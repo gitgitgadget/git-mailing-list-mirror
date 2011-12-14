@@ -1,72 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Makefile: optionally exclude code that needs Unix
- sockets
-Date: Tue, 13 Dec 2011 16:14:02 -0800
-Message-ID: <7vhb14t3g5.fsf@alter.siamese.dyndns.org>
-References: <20111210103943.GA16478@sigill.intra.peff.net>
- <20111210104130.GI16648@sigill.intra.peff.net> <4EE66DAB.5070407@kdbg.org>
- <4EE66E58.6040404@kdbg.org> <20111212213951.GB9754@sigill.intra.peff.net>
- <7vzkexwb7m.fsf@alter.siamese.dyndns.org> <4EE7AEDA.6090509@kdbg.org>
+From: Sebastian Morr <sebastian@morr.cc>
+Subject: [PATCH] stash: Fix multiple error messages on create if no HEAD
+Date: Wed, 14 Dec 2011 01:14:32 +0100
+Message-ID: <20111214001432.GA2959@thinkpad>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Dec 14 01:14:13 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 14 01:14:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RacU8-0005Ye-Au
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 01:14:12 +0100
+	id 1RacUa-0005hg-Cn
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 01:14:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755962Ab1LNAOI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Dec 2011 19:14:08 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42308 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753329Ab1LNAOF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Dec 2011 19:14:05 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 88DB0625F;
-	Tue, 13 Dec 2011 19:14:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ek6zHPcUL+VbPuyhQC7LtH4BEJk=; b=wAIuRm
-	CHEQOvyf5lblJT/ow4nltidex4PBM1OW7YlWjJdNcZ8vuelgA7M4h7K5c34XOyVC
-	rUjl3C74gYzifnLpLrf3StY/+UhtbYh5qMGKxJ+sY46KReAAaBOFuBU01TAMlndU
-	dbYJy832e5CQaSUtUuUBXRYt0A9Wy5DMOSj24=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MNPd7msldks8w5S2bpWHA0rej6vej3NJ
-	9pXqQ8Vo7d0EN4Npl7xhYhB05PrkB/G7ZnBgqF5gGKXSzRYOFP+mZXhdhxBjwN6G
-	OkB6OliI6NQm/BRTBqRxXXDLOgmCWhF2JthHAlA9RD79baIQQQE1fVtByotw4SU2
-	Y844wd64BZ4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 812EF625D;
-	Tue, 13 Dec 2011 19:14:04 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 17CD8625C; Tue, 13 Dec 2011
- 19:14:03 -0500 (EST)
-In-Reply-To: <4EE7AEDA.6090509@kdbg.org> (Johannes Sixt's message of "Tue, 13
- Dec 2011 21:00:26 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 87EF7B8A-25E8-11E1-9427-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756208Ab1LNAOg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Dec 2011 19:14:36 -0500
+Received: from static.148.34.47.78.clients.your-server.de ([78.47.34.148]:48131
+	"EHLO morr.cc" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753329Ab1LNAOg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Dec 2011 19:14:36 -0500
+Received: by morr.cc (Postfix, from userid 1001)
+	id 5B9644763F7F; Wed, 14 Dec 2011 01:14:34 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on morr.cc
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED autolearn=ham
+	version=3.3.1
+Received: from thinkpad (port-92-196-84-34.dynamic.qsc.de [92.196.84.34])
+	by morr.cc (Postfix) with ESMTPSA id D5D664763F7D
+	for <git@vger.kernel.org>; Wed, 14 Dec 2011 01:14:33 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187084>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+create_stash() checks whether HEAD is valid via rev-parse. If this is
+not the case, both itself as well as rev-parse print an error message.
+Make rev-parse quiet.
 
-> Am 13.12.2011 01:45, schrieb Junio C Hamano:
->> I'll queue a single patch that is a squash between 2/2 and Peff's test
->> updates between "credentials: add "cache" helper" and "strbuf: add
->> strbuf_add*_urlencode" in the series.
->
-> Thanks. The resulting series builds fine on Windows and passes/skips the
-> new tests in the expected manner.
+In no_changes(), diff-index is called, which dies unquietly if there is
+no commit. Hide it's stderr.
 
-Thanks. Let's advance the topic forward then.
+Signed-off-by: Sebastian Morr <sebastian@morr.cc>
+---
+
+This bugged me: In a new, empty repository:
+
+    $ git stash
+    fatal: bad revision 'HEAD'
+    fatal: bad revision 'HEAD'
+    fatal: Needed a single revision
+    You do not have the initial commit yet
+
+With this patch:
+
+    $ git stash
+    You do not have the initial commit yet
+
+With the --quiet option, I wouldn't expect diff-index to print error
+messages. But it does so (via revision.c, setup_revisions()). Is this
+wanted?
+
+ git-stash.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/git-stash.sh b/git-stash.sh
+index c766692..07b6511 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -34,7 +34,7 @@ else
+ fi
+ 
+ no_changes () {
+-	git diff-index --quiet --cached HEAD --ignore-submodules -- &&
++	git diff-index --quiet --cached HEAD --ignore-submodules -- 2>/dev/null &&
+ 	git diff-files --quiet --ignore-submodules &&
+ 	(test -z "$untracked" || test -z "$(untracked_files)")
+ }
+@@ -67,7 +67,7 @@ create_stash () {
+ 	fi
+ 
+ 	# state of the base commit
+-	if b_commit=$(git rev-parse --verify HEAD)
++	if b_commit=$(git rev-parse --quiet --verify HEAD)
+ 	then
+ 		head=$(git rev-list --oneline -n 1 HEAD --)
+ 	else
+-- 
+1.7.8.168.gd6118.dirty
