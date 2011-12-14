@@ -1,69 +1,92 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 7/7] revert: stop creating and removing sequencer-old directory
-Date: Wed, 14 Dec 2011 21:40:45 +0530
-Message-ID: <CALkWK0n_Weyr3Y97h9P+bRTizZjdxeQRgP8tG0ssiBpksBtaKg@mail.gmail.com>
-References: <CALkWK0=45OwcBoH2TorsgwTbaXjnffVuh0mGxh2+ShN9cuF-=A@mail.gmail.com>
- <20111120094650.GB2278@elie.hsd1.il.comcast.net> <20111122111207.GA7399@elie.hsd1.il.comcast.net>
- <20111122112001.GF7399@elie.hsd1.il.comcast.net> <7vr50zd5x0.fsf@alter.siamese.dyndns.org>
- <20111123012721.GA14217@elie.hsd1.il.comcast.net> <4ECCB3A2.5030102@viscovery.net>
- <20111123100452.GA30629@elie.hsd1.il.comcast.net> <4ECCC935.7010407@viscovery.net>
- <20111210124644.GA22035@elie.hsd1.il.comcast.net> <20111210130612.GH22035@elie.hsd1.il.comcast.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: tr/pty-all (Re: What's cooking in git.git (Dec 2011, #04; Tue, 13))
+Date: Wed, 14 Dec 2011 17:17:14 +0100
+Message-ID: <201112141717.15021.trast@student.ethz.ch>
+References: <7vobvcrlve.fsf@alter.siamese.dyndns.org> <20111214070916.GA14954@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	=?utf-8?q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+	<pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 14 17:11:15 2011
+X-From: git-owner@vger.kernel.org Wed Dec 14 17:17:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RarQI-0004j6-UH
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 17:11:15 +0100
+	id 1RarWZ-00087j-Oz
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 17:17:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757553Ab1LNQLJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Dec 2011 11:11:09 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:43385 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757545Ab1LNQLH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2011 11:11:07 -0500
-Received: by eekc4 with SMTP id c4so962072eek.19
-        for <git@vger.kernel.org>; Wed, 14 Dec 2011 08:11:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=6WXpKtE5HjRPe4iM4b9GaonGdKMvMJFR/19242PufdQ=;
-        b=Kw1YFFB1O6nP3iSXFFpZO9Cpeqfb0R7GWPvzptbC1x90LmvJPJLT2wms4JheEKxcqD
-         PST5+4h7SQ1a3rfJ0w4PaRqUYWmzjMEkgC3rdTEDwKyynJeRsUqLGJaPWkAjoIpcvmm9
-         4DFH/z0+gfxh+gwYPptuUTdAi45KILCK5q/b8=
-Received: by 10.180.88.66 with SMTP id be2mr5860007wib.54.1323879066288; Wed,
- 14 Dec 2011 08:11:06 -0800 (PST)
-Received: by 10.216.51.141 with HTTP; Wed, 14 Dec 2011 08:10:45 -0800 (PST)
-In-Reply-To: <20111210130612.GH22035@elie.hsd1.il.comcast.net>
+	id S932133Ab1LNQRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Dec 2011 11:17:19 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:32084 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932115Ab1LNQRR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2011 11:17:17 -0500
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 14 Dec
+ 2011 17:17:12 +0100
+Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 14 Dec
+ 2011 17:17:15 +0100
+User-Agent: KMail/1.13.7 (Linux/3.1.3-1-desktop; KDE/4.6.5; x86_64; ; )
+In-Reply-To: <20111214070916.GA14954@elie.hsd1.il.comcast.net>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187139>
-
-Hi,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187140>
 
 Jonathan Nieder wrote:
-> That's the end.
+> Junio C Hamano wrote:
+> > Will merge to 'next' after taking another look.
+> 
+> The middle commit looks good.  The bottom commit could be improved as
+> discussed at [1], but I guess that can happen in-tree.
+> 
+> However, the top commit ("test test-terminal's sanity") still does not
+> seem right to me.
 
-Apart from the few minor details, I'm happy with the series overall.
+I wasn't under the impression that we were done with this, either :-)
 
-> =C2=A0I hope the patches provided some amusement, and
-> advice towards making them more useful would be welcome.
+> It makes the same test run three times.  Probably I should send an
+> alternate patch to get that sanity-check to run once, but I am also
+> not convinced the sanity-check is needed at all --- wouldn't any test
+> that is relying on output from test_terminal act as a sanity check for
+> it already?
 
-Oh, yes.  There were quite a few :facepalm: moments in there for me ;)
+It didn't.  Or more precisely, Michael Haggerty ran into the behavior
+of
 
-Thanks for the enjoyable read.
+  git rev-parse ... | while read sha; do git checkout $sha; make test; done
 
--- Ram
+couldn't make any sense of it, and reported it on IRC.  So in some
+sense, it took infrequent circumstances and two developers' time; next
+time around I'd prefer it to be detected automatically.
+
+> As an aside, I also still believe that running "git shortlog" without
+> explicitly passing "HEAD" when testing how it reacts to [core] pager
+> configuration was a bug and a distraction, hence the patch at [2].
+
+Why not.  Some other test should verify how shortlog reacts to the
+tty-ness of stdin, but that's yet another direction.
+
+> I also find Jeff's patch [3] appealing.
+
+Me too, though wonder whether feeding a file full of garbage wouldn't
+be better, so as to trip up commands that try to read only from a
+non-tty stdin.
+
+
+
+> [1] http://thread.gmane.org/gmane.comp.version-control.git/186923/focus=186944
+> [2] http://article.gmane.org/gmane.comp.version-control.git/186932
+> [3] http://article.gmane.org/gmane.comp.version-control.git/186936
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
