@@ -1,79 +1,83 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [PATCH resend] Do not create commits whose message contains NUL
-Date: Wed, 14 Dec 2011 14:23:29 +0900
-Message-ID: <buomxavwwtq.fsf@dhlpc061.dev.necel.com>
-References: <1323777368-19697-1-git-send-email-pclouds@gmail.com>
- <20111213175932.GA1663@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: tr/pty-all (Re: What's cooking in git.git (Dec 2011, #04; Tue, 13))
+Date: Wed, 14 Dec 2011 01:09:16 -0600
+Message-ID: <20111214070916.GA14954@elie.hsd1.il.comcast.net>
+References: <7vobvcrlve.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 14 06:23:50 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
+	Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 14 08:09:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RahJj-0003JQ-19
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 06:23:47 +0100
+	id 1Raiy2-0001jg-5P
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 08:09:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751027Ab1LNFXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Dec 2011 00:23:34 -0500
-Received: from relmlor1.renesas.com ([210.160.252.171]:37477 "EHLO
-	relmlor1.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750774Ab1LNFXd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Dec 2011 00:23:33 -0500
-Received: from relmlir1.idc.renesas.com ([10.200.68.151])
- by relmlor1.idc.renesas.com ( SJSMS)
- with ESMTP id <0LW600IFUHN86Z20@relmlor1.idc.renesas.com> for
- git@vger.kernel.org; Wed, 14 Dec 2011 14:23:32 +0900 (JST)
-Received: from relmlac4.idc.renesas.com ([10.200.69.24])
- by relmlir1.idc.renesas.com (SJSMS)
- with ESMTP id <0LW6009OVHN7GHD0@relmlir1.idc.renesas.com> for
- git@vger.kernel.org; Wed, 14 Dec 2011 14:23:32 +0900 (JST)
-Received: by relmlac4.idc.renesas.com (Postfix, from userid 0)
-	id 1BB5748093; Wed, 14 Dec 2011 14:23:32 +0900 (JST)
-Received: from relmlac4.idc.renesas.com (localhost [127.0.0.1])
-	by relmlac4.idc.renesas.com (Postfix) with ESMTP id 0ED1248087; Wed,
- 14 Dec 2011 14:23:32 +0900 (JST)
-Received: from relmlii2.idc.renesas.com [10.200.68.66]	by
- relmlac4.idc.renesas.com with ESMTP id QAD31513; Wed,
- 14 Dec 2011 14:23:32 +0900
-X-IronPort-AV: E=Sophos;i="4.71,349,1320591600";   d="scan'208";a="59567204"
-Received: from unknown (HELO relay41.aps.necel.com) ([10.29.19.9])
- by relmlii2.idc.renesas.com with ESMTP; Wed, 14 Dec 2011 14:23:31 +0900
-Received: from dhlpc061 (dhlpc061.dev.necel.com [10.114.98.108])
-	by relay41.aps.necel.com (8.14.4+Sun/8.14.4) with ESMTP id pBE5NUHk022588;
- Wed, 14 Dec 2011 14:23:31 +0900 (JST)
-Received: by dhlpc061 (Postfix, from userid 31295)	id 885C752E1F5; Wed,
- 14 Dec 2011 14:23:30 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-reply-to: <20111213175932.GA1663@sigill.intra.peff.net>
+	id S1753663Ab1LNHJZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Dec 2011 02:09:25 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:62779 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753216Ab1LNHJZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2011 02:09:25 -0500
+Received: by yenm11 with SMTP id m11so391948yen.19
+        for <git@vger.kernel.org>; Tue, 13 Dec 2011 23:09:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=9Bfy2CkCjjT9WV2Z06ta7ZvGhYDzscopNK4tW0FmTqA=;
+        b=YorZVrnBfaGpTs2XhDDJYtY4rQbTisLn3mY6Qn3mk6wqMFM4LaX8bLWmZFS6z3yzRb
+         Dq0Fbd02YyAS97yg6oDcsjeGi37NDn4AaybmWrw0Ly0vNAPm2GwfxaBEBgvHOJNuGiwz
+         KGf1p+7VNFluieg93ie4hUcShMymeumNlpl4k=
+Received: by 10.236.176.2 with SMTP id a2mr9461212yhm.12.1323846564469;
+        Tue, 13 Dec 2011 23:09:24 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id f17sm4862005ang.20.2011.12.13.23.09.22
+        (version=SSLv3 cipher=OTHER);
+        Tue, 13 Dec 2011 23:09:23 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vobvcrlve.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187096>
 
-Jeff King <peff@peff.net> writes:
->      But maybe it would be nicer to say something like:
+Junio C Hamano wrote:
+
+> * tr/pty-all (2011-12-12) 3 commits
+>  - t/lib-terminal: test test-terminal's sanity
+>  - test-terminal: set output terminals to raw mode
+>  - test-terminal: give the child an empty stdin TTY
 >
->        error: your commit message contains NUL characters.
->        hint: This is often caused by using multibyte encodings such as
->        hint: UTF-16. Please check your editor settings.
+> Will merge to 'next' after taking another look.
 
-I think the error message with the hint is much better for users, but
-isn't the term "multibyte" a little misleading here?  It seems like
-it's really _wide_ encodings that are generally the culprit.
+The middle commit looks good.  The bottom commit could be improved as
+discussed at [1], but I guess that can happen in-tree.
 
-[UTF-16 of course is particularly nasty in that it uses both units which
-are wider than a byte ("wide"), _and_ multiple units per code-point....]
+However, the top commit ("test test-terminal's sanity") still does not
+seem right to me.
+
+It makes the same test run three times.  Probably I should send an
+alternate patch to get that sanity-check to run once, but I am also
+not convinced the sanity-check is needed at all --- wouldn't any test
+that is relying on output from test_terminal act as a sanity check for
+it already?
+
+As an aside, I also still believe that running "git shortlog" without
+explicitly passing "HEAD" when testing how it reacts to [core] pager
+configuration was a bug and a distraction, hence the patch at [2].  Am
+I the only one?  I also find Jeff's patch [3] appealing.
 
 Thanks,
+Jonathan
 
--Miles
-
--- 
-Quack, n. A murderer without a license.
+[1] http://thread.gmane.org/gmane.comp.version-control.git/186923/focus=186944
+[2] http://article.gmane.org/gmane.comp.version-control.git/186932
+[3] http://article.gmane.org/gmane.comp.version-control.git/186936
