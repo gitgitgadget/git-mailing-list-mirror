@@ -1,199 +1,131 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Revert "http: don't always prompt for password"
-Date: Tue, 13 Dec 2011 19:11:56 -0500
-Message-ID: <20111214001156.GA21940@sigill.intra.peff.net>
-References: <20111213201704.GA12072@sigill.intra.peff.net>
- <20111213202508.GA12187@sigill.intra.peff.net>
- <7vaa6wuqjt.fsf@alter.siamese.dyndns.org>
- <20111213231909.GD12432@sigill.intra.peff.net>
- <20111213232053.GE12432@sigill.intra.peff.net>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: [REQUEST PULL] git-gui
+Date: Wed, 14 Dec 2011 00:05:37 +0000
+Message-ID: <87d3bs2f1q.fsf@fox.patthoyts.tk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Stefan Naewe <stefan.naewe@gmail.com>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Eric <eric.advincula@gmail.com>, git@vger.kernel.org,
-	msysgit@googlegroups.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 14 01:12:18 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 14 01:12:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RacSI-0004tQ-5P
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 01:12:18 +0100
+	id 1RacSn-00054I-F6
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 01:12:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756214Ab1LNAL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Dec 2011 19:11:59 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49859
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755997Ab1LNAL6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Dec 2011 19:11:58 -0500
-Received: (qmail 25685 invoked by uid 107); 14 Dec 2011 00:18:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 13 Dec 2011 19:18:39 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Dec 2011 19:11:56 -0500
-Content-Disposition: inline
-In-Reply-To: <20111213232053.GE12432@sigill.intra.peff.net>
+	id S1753957Ab1LNAMn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Dec 2011 19:12:43 -0500
+Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:54344 "EHLO
+	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753329Ab1LNAMm convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Dec 2011 19:12:42 -0500
+Received: from know-smtpout-4.server.virginmedia.net ([62.254.123.1])
+          by mtaout02-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20111214001240.ZHNI11752.mtaout02-winn.ispmail.ntl.com@know-smtpout-4.server.virginmedia.net>;
+          Wed, 14 Dec 2011 00:12:40 +0000
+Received: from [94.171.229.22] (helo=fox.patthoyts.tk)
+	by know-smtpout-4.server.virginmedia.net with esmtpa (Exim 4.63)
+	(envelope-from <patthoyts@users.sourceforge.net>)
+	id 1RacSe-0007hY-Hr; Wed, 14 Dec 2011 00:12:40 +0000
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id 785FB20A79; Wed, 14 Dec 2011 00:05:38 +0000 (GMT)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Home-Page: http://www.patthoyts.tk/
+X-Web: http://www.patthoyts.tk/
+X-Url: http://www.patthoyts.tk/
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+X-Cloudmark-Analysis: v=1.1 cv=JvdXmxIgLJv2/GthKqHpGJEEHukvLcvELVXUanXFreg= c=1 sm=0 a=O9HYxzjLEG8A:10 a=IkcTkHD0fZMA:10 a=BKB4hTfATD1S3bI5s5kA:9 a=LmVI-IegMmjvk-DkLFoA:7 a=QEXdDO2ut3YA:10 a=ygrxFxvRaxsys9lH:21 a=34jrqHGfEunmsWnl:21 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187082>
 
-On Tue, Dec 13, 2011 at 06:20:53PM -0500, Jeff King wrote:
+The following changes since commit 843d6597fbacfae02b8af7d6840992c92d08=
+63f8:
 
-> BTW, one other solution, rather than reverting Stefan's patch, is to
-> just re-add the "unconditionally ask for a password" behavior back to
-> git-http-push, but not to the fetching side. Especially if we hope to
-> kill off git-http-push soon (after a deprecation period presumably),
-> then that lets it work in the meantime without hurting the other http
-> code. And it's really easy to do.
+  git-gui: incremental goto line in blame view (2011-10-15 23:14:13 +01=
+00)
 
-And here's what that patch looks like.
+are available in the git repository at:
 
-Thinking on it more, this is probably better for a maint release than
-reverting Stefan's patch. It un-breaks http-push, and they are no
-differently off than they are with the revert. But it leaves the
-enhancement in place for the smart-http code.
+  git://repo.or.cz/git-gui.git master
 
--- >8 --
-Subject: [PATCH] http-push: enable "proactive auth"
+for you to fetch changes up to 942e6baa92846e5628752c65a22bc4957d8de4d0=
+:
 
-Before commit 986bbc08, git was proactive about asking for
-http passwords. It assumed that if you had a username in
-your URL, you would also want a password, and asked for it
-before making any http requests.
+  git-gui 0.16 (2011-12-13 23:44:30 +0000)
 
-However, this could interfere with the use of .netrc (see
-986bbc08 for details). And it was also unnecessary, since
-the http fetching code had learned to recognize an HTTP 401
-and prompt the user then. Furthermore, the proactive prompt
-could interfere with the usage of .netrc (see 986bbc08 for
-details).
+----------------------------------------------------------------
+Bert Wesarg (14):
+      git-gui: fix multi selected file operation
+      git-gui: handle config booleans without value
+      git-gui: add smart case search mode in searchbar
+      git-gui: add regexp search mode to the searchbar
+      git-gui: add search history to searchbar
+      git-gui: fix unintended line break in message string
+      git-gui: use "untracked" for files which are not known to git
+      git-gui: new config to control staging of untracked files
+      git-gui: fix display of path in browser title
+      git-gui: use a tristate to control the case mode in the searchbar
+      git-gui: span widgets over the full file output area in the blame=
+ view
+      git-gui: include the file path in guitools confirmation dialog
+      git-gui: make config gui.warndetachedcommit a boolean
+      git-gui: don't warn for detached head when rebasing
 
-Unfortunately, the http push-over-DAV code never learned to
-recognize HTTP 401, and so was broken by this change. This
-patch does a quick fix of re-enabling the "proactive auth"
-strategy only for http-push, leaving the dumb http fetch and
-smart-http as-is.
+Dejan Ribi=C4=8D (1):
+      git-gui: fix spelling error in sshkey.tcl
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- http-fetch.c         |    2 +-
- http-push.c          |    2 +-
- http.c               |    8 +++++++-
- http.h               |    3 ++-
- remote-curl.c        |    2 +-
- t/t5540-http-push.sh |    2 +-
- 6 files changed, 13 insertions(+), 6 deletions(-)
+Pat Thoyts (12):
+      git-gui: include the number of untracked files to stage when aski=
+ng the user
+      git-gui: theme the search and line-number entry fields on blame s=
+creen
+      git-gui: catch invalid or complete regular expressions and treat =
+as no match.
+      git-gui: enable the smart case sensitive search only if gui.searc=
+h.smartcase is true
+      Merge branch 'bw/searching'
+      git-gui: set suitable extended window manager hints.
+      git-gui: support underline style when parsing diff output
+      git-gui: sort the numeric ansi codes
+      git-gui: set whitespace warnings appropriate to this project
+      git-gui: added config gui.gcwarning to disable the gc hint messag=
+e
+      git-gui: handle shell script text filters when loading for blame.
+      git-gui 0.16
 
-diff --git a/http-fetch.c b/http-fetch.c
-index 69299b7..94d47cb 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -67,7 +67,7 @@ int main(int argc, const char **argv)
- 
- 	git_config(git_default_config, NULL);
- 
--	http_init(NULL, url);
-+	http_init(NULL, url, 0);
- 	walker = get_http_walker(url);
- 	walker->get_tree = get_tree;
- 	walker->get_history = get_history;
-diff --git a/http-push.c b/http-push.c
-index 5d01be9..70283e6 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1820,7 +1820,7 @@ int main(int argc, char **argv)
- 
- 	memset(remote_dir_exists, -1, 256);
- 
--	http_init(NULL, repo->url);
-+	http_init(NULL, repo->url, 1);
- 
- #ifdef USE_CURL_MULTI
- 	is_running_queue = 0;
-diff --git a/http.c b/http.c
-index 008ad72..6c90092 100644
---- a/http.c
-+++ b/http.c
-@@ -43,6 +43,7 @@
- static const char *curl_http_proxy;
- static const char *curl_cookie_file;
- static char *user_name, *user_pass, *description;
-+static int http_proactive_auth;
- static const char *user_agent;
- 
- #if LIBCURL_VERSION_NUM >= 0x071700
-@@ -279,6 +280,9 @@ static CURL *get_curl_handle(void)
- 	curl_easy_setopt(result, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
- #endif
- 
-+	if (http_proactive_auth)
-+		init_curl_http_auth(result);
-+
- 	if (ssl_cert != NULL)
- 		curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
- 	if (has_cert_password())
-@@ -367,7 +371,7 @@ static void set_from_env(const char **var, const char *envname)
- 		*var = val;
- }
- 
--void http_init(struct remote *remote, const char *url)
-+void http_init(struct remote *remote, const char *url, int proactive_auth)
- {
- 	char *low_speed_limit;
- 	char *low_speed_time;
-@@ -378,6 +382,8 @@ void http_init(struct remote *remote, const char *url)
- 
- 	curl_global_init(CURL_GLOBAL_ALL);
- 
-+	http_proactive_auth = proactive_auth;
-+
- 	if (remote && remote->http_proxy)
- 		curl_http_proxy = xstrdup(remote->http_proxy);
- 
-diff --git a/http.h b/http.h
-index 3c332a9..51f6ba7 100644
---- a/http.h
-+++ b/http.h
-@@ -86,7 +86,8 @@ struct buffer {
- extern void step_active_slots(void);
- #endif
- 
--extern void http_init(struct remote *remote, const char *url);
-+extern void http_init(struct remote *remote, const char *url,
-+		      int proactive_auth);
- extern void http_cleanup(void);
- 
- extern int data_received;
-diff --git a/remote-curl.c b/remote-curl.c
-index 0e720ee..0757b19 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -859,7 +859,7 @@ int main(int argc, const char **argv)
- 
- 	url = strbuf_detach(&buf, NULL);
- 
--	http_init(remote, url);
-+	http_init(remote, url, 0);
- 
- 	do {
- 		if (strbuf_getline(&buf, stdin, '\n') == EOF) {
-diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
-index 3300227..1eea647 100755
---- a/t/t5540-http-push.sh
-+++ b/t/t5540-http-push.sh
-@@ -160,7 +160,7 @@ test_expect_success 'PUT and MOVE sends object to URLs with SHA-1 hash suffix' '
- test_http_push_nonff "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo.git \
- 	"$ROOT_PATH"/test_repo_clone master
- 
--test_expect_failure 'push to password-protected repository (user in URL)' '
-+test_expect_success 'push to password-protected repository (user in URL)' '
- 	test_commit pw-user &&
- 	git push "$HTTPD_URL_USER/auth/dumb/test_repo.git" HEAD &&
- 	git rev-parse --verify HEAD >expect &&
--- 
-1.7.8.17.gfd3524
+Samuel Bronson (1):
+      git-gui: Set both 16x16 and 32x32 icons on X to pacify Xming.
+
+Tilman Vogel (1):
+      git-gui: add config value gui.diffopts for passing additional dif=
+f options
+
+ .gitattributes     |    1 +
+ GIT-VERSION-GEN    |    2 +-
+ git-gui.sh         |   56 ++++++++++++++++++++++--
+ lib/blame.tcl      |   29 ++++++------
+ lib/browser.tcl    |    8 +++-
+ lib/choose_rev.tcl |    1 +
+ lib/class.tcl      |    1 +
+ lib/commit.tcl     |    4 +-
+ lib/diff.tcl       |    5 +-
+ lib/index.tcl      |   24 ++++++++---
+ lib/line.tcl       |    2 +-
+ lib/option.tcl     |   20 ++++++++
+ lib/search.tcl     |  123 ++++++++++++++++++++++++++++++++++++++++++++=
+++-----
+ lib/sshkey.tcl     |    2 +-
+ lib/themed.tcl     |   99 ++++++++++++++++++++++++++++++++++++++++--
+ lib/tools.tcl      |   10 +++-
+ lib/transport.tcl  |    1 +
+ 17 files changed, 339 insertions(+), 49 deletions(-)
