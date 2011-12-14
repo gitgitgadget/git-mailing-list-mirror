@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 1/3] Make commit_tree() take message length in addition to the commit message
-Date: Wed, 14 Dec 2011 21:08:17 +0700
-Message-ID: <1323871699-8839-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 3/3] Do not create commits whose message contains NUL
+Date: Wed, 14 Dec 2011 21:08:19 +0700
+Message-ID: <1323871699-8839-4-git-send-email-pclouds@gmail.com>
 References: <1323777368-19697-1-git-send-email-pclouds@gmail.com>
  <1323871699-8839-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -12,240 +12,164 @@ Cc: Jeff King <peff@peff.net>, Miles Bader <miles@gnu.org>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 14 15:08:49 2011
+X-From: git-owner@vger.kernel.org Wed Dec 14 15:09:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RapVj-0002DL-2g
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 15:08:44 +0100
+	id 1RapW1-0002L3-Lb
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Dec 2011 15:09:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757308Ab1LNOIi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Dec 2011 09:08:38 -0500
+	id S1757329Ab1LNOI5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Dec 2011 09:08:57 -0500
 Received: from mail-iy0-f174.google.com ([209.85.210.174]:62916 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757207Ab1LNOIh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Dec 2011 09:08:37 -0500
-Received: by iaeh11 with SMTP id h11so1289113iae.19
-        for <git@vger.kernel.org>; Wed, 14 Dec 2011 06:08:36 -0800 (PST)
+	with ESMTP id S1754861Ab1LNOI4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2011 09:08:56 -0500
+Received: by mail-iy0-f174.google.com with SMTP id h11so1289113iae.19
+        for <git@vger.kernel.org>; Wed, 14 Dec 2011 06:08:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=3cfu7WbZ6H64wUUjjgbSW3nbdy9PlyQT2bIaC4LDHis=;
-        b=GiX7GzA6IA2+V8Si5+xhFuSEq6VtrIsW2YSZ4V4efG4KwV6gQGskTC43w6VEvcmN2M
-         EbI1spfklz/2YOJ3C/ommMz1eFQo+7qbvmtcU/zjsfTwjj1IRfmAnu/A2824WATIjsKQ
-         WlbPr35IxeSTx7od1Is7HlORNYSlsr2+YWLU4=
-Received: by 10.50.219.135 with SMTP id po7mr19777072igc.11.1323871716579;
-        Wed, 14 Dec 2011 06:08:36 -0800 (PST)
+        bh=Yz/DfxZJsQDAui39JgkxG1INx7MAiQtDMzm9NW1jkj0=;
+        b=l3s9aviavG6eHSJR/Ud5eD3o701f4VXdpeqVJTar/8fexcwST6boaXvZ3WL1azTqu8
+         7Gq9BmS+ga0FmGCwB3aIAkKDZnS/U+jl0vmUMoOO7+RcWdW8hK45Hy/zvTIjvU7MhdxA
+         S0Cf6KPHCDVkgfPCKaHcU7zk/Y5CZxQ0G/d+4=
+Received: by 10.42.150.135 with SMTP id a7mr19210878icw.53.1323871736099;
+        Wed, 14 Dec 2011 06:08:56 -0800 (PST)
 Received: from tre ([115.74.57.162])
-        by mx.google.com with ESMTPS id z22sm9425808ibg.5.2011.12.14.06.08.31
+        by mx.google.com with ESMTPS id wn1sm4755676igc.3.2011.12.14.06.08.49
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 14 Dec 2011 06:08:35 -0800 (PST)
-Received: by tre (sSMTP sendmail emulation); Wed, 14 Dec 2011 21:08:32 +0700
+        Wed, 14 Dec 2011 06:08:53 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Wed, 14 Dec 2011 21:08:50 +0700
 X-Mailer: git-send-email 1.7.8.36.g69ee2
 In-Reply-To: <1323871699-8839-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187119>
+
+We assume that the commit log messages are uninterpreted sequences of
+non-NUL bytes (see Documentation/i18n.txt). However the assumption
+does not really stand out and it's quite easy to set an editor to save
+in a NUL-included encoding. Currently we silently cut at the first NUL
+we see.
+
+Make it more obvious that NUL is not welcome by refusing to create
+such commits. Those who deliberately want to create them can still do
+with hash-object.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/commit-tree.c |    2 +-
- builtin/commit.c      |    2 +-
- builtin/merge.c       |    4 ++--
- builtin/notes.c       |    2 +-
- commit.c              |    4 ++--
- commit.h              |    2 +-
- notes-cache.c         |    2 +-
- notes-merge.c         |    8 ++++----
- notes-merge.h         |    2 +-
- 9 files changed, 14 insertions(+), 14 deletions(-)
+ Documentation/config.txt |    4 ++++
+ advice.c                 |    2 ++
+ advice.h                 |    1 +
+ commit.c                 |    9 +++++++++
+ t/t3900-i18n-commit.sh   |    6 ++++++
+ t/t3900/UTF-16.txt       |  Bin 0 -> 32 bytes
+ 6 files changed, 22 insertions(+), 0 deletions(-)
+ create mode 100644 t/t3900/UTF-16.txt
 
-diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
-index d083795..8fa384f 100644
---- a/builtin/commit-tree.c
-+++ b/builtin/commit-tree.c
-@@ -56,7 +56,7 @@ int cmd_commit_tree(int argc, const char **argv, cons=
-t char *prefix)
- 	if (strbuf_read(&buffer, 0, 0) < 0)
- 		die_errno("git commit-tree: failed to read");
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 5a841da..daf57c2 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -144,6 +144,10 @@ advice.*::
+ 		Advice shown when you used linkgit::git-checkout[1] to
+ 		move to the detach HEAD state, to instruct how to create
+ 		a local branch after the fact.  Default: true.
++	commitWideEncoding::
++		Advice shown when linkgit::git-commit[1] refuses to
++		proceed because there are NULs in commit message.
++		Default: true.
+ --
 =20
--	if (commit_tree(buffer.buf, tree_sha1, parents, commit_sha1, NULL)) {
-+	if (commit_tree(buffer.buf, buffer.len, tree_sha1, parents, commit_sh=
-a1, NULL)) {
- 		strbuf_release(&buffer);
- 		return 1;
- 	}
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 8f2bebe..ce0e47f 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1483,7 +1483,7 @@ int cmd_commit(int argc, const char **argv, const=
- char *prefix)
- 		exit(1);
- 	}
+ core.fileMode::
+diff --git a/advice.c b/advice.c
+index e02e632..130949e 100644
+--- a/advice.c
++++ b/advice.c
+@@ -6,6 +6,7 @@ int advice_commit_before_merge =3D 1;
+ int advice_resolve_conflict =3D 1;
+ int advice_implicit_identity =3D 1;
+ int advice_detached_head =3D 1;
++int advice_commmit_wide_encoding =3D 1;
 =20
--	if (commit_tree(sb.buf, active_cache_tree->sha1, parents, sha1,
-+	if (commit_tree(sb.buf, sb.len, active_cache_tree->sha1, parents, sha=
-1,
- 			author_ident.buf)) {
- 		rollback_index_files();
- 		die(_("failed to write commit object"));
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 2870a6a..df4548a 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -913,7 +913,7 @@ static int merge_trivial(struct commit *head)
- 	parent->next->item =3D remoteheads->item;
- 	parent->next->next =3D NULL;
- 	prepare_to_commit();
--	commit_tree(merge_msg.buf, result_tree, parent, result_commit, NULL);
-+	commit_tree(merge_msg.buf, merge_msg.len, result_tree, parent, result=
-_commit, NULL);
- 	finish(head, result_commit, "In-index merge");
- 	drop_save();
- 	return 0;
-@@ -944,7 +944,7 @@ static int finish_automerge(struct commit *head,
- 	strbuf_addch(&merge_msg, '\n');
- 	prepare_to_commit();
- 	free_commit_list(remoteheads);
--	commit_tree(merge_msg.buf, result_tree, parents, result_commit, NULL)=
-;
-+	commit_tree(merge_msg.buf, merge_msg.len, result_tree, parents, resul=
-t_commit, NULL);
- 	strbuf_addf(&buf, "Merge made by the '%s' strategy.", wt_strategy);
- 	finish(head, result_commit, buf.buf);
- 	strbuf_release(&buf);
-diff --git a/builtin/notes.c b/builtin/notes.c
-index f8e437d..d665459 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -306,7 +306,7 @@ void commit_notes(struct notes_tree *t, const char =
-*msg)
- 	if (buf.buf[buf.len - 1] !=3D '\n')
- 		strbuf_addch(&buf, '\n'); /* Make sure msg ends with newline */
+ static struct {
+ 	const char *name;
+@@ -17,6 +18,7 @@ static struct {
+ 	{ "resolveconflict", &advice_resolve_conflict },
+ 	{ "implicitidentity", &advice_implicit_identity },
+ 	{ "detachedhead", &advice_detached_head },
++	{ "commitwideencoding", &advice_commmit_wide_encoding },
+ };
 =20
--	create_notes_commit(t, NULL, buf.buf + 7, commit_sha1);
-+	create_notes_commit(t, NULL, buf.buf + 7, buf.len - 7, commit_sha1);
- 	update_ref(buf.buf, t->ref, commit_sha1, NULL, 0, DIE_ON_ERR);
+ void advise(const char *advice, ...)
+diff --git a/advice.h b/advice.h
+index e5d0af7..d913bdb 100644
+--- a/advice.h
++++ b/advice.h
+@@ -9,6 +9,7 @@ extern int advice_commit_before_merge;
+ extern int advice_resolve_conflict;
+ extern int advice_implicit_identity;
+ extern int advice_detached_head;
++extern int advice_commmit_wide_encoding;
 =20
- 	strbuf_release(&buf);
+ int git_default_advice_config(const char *var, const char *value);
+ void advise(const char *advice, ...);
 diff --git a/commit.c b/commit.c
-index 73b7e00..d67b8c7 100644
+index d67b8c7..59e5bce 100644
 --- a/commit.c
 +++ b/commit.c
-@@ -845,7 +845,7 @@ static const char commit_utf8_warn[] =3D
- "You may want to amend it after fixing the message, or set the config\=
-n"
- "variable i18n.commitencoding to the encoding your project uses.\n";
+@@ -855,6 +855,15 @@ int commit_tree(const char *msg, size_t msg_len, u=
+nsigned char *tree,
 =20
--int commit_tree(const char *msg, unsigned char *tree,
-+int commit_tree(const char *msg, size_t msg_len, unsigned char *tree,
- 		struct commit_list *parents, unsigned char *ret,
- 		const char *author)
- {
-@@ -884,7 +884,7 @@ int commit_tree(const char *msg, unsigned char *tre=
-e,
- 	strbuf_addch(&buffer, '\n');
+ 	assert_sha1_type(tree, OBJ_TREE);
 =20
- 	/* And add the comment */
--	strbuf_addstr(&buffer, msg);
-+	strbuf_add(&buffer, msg, msg_len);
++	if (memchr(msg, '\0', msg_len)) {
++		error(_("your commit message contains NUL characters."));
++		if (advice_commmit_wide_encoding) {
++			advise(_("This is often caused by using wide encodings such as"));
++			advise(_("UTF-16. Please check your editor settings."));
++		}
++		return -1;
++	}
++
+ 	/* Not having i18n.commitencoding is the same as having utf-8 */
+ 	encoding_is_utf8 =3D is_encoding_utf8(git_commit_encoding);
 =20
- 	/* And check the encoding */
- 	if (encoding_is_utf8 && !is_utf8(buffer.buf))
-diff --git a/commit.h b/commit.h
-index 009b113..1acaf53 100644
---- a/commit.h
-+++ b/commit.h
-@@ -181,7 +181,7 @@ static inline int single_parent(struct commit *comm=
-it)
+diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
+index 1f62c15..d48a7c0 100755
+--- a/t/t3900-i18n-commit.sh
++++ b/t/t3900-i18n-commit.sh
+@@ -34,6 +34,12 @@ test_expect_success 'no encoding header for base cas=
+e' '
+ 	test z =3D "z$E"
+ '
 =20
- struct commit_list *reduce_heads(struct commit_list *heads);
-=20
--extern int commit_tree(const char *msg, unsigned char *tree,
-+extern int commit_tree(const char *msg, size_t msg_len, unsigned char =
-*tree,
- 		struct commit_list *parents, unsigned char *ret,
- 		const char *author);
-=20
-diff --git a/notes-cache.c b/notes-cache.c
-index 4c8984e..04a5698 100644
---- a/notes-cache.c
-+++ b/notes-cache.c
-@@ -56,7 +56,7 @@ int notes_cache_write(struct notes_cache *c)
-=20
- 	if (write_notes_tree(&c->tree, tree_sha1))
- 		return -1;
--	if (commit_tree(c->validity, tree_sha1, NULL, commit_sha1, NULL) < 0)
-+	if (commit_tree(c->validity, strlen(c->validity), tree_sha1, NULL, co=
-mmit_sha1, NULL) < 0)
- 		return -1;
- 	if (update_ref("update notes cache", c->tree.ref, commit_sha1, NULL,
- 		       0, QUIET_ON_ERR) < 0)
-diff --git a/notes-merge.c b/notes-merge.c
-index ce10aac..b3baaf4 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -530,7 +530,7 @@ static int merge_from_diffs(struct notes_merge_opti=
-ons *o,
- }
-=20
- void create_notes_commit(struct notes_tree *t, struct commit_list *par=
-ents,
--			 const char *msg, unsigned char *result_sha1)
-+			 const char *msg, size_t msg_len, unsigned char *result_sha1)
- {
- 	unsigned char tree_sha1[20];
-=20
-@@ -551,7 +551,7 @@ void create_notes_commit(struct notes_tree *t, stru=
-ct commit_list *parents,
- 		/* else: t->ref points to nothing, assume root/orphan commit */
- 	}
-=20
--	if (commit_tree(msg, tree_sha1, parents, result_sha1, NULL))
-+	if (commit_tree(msg, msg_len, tree_sha1, parents, result_sha1, NULL))
- 		die("Failed to commit notes tree to database");
- }
-=20
-@@ -669,7 +669,7 @@ int notes_merge(struct notes_merge_options *o,
- 		commit_list_insert(remote, &parents); /* LIFO order */
- 		commit_list_insert(local, &parents);
- 		create_notes_commit(local_tree, parents, o->commit_msg.buf,
--				    result_sha1);
-+				    o->commit_msg.len, result_sha1);
- 	}
-=20
- found_result:
-@@ -734,7 +734,7 @@ int notes_merge_commit(struct notes_merge_options *=
-o,
- 	}
-=20
- 	create_notes_commit(partial_tree, partial_commit->parents, msg,
--			    result_sha1);
-+			    strlen(msg), result_sha1);
- 	if (o->verbosity >=3D 4)
- 		printf("Finalized notes merge commit: %s\n",
- 			sha1_to_hex(result_sha1));
-diff --git a/notes-merge.h b/notes-merge.h
-index 168a672..fd52988 100644
---- a/notes-merge.h
-+++ b/notes-merge.h
-@@ -37,7 +37,7 @@ void init_notes_merge_options(struct notes_merge_opti=
-ons *o);
-  * The resulting commit SHA1 is stored in result_sha1.
-  */
- void create_notes_commit(struct notes_tree *t, struct commit_list *par=
-ents,
--			 const char *msg, unsigned char *result_sha1);
-+			 const char *msg, size_t msg_len, unsigned char *result_sha1);
-=20
- /*
-  * Merge notes from o->remote_ref into o->local_ref
++test_expect_failure 'UTF-16 refused because of NULs' '
++	echo UTF-16 >F &&
++	git commit -a -F "$TEST_DIRECTORY"/t3900/UTF-16.txt
++'
++
++
+ for H in ISO8859-1 eucJP ISO-2022-JP
+ do
+ 	test_expect_success "$H setup" '
+diff --git a/t/t3900/UTF-16.txt b/t/t3900/UTF-16.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..53296be684253f40964c060=
+4be7fa7ff12e200cb
+GIT binary patch
+literal 32
+mcmezOpWz6@X@-jo=3DNYasZ~@^#h9rjP3@HpR7}6Nh8Mpw;r3yp<
+
+literal 0
+HcmV?d00001
+
 --=20
 1.7.8.36.g69ee2
