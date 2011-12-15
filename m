@@ -1,66 +1,75 @@
-From: Hallvard B Furuseth <h.b.furuseth@usit.uio.no>
-Subject: How to commit incomplete =?UTF-8?Q?changes=3F?=
-Date: Thu, 15 Dec 2011 00:24:33 +0100
-Message-ID: <4cfc9cf0515b1bc751f6aa0de4f55e2a@ulrik.uio.no>
+From: Jeff King <peff@peff.net>
+Subject: Re: tr/pty-all (Re: What's cooking in git.git (Dec 2011, #04; Tue,
+ 13))
+Date: Wed, 14 Dec 2011 19:25:30 -0500
+Message-ID: <20111215002530.GA2566@sigill.intra.peff.net>
+References: <7vobvcrlve.fsf@alter.siamese.dyndns.org>
+ <20111214070916.GA14954@elie.hsd1.il.comcast.net>
+ <201112141717.15021.trast@student.ethz.ch>
+ <20111214230713.GA13128@sigill.intra.peff.net>
+ <20111214232151.GB13128@sigill.intra.peff.net>
+ <20111214233119.GA2354@elie>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 15 00:45:21 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 15 01:25:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RayVj-0000NK-Dq
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 00:45:19 +0100
+	id 1Raz8x-0002AM-D8
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 01:25:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755434Ab1LNXpL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Dec 2011 18:45:11 -0500
-Received: from mail-out1.uio.no ([129.240.10.57]:51997 "EHLO mail-out1.uio.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753150Ab1LNXpK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Dec 2011 18:45:10 -0500
-X-Greylist: delayed 1235 seconds by postgrey-1.27 at vger.kernel.org; Wed, 14 Dec 2011 18:45:09 EST
-Received: from mail-mx3.uio.no ([129.240.10.44])
-	by mail-out1.uio.no with esmtp (Exim 4.75)
-	(envelope-from <h.b.furuseth@usit.uio.no>)
-	id 1RayBd-0007j6-SA
-	for git@vger.kernel.org; Thu, 15 Dec 2011 00:24:33 +0100
-Received: from w3prod-wm01.uio.no ([129.240.4.214] helo=webmail.uio.no)
-	by mail-mx3.uio.no with esmtpsa (TLSv1:AES256-SHA:256)
-	user hbf (Exim 4.76)
-	(envelope-from <h.b.furuseth@usit.uio.no>)
-	id 1RayBd-0002TR-Gf
-	for git@vger.kernel.org; Thu, 15 Dec 2011 00:24:33 +0100
-Received: from c3C3D47C1.dhcp.bluecom.no ([193.71.61.60])
- by webmail.uio.no
- with HTTP (HTTP/1.1 POST); Thu, 15 Dec 2011 00:24:33 +0100
-X-Sender: h.b.furuseth@usit.uio.no
-User-Agent: Roundcube Webmail/0.4.2
-X-UiO-Ratelimit-Test: rcpts/h 1 msgs/h 1 sum rcpts/h 4 sum msgs/h 1 total rcpts 2038 max rcpts/h 17 ratelimit 0
-X-UiO-Spam-info: not spam, SpamAssassin (score=-7.0, required=5.0, autolearn=disabled, RP_MATCHES_RCVD=-2.023,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
-X-UiO-Scanned: 76EAFF6FDCD8051CC3149048733EC990E3AA4678
-X-UiO-SPAM-Test: remote_host: 129.240.4.214 spam_score: -69 maxlevel 80 minaction 2 bait 0 mail/h: 23 total 1944038 max/h 663 blacklist 0 greylist 0 ratelimit 0
+	id S1755623Ab1LOAZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Dec 2011 19:25:33 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50269
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755375Ab1LOAZc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2011 19:25:32 -0500
+Received: (qmail 4314 invoked by uid 107); 15 Dec 2011 00:32:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Dec 2011 19:32:14 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Dec 2011 19:25:30 -0500
+Content-Disposition: inline
+In-Reply-To: <20111214233119.GA2354@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187178>
 
- Do people have any feelings or conventions for how and when to publish
- a series of commits where the first one(s) break something and the next
- ones clear it up?  I've found some discussion, but with vague results.
+On Wed, Dec 14, 2011 at 05:31:19PM -0600, Jonathan Nieder wrote:
 
- I'm about to commit some small edits which go together with bigger
- generated changes.  It seems both more readable and more cherry-pick-
- friendly to me to keep these in separate commits.
+> > @@ -469,7 +471,7 @@ test_debug () {
+> >  test_eval_ () {
+> >  	# This is a separate function because some tests use
+> >  	# "return" to end a test_expect_success block early.
+> > -	eval >&3 2>&4 "$*"
+> > +	eval <"$TEST_DIRECTORY/stdin-garbage" >&3 2>&4 "$*"
+> 
+> How about /dev/urandom on platforms that support it?  It wouldn't be
+> as pleasant to debug as "This is a magic stdin garbage stream", but it
+> would be more likely to (despite the name :)) predictably trip errors,
+> or at least hangs, in problematic tests.
 
- What I've found is I can use a line in the commit message like
-     "Incomplete change, requires next commit (update foo/ dir)."
- and, if there is any point, do a no-ff merge past the breakage.
+I'd rather have something deterministic. If you really want to be mean
+to accidental readers of stdin, then put binary junk into stdin-garbage
+(even the results of a single run of /dev/urandom, if you like). But I
+suspect arbitrary text is good enough to throw a monkey wrench into
+anything that will care about its input (and those that don't are beyond
+our ability to auto-detect anyway[1]). And it's way easier to debug than
+seeing random binary bits.
 
--- 
- Hallvard
+-Peff
+
+[1] Actually, you could abandon the idea of feeding garbage altogether,
+and instead open the descriptor outside the test, then check that its
+offset is still 0 after the test. You'd have to use a helper program to
+do the ftell(), but it should work as the descriptor position will be
+shared.
