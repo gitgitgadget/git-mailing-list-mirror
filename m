@@ -1,73 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [msysGit] [PATCH] gitk: fix the display of files when filtered
- by path
-Date: Thu, 15 Dec 2011 11:50:53 -0800
-Message-ID: <7v1us5obqa.fsf@alter.siamese.dyndns.org>
-References: <87hb14wg4l.fsf@fox.patthoyts.tk>
- <CAJDDKr6rVaX_=SZZeEAs950yuNDvi8sOkzrUK7LnCrK6MYfscg@mail.gmail.com>
- <alpine.DEB.1.00.1112151023280.2615@bonsai2>
- <CAOeW2eHD7Xutf+pHDyMOo=uZC9PSFZi+aMq1Rx80iTKPFApr8A@mail.gmail.com>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: Git difftool / mergetool on directory tree
+Date: Thu, 15 Dec 2011 13:53:01 -0600
+Message-ID: <4EEA501D.3050401@gmail.com>
+References: <4EE8618E.7020902@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Thu Dec 15 20:51:01 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Daniele Segato <daniele.bilug@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 15 20:53:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbHKW-0006IE-Ly
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 20:51:01 +0100
+	id 1RbHMd-0007Pk-E3
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 20:53:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759380Ab1LOTu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Dec 2011 14:50:56 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40048 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751910Ab1LOTuz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2011 14:50:55 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 539BA6DAB;
-	Thu, 15 Dec 2011 14:50:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Rh+Oeqg52wEhAa3+0l72maCEjcM=; b=fKTrdY
-	GTHYZTRqH3BWuIdXpcObOS111WMobtOzsH5FnQMCp6QitAD0Fjpivt8tM6EG7UTB
-	cx51CT8ER+XES0f+PWUUA0JwpCptiP1a597QcEsY5y3maioGRMDB/q8LOS73ea3O
-	myMIhTBmqKSXSwNp3yArtOSHb5Sz1m1ba5WwM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aSh5oXddFhTGf5qqif1SesqSOzJEspJY
-	7MlDe+4U6+gwfrQPgfUfFmdVLjl2q9yh0uel+ed3Pc6jOzhC37Xob+UivrdPe1bQ
-	3Ewnji463HmwmJQKdDd8zSpxMeSVkYrkItL6opWW22pegSPlFo8YG0Ku5lPdcVX1
-	gGloa+oGA9g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 498E36DAA;
-	Thu, 15 Dec 2011 14:50:55 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D52686DA8; Thu, 15 Dec 2011
- 14:50:54 -0500 (EST)
-In-Reply-To: <CAOeW2eHD7Xutf+pHDyMOo=uZC9PSFZi+aMq1Rx80iTKPFApr8A@mail.gmail.com> (Martin
- von Zweigbergk's message of "Thu, 15 Dec 2011 11:42:38 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 19A6916C-2756-11E1-8DDA-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756321Ab1LOTxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Dec 2011 14:53:06 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:56653 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751300Ab1LOTxE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2011 14:53:04 -0500
+Received: by yenm11 with SMTP id m11so1724702yen.19
+        for <git@vger.kernel.org>; Thu, 15 Dec 2011 11:53:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=Cu88yAoj6avwQSC3/o1WjYM/Jhd4EoF7Eu3NQTdyneU=;
+        b=QqIQPUXIUwWaBWpL60mHsM+2JQeKX5w2J46dBTH87z8UOSug48EzYPbLZ8NVedNoC4
+         yYXmGwE73h1aZO3H5OpyrsVFtDhmEWGG+Jk5LdXqy9Ur87kyou+o0ZYxIaISX6Ue8ak1
+         rfp/SY+sK2AuMEmxsSjpzD161QOg8eICS1nZQ=
+Received: by 10.236.175.72 with SMTP id y48mr7417047yhl.17.1323978784347;
+        Thu, 15 Dec 2011 11:53:04 -0800 (PST)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id 5sm12706757anz.14.2011.12.15.11.53.03
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 15 Dec 2011 11:53:03 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.24) Gecko/20111103 Thunderbird/3.1.16
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <4EE8618E.7020902@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187227>
 
-Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
+On 12/14/2011 2:42 AM, Daniele Segato wrote:
+> many diff / merge tool around have the ability to compare a directory
+> tree (meld is one, but there are many).
+>
+> Is there a way to start a difftool or a mergetool on a folder instead of
+> the single file?
+>
+> It would be an handsome feature to git.
+>
+> I googled a little before popping out this question and I only found
+> suggestion on how to open "many" file at once instead of opening them
+> serially but that's not the same thing not as powerful as directory
+> comparison.
+>
+(This works with kdiff3 as the mergetool/difftool on git 1.7.1 on linux):
 
-> Paul and Junio, the patches I sent in April are still not in git.git,
-> are they? Can we use another repo until the kernel.org one is up? More
-> than eight months to get a patch (or eight) merged is way too long,
-> IMO.
+git difftool <commit>:<dir>/ <commit-2>:<dir>/
 
-I tend to agree.
+e.g., git difftool mycommit:ourdir/ yourcommit:ourdir/
 
-I have this slight suspicion that Paul would appreciate if somebody who
-cares about gitk who is capable and willing steps forward and takes over
-the maintainership of gitk, as he is busy in his other projects.
+<commit> = pointer to a commit (ie: sha-1, branchname, tag, ref)
+<dir> = path of dir relative to worktree
+
+
+v/r,
+neal
