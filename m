@@ -1,63 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add '-P' as a synonym for '--no-pager' in the git
- command
-Date: Thu, 15 Dec 2011 13:41:37 -0800
-Message-ID: <7vhb11ms1a.fsf@alter.siamese.dyndns.org>
-References: <1323982541-18995-1-git-send-email-jratt0@gmail.com>
+Subject: Re: [PATCH 3/4] fetch-pack: match refs exactly
+Date: Thu, 15 Dec 2011 13:46:22 -0800
+Message-ID: <7vaa6tmrtd.fsf@alter.siamese.dyndns.org>
+References: <20111213003925.GA28403@sigill.intra.peff.net>
+ <20111213004808.GC3699@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Joe Ratterman <jratt0@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 15 22:41:44 2011
+Cc: git@vger.kernel.org, Kevin Sawicki <kevin@github.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 15 22:46:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbJ3g-0006yX-83
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 22:41:44 +0100
+	id 1RbJ8I-00011n-I2
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 22:46:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759505Ab1LOVlk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Dec 2011 16:41:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42087 "EHLO
+	id S1759527Ab1LOVq0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Dec 2011 16:46:26 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44951 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754146Ab1LOVlj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2011 16:41:39 -0500
+	id S1754146Ab1LOVqZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2011 16:46:25 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F79B65B7;
-	Thu, 15 Dec 2011 16:41:39 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C803674E;
+	Thu, 15 Dec 2011 16:46:25 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WSQDtw2uOynzl0/eca1lUK++OsU=; b=yXtgGp
-	LUUu5uginXULwcRt4/saKva4HSXCl1mo2Urowtt17b/PFtPDRn8g2NVJZ/6mWzKT
-	IbK8wsMVbnQPLfOEtaTi8giMHZKkRbDBQAg5BuPlBHYyVcuwI6zcY6F7r7Cj4Y1x
-	bJcVTT/qUZOIWNN2xy+v/EH4yjRB4ZXwyecOs=
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=scs5DqGZH+HrZqg1OfCW51hEHnU=; b=DKmp33B78XYgBPGVBeDv
+	S3iSizP5FguANYn/G/dN98ndAkApIktTiQz6+E/I/5pR+TXqYWOIY6D7tDdOBlQ7
+	xFkqsQozXp/eeSeLRaxBsxmUThS5ATmaVR3CsStsF1KM8dS/82eEja0ow8AOYkuS
+	ZqoXb56TCm3oxRItCHl4Rio=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BvSXNAXVgf1Xg+o/6lPUcCL20Cpkit8q
-	OmKELtHwAdjRL95gX6H12NvkcmDQ2Pc/2gI6d2APW8zhZq84iZL+LKRGW3u8kf/M
-	N5p4XTTHD14MYq7pVf9KlL9E5rZ1Gm1w8pVS4HM9pXr3h6MrWPKKjZRiDK+hC0Lw
-	K5gIEzlErck=
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=Q8tKi7Wdl17Hd/xKvmvSsyngHLP43JXdSWKdLw7FVZRccD
+	KCxJsxMy+orrEDqmQzk6j9dcYsL5vIb4JNrAyNCxDAj3ehms4cAKuMWxVkG32D7Y
+	zMducwFdmDRgwgVRQ1o303jbmFjDB8XlhaDXpxRq4C5I6SBPgu3wraduV7TzY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3609265B6;
-	Thu, 15 Dec 2011 16:41:39 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 241F6674D;
+	Thu, 15 Dec 2011 16:46:25 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9E1E765B4; Thu, 15 Dec 2011
- 16:41:38 -0500 (EST)
-In-Reply-To: <1323982541-18995-1-git-send-email-jratt0@gmail.com> (Joe
- Ratterman's message of "Thu, 15 Dec 2011 14:55:41 -0600")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 40D25674C; Thu, 15 Dec 2011
+ 16:46:24 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 91A60008-2765-11E1-977D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 3BE3F7AA-2766-11E1-916E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187242>
 
-Sorry, but why was I listed on the To: line?
+Jeff King <peff@peff.net> writes:
 
-I do not recall there was a list concensus that this is a must-have or
-even good-to-have, and I am not personally interested in this. I hesitate
-to accept a patch that lets a feature without clear advantage squat on a
-short-and-sweet single-letter option, generally speaking.
+> This is obviously the one that can break existing fetch-pack users. I
+> doubt they exist. If they do, there are a few alternatives:
+>
+>   1. Come up with some more sane rules for path_match (e.g., try full
+>      strings first, use full-string matching for things starting with
+>      "refs/", etc).
+>
+>   2. Leave the matching in-place for git-fetch-pack, but use exact
+>      matching for internal users that will always provide qualified refs
+>      (i.e., "git fetch").
+
+I think the latter is the sane thing to do _if_ this becomes an issue, and
+as you mention, it is in line with what "git fetch" wrapper already
+does.
+
+Given that fetch-pack was meant to be driven by "git fetch" wrapper that
+turns the command line and other refspecs into full refnames on the remote
+end before calling it, and also as you mentionied that it is clearly
+documented as "relative to $GIT_DIR", I do not think we should support the
+tail-match semantics at all in the first place.
