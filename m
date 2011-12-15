@@ -1,74 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] Improve git-bundle builtin
-Date: Thu, 15 Dec 2011 13:30:38 -0800
-Message-ID: <7vobv9msjl.fsf@alter.siamese.dyndns.org>
-References: <20111208175913.GK2394@elie.hsd1.il.comcast.net>
- <1323967528-10537-1-git-send-email-artagnon@gmail.com>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [msysGit] [PATCH] gitk: fix the display of files when filtered by path
+Date: Thu, 15 Dec 2011 21:33:01 +0000
+Message-ID: <877h1xzfjm.fsf@fox.patthoyts.tk>
+References: <87hb14wg4l.fsf@fox.patthoyts.tk>
+	<CAJDDKr6rVaX_=SZZeEAs950yuNDvi8sOkzrUK7LnCrK6MYfscg@mail.gmail.com>
+	<alpine.DEB.1.00.1112151023280.2615@bonsai2>
+	<CAOeW2eHD7Xutf+pHDyMOo=uZC9PSFZi+aMq1Rx80iTKPFApr8A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Joey Hess <joey@kitenet.net>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 15 22:30:47 2011
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Paul Mackerras <paulus@samba.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Aguilar <davvid@gmail.com>, Git <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 15 22:33:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbIt4-0000kI-Af
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 22:30:46 +0100
+	id 1RbIvO-000278-OU
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 22:33:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759494Ab1LOVam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Dec 2011 16:30:42 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37325 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751855Ab1LOVal (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2011 16:30:41 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC01A62A4;
-	Thu, 15 Dec 2011 16:30:40 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ahkXM+jWkmesy5Gy5hnApHc15EY=; b=Oqv0Hx
-	Vch3HnGunLfcgRz52uLVsx/KmXZf2VlBQ9pf+C519q22cv90BKzmPfGBuWlALH68
-	6mVTG/bNoAOQhK4Y04xAVANssewWIWshi7oDhhXDBN1XMwRRTSwgaxJndG/rV/3A
-	anPLuBe8qRBvblxCC3mA/i2/p1o3RHskXYyS8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pHiXtfgnExVf5yaYTWjX4Sw1TXej51yG
-	IjAZA3dSYYyRN2rVmGd4mS9RRqspOA1Peh4e4gtJfEfoup7qlp3ZB2BzHztTJpOn
-	7UWZccOlQd38nXawX1w4uEwXjUKdqIgWyV8sPa9ffOBz7v2GQv9NIpp3MeA5o2QW
-	1YCWmZ+61d0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D295B62A3;
-	Thu, 15 Dec 2011 16:30:40 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 69E3062A2; Thu, 15 Dec 2011
- 16:30:40 -0500 (EST)
-In-Reply-To: <1323967528-10537-1-git-send-email-artagnon@gmail.com> (Ramkumar
- Ramachandra's message of "Thu, 15 Dec 2011 22:15:26 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0952BE04-2764-11E1-AF7F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759510Ab1LOVdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Dec 2011 16:33:06 -0500
+Received: from mtaout01-winn.ispmail.ntl.com ([81.103.221.47]:13124 "EHLO
+	mtaout01-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751855Ab1LOVdF (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Dec 2011 16:33:05 -0500
+Received: from know-smtpout-4.server.virginmedia.net ([62.254.123.4])
+          by mtaout01-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20111215213302.DYQD27013.mtaout01-winn.ispmail.ntl.com@know-smtpout-4.server.virginmedia.net>;
+          Thu, 15 Dec 2011 21:33:02 +0000
+Received: from [94.171.229.22] (helo=fox.patthoyts.tk)
+	by know-smtpout-4.server.virginmedia.net with esmtpa (Exim 4.63)
+	(envelope-from <patthoyts@users.sourceforge.net>)
+	id 1RbIvG-0007B5-GH; Thu, 15 Dec 2011 21:33:02 +0000
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id B029F20A82; Thu, 15 Dec 2011 21:33:01 +0000 (GMT)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+X-Home-Page: http://www.patthoyts.tk/
+X-Web: http://www.patthoyts.tk/
+In-Reply-To: <CAOeW2eHD7Xutf+pHDyMOo=uZC9PSFZi+aMq1Rx80iTKPFApr8A@mail.gmail.com>
+	(Martin von Zweigbergk's message of "Thu, 15 Dec 2011 11:42:38 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+X-Cloudmark-Analysis: v=1.1 cv=JvdXmxIgLJv2/GthKqHpGJEEHukvLcvELVXUanXFreg= c=1 sm=0 a=O9HYxzjLEG8A:10 a=KpAh3GZeS6gA:10 a=kj9zAlcOel0A:10 a=pGLkceISAAAA:8 a=FP58Ms26AAAA:8 a=TSbVqHtbAAAA:8 a=VwQbUJbxAAAA:8 a=NEAV23lmAAAA:8 a=Rf460ibiAAAA:8 a=qt9NyTCInrm-CXDTAREA:9 a=CjuIK1q_8ugA:10 a=U62fhAwekXMA:10 a=MSl-tDqOz04A:10 a=_RhRFcbxBZMA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187239>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
 
-> A couple of thoughts:
+[resending as my earlier post got bounced from vger]
+
+>Hi,
 >
-> 1. There's a SP between the OBJID and the ref name in list-heads as
-> opposed to the TAB used by other git commands such as ls-remote,
-> diff-tree.  Will fixing it break someone's parser somewhere?
+>On Thu, Dec 15, 2011 at 1:24 AM, Johannes Schindelin
+><Johannes.Schindelin@gmx.de> wrote:
+>> Hi,
+>>
+>> On Wed, 14 Dec 2011, David Aguilar wrote:
+>>
+>>> On Tue, Dec 13, 2011 at 8:50 AM, Pat Thoyts
+>>> <patthoyts@users.sourceforge.net> wrote:
+>>> > Launching 'gitk -- .' or 'gitk -- ..\t' restricts the display to files
+>>> > under the given directory but the file list is left empty. This is because
+>>> > the path_filter function fails to match the filenames which are relative
+>>> > to the working tree to the filter which is filessytem relative.
+>>> > This solves the problem by making both names fully qualified filesystem
+>>> > paths before performing the comparison.
+>
+>How is this related to my patches from April? See
+>http://thread.gmane.org/gmane.comp.version-control.git/170853. It's
+>clearly not the same problem, but will the patches conflict? Will some
+>of mine be unnecessary?
+>
+>> Thanks for reminding me that I did not yet apply and push. Did so now.
+>
+>What do you mean by this? Push to where?
+>git://git.kernel.org/pub/scm/gitk/gitk.git is still down.
+>
 
-If somebody will get broken when you change something, that change is not
-"fixing" but just "changing". Why do you even want to "fix" it?
+This is for msysGit.
 
-> 2. Is it worth fixing the "--stdin" tests?  What is the usecase?
+>Paul and Junio, the patches I sent in April are still not in git.git,
+>are they? Can we use another repo until the kernel.org one is up? More
+>than eight months to get a patch (or eight) merged is way too long,
+>IMO.
 
-Having to pack too many refs that would not fit on a command line length
-limit, which is not an unusual requirement.
+I'm not sure how this might relate to your patches. I've got a version
+merged on top of the last version of the gitk report that I have which
+includes those and it seems fine. As stated I did this work against
+git-core as the gitk repository continues to be unavailable. However as
+I have a pretty current snapshot  I have pushed this to github to provide
+some visibility of things I know are not present within git-core. See
+http://github.com/patthoyts/gitk.git
+
+-- 
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
