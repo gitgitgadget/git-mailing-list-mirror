@@ -1,84 +1,85 @@
-From: Hallvard B Furuseth <h.b.furuseth@usit.uio.no>
-Subject: Re: How to commit incomplete =?UTF-8?Q?changes=3F?=
-Date: Thu, 15 Dec 2011 08:11:38 +0100
-Message-ID: <7e1ccfac8c47e8877c0438086bd1d91b@ulrik.uio.no>
-References: <4cfc9cf0515b1bc751f6aa0de4f55e2a@ulrik.uio.no>
- <20111215104444.783303cf@ashu.dyn1.rarus.ru>
+From: Jeff King <peff@peff.net>
+Subject: Re: process committed files in post-receive hook
+Date: Thu, 15 Dec 2011 02:23:01 -0500
+Message-ID: <20111215072301.GC1327@sigill.intra.peff.net>
+References: <loom.20111210T111457-837@post.gmane.org>
+ <4EE94783.1010805@gmail.com>
+ <4EE95523.9030702@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Alexey Shumkin <Alex.Crezoff@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 15 08:11:46 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Neal Kreitzinger <nkreitzinger@gmail.com>, git@vger.kernel.org
+To: Hao Wang <billhao@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 15 08:23:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rb5Tk-0001Zv-Jg
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 08:11:44 +0100
+	id 1Rb5ep-0005KQ-6z
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 08:23:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752672Ab1LOHLm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Dec 2011 02:11:42 -0500
-Received: from mail-out2.uio.no ([129.240.10.58]:52202 "EHLO mail-out2.uio.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755206Ab1LOHLk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2011 02:11:40 -0500
-Received: from mail-mx2.uio.no ([129.240.10.30])
-	by mail-out2.uio.no with esmtp (Exim 4.75)
-	(envelope-from <h.b.furuseth@usit.uio.no>)
-	id 1Rb5Tf-0002cp-7c; Thu, 15 Dec 2011 08:11:39 +0100
-Received: from w3prod-wm01.uio.no ([129.240.4.214] helo=webmail.uio.no)
-	by mail-mx2.uio.no with esmtpsa (TLSv1:AES256-SHA:256)
-	user hbf (Exim 4.76)
-	(envelope-from <h.b.furuseth@usit.uio.no>)
-	id 1Rb5Te-0007Ac-Qp; Thu, 15 Dec 2011 08:11:39 +0100
-Received: from c3C3D47C1.dhcp.bluecom.no ([193.71.61.60])
- by webmail.uio.no
- with HTTP (HTTP/1.1 POST); Thu, 15 Dec 2011 08:11:38 +0100
-In-Reply-To: <20111215104444.783303cf@ashu.dyn1.rarus.ru>
-X-Sender: h.b.furuseth@usit.uio.no
-User-Agent: Roundcube Webmail/0.4.2
-X-UiO-Ratelimit-Test: rcpts/h 2 msgs/h 1 sum rcpts/h 2 sum msgs/h 1 total rcpts 2040 max rcpts/h 17 ratelimit 0
-X-UiO-Spam-info: not spam, SpamAssassin (score=-7.0, required=5.0, autolearn=disabled, RP_MATCHES_RCVD=-2.023,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
-X-UiO-Scanned: 5FCC8D1034FB1410B664C5C5920CC9C3111A3CB1
-X-UiO-SPAM-Test: remote_host: 129.240.4.214 spam_score: -69 maxlevel 80 minaction 2 bait 0 mail/h: 17 total 1944206 max/h 663 blacklist 0 greylist 0 ratelimit 0
+	id S1757295Ab1LOHXF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Dec 2011 02:23:05 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50359
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755702Ab1LOHXE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2011 02:23:04 -0500
+Received: (qmail 6149 invoked by uid 107); 15 Dec 2011 07:29:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 Dec 2011 02:29:45 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Dec 2011 02:23:01 -0500
+Content-Disposition: inline
+In-Reply-To: <4EE95523.9030702@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187194>
 
- On Thu, 15 Dec 2011 10:44:44 +0400, Alexey Shumkin 
- <Alex.Crezoff@gmail.com> wrote:
->> Do people have any feelings or conventions for how and when to
->> publish a series of commits where the first one(s) break something
->> and the next ones clear it up?
->
-> I'm curiuos, why to you want to commit changes that break something
-> separately from fixup?
+On Wed, Dec 14, 2011 at 06:02:11PM -0800, Hao Wang wrote:
 
- I answered that, but maybe too briefly:
+> Thank you all for providing the options. Just so you know I finally
+> went with Alexey's suggestion. I used 'git show' to get both a list
+> of files in a directory and the content of each file. It works great
+> on a bare repository so there is no need to check out a copy on the
+> server.
 
->>  I'm about to commit some small edits which go together with bigger
->>  generated changes.  It seems both more readable and more 
->> cherry-pick-
->>  friendly to me to keep these in separate commits.
+If you are scripting, we usually encourage the use of "plumbing"
+commands whose output is guaranteed not to change ("show" is a
+"porcelain" command intended to be used by end-users, and it's possible
+that its behavior might change from version to version).
 
- To expand on that: To review the change, review the hand-edited 
- commits,
- which is easier when these do not drown in generated changes.  Review
- the *commands* which generated the rest - I'd put those in the commit
- message - and glance at the actual changes.  Cherry-pick: Possbly you
- need to run the commands instead of cherry-picking the generated
- changes.  That's easier with a commit with only generated changes.
+The plumbing command to get a directory listing for a tree is "git
+ls-tree" (try the "--name-only" option for terse output, and use "-z" if
+you want to be robust in the face of filenames with funny characters).
 
- I know it also can cause problems.  Would you make a single big commit
- anyway, and describe carefully in the commit message which parts are
- hand-edits?  (We don't auto-test commits yet, but I'll sure this issue
- will crop up again later when we do.)
+> # get a list of rule files using git show
+> def getRuleFileList(rev):
+>     # run git show
+>     p = subprocess.Popen(['git', 'show', rev], stdout=subprocess.PIPE)
+>     p.wait()
+>     if p.returncode != 0: return None # error
+> 
+>     # parse output
+>     i = 0
+>     filelist = []
+>     for line in p.stdout.readlines():
+>         filelist.append(line)
+>     p.stdout.close()
+>     return filelist
 
--- 
- Hallvard
+Doesn't this put "tree HEAD:foo", as printed by "git show", at the top
+of your filelist? Another reason to use ls-tree.
+
+> # read the content of a file
+> def readfile(rev):
+>     # run git show
+>     p = subprocess.Popen(['git', 'show', rev], stdout=subprocess.PIPE)
+>     p.wait()
+>     if p.returncode != 0: return None # error
+>     return p.stdout.read()
+
+The plumbing for this is "git cat-file blob ...".
+
+-Peff
