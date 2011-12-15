@@ -1,125 +1,64 @@
-From: Hao Wang <billhao@gmail.com>
-Subject: Re: process committed files in post-receive hook
-Date: Wed, 14 Dec 2011 18:02:11 -0800
-Message-ID: <4EE95523.9030702@gmail.com>
-References: <loom.20111210T111457-837@post.gmane.org> <4EE94783.1010805@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH 2/4] test-lib: allow testing another git build tree
+Date: Wed, 14 Dec 2011 19:07:35 -0800
+Message-ID: <7vsjkmpm6g.fsf@alter.siamese.dyndns.org>
+References: <cover.1323876121.git.trast@student.ethz.ch>
+ <94f64a03398829bb9a11c18577efb39d9b153eca.1323876121.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 15 03:02:21 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, Michael Haggerty <mhagger@alum.mit.edu>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Dec 15 04:07:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rb0eK-0002Aa-J6
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 03:02:20 +0100
+	id 1Rb1fc-0005pV-MB
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 04:07:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758541Ab1LOCCQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Dec 2011 21:02:16 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:53857 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755804Ab1LOCCP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Dec 2011 21:02:15 -0500
-Received: by iaeh11 with SMTP id h11so2027574iae.19
-        for <git@vger.kernel.org>; Wed, 14 Dec 2011 18:02:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=B1Nsp9xCpnFsybGve2i50Yz8I0cN8KbmLbPz1WtWlO4=;
-        b=ItHJMPPox2WpT3rOkjp/bY8HIJbBWvA61slkstPljp1ldF1ibIsor1A/Shir+9pfj0
-         ykK7BNVqcvZ6lD0/k9n0CHICM2h8Y2wB2MgX21ZptLaT04Nvy3jHjMEnb+Nx+lS/JXfl
-         cdaHfFHz5sk9ga+39ZmIquvNTutmvUHKwpumI=
-Received: by 10.50.87.227 with SMTP id bb3mr1075665igb.29.1323914534627;
-        Wed, 14 Dec 2011 18:02:14 -0800 (PST)
-Received: from toben-mintzs-mac-pro.local (truffle.usc.edu. [128.125.14.197])
-        by mx.google.com with ESMTPS id z22sm15131658ibg.5.2011.12.14.18.02.12
-        (version=SSLv3 cipher=OTHER);
-        Wed, 14 Dec 2011 18:02:13 -0800 (PST)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.5; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <4EE94783.1010805@gmail.com>
+	id S1758521Ab1LODHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Dec 2011 22:07:39 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57379 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755357Ab1LODHi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2011 22:07:38 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADE656E47;
+	Wed, 14 Dec 2011 22:07:37 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fRD7C6tktzE1KF00u0Iz2qEcYx8=; b=hcaAw3
+	x0A9fv1EmQ3QozO34qW8Z4MPgPMrtGkRDD1yoZ7pm71v1gfSkMWuaWIwbns/2E/+
+	fEMVUQi5QEaabikybgG2opCF7V9ZGHsIOx0vLUKQkaTOdEVkbA7Ez5gpSih9Xih9
+	Dw2b/n9jmjSJDDb7SlCKLJM4my1lGSkK14zaI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VgpjuGK71XcNGC0DPto7oUIA2UQqPRho
+	0EqYMEG2hDW6TMEAW36s2ngm9tRpFgBNbP5KfIL4n1T/BiTGJSIobTjlOqorT7ZP
+	ERy49hpAChvK8C6xJojK+lf82Xa75Ze+PoQfbmyWFbaREv54MtR9a2qseovVkQnH
+	VW1J55K7Mv4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A540E6E46;
+	Wed, 14 Dec 2011 22:07:37 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 347D86E45; Wed, 14 Dec 2011
+ 22:07:37 -0500 (EST)
+In-Reply-To: <94f64a03398829bb9a11c18577efb39d9b153eca.1323876121.git.trast@student.ethz.ch> (Thomas Rast's message of "Wed, 14 Dec 2011 16:23:30 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F10CF282-26C9-11E1-8A81-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187184>
 
-Thank you all for providing the options. Just so you know I finally went 
-with Alexey's suggestion. I used 'git show' to get both a list of files 
-in a directory and the content of each file. It works great on a bare 
-repository so there is no need to check out a copy on the server.
+Thomas Rast <trast@student.ethz.ch> writes:
 
-Below is the python code in my post-receive hook for this task, where 
-rev is something like 'HEAD:directory_name' for the first function and 
-'HEAD:directory/filename' for the second function.
+> The perf-lib work wants this feature, so we may as well do it for
+> test-lib in general.
 
-# get a list of rule files using git show
-def getRuleFileList(rev):
-     # run git show
-     p = subprocess.Popen(['git', 'show', rev], stdout=subprocess.PIPE)
-     p.wait()
-     if p.returncode != 0: return None # error
-
-     # parse output
-     i = 0
-     filelist = []
-     for line in p.stdout.readlines():
-         filelist.append(line)
-     p.stdout.close()
-     return filelist
-
-# read the content of a file
-def readfile(rev):
-     # run git show
-     p = subprocess.Popen(['git', 'show', rev], stdout=subprocess.PIPE)
-     p.wait()
-     if p.returncode != 0: return None # error
-     return p.stdout.read()
-
-Hao
-
-On 12/14/11 5:04 PM, Neal Kreitzinger wrote:
-> On 12/10/2011 4:29 AM, Hao wrote:
->> Hi guys,
->>
->> I am writing a post-receive hook in Python that examines the content
->> of some files (the HEAD rev). Because the repo is a bare one on the
->> server. My current approach is to check out a working copy on the
->> server and run 'git pull' in post- receive to get the most up-to-date
->> version, and then process files in the working copy.
->>
->> I have two questions. First, is there a way that I can access file
->> content in a bare repo without checking out a working copy? If this
->> is not possible, my approach would be reasonable. However, when 'git
->> pull' was called in the python script post-receive when a commit
->> occurs, it gives an error.
->>
->> remote: fatal: Not a git repository: '.'
->>
->> The call in python is
->>
->> subprocess.Popen(["git", "pull"],
->> cwd="/Users/git/ts.git.workingcopy")
->>
->> I read from a post (http://stackoverflow.com/questions/4043609/) that
->> GIT_DIR is causing this error. Is it safe to unset GIT_DIR in
->> post-receive?
->>
-> The specific processing you intend to perform on the files would
-> determine which of the access techniques is appropriate for you.
-> Generally speaking, I think a checkout in a non-bare repo makes sense.
-> You could limit it to a shallow clone (see git-clone manpage) to save
-> space.
->
-> Another way to get the files is git-archive (creates tar file), that you
-> could extract to a dir for processing.
->
-> In both cases, you need to consider the default permissions in play with
-> git-checkout and git-archive if permissions are important in your
-> processing.
->
-> v/r,
-> neal
+How is this different from what GIT_TEST_INSTALLED already gives us
+(other than "needs more diskspace to keep another source tree fully
+built", that is)?
