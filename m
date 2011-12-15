@@ -1,99 +1,63 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: git help prune accuracy?
-Date: Thu, 15 Dec 2011 16:01:52 -0700
-Organization: CAF
-Message-ID: <201112151601.52968.mfick@codeaurora.org>
-References: <201112151432.09252.mfick@codeaurora.org> <201112151453.52157.mfick@codeaurora.org> <7v1us5mqc4.fsf@alter.siamese.dyndns.org>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [msysGit] [PATCH] gitk: fix the display of files when filtered
+ by path
+Date: Fri, 16 Dec 2011 10:01:24 +1100
+Message-ID: <20111215230124.GH20629@bloggs.ozlabs.ibm.com>
+References: <87hb14wg4l.fsf@fox.patthoyts.tk>
+ <CAJDDKr6rVaX_=SZZeEAs950yuNDvi8sOkzrUK7LnCrK6MYfscg@mail.gmail.com>
+ <alpine.DEB.1.00.1112151023280.2615@bonsai2>
+ <CAOeW2eHD7Xutf+pHDyMOo=uZC9PSFZi+aMq1Rx80iTKPFApr8A@mail.gmail.com>
+ <7v1us5obqa.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 16 00:02:04 2011
+X-From: git-owner@vger.kernel.org Fri Dec 16 00:02:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbKJP-0003cK-2l
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 00:02:03 +0100
+	id 1RbKJl-0003oQ-6a
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 00:02:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759727Ab1LOXBz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Dec 2011 18:01:55 -0500
-Received: from wolverine02.qualcomm.com ([199.106.114.251]:57241 "EHLO
-	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759722Ab1LOXBy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2011 18:01:54 -0500
-X-IronPort-AV: E=McAfee;i="5400,1158,6561"; a="144912620"
-Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
-  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 15 Dec 2011 15:01:53 -0800
-Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 8648310004C4;
-	Thu, 15 Dec 2011 15:01:53 -0800 (PST)
-User-Agent: KMail/1.13.5 (Linux/2.6.32-28-generic; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <7v1us5mqc4.fsf@alter.siamese.dyndns.org>
+	id S1759733Ab1LOXCS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Dec 2011 18:02:18 -0500
+Received: from ozlabs.org ([203.10.76.45]:57101 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759708Ab1LOXCQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2011 18:02:16 -0500
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id E30431007D5; Fri, 16 Dec 2011 10:02:15 +1100 (EST)
+Content-Disposition: inline
+In-Reply-To: <7v1us5obqa.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187254>
 
-On Thursday, December 15, 2011 03:18:19 pm Junio C Hamano 
-wrote:
-> Martin Fick <mfick@codeaurora.org> writes:
-> >>   objects from the object database. In addition, it
-> >> 
-> >> prunes the unpacked objects that are also found in
-> >> packs by running git prune-packed.
-> >> 
-> >> The last sentence seems like it should maybe have the
-> >> following fix:
-> >> 
-> >> s/it prunes the unpacked/it prunes the unreferenced/
-> > 
-> > Ack, I meant:
-> > 
-> > s/it prunes the unpacked/it prunes the unreachable/
+On Thu, Dec 15, 2011 at 11:50:53AM -0800, Junio C Hamano wrote:
+> Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
 > 
-> "In addition" part is about objects that exist in loose
-> format that are also found in packs and has nothing to
-> do with reachability.
+> > Paul and Junio, the patches I sent in April are still not in git.git,
+> > are they? Can we use another repo until the kernel.org one is up? More
+> > than eight months to get a patch (or eight) merged is way too long,
+> > IMO.
 > 
-> Running "git pack-objects" to collect loose objects into
-> a new pack will not remove these loose objects that are
-> copied into that new pack. Because we try to access
-> objects from an already open packfile before trying a
-> loose object file, removing these now-redundant loose
-> ones after they are packed makes sense. And that is what
-> "git prune-packed" does.
+> I tend to agree.
+> 
+> I have this slight suspicion that Paul would appreciate if somebody who
+> cares about gitk who is capable and willing steps forward and takes over
+> the maintainership of gitk, as he is busy in his other projects.
 
-Thanks Junio, that makes a lot of sense.  I don't know why I 
-was not getting that from the description even though that 
-was exactly what I was looking for.  Maybe it was because of 
-the intro/summary line?  Now that I think I understand what 
-it is doing, it seems like this command is more about 
-"pruning loose objects" (whether unreachable or already 
-packed) than it is about "pruning unreachable objects" 
-(which could be loose or packed)?  The summary line reads:
+Indeed.  For now I have put up a repository on ozlabs.org:
 
-  git-prune - Prune all unreachable objects from the object 
-database
+git://ozlabs.org/~paulus/gitk.git
 
-Maybe I am not familiar enough with git terminology, but 
-does "object database" imply loose objects only?  Because 
-the word "all" in that summary makes it sound like it will 
-prune all unreachable objects (loose and packed).
+but if someone wants to take on the gitk maintainership, please let me
+know.
 
-I don't quite have an alternative suggestion for a better 
-summary, the best I could do (but don't like) is:
-
-  git-prune - Prune loose objects (unreachable or packed)
-
-
--Martin
-
-
--- 
-Employee of Qualcomm Innovation Center, Inc. which is a 
-member of Code Aurora Forum
+Paul.
