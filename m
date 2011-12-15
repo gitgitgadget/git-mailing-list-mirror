@@ -1,80 +1,125 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] Do not create commits whose message contains NUL
-Date: Wed, 14 Dec 2011 20:18:55 -0500
-Message-ID: <20111215011855.GA24568@sigill.intra.peff.net>
-References: <1323777368-19697-1-git-send-email-pclouds@gmail.com>
- <1323871699-8839-1-git-send-email-pclouds@gmail.com>
- <1323871699-8839-4-git-send-email-pclouds@gmail.com>
- <CADCnXoaqEXJV+Mb1=nQge_bjA3H6R7=BPt213CKLX55zyTHEtg@mail.gmail.com>
+From: Hao Wang <billhao@gmail.com>
+Subject: Re: process committed files in post-receive hook
+Date: Wed, 14 Dec 2011 18:02:11 -0800
+Message-ID: <4EE95523.9030702@gmail.com>
+References: <loom.20111210T111457-837@post.gmane.org> <4EE94783.1010805@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Dec 15 02:19:11 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 15 03:02:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RazyY-0005G5-WF
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 02:19:11 +0100
+	id 1Rb0eK-0002Aa-J6
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 03:02:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758523Ab1LOBTA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Dec 2011 20:19:00 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50292
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758506Ab1LOBS6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Dec 2011 20:18:58 -0500
-Received: (qmail 4787 invoked by uid 107); 15 Dec 2011 01:25:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Dec 2011 20:25:39 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Dec 2011 20:18:55 -0500
-Content-Disposition: inline
-In-Reply-To: <CADCnXoaqEXJV+Mb1=nQge_bjA3H6R7=BPt213CKLX55zyTHEtg@mail.gmail.com>
+	id S1758541Ab1LOCCQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Dec 2011 21:02:16 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:53857 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755804Ab1LOCCP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Dec 2011 21:02:15 -0500
+Received: by iaeh11 with SMTP id h11so2027574iae.19
+        for <git@vger.kernel.org>; Wed, 14 Dec 2011 18:02:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=B1Nsp9xCpnFsybGve2i50Yz8I0cN8KbmLbPz1WtWlO4=;
+        b=ItHJMPPox2WpT3rOkjp/bY8HIJbBWvA61slkstPljp1ldF1ibIsor1A/Shir+9pfj0
+         ykK7BNVqcvZ6lD0/k9n0CHICM2h8Y2wB2MgX21ZptLaT04Nvy3jHjMEnb+Nx+lS/JXfl
+         cdaHfFHz5sk9ga+39ZmIquvNTutmvUHKwpumI=
+Received: by 10.50.87.227 with SMTP id bb3mr1075665igb.29.1323914534627;
+        Wed, 14 Dec 2011 18:02:14 -0800 (PST)
+Received: from toben-mintzs-mac-pro.local (truffle.usc.edu. [128.125.14.197])
+        by mx.google.com with ESMTPS id z22sm15131658ibg.5.2011.12.14.18.02.12
+        (version=SSLv3 cipher=OTHER);
+        Wed, 14 Dec 2011 18:02:13 -0800 (PST)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.5; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <4EE94783.1010805@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187183>
 
-On Thu, Dec 15, 2011 at 10:04:06AM +0900, Miles Bader wrote:
+Thank you all for providing the options. Just so you know I finally went 
+with Alexey's suggestion. I used 'git show' to get both a list of files 
+in a directory and the content of each file. It works great on a bare 
+repository so there is no need to check out a copy on the server.
 
-> > + =C2=A0 =C2=A0 =C2=A0 commitWideEncoding::
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Advice shown whe=
-n linkgit::git-commit[1] refuses to
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 proceed because =
-there are NULs in commit message.
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Default: true.
->=20
-> Although "wide encoding" is a reasonable guess at cause of embedded
-> zero characters (and so a useful term for diagnostic messages, as it
-> can help users identify the problem in their environment which is
-> causing such zero bytes), it's really only a guess in most cases...
->=20
-> Shouldn't the variable be named based on what it actually does, which
-> is allow zero-bytes in commit messages...?
+Below is the python code in my post-receive hook for this task, where 
+rev is something like 'HEAD:directory_name' for the first function and 
+'HEAD:directory/filename' for the second function.
 
-I agree, but...
+# get a list of rule files using git show
+def getRuleFileList(rev):
+     # run git show
+     p = subprocess.Popen(['git', 'show', rev], stdout=subprocess.PIPE)
+     p.wait()
+     if p.returncode != 0: return None # error
 
-Really this variable is overkill. The advice.* subsystem is for
-silencing hints and warnings from git that you see repeatedly because
-you are smarter than git, and want to ignore its advice.
+     # parse output
+     i = 0
+     filelist = []
+     for line in p.stdout.readlines():
+         filelist.append(line)
+     p.stdout.close()
+     return filelist
 
-But in this case, I don't see a user saying "stupid git, of _course_ I
-want to commit NULs. Stop nagging me". Especially because it is not a
-warning, but a fatal error. :)
+# read the content of a file
+def readfile(rev):
+     # run git show
+     p = subprocess.Popen(['git', 'show', rev], stdout=subprocess.PIPE)
+     p.wait()
+     if p.returncode != 0: return None # error
+     return p.stdout.read()
 
-So yes, it's verbose, but no, it's not something somebody is going to b=
-e
-so bothered by that they will find the config option to turn it off.
-Instead, they will stop doing the bad thing and never see it again.  At
-best this config option is useless, and at worst it clutters the
-advice.* namespace, making it harder for people to find the advice
-option they _do_ want to turn off).
+Hao
 
-Perhaps it should just be dropped.
-
--Peff
+On 12/14/11 5:04 PM, Neal Kreitzinger wrote:
+> On 12/10/2011 4:29 AM, Hao wrote:
+>> Hi guys,
+>>
+>> I am writing a post-receive hook in Python that examines the content
+>> of some files (the HEAD rev). Because the repo is a bare one on the
+>> server. My current approach is to check out a working copy on the
+>> server and run 'git pull' in post- receive to get the most up-to-date
+>> version, and then process files in the working copy.
+>>
+>> I have two questions. First, is there a way that I can access file
+>> content in a bare repo without checking out a working copy? If this
+>> is not possible, my approach would be reasonable. However, when 'git
+>> pull' was called in the python script post-receive when a commit
+>> occurs, it gives an error.
+>>
+>> remote: fatal: Not a git repository: '.'
+>>
+>> The call in python is
+>>
+>> subprocess.Popen(["git", "pull"],
+>> cwd="/Users/git/ts.git.workingcopy")
+>>
+>> I read from a post (http://stackoverflow.com/questions/4043609/) that
+>> GIT_DIR is causing this error. Is it safe to unset GIT_DIR in
+>> post-receive?
+>>
+> The specific processing you intend to perform on the files would
+> determine which of the access techniques is appropriate for you.
+> Generally speaking, I think a checkout in a non-bare repo makes sense.
+> You could limit it to a shallow clone (see git-clone manpage) to save
+> space.
+>
+> Another way to get the files is git-archive (creates tar file), that you
+> could extract to a dir for processing.
+>
+> In both cases, you need to consider the default permissions in play with
+> git-checkout and git-archive if permissions are important in your
+> processing.
+>
+> v/r,
+> neal
