@@ -1,195 +1,93 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 2/2] bundle: rewrite builtin to use parse-options
-Date: Thu, 15 Dec 2011 22:15:28 +0530
-Message-ID: <1323967528-10537-3-git-send-email-artagnon@gmail.com>
-References: <20111208175913.GK2394@elie.hsd1.il.comcast.net>
- <1323967528-10537-1-git-send-email-artagnon@gmail.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Joey Hess <joey@kitenet.net>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 15 17:45:57 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [bug?] checkout -m doesn't work without a base version
+Date: Thu, 15 Dec 2011 09:36:03 -0800
+Message-ID: <7v4nx1pwjg.fsf@alter.siamese.dyndns.org>
+References: <4EDBF4D5.6030908@pcharlan.com>
+ <7vbormn8vk.fsf@alter.siamese.dyndns.org> <4EE8782A.9040507@elegosoft.com>
+ <7vhb13qbs6.fsf@alter.siamese.dyndns.org> <m2vcpiw1z1.fsf@igel.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Schubert <mschub@elegosoft.com>,
+	Pete Harlan <pgit@pcharlan.com>, git@vger.kernel.org
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Thu Dec 15 18:36:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbERQ-0001HY-75
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 17:45:56 +0100
+	id 1RbFE5-0004H6-3k
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 18:36:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932594Ab1LOQpt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Dec 2011 11:45:49 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:42502 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932565Ab1LOQps (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2011 11:45:48 -0500
-Received: by mail-iy0-f174.google.com with SMTP id h11so3006690iae.19
-        for <git@vger.kernel.org>; Thu, 15 Dec 2011 08:45:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=T68pgjQ7Eayh3CxID/8dUDBYWedN9+E99T6FnBYufDw=;
-        b=Qql5KY98snaWfD3ec+Q2FWLatK2Kcp5pyDc9oYAMDaGOSB0Oow2xectA3muUcRR3Js
-         lKHEfcHprizfOlpmpa9ACN2Bb+hJBWCd9pr3aIl07Cqtagq8h4Eiajda7ExvwDgFP9I3
-         GmUEl4LVSPPH21C7v5LMlJJQAVgPlCKKry42g=
-Received: by 10.42.29.137 with SMTP id r9mr2879097icc.20.1323967548483;
-        Thu, 15 Dec 2011 08:45:48 -0800 (PST)
-Received: from localhost.localdomain ([122.174.88.206])
-        by mx.google.com with ESMTPS id lu10sm11031370igc.0.2011.12.15.08.45.43
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 15 Dec 2011 08:45:47 -0800 (PST)
-X-Mailer: git-send-email 1.7.4.1
-In-Reply-To: <1323967528-10537-1-git-send-email-artagnon@gmail.com>
+	id S1759272Ab1LORgH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Dec 2011 12:36:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59835 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759268Ab1LORgG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2011 12:36:06 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9ECB4710D;
+	Thu, 15 Dec 2011 12:36:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1u7Yz9lMXkAX9Sd0l2h1Nw1jwas=; b=O2QDMy
+	lHWua0RudZLHMLYzJxH7Lm8/xNgpTnoj+9+qd89IBUY01ms3MdjVkMUTpPmVIZYd
+	/7X8WPczCAYS8HGeQ8UZ8yxhTvp9ovVMewz3sjJR8zdX4YqJsBZ6M193QX5Jfo0T
+	Dj7qjkU2VwMAnj2GJv7PNHrni92tpW3NJrEpw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Kg/L3gve1fHXC2bZwgXB+UKHCi0by0gb
+	jPc1UpSBsSTiihW9v+2KCUOj7A4ID0heVuXjATNzNLn9QwVn103uq6jbbscOZLbr
+	G7TciLkn8eNUseV3F8k4mtHXKTSUw9eX/eJ1QgnP+yJT7NldGXPIwxKjSotYD26L
+	GOk+Ch+tMp0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 93ED5710B;
+	Thu, 15 Dec 2011 12:36:05 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0288D710A; Thu, 15 Dec 2011
+ 12:36:04 -0500 (EST)
+In-Reply-To: <m2vcpiw1z1.fsf@igel.home> (Andreas Schwab's message of "Thu, 15
+ Dec 2011 11:42:10 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 43B780A0-2743-11E1-A01F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187213>
 
-The git-bundle builtin currently parses command-line options by hand;
-this is fragile, and reports cryptic errors on failure.  Use the
-parse-options library to do the parsing instead.
+Andreas Schwab <schwab@linux-m68k.org> writes:
 
-Encouraged-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- builtin/bundle.c  |   91 +++++++++++++++++++++++++++++++----------------------
- t/t5704-bundle.sh |    2 +-
- 2 files changed, 54 insertions(+), 39 deletions(-)
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> The variable "mode" is assigned to when we see an stage #2 entry in the
+>> loop, and we should have updated threeway[1] immediately before doing so.
+>> If threeway[1] is not updated, we would have already returned before using
+>> the variable in make_cache_entry().
+>
+> How can you be sure that ce_stage(ce) ever returns 2?
 
-diff --git a/builtin/bundle.c b/builtin/bundle.c
-index 92a8a60..13ed770 100644
---- a/builtin/bundle.c
-+++ b/builtin/bundle.c
-@@ -1,5 +1,6 @@
- #include "builtin.h"
- #include "cache.h"
-+#include "parse-options.h"
- #include "bundle.h"
+You cannot and and there are cases where you exit the loop without finding
+a stage #2 entry. But in that case threeway[1] stays 0{40} and control is
+returned to the caller without ever getting to the place where the
+variable is used.
+
+You could do the usual "unnecessary initialization" trick, though.
+
+ builtin/checkout.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 31aa248..064e7a1 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -152,7 +152,7 @@ static int checkout_merged(int pos, struct checkout *state)
+ 	unsigned char sha1[20];
+ 	mmbuffer_t result_buf;
+ 	unsigned char threeway[3][20];
+-	unsigned mode;
++	unsigned mode = 0;
  
- /*
-@@ -9,57 +10,71 @@
-  * bundle supporting "fetch", "pull", and "ls-remote".
-  */
- 
--static const char builtin_bundle_usage[] =
--  "git bundle create <file> <git-rev-list args>\n"
--  "   or: git bundle verify <file>\n"
--  "   or: git bundle list-heads <file> [<refname>...]\n"
--  "   or: git bundle unbundle <file> [<refname>...]";
-+static const char * builtin_bundle_usage[] = {
-+	"git bundle create <file> <git-rev-list args>",
-+	"git bundle verify <file>",
-+	"git bundle list-heads <file> [<refname>...]",
-+	"git bundle unbundle <file> [<refname>...]",
-+	NULL
-+};
- 
- int cmd_bundle(int argc, const char **argv, const char *prefix)
- {
--	struct bundle_header header;
--	const char *cmd, *bundle_file;
-+	int prefix_length;
- 	int bundle_fd = -1;
--	char buffer[PATH_MAX];
-+	const char *subcommand, *bundle_file;
-+	struct bundle_header header;
-+	struct option options[] = { OPT_END() };
- 
--	if (argc < 3)
--		usage(builtin_bundle_usage);
-+	argc = parse_options(argc, argv, prefix, options,
-+			builtin_bundle_usage, PARSE_OPT_STOP_AT_NON_OPTION);
- 
--	cmd = argv[1];
--	bundle_file = argv[2];
--	argc -= 2;
--	argv += 2;
-+	if (argc < 2)
-+		usage_with_options(builtin_bundle_usage, options);
-+	subcommand = argv[0];
- 
--	if (prefix && bundle_file[0] != '/') {
--		snprintf(buffer, sizeof(buffer), "%s/%s", prefix, bundle_file);
--		bundle_file = buffer;
--	}
-+	argc = parse_options(argc, argv, prefix, options,
-+			builtin_bundle_usage, PARSE_OPT_STOP_AT_NON_OPTION);
-+
-+	/* Disallow stray arguments */
-+	if ((strcmp(subcommand, "create") && argc > 2) ||
-+		(!strcmp(subcommand, "verify") && argc > 1))
-+		usage_with_options(builtin_bundle_usage, options);
- 
--	memset(&header, 0, sizeof(header));
--	if (strcmp(cmd, "create") && (bundle_fd =
--				read_bundle_header(bundle_file, &header)) < 0)
--		return 1;
-+	prefix_length = prefix ? strlen(prefix) : 0;
-+	bundle_file = prefix_filename(prefix, prefix_length, argv[0]);
- 
--	if (!strcmp(cmd, "verify")) {
-+	/* Read out bundle header, except in the "create" case */
-+	if (strcmp(subcommand, "create")) {
-+		memset(&header, 0, sizeof(header));
-+		bundle_fd = read_bundle_header(bundle_file, &header);
-+		if (bundle_fd < 0)
-+			die_errno(_("Failed to open bundle file '%s'"), bundle_file);
-+	}
-+
-+	if (!strcmp(subcommand, "create")) {
-+		if (!startup_info->have_repository)
-+			die(_("Need a repository to create a bundle."));
-+		return create_bundle(&header, bundle_file, argc, argv);
-+	} else if (!strcmp(subcommand, "verify")) {
- 		close(bundle_fd);
- 		if (verify_bundle(&header, 1))
--			return 1;
-+			return -1; /* Error already reported */
- 		fprintf(stderr, _("%s is okay\n"), bundle_file);
--		return 0;
--	}
--	if (!strcmp(cmd, "list-heads")) {
-+	} else if (!strcmp(subcommand, "list-heads")) {
- 		close(bundle_fd);
--		return !!list_bundle_refs(&header, argc, argv);
--	}
--	if (!strcmp(cmd, "create")) {
--		if (!startup_info->have_repository)
--			die(_("Need a repository to create a bundle."));
--		return !!create_bundle(&header, bundle_file, argc, argv);
--	} else if (!strcmp(cmd, "unbundle")) {
--		if (!startup_info->have_repository)
-+		return list_bundle_refs(&header, argc, argv);
-+	} else if (!strcmp(subcommand, "unbundle")) {
-+		if (!startup_info->have_repository) {
-+			close(bundle_fd);
- 			die(_("Need a repository to unbundle."));
--		return !!unbundle(&header, bundle_fd, 0) ||
-+		}
-+		return unbundle(&header, bundle_fd, 0) ||
- 			list_bundle_refs(&header, argc, argv);
--	} else
--		usage(builtin_bundle_usage);
-+	} else {
-+		close(bundle_fd);
-+		usage_with_options(builtin_bundle_usage, options);
-+	}
-+
-+	return 0;
- }
-diff --git a/t/t5704-bundle.sh b/t/t5704-bundle.sh
-index 09ff4f1..8e3f677 100755
---- a/t/t5704-bundle.sh
-+++ b/t/t5704-bundle.sh
-@@ -53,7 +53,7 @@ test_expect_success 'disallow stray command-line options' '
- 	test_must_fail git bundle create --junk bundle second third
- '
- 
--test_expect_failure 'disallow stray command-line arguments' '
-+test_expect_success 'disallow stray command-line arguments' '
- 	git bundle create bundle second third &&
- 	test_must_fail git bundle verify bundle junk
- '
--- 
-1.7.4.1
+ 	memset(threeway, 0, sizeof(threeway));
+ 	while (pos < active_nr) {
