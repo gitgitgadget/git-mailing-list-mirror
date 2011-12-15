@@ -1,62 +1,80 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [bug?] checkout -m doesn't work without a base version
-Date: Thu, 15 Dec 2011 11:42:10 +0100
-Message-ID: <m2vcpiw1z1.fsf@igel.home>
-References: <4EDBF4D5.6030908@pcharlan.com>
-	<7vbormn8vk.fsf@alter.siamese.dyndns.org>
-	<4EE8782A.9040507@elegosoft.com>
-	<7vhb13qbs6.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [RFC PATCH 2/4] test-lib: allow testing another git build tree
+Date: Thu, 15 Dec 2011 11:33:45 +0100
+Message-ID: <3016269.uH93UWUbx5@thomas.inf.ethz.ch>
+References: <cover.1323876121.git.trast@student.ethz.ch> <94f64a03398829bb9a11c18577efb39d9b153eca.1323876121.git.trast@student.ethz.ch> <7vsjkmpm6g.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Schubert <mschub@elegosoft.com>,
-	Pete Harlan <pgit@pcharlan.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 15 11:42:21 2011
+X-From: git-owner@vger.kernel.org Thu Dec 15 11:45:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rb8lZ-00070W-9Z
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 11:42:21 +0100
+	id 1Rb8ov-0000Bf-Ok
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 11:45:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758782Ab1LOKmQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Dec 2011 05:42:16 -0500
-Received: from mail-out.m-online.net ([212.18.0.10]:37126 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753694Ab1LOKmP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2011 05:42:15 -0500
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 379581853B9B;
-	Thu, 15 Dec 2011 11:42:11 +0100 (CET)
-X-Auth-Info: fQ8es9BMpaftBF9FOrZEWiZ76l5ljux18MM0dJ23zro=
-Received: from igel.home (ppp-88-217-127-96.dynamic.mnet-online.de [88.217.127.96])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 53A671C00141;
-	Thu, 15 Dec 2011 11:42:11 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id 02091CA29C; Thu, 15 Dec 2011 11:42:10 +0100 (CET)
-X-Yow: This ASEXUAL PIG really BOILS my BLOOD...  He's so..so.....URGENT!!
-In-Reply-To: <7vhb13qbs6.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 14 Dec 2011 09:54:33 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.92 (gnu/linux)
+	id S1755874Ab1LOKpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Dec 2011 05:45:45 -0500
+Received: from psi.thgersdorf.net ([188.40.92.130]:46415 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752365Ab1LOKpo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2011 05:45:44 -0500
+X-Greylist: delayed 639 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Dec 2011 05:45:44 EST
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id 95B87133D9F;
+	Thu, 15 Dec 2011 11:17:15 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id xOsJ2SKfI9BI; Thu, 15 Dec 2011 11:17:14 +0100 (CET)
+Received: from thomas.inf.ethz.ch (pctrast.inf.ethz.ch [129.132.153.233])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id 67CF7133D8C;
+	Thu, 15 Dec 2011 11:17:14 +0100 (CET)
+User-Agent: KMail/4.7.2 (Linux/3.1.5-1-desktop; KDE/4.7.2; x86_64; ; )
+In-Reply-To: <7vsjkmpm6g.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187204>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wednesday 14 December 2011 19:07:35 Junio C Hamano wrote:
+> Thomas Rast <trast@student.ethz.ch> writes:
+> > The perf-lib work wants this feature, so we may as well do it for
+> > test-lib in general.
+> 
+> How is this different from what GIT_TEST_INSTALLED already gives us
+> (other than "needs more diskspace to keep another source tree fully
+> built", that is)?
 
-> The variable "mode" is assigned to when we see an stage #2 entry in the
-> loop, and we should have updated threeway[1] immediately before doing so.
-> If threeway[1] is not updated, we would have already returned before using
-> the variable in make_cache_entry().
+I was scared away by the note that it would use (among others) perl
+libs from the current build tree.  Upon investigation I also see that
+the test-* situation is still not satisfactory.  Some (like
+test-chmtime) are used by the tests for a vital task, and if they ever
+have to be fixed, we would want to use the fixed version in any "test
+an old git" run.  OTOH, others (e.g., test-dump-cache-tree) are linked
+with the rest of the code and serve to test an otherwise not
+accessible part of it, and testing an old git should use them from the
+tested tree.
 
-How can you be sure that ce_stage(ce) ever returns 2?
+The disk space argument is moot IMO: for sane perf testing you need
+the extra build tree anyway because you cannot checkout another
+version in the current tree.  Otherwise the scripts may change and/or
+disappear from under themselves.
 
-Andreas.
+An optimization might be to have the run script only use a single
+build tree and several install trees.  However, while such a built
+tree takes just over 100MB of space in my tests, everything installed
+$PREFIX/libexec/git-core is also already 65MB here.  So the latter
+scheme would only amortize itself if you had at least 3 trees tested
+simultaneously.
 
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Thomas Rast
+trast@{inf,student}.ethz.ch
