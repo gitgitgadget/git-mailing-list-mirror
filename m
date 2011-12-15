@@ -1,69 +1,228 @@
-From: Joe Ratterman <jratt0@gmail.com>
-Subject: [PATCH] Gitweb: Avoid warnings when a repo does not have a valid HEAD
-Date: Thu, 15 Dec 2011 14:58:57 -0600
-Message-ID: <1323982737-19065-1-git-send-email-jratt0@gmail.com>
-Cc: Joe Ratterman <jratt0@gmail.com>
-To: gitster@pobox.com, git@vger.kernel.org, jnareb@gmail.com
-X-From: git-owner@vger.kernel.org Thu Dec 15 21:59:17 2011
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/2] t5704 (bundle): rewrite for larger coverage
+Date: Thu, 15 Dec 2011 15:16:32 -0600
+Message-ID: <20111215211632.GB16160@elie.hsd1.il.comcast.net>
+References: <20111208175913.GK2394@elie.hsd1.il.comcast.net>
+ <1323967528-10537-1-git-send-email-artagnon@gmail.com>
+ <1323967528-10537-2-git-send-email-artagnon@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Joey Hess <joey@kitenet.net>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 15 22:16:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbIOb-0000KY-7q
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 21:59:17 +0100
+	id 1RbIfa-000125-5m
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 22:16:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759215Ab1LOU7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Dec 2011 15:59:13 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:45771 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751910Ab1LOU7M (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2011 15:59:12 -0500
-Received: by faar15 with SMTP id r15so2680224faa.19
-        for <git@vger.kernel.org>; Thu, 15 Dec 2011 12:59:11 -0800 (PST)
+	id S1759438Ab1LOVQp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Dec 2011 16:16:45 -0500
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:42500 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759376Ab1LOVQp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2011 16:16:45 -0500
+Received: by wgbds13 with SMTP id ds13so1771375wgb.1
+        for <git@vger.kernel.org>; Thu, 15 Dec 2011 13:16:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=EkRJEj9+jaWl/JYQudkSlSmmF177ggclKdbWx6kQx04=;
-        b=SjK6HbfBC3qwAafAmQLVglIli4LA6LH1OSV2scscFMaAbvQue/dZDWRccOXAgmkoRN
-         yMqpzEjSMpplGrZvbsqPFTsWLx3ZZ5NVl1nBBagknQhkigEMU6yVMBZ7r88Nm6GIKmMc
-         RkAFc3ZW6awJt0nl3a4rAO/kNuu/6bWKksItE=
-Received: by 10.180.93.228 with SMTP id cx4mr8444569wib.19.1323982751359;
-        Thu, 15 Dec 2011 12:59:11 -0800 (PST)
-Received: from localhost.localdomain (rchp4.rochester.ibm.com. [129.42.161.36])
-        by mx.google.com with ESMTPS id gb16sm11227588wbb.12.2011.12.15.12.59.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 15 Dec 2011 12:59:10 -0800 (PST)
-X-Mailer: git-send-email 1.7.7.1.3.ge148a
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=4+yO+wpXAxYxou04J5HUjEbUZmJRCw0X413cciKo4zE=;
+        b=uvkAFnFy3luXqHNYksw+5PJK/R/6oAIDyZy/29B6bxkK2X3oZ8119NKfSNFuemhUjz
+         R6jC/5fhxVYQVuZqoX+79pEqp54IBcEvzo8I2TIL4wbz/txDQLHyLqDaTT+jUZJ5snkF
+         82WQuHemCR/nlHJSPyZda1u/LH7zlBF9iwgnM=
+Received: by 10.180.92.42 with SMTP id cj10mr8139929wib.64.1323983803756;
+        Thu, 15 Dec 2011 13:16:43 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id hn15sm10120141wib.22.2011.12.15.13.16.39
+        (version=SSLv3 cipher=OTHER);
+        Thu, 15 Dec 2011 13:16:42 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1323967528-10537-2-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187234>
 
-It is possible that the HEAD reference does not point to an existing
-branch.  When viewing such a repository in gitweb, a message like this
-one was sent to the error log:
+Hi,
 
-  gitweb.cgi: Use of uninitialized value in string eq at /usr/src/git/gitweb/gitweb.cgi line 5115.
+Ramkumar Ramachandra wrote:
 
-Signed-off-by: Joe Ratterman <jratt0@gmail.com>
----
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> Rewrite
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 4f0c3bd..5af06d6 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -5440,7 +5440,7 @@ sub git_heads_body {
- 	for (my $i = $from; $i <= $to; $i++) {
- 		my $entry = $headlist->[$i];
- 		my %ref = %$entry;
--		my $curr = $ref{'id'} eq $head;
-+		my $curr = $head ? ($ref{'id'} eq $head) : 0;
- 		if ($alternate) {
- 			print "<tr class=\"dark\">\n";
- 		} else {
--- 
-1.7.7.1
+Always a scary word.  Very rarely justified, especially when the
+original and rewritten versions of something are not going to be able
+to coexist for a period while the bugs are ironed out.  It doesn't
+leave me optimistic.
+
+>         the git-bundle testsuite to exercise more of its
+> functionality.
+
+Luckily, this goal suggests that I am going to see some new tests
+added, without the existing coverage being removed or mangled, so
+maybe I can ignore the fears awakened by the word "Rewrite".  Let's
+see...
+
+[...]
+> --- a/t/t5704-bundle.sh
+> +++ b/t/t5704-bundle.sh
+> @@ -1,56 +1,99 @@
+>  #!/bin/sh
+>  
+> -test_description='some bundle related tests'
+> +test_description='Test git-bundle'
+
+Why?
+
+>  . ./test-lib.sh
+>  
+>  test_expect_success 'setup' '
+> +	git config core.logAllRefUpdates false &&
+
+Why?
+
+> +	test_commit initial &&
+> +	git checkout -b branch &&
+> +	test_commit second &&
+> +	test_commit third &&
+> +	git checkout master &&
+> +	test_commit fourth file
+> +'
+
+No explicit tags in the setup this time.  Now all commits are referred
+to by tags, which worsens the coverage, since if some future change
+caused commits not referred to by a tag to be dropped, it would be
+missed.  Paraphrasing
+
+	>file &&
+	git add file &&
+	test_tick &&
+	git commit -m initial &&
+	git tag -m initial initial
+
+to
+
+	test_commit initial file
+
+when not preparing to make some other change in the same place and if
+the original was not too confusing feels like gratuitous churn.
+
+[...]
+> +test_expect_success 'create succeeds' '
+> +	git bundle create bundle second third &&
+> +	cat >expect <<-\EOF &&
+> +	OBJID	refs/tags/third
+> +	OBJID	refs/tags/second
+> +	EOF
+> +	{
+> +		git ls-remote bundle |
+> +		sed "s/$_x40/OBJID/g"
+> +	} >actual &&
+> +	test_cmp expect actual
+> +'
+
+A new test.  What assertion is it testing?  Why censor out the
+object names when comparing the expected object names to the
+actual ones, instead of computing the appropriate object names
+for the expected result?  Is this new test useful, or does it
+cover ground already tested in t5510-fetch.sh?
+
+> +test_expect_success 'verify succeeds' '
+> +	git bundle create bundle second third &&
+> +	git bundle verify bundle
+>  '
+
+A test for "git bundle verify" is a welcome addition.
+
+> +test_expect_success 'list-heads succeeds' '
+> +	git bundle create bundle second third &&
+> +	cat >expect <<-\EOF &&
+> +	OBJID refs/tags/second
+> +	OBJID refs/tags/third
+> +	EOF
+> +	{
+> +		git bundle list-heads bundle |
+> +		sed "s/$_x40/OBJID/g"
+> +	} >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+
+Based on 'git grep -e "git bundle list-heads" -- t', there don't seem
+to be any existing tests for "git bundle list-heads" except for
+t5510-fetch.sh, but I'm not sure what this adds on top of that one.
+
+> -test_expect_success 'tags can be excluded by rev-list options' '
+> -
+> -	git bundle create bundle --all --since=7.Apr.2005.15:16:00.-0700 &&
+> -	git ls-remote bundle > output &&
+> -	! grep tag output
+
+Dropped?
+
+> +test_expect_success 'create dies on invalid bundle filename' '
+> +	mkdir adir &&
+> +	test_expect_code 128 git bundle create adir --all
+> +'
+
+How is "invalid bundle filename" a clearer explanation than "bundle
+file cannot be created"?
+
+>  
+> +test_expect_success 'disallow stray command-line options' '
+> +	test_must_fail git bundle create --junk bundle second third
+>  '
+
+Ok.  Might also be useful to check that no "--junk" or "bundle" file
+is created.
+
+> +test_expect_failure 'disallow stray command-line arguments' '
+> +	git bundle create bundle second third &&
+> +	test_must_fail git bundle verify bundle junk
+> +'
+
+In this case, "stray command-line arguments" actually means "extra
+arguments to 'verify'", I guess?
+
+What happens if I run "git bundle verify *.bundle" in a directory
+with multiple bundles?  What should happen?
+
+> +test_expect_success 'create accepts rev-list options to narrow refs' '
+> +	git bundle create bundle --all -- file &&
+
+I don't understand what "options to narrow refs" means.  Does that
+mean options like --remotes=origin which yield refs from some subset
+of the ref namespace, unlike --all?
+
+[...]
+> +test_expect_success 'unbundle succeeds' '
+
+A test for "git bundle unbundle" is a welcome addition.
+
+[...]
+>  test_expect_failure 'bundle --stdin' '
+> -
+>  	echo master | git bundle create stdin-bundle.bdl --stdin &&
+>  	git ls-remote stdin-bundle.bdl >output &&
+>  	grep master output
+> -
+>  '
+
+Seems like a gratuitous change to mix into a patch that introduces
+functional changes.
+
+I found this hard to review, since it doesn't seem very focussed ---
+it mixes style cleanups, removal of code, and introduction of new
+code.  I'd be way happier to see a new patch that just adds new tests
+to the script without potentially breaking anything on the way.  Then
+if the style cleanups still seem important to you, they can be
+reviewed as a separate patch.
+
+Hoping that clarifies a little,
+Jonathan
