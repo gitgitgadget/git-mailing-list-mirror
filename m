@@ -1,139 +1,85 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: tr/pty-all (Re: What's cooking in git.git (Dec 2011, #04; Tue,
- 13))
-Date: Thu, 15 Dec 2011 01:55:29 -0500
-Message-ID: <20111215065529.GA1327@sigill.intra.peff.net>
-References: <7vobvcrlve.fsf@alter.siamese.dyndns.org>
- <20111214070916.GA14954@elie.hsd1.il.comcast.net>
- <201112141717.15021.trast@student.ethz.ch>
- <20111214230713.GA13128@sigill.intra.peff.net>
- <20111214232151.GB13128@sigill.intra.peff.net>
- <20111214233119.GA2354@elie>
- <20111215002530.GA2566@sigill.intra.peff.net>
- <20111215005057.GB2566@sigill.intra.peff.net>
- <7vfwgmplgd.fsf@alter.siamese.dyndns.org>
+Subject: Re: [BUG] in rev-parse
+Date: Thu, 15 Dec 2011 02:05:21 -0500
+Message-ID: <20111215070521.GB1327@sigill.intra.peff.net>
+References: <20111214184926.GB18335@llunet.cs.wisc.edu>
+ <20111214210157.GA8990@sigill.intra.peff.net>
+ <7vk45yplkm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
+Cc: nathan.panike@gmail.com, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 15 07:55:40 2011
+X-From: git-owner@vger.kernel.org Thu Dec 15 08:05:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rb5E9-0004qe-Bm
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 07:55:37 +0100
+	id 1Rb5Ng-0007vg-Mx
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 08:05:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932340Ab1LOGzd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Dec 2011 01:55:33 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50344
+	id S932292Ab1LOHFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Dec 2011 02:05:24 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50353
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932261Ab1LOGzc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2011 01:55:32 -0500
-Received: (qmail 5973 invoked by uid 107); 15 Dec 2011 07:02:13 -0000
+	id S932261Ab1LOHFX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2011 02:05:23 -0500
+Received: (qmail 6024 invoked by uid 107); 15 Dec 2011 07:12:04 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 Dec 2011 02:02:13 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Dec 2011 01:55:29 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 Dec 2011 02:12:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Dec 2011 02:05:21 -0500
 Content-Disposition: inline
-In-Reply-To: <7vfwgmplgd.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vk45yplkm.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187192>
 
-On Wed, Dec 14, 2011 at 07:23:14PM -0800, Junio C Hamano wrote:
+On Wed, Dec 14, 2011 at 07:20:41PM -0800, Junio C Hamano wrote:
 
 > Jeff King <peff@peff.net> writes:
 > 
-> > This correctly detects the bug in t7006. I can't decide if it's clever
-> > or ugly.
+> > On the other hand, it has been like this since it was introduced in
+> > 2006, and I wonder if scripts rely on the --verify side effect.
 > 
-> I would say it falls on the latter side of the line by small margin. Let's
-> do the /dev/null thing and be done with it.
+> It would have been nicer if it did not to imply --verify at all; a long
+> hexdigit that do not name an existing object at all will be shortened to
+> its prefix that still do not collide with an abbreviated object name of an
+> existing object, and even in such a case, the command should not error out
+> only because it was fed a non-existing object (of course, if "--verify" is
+> given at the same time, its "one input that names existing object only"
+> rule should also kick in).
 
-Darn, I wanted to post it on my fridge with an "A+".
+Dropping the implied verify is easy (see below). But handling
+non-existant sha1s is a much more complicated change, as the regular
+abbreviation machinery assumes that they exist. E.g., with the patch
+below:
 
-Here's a cleaned-up version of the /dev/null one.
+  $ good=73c6b3575bc638b7096ec913bd91193707e2265d
+  $ bad=${good#d}e
+  $ git rev-parse --short $good
+  73c6b35
+  $ git rev-parse --short $bad
+  [no output]
 
--- >8 --
-Subject: [PATCH] test-lib: redirect stdin of tests
+Anyway, I'm not sure it's worth changing at this point. It's part of the
+plumbing API that has been that way forever, it's kind of a rare thing
+to ask for, and I've already shown a workaround using rev-list.
 
-We want to run tests in a predictable, sterile environment
-so we can get repeatable results.  They should take as
-little input as possible from the environment outside the
-test script. We already sanitize environment variables, but
-leave stdin untouched. This means that scripts can
-accidentally be impacted by content on stdin, or whether
-stdin isatty().
+-Peff
 
-Furthermore, scripts reading from stdin can be annoying to
-outer loops which care about their stdin offset, like:
-
-  while read sha1; do
-      make test
-  done
-
-A test which accidentally reads stdin would soak up all of
-the rest of the input intended for the outer shell loop.
-
-Let's redirect stdin from /dev/null, which solves both
-of these problems. It won't detect tests accidentally
-reading from stdin, but since doing so now gives a
-deterministic result, we don't need to consider that an
-error.
-
-We'll also leave file descriptor 6 as a link to the original
-stdin. Tests shouldn't need to look at this, but it can be
-convenient for inserting interactive commands while
-debugging tests (e.g., you could insert "bash <&6 >&3 2>&4"
-to run interactive commands in the environment of the test
-script).
-
-Signed-off-by: Jeff King <peff@peff.net>
 ---
-I went the "redirect each test individually" route. In the course of my
-experimentation, I notice that some tests (e.g., t4013) will do:
-
-  while read x; do
-          test_expect_success "test something ($x)" "
-            ... do some test involving $x ...
-          "
-  done <<\EOF
-  ... some values of $x ....
-  EOF
-
-This protects those loops from accidental stdin-readers inside the test
-scripts, too.
-
- t/test-lib.sh |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index bdd9513..5ea9fe3 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -191,6 +191,7 @@ then
- fi
- 
- exec 5>&1
-+exec 6<&0
- if test "$verbose" = "t"
- then
- 	exec 4>&2 3>&1
-@@ -469,7 +470,7 @@ test_debug () {
- test_eval_ () {
- 	# This is a separate function because some tests use
- 	# "return" to end a test_expect_success block early.
--	eval >&3 2>&4 "$*"
-+	eval </dev/null >&3 2>&4 "$*"
- }
- 
- test_run_ () {
--- 
-1.7.8.rc2.30.g803b1a
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 98d1cbe..b365ca0 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -545,7 +545,6 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 			if (!strcmp(arg, "--short") ||
+ 			    !prefixcmp(arg, "--short=")) {
+ 				filter &= ~(DO_FLAGS|DO_NOREV);
+-				verify = 1;
+ 				abbrev = DEFAULT_ABBREV;
+ 				if (arg[7] == '=')
+ 					abbrev = strtoul(arg + 8, NULL, 10);
