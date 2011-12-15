@@ -1,66 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [msysGit] Windows & executable bit for newly created files
-Date: Thu, 15 Dec 2011 12:56:39 -0800
-Message-ID: <7vwr9xmu48.fsf@alter.siamese.dyndns.org>
-References: <4EEA5387.5020808@dirk.my1.cc>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>
-X-From: git-owner@vger.kernel.org Thu Dec 15 21:56:55 2011
+From: Joe Ratterman <jratt0@gmail.com>
+Subject: [PATCH] Gitweb: Avoid warnings when a repo does not have a valid HEAD
+Date: Thu, 15 Dec 2011 14:58:57 -0600
+Message-ID: <1323982737-19065-1-git-send-email-jratt0@gmail.com>
+Cc: Joe Ratterman <jratt0@gmail.com>
+To: gitster@pobox.com, git@vger.kernel.org, jnareb@gmail.com
+X-From: git-owner@vger.kernel.org Thu Dec 15 21:59:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbIME-0007Zk-4c
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 21:56:50 +0100
+	id 1RbIOb-0000KY-7q
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 21:59:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759479Ab1LOU4o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Dec 2011 15:56:44 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45528 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759225Ab1LOU4m convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Dec 2011 15:56:42 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E4BE05262;
-	Thu, 15 Dec 2011 15:56:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=6vpjTrMcmofo
-	7K6ErbHv3CFoBlY=; b=S5929lSDlSjKYq7DCK+hnTMrlE9Fe4kDx84B6Zm4KWlS
-	FudnI9T9qWAYWkpEKuSymUtsn0t0dypTJC07rTNg0tRIossUaClwKVLlG/1e0ps8
-	UBtjoYi2SszNmHe3F/c06OwCtnu73mzVKsCxKIq4IcJcTwU1kXdUJzX6tGvB71o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=cfBISt
-	2fYUQUvbtmU/wP5Oh2XnlRE8El476scvBaS9iDRAUlgRQPT2Ae+0rkMXx4r55ZoA
-	4o94imNdbPi1xiDe62nWvxUfqbWCJdX9kF9IBTa4xYVelTV/055ou53lsxSzAfOd
-	OgC2K+W9x4eNMvFjYwGklH9PLlENPzpXKM2tU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DBE6F5260;
-	Thu, 15 Dec 2011 15:56:41 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0D4CC524E; Thu, 15 Dec 2011
- 15:56:40 -0500 (EST)
-In-Reply-To: <4EEA5387.5020808@dirk.my1.cc> ("Dirk =?utf-8?Q?S=C3=BCsserot?=
- =?utf-8?Q?t=22's?= message of "Thu, 15 Dec 2011 21:07:35 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 49C228BC-275F-11E1-ACEB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759215Ab1LOU7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Dec 2011 15:59:13 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:45771 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751910Ab1LOU7M (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2011 15:59:12 -0500
+Received: by faar15 with SMTP id r15so2680224faa.19
+        for <git@vger.kernel.org>; Thu, 15 Dec 2011 12:59:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=EkRJEj9+jaWl/JYQudkSlSmmF177ggclKdbWx6kQx04=;
+        b=SjK6HbfBC3qwAafAmQLVglIli4LA6LH1OSV2scscFMaAbvQue/dZDWRccOXAgmkoRN
+         yMqpzEjSMpplGrZvbsqPFTsWLx3ZZ5NVl1nBBagknQhkigEMU6yVMBZ7r88Nm6GIKmMc
+         RkAFc3ZW6awJt0nl3a4rAO/kNuu/6bWKksItE=
+Received: by 10.180.93.228 with SMTP id cx4mr8444569wib.19.1323982751359;
+        Thu, 15 Dec 2011 12:59:11 -0800 (PST)
+Received: from localhost.localdomain (rchp4.rochester.ibm.com. [129.42.161.36])
+        by mx.google.com with ESMTPS id gb16sm11227588wbb.12.2011.12.15.12.59.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 15 Dec 2011 12:59:10 -0800 (PST)
+X-Mailer: git-send-email 1.7.7.1.3.ge148a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187233>
 
-Dirk S=C3=BCsserott <newsletter@dirk.my1.cc> writes:
+It is possible that the HEAD reference does not point to an existing
+branch.  When viewing such a repository in gitweb, a message like this
+one was sent to the error log:
 
-> Is there a way to convince git that the new mode is 755 instead of 64=
-4,
-> even with core.filemode set to false? So that the mode is correct whe=
-n I
-> checkout the file under Linux later on?
+  gitweb.cgi: Use of uninitialized value in string eq at /usr/src/git/gitweb/gitweb.cgi line 5115.
 
-"git update-index --chmod=3D+x"?
+Signed-off-by: Joe Ratterman <jratt0@gmail.com>
+---
+ gitweb/gitweb.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 4f0c3bd..5af06d6 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -5440,7 +5440,7 @@ sub git_heads_body {
+ 	for (my $i = $from; $i <= $to; $i++) {
+ 		my $entry = $headlist->[$i];
+ 		my %ref = %$entry;
+-		my $curr = $ref{'id'} eq $head;
++		my $curr = $head ? ($ref{'id'} eq $head) : 0;
+ 		if ($alternate) {
+ 			print "<tr class=\"dark\">\n";
+ 		} else {
+-- 
+1.7.7.1
