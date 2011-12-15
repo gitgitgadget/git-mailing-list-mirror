@@ -1,78 +1,63 @@
-From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Subject: Re: Revisiting metadata storage
-Date: Thu, 15 Dec 2011 13:40:36 -0800
-Message-ID: <CAE1pOi2TGWmFErcKhQu-a37JjLh22O1zFYoBaVRyfBDFjOTE9Q@mail.gmail.com>
-References: <CAD77+gQB+0zJG62jrtPn_MwLLR7zgH=5gBtkvPxrKgiLPZsbsw@mail.gmail.com>
-	<87sjkx8gll.fsf@an-dro.info.enstb.org>
-	<CAD77+gR=SjU0Ne9jort91pdHDA=RjkTJUJmnqKBipqoGUmoL_A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add '-P' as a synonym for '--no-pager' in the git
+ command
+Date: Thu, 15 Dec 2011 13:41:37 -0800
+Message-ID: <7vhb11ms1a.fsf@alter.siamese.dyndns.org>
+References: <1323982541-18995-1-git-send-email-jratt0@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Ronan Keryell <Ronan.Keryell@hpc-project.com>,
-	Git List <git@vger.kernel.org>
-To: Richard Hartmann <richih.mailinglist@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 15 22:40:48 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Joe Ratterman <jratt0@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 15 22:41:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbJ2h-0006Kw-Lo
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 22:40:44 +0100
+	id 1RbJ3g-0006yX-83
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 22:41:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759530Ab1LOVkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Dec 2011 16:40:37 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:54867 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756549Ab1LOVkg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2011 16:40:36 -0500
-Received: by ghbz12 with SMTP id z12so1881680ghb.19
-        for <git@vger.kernel.org>; Thu, 15 Dec 2011 13:40:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=9b7b2DaJlBEWpsl2IeKSN9VLm3ys4+NuyYDp3TvW6sc=;
-        b=hlXpJPaHyNBjWzTkNNurdn55SxFWUxKWYkPLdzfgiVKmD1wkbUDWBJPd/PiG41d/7q
-         zqiXyYFWCMpPKr4pTvQUJdP+nMsqBx8EoP7CN6XkFoiZz65hF8moSYEZUGx3oLfHbZxL
-         G62IsFtbf3QvKlI7dHtXP78xLPtYsmJsyWw20=
-Received: by 10.236.178.71 with SMTP id e47mr7355323yhm.66.1323985236316; Thu,
- 15 Dec 2011 13:40:36 -0800 (PST)
-Received: by 10.236.27.200 with HTTP; Thu, 15 Dec 2011 13:40:36 -0800 (PST)
-In-Reply-To: <CAD77+gR=SjU0Ne9jort91pdHDA=RjkTJUJmnqKBipqoGUmoL_A@mail.gmail.com>
+	id S1759505Ab1LOVlk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Dec 2011 16:41:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42087 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754146Ab1LOVlj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2011 16:41:39 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F79B65B7;
+	Thu, 15 Dec 2011 16:41:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WSQDtw2uOynzl0/eca1lUK++OsU=; b=yXtgGp
+	LUUu5uginXULwcRt4/saKva4HSXCl1mo2Urowtt17b/PFtPDRn8g2NVJZ/6mWzKT
+	IbK8wsMVbnQPLfOEtaTi8giMHZKkRbDBQAg5BuPlBHYyVcuwI6zcY6F7r7Cj4Y1x
+	bJcVTT/qUZOIWNN2xy+v/EH4yjRB4ZXwyecOs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BvSXNAXVgf1Xg+o/6lPUcCL20Cpkit8q
+	OmKELtHwAdjRL95gX6H12NvkcmDQ2Pc/2gI6d2APW8zhZq84iZL+LKRGW3u8kf/M
+	N5p4XTTHD14MYq7pVf9KlL9E5rZ1Gm1w8pVS4HM9pXr3h6MrWPKKjZRiDK+hC0Lw
+	K5gIEzlErck=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3609265B6;
+	Thu, 15 Dec 2011 16:41:39 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9E1E765B4; Thu, 15 Dec 2011
+ 16:41:38 -0500 (EST)
+In-Reply-To: <1323982541-18995-1-git-send-email-jratt0@gmail.com> (Joe
+ Ratterman's message of "Thu, 15 Dec 2011 14:55:41 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 91A60008-2765-11E1-977D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187241>
 
-On 14 December 2011 09:59, Richard Hartmann
-<richih.mailinglist@gmail.com> wrote:
-> On Tue, Dec 6, 2011 at 23:45, Ronan Keryell
-> <Ronan.Keryell@hpc-project.com> wrote:
->
->> At least I'm interested and began to dig into it but I do not have a lot
->> of time to work on it...
->
-> If we can agree on Perl, I can try to help. I don't think I speak
-> enough Python to be of use with that.
->
-> Other people who have an interest in this: Please pipe up so we can
-> hammer out a rough consensus & roadmap.
+Sorry, but why was I listed on the To: line?
 
-I'd love to have better support for metadata (specifically
-timestamps). I don't care whether it's Perl, Python, Bash, or C. I
-don't think I'll be much help coding but I'd like to try.
-
-In all honesty though, I plan to rewrite our build to use file digests
-instead of timestamps. Right now every rebase means a full (and almost
-completely unnecessary) rebuild. Luckily I'm using the wonderful
-git-new-workdir so there is no pain when switching branches.
-
-Once the rewrite is complete (in one or two months) Git's relentless
-timestamp changes should no longer affect us as much anymore. I would
-still like to get a better grip on metadata though. Git should be able
-to not touch files that have not changed. But whether that's feasible
-or even in scope of what you have in mind... :-)
-
-Cheers,
-Hilco
+I do not recall there was a list concensus that this is a must-have or
+even good-to-have, and I am not personally interested in this. I hesitate
+to accept a patch that lets a feature without clear advantage squat on a
+short-and-sweet single-letter option, generally speaking.
