@@ -1,131 +1,66 @@
-From: Joe Ratterman <jratt0@gmail.com>
-Subject: [PATCH] Add '-P' as a synonym for '--no-pager' in the git command
-Date: Thu, 15 Dec 2011 14:55:41 -0600
-Message-ID: <1323982541-18995-1-git-send-email-jratt0@gmail.com>
-Cc: Joe Ratterman <jratt0@gmail.com>
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 15 21:56:12 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [msysGit] Windows & executable bit for newly created files
+Date: Thu, 15 Dec 2011 12:56:39 -0800
+Message-ID: <7vwr9xmu48.fsf@alter.siamese.dyndns.org>
+References: <4EEA5387.5020808@dirk.my1.cc>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>
+X-From: git-owner@vger.kernel.org Thu Dec 15 21:56:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbILb-0007Gx-Jt
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 21:56:11 +0100
+	id 1RbIME-0007Zk-4c
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 21:56:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759390Ab1LOU4G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Dec 2011 15:56:06 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:58957 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759225Ab1LOU4F (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2011 15:56:05 -0500
-Received: by faar15 with SMTP id r15so2676704faa.19
-        for <git@vger.kernel.org>; Thu, 15 Dec 2011 12:56:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=CBZuZ0IjhLT3lut8PBEsAVPWHbT6eEXtHWnqSvA+/ec=;
-        b=s49cbhpr5ZCKFNXolINM/dcGpcWHiP4QQn38udPqKo2FNBpBiFeYVWdAlM9qJ8WytA
-         ygZYwc8GBIr2P0dLvli3NS4HQ5yAy326KqcjWoGLi8cXVEEGBXNLxlkJMGX2aBm+2tUY
-         i9IokDtUI2xo0P7BwiAED65hxm0QtR80jUxpE=
-Received: by 10.180.106.105 with SMTP id gt9mr10056496wib.39.1323982563190;
-        Thu, 15 Dec 2011 12:56:03 -0800 (PST)
-Received: from localhost.localdomain (rchp4.rochester.ibm.com. [129.42.161.36])
-        by mx.google.com with ESMTPS id fi11sm11223606wbb.9.2011.12.15.12.56.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 15 Dec 2011 12:56:02 -0800 (PST)
-X-Mailer: git-send-email 1.7.7.1.3.ge148a
+	id S1759479Ab1LOU4o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Dec 2011 15:56:44 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45528 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759225Ab1LOU4m convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Dec 2011 15:56:42 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E4BE05262;
+	Thu, 15 Dec 2011 15:56:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=6vpjTrMcmofo
+	7K6ErbHv3CFoBlY=; b=S5929lSDlSjKYq7DCK+hnTMrlE9Fe4kDx84B6Zm4KWlS
+	FudnI9T9qWAYWkpEKuSymUtsn0t0dypTJC07rTNg0tRIossUaClwKVLlG/1e0ps8
+	UBtjoYi2SszNmHe3F/c06OwCtnu73mzVKsCxKIq4IcJcTwU1kXdUJzX6tGvB71o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=cfBISt
+	2fYUQUvbtmU/wP5Oh2XnlRE8El476scvBaS9iDRAUlgRQPT2Ae+0rkMXx4r55ZoA
+	4o94imNdbPi1xiDe62nWvxUfqbWCJdX9kF9IBTa4xYVelTV/055ou53lsxSzAfOd
+	OgC2K+W9x4eNMvFjYwGklH9PLlENPzpXKM2tU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DBE6F5260;
+	Thu, 15 Dec 2011 15:56:41 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0D4CC524E; Thu, 15 Dec 2011
+ 15:56:40 -0500 (EST)
+In-Reply-To: <4EEA5387.5020808@dirk.my1.cc> ("Dirk =?utf-8?Q?S=C3=BCsserot?=
+ =?utf-8?Q?t=22's?= message of "Thu, 15 Dec 2011 21:07:35 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 49C228BC-275F-11E1-ACEB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187232>
 
-  Also, add both -P|--no-pager to the existing -p|--paginate in bash
-  completion.
+Dirk S=C3=BCsserott <newsletter@dirk.my1.cc> writes:
 
-Signed-off-by: Joe Ratterman <jratt0@gmail.com>
----
- Documentation/git.txt                  |    3 ++-
- contrib/completion/git-completion.bash |    2 +-
- git.c                                  |    4 ++--
- t/t7006-pager.sh                       |    8 ++++++++
- 4 files changed, 13 insertions(+), 4 deletions(-)
+> Is there a way to convince git that the new mode is 755 instead of 64=
+4,
+> even with core.filemode set to false? So that the mode is correct whe=
+n I
+> checkout the file under Linux later on?
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index e869032..c7f8445 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git' [--version] [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
--    [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
-+    [-p|--paginate|-P|--no-pager] [--no-replace-objects] [--bare]
-     [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
-     [-c <name>=<value>]
-     [--help] <command> [<args>]
-@@ -329,6 +329,7 @@ help ...`.
- 	configuration options (see the "Configuration Mechanism" section
- 	below).
- 
-+-P::
- --no-pager::
- 	Do not pipe git output into a pager.
- 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index cc1bdf9..8b9ea1b 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2640,7 +2640,7 @@ _git ()
- 		case "$i" in
- 		--git-dir=*) __git_dir="${i#--git-dir=}" ;;
- 		--bare)      __git_dir="." ;;
--		--version|-p|--paginate) ;;
-+		--version|-p|--paginate|-P|--no-pager) ;;
- 		--help) command="help"; break ;;
- 		*) command="$i"; break ;;
- 		esac
-diff --git a/git.c b/git.c
-index 8e34903..baa1613 100644
---- a/git.c
-+++ b/git.c
-@@ -7,7 +7,7 @@
- 
- const char git_usage_string[] =
- 	"git [--version] [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n"
--	"           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]\n"
-+	"           [-p|--paginate|-P|--no-pager] [--no-replace-objects] [--bare]\n"
- 	"           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n"
- 	"           [-c name=value] [--help]\n"
- 	"           <command> [<args>]";
-@@ -103,7 +103,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 			exit(0);
- 		} else if (!strcmp(cmd, "-p") || !strcmp(cmd, "--paginate")) {
- 			use_pager = 1;
--		} else if (!strcmp(cmd, "--no-pager")) {
-+		} else if (!strcmp(cmd, "-P") || !strcmp(cmd, "--no-pager")) {
- 			use_pager = 0;
- 			if (envchanged)
- 				*envchanged = 1;
-diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index 320e1d1..783915e 100755
---- a/t/t7006-pager.sh
-+++ b/t/t7006-pager.sh
-@@ -84,6 +84,14 @@ test_expect_success 'no pager even with --paginate when stdout is a pipe' '
- 	! test -e paginated.out
- '
- 
-+test_expect_success TTY 'no pager with -P' '
-+	rm -f paginated.out ||
-+	cleanup_fail &&
-+
-+	test_terminal git -P log &&
-+	! test -e paginated.out
-+'
-+
- test_expect_success TTY 'no pager with --no-pager' '
- 	rm -f paginated.out ||
- 	cleanup_fail &&
--- 
-1.7.7.1
+"git update-index --chmod=3D+x"?
