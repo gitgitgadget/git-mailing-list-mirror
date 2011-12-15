@@ -1,92 +1,81 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [bug?] checkout -m doesn't work without a base version
-Date: Thu, 15 Dec 2011 13:20:17 +0900
-Message-ID: <buoipli8nzy.fsf@dhlpc061.dev.necel.com>
-References: <4EDBF4D5.6030908@pcharlan.com>
- <7vbormn8vk.fsf@alter.siamese.dyndns.org> <4EE8782A.9040507@elegosoft.com>
- <7vhb13qbs6.fsf@alter.siamese.dyndns.org>
+From: Alexey Shumkin <Alex.Crezoff@gmail.com>
+Subject: Re: How to commit incomplete changes?
+Date: Thu, 15 Dec 2011 10:44:44 +0400
+Message-ID: <20111215104444.783303cf@ashu.dyn1.rarus.ru>
+References: <4cfc9cf0515b1bc751f6aa0de4f55e2a@ulrik.uio.no>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Schubert <mschub@elegosoft.com>,
-	Pete Harlan <pgit@pcharlan.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 15 05:20:27 2011
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Hallvard B Furuseth <h.b.furuseth@usit.uio.no>
+X-From: git-owner@vger.kernel.org Thu Dec 15 07:44:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rb2ny-0001yT-Ps
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 05:20:27 +0100
+	id 1Rb53m-0001QJ-Lv
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 07:44:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758659Ab1LOEUW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Dec 2011 23:20:22 -0500
-Received: from relmlor2.renesas.com ([210.160.252.172]:46613 "EHLO
-	relmlor2.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755874Ab1LOEUW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Dec 2011 23:20:22 -0500
-Received: from relmlir1.idc.renesas.com ([10.200.68.151])
- by relmlor2.idc.renesas.com ( SJSMS)
- with ESMTP id <0LW80099M9DWUNB0@relmlor2.idc.renesas.com> for
- git@vger.kernel.org; Thu, 15 Dec 2011 13:20:20 +0900 (JST)
-Received: from relmlac3.idc.renesas.com ([10.200.69.23])
- by relmlir1.idc.renesas.com (SJSMS)
- with ESMTP id <0LW8009389DWHWD0@relmlir1.idc.renesas.com> for
- git@vger.kernel.org; Thu, 15 Dec 2011 13:20:20 +0900 (JST)
-Received: by relmlac3.idc.renesas.com (Postfix, from userid 0)
-	id 845731807C; Thu, 15 Dec 2011 13:20:20 +0900 (JST)
-Received: from relmlac3.idc.renesas.com (localhost [127.0.0.1])
-	by relmlac3.idc.renesas.com (Postfix) with ESMTP id 7B41F18077; Thu,
- 15 Dec 2011 13:20:20 +0900 (JST)
-Received: from relmlii1.idc.renesas.com [10.200.68.65]	by
- relmlac3.idc.renesas.com with ESMTP id PAM00716; Thu,
- 15 Dec 2011 13:20:20 +0900
-X-IronPort-AV: E=Sophos;i="4.71,356,1320591600";   d="scan'208";a="59578161"
-Received: from unknown (HELO relay41.aps.necel.com) ([10.29.19.9])
- by relmlii1.idc.renesas.com with ESMTP; Thu, 15 Dec 2011 13:20:20 +0900
-Received: from dhlpc061 (dhlpc061.dev.necel.com [10.114.98.108])
-	by relay41.aps.necel.com (8.14.4+Sun/8.14.4) with ESMTP id pBF4KJgC007839;
- Thu, 15 Dec 2011 13:20:19 +0900 (JST)
-Received: by dhlpc061 (Postfix, from userid 31295)	id 1B01D52E1F5; Thu,
- 15 Dec 2011 13:20:18 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-reply-to: <7vhb13qbs6.fsf@alter.siamese.dyndns.org>
+	id S1754115Ab1LOGou (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Dec 2011 01:44:50 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:53273 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753748Ab1LOGot (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2011 01:44:49 -0500
+Received: by eekc4 with SMTP id c4so1726290eek.19
+        for <git@vger.kernel.org>; Wed, 14 Dec 2011 22:44:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=rarus.ru; s=google;
+        h=sender:date:from:to:cc:subject:message-id:in-reply-to:references
+         :x-mailer:mime-version:content-type:content-transfer-encoding;
+        bh=vgmKGBS0GG90dCjmbpn4kJ7m6sHNcLkIczI0I/6fV4Q=;
+        b=CRRv+5YPOgUZFAke0G96axMP5Df9wQCNZmCFUpa08M88Lz7A2o+eTjjGBt2xbisNVM
+         RLZBkNji9jrY2hk/sWt2dhsN3vvMBmdezlLoHxiJYFD+Apy7ZIT22B3Ip58iTSD5ce6F
+         3K5itOG45If78VwO1ZwmuLaeqNesNMM7vKpOQ=
+Received: by 10.213.15.203 with SMTP id l11mr136708eba.126.1323931487952;
+        Wed, 14 Dec 2011 22:44:47 -0800 (PST)
+Received: from ashu.dyn1.rarus.ru ([85.21.218.130])
+        by mx.google.com with ESMTPS id 58sm20245977eet.11.2011.12.14.22.44.46
+        (version=SSLv3 cipher=OTHER);
+        Wed, 14 Dec 2011 22:44:46 -0800 (PST)
+In-Reply-To: <4cfc9cf0515b1bc751f6aa0de4f55e2a@ulrik.uio.no>
+X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; i386-redhat-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187190>
 
-Junio C Hamano <gitster@pobox.com> writes:
->> builtin/checkout.c: In function =E2=80=98cmd_checkout=E2=80=99:
->> builtin/checkout.c:210:5: warning: =E2=80=98mode=E2=80=99 may be use=
-d uninitialized
->> in this function [-Wuninitialized]
->> builtin/checkout.c:160:11: note: =E2=80=98mode=E2=80=99 was declared=
- here
->
-> Isn't this just your gcc being overly cautious (aka "silly")?
->
-> The variable "mode" is assigned to when we see an stage #2 entry in t=
-he
-> loop, and we should have updated threeway[1] immediately before doing=
- so.
-> If threeway[1] is not updated, we would have already returned before =
-using
-> the variable in make_cache_entry().
+>  Do people have any feelings or conventions for how and when to
+> publish a series of commits where the first one(s) break something
+> and the next ones clear it up?
+I'm curiuos, why to you want to commit changes that break something
+separately from fixup?
 
-Maybe that is actually guaranteed (I dunno), but it's certainly not
-obvious from the code here, even to a human... any guarantee would
-have to come from external invariants that the compiler doesn't know
-about.
+Many conventions (as I know) use ideology that every commit must NOT
+BREAK existing code or tests. Every SHARED commit. Git design (as you
+must be already know) allows you to make/change/reorder as many commits
+as you want (before you share them or push to a "central" repository).
+So, you have not to be afraid to commit every your change, because you
+can always change/fixup/split your commits.
 
-Given that, I think it's a fair warning, certainly not "silly."  This
-aspect of the code doesn't seem easy to understand...
+Usually, you introduce a feature in a branch. Also, your project must
+have (?) (mine do have) unit-tests, at least. And most changes must be
+tested. So, breakage must be discovered early, even after some other
+commits in that feature branch. In that case you can just make a fixup
+commit and then rebase it on a breakage commit with a "squash".
 
--Miles
+And only after all features made and all tests passed you can share
+them (push to another repo).
 
---=20
-`To alcohol!  The cause of, and solution to,
- all of life's problems' --Homer J. Simpson
+>I've found some discussion, but with vague results.
+> 
+>  I'm about to commit some small edits which go together with bigger
+>  generated changes.  It seems both more readable and more cherry-pick-
+>  friendly to me to keep these in separate commits.
+> 
+>  What I've found is I can use a line in the commit message like
+>      "Incomplete change, requires next commit (update foo/ dir)."
+>  and, if there is any point, do a no-ff merge past the breakage.
+> 
