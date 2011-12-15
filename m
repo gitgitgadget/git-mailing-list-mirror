@@ -1,91 +1,99 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [BUG] in rev-parse
-Date: Thu, 15 Dec 2011 23:53:50 +0100
-Message-ID: <4EEA7A7E.4070109@alum.mit.edu>
-References: <20111214184926.GB18335@llunet.cs.wisc.edu> <20111214210157.GA8990@sigill.intra.peff.net> <7vk45yplkm.fsf@alter.siamese.dyndns.org> <20111215070521.GB1327@sigill.intra.peff.net>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: git help prune accuracy?
+Date: Thu, 15 Dec 2011 16:01:52 -0700
+Organization: CAF
+Message-ID: <201112151601.52968.mfick@codeaurora.org>
+References: <201112151432.09252.mfick@codeaurora.org> <201112151453.52157.mfick@codeaurora.org> <7v1us5mqc4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, nathan.panike@gmail.com,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 15 23:54:02 2011
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 16 00:02:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbKBe-0008TT-5q
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 23:54:02 +0100
+	id 1RbKJP-0003cK-2l
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 00:02:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759632Ab1LOWx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Dec 2011 17:53:58 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:51360 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756567Ab1LOWx5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2011 17:53:57 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.2.128] (p54BEA4CB.dip.t-dialin.net [84.190.164.203])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pBFMrolP019102
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 15 Dec 2011 23:53:50 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
-In-Reply-To: <20111215070521.GB1327@sigill.intra.peff.net>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1759727Ab1LOXBz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Dec 2011 18:01:55 -0500
+Received: from wolverine02.qualcomm.com ([199.106.114.251]:57241 "EHLO
+	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759722Ab1LOXBy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2011 18:01:54 -0500
+X-IronPort-AV: E=McAfee;i="5400,1158,6561"; a="144912620"
+Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
+  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 15 Dec 2011 15:01:53 -0800
+Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 8648310004C4;
+	Thu, 15 Dec 2011 15:01:53 -0800 (PST)
+User-Agent: KMail/1.13.5 (Linux/2.6.32-28-generic; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <7v1us5mqc4.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187253>
 
-On 12/15/2011 08:05 AM, Jeff King wrote:
-> On Wed, Dec 14, 2011 at 07:20:41PM -0800, Junio C Hamano wrote:
+On Thursday, December 15, 2011 03:18:19 pm Junio C Hamano 
+wrote:
+> Martin Fick <mfick@codeaurora.org> writes:
+> >>   objects from the object database. In addition, it
+> >> 
+> >> prunes the unpacked objects that are also found in
+> >> packs by running git prune-packed.
+> >> 
+> >> The last sentence seems like it should maybe have the
+> >> following fix:
+> >> 
+> >> s/it prunes the unpacked/it prunes the unreferenced/
+> > 
+> > Ack, I meant:
+> > 
+> > s/it prunes the unpacked/it prunes the unreachable/
 > 
->> Jeff King <peff@peff.net> writes:
->>
->>> On the other hand, it has been like this since it was introduced in
->>> 2006, and I wonder if scripts rely on the --verify side effect.
->>
->> It would have been nicer if it did not to imply --verify at all; a long
->> hexdigit that do not name an existing object at all will be shortened to
->> its prefix that still do not collide with an abbreviated object name of an
->> existing object, and even in such a case, the command should not error out
->> only because it was fed a non-existing object (of course, if "--verify" is
->> given at the same time, its "one input that names existing object only"
->> rule should also kick in).
+> "In addition" part is about objects that exist in loose
+> format that are also found in packs and has nothing to
+> do with reachability.
 > 
-> Dropping the implied verify is easy (see below). But handling
-> non-existant sha1s is a much more complicated change, as the regular
-> abbreviation machinery assumes that they exist. E.g., with the patch
-> below:
-> 
->   $ good=73c6b3575bc638b7096ec913bd91193707e2265d
->   $ bad=${good#d}e
->   $ git rev-parse --short $good
->   73c6b35
->   $ git rev-parse --short $bad
->   [no output]
-> 
-> Anyway, I'm not sure it's worth changing at this point. It's part of the
-> plumbing API that has been that way forever, it's kind of a rare thing
-> to ask for, and I've already shown a workaround using rev-list.
+> Running "git pack-objects" to collect loose objects into
+> a new pack will not remove these loose objects that are
+> copied into that new pack. Because we try to access
+> objects from an already open packfile before trying a
+> loose object file, removing these now-redundant loose
+> ones after they are packed makes sense. And that is what
+> "git prune-packed" does.
 
-I believe that the OP was more inconvenienced that "git rev-parse
---short" chokes on multiple objects than by the fact that it insists
-that the objects exist.  (And shortening the SHA1s of non-existent
-objects doesn't sound very useful anyway.)  So I think that a useful
-compromise would be for "git rev-parse --short" to accept multiple args
-but continue to insist that each of the args is a valid object.
+Thanks Junio, that makes a lot of sense.  I don't know why I 
+was not getting that from the description even though that 
+was exactly what I was looking for.  Maybe it was because of 
+the intro/summary line?  Now that I think I understand what 
+it is doing, it seems like this command is more about 
+"pruning loose objects" (whether unreachable or already 
+packed) than it is about "pruning unreachable objects" 
+(which could be loose or packed)?  The summary line reads:
 
-If that is considered too big a break with backwards compatibility, one
-could add a --no-verify option that turns off the verification behavior
-of --short.  But IMHO this problem is not important enough to justify
-adding an extra option.
+  git-prune - Prune all unreachable objects from the object 
+database
 
-Michael
+Maybe I am not familiar enough with git terminology, but 
+does "object database" imply loose objects only?  Because 
+the word "all" in that summary makes it sound like it will 
+prune all unreachable objects (loose and packed).
+
+I don't quite have an alternative suggestion for a better 
+summary, the best I could do (but don't like) is:
+
+  git-prune - Prune loose objects (unreachable or packed)
+
+
+-Martin
+
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Employee of Qualcomm Innovation Center, Inc. which is a 
+member of Code Aurora Forum
