@@ -1,85 +1,80 @@
-From: Hao Wang <billhao@gmail.com>
-Subject: Re: process committed files in post-receive hook
-Date: Thu, 15 Dec 2011 00:19:08 -0800
-Message-ID: <4EE9AD7C.5080107@gmail.com>
-References: <loom.20111210T111457-837@post.gmane.org> <4EE94783.1010805@gmail.com> <4EE95523.9030702@gmail.com> <20111215072301.GC1327@sigill.intra.peff.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 28/51] refs.c: rename ref_array -> ref_dir
+Date: Thu, 15 Dec 2011 09:19:08 +0100
+Message-ID: <4EE9AD7C.2050605@alum.mit.edu>
+References: <1323668338-1764-1-git-send-email-mhagger@alum.mit.edu> <1323668338-1764-29-git-send-email-mhagger@alum.mit.edu> <7v7h21xps9.fsf@alter.siamese.dyndns.org> <4EE6E61F.8080405@alum.mit.edu> <7vk461vuy9.fsf@alter.siamese.dyndns.org> <4EE7A387.3070400@alum.mit.edu> <4EE7CDF2.3040408@alum.mit.edu> <7vzkewt5qu.fsf@alter.siamese.dyndns.org> <7vborct37c.fsf@alter.siamese.dyndns.org> <20111214023320.GA22141@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Neal Kreitzinger <nkreitzinger@gmail.com>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Drew Northup <drew.northup@maine.edu>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 15 09:19:20 2011
+X-From: git-owner@vger.kernel.org Thu Dec 15 09:19:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rb6X8-0007r1-GJ
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 09:19:18 +0100
+	id 1Rb6XO-0007xY-Pn
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 09:19:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757307Ab1LOITO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Dec 2011 03:19:14 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:63354 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752550Ab1LOITN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2011 03:19:13 -0500
-Received: by iaeh11 with SMTP id h11so2455171iae.19
-        for <git@vger.kernel.org>; Thu, 15 Dec 2011 00:19:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-tagtoolbar-keys:content-type
-         :content-transfer-encoding;
-        bh=jTs03Nw7rwYtLJUgiLRLdBJO71sjJai11oZVtGDM8Ws=;
-        b=Skar1huLxh1jqFcp1AInUdjgOLf4RhVuSaBQ0Oa5OHNKbn3bcs/3Wcck+BVw5xuLsT
-         +PzoiFNnwPunY47atyZbqNnnq1Jc4dt+basYPAW898B1mS98RiYIzvhpZQu66IHzmPaP
-         TPZORl6mHrXRYRUpCMTjFJDORA49s0c/8tMAs=
-Received: by 10.50.85.136 with SMTP id h8mr2264562igz.56.1323937152822;
-        Thu, 15 Dec 2011 00:19:12 -0800 (PST)
-Received: from [192.168.1.5] (cpe-76-170-238-136.socal.res.rr.com. [76.170.238.136])
-        by mx.google.com with ESMTPS id x18sm18598791ibi.2.2011.12.15.00.19.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 15 Dec 2011 00:19:11 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <20111215072301.GC1327@sigill.intra.peff.net>
-X-TagToolbar-Keys: D20111215001908915
+	id S1757321Ab1LOITb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Dec 2011 03:19:31 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:43577 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752550Ab1LOIT3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2011 03:19:29 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.69.134] (p54BEA4CB.dip.t-dialin.net [84.190.164.203])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pBF8J8nG026952
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 15 Dec 2011 09:19:09 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
+In-Reply-To: <20111214023320.GA22141@sigill.intra.peff.net>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187197>
 
+On 12/14/2011 03:33 AM, Jeff King wrote:
+> On Tue, Dec 13, 2011 at 04:19:19PM -0800, Junio C Hamano wrote:
+>> Actually, I do not think it even needs to be the "extra *REF* API". The
+>> only thing that matters is that these commits are considered to be extra
+>> anchor point in the history, in addition to the usual rule of considering
+>> that everything reachable from our refs is complete. The data structure to
+>> hold them does not even have to be a "struct ref". Just an array of object
+>> names (or "struct object *") should suffice.
+> 
+> Since my cff38a5 (receive-pack: eliminate duplicate .have refs,
+> 2011-05-19), receive-pack simply has a packed array of binary sha1s (in
+> a "struct sha1_array" object). That might be the simplest thing.
 
-> If you are scripting, we usually encourage the use of "plumbing"
-> commands whose output is guaranteed not to change ("show" is a
-> "porcelain" command intended to be used by end-users, and it's possible
-> that its behavior might change from version to version).
->
-> The plumbing command to get a directory listing for a tree is "git
-> ls-tree" (try the "--name-only" option for terse output, and use "-z" if
-> you want to be robust in the face of filenames with funny characters).
+It was pretty easy to eliminate the use of extra_refs from receive-pack.
+ I'll submit the patches as soon as I can.  The patches will be based
+off of patch 16/51 of the ref-api-D series, since Junio indicated that
+he wants to queue up those commits (let me know if you have a different
+preference).
 
-Jeff, thank you for the information. This is really helpful.
+Now I'm looking at the uses of extra_refs in git-clone.  One thing it
+does is add some extra refs then write them to the packed-refs file.  I
+still have to dig into it, but this seems strange.  If the refs are
+being written to packed-refs, it seems like they must be real (not
+extra) refs, or perhaps are just about to become real refs as part of
+the clone.  Or is something more egregious is going on?
 
->> # get a list of rule files using git show
->> def getRuleFileList(rev):
->>      # run git show
->>      p = subprocess.Popen(['git', 'show', rev], stdout=subprocess.PIPE)
->>      p.wait()
->>      if p.returncode != 0: return None # error
->>
->>      # parse output
->>      i = 0
->>      filelist = []
->>      for line in p.stdout.readlines():
->>          filelist.append(line)
->>      p.stdout.close()
->>      return filelist
->
-> Doesn't this put "tree HEAD:foo", as printed by "git show", at the top
-> of your filelist? Another reason to use ls-tree.
+Moving the pack_refs() function to refs.c was on the agenda anyway, so
+it should be possible to sort this out at the same time.
 
-Yes, the first two items ("tree HEAD:foo" and an empty line) are removed 
-later from filelist.
+Michael
 
-Hao
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
