@@ -1,127 +1,114 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv2 5/9] add generic terminal prompt function
-Date: Thu, 15 Dec 2011 08:39:39 -0500
-Message-ID: <20111215133939.GA2241@sigill.intra.peff.net>
-References: <20111210103943.GA16478@sigill.intra.peff.net>
- <20111210104101.GE16648@sigill.intra.peff.net>
- <20111215124851.GA6907@padd.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2 1/3] merge: abort if fails to commit
+Date: Thu, 15 Dec 2011 20:47:21 +0700
+Message-ID: <1323956843-5326-1-git-send-email-pclouds@gmail.com>
+References: <1323871699-8839-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Thu Dec 15 14:39:48 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Miles Bader <miles@gnu.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 15 14:47:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbBXI-0006sE-1t
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 14:39:48 +0100
+	id 1RbBee-0002nO-Ih
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 14:47:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751490Ab1LONjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Dec 2011 08:39:43 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50481
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751022Ab1LONjm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2011 08:39:42 -0500
-Received: (qmail 8428 invoked by uid 107); 15 Dec 2011 13:46:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 Dec 2011 08:46:24 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Dec 2011 08:39:39 -0500
-Content-Disposition: inline
-In-Reply-To: <20111215124851.GA6907@padd.com>
+	id S1757339Ab1LONrO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Dec 2011 08:47:14 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:33385 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751447Ab1LONrN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2011 08:47:13 -0500
+Received: by iaeh11 with SMTP id h11so2819700iae.19
+        for <git@vger.kernel.org>; Thu, 15 Dec 2011 05:47:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=O673+tJlIjxWB/e1yfPEBbpCwibxOLmtv0fDcyOgw0o=;
+        b=JaA5dkcgGbJO13Yw0103prE78fCXE2eKFxQrxlApYgGTEtWE0EbISdDaO17fhnxYQO
+         FiA+W3Ur704iLDs8gNFHXNgjb/cbSBsGLjJUWwFucOuiCnQ4lBLCAXgwKH3fk8W3uz0T
+         Atbegfm+tmBV9fv0QmAlICM2GAa65VFXPNTyw=
+Received: by 10.50.242.1 with SMTP id wm1mr3197537igc.30.1323956832963;
+        Thu, 15 Dec 2011 05:47:12 -0800 (PST)
+Received: from tre ([115.74.57.162])
+        by mx.google.com with ESMTPS id r18sm21339731ibh.4.2011.12.15.05.47.08
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 15 Dec 2011 05:47:11 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Thu, 15 Dec 2011 20:47:24 +0700
+X-Mailer: git-send-email 1.7.8.36.g69ee2
+In-Reply-To: <1323871699-8839-2-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187207>
 
-On Thu, Dec 15, 2011 at 07:48:51AM -0500, Pete Wyckoff wrote:
 
-> peff@peff.net wrote on Sat, 10 Dec 2011 05:41 -0500:
-> > +static struct termios old_term;
-> > +
-> > +static void restore_term(void)
-> > +{
-> > +	if (term_fd < 0)
-> > +		return;
-> > +
-> > +	tcsetattr(term_fd, TCSAFLUSH, &old_term);
-> > +	term_fd = -1;
-> > +}
-> 
-> Restores from static old_term.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ 2011/12/15 Junio C Hamano <gitster@pobox.com>:
+ >> -     commit_tree(merge_msg.buf, merge_msg.len, result_tree, parent=
+, result_commit, NULL);
+ >> +     if (commit_tree(merge_msg.buf, merge_msg.len,
+ >> +                     result_tree, parent, result_commit, NULL))
+ >> +             die(_("failed to write commit object"));
+ >>       finish(head, result_commit, "In-index merge");
+ >>       drop_save();
+ >>       return 0;
+ >
+ > Should we die immediately, or should we do some clean-ups after ours=
+elves
+ > before doing so?
 
-Right. But note that it is protected by term_fd being set.
+ I'm not sure. I had a quick look over the command and it seems we do
+ not need to do any clean-ups. But I'm not familiar with the command
+ anyway..
 
-> > +char *git_terminal_prompt(const char *prompt, int echo)
-> > +{
-> > +	static struct strbuf buf = STRBUF_INIT;
-> > +	int r;
-> > +	FILE *fh;
-> > +
-> > +	fh = fopen("/dev/tty", "w+");
-> > +	if (!fh)
-> > +		return NULL;
-> > +
-> > +	if (!echo) {
-> > +		struct termios t;
-> > +
-> > +		if (tcgetattr(fileno(fh), &t) < 0) {
-> > +			fclose(fh);
-> > +			return NULL;
-> > +		}
-> > +
-> > +		old_term = t;
-> 
-> Which is only saved if echo is true.
+ > In any case, this is a good change that shouldn't be taken hostage t=
+o the
+ > unrelated change in patch [1/3].
 
-Yes, but just below:
+ Moved it up so it you can cherry-pick it independently.
 
-> > +		term_fd = fileno(fh);
-> > +		sigchain_push_common(restore_term_on_signal);
+ builtin/merge.c |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
 
-We set up term_fd, and then:
-
-> > +		t.c_lflag &= ~ECHO;
-> > +		if (tcsetattr(fileno(fh), TCSAFLUSH, &t) < 0) {
-> > +			term_fd = -1;
-> > +			fclose(fh);
-> > +			return NULL;
-> > +		}
-
-On error, disable it again.
-
-> > +	}
-> > +
-> > +	fputs(prompt, fh);
-> > +	fflush(fh);
-> > +
-> > +	r = strbuf_getline(&buf, fh, '\n');
-> > +	if (!echo) {
-> > +		putc('\n', fh);
-> > +		fflush(fh);
-> > +	}
-> > +
-> > +	restore_term();
-> 
-> Perhaps this line should go in !echo.
-
-It could, but it's a no-op as-is, as term_fd will be -1.
-
-I agree it might be a little more obvious to put it there (I think what
-happened is my initial revision did not look at "echo" ever again, and
-then that conditional was added later when I realized that the "!echo"
-case needed us to print the newline manually).
-
-> And why no sigchain_pop() for the signal handler?
-
-Because I used sigchain_push_common, which has no pop_common analog. But
-it's OK, because calling restore_term sets term_fd to -1, making further
-calls a no-op. So leaving the handler in place is fine.
-
-Another option would be to add sigchain_pop_common, which pops the
-same signals from push_common.
-
--Peff
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 2870a6a..27576c0 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -913,7 +913,8 @@ static int merge_trivial(struct commit *head)
+ 	parent->next->item =3D remoteheads->item;
+ 	parent->next->next =3D NULL;
+ 	prepare_to_commit();
+-	commit_tree(merge_msg.buf, result_tree, parent, result_commit, NULL);
++	if (commit_tree(merge_msg.buf, result_tree, parent, result_commit, NU=
+LL))
++		die(_("failed to write commit object"));
+ 	finish(head, result_commit, "In-index merge");
+ 	drop_save();
+ 	return 0;
+@@ -944,7 +945,8 @@ static int finish_automerge(struct commit *head,
+ 	strbuf_addch(&merge_msg, '\n');
+ 	prepare_to_commit();
+ 	free_commit_list(remoteheads);
+-	commit_tree(merge_msg.buf, result_tree, parents, result_commit, NULL)=
+;
++	if (commit_tree(merge_msg.buf, result_tree, parents, result_commit, N=
+ULL))
++		die(_("failed to write commit object"));
+ 	strbuf_addf(&buf, "Merge made by the '%s' strategy.", wt_strategy);
+ 	finish(head, result_commit, buf.buf);
+ 	strbuf_release(&buf);
+--=20
+1.7.8.36.g69ee2
