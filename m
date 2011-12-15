@@ -1,81 +1,139 @@
-From: Alexey Shumkin <Alex.Crezoff@gmail.com>
-Subject: Re: How to commit incomplete changes?
-Date: Thu, 15 Dec 2011 10:44:44 +0400
-Message-ID: <20111215104444.783303cf@ashu.dyn1.rarus.ru>
-References: <4cfc9cf0515b1bc751f6aa0de4f55e2a@ulrik.uio.no>
+From: Jeff King <peff@peff.net>
+Subject: Re: tr/pty-all (Re: What's cooking in git.git (Dec 2011, #04; Tue,
+ 13))
+Date: Thu, 15 Dec 2011 01:55:29 -0500
+Message-ID: <20111215065529.GA1327@sigill.intra.peff.net>
+References: <7vobvcrlve.fsf@alter.siamese.dyndns.org>
+ <20111214070916.GA14954@elie.hsd1.il.comcast.net>
+ <201112141717.15021.trast@student.ethz.ch>
+ <20111214230713.GA13128@sigill.intra.peff.net>
+ <20111214232151.GB13128@sigill.intra.peff.net>
+ <20111214233119.GA2354@elie>
+ <20111215002530.GA2566@sigill.intra.peff.net>
+ <20111215005057.GB2566@sigill.intra.peff.net>
+ <7vfwgmplgd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Hallvard B Furuseth <h.b.furuseth@usit.uio.no>
-X-From: git-owner@vger.kernel.org Thu Dec 15 07:44:55 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 15 07:55:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rb53m-0001QJ-Lv
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 07:44:55 +0100
+	id 1Rb5E9-0004qe-Bm
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 07:55:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754115Ab1LOGou (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Dec 2011 01:44:50 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:53273 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753748Ab1LOGot (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2011 01:44:49 -0500
-Received: by eekc4 with SMTP id c4so1726290eek.19
-        for <git@vger.kernel.org>; Wed, 14 Dec 2011 22:44:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rarus.ru; s=google;
-        h=sender:date:from:to:cc:subject:message-id:in-reply-to:references
-         :x-mailer:mime-version:content-type:content-transfer-encoding;
-        bh=vgmKGBS0GG90dCjmbpn4kJ7m6sHNcLkIczI0I/6fV4Q=;
-        b=CRRv+5YPOgUZFAke0G96axMP5Df9wQCNZmCFUpa08M88Lz7A2o+eTjjGBt2xbisNVM
-         RLZBkNji9jrY2hk/sWt2dhsN3vvMBmdezlLoHxiJYFD+Apy7ZIT22B3Ip58iTSD5ce6F
-         3K5itOG45If78VwO1ZwmuLaeqNesNMM7vKpOQ=
-Received: by 10.213.15.203 with SMTP id l11mr136708eba.126.1323931487952;
-        Wed, 14 Dec 2011 22:44:47 -0800 (PST)
-Received: from ashu.dyn1.rarus.ru ([85.21.218.130])
-        by mx.google.com with ESMTPS id 58sm20245977eet.11.2011.12.14.22.44.46
-        (version=SSLv3 cipher=OTHER);
-        Wed, 14 Dec 2011 22:44:46 -0800 (PST)
-In-Reply-To: <4cfc9cf0515b1bc751f6aa0de4f55e2a@ulrik.uio.no>
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; i386-redhat-linux-gnu)
+	id S932340Ab1LOGzd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Dec 2011 01:55:33 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50344
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932261Ab1LOGzc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2011 01:55:32 -0500
+Received: (qmail 5973 invoked by uid 107); 15 Dec 2011 07:02:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 Dec 2011 02:02:13 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Dec 2011 01:55:29 -0500
+Content-Disposition: inline
+In-Reply-To: <7vfwgmplgd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187191>
 
->  Do people have any feelings or conventions for how and when to
-> publish a series of commits where the first one(s) break something
-> and the next ones clear it up?
-I'm curiuos, why to you want to commit changes that break something
-separately from fixup?
+On Wed, Dec 14, 2011 at 07:23:14PM -0800, Junio C Hamano wrote:
 
-Many conventions (as I know) use ideology that every commit must NOT
-BREAK existing code or tests. Every SHARED commit. Git design (as you
-must be already know) allows you to make/change/reorder as many commits
-as you want (before you share them or push to a "central" repository).
-So, you have not to be afraid to commit every your change, because you
-can always change/fixup/split your commits.
-
-Usually, you introduce a feature in a branch. Also, your project must
-have (?) (mine do have) unit-tests, at least. And most changes must be
-tested. So, breakage must be discovered early, even after some other
-commits in that feature branch. In that case you can just make a fixup
-commit and then rebase it on a breakage commit with a "squash".
-
-And only after all features made and all tests passed you can share
-them (push to another repo).
-
->I've found some discussion, but with vague results.
+> Jeff King <peff@peff.net> writes:
 > 
->  I'm about to commit some small edits which go together with bigger
->  generated changes.  It seems both more readable and more cherry-pick-
->  friendly to me to keep these in separate commits.
+> > This correctly detects the bug in t7006. I can't decide if it's clever
+> > or ugly.
 > 
->  What I've found is I can use a line in the commit message like
->      "Incomplete change, requires next commit (update foo/ dir)."
->  and, if there is any point, do a no-ff merge past the breakage.
-> 
+> I would say it falls on the latter side of the line by small margin. Let's
+> do the /dev/null thing and be done with it.
+
+Darn, I wanted to post it on my fridge with an "A+".
+
+Here's a cleaned-up version of the /dev/null one.
+
+-- >8 --
+Subject: [PATCH] test-lib: redirect stdin of tests
+
+We want to run tests in a predictable, sterile environment
+so we can get repeatable results.  They should take as
+little input as possible from the environment outside the
+test script. We already sanitize environment variables, but
+leave stdin untouched. This means that scripts can
+accidentally be impacted by content on stdin, or whether
+stdin isatty().
+
+Furthermore, scripts reading from stdin can be annoying to
+outer loops which care about their stdin offset, like:
+
+  while read sha1; do
+      make test
+  done
+
+A test which accidentally reads stdin would soak up all of
+the rest of the input intended for the outer shell loop.
+
+Let's redirect stdin from /dev/null, which solves both
+of these problems. It won't detect tests accidentally
+reading from stdin, but since doing so now gives a
+deterministic result, we don't need to consider that an
+error.
+
+We'll also leave file descriptor 6 as a link to the original
+stdin. Tests shouldn't need to look at this, but it can be
+convenient for inserting interactive commands while
+debugging tests (e.g., you could insert "bash <&6 >&3 2>&4"
+to run interactive commands in the environment of the test
+script).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I went the "redirect each test individually" route. In the course of my
+experimentation, I notice that some tests (e.g., t4013) will do:
+
+  while read x; do
+          test_expect_success "test something ($x)" "
+            ... do some test involving $x ...
+          "
+  done <<\EOF
+  ... some values of $x ....
+  EOF
+
+This protects those loops from accidental stdin-readers inside the test
+scripts, too.
+
+ t/test-lib.sh |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index bdd9513..5ea9fe3 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -191,6 +191,7 @@ then
+ fi
+ 
+ exec 5>&1
++exec 6<&0
+ if test "$verbose" = "t"
+ then
+ 	exec 4>&2 3>&1
+@@ -469,7 +470,7 @@ test_debug () {
+ test_eval_ () {
+ 	# This is a separate function because some tests use
+ 	# "return" to end a test_expect_success block early.
+-	eval >&3 2>&4 "$*"
++	eval </dev/null >&3 2>&4 "$*"
+ }
+ 
+ test_run_ () {
+-- 
+1.7.8.rc2.30.g803b1a
