@@ -1,80 +1,81 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 28/51] refs.c: rename ref_array -> ref_dir
-Date: Thu, 15 Dec 2011 09:19:08 +0100
-Message-ID: <4EE9AD7C.2050605@alum.mit.edu>
-References: <1323668338-1764-1-git-send-email-mhagger@alum.mit.edu> <1323668338-1764-29-git-send-email-mhagger@alum.mit.edu> <7v7h21xps9.fsf@alter.siamese.dyndns.org> <4EE6E61F.8080405@alum.mit.edu> <7vk461vuy9.fsf@alter.siamese.dyndns.org> <4EE7A387.3070400@alum.mit.edu> <4EE7CDF2.3040408@alum.mit.edu> <7vzkewt5qu.fsf@alter.siamese.dyndns.org> <7vborct37c.fsf@alter.siamese.dyndns.org> <20111214023320.GA22141@sigill.intra.peff.net>
+From: Alexey Shumkin <alex.crezoff@gmail.com>
+Subject: Re: How to commit incomplete changes?
+Date: Thu, 15 Dec 2011 12:22:52 +0400
+Message-ID: <20111215122252.584d1003@ashu.dyn1.rarus.ru>
+References: <4cfc9cf0515b1bc751f6aa0de4f55e2a@ulrik.uio.no>
+	<20111215104444.783303cf@ashu.dyn1.rarus.ru>
+	<7e1ccfac8c47e8877c0438086bd1d91b@ulrik.uio.no>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johan Herland <johan@herland.net>,
-	Julian Phillips <julian@quantumfyre.co.uk>,
-	Drew Northup <drew.northup@maine.edu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 15 09:19:35 2011
+Cc: <git@vger.kernel.org>
+To: Hallvard B Furuseth <h.b.furuseth@usit.uio.no>
+X-From: git-owner@vger.kernel.org Thu Dec 15 09:23:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rb6XO-0007xY-Pn
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 09:19:35 +0100
+	id 1Rb6ak-00011B-77
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 09:23:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757321Ab1LOITb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Dec 2011 03:19:31 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:43577 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752550Ab1LOIT3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2011 03:19:29 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.134] (p54BEA4CB.dip.t-dialin.net [84.190.164.203])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id pBF8J8nG026952
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 15 Dec 2011 09:19:09 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.23) Gecko/20110921 Lightning/1.0b2 Thunderbird/3.1.15
-In-Reply-To: <20111214023320.GA22141@sigill.intra.peff.net>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1756098Ab1LOIW5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Dec 2011 03:22:57 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:54763 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752340Ab1LOIW5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2011 03:22:57 -0500
+Received: by eaaj10 with SMTP id j10so1630389eaa.19
+        for <git@vger.kernel.org>; Thu, 15 Dec 2011 00:22:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        bh=A/sVWqUMrrDYhIloTZFcx+XMENNT2LWa21jUWCj93aE=;
+        b=FE0en1mUBAfNC8iMUIDKqsX5GOLSykVrGTxFnnoPQ6EYXU0BeciSVaSZOIRdOGo+H2
+         oa1phfM6VmhR0hXUIbQLq6iucPlHuUgUwUG97+WpQegb3V9MBMlOrhKzHhh+VJGi5L/r
+         jeO/jZmCXNKP8iiYVHQs5QUShglEt4BhfCKPM=
+Received: by 10.205.122.147 with SMTP id gg19mr496358bkc.20.1323937375882;
+        Thu, 15 Dec 2011 00:22:55 -0800 (PST)
+Received: from ashu.dyn1.rarus.ru ([85.21.218.130])
+        by mx.google.com with ESMTPS id d2sm12372156bky.11.2011.12.15.00.22.55
+        (version=SSLv3 cipher=OTHER);
+        Thu, 15 Dec 2011 00:22:55 -0800 (PST)
+In-Reply-To: <7e1ccfac8c47e8877c0438086bd1d91b@ulrik.uio.no>
+X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; i386-redhat-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187198>
 
-On 12/14/2011 03:33 AM, Jeff King wrote:
-> On Tue, Dec 13, 2011 at 04:19:19PM -0800, Junio C Hamano wrote:
->> Actually, I do not think it even needs to be the "extra *REF* API". The
->> only thing that matters is that these commits are considered to be extra
->> anchor point in the history, in addition to the usual rule of considering
->> that everything reachable from our refs is complete. The data structure to
->> hold them does not even have to be a "struct ref". Just an array of object
->> names (or "struct object *") should suffice.
+Oh! I got it. I missed "generated changes".
+Well, unfortunately (or fortunately ;) ), I did not meet such a workflow
+when changes are "generated" without my hands.
+In your case it may sound reasonable to make separate fixup commit.
+But Git allows you to make your own (more flexible than SVN,
+for instance) workflow, which suits you. It's up to you ;)
+You decide.
+If you plan cherry-picking that fixups, do separate fixups. Just
+publish them together.
+If you want every commit is "clear" and "workable", squash fixup into
+a single commit.
+I do not know what exactly is "generated changes" you're talking
+about ), so, maybe I'd do separate fixups, maybe not. ))
+There is no single solution. ))) TIMTOWTDI
+That is why you hesitate :) Do your own decision. And feel free to
+change it later. ))
+
+>  To expand on that: To review the change, review the hand-edited 
+>  commits,
+>  which is easier when these do not drown in generated changes.  Review
+>  the *commands* which generated the rest - I'd put those in the commit
+>  message - and glance at the actual changes.  Cherry-pick: Possbly you
+>  need to run the commands instead of cherry-picking the generated
+>  changes.  That's easier with a commit with only generated changes.
 > 
-> Since my cff38a5 (receive-pack: eliminate duplicate .have refs,
-> 2011-05-19), receive-pack simply has a packed array of binary sha1s (in
-> a "struct sha1_array" object). That might be the simplest thing.
-
-It was pretty easy to eliminate the use of extra_refs from receive-pack.
- I'll submit the patches as soon as I can.  The patches will be based
-off of patch 16/51 of the ref-api-D series, since Junio indicated that
-he wants to queue up those commits (let me know if you have a different
-preference).
-
-Now I'm looking at the uses of extra_refs in git-clone.  One thing it
-does is add some extra refs then write them to the packed-refs file.  I
-still have to dig into it, but this seems strange.  If the refs are
-being written to packed-refs, it seems like they must be real (not
-extra) refs, or perhaps are just about to become real refs as part of
-the clone.  Or is something more egregious is going on?
-
-Moving the pack_refs() function to refs.c was on the agenda anyway, so
-it should be possible to sort this out at the same time.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+>  I know it also can cause problems.  Would you make a single big
+> commit anyway, and describe carefully in the commit message which
+> parts are hand-edits?  (We don't auto-test commits yet, but I'll sure
+> this issue will crop up again later when we do.)
+> 
