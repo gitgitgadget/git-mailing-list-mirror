@@ -1,73 +1,131 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 0/2] Improve git-bundle builtin
-Date: Thu, 15 Dec 2011 14:54:56 -0600
-Message-ID: <20111215205340.GA16160@elie.hsd1.il.comcast.net>
-References: <20111208175913.GK2394@elie.hsd1.il.comcast.net>
- <1323967528-10537-1-git-send-email-artagnon@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Joey Hess <joey@kitenet.net>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 15 21:55:17 2011
+From: Joe Ratterman <jratt0@gmail.com>
+Subject: [PATCH] Add '-P' as a synonym for '--no-pager' in the git command
+Date: Thu, 15 Dec 2011 14:55:41 -0600
+Message-ID: <1323982541-18995-1-git-send-email-jratt0@gmail.com>
+Cc: Joe Ratterman <jratt0@gmail.com>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 15 21:56:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbIKh-0006lS-Rf
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 21:55:16 +0100
+	id 1RbILb-0007Gx-Jt
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 21:56:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759350Ab1LOUzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Dec 2011 15:55:08 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:53011 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751597Ab1LOUzH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2011 15:55:07 -0500
-Received: by wgbdr13 with SMTP id dr13so4695957wgb.1
-        for <git@vger.kernel.org>; Thu, 15 Dec 2011 12:55:06 -0800 (PST)
+	id S1759390Ab1LOU4G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Dec 2011 15:56:06 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:58957 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759225Ab1LOU4F (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2011 15:56:05 -0500
+Received: by faar15 with SMTP id r15so2676704faa.19
+        for <git@vger.kernel.org>; Thu, 15 Dec 2011 12:56:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=G5fpqJeF6daWuqCMOPpgQNQsKjdnnAyxCAaLGV4joPY=;
-        b=eXutfzAislPJp5sfHwsCiIqW768oozwRb+SzOaruVUsfqMpWDqdW+5vBdgQsoHUr+/
-         6hheS5uiU4iIBZwr0oUvTt5NMEKkaCfBlLMMNx9ykojtCtzoOiU/nWzIPFkx5UM/3zwz
-         ZPtOl489L9lI0L0hBOynO27bZXo0BjuDiTKhQ=
-Received: by 10.216.138.76 with SMTP id z54mr1677208wei.17.1323982506467;
-        Thu, 15 Dec 2011 12:55:06 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id b5sm11232867wbh.4.2011.12.15.12.55.03
-        (version=SSLv3 cipher=OTHER);
-        Thu, 15 Dec 2011 12:55:05 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1323967528-10537-1-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=CBZuZ0IjhLT3lut8PBEsAVPWHbT6eEXtHWnqSvA+/ec=;
+        b=s49cbhpr5ZCKFNXolINM/dcGpcWHiP4QQn38udPqKo2FNBpBiFeYVWdAlM9qJ8WytA
+         ygZYwc8GBIr2P0dLvli3NS4HQ5yAy326KqcjWoGLi8cXVEEGBXNLxlkJMGX2aBm+2tUY
+         i9IokDtUI2xo0P7BwiAED65hxm0QtR80jUxpE=
+Received: by 10.180.106.105 with SMTP id gt9mr10056496wib.39.1323982563190;
+        Thu, 15 Dec 2011 12:56:03 -0800 (PST)
+Received: from localhost.localdomain (rchp4.rochester.ibm.com. [129.42.161.36])
+        by mx.google.com with ESMTPS id fi11sm11223606wbb.9.2011.12.15.12.56.01
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 15 Dec 2011 12:56:02 -0800 (PST)
+X-Mailer: git-send-email 1.7.7.1.3.ge148a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187231>
 
-Hi Ram,
+  Also, add both -P|--no-pager to the existing -p|--paginate in bash
+  completion.
 
-Ramkumar Ramachandra wrote:
+Signed-off-by: Joe Ratterman <jratt0@gmail.com>
+---
+ Documentation/git.txt                  |    3 ++-
+ contrib/completion/git-completion.bash |    2 +-
+ git.c                                  |    4 ++--
+ t/t7006-pager.sh                       |    8 ++++++++
+ 4 files changed, 13 insertions(+), 4 deletions(-)
 
-> 1. There's a SP between the OBJID and the ref name in list-heads as
-> opposed to the TAB used by other git commands such as ls-remote,
-> diff-tree.  Will fixing it break someone's parser somewhere?
-
-I don't know.  Would there be any advantage at all to changing the
-output format of the tool?  Bad idea.
-
-If the goal is to avoid confusion, perhaps a note in the documentation
-would help.
-
-> 2. Is it worth fixing the "--stdin" tests?  What is the usecase?
-
-Is "script that wants to list which revs to bundle, possibly exceeding
-the command-line length limit" not enough of a use case?  Yes, I think
-it is very much worth fixing.
-
-Thanks for looking at this.
-Jonathan
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index e869032..c7f8445 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git' [--version] [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+-    [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
++    [-p|--paginate|-P|--no-pager] [--no-replace-objects] [--bare]
+     [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+     [-c <name>=<value>]
+     [--help] <command> [<args>]
+@@ -329,6 +329,7 @@ help ...`.
+ 	configuration options (see the "Configuration Mechanism" section
+ 	below).
+ 
++-P::
+ --no-pager::
+ 	Do not pipe git output into a pager.
+ 
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index cc1bdf9..8b9ea1b 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2640,7 +2640,7 @@ _git ()
+ 		case "$i" in
+ 		--git-dir=*) __git_dir="${i#--git-dir=}" ;;
+ 		--bare)      __git_dir="." ;;
+-		--version|-p|--paginate) ;;
++		--version|-p|--paginate|-P|--no-pager) ;;
+ 		--help) command="help"; break ;;
+ 		*) command="$i"; break ;;
+ 		esac
+diff --git a/git.c b/git.c
+index 8e34903..baa1613 100644
+--- a/git.c
++++ b/git.c
+@@ -7,7 +7,7 @@
+ 
+ const char git_usage_string[] =
+ 	"git [--version] [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n"
+-	"           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]\n"
++	"           [-p|--paginate|-P|--no-pager] [--no-replace-objects] [--bare]\n"
+ 	"           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n"
+ 	"           [-c name=value] [--help]\n"
+ 	"           <command> [<args>]";
+@@ -103,7 +103,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 			exit(0);
+ 		} else if (!strcmp(cmd, "-p") || !strcmp(cmd, "--paginate")) {
+ 			use_pager = 1;
+-		} else if (!strcmp(cmd, "--no-pager")) {
++		} else if (!strcmp(cmd, "-P") || !strcmp(cmd, "--no-pager")) {
+ 			use_pager = 0;
+ 			if (envchanged)
+ 				*envchanged = 1;
+diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+index 320e1d1..783915e 100755
+--- a/t/t7006-pager.sh
++++ b/t/t7006-pager.sh
+@@ -84,6 +84,14 @@ test_expect_success 'no pager even with --paginate when stdout is a pipe' '
+ 	! test -e paginated.out
+ '
+ 
++test_expect_success TTY 'no pager with -P' '
++	rm -f paginated.out ||
++	cleanup_fail &&
++
++	test_terminal git -P log &&
++	! test -e paginated.out
++'
++
+ test_expect_success TTY 'no pager with --no-pager' '
+ 	rm -f paginated.out ||
+ 	cleanup_fail &&
+-- 
+1.7.7.1
