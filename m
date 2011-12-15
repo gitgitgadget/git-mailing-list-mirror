@@ -1,77 +1,81 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: Git difftool / mergetool on directory tree
-Date: Thu, 15 Dec 2011 13:53:01 -0600
-Message-ID: <4EEA501D.3050401@gmail.com>
-References: <4EE8618E.7020902@gmail.com>
+From: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
+Subject: [msysGit] Windows & executable bit for newly created files
+Date: Thu, 15 Dec 2011 21:07:35 +0100
+Message-ID: <4EEA5387.5020808@dirk.my1.cc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Daniele Segato <daniele.bilug@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 15 20:53:12 2011
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 15 21:07:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbHMd-0007Pk-E3
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 20:53:11 +0100
+	id 1RbHai-00066X-9P
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Dec 2011 21:07:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756321Ab1LOTxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Dec 2011 14:53:06 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:56653 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751300Ab1LOTxE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Dec 2011 14:53:04 -0500
-Received: by yenm11 with SMTP id m11so1724702yen.19
-        for <git@vger.kernel.org>; Thu, 15 Dec 2011 11:53:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=Cu88yAoj6avwQSC3/o1WjYM/Jhd4EoF7Eu3NQTdyneU=;
-        b=QqIQPUXIUwWaBWpL60mHsM+2JQeKX5w2J46dBTH87z8UOSug48EzYPbLZ8NVedNoC4
-         yYXmGwE73h1aZO3H5OpyrsVFtDhmEWGG+Jk5LdXqy9Ur87kyou+o0ZYxIaISX6Ue8ak1
-         rfp/SY+sK2AuMEmxsSjpzD161QOg8eICS1nZQ=
-Received: by 10.236.175.72 with SMTP id y48mr7417047yhl.17.1323978784347;
-        Thu, 15 Dec 2011 11:53:04 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id 5sm12706757anz.14.2011.12.15.11.53.03
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 15 Dec 2011 11:53:03 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.24) Gecko/20111103 Thunderbird/3.1.16
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <4EE8618E.7020902@gmail.com>
+	id S1756246Ab1LOUHk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Dec 2011 15:07:40 -0500
+Received: from smtprelay04.ispgateway.de ([80.67.31.42]:54398 "EHLO
+	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751400Ab1LOUHj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2011 15:07:39 -0500
+Received: from [84.176.39.18] (helo=[192.168.2.100])
+	by smtprelay04.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1RbHaa-0003LU-HS
+	for git@vger.kernel.org; Thu, 15 Dec 2011 21:07:36 +0100
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
+X-Df-Sender: NzU3NjQ2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187228>
 
-On 12/14/2011 2:42 AM, Daniele Segato wrote:
-> many diff / merge tool around have the ability to compare a directory
-> tree (meld is one, but there are many).
->
-> Is there a way to start a difftool or a mergetool on a folder instead of
-> the single file?
->
-> It would be an handsome feature to git.
->
-> I googled a little before popping out this question and I only found
-> suggestion on how to open "many" file at once instead of opening them
-> serially but that's not the same thing not as powerful as directory
-> comparison.
->
-(This works with kdiff3 as the mergetool/difftool on git 1.7.1 on linux):
+Hi,
 
-git difftool <commit>:<dir>/ <commit-2>:<dir>/
+I sometimes write new (shell/perl) scripts under Windows whithin
+msysGit's bash. An "ls -l" shows them as executable:
 
-e.g., git difftool mycommit:ourdir/ yourcommit:ourdir/
+$ ls -l
 
-<commit> = pointer to a commit (ie: sha-1, branchname, tag, ref)
-<dir> = path of dir relative to worktree
+    -rwxr-xr-x  ...  11 Dec 15 20:33 test.sh
+
+Ok, "ls" just *pretends* they have the bit set (I think it just peeks
+for the she-bang line).
+
+Adding the file and looking at the patch gives:
+
+$ git add test.sh
+$ git diff --cached
+
+    diff --git a/test.sh b/test.sh
+    new file mode 100644
+    index 0000000..13f4793
+    --- /dev/null
+    +++ b/test.sh
+    @@ -0,0 +1,2 @@
+    +#!/bin/sh
+    +
+
+Is there a way to convince git that the new mode is 755 instead of 644,
+even with core.filemode set to false? So that the mode is correct when I
+checkout the file under Linux later on?
+
+My impression is that when git once knows the file has 755, it remembers
+that. I'd like to avoid those commits (made under Linux) with "chmod +x
+for scripts newly created under Windows".
+
+Sometimes I create a script under Windows, add and commit it, create a
+patch (git-format-patch), edit the patch (644 -> 755), reset the branch,
+and finally git-am the patch. It works but is not particularly convenient.
+
+Is there sth. like
+
+$ git add --filemode=755 <filepattern>   ?
 
 
-v/r,
-neal
+Cheers,
+    Dirk
