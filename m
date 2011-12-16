@@ -1,104 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] attr: map builtin userdiff drivers to well-known
- extensions
-Date: Fri, 16 Dec 2011 14:21:04 -0500
-Message-ID: <20111216192104.GA19924@sigill.intra.peff.net>
-References: <20111216110000.GA15676@sigill.intra.peff.net>
- <4EEB4F13.2010402@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Adding hooks.directory config option; wiring into
+ run_hook
+Date: Fri, 16 Dec 2011 11:23:28 -0800
+Message-ID: <7viplgiamn.fsf@alter.siamese.dyndns.org>
+References: <CADQnX_e76LzuRUDOKFOsRHU=e8Cw+qh5x1BdW5HMEdMmP5PaHg@mail.gmail.com>
+ <7vmxasie6k.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Brandon Casey <drafnel@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Dec 16 20:21:14 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Christopher Dale <chrelad@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 16 20:23:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbdLF-0001Kp-Rk
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 20:21:14 +0100
+	id 1RbdNe-0002Ej-MQ
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 20:23:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760572Ab1LPTVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Dec 2011 14:21:09 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44257
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760557Ab1LPTVH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Dec 2011 14:21:07 -0500
-Received: (qmail 6993 invoked by uid 107); 16 Dec 2011 19:27:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 16 Dec 2011 14:27:48 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Dec 2011 14:21:04 -0500
-Content-Disposition: inline
-In-Reply-To: <4EEB4F13.2010402@viscovery.net>
+	id S1760591Ab1LPTXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Dec 2011 14:23:36 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54638 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760589Ab1LPTXc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2011 14:23:32 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A9AA741C;
+	Fri, 16 Dec 2011 14:23:30 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gEeaXvxI8DvEEggW6ibbCoV0EUU=; b=u/Lcnb
+	e5BJZyJ6j9NIEPE5JRmiq7FenVXQA9YorHyqjTrLhlEywTAz0F4mDwrdRloWAPWd
+	YRV7kB1zZkEGU4P9HRq10/aNwVJiyJXi+5h4dLHURszTBwDRXfkT5/HZzNaaO7mv
+	YcCEDCmdX9MBWZLjDp/fH1rM4P97Exd7x9qXM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=b3K/UziNFoEYlACLLr6KFnRXTJ7hXymQ
+	Oe4CFjRI+r0aBjXUNVN7slNilXP/hpqnbNnE6mXdqYfvER93nVWgs1m4pRVbH/3r
+	e+v0BlKghXeLSMLzxC/00uAATim4mQ3aaOWK8hem5P6tyWDx68ZZNqpTG2jXBFkf
+	mXJZc/hjHQc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9226F741B;
+	Fri, 16 Dec 2011 14:23:30 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 27B2F741A; Fri, 16 Dec 2011
+ 14:23:30 -0500 (EST)
+In-Reply-To: <7vmxasie6k.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Fri, 16 Dec 2011 10:06:43 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6FBD57F0-281B-11E1-8F32-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187303>
 
-On Fri, Dec 16, 2011 at 03:00:51PM +0100, Johannes Sixt wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Am 12/16/2011 12:00, schrieb Jeff King:
-> >  static const char *builtin_attr[] = {
-> ...
-> > +	"*.c diff=cpp",
-> > +	"*.cc diff=cpp",
-> > +	"*.cxx diff=cpp",
-> > +	"*.cpp diff=cpp",
-> > +	"*.h diff=cpp",
-> > +	"*.hpp diff=cpp",
-> 
-> Please don't do this. It would be a serious regression for C++ coders, and
-> some C coders as well. The built-in hunk header patterns are severly
-> broken and don't work well with C++ code. I know for sure that the
-> following are not recognized:
-> 
-> - template declarations, e.g. template<class T> func(T x);
-> - constructor definitionss, e.g. MyClass::MyClass()
-> - functions that return references, e.g. const string& func()
-> - function definitions along the GNU coding style, e.g.
-> 
->      void
->      the_func ()
+> Christopher Dale <chrelad@gmail.com> writes:
+>
+>> ...
+>> trusted path execution policies. These systems require that any file
+>> that can be executed exhibit at least the following characteristics:
+>>
+>>   * The executable, it's directory, and each directory above it are
+>>     not writable.
+>> 
+>> Since the hooks directory is within a directory that by it's very nature
+>> requires write permissions,...
+>
+> Sorry, but I am not interested at all. If you can write into $GIT_DIR/config
+> then you can point at any directory with hooks.directory and that would mean
+> it would defeat your "trusted path execution policies".
 
-Hmm. I think it's a legitimate criticism to say "hunk-header detection
-is a broken feature because our heuristics aren't good enough, and we
-shouldn't start using it by default because people will complain because
-it sucks too much".
-
-At the same time, I think we have seen people complaining that the
-regular dumb funcname detection is not good enough[1], and that using
-language-specific funcnames, while not 100% perfect, produces better
-results on the whole.
-
-So I think rather than saying "this doesn't always work", it's important
-to ask "on the whole, does this tend to produce better results than
-without, and when we are wrong, how bad is it?"
-
-I'm not clear from what you wrote on whether you were saying it is
-simply sub-optimal, or whether on balance it is way worse than the
-default funcname matching.
-
-And if it is bad on balance, is the right solution to avoid exposing
-people to it, or is it to make our patterns better? I.e., is it fixable,
-or is it simply too hard a problem to get right in the general case, and
-we shouldn't turn it on by default?
-
-> I am currently using this pattern (but I'm sure it can be optimized) with
-> an appropriate xcpp attribute:
-> 
-> [diff "xcpp"]
->         xfuncname = "!^[
-> \\t]*[a-zA-Z_][a-zA-Z_0-9]*[^()]*:[[:space:]]*$\n^[a-zA-Z_][a-zA-Z_0-9]*.*"
-
-So, I'm confused. If you are using this, surely you have "*.c diff=xcpp"
-in your attributes file, and my patch has no effect for you, as it is
-lower precedence than user-supplied gitattributes? Also, if you called
-it diff.cpp.xfuncname, then wouldn't my patch still be useful, as your
-complaint is not "my *.c files are not actually C language" but "the C
-language driver sucks" (but you be remedying that by providing your own
-config).
-
--Peff
+I was about to follow-up with "the only option that may make sense in such
+an environment may be to disable hooks", but after thinking about it more,
+if somebody enables hooks, the environment will make sure that they will
+fail to execute, and it would be an incentive enough for people to disable
+them. IOW, no need to have such an option, even.
