@@ -1,162 +1,57 @@
-From: Christopher Dale <chrelad@gmail.com>
-Subject: [PATCH] Adding hooks.directory config option; wiring into run_hook
-Date: Fri, 16 Dec 2011 12:00:58 -0600
-Message-ID: <CADQnX_e76LzuRUDOKFOsRHU=e8Cw+qh5x1BdW5HMEdMmP5PaHg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] attribute "eol" with "crlf"
+Date: Fri, 16 Dec 2011 10:03:03 -0800
+Message-ID: <7vr504ieco.fsf@alter.siamese.dyndns.org>
+References: <CAN0XMO+OOdTJ+aNMSc2G3RVc7Wfypr4+7dU3US9GVAmMiSJ7cg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 16 19:01:10 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Ralf Thielow <ralf.thielow@googlemail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 16 19:03:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rbc5h-00088c-EC
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 19:01:05 +0100
+	id 1Rbc7k-0000kK-Fx
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 19:03:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760315Ab1LPSBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Dec 2011 13:01:00 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:38423 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756517Ab1LPSA7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Dec 2011 13:00:59 -0500
-Received: by wgbdr13 with SMTP id dr13so6613307wgb.1
-        for <git@vger.kernel.org>; Fri, 16 Dec 2011 10:00:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=Xufqbg+X3vbCMKrMNpCoo3EDt0ZCsqoT0se/+OalTEg=;
-        b=IFwRFR3AhhfbvgYbsWblowQE3nsQAfXZa6pYHl6gTzyVesHrMBnTkU6+/BTFscAkHl
-         +imUgHBropbrjK5ZhOmaF4X2UfeakdI+E0jWb47p3jp19zm3jKHaEq1T58vR3kFEFosg
-         5Snhfpj9A3lXnCUKSkrXDkYokePiPuERLirvY=
-Received: by 10.216.137.28 with SMTP id x28mr3664546wei.0.1324058458214; Fri,
- 16 Dec 2011 10:00:58 -0800 (PST)
-Received: by 10.216.155.148 with HTTP; Fri, 16 Dec 2011 10:00:58 -0800 (PST)
+	id S1760307Ab1LPSDI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Dec 2011 13:03:08 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44324 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754249Ab1LPSDF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2011 13:03:05 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 18E2159E5;
+	Fri, 16 Dec 2011 13:03:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WJfn+I54MXu8S0P/JJVp7oEag0Y=; b=fVmmQY
+	A8wCvAUZHLn9fzL/bU8WA3zAUvzoVL5H683A/u/mS9S/3oydg7Mw7ZRzu+SA84v2
+	k/kDt52BobCXtojNFWhqZDSGby5EH8bIQo6rbR2Wsp/vZ9kFHWJoIZqW6rMjg0K/
+	9arq6o3+xqjln8vVfpN/Edn6ivSPvJzsVjPdQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HGzqL9pqXvuaY4zDxemRo4gYI+zDVPGW
+	G0QjJ3rbtuaGP5+fzw+Aqg1zZyWTBH/Z7YOuVs3Q5Q5uRBR8aXR4R7SeymAleyRP
+	cHEp54dkAtvvtxGPuMIXkzUFWowTjocsRUZvGMlQP01dRPHmmC1udPPsra5LWgoO
+	tGwHHbOTuzc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1076859E4;
+	Fri, 16 Dec 2011 13:03:05 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9A39C59E1; Fri, 16 Dec 2011
+ 13:03:04 -0500 (EST)
+In-Reply-To: <CAN0XMO+OOdTJ+aNMSc2G3RVc7Wfypr4+7dU3US9GVAmMiSJ7cg@mail.gmail.com> (Ralf
+ Thielow's message of "Fri, 16 Dec 2011 18:44:21 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 337FBCB6-2810-11E1-A315-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187293>
 
->From 92a34696bb4e76ae7a967666234f13d04858bb68 Mon Sep 17 00:00:00 2001
-From: Christopher Dale <chrelad@gmail.com>
-Date: Fri, 16 Dec 2011 10:55:26 -0600
-Subject: [PATCH] Adding hooks.directory config option; wiring into run_hook
-
-The new hooks.directory config option allows each git repository to
-specify the location of the hooks for that repository. The default
-remains $GIT_DIR/hooks. The ability to change the hooks directory is
-necessary when stuck in an environment with enhanced security and
-trusted path execution policies. These systems require that any file
-that can be executed exhibit at least the following characteristics:
-
-  * The executable, it's directory, and each directory above it are
-    not writable.
-
-Since the hooks directory is within a directory that by it's very nature
-requires write permissions, hooks are a non-starter in git's current
-state. This patch aims to allow a (most likely bare) repo to have it's
-hooks directory customized to a location that meets the above
-requirements.
-
-I'm not terribly good at C++, so please let me know if I need to fix
-anything. I saw that there were a bunch of scripts that have
-GIT_DIR/hooks hard-coded in them. Since I'm not familiar with those
-scripts, I will leave them alone for now. Maybe someone that is familiar
-with the scripts can integrate the new configuration option into them?
----
- Documentation/config.txt               |    5 +++++
- contrib/completion/git-completion.bash |    1 +
- run-command.c                          |   25 +++++++++++++++++++++++--
- 3 files changed, 29 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 8a7d2d4..c23417c 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1226,6 +1226,11 @@ help.autocorrect::
-        value is 0 - the command will be just shown but not executed.
-        This is the default.
-
-+hooks.directory::
-+       Override the default hook directory location GIT_DIR/hooks. This can be
-+       usefull if you are in an environment that has trusted path execution for
-+       example.
-+
- http.proxy::
-        Override the HTTP proxy, normally configured using the 'http_proxy'
-        environment variable (see linkgit:curl[1]).  This can be overridden
-diff --git a/contrib/completion/git-completion.bash
-b/contrib/completion/git-completion.bash
-index cc1bdf9..066948e 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2177,6 +2177,7 @@ _git_config ()
-                help.autocorrect
-                help.browser
-                help.format
-+               hooks.directory
-                http.lowSpeedLimit
-                http.lowSpeedTime
-                http.maxRequests
-diff --git a/run-command.c b/run-command.c
-index 1c51043..2e5fa16 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "diff.h"
- #include "run-command.h"
- #include "exec_cmd.h"
- #include "argv-array.h"
-@@ -65,6 +66,7 @@ static int execv_shell_cmd(const char **argv)
- #ifndef WIN32
- static int child_err = 2;
- static int child_notifier = -1;
-+static const char *hook_directory = NULL;
-
- static void notify_parent(void)
- {
-@@ -603,6 +605,14 @@ int finish_async(struct async *async)
- #endif
- }
-
-+static int git_hook_config(const char *var, const char *value, void *cb)
-+{
-+       if (!strcmp(var, "hooks.directory"))
-+               return git_config_pathname(&hook_directory, var, value);
-+
-+       return git_diff_ui_config(var, value, cb);
-+}
-+
- int run_hook(const char *index_file, const char *name, ...)
- {
-        struct child_process hook;
-@@ -612,11 +622,22 @@ int run_hook(const char *index_file, const char
-*name, ...)
-        va_list args;
-        int ret;
-
--       if (access(git_path("hooks/%s", name), X_OK) < 0)
-+       // If this is not reset to NULL, then strange stuff happens
-+       hook_directory = NULL;
-+
-+       // Load the configuration for hooks.directory
-+       git_config(git_hook_config, NULL);
-+
-+       // If the configuration is not set for hooks directory, set it to the
-+       // default GIT_PATH/hooks directory that we all know and love.
-+       if(hook_directory == NULL)
-+               hook_directory = git_path("hooks");
-+
-+       if (access(mkpath("%s/%s", hook_directory, name), X_OK) < 0)
-                return 0;
-
-        va_start(args, name);
--       argv_array_push(&argv, git_path("hooks/%s", name));
-+       argv_array_push(&argv, mkpath("%s/%s", hook_directory, name));
-        while ((p = va_arg(args, const char *)))
-                argv_array_push(&argv, p);
-        va_end(args);
--- 
-1.7.5.2.353.g5df3e
+Can you bisect?
