@@ -1,106 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] attribute "eol" with "crlf"
-Date: Fri, 16 Dec 2011 14:17:04 -0800
-Message-ID: <7vehw4go0v.fsf@alter.siamese.dyndns.org>
-References: <CAN0XMO+OOdTJ+aNMSc2G3RVc7Wfypr4+7dU3US9GVAmMiSJ7cg@mail.gmail.com>
- <vpqr504wf70.fsf@bauges.imag.fr> <7vmxasgqlm.fsf@alter.siamese.dyndns.org>
- <CAN0XMOL674Hw_LctTC+8NNqA84Of6dMjdKT0SU+DWMG7EYShYQ@mail.gmail.com>
+From: David =?utf-8?q?=E2=80=98Bombe=E2=80=99_Roden?= 
+	<bombe@pterodactylus.net>
+Subject: Strange behaviour with git-add, .gitignore and a tracked file
+Date: Fri, 16 Dec 2011 22:57:57 +0100
+Message-ID: <201112162258.04661.bombe@pterodactylus.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git <git@vger.kernel.org>
-To: Ralf Thielow <ralf.thielow@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 16 23:17:16 2011
+Content-Type: multipart/signed;
+  boundary="nextPart6104809.u55lBJFu0p";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 16 23:23:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rbg5Z-0002ZN-UN
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 23:17:14 +0100
+	id 1RbgBa-00059g-Aa
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 23:23:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760878Ab1LPWRK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Dec 2011 17:17:10 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36339 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756644Ab1LPWRH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Dec 2011 17:17:07 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CF41C768E;
-	Fri, 16 Dec 2011 17:17:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=CASJCEp8qRVO
-	dbBeBpnghDkE1Ng=; b=ICPaKcr1pSrDm9jf8A1HTqtqxhzRosvDr30y5l81EGLx
-	781GLBG8Dv2BOsCIvQtj2FxE5YfEz4X3V20jTO5tTHO+bjcgQiePuiqUKa8QdA7k
-	AHmjLrG0QRimI++XTV7w5DQWRiyhBhpIz25e9FUBCvwuup2cCPrJinlfuNjmIxE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=iifSPz
-	/xCHnCyYb5Uc+32zoY/juW08CEgKAvBAbsHKeVxPc+kXcHY76EZca/cRpLLRMGJF
-	//iwa0WkVI1LLm+G+2sa3JeI3qHGJS44dzjKkShlG/un7Qf/Zvccb9oawXD+JJXt
-	cgXL1eP+G1P3l9dKiV6sp488HfJ+2/xh67k9I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C66E8768D;
-	Fri, 16 Dec 2011 17:17:06 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 59ACD768B; Fri, 16 Dec 2011
- 17:17:06 -0500 (EST)
-In-Reply-To: <CAN0XMOL674Hw_LctTC+8NNqA84Of6dMjdKT0SU+DWMG7EYShYQ@mail.gmail.com> (Ralf
- Thielow's message of "Fri, 16 Dec 2011 23:05:27 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B0481A36-2833-11E1-8BD4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932654Ab1LPWXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Dec 2011 17:23:21 -0500
+Received: from weltgehirnmaschine.de ([46.163.73.232]:50765 "EHLO
+	beak.pterodactylus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756644Ab1LPWXU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2011 17:23:20 -0500
+X-Greylist: delayed 1486 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Dec 2011 17:23:20 EST
+Received: from magnesium ([10.98.86.14]:55139 helo=magnesium.localnet)
+	by beak.pterodactylus.net with esmtps (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.71)
+	(envelope-from <bombe@pterodactylus.net>)
+	id 1RbfnT-0007LT-2c
+	for git@vger.kernel.org; Fri, 16 Dec 2011 22:58:31 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.35-31-generic-pae; KDE/4.5.5; i686; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187326>
 
-Ralf Thielow <ralf.thielow@googlemail.com> writes:
+--nextPart6104809.u55lBJFu0p
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-> So i have to commit ".gitattributes" and everything is fine for me af=
-ter!?
+Hi.
 
-No.  Sorry if I was unclear, but I do not see which part was unclear in
-what I wrote, so...
+I stumbled across some strange behaviour today:
 
->> The sequence adds "test\r\n" file without .gitattributes to have the
->> repository record that exact byte sequence for the file. But then la=
-ter
->> goes around and says "This file wants to express the end of line wit=
-h CRLF
->> on the filesystem, so please replace LF in the repository representa=
-tion
->> to CRLF when checking out, and replace CRLF in the working tree to L=
-=46 when
->> checking in".
->>
->> So it is not surprising that "\r\n" coming from the repository is re=
-placed
->> to "\r\r\n" when checked out. As far as the repository data is conce=
-rned,
->> that line has a funny byte with value "\r" at the end, immediately b=
-efore
->> the line terminator "\n".
->>
->> What you said is _technically_ correct in that sense.
->>
->> However, I think the CRLF filter used to have a hack to strip "\r" i=
-f the
->> repository data records "\r" at the end of line. This was intended t=
-o help
->> people who checked in such a broken text file (if it is a text file,=
- then
->> raw ascii CR does not have a place in it in the repository represent=
-ation)
->> and it was a useful hack to help people recover from such mistakes t=
-o
->> start the project from DOS-only world (with CRLF in the repository d=
-ata)
->> and migrate to cross platform world (with LF in the repository data,=
- CRLF
->> in the DOS working tree). =C2=A0I suspect that the streaming filter =
-conversion
->> may not have the same hack in it.
+=2D--
+git init git-test
+cd git-test
+echo '*' > .gitignore
+git add -f .gitignore
+git commit -m "Add gitignore."
+mkdir dir
+echo a > dir/file
+git add -f dir/file
+git commit -m "Add dir/file."
+echo b >> dir/file
+git add dir/file
+=2D--
+
+The last git-add results in the following error message:
+
+=2D--
+The following paths are ignored by one of your .gitignore files:
+dir
+Use -f if you really want to add them.
+fatal: no files added
+=2D--
+
+While it is true that the file specification matches a pattern in .gitignor=
+e,=20
+the file is already tracked and should not be ignored.
+
+This behaviour was reproduced with 1.7.7.4 (on OS X), 1.7.5.4, 1.7.1,=20
+1.7.8-247-g10f4eb6 (latest master as of a couple of hours ago) (all Linux).
+
+
+Greetings,
+
+	David
+=2D-=20
+David =E2=80=98Bombe=E2=80=99 Roden <bombe@pterodactylus.net>
+
+--nextPart6104809.u55lBJFu0p
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEABECAAYFAk7rvugACgkQsh8Hgp5TwkOQXwCfSsHDDWRgmF4rnmEXq6/bnPHM
+z+YAn2atasoH4Q59sqN4uFuaq741lp1T
+=Xu+S
+-----END PGP SIGNATURE-----
+
+--nextPart6104809.u55lBJFu0p--
