@@ -1,81 +1,83 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH] Fix an "variable might be used uninitialized" gcc warning
-Date: Fri, 16 Dec 2011 22:44:38 +0000
-Message-ID: <4EEBC9D6.6010204@ramsay1.demon.co.uk>
+Subject: [PATCH] grep.h: Fix compilation error on mingw
+Date: Fri, 16 Dec 2011 22:56:22 +0000
+Message-ID: <4EEBCC96.3010901@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 16 23:58:43 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: trast@student.ethz.ch
+X-From: git-owner@vger.kernel.org Fri Dec 16 23:58:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rbgjf-0001mR-To
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 23:58:40 +0100
+	id 1Rbgjk-0001nx-Ny
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 23:58:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760931Ab1LPW6f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Dec 2011 17:58:35 -0500
-Received: from lon1-post-1.mail.demon.net ([195.173.77.148]:44063 "EHLO
-	lon1-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760864Ab1LPW6d (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Dec 2011 17:58:33 -0500
+	id S1760943Ab1LPW6k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Dec 2011 17:58:40 -0500
+Received: from lon1-post-3.mail.demon.net ([195.173.77.150]:38729 "EHLO
+	lon1-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752634Ab1LPW6j (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Dec 2011 17:58:39 -0500
 Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by lon1-post-1.mail.demon.net with esmtp (Exim 4.69)
-	id 1RbgjX-0006rU-ZG; Fri, 16 Dec 2011 22:58:32 +0000
+	by lon1-post-3.mail.demon.net with esmtp (Exim 4.69)
+	id 1Rbgjc-00042K-ek; Fri, 16 Dec 2011 22:58:38 +0000
 User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187332>
 
 
-In particular, gcc issues the following warning:
+In particular, gcc complains as follows:
 
-        CC builtin/checkout.o
-    builtin/checkout.c: In function `cmd_checkout':
-    builtin/checkout.c:160: warning: 'mode' might be used uninitialized \
-        in this function
+        CC bisect.o
+    In file included from revision.h:5,
+                     from bisect.c:4:
+    grep.h:138: error: expected '=', ',', ';', 'asm' or \
+        '__attribute__' before 'grep_attr_mutex'
+    make: *** [bisect.o] Error 1
 
-However, the analysis performed by gcc is too conservative, in this
-case, since the mode variable will not be used uninitialised. Note that,
-if the mode variable is not set in the loop, then "threeway[1]" will
-also still be set to the null SHA1. This will then result in control
-leaving the function, almost directly after the loop, well before the
-potential use in the call to make_cache_entry().
-
-In order to suppress the warning, we initialise the mode variable to
-zero in it's declaration.
+In order to fix the error, we include the 'thread-utils.h' header
+file in grep.h, since it provides a definition of pthread_mutex_t
+(indirectly via compat/win32/pthread.h).
 
 Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 ---
 
-Just in case you haven't found the time to apply your own patch!
+Hi Thomas,
 
-[Note that only 2 out of the 3 versions of gcc I use issues this
-warning]
+If you need to re-roll your grep-threading series, could you please
+squash this patch into your commit 53f4b6f7 (grep: enable threading
+with -p and -W using lazy attribute lookup, 12-12-2011).
+
+[Note: you could also remove the '#include "thread-utils.h"' in both
+grep.c and builtin/grep.c, since it is now included from grep.h.]
+
+Thanks!
 
 ATB,
 Ramsay Jones
 
- builtin/checkout.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ grep.h |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 787d468..f1984d9 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -157,7 +157,7 @@ static int checkout_merged(int pos, struct checkout *state)
- 	unsigned char sha1[20];
- 	mmbuffer_t result_buf;
- 	unsigned char threeway[3][20];
--	unsigned mode;
-+	unsigned mode = 0;
+diff --git a/grep.h b/grep.h
+index 15d227c..b6f06cb 100644
+--- a/grep.h
++++ b/grep.h
+@@ -8,6 +8,7 @@ typedef int pcre;
+ typedef int pcre_extra;
+ #endif
+ #include "kwset.h"
++#include "thread-utils.h"
  
- 	memset(threeway, 0, sizeof(threeway));
- 	while (pos < active_nr) {
+ enum grep_pat_token {
+ 	GREP_PATTERN,
 -- 
 1.7.8
