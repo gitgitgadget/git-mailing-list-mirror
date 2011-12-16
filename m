@@ -1,134 +1,104 @@
-From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Subject: Re: Revisiting metadata storage
-Date: Fri, 16 Dec 2011 10:55:52 -0800
-Message-ID: <CAE1pOi2GW=3o7QgTEcUYbjif3WokpVdgL6UdKXu9x0yKH-vrGw@mail.gmail.com>
-References: <CAD77+gQB+0zJG62jrtPn_MwLLR7zgH=5gBtkvPxrKgiLPZsbsw@mail.gmail.com>
-	<87sjkx8gll.fsf@an-dro.info.enstb.org>
-	<CAD77+gR=SjU0Ne9jort91pdHDA=RjkTJUJmnqKBipqoGUmoL_A@mail.gmail.com>
-	<CAE1pOi2TGWmFErcKhQu-a37JjLh22O1zFYoBaVRyfBDFjOTE9Q@mail.gmail.com>
-	<20111216075251.GA4048@elie.hsd1.il.comcast.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] attr: map builtin userdiff drivers to well-known
+ extensions
+Date: Fri, 16 Dec 2011 14:21:04 -0500
+Message-ID: <20111216192104.GA19924@sigill.intra.peff.net>
+References: <20111216110000.GA15676@sigill.intra.peff.net>
+ <4EEB4F13.2010402@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Richard Hartmann <richih.mailinglist@gmail.com>,
-	Ronan Keryell <Ronan.Keryell@hpc-project.com>,
-	Git List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 16 19:55:58 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Brandon Casey <drafnel@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Dec 16 20:21:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rbcwn-000766-K1
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 19:55:57 +0100
+	id 1RbdLF-0001Kp-Rk
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 20:21:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760535Ab1LPSzy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Dec 2011 13:55:54 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:53083 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760529Ab1LPSzw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Dec 2011 13:55:52 -0500
-Received: by yenm11 with SMTP id m11so2451840yen.19
-        for <git@vger.kernel.org>; Fri, 16 Dec 2011 10:55:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=34AGRDlkp9TOFBAFUhXZZLPl/MP5Etvy2t0g+dRMJuc=;
-        b=OdC/lP4rxbRdBh1NteUpuhbHaNMTR8zyA2wdFdx9xKiCYQ18SJA1KqTvHVLrQr0I79
-         FM1zrW4p+xL1FJBrUjrBgmYs5BcWKlCBtfUeFNvaFuAXkusG++qUxrKjbUuPI11oZvEJ
-         nOTZFx54F5JL/B9U48ZnKmDvDtVVlzoM8mlZo=
-Received: by 10.236.135.77 with SMTP id t53mr13712181yhi.49.1324061752034;
- Fri, 16 Dec 2011 10:55:52 -0800 (PST)
-Received: by 10.236.27.200 with HTTP; Fri, 16 Dec 2011 10:55:52 -0800 (PST)
-In-Reply-To: <20111216075251.GA4048@elie.hsd1.il.comcast.net>
+	id S1760572Ab1LPTVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Dec 2011 14:21:09 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44257
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760557Ab1LPTVH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2011 14:21:07 -0500
+Received: (qmail 6993 invoked by uid 107); 16 Dec 2011 19:27:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 16 Dec 2011 14:27:48 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Dec 2011 14:21:04 -0500
+Content-Disposition: inline
+In-Reply-To: <4EEB4F13.2010402@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187302>
 
-On 15 December 2011 23:52, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hilco Wijbenga wrote:
->
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0Right now every rebase means a full (and almost
->> completely unnecessary) rebuild.
->
-> It sounds like what you are suffering from is that "git rebase" uses
-> the worktree as its workspace instead of doing all that work
-> in-memory, right?
+On Fri, Dec 16, 2011 at 03:00:51PM +0100, Johannes Sixt wrote:
 
-Yes, I guess the problem is that it uses the worktree as its workspace.
+> Am 12/16/2011 12:00, schrieb Jeff King:
+> >  static const char *builtin_attr[] = {
+> ...
+> > +	"*.c diff=cpp",
+> > +	"*.cc diff=cpp",
+> > +	"*.cxx diff=cpp",
+> > +	"*.cpp diff=cpp",
+> > +	"*.h diff=cpp",
+> > +	"*.hpp diff=cpp",
+> 
+> Please don't do this. It would be a serious regression for C++ coders, and
+> some C coders as well. The built-in hunk header patterns are severly
+> broken and don't work well with C++ code. I know for sure that the
+> following are not recognized:
+> 
+> - template declarations, e.g. template<class T> func(T x);
+> - constructor definitionss, e.g. MyClass::MyClass()
+> - functions that return references, e.g. const string& func()
+> - function definitions along the GNU coding style, e.g.
+> 
+>      void
+>      the_func ()
 
-(I know others disagree but to me it's a bug that Git touches files
-that it doesn't actually change.)
+Hmm. I think it's a legitimate criticism to say "hunk-header detection
+is a broken feature because our heuristics aren't good enough, and we
+shouldn't start using it by default because people will complain because
+it sucks too much".
 
-> If I were in your situation, I would do the following:
->
-> =C2=A01. Don't rebase so often. =C2=A0When wanting to take advantage =
-of features
-> =C2=A0 =C2=A0from a new upstream version, use "git merge" to pull it =
-in. =C2=A0Only
-> =C2=A0 =C2=A0rebase when it is time to make the history presentable f=
-or other
-> =C2=A0 =C2=A0people.
+At the same time, I think we have seen people complaining that the
+regular dumb funcname detection is not good enough[1], and that using
+language-specific funcnames, while not 100% perfect, produces better
+results on the whole.
 
-I usually rebase in the morning to get an up-to-date tree. Is that
-considered too often? Perhaps it's my Subversion background but I'm
-not comfortable diverging too much. Is that too paranoid? :-)
+So I think rather than saying "this doesn't always work", it's important
+to ask "on the whole, does this tend to produce better results than
+without, and when we are wrong, how bad is it?"
 
-So IIUC, I can do "git rebase master" even after multiple "git merge ma=
-ster"s?
+I'm not clear from what you wrote on whether you were saying it is
+simply sub-optimal, or whether on balance it is way worse than the
+default funcname matching.
 
-> =C2=A0 =C2=A0This way, "git log --first-parent" will give easy access=
- to
-> =C2=A0 =C2=A0the intermediate versions you have hacked on and tested =
-recently.
+And if it is bad on balance, is the right solution to avoid exposing
+people to it, or is it to make our patterns better? I.e., is it fixable,
+or is it simply too hard a problem to get right in the general case, and
+we shouldn't turn it on by default?
 
-Why is "git log --first-parent" important? I read "git help log" on
-first-parent but that didn't really tell me much. Google was not very
-helpful either.
+> I am currently using this pattern (but I'm sure it can be optimized) with
+> an appropriate xcpp attribute:
+> 
+> [diff "xcpp"]
+>         xfuncname = "!^[
+> \\t]*[a-zA-Z_][a-zA-Z_0-9]*[^()]*:[[:space:]]*$\n^[a-zA-Z_][a-zA-Z_0-9]*.*"
 
-> =C2=A02. When history gets ugly and you want to rebase to make the se=
-ries
-> =C2=A0 =C2=A0easier to make sense of, use a separate workdir:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git branch tmp; # make a copy to rebase
+So, I'm confused. If you are using this, surely you have "*.c diff=xcpp"
+in your attributes file, and my patch has no effect for you, as it is
+lower precedence than user-supplied gitattributes? Also, if you called
+it diff.cpp.xfuncname, then wouldn't my patch still be useful, as your
+complaint is not "my *.c files are not actually C language" but "the C
+language driver sucks" (but you be remedying that by providing your own
+config).
 
-This is in my merged branch, right?
-
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ cd ..
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git new-workdir repo rebase-scratch tmp
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ cd rebase-scratch
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git rebase -i origin/master
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0...
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ cd ..
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ rm -fr rebase-scratch
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ cd repo
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git diff HEAD tmp; =C2=A0 =C2=A0# Does t=
-he rebased version look better?
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git reset --keep tmp; # Yes. =C2=A0Use i=
-t.
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git branch -d tmp
-
-Interesting. If I run the rebase after the merge, rebase appears to do
-much less work. I.e. it appears to only touch files that have actually
-changed. Is that true?
-
-> =C2=A03. Once the rebased history looks reasonably good, be sure to r=
-ebase
-> =C2=A0 =C2=A0one final time and test each commit before submitting fo=
-r other
-> =C2=A0 =C2=A0people's use.
->
-> Hope that helps,
-
-Yes, thanks for pointing out yet more useful Git options. There seems
-no end to them. :-)
-
-Cheers,
-Hilco
+-Peff
