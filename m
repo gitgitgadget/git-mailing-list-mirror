@@ -1,49 +1,53 @@
-From: Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: Re: [BUG] attribute "eol" with "crlf"
-Date: Fri, 16 Dec 2011 19:28:22 +0100
-Message-ID: <CAN0XMOJFCwORt_VaddgeeCNp3S-nm8DxYDPDyPCsVngRhuEP6A@mail.gmail.com>
-References: <CAN0XMO+OOdTJ+aNMSc2G3RVc7Wfypr4+7dU3US9GVAmMiSJ7cg@mail.gmail.com>
-	<vpqr504wf70.fsf@bauges.imag.fr>
+From: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>
+Subject: Re: [msysGit] Windows & executable bit for newly created files
+Date: Fri, 16 Dec 2011 19:27:37 +0100
+Message-ID: <4EEB8D99.9030302@dirk.my1.cc>
+References: <4EEA5387.5020808@dirk.my1.cc> <7vwr9xmu48.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Dec 16 19:28:38 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 16 19:28:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbcWL-0003SQ-5m
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 19:28:37 +0100
+	id 1RbcWc-0003XA-CP
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 19:28:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760503Ab1LPS22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Dec 2011 13:28:28 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:46059 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760464Ab1LPS2W (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Dec 2011 13:28:22 -0500
-Received: by yenm11 with SMTP id m11so2433062yen.19
-        for <git@vger.kernel.org>; Fri, 16 Dec 2011 10:28:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=2g+V2NhAQ7n8sqmcvgOSeyXw4bi7i498b6PjQSPLN94=;
-        b=A7r+oOb1DWbaLPGz968+j8zUdMb6jE4k49HA2UvDLNm75idic7Y3jbZoDuNRtH1gFh
-         SCHrV+5Sq6yerhhsFVa2GYheYDESEIdPfZC9JYODmfSENdkkGEqWAldaulIkFzTcHg5a
-         qYhWHtC7U6arhubkbnFDpVGoqa8PkR0YDhJGc=
-Received: by 10.236.123.108 with SMTP id u72mr13581393yhh.45.1324060102350;
- Fri, 16 Dec 2011 10:28:22 -0800 (PST)
-Received: by 10.147.22.19 with HTTP; Fri, 16 Dec 2011 10:28:22 -0800 (PST)
-In-Reply-To: <vpqr504wf70.fsf@bauges.imag.fr>
+	id S1760510Ab1LPS2u convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Dec 2011 13:28:50 -0500
+Received: from smtprelay01.ispgateway.de ([80.67.31.28]:42983 "EHLO
+	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760178Ab1LPS2t (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2011 13:28:49 -0500
+Received: from [217.87.98.165] (helo=[192.168.2.100])
+	by smtprelay01.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1RbcVN-0002jP-Pa; Fri, 16 Dec 2011 19:27:37 +0100
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <7vwr9xmu48.fsf@alter.siamese.dyndns.org>
+X-Df-Sender: NzU3NjQ2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187298>
 
-> What behavior would you have expected?
+Am 15.12.2011 21:56 schrieb Junio C Hamano:
+> Dirk S=C3=BCsserott <newsletter@dirk.my1.cc> writes:
+>=20
+>> Is there a way to convince git that the new mode is 755 instead of 6=
+44,
+>> even with core.filemode set to false? So that the mode is correct wh=
+en I
+>> checkout the file under Linux later on?
+>=20
+> "git update-index --chmod=3D+x"?
+>=20
 
-I've expected that git doesn't change the line endings
-because it's already CRLF.
+Oh, thanks. I wasn't aware of that option. Works exactly as I like.
+
+Dirk
