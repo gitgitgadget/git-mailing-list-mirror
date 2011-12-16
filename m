@@ -1,63 +1,68 @@
-From: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
-Subject: Re: How to commit incomplete changes?
-Date: Fri, 16 Dec 2011 13:58:12 +0100
-Message-ID: <hbf.20111216ym10@bombur.uio.no>
-References: <4cfc9cf0515b1bc751f6aa0de4f55e2a@ulrik.uio.no>
-	<4EEA79E0.4070700@gmail.com>
-	<7v8vmdl62s.fsf@alter.siamese.dyndns.org>
-	<hbf.20111216xubv@bombur.uio.no>
+From: Alex Bennee <kernel-hacker@bennee.com>
+Subject: Any tips for improving the performance of cloning large repositories?
+Date: Fri, 16 Dec 2011 13:02:12 +0000
+Message-ID: <CAJ-05NPP7aCcr_SYxLYk8U1entDMv0aF2Me3cTGmOLjYqFKUOA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 16 13:58:23 2011
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 16 14:02:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbXMk-0001aE-Nn
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 13:58:23 +0100
+	id 1RbXQZ-0003Gz-O4
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 14:02:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759090Ab1LPM6T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Dec 2011 07:58:19 -0500
-Received: from mail-out2.uio.no ([129.240.10.58]:49328 "EHLO mail-out2.uio.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758751Ab1LPM6R (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Dec 2011 07:58:17 -0500
-Received: from mail-mx4.uio.no ([129.240.10.45])
-	by mail-out2.uio.no with esmtp (Exim 4.75)
-	(envelope-from <hbf@ulrik.uio.no>)
-	id 1RbXMe-0005lB-1W; Fri, 16 Dec 2011 13:58:16 +0100
-Received: from bombur.uio.no ([129.240.6.233])
-	by mail-mx4.uio.no with esmtp  (Exim 4.76)
-	(envelope-from <hbf@ulrik.uio.no>)
-	id 1RbXMd-0001mx-Mo; Fri, 16 Dec 2011 13:58:16 +0100
-Received: by bombur.uio.no (Postfix, from userid 2112)
-	id A5772E26; Fri, 16 Dec 2011 13:58:12 +0100 (CET)
-In-Reply-To: <hbf.20111216xubv@bombur.uio.no>
-X-Mailer: VM 7.19 under Emacs 23.1.1
-X-UiO-Ratelimit-Test: rcpts/h 7 msgs/h 2 sum rcpts/h 8 sum msgs/h 2 total rcpts 2047 max rcpts/h 17 ratelimit 0
-X-UiO-Spam-info: not spam, SpamAssassin (score=-7.0, required=5.0, autolearn=disabled, RP_MATCHES_RCVD=-2.023,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
-X-UiO-Scanned: 6A31A690481274CD10C10473507633206579CCED
-X-UiO-SPAM-Test: remote_host: 129.240.6.233 spam_score: -69 maxlevel 80 minaction 2 bait 0 mail/h: 2 total 880 max/h 5 blacklist 0 greylist 0 ratelimit 0
+	id S1759177Ab1LPNCQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Dec 2011 08:02:16 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:48978 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758921Ab1LPNCO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2011 08:02:14 -0500
+Received: by iaeh11 with SMTP id h11so4343192iae.19
+        for <git@vger.kernel.org>; Fri, 16 Dec 2011 05:02:13 -0800 (PST)
+Received: by 10.50.36.230 with SMTP id t6mr8255438igj.83.1324040532843; Fri,
+ 16 Dec 2011 05:02:12 -0800 (PST)
+Received: by 10.42.174.136 with HTTP; Fri, 16 Dec 2011 05:02:12 -0800 (PST)
+X-Google-Sender-Auth: k1R1Qc0OrMcFg7ZNIO2cnK3jNM4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187275>
 
-I wrote:
->[Neal Kreitzinger]
->> I assume by 'generated changes' you mean the automerge in git...
-> 
-> No.  And to your questions of why I want this with unpublished work:
-> No.  Like I wrote, I'm talking about published commits.
+Hi,
 
-Wait, I see - as-yet unpublished commits, yes.  Which seem best to me to
-publish that way.  And which will get cherry-picked later, after commit
-and testing.
+We've migrated our old CVS repository into GIT without too many
+issues. However now we are rolling out the usage of the new repository
+we are hitting some performance bottlenecks, especially on the initial
+clone (something our buildbot instance does a lot).
+
+Our repo is large, my .git is around 2.5G although the central repo
+has a 1.7Gb single pack file. However some machines handle the cloning
+better than others. For one thing the clone process seems to involve
+the receiving side needing a large glob of memory which causes
+problems when there is memory pressure.
+
+I've tried tweaking the pack size from unlimited to 256m but this
+seems to have increased the clone time as the receiving end attempts
+to re-pack everything back into an uber-pack.
+
+Another thing that I've noticed is very high systime on the receiving
+machines as ethernet and disk I/O is heavily hit.
+
+So what I'm looking for are some tips on how I can tweak
+configurations to make the clone process a little less I/O and memory
+heavy. Any suggestions?
+
+One thing I did try was a rsync'ed local repo in /var/cache/repos
+which the clone command used for reference with something like:
+
+git clone --local --reference /var/cache/repo.git git://repo/repo.git
+
+But that didn't help as it seems to copy the whole thing anyway.
 
 -- 
-Hallvard
+Alex, homepage: http://www.bennee.com/~alex/
+http://www.half-llama.co.uk
