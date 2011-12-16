@@ -1,75 +1,64 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] attr: map builtin userdiff drivers to well-known extensions
-Date: Fri, 16 Dec 2011 15:00:51 +0100
-Message-ID: <4EEB4F13.2010402@viscovery.net>
-References: <20111216110000.GA15676@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Brandon Casey <drafnel@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Dec 16 15:01:03 2011
+From: Seth Robertson <in-gitvger@baka.org>
+Subject: Re: Any tips for improving the performance of cloning large repositories?
+Date: Fri, 16 Dec 2011 09:14:59 -0500
+Message-ID: <201112161414.pBGEExLJ006769@no.baka.org>
+References: <CAJ-05NPP7aCcr_SYxLYk8U1entDMv0aF2Me3cTGmOLjYqFKUOA@mail.gmail.com> <hbf.20111216yufz@bombur.uio.no>
+        <hbf.20111216zcin@bombur.uio.no>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Cc: Alex Bennee <kernel-hacker@bennee.com>, git@vger.kernel.org
+To: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
+X-From: git-owner@vger.kernel.org Fri Dec 16 15:15:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbYLP-0004Bn-1F
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 15:01:03 +0100
+	id 1RbYZe-0002Cu-C1
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 15:15:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759443Ab1LPOA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Dec 2011 09:00:59 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:61873 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756517Ab1LPOA5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Dec 2011 09:00:57 -0500
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1RbYLD-0003In-SH; Fri, 16 Dec 2011 15:00:52 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 891991660F;
-	Fri, 16 Dec 2011 15:00:51 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <20111216110000.GA15676@sigill.intra.peff.net>
-X-Spam-Score: -1.4 (-)
+	id S1759665Ab1LPOPY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Dec 2011 09:15:24 -0500
+Received: from tsutomu.baka.org ([66.114.72.182]:38451 "EHLO tsutomu.baka.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759756Ab1LPOPU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2011 09:15:20 -0500
+Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
+	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id pBGEExtk003197
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 16 Dec 2011 09:15:00 -0500
+Received: from no.baka.org (localhost [127.0.0.1])
+	by no.baka.org (8.14.4/8.14.0) with ESMTP id pBGEExLJ006769;
+	Fri, 16 Dec 2011 09:14:59 -0500
+In-reply-to: <hbf.20111216zcin@bombur.uio.no>
+Comments: In reply to a message from "Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>" dated "Fri, 16 Dec 2011 14:39:05 +0100."
+Bypass: true
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187279>
 
-Am 12/16/2011 12:00, schrieb Jeff King:
->  static const char *builtin_attr[] = {
-...
-> +	"*.c diff=cpp",
-> +	"*.cc diff=cpp",
-> +	"*.cxx diff=cpp",
-> +	"*.cpp diff=cpp",
-> +	"*.h diff=cpp",
-> +	"*.hpp diff=cpp",
 
-Please don't do this. It would be a serious regression for C++ coders, and
-some C coders as well. The built-in hunk header patterns are severly
-broken and don't work well with C++ code. I know for sure that the
-following are not recognized:
+In message <hbf.20111216zcin@bombur.uio.no>, Hallvard Breien Furuseth writes:
 
-- template declarations, e.g. template<class T> func(T x);
-- constructor definitionss, e.g. MyClass::MyClass()
-- functions that return references, e.g. const string& func()
-- function definitions along the GNU coding style, e.g.
+    I wrote:
+    > Do you often need to clone from a remote?  Instead of cloning from a
+    > local (git clone --mirror) which gets auto-updated from the remote.
 
-     void
-     the_func ()
+    Er, obviously not, since you tried that with rsync.  Create the mirror
+    with 'git clone --mirror', then update it with 'git fetch' rather than
+    rsync.
 
-I am currently using this pattern (but I'm sure it can be optimized) with
-an appropriate xcpp attribute:
+If you really need to perform a full clone from the buildbot with or
+without a different working directory (for instance if you have
+buildbots/checkout users running in parallel where multiple users need
+a consistent HEAD for multiple sequential operations) then instead
+consider cloning with --reference or --shared.  There are severe
+restrictions on what you should do with aggressive sharing (man
+git-clone), but if all you are doing is normal checkouts, tags,
+commits, etc, then it would be just fine.  Of course remember to add a
+remote for the real upstream if you are planning on pushing
+changes/tags back.
 
-[diff "xcpp"]
-        xfuncname = "!^[
-\\t]*[a-zA-Z_][a-zA-Z_0-9]*[^()]*:[[:space:]]*$\n^[a-zA-Z_][a-zA-Z_0-9]*.*"
-
-(modulo MUA line wrapping).
-
--- Hannes
+					-Seth Robertson
