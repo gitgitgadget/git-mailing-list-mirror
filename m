@@ -1,63 +1,88 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] attr: map builtin userdiff drivers to well-known
  extensions
-Date: Fri, 16 Dec 2011 14:32:53 -0500
-Message-ID: <20111216193253.GD19924@sigill.intra.peff.net>
+Date: Fri, 16 Dec 2011 11:33:30 -0800
+Message-ID: <7vehw4ia5x.fsf@alter.siamese.dyndns.org>
 References: <20111216110000.GA15676@sigill.intra.peff.net>
- <A8E08CC616E248EC8F9000DD86F228E0@PhilipOakley>
+ <4EEB4F13.2010402@viscovery.net>
+ <20111216192104.GA19924@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
 	Brandon Casey <drafnel@gmail.com>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Fri Dec 16 20:33:01 2011
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Dec 16 20:33:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbdWe-0005wQ-JL
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 20:33:00 +0100
+	id 1RbdXG-0006KX-7N
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 20:33:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760606Ab1LPTc5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Dec 2011 14:32:57 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44283
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752264Ab1LPTc4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Dec 2011 14:32:56 -0500
-Received: (qmail 7231 invoked by uid 107); 16 Dec 2011 19:39:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 16 Dec 2011 14:39:37 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Dec 2011 14:32:53 -0500
-Content-Disposition: inline
-In-Reply-To: <A8E08CC616E248EC8F9000DD86F228E0@PhilipOakley>
+	id S1760609Ab1LPTde (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Dec 2011 14:33:34 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59288 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752264Ab1LPTdd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2011 14:33:33 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F024B76DF;
+	Fri, 16 Dec 2011 14:33:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=r104sYawFCOIMCzbNX6/bzX7gqI=; b=UDF4uz
+	+TAUvIGU6mihmnCT5ZvTl4XjvymlOkPGLyQOE/+WskB8kBedwaj6UryXaTL2IrGM
+	wXOZwxxLnnYfXoeSTB7LCurUpANAVOmM7gC+etujm6UYJ2ut3OWsgWIjEH4qSXDv
+	9GJm7mXUrZeoTMXRNRPbWzHMRGbgJ/xyfExDc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bsf5w5xhd3bCivCsRwKwldvrQ4bUima8
+	qSfNBDV8S/0D10SEnXWj/SWFtGQlxAEL3IQ9RodqOoBr+vl7PSjxOw8fE+nongm5
+	Xi+II5aU1pLscGaFcfWRTMJOguZSxhzI3El6yX81CvoYKfUy+B1nUER3OXKyNWLi
+	P61ScyVmPP8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E7D5B76DE;
+	Fri, 16 Dec 2011 14:33:32 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4D51176DD; Fri, 16 Dec 2011
+ 14:33:32 -0500 (EST)
+In-Reply-To: <20111216192104.GA19924@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 16 Dec 2011 14:21:04 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D6A6D788-281C-11E1-A220-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187308>
 
-On Fri, Dec 16, 2011 at 07:26:00PM -0000, Philip Oakley wrote:
+Jeff King <peff@peff.net> writes:
 
-> >+ "*.m diff=objc",
-> 
-> There is a conflict here with the Matlab community which also uses
-> "*.m" files for its scripts and code.
-> They fit the "It's not that hard to do, but it's an extra step that
-> the user might not even know is an option." rationale.
-> 
-> If the objc.m is used as a default it must be overidable easily, and
-> listed in the appropriate documentation to mitigate the "might not
-> even know" risk.
+> I'm not clear from what you wrote on whether you were saying it is
+> simply sub-optimal, or whether on balance it is way worse than the
+> default funcname matching.
 
-It is easily overridable; just put your own "*.m" (or anything that
-matches your files) entry into your gitattributes file. I'm more
-concerned that people will start getting worse results than with the
-default, and not know how to fix it.
+I think we recently saw that the optional built-in one for C did not even
+understand a function that returns a pointer, and nobody complained about
+it for a long time, and what was even more funny was that a patch to fix
+it got a comment from somebody who wasn't using the optional built-in one
+saying "The default works fine; what problem are you fixing?". That is
+clearly one example where the default one is still better than the pattern
+based one, iow, the pattern based one is way premature to be turned on by
+default.
 
-If you have some Matlab files, would you mind doing diffs with the
-default driver and with the objc driver, and comment on how good or bad
-the results are?
+> And if it is bad on balance, is the right solution to avoid exposing
+> people to it, or is it to make our patterns better?
 
--Peff
+Can't we do both, by avoid exposing normal users to broken one while
+people who want to improve the pattern based one work on unbreak it?
+
+> I.e., is it fixable,
+> or is it simply too hard a problem to get right in the general case, and
+> we shouldn't turn it on by default?
+
+I do not think that is the "either-or" question. My impression has been
+that even if it is fixable, it is too broken and produces worse result
+than the simple default in its current form.
