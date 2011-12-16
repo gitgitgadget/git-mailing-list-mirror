@@ -1,51 +1,60 @@
-From: Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: Re: [BUG] attribute "eol" with "crlf"
-Date: Fri, 16 Dec 2011 21:53:16 +0100
-Message-ID: <CAN0XMOK9P_25M0bVjYn9gZ+ONi7yKEZX+83X_mwJok+P5TEVoQ@mail.gmail.com>
-References: <CAN0XMO+OOdTJ+aNMSc2G3RVc7Wfypr4+7dU3US9GVAmMiSJ7cg@mail.gmail.com>
-	<vpqr504wf70.fsf@bauges.imag.fr>
-	<CAN0XMOJFCwORt_VaddgeeCNp3S-nm8DxYDPDyPCsVngRhuEP6A@mail.gmail.com>
-	<20111216200955.GA8499@angband.pl>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] pretty: give placeholders to reflog identity
+Date: Fri, 16 Dec 2011 13:04:05 -0800
+Message-ID: <7vr504grei.fsf@alter.siamese.dyndns.org>
+References: <20111216114024.GA16965@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git <git@vger.kernel.org>
-To: Adam Borowski <kilobyte@angband.pl>
-X-From: git-owner@vger.kernel.org Fri Dec 16 21:53:30 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Dec 16 22:04:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbemX-0006Vc-GR
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 21:53:29 +0100
+	id 1Rbeww-0002eE-Vj
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 22:04:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030245Ab1LPUx1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Dec 2011 15:53:27 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:63527 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932762Ab1LPUxR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Dec 2011 15:53:17 -0500
-Received: by yhr47 with SMTP id 47so3198248yhr.19
-        for <git@vger.kernel.org>; Fri, 16 Dec 2011 12:53:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=DrUom0tG29qMU0TVoOs9JOhtFgDhprUAPssTKNnbkqQ=;
-        b=QGvTXBBL/zg1c9wQsrg0wSjU/71ug8QP68iAcxpmiXVXMHcUDCN8H2rQzDcApaa/YD
-         Mpj9FftVLj7hL9FybIvbW4ctcu/f/VxAwSLqdFtPeO8h4xzN5kjWQ3dcC4tsx8UqsIig
-         mLHmAyDomzJbyqgn8ZtOYlh0EioAQ1R6/0pOE=
-Received: by 10.236.153.226 with SMTP id f62mr14736001yhk.62.1324068796728;
- Fri, 16 Dec 2011 12:53:16 -0800 (PST)
-Received: by 10.147.22.19 with HTTP; Fri, 16 Dec 2011 12:53:16 -0800 (PST)
-In-Reply-To: <20111216200955.GA8499@angband.pl>
+	id S1760088Ab1LPVEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Dec 2011 16:04:10 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35506 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752355Ab1LPVEI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2011 16:04:08 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 825296201;
+	Fri, 16 Dec 2011 16:04:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mrwRpUP5D2oPSNYgYBuQ7SqzNgI=; b=FntxCo
+	/37iCi9TLmzRtzkjIQbHSU4bUCZXOsHFN1Uzuw3moEvcA87bvgqxeUgioaAB/2Rq
+	hzs5tpPOCuZwjwGEZiqVhcm53cqQ2K1yLR0MOR2ZH/zpiSC90trED07yKRtgLfB+
+	YEz7gC4xDxlis9gTuCaNVMmATIZzKwS2Qi5gI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rhV4TLcjiOwEAN1srh0y6bWZhrqAnbtL
+	Nfx7vbjJiR4mljIWiJWmT+qFv2Xni0pg7ooilnJ37N5IE7Bbpj6fx+J3LtukSohv
+	P0qID0CoGlIxKqeuArdW89SvPT87mX5Y2yWoyF0dfMx5X1MUrQz9GXICdLVD0MR9
+	IlF0SVA/UWY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 794DD6200;
+	Fri, 16 Dec 2011 16:04:07 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1035161FF; Fri, 16 Dec 2011
+ 16:04:06 -0500 (EST)
+In-Reply-To: <20111216114024.GA16965@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 16 Dec 2011 06:40:24 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7E03BD3C-2829-11E1-9D3D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187319>
 
-> And how exactly can it change the file back the way it was?
+Makes sense; thanks.
 
-It shouldn't need to change the file back. That's actually the bug. :/
+With the existing helper format_person_part(), this is surprisingly
+simple. Perhaps I should not be surprised ;-).
