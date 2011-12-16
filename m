@@ -1,106 +1,66 @@
 From: Michael Horowitz <michael.horowitz@ieee.org>
-Subject: Re: git-p4.skipSubmitEdit
-Date: Fri, 16 Dec 2011 10:38:58 -0500
-Message-ID: <CAFLRboo8DBk3zFEBF9OqKmre=d5PM7+3J9V0pHNz53MPtqjOWA@mail.gmail.com>
-References: <1315514452.10046.0.camel@uncle-pecos>
-	<4E6DB5F0.7080303@diamand.org>
-	<1315847540.10046.29.camel@uncle-pecos>
-	<20111018004500.GA31768@arf.padd.com>
-	<4E9DBD0B.7020505@diamand.org>
-	<20111020011610.GA7292@arf.padd.com>
+Subject: git-p4 using notes
+Date: Fri, 16 Dec 2011 11:07:10 -0500
+Message-ID: <CAFLRbori1Dinc2epputWfjgCOWp7M2f=+TA0w2jHq_fmRC=y3w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Luke Diamand <luke@diamand.org>,
-	"L. A. Linden Levy" <alevy@mobitv.com>, git@vger.kernel.org
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Fri Dec 16 16:39:09 2011
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Dec 16 17:07:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbZsJ-0007sd-4w
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 16:39:07 +0100
+	id 1RbaJY-0004I5-Qn
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 17:07:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759280Ab1LPPjA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Dec 2011 10:39:00 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:43629 "EHLO
+	id S1760090Ab1LPQHM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Dec 2011 11:07:12 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:39326 "EHLO
 	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756507Ab1LPPi6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Dec 2011 10:38:58 -0500
-Received: by pbdu13 with SMTP id u13so779098pbd.19
-        for <git@vger.kernel.org>; Fri, 16 Dec 2011 07:38:58 -0800 (PST)
+	with ESMTP id S1759429Ab1LPQHL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2011 11:07:11 -0500
+Received: by pbdu13 with SMTP id u13so791546pbd.19
+        for <git@vger.kernel.org>; Fri, 16 Dec 2011 08:07:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=0BT86U/CmcUvLNsDIN9U5Bld253ltqYAh3kLc2wHY90=;
-        b=NHuvOA2bH7UoOb09Y+5GeqdhIv1AFj/4IvONirKIwI9YgEa2nm4muvS+X1ec7UxWPi
-         L5btW7yhhuZT4kF7HHaGnIb2ALexTm9qEkEFBwKzIyedyBLZK3rVPWD9YK8vhREwAeg9
-         1/6j/mMPoIZQLOMcoh1sE8ynxqVcPAJKFXxrU=
-Received: by 10.68.190.202 with SMTP id gs10mr17152300pbc.5.1324049938471;
- Fri, 16 Dec 2011 07:38:58 -0800 (PST)
-Received: by 10.143.31.6 with HTTP; Fri, 16 Dec 2011 07:38:58 -0800 (PST)
-In-Reply-To: <20111020011610.GA7292@arf.padd.com>
-X-Google-Sender-Auth: Z6nQ_2tjwjPwHXJafUtCGrEvXio
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        bh=Kq6iiylyybOpI8RzY39HP4EE+ZDFkiuyIeQpjEuY6E0=;
+        b=jAhhgnlWw6rv5XjIDfeVVTm1p7C0QJoxB5zAaSA1c8pmFdO1/RTtptGbZ1TUx/zXPJ
+         3MDCajoQUcmIxgXte0cKMkcAlB2j3Ubqo4gbHIJACK5rOuYcd+wiuCMHERPYTy8zugSg
+         HZ8syroIlGVhKY8aLyQG736pV4ozaHf3qRS10=
+Received: by 10.68.74.132 with SMTP id t4mr17290930pbv.22.1324051630655; Fri,
+ 16 Dec 2011 08:07:10 -0800 (PST)
+Received: by 10.143.31.6 with HTTP; Fri, 16 Dec 2011 08:07:10 -0800 (PST)
+X-Google-Sender-Auth: 09DA7hNSjy2VnY8IyP6RjNHmCzs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187284>
 
-All,
+For those of you using git-p4 because of a company requirement to use
+Perforce, but really wish you could use git only, the most frustrating
+part is the fact that when changes are submitted, the commit message
+is rewritten to include a reference to the P4 change number which is
+used by the sync.  When syncing back changes, this causes the commit
+hash to be different, and so blows away your old commit and any parent
+commit references and such.
 
-It appears that this change has introduced a bug that causes submit to
-fail every time if you do not skip the submit edit.
+I read someplace, I can't remember where at this point, that if git-p4
+used notes to write the P4 change information, that would not impact
+the commit hash, so when merging back, things would not be
+overwritten, and you can maintain branches and commit history properly
+in git.
 
-=46rom what I can tell, this is because the new edit_template method
-does not return True at the end.
+I just ran into this project, where it seems that someone has
+re-written git-p4 to use notes: https://github.com/ermshiperete/git-p4
+
+I was wondering if any of the maintainers of git-p4 has considered
+this, and might want to leverage this work to merge into the main git
+repo, possibly with an option to choose between the two behaviors.
 
 Thanks,
 
 Mike
-
-
-
-On Wed, Oct 19, 2011 at 9:16 PM, Pete Wyckoff <pw@padd.com> wrote:
-> luke@diamand.org wrote on Tue, 18 Oct 2011 18:53 +0100:
->> Looks good, one minor nit (see below) and a comment.
-> [..]
->> >+ =A0 =A0 =A0 =A0# invoke the editor
->> >+ =A0 =A0 =A0 =A0if os.environ.has_key("P4EDITOR"):
->> >+ =A0 =A0 =A0 =A0 =A0 =A0editor =3D os.environ.get("P4EDITOR")
->> >+ =A0 =A0 =A0 =A0else:
->> >+ =A0 =A0 =A0 =A0 =A0 =A0editor =3D read_pipe("git var GIT_EDITOR")=
-=2Estrip()
->> >+ =A0 =A0 =A0 =A0system(editor + " " + template_file)
->>
->> This is where we should really check the return code. However, doing
->> so seems to break lots of the existing tests so it's not as easy as
->> it looks.
->
-> Indeed. =A0I'll not fix that now, but agree it should be.
->
->> >+
->> >+ =A0 =A0 =A0 =A0# If the file was not saved, prompt to see if this=
- patch should
->> >+ =A0 =A0 =A0 =A0# be skipped. =A0But skip this verification step i=
-f configured so.
->> >+ =A0 =A0 =A0 =A0if gitConfig("git-p4.skipSubmitEditCheck") =3D=3D =
-"true":
->> >+ =A0 =A0 =A0 =A0 =A0 =A0print "return true for skipSubmitEditCheck=
-"
->>
->> You print a helpful/annoying(?) message here, but not further up at
->> skipSubmitEdit?
->
-> Aargh. =A0Leaked debug code. =A0Thanks for noticing. =A0I got rid of
-> it.
->
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0-- Pete
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
