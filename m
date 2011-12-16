@@ -1,61 +1,97 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Branch names with slashes
-Date: Fri, 16 Dec 2011 08:02:37 +0100
-Message-ID: <4EEAED0D.90006@viscovery.net>
-References: <CAGcUY13TOodu1BO3DCoNnVvNZ9QkWAbD-RmyqQX6P1q6tcO+yg@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Revisiting metadata storage
+Date: Fri, 16 Dec 2011 01:52:51 -0600
+Message-ID: <20111216075251.GA4048@elie.hsd1.il.comcast.net>
+References: <CAD77+gQB+0zJG62jrtPn_MwLLR7zgH=5gBtkvPxrKgiLPZsbsw@mail.gmail.com>
+ <87sjkx8gll.fsf@an-dro.info.enstb.org>
+ <CAD77+gR=SjU0Ne9jort91pdHDA=RjkTJUJmnqKBipqoGUmoL_A@mail.gmail.com>
+ <CAE1pOi2TGWmFErcKhQu-a37JjLh22O1zFYoBaVRyfBDFjOTE9Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Leonardo Kim <dalinaum@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 16 08:02:49 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Richard Hartmann <richih.mailinglist@gmail.com>,
+	Ronan Keryell <Ronan.Keryell@hpc-project.com>,
+	Git List <git@vger.kernel.org>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 16 08:53:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbRoe-00014I-7m
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 08:02:48 +0100
+	id 1RbSbJ-0008TF-Vx
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 08:53:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751568Ab1LPHCl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Dec 2011 02:02:41 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:43431 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751293Ab1LPHCk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Dec 2011 02:02:40 -0500
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1RbRoT-00019y-Em; Fri, 16 Dec 2011 08:02:37 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 295841660F;
-	Fri, 16 Dec 2011 08:02:37 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <CAGcUY13TOodu1BO3DCoNnVvNZ9QkWAbD-RmyqQX6P1q6tcO+yg@mail.gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1756160Ab1LPHxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Dec 2011 02:53:00 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:34146 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751477Ab1LPHw7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2011 02:52:59 -0500
+Received: by yenm11 with SMTP id m11so2021481yen.19
+        for <git@vger.kernel.org>; Thu, 15 Dec 2011 23:52:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=BnWGv92416Dl9njMWTlZXzIAZq0oZ35WwwQgkXrX7bU=;
+        b=EdyQnei4ZvYxefz3pfMa1xckqoDj2eWMEhVZZqecI1cnVDOCQkvRbfdLe6uuSm4mf1
+         du98au1wC9V5EFQ4pdz91zm1daBxQHE5C2zIqvD47GprlvMQ90E/ZjbE0pcYBVAcIb0P
+         U+D4zoBVo2nitkhhJznUq7zp0HP7VzH7c6WmA=
+Received: by 10.236.22.136 with SMTP id t8mr10793503yht.30.1324021979199;
+        Thu, 15 Dec 2011 23:52:59 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id q52sm13095008yhh.3.2011.12.15.23.52.56
+        (version=SSLv3 cipher=OTHER);
+        Thu, 15 Dec 2011 23:52:57 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CAE1pOi2TGWmFErcKhQu-a37JjLh22O1zFYoBaVRyfBDFjOTE9Q@mail.gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187264>
 
-Am 12/14/2011 11:17, schrieb Leonardo Kim:
-> Branch names can contain slashes, so we can use 'development/foo' as a
-> branch name. If I choose 'development' as a branch name, it doesn't
-> work. There is a directory named development at '.git/refs/heads'
-> directory. So we cannot create a file named development for
-> 'refs/heads/development'.
-> 
-> An error message may occurs like below. Unfortunately, It is not of help to me.
-> 'error: 'refs/heads/development/foo' exists; cannot create
-> 'refs/heads/development'.
-> 
-> I think that dealing with a file system and an error message above is
-> not sufficient for a novice like me. I hope that it should be
-> improved.
+Hilco Wijbenga wrote:
 
-Sorry, I don't see anything in the error message that makes a connection
-between refs and a file system; it only says "foo/bar exists; cannot
-create foo". I really don't see how this can be improved to avoid confusion.
+>                        Right now every rebase means a full (and almost
+> completely unnecessary) rebuild.
 
--- Hannes
+It sounds like what you are suffering from is that "git rebase" uses
+the worktree as its workspace instead of doing all that work
+in-memory, right?
+
+If I were in your situation, I would do the following:
+
+ 1. Don't rebase so often.  When wanting to take advantage of features
+    from a new upstream version, use "git merge" to pull it in.  Only
+    rebase when it is time to make the history presentable for other
+    people.
+
+    This way, "git log --first-parent" will give easy access to
+    the intermediate versions you have hacked on and tested recently.
+
+ 2. When history gets ugly and you want to rebase to make the series
+    easier to make sense of, use a separate workdir:
+
+	$ git branch tmp; # make a copy to rebase
+
+	$ cd ..
+	$ git new-workdir repo rebase-scratch tmp
+	$ cd rebase-scratch
+	$ git rebase -i origin/master
+	...
+	$ cd ..
+	$ rm -fr rebase-scratch
+
+	$ cd repo
+	$ git diff HEAD tmp;	# Does the rebased version look better?
+	$ git reset --keep tmp;	# Yes.  Use it.
+	$ git branch -d tmp
+
+ 3. Once the rebased history looks reasonably good, be sure to rebase
+    one final time and test each commit before submitting for other
+    people's use.
+
+Hope that helps,
+Jonathan
