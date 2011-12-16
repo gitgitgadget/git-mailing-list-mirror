@@ -1,170 +1,102 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] pretty: give placeholders to reflog identity
-Date: Fri, 16 Dec 2011 06:40:24 -0500
-Message-ID: <20111216114024.GA16965@sigill.intra.peff.net>
+From: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
+Subject: Re: How to commit incomplete changes?
+Date: Fri, 16 Dec 2011 13:15:28 +0100
+Message-ID: <hbf.20111216xubv@bombur.uio.no>
+References: <4cfc9cf0515b1bc751f6aa0de4f55e2a@ulrik.uio.no>
+	<4EEA79E0.4070700@gmail.com>
+	<7v8vmdl62s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Neal Kreitzinger <nkreitzinger@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 16 12:40:54 2011
+X-From: git-owner@vger.kernel.org Fri Dec 16 13:15:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbW9h-0007qh-9O
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 12:40:50 +0100
+	id 1RbWhM-0006hJ-NR
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 13:15:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756539Ab1LPLkb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Dec 2011 06:40:31 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44002
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758846Ab1LPLk1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Dec 2011 06:40:27 -0500
-Received: (qmail 3781 invoked by uid 107); 16 Dec 2011 11:47:08 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 16 Dec 2011 06:47:08 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Dec 2011 06:40:24 -0500
-Content-Disposition: inline
+	id S1751893Ab1LPMPc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Dec 2011 07:15:32 -0500
+Received: from mail-out1.uio.no ([129.240.10.57]:52586 "EHLO mail-out1.uio.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750921Ab1LPMPb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2011 07:15:31 -0500
+Received: from mail-mx2.uio.no ([129.240.10.30])
+	by mail-out1.uio.no with esmtp (Exim 4.75)
+	(envelope-from <hbf@ulrik.uio.no>)
+	id 1RbWhF-0003TL-5E; Fri, 16 Dec 2011 13:15:29 +0100
+Received: from bombur.uio.no ([129.240.6.233])
+	by mail-mx2.uio.no with esmtp  (Exim 4.76)
+	(envelope-from <hbf@ulrik.uio.no>)
+	id 1RbWhE-0002Xd-N7; Fri, 16 Dec 2011 13:15:29 +0100
+Received: by bombur.uio.no (Postfix, from userid 2112)
+	id 89908DE9; Fri, 16 Dec 2011 13:15:28 +0100 (CET)
+In-Reply-To: <7v8vmdl62s.fsf@alter.siamese.dyndns.org>
+X-Mailer: VM 7.19 under Emacs 23.1.1
+X-UiO-Ratelimit-Test: rcpts/h 4 msgs/h 1 sum rcpts/h 5 sum msgs/h 1 total rcpts 2044 max rcpts/h 17 ratelimit 0
+X-UiO-Spam-info: not spam, SpamAssassin (score=-7.0, required=5.0, autolearn=disabled, RP_MATCHES_RCVD=-2.023,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
+X-UiO-Scanned: 55A2994BD5CF9B54F91CF96F7DA6B91061A1FEA8
+X-UiO-SPAM-Test: remote_host: 129.240.6.233 spam_score: -69 maxlevel 80 minaction 1 bait 0 mail/h: 1 total 879 max/h 5 blacklist 0 greylist 1 ratelimit 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187273>
 
-When doing a reflog walk, you can get some information about
-the reflog (such as the subject line), but not the identity
-information (i.e., name and email).
+[Neal Kreitzinger]
+> I assume by 'generated changes' you mean the automerge in git...
 
-Let's make those available, mimicing the options for author
-and committer identity.
+No.  And to your questions of why I want this with unpublished work:
+No.  Like I wrote, I'm talking about published commits.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Initial posting and discussion here:
+[Junio C Hamano]
+> My reading of the "need to split" example was not "bulk of work plus fixes
+> to mistakes".  Imagine you are working on somebody else's code and for some
+> reason you want to do
+> 
+> 	s/setenv/xsetenv/g
+> 
+> all over the code, and also add a wrapper to implement xsetenv() function.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/185043
+Yes - except there is no "mistakes" since it's deliberate.  I'd do
+s/setenv/xsetenv/g, which does too little (misses some preprocessor
+stuff) or is too greedy, then commit anyway and clean up in next commit.
 
-Response was positive, but we were in 1.7.8 release freeze, so you asked
-me to hold and re-post.
+I could make and commit a much more complicated script to do it all, but
+that's unhelpful when trying to read what the heck the change is doing.
+And who knows what it'd do when run on a somewhat different codebase.
 
- Documentation/pretty-formats.txt |    4 ++++
- pretty.c                         |   25 +++++++++++++++++++++++++
- reflog-walk.c                    |   12 ++++++++++++
- reflog-walk.h                    |    1 +
- t/t6006-rev-list-format.sh       |    6 ++++++
- 5 files changed, 48 insertions(+), 0 deletions(-)
+That example matches a future internal API change.  My current issue
+is changes generated with 'autoreconf' - after cleaning up an utter
+libtool/automake mess by hand, which will break things if I don't
+autoreconf in the same commmit.
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 561cc9f..880b6f2 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -132,6 +132,10 @@ The placeholders are:
- - '%N': commit notes
- - '%gD': reflog selector, e.g., `refs/stash@\{1\}`
- - '%gd': shortened reflog selector, e.g., `stash@\{1\}`
-+- '%gn': reflog identity name
-+- '%gN': reflog identity name (respecting .mailmap, see linkgit:git-shortlog[1] or linkgit:git-blame[1])
-+- '%ge': reflog identity email
-+- '%gE': reflog identity email (respecting .mailmap, see linkgit:git-shortlog[1] or linkgit:git-blame[1])
- - '%gs': reflog subject
- - '%Cred': switch color to red
- - '%Cgreen': switch color to green
-diff --git a/pretty.c b/pretty.c
-index 230fe1c..1580299 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -822,6 +822,23 @@ static void rewrap_message_tail(struct strbuf *sb,
- 	c->indent2 = new_indent2;
- }
- 
-+static int format_reflog_person(struct strbuf *sb,
-+				char part,
-+				struct reflog_walk_info *log,
-+				enum date_mode dmode)
-+{
-+	const char *ident;
-+
-+	if (!log)
-+		return 2;
-+
-+	ident = get_reflog_ident(log);
-+	if (!ident)
-+		return 2;
-+
-+	return format_person_part(sb, part, ident, strlen(ident), dmode);
-+}
-+
- static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
- 				void *context)
- {
-@@ -963,6 +980,14 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
- 			if (c->pretty_ctx->reflog_info)
- 				get_reflog_message(sb, c->pretty_ctx->reflog_info);
- 			return 2;
-+		case 'n':
-+		case 'N':
-+		case 'e':
-+		case 'E':
-+			return format_reflog_person(sb,
-+						    placeholder[1],
-+						    c->pretty_ctx->reflog_info,
-+						    c->pretty_ctx->date_mode);
- 		}
- 		return 0;	/* unknown %g placeholder */
- 	case 'N':
-diff --git a/reflog-walk.c b/reflog-walk.c
-index da71a85..c7095b7 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -294,6 +294,18 @@ void get_reflog_message(struct strbuf *sb,
- 	strbuf_add(sb, info->message, len);
- }
- 
-+const char *get_reflog_ident(struct reflog_walk_info *reflog_info)
-+{
-+	struct commit_reflog *commit_reflog = reflog_info->last_commit_reflog;
-+	struct reflog_info *info;
-+
-+	if (!commit_reflog)
-+		return NULL;
-+
-+	info = &commit_reflog->reflogs->items[commit_reflog->recno+1];
-+	return info->email;
-+}
-+
- void show_reflog_message(struct reflog_walk_info *reflog_info, int oneline,
- 	enum date_mode dmode)
- {
-diff --git a/reflog-walk.h b/reflog-walk.h
-index 7bd2cd4..afb1ae3 100644
---- a/reflog-walk.h
-+++ b/reflog-walk.h
-@@ -14,6 +14,7 @@ extern void show_reflog_message(struct reflog_walk_info *info, int,
- 		enum date_mode);
- extern void get_reflog_message(struct strbuf *sb,
- 		struct reflog_walk_info *reflog_info);
-+extern const char *get_reflog_ident(struct reflog_walk_info *reflog_info);
- extern void get_reflog_selector(struct strbuf *sb,
- 		struct reflog_walk_info *reflog_info,
- 		enum date_mode dmode,
-diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
-index d918cc0..4442790 100755
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -267,6 +267,12 @@ test_expect_success '%gd shortens ref name' '
- 	test_cmp expect.gd-short actual.gd-short
- '
- 
-+test_expect_success 'reflog identity' '
-+	echo "C O Mitter:committer@example.com" >expect &&
-+	git log -g -1 --format="%gn:%ge" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'oneline with empty message' '
- 	git commit -m "dummy" --allow-empty &&
- 	git commit -m "dummy" --allow-empty &&
+> You _could_ do it in one single commit, but what happens when you try to
+> adjust to the updated upstream code, which may have added new callsites to
+> setenv()?
+
+Indeed.  In this case, it'd be when cherry-picking from the devel branch
+to the release branch.  These still differ too much, a legacy of our old
+CVS workflow.
+
+> If you keep it as two patches, one is mechanical (i.e. s/setenv/xsetenv/g)
+> and the other is manual (i.e. implementation of xsetenv()), then you can
+> discard the text of the "mechanical" one from the old series and instead
+> run the substitution on the updated code, and then cherry-pick the
+> "manual" one.
+
+Yes.  I'd order it in a sequence which never broke anything if I could.
+
+Well, come to think of it: Possibly I could introduce some new code
+which would only exist for the sake of patching over the temporary
+breakage, and then delete that code again 2-3 commits later.  In this
+case, I'd among other things create an obsolete libtool.m4 which is
+currently hiding inside aclocal.m4.  Not sure if that makes more sense
+than just having a few broken commits.
+
 -- 
-1.7.7.4.13.g57bf4
+Hallvard
