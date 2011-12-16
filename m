@@ -1,146 +1,57 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: How to automatically correct an almost correct auto-merge?
-Date: Fri, 16 Dec 2011 21:32:15 +0100
-Message-ID: <20111216203215.GG1868@goldbirke>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] use custom rename score during --follow
+Date: Fri, 16 Dec 2011 12:33:19 -0800
+Message-ID: <7v39cki7e8.fsf@alter.siamese.dyndns.org>
+References: <20111216112749.GA16314@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 16 21:32:26 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Dec 16 21:33:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbeS5-0006L4-SK
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 21:32:22 +0100
+	id 1RbeT9-0006me-Ag
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 21:33:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932774Ab1LPUcS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Dec 2011 15:32:18 -0500
-Received: from moutng.kundenserver.de ([212.227.17.8]:59162 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932640Ab1LPUcQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Dec 2011 15:32:16 -0500
-Received: from localhost6.localdomain6 (p5B1305DF.dip0.t-ipconnect.de [91.19.5.223])
-	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
-	id 0LnUpq-1R54mv2IMI-00h57u; Fri, 16 Dec 2011 21:32:15 +0100
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Provags-ID: V02:K0:8A06cgqVatvayAvTzH+tvkm9pZg3rpQn0txbbFVuqrM
- GDBz0RIiFljh+TRr2mRfuyw+g96KclCyKlz4UQO2C56BT/FsUV
- WbH9bt7LKKg9B1woDuzi1YokBlUN7WPAkgzvRfXHLOJe9iKT9i
- 0e4g0ZqchWe2zlaYsud50doJVjyKJwWcIjIs1j+H+bS7v0b3ZO
- ONrIOb9kpKxBqx7EQgTs50+796bM+W8k4Mcb1v3y4B8FsPmdvi
- jk6neC/X1+6qeK5oISE+9SC+Ckn+9ghUsJiyYX1yQuYJuwjxjA
- OyktvVacbfZzwClpnfF2u4mvP4uaR+3V7cgKHWPXSEP6OIlElr
- yRFoRWsCrPTTWB0w2NvA=
+	id S964827Ab1LPUdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Dec 2011 15:33:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53648 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932590Ab1LPUdW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2011 15:33:22 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8BF38587F;
+	Fri, 16 Dec 2011 15:33:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3yPV1KSAH6/jjBrHt/H9rJO91DQ=; b=Qj7nOm
+	ezpBx/qPrimor3POPJ6GPLKV/4tTpK5z884zWprvNfhMI8wTznQPQqZhQiSx4/so
+	0BhUs2+LRyQZx4QUGQZi7blVaaCsOkAq6+c2yNCpUS3+Pf1zKhrPnWF05re9MWj8
+	MQzAsj5itrulcCFnxwB3YykLqNXnhCDkXESSg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RnzSld7Lig+f4R5jMRekk8eELdwQ6vYU
+	d1cpP7v+Y0doewfNy0U+ysWG34ynqcER+750FtRW9T2ED98e+OqSveHskVqm1fCm
+	+LbblMbPoAuoJjZ5XAIHHfe3BVUcqhqp4YvecszwVTJH+A8XMziBsaChEK4JS++7
+	Q/yEZt/g/SU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 83F83587E;
+	Fri, 16 Dec 2011 15:33:21 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0FED2587C; Fri, 16 Dec 2011
+ 15:33:20 -0500 (EST)
+In-Reply-To: <20111216112749.GA16314@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 16 Dec 2011 06:27:50 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 31B64822-2825-11E1-A11D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187315>
 
-Hi,
-
-
-Briefly:
-
-Neighboring areas of a file are modified in two branches.  Git merges
-the two branches without conflicts, but the result is not semantically
-correct.  How can I teach git to produce the correct merge result when
-performing the same merge later on?
-
-
-Longer:
-
-The following commands create a file and two branches, both of them
-modifying the file by adding lines in the same area:
-
-git init
-cat >file <<\EOF
-1
-
-2
-EOF
-git add file
-git commit -m file
-git apply <<\EOF
-diff --git a/file b/file
-index 1c3e7efc..121366a2 100644
---- a/file
-+++ b/file
-@@ -1,3 +1,5 @@
- 1
-
-+a
-+
- 2
-EOF
-git commit -a -m a
-git checkout -b branch HEAD^
-git apply <<\EOF
-diff --git a/file b/file
-index 1c3e7efc..f2e91d4f 100644
---- a/file
-+++ b/file
-@@ -1,3 +1,6 @@
- 1
-+b
-+
-+c
-
- 2
-EOF
-git commit -a -m 'b c'
-git checkout master
-
-
-At this point I merge 'branch' and git produces the following result:
-
-$ git merge branch
-Auto-merging file
-Merge made by the 'recursive' strategy.
- file |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
-$ cat file
-1
-b
-
-c
-
-a
-
-2
-
-
-Now, these changes and the merge above are the minimal receipe which
-corresponds to a real merge I'm having trouble with at dayjob.  Just
-imagine that '1' and '2' are the beginning and end of a function, 'b'
-is the declaration of a new local variable, and 'a' and 'c' are new
-code blocks.  As it happens, the semantically correct result would be
-the following:
-
-1
-b
-
-a
-
-c
-
-2
-
-i.e. 'a' must be executed before 'c'.
-
-I corrected the merge result manually, but these two branches are
-merged a couple of times a day into an integration branch, and they
-will likely cook for a few weeks, which means a lot of merges, and a
-lot of manual corrections.  So I'm looking for a way to teach git to
-produce the semantically correct merge result.  Something like
-'rerere' would be great, but of course I can't use 'rerere' in this
-case, because there are no merge conflicts at all...
-
-Any ideas?  Did someone deal with similar issues before?
-
-
-Thanks,
-G=E1bor
+Makes sense; thanks.
