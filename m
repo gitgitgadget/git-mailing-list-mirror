@@ -1,66 +1,61 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] Add '-P' as a synonym for '--no-pager' in the git command
-Date: Fri, 16 Dec 2011 10:30:09 +0100
-Message-ID: <vpqliqc50f2.fsf@bauges.imag.fr>
-References: <1323982541-18995-1-git-send-email-jratt0@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: git 1.7.7.5
+Date: Fri, 16 Dec 2011 04:57:58 -0600
+Message-ID: <20111216105757.GA11174@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Joe Ratterman <jratt0@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 16 10:30:30 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 16 11:58:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbU7a-0002Dw-G2
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 10:30:30 +0100
+	id 1RbVUV-0006RP-CK
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 11:58:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760231Ab1LPJaV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Dec 2011 04:30:21 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:32908 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759876Ab1LPJaS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Dec 2011 04:30:18 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id pBG9O9wK012343
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 16 Dec 2011 10:24:09 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1RbU7F-0004zD-O2; Fri, 16 Dec 2011 10:30:09 +0100
-In-Reply-To: <1323982541-18995-1-git-send-email-jratt0@gmail.com> (Joe
-	Ratterman's message of "Thu, 15 Dec 2011 14:55:41 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 16 Dec 2011 10:24:12 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: pBG9O9wK012343
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1324632252.85744@cpeCQibj6CscFvUJxgRdbw
+	id S1751785Ab1LPK6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Dec 2011 05:58:10 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:43427 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750921Ab1LPK6H (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2011 05:58:07 -0500
+Received: by ghbz12 with SMTP id z12so2202401ghb.19
+        for <git@vger.kernel.org>; Fri, 16 Dec 2011 02:58:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=/Byr/AY1fBtHiGjcjqk20j9e1684+vxoQp405V9VhYg=;
+        b=Z5/LY6IcVExg1RUy87J0Nhdf0vf04zttDy7Ex8u1WTLBt15t8NuUEpbt1LzQizr7Y7
+         xi004UzWB4bfwa4078MPNWPcXyG9GWr8QI+ehiEndM78ObqMQSAFdf4AbXxHJ1tyObPu
+         3ye7e9KUsL9RMJGaLuwdF07NI4T/RWpif+M7A=
+Received: by 10.236.201.196 with SMTP id b44mr11451954yho.48.1324033086539;
+        Fri, 16 Dec 2011 02:58:06 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id j25sm13757808yhm.12.2011.12.16.02.58.04
+        (version=SSLv3 cipher=OTHER);
+        Fri, 16 Dec 2011 02:58:06 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187268>
 
-Joe Ratterman <jratt0@gmail.com> writes:
+Hi Junio,
 
->   Also, add both -P|--no-pager to the existing -p|--paginate in bash
->   completion.
+I noticed that v1.7.7.5 was tagged a few days ago (b36dcd72), but
+there is no corresponding tarball at
 
-A good commit message should always answer the question "why?". In this
-case, I really don't see why this is needed. If you don't like Git's
-auto-paginate feature, turn it off with core.pager or pager.<cmd>. If
-you like it, you very rarely need --no-pager (IIRC, I'm the one who
-introduced --no-pager, and I don't think I've ever used it outside a
-script).
+ http://code.google.com/p/git-core/downloads/list
 
-So, I'd rather keep -P free in case we need it later for something
-really useful (or possibly a better commit message).
+Will there be an official tarball?
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I don't mind either way, but it would be useful to know whether
+distributors should make their own or just wait.
+
+Thanks,
+Jonathan
