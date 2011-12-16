@@ -1,59 +1,61 @@
-From: "Aneesh Kumar K.V" <aneesh.kumar@linux.vnet.ibm.com>
-Subject: How to generate pull-request with info of signed tag
-Date: Fri, 16 Dec 2011 12:05:16 +0530
-Message-ID: <874nx1korf.fsf@linux.vnet.ibm.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Branch names with slashes
+Date: Fri, 16 Dec 2011 08:02:37 +0100
+Message-ID: <4EEAED0D.90006@viscovery.net>
+References: <CAGcUY13TOodu1BO3DCoNnVvNZ9QkWAbD-RmyqQX6P1q6tcO+yg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 16 07:35:35 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Leonardo Kim <dalinaum@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 16 08:02:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbROJ-0001PR-3s
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 07:35:35 +0100
+	id 1RbRoe-00014I-7m
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 08:02:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751610Ab1LPGfa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Dec 2011 01:35:30 -0500
-Received: from e31.co.us.ibm.com ([32.97.110.149]:45374 "EHLO
-	e31.co.us.ibm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751399Ab1LPGf3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Dec 2011 01:35:29 -0500
-Received: from /spool/local
-	by e31.co.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted
-	for <git@vger.kernel.org> from <aneesh.kumar@linux.vnet.ibm.com>;
-	Thu, 15 Dec 2011 23:35:29 -0700
-Received: from d03relay05.boulder.ibm.com (9.17.195.107)
-	by e31.co.us.ibm.com (192.168.1.131) with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted;
-	Thu, 15 Dec 2011 23:35:25 -0700
-Received: from d03av04.boulder.ibm.com (d03av04.boulder.ibm.com [9.17.195.170])
-	by d03relay05.boulder.ibm.com (8.13.8/8.13.8/NCO v10.0) with ESMTP id pBG6ZN5t014714
-	for <git@vger.kernel.org>; Thu, 15 Dec 2011 23:35:23 -0700
-Received: from d03av04.boulder.ibm.com (loopback [127.0.0.1])
-	by d03av04.boulder.ibm.com (8.14.4/8.13.1/NCO v10.0 AVout) with ESMTP id pBG6ZMLO011104
-	for <git@vger.kernel.org>; Thu, 15 Dec 2011 23:35:23 -0700
-Received: from skywalker.linux.vnet.ibm.com ([9.124.95.8])
-	by d03av04.boulder.ibm.com (8.14.4/8.13.1/NCO v10.0 AVin) with ESMTP id pBG6ZHod010577;
-	Thu, 15 Dec 2011 23:35:20 -0700
-User-Agent: Notmuch/0.10+50~g65f6e2b (http://notmuchmail.org) Emacs/23.3.1 (x86_64-pc-linux-gnu)
-x-cbid: 11121606-7282-0000-0000-000004F490DE
+	id S1751568Ab1LPHCl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Dec 2011 02:02:41 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:43431 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751293Ab1LPHCk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2011 02:02:40 -0500
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1RbRoT-00019y-Em; Fri, 16 Dec 2011 08:02:37 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 295841660F;
+	Fri, 16 Dec 2011 08:02:37 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <CAGcUY13TOodu1BO3DCoNnVvNZ9QkWAbD-RmyqQX6P1q6tcO+yg@mail.gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187263>
 
+Am 12/14/2011 11:17, schrieb Leonardo Kim:
+> Branch names can contain slashes, so we can use 'development/foo' as a
+> branch name. If I choose 'development' as a branch name, it doesn't
+> work. There is a directory named development at '.git/refs/heads'
+> directory. So we cannot create a file named development for
+> 'refs/heads/development'.
+> 
+> An error message may occurs like below. Unfortunately, It is not of help to me.
+> 'error: 'refs/heads/development/foo' exists; cannot create
+> 'refs/heads/development'.
+> 
+> I think that dealing with a file system and an error message above is
+> not sufficient for a novice like me. I hope that it should be
+> improved.
 
-Hi,
+Sorry, I don't see anything in the error message that makes a connection
+between refs and a file system; it only says "foo/bar exists; cannot
+create foo". I really don't see how this can be improved to avoid confusion.
 
-I am using git from master branch and wanted to try the signed pull
-request. I have pushed the signed tag to repo.or.cz, but not sure how to
-generate pull request with signed tag information ? git-pull-request
-insist on a branch on the server and put the branch details in the
-pull-request text, It do add tag description but not the tag name and
-still put "repo-name branch" name in the txt. Shouldn't that be
-"repo-name tag-name" so that one can cut-paste that in pull request ?
-
--aneesh
+-- Hannes
