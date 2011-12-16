@@ -1,58 +1,75 @@
-From: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
-Subject: Re: Any tips for improving the performance of cloning large repositories?
-Date: Fri, 16 Dec 2011 14:39:05 +0100
-Message-ID: <hbf.20111216zcin@bombur.uio.no>
-References: <CAJ-05NPP7aCcr_SYxLYk8U1entDMv0aF2Me3cTGmOLjYqFKUOA@mail.gmail.com>
-	<hbf.20111216yufz@bombur.uio.no>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] attr: map builtin userdiff drivers to well-known extensions
+Date: Fri, 16 Dec 2011 15:00:51 +0100
+Message-ID: <4EEB4F13.2010402@viscovery.net>
+References: <20111216110000.GA15676@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Alex Bennee <kernel-hacker@bennee.com>
-X-From: git-owner@vger.kernel.org Fri Dec 16 14:39:18 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Brandon Casey <drafnel@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Dec 16 15:01:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbY0L-00035E-4x
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 14:39:17 +0100
+	id 1RbYLP-0004Bn-1F
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 15:01:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759133Ab1LPNjK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Dec 2011 08:39:10 -0500
-Received: from mail-out1.uio.no ([129.240.10.57]:37052 "EHLO mail-out1.uio.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755827Ab1LPNjI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Dec 2011 08:39:08 -0500
-Received: from mail-mx1.uio.no ([129.240.10.29])
-	by mail-out1.uio.no with esmtp (Exim 4.75)
-	(envelope-from <hbf@ulrik.uio.no>)
-	id 1RbY0B-0006nP-PL; Fri, 16 Dec 2011 14:39:07 +0100
-Received: from bombur.uio.no ([129.240.6.233])
-	by mail-mx1.uio.no with esmtp  (Exim 4.76)
-	(envelope-from <hbf@ulrik.uio.no>)
-	id 1RbY0B-0003G1-B7; Fri, 16 Dec 2011 14:39:07 +0100
-Received: by bombur.uio.no (Postfix, from userid 2112)
-	id 06384E26; Fri, 16 Dec 2011 14:39:05 +0100 (CET)
-In-Reply-To: <hbf.20111216yufz@bombur.uio.no>
-X-Mailer: VM 7.19 under Emacs 23.1.1
-X-UiO-Ratelimit-Test: rcpts/h 7 msgs/h 3 sum rcpts/h 10 sum msgs/h 4 total rcpts 2054 max rcpts/h 17 ratelimit 0
-X-UiO-Spam-info: not spam, SpamAssassin (score=-7.0, required=5.0, autolearn=disabled, RP_MATCHES_RCVD=-2.023,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
-X-UiO-Scanned: DDD1AE0EABA9302A5CEFE220556F6EAA48214859
-X-UiO-SPAM-Test: remote_host: 129.240.6.233 spam_score: -69 maxlevel 80 minaction 2 bait 0 mail/h: 3 total 883 max/h 5 blacklist 0 greylist 0 ratelimit 0
+	id S1759443Ab1LPOA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Dec 2011 09:00:59 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:61873 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756517Ab1LPOA5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2011 09:00:57 -0500
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1RbYLD-0003In-SH; Fri, 16 Dec 2011 15:00:52 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 891991660F;
+	Fri, 16 Dec 2011 15:00:51 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <20111216110000.GA15676@sigill.intra.peff.net>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187278>
 
-I wrote:
-> Do you often need to clone from a remote?  Instead of cloning from a
-> local (git clone --mirror) which gets auto-updated from the remote.
+Am 12/16/2011 12:00, schrieb Jeff King:
+>  static const char *builtin_attr[] = {
+...
+> +	"*.c diff=cpp",
+> +	"*.cc diff=cpp",
+> +	"*.cxx diff=cpp",
+> +	"*.cpp diff=cpp",
+> +	"*.h diff=cpp",
+> +	"*.hpp diff=cpp",
 
-Er, obviously not, since you tried that with rsync.  Create the mirror
-with 'git clone --mirror', then update it with 'git fetch' rather than
-rsync.
+Please don't do this. It would be a serious regression for C++ coders, and
+some C coders as well. The built-in hunk header patterns are severly
+broken and don't work well with C++ code. I know for sure that the
+following are not recognized:
 
--- 
-Hallvard
+- template declarations, e.g. template<class T> func(T x);
+- constructor definitionss, e.g. MyClass::MyClass()
+- functions that return references, e.g. const string& func()
+- function definitions along the GNU coding style, e.g.
+
+     void
+     the_func ()
+
+I am currently using this pattern (but I'm sure it can be optimized) with
+an appropriate xcpp attribute:
+
+[diff "xcpp"]
+        xfuncname = "!^[
+\\t]*[a-zA-Z_][a-zA-Z_0-9]*[^()]*:[[:space:]]*$\n^[a-zA-Z_][a-zA-Z_0-9]*.*"
+
+(modulo MUA line wrapping).
+
+-- Hannes
