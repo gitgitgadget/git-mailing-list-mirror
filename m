@@ -1,79 +1,69 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [BUG] attribute "eol" with "crlf"
-Date: Fri, 16 Dec 2011 19:21:07 +0100
-Message-ID: <vpqr504wf70.fsf@bauges.imag.fr>
-References: <CAN0XMO+OOdTJ+aNMSc2G3RVc7Wfypr4+7dU3US9GVAmMiSJ7cg@mail.gmail.com>
+From: Christopher Dale <chrelad@gmail.com>
+Subject: Re: [PATCH] Adding hooks.directory config option; wiring into run_hook
+Date: Fri, 16 Dec 2011 12:28:17 -0600
+Message-ID: <CADQnX_c=WUYgjTkXC2vNCua=6Cf7CMBBfnteBv2hE_kGH=y9UQ@mail.gmail.com>
+References: <CADQnX_e76LzuRUDOKFOsRHU=e8Cw+qh5x1BdW5HMEdMmP5PaHg@mail.gmail.com>
+	<7vmxasie6k.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>
-To: Ralf Thielow <ralf.thielow@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 16 19:21:21 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 16 19:28:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbcPH-0008U5-Kj
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 19:21:19 +0100
+	id 1RbcWB-0003MN-3T
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 19:28:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760240Ab1LPSVP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Dec 2011 13:21:15 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:60181 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760133Ab1LPSVN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Dec 2011 13:21:13 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id pBGIL7Kv009432
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 16 Dec 2011 19:21:07 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1RbcP6-00016Q-5h; Fri, 16 Dec 2011 19:21:08 +0100
-In-Reply-To: <CAN0XMO+OOdTJ+aNMSc2G3RVc7Wfypr4+7dU3US9GVAmMiSJ7cg@mail.gmail.com>
-	(Ralf Thielow's message of "Fri, 16 Dec 2011 18:44:21 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 16 Dec 2011 19:21:07 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: pBGIL7Kv009432
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1324664471.32944@shHaGwlrrrAZEokOFwWE7w
+	id S1760494Ab1LPS2X convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Dec 2011 13:28:23 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:34538 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760406Ab1LPS2S convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Dec 2011 13:28:18 -0500
+Received: by werm1 with SMTP id m1so545186wer.19
+        for <git@vger.kernel.org>; Fri, 16 Dec 2011 10:28:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=XYWm07Uf3ECRXCi4WBg7emXbxp+X/yS6s9rrqQg/c40=;
+        b=t1mZA7+PWso9w/zYtlxyrqo3kFdFvuc8xN55LPII4AMpXjz3gGmYDgS0Dwj/wkYIR6
+         A9ipJ4eRgb85aFa2dIeY+oaC0vPpAAfXT7e9v+eabY5TOUaxRMxqo+bIrnbPHl3BlM2S
+         xTcwBL3VX/TDd74TZFy8ihhnsVkxGgAXOB3aU=
+Received: by 10.216.138.151 with SMTP id a23mr3614898wej.52.1324060097632;
+ Fri, 16 Dec 2011 10:28:17 -0800 (PST)
+Received: by 10.216.155.148 with HTTP; Fri, 16 Dec 2011 10:28:17 -0800 (PST)
+In-Reply-To: <7vmxasie6k.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187296>
 
-Ralf Thielow <ralf.thielow@googlemail.com> writes:
+Okidokee, thanks for your feedback :)
 
-> There's a bug in git-1.7.8 if you use the attribute "eol" with "crlf".
+On Fri, Dec 16, 2011 at 12:06 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Christopher Dale <chrelad@gmail.com> writes:
 >
-> Steps to reproduce:
-> - add and commit a text file which uses 0d0a for line breaks
-> 7465 7374 0d0a 0d0a 7465 7374 0d0a       test....test..
-> - add ".gitattributes" with "*.txt eol=crlf"
-> - change a line in the file
-> - execute "git checkout [file]"
+>> ...
+>> trusted path execution policies. These systems require that any file
+>> that can be executed exhibit at least the following characteristics:
+>>
+>> =C2=A0 * The executable, it's directory, and each directory above it=
+ are
+>> =C2=A0 =C2=A0 not writable.
+>>
+>> Since the hooks directory is within a directory that by it's very na=
+ture
+>> requires write permissions,...
 >
-> The result is:
-> 7465 7374 0d0d 0a0d 0d0a 7465 7374 0d0d  test......test..
-
-It seems to me to be the expected behavior. You committed a file whose
-line endings are not normalized to LF in the repository, and asked for a
-conversion LF -> CRLF on checkout, which Git did.
-
-Git can't know exactly the moment when you edit .gitattributes, so it
-can't do the conversion at the time you add the eol=crlf attribute. It
-does it on checkout.
-
-> 0d0a was replaced by 0d0d0a.
-
-I'd say 0a (LF) was replaced by 0d0a (CRLF).
-
-What behavior would you have expected?
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> Sorry, but I am not interested at all. If you can write into $GIT_DIR=
+/config
+> then you can point at any directory with hooks.directory and that wou=
+ld mean
+> it would defeat your "trusted path execution policies".
