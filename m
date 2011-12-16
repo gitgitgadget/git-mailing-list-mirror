@@ -1,73 +1,96 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 10/10] revert: report fine-grained error messages from
- insn parser
-Date: Fri, 16 Dec 2011 04:48:35 +0530
-Message-ID: <CALkWK0k6Vf51nk3jLs3z1LvzRnCb46obVDZh8h5byzTzCBctJw@mail.gmail.com>
-References: <CALkWK0kbV2WFfGVrA9m_Uwd4J8+U9Yde9Wxb-OZE9Y8K+Ta_4A@mail.gmail.com>
- <1323881677-11117-1-git-send-email-artagnon@gmail.com> <1323881677-11117-11-git-send-email-artagnon@gmail.com>
- <7vsjklmsvt.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git help prune accuracy?
+Date: Thu, 15 Dec 2011 16:04:02 -0800
+Message-ID: <7vliqdl6vh.fsf@alter.siamese.dyndns.org>
+References: <201112151432.09252.mfick@codeaurora.org>
+ <201112151453.52157.mfick@codeaurora.org>
+ <7v1us5mqc4.fsf@alter.siamese.dyndns.org>
+ <201112151601.52968.mfick@codeaurora.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 16 00:24:52 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Martin Fick <mfick@codeaurora.org>
+X-From: git-owner@vger.kernel.org Fri Dec 16 01:04:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbKfU-0005Uy-0L
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 00:24:52 +0100
+	id 1RbLHf-0004gk-R2
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Dec 2011 01:04:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759654Ab1LOXYr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Dec 2011 18:24:47 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:32979 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759633Ab1LOXYq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Dec 2011 18:24:46 -0500
-Received: by wgbdr13 with SMTP id dr13so4897035wgb.1
-        for <git@vger.kernel.org>; Thu, 15 Dec 2011 15:24:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=XExrC5qU0Cu7Xeooyb/wCzz+syY4eD3m9ux/3HLN/tc=;
-        b=M3cpoD0XUrzNicI3um4iB2/1o53Z3Y8jjxiC1XSIfp9sCuZHgWO6QPRWdc4Euh9T6m
-         agm0Y0B/SykqwcTCZfevHY9vOg7Fo5Xm85iHGksgsr6TblBVQInV/wrhkbhxPrVSH07/
-         Lo6wc9il2NG13vmfIWqMp6YeLsHIUncUCNAJA=
-Received: by 10.180.88.66 with SMTP id be2mr8678769wib.54.1323991136237; Thu,
- 15 Dec 2011 15:18:56 -0800 (PST)
-Received: by 10.216.51.141 with HTTP; Thu, 15 Dec 2011 15:18:35 -0800 (PST)
-In-Reply-To: <7vsjklmsvt.fsf@alter.siamese.dyndns.org>
+	id S1759846Ab1LPAEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Dec 2011 19:04:08 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64160 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756247Ab1LPAEH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Dec 2011 19:04:07 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2664C675A;
+	Thu, 15 Dec 2011 19:04:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fJdF+TAV58ZKQ8EEDy+fGD1hBx0=; b=ySOCwy
+	THvdn9iO9RkfPb4qff9bk7unRN1hJz4raV2+W3vZv5Gr35/V4w9jhCdbZ+kPsbNq
+	o/PAqZsFd/C9TuD79ASlcKIX8qIJYpdQfKrbH1+ToGaJTynE7pOZbkl6yK/1xkwz
+	yAVrNRJ3PbSUCYNgPQNYBVdQKxJSxRWo4qSv8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oUIpoeRM/zAKMBZ9kpOpSfomlZJ0THmB
+	HLSSXJwiTH/IPzYTuo1idSVDm6fgJAfsSBOWTXyGo+UspB2w4wYZEUm2biuUR6ti
+	IiWjWiAKWKdwNVrpMBpbIniS7zpcXdht0Md8jCewXPrBT6Ghpa/H+KWbTYc/6HkO
+	+5ci3gOiG4Y=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 19D2D6759;
+	Thu, 15 Dec 2011 19:04:05 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3397D6758; Thu, 15 Dec 2011
+ 19:04:04 -0500 (EST)
+In-Reply-To: <201112151601.52968.mfick@codeaurora.org> (Martin Fick's message
+ of "Thu, 15 Dec 2011 16:01:52 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 77337A98-2779-11E1-BEB6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187257>
 
-Hi Junio,
+Martin Fick <mfick@codeaurora.org> writes:
 
-Junio C Hamano wrote:
-> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+> ...  The summary line reads:
 >
->> Three kinds of errors can arise from parsing '.git/sequencer/todo':
->> 1. Unrecognized action
->> 2. Missing space after valid action prefix
+>   git-prune - Prune all unreachable objects from the object 
+> database
+
+Yea, prune itself has always been primarily about getting rid of
+unreachable objects. I suspect (I didn't check) that we did not even have
+a call to prune-packed in its original implementation and it was later
+added as "we are doing the pruning anyway, why not do this as well while
+at it".
+
+Yeah, I just checked.  Before 51890a6 (Call prune-packed from "git prune"
+as well., 2005-08-19), we didn't.  And 2396ec8 (Add "git-prune-packed"
+that removes objects that exist in a pack., 2005-07-03) explains it rather
+nicely:
+
+    Add "git-prune-packed" that removes objects that exist in a pack.
+    
+    This, together with "git repack" can be used to clean up unpacked
+    git archives.
+
+> I don't quite have an alternative suggestion for a better 
+> summary, the best I could do (but don't like) is:
 >
-> I think these two are the same and shouldn't result in different erro=
-r
-> messages, i.e. the first one in this sequence is still an "Unrecogniz=
-ed
-> action" error and does not have anything to do with "pick" action.
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0pickle rr/cherry-pick~4
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0pick rr/cherry-pick~3
+>   git-prune - Prune loose objects (unreachable or packed)
 
-Good point.  I'll change the parser to check for "pick " || "pick\t"
-and "revert " || "revert\t" explicitly in the re-roll.
+For a one-liner description, "Remove unnecessary or redundant loose
+objects" without parentheses may be better. Explaining "git prune" as
+"this prunes" does not add as much information as restating it using a
+different and more common verb.
 
-Thanks.
-
--- Ram
+The body text can clarify what we mean by "unnecessary" and "redundant".
+A loose object that is old may be unreachable from any of the refs,
+i.e. unused, and hence unnecessary. Or the same object as a loose one may
+be found in a pack, which would make the loose one redundant.
