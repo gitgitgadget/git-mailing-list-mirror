@@ -1,54 +1,94 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: BUG: git-p4: can't add files with special chars
-Date: Sat, 17 Dec 2011 08:27:54 -0500
-Message-ID: <20111217132754.GB31271@padd.com>
-References: <4EE6688A.2030105@diamand.org>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: Big Mess--How to use Git to resolve
+Date: Sat, 17 Dec 2011 07:33:06 -0800
+Message-ID: <86iplf2oy5.fsf@red.stonehenge.com>
+References: <1324125130643-7103964.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Sat Dec 17 14:28:05 2011
+Cc: git@vger.kernel.org
+To: hs_glw <greg@hra.net>
+X-From: git-owner@vger.kernel.org Sat Dec 17 16:38:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbuJ2-0000NN-A2
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 14:28:04 +0100
+	id 1RbwLJ-00035V-1v
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 16:38:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751830Ab1LQN17 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Dec 2011 08:27:59 -0500
-Received: from honk.padd.com ([74.3.171.149]:58304 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752191Ab1LQN16 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Dec 2011 08:27:58 -0500
-Received: from arf.padd.com (unknown [50.55.144.134])
-	by honk.padd.com (Postfix) with ESMTPSA id DA9EF1C89;
-	Sat, 17 Dec 2011 05:27:57 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 8C1FC31466; Sat, 17 Dec 2011 08:27:54 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <4EE6688A.2030105@diamand.org>
+	id S1752466Ab1LQPi3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Dec 2011 10:38:29 -0500
+Received: from lax-gw12.mailroute.net ([199.89.0.112]:44651 "EHLO
+	mail.mroute.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752425Ab1LQPi1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Dec 2011 10:38:27 -0500
+X-Greylist: delayed 319 seconds by postgrey-1.27 at vger.kernel.org; Sat, 17 Dec 2011 10:38:27 EST
+Received: from localhost (localhost [127.0.0.1])
+	by lax-gw12.mroute.net (Postfix) with ESMTP id 2F06E32708A0;
+	Sat, 17 Dec 2011 15:33:08 +0000 (UTC)
+X-Virus-Scanned: by MailRoute
+Received: from red.stonehenge.com (red.stonehenge.com [208.79.95.2])
+	by lax-gw12.mroute.net (Postfix) with ESMTP id 00E62327089F;
+	Sat, 17 Dec 2011 15:33:06 +0000 (UTC)
+Received: by red.stonehenge.com (Postfix, from userid 1001)
+	id DE57B1B09; Sat, 17 Dec 2011 07:33:06 -0800 (PST)
+x-mayan-date: Long count = 12.19.18.17.10; tzolkin = 11 Oc; haab = 18 Mac
+In-Reply-To: <1324125130643-7103964.post@n2.nabble.com> (hs glw's message of
+	"Sat, 17 Dec 2011 04:32:10 -0800 (PST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187385>
 
-luke@diamand.org wrote on Mon, 12 Dec 2011 20:48 +0000:
-> I just noticed this today. You can't add a file from git to perforce
-> that contains a p4 special character (@,#,% or *).
-> 
-> There is code to cope going the other way round (p4 file with
-> special character in it) but if you create a file in git and then
-> try to git-p4 submit, it fails.
-> 
-> I've just tried a quick and simple fix, and it turns out that it's
-> not that easy as the special characters get expanded to %40, %2A and
-> so-on. The % seems to get further expanded by python...
+>>>>> "hs" == hs glw <greg@hra.net> writes:
 
-Entertaining.  Probably p4_add() and friends should stop using
-system.  And add option "-f" when wildcards are detected.  I
-wouldn't be surprised if this turned into a larger set of issues.
+hs> Some clients have customizations of the code, some have version 5 of the
+hs> software others have 5.2, 5.5 etc.
 
-		-- Pete
+Create an empty repo.
+
+Unpack the oldest release (I presume you still have the tarballs) you
+might have forked a customer from.  commit it, and tag it as v5.0 (or
+whatever it is).
+
+In the same dir, delete the files, and unpack the *next* release.  git
+add . again, and commit that, effectively recording the changes from one
+release to the next.  Tag it v5.1 or whatever.
+
+Repeat for all releases.
+
+git branch -m master release
+
+That will remain your untouched release branch.
+
+Now, take customer1.  Figure out which release is closest to their
+modified code.  Let's say it's v5.2
+
+git checkout -b customer1 v5.2
+
+erase the files, copy their work in, and commit.  You'll now have a
+customer1 branch that comes off the right release.
+
+repeat for each customer.
+
+So now you have tags for each release, and every customer's code checked
+in somewhere.
+
+If you feel brave, you can try to move a customer to a later release:
+
+git checkout customer1
+git rebase v5.5
+
+That will try to apply the diff between v5.2 and customer1 directly to
+the top of v5.5.  Might fail, might need some mopping up.  But at least
+the hard work is done.
+
+Hope this helps.
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Smalltalk/Perl/Unix consulting, Technical writing, Comedy, etc. etc.
+See http://methodsandmessages.posterous.com/ for Smalltalk discussion
