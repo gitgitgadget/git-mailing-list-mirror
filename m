@@ -1,346 +1,214 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: best way to fastforward all tracking branches after a fetch
-Date: Sat, 17 Dec 2011 15:41:06 +0530
-Message-ID: <20111217101106.GB19248@sita-lt.atc.tcs.com>
-References: <jbvj5o$skt$1@dough.gmane.org>
- <20111217101009.GA19248@sita-lt.atc.tcs.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH 1/3] use struct sha1_array in diff_tree_combined()
+Date: Sat, 17 Dec 2011 11:15:48 +0100
+Message-ID: <4EEC6BD4.4040302@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="LwW0XdcUbUexiWVK"
-Cc: git@vger.kernel.org
-To: Gelonida N <gelonida@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 17 11:11:21 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-15?Q?=C6var_Arnfj=F6?= =?ISO-8859-15?Q?r=F0_Bjarmason?= 
+	<avarab@gmail.com>, Jens Lehmann <Jens.Lehmann@web.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 17 11:16:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbrEf-0008Vd-0d
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 11:11:21 +0100
+	id 1RbrJG-0001QW-P1
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 11:16:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751832Ab1LQKLR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Dec 2011 05:11:17 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:56698 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751808Ab1LQKLP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Dec 2011 05:11:15 -0500
-Received: by iaeh11 with SMTP id h11so5664306iae.19
-        for <git@vger.kernel.org>; Sat, 17 Dec 2011 02:11:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ha53fdMU8/qllo9XdNKzeDElqoxFHnJxp1GzBgiDTJc=;
-        b=IVKLNdN5OP+Ad2UNcRyb/Xpjc9rDz38V2GLEs2vrBlABJXtwxG0SfV4rHo0LUwPRgF
-         cg1dHQJKMva/i7zCWkozK8hpyRpQ3NuIo3oeKPlIlHKtMgiDryYfMv4FnTwWgJdrzVIG
-         YttWck0tmb/+o4CLkz0KlZoRKlA2fWgJIDCx8=
-Received: by 10.50.173.74 with SMTP id bi10mr14063336igc.4.1324116674544;
-        Sat, 17 Dec 2011 02:11:14 -0800 (PST)
-Received: from sita-lt.atc.tcs.com ([117.195.189.63])
-        by mx.google.com with ESMTPS id yg2sm7563938igb.1.2011.12.17.02.11.11
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 17 Dec 2011 02:11:13 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20111217101009.GA19248@sita-lt.atc.tcs.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751821Ab1LQKQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Dec 2011 05:16:00 -0500
+Received: from india601.server4you.de ([85.25.151.105]:40060 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751746Ab1LQKP7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Dec 2011 05:15:59 -0500
+Received: from [192.168.2.105] (p579BE8BE.dip.t-dialin.net [87.155.232.190])
+	by india601.server4you.de (Postfix) with ESMTPSA id 8AF0B2F8038;
+	Sat, 17 Dec 2011 11:15:57 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187367>
 
+Maintaining an array of hashes is easier using sha1_array than
+open-coding it.  This patch also fixes a leak of the SHA1 array
+in  diff_tree_combined_merge().
 
---LwW0XdcUbUexiWVK
-Content-Type: multipart/mixed; boundary="TRYliJ5NKNqkz5bu"
-Content-Disposition: inline
+---
+ builtin/diff.c |   12 ++++++------
+ combine-diff.c |   34 +++++++++++++---------------------
+ diff.h         |    3 ++-
+ submodule.c    |   14 +++++---------
+ 4 files changed, 26 insertions(+), 37 deletions(-)
 
-
---TRYliJ5NKNqkz5bu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-oops; forgot the program...
-
-On Sat, Dec 17, 2011 at 03:40:09PM +0530, Sitaram Chamarty wrote:
-> On Sat, Dec 10, 2011 at 01:26:32PM +0100, Gelonida N wrote:
-> > Hi,
-> >=20
-> > What is the best way to fastforward all fastforwardable tracking
-> > branches after a git fetch?
->=20
-> I know this is a somewhat closed topic, but I took some time to
-> clean up a program I have been using for a while, including some
-> changes based upon ideas elsewhere in this thread.  The program
-> "git-branch-check" is attached, and requires perl > 5.10.0.
->=20
-> Note that this does a lot more than just fast-forward all
-> branches, although it can do that as well.
->=20
-> I alias it (in ~/.gitconfig) to 'bc', so I just run "git bc".
-> Running with "-h" shows usage:
->=20
->     Usage: /home/sitaram/bin/git-branch-check [options] [branches]
->=20
->     Check or fast forward branches.  Default: act upon all local branches=
- if no
->     arguments supplied, or just the current branch if '-c' is passed.
->             -c      act upon current branch only
->             -ff     don't just check, try to fast forward also
->             -md     max diff (default 100; see below for details)
->             -h      help
->     'max diff':
->         hide output for two branches different by more than so many commi=
-ts
->=20
-> My usual usage is just "git bc -c", which may give me:
->=20
->        1        pu...origin/pu
->        1        pu...github/pu
->       13        pu...master
->            5    pu...q
->            7    pu...vrs
->=20
-> This quickly tells me my 'pu' is one ahead of both my own
-> gitolite server as well as github's copy, and that it is 13
-> commits ahead of master.  The (unreleased and frequently
-> rebased) feature branches 'q' and 'vrs' are ahead of pu, which
-> means a rebase is not pending.  Without the "-c" I may see the
-> status of master versus its own upstream and other remotes,
-> etc., also.
->=20
-> The purpose of the max diff limit (default 100) is to hide, for
-> example, the pair 'master' and 'man' from the git.git repo.
-> Otherwise you'd see something like:
->=20
->     27249 973    master...man
->=20
-> which is pretty meaningless.  The sum of those two numbers
-> should be less than the max.
->=20
-> "git bc -ff" will attempt to fast forward all selected branches
-> that are ancestors of their respective upstreams.  The current
-> branch will not be ff-ed if the tree is dirty, since you can't
-> do this by 'git branch -f'; it has to be an actual merge
-> command.
->=20
-> The output is not (currently) pipable to other programs because
-> I use colors (obtained from 'git config --get-color') and
-> currently it is not conditional on STDOUT being a tty.
-
-
-
---TRYliJ5NKNqkz5bu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename=git-branch-check
-
-#!/usr/bin/perl -s
-use 5.10.0;
-use strict;
-use warnings;
-
-# ----------------------------------------------------------------------
-
-# bare-minimum subset of 'Tsh' (see github.com/sitaramc/tsh)
-{
-    my($rc, $text);
-    sub rc { return $rc || 0; }
-    sub text { return $text || ''; }
-    sub lines { return split /\n/, $text; }
-    sub try {
-        my $cmd = shift; die "try: expects only one argument" if @_;
-        $text = `( $cmd ) 2>&1; echo -n RC=\$?`;
-        if ($text =~ s/RC=(\d+)$//) {
-            $rc = $1;
-            return (not $rc);
-        }
-        die "couldnt find RC= in result; this should not happen:\n$text\n\n...\n";
-    }
-}
-
-# ----------------------------------------------------------------------
-
-# options; the "-s" above sets one or more of these
-# (the format of the lines below is special; it is used by usage() to generate
-# help text for the options)
-# BEGIN OPTIONS
-    our $c;     # act upon current branch only
-    our $ff;    # don't just check, try to fast forward also
-    our $md;    # max diff (default 100; see below for details)
-    our $h;     # help
-# END OPTIONS
-    $md ||= 100;
-
-# get this over with; usage() exits so don't worry
-    usage() if $h;
-
-# get current branch
-    my $current = '';
-    try "git symbolic-ref HEAD" or die "DETACHED HEAD or no repo";
-    ($current = (lines)[0]) =~ s(refs/heads/)();
-
-# get branch names
-    # first, all local branches as keys of a hash with upstream name if any, as the value
-    my %upstream;
-    try "git for-each-ref --perl '--format=\$upstream{%(refname:short)} = %(upstream:short);' refs/heads"
-        or die "for-each-ref 1 failed";
-    eval text;
-
-    # local branches as a list; keep $current at the top, and the rest sorted
-    my @local = ($current, grep { $_ ne $current } sort keys %upstream);
-
-    # remote branches as a list
-    try "git for-each-ref '--format=%(refname:short)' refs/remotes"
-        or die "for-each-ref 2 failed";
-    my @remote = lines;
-
-# decide what branches to act upon.  Default: all local branches.  If any
-# arguments are given, then those.  If '-c' is passed, only current branch.
-    my @branches = @local;
-    @branches = @ARGV if @ARGV;
-    @branches = ($current) if $c;
-
-# ----------------------------------------------------------------------
-
-# show the tree state if it's dirty
-    print "dirty:\n", text if dirty();
-
-# process selected branches
-    for my $b (@branches) {
-        # attempt a fast-forward if -ff is passed
-        ff($b, $upstream{$b}, $current) if ($ff);
-        # check against its own upstream
-        check($b, $upstream{$b});
-        # then against all remote branches of the same name (I typically have
-        # my own gitolite server as 'upstream' but also have github and google
-        # code as additional remotes that I push my branches to)
-        check($b, grep(m(^[^/]+/$b$), @remote));
-    }
-    # ...then against all local branches.  We do this in a separate loop
-    # so their output is kept separate from the remote compares above.
-    for my $b (@branches) {
-        check($b, @local);
-    }
-
-# DONE...
-
-# ----------------------------------------------------------------------
-# subroutines
-# ----------------------------------------------------------------------
-
-sub ff {
-    # b=branch, u=upstream, c=current
-    my ($b, $u, $c) = @_;
-
-    unless ($u) {
-        say "$b does not have an upstream";
-        return;
-    }
-
-    if ($b eq $c and dirty()) {
-        say "working tree is dirty; skipping ff for (current branch) $b";
-        return;
-    }
-
-    # $l = number of commits "l"eft side has over the "r"ight (similarly $r...)
-    my($l, $r) = compare($b, $u);
-    if ($r and not $l) {
-        # there is something to update, and ff is possible
-        if ($b eq $c) {
-            # current branch; needs an actual merge
-            try("git merge --ff-only $u") or die "$b: 'git merge --ff-only $u' failed:\n" .  text;
-        } else {
-            # other branches can be forced
-            try("git branch -f $b $u") or die "$b: 'git branch -f $b $u' failed:\n" .  text;
-        }
-    }
-}
-
-sub check {
-    my ($b, @list) = @_;
-    state %seen;
-
-    for my $u (@list) {
-        next unless $u;
-        next if $b eq $u or $seen{$b}{$u};
-        # seeing a...b is as good as seeing b...a also
-        $seen{$b}{$u} = 1;
-        $seen{$u}{$b} = 1;
-
-        my ($l, $r) = compare($b, $u);
-
-        my $abs = $l + $r; next unless $abs;    # if they're equal, don't show it
-        next if $abs >= $md;                    # if they're too far apart, don't show it
-
-        print spacepad(4, $l) . color('green') . ($l || ' ');
-        print spacepad(4, $r) . color('red')   . ($r || ' ');
-        say color('reset') . "    $b...$u";
-    }
-}
-
-sub compare {
-    my ($b, $u) = @_;
-
-    try("git rev-list $u..$b") or die "'git rev-list $u..$b' failed:\n" .  text;
-    my $l = lines;
-
-    try("git rev-list $b..$u") or die "'git rev-list $b..$u' failed:\n" .  text;
-    my $r = lines;
-
-    return($l, $r);
-}
-
-sub dirty {
-    try "git status -s -uno | cut -c1-2 | sort | uniq -c; /./";
-}
-
-sub color {
-    my $color = shift;
-    return `git config --get-color "" $color`;
-}
-
-sub spacepad {
-    return " " x ($_[0] - length($_[1]));
-}
-
-sub usage {
-    print "
-Usage: $0 [options] [branches]
-
-Check or fast forward branches.  Default: act upon all local branches if no
-arguments supplied, or just the current branch if '-c' is passed.
-";
-    @ARGV=($0);
-    for ( grep { /BEGIN OPTIONS/../END OPTIONS/ and not /OPTION/ } <> ) {
-        s/our \$/\t-/;
-        s/; *#/\t/;
-        print;
-    }
-    say "\'max diff':\n    hide output for two branches different by more than so many commits";
-    exit 1;
-}
-
---TRYliJ5NKNqkz5bu--
-
---LwW0XdcUbUexiWVK
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQIcBAEBAgAGBQJO7Gq6AAoJEKRCkIUIgjelvNUP/R6Le5IuZXS0agTxAAHULcI3
-VWGGyfWTDSRzglaTZCojtzPUXaz98h3eU1L9j9gCujHC1gsIt/3V2RMgGrLZrvLG
-XzR624KKZl1yTV3rmiW1KX7zFHcMxlOiAtdOwSBknbaSk/oY/AnT7gsnx69Gq1lh
-DkkaTiMfvzwHTovbMCiD5J2cSELnXAJK05yG0ADyaxikOC5BAvliQfg19WvmAglP
-FizjMudkFD4apoyegAk1W0n64Id0fKxzrzhlYCJSiDqZuAdirkixDqV3ImQqlklJ
-A6oF/Y0fAnaj8fjqzbq9+jU11/gnZH2eU5Xmx9lmoUyB9VIH8LemUsao2BcjAzJz
-mMJ5nqrJCcYsJ6zwq3h+79DgGRTZ/RdPKYLyujIEG8IDf72G98sV4qKrmlzTIVAB
-HHij4H+7LDQnzso/V+F0JBmesBwmcJxXGgtkZL8ViOXioZzwVWrp1FeU/4LvFU1x
-Tl8J1ZbyIqut3K56Bmmt8GYqi9cbaLZPqXyY0Zj8Qi7xzWCjHvSkJ/nIkzEVzqGC
-mCXN6ig67SYwLu73ddUO3Z9hTdycleykyLG1XwczgSvEZsRwEa29Me3URBH3KdU2
-kz/B6tyVpzqgXHKz9FU80pbJcO0pPAqyGuwN3/iHsaLcbIlwPyCC32IHlNEH7gmw
-OBWFYYg66ndp/AVd+srI
-=ipZI
------END PGP SIGNATURE-----
-
---LwW0XdcUbUexiWVK--
+diff --git a/builtin/diff.c b/builtin/diff.c
+index 0fe638f..387afa7 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -14,6 +14,7 @@
+ #include "log-tree.h"
+ #include "builtin.h"
+ #include "submodule.h"
++#include "sha1-array.h"
+ 
+ struct blobinfo {
+ 	unsigned char sha1[20];
+@@ -169,7 +170,7 @@ static int builtin_diff_combined(struct rev_info *revs,
+ 				 struct object_array_entry *ent,
+ 				 int ents)
+ {
+-	const unsigned char (*parent)[20];
++	struct sha1_array parents = SHA1_ARRAY_INIT;
+ 	int i;
+ 
+ 	if (argc > 1)
+@@ -177,12 +178,11 @@ static int builtin_diff_combined(struct rev_info *revs,
+ 
+ 	if (!revs->dense_combined_merges && !revs->combine_merges)
+ 		revs->dense_combined_merges = revs->combine_merges = 1;
+-	parent = xmalloc(ents * sizeof(*parent));
+-	for (i = 0; i < ents; i++)
+-		hashcpy((unsigned char *)(parent + i), ent[i].item->sha1);
+-	diff_tree_combined(parent[0], parent + 1, ents - 1,
++	for (i = 1; i < ents; i++)
++		sha1_array_append(&parents, ent[i].item->sha1);
++	diff_tree_combined(ent[0].item->sha1, &parents,
+ 			   revs->dense_combined_merges, revs);
+-	free((void *)parent);
++	sha1_array_clear(&parents);
+ 	return 0;
+ }
+ 
+diff --git a/combine-diff.c b/combine-diff.c
+index 214014d..cfe6230 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -8,6 +8,7 @@
+ #include "log-tree.h"
+ #include "refs.h"
+ #include "userdiff.h"
++#include "sha1-array.h"
+ 
+ static struct combine_diff_path *intersect_paths(struct combine_diff_path *curr, int n, int num_parent)
+ {
+@@ -1116,15 +1117,14 @@ static void handle_combined_callback(struct diff_options *opt,
+ }
+ 
+ void diff_tree_combined(const unsigned char *sha1,
+-			const unsigned char parent[][20],
+-			int num_parent,
++			const struct sha1_array *parents,
+ 			int dense,
+ 			struct rev_info *rev)
+ {
+ 	struct diff_options *opt = &rev->diffopt;
+ 	struct diff_options diffopts;
+ 	struct combine_diff_path *p, *paths = NULL;
+-	int i, num_paths, needsep, show_log_first;
++	int i, num_paths, needsep, show_log_first, num_parent = parents->nr;
+ 
+ 	diffopts = *opt;
+ 	diffopts.output_format = DIFF_FORMAT_NO_OUTPUT;
+@@ -1144,7 +1144,7 @@ void diff_tree_combined(const unsigned char *sha1,
+ 			diffopts.output_format = stat_opt;
+ 		else
+ 			diffopts.output_format = DIFF_FORMAT_NO_OUTPUT;
+-		diff_tree_sha1(parent[i], sha1, "", &diffopts);
++		diff_tree_sha1(parents->sha1[i], sha1, "", &diffopts);
+ 		diffcore_std(&diffopts);
+ 		paths = intersect_paths(paths, i, num_parent);
+ 
+@@ -1199,22 +1199,14 @@ void diff_tree_combined(const unsigned char *sha1,
+ void diff_tree_combined_merge(const unsigned char *sha1,
+ 			     int dense, struct rev_info *rev)
+ {
+-	int num_parent;
+-	const unsigned char (*parent)[20];
+ 	struct commit *commit = lookup_commit(sha1);
+-	struct commit_list *parents;
+-
+-	/* count parents */
+-	for (parents = commit->parents, num_parent = 0;
+-	     parents;
+-	     parents = parents->next, num_parent++)
+-		; /* nothing */
+-
+-	parent = xmalloc(num_parent * sizeof(*parent));
+-	for (parents = commit->parents, num_parent = 0;
+-	     parents;
+-	     parents = parents->next, num_parent++)
+-		hashcpy((unsigned char *)(parent + num_parent),
+-			parents->item->object.sha1);
+-	diff_tree_combined(sha1, parent, num_parent, dense, rev);
++	struct commit_list *parent = commit->parents;
++	struct sha1_array parents = SHA1_ARRAY_INIT;
++
++	while (parent) {
++		sha1_array_append(&parents, parent->item->object.sha1);
++		parent = parent->next;
++	}
++	diff_tree_combined(sha1, &parents, dense, rev);
++	sha1_array_clear(&parents);
+ }
+diff --git a/diff.h b/diff.h
+index 0c51724..96085cb 100644
+--- a/diff.h
++++ b/diff.h
+@@ -12,6 +12,7 @@ struct diff_queue_struct;
+ struct strbuf;
+ struct diff_filespec;
+ struct userdiff_driver;
++struct sha1_array;
+ 
+ typedef void (*change_fn_t)(struct diff_options *options,
+ 		 unsigned old_mode, unsigned new_mode,
+@@ -195,7 +196,7 @@ struct combine_diff_path {
+ extern void show_combined_diff(struct combine_diff_path *elem, int num_parent,
+ 			      int dense, struct rev_info *);
+ 
+-extern void diff_tree_combined(const unsigned char *sha1, const unsigned char parent[][20], int num_parent, int dense, struct rev_info *rev);
++extern void diff_tree_combined(const unsigned char *sha1, const struct sha1_array *parents, int dense, struct rev_info *rev);
+ 
+ extern void diff_tree_combined_merge(const unsigned char *sha1, int, struct rev_info *);
+ 
+diff --git a/submodule.c b/submodule.c
+index 68c1ba9..788d532 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -373,15 +373,11 @@ static void collect_submodules_from_diff(struct diff_queue_struct *q,
+ 
+ static void commit_need_pushing(struct commit *commit, struct commit_list *parent, int *needs_pushing)
+ {
+-	const unsigned char (*parents)[20];
+-	unsigned int i, n;
++	struct sha1_array parents = SHA1_ARRAY_INIT;
+ 	struct rev_info rev;
+ 
+-	n = commit_list_count(parent);
+-	parents = xmalloc(n * sizeof(*parents));
+-
+-	for (i = 0; i < n; i++) {
+-		hashcpy((unsigned char *)(parents + i), parent->item->object.sha1);
++	while (parent) {
++		sha1_array_append(&parents, parent->item->object.sha1);
+ 		parent = parent->next;
+ 	}
+ 
+@@ -389,9 +385,9 @@ static void commit_need_pushing(struct commit *commit, struct commit_list *paren
+ 	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
+ 	rev.diffopt.format_callback = collect_submodules_from_diff;
+ 	rev.diffopt.format_callback_data = needs_pushing;
+-	diff_tree_combined(commit->object.sha1, parents, n, 1, &rev);
++	diff_tree_combined(commit->object.sha1, &parents, 1, &rev);
+ 
+-	free((void *)parents);
++	sha1_array_clear(&parents);
+ }
+ 
+ int check_submodule_needs_pushing(unsigned char new_sha1[20], const char *remotes_name)
+-- 
+1.7.8
