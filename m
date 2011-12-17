@@ -1,97 +1,78 @@
-From: Michael Horowitz <michael.horowitz@ieee.org>
-Subject: Re: git-p4 using notes
-Date: Fri, 16 Dec 2011 19:57:00 -0500
-Message-ID: <CAFLRboq3--JcfWb=-p-hoNMsQZ-fHS3=5dgYc-pwQy7-rGy-gQ@mail.gmail.com>
-References: <CAFLRbori1Dinc2epputWfjgCOWp7M2f=+TA0w2jHq_fmRC=y3w@mail.gmail.com>
-	<4EEBA24F.8030103@diamand.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] attr: map builtin userdiff drivers to well-known
+ extensions
+Date: Fri, 16 Dec 2011 20:17:51 -0500
+Message-ID: <20111217011751.GA20225@sigill.intra.peff.net>
+References: <20111216110000.GA15676@sigill.intra.peff.net>
+ <4EEB4F13.2010402@viscovery.net>
+ <20111216192104.GA19924@sigill.intra.peff.net>
+ <7vehw4ia5x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Sat Dec 17 01:57:10 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	Brandon Casey <drafnel@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 17 02:17:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbiaK-0006h4-A6
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 01:57:08 +0100
+	id 1RbiuU-0003n5-Ou
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 02:17:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752733Ab1LQA5D convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Dec 2011 19:57:03 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:36358 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752708Ab1LQA5B convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Dec 2011 19:57:01 -0500
-Received: by dajs34 with SMTP id s34so2375571daj.19
-        for <git@vger.kernel.org>; Fri, 16 Dec 2011 16:57:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Zho4WT/dCzpgN4h4WzRXydRfG+d2o3fwE/FSGmZs5u8=;
-        b=lgtPjRITx/SXPR+SfCjEkWrY1SZyXNdX0b42jOIW+PG/sWQFEV4552fx3DOrvS2dTw
-         qNP2l06+gCEz0ca5o3kJN8Iw+2zdZPkV0980gFWwrLRjn9XXxxV+IzwidxP3CgINaIg/
-         gK0RTe1E/kq/3/Cbaka8ccoxIC8KuMSz34A4E=
-Received: by 10.68.72.6 with SMTP id z6mr20278725pbu.73.1324083420980; Fri, 16
- Dec 2011 16:57:00 -0800 (PST)
-Received: by 10.143.31.6 with HTTP; Fri, 16 Dec 2011 16:57:00 -0800 (PST)
-In-Reply-To: <4EEBA24F.8030103@diamand.org>
-X-Google-Sender-Auth: kGijjVJ0li4ka7Gy4LeEbAi5C-0
+	id S1756592Ab1LQBRz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Dec 2011 20:17:55 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44477
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752599Ab1LQBRx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2011 20:17:53 -0500
+Received: (qmail 9299 invoked by uid 107); 17 Dec 2011 01:24:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 16 Dec 2011 20:24:35 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Dec 2011 20:17:51 -0500
+Content-Disposition: inline
+In-Reply-To: <7vehw4ia5x.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187343>
 
-That would be great.  If you need me to help test, let me know.
-Unfortunately I don't know Python and I know very little about the
-internals of git, so I can't help much more than that...
+On Fri, Dec 16, 2011 at 11:33:30AM -0800, Junio C Hamano wrote:
 
-Mike
+> I think we recently saw that the optional built-in one for C did not even
+> understand a function that returns a pointer, and nobody complained about
+> it for a long time,
 
+Yeah. That implies to me that either people don't really care about
+this feature, or that they are not actually using it because it requires
+special configuration (we are not even using it in git.git, for
+example).
 
+> > And if it is bad on balance, is the right solution to avoid exposing
+> > people to it, or is it to make our patterns better?
+> 
+> Can't we do both, by avoid exposing normal users to broken one while
+> people who want to improve the pattern based one work on unbreak it?
 
-On Fri, Dec 16, 2011 at 2:55 PM, Luke Diamand <luke@diamand.org> wrote:
-> On 16/12/11 16:07, Michael Horowitz wrote:
->>
->> For those of you using git-p4 because of a company requirement to us=
-e
->> Perforce, but really wish you could use git only, the most frustrati=
-ng
->> part is the fact that when changes are submitted, the commit message
->> is rewritten to include a reference to the P4 change number which is
->> used by the sync. =A0When syncing back changes, this causes the comm=
-it
->> hash to be different, and so blows away your old commit and any pare=
-nt
->> commit references and such.
->>
->> I read someplace, I can't remember where at this point, that if git-=
-p4
->> used notes to write the P4 change information, that would not impact
->> the commit hash, so when merging back, things would not be
->> overwritten, and you can maintain branches and commit history proper=
-ly
->> in git.
->>
->> I just ran into this project, where it seems that someone has
->> re-written git-p4 to use notes: https://github.com/ermshiperete/git-=
-p4
->>
->> I was wondering if any of the maintainers of git-p4 has considered
->> this, and might want to leverage this work to merge into the main gi=
-t
->> repo, possibly with an option to choose between the two behaviors.
->
->
-> I'm not sure I qualify for such a grand title as maintainer, but I wa=
-s going
-> to give this a go in the new year as it would be quite useful, unless
-> someone beat me to it. I want to fix some problems with labels first =
-though.
->
-> Regards!
-> Luke
+Sure, we can do both. But if nobody is eating the dogfood, it will never
+grow to taste better. Maybe we should start by using diff=c in git
+itself?
+
+> > I.e., is it fixable,
+> > or is it simply too hard a problem to get right in the general case, and
+> > we shouldn't turn it on by default?
+> 
+> I do not think that is the "either-or" question. My impression has been
+> that even if it is fixable, it is too broken and produces worse result
+> than the simple default in its current form.
+
+What I meant by the either-or was: if it is fixable, then we should fix
+it and consider turning it on as a default. If it's too hard to get
+right, then we probably never want it on by default, and people who do
+like it can turn it on (presumably because it works on their code
+style).
+
+-Peff
