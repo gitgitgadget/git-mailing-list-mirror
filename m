@@ -1,160 +1,45 @@
-From: Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: Re: [BUG] attribute "eol" with "crlf"
-Date: Sat, 17 Dec 2011 19:04:14 +0100
-Message-ID: <CAN0XMOK0=uxRHcsUmbOE_UrkUcqmRFk-OYnY7kOZkZcWxWOycQ@mail.gmail.com>
-References: <CAN0XMO+OOdTJ+aNMSc2G3RVc7Wfypr4+7dU3US9GVAmMiSJ7cg@mail.gmail.com>
-	<vpqr504wf70.fsf@bauges.imag.fr>
-	<7vmxasgqlm.fsf@alter.siamese.dyndns.org>
-	<7vr504f5v5.fsf@alter.siamese.dyndns.org>
+From: hs_glw <greg@hra.net>
+Subject: Re: Big Mess--How to use Git to resolve
+Date: Sat, 17 Dec 2011 10:40:47 -0800 (PST)
+Message-ID: <1324147247781-7104493.post@n2.nabble.com>
+References: <1324125130643-7103964.post@n2.nabble.com> <86iplf2oy5.fsf@red.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	=?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 17 19:04:37 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 17 19:40:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rbycd-0003PM-36
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 19:04:35 +0100
+	id 1RbzBm-0006dj-Ad
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 19:40:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752547Ab1LQSEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Dec 2011 13:04:16 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:47874 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752118Ab1LQSEO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Dec 2011 13:04:14 -0500
-Received: by yhr47 with SMTP id 47so3480875yhr.19
-        for <git@vger.kernel.org>; Sat, 17 Dec 2011 10:04:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=QNqtRVocR/yvFsPF7hgdFEdK392wT9zhOKXFz9jYPpc=;
-        b=ki4mUENmF8nHmZGUjsgQmR85FkgI6lje6X1hbutFVhPsV2T4LKyIw95kcsCV8Z5Nb4
-         aA6nnpX2ICZqbuKcQssACwBg7x5dRUj/WR+c//KwsEml7gQ+F0FXc66QSE6BhZKcOwft
-         ZxPvEuG+Pj6H56DHwzywoAbPEvPEWDusbfqLI=
-Received: by 10.236.181.71 with SMTP id k47mr19404525yhm.28.1324145054162;
- Sat, 17 Dec 2011 10:04:14 -0800 (PST)
-Received: by 10.147.22.19 with HTTP; Sat, 17 Dec 2011 10:04:14 -0800 (PST)
-In-Reply-To: <7vr504f5v5.fsf@alter.siamese.dyndns.org>
+	id S1752648Ab1LQSkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Dec 2011 13:40:49 -0500
+Received: from sam.nabble.com ([216.139.236.26]:53013 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751398Ab1LQSks (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Dec 2011 13:40:48 -0500
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <greg@hra.net>)
+	id 1RbzBf-0002WX-PQ
+	for git@vger.kernel.org; Sat, 17 Dec 2011 10:40:47 -0800
+In-Reply-To: <86iplf2oy5.fsf@red.stonehenge.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187388>
 
-V29ya3MgZmluZSBmb3IgbWUuIFRoYW5rcwoKPiBKdW5pbyBDIEhhbWFubyA8Z2l0c3RlckBwb2Jv
-eC5jb20+IHdyaXRlczoKPgo+PiAuLi4KPj4gV2hhdCB5b3Ugc2FpZCBpcyBfdGVjaG5pY2FsbHlf
-IGNvcnJlY3QgaW4gdGhhdCBzZW5zZS4KPj4KPj4gSG93ZXZlciwgSSB0aGluayB0aGUgQ1JMRiBm
-aWx0ZXIgdXNlZCB0byBoYXZlIGEgaGFjayB0byBzdHJpcCAiXHIiIGlmIHRoZQo+PiByZXBvc2l0
-b3J5IGRhdGEgcmVjb3JkcyAiXHIiIGF0IHRoZSBlbmQgb2YgbGluZS4gVGhpcyB3YXMgaW50ZW5k
-ZWQgdG8gaGVscAo+PiBwZW9wbGUgd2hvIGNoZWNrZWQgaW4gc3VjaCBhIGJyb2tlbiB0ZXh0IGZp
-bGUgKGlmIGl0IGlzIGEgdGV4dCBmaWxlLCB0aGVuCj4+IHJhdyBhc2NpaSBDUiBkb2VzIG5vdCBo
-YXZlIGEgcGxhY2UgaW4gaXQgaW4gdGhlIHJlcG9zaXRvcnkgcmVwcmVzZW50YXRpb24pCj4+IGFu
-ZCBpdCB3YXMgYSB1c2VmdWwgaGFjayB0byBoZWxwIHBlb3BsZSByZWNvdmVyIGZyb20gc3VjaCBt
-aXN0YWtlcyB0bwo+PiBzdGFydCB0aGUgcHJvamVjdCBmcm9tIERPUy1vbmx5IHdvcmxkICh3aXRo
-IENSTEYgaW4gdGhlIHJlcG9zaXRvcnkgZGF0YSkKPj4gYW5kIG1pZ3JhdGUgdG8gY3Jvc3MgcGxh
-dGZvcm0gd29ybGQgKHdpdGggTEYgaW4gdGhlIHJlcG9zaXRvcnkgZGF0YSwgQ1JMRgo+PiBpbiB0
-aGUgRE9TIHdvcmtpbmcgdHJlZSkuIMKgSSBzdXNwZWN0IHRoYXQgdGhlIHN0cmVhbWluZyBmaWx0
-ZXIgY29udmVyc2lvbgo+PiBtYXkgbm90IGhhdmUgdGhlIHNhbWUgaGFjayBpbiBpdC4KPgo+IFBl
-cmhhcHMgc29tZXRoaW5nIGxpa2UgdGhpcywgYnV0IEkgZG8gbm90IHVzZSBDUkxGIG15c2VsZiwg
-c28gaXQgcHJvYmFibHkKPiBuZWVkcyB0byBiZSBjaGVja2VkIGJ5IGV4dHJhIHNldHMgb2YgZXll
-cy4KPgo+IFRoYW5rcy4KPgo+IC0tID44IC0tCj4gU3ViamVjdDogbGZfdG9fY3JsZl9maWx0ZXIo
-KTogcmVzdXJyZWN0IENSTEYtPkNSTEYgaGFjawo+Cj4gVGhlIG5vbi1zdHJlYW1pbmcgdmVyc2lv
-biBvZiB0aGUgZmlsdGVyIGNvdW50cyBDUkxGIGFuZCBMRiBpbiB0aGUgd2hvbGUKPiBidWZmZXIs
-IGFuZCByZXR1cm5zIHdpdGhvdXQgZG9pbmcgYW55dGhpbmcgd2hlbiB0aGV5IG1hdGNoIChpLmUu
-IHdoYXQgaXMKPiByZWNvcmRlZCBpbiB0aGUgb2JqZWN0IHN0b3JlIGFscmVhZHkgdXNlcyBDUkxG
-KS4gVGhpcyB3YXMgZG9uZSB0byBoZWxwCj4gcGVvcGxlIHdobyBhZGRlZCBmaWxlcyBmcm9tIHRo
-ZSBET1Mgd29ybGQgYmVmb3JlIHJlYWxpemluZyB0aGV5IHdhbnQgdG8gZ28KPiBjcm9zcyBwbGF0
-Zm9ybSBhbmQgYWRkaW5nIC5naXRhdHRyaWJ1dGVzIHRvIHRlbGwgR2l0IHRoYXQgdGhleSBvbmx5
-IHdhbnQKPiBDUkxGIGluIHRoZWlyIHdvcmtpbmcgdHJlZS4KPgo+IFRoZSBzdHJlYW1pbmcgdmVy
-c2lvbiBvZiB0aGUgZmlsdGVyIGRvZXMgbm90IHdhbnQgdG8gcmVhZCB0aGUgd2hvbGUgdGhpbmcK
-PiBiZWZvcmUgc3RhcnRpbmcgdG8gd29yaywgYXMgdGhhdCBkZWZlYXRzIHRoZSB3aG9sZSBwb2lu
-dCBvZiBzdHJlYW1pbmcuIFNvCj4gd2UgaW5zdGVhZCBjaGVjayB3aGF0IGJ5dGUgZm9sbG93cyBD
-UiB3aGVuZXZlciB3ZSBzZWUgb25lLCBhbmQgYWRkIENSCj4gYmVmb3JlIExGIG9ubHkgd2hlbiB0
-aGUgTEYgZG9lcyBub3QgaW1tZWRpYXRlbHkgZm9sbG93IENSIGFscmVhZHkgdG8ga2VlcAo+IENS
-TEYgYXMgaXMuCj4KPiBTaWduZWQtb2ZmLWJ5OiBKdW5pbyBDIEhhbWFubyA8Z2l0c3RlckBwb2Jv
-eC5jb20+Cj4gLS0tCj4gwqBjb252ZXJ0LmMgfCDCoCA2MCArKysrKysrKysrKysrKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKysrKysrKysrKy0tLS0tLS0tLS0KPiDCoDEgZmlsZXMgY2hhbmdl
-ZCwgNTAgaW5zZXJ0aW9ucygrKSwgMTAgZGVsZXRpb25zKC0pCj4KPiBkaWZmIC0tZ2l0IGEvY29u
-dmVydC5jIGIvY29udmVydC5jCj4gaW5kZXggYzAyODI3NS4uOGRhZjRlNCAxMDA2NDQKPiAtLS0g
-YS9jb252ZXJ0LmMKPiArKysgYi9jb252ZXJ0LmMKPiBAQCAtODc5LDcgKzg3OSw4IEBAIGludCBp
-c19udWxsX3N0cmVhbV9maWx0ZXIoc3RydWN0IHN0cmVhbV9maWx0ZXIgKmZpbHRlcikKPgo+IMKg
-c3RydWN0IGxmX3RvX2NybGZfZmlsdGVyIHsKPiDCoCDCoCDCoCDCoHN0cnVjdCBzdHJlYW1fZmls
-dGVyIGZpbHRlcjsKPiAtIMKgIMKgIMKgIHVuc2lnbmVkIHdhbnRfbGY6MTsKPiArIMKgIMKgIMKg
-IHVuc2lnbmVkIGhhc19oZWxkOjE7Cj4gKyDCoCDCoCDCoCBjaGFyIGhlbGQ7Cj4gwqB9Owo+Cj4g
-wqBzdGF0aWMgaW50IGxmX3RvX2NybGZfZmlsdGVyX2ZuKHN0cnVjdCBzdHJlYW1fZmlsdGVyICpm
-aWx0ZXIsCj4gQEAgLTg4OSwxMCArODkwLDE0IEBAIHN0YXRpYyBpbnQgbGZfdG9fY3JsZl9maWx0
-ZXJfZm4oc3RydWN0IHN0cmVhbV9maWx0ZXIgKmZpbHRlciwKPiDCoCDCoCDCoCDCoHNpemVfdCBj
-b3VudCwgbyA9IDA7Cj4gwqAgwqAgwqAgwqBzdHJ1Y3QgbGZfdG9fY3JsZl9maWx0ZXIgKmxmX3Rv
-X2NybGYgPSAoc3RydWN0IGxmX3RvX2NybGZfZmlsdGVyICopZmlsdGVyOwo+Cj4gLSDCoCDCoCDC
-oCAvKiBPdXRwdXQgYSBwZW5kaW5nIExGIGlmIHdlIG5lZWQgdG8gKi8KPiAtIMKgIMKgIMKgIGlm
-IChsZl90b19jcmxmLT53YW50X2xmKSB7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCBvdXRwdXRb
-bysrXSA9ICdcbic7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCBsZl90b19jcmxmLT53YW50X2xm
-ID0gMDsKPiArIMKgIMKgIMKgIC8qCj4gKyDCoCDCoCDCoCDCoCogV2UgbWF5IGJlIGhvbGRpbmcg
-b250byB0aGUgQ1IgdG8gc2VlIGlmIGl0IGlzIGZvbGxvd2VkIGJ5IGEKPiArIMKgIMKgIMKgIMKg
-KiBMRiwgaW4gd2hpY2ggY2FzZSB3ZSB3b3VsZCBuZWVkIHRvIGdvIHRvIHRoZSBtYWluIGxvb3Au
-Cj4gKyDCoCDCoCDCoCDCoCogT3RoZXJ3aXNlLCBqdXN0IGVtaXQgaXQgdG8gdGhlIG91dHB1dCBz
-dHJlYW0uCj4gKyDCoCDCoCDCoCDCoCovCj4gKyDCoCDCoCDCoCBpZiAobGZfdG9fY3JsZi0+aGFz
-X2hlbGQgJiYgKGxmX3RvX2NybGYtPmhlbGQgIT0gJ1xyJyB8fCAhaW5wdXQpKSB7Cj4gKyDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCBvdXRwdXRbbysrXSA9IGxmX3RvX2NybGYtPmhlbGQ7Cj4gKyDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCBsZl90b19jcmxmLT5oYXNfaGVsZCA9IDA7Cj4gwqAgwqAgwqAgwqB9
-Cj4KPiDCoCDCoCDCoCDCoC8qIFdlIGFyZSB0b2xkIHRvIGRyYWluICovCj4gQEAgLTkwMiwyMiAr
-OTA3LDU3IEBAIHN0YXRpYyBpbnQgbGZfdG9fY3JsZl9maWx0ZXJfZm4oc3RydWN0IHN0cmVhbV9m
-aWx0ZXIgKmZpbHRlciwKPiDCoCDCoCDCoCDCoH0KPgo+IMKgIMKgIMKgIMKgY291bnQgPSAqaXNp
-emVfcDsKPiAtIMKgIMKgIMKgIGlmIChjb3VudCkgewo+ICsgwqAgwqAgwqAgaWYgKGNvdW50IHx8
-IGxmX3RvX2NybGYtPmhhc19oZWxkKSB7Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBzaXplX3Qg
-aTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGludCB3YXNfY3IgPSAwOwo+ICsKPiArIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIGlmIChsZl90b19jcmxmLT5oYXNfaGVsZCkgewo+ICsgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgd2FzX2NyID0gMTsKPiArIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIGxmX3RvX2NybGYtPmhhc19oZWxkID0gMDsKPiArIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIH0KPiArCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBmb3IgKGkgPSAwOyBvIDwg
-Km9zaXplX3AgJiYgaSA8IGNvdW50OyBpKyspIHsKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoGNoYXIgY2ggPSBpbnB1dFtpXTsKPiArCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqBpZiAoY2ggPT0gJ1xuJykgewo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgb3V0cHV0W28rK10gPSAnXHInOwo+IC0gwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKG8gPj0gKm9zaXplX3ApIHsK
-PiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIGxmX3RvX2NybGYtPndhbnRfbGYgPSAxOwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgY29udGludWU7IC8qIFdlIG5lZWQgdG8g
-aW5jcmVhc2UgaSAqLwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgfQo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfSBlbHNlIGlmICh3
-YXNfY3IpIHsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IC8qCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCog
-UHJldmlvdXMgcm91bmQgc2F3IENSIGFuZCBpdCBpcyBub3QgZm9sbG93ZWQKPiArIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgKiBieSBhIExGOyBlbWl0IHRo
-ZSBDUiBiZWZvcmUgcHJvY2Vzc2luZyB0aGUKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgKiBjdXJyZW50IGNoYXJhY3Rlci4KPiArIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgKi8KPiArIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIG91dHB1dFtvKytdID0gJ1xyJzsKPiDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoH0KPiArCj4gKyDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCAvKgo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAqIFdlIG1heSBoYXZlIGNvbnN1bWVkIHRoZSBsYXN0IG91dHB1dCBzbG90LAo+ICsgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAqIGluIHdoaWNoIGNhc2Ugd2UgbmVlZCB0byBi
-cmVhayBvdXQgb2YgdGhpcwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAq
-IGxvb3A7IGhvbGQgdGhlIGN1cnJlbnQgY2hhcmFjdGVyIGJlZm9yZQo+ICsgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAqIHJldHVybmluZy4KPiArIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgKi8KPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IGlmICgqb3NpemVfcCA8PSBvKSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCBsZl90b19jcmxmLT5oYXNfaGVsZCA9IDE7Cj4gKyDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBsZl90b19jcmxmLT5oZWxkID0gY2g7Cj4g
-KyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBjb250aW51ZTsg
-LyogYnJlYWsgYnV0IGluY3JlbWVudCBpICovCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCB9Cj4gKwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKGNo
-ID09ICdccicpIHsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIHdhc19jciA9IDE7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCBjb250aW51ZTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIH0K
-PiArCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB3YXNfY3IgPSAwOwo+IMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgb3V0cHV0W28rK10gPSBjaDsKPiDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoH0KPgo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgKm9zaXplX3Ag
-LT0gbzsKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCppc2l6ZV9wIC09IGk7Cj4gKwo+ICsgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgaWYgKCFsZl90b19jcmxmLT5oYXNfaGVsZCAmJiB3YXNfY3IpIHsK
-PiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGxmX3RvX2NybGYtPmhhc19oZWxk
-ID0gMTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGxmX3RvX2NybGYtPmhl
-bGQgPSAnXHInOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+IMKgIMKgIMKgIMKgfQo+IMKg
-IMKgIMKgIMKgcmV0dXJuIDA7Cj4gwqB9Cg==
+Randal, thank you for the comprehensive answer.  I have one follow-up:  we
+have the working files, then in our installation files we have .PL files
+that are worked on by some iteration of "make" to insert paths both into
+.cgi files and config files, should these installation files be setup as a
+branch? or is there a more correct way of implementing this?
+
+--
+View this message in context: http://git.661346.n2.nabble.com/Big-Mess-How-to-use-Git-to-resolve-tp7103964p7104493.html
+Sent from the git mailing list archive at Nabble.com.
