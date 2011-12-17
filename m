@@ -1,62 +1,52 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] docs: brush up obsolete bits of git-fsck manpage
-Date: Fri, 16 Dec 2011 20:28:11 -0500
-Message-ID: <20111217012811.GC20225@sigill.intra.peff.net>
-References: <20111216113310.GA16601@sigill.intra.peff.net>
- <7vy5ucgsic.fsf@alter.siamese.dyndns.org>
+From: Aaron Schrab <aaron@schrab.com>
+Subject: Re:  Adding hooks.directory config option; wiring into run_hook
+Date: Fri, 16 Dec 2011 20:58:21 -0500
+Message-ID: <20111217015820.GC30928@pug.qqx.org>
+References: <CADQnX_e76LzuRUDOKFOsRHU=e8Cw+qh5x1BdW5HMEdMmP5PaHg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 17 02:28:29 2011
+To: Christopher Dale <chrelad@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 17 03:06:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rbj4e-0006tu-6m
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 02:28:28 +0100
+	id 1RbjfO-0007aX-0k
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 03:06:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760692Ab1LQB2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Dec 2011 20:28:18 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44495
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752771Ab1LQB2O (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Dec 2011 20:28:14 -0500
-Received: (qmail 9413 invoked by uid 107); 17 Dec 2011 01:34:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 16 Dec 2011 20:34:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Dec 2011 20:28:11 -0500
+	id S1760729Ab1LQCGW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Dec 2011 21:06:22 -0500
+Received: from pug.qqx.org ([209.177.157.228]:57865 "EHLO pug.qqx.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760643Ab1LQCGU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2011 21:06:20 -0500
+X-Greylist: delayed 479 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Dec 2011 21:06:20 EST
+Received: by pug.qqx.org (Postfix, from userid 1000)
+	id 2A38E20308; Fri, 16 Dec 2011 20:58:21 -0500 (EST)
+Mail-Followup-To: Christopher Dale <chrelad@gmail.com>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vy5ucgsic.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <CADQnX_e76LzuRUDOKFOsRHU=e8Cw+qh5x1BdW5HMEdMmP5PaHg@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187346>
 
-On Fri, Dec 16, 2011 at 12:40:11PM -0800, Junio C Hamano wrote:
+At 12:00 -0600 16 Dec 2011, Christopher Dale <chrelad@gmail.com> wrote:
+>Since the hooks directory is within a directory that by it's very 
+>nature requires write permissions,
 
-> By the way did you hand-tweak your patch in any way?
-> 
-> I am not complaining that it does not apply (it does), but I am curious
-> how you got the line that begins with "corruption it finds ..." neatly in
-> preimage and postimage; it could become a common line but doing so makes
-> the patch unreadable and that is what I am getting from "git show" after
-> applying the patch.
+Are you sure about this?  I'd think that this would mainly be used for 
+bare repositories.  For a test I created a bare repository, removed 
+write permission, changed the owner to root, then pushed into it from 
+another repository.  So it seems that, at least for basic usage, a bare 
+repository can be modified even if with write permission removed since 
+no entries are being created or removed at the top level.
 
-No, I don't think I tweaked it at all. You can fetch the original commit
-(888b4eb) at:
-
-  git://github.com/peff/git.git jk/fsck-docs
-
-Running "git show" produces the same output as the patch I sent. I
-double-checked with older versions of git, and they all produce the same
-output for me. Ditto for applying what I sent and running "git show" on
-the result.
-
-Using "--patience", on the other hand, does find it as a common line,
-Weird.
-
--Peff
+For this to be a workaround, new repositories would need to be created 
+by an admin.  The requirement that the containing directory not be 
+writeable wouldn't necessarily be an issue; at least on Linux I'm able 
+to create files/directories as root even in a non-writeable directory.
