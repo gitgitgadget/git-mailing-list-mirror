@@ -1,82 +1,151 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 2/3] gitweb: esc_html() site name for title in OPML
-Date: Sat, 17 Dec 2011 10:22:22 +0100
-Message-ID: <1324113743-21498-3-git-send-email-jnareb@gmail.com>
-References: <1324113743-21498-1-git-send-email-jnareb@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] make "git push -v" actually verbose
+Date: Sat, 17 Dec 2011 04:37:15 -0500
+Message-ID: <20111217093713.GA2073@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Juergen Kreileder <jk@blackdown.de>,
-	John Hawley <warthog9@kernel.org>, admin@repo.or.cz
+Cc: Tay Ray Chuan <rctay89@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 17 10:23:28 2011
+X-From: git-owner@vger.kernel.org Sat Dec 17 10:37:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbqUJ-0002jb-JH
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 10:23:27 +0100
+	id 1Rbqhq-0006x4-NX
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 10:37:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751663Ab1LQJXS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Dec 2011 04:23:18 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:38176 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751503Ab1LQJXG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Dec 2011 04:23:06 -0500
-Received: by mail-ee0-f46.google.com with SMTP id c4so3913375eek.19
-        for <git@vger.kernel.org>; Sat, 17 Dec 2011 01:23:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=zRtg6V//l2GbYVTYkTk9YwK1MkFzHGJWRn0dgr6hTJE=;
-        b=imHaNneYiXGmrShSSSqsR+/26/T6qyBmjmWltBhShJky0zENR3aHJsZmVDeg76efib
-         FIq5lGY2oWgopV2HhX5x6prHn8g1jhhGsHJMgGhcYSfpEKAyCMgPMszXWaKR3OmOFntK
-         wyZQXrfkwZNVT593Uoewx1Q1KA3pqsi/tHHZA=
-Received: by 10.14.22.10 with SMTP id s10mr892124ees.122.1324113785533;
-        Sat, 17 Dec 2011 01:23:05 -0800 (PST)
-Received: from localhost.localdomain (abrz159.neoplus.adsl.tpnet.pl. [83.8.119.159])
-        by mx.google.com with ESMTPS id 58sm10768875eet.11.2011.12.17.01.23.04
-        (version=SSLv3 cipher=OTHER);
-        Sat, 17 Dec 2011 01:23:05 -0800 (PST)
-X-Mailer: git-send-email 1.7.6
-In-Reply-To: <1324113743-21498-1-git-send-email-jnareb@gmail.com>
+	id S1751671Ab1LQJhW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Dec 2011 04:37:22 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44741
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751241Ab1LQJhT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Dec 2011 04:37:19 -0500
+Received: (qmail 11495 invoked by uid 107); 17 Dec 2011 09:44:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 17 Dec 2011 04:44:01 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 17 Dec 2011 04:37:15 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187361>
 
-=46rom: J=C3=BCrgen Kreileder <jk@blackdown.de>
+Providing a single "-v" to "git push" currently does
+nothing. Giving two flags ("git push -v -v") turns on the
+first level of verbosity.
 
-This escapes the site name in OPML (XML uses the same escaping rules
-as HTML).  Also fixes encoding issues because esc_html() uses
-to_utf8().
+This is caused by a regression introduced in 8afd8dc (push:
+support multiple levels of verbosity, 2010-02-24). Before
+the series containing 8afd8dc, the verbosity handling for
+fetching and pushing was completely separate. Commit bde873c
+refactored the verbosity handling out of the fetch side, and
+then 8afd8dc converted push to use the refactored code.
 
-Signed-off-by: J=C3=BCrgen Kreileder <jk@blackdown.de>
-Acked-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
+However, the fetch and push sides numbered and passed along
+their verbosity levels differently. For both, a verbosity
+level of "-1" meant "quiet", and "0" meant "default output".
+But from there they differed.
+
+For fetch, a verbosity level of "1" indicated to the "fetch"
+program that it should make the status table slightly more
+verbose, showing up-to-date entries. A verbosity level of
+"2" meant that we should pass a verbose flag to the
+transport; in the case of fetch-pack, this displays protocol
+debugging information.
+
+As a result, the refactored code in bde873c checks for
+"verbosity >= 2", and only then passes it on to the
+transport. From the transport code's perspective, a
+verbosity of 0 or 1 both meant "0".
+
+Push, on the other hand, does not show its own status table;
+that is always handled by the transport layer or below
+(originally send-pack itself, but these days it is done by
+the transport code). So a verbosity level of 1 meant that we
+should pass the verbose flag to send-pack, so that it knows
+we want a verbose status table. However, once 8afd8dc
+switched it to the refactored fetch code, a verbosity level
+of 1 was now being ignored.  Thus, you needed to
+artificially bump the verbosity to 2 (via "-v -v") to have
+any effect.
+
+We can fix this by letting the transport code know about the
+true verbosity level (i.e., let it distinguish level 0 or
+1).
+
+We then have to also make an adjustment to any transport
+methods that assumed "verbose > 0" meant they could spew
+lots of debugging information. Before, they could only get
+"0" or "2", but now they will also receive "1". They need to
+adjust their condition for turning on such spew from
+"verbose > 0" to "verbose > 1".
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- gitweb/gitweb.perl |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+This is an old bug, obviously, but it has been bugging me
+off and on for the past year, so I finally decided to track
+it down.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 35126cd..dcf4658 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -7863,11 +7863,12 @@ sub git_opml {
- 		-charset =3D> 'utf-8',
- 		-content_disposition =3D> 'inline; filename=3D"opml.xml"');
-=20
-+	my $title =3D esc_html($site_name);
- 	print <<XML;
- <?xml version=3D"1.0" encoding=3D"utf-8"?>
- <opml version=3D"1.0">
- <head>
--  <title>$site_name OPML Export</title>
-+  <title>$title OPML Export</title>
- </head>
- <body>
- <outline text=3D"git RSS feeds">
---=20
-1.7.6
+Sorry for the epic-length commit message. It was a subtle
+bug, and the actual patch makes it very difficult to
+understand why it works and doesn't regress the fetch case.
+Hopefully it made sense. :)
+
+ transport.c |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/transport.c b/transport.c
+index 51814b5..48002b9 100644
+--- a/transport.c
++++ b/transport.c
+@@ -215,7 +215,7 @@ static struct ref *get_refs_via_rsync(struct transport *transport, int for_push)
+ 	rsync.argv = args;
+ 	rsync.stdout_to_stderr = 1;
+ 	args[0] = "rsync";
+-	args[1] = (transport->verbose > 0) ? "-rv" : "-r";
++	args[1] = (transport->verbose > 1) ? "-rv" : "-r";
+ 	args[2] = buf.buf;
+ 	args[3] = temp_dir.buf;
+ 	args[4] = NULL;
+@@ -268,7 +268,7 @@ static int fetch_objs_via_rsync(struct transport *transport,
+ 	rsync.argv = args;
+ 	rsync.stdout_to_stderr = 1;
+ 	args[0] = "rsync";
+-	args[1] = (transport->verbose > 0) ? "-rv" : "-r";
++	args[1] = (transport->verbose > 1) ? "-rv" : "-r";
+ 	args[2] = "--ignore-existing";
+ 	args[3] = "--exclude";
+ 	args[4] = "info";
+@@ -351,7 +351,7 @@ static int rsync_transport_push(struct transport *transport,
+ 	args[i++] = "-a";
+ 	if (flags & TRANSPORT_PUSH_DRY_RUN)
+ 		args[i++] = "--dry-run";
+-	if (transport->verbose > 0)
++	if (transport->verbose > 1)
+ 		args[i++] = "-v";
+ 	args[i++] = "--ignore-existing";
+ 	args[i++] = "--exclude";
+@@ -527,7 +527,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 	args.lock_pack = 1;
+ 	args.use_thin_pack = data->options.thin;
+ 	args.include_tag = data->options.followtags;
+-	args.verbose = (transport->verbose > 0);
++	args.verbose = (transport->verbose > 1);
+ 	args.quiet = (transport->verbose < 0);
+ 	args.no_progress = !transport->progress;
+ 	args.depth = data->options.depth;
+@@ -981,7 +981,7 @@ int transport_set_option(struct transport *transport,
+ void transport_set_verbosity(struct transport *transport, int verbosity,
+ 	int force_progress)
+ {
+-	if (verbosity >= 2)
++	if (verbosity >= 1)
+ 		transport->verbose = verbosity <= 3 ? verbosity : 3;
+ 	if (verbosity < 0)
+ 		transport->verbose = -1;
+-- 
+1.7.7.4.13.g57bf4
