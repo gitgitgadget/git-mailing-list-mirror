@@ -1,63 +1,95 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Fix an "variable might be used uninitialized" gcc warning
-Date: Fri, 16 Dec 2011 17:59:08 -0600
-Message-ID: <20111216235908.GA5858@elie.hsd1.il.comcast.net>
-References: <4EEBC9D6.6010204@ramsay1.demon.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Dec 2011, #05; Thu, 15)
+Date: Fri, 16 Dec 2011 16:39:04 -0800
+Message-ID: <7vfwgkf2vr.fsf@alter.siamese.dyndns.org>
+References: <7vd3bpl6i8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Sat Dec 17 00:59:26 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 17 01:39:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbhgS-0006Ue-AD
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 00:59:24 +0100
+	id 1RbiJ0-0001bq-BW
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 01:39:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752639Ab1LPX7R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Dec 2011 18:59:17 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:57876 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752164Ab1LPX7Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Dec 2011 18:59:16 -0500
-Received: by ghbz12 with SMTP id z12so2732195ghb.19
-        for <git@vger.kernel.org>; Fri, 16 Dec 2011 15:59:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=IDX0McMdRW7/B8wEtPufCthkrMFuM8dwO3JTZ4Yic0g=;
-        b=Xk4iN4bUiDB7VfVIm+r82uEj+7diZ0fTGR0fOgTH/+cYejrHL6GKEhiUuWVGyGsU6p
-         yzu5ygtPv6/z70jE1BWz+GZ282wy+wA8HEFVkuNKd4Amseak43297g9ieYB00rqPdASA
-         QVrOBe/gSgDEYB6Y7i4nWj8E2JagCtbpGVjWk=
-Received: by 10.236.192.135 with SMTP id i7mr2425528yhn.13.1324079955716;
-        Fri, 16 Dec 2011 15:59:15 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id f17sm24308873ang.20.2011.12.16.15.59.14
-        (version=SSLv3 cipher=OTHER);
-        Fri, 16 Dec 2011 15:59:15 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4EEBC9D6.6010204@ramsay1.demon.co.uk>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+	id S1756672Ab1LQAjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Dec 2011 19:39:08 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59506 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750963Ab1LQAjI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2011 19:39:08 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA8926C6F;
+	Fri, 16 Dec 2011 19:39:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JrrKiKOarcuJFSc2iFiEprF1N4g=; b=SvYlgJ
+	DtzngosfBdsxXCmyWDn6NhXrEY3DHkCHOaCHLQRnznoF7rYbO3A51fbNbGltP4ar
+	XrsdTbQ7PVQ1gHQdokTULzqd2uLgrEaUN1jmZ6Jmv+F4mAbvJkfeV06iaQtO377Z
+	h2h4q4OL0m78/MUiDMGVWCgG2gUEgWy/iDwag=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RImHR5X0+lB+Ieek26e2KbOy1xKwR4ad
+	04AFwciU5nrCr6rRZO5Wa1eOS/kZezCtWy39D1OZqdasQptStPOqXYJRti3wi/gO
+	t24nJLBjdcmkICxWMcjQSK6DTLFSi9MMRkByuMz7cU/6cHp5BpyD31D9YpmtFqUF
+	ziIi1vRPoWk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C29EC6C6E;
+	Fri, 16 Dec 2011 19:39:06 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2B2B56C6D; Fri, 16 Dec 2011
+ 19:39:06 -0500 (EST)
+In-Reply-To: <7vd3bpl6i8.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 15 Dec 2011 16:11:59 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 867BB492-2847-11E1-BDA0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187338>
 
-Ramsay Jones wrote:
+I don't want to do issue #06 yet, so only differences from #05 are listed
+here for today's updates.  Extra sets of eyeballs on commits in 'pu' are
+very much appreciated.
 
->         CC builtin/checkout.o
->     builtin/checkout.c: In function `cmd_checkout':
->     builtin/checkout.c:160: warning: 'mode' might be used uninitialized \
->         in this function
-[...]
-> [Note that only 2 out of the 3 versions of gcc I use issues this
-> warning]
+* tr/grep-threading (2011-12-16) 3 commits
+ - grep: disable threading in non-worktree case
+ - grep: enable threading with -p and -W using lazy attribute lookup
+ - grep: load funcname patterns for -W
 
-Which version of gcc is that?  Is gcc getting more sane, so we won't
-have to worry about this after a while, or is the false positive a
-new regression that should be reported to them?
+The second one was updated to include thread-utils.h in grep.h
+
+* cn/maint-lf-to-crlf-filter (2011-12-16) 1 commit
+ - lf_to_crlf_filter(): tell the caller we added "\n" when draining
+ (this branch is used by jc/maint-lf-to-crlf-keep-crlf.)
+
+Fixes up an earlier fix already in 'master'.
+
+* jc/maint-lf-to-crlf-keep-crlf (2011-12-16) 1 commit
+ - lf_to_crlf_filter(): resurrect CRLF->CRLF hack
+ (this branch uses cn/maint-lf-to-crlf-filter.)
+
+Builds on top of it.
+
+* jc/request-pull-show-head-4 (2011-12-16) 1 commit
+  (merged to 'next' on 2011-12-16 at bea51ac)
+ + request-pull: update the "pull" command generation logic
+
+Fixes up an earlier update already in 'master'.
+
+* jk/doc-fsck (2011-12-16) 1 commit
+ - docs: brush up obsolete bits of git-fsck manpage
+
+* jk/follow-rename-score (2011-12-16) 1 commit
+ - use custom rename score during --follow
+
+* jk/pretty-reglog-ent (2011-12-16) 1 commit
+ - pretty: give placeholders to reflog identity
+
+Three fairly straightforward patches from Peff; will merge to 'next'
+soonish.
