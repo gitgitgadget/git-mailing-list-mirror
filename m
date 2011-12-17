@@ -1,70 +1,76 @@
-From: Erik Blake <erik@icefield.yk.ca>
-Subject: Escape character for .gitconfig
-Date: Sat, 17 Dec 2011 11:10:37 +0100
-Message-ID: <4EEC6A9D.1060005@icefield.yk.ca>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/3] use struct sha1_array in diff_tree_combined()
+Date: Sat, 17 Dec 2011 05:53:15 -0500
+Message-ID: <20111217105315.GA23935@sigill.intra.peff.net>
+References: <4EEC6BD4.4040302@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 17 11:50:25 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sat Dec 17 11:53:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbrqT-0003S2-25
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 11:50:25 +0100
+	id 1RbrtL-0004Od-Av
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 11:53:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751944Ab1LQKuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Dec 2011 05:50:21 -0500
-Received: from bosmailout11.eigbox.net ([66.96.184.11]:59383 "EHLO
-	bosmailout11.eigbox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751923Ab1LQKuU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Dec 2011 05:50:20 -0500
-X-Greylist: delayed 2378 seconds by postgrey-1.27 at vger.kernel.org; Sat, 17 Dec 2011 05:50:20 EST
-Received: from bosmailscan18.eigbox.net ([10.20.15.18])
-	by bosmailout11.eigbox.net with esmtp (Exim)
-	id 1RbrDz-0004xL-V1
-	for git@vger.kernel.org; Sat, 17 Dec 2011 05:10:39 -0500
-Received: from bosimpout02.eigbox.net ([10.20.55.2])
-	by bosmailscan18.eigbox.net with esmtp (Exim)
-	id 1RbrDz-0001mY-Im
-	for git@vger.kernel.org; Sat, 17 Dec 2011 05:10:39 -0500
-Received: from bosauthsmtp10.eigbox.net ([10.20.18.10])
-	by bosimpout02.eigbox.net with NO UCE
-	id AAAf1i00E0D2CUy01AAfLP; Sat, 17 Dec 2011 05:10:39 -0500
-X-EN-OrigOutIP: 10.20.18.10
-X-EN-IMPSID: AAAf1i00E0D2CUy01AAfLP
-Received: from 221.59.9.46.customer.cdi.no ([46.9.59.221] helo=[192.168.2.3])
-	by bosauthsmtp10.eigbox.net with esmtpa (Exim)
-	id 1RbrDz-0004Dr-9w
-	for git@vger.kernel.org; Sat, 17 Dec 2011 05:10:39 -0500
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
-X-EN-UserInfo: 20c972d92b49a3da013d5f179c4005f2:fb4e807829017c6d805c060c7025d0c2
-X-EN-AuthUser: erik@icefield.yk.ca
-X-EN-OrigIP: 46.9.59.221
-X-EN-OrigHost: 221.59.9.46.customer.cdi.no
+	id S1751964Ab1LQKxT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Dec 2011 05:53:19 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44793
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751948Ab1LQKxS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Dec 2011 05:53:18 -0500
+Received: (qmail 12166 invoked by uid 107); 17 Dec 2011 11:00:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 17 Dec 2011 06:00:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 17 Dec 2011 05:53:15 -0500
+Content-Disposition: inline
+In-Reply-To: <4EEC6BD4.4040302@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187375>
 
-I have an editor path that includes "(" and ")". No matter how I try to 
-escape this character, I get either variations on:
+On Sat, Dec 17, 2011 at 11:15:48AM +0100, Ren=C3=A9 Scharfe wrote:
 
-C:/Program Files (x86)/Notepad++/notepad++.exe: -c: line 0: syntax error 
-near unexpected token `('
-C:/Program Files (x86)/Notepad++/notepad++.exe: -c: line 0: `C:/Program 
-Files (x86)/Notepad++/notepad++.exe \$@\'
-error: There was a problem with the editor 'C:/Program Files 
-(x86)/Notepad++/notepad++.exe'.
-Please supply the message using either -m or -F option.
+> Maintaining an array of hashes is easier using sha1_array than
+> open-coding it.  This patch also fixes a leak of the SHA1 array
+> in  diff_tree_combined_merge().
+>=20
+> ---
+>  builtin/diff.c |   12 ++++++------
+>  combine-diff.c |   34 +++++++++++++---------------------
+>  diff.h         |    3 ++-
+>  submodule.c    |   14 +++++---------
+>  4 files changed, 26 insertions(+), 37 deletions(-)
 
-or:
+Yay. When I refactored sha1_array, I hoped there would be other users,
+but I hadn't actually converted any yet. Good to know it is paying off.
 
-fatal: bad config file line 5 in C:\Users\xxx/.gitconfig
+> -	parent =3D xmalloc(ents * sizeof(*parent));
+> -	for (i =3D 0; i < ents; i++)
+> -		hashcpy((unsigned char *)(parent + i), ent[i].item->sha1);
+> -	diff_tree_combined(parent[0], parent + 1, ents - 1,
+> +	for (i =3D 1; i < ents; i++)
+> +		sha1_array_append(&parents, ent[i].item->sha1);
+> +	diff_tree_combined(ent[0].item->sha1, &parents,
+>  			   revs->dense_combined_merges, revs);
+> -	free((void *)parent);
+> +	sha1_array_clear(&parents);
 
-As you can see, I'm running git on a Win7 64 machine. Is there any way 
-to escape the brackets? Or do I need to reinstall notepad++ on a 
-different path?
+The original code is slightly more efficient, as it is able to use a
+single malloc (because it knows the number of entries ahead of time).
+It probably doesn't make a difference, but we could also add a
+sha1_array_grow() for this case.
+
+I think it could be used in all three spots you converted in this patch=
+=2E
+
+-Peff
