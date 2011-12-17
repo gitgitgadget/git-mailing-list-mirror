@@ -1,79 +1,62 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] attr: map builtin userdiff drivers to well-known
- extensions
-Date: Fri, 16 Dec 2011 20:21:18 -0500
-Message-ID: <20111217012118.GB20225@sigill.intra.peff.net>
-References: <20111216110000.GA15676@sigill.intra.peff.net>
- <4EEB4F13.2010402@viscovery.net>
- <20111216192104.GA19924@sigill.intra.peff.net>
- <4EEBC0A7.3030303@kdbg.org>
+Subject: Re: [PATCH] docs: brush up obsolete bits of git-fsck manpage
+Date: Fri, 16 Dec 2011 20:28:11 -0500
+Message-ID: <20111217012811.GC20225@sigill.intra.peff.net>
+References: <20111216113310.GA16601@sigill.intra.peff.net>
+ <7vy5ucgsic.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Brandon Casey <drafnel@gmail.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sat Dec 17 02:21:28 2011
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 17 02:28:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rbixp-0004qK-26
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 02:21:25 +0100
+	id 1Rbj4e-0006tu-6m
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 02:28:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760639Ab1LQBVV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Dec 2011 20:21:21 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44483
+	id S1760692Ab1LQB2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Dec 2011 20:28:18 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44495
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752732Ab1LQBVU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Dec 2011 20:21:20 -0500
-Received: (qmail 9332 invoked by uid 107); 17 Dec 2011 01:28:02 -0000
+	id S1752771Ab1LQB2O (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Dec 2011 20:28:14 -0500
+Received: (qmail 9413 invoked by uid 107); 17 Dec 2011 01:34:56 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 16 Dec 2011 20:28:02 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Dec 2011 20:21:18 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 16 Dec 2011 20:34:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Dec 2011 20:28:11 -0500
 Content-Disposition: inline
-In-Reply-To: <4EEBC0A7.3030303@kdbg.org>
+In-Reply-To: <7vy5ucgsic.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187345>
 
-On Fri, Dec 16, 2011 at 11:05:27PM +0100, Johannes Sixt wrote:
+On Fri, Dec 16, 2011 at 12:40:11PM -0800, Junio C Hamano wrote:
 
-> Am 16.12.2011 20:21, schrieb Jeff King:
-> > I'm not clear from what you wrote on whether you were saying it is
-> > simply sub-optimal, or whether on balance it is way worse than the
-> > default funcname matching.
+> By the way did you hand-tweak your patch in any way?
 > 
-> I'm saying the latter. Okay, we're talking "only" about hunk headers.
-> But when you are reviewing patches, they are *extremely* useful and a
-> time-saver; when they are wrong or not present, they are exactly the
-> opposite.
+> I am not complaining that it does not apply (it does), but I am curious
+> how you got the line that begins with "corruption it finds ..." neatly in
+> preimage and postimage; it could become a common line but doing so makes
+> the patch unreadable and that is what I am getting from "git show" after
+> applying the patch.
 
-Right. I don't think it is worth arguing "well, it's only funcname
-headers". Because that same argument applies to both the advantages
-(i.e., hopefully with the patch we are generating better funcname
-headers) and disadvantage (i.e., it seems that we might be generating
-worse funcname headers).
+No, I don't think I tweaked it at all. You can fetch the original commit
+(888b4eb) at:
 
-So it is really a question of "how good" or "how bad" for each style.
+  git://github.com/peff/git.git jk/fsck-docs
 
-> Sure I have. What I didn't say (sorry for that!), but wanted to hint at
-> is that this is to experiment with a pattern in order to ultimately
-> improve the built-in pattern. The topic came up just the other day, and
-> I took Thomas Rast's suggestion to experiment with a simplified pattern:
-> 
-> http://thread.gmane.org/gmane.comp.version-control.git/186355/focus=186439
-> 
-> But as is, the built-in pattern misses way too many anchor points in C++
-> code.
+Running "git show" produces the same output as the patch I sent. I
+double-checked with older versions of git, and they all produce the same
+output for me. Ditto for applying what I sent and running "git show" on
+the result.
 
-Yeah, I can certainly agree that the patterns could be better.
-
-Maybe we should just table the extension mapping for now, then, and see
-if the patterns improve? Or maybe just drop the C ones (and probably the
-objc one based on other parts of the thread) and do the rest?
+Using "--patience", on the other hand, does find it as a common line,
+Weird.
 
 -Peff
