@@ -1,172 +1,160 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH] git-p4: fix skipSubmitEdit regression
-Date: Sat, 17 Dec 2011 12:39:03 -0500
-Message-ID: <20111217173903.GA13674@padd.com>
-References: <1315514452.10046.0.camel@uncle-pecos>
- <4E6DB5F0.7080303@diamand.org>
- <1315847540.10046.29.camel@uncle-pecos>
- <20111018004500.GA31768@arf.padd.com>
- <4E9DBD0B.7020505@diamand.org>
- <20111020011610.GA7292@arf.padd.com>
- <CAFLRboo8DBk3zFEBF9OqKmre=d5PM7+3J9V0pHNz53MPtqjOWA@mail.gmail.com>
- <4EEBA106.9010001@diamand.org>
- <CAFLRbor3Gnqhudmg8G_U37Nbo7ENoCEy0iFVGRP4i_AmatJHxw@mail.gmail.com>
- <CAFLRboqJAC0h27m=B9Tw5SFcupEgn4fe9YvWksgqxOVs20nFHw@mail.gmail.com>
+From: Ralf Thielow <ralf.thielow@googlemail.com>
+Subject: Re: [BUG] attribute "eol" with "crlf"
+Date: Sat, 17 Dec 2011 19:04:14 +0100
+Message-ID: <CAN0XMOK0=uxRHcsUmbOE_UrkUcqmRFk-OYnY7kOZkZcWxWOycQ@mail.gmail.com>
+References: <CAN0XMO+OOdTJ+aNMSc2G3RVc7Wfypr4+7dU3US9GVAmMiSJ7cg@mail.gmail.com>
+	<vpqr504wf70.fsf@bauges.imag.fr>
+	<7vmxasgqlm.fsf@alter.siamese.dyndns.org>
+	<7vr504f5v5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Luke Diamand <luke@diamand.org>,
-	"L. A. Linden Levy" <alevy@mobitv.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael Horowitz <michael.horowitz@ieee.org>
-X-From: git-owner@vger.kernel.org Sat Dec 17 18:41:32 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	=?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 17 19:04:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbyGI-0004D3-Nm
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 18:41:31 +0100
+	id 1Rbycd-0003PM-36
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 19:04:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752514Ab1LQRlH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Dec 2011 12:41:07 -0500
-Received: from honk.padd.com ([74.3.171.149]:57523 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752578Ab1LQRjI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Dec 2011 12:39:08 -0500
-Received: from arf.padd.com (unknown [50.55.144.134])
-	by honk.padd.com (Postfix) with ESMTPSA id A852B1C89;
-	Sat, 17 Dec 2011 09:39:06 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 939C6314A8; Sat, 17 Dec 2011 12:39:03 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <CAFLRboqJAC0h27m=B9Tw5SFcupEgn4fe9YvWksgqxOVs20nFHw@mail.gmail.com>
+	id S1752547Ab1LQSEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Dec 2011 13:04:16 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:47874 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752118Ab1LQSEO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Dec 2011 13:04:14 -0500
+Received: by yhr47 with SMTP id 47so3480875yhr.19
+        for <git@vger.kernel.org>; Sat, 17 Dec 2011 10:04:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=QNqtRVocR/yvFsPF7hgdFEdK392wT9zhOKXFz9jYPpc=;
+        b=ki4mUENmF8nHmZGUjsgQmR85FkgI6lje6X1hbutFVhPsV2T4LKyIw95kcsCV8Z5Nb4
+         aA6nnpX2ICZqbuKcQssACwBg7x5dRUj/WR+c//KwsEml7gQ+F0FXc66QSE6BhZKcOwft
+         ZxPvEuG+Pj6H56DHwzywoAbPEvPEWDusbfqLI=
+Received: by 10.236.181.71 with SMTP id k47mr19404525yhm.28.1324145054162;
+ Sat, 17 Dec 2011 10:04:14 -0800 (PST)
+Received: by 10.147.22.19 with HTTP; Sat, 17 Dec 2011 10:04:14 -0800 (PST)
+In-Reply-To: <7vr504f5v5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187387>
 
-Commit 7c766e5 (git-p4: introduce skipSubmitEdit, 2011-12-04)
-made it easier to automate submission to p4, but broke the most
-common case.
-
-Add a test for when the user really does edit and save the change
-template, and fix the bug that causes the test to fail.
-
-Also add a confirmation message when submission is cancelled.
-
-Reported-by: Michael Horowitz <michael.horowitz@ieee.org>
-Signed-off-by: Pete Wyckoff <pw@padd.com>
----
-michael.horowitz@ieee.org wrote on Fri, 16 Dec 2011 19:49 -0500:
-> Oh, and in the case where you do edit the template, it doesn't give
-> you an error or anything, it looks like it succeeded, but you'll
-> notice the change never got submitted to Perforce.  If you look
-> carefully though, you can see it reverting each of your edited files
-> in the P4 tree.
-[..]
-> >> On 16/12/11 15:38, Michael Horowitz wrote:
-> >>>
-> >>> It appears that this change has introduced a bug that causes subm=
-it to
-> >>> fail every time if you do not skip the submit edit.
-> >>>
-> >>>=A0From what I can tell, this is because the new edit_template met=
-hod
-> >>> does not return True at the end.
-
-Oops.  In adding this code, I failed to test what should be the
-normal code path.  How sad.
-
-Junio:  this bug is in master.  Could you apply this fix?
-
-		-- Pete
-
- contrib/fast-import/git-p4  |   18 +++++++++++-------
- t/t9805-skip-submit-edit.sh |   24 +++++++++++++++++++++++-
- 2 files changed, 34 insertions(+), 8 deletions(-)
-
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 3571362..d501eac 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -878,13 +878,16 @@ class P4Submit(Command, P4UserMap):
-         if gitConfig("git-p4.skipSubmitEditCheck") =3D=3D "true":
-             return True
-=20
--        if os.stat(template_file).st_mtime <=3D mtime:
--            while True:
--                response =3D raw_input("Submit template unchanged. Sub=
-mit anyway? [y]es, [n]o (skip this patch) ")
--                if response =3D=3D 'y':
--                    return True
--                if response =3D=3D 'n':
--                    return False
-+        # modification time updated means user saved the file
-+        if os.stat(template_file).st_mtime > mtime:
-+            return True
-+
-+        while True:
-+            response =3D raw_input("Submit template unchanged. Submit =
-anyway? [y]es, [n]o (skip this patch) ")
-+            if response =3D=3D 'y':
-+                return True
-+            if response =3D=3D 'n':
-+                return False
-=20
-     def applyCommit(self, id):
-         print "Applying %s" % (read_pipe("git log --max-count=3D1 --pr=
-etty=3Doneline %s" % id))
-@@ -1068,6 +1071,7 @@ class P4Submit(Command, P4UserMap):
-                         self.modifyChangelistUser(changelist, p4User)
-             else:
-                 # skip this patch
-+                print "Submission cancelled, undoing p4 changes."
-                 for f in editedFiles:
-                     p4_revert(f)
-                 for f in filesToAdd:
-diff --git a/t/t9805-skip-submit-edit.sh b/t/t9805-skip-submit-edit.sh
-index 734ccf2..df929e0 100755
---- a/t/t9805-skip-submit-edit.sh
-+++ b/t/t9805-skip-submit-edit.sh
-@@ -38,7 +38,7 @@ test_expect_success 'no config, unedited, say no' '
- 		cd "$git" &&
- 		echo line >>file1 &&
- 		git commit -a -m "change 3 (not really)" &&
--		printf "bad response\nn\n" | "$GITP4" submit
-+		printf "bad response\nn\n" | "$GITP4" submit &&
- 		p4 changes //depot/... >wc &&
- 		test_line_count =3D 2 wc
- 	)
-@@ -74,6 +74,28 @@ test_expect_success 'skipSubmitEditCheck' '
- 	)
- '
-=20
-+# check the normal case, where the template really is edited
-+test_expect_success 'no config, edited' '
-+	"$GITP4" clone --dest=3D"$git" //depot &&
-+	test_when_finished cleanup_git &&
-+	ed=3D"$TRASH_DIRECTORY/ed.sh" &&
-+	test_when_finished "rm \"$ed\"" &&
-+	cat >"$ed" <<-EOF &&
-+		#!$SHELL_PATH
-+		sleep 1
-+		touch "\$1"
-+		exit 0
-+	EOF
-+	chmod 755 "$ed" &&
-+	(
-+		cd "$git" &&
-+		echo line >>file1 &&
-+		git commit -a -m "change 5" &&
-+		EDITOR=3D"\"$ed\"" "$GITP4" submit &&
-+		p4 changes //depot/... >wc &&
-+		test_line_count =3D 5 wc
-+	)
-+'
-=20
- test_expect_success 'kill p4d' '
- 	kill_p4d
---=20
-1.7.8.154.g767b7.dirty
+V29ya3MgZmluZSBmb3IgbWUuIFRoYW5rcwoKPiBKdW5pbyBDIEhhbWFubyA8Z2l0c3RlckBwb2Jv
+eC5jb20+IHdyaXRlczoKPgo+PiAuLi4KPj4gV2hhdCB5b3Ugc2FpZCBpcyBfdGVjaG5pY2FsbHlf
+IGNvcnJlY3QgaW4gdGhhdCBzZW5zZS4KPj4KPj4gSG93ZXZlciwgSSB0aGluayB0aGUgQ1JMRiBm
+aWx0ZXIgdXNlZCB0byBoYXZlIGEgaGFjayB0byBzdHJpcCAiXHIiIGlmIHRoZQo+PiByZXBvc2l0
+b3J5IGRhdGEgcmVjb3JkcyAiXHIiIGF0IHRoZSBlbmQgb2YgbGluZS4gVGhpcyB3YXMgaW50ZW5k
+ZWQgdG8gaGVscAo+PiBwZW9wbGUgd2hvIGNoZWNrZWQgaW4gc3VjaCBhIGJyb2tlbiB0ZXh0IGZp
+bGUgKGlmIGl0IGlzIGEgdGV4dCBmaWxlLCB0aGVuCj4+IHJhdyBhc2NpaSBDUiBkb2VzIG5vdCBo
+YXZlIGEgcGxhY2UgaW4gaXQgaW4gdGhlIHJlcG9zaXRvcnkgcmVwcmVzZW50YXRpb24pCj4+IGFu
+ZCBpdCB3YXMgYSB1c2VmdWwgaGFjayB0byBoZWxwIHBlb3BsZSByZWNvdmVyIGZyb20gc3VjaCBt
+aXN0YWtlcyB0bwo+PiBzdGFydCB0aGUgcHJvamVjdCBmcm9tIERPUy1vbmx5IHdvcmxkICh3aXRo
+IENSTEYgaW4gdGhlIHJlcG9zaXRvcnkgZGF0YSkKPj4gYW5kIG1pZ3JhdGUgdG8gY3Jvc3MgcGxh
+dGZvcm0gd29ybGQgKHdpdGggTEYgaW4gdGhlIHJlcG9zaXRvcnkgZGF0YSwgQ1JMRgo+PiBpbiB0
+aGUgRE9TIHdvcmtpbmcgdHJlZSkuIMKgSSBzdXNwZWN0IHRoYXQgdGhlIHN0cmVhbWluZyBmaWx0
+ZXIgY29udmVyc2lvbgo+PiBtYXkgbm90IGhhdmUgdGhlIHNhbWUgaGFjayBpbiBpdC4KPgo+IFBl
+cmhhcHMgc29tZXRoaW5nIGxpa2UgdGhpcywgYnV0IEkgZG8gbm90IHVzZSBDUkxGIG15c2VsZiwg
+c28gaXQgcHJvYmFibHkKPiBuZWVkcyB0byBiZSBjaGVja2VkIGJ5IGV4dHJhIHNldHMgb2YgZXll
+cy4KPgo+IFRoYW5rcy4KPgo+IC0tID44IC0tCj4gU3ViamVjdDogbGZfdG9fY3JsZl9maWx0ZXIo
+KTogcmVzdXJyZWN0IENSTEYtPkNSTEYgaGFjawo+Cj4gVGhlIG5vbi1zdHJlYW1pbmcgdmVyc2lv
+biBvZiB0aGUgZmlsdGVyIGNvdW50cyBDUkxGIGFuZCBMRiBpbiB0aGUgd2hvbGUKPiBidWZmZXIs
+IGFuZCByZXR1cm5zIHdpdGhvdXQgZG9pbmcgYW55dGhpbmcgd2hlbiB0aGV5IG1hdGNoIChpLmUu
+IHdoYXQgaXMKPiByZWNvcmRlZCBpbiB0aGUgb2JqZWN0IHN0b3JlIGFscmVhZHkgdXNlcyBDUkxG
+KS4gVGhpcyB3YXMgZG9uZSB0byBoZWxwCj4gcGVvcGxlIHdobyBhZGRlZCBmaWxlcyBmcm9tIHRo
+ZSBET1Mgd29ybGQgYmVmb3JlIHJlYWxpemluZyB0aGV5IHdhbnQgdG8gZ28KPiBjcm9zcyBwbGF0
+Zm9ybSBhbmQgYWRkaW5nIC5naXRhdHRyaWJ1dGVzIHRvIHRlbGwgR2l0IHRoYXQgdGhleSBvbmx5
+IHdhbnQKPiBDUkxGIGluIHRoZWlyIHdvcmtpbmcgdHJlZS4KPgo+IFRoZSBzdHJlYW1pbmcgdmVy
+c2lvbiBvZiB0aGUgZmlsdGVyIGRvZXMgbm90IHdhbnQgdG8gcmVhZCB0aGUgd2hvbGUgdGhpbmcK
+PiBiZWZvcmUgc3RhcnRpbmcgdG8gd29yaywgYXMgdGhhdCBkZWZlYXRzIHRoZSB3aG9sZSBwb2lu
+dCBvZiBzdHJlYW1pbmcuIFNvCj4gd2UgaW5zdGVhZCBjaGVjayB3aGF0IGJ5dGUgZm9sbG93cyBD
+UiB3aGVuZXZlciB3ZSBzZWUgb25lLCBhbmQgYWRkIENSCj4gYmVmb3JlIExGIG9ubHkgd2hlbiB0
+aGUgTEYgZG9lcyBub3QgaW1tZWRpYXRlbHkgZm9sbG93IENSIGFscmVhZHkgdG8ga2VlcAo+IENS
+TEYgYXMgaXMuCj4KPiBTaWduZWQtb2ZmLWJ5OiBKdW5pbyBDIEhhbWFubyA8Z2l0c3RlckBwb2Jv
+eC5jb20+Cj4gLS0tCj4gwqBjb252ZXJ0LmMgfCDCoCA2MCArKysrKysrKysrKysrKysrKysrKysr
+KysrKysrKysrKysrKysrKysrKysrKysrKysrKy0tLS0tLS0tLS0KPiDCoDEgZmlsZXMgY2hhbmdl
+ZCwgNTAgaW5zZXJ0aW9ucygrKSwgMTAgZGVsZXRpb25zKC0pCj4KPiBkaWZmIC0tZ2l0IGEvY29u
+dmVydC5jIGIvY29udmVydC5jCj4gaW5kZXggYzAyODI3NS4uOGRhZjRlNCAxMDA2NDQKPiAtLS0g
+YS9jb252ZXJ0LmMKPiArKysgYi9jb252ZXJ0LmMKPiBAQCAtODc5LDcgKzg3OSw4IEBAIGludCBp
+c19udWxsX3N0cmVhbV9maWx0ZXIoc3RydWN0IHN0cmVhbV9maWx0ZXIgKmZpbHRlcikKPgo+IMKg
+c3RydWN0IGxmX3RvX2NybGZfZmlsdGVyIHsKPiDCoCDCoCDCoCDCoHN0cnVjdCBzdHJlYW1fZmls
+dGVyIGZpbHRlcjsKPiAtIMKgIMKgIMKgIHVuc2lnbmVkIHdhbnRfbGY6MTsKPiArIMKgIMKgIMKg
+IHVuc2lnbmVkIGhhc19oZWxkOjE7Cj4gKyDCoCDCoCDCoCBjaGFyIGhlbGQ7Cj4gwqB9Owo+Cj4g
+wqBzdGF0aWMgaW50IGxmX3RvX2NybGZfZmlsdGVyX2ZuKHN0cnVjdCBzdHJlYW1fZmlsdGVyICpm
+aWx0ZXIsCj4gQEAgLTg4OSwxMCArODkwLDE0IEBAIHN0YXRpYyBpbnQgbGZfdG9fY3JsZl9maWx0
+ZXJfZm4oc3RydWN0IHN0cmVhbV9maWx0ZXIgKmZpbHRlciwKPiDCoCDCoCDCoCDCoHNpemVfdCBj
+b3VudCwgbyA9IDA7Cj4gwqAgwqAgwqAgwqBzdHJ1Y3QgbGZfdG9fY3JsZl9maWx0ZXIgKmxmX3Rv
+X2NybGYgPSAoc3RydWN0IGxmX3RvX2NybGZfZmlsdGVyICopZmlsdGVyOwo+Cj4gLSDCoCDCoCDC
+oCAvKiBPdXRwdXQgYSBwZW5kaW5nIExGIGlmIHdlIG5lZWQgdG8gKi8KPiAtIMKgIMKgIMKgIGlm
+IChsZl90b19jcmxmLT53YW50X2xmKSB7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCBvdXRwdXRb
+bysrXSA9ICdcbic7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCBsZl90b19jcmxmLT53YW50X2xm
+ID0gMDsKPiArIMKgIMKgIMKgIC8qCj4gKyDCoCDCoCDCoCDCoCogV2UgbWF5IGJlIGhvbGRpbmcg
+b250byB0aGUgQ1IgdG8gc2VlIGlmIGl0IGlzIGZvbGxvd2VkIGJ5IGEKPiArIMKgIMKgIMKgIMKg
+KiBMRiwgaW4gd2hpY2ggY2FzZSB3ZSB3b3VsZCBuZWVkIHRvIGdvIHRvIHRoZSBtYWluIGxvb3Au
+Cj4gKyDCoCDCoCDCoCDCoCogT3RoZXJ3aXNlLCBqdXN0IGVtaXQgaXQgdG8gdGhlIG91dHB1dCBz
+dHJlYW0uCj4gKyDCoCDCoCDCoCDCoCovCj4gKyDCoCDCoCDCoCBpZiAobGZfdG9fY3JsZi0+aGFz
+X2hlbGQgJiYgKGxmX3RvX2NybGYtPmhlbGQgIT0gJ1xyJyB8fCAhaW5wdXQpKSB7Cj4gKyDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCBvdXRwdXRbbysrXSA9IGxmX3RvX2NybGYtPmhlbGQ7Cj4gKyDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCBsZl90b19jcmxmLT5oYXNfaGVsZCA9IDA7Cj4gwqAgwqAgwqAgwqB9
+Cj4KPiDCoCDCoCDCoCDCoC8qIFdlIGFyZSB0b2xkIHRvIGRyYWluICovCj4gQEAgLTkwMiwyMiAr
+OTA3LDU3IEBAIHN0YXRpYyBpbnQgbGZfdG9fY3JsZl9maWx0ZXJfZm4oc3RydWN0IHN0cmVhbV9m
+aWx0ZXIgKmZpbHRlciwKPiDCoCDCoCDCoCDCoH0KPgo+IMKgIMKgIMKgIMKgY291bnQgPSAqaXNp
+emVfcDsKPiAtIMKgIMKgIMKgIGlmIChjb3VudCkgewo+ICsgwqAgwqAgwqAgaWYgKGNvdW50IHx8
+IGxmX3RvX2NybGYtPmhhc19oZWxkKSB7Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBzaXplX3Qg
+aTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGludCB3YXNfY3IgPSAwOwo+ICsKPiArIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIGlmIChsZl90b19jcmxmLT5oYXNfaGVsZCkgewo+ICsgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgd2FzX2NyID0gMTsKPiArIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIGxmX3RvX2NybGYtPmhhc19oZWxkID0gMDsKPiArIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIH0KPiArCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBmb3IgKGkgPSAwOyBvIDwg
+Km9zaXplX3AgJiYgaSA8IGNvdW50OyBpKyspIHsKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoGNoYXIgY2ggPSBpbnB1dFtpXTsKPiArCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqBpZiAoY2ggPT0gJ1xuJykgewo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgb3V0cHV0W28rK10gPSAnXHInOwo+IC0gwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKG8gPj0gKm9zaXplX3ApIHsK
+PiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIGxmX3RvX2NybGYtPndhbnRfbGYgPSAxOwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgY29udGludWU7IC8qIFdlIG5lZWQgdG8g
+aW5jcmVhc2UgaSAqLwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgfQo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfSBlbHNlIGlmICh3
+YXNfY3IpIHsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IC8qCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCog
+UHJldmlvdXMgcm91bmQgc2F3IENSIGFuZCBpdCBpcyBub3QgZm9sbG93ZWQKPiArIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgKiBieSBhIExGOyBlbWl0IHRo
+ZSBDUiBiZWZvcmUgcHJvY2Vzc2luZyB0aGUKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgKiBjdXJyZW50IGNoYXJhY3Rlci4KPiArIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgKi8KPiArIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIG91dHB1dFtvKytdID0gJ1xyJzsKPiDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoH0KPiArCj4gKyDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCAvKgo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAqIFdlIG1heSBoYXZlIGNvbnN1bWVkIHRoZSBsYXN0IG91dHB1dCBzbG90LAo+ICsgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAqIGluIHdoaWNoIGNhc2Ugd2UgbmVlZCB0byBi
+cmVhayBvdXQgb2YgdGhpcwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAq
+IGxvb3A7IGhvbGQgdGhlIGN1cnJlbnQgY2hhcmFjdGVyIGJlZm9yZQo+ICsgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAqIHJldHVybmluZy4KPiArIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgKi8KPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IGlmICgqb3NpemVfcCA8PSBvKSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCBsZl90b19jcmxmLT5oYXNfaGVsZCA9IDE7Cj4gKyDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBsZl90b19jcmxmLT5oZWxkID0gY2g7Cj4g
+KyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBjb250aW51ZTsg
+LyogYnJlYWsgYnV0IGluY3JlbWVudCBpICovCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCB9Cj4gKwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKGNo
+ID09ICdccicpIHsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIHdhc19jciA9IDE7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCBjb250aW51ZTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIH0K
+PiArCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB3YXNfY3IgPSAwOwo+IMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgb3V0cHV0W28rK10gPSBjaDsKPiDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoH0KPgo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgKm9zaXplX3Ag
+LT0gbzsKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCppc2l6ZV9wIC09IGk7Cj4gKwo+ICsgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgaWYgKCFsZl90b19jcmxmLT5oYXNfaGVsZCAmJiB3YXNfY3IpIHsK
+PiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGxmX3RvX2NybGYtPmhhc19oZWxk
+ID0gMTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGxmX3RvX2NybGYtPmhl
+bGQgPSAnXHInOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+IMKgIMKgIMKgIMKgfQo+IMKg
+IMKgIMKgIMKgcmV0dXJuIDA7Cj4gwqB9Cg==
