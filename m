@@ -1,73 +1,148 @@
 From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH 09/11] git-p4: test --keep-path
-Date: Sat, 17 Dec 2011 13:52:20 -0500
-Message-ID: <1324147942-21558-10-git-send-email-pw@padd.com>
+Subject: [PATCH 10/11] git-p4: test and document --use-client-spec
+Date: Sat, 17 Dec 2011 13:52:21 -0500
+Message-ID: <1324147942-21558-11-git-send-email-pw@padd.com>
 References: <1324147942-21558-1-git-send-email-pw@padd.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 17 19:56:55 2011
+X-From: git-owner@vger.kernel.org Sat Dec 17 19:57:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbzRH-0003eL-Dc
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 19:56:55 +0100
+	id 1RbzRh-0003lW-Ll
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 19:57:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752655Ab1LQS4w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Dec 2011 13:56:52 -0500
-Received: from honk.padd.com ([74.3.171.149]:58921 "EHLO honk.padd.com"
+	id S1752690Ab1LQS5S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Dec 2011 13:57:18 -0500
+Received: from honk.padd.com ([74.3.171.149]:58923 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750782Ab1LQS4v (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Dec 2011 13:56:51 -0500
+	id S1750782Ab1LQS5R (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Dec 2011 13:57:17 -0500
 Received: from arf.padd.com (unknown [50.55.144.134])
-	by honk.padd.com (Postfix) with ESMTPSA id 87EBE1C89;
-	Sat, 17 Dec 2011 10:56:40 -0800 (PST)
+	by honk.padd.com (Postfix) with ESMTPSA id 97B3D1C89;
+	Sat, 17 Dec 2011 10:57:00 -0800 (PST)
 Received: by arf.padd.com (Postfix, from userid 7770)
-	id A068E314A8; Sat, 17 Dec 2011 13:55:23 -0500 (EST)
+	id B41AF31544; Sat, 17 Dec 2011 13:55:43 -0500 (EST)
 X-Mailer: git-send-email 1.7.8.283.g3bcee.dirty
 In-Reply-To: <1324147942-21558-1-git-send-email-pw@padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187399>
 
-Make sure it leaves the path, below //depot, in git.
+The depot path is required, even with this option.  Make sure
+git-p4 fails and exits with non-zero.
+
+Contents in the specified depot path will be rearranged according
+to the client spec.  Test this and add a note in the docs.
+
+Leave an XXX suggesting that this is somewhat confusing behavior
+that might be good to fix later.
+
+Function stripRepoPath() looks at self.useClientSpec.  Make sure
+this is set both for command-line option --use-client-spec and
+for configuration variable git-p4.useClientSpec.  Test this.
 
 Signed-off-by: Pete Wyckoff <pw@padd.com>
 ---
- t/t9806-options.sh |   24 ++++++++++++++++++++++++
- 1 files changed, 24 insertions(+), 0 deletions(-)
+ Documentation/git-p4.txt   |    5 +++-
+ contrib/fast-import/git-p4 |    6 ++++-
+ t/t9806-options.sh         |   46 ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 55 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+index 2885b82..3092571 100644
+--- a/Documentation/git-p4.txt
++++ b/Documentation/git-p4.txt
+@@ -232,7 +232,10 @@ git repository:
+ 	Use a client spec to find the list of interesting files in p4.
+ 	The client spec is discovered using 'p4 client -o' which checks
+ 	the 'P4CLIENT' environment variable and returns a mapping of
+-	depot files to workspace files.
++	depot files to workspace files.  Note that a depot path is
++	still required, but files found in the path that match in
++	the client spec view will be laid out according to the client
++	spec.
+ 
+ Clone options
+ ~~~~~~~~~~~~~
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index 6fe2fcf..2d07e93 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -1947,7 +1947,10 @@ class P4Sync(Command, P4UserMap):
+             if not gitBranchExists(self.refPrefix + "HEAD") and self.importIntoRemotes and gitBranchExists(self.branch):
+                 system("git symbolic-ref %sHEAD %s" % (self.refPrefix, self.branch))
+ 
+-        if self.useClientSpec or gitConfig("git-p4.useclientspec") == "true":
++        if not self.useClientSpec:
++            if gitConfig("git-p4.useclientspec", "--bool") == "true":
++                self.useClientSpec = True
++        if self.useClientSpec:
+             self.getClientSpec()
+ 
+         # TODO: should always look at previous commits,
+@@ -2376,6 +2379,7 @@ def main():
+ 
+     if not cmd.run(args):
+         parser.print_help()
++        sys.exit(2)
+ 
+ 
+ if __name__ == '__main__':
 diff --git a/t/t9806-options.sh b/t/t9806-options.sh
-index cc0fd26..6b288ac 100755
+index 6b288ac..1f1952a 100755
 --- a/t/t9806-options.sh
 +++ b/t/t9806-options.sh
-@@ -93,6 +93,30 @@ test_expect_success 'clone --max-changes' '
+@@ -117,6 +117,52 @@ test_expect_success 'clone --keep-path' '
  	)
  '
  
-+test_expect_success 'clone --keep-path' '
++# clone --use-client-spec must still specify a depot path
++# if given, it should rearrange files according to client spec
++# when it has view lines that match the depot path
++# XXX: should clone/sync just use the client spec exactly, rather
++# than needing depot paths?
++test_expect_success 'clone --use-client-spec' '
 +	(
-+		cd "$cli" &&
-+		mkdir -p sub/dir &&
-+		echo f4 >sub/dir/f4 &&
-+		p4 add sub/dir/f4 &&
-+		p4 submit -d "change 4"
++		# big usage message
++		exec >/dev/null &&
++		test_must_fail "$GITP4" clone --dest="$git" --use-client-spec
 +	) &&
-+	"$GITP4" clone --dest="$git" --keep-path //depot/sub/dir@all &&
++	cli2="$TRASH_DIRECTORY/cli2" &&
++	mkdir -p "$cli2" &&
++	test_when_finished "rmdir \"$cli2\"" &&
++	(
++		cd "$cli2" &&
++		p4 client -i <<-EOF
++		Client: client2
++		Description: client2
++		Root: $cli2
++		View: //depot/sub/... //client2/bus/...
++		EOF
++	) &&
++	P4CLIENT=client2 &&
 +	test_when_finished cleanup_git &&
++	"$GITP4" clone --dest="$git" --use-client-spec //depot/... &&
 +	(
 +		cd "$git" &&
-+		test_path_is_missing f4 &&
-+		test_path_is_file sub/dir/f4
++		test_path_is_file bus/dir/f4 &&
++		test_path_is_file file1
 +	) &&
 +	cleanup_git &&
-+	"$GITP4" clone --dest="$git" //depot/sub/dir@all &&
++
++	# same thing again, this time with variable instead of option
++	mkdir "$git" &&
 +	(
 +		cd "$git" &&
-+		test_path_is_file f4 &&
-+		test_path_is_missing sub/dir/f4
++		git init &&
++		git config git-p4.useClientSpec true &&
++		"$GITP4" sync //depot/... &&
++		git checkout -b master p4/master &&
++		test_path_is_file bus/dir/f4 &&
++		test_path_is_file file1
 +	)
 +'
 +
