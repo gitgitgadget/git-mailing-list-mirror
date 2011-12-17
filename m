@@ -1,132 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] remote-curl: don't pass back fake refs
-Date: Sat, 17 Dec 2011 05:45:39 -0500
-Message-ID: <20111217104539.GA23844@sigill.intra.peff.net>
+From: Erik Blake <erik@icefield.yk.ca>
+Subject: Escape character for .gitconfig
+Date: Sat, 17 Dec 2011 11:10:37 +0100
+Message-ID: <4EEC6A9D.1060005@icefield.yk.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 17 11:46:04 2011
+X-From: git-owner@vger.kernel.org Sat Dec 17 11:50:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RbrmF-0002Ad-OF
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 11:46:04 +0100
+	id 1RbrqT-0003S2-25
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 11:50:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751925Ab1LQKpn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Dec 2011 05:45:43 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44784
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751856Ab1LQKpm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Dec 2011 05:45:42 -0500
-Received: (qmail 12077 invoked by uid 107); 17 Dec 2011 10:52:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 17 Dec 2011 05:52:24 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 17 Dec 2011 05:45:39 -0500
-Content-Disposition: inline
+	id S1751944Ab1LQKuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Dec 2011 05:50:21 -0500
+Received: from bosmailout11.eigbox.net ([66.96.184.11]:59383 "EHLO
+	bosmailout11.eigbox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751923Ab1LQKuU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Dec 2011 05:50:20 -0500
+X-Greylist: delayed 2378 seconds by postgrey-1.27 at vger.kernel.org; Sat, 17 Dec 2011 05:50:20 EST
+Received: from bosmailscan18.eigbox.net ([10.20.15.18])
+	by bosmailout11.eigbox.net with esmtp (Exim)
+	id 1RbrDz-0004xL-V1
+	for git@vger.kernel.org; Sat, 17 Dec 2011 05:10:39 -0500
+Received: from bosimpout02.eigbox.net ([10.20.55.2])
+	by bosmailscan18.eigbox.net with esmtp (Exim)
+	id 1RbrDz-0001mY-Im
+	for git@vger.kernel.org; Sat, 17 Dec 2011 05:10:39 -0500
+Received: from bosauthsmtp10.eigbox.net ([10.20.18.10])
+	by bosimpout02.eigbox.net with NO UCE
+	id AAAf1i00E0D2CUy01AAfLP; Sat, 17 Dec 2011 05:10:39 -0500
+X-EN-OrigOutIP: 10.20.18.10
+X-EN-IMPSID: AAAf1i00E0D2CUy01AAfLP
+Received: from 221.59.9.46.customer.cdi.no ([46.9.59.221] helo=[192.168.2.3])
+	by bosauthsmtp10.eigbox.net with esmtpa (Exim)
+	id 1RbrDz-0004Dr-9w
+	for git@vger.kernel.org; Sat, 17 Dec 2011 05:10:39 -0500
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
+X-EN-UserInfo: 20c972d92b49a3da013d5f179c4005f2:fb4e807829017c6d805c060c7025d0c2
+X-EN-AuthUser: erik@icefield.yk.ca
+X-EN-OrigIP: 46.9.59.221
+X-EN-OrigHost: 221.59.9.46.customer.cdi.no
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187374>
 
-When receive-pack advertises its list of refs, it generally
-hides the capabilities information after a NUL at the end of
-the first ref. However, when we have an empty repository,
-there are no refs, and therefore receive-pack writes a fake
-ref "capabilities^{}" with the capabilities afterwards.
+I have an editor path that includes "(" and ")". No matter how I try to 
+escape this character, I get either variations on:
 
-On the client side, git reads the result with
-get_remote_heads. We pick the capabilities from the end of
-the line, and then call check_ref to make sure the ref name
-is valid. We see that it isn't, and don't bother adding it
-to our list of refs.
+C:/Program Files (x86)/Notepad++/notepad++.exe: -c: line 0: syntax error 
+near unexpected token `('
+C:/Program Files (x86)/Notepad++/notepad++.exe: -c: line 0: `C:/Program 
+Files (x86)/Notepad++/notepad++.exe \$@\'
+error: There was a problem with the editor 'C:/Program Files 
+(x86)/Notepad++/notepad++.exe'.
+Please supply the message using either -m or -F option.
 
-However, the call to check_ref is enabled by passing the
-REF_NORMAL flag to get_remote_heads. For the regular git
-transport, we pass REF_NORMAL in get_refs_via_connect if we
-are doing a push (since only receive-pack uses this fake
-ref).  But in remote-curl, we never use this flag, and we
-accept the fake ref as a real one, passing it back from the
-helper to the parent git-push.
+or:
 
-Most of the time this bug goes unnoticed, as the fake ref
-won't match our refspecs. However, if "--mirror" is used,
-then we see it as remote cruft to be pruned, and try to pass
-along a deletion refspec for it. Of course this refspec has
-bogus syntax (because of the ^{}), and the helper complains,
-aborting the push.
+fatal: bad config file line 5 in C:\Users\xxx/.gitconfig
 
-Let's have remote-curl mirror what the builtin
-get_refs_via_connect does (at least for the case of using
-git protocol; we can leave the dumb info/refs reader as it
-is).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- remote-curl.c        |    7 ++++---
- t/t5541-http-push.sh |   14 ++++++++++++++
- 2 files changed, 18 insertions(+), 3 deletions(-)
-
-diff --git a/remote-curl.c b/remote-curl.c
-index 0e720ee..b780ba5 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -188,7 +188,7 @@ static int write_discovery(int in, int out, void *data)
- 	return err;
- }
- 
--static struct ref *parse_git_refs(struct discovery *heads)
-+static struct ref *parse_git_refs(struct discovery *heads, int for_push)
- {
- 	struct ref *list = NULL;
- 	struct async async;
-@@ -200,7 +200,8 @@ static struct ref *parse_git_refs(struct discovery *heads)
- 
- 	if (start_async(&async))
- 		die("cannot start thread to parse advertised refs");
--	get_remote_heads(async.out, &list, 0, NULL, 0, NULL);
-+	get_remote_heads(async.out, &list, 0, NULL,
-+			for_push ? REF_NORMAL : 0, NULL);
- 	close(async.out);
- 	if (finish_async(&async))
- 		die("ref parsing thread failed");
-@@ -268,7 +269,7 @@ static struct ref *get_refs(int for_push)
- 		heads = discover_refs("git-upload-pack");
- 
- 	if (heads->proto_git)
--		return parse_git_refs(heads);
-+		return parse_git_refs(heads, for_push);
- 	return parse_info_refs(heads);
- }
- 
-diff --git a/t/t5541-http-push.sh b/t/t5541-http-push.sh
-index a73c826..89232b2 100755
---- a/t/t5541-http-push.sh
-+++ b/t/t5541-http-push.sh
-@@ -154,5 +154,19 @@ test_expect_success 'push (chunked)' '
- 	 test $HEAD = $(git rev-parse --verify HEAD))
- '
- 
-+test_expect_success 'push --all can push to empty repo' '
-+	d=$HTTPD_DOCUMENT_ROOT_PATH/empty-all.git &&
-+	git init --bare "$d" &&
-+	git --git-dir="$d" config http.receivepack true &&
-+	git push --all "$HTTPD_URL"/smart/empty-all.git
-+'
-+
-+test_expect_success 'push --mirror can push to empty repo' '
-+	d=$HTTPD_DOCUMENT_ROOT_PATH/empty-mirror.git &&
-+	git init --bare "$d" &&
-+	git --git-dir="$d" config http.receivepack true &&
-+	git push --mirror "$HTTPD_URL"/smart/empty-mirror.git
-+'
-+
- stop_httpd
- test_done
--- 
-1.7.7.4.13.g57bf4
+As you can see, I'm running git on a Win7 64 machine. Is there any way 
+to escape the brackets? Or do I need to reinstall notepad++ on a 
+different path?
