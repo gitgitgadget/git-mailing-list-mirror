@@ -1,94 +1,142 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git-svn: multiple fetch lines
-Date: Sat, 17 Dec 2011 04:05:21 -0600
-Message-ID: <20111217100521.GA12610@elie.hsd1.il.comcast.net>
-References: <CA+7g9Jxd3mhbra34f+MiJRt36Lb6gVHi1nOCP8Zo5y-G9jB3qA@mail.gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: best way to fastforward all tracking branches after a fetch
+Date: Sat, 17 Dec 2011 15:40:09 +0530
+Message-ID: <20111217101009.GA19248@sita-lt.atc.tcs.com>
+References: <jbvj5o$skt$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Nathan Gray <n8gray@n8gray.org>
-X-From: git-owner@vger.kernel.org Sat Dec 17 11:05:55 2011
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="+QahgC5+KEYLbs62"
+Cc: git@vger.kernel.org
+To: Gelonida N <gelonida@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 17 11:10:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rbr9K-0006nv-3A
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 11:05:50 +0100
+	id 1RbrDo-0008Cd-Pn
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Dec 2011 11:10:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751772Ab1LQKFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Dec 2011 05:05:30 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:63182 "EHLO
+	id S1751782Ab1LQKKZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Dec 2011 05:10:25 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:57098 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751403Ab1LQKF2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Dec 2011 05:05:28 -0500
-Received: by iaeh11 with SMTP id h11so5659734iae.19
-        for <git@vger.kernel.org>; Sat, 17 Dec 2011 02:05:28 -0800 (PST)
+	with ESMTP id S1750887Ab1LQKKX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Dec 2011 05:10:23 -0500
+Received: by iaeh11 with SMTP id h11so5663635iae.19
+        for <git@vger.kernel.org>; Sat, 17 Dec 2011 02:10:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=8LBvQ2Kr25eBEqRTViZ5pSZ/7droNU6rJbVjcT2lkf8=;
-        b=rD4bDoG6OEn9VONyMu+6FakeGpMX6zL/T5Jbc1cP2w3eMpqYOT4bQ1oxE9s5c9+ofK
-         mEmJ9YPIkSED6Ix+SzeDlwIniaCvOqxo7ZHk4QwHdz1qqZ/9krg3jlbep0k2Ri357phj
-         OHQZtoxA6+24wxkcBsDz5+u8qeiALUcRGQ9UY=
-Received: by 10.50.154.228 with SMTP id vr4mr14076380igb.65.1324116328078;
-        Sat, 17 Dec 2011 02:05:28 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id wo4sm19589985igc.5.2011.12.17.02.05.27
-        (version=SSLv3 cipher=OTHER);
-        Sat, 17 Dec 2011 02:05:27 -0800 (PST)
+        bh=PVEIxCt6sdzc3adK/KRQtsHy9Ol3j4q4/dd/qzvESbg=;
+        b=nmg7HAxthagHfxDUFpskuv9ZFIfAoyL5N2zygR9STBO1HWaWbsKMB+7EkM6nF48gRm
+         BBM5oMQKv/Otkc0zw/JW5amQ6k0ctZQzW7FiZ3CvHGIv0pgEBd27DjPIsY5OWcNkhvHO
+         rHwo6UwpgqQ23G7hYry/0xJSyXCbigCHOBI5g=
+Received: by 10.50.173.74 with SMTP id bi10mr14059991igc.4.1324116623537;
+        Sat, 17 Dec 2011 02:10:23 -0800 (PST)
+Received: from sita-lt.atc.tcs.com ([117.195.189.63])
+        by mx.google.com with ESMTPS id wn9sm7551205igc.6.2011.12.17.02.10.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 17 Dec 2011 02:10:22 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <CA+7g9Jxd3mhbra34f+MiJRt36Lb6gVHi1nOCP8Zo5y-G9jB3qA@mail.gmail.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+In-Reply-To: <jbvj5o$skt$1@dough.gmane.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187365>
 
-Hi Nathan,
 
-Nathan Gray wrote:
+--+QahgC5+KEYLbs62
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> I'm in a conversation with the support fellow of the very nice Tower
-> git interface for OS X and we need clarification on a point.  Does
-> git-svn explicitly support multiple "fetch =" lines in an svn-remote
-> section or is it just an accident that it works?  My belief is that
-> such support is intended and his is that it is accidental.
+On Sat, Dec 10, 2011 at 01:26:32PM +0100, Gelonida N wrote:
+> Hi,
+>=20
+> What is the best way to fastforward all fastforwardable tracking
+> branches after a git fetch?
 
-It's true that the documentation is not as clear about this as one
-might like.  Documentation/git-svn.txt leaves it to the reader to
-infer that this is supported by analogy with "fetch =" lines in native
-git [remote] sections:
+I know this is a somewhat closed topic, but I took some time to
+clean up a program I have been using for a while, including some
+changes based upon ideas elsewhere in this thread.  The program
+"git-branch-check" is attached, and requires perl > 5.10.0.
 
-	'git svn' stores [svn-remote] configuration information in the
-	repository .git/config file.  It is similar the core git
-	[remote] sections except 'fetch' keys do not accept glob
-	arguments; but they are instead handled by the 'branches'
-	and 'tags' keys.
+Note that this does a lot more than just fast-forward all
+branches, although it can do that as well.
 
-The change description for the patch that introduced that functionality
-is more helpful.
+I alias it (in ~/.gitconfig) to 'bc', so I just run "git bc".
+Running with "-h" shows usage:
 
-	$ git log -S'Could not find a \"svn-remote.*.fetch\" key' git-svn.perl
-	commit 706587fc
-	Author: Eric Wong <normalperson@yhbt.net>
-	Date:   Thu Jan 18 17:50:01 2007 -0800
+    Usage: /home/sitaram/bin/git-branch-check [options] [branches]
 
-	    git-svn: add support for metadata in .git/config
-	    
-	    Of course, we handle metadata migrations from previous versions
-	    and we have added unit tests.
-	    
-	    The new .git/config remotes resemble non-SVN remotes.  Below
-	    is an example with comments:
-[example using multiple 'fetch' keys snipped]
+    Check or fast forward branches.  Default: act upon all local branches i=
+f no
+    arguments supplied, or just the current branch if '-c' is passed.
+            -c      act upon current branch only
+            -ff     don't just check, try to fast forward also
+            -md     max diff (default 100; see below for details)
+            -h      help
+    'max diff':
+        hide output for two branches different by more than so many commits
 
-Perhaps such an example would be useful for the git-svn(1) manpage,
-too.  Any ideas for where to add such a note, and how it should be
-worded?  (Of course, if you can phrase such an idea in patch form,
-that would be the most convenient.)
+My usual usage is just "git bc -c", which may give me:
 
-Hope that helps,
-Jonathan
+       1        pu...origin/pu
+       1        pu...github/pu
+      13        pu...master
+           5    pu...q
+           7    pu...vrs
+
+This quickly tells me my 'pu' is one ahead of both my own
+gitolite server as well as github's copy, and that it is 13
+commits ahead of master.  The (unreleased and frequently
+rebased) feature branches 'q' and 'vrs' are ahead of pu, which
+means a rebase is not pending.  Without the "-c" I may see the
+status of master versus its own upstream and other remotes,
+etc., also.
+
+The purpose of the max diff limit (default 100) is to hide, for
+example, the pair 'master' and 'man' from the git.git repo.
+Otherwise you'd see something like:
+
+    27249 973    master...man
+
+which is pretty meaningless.  The sum of those two numbers
+should be less than the max.
+
+"git bc -ff" will attempt to fast forward all selected branches
+that are ancestors of their respective upstreams.  The current
+branch will not be ff-ed if the tree is dirty, since you can't
+do this by 'git branch -f'; it has to be an actual merge
+command.
+
+The output is not (currently) pipable to other programs because
+I use colors (obtained from 'git config --get-color') and
+currently it is not conditional on STDOUT being a tty.
+
+--+QahgC5+KEYLbs62
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIcBAEBAgAGBQJO7GqBAAoJEKRCkIUIgjelCsEP/1AK1w3i1IiKRKNb7HxNT+UN
+aejuATL2yEuas/5un2foJjGJENr7+RkOD1Jj7xQOndVVcojl/U9el9F7XqAyMdJH
+hqAJSL2Wg8b6Gz2+uwNZ0yeZ6Yjo+z0h/XY0M+0WXnaOKV3zSQWiGWk5pkrsNsO7
+n0XZMXPJZaPkjy83bq7wHcDiCP/f379Ho8n8XeYmRIdZj8IgZ4w1z+09KUG0oTrD
+2Kt4bq0hEpTkMvcoeJ68VTE4mfUsFRm3pOYeoTcnMrIp0hjbdoMGR/EKJ6Z8aGLY
+wLpviU46ruxesvCOgtGO6wIDMqz0qLZMNHSR+NrkzPJU8A6bf5NvrLRnwwwX5N6e
+4EeHgk6sQhzFLIY39PhIpAwe3dDb78dYVpIhMw/KLENi8NB4jMkB5GY26S8vjYy0
++bAIBw6IMVOkuh/315h4x3jrhyiH7XDkdaQMnUYKhqhslIU9Cnz1KdFtztLqZ8k7
+CyZJx+di8f2J4LqkA6E02M73EzTI3CQ93ZKjzMGEYiGX4Ttp9sKT3D6st88+1Plo
+UcVi6GQCApIvpYQ0QtdrX/WKOtkFLKSYrTz3m2dwBg6mVAx6r0Al88zQVhG4gzWR
+6r5+UH8lfheqrhfQZXXXRKHaMsq0hgFsRwO9Kn34VQswoUp9ladWv6u7+V7YL5q7
+2RQ6FuJeiP6vFId3jzTt
+=dX2+
+-----END PGP SIGNATURE-----
+
+--+QahgC5+KEYLbs62--
