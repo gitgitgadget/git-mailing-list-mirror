@@ -1,105 +1,76 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCHv3 02/11] git-p4: test debug macro
-Date: Sun, 18 Dec 2011 09:06:33 -0500
-Message-ID: <20111218140633.GB16487@padd.com>
-References: <1324147942-21558-1-git-send-email-pw@padd.com>
- <1324147942-21558-3-git-send-email-pw@padd.com>
- <4EED1B06.80007@diamand.org>
- <20111218013651.GA18735@padd.com>
- <20111218032238.GA6368@elie.hsd1.il.comcast.net>
+From: DeMarcus <demarcus@hotmail.com>
+Subject: Re: How can I do an automatic stash when doing a checkout?
+Date: Sun, 18 Dec 2011 16:10:41 +0100
+Message-ID: <jckvpk$i8v$1@dough.gmane.org>
+References: <jcki8u$oip$1@dough.gmane.org> <84ty4ycdcc.fsf@cenderis.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Luke Diamand <luke@diamand.org>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 18 15:06:46 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 18 16:11:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RcHO1-0000M4-VY
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Dec 2011 15:06:46 +0100
+	id 1RcIOa-0000g3-Gr
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Dec 2011 16:11:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751847Ab1LROGi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Dec 2011 09:06:38 -0500
-Received: from honk.padd.com ([74.3.171.149]:44016 "EHLO honk.padd.com"
+	id S1751557Ab1LRPLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Dec 2011 10:11:00 -0500
+Received: from lo.gmane.org ([80.91.229.12]:49692 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751736Ab1LROGg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Dec 2011 09:06:36 -0500
-Received: from arf.padd.com (unknown [50.55.144.134])
-	by honk.padd.com (Postfix) with ESMTPSA id EF60B339A;
-	Sun, 18 Dec 2011 06:06:35 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 929C0313F0; Sun, 18 Dec 2011 09:06:33 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <20111218032238.GA6368@elie.hsd1.il.comcast.net>
+	id S1751127Ab1LRPK7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Dec 2011 10:10:59 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RcIO9-0000U0-SR
+	for git@vger.kernel.org; Sun, 18 Dec 2011 16:10:57 +0100
+Received: from c83-251-142-66.bredband.comhem.se ([83.251.142.66])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 18 Dec 2011 16:10:57 +0100
+Received: from demarcus by c83-251-142-66.bredband.comhem.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 18 Dec 2011 16:10:57 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: c83-251-142-66.bredband.comhem.se
+User-Agent: Mozilla/5.0 (Windows NT 6.0; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <84ty4ycdcc.fsf@cenderis.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187423>
 
-Call this from a test to have it pause and wait for you to
-investigate.  It prints out its current directory and the
-P4 environment variables.  It waits for ctrl-c before continuing
-the test.
+>> This is not how it works with git, where when I want to change branch
+>> I have to do a git checkout. However, that leaves all the modified and
+>> untracked files in the directory of the branch I switched to. This is
+>> seldom the behavior I want.
+>>
+>> With the git stash command I can clean the directory the way I want
+>> but the stash command is not connected to a particular branch.
+>>
+>> Is there a way to have git checkout do an automatic stash when doing a
+>> checkout to another branch, and then do an automatic git stash apply
+>> with the correct stash when changing back to the previous branch
+>> again?
+>
+> You probably don't want to use stash. Just commit whatever partial work
+> you've done.
+>
 
-Signed-off-by: Pete Wyckoff <pw@padd.com>
----
-jrnieder@gmail.com wrote on Sat, 17 Dec 2011 21:26 -0600:
-> Pete Wyckoff wrote:
-> 
-> > +	# 2 is SIGINT, ash/dash does not know symbolic names
-> > +	trap echo 2
-> 
-> 'trap "$cmd" INT' works, and it's even in POSIX. ;)
-> http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#trap
+It feels strange doing a commit of partial work. Some of the files may 
+not even be supposed to be checked in.
 
-Nicer to use the constant.  It works on both.  Unfortunately
-ash has other issues regarding handling ctrl-c from subprocesses.
-Point this out in the comments.
+> You could also just checkout different branches in different
+> directories. Nothing wrong with doing that in git.
+>
 
- t/lib-git-p4.sh |   31 +++++++++++++++++++++++++++++++
- 1 files changed, 31 insertions(+), 0 deletions(-)
+Ok thanks, that would give me the same behavior as I have today.
 
-diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
-index a870f9a..4c30960 100644
---- a/t/lib-git-p4.sh
-+++ b/t/lib-git-p4.sh
-@@ -72,3 +72,34 @@ kill_p4d() {
- cleanup_git() {
- 	rm -rf "$git"
- }
-+
-+#
-+# This is a handy tool when developing or debugging tests.  Use
-+# it inline to pause the script, perhaps like this:
-+#
-+#	"$GITP4" clone ... &&
-+#	(
-+#		cd "$git" &&
-+#		debug &&
-+#		git log --oneline >lines &&
-+#		...
-+#
-+# Go investigate when it pauses, then hit ctrl-c to continue the
-+# test.  The other tests will run, and p4d will be cleaned up nicely.
-+#
-+# Note that the directory is deleted and created for every test run,
-+# so you have to do the "cd" again.
-+#
-+# The continuation feature only works in shells that do not propagate
-+# a child-caught ctrl-c, namely bash.  With ash, the entire test run
-+# will exit on the ctrl-c.
-+#
-+debug() {
-+	echo "*** Debug me, hit ctrl-c when done.  Useful shell commands:"
-+	echo cd \"$(pwd)\"
-+	echo export P4PORT=$P4PORT P4CLIENT=$P4CLIENT
-+	trap "echo" INT
-+	sleep $((3600 * 24 * 30))
-+	trap - INT
-+}
-+
--- 
-1.7.8.285.gb668d
+However, I can see some benefits with have everything in the same 
+directory as git allows compared to other VCSs. And since the stashing 
+feature is already there in git, it would be nice if the git checkout 
+with some flag could use stashing automatically.
