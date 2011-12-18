@@ -1,59 +1,76 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv2 02/11] git-p4: test debug macro
-Date: Sat, 17 Dec 2011 21:26:17 -0600
-Message-ID: <20111218032238.GA6368@elie.hsd1.il.comcast.net>
-References: <1324147942-21558-1-git-send-email-pw@padd.com>
- <1324147942-21558-3-git-send-email-pw@padd.com>
- <4EED1B06.80007@diamand.org>
- <20111218013651.GA18735@padd.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: BUG: Git command causes crash
+Date: Sun, 18 Dec 2011 00:03:22 -0500
+Message-ID: <20111218050322.GA1787@sigill.intra.peff.net>
+References: <CAOgd6zFr5LorTK6X5o6NQE3L61KhaUZG9tX4LEB4_Na_YKPPpA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Luke Diamand <luke@diamand.org>, git@vger.kernel.org
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Sun Dec 18 04:26:52 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ryan O'Hara <minitech.me@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 18 06:03:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rc7Om-0008Jp-1T
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Dec 2011 04:26:52 +0100
+	id 1Rc8uJ-0001du-M2
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Dec 2011 06:03:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751430Ab1LRD0b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Dec 2011 22:26:31 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:45690 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751315Ab1LRD03 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Dec 2011 22:26:29 -0500
-Received: by ghbz12 with SMTP id z12so3026242ghb.19
-        for <git@vger.kernel.org>; Sat, 17 Dec 2011 19:26:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=6uIAp2IoUNGGTScoPqHtnWzUVjWgWIumSdD3Wg0eVM4=;
-        b=g0vb/ppnIxmuVXHFK+R9HcgPYprHliO9gjOuBm9MZfSKVqcsOV5AYSA/VyXtuNKAli
-         jOp0sRdM7TGiAOrx91EiOfOKsJRx6ZklZXeyCBHvpghQphDn6GNuydpS3Hs2VJlWy722
-         cIn+Pz53x1rux3MD4ZKT1UtRXmkT1EbK2LhfI=
-Received: by 10.236.152.102 with SMTP id c66mr73587yhk.75.1324178789356;
-        Sat, 17 Dec 2011 19:26:29 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id w68sm22435710yhe.14.2011.12.17.19.26.27
-        (version=SSLv3 cipher=OTHER);
-        Sat, 17 Dec 2011 19:26:28 -0800 (PST)
+	id S1750876Ab1LRFD2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Dec 2011 00:03:28 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45225
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750695Ab1LRFDY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Dec 2011 00:03:24 -0500
+Received: (qmail 18325 invoked by uid 107); 18 Dec 2011 05:10:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 18 Dec 2011 00:10:06 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 18 Dec 2011 00:03:22 -0500
 Content-Disposition: inline
-In-Reply-To: <20111218013651.GA18735@padd.com>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+In-Reply-To: <CAOgd6zFr5LorTK6X5o6NQE3L61KhaUZG9tX4LEB4_Na_YKPPpA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187412>
 
-Pete Wyckoff wrote:
+On Sat, Dec 17, 2011 at 07:13:53PM -0800, Ryan O'Hara wrote:
 
-> +	# 2 is SIGINT, ash/dash does not know symbolic names
-> +	trap echo 2
+> On Git for Windows (MinGW), at least, this command causes git to crash:
+> 
+> git commit -a --no-message --dry-run
 
-'trap "$cmd" INT' works, and it's even in POSIX. ;)
-http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#trap
+On Linux, too, using just "git commit --no-message" (whether there is
+something to commit or not). This fixes it for me.
+
+-- >8 --
+Subject: [PATCH] commit: initialize static strbuf
+
+Strbufs cannot rely on static all-zero initialization;
+instead, they must use STRBUF_INIT to point to the
+"slopbuf".
+
+Without this patch, "git commit --no-message" segfaults
+reliably.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/commit.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/builtin/commit.c b/builtin/commit.c
+index d0f27f9..336faff 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -104,7 +104,7 @@
+ static int use_editor = 1, include_status = 1;
+ static int show_ignored_in_status;
+ static const char *only_include_assumed;
+-static struct strbuf message;
++static struct strbuf message = STRBUF_INIT;
+ 
+ static int null_termination;
+ static enum {
+-- 
+1.7.8.rc3.14.gd2470
