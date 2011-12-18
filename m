@@ -1,66 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Escape character for .gitconfig
-Date: Sun, 18 Dec 2011 04:51:20 -0500
-Message-ID: <20111218095120.GA2290@sigill.intra.peff.net>
-References: <4EEC6A9D.1060005@icefield.yk.ca>
- <20111217105806.GB23935@sigill.intra.peff.net>
- <4EED9BE5.8060600@icefield.yk.ca>
+From: DeMarcus <demarcus@hotmail.com>
+Subject: How can I do an automatic stash when doing a checkout?
+Date: Sun, 18 Dec 2011 12:19:56 +0100
+Message-ID: <jcki8u$oip$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Erik Blake <erik@icefield.yk.ca>
-X-From: git-owner@vger.kernel.org Sun Dec 18 10:51:29 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 18 12:25:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RcDOz-0002JK-0A
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Dec 2011 10:51:29 +0100
+	id 1RcEsD-00070H-Ik
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Dec 2011 12:25:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751517Ab1LRJvY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Dec 2011 04:51:24 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45296
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751496Ab1LRJvX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Dec 2011 04:51:23 -0500
-Received: (qmail 20474 invoked by uid 107); 18 Dec 2011 09:58:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 18 Dec 2011 04:58:05 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 18 Dec 2011 04:51:20 -0500
-Content-Disposition: inline
-In-Reply-To: <4EED9BE5.8060600@icefield.yk.ca>
+	id S1751105Ab1LRLZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Dec 2011 06:25:24 -0500
+Received: from lo.gmane.org ([80.91.229.12]:45402 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751371Ab1LRLZX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Dec 2011 06:25:23 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RcEre-0006RC-CG
+	for git@vger.kernel.org; Sun, 18 Dec 2011 12:25:10 +0100
+Received: from c83-251-142-66.bredband.comhem.se ([83.251.142.66])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 18 Dec 2011 12:25:10 +0100
+Received: from demarcus by c83-251-142-66.bredband.comhem.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 18 Dec 2011 12:25:10 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: c83-251-142-66.bredband.comhem.se
+User-Agent: Mozilla/5.0 (Windows NT 6.0; rv:8.0) Gecko/20111105 Thunderbird/8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187418>
 
-On Sun, Dec 18, 2011 at 08:53:09AM +0100, Erik Blake wrote:
+Hi,
 
-> That did the trick for this git newb. For the record, I had tried \(,
-> /(, double- and single-quoting the entire path (note that git config
-> --global had removed the quotes that were originally around the
-> string). Did not think of "nested" quotes.
+I'm new to git and currently I'm working with SVN and there it's a bit 
+messier doing branching but once I've branched then all my development 
+there is completely separated from any other branch. When I want to work 
+on another branch I just change directory.
 
-Yeah, if you are using "git config" to enter it on the command line,
-you'll have to put an extra layer of quoting around it to pass it
-through the shell you're currently running. That's why I showed the
-example as the actual config file text. :)
+This is not how it works with git, where when I want to change branch I 
+have to do a git checkout. However, that leaves all the modified and 
+untracked files in the directory of the branch I switched to. This is 
+seldom the behavior I want.
 
-> Now, however, I have a different problem in that notepad++ is somehow
-> signalling git that editing is complete before I even get a chance to
-> edit the file. I am trying the command
-> >git commit --amend
+With the git stash command I can clean the directory the way I want but 
+the stash command is not connected to a particular branch.
 
-Yep. This is a general problem with editors that open files in an
-existing session. The only signal git has of the user being done editing
-is when when the editor process exits. For many editors, there is an
-option or other trick for sticking around until the file is closed.
+Is there a way to have git checkout do an automatic stash when doing a 
+checkout to another branch, and then do an automatic git stash apply 
+with the correct stash when changing back to the previous branch again?
 
-I know nothing about notepad++, but a quick google turned up the
-"-multiInst" option, which would avoid attaching to the existing
-instance. That might work for you.
 
--Peff
+Thanks,
+Daniel
