@@ -1,116 +1,169 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 02/11] git-p4: test debug macro
-Date: Sun, 18 Dec 2011 13:48:11 -0800
-Message-ID: <7vwr9to8kk.fsf@alter.siamese.dyndns.org>
-References: <1324147942-21558-1-git-send-email-pw@padd.com>
- <1324147942-21558-3-git-send-email-pw@padd.com> <4EED1B06.80007@diamand.org>
- <20111218013651.GA18735@padd.com>
- <20111218032238.GA6368@elie.hsd1.il.comcast.net>
- <20111218140633.GB16487@padd.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFD] Handling of non-UTF8 data in gitweb
+Date: Sun, 18 Dec 2011 23:00:58 +0100
+Message-ID: <201112182300.59409.jnareb@gmail.com>
+References: <201112041709.32212.jnareb@gmail.com> <7vehwhcj3q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Luke Diamand <luke@diamand.org>, git@vger.kernel.org
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Sun Dec 18 22:48:21 2011
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	=?iso-8859-1?q?J=FCrgen_Kreileder?= <jk@blackdown.de>,
+	John Hawley <warthog9@kernel.org>,
+	Ismail =?iso-8859-1?q?D=F6nmez?= <ismail@pardus.org.tr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 18 23:01:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RcOaj-0002Ud-8R
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Dec 2011 22:48:21 +0100
+	id 1RcOn8-0006Uv-DM
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Dec 2011 23:01:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751965Ab1LRVsQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Dec 2011 16:48:16 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42098 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751198Ab1LRVsP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Dec 2011 16:48:15 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 179F77D63;
-	Sun, 18 Dec 2011 16:48:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FTuETwWFapFuiIt3L/Y1Z8V7Q7s=; b=mcCqrT
-	UfnQbt4eggkxphCJUetm3sApqddHv6HAVQWQZ9bgl1ldVsvsOTnGkD7ppKx5P2bh
-	ZTVncOvUyQFdX8zohudD038h2XtIBq8ugUET1Nv6ALlGsst2eIHadjP88vBNGD1P
-	G1IUnxNWPVMlPAlYb5G2m9aHMQa4MKjt4CRDg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RfPB+/ROns+49+/taATPgt/pfy8+xokO
-	dwT8gYp3UVbolFusUSly2y9GjXNLxUYRyo9FCgDmz7mN7l+M1S8IaxKsYRjh4dkF
-	P0nz8kdMgeu2bDvgjnaQis2aDa117wIaUB73suot3gMeqegTu3R09MslLG3BtdUK
-	fWLAN04EvNg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E48D7D62;
-	Sun, 18 Dec 2011 16:48:14 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7F8D37D61; Sun, 18 Dec 2011
- 16:48:13 -0500 (EST)
-In-Reply-To: <20111218140633.GB16487@padd.com> (Pete Wyckoff's message of
- "Sun, 18 Dec 2011 09:06:33 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FC408146-29C1-11E1-A40B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751892Ab1LRWBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Dec 2011 17:01:05 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:46037 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751222Ab1LRWBD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Dec 2011 17:01:03 -0500
+Received: by eekc4 with SMTP id c4so4901994eek.19
+        for <git@vger.kernel.org>; Sun, 18 Dec 2011 14:01:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=HAzdhmwSFljNjsD+R6THlgJNLuXlv3wV9BuEWuAHIwo=;
+        b=Wq+wBRIT8LhtbxebcriNDlKFFcojY49TtuuzXo/7sZgbwNAq1F1gSIIKAJA/b3z9rC
+         aZPWCQ3vvJ9C4ZAHOKl9bXfTWi1zefoJVH9wC+tQLd1WnlEhRYSdL9Ua8ivImh+xxgJ5
+         NOCqT6kGBLRZYSw9M1amnPdriA0rrWP0evbSg=
+Received: by 10.14.15.99 with SMTP id e75mr397246eee.67.1324245662297;
+        Sun, 18 Dec 2011 14:01:02 -0800 (PST)
+Received: from [192.168.1.13] (aehn116.neoplus.adsl.tpnet.pl. [79.186.195.116])
+        by mx.google.com with ESMTPS id z43sm35912940eef.7.2011.12.18.14.00.58
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 18 Dec 2011 14:00:59 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vehwhcj3q.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187428>
 
-Pete Wyckoff <pw@padd.com> writes:
+On Wed, 7 Dec 2011, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > But doing this would change gitweb behavior.  Currently when 
+> > encountering something (usually line of output) that is not valid 
+> > UTF-8, we decode it (to UTF-8) using $fallback_encoding, by default
+> > 'latin1'.  Note however that this value is per gitweb installation,
+> > not per repository.
+> 
+> I think we added and you acked 00f429a (gitweb: Handle non UTF-8 text
+> better, 2007-06-03) for a good reason, and I think the above argues that
+> whatever issue the commit tried to address is a non-issue. Is it really
+> true?
 
-> Call this from a test to have it pause and wait for you to
-> investigate.  It prints out its current directory and the
-> P4 environment variables.  It waits for ctrl-c before continuing
-> the test.
->
-> Signed-off-by: Pete Wyckoff <pw@padd.com>
-> ---
-...
-> diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
-> index a870f9a..4c30960 100644
-> --- a/t/lib-git-p4.sh
-> +++ b/t/lib-git-p4.sh
-> @@ -72,3 +72,34 @@ kill_p4d() {
->  cleanup_git() {
->  	rm -rf "$git"
->  }
-> +
-> +#
-> +# This is a handy tool when developing or debugging tests.  Use
-> +...
-> +debug() {
-> +	echo "*** Debug me, hit ctrl-c when done.  Useful shell commands:"
-> +	echo cd \"$(pwd)\"
-> +	echo export P4PORT=$P4PORT P4CLIENT=$P4CLIENT
-> +	trap "echo" INT
-> +	sleep $((3600 * 24 * 30))
-> +	trap - INT
-> +}
-> +
+Actually... the change in 
 
-You may have found this handy yourself, but I would rather not to see it
-here in the current form for multiple reasons.
+  00f429a (gitweb: Handle non UTF-8 text better, 2007-06-03)
 
- - Why "ctrl-c"? You are not even spawning shell from here but are having
-   the user interact with this state in the middle of a test from another
-   shell, no?
+worked correctly, but since 
 
-   Why not "When done, type <RET>" and have a "read junk" or something
-   instead? That would be a lot simpler and you do not have to worry about
-   portability with many lines of comments.
+  e5d3de5 (gitweb: use Perl built-in utf8 function for UTF-8 decoding., 2007-12-04)
 
-   An alternative is to spawn an interactive shell here, and change the
-   "Debug me" comment to say "ctrl-d when done".
+it was changed to a NON-WORKING version - and *nobody* protested.
 
- - This is not linked to the generic "debug" option "txxxx-name.sh -d".
-   Shouldn't you be extending test_debug so that it can go interactive,
-   give customized comments&insns (i.e. "cd $here" may be useful for test
-   scripts outside testing p4, but "P4PORT=..." would not be, so the user
-   of test_debug in t9800-git-p4.* needs customizability of the message).
+   sub to_utf8 {
+   	my $str = shift;
+  -	my $res;
+  -	eval { $res = decode_utf8($str, Encode::FB_CROAK); };
+  -	if (defined $res) {
+  -		return $res;
+  +	if (utf8::valid($str)) {
+  +		utf8::decode($str);
+  +		return $str;
+   	} else {
+   		return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
+   	}
 
-Also could we please rename p4 related tests in t/t98* series so that it
-is clear that they are about git-p4 from "ls t/" output (i.e. have them
-all have "git-p4" in their names)?
+Well, it works for utf8 and latin1 _only_ (with $fallback_encoding being
+set to 'latin1' by default), and for latin1 by historical accident... that
+might be why nobody noticed.  $fallback_encoding != 'latin1' or 'utf8'
+didn't work.
+
+utf8::valid(STRING) is an internal function that tests whether STRING is
+in a consistent state regarding UTF-8.  It returns true is well-formed
+UTF-8 and has the UTF-8 flag on _or_ if string is held as bytes (both
+these states are 'consistent').  For gitweb the second option was true.
+
+Note that utf8:decode(STRING) returns false if STRING is invalid as UTF-8.
+
+What makes it all work is the fact that utf8:decode(STRING) turns on UTF-8
+flag only if source string is valid UTF-8 and contains multi-byte UTF-8
+characters... and that if string doesn't have UTF-8 flag set it is treated
+as in native Perl encoding, i.e. 'latin1' / 'iso-8859-1' (unless it is EBCDIC).
+It is ':utf8' layer that actually convert 'latin1' to 'utf8'.
+
+-- >8 --
+Subject: [PATCH] gitweb: Fix fallback mode of to_utf8 subroutine
+
+e5d3de5 (gitweb: use Perl built-in utf8 function for UTF-8 decoding.,
+2007-12-04) was meant to make gitweb faster by using Perl's internals
+(see subsection "Messing with Perl's Internals" in Encode(3pm) manpage)
+
+Simple benchmark confirms that (old = 00f429a, new = this version):
+
+        old  new
+  old    -- -65%
+  new  189%   --
+
+Unfortunately it made fallback mode of to_utf8 do not work...  except
+for default value 'latin1' of $fallback_encoding ('latin1' is Perl
+native encoding), which is why it was not noticed for such long time.
+
+utf8::valid(STRING) is an internal function that tests whether STRING
+is in a _consistent state_ regarding UTF-8.  It returns true is
+well-formed UTF-8 and has the UTF-8 flag on _*or*_ if string is held
+as bytes (both these states are 'consistent').  For gitweb the second
+option was true, as output from git commands is opened without ':utf8'
+layer.
+
+What made it work at all for STRING in 'latin1' encoding is the fact
+that utf8:decode(STRING) turns on UTF-8 flag only if source string is
+valid UTF-8 and contains multi-byte UTF-8 characters... and that if
+string doesn't have UTF-8 flag set it is treated as in native Perl
+encoding, i.e.  'latin1' / 'iso-8859-1' (unless native encoding it is
+EBCDIC ;-)).  It was ':utf8' layer that actually converted 'latin1'
+(no UTF-8 flag == native == 'latin1) to 'utf8'.
+
+
+Let's make use of the fact that utf8:decode(STRING) returns false if
+STRING is invalid as UTF-8 to check whether to enable fallback mode.
+
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+I'm sorry for overly wordy commit message...
+
+ gitweb/gitweb.perl |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index d24763b..75b0970 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1443,8 +1443,7 @@ sub validate_refname {
+ sub to_utf8 {
+ 	my $str = shift;
+ 	return undef unless defined $str;
+-	if (utf8::valid($str)) {
+-		utf8::decode($str);
++	if (utf8::valid($str) && utf8::decode($str)) {
+ 		return $str;
+ 	} else {
+ 		return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
+-- 
+1.7.6
