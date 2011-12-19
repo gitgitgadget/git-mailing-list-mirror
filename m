@@ -1,102 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCHv2 2/2] attr: drop C/C++ default extension mapping
-Date: Mon, 19 Dec 2011 10:57:37 -0500
-Message-ID: <20111219155737.GB19829@sigill.intra.peff.net>
-References: <20111217033808.GA8683@elie.hsd1.il.comcast.net>
+From: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>
+Subject: Re: Escape character for .gitconfig
+Date: Mon, 19 Dec 2011 16:59:21 +0100
+Message-ID: <4EEF5F59.8030802@dirk.my1.cc>
+References: <4EEC6A9D.1060005@icefield.yk.ca> <20111217105806.GB23935@sigill.intra.peff.net> <4EED9BE5.8060600@icefield.yk.ca> <20111218095120.GA2290@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 19 16:57:57 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Erik Blake <erik@icefield.yk.ca>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 19 16:59:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rcfb4-0006SP-Et
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 16:57:50 +0100
+	id 1Rcfcg-00079S-JC
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 16:59:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752277Ab1LSP5m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Dec 2011 10:57:42 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45885
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752209Ab1LSP5k (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Dec 2011 10:57:40 -0500
-Received: (qmail 32109 invoked by uid 107); 19 Dec 2011 16:04:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 19 Dec 2011 11:04:23 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Dec 2011 10:57:37 -0500
-Content-Disposition: inline
-In-Reply-To: <20111217033808.GA8683@elie.hsd1.il.comcast.net>
+	id S1751713Ab1LSP71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Dec 2011 10:59:27 -0500
+Received: from smtprelay05.ispgateway.de ([80.67.31.100]:56876 "EHLO
+	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751517Ab1LSP7Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Dec 2011 10:59:25 -0500
+Received: from [84.176.42.34] (helo=[192.168.2.100])
+	by smtprelay05.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1RcfcY-0000sx-Ir; Mon, 19 Dec 2011 16:59:22 +0100
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <20111218095120.GA2290@sigill.intra.peff.net>
+X-Df-Sender: NzU3NjQ2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187453>
 
-The point of this mapping is largely to get funcname
-support. However, there's been some indication that our C
-funcname pattern produces worse results than the default
-pattern, so let's leave it unmapped for now.
+Am 18.12.2011 10:51 schrieb Jeff King:
+> On Sun, Dec 18, 2011 at 08:53:09AM +0100, Erik Blake wrote:
+> 
+[...]
+>> Now, however, I have a different problem in that notepad++ is somehow
+>> signalling git that editing is complete before I even get a chance to
+>> edit the file. I am trying the command
+>>> git commit --amend
+[...]
+> 
+> I know nothing about notepad++, but a quick google turned up the
+> "-multiInst" option, which would avoid attaching to the existing
+> instance. That might work for you.
+> 
+> -Peff
 
-If and when it improves, this commit can be reverted.
+Jeff is right! I also use notepad++ and have set
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Obviously this could just be squashed into the first patch. But I think
-I'd rather leave a more explicit note in the history.
+export GIT_EDITOR='notepad++ -multiInst'
 
-When writing the justification for this commit message, though, I did
-notice that my reasoning is slightly flawed. The complaint is that the C
-funcname pattern sucks, and therefore a user who hasn't configured
-anything has a worse experience with patch 1. But enabling that sucky
-experience is a two-step process:
+in my .bashrc (msysGit). And btw: notepad++ DOES handle cr/lf. Look at
+the "Format" menu.
 
-  1. map *.c, etc to the diff driver "cpp"
-
-  2. diff driver "cpp" has a funcname (which is reportedly bad)
-
-Since this series is about tweaking extension mapping, the natural thing
-to do is not enable (1).
-
-But when you think about it, if our funcname pattern is bad, shouldn't
-preventing (2) be the right thing? That is, if our funcname pattern is
-really worse than the default language-agnostic match, wouldn't we be
-doing everybody a service to simply remove the builtin
-diff.cpp.xfuncname pattern?
-
-Then you're not only not causing a regression for users who haven't
-configured anything; you're actively helping people who have set
-"diff=cpp" themselves.
-
-Of course you're causing a regression to people who _like_ the current
-diff.cpp.xfuncname. But if they are so widespread, then why is there so
-much opposition to turning it on by default? My theory is that people
-aren't actually using the builtin diff.cpp.xfuncname.
-
- attr.c |    6 ------
- 1 files changed, 0 insertions(+), 6 deletions(-)
-
-diff --git a/attr.c b/attr.c
-index 10713f3..2f33128 100644
---- a/attr.c
-+++ b/attr.c
-@@ -316,12 +316,6 @@ static void free_attr_elem(struct attr_stack *e)
- 	"*.rb diff=ruby",
- 	"*.bib diff=bibtex",
- 	"*.tex diff=tex",
--	"*.c diff=cpp",
--	"*.cc diff=cpp",
--	"*.cxx diff=cpp",
--	"*.cpp diff=cpp",
--	"*.h diff=cpp",
--	"*.hpp diff=cpp",
- 	"*.cs diff=csharp",
- 	"*.[Ff] diff=fortran",
- 	"*.[Ff][0-9][0-9] diff=fortran",
--- 
-1.7.8.rc2.38.gd9625
+    Dirk
