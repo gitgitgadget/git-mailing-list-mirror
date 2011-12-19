@@ -1,62 +1,66 @@
-From: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>
-Subject: Re: Escape character for .gitconfig
-Date: Mon, 19 Dec 2011 16:59:21 +0100
-Message-ID: <4EEF5F59.8030802@dirk.my1.cc>
-References: <4EEC6A9D.1060005@icefield.yk.ca> <20111217105806.GB23935@sigill.intra.peff.net> <4EED9BE5.8060600@icefield.yk.ca> <20111218095120.GA2290@sigill.intra.peff.net>
+From: "Aneesh Kumar K.V" <aneesh.kumar@linux.vnet.ibm.com>
+Subject: Re: Re* How to generate pull-request with info of signed tag
+Date: Mon, 19 Dec 2011 21:40:37 +0530
+Message-ID: <87iplch79e.fsf@linux.vnet.ibm.com>
+References: <874nx1korf.fsf@linux.vnet.ibm.com> <7vbor8jw0h.fsf@alter.siamese.dyndns.org> <871us3l45o.fsf@linux.vnet.ibm.com> <7viplfdlpb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Erik Blake <erik@icefield.yk.ca>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Dec 19 16:59:31 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 19 17:13:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rcfcg-00079S-JC
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 16:59:30 +0100
+	id 1Rcfqb-0005oR-Iu
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 17:13:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751713Ab1LSP71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Dec 2011 10:59:27 -0500
-Received: from smtprelay05.ispgateway.de ([80.67.31.100]:56876 "EHLO
-	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751517Ab1LSP7Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Dec 2011 10:59:25 -0500
-Received: from [84.176.42.34] (helo=[192.168.2.100])
-	by smtprelay05.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1RcfcY-0000sx-Ir; Mon, 19 Dec 2011 16:59:22 +0100
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <20111218095120.GA2290@sigill.intra.peff.net>
-X-Df-Sender: NzU3NjQ2
+	id S1751706Ab1LSQNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Dec 2011 11:13:49 -0500
+Received: from e3.ny.us.ibm.com ([32.97.182.143]:47844 "EHLO e3.ny.us.ibm.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751204Ab1LSQNs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Dec 2011 11:13:48 -0500
+Received: from /spool/local
+	by e3.ny.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted
+	for <git@vger.kernel.org> from <aneesh.kumar@linux.vnet.ibm.com>;
+	Mon, 19 Dec 2011 11:13:47 -0500
+Received: from d01relay03.pok.ibm.com (9.56.227.235)
+	by e3.ny.us.ibm.com (192.168.1.103) with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted;
+	Mon, 19 Dec 2011 11:11:13 -0500
+Received: from d01av02.pok.ibm.com (d01av02.pok.ibm.com [9.56.224.216])
+	by d01relay03.pok.ibm.com (8.13.8/8.13.8/NCO v10.0) with ESMTP id pBJGB6Lh278912
+	for <git@vger.kernel.org>; Mon, 19 Dec 2011 11:11:06 -0500
+Received: from d01av02.pok.ibm.com (loopback [127.0.0.1])
+	by d01av02.pok.ibm.com (8.14.4/8.13.1/NCO v10.0 AVout) with ESMTP id pBJGAiBi021181
+	for <git@vger.kernel.org>; Mon, 19 Dec 2011 14:10:44 -0200
+Received: from skywalker.linux.vnet.ibm.com ([9.80.64.20])
+	by d01av02.pok.ibm.com (8.14.4/8.13.1/NCO v10.0 AVin) with ESMTP id pBJGAda6020666;
+	Mon, 19 Dec 2011 14:10:42 -0200
+In-Reply-To: <7viplfdlpb.fsf@alter.siamese.dyndns.org>
+User-Agent: Notmuch/0.10.2+102~g61445d1 (http://notmuchmail.org) Emacs/23.3.1 (x86_64-pc-linux-gnu)
+x-cbid: 11121916-8974-0000-0000-000004654509
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187454>
 
-Am 18.12.2011 10:51 schrieb Jeff King:
-> On Sun, Dec 18, 2011 at 08:53:09AM +0100, Erik Blake wrote:
+On Sat, 17 Dec 2011 11:47:44 -0800, Junio C Hamano <gitster@pobox.com> wrote:
+> "Aneesh Kumar K.V" <aneesh.kumar@linux.vnet.ibm.com> writes:
 > 
-[...]
->> Now, however, I have a different problem in that notepad++ is somehow
->> signalling git that editing is complete before I even get a chance to
->> edit the file. I am trying the command
->>> git commit --amend
-[...]
+> > Tested-by: Aneesh Kumar K.V <aneesh.kumar@linux.vnet.ibm.com>
+> >
+> > -aneesh
 > 
-> I know nothing about notepad++, but a quick google turned up the
-> "-multiInst" option, which would avoid attaching to the existing
-> instance. That might work for you.
-> 
-> -Peff
+> Thanks.
 
-Jeff is right! I also use notepad++ and have set
+It would be nice to get the below working
 
-export GIT_EDITOR='notepad++ -multiInst'
+git fetch git-url tag remote-tag-name:local-namespace/tag-name
 
-in my .bashrc (msysGit). And btw: notepad++ DOES handle cr/lf. Look at
-the "Format" menu.
+That way we can make sure before merging i can cut-paste that url and
+the local tag name i wish to store this to. And then do a git-merge.
 
-    Dirk
+-aneesh
