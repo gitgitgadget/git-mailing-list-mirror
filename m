@@ -1,69 +1,53 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Pushing with --mirror over HTTP?
-Date: Mon, 19 Dec 2011 12:12:11 -0500
-Message-ID: <20111219171211.GA20844@sigill.intra.peff.net>
-References: <20068.19089.303108.950233@winooski.ccs.neu.edu>
- <20110907213950.GI13364@sigill.intra.peff.net>
- <20072.12104.965815.994761@winooski.ccs.neu.edu>
+From: Holger Hellmuth <hellmuth@ira.uka.de>
+Subject: Re: How can I do an automatic stash when doing a checkout?
+Date: Mon, 19 Dec 2011 18:24:58 +0100
+Message-ID: <4EEF736A.4070802@ira.uka.de>
+References: <jcki8u$oip$1@dough.gmane.org> <84ty4ycdcc.fsf@cenderis.demon.co.uk> <jckvpk$i8v$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Eli Barzilay <eli@barzilay.org>
-X-From: git-owner@vger.kernel.org Mon Dec 19 18:12:20 2011
+To: DeMarcus <demarcus@hotmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 19 18:24:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rcgl9-0000A2-OK
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 18:12:20 +0100
+	id 1Rcgwo-0006Kg-4f
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 18:24:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752424Ab1LSRMQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Dec 2011 12:12:16 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45909
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751925Ab1LSRMO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Dec 2011 12:12:14 -0500
-Received: (qmail 397 invoked by uid 107); 19 Dec 2011 17:18:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 19 Dec 2011 12:18:57 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Dec 2011 12:12:11 -0500
-Content-Disposition: inline
-In-Reply-To: <20072.12104.965815.994761@winooski.ccs.neu.edu>
+	id S1752466Ab1LSRYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Dec 2011 12:24:18 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:48643 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752217Ab1LSRYR (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Dec 2011 12:24:17 -0500
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1Rcgwd-0002NW-5H; Mon, 19 Dec 2011 18:24:16 +0100
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
+	id 1Rcgwc-0000z5-2t; Mon, 19 Dec 2011 18:24:10 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <jckvpk$i8v$1@dough.gmane.org>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1324315456.164467000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187461>
 
-On Wed, Sep 07, 2011 at 10:58:16PM -0400, Eli Barzilay wrote:
+On 18.12.2011 16:10, DeMarcus wrote:
+>> You probably don't want to use stash. Just commit whatever partial work
+>> you've done.
+>>
+>
+> It feels strange doing a commit of partial work. Some of the files may
+> not even be supposed to be checked in.
 
-> 5 hours ago, Jeff King wrote:
-> > On Mon, Sep 05, 2011 at 12:05:37AM -0400, Eli Barzilay wrote:
-> > 
-> > > Is there anything broken with pushing with mirror over HTTP?  I'm
-> > > trying that with a github url, and I get a broken-looking error
-> > > message:
-> > > 
-> > >   remote part of refspec is not a valid name in :.have
-> > 
-> > It's probably nothing to do with http, but rather with alternate
-> > object databases on the server (which GitHub uses heavily). The
-> > server hands out fake ".have" refs telling you it has some other
-> > branch tips to base packs off of. So I suspect the "push --mirror"
-> > code is simply wrong for trying to update those refs (it may be
-> > exacerbated by using http, though, as the remote helper code seems
-> > to have some extra checks).
-
-Sorry for the very delayed response on your bug, but at least I have
-good news. :)
-
-It should be fixed by:
-
-  http://article.gmane.org/gmane.comp.version-control.git/187373
-
-(I was trying to fix another bug there, but see my followup for a
-discussion of .have).
-
--Peff
+You have heard of "git commit --amend" ? Makes partial commits really 
+easy to work with.
