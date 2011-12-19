@@ -1,120 +1,84 @@
-From: Pete Harlan <pgit@pcharlan.com>
-Subject: [PATCH] Fix capitalization of "renamelimit" in docs to agree with
- code
-Date: Sun, 18 Dec 2011 16:34:52 -0800
-Message-ID: <4EEE86AC.2030802@pcharlan.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Fix capitalization of "renamelimit" in docs to agree with code
+Date: Sun, 18 Dec 2011 16:51:13 -0800 (PST)
+Message-ID: <m3ty4xfkpc.fsf@localhost.localdomain>
+References: <4EEE86AC.2030802@pcharlan.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 19 01:35:39 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Pete Harlan <pgit@pcharlan.com>
+X-From: git-owner@vger.kernel.org Mon Dec 19 01:51:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RcRCd-0005WP-14
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 01:35:39 +0100
+	id 1RcRRo-0001Ij-VW
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 01:51:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752041Ab1LSAff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Dec 2011 19:35:35 -0500
-Received: from hapkido.dreamhost.com ([66.33.216.122]:45757 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752008Ab1LSAfd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Dec 2011 19:35:33 -0500
-Received: from homiemail-a54.g.dreamhost.com (caibbdcaaaaf.dreamhost.com [208.113.200.5])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id 7929F1F6569
-	for <git@vger.kernel.org>; Sun, 18 Dec 2011 16:35:34 -0800 (PST)
-Received: from homiemail-a54.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a54.g.dreamhost.com (Postfix) with ESMTP id 8AE923A4061;
-	Sun, 18 Dec 2011 16:34:53 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pcharlan.com; h=message-id:date
-	:from:mime-version:to:subject:content-type:
-	content-transfer-encoding; q=dns; s=pcharlan.com; b=r+M68xGwhxRG
-	xtD7aoaezldbx34HoFIoD6o7mCWm92bPT2E1c7FjpRHe4l2AvFZbaLsZ0XK2KnW/
-	yBdQGNELpkrdiJknQ6d9vbf4ziazmHFAoWG3Gde+ug9F5/SzrInDwyiXIq8vNk8s
-	O2BM87N+PsUtnb800njRkdMJAEqN/Wc=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pcharlan.com; h=message-id
-	:date:from:mime-version:to:subject:content-type:
-	content-transfer-encoding; s=pcharlan.com; bh=OiMUJHqL8teBp70+Q2
-	OH/jKT6Qk=; b=LPGldO4SwUACjsULwM3dET+3+mz59QwiYiB2Sk2Uc4HKM/RClE
-	tf2/vGUk7jfe0EwNEApmd6RQmALMhpsmrgbeH1/EJJtORQ5tQoscq5JTzxMMtc8Z
-	gNx72SoY2mgo98O3RlfARfw3et7H8zovvzTm+AKak064YfkM03HFJ99Ek=
-Received: from [192.168.0.101] (185.132-78-65.ftth.swbr.surewest.net [65.78.132.185])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: pgit@pcharlan.com)
-	by homiemail-a54.g.dreamhost.com (Postfix) with ESMTPSA id 52E6C3A4058;
-	Sun, 18 Dec 2011 16:34:53 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:8.0) Gecko/20111124 Thunderbird/8.0
+	id S1752047Ab1LSAvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Dec 2011 19:51:16 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:47935 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752011Ab1LSAvP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Dec 2011 19:51:15 -0500
+Received: by eekc4 with SMTP id c4so4997713eek.19
+        for <git@vger.kernel.org>; Sun, 18 Dec 2011 16:51:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=ZzYAxYqNiwnW9qa0ZO34jyCbiblownvtxrh7qDv4BtE=;
+        b=L8CoJ1jLJ1YlxdSvoli9Mw54LogdXM7GOKHQoiOyLqYpWoe+1QCEIJgk7NCLQybje7
+         2n0TGDLPQl1u0A3PYh5kw+AWlPDmTMo8RX5ZAzq/wvQ4/qeYZWsMBb9tDVeceO3jQIlH
+         h8wVKV91yNE9cse02g9Dp+PEodT9CmKmYlXug=
+Received: by 10.213.32.195 with SMTP id e3mr4659871ebd.4.1324255873827;
+        Sun, 18 Dec 2011 16:51:13 -0800 (PST)
+Received: from localhost.localdomain (aehn116.neoplus.adsl.tpnet.pl. [79.186.195.116])
+        by mx.google.com with ESMTPS id 76sm37646737eeh.0.2011.12.18.16.51.12
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 18 Dec 2011 16:51:13 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id pBJ0p7xf022014;
+	Mon, 19 Dec 2011 01:51:13 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id pBJ0ouuR022007;
+	Mon, 19 Dec 2011 01:50:56 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <4EEE86AC.2030802@pcharlan.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187430>
 
-Signed-off-by: Pete Harlan <pgit@pcharlan.com>
----
-The documentation and bash-completion have always capitalized
-"renamelimit" as "renameLimit".  The code has always lowercased the
-whole name.  Repair the docs.
+Pete Harlan <pgit@pcharlan.com> writes:
 
- Documentation/diff-config.txt          |    2 +-
- Documentation/merge-config.txt         |    4 ++--
- contrib/completion/git-completion.bash |    4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+> Signed-off-by: Pete Harlan <pgit@pcharlan.com>
+> ---
+> The documentation and bash-completion have always capitalized
+> "renamelimit" as "renameLimit".  The code has always lowercased the
+> whole name.  Repair the docs.
 
-diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
-index 1aed79e..1b9a314 100644
---- a/Documentation/diff-config.txt
-+++ b/Documentation/diff-config.txt
-@@ -86,7 +86,7 @@ diff.mnemonicprefix::
- diff.noprefix::
- 	If set, 'git diff' does not show any source or destination prefix.
+Key names are *case insensitive* so we can write it in docs in a way
+that is more clear, like 'renameLimit'.
 
--diff.renameLimit::
-+diff.renamelimit::
- 	The number of files to consider when performing the copy/rename
- 	detection; equivalent to the 'git diff' option '-l'.
+Code compares with lowercased key name, so that is why it uses
+'renamelimit'.
 
-diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
-index 861bd6f..fdb3cb6 100644
---- a/Documentation/merge-config.txt
-+++ b/Documentation/merge-config.txt
-@@ -32,10 +32,10 @@ merge.log::
- 	actual commits that are being merged.  Defaults to false, and
- 	true is a synonym for 20.
+> @@ -2122,7 +2122,7 @@ _git_config ()
+>  		diff.ignoreSubmodules
+>  		diff.mnemonicprefix
+>  		diff.noprefix
+> -		diff.renameLimit
+> +		diff.renamelimit
+>  		diff.renames
+>  		diff.suppressBlankEmpty
+>  		diff.tool
 
--merge.renameLimit::
-+merge.renamelimit::
- 	The number of files to consider when performing rename detection
- 	during a merge; if not specified, defaults to the value of
--	diff.renameLimit.
-+	diff.renamelimit.
+Consitency - why you change diff.renameLimit but not
+diff.ignoreSubmodules?
 
- merge.renormalize::
- 	Tell git that canonical representation of files in the
-diff --git a/contrib/completion/git-completion.bash
-b/contrib/completion/git-completion.bash
-index cc1bdf9..76f66e1 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2122,7 +2122,7 @@ _git_config ()
- 		diff.ignoreSubmodules
- 		diff.mnemonicprefix
- 		diff.noprefix
--		diff.renameLimit
-+		diff.renamelimit
- 		diff.renames
- 		diff.suppressBlankEmpty
- 		diff.tool
-@@ -2218,7 +2218,7 @@ _git_config ()
- 		merge.
- 		merge.conflictstyle
- 		merge.log
--		merge.renameLimit
-+		merge.renamelimit
- 		merge.renormalize
- 		merge.stat
- 		merge.tool
 -- 
+Jakub Narebski
