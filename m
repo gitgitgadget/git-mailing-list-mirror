@@ -1,61 +1,114 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: Big Mess--How to use Git to resolve
-Date: Mon, 19 Dec 2011 18:04:24 +0100
-Message-ID: <4EEF6E98.7080000@ira.uka.de>
-References: <1324125130643-7103964.post@n2.nabble.com> <86iplf2oy5.fsf@red.stonehenge.com> <1324147247781-7104493.post@n2.nabble.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] remote-curl: don't pass back fake refs
+Date: Mon, 19 Dec 2011 12:10:55 -0500
+Message-ID: <20111219171055.GA21227@sigill.intra.peff.net>
+References: <20111217104539.GA23844@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: hs_glw <greg@hra.net>
-X-From: git-owner@vger.kernel.org Mon Dec 19 18:03:51 2011
+Content-Type: text/plain; charset=utf-8
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 19 18:11:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rcgcw-0004RS-UI
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 18:03:51 +0100
+	id 1Rcgk1-0007yZ-Cl
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 18:11:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752171Ab1LSRDr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Dec 2011 12:03:47 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:47979 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752129Ab1LSRDq (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Dec 2011 12:03:46 -0500
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1Rcgci-0000VJ-0P; Mon, 19 Dec 2011 18:03:44 +0100
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	id 1Rcgch-0001W6-PA; Mon, 19 Dec 2011 18:03:35 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <1324147247781-7104493.post@n2.nabble.com>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1324314225.027637000
+	id S1752318Ab1LSRK7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Dec 2011 12:10:59 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45905
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752182Ab1LSRK5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Dec 2011 12:10:57 -0500
+Received: (qmail 367 invoked by uid 107); 19 Dec 2011 17:17:40 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 19 Dec 2011 12:17:40 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Dec 2011 12:10:55 -0500
+Content-Disposition: inline
+In-Reply-To: <20111217104539.GA23844@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187459>
 
-On 17.12.2011 19:40, hs_glw wrote:
-> Randal, thank you for the comprehensive answer.  I have one follow-up:  we
-> have the working files, then in our installation files we have .PL files
-> that are worked on by some iteration of "make" to insert paths both into
-> .cgi files and config files, should these installation files be setup as a
-> branch? or is there a more correct way of implementing this?
+On Sat, Dec 17, 2011 at 05:45:39AM -0500, Jeff King wrote:
 
-If I understand you correctly the working aka source files are patched 
-in place to adapt to a customer. I would suggest changing that a bit so 
-that the source filename is different from the installation filename. 
-Add the source file into the repo and add the installation filenames 
-into .gitignore
+> Most of the time this bug goes unnoticed, as the fake ref
+> won't match our refspecs. However, if "--mirror" is used,
+> then we see it as remote cruft to be pruned, and try to pass
+> along a deletion refspec for it. Of course this refspec has
+> bogus syntax (because of the ^{}), and the helper complains,
+> aborting the push.
+> 
+> Let's have remote-curl mirror what the builtin
+> get_refs_via_connect does (at least for the case of using
+> git protocol; we can leave the dumb info/refs reader as it
+> is).
 
-That way you don't have generated files in the repository. Which is 
-usually avoided because they easily get out of sync with their source.
+I did some experimenting, and this also fixes another bug: pushing with
+--mirror to a smart-http remote that uses alternates.
 
-The renaming should be done so you never erraneously add installation 
-files into the repository in place of the source files
+The fake ".have" refs that the server produces are similarly bogus and
+should not be passed back from remote-curl to the parent git process.
+Currently they are, so you get:
+
+  remote part of refspec is not a valid name in :.have
+
+in the --mirror case.
+
+I had thought this patch wouldn't make a difference there, since
+get_remote_heads handles ".have" specifically before the check_refname
+call. But it only does so if you pass in a non-NULL extra_have_objects
+pointer. We do for regular git (since we care about the .haves for
+efficiency, obviously).
+
+But for smart-http, we actually end up parsing the refs twice: once to
+get the list of refs to hand back to the parent git process, and then
+again later in a send-pack subprocess that actually does care about the
+.haves. In the first one, we just pass NULL for extra_have, and
+get_remote_heads happily adds the bogus ones to the list.
+
+For the same reason that this patch squelches the bogus "capability^{}",
+it also squelches the bogus ".have" refs (but of course they are still
+in our buffer to be handed to send-pack, so there is no loss of
+efficiency).
+
+Perhaps we should squash in the test below, which demonstrates the
+breakage. I also wonder if this is maint-worthy.
+
+-Peff
+
+---
+diff --git a/t/t5541-http-push.sh b/t/t5541-http-push.sh
+index 89232b2..9b85d42 100755
+--- a/t/t5541-http-push.sh
++++ b/t/t5541-http-push.sh
+@@ -168,5 +168,23 @@ test_expect_success 'push --mirror can push to empty repo' '
+ 	git push --mirror "$HTTPD_URL"/smart/empty-mirror.git
+ '
+ 
++test_expect_success 'push --all to repo with alternates' '
++	s=$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git &&
++	d=$HTTPD_DOCUMENT_ROOT_PATH/alternates-all.git &&
++	git clone --bare --shared "$s" "$d" &&
++	git --git-dir="$d" config http.receivepack true &&
++	git --git-dir="$d" repack -adl &&
++	git push --all "$HTTPD_URL"/smart/alternates-all.git
++'
++
++test_expect_success 'push --mirror to repo with alternates' '
++	s=$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git &&
++	d=$HTTPD_DOCUMENT_ROOT_PATH/alternates-mirror.git &&
++	git clone --bare --shared "$s" "$d" &&
++	git --git-dir="$d" config http.receivepack true &&
++	git --git-dir="$d" repack -adl &&
++	git push --mirror "$HTTPD_URL"/smart/alternates-mirror.git
++'
++
+ stop_httpd
+ test_done
