@@ -1,57 +1,60 @@
-From: Nazri Ramliy <ayiehere@gmail.com>
-Subject: Re: best way to fastforward all tracking branches after a fetch
-Date: Mon, 19 Dec 2011 14:31:04 +0800
-Message-ID: <CAEY4ZpPKLrWQpEUYkwST8Fh40JwrjxvD+6yML6A+=XpsYmPevg@mail.gmail.com>
-References: <jbvj5o$skt$1@dough.gmane.org>
-	<20111217101009.GA19248@sita-lt.atc.tcs.com>
-	<20111217101106.GB19248@sita-lt.atc.tcs.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: post-receive for web deployment
+Date: Mon, 19 Dec 2011 07:55:20 +0100
+Message-ID: <4EEEDFD8.1050604@viscovery.net>
+References: <CALzTOmJUqzO8H5UxyFaodi98DBJtFvsbQsHsYh1U=Ggq3NRO5A@mail.gmail.com> <CALzTOm+sJHF_7WzjD7bCqAiAbQSV0A3hEX1KdWfFzV7-ePzX2w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Gelonida N <gelonida@gmail.com>, git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 19 07:31:12 2011
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Stephen Major <smajor@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 19 07:55:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RcWkh-0003F3-SE
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 07:31:12 +0100
+	id 1RcX8M-0000mn-69
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 07:55:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752222Ab1LSGbH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Dec 2011 01:31:07 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:33245 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752209Ab1LSGbG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Dec 2011 01:31:06 -0500
-Received: by vbbfc26 with SMTP id fc26so3765911vbb.19
-        for <git@vger.kernel.org>; Sun, 18 Dec 2011 22:31:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=yhrvjJMeNVs3Te4CCoRhhk7FnDjZ11MCa/MPzOO+PUI=;
-        b=GB4pcwBnj8pbnitGzsuTrkCJZhm1eksR5spHYH6uU8nySXQfiV9ERwBRpa2S8mkIr2
-         njQrZmSZmUpothu0WRbYGjU/c3SUEpzT3ooYz3x1++Oq45rD0y+o1gFSXC21HOImUxCJ
-         gtKgiZs3974Rov7+BongCUKtBHcOmC9Gmu+Os=
-Received: by 10.52.30.130 with SMTP id s2mr10549733vdh.55.1324276264976; Sun,
- 18 Dec 2011 22:31:04 -0800 (PST)
-Received: by 10.220.151.134 with HTTP; Sun, 18 Dec 2011 22:31:04 -0800 (PST)
-In-Reply-To: <20111217101106.GB19248@sita-lt.atc.tcs.com>
+	id S1751585Ab1LSGzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Dec 2011 01:55:25 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:64859 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751082Ab1LSGzY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Dec 2011 01:55:24 -0500
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1RcX85-0000LM-Aq; Mon, 19 Dec 2011 07:55:21 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 132D61660F;
+	Mon, 19 Dec 2011 07:55:20 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <CALzTOm+sJHF_7WzjD7bCqAiAbQSV0A3hEX1KdWfFzV7-ePzX2w@mail.gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187440>
 
-On Sat, Dec 17, 2011 at 6:11 PM, Sitaram Chamarty <sitaramc@gmail.com> wrote:
-> oops; forgot the program...
+Am 12/19/2011 3:42, schrieb Stephen Major:
+> checking the remote server files 4 5 6 are still found in:
+> /home/user/domains/domain.com/public_html/live
+> 
+> Why is this happening?
 
-This is nice!
+Before you check out the files, you must ensure that the index matches the
+content in the GIT_WORK_TREE that you populate by git checkout.
 
-Stick it on github, or somewhere, please, so that I can always get the
-latest and greatest?
+You first push a tree that removes 4 5 6 while the index you happen to
+have still has those files recorded, the files are removed. Your second
+push does not have these files anymore, but the index does not record the
+files anymore, either; therefore, git does not act on the files 4 5 6 that
+happen to live in the other worktree.
 
-Thanks.
+Perhaps you should maintain separate index files and set GIT_INDEX_FILE
+accordingly before git checkout.
 
-nazri
+-- Hannes
