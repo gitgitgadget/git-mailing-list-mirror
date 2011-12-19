@@ -1,113 +1,84 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 4/3] gitweb: Fix fallback mode of to_utf8 subroutine
-Date: Mon, 19 Dec 2011 01:54:16 +0100
-Message-ID: <201112190154.19107.jnareb@gmail.com>
-References: <1324113743-21498-1-git-send-email-jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix capitalization of "renamelimit" in docs to agree
+ with code
+Date: Sun, 18 Dec 2011 17:02:26 -0800
+Message-ID: <7vsjkhnzkt.fsf@alter.siamese.dyndns.org>
+References: <4EEE86AC.2030802@pcharlan.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Juergen Kreileder <jk@blackdown.de>,
-	John Hawley <warthog9@kernel.org>, admin@repo.or.cz
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 19 01:54:26 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Pete Harlan <pgit@pcharlan.com>
+X-From: git-owner@vger.kernel.org Mon Dec 19 02:02:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RcRUm-00021p-NG
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 01:54:25 +0100
+	id 1RcRcw-0004Ds-WB
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 02:02:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752070Ab1LSAyV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Dec 2011 19:54:21 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:51812 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752011Ab1LSAyU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Dec 2011 19:54:20 -0500
-Received: by eekc4 with SMTP id c4so4999244eek.19
-        for <git@vger.kernel.org>; Sun, 18 Dec 2011 16:54:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=0NC+iYwYxQz+bXJbROQtSDBDeJmzZpnwTNNy/acNK0w=;
-        b=Epg6RVX09/mkEztWn0LILfUCIvKkImYREOFVYXVnCBxLhMuxdDmnA+OQ0Ctvndddnk
-         CdsX/cOvLQdufoL2gKsagIJIpUE9I8wv/gZkLQ3ffdDftjkiv88nCZ3bc+F8zH02tesg
-         5UCiJiApg86dQ52rDhGnzmFP8l9JmbSUvmBIc=
-Received: by 10.213.29.7 with SMTP id o7mr4369100ebc.102.1324256058886;
-        Sun, 18 Dec 2011 16:54:18 -0800 (PST)
-Received: from [192.168.1.13] (aehn116.neoplus.adsl.tpnet.pl. [79.186.195.116])
-        by mx.google.com with ESMTPS id q28sm37592124eea.6.2011.12.18.16.54.17
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 18 Dec 2011 16:54:18 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1324113743-21498-1-git-send-email-jnareb@gmail.com>
-Content-Disposition: inline
+	id S1752077Ab1LSBCb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Dec 2011 20:02:31 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37670 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752033Ab1LSBC3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Dec 2011 20:02:29 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CD7C46F92;
+	Sun, 18 Dec 2011 20:02:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Z63ofnRcb1R4Yrm+4IBjTlDp3nY=; b=tgaz7N
+	HlNAUT5X+mkjrcW8KktBeRRsXfpqcmjofsPg5gCVYXsG4fzKJt9uLGcBqj1Y+hLF
+	1EPqALCbXfdjLAQe2wQ0dwcCtR16UgduJl9edaWPZGqug+nl6+bN+rxgMKBsdWhy
+	7d0/kN7lbJh7weLbv+3dPsz8BEmJHmiSSjZ0o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hoXVcN+n2R7cRK6LUzyMoINO8F84AnYH
+	n8O9I8WnJIDmMul9VQMYzTl1kc0w1x/RpDVLIxdhAVNT5USKaAPSsHsxjksrpRkQ
+	rO5419Tj+BFlSNuFAno2Efq1X9lXVHi6U79gJPFc5FvHkSgIhC4S/y3UqfqLAIHR
+	qvs92s6QC/g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C60CF6F91;
+	Sun, 18 Dec 2011 20:02:28 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 45ED56F90; Sun, 18 Dec 2011
+ 20:02:28 -0500 (EST)
+In-Reply-To: <4EEE86AC.2030802@pcharlan.com> (Pete Harlan's message of "Sun,
+ 18 Dec 2011 16:34:52 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1F083208-29DD-11E1-BC6F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187432>
 
-e5d3de5 (gitweb: use Perl built-in utf8 function for UTF-8 decoding.,
-2007-12-04) was meant to make gitweb faster by using Perl's internals
-(see subsection "Messing with Perl's Internals" in Encode(3pm) manpage)
+Pete Harlan <pgit@pcharlan.com> writes:
 
-Simple benchmark confirms that (old = 00f429a, new = this version);
-note that it is synthetic benchmark of standalone subroutines, not
-of gitweb itself
+> Signed-off-by: Pete Harlan <pgit@pcharlan.com>
+> ---
+> The documentation and bash-completion have always capitalized
+> "renamelimit" as "renameLimit".  The code has always lowercased the
+> whole name.  Repair the docs.
 
-        old  new
-  old    -- -65%
-  new  189%   --
+Please don't do this.
 
-Unfortunately it made fallback mode of to_utf8 do not work...  except
-for default value 'latin1' of $fallback_encoding ('latin1' is Perl
-native encoding), which is why it was not noticed for such long time.
+Exactly because we treat the variable name part (and the top-level section
+part of three-part names) case insensitively, the code lowercases before
+comparing as an implementation detail.
 
-utf8::valid(STRING) is an internal function that tests whether STRING
-is in a _consistent state_ regarding UTF-8.  It returns true is
-well-formed UTF-8 and has the UTF-8 flag on _*or*_ if string is held
-as bytes (both these states are 'consistent').  For gitweb the second
-option was true, as output from git commands is opened without ':utf8'
-layer.
+However, you will be naming the same variable whether you spell it using
+all lowercase, or using camelCase (i.e. it does not really matter what
+case the user uses). The camelCase makes it slightly easier to see where
+the word boundaries are than alllowercase, and that is why we try to use
+it in our documentes, which is after all meant to be read by humans.
 
-What made it work at all for STRING in 'latin1' encoding is the fact
-that utf8:decode(STRING) turns on UTF-8 flag only if source string is
-valid UTF-8 and contains multi-byte UTF-8 characters... and that if
-string doesn't have UTF-8 flag set it is treated as in native Perl
-encoding, i.e.  'latin1' / 'iso-8859-1' (unless native encoding it is
-EBCDIC ;-)).  It was ':utf8' layer that actually converted 'latin1'
-(no UTF-8 flag == native == 'latin1) to 'utf8'.
+I would also appreciate if people tried not to overflow my mailbox with an
+incorrect patch that hasn't been discussed and hasn't seen concensus on
+the list that the particular change is a good thing to do, unless the
+patch is about an area that I am an area expert (you can see who the area
+experts are by asking "git shortlog --no-merges -n" or "git blame").
 
-
-Let's make use of the fact that utf8:decode(STRING) returns false if
-STRING is invalid as UTF-8 to check whether to enable fallback mode.
-
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Excuse me for overly long commit message...
-
-Resent as part of to_utf8 fixes for better visibility
-
- gitweb/gitweb.perl |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index d24763b..75b0970 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1443,8 +1443,7 @@ sub validate_refname {
- sub to_utf8 {
- 	my $str = shift;
- 	return undef unless defined $str;
--	if (utf8::valid($str)) {
--		utf8::decode($str);
-+	if (utf8::valid($str) && utf8::decode($str)) {
- 		return $str;
- 	} else {
- 		return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
--- 
-1.7.6
+Thanks.
