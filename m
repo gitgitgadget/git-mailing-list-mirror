@@ -1,68 +1,70 @@
-From: Thomas Jarosch <thomas.jarosch@intra2net.com>
-Subject: Re: git 1.7.7.5
-Date: Mon, 19 Dec 2011 10:41:07 +0100
-Organization: Intra2net AG
-Message-ID: <201112191041.07629.thomas.jarosch@intra2net.com>
-References: <20111216105757.GA11174@elie.hsd1.il.comcast.net>
+From: =?iso-8859-1?Q?Henrik_Grubbstr=F6m?= <grubba@roxen.com>
+Subject: Re: [PATCH] lf_to_crlf_filter(): tell the caller we added "\n" when
+ draining
+Date: Mon, 19 Dec 2011 11:19:19 +0100 (CET)
+Organization: Roxen Internet Software AB
+Message-ID: <Pine.GSO.4.63.1112191114010.4136@shipon.roxen.com>
+References: <Pine.GSO.4.63.1111231801580.5099@shipon.roxen.com>
+ <20111125153829.GB10417@beez.lab.cmartin.tk> <Pine.GSO.4.63.1111251705330.22588@shipon.roxen.com>
+ <20111125170219.GD10417@beez.lab.cmartin.tk> <7vy5v2wleb.fsf@alter.siamese.dyndns.org>
+ <20111128104812.GA2386@beez.lab.cmartin.tk> <7viplggoq9.fsf@alter.siamese.dyndns.org>
+ <7vaa6sgmt3.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 19 10:41:18 2011
+Content-Type: MULTIPART/MIXED; BOUNDARY="-559023410-1817792895-1324289959=:4136"
+Cc: Git Mailing list <git@vger.kernel.org>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 19 11:19:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RcZid-0007Ay-Lf
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 10:41:16 +0100
+	id 1RcaJh-00044l-B5
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 11:19:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751172Ab1LSJlL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Dec 2011 04:41:11 -0500
-Received: from re04.intra2net.com ([82.165.46.26]:44616 "EHLO
-	re04.intra2net.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751095Ab1LSJlK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Dec 2011 04:41:10 -0500
-Received: from intranator.m.i2n (unknown [172.16.1.99])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by re04.intra2net.com (Postfix) with ESMTP id 67B5330109;
-	Mon, 19 Dec 2011 10:41:09 +0100 (CET)
-Received: from localhost (intranator.m.i2n [127.0.0.1])
-	by localhost (Postfix) with ESMTP id 3A7102AC54;
-	Mon, 19 Dec 2011 10:41:09 +0100 (CET)
-X-Virus-Scanned: by Intranator (www.intra2net.com) with AMaViS and F-Secure
-	AntiVirus (fsavdb 2011-12-19_02)
-X-Spam-Status: 
-X-Spam-Level: 0
-Received: from storm.localnet (storm.m.i2n [172.16.1.2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by intranator.m.i2n (Postfix) with ESMTPS id D0BFE2AC53;
-	Mon, 19 Dec 2011 10:41:07 +0100 (CET)
-User-Agent: KMail/1.13.7 (Linux/2.6.41.4-1.fc15.x86_64; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <20111216105757.GA11174@elie.hsd1.il.comcast.net>
+	id S1751663Ab1LSKT1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Dec 2011 05:19:27 -0500
+Received: from mail.roxen.com ([212.247.29.220]:56249 "EHLO mail.roxen.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751296Ab1LSKT0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Dec 2011 05:19:26 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.roxen.com (Postfix) with ESMTP id 643486280CC;
+	Mon, 19 Dec 2011 11:19:24 +0100 (CET)
+X-Virus-Scanned: amavisd-new at roxen.com
+Received: from mail.roxen.com ([212.247.29.220])
+	by localhost (marge.roxen.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id TrqbbctXJ9Ja; Mon, 19 Dec 2011 11:19:20 +0100 (CET)
+Received: from shipon.roxen.com (shipon.roxen.com [212.247.28.156])
+	by mail.roxen.com (Postfix) with ESMTP id EB8496280DE;
+	Mon, 19 Dec 2011 11:19:19 +0100 (CET)
+In-Reply-To: <7vaa6sgmt3.fsf_-_@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187444>
 
-On Friday, 16. December 2011 11:57:58 Jonathan Nieder wrote:
-> I noticed that v1.7.7.5 was tagged a few days ago (b36dcd72), but
-> there is no corresponding tarball at
-> 
->  http://code.google.com/p/git-core/downloads/list
-> 
-> Will there be an official tarball?
-> 
-> I don't mind either way, but it would be useful to know whether
-> distributors should make their own or just wait.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Looks like a bug, the front page of "git-scm.com" also shows 1.7.7.5
-as latest stable release and leads to a dead link.
+---559023410-1817792895-1324289959=:4136
+Content-Type: TEXT/PLAIN; charset=iso-8859-1; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Cheers,
-Thomas
+On Fri, 16 Dec 2011, Junio C Hamano wrote:
+
+> This can only happen when the input size is multiple of the
+> buffer size of the cascade filter (16k) and ends with an LF,
+> but in such a case, the code forgot to tell the caller that
+> it added the "\n" it could not add during the last round.
+
+We probably ought to have a corresponding test in the testsuite.
+A blob consisting of a singe 'A' followed by 8192 linefeeds should
+be sufficient to trigger the problems.
+
+--
+Henrik Grubbström					grubba@roxen.com
+Roxen Internet Software AB
+---559023410-1817792895-1324289959=:4136--
