@@ -1,84 +1,113 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Fix capitalization of "renamelimit" in docs to agree with code
-Date: Sun, 18 Dec 2011 16:51:13 -0800 (PST)
-Message-ID: <m3ty4xfkpc.fsf@localhost.localdomain>
-References: <4EEE86AC.2030802@pcharlan.com>
+Subject: [PATCH 4/3] gitweb: Fix fallback mode of to_utf8 subroutine
+Date: Mon, 19 Dec 2011 01:54:16 +0100
+Message-ID: <201112190154.19107.jnareb@gmail.com>
+References: <1324113743-21498-1-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pete Harlan <pgit@pcharlan.com>
-X-From: git-owner@vger.kernel.org Mon Dec 19 01:51:22 2011
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Juergen Kreileder <jk@blackdown.de>,
+	John Hawley <warthog9@kernel.org>, admin@repo.or.cz
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 19 01:54:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RcRRo-0001Ij-VW
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 01:51:21 +0100
+	id 1RcRUm-00021p-NG
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 01:54:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752047Ab1LSAvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Dec 2011 19:51:16 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:47935 "EHLO
+	id S1752070Ab1LSAyV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Dec 2011 19:54:21 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:51812 "EHLO
 	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752011Ab1LSAvP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Dec 2011 19:51:15 -0500
-Received: by eekc4 with SMTP id c4so4997713eek.19
-        for <git@vger.kernel.org>; Sun, 18 Dec 2011 16:51:14 -0800 (PST)
+	with ESMTP id S1752011Ab1LSAyU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Dec 2011 19:54:20 -0500
+Received: by eekc4 with SMTP id c4so4999244eek.19
+        for <git@vger.kernel.org>; Sun, 18 Dec 2011 16:54:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=ZzYAxYqNiwnW9qa0ZO34jyCbiblownvtxrh7qDv4BtE=;
-        b=L8CoJ1jLJ1YlxdSvoli9Mw54LogdXM7GOKHQoiOyLqYpWoe+1QCEIJgk7NCLQybje7
-         2n0TGDLPQl1u0A3PYh5kw+AWlPDmTMo8RX5ZAzq/wvQ4/qeYZWsMBb9tDVeceO3jQIlH
-         h8wVKV91yNE9cse02g9Dp+PEodT9CmKmYlXug=
-Received: by 10.213.32.195 with SMTP id e3mr4659871ebd.4.1324255873827;
-        Sun, 18 Dec 2011 16:51:13 -0800 (PST)
-Received: from localhost.localdomain (aehn116.neoplus.adsl.tpnet.pl. [79.186.195.116])
-        by mx.google.com with ESMTPS id 76sm37646737eeh.0.2011.12.18.16.51.12
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=0NC+iYwYxQz+bXJbROQtSDBDeJmzZpnwTNNy/acNK0w=;
+        b=Epg6RVX09/mkEztWn0LILfUCIvKkImYREOFVYXVnCBxLhMuxdDmnA+OQ0Ctvndddnk
+         CdsX/cOvLQdufoL2gKsagIJIpUE9I8wv/gZkLQ3ffdDftjkiv88nCZ3bc+F8zH02tesg
+         5UCiJiApg86dQ52rDhGnzmFP8l9JmbSUvmBIc=
+Received: by 10.213.29.7 with SMTP id o7mr4369100ebc.102.1324256058886;
+        Sun, 18 Dec 2011 16:54:18 -0800 (PST)
+Received: from [192.168.1.13] (aehn116.neoplus.adsl.tpnet.pl. [79.186.195.116])
+        by mx.google.com with ESMTPS id q28sm37592124eea.6.2011.12.18.16.54.17
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 18 Dec 2011 16:51:13 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id pBJ0p7xf022014;
-	Mon, 19 Dec 2011 01:51:13 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id pBJ0ouuR022007;
-	Mon, 19 Dec 2011 01:50:56 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <4EEE86AC.2030802@pcharlan.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Sun, 18 Dec 2011 16:54:18 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1324113743-21498-1-git-send-email-jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187431>
 
-Pete Harlan <pgit@pcharlan.com> writes:
+e5d3de5 (gitweb: use Perl built-in utf8 function for UTF-8 decoding.,
+2007-12-04) was meant to make gitweb faster by using Perl's internals
+(see subsection "Messing with Perl's Internals" in Encode(3pm) manpage)
 
-> Signed-off-by: Pete Harlan <pgit@pcharlan.com>
-> ---
-> The documentation and bash-completion have always capitalized
-> "renamelimit" as "renameLimit".  The code has always lowercased the
-> whole name.  Repair the docs.
+Simple benchmark confirms that (old = 00f429a, new = this version);
+note that it is synthetic benchmark of standalone subroutines, not
+of gitweb itself
 
-Key names are *case insensitive* so we can write it in docs in a way
-that is more clear, like 'renameLimit'.
+        old  new
+  old    -- -65%
+  new  189%   --
 
-Code compares with lowercased key name, so that is why it uses
-'renamelimit'.
+Unfortunately it made fallback mode of to_utf8 do not work...  except
+for default value 'latin1' of $fallback_encoding ('latin1' is Perl
+native encoding), which is why it was not noticed for such long time.
 
-> @@ -2122,7 +2122,7 @@ _git_config ()
->  		diff.ignoreSubmodules
->  		diff.mnemonicprefix
->  		diff.noprefix
-> -		diff.renameLimit
-> +		diff.renamelimit
->  		diff.renames
->  		diff.suppressBlankEmpty
->  		diff.tool
+utf8::valid(STRING) is an internal function that tests whether STRING
+is in a _consistent state_ regarding UTF-8.  It returns true is
+well-formed UTF-8 and has the UTF-8 flag on _*or*_ if string is held
+as bytes (both these states are 'consistent').  For gitweb the second
+option was true, as output from git commands is opened without ':utf8'
+layer.
 
-Consitency - why you change diff.renameLimit but not
-diff.ignoreSubmodules?
+What made it work at all for STRING in 'latin1' encoding is the fact
+that utf8:decode(STRING) turns on UTF-8 flag only if source string is
+valid UTF-8 and contains multi-byte UTF-8 characters... and that if
+string doesn't have UTF-8 flag set it is treated as in native Perl
+encoding, i.e.  'latin1' / 'iso-8859-1' (unless native encoding it is
+EBCDIC ;-)).  It was ':utf8' layer that actually converted 'latin1'
+(no UTF-8 flag == native == 'latin1) to 'utf8'.
 
+
+Let's make use of the fact that utf8:decode(STRING) returns false if
+STRING is invalid as UTF-8 to check whether to enable fallback mode.
+
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Excuse me for overly long commit message...
+
+Resent as part of to_utf8 fixes for better visibility
+
+ gitweb/gitweb.perl |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index d24763b..75b0970 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1443,8 +1443,7 @@ sub validate_refname {
+ sub to_utf8 {
+ 	my $str = shift;
+ 	return undef unless defined $str;
+-	if (utf8::valid($str)) {
+-		utf8::decode($str);
++	if (utf8::valid($str) && utf8::decode($str)) {
+ 		return $str;
+ 	} else {
+ 		return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
 -- 
-Jakub Narebski
+1.7.6
