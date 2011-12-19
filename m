@@ -1,64 +1,239 @@
-From: DeMarcus <demarcus@hotmail.com>
-Subject: Re: How can I do an automatic stash when doing a checkout?
-Date: Mon, 19 Dec 2011 22:46:29 +0100
-Message-ID: <jcobbo$jab$1@dough.gmane.org>
-References: <jcki8u$oip$1@dough.gmane.org> <84ty4ycdcc.fsf@cenderis.demon.co.uk> <jckvpk$i8v$1@dough.gmane.org> <4EEF736A.4070802@ira.uka.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 19 22:50:18 2011
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH] t4018: add a few more test cases for cpp hunk header matching
+Date: Mon, 19 Dec 2011 15:53:13 -0600
+Message-ID: <6fUozvAFiZtWtB8fYx2kUeUq8VtDgI4bzcA55hMiHJgT_Ag96PM120NEGB5HdtvbJQHJWjAksX6bgea_pMM2jpV6mCwiLKQ9EacSnIUmJ8llgHHqU2I0v9oMj8mYKTJxdIZXJFnBtYA@cipher.nrlssc.navy.mil>
+References: <31E9klcRboMV0wSJY5WO-N7nIBOUOa_wr6MVfWY9AInImxJIqC0flahvpDrVGMIuZ9e7Ouha1HDuesbwTGaNQA4dgN-FShNJKkfMG_cHLUJAT2rE539shnQxzM0dQyZIb5661As6Tvs@cipher.nrlssc.navy.mil>
+Cc: git@vger.kernel.org, j6t@kdbg.org, gitster@pobox.com,
+	jrnieder@gmail.com, trast@student.ethz.ch,
+	Brandon Casey <drafnel@gmail.com>
+To: peff@peff.net
+X-From: git-owner@vger.kernel.org Mon Dec 19 22:54:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rcl68-0000Lr-IW
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 22:50:16 +0100
+	id 1RclAd-0002MG-SU
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 22:54:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753096Ab1LSVuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Dec 2011 16:50:12 -0500
-Received: from lo.gmane.org ([80.91.229.12]:53659 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752353Ab1LSVuL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Dec 2011 16:50:11 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Rcl5y-0000IZ-Pf
-	for git@vger.kernel.org; Mon, 19 Dec 2011 22:50:06 +0100
-Received: from c83-251-142-66.bredband.comhem.se ([83.251.142.66])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 19 Dec 2011 22:50:06 +0100
-Received: from demarcus by c83-251-142-66.bredband.comhem.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 19 Dec 2011 22:50:06 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: c83-251-142-66.bredband.comhem.se
-User-Agent: Mozilla/5.0 (Windows NT 6.0; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <4EEF736A.4070802@ira.uka.de>
+	id S1752945Ab1LSVyw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Dec 2011 16:54:52 -0500
+Received: from mail4.nrlssc.navy.mil ([128.160.11.9]:48751 "EHLO
+	mail4.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752353Ab1LSVyu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Dec 2011 16:54:50 -0500
+Received: by mail4.nrlssc.navy.mil id pBJLsRbL001601; Mon, 19 Dec 2011 15:54:27 -0600
+In-Reply-To: <31E9klcRboMV0wSJY5WO-N7nIBOUOa_wr6MVfWY9AInImxJIqC0flahvpDrVGMIuZ9e7Ouha1HDuesbwTGaNQA4dgN-FShNJKkfMG_cHLUJAT2rE539shnQxzM0dQyZIb5661As6Tvs@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 19 Dec 2011 21:54:26.0399 (UTC) FILETIME=[C6A636F0:01CCBE98]
+X-Virus-Scanned: clamav-milter 0.97.2 at mail4
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187479>
 
-On 2011-12-19 18:24, Holger Hellmuth wrote:
-> On 18.12.2011 16:10, DeMarcus wrote:
->>> You probably don't want to use stash. Just commit whatever partial work
->>> you've done.
->>>
->>
->> It feels strange doing a commit of partial work. Some of the files may
->> not even be supposed to be checked in.
->
-> You have heard of "git commit --amend" ? Makes partial commits really
-> easy to work with.
->
->
+From: Brandon Casey <drafnel@gmail.com>
 
-Yes, I know that one. It's just that I know myself, I don't really like 
-to go back rearranging. I prefer to keep things spread out at first and 
-then inserted properly when it's time. But maybe I'm just unused to the 
-git workflow.
+Add one case for matching a function returning a pointer.
+
+Plus add examples of things we explicitly do not match:
+
+   labels
+   function declarations
+   global variable declarations
+
+Signed-off-by: Brandon Casey <drafnel@gmail.com>
+---
+
+
+This can be squashed into the original patch with the other test cases.
+This just introduces a few more cases pointed out by Thomas Rast in the
+email Johannes referenced.
+
+   http://thread.gmane.org/gmane.comp.version-control.git/186355/focus=186439
+
+Also, note that all of the tests pass except for ignore_global.cpp with
+Johannes's pattern:
+
+   "!^[ \\t]*[a-zA-Z_][a-zA-Z_0-9]*[^()]*:[[:space:]]*$\n^[a-zA-Z_][a-zA-Z_0-9]*.*"
+
+-Brandon
+
+
+ t/t4018/ignore_declaration.cpp |   35 +++++++++++++++++++++++++++++++++++
+ t/t4018/ignore_global.cpp      |   36 ++++++++++++++++++++++++++++++++++++
+ t/t4018/ignore_label.cpp       |   35 +++++++++++++++++++++++++++++++++++
+ t/t4018/pointer_return.cpp     |   34 ++++++++++++++++++++++++++++++++++
+ 4 files changed, 140 insertions(+), 0 deletions(-)
+ create mode 100644 t/t4018/ignore_declaration.cpp
+ create mode 100644 t/t4018/ignore_global.cpp
+ create mode 100644 t/t4018/ignore_label.cpp
+ create mode 100644 t/t4018/pointer_return.cpp
+
+diff --git a/t/t4018/ignore_declaration.cpp b/t/t4018/ignore_declaration.cpp
+new file mode 100644
+index 0000000..615aea0
+--- /dev/null
++++ b/t/t4018/ignore_declaration.cpp
+@@ -0,0 +1,35 @@
++int WRONG_function_hunk_header_preceding_the_right_one (void)
++{
++	return 0;
++}
++
++int RIGHT_function_hunk_header (void)
++{
++	void WRONG_function_declaration_within_body (void);
++	/*
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 */
++
++	int answer = 0;
++
++	/*
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 */
++
++	return answer;
++}
++
++int WRONG_function_hunk_header_following_the_right_one (void)
++{
++	return 0;
++}
+diff --git a/t/t4018/ignore_global.cpp b/t/t4018/ignore_global.cpp
+new file mode 100644
+index 0000000..df6b8aa
+--- /dev/null
++++ b/t/t4018/ignore_global.cpp
+@@ -0,0 +1,36 @@
++int WRONG_function_hunk_header_preceding_the_right_one (void)
++{
++	return 0;
++}
++
++int RIGHT_function_hunk_header (void)
++{
++	/*
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 */
++
++	return answer;
++}
++
++int WRONG_global_variable;
++
++/*
++ * Filler
++ * Filler
++ * Filler
++ * Filler
++ * Filler
++ * Filler
++ */
++
++int answer = 0;
++
++int WRONG_function_hunk_header_following_the_right_one (void)
++{
++	return 0;
++}
+diff --git a/t/t4018/ignore_label.cpp b/t/t4018/ignore_label.cpp
+new file mode 100644
+index 0000000..2e3ce10
+--- /dev/null
++++ b/t/t4018/ignore_label.cpp
+@@ -0,0 +1,35 @@
++int WRONG_function_hunk_header_preceding_the_right_one (void)
++{
++	return 0;
++}
++
++int RIGHT_function_hunk_header (void)
++{
++WRONG_should_not_match_label:
++	/*
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 */
++
++	int answer = 0;
++
++	/*
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 */
++
++	return answer;
++}
++
++int WRONG_function_hunk_header_following_the_right_one (void)
++{
++	return 0;
++}
+diff --git a/t/t4018/pointer_return.cpp b/t/t4018/pointer_return.cpp
+new file mode 100644
+index 0000000..fd85545
+--- /dev/null
++++ b/t/t4018/pointer_return.cpp
+@@ -0,0 +1,34 @@
++int WRONG_function_hunk_header_preceding_the_right_one (void)
++{
++	return 0;
++}
++
++static int *RIGHT_function_hunk_header (void)
++{
++	/*
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 */
++
++	int answer = 0;
++
++	/*
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 * Filler
++	 */
++
++	return answer;
++}
++
++int WRONG_function_hunk_header_following_the_right_one (void)
++{
++	return 0;
++}
+-- 
+1.7.7.4
