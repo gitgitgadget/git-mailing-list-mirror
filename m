@@ -1,66 +1,109 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv2 2/2] attr: drop C/C++ default extension mapping
-Date: Mon, 19 Dec 2011 12:10:03 -0600
-Message-ID: <20111219181003.GB12200@elie.hsd1.il.comcast.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv2 1/2] attr: map builtin userdiff drivers to well-known
+ extensions
+Date: Mon, 19 Dec 2011 13:55:11 -0500
+Message-ID: <20111219185511.GA3852@sigill.intra.peff.net>
 References: <20111217033808.GA8683@elie.hsd1.il.comcast.net>
- <20111219155737.GB19829@sigill.intra.peff.net>
+ <20111219154938.GA19829@sigill.intra.peff.net>
+ <20111219180733.GA12200@elie.hsd1.il.comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
 	Junio C Hamano <gitster@pobox.com>,
 	Brandon Casey <drafnel@gmail.com>,
 	Philip Oakley <philipoakley@iee.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Dec 19 19:10:18 2011
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 19 19:55:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RchfF-00042v-MF
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 19:10:18 +0100
+	id 1RciMp-00060f-Qs
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 19:55:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752648Ab1LSSKO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Dec 2011 13:10:14 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:45078 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751032Ab1LSSKM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Dec 2011 13:10:12 -0500
-Received: by vcbfk14 with SMTP id fk14so4224705vcb.19
-        for <git@vger.kernel.org>; Mon, 19 Dec 2011 10:10:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=br3KjqqnJq5QnSeT2Cu7YV6W3HKOquiST5iXRNClQGo=;
-        b=A7VhZjNGFOlXcPmtL8lUu+iyJED8WVkFAA3a4KOGuikebXA3KA2rXhc3s0rwj4yHBb
-         IwnhFrXBzwsCbgJs6Qg1uq8jgReO2FjomPhfH+uLBdoJaXvXPrJpAkyLDGRMiMF81Ebz
-         2RzGY5CvTG2g5Ruhu06S+X4rxwVbEtpj7Fs6w=
-Received: by 10.52.24.43 with SMTP id r11mr4968722vdf.125.1324318211624;
-        Mon, 19 Dec 2011 10:10:11 -0800 (PST)
-Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id c7sm16920816vdh.12.2011.12.19.10.10.10
-        (version=SSLv3 cipher=OTHER);
-        Mon, 19 Dec 2011 10:10:10 -0800 (PST)
+	id S1752731Ab1LSSzQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Dec 2011 13:55:16 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45949
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751393Ab1LSSzO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Dec 2011 13:55:14 -0500
+Received: (qmail 1272 invoked by uid 107); 19 Dec 2011 19:01:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 19 Dec 2011 14:01:57 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Dec 2011 13:55:11 -0500
 Content-Disposition: inline
-In-Reply-To: <20111219155737.GB19829@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
+In-Reply-To: <20111219180733.GA12200@elie.hsd1.il.comcast.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187464>
 
-Jeff King wrote:
+On Mon, Dec 19, 2011 at 12:07:33PM -0600, Jonathan Nieder wrote:
 
-> But when you think about it, if our funcname pattern is bad, shouldn't
-> preventing (2) be the right thing? That is, if our funcname pattern is
-> really worse than the default language-agnostic match, wouldn't we be
-> doing everybody a service to simply remove the builtin
-> diff.cpp.xfuncname pattern?
+> > The C mappings are still here, but see the next patch.
+> 
+> This is adding a regression in order to remove it.  I guess it's
+> harmless, but I don't see the point.
 
-I don't see why.  Anyone who has set "diff=cpp" either likes suffering
-(maybe they are hoping to improve the pattern) or is working with a
-codebase for which the current pattern works better than the default
-behavior (maybe their codebase has a lot of goto labels aligned at
-column zero).  So removing the funcname pattern can only hurt them.
+It's purely an attempt to help somebody reading "git log" later
+understand what happened. Maybe a comment in the commit message is more
+appropriate.
+
+> > +test_expect_success 'binary files are not considered text by file extension' '
+> > +	echo Q | q_to_nul >binary.c &&
+> > +	git add binary.c &&
+> > +	cat >expect <<-\EOF &&
+> > +	diff --git a/binary.c b/binary.c
+> > +	new file mode 100644
+> > +	index 0000000..1f2a4f5
+> > +	Binary files /dev/null and b/binary.c differ
+> > +	EOF
+> > +	git diff --cached binary.c >actual &&
+> > +	test_cmp expect actual
+> 
+> Re the idea of this test: very good idea.
+> 
+> Re the mechanics: I would have been happier to see
+> 
+> 	echo Q | q_to_nul >binary.c &&
+> 	git add binary.c &&
+> 	git diff --cached binary.c >diff &&
+> 	grep Binary files diff
+
+Yeah, I think that's fine, and I'll squash it in to my local version.
+
+It does miss one problem, though (that is also present in my original):
+using "binary.c" is no longer a good name, since the next patch will
+revert the "*.c" bits. :)
+
+> > --- a/t/t4018-diff-funcname.sh
+> > +++ b/t/t4018-diff-funcname.sh
+> > @@ -124,7 +124,9 @@ do
+> >  done
+> >  
+> >  test_expect_success 'default behaviour' '
+> > -	rm -f .gitattributes &&
+> > +	cat >.gitattributes <<-\EOF &&
+> > +	*.java diff=default
+> > +	EOF
+> >  	test_expect_funcname "public class Beer\$"
+> >  '
+> 
+> 	echo "*.java diff=default" >.gitattributes
+> 
+> would do the same with two lines fewer. :)
+
+Yup. I was following the style of the test directly below, which sets
+both java and perl drivers. But the "default" test that needed updating
+only checks the java case.
+
+Will squash.
+
+> Thanks for working on this.  I owe you a beer.
+
+You're welcome. :)
+
+-Peff
