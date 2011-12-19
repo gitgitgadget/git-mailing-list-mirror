@@ -1,172 +1,117 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] push: hint to use push.default=upstream when
- appropriate
-Date: Mon, 19 Dec 2011 05:37:46 -0500
-Message-ID: <20111219103746.GB1736@sigill.intra.peff.net>
-References: <7vobvct58u.fsf@alter.siamese.dyndns.org>
- <20111215073816.GD1327@sigill.intra.peff.net>
- <7vmxatofvr.fsf@alter.siamese.dyndns.org>
- <7vliq9nn0l.fsf@alter.siamese.dyndns.org>
- <7vbor5nmsq.fsf_-_@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 4/3] gitweb: Fix fallback mode of to_utf8 subroutine
+Date: Mon, 19 Dec 2011 13:11:57 +0100
+Message-ID: <201112191311.58787.jnareb@gmail.com>
+References: <1324113743-21498-1-git-send-email-jnareb@gmail.com> <201112190154.19107.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 19 11:38:04 2011
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Juergen Kreileder <jk@blackdown.de>,
+	Junio Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 19 13:12:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rcabb-0002Yl-Cc
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 11:38:03 +0100
+	id 1Rcc4h-0007SY-Jp
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 13:12:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752505Ab1LSKhy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Dec 2011 05:37:54 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45820
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752478Ab1LSKhw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Dec 2011 05:37:52 -0500
-Received: (qmail 27861 invoked by uid 107); 19 Dec 2011 10:44:31 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 19 Dec 2011 05:44:31 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Dec 2011 05:37:46 -0500
+	id S1752931Ab1LSMMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Dec 2011 07:12:06 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:33155 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752899Ab1LSMME (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Dec 2011 07:12:04 -0500
+Received: by eekc4 with SMTP id c4so5369018eek.19
+        for <git@vger.kernel.org>; Mon, 19 Dec 2011 04:12:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=TiLvSpNphtXNRGPLmfcrVY/0I0Q8qvt5WSbu1MNsNJs=;
+        b=dKp5zTysQSAniUFGqqmOKz3ysh0bPVQFo3yM0HT8EAi6bPe2/dOE6bPOI28UuTbSAb
+         9XJfLWdrKnlM1FBeH0rZ6uXaQsPkPYe27IxUzHNn1fFf1KzwXcXhOoqMN9TU3cOQP5Q/
+         tTaZk5P0MLhr6/oOkNbpCHW9dW9iJNh+oriOs=
+Received: by 10.213.2.131 with SMTP id 3mr2599706ebj.102.1324296723189;
+        Mon, 19 Dec 2011 04:12:03 -0800 (PST)
+Received: from [192.168.1.13] (aehn116.neoplus.adsl.tpnet.pl. [79.186.195.116])
+        by mx.google.com with ESMTPS id t59sm26087415eeh.10.2011.12.19.04.12.01
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 19 Dec 2011 04:12:01 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <201112190154.19107.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vbor5nmsq.fsf_-_@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187448>
 
-On Sun, Dec 18, 2011 at 09:38:29PM -0800, Junio C Hamano wrote:
+Jakub Narebski wrote:
 
-> If you push into a shared repository that others push to, and you have
-> local branches in your repository that matches the remote side but do not
-> keep them up-to-date, then 'matching refs' is not an appropriate default
-> for you.
+> e5d3de5 (gitweb: use Perl built-in utf8 function for UTF-8 decoding.,
+> 2007-12-04) was meant to make gitweb faster by using Perl's internals
+> (see subsection "Messing with Perl's Internals" in Encode(3pm) manpage)
 > 
-> Detect when push failed due to non-fast-forward _and_ we did matching refs
-> by default (i.e. if the user explicitly said ':' from the command line, or
-> had push.default set to 'matching', then we do not want to advise), and
-> give a hint to tell the user that the user may want to set 'push.default'
-> configuration variable to 'upstream', if the remote repository receives
-> pushes from other places.
+> Simple benchmark confirms that (old = 00f429a, new = this version);
+> note that it is synthetic benchmark of standalone subroutines, not
+> of gitweb itself
+> 
+>         old  new
+>   old    -- -65%
+>   new  189%   --
 
-I like the general idea. I initially had the thought "wait, don't we
-already complain loudly when push.default is not set?". But it seems we
-ripped that out long ago (I think I set push.default to "matching" to
-shut it up, and then never noticed that doing so is no longer
-necessary).
+Nb. that was about operations / second (higher is better):
 
-Focusing instead on when an actual (suspected) misconfiguration has
-occurred is a much better approach. It won't catch the case of "oops,
-I'm on branch 'foo' and just pushed not-ready-to-publish work to 'bar'".
-But the point is not necessarily to catch every mistake, but rather
-catch some easy ones and hopefully educate the user to update their
-settings or modify their workflow as appropriate.
+           Rate  old  new
+    old  2067/s   -- -65%
+    new  5863/s 184%   --
 
-> +static const char *message_advice_use_upstream[] = {
-> +	"If you are pushing into a repository that receives pushes from",
-> +	"repositories other than the current repository, you may want to",
-> +	"set 'push.default' configuration variable to 'upstream' to avoid",
-> +	"pushing branches you haven't worked on that others have updated.",
-> +};
+Or in slightly different benchmark (more smaller lines):
 
-Minor English nit: I would say "...you want to set _the_ 'push.default'
-configuration variable...".
+          Rate  old  new
+    old  277/s   -- -73%
+    new 1021/s 268%   --
 
-The first few lines feel a little overwhelming, as you are setting up a
-hypothetical "if you are in situation X" in as few words as possible,
-but it involves the word "repository" three different times (to refer to
-three different repositories). I don't think there is anything
-inaccurate in the text, or even that the same meaning could be conveyed
-more succinctly. But I wonder if it would make sense to take a step back
-and stop worrying about the potential repository setup, and try to
-describe the failure more specifically.
+ old$ time ./t9500-gitweb-standalone-no-errors.sh >/dev/null
 
-It seems like the real problem is that they are on branch "foo", but the
-matching behavior tried to push "bar", which didn't work. And we are
-worried that they may be surprised that we even attempted to push "bar"
-at all.
+   real       1m16.788s
+   user       1m0.908s
+   sys        0m14.033s
+   user+sys   1m14.941s
 
-And that probably happened because of the situation you describe, but we
-(and the user) don't have to think about that. We can just think about
-the more immediate mistake of "oops, I didn't want to push 'bar'".
+ new$ time ./t9500-gitweb-standalone-no-errors.sh >/dev/null
 
-Which leads me to two ideas:
+    real      1m12.216s
+    user      0m57.300s
+    sys       0m13.329s
+    user+sys  1m10.639s
 
-  1. This is not good advice to give when pushing the _current_ branch
-     failed due to non-ff. Setting push.default to "upstream" would
-     probably yield the same error. We should probably tighten the
-     condition for showing this message to when a non-HEAD branch failed
-     to fast-forward.
+Though such benchmarks should have been a part of e5d3de5.
 
-  2. The text should focus on the (possible) local misconfiguration, not
-     the repo setup.
 
-So maybe something like:
+P.S. I started to get strange errors
 
-  By default, git pushes all branches that have a matching counterpart
-  on the remote. In this case, some of your local branches were stale
-  with respect to their remote counterparts. If you did not intend to
-  push these branches, you may want to set the 'push.default'
-  configuration variable to 'upstream' to push only the current branch.
+ XML Parsing Error: xml processing instruction not at start of external entity
+ Location: http://localhost/cgi-bin/gitweb/gitweb.cgi
+ Line Number 37, Column 1:
+ <?xml version="1.0" encoding="utf-8"?>
+ ^
 
-I'm not 100% happy with that text, but I think you can see the direction
-I am talking about.
+while "show source" shows that '<?xml version="1.0" encoding="utf-8"?>'
+is the first line.  WTF?!?
 
->  static int push_with_options(struct transport *transport, int flags)
->  {
->  	int err;
-> @@ -136,6 +158,9 @@ static int push_with_options(struct transport *transport, int flags)
->  
->  	err |= transport_disconnect(transport);
->  
-> +	if (nonfastforward && default_matching_used)
-> +		advise_use_upstream();
-> +
+P.P.S. Now I am getting errors when running gitweb, but only in some
+cases (via mod_cgi not as standalone script, only when using lynx),
+namely it looks like it falls back to 'latin1' when doing content
+which is valid UTF-8.
 
-How does the location of this message interact with the existing
-messages?  It seems to come before the usual non-fast-forward advice,
-but after the status table and "failed to push some refs to..." error
-message.
+Will investigate.
 
-E.g.:
-
-  To origin
-     1065894..c6935ca  master -> master
-   ! [rejected]        other -> other (non-fast-forward)
-  error: failed to push some refs to 'origin'
-  hint: If you are pushing into a repository that receives pushes from
-  hint: repositories other than the current repository, you may want to
-  hint: set 'push.default' configuration variable to 'upstream' to avoid
-  hint: pushing branches you haven't worked on that others have updated.
-  To prevent you from losing history, non-fast-forward updates were rejected
-  Merge the remote changes (e.g. 'git pull') before pushing again.  See the
-  'Note about fast-forwards' section of 'git push --help' for details.
-
-which is quite a chunk of text. If we follow my suggestion above and
-only print this message for non-HEAD refs, then these two messages
-become an either/or situation, I think. If the HEAD failed to
-fast-forward, then the right advice is probably "git pull && git push".
-If a non-HEAD failed, then the right advice is either "git checkout $X
-&& git pull && git push" or "here's how to avoid accidentally pushing
-$X".
-
-So the logic would be something like:
-
-  if (nonfastforward == NONFASTFORWARD_HEAD)
-          advise_pull_before_push();
-  else if (nonfastforward == NONFASTFORWAD_OTHER) {
-          if (default_matching_used)
-                  advise_use_upstream();
-          else
-                  advise_checkout_pull_push();
-  }
-
-I'm not sure that the checkout-pull-push advice is really all that good,
-but we don't have much else to offer.
-
--Peff
+-- 
+Jakub Narebski
+Poland
