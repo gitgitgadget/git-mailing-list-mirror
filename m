@@ -1,117 +1,82 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 4/3] gitweb: Fix fallback mode of to_utf8 subroutine
-Date: Mon, 19 Dec 2011 13:11:57 +0100
-Message-ID: <201112191311.58787.jnareb@gmail.com>
-References: <1324113743-21498-1-git-send-email-jnareb@gmail.com> <201112190154.19107.jnareb@gmail.com>
+From: Stephen Major <smajor@gmail.com>
+Subject: Re: post-receive for web deployment
+Date: Mon, 19 Dec 2011 04:42:37 -0800
+Message-ID: <CALzTOmJacwJFNJJo6Y7kjq2pVP8DcgYfWf=bsD0m9oK1XsZ9Yw@mail.gmail.com>
+References: <CALzTOmJUqzO8H5UxyFaodi98DBJtFvsbQsHsYh1U=Ggq3NRO5A@mail.gmail.com>
+	<CALzTOm+sJHF_7WzjD7bCqAiAbQSV0A3hEX1KdWfFzV7-ePzX2w@mail.gmail.com>
+	<CAMK1S_hjncBxdh4+UXAJbtJnsPWZUpWASyixG8eNcpFLMRpLgw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Juergen Kreileder <jk@blackdown.de>,
-	Junio Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 19 13:12:12 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 19 13:42:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rcc4h-0007SY-Jp
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 13:12:11 +0100
+	id 1RccYM-0003pr-J4
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Dec 2011 13:42:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752931Ab1LSMMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Dec 2011 07:12:06 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:33155 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752899Ab1LSMME (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Dec 2011 07:12:04 -0500
-Received: by eekc4 with SMTP id c4so5369018eek.19
-        for <git@vger.kernel.org>; Mon, 19 Dec 2011 04:12:03 -0800 (PST)
+	id S1752819Ab1LSMmk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Dec 2011 07:42:40 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:62308 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751866Ab1LSMmi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Dec 2011 07:42:38 -0500
+Received: by qcqz2 with SMTP id z2so3033086qcq.19
+        for <git@vger.kernel.org>; Mon, 19 Dec 2011 04:42:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=TiLvSpNphtXNRGPLmfcrVY/0I0Q8qvt5WSbu1MNsNJs=;
-        b=dKp5zTysQSAniUFGqqmOKz3ysh0bPVQFo3yM0HT8EAi6bPe2/dOE6bPOI28UuTbSAb
-         9XJfLWdrKnlM1FBeH0rZ6uXaQsPkPYe27IxUzHNn1fFf1KzwXcXhOoqMN9TU3cOQP5Q/
-         tTaZk5P0MLhr6/oOkNbpCHW9dW9iJNh+oriOs=
-Received: by 10.213.2.131 with SMTP id 3mr2599706ebj.102.1324296723189;
-        Mon, 19 Dec 2011 04:12:03 -0800 (PST)
-Received: from [192.168.1.13] (aehn116.neoplus.adsl.tpnet.pl. [79.186.195.116])
-        by mx.google.com with ESMTPS id t59sm26087415eeh.10.2011.12.19.04.12.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 19 Dec 2011 04:12:01 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201112190154.19107.jnareb@gmail.com>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=PlWEuNtYat6tiUrzT3bXvelS6RkE+TykA0uOgU6qv2g=;
+        b=i+cIY6RkLETXhKPvykMtIl0NT5scqqnEtQVp+n0Awpf5tvbaoChpZABmD51xdm17hx
+         FxVOK7F6YvIZ++Q4sjQnNn39MhWfz1JkyR8c3rCqBul/rCoICl2ZV0J+lnXWGkmrN0NF
+         1aZ6iC/+d/f3a0AW82QBllGcM53kaDcfHQtv0=
+Received: by 10.229.77.134 with SMTP id g6mr5379936qck.125.1324298557651; Mon,
+ 19 Dec 2011 04:42:37 -0800 (PST)
+Received: by 10.229.33.67 with HTTP; Mon, 19 Dec 2011 04:42:37 -0800 (PST)
+In-Reply-To: <CAMK1S_hjncBxdh4+UXAJbtJnsPWZUpWASyixG8eNcpFLMRpLgw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187449>
 
-Jakub Narebski wrote:
+After some playing I found using git clone to export to the staging
+path and then doing git checkout -f master for the production path
+keeps the files in the production tree clean while leaving any
+un-tracked files in tact, seems what
+Johannes said was true and this seems like a simple workaround... not
+sure about working with indexes like he pointed out.
 
-> e5d3de5 (gitweb: use Perl built-in utf8 function for UTF-8 decoding.,
-> 2007-12-04) was meant to make gitweb faster by using Perl's internals
-> (see subsection "Messing with Perl's Internals" in Encode(3pm) manpage)
-> 
-> Simple benchmark confirms that (old = 00f429a, new = this version);
-> note that it is synthetic benchmark of standalone subroutines, not
-> of gitweb itself
-> 
->         old  new
->   old    -- -65%
->   new  189%   --
-
-Nb. that was about operations / second (higher is better):
-
-           Rate  old  new
-    old  2067/s   -- -65%
-    new  5863/s 184%   --
-
-Or in slightly different benchmark (more smaller lines):
-
-          Rate  old  new
-    old  277/s   -- -73%
-    new 1021/s 268%   --
-
- old$ time ./t9500-gitweb-standalone-no-errors.sh >/dev/null
-
-   real       1m16.788s
-   user       1m0.908s
-   sys        0m14.033s
-   user+sys   1m14.941s
-
- new$ time ./t9500-gitweb-standalone-no-errors.sh >/dev/null
-
-    real      1m12.216s
-    user      0m57.300s
-    sys       0m13.329s
-    user+sys  1m10.639s
-
-Though such benchmarks should have been a part of e5d3de5.
+echo "Resetting staging tree"
+rm -rf staging.git $staging_path
+git --work-tree=3D$staging_path clone ./ staging.git
 
 
-P.S. I started to get strange errors
+echo "Resetting production tree"
+git --work-tree=3D$live_path checkout -f master
 
- XML Parsing Error: xml processing instruction not at start of external entity
- Location: http://localhost/cgi-bin/gitweb/gitweb.cgi
- Line Number 37, Column 1:
- <?xml version="1.0" encoding="utf-8"?>
- ^
 
-while "show source" shows that '<?xml version="1.0" encoding="utf-8"?>'
-is the first line.  WTF?!?
-
-P.P.S. Now I am getting errors when running gitweb, but only in some
-cases (via mod_cgi not as standalone script, only when using lynx),
-namely it looks like it falls back to 'latin1' when doing content
-which is valid UTF-8.
-
-Will investigate.
-
--- 
-Jakub Narebski
-Poland
+On Mon, Dec 19, 2011 at 2:35 AM, Sitaram Chamarty <sitaramc@gmail.com> =
+wrote:
+> On Mon, Dec 19, 2011 at 8:12 AM, Stephen Major <smajor@gmail.com> wro=
+te:
+>> Hello,
+>>
+>> I am having some difficulty understanding what I am doing wrong when
+>> working with git to deploy a website through the use of a post-recei=
+ve
+>> hook on the remote.
+>
+> The most common issue I have seen in cases like this is that you need
+> to 'unset GIT_DIR'. =A0In fact, anytime you play around with running
+> stuff from *inside* a hook that works fine when you run it from
+> outside, you need to check what GIT_ variables are present.
+>
+> I believe 'unset `git rev-parse --local-env-vars`' is a good idea too=
+;
+> probably much simpler.
