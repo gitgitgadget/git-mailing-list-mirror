@@ -1,65 +1,179 @@
-From: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>
-Subject: Re: Escape character for .gitconfig
-Date: Tue, 20 Dec 2011 20:46:44 +0100
-Message-ID: <4EF0E624.1090500@dirk.my1.cc>
-References: <4EEC6A9D.1060005@icefield.yk.ca> <20111217105806.GB23935@sigill.intra.peff.net> <4EED9BE5.8060600@icefield.yk.ca> <20111218095120.GA2290@sigill.intra.peff.net> <4EEF5F59.8030802@dirk.my1.cc> <4EF04199.1010008@icefield.yk.ca>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2] t4018: introduce test cases for the internal hunk
+ header patterns
+Date: Tue, 20 Dec 2011 20:52:33 +0100
+Message-ID: <4EF0E781.4060506@kdbg.org>
+References: <7vmxaokv6k.fsf@alter.siamese.dyndns.org> <1324348939-27115-1-git-send-email-drafnel@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Erik Blake <erik@icefield.yk.ca>
-X-From: git-owner@vger.kernel.org Tue Dec 20 20:46:55 2011
+Cc: gitster@pobox.com, git@vger.kernel.org, peff@peff.net,
+	jrnieder@gmail.com, trast@student.ethz.ch
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 20 20:52:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rd5eG-0007Jy-5p
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Dec 2011 20:46:52 +0100
+	id 1Rd5jx-0001OU-3v
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Dec 2011 20:52:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752826Ab1LTTqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Dec 2011 14:46:49 -0500
-Received: from smtprelay05.ispgateway.de ([80.67.31.98]:48531 "EHLO
-	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751669Ab1LTTqr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Dec 2011 14:46:47 -0500
-Received: from [84.176.60.213] (helo=[192.168.2.100])
-	by smtprelay05.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1Rd5e9-0002un-4b; Tue, 20 Dec 2011 20:46:45 +0100
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <4EF04199.1010008@icefield.yk.ca>
-X-Df-Sender: NzU3NjQ2
+	id S1752482Ab1LTTwl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Dec 2011 14:52:41 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:52367 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751715Ab1LTTwj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Dec 2011 14:52:39 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 9E379A7EB4;
+	Tue, 20 Dec 2011 20:53:00 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 0B42519F5FE;
+	Tue, 20 Dec 2011 20:52:34 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <1324348939-27115-1-git-send-email-drafnel@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187522>
 
-Am 20.12.2011 09:04 schrieb Erik Blake:
-> Hi Dirk,
->
-> I ended up using "'C:/Program Files (x86)/Notepad++/notepad++.exe'
-> -multiInst -notabbar -nosession -noPlugin" which works nicely for me
-> (note the placement of the inner quotations).
->
-> It is notepad.exe (the default Windows editor) that fails on files with
-> only <lf> termination. That's why I was trying to set notepad++ as the
-> git editor as it is vastly superior.
->
-> Cheers,
-> Erik
+Am 20.12.2011 03:42, schrieb Brandon Casey:
+> +int WRONG_global_variable;
 
-Hi Erik,
+Personally, I'm not a fan of this one. IMHO, global variable
+definitions need not be ignored. (But I can live with it.)
 
-oops, I overread that you talked about notepad (not notepad++) and the
-<lf> stuff. My fault. I use the portable version of notepad++ and don't
-have the "space in path" problem. But if you mainly use the git-bash (as
-I do) instead of cmd.exe, then probably you could tweak your .bashrc:
+But here are some more tests that I care about and that you can squash in.
 
-export PATH="/C:/Program Files (x86)/Notepad++":$PATH
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ t/t4018/broken_class_constructor.cpp               |    3 +-
+ t/t4018/broken_return_type_in_global_namespace.cpp |   16 ++++++++++++++
+ t/t4018/class_definition.cpp                       |   19 +++++++++++++++++
+ t/t4018/derived_class_definition.cpp               |   20 ++++++++++++++++++
+ t/t4018/ignore_access_specifier.cpp                |   22 ++++++++++++++++++++
+ 5 files changed, 79 insertions(+), 1 deletions(-)
+ create mode 100644 t/t4018/broken_return_type_in_global_namespace.cpp
+ create mode 100644 t/t4018/class_definition.cpp
+ create mode 100644 t/t4018/derived_class_definition.cpp
+ create mode 100644 t/t4018/ignore_access_specifier.cpp
 
-and then run notepad++ w/o giving the absolute path.
-
-Cheers,
-    Dirk
+diff --git a/t/t4018/broken_class_constructor.cpp b/t/t4018/broken_class_constructor.cpp
+index 774c7f9..28c1bc8 100644
+--- a/t/t4018/broken_class_constructor.cpp
++++ b/t/t4018/broken_class_constructor.cpp
+@@ -3,7 +3,8 @@ int WRONG_function_hunk_header_preceding_the_right_one (void)
+ 	return 0;
+ }
+ 
+-RIGHT_function_hunk_header::RIGHT_function_hunk_header (void)
++RIGHT_function_hunk_header::RIGHT_function_hunk_header (int x) :
++	WRONG_member_initializer(x)
+ {
+ 	const char *msg = "ChangeMe";
+ 	printf("Hello, world, %s\n", msg);
+diff --git a/t/t4018/broken_return_type_in_global_namespace.cpp b/t/t4018/broken_return_type_in_global_namespace.cpp
+new file mode 100644
+index 0000000..da9931b
+--- /dev/null
++++ b/t/t4018/broken_return_type_in_global_namespace.cpp
+@@ -0,0 +1,16 @@
++int WRONG_function_hunk_header_preceding_the_right_one (void)
++{
++	return 0;
++}
++
++::TypeInGlobalNamespace RIGHT_function_hunk_header()
++{
++	const char *msg = "ChangeMe";
++	printf("Hello, world, %s\n", msg);
++	return 0;
++}
++
++int WRONG_function_hunk_header_following_the_right_one (void)
++{
++	return 0;
++}
+diff --git a/t/t4018/class_definition.cpp b/t/t4018/class_definition.cpp
+new file mode 100644
+index 0000000..fc3df34
+--- /dev/null
++++ b/t/t4018/class_definition.cpp
+@@ -0,0 +1,19 @@
++int WRONG_function_hunk_header_preceding_the_right_one (void)
++{
++	return 0;
++}
++
++class RIGHT_class_name
++{
++	void WRONG_function_name_following_the_right_one()
++	{
++		const char *msg = "ChangeMe";
++		printf("Hello, world, %s\n", msg);
++		return 0;
++	}
++}
++
++int WRONG_function_hunk_header_following_the_right_one (void)
++{
++	return 0;
++}
+diff --git a/t/t4018/derived_class_definition.cpp b/t/t4018/derived_class_definition.cpp
+new file mode 100644
+index 0000000..b8501a5
+--- /dev/null
++++ b/t/t4018/derived_class_definition.cpp
+@@ -0,0 +1,20 @@
++int WRONG_function_hunk_header_preceding_the_right_one (void)
++{
++	return 0;
++}
++
++class RIGHT_class_name :
++	public WRONG_class_name_following_the_right_one
++{
++	void WRONG_function_name_following_the_right_one()
++	{
++		const char *msg = "ChangeMe";
++		printf("Hello, world, %s\n", msg);
++		return 0;
++	}
++}
++
++int WRONG_function_hunk_header_following_the_right_one (void)
++{
++	return 0;
++}
+diff --git a/t/t4018/ignore_access_specifier.cpp b/t/t4018/ignore_access_specifier.cpp
+new file mode 100644
+index 0000000..d865040
+--- /dev/null
++++ b/t/t4018/ignore_access_specifier.cpp
+@@ -0,0 +1,22 @@
++int WRONG_function_hunk_header_preceding_the_right_one (void)
++{
++	return 0;
++}
++
++class RIGHT_class_name
++{
++public:
++protected:
++private:
++	void WRONG_function_name_following_the_right_one()
++	{
++		const char *msg = "ChangeMe";
++		printf("Hello, world, %s\n", msg);
++		return 0;
++	}
++}
++
++int WRONG_function_hunk_header_following_the_right_one (void)
++{
++	return 0;
++}
+-- 
+1.7.8.216.g2e426
