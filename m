@@ -1,79 +1,79 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH 2/2] Documentation: make git-sh-setup docs less scary
-Date: Tue, 20 Dec 2011 12:09:05 +0100
-Message-ID: <c8867738c264a76f9662080b64e00615ec1aa28f.1324378986.git.trast@student.ethz.ch>
-References: <c53feb0de8006c205fd26c2c07dcd78bd86b6c24.1324378986.git.trast@student.ethz.ch>
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: Re: git-p4: labels
+Date: Tue, 20 Dec 2011 12:03:28 +0000
+Message-ID: <CAOpHH-VUJBU5ygabw7YS_FHz6xMDtMkdWMNdH3Mnvp+Crbwh7Q@mail.gmail.com>
+References: <4EEE3203.10605@diamand.org> <CAOpHH-W1hE6bw51NKXrdf1QtF3T+v4aLwxMn+_5xPP5j=uJr3w@mail.gmail.com>
+ <20111220014753.GD20591@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 20 12:09:19 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Luke Diamand <luke@diamand.org>, Git List <git@vger.kernel.org>,
+	Michael Horowitz <michael.horowitz@ieee.org>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Tue Dec 20 13:04:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RcxZO-0002vW-Iw
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Dec 2011 12:09:18 +0100
+	id 1RcyQT-00045p-EM
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Dec 2011 13:04:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751664Ab1LTLJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Dec 2011 06:09:14 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:56092 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751456Ab1LTLJJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Dec 2011 06:09:09 -0500
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 20 Dec
- 2011 12:09:03 +0100
-Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
- (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 20 Dec
- 2011 12:09:07 +0100
-X-Mailer: git-send-email 1.7.8.484.gdad4270
-In-Reply-To: <c53feb0de8006c205fd26c2c07dcd78bd86b6c24.1324378986.git.trast@student.ethz.ch>
-X-Originating-IP: [129.132.153.233]
+	id S1751646Ab1LTMED convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Dec 2011 07:04:03 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:52186 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751223Ab1LTMEB convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Dec 2011 07:04:01 -0500
+Received: by lahd3 with SMTP id d3so143502lah.19
+        for <git@vger.kernel.org>; Tue, 20 Dec 2011 04:03:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=WWDx6NgQl1rrvYnBUQihqMkNvfQwP5Jl9Ul86ocm+yE=;
+        b=wfthWsY5CIA+UprA71USuIPYYOLlZm4BWU0LD0KpMoALI2MlH4g7nv0uT/QesXzyKH
+         cDquYNtlP3NnxKfZ8qPx7ZyBLm5qA10W+lBGIkJCywO8y6xtpUZ1yT1+ARRzb9wWPauD
+         7mbRvjtuJsH/h/U9iQXtd/OrcPmihjefknuhQ=
+Received: by 10.152.104.47 with SMTP id gb15mr1379039lab.9.1324382639369; Tue,
+ 20 Dec 2011 04:03:59 -0800 (PST)
+Received: by 10.152.5.105 with HTTP; Tue, 20 Dec 2011 04:03:28 -0800 (PST)
+In-Reply-To: <20111220014753.GD20591@padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187510>
 
-At least one IRC user was scared away by the introductory "This is not
-a command the end user would want to run.  Ever." to the point of not
-reading on.
+On Tue, Dec 20, 2011 at 1:47 AM, Pete Wyckoff <pw@padd.com> wrote:
+> But adding a new command to go back and look for _new_ labels
+> makes sense too. =A0Finding the new ones isn't so bad, given that
+> p4 can just print them directly, and we keep them as tags in git.
 
-Reword it in a more matter-of-fact way that does not intentionally try
-to scare the user away.  Since 46bac90 (Do not install shell libraries
-executable, 2010-01-31) it is not executable anyway, so the end user
-would get
+Now that you say that, it is now very difficult to detect branches on a=
+n
+already imported repository. Maybe the new command could also do that?
+In this case I would call it "git-p4 resync".
 
-  $ git sh-setup
-  fatal: cannot exec 'git-sh-setup': Permission denied
+> [...]
+> But isn't there a step in label detection that looks an awful lot
+> like branch point detection? =A0You've got a label, which is a
+> bunch of files, not a p4 change number. =A0Now you have to figure
+> out the change number so you can go hunt that down in the git
+> history. =A0Vitor's take on this was to use git diff machinery to
+> find it, not trawling through the p4 change/filelog/describe
+> history, mainly because it's likely much faster to do it locally
+> in git.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
- Documentation/git-sh-setup.txt |   11 ++++-------
- 1 files changed, 4 insertions(+), 7 deletions(-)
+In labels this is easier and fast:
 
-diff --git a/Documentation/git-sh-setup.txt b/Documentation/git-sh-setup.txt
-index bbfefca..612fb50 100644
---- a/Documentation/git-sh-setup.txt
-+++ b/Documentation/git-sh-setup.txt
-@@ -13,13 +13,10 @@ SYNOPSIS
- DESCRIPTION
- -----------
- 
--This is not a command the end user would want to run.  Ever.
--This documentation is meant for people who are studying the
--Porcelain-ish scripts and/or are writing new ones.
--
--The 'git sh-setup' scriptlet is designed to be sourced (using
--`.`) by other shell scripts to set up some variables pointing at
--the normal git directories and a few helper shell functions.
-+This command cannot be run by the end user.  Shell scripts can
-+source it (using `.` as indicated above) to set up some variables
-+pointing at the normal git directories and a few helper shell
-+functions.
- 
- Before sourcing it, your script should set up a few variables;
- `USAGE` (and `LONG_USAGE`, if any) is used to define message
--- 
-1.7.8.484.gdad4270
+p4 changes -m 1 @label_name
+
+Then we could diff the label against the changelist. If equal simply ta=
+g
+the commit, if different then we need to create a temporary branch to
+commit the changes and tag that instead.
+
+--=20
+Vitor Antunes
