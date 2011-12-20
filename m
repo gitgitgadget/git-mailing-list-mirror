@@ -1,70 +1,65 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 2/2] Documentation: make git-sh-setup docs less scary
-Date: Tue, 20 Dec 2011 20:45:05 +0100
-Message-ID: <CACBZZX5BSfh8S9Kf1Wbi+NPEKpxJNXU8TD8-hkC2o1Mi91Or6A@mail.gmail.com>
-References: <c53feb0de8006c205fd26c2c07dcd78bd86b6c24.1324378986.git.trast@student.ethz.ch>
- <c8867738c264a76f9662080b64e00615ec1aa28f.1324378986.git.trast@student.ethz.ch>
+From: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>
+Subject: Re: Escape character for .gitconfig
+Date: Tue, 20 Dec 2011 20:46:44 +0100
+Message-ID: <4EF0E624.1090500@dirk.my1.cc>
+References: <4EEC6A9D.1060005@icefield.yk.ca> <20111217105806.GB23935@sigill.intra.peff.net> <4EED9BE5.8060600@icefield.yk.ca> <20111218095120.GA2290@sigill.intra.peff.net> <4EEF5F59.8030802@dirk.my1.cc> <4EF04199.1010008@icefield.yk.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Dec 20 20:45:33 2011
+To: Erik Blake <erik@icefield.yk.ca>
+X-From: git-owner@vger.kernel.org Tue Dec 20 20:46:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rd5cy-0006iC-DH
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Dec 2011 20:45:32 +0100
+	id 1Rd5eG-0007Jy-5p
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Dec 2011 20:46:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752658Ab1LTTp2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Dec 2011 14:45:28 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:55795 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751669Ab1LTTp1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Dec 2011 14:45:27 -0500
-Received: by werm1 with SMTP id m1so2223004wer.19
-        for <git@vger.kernel.org>; Tue, 20 Dec 2011 11:45:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=T2ya0WVNI1lx+ZERKcJAv6xitg40zR5BIXmLyBzAYQ0=;
-        b=r8kihjCU/XNISYsaScZ5dqbbc7bWdMkNT/zs3voQ1d8H9gfl+FVzQeYBcrQL/NZ36R
-         nVRIe3POK7bcVf4dsHDREneEOBUP6GJiefs2t1BxcQ7WFwq0yQsi0KNfSV79cT2brcvq
-         /d/kklXdspSNgzWVAkt+cD7E+6iUD85OOYTIA=
-Received: by 10.216.136.28 with SMTP id v28mr7439176wei.58.1324410326177; Tue,
- 20 Dec 2011 11:45:26 -0800 (PST)
-Received: by 10.223.77.91 with HTTP; Tue, 20 Dec 2011 11:45:05 -0800 (PST)
-In-Reply-To: <c8867738c264a76f9662080b64e00615ec1aa28f.1324378986.git.trast@student.ethz.ch>
+	id S1752826Ab1LTTqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Dec 2011 14:46:49 -0500
+Received: from smtprelay05.ispgateway.de ([80.67.31.98]:48531 "EHLO
+	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751669Ab1LTTqr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Dec 2011 14:46:47 -0500
+Received: from [84.176.60.213] (helo=[192.168.2.100])
+	by smtprelay05.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1Rd5e9-0002un-4b; Tue, 20 Dec 2011 20:46:45 +0100
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <4EF04199.1010008@icefield.yk.ca>
+X-Df-Sender: NzU3NjQ2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187521>
 
-On Tue, Dec 20, 2011 at 12:09, Thomas Rast <trast@student.ethz.ch> wrot=
-e:
-> At least one IRC user was scared away by the introductory "This is no=
-t
-> a command the end user would want to run. =C2=A0Ever." to the point o=
-f not
-> reading on.
+Am 20.12.2011 09:04 schrieb Erik Blake:
+> Hi Dirk,
+>
+> I ended up using "'C:/Program Files (x86)/Notepad++/notepad++.exe'
+> -multiInst -notabbar -nosession -noPlugin" which works nicely for me
+> (note the placement of the inner quotations).
+>
+> It is notepad.exe (the default Windows editor) that fails on files with
+> only <lf> termination. That's why I was trying to set notepad++ as the
+> git editor as it is vastly superior.
+>
+> Cheers,
+> Erik
 
-Arguably that's the point isn't it? To not have people who aren't
-maintaining Git itself waste time on reading it.
+Hi Erik,
 
-Anyway I don't care how it's worded, but if you're going to patch it
-you should probably do these too for consistency, since they
-copy/paste this same blurb:
+oops, I overread that you talked about notepad (not notepad++) and the
+<lf> stuff. My fault. I use the portable version of notepad++ and don't
+have the "space in path" problem. But if you mainly use the git-bash (as
+I do) instead of cmd.exe, then probably you could tweak your .bashrc:
 
-    $ git --no-pager grep -l 'This is not a command the end user would
-want to run.  Ever.'
-    Documentation/git-mergetool--lib.txt
-    Documentation/git-sh-i18n--envsubst.txt
-    Documentation/git-sh-i18n.txt
-    Documentation/git-sh-setup.txt
+export PATH="/C:/Program Files (x86)/Notepad++":$PATH
 
-And actually we might want to do all those with some asciidoc include
-mechanism.
+and then run notepad++ w/o giving the absolute path.
+
+Cheers,
+    Dirk
