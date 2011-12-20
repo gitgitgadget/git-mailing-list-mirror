@@ -1,84 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Debugging git-commit slowness on a large repo
-Date: Mon, 19 Dec 2011 17:21:03 -0800
-Message-ID: <7vehw0kphc.fsf@alter.siamese.dyndns.org>
-References: <CB0BCE02.2CD42%joshua.redstone@fb.com>
- <CB1518AB.2D649%joshua.redstone@fb.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [RFC/PATCH 0/2] Re: git-svn: multiple fetch lines
+Date: Mon, 19 Dec 2011 19:22:36 -0600
+Message-ID: <20111220012236.GB20979@elie.hsd1.il.comcast.net>
+References: <CA+7g9Jxd3mhbra34f+MiJRt36Lb6gVHi1nOCP8Zo5y-G9jB3qA@mail.gmail.com>
+ <20111217100521.GA12610@elie.hsd1.il.comcast.net>
+ <CA+7g9JzatFYViMk302uU-X=YQGF2wEsmASkLPm0tDfQvpL_-vQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Carlos =?utf-8?Q?Mart=C3=AD?= =?utf-8?Q?n?= Nieto 
-	<cmn@elego.de>, Tomas Carnecky <tom@dbservice.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Joshua Redstone <joshua.redstone@fb.com>
-X-From: git-owner@vger.kernel.org Tue Dec 20 02:21:16 2011
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Nathan Gray <n8gray@n8gray.org>
+X-From: git-owner@vger.kernel.org Tue Dec 20 02:22:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RcoOJ-0003ch-2U
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Dec 2011 02:21:15 +0100
+	id 1RcoPr-00045I-IF
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Dec 2011 02:22:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753790Ab1LTBVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Dec 2011 20:21:09 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60951 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753336Ab1LTBVI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Dec 2011 20:21:08 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5480A65F9;
-	Mon, 19 Dec 2011 20:21:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=umowN1U0lqZDCmKb8fOaLxGFoQo=; b=h6J46r
-	8sARxp+TL9lBOovZ4WO2yr1QSRayyy3lN4owQHe2eY8YmTmoGbt4/ecm1FN+tNoY
-	wGYviI1T4gyDbSL0uZtQkQV+83u5A2PGEKLMc+dZ2sUY/4Gzlm26ituWDCqOO6Jn
-	mnKZ93EUAZczqr3hGpbguw6AIlu81w14D3SAw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Sjw9VjhLxJdUNW+Ga0ZfSTAIITRmPoro
-	X1NEuYKGAH29wDbNcQcdmbyjw8AmZb3JmlXCqdJGeleZYT032OjrE+fBvOhTztyx
-	7geU7T7CrE7Tn1VIqq62hLbJnqjb4p4NUbqj6V1fs7/5Bh+FcBUvMlI+XhYyss9+
-	Otr7uLuQKvo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4AEA465F8;
-	Mon, 19 Dec 2011 20:21:05 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B26C565F5; Mon, 19 Dec 2011
- 20:21:04 -0500 (EST)
-In-Reply-To: <CB1518AB.2D649%joshua.redstone@fb.com> (Joshua Redstone's
- message of "Tue, 20 Dec 2011 00:51:16 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E2EAA0AE-2AA8-11E1-A258-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753652Ab1LTBWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Dec 2011 20:22:47 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:64466 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753205Ab1LTBWq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Dec 2011 20:22:46 -0500
+Received: by yhr47 with SMTP id 47so4419610yhr.19
+        for <git@vger.kernel.org>; Mon, 19 Dec 2011 17:22:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=ldA/CuJpC20xwHzOtKo+VIT3VBoaw9aiHLTE8U1KEJk=;
+        b=fKaqCLhouLHZcXK2Cn9YyUK2sJJ+Z6CVk4gH0IFbDWIW7ZSCVrBDh2M6e0fRzGGpbM
+         gtcrkSkNO/LW0KRbbo7zduygJUSVlG7iv1M+JBct8M5rUEHO0rvDn8cvHUqXi8F/k2uk
+         X3RpoqzdGMWsJmY8IvfpvrWq8rD7MsrHdeX9o=
+Received: by 10.236.187.97 with SMTP id x61mr31661487yhm.97.1324344165574;
+        Mon, 19 Dec 2011 17:22:45 -0800 (PST)
+Received: from elie.hsd1.il.comcast.net (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id s12sm199790and.15.2011.12.19.17.22.43
+        (version=SSLv3 cipher=OTHER);
+        Mon, 19 Dec 2011 17:22:44 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CA+7g9JzatFYViMk302uU-X=YQGF2wEsmASkLPm0tDfQvpL_-vQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21+51 (9e756d1adb76) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187489>
 
-Joshua Redstone <joshua.redstone@fb.com> writes:
+Nathan Gray wrote:
 
-> I've managed to speed up git-commit on large repos by 4x by removing some
-> safeguards that caused git to stat every file in the repo on commits that
-> touch a small number of files.  The diff, for illustrative purposes only,
-> is at:
->
->     https://gist.github.com/1499621
->
->
-> With a repo with 1 million files (but few commits), the diff drops the
-> commit time down from 7.3 seconds to 1.8 seconds, a 75% decrease. The
-> optimizations are:
+> How about something along these lines:
 
-I do not know if these kind of changes are called "optimizations" or
-merely making the command record a random tree object that may have some
-resemblance to what you wanted to commit but is subtly incorrect. I didn't
-fetch your safety removal, though.
+Sounds sensible.  Here's a patch series along those lines to get
+things started.  Please feel free to try them (use "make -C
+Documentation git-svn.1" to test), tweak to taste, and resend when
+ready for Eric to pick up.
 
-Wouldn't you get a similar speed-up without being unsafe if you simply ran
-"git commit" without any parameter (i.e. write out the current index as a
-tree and make a commit), combined with "--no-status" and perhaps "-q" to
-avoid running the comparison between the resulting commit and the working
-tree state after the commit?
+Thanks,
+
+Jonathan Nieder (1):
+  git-svn: clarify explanation of --destination argument
+
+Nathan Gray (1):
+  git-svn: multiple fetch/branches/tags keys are supported
+
+ Documentation/git-svn.txt |   31 ++++++++++++++++++++++++++-----
+ 1 files changed, 26 insertions(+), 5 deletions(-)
