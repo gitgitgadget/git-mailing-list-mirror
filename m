@@ -1,114 +1,113 @@
-From: Richard Hartmann <richih.mailinglist@gmail.com>
-Subject: Metadata storage - let's do this (was: "Tracking file metadata in git
- -- fix metastore or enhance git?") (was: "Revisiting metadata storage")
-Date: Tue, 20 Dec 2011 16:45:24 +0100
-Message-ID: <CAD77+gSihfmOV1ggAx9zcrqdn3F8CObXGZrJjSfMHKtY25teeg@mail.gmail.com>
+From: Brandon Casey <drafnel@gmail.com>
+Subject: Re: [PATCH v2] t4018: introduce test cases for the internal hunk
+ header patterns
+Date: Tue, 20 Dec 2011 09:58:37 -0600
+Message-ID: <CA+sFfMd95-T9K2CztByo7d9Yn-RN58oYfAz0ZA1Gp+84oBBs2g@mail.gmail.com>
+References: <7vmxaokv6k.fsf@alter.siamese.dyndns.org>
+	<1324348939-27115-1-git-send-email-drafnel@gmail.com>
+	<m3pqfjfy42.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: jrnieder@gmail.com, Ronan Keryell <Ronan.Keryell@hpc-project.com>,
-	hilco.wijbenga@gmail.com, Thorsten Glaser <tg@mirbsd.de>,
-	git.nabble.com@johnnyutahh.com
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 20 16:45:54 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, git@vger.kernel.org, peff@peff.net,
+	j6t@kdbg.org, jrnieder@gmail.com, trast@student.ethz.ch
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 20 16:58:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rd1t1-0004ST-Gb
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Dec 2011 16:45:51 +0100
+	id 1Rd25T-0001r2-7R
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Dec 2011 16:58:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752547Ab1LTPps (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Dec 2011 10:45:48 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:35709 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751750Ab1LTPpq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Dec 2011 10:45:46 -0500
-Received: by wibhm6 with SMTP id hm6so1470738wib.19
-        for <git@vger.kernel.org>; Tue, 20 Dec 2011 07:45:45 -0800 (PST)
+	id S1751713Ab1LTP6j convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Dec 2011 10:58:39 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:37600 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751516Ab1LTP6i convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Dec 2011 10:58:38 -0500
+Received: by obcwo16 with SMTP id wo16so2505629obc.19
+        for <git@vger.kernel.org>; Tue, 20 Dec 2011 07:58:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=GYqjtUjr2SNvyR+sadVWUQVfy2HbKfW7Zd+znUg89kc=;
-        b=cPqRfy5v9RsPxZNl7ksdLJBkru3AHxR/Tyh5oFIIS8/E/ehd/mECRoTieRNkdf7MOy
-         lByKrUV++VuyhgWxNGx9kyruvrF/vHWvbV9XLdLx90Z4p33sGd8vWmQXIGtVSzdQRCFX
-         xHbVHky8USwTQc9npzTwXxx2HkBRpzkGu3xVw=
-Received: by 10.180.77.42 with SMTP id p10mr5917847wiw.5.1324395945402; Tue,
- 20 Dec 2011 07:45:45 -0800 (PST)
-Received: by 10.216.10.208 with HTTP; Tue, 20 Dec 2011 07:45:24 -0800 (PST)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=PsY4GeHS+MxxTk7+RWuFZJ4Ou05Yux8YNzCyoMQJ4ug=;
+        b=mQ9RHBb3ikf1eDOiWHuUY8atSu3o8oEjLc05aKP+VLXCYwHAq+3gE4o3JfsS29/cjf
+         SoWpmn2u4/C9sHyaLQidNt8qxgp+kPY0j4w3kGTrzt/48P6HevIAAI+HdkBlL2gXR9I9
+         vMPqHA2r6k8wFgeIPs3LMDkI6eFUjZ2GeH0Ss=
+Received: by 10.182.13.42 with SMTP id e10mr2210679obc.18.1324396717571; Tue,
+ 20 Dec 2011 07:58:37 -0800 (PST)
+Received: by 10.182.37.170 with HTTP; Tue, 20 Dec 2011 07:58:37 -0800 (PST)
+In-Reply-To: <m3pqfjfy42.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187514>
 
-Hi all,
+On Tue, Dec 20, 2011 at 2:25 AM, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
+> Brandon Casey <drafnel@gmail.com> writes:
+>
+>> diff --git a/t/t4018/ignore_global.cpp b/t/t4018/ignore_global.cpp
+>> new file mode 100644
+>> index 0000000..95e23bc
+>> --- /dev/null
+>> +++ b/t/t4018/ignore_global.cpp
+>> @@ -0,0 +1,19 @@
+>> +int WRONG_function_hunk_header_preceding_the_right_one (void)
+>> +{
+>> + =C2=A0 =C2=A0 return 0;
+>> +}
+>> +
+>> +int RIGHT_function_hunk_header (void)
+>> +{
+>> + =C2=A0 =C2=A0 printf("Hello, world\n");
+>> + =C2=A0 =C2=A0 return 0;
+>> +}
+>> +
+>> +int WRONG_global_variable;
+>> +
+>> +int ChangeMe;
+>> +
+>> +int WRONG_function_hunk_header_following_the_right_one (void)
+>> +{
+>> + =C2=A0 =C2=A0 return 0;
+>> +}
+>
+> Shouldn't ChangeMe be inside function?
 
-to summarize the current situation: quite a few people want to have
-this, but no one seems to be willing to actually jump into the cold
-water and swim.
+No, this one is placed here after the WRONG_global_variable to make
+sure that a global variable is not chosen for the hunk header.  It
+should chose the most recently encountered function name for the hunk
+header, which is RIGHT_function_hunk_header.
 
-I decided to scratch my own itch and started to collect requirements,
-etc. Obviously, those are mine. I can already tell you that I will
-focus on mtime and possibly EXIF support as that is what I need this
-whole thing for.
-You are very welcome to comment on any of this.
+>> diff --git a/t/t4018/simple.cpp b/t/t4018/simple.cpp
+>> new file mode 100644
+>> index 0000000..c96ad87
+>> --- /dev/null
+>> +++ b/t/t4018/simple.cpp
+>> @@ -0,0 +1,32 @@
+>> +/*
+>> + * =C2=A0Test file for testing the internal hunk header patterns
+>> + *
+>> + * =C2=A0The "RIGHT" hunk header function, the one that should appe=
+ar on the
+>> + * =C2=A0hunk header line, should be named "RIGHT_function_hunk_hea=
+der" and
+>> + * =C2=A0the body of this function should have an assignment that l=
+ooks like
+>> + *
+>> + * =C2=A0 =C2=A0 answer =3D 0
+>
+> Shouldn't it be ChangeMe?
 
+Whoops, I forgot about that text.  Thanks for noticing.  Yes this is
+incorrect now.  I think I'll break that out into a README file.
 
-Please note that I decided not to tie this into git but to use a
-separate file. The rationale being that, this way, normal git
-operations are not impacted in any way and allowing re-use elsewhere.
+v3 forthcoming.
 
-
-General:
-* Must work with non-git
-* Must play nicely with git
-** Must merge easily when there are no conflicts
-** Must conflict merges if layout version is changed
-* No XML as that does not merge
-* Assuming I spear-head this effort, it will be in Perl 5
-* Possible names include
-** metamonger
-** metamangler
-** git meta
-* Needs test suite
-
-Storage:
-* Versioned storage layout
-* Tab-seperated list (handle file names containing tabs via escaping?)
-* UTF-8 for file names, ISO-8859-1 for metadata
-* All binary data, if any (support for xattr?) will be ASCII-armoured
-* Metadata will be both machine and human readable _and_ explicitly be
-designed to facilitate manual editing
-
-Syntax:
-
-$0 save # save metadata, recursively, to .meta.db
-
-$0 apply # apply metadata, recursively, from .meta.db
-
-$0 diff # guess.
-
--q : quiet
--m : comma-seperated list to override what data will be stored/applied/diffed
--f : specify file name to store to/apply from
--F: store to/apply from .meta.db.$HOSTNAME
--U: store to/apply from .meta.db.$(cat /etc/hostuuid)
---exif-db : EXIF <> db
---exif-file : EXIF <> file
-
-I would like to have this tool be able to operate on EXIF data to see
-if the file's mtime and creation time are the same. Very specific use
-case, but hey. Maybe factor that out into a cleanly modularized system
-and call if via a more generic interface, though
-
-
-Depending on the feedback I get and how busy I am before christmas, I
-may get an initial version up and running before 2012.
-
-
-If you want to help, nag or anything, please do it asap.
-
-
-Thanks,
-Richard
+-Brandon
