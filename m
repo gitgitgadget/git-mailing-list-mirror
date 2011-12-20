@@ -1,59 +1,85 @@
-From: Nathan Panike <nwp@cs.wisc.edu>
-Subject: Re: [PATCH] Specify a precision for the length of a subject string
-Date: Tue, 20 Dec 2011 16:50:15 -0600
-Message-ID: <20111220225014.GD21353@llunet.cs.wisc.edu>
-References: <20111220220754.GC21353@llunet.cs.wisc.edu>
- <87k45qriu2.fsf@thomas.inf.ethz.ch>
-Reply-To: nathan.panike@gmail.com
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH] builtin/init-db.c: eliminate -Wformat warning on Solaris
+Date: Tue, 20 Dec 2011 23:27:41 +0000
+Message-ID: <1324423661-31174-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Nathan W. Panike" <nathan.panike@gmail.com>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Dec 20 23:50:28 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 21 00:27:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rd8Vv-0000nl-Tg
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Dec 2011 23:50:28 +0100
+	id 1Rd95z-00065H-ON
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Dec 2011 00:27:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753231Ab1LTWuX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Dec 2011 17:50:23 -0500
-Received: from llunet.cs.wisc.edu ([128.105.175.76]:52591 "EHLO
-	llunet.cs.wisc.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753215Ab1LTWuV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Dec 2011 17:50:21 -0500
-Received: from llunet.cs.wisc.edu (localhost [127.0.0.1])
-	by llunet.cs.wisc.edu (8.14.1/8.14.1) with ESMTP id pBKMoGxS014696;
-	Tue, 20 Dec 2011 16:50:16 -0600
-Received: (from nwp@localhost)
-	by llunet.cs.wisc.edu (8.14.1/8.14.1/Submit) id pBKMoFTb014695;
-	Tue, 20 Dec 2011 16:50:15 -0600
-Content-Disposition: inline
-In-Reply-To: <87k45qriu2.fsf@thomas.inf.ethz.ch>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753114Ab1LTX1k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Dec 2011 18:27:40 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:57590 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753073Ab1LTX1i (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Dec 2011 18:27:38 -0500
+Received: by eekc4 with SMTP id c4so7063196eek.19
+        for <git@vger.kernel.org>; Tue, 20 Dec 2011 15:27:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=XxxxJqc4ScV4mLlW/9RI3Sa6RgLJGb0jdCKGjdTcMks=;
+        b=u1VA6B/hhDYIXbnkGYEZ4iots7KJlCEgaY1SLzitV6E77GmVE6ACkTFHdDntbHNvo6
+         R4Mm92p/ACJYgMmG0QJAB6coP+0d7LiiHUlXQgN9/Zb11/fUXuuRGrJDyhHKy/DIHqN7
+         SjBVogwHKLgESq4cH/hLhpCLDacvENsRxJm+4=
+Received: by 10.14.3.232 with SMTP id 80mr1726105eeh.2.1324423657439;
+        Tue, 20 Dec 2011 15:27:37 -0800 (PST)
+Received: from w.nix.is (w.nix.is. [188.40.98.140])
+        by mx.google.com with ESMTPS id z54sm13083869eeh.5.2011.12.20.15.27.36
+        (version=SSLv3 cipher=OTHER);
+        Tue, 20 Dec 2011 15:27:36 -0800 (PST)
+X-Mailer: git-send-email 1.7.7.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187535>
 
-On Tue, Dec 20, 2011 at 11:15:01PM +0100, Thomas Rast wrote:
-> "Nathan W. Panike" <nathan.panike@gmail.com> writes:
-> 
-> > This is useful when one is working on a system where the pager is lousy.
-> 
-> I'm curious.  Are you saying your less does not have -S (or you do not
-> even have less), or do you have a reason not to use it?
-> 
-> -- 
-> Thomas Rast
-> trast@{inf,student}.ethz.ch
+On Solaris systems we'd warn about an implicit cast of mode_t when we
+printed things out with the %d format. We'd get this warning under GCC
+4.6.0 with Solaris headers:
 
-The reason I thought of this initially was that I have a bot reporting commits
-at $dayjob in an IRC channel. Since some of my colleagues commit with long
-subject lines, I thought of this as a way to control the output of the bot
-(e.g., by controlling the bot's input).
+    builtin/init-db.c: In function =E2=80=98separate_git_dir=E2=80=99:
+    builtin/init-db.c:354:4: warning: format =E2=80=98%d=E2=80=99 expec=
+ts argument of type =E2=80=98int=E2=80=99, but argument 2 has type =E2=80=
+=98mode_t=E2=80=99 [-Wformat]
 
-Nathan Panike
+We've been doing this ever since v1.7.4.1-296-gb57fb80. Just work
+around this by adding an explicit cast.
+
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+---
+ builtin/init-db.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index d07554c..0dacb8b 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -351,7 +351,7 @@ static void separate_git_dir(const char *git_dir)
+ 		else if (S_ISDIR(st.st_mode))
+ 			src =3D git_link;
+ 		else
+-			die(_("unable to handle file type %d"), st.st_mode);
++			die(_("unable to handle file type %d"), (int)st.st_mode);
+=20
+ 		if (rename(src, git_dir))
+ 			die_errno(_("unable to move %s to %s"), src, git_dir);
+--=20
+1.7.7.3
