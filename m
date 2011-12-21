@@ -1,155 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] bash completion: use read -r everywhere
-Date: Wed, 21 Dec 2011 10:59:35 -0800
-Message-ID: <7vipl9hht4.fsf@alter.siamese.dyndns.org>
-References: <4502a0248bb843018335e9b5cdf70736c096ebe3.1324482693.git.trast@student.ethz.ch>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 4/4] Suppress "statement not reached" warnings under Sun Studio
+Date: Wed, 21 Dec 2011 20:03:47 +0100
+Message-ID: <CACBZZX4htZRQH+2xvoskwE7KoTz98Ox-3xQf0hyEbbFDYCZYHw@mail.gmail.com>
+References: <1324430302-22441-1-git-send-email-avarab@gmail.com>
+ <1324430302-22441-5-git-send-email-avarab@gmail.com> <7vvcp9hjam.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, Kevin Ballard <kevin@sb.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Dec 21 19:59:44 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Jason Evans <jasone@canonware.com>,
+	David Barr <david.barr@cordelta.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 21 20:04:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RdROC-0007Nu-7l
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Dec 2011 19:59:44 +0100
+	id 1RdRSa-0001b3-N7
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Dec 2011 20:04:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754128Ab1LUS7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Dec 2011 13:59:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65384 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754013Ab1LUS7i (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Dec 2011 13:59:38 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 11D325B45;
-	Wed, 21 Dec 2011 13:59:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ZPL68cheWFJWrJfiViPq9iSGBWM=; b=VQeJjv
-	nNwvK0Y+0sXGDE1Ygzmyolmj21QjlugWbnJblJxLzVJ9RDa+CzyG17MARDZaZWyB
-	RC2DNPhrbIJfRmHGTQn0LzCqLBpkN5/+iv7j+1ZEFmeo7AwXVEpoJs21qbJRNUAm
-	xVO4Zjk9O/Mb60pmwTbkHTju9V1Gdcbn5laE8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=K8bsYtKBKhjURcWIn88V+O36Pn5IRd5A
-	lX61y0MR6tOymbDGBwjObWlf9TWZD0Dw4E2s8uoI8Rt/DGanYGcJfyXu7u3pEnDP
-	jI/tAoV9idZDqcWx3QWYg3aJ4cgNoZwpkrLwnDdeDQFFhnhnk8p+T1GtvMPWSxIr
-	Ph5qqj6WP/Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 098D25B3E;
-	Wed, 21 Dec 2011 13:59:38 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4DC085B3B; Wed, 21 Dec 2011
- 13:59:37 -0500 (EST)
-In-Reply-To: <4502a0248bb843018335e9b5cdf70736c096ebe3.1324482693.git.trast@student.ethz.ch> (Thomas Rast's message of "Wed, 21 Dec 2011 16:54:14 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EDC3766E-2C05-11E1-9804-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754227Ab1LUTEL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Dec 2011 14:04:11 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:58409 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753557Ab1LUTEJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Dec 2011 14:04:09 -0500
+Received: by eaad14 with SMTP id d14so1408100eaa.19
+        for <git@vger.kernel.org>; Wed, 21 Dec 2011 11:04:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=ciFE2vQzlt75+NMoVHLA26zY9cY2QKS3oUhaS5dINaE=;
+        b=opo/PsMa+VB6rbl4U5TFdiddNnQJ4BV4uDYvAXNj3fb75bK2L7qu/hJYct60qEXuQJ
+         TkccMVhFoojx9FIH+47LnsFVbymXDcRWJyMkBn5mDylneXYV+gIekVkC3Y+OTdc60I1F
+         3OFraaqWFEu2bFlTcO2u2KWq5z59D9X5q0Gd0=
+Received: by 10.204.153.15 with SMTP id i15mr2368227bkw.43.1324494248416; Wed,
+ 21 Dec 2011 11:04:08 -0800 (PST)
+Received: by 10.204.181.83 with HTTP; Wed, 21 Dec 2011 11:03:47 -0800 (PST)
+In-Reply-To: <7vvcp9hjam.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187579>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+On Wed, Dec 21, 2011 at 19:27, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =C2=A0<avarab@gmail.com> write=
+s:
+>
+>> diff --git a/read-cache.c b/read-cache.c
+>> index a51bba1..0a4e895 100644
+>> --- a/read-cache.c
+>> +++ b/read-cache.c
+>> @@ -758,7 +758,13 @@ int verify_path(const char *path)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;
+>>
+>> =C2=A0 =C2=A0 =C2=A0 goto inside;
+>> +#ifdef __sun
+>> +# =C2=A0 =C2=A0pragma error_messages (off, E_STATEMENT_NOT_REACHED)
+>> +#endif
+>> =C2=A0 =C2=A0 =C2=A0 for (;;) {
+>> +#ifdef __sun
+>> +# =C2=A0 =C2=A0pragma error_messages (on, E_STATEMENT_NOT_REACHED)
+>> +#endif
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!c)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 return 1;
+>
+> Patches 1-3 makes sense, but this one is too ugly to live.
+>
+> Wouldn't something like this be equivalent and have the same effect
+> without sacrificing the readablity?
+>
+> diff --git a/read-cache.c b/read-cache.c
+> index a51bba1..73af797 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -757,12 +757,12 @@ int verify_path(const char *path)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (has_dos_drive_prefix(path))
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return 0;
+>
+> - =C2=A0 =C2=A0 =C2=A0 goto inside;
+> + =C2=A0 =C2=A0 =C2=A0 /* we are at the beginning of a path component=
+ */
+> + =C2=A0 =C2=A0 =C2=A0 c =3D '/';
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0for (;;) {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!c)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0return 1;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (is_dir_sep=
+(c)) {
+> -inside:
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0c =3D *path++;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0if ((c =3D=3D '.' && !verify_dotfile(path)) ||
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0is_dir_sep(c) || c =3D=3D '\0')
 
-> POSIX specifies
->
->   The read utility shall read a single line from standard input.
->   By default, unless the -r option is specified, backslash ('\')
->   shall act as an escape character...
->
-> Our omission of -r breaks the loop reading refnames from
-> git-for-each-ref in __git_refs() if there are refnames such as
-> "foo'bar", in which case for-each-ref helpfully quotes them as in
->
->   $ git update-ref "refs/remotes/test/foo'bar" HEAD
->   $ git for-each-ref --shell --format="ref=%(refname:short)" "refs/remotes"
->   ref='test/foo'\''bar'
->
-> Interpolating the \' here will read "ref='test/foo'''bar'" instead,
-> and eval then chokes on the unbalanced quotes.
->
-> However, since none of the read loops _want_ to have backslashes
-> interpolated, it's much safer to use read -r everywhere.
->
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+That would make that warning go away, but I don't know if that changes
+the semantics of the code. I was aiming not to change any code, just
+to squash spurious warnings under Sun Studio.
 
-Thanks.
+We could also just wrap the whole function definition in the pragma,
+which would make the code more readable since we wouldn't have 6 lines
+of warning suppression in the middle of the function.
 
-As this script is specific to bash, it is secondary importance what POSIX
-says. The "-r" option is important only because "bash" happens to follow
-POSIX in this case. I'd like to see the early part of the message reworded
-perhaps like this:
-
-	At various points in the script, we use "read" utility without
-	giving it the "-r" option that prevents a backslash ('\')
-	character to act as an escape character. This breaks e.g. reading
-	refnames from ...
-
-Does this regress for zsh users in some ways, by the way?
-
-> ---
->  contrib/completion/git-completion.bash |   12 ++++++------
->  1 files changed, 6 insertions(+), 6 deletions(-)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 78257ae..e7a39ef 100755
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -111,7 +111,7 @@ __git_ps1_show_upstream ()
->  
->  	# get some config options from git-config
->  	local output="$(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')"
-> -	while read key value; do
-> +	while read -r key value; do
->  		case "$key" in
->  		bash.showupstream)
->  			GIT_PS1_SHOWUPSTREAM="$value"
-> @@ -589,7 +589,7 @@ __git_refs ()
->  			local ref entry
->  			git --git-dir="$dir" for-each-ref --shell --format="ref=%(refname:short)" \
->  				"refs/remotes/" | \
-> -			while read entry; do
-> +			while read -r entry; do
->  				eval "$entry"
->  				ref="${ref#*/}"
->  				if [[ "$ref" == "$cur"* ]]; then
-> @@ -602,7 +602,7 @@ __git_refs ()
->  	case "$cur" in
->  	refs|refs/*)
->  		git ls-remote "$dir" "$cur*" 2>/dev/null | \
-> -		while read hash i; do
-> +		while read -r hash i; do
->  			case "$i" in
->  			*^{}) ;;
->  			*) echo "$i" ;;
-> @@ -611,7 +611,7 @@ __git_refs ()
->  		;;
->  	*)
->  		git ls-remote "$dir" HEAD ORIG_HEAD 'refs/tags/*' 'refs/heads/*' 'refs/remotes/*' 2>/dev/null | \
-> -		while read hash i; do
-> +		while read -r hash i; do
->  			case "$i" in
->  			*^{}) ;;
->  			refs/*) echo "${i#refs/*/}" ;;
-> @@ -636,7 +636,7 @@ __git_refs_remotes ()
->  {
->  	local i hash
->  	git ls-remote "$1" 'refs/heads/*' 2>/dev/null | \
-> -	while read hash i; do
-> +	while read -r hash i; do
->  		echo "$i:refs/remotes/$1/${i#refs/heads/}"
->  	done
->  }
-> @@ -1863,7 +1863,7 @@ __git_config_get_set_variables ()
->  	done
->  
->  	git --git-dir="$(__gitdir)" config $config_file --list 2>/dev/null |
-> -	while read line
-> +	while read -r line
->  	do
->  		case "$line" in
->  		*.*=*)
+Or we could just drop this patch entirely, or rewrite the code. Your
+pick.
