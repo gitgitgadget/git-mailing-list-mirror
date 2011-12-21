@@ -1,57 +1,64 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH] Specify a precision for the length of a subject string
-Date: Wed, 21 Dec 2011 12:26:25 +0100
-Message-ID: <m2liq6go7y.fsf@igel.home>
-References: <20111220220754.GC21353@llunet.cs.wisc.edu>
+From: Michael Schubert <mschub@elegosoft.com>
+Subject: [PATCH] builtin/log: remove redundant initialization
+Date: Wed, 21 Dec 2011 13:05:27 +0100
+Message-ID: <4EF1CB87.8050801@elegosoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: "Nathan W. Panike" <nathan.panike@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 21 12:26:37 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 21 13:06:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RdKJe-0007Wi-1T
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Dec 2011 12:26:34 +0100
+	id 1RdKwa-00086S-9X
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Dec 2011 13:06:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751825Ab1LUL03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Dec 2011 06:26:29 -0500
-Received: from mail-out.m-online.net ([212.18.0.10]:51483 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751646Ab1LUL02 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Dec 2011 06:26:28 -0500
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 53B0E180009D;
-	Wed, 21 Dec 2011 12:26:26 +0100 (CET)
-X-Auth-Info: 8qhrpPKY1srFavFuWCCYb2Z4JCmsXDuVzVcNjIRPcZA=
-Received: from igel.home (ppp-93-104-130-25.dynamic.mnet-online.de [93.104.130.25])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 546C21C00155;
-	Wed, 21 Dec 2011 12:26:26 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id 8E305CA29C; Wed, 21 Dec 2011 12:26:25 +0100 (CET)
-X-Yow: UH-OH!!  I think KEN is OVER-DUE on his R.V. PAYMENTS and HE'S
- having a NERVOUS BREAKDOWN too!!  Ha ha.
-In-Reply-To: <20111220220754.GC21353@llunet.cs.wisc.edu> (Nathan W. Panike's
-	message of "Tue, 20 Dec 2011 16:07:54 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.92 (gnu/linux)
+	id S1753422Ab1LUMGk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Dec 2011 07:06:40 -0500
+Received: from mx0.elegosoft.com ([78.47.87.163]:50759 "EHLO mx0.elegosoft.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753057Ab1LUMGi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Dec 2011 07:06:38 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id C9FB0DE968
+	for <git@vger.kernel.org>; Wed, 21 Dec 2011 13:06:36 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id z8glneBJGp3e for <git@vger.kernel.org>;
+	Wed, 21 Dec 2011 13:06:36 +0100 (CET)
+Received: from [10.10.10.197] (i59F7870A.versanet.de [89.247.135.10])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id A3BD1DE820
+	for <git@vger.kernel.org>; Wed, 21 Dec 2011 13:06:36 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20111108 Thunderbird/8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187560>
 
-"Nathan W. Panike" <nathan.panike@gmail.com> writes:
+"abbrev" and "commit_format" in struct rev_info get initialized in
+init_revisions - no need to reinit in cmd_log_init_defaults.
 
-> $ git log --pretty='%h %30s' d165204 -1
+Signed-off-by: Michael Schubert <mschub@elegosoft.com>
+---
+ builtin/log.c |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
 
-In C's formatted output this syntax denotes a minimum field width, not a
-precision, so it will probably be surprising to many people.
-
-Andreas.
-
+diff --git a/builtin/log.c b/builtin/log.c
+index 89d0cc0..7d1f6f8 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -73,8 +73,6 @@ static int decorate_callback(const struct option *opt, const char *arg, int unse
+ 
+ static void cmd_log_init_defaults(struct rev_info *rev)
+ {
+-	rev->abbrev = DEFAULT_ABBREV;
+-	rev->commit_format = CMIT_FMT_DEFAULT;
+ 	if (fmt_pretty)
+ 		get_commit_format(fmt_pretty, rev);
+ 	rev->verbose_header = 1;
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+1.7.8.400.g03f4
