@@ -1,599 +1,498 @@
 From: Bill Zaumen <bill.zaumen+git@gmail.com>
-Subject: [PATCH 4/6] Add digests to commit objects.
-Date: Tue, 20 Dec 2011 23:12:10 -0800
-Message-ID: <1324451530.1684.22.camel@yos>
+Subject: [PATCH 5/6] Add MD support for fetch, pull, and push.
+Date: Tue, 20 Dec 2011 23:12:48 -0800
+Message-ID: <1324451568.1684.23.camel@yos>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org, peff@peff.net, pclouds@gmail.com,
 	gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Dec 21 08:12:14 2011
+X-From: git-owner@vger.kernel.org Wed Dec 21 08:12:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RdGLU-0000HY-6C
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Dec 2011 08:12:13 +0100
+	id 1RdGM6-0000QC-It
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Dec 2011 08:12:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752186Ab1LUHMH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Dec 2011 02:12:07 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:46579 "EHLO
+	id S1751362Ab1LUHMq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Dec 2011 02:12:46 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:34580 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751214Ab1LUHMF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Dec 2011 02:12:05 -0500
-Received: by iaeh11 with SMTP id h11so11462089iae.19
-        for <git@vger.kernel.org>; Tue, 20 Dec 2011 23:12:05 -0800 (PST)
+	with ESMTP id S1752214Ab1LUHMp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Dec 2011 02:12:45 -0500
+Received: by iaeh11 with SMTP id h11so11462959iae.19
+        for <git@vger.kernel.org>; Tue, 20 Dec 2011 23:12:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=sender:subject:from:to:content-type:date:message-id:mime-version
          :x-mailer:content-transfer-encoding;
-        bh=qdQYgCg6537qAn++rQ4ui0QTg1wJd0syBdrGuyk+d9k=;
-        b=IZPwY8vWJjZ5VcLsKUq/5lOATJ6aC7Fc10MHazBMozJ7vGnNfVqSoFK3VGZ18Ubjqe
-         eD/f23Gf0BTtZya0M7H1As1INrQhX5UTjZfm1NvPSs7Xm/P7eIbCK6FaBSsI33YvX7sj
-         y3PD6H8ht7oI/b3TA9i361ZXf4hy1vNwf3cFQ=
-Received: by 10.50.181.197 with SMTP id dy5mr1617682igc.13.1324451525256;
-        Tue, 20 Dec 2011 23:12:05 -0800 (PST)
+        bh=2W58iqvwlhMKFtRN0LQGqNFBcTiVwi1OcxY6RusP2J4=;
+        b=YMGHmkRd7ILCcmhU6/+pnRbQpoKLoip+7b6JtkQFqLxle/ROWr0JCcPdHKBe9ueztB
+         zzLWppet8ulNcNfLBPCE4m+kEopikFdueleXPgaXSQEWdBlDioa79pU/ZRTeM+0y4fIE
+         P2QWXyFSqnbnwVclkFPXBmMc4LLWIiFff3ajk=
+Received: by 10.50.88.135 with SMTP id bg7mr1583432igb.7.1324451564779;
+        Tue, 20 Dec 2011 23:12:44 -0800 (PST)
 Received: from [192.168.1.20] (adsl-209-233-20-69.dsl.snfc21.pacbell.net. [209.233.20.69])
-        by mx.google.com with ESMTPS id cv10sm22971817igc.0.2011.12.20.23.12.02
+        by mx.google.com with ESMTPS id d19sm13745294ibh.8.2011.12.20.23.12.41
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 20 Dec 2011 23:12:04 -0800 (PST)
+        Tue, 20 Dec 2011 23:12:43 -0800 (PST)
 X-Mailer: Evolution 2.30.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187555>
 
-When COMMIT_DIGEST is defined in the Makefile, a new
-header is added to commits. The header is named 'digest'
-and is a digest of the digests associated with the
-commit's tree (computed recursively) and parents, and
-of the other fields. This digest is included in the
-SHA-1 hash computation and the commit's digest.
-
-A function named verify_commit allows the digest to
-be recomputed and checked.
+A new capability, "mds-check" is defined. When present, a client will
+(when possible and useful) send the server a SHA-1 value and a message
+digest, separated by a '-'.  This is used to detect hash collisions,
+with a goal of finding problems early if a malicious attempt is made
+to forge commits with different commits with the same SHA-1 value in
+different repositories.  It is a simple, fast test - a look-up and a
+comparison.
 
 Signed-off-by: Bill Zaumen <bill.zaumen+git@gmail.com>
 ---
- commit.c |  436 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- commit.h |   11 ++
- 2 files changed, 443 insertions(+), 4 deletions(-)
+ builtin/fetch-pack.c   |   29 +++++++++++-
+ builtin/receive-pack.c |  117 +++++++++++++++++++++++++++++++++++++++++++-----
+ builtin/send-pack.c    |   26 ++++++++++-
+ http.c                 |   19 ++++++--
+ t/t5500-fetch-pack.sh  |   10 +++--
+ t/t5510-fetch.sh       |   12 ++++-
+ upload-pack.c          |   11 ++++-
+ 7 files changed, 196 insertions(+), 28 deletions(-)
 
-diff --git a/commit.c b/commit.c
-index b781274..ac0d492 100644
---- a/commit.c
-+++ b/commit.c
-@@ -6,11 +6,395 @@
- #include "diff.h"
- #include "revision.h"
- #include "notes.h"
-+#ifdef PACKDB
-+#include "packdb.h"
-+#endif
- 
- int save_commit_buffer = 1;
- 
- const char *commit_type = "commit";
- 
-+struct commit_mds_context {
-+	unsigned long missing;
-+	mdigest_context_t context;
-+#ifdef PACKDB
-+	int packdb_opened;
-+#endif /* PACKDB */
-+};
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 6207ecd..2f5b7ef 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -18,6 +18,8 @@ static int prefer_ofs_delta = 1;
+ static int no_done;
+ static int fetch_fsck_objects = -1;
+ static int transfer_fsck_objects = -1;
++static int mds_check = 0;
 +
-+#if defined(COMMIT_DIGEST)||defined(PACKDB_TEST)||defined(COMMIT_DIGEST_TEST)
-+static int get_objects_mds_f(const unsigned char *sha1,
-+			  const char *basebuf, int baselen,
-+			  const char *path, unsigned int mode, int stage,
-+			  void *context)
-+{
-+	struct commit_mds_context *c = (struct commit_mds_context *)context;
-+	mdigest_t digest;
-+	unsigned long size;
-+	int type;
+ static struct fetch_pack_args args = {
+ 	/* .uploadpack = */ "git-upload-pack",
+ };
+@@ -390,9 +392,25 @@ static int find_common(int fd[2], unsigned char *result_sha1,
+ 	flushes = 0;
+ 	retval = -1;
+ 	while ((sha1 = get_rev())) {
+-		packet_buf_write(&req_buf, "have %s\n", sha1_to_hex(sha1));
+-		if (args.verbose)
+-			fprintf(stderr, "have %s\n", sha1_to_hex(sha1));
++		if (mds_check) {
++			mdigest_t digest;
++			if (has_sha1_file_digest(sha1, &digest)) {
++				packet_buf_write(&req_buf, "have %s\n",
++						 sha1_to_hex_digest(sha1,
++								    &digest));
 +
-+	if (S_ISGITLINK(mode)) {
-+		/*
-+		 * Submodule entry - SHA-1 of a commit in the submodule
-+		 * with no entry in our repository.
-+		 */
-+		mdigest_Update(&c->context, sha1, 20);
-+		return -1;
-+	}
-+	if (!has_sha1_file(sha1)) {
-+		c->missing++;
-+		return -1;
-+	}
-+	if (has_sha1_file_digest(sha1, &digest)) {
-+		int wcode = get_mdigest_wcode(&digest);
-+		unsigned char ucwcode = (unsigned char) (wcode & 0xff);
-+		mdigest_Update(&c->context, &ucwcode, 1);
-+		mdigest_Update(&c->context, get_mdigest_buffer(&digest),
-+			       get_mdigest_len(&digest));
-+#if defined(PACKDB) && defined (PACKDB_TEST)
-+		{
-+		  static int firsttime = 1;
-+		  mdigest_t xdigest;
-+		  if (!c->packdb_opened) {
-+		    packdb_open();
-+		    c->packdb_opened = 1;
-+		    firsttime = 0;
-+		  }
-+		  if (firsttime) {
-+		    if (!packdb_lookup(sha1, &xdigest)) {
-+		      packdb_process(sha1, &digest);
-+		      packdb_lookup(sha1, &xdigest);
-+		      if (mdigest_tst(&digest, &xdigest)) {
-+			die("digest for %s failed with packdb\n",
-+			    sha1_to_hex(sha1));
-+		      }
-+		    }
-+		  }
-+		}
-+#endif
-+	} else {
-+		enum object_type xtype;
-+		unsigned long xsize;
-+		mdigest_t xdigest;
-+		unsigned char xsha1[20];
-+		int wcode;
-+		unsigned char ucwcode;
-+#ifdef PACKDB
-+		if (!c->packdb_opened) {
-+			packdb_open();
-+			c->packdb_opened = 1;
-+		}
-+		if (!packdb_lookup(sha1, &xdigest)) {
-+#endif /* PACKDB */
-+			void *data = read_sha1_file(sha1, &xtype, &xsize);
-+			hash_sha1_file_extended(data, xsize,
-+						typename(xtype),
-+						xsha1,
-+						&xdigest);
-+			free(data);
-+#ifdef PACKDB
-+			packdb_process(sha1, &xdigest);
-+		  }
-+#endif /* PACKDB */
-+		wcode = get_mdigest_wcode(&xdigest);
-+		ucwcode = (unsigned char) (wcode & 0xff);
-+		mdigest_Update(&c->context, &ucwcode, 1);
-+		mdigest_Update(&c->context, get_mdigest_buffer(&xdigest),
-+			       get_mdigest_len(&xdigest));
-+	}
-+	type = sha1_object_info(sha1, &size);
-+	switch(type) {
-+	case OBJ_TREE:
-+	  return (S_ISDIR(mode))? READ_TREE_RECURSIVE: 0;
-+	case OBJ_BLOB:
-+		return 0;
-+	default:
-+		if (type <= OBJ_NONE) {
-+		  c->missing++;
-+		}
-+		return 0;
-+	}
-+}
-+
-+/*
-+ * Works with a tree or a commit sha1 - recursively traverses the trees
-+ * and computes the CRC of each blob's CRC. With a commit sha1, the
-+ * caller must provide the 'parents' list - we sometimes call this
-+ * function with the commit-object's tree before the sha1 value is
-+ * computed.
-+ */
-+static int get_objects_mds(const unsigned char *sha1,
-+			   struct commit_list *parents,
-+			   const char *author, size_t author_len,
-+			   const char *committer, size_t committer_len,
-+			   const char *encoding, size_t encoding_len,
-+			   struct commit_extra_header *extra,
-+			   const char *msg, size_t msg_len,
-+			   mdigest_t *digestp)
-+{
-+	struct commit_mds_context context;
-+	struct tree *tree = parse_tree_indirect(sha1);
-+	struct pathspec ps;
-+	mdigest_t xdigest;
-+	struct commit_extra_header *extra_head = extra;
-+	mdigest_Init(&context.context, MDIGEST_DEFAULT);
-+	context.missing = 0;
-+#ifdef PACKDB
-+	context.packdb_opened = 0;
-+#endif /* PACKDB */
-+
-+	if (tree == NULL) {
-+		return -1;
-+	} else {
-+		init_pathspec(&ps, NULL);
-+		parse_tree(tree);
-+		if (has_sha1_file_digest(tree->object.sha1, &xdigest)) {
-+			int wcode = get_mdigest_wcode(&xdigest);
-+			unsigned char ucwcode =
-+				(unsigned char) (wcode & 0xff);
-+			mdigest_Update(&context.context, &ucwcode, 1);
-+			mdigest_Update(&context.context,
-+				       get_mdigest_buffer(&xdigest),
-+				       get_mdigest_len(&xdigest));
-+		} else {
-+			enum object_type xtype;
-+			unsigned long xsize;
-+			mdigest_t xdigest;
-+			unsigned char xsha1[20];
-+			int wcode;
-+			unsigned char ucwcode;
-+#ifdef PACKDB
-+			if (!context.packdb_opened) {
-+				packdb_open();
-+				context.packdb_opened = 1;
-+			}
-+			if (!packdb_lookup(sha1, &xdigest)) {
-+#endif /* PACKDB */
-+
-+				void *data = read_sha1_file(sha1, &xtype,
-+							    &xsize);
-+				hash_sha1_file_extended(data, xsize,
-+							typename(xtype),
-+							xsha1,
-+							&xdigest);
-+				free(data);
-+#ifdef PACKDB
-+				packdb_process(sha1, &xdigest);
-+			}
-+#endif /* PACKDB */
-+			wcode = get_mdigest_wcode(&xdigest);
-+			ucwcode = (unsigned char)(wcode & 0xff);
-+			mdigest_Update(&context.context, &ucwcode, 1);
-+			mdigest_Update(&context.context,
-+				       get_mdigest_buffer(&xdigest),
-+				       get_mdigest_len(&xdigest));
-+		}
-+		read_tree_recursive(tree, "", 0, 0, &ps, get_objects_mds_f,
-+				    &context);
-+		while (parents) {
-+			/*
-+			 * Include the message digests of the parent commits.
-+			 */
-+			struct commit_list *next = parents->next;
-+			if (!has_sha1_file(parents->item->object.sha1)) {
-+				return -1;
-+			} else if (has_sha1_file_digest
-+				   (parents->item->object.sha1, &xdigest)) {
-+				int wcode = get_mdigest_wcode(&xdigest);
-+				unsigned char ucwcode =
-+					(unsigned char) (wcode & 0xff);
-+				mdigest_Update(&context.context, &ucwcode, 1);
-+				mdigest_Update(&context.context,
-+					       get_mdigest_buffer(&xdigest),
-+					       get_mdigest_len(&xdigest));
 +			} else {
-+				enum object_type xtype;
-+				unsigned long xsize;
-+				mdigest_t xdigest;
-+				unsigned char xsha1[20];
-+				int wcode;
-+				unsigned char ucwcode;
-+#ifdef PACKDB
-+				if (!context.packdb_opened) {
-+					packdb_open();
-+					context.packdb_opened = 1;
-+				}
-+				if (!packdb_lookup(sha1, &xdigest)) {
-+#endif /* PACKDB */
-+
-+					void *data = read_sha1_file(sha1,
-+								    &xtype,
-+								    &xsize);
-+					hash_sha1_file_extended(data, xsize,
-+								typename(xtype),
-+								xsha1,
-+								&xdigest);
-+					free(data);
-+#ifdef PACKDB
-+					packdb_process(sha1, &xdigest);
-+				}
-+#endif /* PACKDB */
-+				wcode = get_mdigest_wcode(&xdigest);
-+				ucwcode = (unsigned char)(wcode & 0xff);
-+				mdigest_Update(&context.context, &ucwcode, 1);
-+				mdigest_Update(&context.context,
-+					       get_mdigest_buffer(&xdigest),
-+					       get_mdigest_len(&xdigest));
++				packet_buf_write(&req_buf, "have %s\n",
++						 sha1_to_hex(sha1));
 +			}
-+			parents = next;
++			if (args.verbose)
++				fprintf(stderr, "have %s\n", sha1_to_hex(sha1));
++		} else {
++			packet_buf_write(&req_buf, "have %s\n",
++					 sha1_to_hex(sha1));
++			if (args.verbose)
++				fprintf(stderr, "have %s\n", sha1_to_hex(sha1));
 +		}
-+#ifdef PACKDB
-+		if (context.packdb_opened) packdb_close();
-+#endif /* PACKDB */
-+		if (msg && author && committer && digestp) {
-+			mdigest_Update(&context.context, author, author_len);
-+			mdigest_Update(&context.context, committer,
-+				       committer_len);
-+			if (encoding) mdigest_Update(&context.context, encoding,
-+						     encoding_len);
-+			while (extra) {
-+			  mdigest_Update(&context.context, extra->key,
-+					 strlen(extra->key));
-+			  mdigest_Update(&context.context, " ", 1);
-+			  mdigest_Update(&context.context, extra->value,
-+					 extra->len);
-+			  mdigest_Update(&context.context, "\n", 1);
-+			  extra = extra->next;
-+			}
-+			free_commit_extra_headers(extra_head);
-+			mdigest_Update(&context.context, msg, msg_len);
-+		}
-+		if (digestp) mdigest_Final(digestp, &context.context);
-+		return ((context.missing == 0)? 0: -1);
+ 		in_vain++;
+ 		if (flush_at <= ++count) {
+ 			int ack;
+@@ -807,6 +825,11 @@ static struct ref *do_fetch_pack(int fd[2],
+ 			fprintf(stderr, "Server supports ofs-delta\n");
+ 	} else
+ 		prefer_ofs_delta = 0;
++	if (server_supports("mds-check")) {
++		if (args.verbose)
++			fprintf(stderr, "Server supports mds-check\n");
++		mds_check = 1;
 +	}
-+}
-+#endif /* defined(COMMIT_DIGEST)||defined(PACKDB_TEST)||defined(COMMIT_DIGEST_TEST) */
-+
-+int verify_commit(struct commit *commit) {
-+#ifdef COMMIT_DIGEST
-+	if (save_commit_buffer) {
-+		mdigest_t edigest;
+ 	if (everything_local(&ref, nr_match, match)) {
+ 		packet_flush(fd[1]);
+ 		goto all_done;
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index d2dcb7e..b9d1c1f 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -122,7 +122,8 @@ static int show_ref(const char *path, const unsigned char *sha1, int flag, void
+ 	else
+ 		packet_write(1, "%s %s%c%s%s\n",
+ 			     sha1_to_hex(sha1), path, 0,
+-			     " report-status delete-refs side-band-64k",
++			     " report-status delete-refs side-band-64k"
++			     " mds-check",
+ 			     prefer_ofs_delta ? " ofs-delta" : "");
+ 	sent_capabilities = 1;
+ 	return 0;
+@@ -709,37 +710,131 @@ static struct command *read_head_info(void)
+ 	struct command *commands = NULL;
+ 	struct command **p = &commands;
+ 	for (;;) {
+-		static char line[1000];
++		static char line[1500];
+ 		unsigned char old_sha1[20], new_sha1[20];
+ 		struct command *cmd;
+ 		char *refname;
+ 		int len, reflen;
++		int has_old_sha1_digest = 0;
++		int has_new_sha1_digest = 0;
++		mdigest_t old_sha1_digest;
++		mdigest_t new_sha1_digest;
 +		mdigest_t digest;
-+		const char *author = NULL;
-+		size_t author_len = 0;
-+		const char *committer = NULL;
-+		size_t committer_len = 0;
-+		const char *encoding = NULL;
-+		size_t encoding_len = 0;
-+		const char *msg = NULL;
-+		size_t msg_len = 0;
-+		const char *mdstring = NULL;
-+		size_t mdstring_len = 0;
-+		const char *bufptr;
-+		const char *tail;
-+		struct commit_extra_header *extra = NULL;
++		int old_hashlen = 40;
++		int new_hashlen = 40;
++		int hashlen = 81; /* includes blank between two hashes */
++		int digest_field_len = 0;
 +
-+		parse_commit(commit);
-+		extra = read_commit_extra_header_lines(commit->buffer,
-+						       commit->buffer_len);
-+		bufptr = commit->buffer;
-+		tail = bufptr + commit->buffer_len;
-+		while (*bufptr != '\n' && bufptr < tail) {
-+			if (*bufptr == 'a') {
-+				if ((bufptr + 7) < tail) {
-+					if (memcmp(bufptr, "author ", 7) == 0) {
-+						bufptr += 7;
-+						author = bufptr;
-+						while (*bufptr != '\n' &&
-+						       bufptr < tail) {
-+							bufptr++;
-+						}
-+						author_len = bufptr - author;
-+					} else while (*bufptr != '\n' &&
-+						      bufptr < tail) bufptr++;
-+					if (bufptr < tail) bufptr++;
++		mdigest_clear(&old_sha1_digest);
++		mdigest_clear(&new_sha1_digest);
+ 
+ 		len = packet_read_line(0, line, sizeof(line));
+ 		if (!len)
+ 			break;
+ 		if (line[len-1] == '\n')
+ 			line[--len] = 0;
+-		if (len < 83 ||
+-		    line[40] != ' ' ||
+-		    line[81] != ' ' ||
+-		    get_sha1_hex(line, old_sha1) ||
+-		    get_sha1_hex(line + 41, new_sha1))
++		if (len > (old_hashlen + 1) && line[old_hashlen] == '-') {
++			digest_field_len = 1
++				+ get_hex_field_size(line+old_hashlen+1);
++		}
++		if (len > (old_hashlen + digest_field_len) &&
++		    line[old_hashlen] == '-') {
++			old_hashlen += digest_field_len;
++			hashlen += digest_field_len;
++			digest_field_len = 0;
++			if (len > (old_hashlen + 1)
++			    && line[old_hashlen] == '-') {
++				digest_field_len = 1 +
++					get_hex_field_size(line+old_hashlen+1);
++			}
++			if (len > (old_hashlen + digest_field_len + 1) &&
++			    line[old_hashlen] == '-') {
++				old_hashlen += digest_field_len;
++				hashlen += digest_field_len;
++			}
++		}
++		if (line[old_hashlen] != ' ') {
++			die("protocol error: expected old/new/ref, got '%s'",
++			    line);
++		}
++		digest_field_len = 0;
++		if (len > hashlen + 1 && line[hashlen] == '-') {
++			digest_field_len = 1 +
++			  get_hex_field_size(line+hashlen+1);
++		}
++		if (len > (hashlen + digest_field_len + 1) &&
++		    line[hashlen] == '-') {
++			new_hashlen += digest_field_len;
++			hashlen += digest_field_len;
++			digest_field_len = 0;
++			if (len > (hashlen + 1)
++			    && line[hashlen] == '-') {
++				digest_field_len = 1 +
++					get_hex_field_size(line+hashlen+1);
++			}
++			if (len > (hashlen + digest_field_len + 1) &&
++			    line[hashlen] == '-') {
++				new_hashlen += digest_field_len;
++				hashlen += digest_field_len;
++			}
++		}
++		if (line[hashlen] != ' ') {
+ 			die("protocol error: expected old/new/ref, got '%s'",
+ 			    line);
++		}
++
++		if (len < hashlen + 1 ||
++		    line[old_hashlen] != ' ' ||
++		    line[hashlen] != ' ' ||
++		    get_sha1_hex_digest(line, old_sha1,
++				     &has_old_sha1_digest, &old_sha1_digest) ||
++		    get_sha1_hex_digest(line + old_hashlen + 1, new_sha1,
++					&has_new_sha1_digest,
++					&new_sha1_digest)) {
++			die("protocol error: expected old/new/ref, got '%s'",
++			    line);
++		}
++
++		if (has_old_sha1_digest &&
++		    has_sha1_file_digest(old_sha1, &digest)) {
++			if (mdigest_tst(&old_sha1_digest, &digest)) {
++				die("hash collision for %s",
++				    sha1_to_hex(old_sha1));
++			}
++		}
++
++
++		if (has_new_sha1_digest &&
++		    has_sha1_file_digest(new_sha1, &digest)) {
++			if (mdigest_tst(&new_sha1_digest, &digest)) {
++				die("hash collision for %s",
++				    sha1_to_hex(new_sha1));
++			}
++		}
+ 
+-		refname = line + 82;
++		refname = line + hashlen + 1;
+ 		reflen = strlen(refname);
+-		if (reflen + 82 < len) {
++		if (reflen + hashlen + 1 < len) {
+ 			if (strstr(refname + reflen + 1, "report-status"))
+ 				report_status = 1;
+ 			if (strstr(refname + reflen + 1, "side-band-64k"))
+ 				use_sideband = LARGE_PACKET_MAX;
+ 		}
+-		cmd = xcalloc(1, sizeof(struct command) + len - 80);
++		/*
++		 * Without the additional digests,
++		 *   old_hashlen + new_hashlen = 80
++		 *   hashlen = 81,
++		 *   hashlen + 1 = 82
++		 * which puts the same numeric values into the last argument
++		 * of xcalloc, and the second & third argument of memcpy
++		 * that were used in commit
++		 * fc14b89a7e6899b8ac3b5751ec2d8c98203ea4c2.
++		 */
++		cmd = xcalloc(1, sizeof(struct command) + len
++			      - (old_hashlen + new_hashlen));
+ 		hashcpy(cmd->old_sha1, old_sha1);
+ 		hashcpy(cmd->new_sha1, new_sha1);
+-		memcpy(cmd->ref_name, line + 82, len - 81);
++		memcpy(cmd->ref_name, line + hashlen + 1, len - (hashlen));
+ 		*p = cmd;
+ 		p = &cmd->next;
+ 	}
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index cd1115f..1eb9704 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -250,6 +250,7 @@ int send_pack(struct send_pack_args *args,
+ 	int allow_deleting_refs = 0;
+ 	int status_report = 0;
+ 	int use_sideband = 0;
++	int mds_check = 0;
+ 	unsigned cmds_sent = 0;
+ 	int ret;
+ 	struct async demux;
+@@ -263,6 +264,8 @@ int send_pack(struct send_pack_args *args,
+ 		args->use_ofs_delta = 1;
+ 	if (server_supports("side-band-64k"))
+ 		use_sideband = 1;
++	if (server_supports("mds-check"))
++		mds_check = 1;
+ 
+ 	if (!remote_refs) {
+ 		fprintf(stderr, "No refs in common and none specified; doing nothing.\n"
+@@ -298,8 +301,27 @@ int send_pack(struct send_pack_args *args,
+ 		if (args->dry_run) {
+ 			ref->status = REF_STATUS_OK;
+ 		} else {
+-			char *old_hex = sha1_to_hex(ref->old_sha1);
+-			char *new_hex = sha1_to_hex(ref->new_sha1);
++			char *old_hex, *new_hex;
++			if (mds_check) {
++				mdigest_t digest;
++				if (has_sha1_file_digest(ref->old_sha1,
++						      &digest)) {
++					old_hex = sha1_to_hex_digest
++						(ref->old_sha1, &digest);
++				} else {
++					old_hex = sha1_to_hex(ref->old_sha1);
 +				}
-+			} else if (*bufptr == 'c') {
-+				if ((bufptr + 10) < tail) {
-+					if (memcmp(bufptr,
-+						   "committer ", 10) == 0) {
-+						bufptr += 10;
-+						committer = bufptr;
-+						while (*bufptr != '\n' &&
-+						       bufptr < tail) {
-+							bufptr++;
-+						}
-+						committer_len =
-+							bufptr - committer;
-+					} else  while (*bufptr != '\n' &&
-+						      bufptr < tail) bufptr++;
-+					if (bufptr < tail) bufptr++;
-+				}
-+			} else if(*bufptr == 'e') {
-+				if ((bufptr + 9) < tail) {
-+					if (memcmp(bufptr,
-+						   "encoding ", 9) == 0) {
-+						bufptr += 9;
-+						encoding = bufptr;
-+						while (*bufptr != '\n' &&
-+						       bufptr < tail) {
-+							bufptr++;
-+						}
-+						encoding_len =
-+							bufptr - encoding;
-+					} else  while (*bufptr != '\n' &&
-+						      bufptr < tail) bufptr++;
-+					if (bufptr < tail) bufptr++;
-+				}
-+			} else if (*bufptr == 'd') {
-+				if ((bufptr + 7) < tail) {
-+					if (memcmp(bufptr, "digest ", 7) == 0) {
-+						bufptr += 7;
-+						mdstring = bufptr;
-+						while (*bufptr != '\n' &&
-+						       bufptr < tail) {
-+							bufptr++;
-+						}
-+						mdstring_len =
-+							bufptr - mdstring;
-+					} else  while (*bufptr != '\n' &&
-+						      bufptr < tail) bufptr++;
-+					if (bufptr < tail) bufptr++;
++				if (has_sha1_file_digest(ref->new_sha1,
++						      &digest)) {
++					new_hex = sha1_to_hex_digest
++						(ref->new_sha1, &digest);
++				} else {
++					new_hex = sha1_to_hex(ref->new_sha1);
 +				}
 +			} else {
-+				while (*bufptr != '\n' && bufptr < tail)
-+					bufptr++;
-+				if (bufptr < tail) bufptr++;
++				old_hex = sha1_to_hex(ref->old_sha1);
++				new_hex = sha1_to_hex(ref->new_sha1);
 +			}
-+		}
-+		if (*bufptr == '\n' && bufptr < tail) {
-+			bufptr++;
-+			msg = bufptr;
-+			msg_len = tail - bufptr;
-+		}
-+		if (mdstring &&
-+		    get_mdigest_from_external_hex(&edigest, mdstring) < 0) {
-+			return -1;
-+		}
-+		if (author && committer && msg) {
-+			if (mdstring == NULL) return 0;
-+			if (get_objects_mds(commit->object.sha1,
-+					    commit->parents,
-+					    author, author_len,
-+					    committer, committer_len,
-+					    encoding, encoding_len,
-+					    extra,
-+					    msg, msg_len,
-+					    &digest)) {
-+				return -1;
-+			}
-+			return mdigest_tst(&edigest, &digest);
-+		} else {
-+			return -1;
-+		}
-+	} else {
-+	  return 0;
-+	}
-+#else /* COMMIT_DIGEST */
-+	return 0;
-+#endif /* COMMIT_DIGEST */
-+}
+ 
+ 			if (!cmds_sent && (status_report || use_sideband)) {
+ 				packet_buf_write(&req_buf, "%s %s %s%c%s%s",
+diff --git a/http.c b/http.c
+index 0ffd79c..e4e3ec7 100644
+--- a/http.c
++++ b/http.c
+@@ -1014,8 +1014,9 @@ int finish_http_pack_request(struct http_pack_request *preq)
+ 	struct packed_git **lst;
+ 	struct packed_git *p = preq->target;
+ 	char *tmp_idx;
++	char *tmp_mds;
+ 	struct child_process ip;
+-	const char *ip_argv[8];
++	const char *ip_argv[10];
+ 
+ 	close_pack_index(p);
+ 
+@@ -1028,14 +1029,20 @@ int finish_http_pack_request(struct http_pack_request *preq)
+ 	*lst = (*lst)->next;
+ 
+ 	tmp_idx = xstrdup(preq->tmpfile);
++	tmp_mds = xstrdup(preq->tmpfile);
+ 	strcpy(tmp_idx + strlen(tmp_idx) - strlen(".pack.temp"),
+ 	       ".idx.temp");
++	strcpy(tmp_mds + strlen(tmp_mds) - strlen(".pack.temp"),
++	       ".mds.temp");
 +
- static struct commit *check_commit(struct object *obj,
- 				   const unsigned char *sha1,
- 				   int quiet)
-@@ -325,6 +709,9 @@ int parse_commit(struct commit *item)
- 	ret = parse_commit_buffer(item, buffer, size);
- 	if (save_commit_buffer && !ret) {
- 		item->buffer = buffer;
-+#ifdef COMMIT_DIGEST
-+		item->buffer_len = (size_t) size;
-+#endif
- 		return 0;
- 	}
- 	free(buffer);
-@@ -916,6 +1303,9 @@ static inline int standard_header_field(const char *field, size_t len)
- {
- 	return ((len == 4 && !memcmp(field, "tree ", 5)) ||
- 		(len == 6 && !memcmp(field, "parent ", 7)) ||
-+#ifdef COMMIT_DIGEST
-+		(len == 6 && !memcmp(field, "digest ", 7)) ||
-+#endif
- 		(len == 6 && !memcmp(field, "author ", 7)) ||
- 		(len == 9 && !memcmp(field, "committer ", 10)) ||
- 		(len == 8 && !memcmp(field, "encoding ", 9)));
-@@ -998,12 +1388,43 @@ int commit_tree_extended(const char *msg, unsigned char *tree,
- 	int result;
- 	int encoding_is_utf8;
- 	struct strbuf buffer;
-+	static char committer[1000];
-+	const char *encoding = NULL;
-+#if defined(COMMIT_DIGEST) || defined (COMMIT_DIGEST_TEST)
-+	mdigest_t digest;
-+#endif /* defined(COMMIT_DIGEST) || defined(PACKDB_TEST) */
-+	/*
-+	 * git_committer_info returns a static buffer of size 1000, so
-+	 * we have to copy it - assume git_committer_info does necessary
-+	 * buffer-overflow tests.
-+	 */
-+	strcpy (committer, git_committer_info(IDENT_ERROR_ON_NO_NAME));
  
- 	assert_sha1_type(tree, OBJ_TREE);
+ 	ip_argv[0] = "index-pack";
+ 	ip_argv[1] = "-o";
+ 	ip_argv[2] = tmp_idx;
+-	ip_argv[3] = preq->tmpfile;
+-	ip_argv[4] = NULL;
++	ip_argv[3] = "-m";
++	ip_argv[4] = tmp_mds;
++	ip_argv[5] = preq->tmpfile;
++	ip_argv[6] = NULL;
  
- 	/* Not having i18n.commitencoding is the same as having utf-8 */
- 	encoding_is_utf8 = is_encoding_utf8(git_commit_encoding);
-+	if (!encoding_is_utf8)
-+		encoding = git_commit_encoding;
- 
-+	/* Person/date information setup*/
-+	if (!author)
-+		author = git_author_info(IDENT_ERROR_ON_NO_NAME);
-+#if defined(COMMIT_DIGEST) || defined(PACKDB_TEST) || defined(COMMIT_DIGEST_TEST)
-+	/*
-+	 * Have all the pieces so compute the message digest. We do it here
-+	 * because the list 'parents' will be destroyed by the following loop.
-+	 */
-+	if (get_objects_mds(tree, parents,
-+			    author, (author? strlen(author): 0),
-+			    committer, strlen(committer),
-+			    encoding, (encoding? strlen(encoding): 0),
-+			    extra,
-+			    msg, (msg? strlen(msg): 0),
-+			    &digest)) {
-+		die("could not compute message digest for commit");
-+	}
-+#endif /* defined(COMMIT_DIGEST) || defined(PACKDB_TEST)  || defined(COMMIT_DIGEST_TEST)*/
- 	strbuf_init(&buffer, 8192); /* should avoid reallocs for the headers */
- 	strbuf_addf(&buffer, "tree %s\n", sha1_to_hex(tree));
- 
-@@ -1023,17 +1444,19 @@ int commit_tree_extended(const char *msg, unsigned char *tree,
+ 	memset(&ip, 0, sizeof(ip));
+ 	ip.argv = ip_argv;
+@@ -1046,20 +1053,24 @@ int finish_http_pack_request(struct http_pack_request *preq)
+ 	if (run_command(&ip)) {
+ 		unlink(preq->tmpfile);
+ 		unlink(tmp_idx);
++		unlink(tmp_mds);
+ 		free(tmp_idx);
++		free(tmp_mds);
+ 		return -1;
  	}
  
- 	/* Person/date information */
--	if (!author)
--		author = git_author_info(IDENT_ERROR_ON_NO_NAME);
- 	strbuf_addf(&buffer, "author %s\n", author);
--	strbuf_addf(&buffer, "committer %s\n", git_committer_info(IDENT_ERROR_ON_NO_NAME));
-+	strbuf_addf(&buffer, "committer %s\n", committer);
-+
- 	if (!encoding_is_utf8)
- 		strbuf_addf(&buffer, "encoding %s\n", git_commit_encoding);
--
- 	while (extra) {
- 		add_extra_header(&buffer, extra);
- 		extra = extra->next;
+ 	unlink(sha1_pack_index_name(p->sha1));
+ 
+ 	if (move_temp_to_file(preq->tmpfile, sha1_pack_name(p->sha1))
+-	 || move_temp_to_file(tmp_idx, sha1_pack_index_name(p->sha1))) {
++	 || move_temp_to_file(tmp_idx, sha1_pack_index_name(p->sha1))
++	 || move_temp_to_file(tmp_mds, sha1_pack_mds_name(p->sha1))) {
+ 		free(tmp_idx);
+ 		return -1;
  	}
-+#ifdef COMMIT_DIGEST
-+	strbuf_addf(&buffer, "digest %s\n", mdigest_to_external_hex(&digest));
-+#endif /* COMMIT_DIGEST */
-+
- 	strbuf_addch(&buffer, '\n');
  
- 	/* And add the comment */
-@@ -1045,6 +1468,11 @@ int commit_tree_extended(const char *msg, unsigned char *tree,
- 
- 	result = write_sha1_file(buffer.buf, buffer.len, commit_type, ret);
- 	strbuf_release(&buffer);
-+#if defined(COMMIT_DIGEST) && defined (COMMIT_DIGEST_TEST)
-+	if (verify_commit(lookup_commit(ret))) {
-+	    die("commit verification failed for %s\n", sha1_to_hex(ret));
-+	  }
-+#endif
- 	return result;
+ 	install_packed_git(p);
+ 	free(tmp_idx);
++	free(tmp_mds);
+ 	return 0;
  }
  
-diff --git a/commit.h b/commit.h
-index 3745f12..7a91519 100644
---- a/commit.h
-+++ b/commit.h
-@@ -5,6 +5,7 @@
- #include "tree.h"
- #include "strbuf.h"
- #include "decorate.h"
-+#include "mdigest.h"
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 9bf69e9..b6632d2 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -53,8 +53,8 @@ pull_to_client () {
+ 			git symbolic-ref HEAD refs/heads/`echo $heads \
+ 				| sed -e "s/^\(.\).*$/\1/"` &&
  
- struct commit_list {
- 	struct commit *item;
-@@ -19,6 +20,9 @@ struct commit {
- 	struct commit_list *parents;
- 	struct tree *tree;
- 	char *buffer;
-+#ifdef COMMIT_DIGEST
-+	size_t buffer_len;
-+#endif
- };
+-			git fsck --full &&
+-
++			git fsck --full  &&
++			test -z "`git count-objects -v -M | grep MD`" &&
+ 			mv .git/objects/pack/pack-* . &&
+ 			p=`ls -1 pack-*.pack` &&
+ 			git unpack-objects <$p &&
+@@ -142,7 +142,8 @@ test_expect_success 'fsck in shallow repo' '
+ test_expect_success 'simple fetch in shallow repo' '
+ 	(
+ 		cd shallow &&
+-		git fetch
++		git fetch &&
++		test -z "`git count-objects -v -M | grep MD`"
+ 	)
+ '
  
- extern int save_commit_buffer;
-@@ -218,4 +222,11 @@ struct merge_remote_desc {
-  */
- struct commit *get_merge_parent(const char *name);
+@@ -245,7 +246,8 @@ test_expect_success 'clone shallow object count' '
+ 		cd shallow &&
+ 		git count-objects -v
+ 	) > count.shallow &&
+-	grep "^count: 52" count.shallow
++	grep "^count: 52" count.shallow  &&
++	test -z "`git count-objects -v -M | grep MD`"
+ '
  
-+/*
-+ * Returns 0 if OK or if save_commit_buffer == 0 or if COMMIT_DIGEST was
-+ * not defined during compilation; non-zero otherwise.  If a commit does
-+ * not have a digest field, 0 is returned.
-+ */
-+extern int verify_commit(struct commit *commit);
+ test_done
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index e88dbd5..5e3b8c6 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -14,6 +14,12 @@ test_bundle_object_count () {
+ 	test "$2" = $(grep '^[0-9a-f]\{40\} ' verify.out | wc -l)
+ }
+ 
++test_bundle_mds_count () {
++	git verify-pack -v -M "$1" >verify.out &&
++	test "$2" = $(grep '^[0-9a-f]\{40\} ' verify.out | grep -v "<no md>" | wc -l)
++}
 +
- #endif /* COMMIT_H */
++
+ test_expect_success setup '
+ 	echo >file original &&
+ 	git add file &&
+@@ -214,7 +220,8 @@ test_expect_success 'bundle 1 has only 3 files ' '
+ 		cat
+ 	) <bundle1 >bundle.pack &&
+ 	git index-pack bundle.pack &&
+-	test_bundle_object_count bundle.pack 3
++	test_bundle_object_count bundle.pack 3 &&
++	test_bundle_mds_count bundle.pack 3
+ '
+ 
+ test_expect_success 'unbundle 2' '
+@@ -237,7 +244,8 @@ test_expect_success 'bundle does not prerequisite objects' '
+ 		cat
+ 	) <bundle3 >bundle.pack &&
+ 	git index-pack bundle.pack &&
+-	test_bundle_object_count bundle.pack 3
++	test_bundle_object_count bundle.pack 3 &&
++	test_bundle_mds_count bundle.pack 3
+ '
+ 
+ test_expect_success 'bundle should be able to create a full history' '
+diff --git a/upload-pack.c b/upload-pack.c
+index 6f36f62..1e77826 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -320,11 +320,18 @@ static int got_sha1(char *hex, unsigned char *sha1)
+ {
+ 	struct object *o;
+ 	int we_knew_they_have = 0;
++	int has_sha1_digest, has_digest;
++	mdigest_t sha1_digest, digest;
+ 
+-	if (get_sha1_hex(hex, sha1))
++	if (get_sha1_hex_digest(hex, sha1, &has_sha1_digest, &sha1_digest))
+ 		die("git upload-pack: expected SHA1 object, got '%s'", hex);
+ 	if (!has_sha1_file(sha1))
+ 		return -1;
++	has_digest = has_sha1_file_digest(sha1, &digest);
++	if (has_sha1_digest && has_digest
++	    && mdigest_tst(&digest, &sha1_digest)) {
++		die("git upload-pack: SHA1 collision on MD for %s", hex);
++	}
+ 
+ 	o = lookup_object(sha1);
+ 	if (!(o && o->parsed))
+@@ -719,7 +726,7 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
+ {
+ 	static const char *capabilities = "multi_ack thin-pack side-band"
+ 		" side-band-64k ofs-delta shallow no-progress"
+-		" include-tag multi_ack_detailed";
++		" include-tag multi_ack_detailed" " mds-check";
+ 	struct object *o = parse_object(sha1);
+ 	const char *refname_nons = strip_namespace(refname);
+ 
 -- 
 1.7.1
