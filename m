@@ -1,166 +1,122 @@
-From: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: [PATCH] git-commit: add option --date-now
-Date: Wed, 21 Dec 2011 15:38:37 +0000
-Message-ID: <20111221153837.GC2160@beez.lab.cmartin.tk>
-References: <4EF1F3AB.5080607@elegosoft.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] bash completion: use read -r everywhere
+Date: Wed, 21 Dec 2011 16:54:14 +0100
+Message-ID: <4502a0248bb843018335e9b5cdf70736c096ebe3.1324482693.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="WYTEVAkct0FjGQmd"
-Cc: git <git@vger.kernel.org>
-To: Michael Schubert <mschub@elegosoft.com>
-X-From: git-owner@vger.kernel.org Wed Dec 21 16:38:49 2011
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, Kevin Ballard <kevin@sb.org>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 21 16:54:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RdOFj-0001xg-3h
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Dec 2011 16:38:47 +0100
+	id 1RdOUs-0001SD-5R
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Dec 2011 16:54:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752691Ab1LUPim (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Dec 2011 10:38:42 -0500
-Received: from kimmy.cmartin.tk ([91.121.65.165]:44082 "EHLO kimmy.cmartin.tk"
+	id S1752797Ab1LUPyV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Dec 2011 10:54:21 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:13193 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751050Ab1LUPil (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Dec 2011 10:38:41 -0500
-Received: from beez.lab.cmartin.tk (145.Red-81-38-112.dynamicIP.rima-tde.net [81.38.112.145])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 518A1461B4;
-	Wed, 21 Dec 2011 16:38:33 +0100 (CET)
-Received: (nullmailer pid 11468 invoked by uid 1000);
-	Wed, 21 Dec 2011 15:38:37 -0000
-Mail-Followup-To: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
-	Michael Schubert <mschub@elegosoft.com>, git <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <4EF1F3AB.5080607@elegosoft.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751944Ab1LUPyU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Dec 2011 10:54:20 -0500
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 21 Dec
+ 2011 16:54:15 +0100
+Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 21 Dec
+ 2011 16:54:16 +0100
+X-Mailer: git-send-email 1.7.8.484.gdad4270
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187569>
 
+POSIX specifies
 
---WYTEVAkct0FjGQmd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+  The read utility shall read a single line from standard input.
+  By default, unless the -r option is specified, backslash ('\')
+  shall act as an escape character...
 
-On Wed, Dec 21, 2011 at 03:56:43PM +0100, Michael Schubert wrote:
-> Currently, Git doesn't provide an easy way to use the current date when
-> amending a commit or reusing an existing commmit with -C/-c. Therefore,
-> add --date-now.
+Our omission of -r breaks the loop reading refnames from
+git-for-each-ref in __git_refs() if there are refnames such as
+"foo'bar", in which case for-each-ref helpfully quotes them as in
 
-The option --reset-author also resets the date. So 'git commit
---ammend --reset-author' does what 'git commit --amend --date-now'
-would do in most cases. I was surpised when I tried 'git commit
---amend --date=3Dnow' that git didn't understand 'now' as a date, which
-seems like a more obvious place to fix it.
+  $ git update-ref "refs/remotes/test/foo'bar" HEAD
+  $ git for-each-ref --shell --format="ref=%(refname:short)" "refs/remotes"
+  ref='test/foo'\''bar'
 
->=20
-> Signed-off-by: Michael Schubert <mschub@elegosoft.com>
-> ---
->  Documentation/git-commit.txt |    7 +++++--
->  builtin/commit.c             |    9 ++++++++-
->  2 files changed, 13 insertions(+), 3 deletions(-)
->=20
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-> index 5cc84a1..b7c6f0d 100644
-> --- a/Documentation/git-commit.txt
-> +++ b/Documentation/git-commit.txt
-> @@ -12,8 +12,8 @@ SYNOPSIS
->  	   [--dry-run] [(-c | -C | --fixup | --squash) <commit>]
->  	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
->  	   [--allow-empty-message] [--no-verify] [-e] [--author=3D<author>]
-> -	   [--date=3D<date>] [--cleanup=3D<mode>] [--status | --no-status]
-> -	   [-i | -o] [--] [<file>...]
-> +	   [--date=3D<date> | --date-now] [--cleanup=3D<mode>]
-> +	   [--status | --no-status] [-i | -o] [--] [<file>...]
-> =20
->  DESCRIPTION
->  -----------
-> @@ -126,6 +126,9 @@ OPTIONS
->  --date=3D<date>::
->  	Override the author date used in the commit.
-> =20
-> +--date-now
-> +	Override the author date used in the commit with the current local time.
-> +
->  -m <msg>::
->  --message=3D<msg>::
->  	Use the given <msg> as the commit message.
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index be1ab2e..28fdf1a 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -82,6 +82,7 @@ static const char *author_message, *author_message_buff=
-er;
->  static char *edit_message, *use_message;
->  static char *fixup_message, *squash_message;
->  static int all, also, interactive, patch_interactive, only, amend, signo=
-ff;
-> +static int date_now;
->  static int edit_flag =3D -1; /* unspecified */
->  static int quiet, verbose, no_verify, allow_empty, dry_run, renew_author=
-ship;
->  static int no_post_rewrite, allow_empty_message;
-> @@ -134,6 +135,7 @@ static struct option builtin_commit_options[] =3D {
->  	OPT_FILENAME('F', "file", &logfile, "read message from file"),
->  	OPT_STRING(0, "author", &force_author, "author", "override author for c=
-ommit"),
->  	OPT_STRING(0, "date", &force_date, "date", "override date for commit"),
-> +	OPT_BOOLEAN(0, "date-now", &date_now, "override date for commit with cu=
-rrent local time"),
->  	OPT_CALLBACK('m', "message", &message, "message", "commit message", opt=
-_parse_m),
->  	OPT_STRING('c', "reedit-message", &edit_message, "commit", "reuse and e=
-dit message from specified commit"),
->  	OPT_STRING('C', "reuse-message", &use_message, "commit", "reuse message=
- from specified commit"),
-> @@ -557,7 +559,9 @@ static void determine_author_info(struct strbuf *auth=
-or_ident)
->  					(lb - strlen(" ") -
->  					 (a + strlen("\nauthor "))));
->  		email =3D xmemdupz(lb + strlen("<"), rb - (lb + strlen("<")));
-> -		date =3D xmemdupz(rb + strlen("> "), eol - (rb + strlen("> ")));
-> +		if (!date_now)
-> +			date =3D xmemdupz(rb + strlen("> "),
-> +					eol - (rb + strlen("> ")));
->  	}
-> =20
->  	if (force_author) {
-> @@ -1018,6 +1022,9 @@ static int parse_and_validate_options(int argc, con=
-st char *argv[],
->  	if (force_author && renew_authorship)
->  		die(_("Using both --reset-author and --author does not make sense"));
-> =20
-> +	if (force_date && date_now)
-> +		die(_("Using both --date and --date-now does not make sense"));
-> +
->  	if (logfile || message.len || use_message || fixup_message)
->  		use_editor =3D 0;
->  	if (0 <=3D edit_flag)
-> --=20
-> 1.7.8.521.g64725
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->=20
+Interpolating the \' here will read "ref='test/foo'''bar'" instead,
+and eval then chokes on the unbalanced quotes.
 
---WYTEVAkct0FjGQmd
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+However, since none of the read loops _want_ to have backslashes
+interpolated, it's much safer to use read -r everywhere.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
+ contrib/completion/git-completion.bash |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
 
-iQEcBAEBAgAGBQJO8f19AAoJEHKRP1jG7ZzTsoUH/Rp2PIrPYvea9NSJcAqzJKyH
-u8qEt66mfet5nR0aFDHw7R9+5xG99+lHbCUmvGPe4r1bTO21qfJ35WuJ5QaxnDoE
-URCa7/Jicv2FoEG7tAUf2V+8D4bt8HLsMTWLClHLtNnFhgZH+yS9X6ukQFaITVCf
-h3Py7k+XVrzQ4Ve9DMlRSd5+fL/KPB27+J3Yae46IjV+bhRtnHq1UTZJaV2wnTWY
-cicC6VnA1S6E9rY02sLSfUzJezL5dYylNXq73GHdA+AXjCjLpx+j3CionuWE7nwY
-vbztQTHOfuURayZUE+1t7WcQNfqKKIAG+MvYXmje7m1jlxVVov1MVVZyvvhA72A=
-=URgO
------END PGP SIGNATURE-----
-
---WYTEVAkct0FjGQmd--
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 78257ae..e7a39ef 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -111,7 +111,7 @@ __git_ps1_show_upstream ()
+ 
+ 	# get some config options from git-config
+ 	local output="$(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')"
+-	while read key value; do
++	while read -r key value; do
+ 		case "$key" in
+ 		bash.showupstream)
+ 			GIT_PS1_SHOWUPSTREAM="$value"
+@@ -589,7 +589,7 @@ __git_refs ()
+ 			local ref entry
+ 			git --git-dir="$dir" for-each-ref --shell --format="ref=%(refname:short)" \
+ 				"refs/remotes/" | \
+-			while read entry; do
++			while read -r entry; do
+ 				eval "$entry"
+ 				ref="${ref#*/}"
+ 				if [[ "$ref" == "$cur"* ]]; then
+@@ -602,7 +602,7 @@ __git_refs ()
+ 	case "$cur" in
+ 	refs|refs/*)
+ 		git ls-remote "$dir" "$cur*" 2>/dev/null | \
+-		while read hash i; do
++		while read -r hash i; do
+ 			case "$i" in
+ 			*^{}) ;;
+ 			*) echo "$i" ;;
+@@ -611,7 +611,7 @@ __git_refs ()
+ 		;;
+ 	*)
+ 		git ls-remote "$dir" HEAD ORIG_HEAD 'refs/tags/*' 'refs/heads/*' 'refs/remotes/*' 2>/dev/null | \
+-		while read hash i; do
++		while read -r hash i; do
+ 			case "$i" in
+ 			*^{}) ;;
+ 			refs/*) echo "${i#refs/*/}" ;;
+@@ -636,7 +636,7 @@ __git_refs_remotes ()
+ {
+ 	local i hash
+ 	git ls-remote "$1" 'refs/heads/*' 2>/dev/null | \
+-	while read hash i; do
++	while read -r hash i; do
+ 		echo "$i:refs/remotes/$1/${i#refs/heads/}"
+ 	done
+ }
+@@ -1863,7 +1863,7 @@ __git_config_get_set_variables ()
+ 	done
+ 
+ 	git --git-dir="$(__gitdir)" config $config_file --list 2>/dev/null |
+-	while read line
++	while read -r line
+ 	do
+ 		case "$line" in
+ 		*.*=*)
+-- 
+1.7.8.484.gdad4270
