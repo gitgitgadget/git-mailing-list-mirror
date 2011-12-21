@@ -1,64 +1,67 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] Use Python's "print" as a function, not as a keyword
-Date: Wed, 21 Dec 2011 10:12:28 -0600
-Message-ID: <CAGdFq_jCdybZfw3d9o8+aVxQ043LQaqpSkdXEHib3vYX6N0hbw@mail.gmail.com>
-References: <20111221021930.GA31364@thinkpad> <CACBZZX7PVyCFfHTJN_QZfyt5wAcr4UAiJSmo54PSi=8pgv3sYA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] git-commit: add option --date-now
+Date: Wed, 21 Dec 2011 17:24:57 +0100
+Message-ID: <vpqmxalrixy.fsf@bauges.imag.fr>
+References: <4EF1F3AB.5080607@elegosoft.com>
+	<20111221153837.GC2160@beez.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sebastian Morr <sebastian@morr.cc>, git@vger.kernel.org
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 21 17:13:18 2011
+Cc: Michael Schubert <mschub@elegosoft.com>, git <git@vger.kernel.org>
+To: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Wed Dec 21 17:25:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RdOn6-0002Az-UE
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Dec 2011 17:13:17 +0100
+	id 1RdOzG-0008FW-C3
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Dec 2011 17:25:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752765Ab1LUQNL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Dec 2011 11:13:11 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:64129 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752341Ab1LUQNK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Dec 2011 11:13:10 -0500
-Received: by werm1 with SMTP id m1so2770156wer.19
-        for <git@vger.kernel.org>; Wed, 21 Dec 2011 08:13:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=6iA2Df0iWDGKZwpr/yxjov8uDQIbyS0/6dgigkVSK10=;
-        b=GCw3JudYM5dsEnV3BFV659c/F62+LeaWKs/BYp5MWj+avXk/XKoQVjUp+/uDQp9I+b
-         JieJZs6lQPRCNFv7Gv6tYdNjSL5oc55QMH/GJqyYiJlN5UOlDAHavcasXzkZLVW8TP8X
-         fS7KoInUCfqcXu1eAFPDgc6x5uSYb0QNjLRes=
-Received: by 10.216.131.141 with SMTP id m13mr9356305wei.30.1324483989296;
- Wed, 21 Dec 2011 08:13:09 -0800 (PST)
-Received: by 10.223.123.134 with HTTP; Wed, 21 Dec 2011 08:12:28 -0800 (PST)
-In-Reply-To: <CACBZZX7PVyCFfHTJN_QZfyt5wAcr4UAiJSmo54PSi=8pgv3sYA@mail.gmail.com>
+	id S1752951Ab1LUQZq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Dec 2011 11:25:46 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:35413 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752814Ab1LUQZp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Dec 2011 11:25:45 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id pBLGOgmQ030809
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 21 Dec 2011 17:24:42 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1RdOyP-00019a-UL; Wed, 21 Dec 2011 17:24:57 +0100
+In-Reply-To: <20111221153837.GC2160@beez.lab.cmartin.tk> ("Carlos
+ =?iso-8859-1?Q?Mart=EDn?=
+	Nieto"'s message of "Wed, 21 Dec 2011 15:38:37 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 21 Dec 2011 17:24:42 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: pBLGOgmQ030809
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1325089484.25047@JGv7m2qcJ7HG3WxlJZ/GMQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187571>
 
-On Tue, Dec 20, 2011 at 20:48, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
-avarab@gmail.com> wrote:
-> I'm running Debian unstable and it has Python 2.7. Most people are
-> still using Python 2.x as their default system Python since 3.x break=
-s
-> backwards compatibility for common constructs like print.
->
-> Does this only break Python 2.6, or all 2.x versions of Python?
->
-> What's our currently supported Python version for the Python code in
-> Git? It's 5.8.0 for Perl, do we have any particular aim for a
-> supported Python version?
+Carlos Mart=EDn Nieto <cmn@elego.de> writes:
 
-Python 2.4.
+> I was surpised when I tried 'git commit --amend --date=3Dnow' that gi=
+t
+> didn't understand 'now' as a date, which seems like a more obvious
+> place to fix it.
+
++1
+
+I really don't think Git wants yet-another-option for each use-case we
+find, and accepting "now" as a date (either by hardcoding "now" as an
+accepted value, or by running approxidate on the argument of --date).
 
 --=20
-Cheers,
-
-Sverre Rabbelier
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
