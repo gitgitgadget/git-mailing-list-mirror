@@ -1,67 +1,102 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] git-commit: add option --date-now
-Date: Wed, 21 Dec 2011 17:24:57 +0100
-Message-ID: <vpqmxalrixy.fsf@bauges.imag.fr>
-References: <4EF1F3AB.5080607@elegosoft.com>
-	<20111221153837.GC2160@beez.lab.cmartin.tk>
+From: "Aneesh Kumar K.V" <aneesh.kumar@linux.vnet.ibm.com>
+Subject: Re: Re* How to generate pull-request with info of signed tag
+Date: Wed, 21 Dec 2011 22:21:21 +0530
+Message-ID: <87ipl9yik6.fsf@linux.vnet.ibm.com>
+References: <874nx1korf.fsf@linux.vnet.ibm.com> <7vbor8jw0h.fsf@alter.siamese.dyndns.org> <871us3l45o.fsf@linux.vnet.ibm.com> <7viplfdlpb.fsf@alter.siamese.dyndns.org> <87iplch79e.fsf@linux.vnet.ibm.com> <7vobv4mj4r.fsf@alter.siamese.dyndns.org> <7vk45smilc.fsf@alter.siamese.dyndns.org> <87liq6xwr8.fsf@linux.vnet.ibm.com> <7vzkemh0de.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Schubert <mschub@elegosoft.com>, git <git@vger.kernel.org>
-To: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Wed Dec 21 17:25:50 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 21 17:52:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RdOzG-0008FW-C3
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Dec 2011 17:25:50 +0100
+	id 1RdPOd-0004jC-Dh
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Dec 2011 17:52:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752951Ab1LUQZq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Dec 2011 11:25:46 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:35413 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752814Ab1LUQZp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Dec 2011 11:25:45 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id pBLGOgmQ030809
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 21 Dec 2011 17:24:42 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1RdOyP-00019a-UL; Wed, 21 Dec 2011 17:24:57 +0100
-In-Reply-To: <20111221153837.GC2160@beez.lab.cmartin.tk> ("Carlos
- =?iso-8859-1?Q?Mart=EDn?=
-	Nieto"'s message of "Wed, 21 Dec 2011 15:38:37 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 21 Dec 2011 17:24:42 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: pBLGOgmQ030809
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1325089484.25047@JGv7m2qcJ7HG3WxlJZ/GMQ
+	id S1752949Ab1LUQv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Dec 2011 11:51:59 -0500
+Received: from e32.co.us.ibm.com ([32.97.110.150]:48338 "EHLO
+	e32.co.us.ibm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751881Ab1LUQv6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Dec 2011 11:51:58 -0500
+Received: from /spool/local
+	by e32.co.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted
+	for <git@vger.kernel.org> from <aneesh.kumar@linux.vnet.ibm.com>;
+	Wed, 21 Dec 2011 09:51:56 -0700
+Received: from d03relay03.boulder.ibm.com (9.17.195.228)
+	by e32.co.us.ibm.com (192.168.1.132) with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted;
+	Wed, 21 Dec 2011 09:51:43 -0700
+Received: from d03av04.boulder.ibm.com (d03av04.boulder.ibm.com [9.17.195.170])
+	by d03relay03.boulder.ibm.com (8.13.8/8.13.8/NCO v10.0) with ESMTP id pBLGpV30115478
+	for <git@vger.kernel.org>; Wed, 21 Dec 2011 09:51:36 -0700
+Received: from d03av04.boulder.ibm.com (loopback [127.0.0.1])
+	by d03av04.boulder.ibm.com (8.14.4/8.13.1/NCO v10.0 AVout) with ESMTP id pBLGpRvH018190
+	for <git@vger.kernel.org>; Wed, 21 Dec 2011 09:51:29 -0700
+Received: from skywalker.linux.vnet.ibm.com ([9.124.88.134])
+	by d03av04.boulder.ibm.com (8.14.4/8.13.1/NCO v10.0 AVin) with ESMTP id pBLGpMs9017269;
+	Wed, 21 Dec 2011 09:51:25 -0700
+In-Reply-To: <7vzkemh0de.fsf@alter.siamese.dyndns.org>
+User-Agent: Notmuch/0.10.2+110~g3b54f44 (http://notmuchmail.org) Emacs/23.3.1 (x86_64-pc-linux-gnu)
+x-cbid: 11122116-3270-0000-0000-000002B9044D
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187572>
 
-Carlos Mart=EDn Nieto <cmn@elego.de> writes:
+On Tue, 20 Dec 2011 23:03:57 -0800, Junio C Hamano <gitster@pobox.com> wrote:
+> "Aneesh Kumar K.V" <aneesh.kumar@linux.vnet.ibm.com> writes:
+> 
+> > Also can we make .git/config remote stanza to have something like below
+> >
+> >
+> >      fetch = +refs/tags/*:refs/tags/abc/*
+> >
+> > so that one can do
+> >
+> >    git fetch t-remote tag-name
+> >
+> > and that get stored to abc/tag-name 
+> 
+> You can do whatever you want to your own config file without asking anybody.
+> 
+> Having said that, the point of the recent change to allow you to pull this
+> way (notice the lack of "tag")
+> 
+>     $ git pull $url $signed_tag_name
+> 
+> is so that you do not have to contaminate your own ref namespace with tags
+> that are used to leave audit trails in the history graph.
+> 
 
-> I was surpised when I tried 'git commit --amend --date=3Dnow' that gi=
-t
-> didn't understand 'now' as a date, which seems like a more obvious
-> place to fix it.
+With an entry like below
 
-+1
+[remote "github"]
+        fetch = +refs/tags/*:refs/tags/origin/*
+        url = git://github.com/kvaneesh/QEMU.git
 
-I really don't think Git wants yet-another-option for each use-case we
-find, and accepting "now" as a date (either by hardcoding "now" as an
-accepted value, or by running approxidate on the argument of --date).
+when i do git fetch github for-anthony i get the below error
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+[master@QEMU]$ git fetch github for-anthony
+From git://github.com/kvaneesh/QEMU
+ * tag               for-anthony -> FETCH_HEAD
+[master@QEMU]$ less .git/config 
+
+Also trying to do
+
+[master@QEMU]$ git fetch git://github.com/kvaneesh/QEMU.git  for-anthony:aneesh/for-anthony
+error: Trying to write non-commit object 12916047784615b7d8b879d9d39be6c1559e1b1b to branch refs/heads/aneesh/for-anthony
+From git://github.com/kvaneesh/QEMU
+ ! [new branch]      for-anthony -> aneesh/for-anthony  (unable to update local ref)
+ * [new tag]         for-anthony -> for-anthony
+
+
+I understand that replacing the above with below works. But we should
+not be required to specify refs/tags there right ?
+
+[master@QEMU]$ git fetch git://github.com/kvaneesh/QEMU.git  refs/tags/for-anthony:refs/tags/aneesh/for-anthony
+
+-aneesh
