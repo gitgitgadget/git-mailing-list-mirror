@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH 2/4] Fix a bitwise negation assignment issue spotted by Sun Studio
-Date: Wed, 21 Dec 2011 01:18:20 +0000
-Message-ID: <1324430302-22441-3-git-send-email-avarab@gmail.com>
+Subject: [PATCH 3/4] Appease Sun Studio by renaming "tmpfile"
+Date: Wed, 21 Dec 2011 01:18:21 +0000
+Message-ID: <1324430302-22441-4-git-send-email-avarab@gmail.com>
 References: <1324430302-22441-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -14,138 +14,179 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 21 02:18:41 2011
+X-From: git-owner@vger.kernel.org Wed Dec 21 02:18:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RdApN-0001Uu-8N
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Dec 2011 02:18:41 +0100
+	id 1RdApU-0001Wn-Cq
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Dec 2011 02:18:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753555Ab1LUBSh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Dec 2011 20:18:37 -0500
+	id S1753030Ab1LUBSo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Dec 2011 20:18:44 -0500
 Received: from mail-ee0-f46.google.com ([74.125.83.46]:52700 "EHLO
 	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753674Ab1LUBSf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Dec 2011 20:18:35 -0500
+	with ESMTP id S1753571Ab1LUBSn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Dec 2011 20:18:43 -0500
 Received: by mail-ee0-f46.google.com with SMTP id c4so7119243eek.19
-        for <git@vger.kernel.org>; Tue, 20 Dec 2011 17:18:35 -0800 (PST)
+        for <git@vger.kernel.org>; Tue, 20 Dec 2011 17:18:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=tAGbykwi4ww9RaIn2e/Ef0B7dBLnMvp37V86iBv5Gc0=;
-        b=miO5VTXRf78UJU5WdPIbmku6sm1JNWMeGpYY06svCUAA+argD6sAcuw/fiOb24V3II
-         3igmy4/w+YAFwBI4tPCTEHCsjw7lUsSF9yu8Ba3ru4uCxASfzeDh9Hn/1MmViIJN2ifz
-         MHWUM4mTEGcOlH3KQAf0M6cgajRNIWVa719PU=
-Received: by 10.213.15.76 with SMTP id j12mr959823eba.120.1324430315237;
-        Tue, 20 Dec 2011 17:18:35 -0800 (PST)
+        bh=a50Wzb3bISa0aXHd9RGL7JHkjiUeurJjR9hwtBTuH4w=;
+        b=txLiL85hB7WFJsSr+A9EFvsgLXxgVncA2CK9A8/DLX7Hhmmq6iraEUOxulZW2qBMeX
+         r8h+xWpC6v61y1v/VAP0BXWlcUd9N3cDJdW7O2fLfOMaz0+P5Cz+QMzrU12WkqA+o5V+
+         DWAoCIc4LvJYJgmktAy0isLzoM0yojJemQLIo=
+Received: by 10.14.127.197 with SMTP id d45mr1860511eei.91.1324430322384;
+        Tue, 20 Dec 2011 17:18:42 -0800 (PST)
 Received: from w.nix.is (w.nix.is. [188.40.98.140])
-        by mx.google.com with ESMTPS id z43sm14054237eef.7.2011.12.20.17.18.34
+        by mx.google.com with ESMTPS id z43sm14054237eef.7.2011.12.20.17.18.41
         (version=SSLv3 cipher=OTHER);
-        Tue, 20 Dec 2011 17:18:34 -0800 (PST)
+        Tue, 20 Dec 2011 17:18:41 -0800 (PST)
 X-Mailer: git-send-email 1.7.7.3
 In-Reply-To: <1324430302-22441-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187543>
 
-Change direct and indirect assignments of the bitwise negation of 0 to
-uint32_t variables to have a "U" suffix. I.e. ~0U instead of ~0. This
-eliminates warnings under Sun Studio 12 Update 1:
+On Solaris the system headers define the "tmpfile" name, which'll
+cause Git compiled with Sun Studio 12 Update 1 to whine about us
+redefining the name:
 
-    "vcs-svn/string_pool.c", line 11: warning: initializer will be sign=
--extended: -1 (E_INIT_SIGN_EXTEND)
-    "vcs-svn/string_pool.c", line 81: warning: initializer will be sign=
--extended: -1 (E_INIT_SIGN_EXTEND)
-    "vcs-svn/repo_tree.c", line 112: warning: initializer will be sign-=
-extended: -1 (E_INIT_SIGN_EXTEND)
-    "vcs-svn/repo_tree.c", line 112: warning: initializer will be sign-=
-extended: -1 (E_INIT_SIGN_EXTEND)
-    "test-treap.c", line 34: warning: initializer will be sign-extended=
-: -1 (E_INIT_SIGN_EXTEND)
+    "pack-write.c", line 76: warning: name redefined by pragma redefine=
+_extname declared static: tmpfile     (E_PRAGMA_REDEFINE_STATIC)
+    "sha1_file.c", line 2455: warning: name redefined by pragma redefin=
+e_extname declared static: tmpfile    (E_PRAGMA_REDEFINE_STATIC)
+    "fast-import.c", line 858: warning: name redefined by pragma redefi=
+ne_extname declared static: tmpfile   (E_PRAGMA_REDEFINE_STATIC)
+    "builtin/index-pack.c", line 175: warning: name redefined by pragma=
+ redefine_extname declared static: tmpfile    (E_PRAGMA_REDEFINE_STATIC=
+)
 
-The semantics are still the same as demonstrated by this program:
-
-    $ cat test.c && make test && ./test
-    #include <stdio.h>
-    #include <stdint.h>
-
-    int main(void)
-    {
-        uint32_t foo =3D ~0;
-        uint32_t bar =3D ~0U;
-
-        printf("foo =3D <%u> bar =3D <%u>\n", foo, bar);
-
-        return 0;
-    }
-    cc     test.c   -o test
-    "test.c", line 5: warning: initializer will be sign-extended: -1
-    foo =3D <4294967295> bar =3D <4294967295>
+Just renaming the "tmpfile" variable to "tmp_file" in the relevant
+places is the easiest way to fix this.
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- test-treap.c          |    2 +-
- vcs-svn/repo_tree.c   |    2 +-
- vcs-svn/string_pool.c |    4 ++--
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ builtin/index-pack.c |    6 +++---
+ fast-import.c        |    8 ++++----
+ pack-write.c         |    6 +++---
+ sha1_file.c          |   12 ++++++------
+ 4 files changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/test-treap.c b/test-treap.c
-index ab8c951..294d7ee 100644
---- a/test-treap.c
-+++ b/test-treap.c
-@@ -31,7 +31,7 @@ static void strtonode(struct int_node *item, const ch=
-ar *s)
- int main(int argc, char *argv[])
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 98025da..af7dc37 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -172,10 +172,10 @@ static const char *open_pack_file(const char *pac=
+k_name)
+ 	if (from_stdin) {
+ 		input_fd =3D 0;
+ 		if (!pack_name) {
+-			static char tmpfile[PATH_MAX];
+-			output_fd =3D odb_mkstemp(tmpfile, sizeof(tmpfile),
++			static char tmp_file[PATH_MAX];
++			output_fd =3D odb_mkstemp(tmp_file, sizeof(tmp_file),
+ 						"pack/tmp_pack_XXXXXX");
+-			pack_name =3D xstrdup(tmpfile);
++			pack_name =3D xstrdup(tmp_file);
+ 		} else
+ 			output_fd =3D open(pack_name, O_CREAT|O_EXCL|O_RDWR, 0600);
+ 		if (output_fd < 0)
+diff --git a/fast-import.c b/fast-import.c
+index 4b9c4b7..6cd19e5 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -855,15 +855,15 @@ static struct tree_content *dup_tree_content(stru=
+ct tree_content *s)
+=20
+ static void start_packfile(void)
  {
- 	struct strbuf sb =3D STRBUF_INIT;
--	struct trp_root root =3D { ~0 };
-+	struct trp_root root =3D { ~0U };
- 	uint32_t item;
+-	static char tmpfile[PATH_MAX];
++	static char tmp_file[PATH_MAX];
+ 	struct packed_git *p;
+ 	struct pack_header hdr;
+ 	int pack_fd;
 =20
- 	if (argc !=3D 1)
-diff --git a/vcs-svn/repo_tree.c b/vcs-svn/repo_tree.c
-index a21d89d..c3f198d 100644
---- a/vcs-svn/repo_tree.c
-+++ b/vcs-svn/repo_tree.c
-@@ -109,7 +109,7 @@ static struct repo_dirent *repo_read_dirent(uint32_=
-t revision,
- static void repo_write_dirent(const uint32_t *path, uint32_t mode,
- 			      uint32_t content_offset, uint32_t del)
- {
--	uint32_t name, revision, dir_o =3D ~0, parent_dir_o =3D ~0;
-+	uint32_t name, revision, dir_o =3D ~0U, parent_dir_o =3D ~0U;
- 	struct repo_dir *dir;
- 	struct repo_dirent *key;
- 	struct repo_dirent *dent =3D NULL;
-diff --git a/vcs-svn/string_pool.c b/vcs-svn/string_pool.c
-index 8af8d54..1b63b19 100644
---- a/vcs-svn/string_pool.c
-+++ b/vcs-svn/string_pool.c
-@@ -8,7 +8,7 @@
- #include "obj_pool.h"
- #include "string_pool.h"
+-	pack_fd =3D odb_mkstemp(tmpfile, sizeof(tmpfile),
++	pack_fd =3D odb_mkstemp(tmp_file, sizeof(tmp_file),
+ 			      "pack/tmp_pack_XXXXXX");
+-	p =3D xcalloc(1, sizeof(*p) + strlen(tmpfile) + 2);
+-	strcpy(p->pack_name, tmpfile);
++	p =3D xcalloc(1, sizeof(*p) + strlen(tmp_file) + 2);
++	strcpy(p->pack_name, tmp_file);
+ 	p->pack_fd =3D pack_fd;
+ 	p->do_not_close =3D 1;
+ 	pack_file =3D sha1fd(pack_fd, p->pack_name);
+diff --git a/pack-write.c b/pack-write.c
+index de2bd01..ca9e63b 100644
+--- a/pack-write.c
++++ b/pack-write.c
+@@ -73,9 +73,9 @@ const char *write_idx_file(const char *index_name, st=
+ruct pack_idx_entry **objec
+ 		f =3D sha1fd_check(index_name);
+ 	} else {
+ 		if (!index_name) {
+-			static char tmpfile[PATH_MAX];
+-			fd =3D odb_mkstemp(tmpfile, sizeof(tmpfile), "pack/tmp_idx_XXXXXX")=
+;
+-			index_name =3D xstrdup(tmpfile);
++			static char tmp_file[PATH_MAX];
++			fd =3D odb_mkstemp(tmp_file, sizeof(tmp_file), "pack/tmp_idx_XXXXXX=
+");
++			index_name =3D xstrdup(tmp_file);
+ 		} else {
+ 			unlink(index_name);
+ 			fd =3D open(index_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
+diff --git a/sha1_file.c b/sha1_file.c
+index f291f3f..88f2151 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2452,15 +2452,15 @@ static int write_loose_object(const unsigned ch=
+ar *sha1, char *hdr, int hdrlen,
+ 	git_SHA_CTX c;
+ 	unsigned char parano_sha1[20];
+ 	char *filename;
+-	static char tmpfile[PATH_MAX];
++	static char tmp_file[PATH_MAX];
 =20
--static struct trp_root tree =3D { ~0 };
-+static struct trp_root tree =3D { ~0U };
+ 	filename =3D sha1_file_name(sha1);
+-	fd =3D create_tmpfile(tmpfile, sizeof(tmpfile), filename);
++	fd =3D create_tmpfile(tmp_file, sizeof(tmp_file), filename);
+ 	if (fd < 0) {
+ 		if (errno =3D=3D EACCES)
+ 			return error("insufficient permission for adding an object to repos=
+itory database %s\n", get_object_directory());
+ 		else
+-			return error("unable to create temporary sha1 filename %s: %s\n", t=
+mpfile, strerror(errno));
++			return error("unable to create temporary sha1 filename %s: %s\n", t=
+mp_file, strerror(errno));
+ 	}
 =20
- struct node {
- 	uint32_t offset;
-@@ -78,7 +78,7 @@ void pool_print_seq(uint32_t len, uint32_t *seq, char=
- delim, FILE *stream)
- uint32_t pool_tok_seq(uint32_t sz, uint32_t *seq, const char *delim, c=
-har *str)
- {
- 	char *context =3D NULL;
--	uint32_t token =3D ~0;
-+	uint32_t token =3D ~0U;
- 	uint32_t length;
+ 	/* Set it up */
+@@ -2505,12 +2505,12 @@ static int write_loose_object(const unsigned ch=
+ar *sha1, char *hdr, int hdrlen,
+ 		struct utimbuf utb;
+ 		utb.actime =3D mtime;
+ 		utb.modtime =3D mtime;
+-		if (utime(tmpfile, &utb) < 0)
++		if (utime(tmp_file, &utb) < 0)
+ 			warning("failed utime() on %s: %s",
+-				tmpfile, strerror(errno));
++				tmp_file, strerror(errno));
+ 	}
 =20
- 	if (sz =3D=3D 0)
+-	return move_temp_to_file(tmpfile, filename);
++	return move_temp_to_file(tmp_file, filename);
+ }
+=20
+ int write_sha1_file(const void *buf, unsigned long len, const char *ty=
+pe, unsigned char *returnsha1)
 --=20
 1.7.7.3
