@@ -1,64 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtin/init-db.c: eliminate -Wformat warning on Solaris
-Date: Tue, 20 Dec 2011 16:04:17 -0800
-Message-ID: <7vmxamiyda.fsf@alter.siamese.dyndns.org>
-References: <1324423661-31174-1-git-send-email-avarab@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] Makefile: Change the default compiler from "gcc" to "cc"
+Date: Wed, 21 Dec 2011 02:06:52 +0100
+Message-ID: <CACBZZX629-hP6kPR1rHQ1E7SoXHSE0a_S8G0Lm0m4=aizk+6hA@mail.gmail.com>
+References: <1324424447-7164-1-git-send-email-avarab@gmail.com> <7vr4zyiyih.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 21 01:04:32 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 21 02:07:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rd9fV-0002RK-PQ
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Dec 2011 01:04:26 +0100
+	id 1RdAeP-00067j-Ts
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Dec 2011 02:07:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752656Ab1LUAEW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Dec 2011 19:04:22 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47515 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752829Ab1LUAEU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Dec 2011 19:04:20 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6BF9762AF;
-	Tue, 20 Dec 2011 19:04:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CrgaA5GNIW03FB5jIORyjda0DtA=; b=Sxj8/y
-	Dy9s6cs0C0Y7C3WFDqQ+1xWg9nmUo6u+lBVH3hTkbp16IkezUgBH/yF/KTHXVcSv
-	zyChXSqu6BO14ZKeIm8J/K+5YLrkOUEEQi5I66VfchQRV134ePuKMKhgSbd3lxX9
-	Zqu45c/O0JQ4682TGdrUhNgjoPD/j3lhmsggc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XWsty4UTuGDmS1fS9ZBCe49rPTQf0Np0
-	XR11Q14XMlnhlAv4JsUccUs2C2YlOowRTl93iJd/2cr9q4+UhT1qiIwEyVzVrEEf
-	yAK5Eswi/Pq3rcFVHyz/EdYNOMK0AQXxGE4nCEVhNCdp5zY+doSAeHkKjbIadEoY
-	TZYDu3kNXBw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6437D62AE;
-	Tue, 20 Dec 2011 19:04:19 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E6BB662AD; Tue, 20 Dec 2011
- 19:04:18 -0500 (EST)
-In-Reply-To: <1324423661-31174-1-git-send-email-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 20 Dec
- 2011 23:27:41 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 540CA1D8-2B67-11E1-9B49-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753739Ab1LUBHQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Dec 2011 20:07:16 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:53333 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752895Ab1LUBHO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Dec 2011 20:07:14 -0500
+Received: by wgbdr13 with SMTP id dr13so13386117wgb.1
+        for <git@vger.kernel.org>; Tue, 20 Dec 2011 17:07:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=5s9iA7tyKRqjjxUp3xp03/hewpqDbbvfID/LMHZ4gA8=;
+        b=Ki7+9e2b+xclFcanPD7CR5C1gf6hJ572a1PHYax6zGlSOyyvfvCXE3yQXBiI8W8CX3
+         r3EQMBeK9Dv6gqYhvgAlDj8c8irQox8evRxnG5KRarp2C0bc02wylTyBasR/cELbA/lH
+         gXw7tJAiZU3QJk1dnULOtzLBBU2pUBVSTVXps=
+Received: by 10.227.208.133 with SMTP id gc5mr4172674wbb.25.1324429633189;
+ Tue, 20 Dec 2011 17:07:13 -0800 (PST)
+Received: by 10.223.77.91 with HTTP; Tue, 20 Dec 2011 17:06:52 -0800 (PST)
+In-Reply-To: <7vr4zyiyih.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187539>
 
-I will queue this directly on 'maint', as I do not think it is worth
-fixing immediately on top of 2c050e0 (i18n: mark init-db messages for
-translation, 2011-04-10) and merging all the way down to the now-ancient
-v1.7.5.X series.
-
-Thanks.
+On Wed, Dec 21, 2011 at 01:01, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> However unlike Linux Git is written in ANSI C and supports a multitu=
+de
+>> of compilers, including Clang, Sun Studio, xlc etc. On my Linux box
+>> "cc" is a symlink to clang, and on a Solaris box I have access to "c=
+c"
+>> is Sun Studio's CC.
+>>
+>> Both of these are perfectly capable of compiling Git, and it's
+>> annoying to have to specify CC=3Dcc on the command-line when compili=
+ng
+>> Git when that's the default behavior of most other portable programs=
+=2E
+>
+> Would this affect folks in BSD land negatively?
