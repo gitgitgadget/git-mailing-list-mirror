@@ -1,66 +1,67 @@
-From: Thomas Jarosch <thomas.jarosch@intra2net.com>
-Subject: Re: git 1.7.7.5
-Date: Wed, 21 Dec 2011 18:20:45 +0100
-Organization: Intra2net AG
-Message-ID: <201112211820.45447.thomas.jarosch@intra2net.com>
-References: <20111216105757.GA11174@elie.hsd1.il.comcast.net> <7viplckt2m.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
+Subject: [PATCH] clone: don't say <branch> when we mean <remote>
+Date: Wed, 21 Dec 2011 18:14:09 +0000
+Message-ID: <1324491249-5357-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	schacon@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 21 18:20:56 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 21 19:14:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RdPqZ-0001s1-8H
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Dec 2011 18:20:55 +0100
+	id 1RdQgE-0001Eo-CV
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Dec 2011 19:14:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752535Ab1LURUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Dec 2011 12:20:50 -0500
-Received: from re04.intra2net.com ([82.165.46.26]:54983 "EHLO
-	re04.intra2net.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752047Ab1LURUs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Dec 2011 12:20:48 -0500
-Received: from intranator.m.i2n (unknown [172.16.1.99])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by re04.intra2net.com (Postfix) with ESMTP id AE5CC300DF;
-	Wed, 21 Dec 2011 18:20:47 +0100 (CET)
-Received: from localhost (intranator.m.i2n [127.0.0.1])
-	by localhost (Postfix) with ESMTP id 6E2732AC54;
-	Wed, 21 Dec 2011 18:20:47 +0100 (CET)
-X-Virus-Scanned: by Intranator (www.intra2net.com) with AMaViS and F-Secure
-	AntiVirus (fsavdb 2011-12-21_06)
-X-Spam-Status: 
-X-Spam-Level: 0
-Received: from storm.localnet (storm.m.i2n [172.16.1.2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by intranator.m.i2n (Postfix) with ESMTPS id 1281B2AC53;
-	Wed, 21 Dec 2011 18:20:46 +0100 (CET)
-User-Agent: KMail/1.13.7 (Linux/2.6.41.4-1.fc15.x86_64; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <7viplckt2m.fsf@alter.siamese.dyndns.org>
+	id S1753509Ab1LUSOO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Dec 2011 13:14:14 -0500
+Received: from kimmy.cmartin.tk ([91.121.65.165]:47672 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751730Ab1LUSON (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Dec 2011 13:14:13 -0500
+Received: from beez.lab.cmartin.tk (145.Red-81-38-112.dynamicIP.rima-tde.net [81.38.112.145])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id B39AE461B4
+	for <git@vger.kernel.org>; Wed, 21 Dec 2011 19:14:05 +0100 (CET)
+Received: (nullmailer pid 5393 invoked by uid 1000);
+	Wed, 21 Dec 2011 18:14:09 -0000
+X-Mailer: git-send-email 1.7.8.352.g876a6f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187574>
 
-On Tuesday, 20. December 2011 01:03:29 Junio C Hamano wrote:
-> but anyway I've uploaded both 1.7.7.5 and 1.7.6.5 tarballs.
+Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+---
 
-Thanks!
+The manpage says <name> which might actually be a better word to use
+everywhere, but having <branch> instead of <remote> can only lead to
+confusion.
 
-May be Scott Chacon can provide you commit access to git-scm.com ;)
-If you are interested in this of course.
+Looking through blame, the second line survived a typo fix and was
+introduced in 2008 when clone was made a builtin. The script used to
+say <name>. So it's clearly nothing urgent, but it bugged me, so I'm
+sending a patch.
 
-For example wikipedia lists git-scm.com as website for git.
-(http://en.wikipedia.org/wiki/Git_%28software%29)
+ builtin/clone.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-Cheers,
-Thomas
+diff --git a/builtin/clone.c b/builtin/clone.c
+index efe8b6c..e85ee69 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -84,8 +84,8 @@ static struct option builtin_clone_options[] =3D {
+ 		   "directory from which templates will be used"),
+ 	OPT_CALLBACK(0 , "reference", &option_reference, "repo",
+ 		     "reference repository", &opt_parse_reference),
+-	OPT_STRING('o', "origin", &option_origin, "branch",
+-		   "use <branch> instead of 'origin' to track upstream"),
++	OPT_STRING('o', "origin", &option_origin, "remote",
++		   "use <remote> instead of 'origin' to track upstream"),
+ 	OPT_STRING('b', "branch", &option_branch, "branch",
+ 		   "checkout <branch> instead of the remote's HEAD"),
+ 	OPT_STRING('u', "upload-pack", &option_upload_pack, "path",
+--=20
+1.7.8.352.g876a6f
