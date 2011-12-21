@@ -1,96 +1,155 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: Big Mess--How to use Git to resolve
-Date: Wed, 21 Dec 2011 17:44:59 -0600
-Message-ID: <4EF26F7B.90206@gmail.com>
-References: <1324125130643-7103964.post@n2.nabble.com> <86iplf2oy5.fsf@red.stonehenge.com> <1324147247781-7104493.post@n2.nabble.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [RFC/PATCH] i18n of multi-line messages
+Date: Wed, 21 Dec 2011 15:55:26 -0800
+Message-ID: <7vr4zxeaz5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: hs_glw <greg@hra.net>
-X-From: git-owner@vger.kernel.org Thu Dec 22 00:45:09 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 22 00:55:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RdVqP-0005jB-3r
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Dec 2011 00:45:09 +0100
+	id 1RdW0U-00014s-D5
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Dec 2011 00:55:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752766Ab1LUXpF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Dec 2011 18:45:05 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:58484 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751638Ab1LUXpD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Dec 2011 18:45:03 -0500
-Received: by ghbz12 with SMTP id z12so5169416ghb.19
-        for <git@vger.kernel.org>; Wed, 21 Dec 2011 15:45:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=KwBHtFLkJQAASwkqBKUEIEl4eft51FIcgWRrQ11d6hw=;
-        b=ZTEi1sZMx6fut8U4nafCzXYkZ2PrxL+Gq5eRhyxxJRM5I8+9fLj4a8PcuMu9E67JIA
-         nZYiYMLnxBGBoVDNzDNaINilKQO7Jxwlg90G+doJ9sCxcVcV9mV0PgiOQE+NvHoPNMhg
-         rsHSzjeCdoD/zYGGg93TeLgVmvc4W/1bYPpxQ=
-Received: by 10.236.139.199 with SMTP id c47mr12128274yhj.113.1324511102435;
-        Wed, 21 Dec 2011 15:45:02 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id c10sm11600269yhj.2.2011.12.21.15.45.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 21 Dec 2011 15:45:01 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.25) Gecko/20111213 Thunderbird/3.1.17
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <1324147247781-7104493.post@n2.nabble.com>
+	id S1754139Ab1LUXzb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Dec 2011 18:55:31 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64412 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753752Ab1LUXz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Dec 2011 18:55:29 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 230DF6D2E;
+	Wed, 21 Dec 2011 18:55:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=u
+	TEI4nPibzAQmr+dc/qpGhd3nG4=; b=rYSLhQz21CjKFB/hA24e6B2l7dxTSZiWK
+	JZw2Go+AnhThfKgKU8QIZb3ZVubcWXC+zmIgZUpbPStqkpPlPHIlJILmGb5SK4qP
+	GGqSgW2FiXsNf9yLyb4gO+3jhYbixPRPYwRgvRyYpT//EBpnvEYsoArCpowZdY/7
+	K613L1KCYQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=oVph6jSEgAPyWnlFuVMJ+nxWbHPA9lIDGXMuNYdVmsbhdFm77gZK0rcU
+	zUjNyvF7melLlJJzFa/HOvJISqNhQ/IIg0N2f7EnvEOnp0Xk8gSQsWCE+aMeFKyi
+	rqroIRAWPKLo+VWJN/iE1Bq7yU+xl+CRljxkM2K7MjqzZv1lt1Y=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A3546D2D;
+	Wed, 21 Dec 2011 18:55:28 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7D28D6D2C; Wed, 21 Dec 2011
+ 18:55:27 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 41B41232-2C2F-11E1-B831-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187592>
 
-On 12/17/2011 12:40 PM, hs_glw wrote:
-> Randal, thank you for the comprehensive answer.
+Advice messages are by definition meant for human end-users, and prime
+candidates for i18n/l10n. They tend to also be more verbose to be helpful,
+and need to be longer than just one line.
 
-Note that Randal's solution leaves with a branch named Release that has 
-the history of the generic version of your software, and various 
-custom(er) branches that fork from the Release branch...
+Although we do not have parameterized multi-line advice messages yet, once
+we do, we cannot emit such a message like this:
 
-On 12/17/2011 6:32 AM, hs_glw wrote:
-> Some clients have customizations of the code, some have version 5 of
-> the software others have 5.2, 5.5 etc.
->
-> My goal is to pull all the different versions in, put them all
- > together, and create a master version of the software that runs for
- > all clients.
+	advise(_("Please rename %s to something else"), gostak);
+        advise(_("so that we can avoid distimming %s unnecessarily."), doshes);
 
-Note that you don't have to make everyone run the same version. At my 
-shop we maintain dozens of concurrent divergent versions and that is the 
-main reason we chose git.  We can maintain a generic version (which most 
-clients run) and also custom branches (for clients wanting to pay for 
-customizations) forked off of the generic branch.  The custom branches 
-can periodically have the generic branch merged in to obtain the generic 
-fixes/enhancements.  You can also merge the custom branches into the 
-generic branch if you want those custom features included in a new 
-release of the generic branch.
+because some translations may need to have the replacement of 'gostak' on
+the second line (or 'doshes' on the first line). Some languages may even
+need to use three lines in order to fit the same message within a
+reasonable width.
 
-> There will still be some files that are completely unique to each
-> client (style sheets and logos for instance).
+Instead, it has to be a single advise() construct, like this:
 
-If your logos are graphical files they are likely considered 'large 
-files' and are likely binary files in the context of git.  It is 
-recommended you maintain these in a separate repository to keep them 
-from bogging down your main repo (performance and storage).  You can 
-make the logo repo a submodule of the main repo (source repo).  This 
-would then make your main repo a 'super project' (contains submodules) 
-in git terminology.  Alternatively, I think your source repo and logo 
-repo can just both be submodules of a super project.
+	advise(_("Please rename %s to something else\n"
+                 "so that we can avoid distimming %s unnecessarily."),
+		gostak, doshes); 
 
-We are working on implementing this so some of what I said is 
-theoretical.  Custom branches in combination with submodules seems like 
-it could get pretty unwieldy if not managed properly.
+Update the advise() function and its existing callers to
 
-Some things to look into.
+ - take a format string that can be multi-line and translatable as a
+   whole;
+ - use the string and the parameters to form a localized message; and
+ - append each line in the result to localization of the "hint: " prefix.
 
-v/r,
-neal
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ advice.c         |   23 ++++++++++++++++-------
+ builtin/revert.c |    9 ++++-----
+ 2 files changed, 20 insertions(+), 12 deletions(-)
+
+diff --git a/advice.c b/advice.c
+index e02e632..fcdf66a 100644
+--- a/advice.c
++++ b/advice.c
+@@ -21,11 +21,21 @@ static struct {
+ 
+ void advise(const char *advice, ...)
+ {
++	struct strbuf buf = STRBUF_INIT;
+ 	va_list params;
++	const char *cp, *np;
+ 
+ 	va_start(params, advice);
+-	vreportf("hint: ", advice, params);
++	strbuf_addf(&buf, advice, params);
+ 	va_end(params);
++
++	for (cp = buf.buf; *cp; cp = np) {
++		np = strchrnul(cp, '\n');
++		fprintf(stderr, "%s%.*s\n", _("hint: "), (int)(np - cp), cp);
++		if (*np)
++			np++;
++	}
++	strbuf_release(&buf);
+ }
+ 
+ int git_default_advice_config(const char *var, const char *value)
+@@ -46,16 +56,15 @@ int git_default_advice_config(const char *var, const char *value)
+ int error_resolve_conflict(const char *me)
+ {
+ 	error("'%s' is not possible because you have unmerged files.", me);
+-	if (advice_resolve_conflict) {
++	if (advice_resolve_conflict)
+ 		/*
+ 		 * Message used both when 'git commit' fails and when
+ 		 * other commands doing a merge do.
+ 		 */
+-		advise("Fix them up in the work tree,");
+-		advise("and then use 'git add/rm <file>' as");
+-		advise("appropriate to mark resolution and make a commit,");
+-		advise("or use 'git commit -a'.");
+-	}
++		advise(_("Fix them up in the work tree,\n"
++			 "and then use 'git add/rm <file>' as\n"
++			 "appropriate to mark resolution and make a commit,\n"
++			 "or use 'git commit -a'."));
+ 	return -1;
+ }
+ 
+diff --git a/builtin/revert.c b/builtin/revert.c
+index fce3f92..440d2be 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -343,11 +343,10 @@ static void print_advice(int show_hint)
+ 		return;
+ 	}
+ 
+-	if (show_hint) {
+-		advise("after resolving the conflicts, mark the corrected paths");
+-		advise("with 'git add <paths>' or 'git rm <paths>'");
+-		advise("and commit the result with 'git commit'");
+-	}
++	if (show_hint)
++		advise(_("after resolving the conflicts, mark the corrected paths\n"
++			 "with 'git add <paths>' or 'git rm <paths>'\n"
++			 "and commit the result with 'git commit'"));
+ }
+ 
+ static void write_message(struct strbuf *msgbuf, const char *filename)
