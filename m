@@ -1,85 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] i18n of multi-line messages
-Date: Wed, 21 Dec 2011 16:20:55 -0800
-Message-ID: <7vmxale9so.fsf@alter.siamese.dyndns.org>
-References: <7vr4zxeaz5.fsf@alter.siamese.dyndns.org>
- <CACBZZX7bgjFz7mvTySPKhR24coqOeVVy8+CsKHVj8Q3LF_-5ww@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCHv2 1/2] attr: map builtin userdiff drivers to well-known extensions
+Date: Thu, 22 Dec 2011 02:47:25 +0100
+Message-ID: <CACBZZX4ZC+hkG38mrAwi158CiGQN7BD=U220h1B=ZOH+kNK1Zw@mail.gmail.com>
+References: <20111217033808.GA8683@elie.hsd1.il.comcast.net> <20111219154938.GA19829@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 22 01:21:10 2011
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <drafnel@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 22 02:47:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RdWPF-0001m6-RT
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Dec 2011 01:21:10 +0100
+	id 1RdXlA-0005XG-RU
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Dec 2011 02:47:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754565Ab1LVAVA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Dec 2011 19:21:00 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40999 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754436Ab1LVAU6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Dec 2011 19:20:58 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E4F87219;
-	Wed, 21 Dec 2011 19:20:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=DLb2pxW3p/1U
-	4rHMRh6WUoAmvRw=; b=MtWboU0jiL/z1Ecl8IQJsludpRraGJatXXOa9yOY3yJJ
-	GMhaKyBFfx+6qd28ct4MorQZxxQIfgr5HMm+7eDComALtpxr4pPlAaNdFU4IqPkx
-	7VdRzzU3RTUqGrhxed7nv13MekobCQI18yhzkMe9Awu8jzQ6JK4rdyOY3RzjHrs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=PlQwmF
-	WKD/Tmi5qu0erwAsLXlJN4hJAFLLNbfepkel6Xi1CV3Uo1qRTpgEvMqskP2MXNJJ
-	VGmIwgF+/CnPLDc4nyL9ADmuNnicXkPDfbcNenph0WwrC2zWz3pbxv6vtGBHrbuO
-	BFBN22NmvhBZQIa1Bl/y1c/wdbZ8ByOrY5dwU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 25ABF7218;
-	Wed, 21 Dec 2011 19:20:57 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC89F7217; Wed, 21 Dec 2011
- 19:20:56 -0500 (EST)
-In-Reply-To: <CACBZZX7bgjFz7mvTySPKhR24coqOeVVy8+CsKHVj8Q3LF_-5ww@mail.gmail.com>
- (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 22 Dec
- 2011 01:14:20 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D12C8630-2C32-11E1-BE60-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752936Ab1LVBrt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Dec 2011 20:47:49 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:36316 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752596Ab1LVBrr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Dec 2011 20:47:47 -0500
+Received: by eaad14 with SMTP id d14so1617814eaa.19
+        for <git@vger.kernel.org>; Wed, 21 Dec 2011 17:47:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=IQhOZKt24zs46XwB3EXqMulVXz5CWTZEV2mDiwQO+W0=;
+        b=OVp1lHPLkciI/cbotjTZ1I0sDJzio0kyKxBFJozVh9tK52+VsNPofArDqLc8ecU8qA
+         1MmH8aEqaFkV665KDFZUBhN+QdlZH5dSHdEH0SWSmDCjvwDPViFP56VfUXVDPDAEWBOx
+         pUJCvllmRCfkNUYFVaXi60osybPXvBaDbJovc=
+Received: by 10.205.126.18 with SMTP id gu18mr2594838bkc.79.1324518466272;
+ Wed, 21 Dec 2011 17:47:46 -0800 (PST)
+Received: by 10.204.181.83 with HTTP; Wed, 21 Dec 2011 17:47:25 -0800 (PST)
+In-Reply-To: <20111219154938.GA19829@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187597>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Mon, Dec 19, 2011 at 16:49, Jeff King <peff@peff.net> wrote:
 
-> On Thu, Dec 22, 2011 at 00:55, Junio C Hamano <gitster@pobox.com> wro=
-te:
->
-> Nice. Thanks for tackling this. I'll no doubt be submitting some of
-> these myself once we start getting translations.
->
-> This is not a regression, but note that something like this:
->
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fprintf(stderr, "=
-%s%.*s\n", _("hint: "), (int)(np - cp), cp);
->
-> Isn't going to cut it for RTL languages like Hebrew and Arabic, since
-> for them the "hint: " would effectively be at the end of the line.
->
-> I think the easiest way to tackle that sort of thing is to just do:
->
->     _("hint: %.*s\n")
->
-> And have a TRANSLATORS comment indicating that the format string
-> should be kept, but that translators can move around the "hint", GNU
-> gettext also has a msgcheck feature to check that format strings are
-> compatible in the translations.
+> + =C2=A0 =C2=A0 =C2=A0 "*.perl diff=3Dperl",
+> + =C2=A0 =C2=A0 =C2=A0 "*.pl diff=3Dperl",
 
-Good point. Thanks.
+This should also be:
+
+ *.pm (for Perl module files)
+ *.PL (for Makefile.PL)
+
+And it's also very common for Perl code to use, for tests:
+
+ *.t
+
+But that likely runs into the namespace clashing issue all over again.
