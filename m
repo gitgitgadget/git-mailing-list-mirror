@@ -1,62 +1,74 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: Warning from AV software about kill.exe
-Date: Thu, 22 Dec 2011 09:45:37 +0100
-Message-ID: <87mxalkn9q.fsf@thomas.inf.ethz.ch>
-References: <4EF2E08C.3050502@icefield.yk.ca>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [RFC/PATCH] i18n of multi-line messages
+Date: Thu, 22 Dec 2011 23:40:07 +1300
+Message-ID: <4EF30907.8070101@gmail.com>
+References: <7vr4zxeaz5.fsf@alter.siamese.dyndns.org> <4EF2D436.3080303@viscovery.net> <7vaa6ldpk6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <git@vger.kernel.org>
-To: Erik Blake <erik@icefield.yk.ca>
-X-From: git-owner@vger.kernel.org Thu Dec 22 09:45:49 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 22 11:40:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RdeHc-00031m-BN
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Dec 2011 09:45:48 +0100
+	id 1Rdg4i-0004eB-SB
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Dec 2011 11:40:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754780Ab1LVIpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Dec 2011 03:45:45 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:6386 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753811Ab1LVIpo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Dec 2011 03:45:44 -0500
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 22 Dec
- 2011 09:45:39 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 22 Dec
- 2011 09:45:41 +0100
-In-Reply-To: <4EF2E08C.3050502@icefield.yk.ca> (Erik Blake's message of "Thu,
-	22 Dec 2011 08:47:24 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1755133Ab1LVKk2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Dec 2011 05:40:28 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:40578 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755119Ab1LVKkE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Dec 2011 05:40:04 -0500
+Received: by iaeh11 with SMTP id h11so13333478iae.19
+        for <git@vger.kernel.org>; Thu, 22 Dec 2011 02:40:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=m/grAi5XKWVD+Fj5oTY43FRTaQMjuAMQPg0InlFBjss=;
+        b=a6vjewCItDR+u/AEkfTgnsKZFzdpLAVKoYXZcIuZI4uqbbI1oW956S8NGETvdehxtP
+         Ka1u73k2uqF2tHuFYXclYCqDaUAHtaeXNjT+bN9Fu7cFxMByLAurY8eZppUkQXZ/KEIh
+         PD1BGLOCiBvswRbh2vR0ryXnnIYiBcb21sarI=
+Received: by 10.50.157.131 with SMTP id wm3mr8129459igb.13.1324550403996;
+        Thu, 22 Dec 2011 02:40:03 -0800 (PST)
+Received: from [192.168.0.150] (222-153-33-227.jetstream.xtra.co.nz. [222.153.33.227])
+        by mx.google.com with ESMTPS id l35sm27766549ibj.0.2011.12.22.02.39.59
+        (version=SSLv3 cipher=OTHER);
+        Thu, 22 Dec 2011 02:40:01 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <7vaa6ldpk6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187606>
 
-Erik Blake <erik@icefield.yk.ca> writes:
+Hi Junio,
 
-> I'm running git under Win7 64. As I selected "Repository|Visualize all
-> branch history" in the git gui, my AV software (Trustport) trapped the
-> bin\kill.exe program for "trying to modify system global settings
-> (time, timezone, registry quota, etc.)"
->
-> Does anyone know the details of this process and what it's function
-> is? First time I've seen it, though I'm a relatively new user.
+On 12/22/2011 08:38 PM, Junio C Hamano wrote:
+> +	for (cp = buf.buf; *cp; cp = np) {
+> +		np = strchrnul(cp, '\n');
+> +		/*
+> +		 * TRANSLATORS: the format is designed so that in RTL
+> +		 * languages you could reorder and put the "prefix" at
+> +		 * the end instead of the beginning of a line if you
+> +		 * wanted to.
+> +		 */
+> +		strbuf_addf(&line,
+> +			    _("%s: %.*s\n"),
+> +			    prefix,
+> +			    (int)(np - cp), cp);
+> +		emit(&line, cb_data);
+> +		strbuf_reset(&line);
+> +		if (*np)
+> +			np++;
+> +	}
 
-'kill' is a standard unix utility that sends signals to processes, in
-particular signals that cause the processes to exit or be killed
-forcibly by the kernel, hence the name.  (I don't know how the windows
-equivalent works under the hood, but presumably it's something similar.)
-
-git-gui and gitk use kill to terminate background worker processes that
-are no longer needed because you closed the window their output would
-have been displayed in, etc.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Forgive my ignorance if I've missed something, but how is this going to
+work for RTL languages? Translators can change the format string but
+they can't change the order of parameters passed to strbuf_addf.
