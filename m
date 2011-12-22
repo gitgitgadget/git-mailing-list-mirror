@@ -1,64 +1,86 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCHv2 1/2] attr: map builtin userdiff drivers to well-known extensions
-Date: Thu, 22 Dec 2011 02:47:25 +0100
-Message-ID: <CACBZZX4ZC+hkG38mrAwi158CiGQN7BD=U220h1B=ZOH+kNK1Zw@mail.gmail.com>
-References: <20111217033808.GA8683@elie.hsd1.il.comcast.net> <20111219154938.GA19829@sigill.intra.peff.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [RFC/PATCH] i18n of multi-line messages
+Date: Thu, 22 Dec 2011 07:54:46 +0100
+Message-ID: <4EF2D436.3080303@viscovery.net>
+References: <7vr4zxeaz5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 22 02:47:53 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 22 07:54:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RdXlA-0005XG-RU
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Dec 2011 02:47:53 +0100
+	id 1RdcYL-0002yM-PL
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Dec 2011 07:54:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752936Ab1LVBrt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Dec 2011 20:47:49 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:36316 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752596Ab1LVBrr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Dec 2011 20:47:47 -0500
-Received: by eaad14 with SMTP id d14so1617814eaa.19
-        for <git@vger.kernel.org>; Wed, 21 Dec 2011 17:47:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=IQhOZKt24zs46XwB3EXqMulVXz5CWTZEV2mDiwQO+W0=;
-        b=OVp1lHPLkciI/cbotjTZ1I0sDJzio0kyKxBFJozVh9tK52+VsNPofArDqLc8ecU8qA
-         1MmH8aEqaFkV665KDFZUBhN+QdlZH5dSHdEH0SWSmDCjvwDPViFP56VfUXVDPDAEWBOx
-         pUJCvllmRCfkNUYFVaXi60osybPXvBaDbJovc=
-Received: by 10.205.126.18 with SMTP id gu18mr2594838bkc.79.1324518466272;
- Wed, 21 Dec 2011 17:47:46 -0800 (PST)
-Received: by 10.204.181.83 with HTTP; Wed, 21 Dec 2011 17:47:25 -0800 (PST)
-In-Reply-To: <20111219154938.GA19829@sigill.intra.peff.net>
+	id S1751935Ab1LVGyx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Dec 2011 01:54:53 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:22803 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751699Ab1LVGyw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Dec 2011 01:54:52 -0500
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1RdcYB-0004tL-G5; Thu, 22 Dec 2011 07:54:47 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 3AE351660F;
+	Thu, 22 Dec 2011 07:54:47 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <7vr4zxeaz5.fsf@alter.siamese.dyndns.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187598>
 
-On Mon, Dec 19, 2011 at 16:49, Jeff King <peff@peff.net> wrote:
+Am 12/22/2011 0:55, schrieb Junio C Hamano:
+>  void advise(const char *advice, ...)
+>  {
+> +	struct strbuf buf = STRBUF_INIT;
+>  	va_list params;
+> +	const char *cp, *np;
+>  
+>  	va_start(params, advice);
+> -	vreportf("hint: ", advice, params);
+> +	strbuf_addf(&buf, advice, params);
+>  	va_end(params);
+> +
+> +	for (cp = buf.buf; *cp; cp = np) {
+> +		np = strchrnul(cp, '\n');
+> +		fprintf(stderr, "%s%.*s\n", _("hint: "), (int)(np - cp), cp);
+> +		if (*np)
+> +			np++;
+> +	}
+> +	strbuf_release(&buf);
+>  }
 
-> + =C2=A0 =C2=A0 =C2=A0 "*.perl diff=3Dperl",
-> + =C2=A0 =C2=A0 =C2=A0 "*.pl diff=3Dperl",
+IMHO, this logic should be moved into vreportf(), and we get proper
+prefixing of multi-line warning(), error(), and die() messages for free.
 
-This should also be:
+> +		advise(_("Fix them up in the work tree,\n"
+> +			 "and then use 'git add/rm <file>' as\n"
+> +			 "appropriate to mark resolution and make a commit,\n"
+> +			 "or use 'git commit -a'."));
 
- *.pm (for Perl module files)
- *.PL (for Makefile.PL)
+<rant>
+Can people please pay attention how they break multi-line messages? In
+this particular case, (1) even in a 80-columns terminal the lines are
+spectacularly short, and (2) a break in the middle of a word group can
+easily be avoided such that the result does not look ugly:
 
-And it's also very common for Perl code to use, for tests:
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit,
+hint: or use 'git commit -a'.
 
- *.t
+And, no, "It would break the 80-column limit of source code" does not
+count for user-visible messages.
+</rant>
 
-But that likely runs into the namespace clashing issue all over again.
+-- Hannes
