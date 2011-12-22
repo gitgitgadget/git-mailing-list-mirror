@@ -1,114 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] i18n of multi-line messages
-Date: Thu, 22 Dec 2011 10:08:23 -0800
-Message-ID: <7v39cceay0.fsf@alter.siamese.dyndns.org>
-References: <7vr4zxeaz5.fsf@alter.siamese.dyndns.org>
- <4EF2D436.3080303@viscovery.net> <7vaa6ldpk6.fsf@alter.siamese.dyndns.org>
- <4EF2E824.7020509@viscovery.net>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: Gitk: shortcut to jump to the current HEAD (yellow spot)?
+Date: Thu, 22 Dec 2011 18:26:13 +0000
+Message-ID: <874nwslayi.fsf@fox.patthoyts.tk>
+References: <4EF3517A.8030108@dirk.my1.cc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Dec 22 19:08:38 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Dirk =?iso-8859-1?Q?S=FCsserott?= <newsletter@dirk.my1.cc>
+X-From: git-owner@vger.kernel.org Thu Dec 22 19:26:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rdn4G-0004OS-W2
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Dec 2011 19:08:37 +0100
+	id 1RdnLR-0005Ia-ON
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Dec 2011 19:26:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755755Ab1LVSI2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Dec 2011 13:08:28 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64495 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755575Ab1LVSI0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Dec 2011 13:08:26 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0E6A6267;
-	Thu, 22 Dec 2011 13:08:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RVHrkA3k3rtZKO0fdH2nfkR9taY=; b=wF1SNI
-	7qFpIr4WEOEzGSWwbz79DHSQ2NfVBct13UIPgd1CHYnQ0zU3RFZVJpbhrTIHpPw8
-	qedGGFRRLrrrAF0XIGpz2kF8w6RJ9yBgx3AQD16/OF8LM14H54K8bSmF8JoHyMrk
-	wIl1HBDlSjJabHJGTXvaWUPNkJ/WilswskNB0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=j6v+szXIiqkcUtZLeW43p4/J+hHFYewJ
-	OBGOKMozYB2t8gFdVoQEH74k65vb4Vgi3wD0fM2jTxnYmWHYFZte3KI1iiQVIfUo
-	wuLqMFs3YEtecaeCQyVo56nJ4Yg5V13t9ni8Cts4Y+3llc5wPD0PNEkaKUQdswTb
-	dcrxcEE357s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A7BFE6266;
-	Thu, 22 Dec 2011 13:08:25 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 29B7C6263; Thu, 22 Dec 2011
- 13:08:25 -0500 (EST)
-In-Reply-To: <4EF2E824.7020509@viscovery.net> (Johannes Sixt's message of
- "Thu, 22 Dec 2011 09:19:48 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F108C942-2CC7-11E1-94CB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752152Ab1LVS0S convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Dec 2011 13:26:18 -0500
+Received: from mtaout03-winn.ispmail.ntl.com ([81.103.221.49]:19677 "EHLO
+	mtaout03-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751892Ab1LVS0Q convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Dec 2011 13:26:16 -0500
+X-Greylist: delayed 404 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Dec 2011 13:26:16 EST
+Received: from know-smtpout-4.server.virginmedia.net ([62.254.123.2])
+          by mtaout03-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20111222182615.SQNC19823.mtaout03-winn.ispmail.ntl.com@know-smtpout-4.server.virginmedia.net>;
+          Thu, 22 Dec 2011 18:26:15 +0000
+Received: from [94.171.229.22] (helo=fox.patthoyts.tk)
+	by know-smtpout-4.server.virginmedia.net with esmtpa (Exim 4.63)
+	(envelope-from <patthoyts@users.sourceforge.net>)
+	id 1RdnLL-0002s5-BL; Thu, 22 Dec 2011 18:26:15 +0000
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id E05472015A; Thu, 22 Dec 2011 18:26:14 +0000 (GMT)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+X-Home-Page: http://www.patthoyts.tk/
+X-Web: http://www.patthoyts.tk/
+In-Reply-To: <4EF3517A.8030108@dirk.my1.cc> ("Dirk =?iso-8859-1?Q?S=FCsser?=
+ =?iso-8859-1?Q?ott=22's?= message of
+	"Thu, 22 Dec 2011 16:49:14 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+X-Cloudmark-Analysis: v=1.1 cv=JvdXmxIgLJv2/GthKqHpGJEEHukvLcvELVXUanXFreg= c=1 sm=0 a=O9HYxzjLEG8A:10 a=0ye2pr1Oh2AA:10 a=8nJEP1OIZ-IA:10 a=Rf460ibiAAAA:8 a=CfeYt0D733sVBer90p8A:9 a=wPNLvfGTeEIA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187613>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Dirk S=FCsserott <newsletter@dirk.my1.cc> writes:
 
-> Am 12/22/2011 8:38, schrieb Junio C Hamano:
->> +static void v_format(const char *prefix, const char *fmt, va_list params,
->> +		     emit_fn emit, void *cb_data)
->> +{
->> +	struct strbuf buf = STRBUF_INIT;
->> +	struct strbuf line = STRBUF_INIT;
->> +	const char *cp, *np;
->> +
->> +	strbuf_vaddf(&buf, fmt, params);
-> ...
->>  void vreportf(const char *prefix, const char *err, va_list params)
->>  {
->> -	char msg[4096];
->> -	vsnprintf(msg, sizeof(msg), err, params);
->> -	fprintf(stderr, "%s%s\n", prefix, msg);
->> +	v_format(prefix, err, params, emit_report, NULL);
->>  }
+>Hi!
 >
-> Using strbuf (or xmalloc for that matter) from a function that can be
-> called from die() is a big no-no. You should keep the fixed-sized buffer.
+>Does anybody know about a shortcut in gitk to "jump to the yellow spot=
+"?
+>
+>I often use cmdline and gitk at the same time, switch branches, stash,
+>rebase and so on from bash. When hitting [Ctrl-]F5 in gitk, the last
+>highlighted commit is focused again and my HEAD is far off the screen.
+>
+>Is there a way to jump to the HEAD (the yellow bubble in gitk) with a
+>fingertip?
+>
+>TIA
+>    Dirk
 
-I _think_ I liked the simplicity of having the logic to
-
- - format localized message to a multi-line buffer; and
- - split the contents of that buffer into lines and add prefix in an
-   i18n friendly way
-
-in vreportf(), but there are many problems in this approach, it seems.  We
-may need to limit the message length for error()/die() codepath, but we do
-not want to be limited in others, definitely not from advise().
-
-Also some calls to error() are meant to produce plumbing error message and
-should never be localized. The approach to localize the prefix in vreportf()
-will not work for this reason.
-
-I think we should start from the original "advise-only" way. In the longer
-term (if somebody cares about it deeply), things can be fixed up and the
-mechanism can then be unified in the following order:
-
- (1) figure out a way to allow error() and die() tell if they are called
-     to produce a plumbing message that should not be translated (multiple
-     approaches are possible, ranging from adding error_plumb() function
-     to marking the message format string specially);
-
- (2) update the existing error()/die() calls that are used to produce
-     plumbing message and mark them as such, using the mechanism decided
-     in (1);
-
- (3) Take the v_format/vreport code from my patch I am discarding with
-     this message, enhance them to turn the "prefix" i18n part
-     consitional, and use that to reimplement the mechanism (1).
-
-But that is not for this year.
+Hit the Home key. The binding for that takes you to the first commit.
+End to the last (oldest) commit.
+--=20
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
