@@ -1,76 +1,59 @@
-From: demerphq <demerphq@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: I can never finish a push
-Date: Fri, 23 Dec 2011 15:19:06 +0100
-Message-ID: <CANgJU+VEpYkttoBp0SUNcROH6-HmGX5v7aVXGZFO_U2aZHv8mA@mail.gmail.com>
+Date: Fri, 23 Dec 2011 15:39:10 +0100
+Message-ID: <4EF4928E.4090306@viscovery.net>
 References: <4EF47DF3.9080809@bbn.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Martin L Resnick <mresnick@bbn.com>
-X-From: git-owner@vger.kernel.org Fri Dec 23 15:19:14 2011
+X-From: git-owner@vger.kernel.org Fri Dec 23 15:39:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Re5xo-00070F-Sq
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Dec 2011 15:19:13 +0100
+	id 1Re6HJ-0000a0-1v
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Dec 2011 15:39:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757269Ab1LWOTI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Dec 2011 09:19:08 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:51406 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751009Ab1LWOTH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Dec 2011 09:19:07 -0500
-Received: by ghbg21 with SMTP id g21so515846ghb.19
-        for <git@vger.kernel.org>; Fri, 23 Dec 2011 06:19:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=EccYtkF4isgaSggwBfvoawPpFPSN5VOnzAiVlKWk/WM=;
-        b=xxX13qHV36KkTXryNgKOWtmax5VpG8JQvGJjuOQZP/OVWrxce63rj4HMlS14aPQaIB
-         T8wlOmbcwkVCLFV9ykp+P6D03EzoYqx91CD5Y7WjigI5QcyoqaCCYFwHqKK3TY4CodQ3
-         vF3tB296n7Ta3V3uGfAmUnzVQ+idvayrw0Zlk=
-Received: by 10.101.139.1 with SMTP id r1mr6318483ann.86.1324649946407; Fri,
- 23 Dec 2011 06:19:06 -0800 (PST)
-Received: by 10.236.72.132 with HTTP; Fri, 23 Dec 2011 06:19:06 -0800 (PST)
+	id S1756788Ab1LWOjQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Dec 2011 09:39:16 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:19993 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752456Ab1LWOjP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Dec 2011 09:39:15 -0500
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Re6H9-0007dn-Ju; Fri, 23 Dec 2011 15:39:11 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 492721660F;
+	Fri, 23 Dec 2011 15:39:11 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
 In-Reply-To: <4EF47DF3.9080809@bbn.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187630>
 
-On 23 December 2011 14:11, Martin L Resnick <mresnick@bbn.com> wrote:
+Am 12/23/2011 14:11, schrieb Martin L Resnick:
 > I'm working remotely over a VERY slow line.
->
+> 
 > When I do a push it starts out fine
 > but after the 15 seconds it takes to push
 > it fails with non-fast-forward merge.
->
+> 
 > So I pull (no merge needed, its fast-forward)
 > and try push again. Fails again.
->
+> 
 > I can keep this up for hours on end;
 > pushing, pulling, pushing, pulling.
-> Apparently there is fast and furious development
-> on the branch I'm on that during my 15 seconds
-> of pushing someone else on-site pushes and adds
-> new commits before mine can finish.
->
-> Is there anyway to lock the repository while
-> my push is going on ?
->
-> Please don't ask why I have a slow line
-> or why the volume of changes that I am pushing.
-> Suffice it to say its military work.
 
-Maybe try pushing a branch and then having a colleague with a faster
-connection do the merge for you.
+Your statements can only make sense if the pushed branch generates a
+"non-fast-forward" is not the same branch that you pull. Show a transcript
+of your commands, and in particular also tell your setting of push.default.
 
-yves
-
-
--- 
-perl -Mre=debug -e "/just|another|perl|hacker/"
+-- Hannes
