@@ -1,73 +1,85 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Specify a precision for the length of a subject string
-Date: Fri, 23 Dec 2011 05:35:11 -0500
-Message-ID: <20111223103511.GA10029@sigill.intra.peff.net>
-References: <20111220220754.GC21353@llunet.cs.wisc.edu>
- <20111221043843.GA20714@sigill.intra.peff.net>
- <20111221145112.GA13097@llunet.cs.wisc.edu>
- <20111223100957.GA1247@sigill.intra.peff.net>
+Subject: [PATCH 1/2] pretty: refactor --format "magic" placeholders
+Date: Fri, 23 Dec 2011 05:35:59 -0500
+Message-ID: <20111223103558.GA28036@sigill.intra.peff.net>
+References: <20111223100957.GA1247@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: nathan.panike@gmail.com
-X-From: git-owner@vger.kernel.org Fri Dec 23 11:35:23 2011
+X-From: git-owner@vger.kernel.org Fri Dec 23 11:36:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Re2TA-0002hn-Eh
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Dec 2011 11:35:20 +0100
+	id 1Re2U8-0003Db-Ax
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Dec 2011 11:36:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756606Ab1LWKfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Dec 2011 05:35:16 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51723
+	id S1756669Ab1LWKgF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Dec 2011 05:36:05 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51727
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754190Ab1LWKfO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Dec 2011 05:35:14 -0500
-Received: (qmail 32314 invoked by uid 107); 23 Dec 2011 10:41:59 -0000
+	id S1756551Ab1LWKgB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Dec 2011 05:36:01 -0500
+Received: (qmail 32365 invoked by uid 107); 23 Dec 2011 10:42:46 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 23 Dec 2011 05:41:59 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Dec 2011 05:35:11 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 23 Dec 2011 05:42:46 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Dec 2011 05:35:59 -0500
 Content-Disposition: inline
 In-Reply-To: <20111223100957.GA1247@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187625>
 
-On Fri, Dec 23, 2011 at 05:09:58AM -0500, Jeff King wrote:
+Instead of assuming each magic token is a single character,
+let's handle arbitrary-sized magic.
 
-> > The ones that make sense to limit are all those that depend on the subject, as the
-> > above; it does not make sense to limit other fields that don't depend on the
-> > subject, as they are fixed width, or have small variance. And it does not make
-> > sense to me to limit the length of the body.
-> 
-> I agree the subject is the most likely place. I was thinking one might
-> want to do it with the body, too. But whether it would be "I want N
-> bytes of the body" or "truncate each body line at N bytes without
-> wrapping", I don't know.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ pretty.c |    9 +++++----
+ 1 files changed, 5 insertions(+), 4 deletions(-)
 
-Another place that might want it is %N (commit notes).
-
-Here's how I would have done it. Not involving %w at all, but applying
-equally to all placeholders.
-
-  [1/2]: pretty: refactor --format "magic" placeholders
-  [2/2]: pretty: allow "max-size" magic for all placeholders
-
-I'm not personally interested in this topic, so I won't be pushing for
-this to be included in git. But if it feels like the right direction for
-you, feel free to be build on it and post it as part of your series (or
-just take it as inspiration and make your own commits). Off the top of
-my head, it needs:
-
-  - documentation updates
-  - tests
-  - userformat_want_item should also respect the same magic (it already
-    duplicates some of the "-/+/ " magic. It might be nice to factor
-    that part out).
-
--Peff
+diff --git a/pretty.c b/pretty.c
+index 230fe1c..7b4d098 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1018,6 +1018,7 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
+ 				 void *context)
+ {
+ 	int consumed;
++	int magic_len = 0;
+ 	size_t orig_len;
+ 	enum {
+ 		NO_MAGIC,
+@@ -1039,13 +1040,13 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
+ 	default:
+ 		break;
+ 	}
+-	if (magic != NO_MAGIC)
++	if (magic != NO_MAGIC) {
++		magic_len++;
+ 		placeholder++;
++	}
+ 
+ 	orig_len = sb->len;
+ 	consumed = format_commit_one(sb, placeholder, context);
+-	if (magic == NO_MAGIC)
+-		return consumed;
+ 
+ 	if ((orig_len == sb->len) && magic == DEL_LF_BEFORE_EMPTY) {
+ 		while (sb->len && sb->buf[sb->len - 1] == '\n')
+@@ -1056,7 +1057,7 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
+ 		else if (magic == ADD_SP_BEFORE_NON_EMPTY)
+ 			strbuf_insert(sb, orig_len, " ", 1);
+ 	}
+-	return consumed + 1;
++	return consumed + magic_len;
+ }
+ 
+ static size_t userformat_want_item(struct strbuf *sb, const char *placeholder,
+-- 
+1.7.8.1.3.gba11d
