@@ -1,59 +1,56 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
+From: Andreas Schwab <schwab@linux-m68k.org>
 Subject: Re: I can never finish a push
-Date: Fri, 23 Dec 2011 15:39:10 +0100
-Message-ID: <4EF4928E.4090306@viscovery.net>
+Date: Fri, 23 Dec 2011 15:39:44 +0100
+Message-ID: <m262h773nz.fsf@igel.home>
 References: <4EF47DF3.9080809@bbn.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Cc: git@vger.kernel.org
 To: Martin L Resnick <mresnick@bbn.com>
-X-From: git-owner@vger.kernel.org Fri Dec 23 15:39:21 2011
+X-From: git-owner@vger.kernel.org Fri Dec 23 15:39:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Re6HJ-0000a0-1v
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Dec 2011 15:39:21 +0100
+	id 1Re6Hq-0000o0-LC
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Dec 2011 15:39:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756788Ab1LWOjQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Dec 2011 09:39:16 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:19993 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752456Ab1LWOjP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Dec 2011 09:39:15 -0500
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Re6H9-0007dn-Ju; Fri, 23 Dec 2011 15:39:11 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 492721660F;
-	Fri, 23 Dec 2011 15:39:11 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <4EF47DF3.9080809@bbn.com>
-X-Spam-Score: -1.4 (-)
+	id S1756930Ab1LWOju (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Dec 2011 09:39:50 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:60842 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754164Ab1LWOjt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Dec 2011 09:39:49 -0500
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id B72CD1C009EE;
+	Fri, 23 Dec 2011 15:39:45 +0100 (CET)
+X-Auth-Info: 9pni4bfMFi5DVytFVUJdCuKyM44MWk/9yDOFc2zmuIw=
+Received: from igel.home (ppp-88-217-99-149.dynamic.mnet-online.de [88.217.99.149])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 80E0F1C0004D;
+	Fri, 23 Dec 2011 15:39:45 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 9C63ACA29C; Fri, 23 Dec 2011 15:39:44 +0100 (CET)
+X-Yow: I have accepted Provolone into my life!
+In-Reply-To: <4EF47DF3.9080809@bbn.com> (Martin L. Resnick's message of "Fri,
+	23 Dec 2011 08:11:15 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.92 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187631>
 
-Am 12/23/2011 14:11, schrieb Martin L Resnick:
-> I'm working remotely over a VERY slow line.
-> 
-> When I do a push it starts out fine
-> but after the 15 seconds it takes to push
-> it fails with non-fast-forward merge.
-> 
+Martin L Resnick <mresnick@bbn.com> writes:
+
 > So I pull (no merge needed, its fast-forward)
-> and try push again. Fails again.
-> 
-> I can keep this up for hours on end;
-> pushing, pulling, pushing, pulling.
 
-Your statements can only make sense if the pushed branch generates a
-"non-fast-forward" is not the same branch that you pull. Show a transcript
-of your commands, and in particular also tell your setting of push.default.
+If the merge is fast-forward then you aren't really having anything to
+push, are you?  Are you sure you are pushing the right branch?
 
--- Hannes
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
