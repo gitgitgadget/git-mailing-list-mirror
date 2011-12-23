@@ -1,85 +1,69 @@
-From: =?ISO-8859-1?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-Subject: Re: Gitk: shortcut to jump to the current HEAD (yellow spot)?
-Date: Fri, 23 Dec 2011 19:54:56 +0100
-Message-ID: <4EF4CE80.8090502@dirk.my1.cc>
-References: <4EF3517A.8030108@dirk.my1.cc> <874nwslayi.fsf@fox.patthoyts.tk>
+From: Jehan Bing <jehan@orb.com>
+Subject: Re: "Nested quantifiers" error in gitweb with "++" in the filename
+Date: Fri, 23 Dec 2011 11:37:23 -0800
+Message-ID: <4EF4D873.4090803@orb.com>
+References: <jd04eq$9m0$1@dough.gmane.org> <CANgJU+VA9s9t0c8D0P_DesbSDQRBQ6v913KixKQAuiy8jZsdzQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Fri Dec 23 19:55:08 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 23 20:37:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ReAGp-00072b-G8
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Dec 2011 19:55:07 +0100
+	id 1ReAvv-0002hC-0v
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Dec 2011 20:37:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757597Ab1LWSzD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Dec 2011 13:55:03 -0500
-Received: from smtprelay04.ispgateway.de ([80.67.31.42]:57993 "EHLO
-	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753852Ab1LWSzB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Dec 2011 13:55:01 -0500
-Received: from [217.87.111.219] (helo=[192.168.2.100])
-	by smtprelay04.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1ReAGg-0002Ge-4z; Fri, 23 Dec 2011 19:54:58 +0100
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <874nwslayi.fsf@fox.patthoyts.tk>
-X-Df-Sender: NzU3NjQ2
+	id S1754314Ab1LWThb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Dec 2011 14:37:31 -0500
+Received: from lo.gmane.org ([80.91.229.12]:55872 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752453Ab1LWTh3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Dec 2011 14:37:29 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1ReAvo-0002eN-HX
+	for git@vger.kernel.org; Fri, 23 Dec 2011 20:37:28 +0100
+Received: from 173-167-111-189-sfba.hfc.comcastbusiness.net ([173.167.111.189])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 23 Dec 2011 20:37:28 +0100
+Received: from jehan by 173-167-111-189-sfba.hfc.comcastbusiness.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 23 Dec 2011 20:37:28 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 173-167-111-189-sfba.hfc.comcastbusiness.net
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <CANgJU+VA9s9t0c8D0P_DesbSDQRBQ6v913KixKQAuiy8jZsdzQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187638>
 
-Am 22.12.2011 19:26 schrieb Pat Thoyts:
-> Dirk S=FCsserott <newsletter@dirk.my1.cc> writes:
->=20
->> Hi!
+On 2011-12-23 08:02, demerphq wrote:
+> On 22 December 2011 21:37, Jehan Bing<jehan@orb.com>  wrote:
+>> Hi,
 >>
->> Does anybody know about a shortcut in gitk to "jump to the yellow sp=
-ot"?
+>> I'm getting an error when trying to look at a blob when the filename has
+>> "++" in it:
 >>
->> I often use cmdline and gitk at the same time, switch branches, stas=
-h,
->> rebase and so on from bash. When hitting [Ctrl-]F5 in gitk, the last
->> highlighted commit is focused again and my HEAD is far off the scree=
-n.
->>
->> Is there a way to jump to the HEAD (the yellow bubble in gitk) with =
-a
->> fingertip?
->>
->> TIA
->>    Dirk
->=20
-> Hit the Home key. The binding for that takes you to the first commit.
-> End to the last (oldest) commit.
+>> http://.../blob/13ec1624fefc23d20d0407aac3337b35844a2ceb:/foo-++.txt
+>
+> This error comes because the filename is being used a pattern without
+> being protected by a quotemeta.
+>
+> Interestingly, a later version of perl would not have this problem as
+> ++ is a legal quantifier as of 5.10, nevertheless it probably wouldnt
+> do what you expected.
+>
 
-Hi Pat,
+Interestingly, a later version of perl would not have this problem as, 
+after investigating the problem further, it's actually a bug in CGI.pm 
+which has since been fixed ;)
 
-thank you, but I almost always run gitk with the '--all' parameter.
-Actually, I have a function in my .bashrc for this:
-
-  # calls gitk from the top-level directory:
-  function gkup()
-  {
-      (cd "./$(git rev-parse --show-cdup)"; gitk --all "$@" &)
-  }
-
-That's because gitk behaves odd (at least to me) when not run from the
-top-level directory. E.g. the "touching paths" box won't find files in
-the top dir if you don't prefix them with a slash. It's all relative to
-the directory gitk was started in. To get predictable behavior, I wrote
-this function and garnished it with '--all'.
-
-Thus, my current HEAD is not always on the top of the history but
-somewhere in between. However, typing "HEAD" (or "head" in the SHA1
-field works for me.
-
-Cheers
-    Dirk
+My distribution comes with an old version of CGI.pm (3.15 from perl 
+5.8.8). After updating to the latest, the problem went away.
