@@ -1,56 +1,62 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: I can never finish a push
-Date: Fri, 23 Dec 2011 15:39:44 +0100
-Message-ID: <m262h773nz.fsf@igel.home>
-References: <4EF47DF3.9080809@bbn.com>
+From: demerphq <demerphq@gmail.com>
+Subject: Re: "Nested quantifiers" error in gitweb with "++" in the filename
+Date: Fri, 23 Dec 2011 17:02:22 +0100
+Message-ID: <CANgJU+VA9s9t0c8D0P_DesbSDQRBQ6v913KixKQAuiy8jZsdzQ@mail.gmail.com>
+References: <jd04eq$9m0$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Martin L Resnick <mresnick@bbn.com>
-X-From: git-owner@vger.kernel.org Fri Dec 23 15:39:55 2011
+To: Jehan Bing <jehan@orb.com>
+X-From: git-owner@vger.kernel.org Fri Dec 23 17:02:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Re6Hq-0000o0-LC
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Dec 2011 15:39:54 +0100
+	id 1Re7Zk-0002o3-Dn
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Dec 2011 17:02:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756930Ab1LWOju (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Dec 2011 09:39:50 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:60842 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754164Ab1LWOjt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Dec 2011 09:39:49 -0500
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id B72CD1C009EE;
-	Fri, 23 Dec 2011 15:39:45 +0100 (CET)
-X-Auth-Info: 9pni4bfMFi5DVytFVUJdCuKyM44MWk/9yDOFc2zmuIw=
-Received: from igel.home (ppp-88-217-99-149.dynamic.mnet-online.de [88.217.99.149])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 80E0F1C0004D;
-	Fri, 23 Dec 2011 15:39:45 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id 9C63ACA29C; Fri, 23 Dec 2011 15:39:44 +0100 (CET)
-X-Yow: I have accepted Provolone into my life!
-In-Reply-To: <4EF47DF3.9080809@bbn.com> (Martin L. Resnick's message of "Fri,
-	23 Dec 2011 08:11:15 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.92 (gnu/linux)
+	id S1757379Ab1LWQCY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Dec 2011 11:02:24 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:58246 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753557Ab1LWQCX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Dec 2011 11:02:23 -0500
+Received: by yenm11 with SMTP id m11so5830628yen.19
+        for <git@vger.kernel.org>; Fri, 23 Dec 2011 08:02:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=wrmcbRVE/f4/xfcHDt+C8Njd6SJZhltmznD8pQLdCJU=;
+        b=X/Oyt+URmbe85v37XOq+g9JjOGKM02IqmnZ5vqzHM3sz4t6rf0n39d7VuCx5/r0Lp2
+         yl1UibmhnbA+g/IdR7EfgTSeJIzUugq+mQWBHI91rZeSD3wZiY735gT3XZAGAuUiln4W
+         ml6pkSHKg5aqWWgIafcwzBXSL336KZqM/8i9M=
+Received: by 10.236.173.170 with SMTP id v30mr21732528yhl.24.1324656142906;
+ Fri, 23 Dec 2011 08:02:22 -0800 (PST)
+Received: by 10.236.72.132 with HTTP; Fri, 23 Dec 2011 08:02:22 -0800 (PST)
+In-Reply-To: <jd04eq$9m0$1@dough.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187632>
 
-Martin L Resnick <mresnick@bbn.com> writes:
+On 22 December 2011 21:37, Jehan Bing <jehan@orb.com> wrote:
+> Hi,
+>
+> I'm getting an error when trying to look at a blob when the filename has
+> "++" in it:
+>
+> http://.../blob/13ec1624fefc23d20d0407aac3337b35844a2ceb:/foo-++.txt
 
-> So I pull (no merge needed, its fast-forward)
+This error comes because the filename is being used a pattern without
+being protected by a quotemeta.
 
-If the merge is fast-forward then you aren't really having anything to
-push, are you?  Are you sure you are pushing the right branch?
+Interestingly, a later version of perl would not have this problem as
+++ is a legal quantifier as of 5.10, nevertheless it probably wouldnt
+do what you expected.
 
-Andreas.
-
+yves
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+perl -Mre=debug -e "/just|another|perl|hacker/"
