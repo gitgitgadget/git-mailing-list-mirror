@@ -1,57 +1,48 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [RFC PATCH] Allow cloning branches selectively
-Date: Sat, 24 Dec 2011 11:31:51 +0700
-Message-ID: <CACsJy8ANZvkY+na-tM95prHEfXD+N2OT8+3NLeccycGL1BmbCg@mail.gmail.com>
-References: <1324671199-7074-1-git-send-email-cmn@elego.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Sat Dec 24 05:32:28 2011
+From: Jonathan Duncan <jonathan@memoryties.com>
+Subject: Wrong code on master
+Date: Fri, 23 Dec 2011 22:09:06 -0700
+Message-ID: <36BFCDA4-8249-4965-877F-FFC9EA65C7EE@memoryties.com>
+Mime-Version: 1.0 (Apple Message framework v1251.1)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 24 06:09:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ReJHY-0001lF-7f
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Dec 2011 05:32:28 +0100
+	id 1ReJrT-000490-68
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Dec 2011 06:09:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754564Ab1LXEcY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Dec 2011 23:32:24 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:42392 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752157Ab1LXEcX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Dec 2011 23:32:23 -0500
-Received: by eaad14 with SMTP id d14so3160461eaa.19
-        for <git@vger.kernel.org>; Fri, 23 Dec 2011 20:32:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=UZasZLAfHhf4Uq8d2cjytydzx6cvcwiZDN3D3Sorn+M=;
-        b=W/dsNasJSeaQzByq8GdZi+vo05zxXFYTUel0KYqssr3nHqU8kYqYSxkm1+1EtdIupf
-         opQCBYf2gP0xyRN8pSvjvG+6z+nWjhelVtFpGJAKa2QSxOGD4Pe5qEdNqdIiCxFS6EW/
-         7E+1OqUBPnaTZ6m3+TCtHbGGzvIm0VHI7erhE=
-Received: by 10.204.145.74 with SMTP id c10mr4771343bkv.62.1324701142231; Fri,
- 23 Dec 2011 20:32:22 -0800 (PST)
-Received: by 10.204.32.197 with HTTP; Fri, 23 Dec 2011 20:31:51 -0800 (PST)
-In-Reply-To: <1324671199-7074-1-git-send-email-cmn@elego.de>
+	id S1751200Ab1LXFJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Dec 2011 00:09:13 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:34792 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750846Ab1LXFJM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Dec 2011 00:09:12 -0500
+Received: by iaeh11 with SMTP id h11so16083430iae.19
+        for <git@vger.kernel.org>; Fri, 23 Dec 2011 21:09:11 -0800 (PST)
+Received: by 10.50.183.166 with SMTP id en6mr16529766igc.7.1324703351562;
+        Fri, 23 Dec 2011 21:09:11 -0800 (PST)
+Received: from [10.0.7.3] (c-76-27-42-247.hsd1.ut.comcast.net. [76.27.42.247])
+        by mx.google.com with ESMTPS id i2sm14287329igq.6.2011.12.23.21.09.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 23 Dec 2011 21:09:10 -0800 (PST)
+X-Mailer: Apple Mail (2.1251.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187653>
 
-On Sat, Dec 24, 2011 at 3:13 AM, Carlos Mart=C3=ADn Nieto <cmn@elego.de=
-> wrote:
-> Sometimes it's useful to clone only a subset of branches from a remot=
-e
-> we're cloning. Teach clone the --fetch option to select which branche=
-s
-> should get fetched.
+I have a developer that committed code that should have been on a branch.  I have created a branch now and locally my master branch is good to go.  However, when I try to push it conflicts, of course, because the repo still wants me to pull the changes and merge them to my master.
 
-What about tags? Are all tags fetched or only ones part of the
-selected branches?
---=20
-Duy
+The new code from the other developer will eventually be used, but we were not ready for it to be on "master" yet.  I need to push my own code out before that other code gets used.
+
+Will I really have to pull and merge the code to master and then revert?  I have been googling all day, trying to figure out the best way to do this and in the process I fear I have made a mess of my repo.  I have been using git long enough to be dangerous to myself.
+
+Any thoughts?  Got a good article I can read?
+
+Thanks,
+Jonathan
