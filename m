@@ -1,148 +1,166 @@
 From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH 10/11] git-p4: test and document --use-client-spec
-Date: Sat, 24 Dec 2011 21:07:39 -0500
-Message-ID: <1324778860-4821-11-git-send-email-pw@padd.com>
+Subject: [PATCH 11/11] git-p4: document and test submit options
+Date: Sat, 24 Dec 2011 21:07:40 -0500
+Message-ID: <1324778860-4821-12-git-send-email-pw@padd.com>
 References: <1324778860-4821-1-git-send-email-pw@padd.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 25 03:11:10 2011
+X-From: git-owner@vger.kernel.org Sun Dec 25 03:11:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RedYM-0001Ja-7J
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Dec 2011 03:11:10 +0100
+	id 1RedYe-0001Tu-Pm
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Dec 2011 03:11:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758054Ab1LYCLF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Dec 2011 21:11:05 -0500
-Received: from honk.padd.com ([74.3.171.149]:51322 "EHLO honk.padd.com"
+	id S1758058Ab1LYCLZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Dec 2011 21:11:25 -0500
+Received: from honk.padd.com ([74.3.171.149]:51324 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755440Ab1LYCLE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Dec 2011 21:11:04 -0500
+	id S1758056Ab1LYCLY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Dec 2011 21:11:24 -0500
 Received: from arf.padd.com (unknown [50.55.144.134])
-	by honk.padd.com (Postfix) with ESMTPSA id 5F3BE31BF;
-	Sat, 24 Dec 2011 18:11:03 -0800 (PST)
+	by honk.padd.com (Postfix) with ESMTPSA id A4A3231BF;
+	Sat, 24 Dec 2011 18:11:23 -0800 (PST)
 Received: by arf.padd.com (Postfix, from userid 7770)
-	id 274C4315E1; Sat, 24 Dec 2011 21:11:01 -0500 (EST)
+	id 38661315E1; Sat, 24 Dec 2011 21:11:21 -0500 (EST)
 X-Mailer: git-send-email 1.7.8.1.398.gf9d11
 In-Reply-To: <1324778860-4821-1-git-send-email-pw@padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187674>
 
-The depot path is required, even with this option.  Make sure
-git-p4 fails and exits with non-zero.
+Clarify there is a -M option, but no -C.  These are both
+configurable through variables.
 
-Contents in the specified depot path will be rearranged according
-to the client spec.  Test this and add a note in the docs.
+Explain that the allowSubmit variable takes a comma-separated
+list of branch names.
 
-Leave an XXX suggesting that this is somewhat confusing behavior
-that might be good to fix later.
+Catch earlier an invalid branch name given as an argument to
+"git p4 clone".
 
-Function stripRepoPath() looks at self.useClientSpec.  Make sure
-this is set both for command-line option --use-client-spec and
-for configuration variable git-p4.useClientSpec.  Test this.
+Test option --origin, variable allowSubmit, and explicit master
+branch name.
 
 Signed-off-by: Pete Wyckoff <pw@padd.com>
 ---
- Documentation/git-p4.txt   |    5 +++-
- contrib/fast-import/git-p4 |    6 ++++-
- t/t9806-git-p4-options.sh  |   46 ++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 55 insertions(+), 2 deletions(-)
+ Documentation/git-p4.txt   |    8 +++++-
+ contrib/fast-import/git-p4 |    7 +++++
+ t/t9807-git-p4-submit.sh   |   54 ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 67 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
-index 2885b82..3092571 100644
+index 3092571..f97b1c5 100644
 --- a/Documentation/git-p4.txt
 +++ b/Documentation/git-p4.txt
-@@ -232,7 +232,10 @@ git repository:
- 	Use a client spec to find the list of interesting files in p4.
- 	The client spec is discovered using 'p4 client -o' which checks
- 	the 'P4CLIENT' environment variable and returns a mapping of
--	depot files to workspace files.
-+	depot files to workspace files.  Note that a depot path is
-+	still required, but files found in the path that match in
-+	the client spec view will be laid out according to the client
-+	spec.
+@@ -267,7 +267,9 @@ These options can be used to modify 'git p4 submit' behavior.
  
- Clone options
- ~~~~~~~~~~~~~
+ -M[<n>]::
+ 	Detect renames.  See linkgit:git-diff[1].  Renames will be
+-	represented in p4 using explicit 'move' operations.
++	represented in p4 using explicit 'move' operations.  There
++	is no corresponding option to detect copies, but there are
++	variables for both moves and copies.
+ 
+ --preserve-user::
+ 	Re-author p4 changes before submitting to p4.  This option
+@@ -453,7 +455,9 @@ git-p4.skipSubmitEditCheck::
+ git-p4.allowSubmit::
+ 	By default, any branch can be used as the source for a 'git p4
+ 	submit' operation.  This configuration variable, if set, permits only
+-	the named branches to be used as submit sources.
++	the named branches to be used as submit sources.  Branch names
++	must be the short names (no "refs/heads/"), and should be
++	separated by commas (","), with no spaces.
+ 
+ git-p4.skipUserNameCheck::
+ 	If the user running 'git p4 submit' does not exist in the p4
 diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index d0a9b0d..5420bf1 100755
+index 5420bf1..d3c3ad8 100755
 --- a/contrib/fast-import/git-p4
 +++ b/contrib/fast-import/git-p4
-@@ -1951,7 +1951,10 @@ class P4Sync(Command, P4UserMap):
-             if not gitBranchExists(self.refPrefix + "HEAD") and self.importIntoRemotes and gitBranchExists(self.branch):
-                 system("git symbolic-ref %sHEAD %s" % (self.refPrefix, self.branch))
+@@ -362,6 +362,11 @@ def isValidGitDir(path):
+ def parseRevision(ref):
+     return read_pipe("git rev-parse %s" % ref).strip()
  
--        if self.useClientSpec or gitConfig("git-p4.useclientspec") == "true":
-+        if not self.useClientSpec:
-+            if gitConfig("git-p4.useclientspec", "--bool") == "true":
-+                self.useClientSpec = True
-+        if self.useClientSpec:
-             self.getClientSpec()
++def branchExists(ref):
++    rev = read_pipe(["git", "rev-parse", "-q", "--verify", ref],
++                     ignore_error=True)
++    return len(rev) > 0
++
+ def extractLogMessageFromGitCommit(commit):
+     logMessage = ""
  
-         # TODO: should always look at previous commits,
-@@ -2380,6 +2383,7 @@ def main():
+@@ -1089,6 +1094,8 @@ class P4Submit(Command, P4UserMap):
+                 die("Detecting current git branch failed!")
+         elif len(args) == 1:
+             self.master = args[0]
++            if not branchExists(self.master):
++                die("Branch %s does not exist" % self.master)
+         else:
+             return False
  
-     if not cmd.run(args):
-         parser.print_help()
-+        sys.exit(2)
- 
- 
- if __name__ == '__main__':
-diff --git a/t/t9806-git-p4-options.sh b/t/t9806-git-p4-options.sh
-index 6b288ac..1f1952a 100755
---- a/t/t9806-git-p4-options.sh
-+++ b/t/t9806-git-p4-options.sh
-@@ -117,6 +117,52 @@ test_expect_success 'clone --keep-path' '
+diff --git a/t/t9807-git-p4-submit.sh b/t/t9807-git-p4-submit.sh
+index 2cb724e..b1f61e3 100755
+--- a/t/t9807-git-p4-submit.sh
++++ b/t/t9807-git-p4-submit.sh
+@@ -31,6 +31,60 @@ test_expect_success 'submit with no client dir' '
  	)
  '
  
-+# clone --use-client-spec must still specify a depot path
-+# if given, it should rearrange files according to client spec
-+# when it has view lines that match the depot path
-+# XXX: should clone/sync just use the client spec exactly, rather
-+# than needing depot paths?
-+test_expect_success 'clone --use-client-spec' '
-+	(
-+		# big usage message
-+		exec >/dev/null &&
-+		test_must_fail "$GITP4" clone --dest="$git" --use-client-spec
-+	) &&
-+	cli2="$TRASH_DIRECTORY/cli2" &&
-+	mkdir -p "$cli2" &&
-+	test_when_finished "rmdir \"$cli2\"" &&
-+	(
-+		cd "$cli2" &&
-+		p4 client -i <<-EOF
-+		Client: client2
-+		Description: client2
-+		Root: $cli2
-+		View: //depot/sub/... //client2/bus/...
-+		EOF
-+	) &&
-+	P4CLIENT=client2 &&
++# make two commits, but tell it to apply only from HEAD^
++test_expect_success 'submit --origin' '
 +	test_when_finished cleanup_git &&
-+	"$GITP4" clone --dest="$git" --use-client-spec //depot/... &&
++	"$GITP4" clone --dest="$git" //depot &&
 +	(
 +		cd "$git" &&
-+		test_path_is_file bus/dir/f4 &&
-+		test_path_is_file file1
++		test_commit "file3" &&
++		test_commit "file4" &&
++		git config git-p4.skipSubmitEdit true &&
++		"$GITP4" submit --origin=HEAD^
 +	) &&
-+	cleanup_git &&
++	(
++		cd "$cli" &&
++		p4 sync &&
++		test_path_is_missing "file3.t" &&
++		test_path_is_file "file4.t"
++	)
++'
 +
-+	# same thing again, this time with variable instead of option
-+	mkdir "$git" &&
++test_expect_success 'submit with allowSubmit' '
++	test_when_finished cleanup_git &&
++	"$GITP4" clone --dest="$git" //depot &&
 +	(
 +		cd "$git" &&
-+		git init &&
-+		git config git-p4.useClientSpec true &&
-+		"$GITP4" sync //depot/... &&
-+		git checkout -b master p4/master &&
-+		test_path_is_file bus/dir/f4 &&
-+		test_path_is_file file1
++		test_commit "file5" &&
++		git config git-p4.skipSubmitEdit true &&
++		git config git-p4.allowSubmit "nobranch" &&
++		test_must_fail "$GITP4" submit &&
++		git config git-p4.allowSubmit "nobranch,master" &&
++		"$GITP4" submit
++	)
++'
++
++test_expect_success 'submit with master branch name from argv' '
++	test_when_finished cleanup_git &&
++	"$GITP4" clone --dest="$git" //depot &&
++	(
++		cd "$git" &&
++		test_commit "file6" &&
++		git config git-p4.skipSubmitEdit true &&
++		test_must_fail "$GITP4" submit nobranch &&
++		git branch otherbranch &&
++		git reset --hard HEAD^ &&
++		test_commit "file7" &&
++		"$GITP4" submit otherbranch
++	) &&
++	(
++		cd "$cli" &&
++		p4 sync &&
++		test_path_is_file "file6.t" &&
++		test_path_is_missing "file7.t"
 +	)
 +'
 +
