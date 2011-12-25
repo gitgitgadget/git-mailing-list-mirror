@@ -1,196 +1,87 @@
-From: Joey Hess <joey@kitenet.net>
-Subject: FETCH_HEAD documentation vs reality
-Date: Sun, 25 Dec 2011 13:39:01 -0400
-Message-ID: <20111225173901.GA668@gnu.kitenet.net>
+From: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: [RFC PATCH] Allow cloning branches selectively
+Date: Sun, 25 Dec 2011 17:43:22 +0000
+Message-ID: <20111225174322.GB6361@beez.lab.cmartin.tk>
+References: <1324671199-7074-1-git-send-email-cmn@elego.de>
+ <m3hb0ofwem.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="+pHx0qQiF2pBVqBT"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 25 18:39:34 2011
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="24zk1gE8NUlDmwG9"
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 25 18:43:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Res2n-00018T-QD
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Dec 2011 18:39:34 +0100
+	id 1Res6a-0006cW-P0
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Dec 2011 18:43:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753486Ab1LYRjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Dec 2011 12:39:11 -0500
-Received: from wren.kitenet.net ([80.68.85.49]:53498 "EHLO kitenet.net"
+	id S1753507Ab1LYRnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Dec 2011 12:43:25 -0500
+Received: from kimmy.cmartin.tk ([91.121.65.165]:52645 "EHLO kimmy.cmartin.tk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752168Ab1LYRjK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Dec 2011 12:39:10 -0500
-Received: from gnu.kitenet.net (dialup-4.153.2.217.Dial1.Atlanta1.Level3.net [4.153.2.217])
-	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id 94A091180EC
-	for <git@vger.kernel.org>; Sun, 25 Dec 2011 12:39:06 -0500 (EST)
-Received: by gnu.kitenet.net (Postfix, from userid 1000)
-	id 8BD9D44992; Sun, 25 Dec 2011 12:39:01 -0500 (EST)
+	id S1753207Ab1LYRnY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Dec 2011 12:43:24 -0500
+Received: from beez.lab.cmartin.tk (145.Red-81-38-112.dynamicIP.rima-tde.net [81.38.112.145])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id 5D5A9461B9;
+	Sun, 25 Dec 2011 18:43:16 +0100 (CET)
+Received: (nullmailer pid 4449 invoked by uid 1000);
+	Sun, 25 Dec 2011 17:43:22 -0000
+Mail-Followup-To: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <m3hb0ofwem.fsf@localhost.localdomain>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187684>
 
 
---+pHx0qQiF2pBVqBT
-Content-Type: multipart/mixed; boundary="IJpNTDwzlM2Ie8A6"
-Content-Disposition: inline
-
-
---IJpNTDwzlM2Ie8A6
-Content-Type: text/plain; charset=us-ascii
+--24zk1gE8NUlDmwG9
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-While trying to find some documentation of the format of .git/FETCH_HEAD,
-I found this example in git-read-tree.txt, which I think will no longer
-work. Probably when this was written, .git/FETCH_HEAD contained only a sing=
-le
-SHA; it's much more complicated now.
+On Sun, Dec 25, 2011 at 08:28:39AM -0800, Jakub Narebski wrote:
+> Carlos Mart=EDn Nieto <cmn@elego.de> writes:
+>=20
+> > Sometimes it's useful to clone only a subset of branches from a remote
+> > we're cloning. Teach clone the --fetch option to select which branches
+> > should get fetched.
+> >=20
+> > Each --fetch sets up a fetch refspec for that branch. Previously this
+> > was only possible by initializing a repo and manually setting up the
+> > config.
+>=20
+> I haven't read the code, but I guess it should be possible to share
+> code with "git remote add", which allows to select which branches to
+> track, and which branch is to be 'main' on remote.
+>=20
+>   git remote add [-t <branch>] [-m <master>] [-f] ...
 
-        $ JC=3D`git rev-parse --verify "HEAD^0"`
-        $ git checkout-index -f -u -a $JC
-        ...
-        $ git fetch git://.... linus
-        $ LT=3D`cat .git/FETCH_HEAD`
-        ...
-        $ git read-tree -m -u `git merge-base $JC $LT` $JC $LT
+Ah, very nice. I didn't know about those options. Hopefully I can use
+it. Thanks for pointing it out.
 
-It's also common for the first line of .git/FETCH_HEAD to be an
-arbitrary branch that was fetched (as part of an unqualified "git
-pull"), marked not-for-merge. So using "FETCH_HEAD" as a refname will
-refer to such a branch unintentionally. There are several places in the
-docs that seem to expect FETCH_HEAD to always refer to the one that was
-fetched and will be merged (ie, master):
+   cmn
 
-revisions.txt:
-
-	'FETCH_HEAD' records the branch which you fetched from a remote repository
-	with your last `git fetch` invocation.
-
-git-pull.txt:
-
-	In its default mode, `git pull` is shorthand for
-	`git fetch` followed by `git merge FETCH_HEAD`.
-
-gittutorial.txt:
-
-	alice$ git log -p HEAD..FETCH_HEAD
-	$ gitk HEAD..FETCH_HEAD
-
-howto/rebase-from-internal-branch.txt:
-
-	You fetch from upstream, but not merge.
-=09
-	    $ git fetch upstream
-=09
-	This leaves the updated upstream head in .git/FETCH_HEAD but
-	does not touch your .git/HEAD nor .git/refs/heads/master.
-	You run "git rebase" now.
-=09
-	    $ git rebase FETCH_HEAD master
-
-All this documentation could be changed, or resolve_ref_unsafe in refs.c
-could be changed to have a special case parser for .git/FETCH_HEAD,
-that finds the first branch that is marked for merge, where it now has
-this minor special case for it:
-
-        /* Please note that FETCH_HEAD has a second line containing other d=
-ata. */
-        if (get_sha1_hex(buffer, sha1) || (buffer[40] !=3D '\0' && !isspace=
-(buffer[40]))) {
-
-Or yet another way to fix it would be to make git fetch always write the
-intended FETCH_HEAD first into .git/FETCH_HEAD. (When not in --append mode.)
-This seems like perhaps the best fix, although it does mean that if a
-fetch is done of only not-for-merge refs, without --append, FETCH_HEAD
-will still refer to one of them.=20
-
-I've attached a minimal proof-of-concept patch implementing this last
-option.
-
---=20
-see shy jo
-
---IJpNTDwzlM2Ie8A6
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename=patch
-Content-Transfer-Encoding: quoted-printable
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 33ad3aa..e2f2c69 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -376,6 +376,7 @@ static int store_updated_refs(const char *raw_url, cons=
-t char *remote_name,
- 	struct strbuf note =3D STRBUF_INIT;
- 	const char *what, *kind;
- 	struct ref *rm;
-+	int top =3D 1;
- 	char *url, *filename =3D dry_run ? "/dev/null" : git_path("FETCH_HEAD");
-=20
- 	fp =3D fopen(filename, "a");
-@@ -393,6 +394,7 @@ static int store_updated_refs(const char *raw_url, cons=
-t char *remote_name,
- 		goto abort;
- 	}
-=20
-+ write:
- 	for (rm =3D ref_map; rm; rm =3D rm->next) {
- 		struct ref *ref =3D NULL;
-=20
-@@ -408,6 +410,9 @@ static int store_updated_refs(const char *raw_url, cons=
-t char *remote_name,
- 		if (!commit)
- 			rm->merge =3D 0;
-=20
-+		if (top !=3D rm->merge)
-+			continue;
-+
- 		if (!strcmp(rm->name, "HEAD")) {
- 			kind =3D "";
- 			what =3D "";
-@@ -474,6 +479,11 @@ static int store_updated_refs(const char *raw_url, con=
-st char *remote_name,
- 		}
- 	}
-=20
-+	if (top) {
-+		top =3D 0;
-+		goto write;
-+	}
-+
- 	if (rc & STORE_REF_ERROR_DF_CONFLICT)
- 		error(_("some local refs could not be updated; try running\n"
- 		      " 'git remote prune %s' to remove any old, conflicting "
-
---IJpNTDwzlM2Ie8A6--
-
---+pHx0qQiF2pBVqBT
+--24zk1gE8NUlDmwG9
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: Digital signature
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.11 (GNU/Linux)
 
-iQIVAwUBTvdfsskQ2SIlEuPHAQj9bg//bdYL31vnLQ4IroIJOCfKbH4BlwGRbvSs
-xF02Lhw++Hrv6CYuOEHbyp3kevDG3y3JwcPSHn12HATXjKBGY6n5a+rPT9M2AYat
-ID/SiomIho/7HcXSb1TZYmt5WgMvqZmbJzo1/ntOqrErgatrlQ2RJ1b+jZDtTlXu
-agyIpF68Xqmcb31Qc/UQH8f9/ip/zZ7G+1L4WaAU6aGmhmCkpXdZ59nCoBme5lGM
-E+w17B/LZmZfkmiZX2V7s7W7SAcbMISb7RF062bCnfbcu1SV54bcu1d2YSQePBhw
-R6lbtA6Aiu4KXRdpwvE4XteRrUmfpft7VrA0RBeI9llqwU4kNHDd4ZMkA7w+xb8p
-U1yOCejatj1O6Fgim42G/F3R3qB1EIDb8HIvHMGB7AifSrP4MkBDq8caXuegMWVN
-ue52AV7BzoTI+KSUJFZKif146EvhpyeNSqZZjqlFjGI4Uh0Uhyd2dNwgSF8f4BrX
-93UMOZarKVS6v7RrC349kjuKc4LjSPVYHdHVj/Bx0zzhbdmuA1mXUlWAMJwRdGUv
-mOLMQ7rEY/GhgvzXBrgJhVZYZkW7UeF0RwBTt0akZvIoG+oesvglGUrqqJXfa9nt
-GrUgclOgSG5PKAg0FUOMcyWwuiFpA+c5GpRiEPyDbpbKEVN5Io/y40w/BIR5Qmfw
-4uIGlKkK+zQ=
-=UR8R
+iQEcBAEBAgAGBQJO92C6AAoJEHKRP1jG7ZzTe60H/3r0L96P0mSMj0mtekT0e8PK
+wS5sFDLAcG1ITaQFgAJjGxmEuHMxgpdgUHwSWiUDNmVAknkbw82+V1ZlZ0iLXgDd
+0Xb43dbif+myBAU5LUMr87XAh62YtWlpP86mHtowzH8i5TSClNMxxt9k+rx/EIyB
+xavmfi4UV21UgaIKPfsNqqPlpFoClDHYrWEXGo0pHh22FGFZkFUbh6yLzwkK7nFB
+qsyG6YJMTG+drD5yVylIxApgJIs6RkKUxI6OQB1t9zc5RyokRd21RWDurdQCKJl1
+4/pN5RhEvaHkhWCZJC4OqJjqJhpxuQdoiAs/ornO0tVCzhdGeEEEd9mA3lEEQPQ=
+=kf6y
 -----END PGP SIGNATURE-----
 
---+pHx0qQiF2pBVqBT--
+--24zk1gE8NUlDmwG9--
