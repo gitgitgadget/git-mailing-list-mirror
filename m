@@ -1,310 +1,127 @@
-From: =?iso-8859-1?Q?Sidney_San_Mart=EDn?= <s@sidneysm.com>
-Subject: [PATCH] Support wrapping commit messages when you read them
-Date: Sat, 24 Dec 2011 21:05:32 -0800
-Message-ID: <8DE6E894-B50D-4F7E-AE18-C10E7E40A550@sidneysm.com>
-Mime-Version: 1.0 (Apple Message framework v1251.1)
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 25 06:06:03 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add post-fetch hook
+Date: Sun, 25 Dec 2011 01:30:03 -0800
+Message-ID: <7vsjk99exw.fsf@alter.siamese.dyndns.org>
+References: <20111224234212.GA21533@gnu.kitenet.net>
+ <7v4nwpbaxq.fsf@alter.siamese.dyndns.org>
+ <20111225035059.GA29852@gnu.kitenet.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Joey Hess <joey@kitenet.net>
+X-From: git-owner@vger.kernel.org Sun Dec 25 10:31:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RegHb-0005en-1U
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Dec 2011 06:06:03 +0100
+	id 1RekQJ-0005Hg-D2
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Dec 2011 10:31:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750800Ab1LYFFl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Dec 2011 00:05:41 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:42427 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750730Ab1LYFFk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Dec 2011 00:05:40 -0500
-Received: by iaeh11 with SMTP id h11so17285010iae.19
-        for <git@vger.kernel.org>; Sat, 24 Dec 2011 21:05:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sidneysm.com; s=google;
-        h=from:content-type:content-transfer-encoding:subject:date:message-id
-         :to:mime-version:x-mailer;
-        bh=9cNHwBOie5Ygv7KVoQGR12vc6U6ktefSQqNPPpa/Ijc=;
-        b=LNgmSpqb+syPL0zpGq3cFNyVqReIlxr87zSCCXjnRes1wHhRxt4KFbl6rNNWus0WEX
-         WgYY7CBdmf3v8a18ne42YUMst++WoVZbquMLaZd6n06Fz2S+V7r/Id6JxrgeiZq16kkP
-         /4P+MgU2757NtobNzi7uifQF0PqO1q93tMGSo=
-Received: by 10.50.168.2 with SMTP id zs2mr20653172igb.9.1324789539471;
-        Sat, 24 Dec 2011 21:05:39 -0800 (PST)
-Received: from [172.20.10.2] (mobile-166-205-136-221.mycingular.net. [166.205.136.221])
-        by mx.google.com with ESMTPS id l28sm61153233ibc.3.2011.12.24.21.05.38
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 24 Dec 2011 21:05:39 -0800 (PST)
-X-Mailer: Apple Mail (2.1251.1)
+	id S1751396Ab1LYJaz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Dec 2011 04:30:55 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48579 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751343Ab1LYJaw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Dec 2011 04:30:52 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B57105C10;
+	Sun, 25 Dec 2011 04:30:51 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KvWUYnVVAumnxt4MQVWGwN4rDZU=; b=DMZZtS
+	CMbSvaE8mY3gbdpsaUrw3USZJImXNd+rxc51KHf42ytYwwWjD3hR/JJnJHjl/KDw
+	UrNU4BnNC2gq172C9tO/cPgj5wykMmZNIUzWkDe1eHBcXYF3duBWEK1meq2O0K4C
+	P/3mTcqvs95OwC8D9yFi6TVwahFOmycaRuj8M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qV8MAwOUj+b6h+SNO/ajzqsqGu/+uhIV
+	Gf6WeXlB+YfAuKifi3+EcgiOVe3S8/cQfRStXkos83h8TBke+tBOW+F6KN0nUeag
+	61u4s/W4eT6mK8Z9CikEuoxo7pUUjnQB8Hyfd6r1k9nRJUyHbtLeDyVc9PiBicDP
+	xgPWghjWf2k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ACA9E5C0F;
+	Sun, 25 Dec 2011 04:30:51 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E9E5F5C06; Sun, 25 Dec 2011
+ 04:30:04 -0500 (EST)
+In-Reply-To: <20111225035059.GA29852@gnu.kitenet.net> (Joey Hess's message of
+ "Sat, 24 Dec 2011 23:50:59 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 071A1AA0-2EDB-11E1-B82E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187679>
 
-=46airly simpleminded line wrapping that makes commit messages
-readable if they weren=92t wrapped by the committer.
+Joey Hess <joey@kitenet.net> writes:
 
-- Use strbuf_add_wrapped_text() to do the dirty work
-- Detect simple lists which begin with "+ ", "* ", or "- " and indent
-  them appropriately (like this line)
-- Print lines which begin with whitespace as-is (e.g. code samples)
+> Junio C Hamano wrote:
+>> If we _were_ to sanction the use of the hook to tweak the result, I do not
+>> want to see it implemented as an ad-hoc hack that tells the hook writers
+>> that it is _entirely_ their responsiblity to update the remote tracking
+>> branches from what it fetched, and also update $GIT_DIR/FETCH_HEAD to
+>> maintain consistency between these two places.
+>> 
+>> A very cursory look at the patch tells me that there are a few problems
+>> with it.  It does not seem to affect what will go to $GIT_DIR/FETCH_HEAD
+>> at all, and hence it does not have any way to affect the result of the
+>> fetch that does not store it to any of our remote tracking branches.
+>
+> True, it does not update FETCH_HEAD. I had not considered using the hook
+> that way.
 
-Add --wrap[=3D<width>] and --no-wrap to commands that pretty-print comm=
-it
-messages, and add log.wrap and log.wrap.width configuration options.
+Perhaps I misread what you wrote in the commit log message then.  I
+somehow got an impression that one of the advertised way for the hook to
+be used was to lie which commits the remote tracking refs point at by
+letting it run "update-ref refs/*/*" and the lie is later picked up by
+re-reading them, but I wasn't reading the patch very carefully.
 
-log.wrap defaults to never, and can be set to never/false, auto/true,
-or always. If auto, hijack want_color() to decide whether it=92s
-appropriate to use line wrapping. (This is a little hacky, but as far
-as I can tell the conditions for auto color and auto wrapping are the
-same. Maybe it would make sense to rename want_color()?)
+If your use case does not involve updating the remote tracking refs nor
+FETCH_HEAD (updating only one and not the other is a no-starter), then we
+should explicitly forbid it in the documentation, as allowing updates will
+invite inconsistencies.
 
-log.wrap.width defaults to 80.
+Although I do not deeply care between such a "trigger to only notify, no
+touching" hook and a full-blown "allow hook writers to easily lie about
+what happened in the fetch" hook, I was hoping that we would get this
+right and useful if we were spending our brain bandwidth on it. I am not
+very fond of an easier "trigger to only notify" hook because people are
+bound to misuse the interface and try updating the refs anyway, making it
+easy to introduce inconsistencies between refs and FETCH_HEAD that will
+confuse the later "merge" step.
 
-Signed-off-by: Sidney San Mart=EDn <s@sidneysm.com>
----
+As hook writers are more prone to write such an incorrect code than people
+who implement the mechanism to call hooks on the git-core side, the more
+the hook interface helps hook writers to avoid such mistakes, the better.
 
-I hope I=92m doing this right!
+So if we were to allow the hook to lie what commits were fetched and store
+something different from what we fetched in the remote tracking refs, I
+think the correct place to do so would be in store_updated_refs(),
+immediately before we call check_everything_connected().
 
-Consider this a first draft of the new feature I brought up a few weeks=
- ago.
+ - Feed the contents of the ref_map to the hook. For each entry, the hook
+   would get (at least):
+   . the object name;
+   . the refname at the remote;
+   . the refname at the local (which could be empty when we are not
+     copying it to any of our local ref); and
+   . if the entry is to be used for merge.
 
+ - The hook must read _everything_ from its standard input, and then
+   return the
+   re-written result in the same format as its input. The hook could
+   . update the object name (i.e. re-point the remote tracking ref);
+   . update the local refname (i.e. use different remote tracking ref);
+   . change "merge" flag between true/false; and/or
+   . add or remove entries
 
- Documentation/config.txt         |    8 ++++
- Documentation/pretty-options.txt |   14 +++++++
- commit.h                         |    6 +++
- log-tree.c                       |    1 +
- pretty.c                         |   71 ++++++++++++++++++++++++++++++=
-+++++++-
- revision.c                       |   10 +++++
- revision.h                       |    3 ++
- 7 files changed, 112 insertions(+), 1 deletions(-)
+ - You read from the hook and replace the ref_map list that is fed to
+   check_everything_connected(). This ref_map list is what is used in the
+   next for() loop that calls update_local_ref() to update the remote
+   tracking ref, records the entry in FETCH_HEAD, and produces the report.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 6e63b59..b8c1a81 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1403,6 +1403,14 @@ log.showroot::
- 	Tools like linkgit:git-log[1] or linkgit:git-whatchanged[1], which
- 	normally hide the root commit will now show it. True by default.
-=20
-+log.wrap::
-+	Commit message wrapping. May be set to always, false (or never) or
-+	auto (or true), in which case commit messages are only wrapped when
-+	the output is to a terminal. Defaults to false. See linkgit:git-log[1=
-].
-+
-+log.wrap.width::
-+	Line width for commit message wrapping. Defaults to 80 characters.
-+
- mailmap.file::
- 	The location of an augmenting mailmap file. The default
- 	mailmap, located in the root of the repository, is loaded
-diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-op=
-tions.txt
-index 2a3dc86..7601a43 100644
---- a/Documentation/pretty-options.txt
-+++ b/Documentation/pretty-options.txt
-@@ -10,6 +10,20 @@
- Note: you can specify the default pretty format in the repository
- configuration (see linkgit:git-config[1]).
-=20
-+--wrap[=3D<width>]::
-+	Word-wrap commit messages to the specified width, 80 characters
-+	by default. Lines beginning with +, *, or - and a space, or with a
-+	number followed by a period and a space, are interpreted as lists
-+	and wrapped with a hanging indent. Lines beginning with whitespace
-+	(e.g. code samples) are left as-is.
-++
-+Note: you can specify the default wrapping behavior in the repository
-+configuration (see linkgit:git-config[1]).
-+
-+--no-wrap::
-+	Turn off commit message wrapping. This is the default (unless
-+	otherwise specified in the repository configuration).
-+
- --abbrev-commit::
- 	Instead of showing the full 40-byte hexadecimal commit object
- 	name, show only a partial prefix.  Non default number of
-diff --git a/commit.h b/commit.h
-index 4df3978..1321666 100644
---- a/commit.h
-+++ b/commit.h
-@@ -86,6 +86,12 @@ struct pretty_print_context {
- 	int show_notes;
- 	struct reflog_walk_info *reflog_info;
- 	const char *output_encoding;
-+	struct wrap_options {
-+		unsigned int
-+			width,
-+			wrap:1,
-+			wrap_given:1;
-+	} wrap;
- };
-=20
- struct userformat_want {
-diff --git a/log-tree.c b/log-tree.c
-index 319bd31..3dfa944 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -414,6 +414,7 @@ void show_log(struct rev_info *opt)
-=20
- 	opt->loginfo =3D NULL;
- 	ctx.show_notes =3D opt->show_notes;
-+	ctx.wrap =3D opt->wrap;
- 	if (!opt->verbose_header) {
- 		graph_show_commit(opt->graph);
-=20
-diff --git a/pretty.c b/pretty.c
-index 1580299..133bc53 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -23,6 +23,10 @@ static size_t commit_formats_len;
- static size_t commit_formats_alloc;
- static struct cmt_fmt_map *find_commit_format(const char *sought);
-=20
-+static unsigned int wrap_configured =3D 0;
-+static unsigned int wrap =3D 0;
-+static unsigned int wrap_width =3D 80;
-+
- static void save_user_format(struct rev_info *rev, const char *cp, int=
- is_tformat)
- {
- 	free(user_format);
-@@ -172,6 +176,63 @@ void get_commit_format(const char *arg, struct rev=
-_info *rev)
- 	}
- }
-=20
-+static int git_wrap_config(const char *name, const char *value, void *=
-cb)
-+{
-+	wrap_configured =3D 1;
-+
-+	if (prefixcmp(name, "log.wrap"))
-+		return 0;
-+
-+	if (name[8] =3D=3D '\0') {
-+		if (value && !strcmp(value, "always")) {
-+			wrap =3D 1;
-+		} else if (value && !strcmp(value, "never")) {
-+			wrap =3D 0;
-+		} else if (!value || !strcmp(value, "auto") || git_config_bool(name,=
- value)) {
-+			wrap =3D want_color(GIT_COLOR_AUTO);
-+		}
-+	} else if (name[8] =3D=3D '.') {
-+		name +=3D 9;
-+		if (!strcmp(name, "width")) {
-+			wrap_width =3D git_config_int(name, value);
-+		}
-+	}
-+	return 0;
-+}
-+
-+static unsigned int want_wrap(struct wrap_options options)
-+{
-+	if(!wrap_configured)
-+		git_config(git_wrap_config, NULL);
-+	return (options.wrap_given ? options.wrap : wrap);
-+}
-+static unsigned int get_wrap_width(struct wrap_options options)
-+{
-+	if(!wrap_configured)
-+		git_config(git_wrap_config, NULL);
-+	return options.width ? options.width : wrap_width;
-+}
-+
-+static int line_list_prefix(const char *line, int len)
-+{
-+	unsigned int numberLength =3D 0;
-+	const char *pos =3D line;
-+	if (len < 3) {
-+		return 0;
-+	} else if ((line[0] =3D=3D '*' || line[0] =3D=3D '+' || line[0] =3D=3D=
- '-') && line[1] =3D=3D ' ') {
-+		return 2;
-+	} else {
-+		while (pos - line < len && pos[0] >=3D '0' && pos[0] <=3D '9'){
-+			numberLength++;
-+			pos++;
-+		}
-+		if (numberLength && pos - line + 1 < len && pos[0] =3D=3D '.' && pos=
-[1] =3D=3D ' ') {
-+			return numberLength + 2;
-+		}
-+	}
-+	return 0;
-+}
-+
- /*
-  * Generic support for pretty-printing the header
-  */
-@@ -1246,6 +1307,8 @@ void pp_remainder(const struct pretty_print_conte=
-xt *pp,
- 		  struct strbuf *sb,
- 		  int indent)
- {
-+	unsigned int wrap =3D want_wrap(pp->wrap);
-+	unsigned int width =3D get_wrap_width(pp->wrap);
- 	int first =3D 1;
- 	for (;;) {
- 		const char *line =3D *msg_p;
-@@ -1268,7 +1331,13 @@ void pp_remainder(const struct pretty_print_cont=
-ext *pp,
- 			memset(sb->buf + sb->len, ' ', indent);
- 			strbuf_setlen(sb, sb->len + indent);
- 		}
--		strbuf_add(sb, line, linelen);
-+		if (wrap && linelen && line[0] !=3D ' ' && line[0] !=3D '\t') {
-+			struct strbuf wrapped =3D STRBUF_INIT;
-+			strbuf_add(&wrapped, line, linelen);
-+			strbuf_add_wrapped_text(sb, wrapped.buf, 0, indent + line_list_pref=
-ix(line, linelen), width - indent);
-+		} else {
-+			strbuf_add(sb, line, linelen);
-+		}
- 		strbuf_addch(sb, '\n');
- 	}
- }
-diff --git a/revision.c b/revision.c
-index 8764dde..ca4b386 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1465,6 +1465,16 @@ static int handle_revision_opt(struct rev_info *=
-revs, int argc, const char **arg
- 		revs->verbose_header =3D 1;
- 		revs->pretty_given =3D 1;
- 		get_commit_format(arg+9, revs);
-+	} else if (!strcmp(arg, "--wrap")) {
-+		revs->wrap.wrap =3D 1;
-+		revs->wrap.wrap_given =3D 1;
-+	} else if (!prefixcmp(arg, "--wrap=3D")) {
-+		revs->wrap.wrap =3D 1;
-+		revs->wrap.wrap_given =3D 1;
-+		revs->wrap.width =3D atoi(arg+7);
-+	} else if (!prefixcmp(arg, "--no-wrap")) {
-+		revs->wrap.wrap =3D 0;
-+		revs->wrap.wrap_given =3D 1;
- 	} else if (!strcmp(arg, "--show-notes") || !strcmp(arg, "--notes")) {
- 		revs->show_notes =3D 1;
- 		revs->show_notes_given =3D 1;
-diff --git a/revision.h b/revision.h
-index 6aa53d1..f812685 100644
---- a/revision.h
-+++ b/revision.h
-@@ -117,6 +117,9 @@ struct rev_info {
- 			missing_newline:1,
- 			date_mode_explicit:1,
- 			preserve_subject:1;
-+
-+	struct wrap_options wrap;
-+
- 	unsigned int	disable_stdin:1;
- 	unsigned int	leak_pending:1;
-=20
---=20
-1.7.8.1
+This way, the hook cannot screw up, as what it tells us will consistently
+be written by us to where it should go.
