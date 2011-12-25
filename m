@@ -1,81 +1,70 @@
-From: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: [RFC PATCH] Allow cloning branches selectively
-Date: Sun, 25 Dec 2011 19:00:53 +0000
-Message-ID: <20111225190053.GC6361@beez.lab.cmartin.tk>
-References: <1324671199-7074-1-git-send-email-cmn@elego.de>
- <CACsJy8ANZvkY+na-tM95prHEfXD+N2OT8+3NLeccycGL1BmbCg@mail.gmail.com>
+From: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>
+Subject: Re: Gitk: shortcut to jump to the current HEAD (yellow spot)?
+Date: Sun, 25 Dec 2011 20:33:33 +0100
+Message-ID: <4EF77A8D.7020907@dirk.my1.cc>
+References: <4EF3517A.8030108@dirk.my1.cc> <874nwslayi.fsf@fox.patthoyts.tk> <4EF4CE80.8090502@dirk.my1.cc> <CAOeW2eGCKxYW1TT-HPoSCO0_PsQPX5C-bcHLUy73MTd7=CsqRA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="uXxzq0nDebZQVNAZ"
-Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 25 20:01:06 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 25 20:34:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RetJf-00050A-RC
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Dec 2011 20:01:04 +0100
+	id 1RetpX-0002UB-TH
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Dec 2011 20:34:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752521Ab1LYTA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Dec 2011 14:00:59 -0500
-Received: from kimmy.cmartin.tk ([91.121.65.165]:41715 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752251Ab1LYTA6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Dec 2011 14:00:58 -0500
-Received: from beez.lab.cmartin.tk (145.Red-81-38-112.dynamicIP.rima-tde.net [81.38.112.145])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id CA2AB461B9;
-	Sun, 25 Dec 2011 20:00:48 +0100 (CET)
-Received: (nullmailer pid 13477 invoked by uid 1000);
-	Sun, 25 Dec 2011 19:00:53 -0000
-Mail-Followup-To: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <CACsJy8ANZvkY+na-tM95prHEfXD+N2OT8+3NLeccycGL1BmbCg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753304Ab1LYTdj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Dec 2011 14:33:39 -0500
+Received: from smtprelay03.ispgateway.de ([80.67.31.30]:40918 "EHLO
+	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752521Ab1LYTdi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Dec 2011 14:33:38 -0500
+Received: from [84.176.34.130] (helo=[192.168.2.100])
+	by smtprelay03.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1Retp9-0006bY-6y; Sun, 25 Dec 2011 20:33:35 +0100
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <CAOeW2eGCKxYW1TT-HPoSCO0_PsQPX5C-bcHLUy73MTd7=CsqRA@mail.gmail.com>
+X-Df-Sender: NzU3NjQ2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187688>
 
-
---uXxzq0nDebZQVNAZ
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Sat, Dec 24, 2011 at 11:31:51AM +0700, Nguyen Thai Ngoc Duy wrote:
-> On Sat, Dec 24, 2011 at 3:13 AM, Carlos Mart=EDn Nieto <cmn@elego.de> wro=
-te:
-> > Sometimes it's useful to clone only a subset of branches from a remote
-> > we're cloning. Teach clone the --fetch option to select which branches
-> > should get fetched.
+Am 24.12.2011 05:22 schrieb Martin von Zweigbergk:
+> 2011/12/23 Dirk S=C3=BCsserott <newsletter@dirk.my1.cc>:
+>>
+>> That's because gitk behaves odd (at least to me) when not run from t=
+he
+>> top-level directory. E.g. the "touching paths" box won't find files =
+in
+>> the top dir if you don't prefix them with a slash.
 >=20
-> What about tags? Are all tags fetched or only ones part of the
-> selected branches?
+> This should be fixed in c332f44 (gitk: Fix file highlight when run in
+> subdirectory, 2011-04-04), which is in the current master and thus, I
+> believe, to be released in Git 1.7.9.
+>=20
+> Martin
 
-I haven't really touched that part of the code, so I think it'll fetch
-every tag, as that's what clone does by default. Certainly something
-that should get fixed.
+Ahh, cool. I wouldn't have noticed because I'm so used to my "cd $TOP &=
+&
+gitk". I thought it was by intention because it just behaves like "git
+log": When run from subdirs it doesn't know about topdir files: Assume
+README.txt is in the topdir and current dir is some subdir:
 
-   cmn
+$ git log -- README.txt    # fails
+$ git log -- ../README.txt # works
 
---uXxzq0nDebZQVNAZ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+My alias (or function) was just a helper to avoid remembering where I
+started gitk from.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+Cheers,
+    Dirk
 
-iQEcBAEBAgAGBQJO93LlAAoJEHKRP1jG7ZzT5LkIAIDA8cxvtRe0CbGjBs54pK4N
-/ma/IT2FPlIJonnhwIF4nqYA7VzLP82wKzCj4j6uCcf0tNhuJro+dafnxsus+HT7
-rRqLSCMeLMpmRRezgrihyGlYIMzQIREQoO7ai71nJEIdCp76Qvq7FXu/IkxJZ5ij
-4Ey6b1VRUhNKs8fK8LevwGZt6Kgs7+TEevPk+rQpHAkBWAi7v2yYuVNfuEDbJGBe
-HWKcU1dqKtd8KWg7fMayrVP5eT9ZrbDi54D4qAPbzs5A9WhePctdlAZkFOXDrLyw
-G5ARJb34W4sNrfb1xKDPT6HCvnu1ppB1SM5lxHkE+ANRAfWO//8V5+YfoxVhobc=
-=fbf2
------END PGP SIGNATURE-----
-
---uXxzq0nDebZQVNAZ--
+BTW, Merry X-Mas to you and all others on the list :-)
