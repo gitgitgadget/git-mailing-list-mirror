@@ -1,290 +1,250 @@
-From: Joey Hess <joey@kitenet.net>
-Subject: [PATCH] write first for-merge ref to FETCH_HEAD first
-Date: Mon, 26 Dec 2011 12:16:56 -0400
-Message-ID: <20111226161656.GB29582@gnu.kitenet.net>
-References: <20111225173901.GA668@gnu.kitenet.net>
- <7vd3bb929n.fsf@alter.siamese.dyndns.org>
+From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+Subject: Re: [PATCH] honour GIT_ASKPASS for querying username in git-svn
+Date: Tue, 27 Dec 2011 00:49:05 +0100
+Message-ID: <4EF907F1.1030801@tu-clausthal.de>
+References: <4EC52508.9070907@tu-clausthal.de> <CABPQNSZ0iPAE+BnDU6Nz8_PkrAtPbjL4RoJuQS=Um2wxPt-2DQ@mail.gmail.com> <4EC65DE4.90005@tu-clausthal.de> <CABPQNSbfM0JRVPk3fxfSEq7QaO-fynHM8FBGpPribdgeRqpZKA@mail.gmail.com> <4ED0CE8B.70205@tu-clausthal.de> <20111130064401.GC5317@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="HG+GLK89HZ1zG0kk"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 26 17:17:19 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 27 00:49:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RfDEe-0002tZ-Nb
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Dec 2011 17:17:13 +0100
+	id 1RfKIE-00058L-8Y
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Dec 2011 00:49:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752636Ab1LZQRH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Dec 2011 11:17:07 -0500
-Received: from wren.kitenet.net ([80.68.85.49]:49029 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752261Ab1LZQRF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Dec 2011 11:17:05 -0500
-Received: from gnu.kitenet.net (dialup-4.153.8.110.Dial1.Atlanta1.Level3.net [4.153.8.110])
-	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id A252E11841A;
-	Mon, 26 Dec 2011 11:17:02 -0500 (EST)
-Received: by gnu.kitenet.net (Postfix, from userid 1000)
-	id 6600E44699; Mon, 26 Dec 2011 11:16:56 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <7vd3bb929n.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753464Ab1LZXtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Dec 2011 18:49:09 -0500
+Received: from poseidon.rz.tu-clausthal.de ([139.174.2.21]:59903 "EHLO
+	poseidon.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752214Ab1LZXtI (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Dec 2011 18:49:08 -0500
+Received: from poseidon.rz.tu-clausthal.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id 3D90622916;
+	Tue, 27 Dec 2011 00:49:05 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
+	 bh=Ufu3YOwgS0fd3u2+1D4dtg+MH74=; b=lX1DlLOF3OH2U/wmbiXSlQfB+hs3
+	c43J2bIIZpEUAn4GWOQzm/lJCj//f8Y8XBJ7FFA5tgLlns0x5HuJXiwuNZgQZJDr
+	XK3/KTKP6C6YSPmT42pkloIbzIcPyfXJmYpKo+gkQfoBtmRuQWnYzB6NetXj2lGB
+	uaBhi3bv61CH0N0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
+	dkim1; b=1tJ5RqX6YQbZfzXtc56mDUNCJesB6SsgvZzwcjvvpcbDgv1TyOxBNWD
+	iLGIYzUFzhGCQMb8cKRzLq3oJme2jCNQUmaff1FWlCv0AnXSltJb2QhIVmEeh1YI
+	Oeom0fEI+h0O4FYolIherpOcjQdDruvrD2MXBFO5OWCrntH9nJko=
+Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
+	by poseidon.rz.tu-clausthal.de (Postfix) with ESMTP id 0FC8A22910;
+	Tue, 27 Dec 2011 00:49:05 +0100 (CET)
+Received: from [84.132.157.21] (account sstri@tu-clausthal.de HELO [192.168.178.20])
+  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.3)
+  with ESMTPSA id 25229166; Tue, 27 Dec 2011 00:49:04 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
+In-Reply-To: <20111130064401.GC5317@sigill.intra.peff.net>
+X-Enigmail-Version: 1.3.4
+X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187702>
 
+Hi,
 
---HG+GLK89HZ1zG0kk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Am 30.11.2011 07:44 schrieb Jeff King:
+> That aside, I think this is an improvement over the current code.
+>   1. Regular git will also respect SSH_ASKPASS
+>   2. Regular git will ignore an askpass variable that is set but empty.
+> Perhaps git-svn should be refactored to have a reusable "prompt"
+> function that respects askpass and tries to behave like C git? It could
+> even go into the Git perl module.
 
-The FETCH_HEAD refname is supposed to refer to the ref that was fetched
-and should be merged. However all fetched refs are written to
-=2Egit/FETCH_HEAD in an arbitrary order, and resolve_ref_unsafe simply
-takes the first ref as the FETCH_HEAD, which is often the wrong one,
-when other branches were also fetched.
+I honoured all your ideas. Hopefully the patches can be applied now. The new patches
+follow (you can also pull from git://github.com/csware/git.git askpass-prompt):
 
-The solution is to write the for-merge ref(s) to FETCH_HEAD first.
-Then, unless --append is used, the FETCH_HEAD refname behaves as intended.
-If the user uses --append, they presumably are doing so in order to
-preserve the old FETCH_HEAD.
+>From b760546c59d1b9982296c19f8eaea6dc225b5a4f Mon Sep 17 00:00:00 2001
+From: Sven Strickroth <email@cs-ware.de>
+Date: Tue, 27 Dec 2011 00:33:46 +0100
+Subject: [PATCH 1/4] add central method for prompting a user using
+ GIT_ASKPASS or SSH_ASKPASS
 
-Also included a fix to documentation that assumes FETCH_HEAD contains
-only a single ref.
+Signed-off-by: Sven Strickroth <email@cs-ware.de>
 ---
- Documentation/git-read-tree.txt |    2 +-
- builtin/fetch.c                 |  158 +++++++++++++++++++++--------------=
-----
- 2 files changed, 85 insertions(+), 75 deletions(-)
+ perl/Git.pm |   31 ++++++++++++++++++++++++++++++-
+ 1 files changed, 30 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.=
-txt
-index 5375549..2d3ff23 100644
---- a/Documentation/git-read-tree.txt
-+++ b/Documentation/git-read-tree.txt
-@@ -342,7 +342,7 @@ since you pulled from him:
-=20
- ----------------
- $ git fetch git://.... linus
--$ LT=3D`cat .git/FETCH_HEAD`
-+$ LT=3D`git rev-parse FETCH_HEAD`
- ----------------
-=20
- Your work tree is still based on your HEAD ($JC), but you have
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 33ad3aa..db565cd 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -377,6 +377,7 @@ static int store_updated_refs(const char *raw_url, cons=
-t char *remote_name,
- 	const char *what, *kind;
- 	struct ref *rm;
- 	char *url, *filename =3D dry_run ? "/dev/null" : git_path("FETCH_HEAD");
-+	signed int want_merge;
-=20
- 	fp =3D fopen(filename, "a");
- 	if (!fp)
-@@ -393,84 +394,93 @@ static int store_updated_refs(const char *raw_url, co=
-nst char *remote_name,
- 		goto abort;
- 	}
-=20
--	for (rm =3D ref_map; rm; rm =3D rm->next) {
--		struct ref *ref =3D NULL;
--
--		if (rm->peer_ref) {
--			ref =3D xcalloc(1, sizeof(*ref) + strlen(rm->peer_ref->name) + 1);
--			strcpy(ref->name, rm->peer_ref->name);
--			hashcpy(ref->old_sha1, rm->peer_ref->old_sha1);
--			hashcpy(ref->new_sha1, rm->old_sha1);
--			ref->force =3D rm->peer_ref->force;
--		}
-+	/* Two passes are made over the ref_map, to write merge refs
-+	 * to FETCH_HEAD first. This allows using FETCH_HEAD as a refname
-+	 * to refer to the ref to be merged. */
-+	for (want_merge =3D 1; want_merge >=3D 0 ; want_merge--) {
-+		for (rm =3D ref_map; rm; rm =3D rm->next) {
-+			struct ref *ref =3D NULL;
+diff --git a/perl/Git.pm b/perl/Git.pm
+index f7ce511..8176d47 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -58,7 +58,7 @@ require Exporter;
+                 command_output_pipe command_input_pipe command_close_pipe
+                 command_bidi_pipe command_close_bidi_pipe
+                 version exec_path html_path hash_object git_cmd_try
+-                remote_refs
++                remote_refs prompt
+                 temp_acquire temp_release temp_reset temp_path);
+
+
+@@ -512,6 +512,35 @@ C<git --html-path>). Useful mostly only internally.
+ sub html_path { command_oneline('--html-path') }
+
+
++=item prompt ( PROMPT)
 +
-+			commit =3D lookup_commit_reference_gently(rm->old_sha1, 1);
-+			if (!commit)
-+				rm->merge =3D 0;
++Checks if GIT_ASKPASS or SSH_ASKPASS is set, and if yes
++use it and return answer from user.
 +
-+			if (rm->merge !=3D want_merge)
-+				continue;
++=cut
 +
-+			if (rm->peer_ref) {
-+				ref =3D xcalloc(1, sizeof(*ref) + strlen(rm->peer_ref->name) + 1);
-+				strcpy(ref->name, rm->peer_ref->name);
-+				hashcpy(ref->old_sha1, rm->peer_ref->old_sha1);
-+				hashcpy(ref->new_sha1, rm->old_sha1);
-+				ref->force =3D rm->peer_ref->force;
-+			}
-=20
--		commit =3D lookup_commit_reference_gently(rm->old_sha1, 1);
--		if (!commit)
--			rm->merge =3D 0;
-=20
--		if (!strcmp(rm->name, "HEAD")) {
--			kind =3D "";
--			what =3D "";
--		}
--		else if (!prefixcmp(rm->name, "refs/heads/")) {
--			kind =3D "branch";
--			what =3D rm->name + 11;
--		}
--		else if (!prefixcmp(rm->name, "refs/tags/")) {
--			kind =3D "tag";
--			what =3D rm->name + 10;
--		}
--		else if (!prefixcmp(rm->name, "refs/remotes/")) {
--			kind =3D "remote-tracking branch";
--			what =3D rm->name + 13;
--		}
--		else {
--			kind =3D "";
--			what =3D rm->name;
--		}
-+			if (!strcmp(rm->name, "HEAD")) {
-+				kind =3D "";
-+				what =3D "";
-+			}
-+			else if (!prefixcmp(rm->name, "refs/heads/")) {
-+				kind =3D "branch";
-+				what =3D rm->name + 11;
-+			}
-+			else if (!prefixcmp(rm->name, "refs/tags/")) {
-+				kind =3D "tag";
-+				what =3D rm->name + 10;
-+			}
-+			else if (!prefixcmp(rm->name, "refs/remotes/")) {
-+				kind =3D "remote-tracking branch";
-+				what =3D rm->name + 13;
-+			}
-+			else {
-+				kind =3D "";
-+				what =3D rm->name;
-+			}
-=20
--		url_len =3D strlen(url);
--		for (i =3D url_len - 1; url[i] =3D=3D '/' && 0 <=3D i; i--)
--			;
--		url_len =3D i + 1;
--		if (4 < i && !strncmp(".git", url + i - 3, 4))
--			url_len =3D i - 3;
--
--		strbuf_reset(&note);
--		if (*what) {
--			if (*kind)
--				strbuf_addf(&note, "%s ", kind);
--			strbuf_addf(&note, "'%s' of ", what);
--		}
--		fprintf(fp, "%s\t%s\t%s",
--			sha1_to_hex(rm->old_sha1),
--			rm->merge ? "" : "not-for-merge",
--			note.buf);
--		for (i =3D 0; i < url_len; ++i)
--			if ('\n' =3D=3D url[i])
--				fputs("\\n", fp);
--			else
--				fputc(url[i], fp);
--		fputc('\n', fp);
--
--		strbuf_reset(&note);
--		if (ref) {
--			rc |=3D update_local_ref(ref, what, &note);
--			free(ref);
--		} else
--			strbuf_addf(&note, "* %-*s %-*s -> FETCH_HEAD",
--				    TRANSPORT_SUMMARY_WIDTH,
--				    *kind ? kind : "branch",
--				    REFCOL_WIDTH,
--				    *what ? what : "HEAD");
--		if (note.len) {
--			if (verbosity >=3D 0 && !shown_url) {
--				fprintf(stderr, _("From %.*s\n"),
--						url_len, url);
--				shown_url =3D 1;
-+			url_len =3D strlen(url);
-+			for (i =3D url_len - 1; url[i] =3D=3D '/' && 0 <=3D i; i--)
-+				;
-+			url_len =3D i + 1;
-+			if (4 < i && !strncmp(".git", url + i - 3, 4))
-+				url_len =3D i - 3;
++sub prompt {
++	my ($self, $prompt) = _maybe_self(@_);
++	if (exists $ENV{'GIT_ASKPASS'}) {
++		return _prompt($ENV{'GIT_ASKPASS'}, $prompt);
++	} elsif (exists $ENV{'SSH_ASKPASS'}) {
++		return _prompt($ENV{'SSH_ASKPASS'}, $prompt);
++	} else {
++		return undef;
++	}
++}
 +
-+			strbuf_reset(&note);
-+			if (*what) {
-+				if (*kind)
-+					strbuf_addf(&note, "%s ", kind);
-+				strbuf_addf(&note, "'%s' of ", what);
-+			}
-+			fprintf(fp, "%s\t%s\t%s",
-+				sha1_to_hex(rm->old_sha1),
-+				rm->merge ? "" : "not-for-merge",
-+				note.buf);
-+			for (i =3D 0; i < url_len; ++i)
-+				if ('\n' =3D=3D url[i])
-+					fputs("\\n", fp);
-+				else
-+					fputc(url[i], fp);
-+			fputc('\n', fp);
++sub _prompt {
++	my ($self, $askpass, $prompt) = _maybe_self(@_);
++	my $ret;
++	open(PH, "-|", $askpass, $prompt);
++	$ret = <PH>;
++	$ret =~ s/[\012\015]//g; # strip \n\r
++	close(PH);
++	return $ret;
++}
 +
-+			strbuf_reset(&note);
-+			if (ref) {
-+				rc |=3D update_local_ref(ref, what, &note);
-+				free(ref);
-+			} else
-+				strbuf_addf(&note, "* %-*s %-*s -> FETCH_HEAD",
-+					    TRANSPORT_SUMMARY_WIDTH,
-+					    *kind ? kind : "branch",
-+					    REFCOL_WIDTH,
-+					    *what ? what : "HEAD");
-+			if (note.len) {
-+				if (verbosity >=3D 0 && !shown_url) {
-+					fprintf(stderr, _("From %.*s\n"),
-+							url_len, url);
-+					shown_url =3D 1;
-+				}
-+				if (verbosity >=3D 0)
-+					fprintf(stderr, " %s\n", note.buf);
- 			}
--			if (verbosity >=3D 0)
--				fprintf(stderr, " %s\n", note.buf);
- 		}
- 	}
-=20
---=20
-1.7.7.3
++
+ =item repo_path ()
 
+ Return path to the git repository. Must be called on a repository instance.
+-- 
+1.7.7.1.msysgit.0
 
---HG+GLK89HZ1zG0kk
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+>From ef4c6557d1b0e33440d13c64742d44b2a22143f3 Mon Sep 17 00:00:00 2001
+From: Sven Strickroth <email@cs-ware.de>
+Date: Tue, 27 Dec 2011 00:34:09 +0100
+Subject: [PATCH 2/4] switch to central prompt method
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+Signed-off-by: Sven Strickroth <email@cs-ware.de>
+---
+ git-svn.perl |    9 ++-------
+ 1 files changed, 2 insertions(+), 7 deletions(-)
 
-iQIVAwUBTvid98kQ2SIlEuPHAQh9rQ/9F1CdqyuEj0XHuTEdkhbdEScQyzE/7kge
-fso9WtYIprqdFNmVrn7L+4OB6gfsx/ul4FZsgIEnKO5z555WaNNeh8coJg1cZHc/
-lCHC9QGSDacJsi73DQpseQribK+RZJn2hhWGULUmXMF9uuxRxyHYHQWWLuxSMd8x
-3RPq3YHMGNRgeymRKRy5SpD1fy2xwE2O8p9B6u/Yt4WlMLrPGN+wQXbl/HmZhQz5
-18dNEYRDme2Orxale2HQRgWKBt8fPEOyy9+583XgOaGW6HmlP9wtfFCajTbePpw8
-QxO+nDsEXDcEebnBGzj4olZIzXJBMT68MRxgSNo0+HLuBe6X2HNq3qt/zWinemUy
-1hNbN7xuQGy8mKR/vatfqvfrsOH/Is3aAdWnfmrS2JHHKgX4nRLp3CEhSZTNlBDW
-2a9Tc39BjCzNFDW/JO7URzqY7EODBSDhqW/+8qi8jZweQepYyE5acK0l3myG5SED
-YebCUzHVkayeEoMigp6h5xszdDrl9dBT4N8U0ORSrWOvu6NH0A7UE3JCV4r/qlht
-09MKKCxa1frVzVkG9u4lpgozzBU5y4Yr0/8uAtmjmWDY0EchRzaCTubror6QdgEy
-O1ck4Ryd7M3RTlTQnNVcg7VkkdK8Qe+h5xpcGqKGsTrJtSo/hD1qT9No6dp6gpA0
-EFWXATjPT94=
-=eX7y
------END PGP SIGNATURE-----
+diff --git a/git-svn.perl b/git-svn.perl
+index eeb83d3..4fd4eca 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -4415,13 +4415,8 @@ sub username {
 
---HG+GLK89HZ1zG0kk--
+ sub _read_password {
+ 	my ($prompt, $realm) = @_;
+-	my $password = '';
+-	if (exists $ENV{GIT_ASKPASS}) {
+-		open(PH, "-|", $ENV{GIT_ASKPASS}, $prompt);
+-		$password = <PH>;
+-		$password =~ s/[\012\015]//; # \n\r
+-		close(PH);
+-	} else {
++	my $password = Git->prompt($prompt);;
++	if (!defined $password) {
+ 		print STDERR $prompt;
+ 		STDERR->flush;
+ 		require Term::ReadKey;
+-- 
+1.7.7.1.msysgit.0
+
+>From d58f41d7b9b8e690c9839f6f7539774da88aa3a4 Mon Sep 17 00:00:00 2001
+From: Sven Strickroth <email@cs-ware.de>
+Date: Tue, 27 Dec 2011 00:37:43 +0100
+Subject: [PATCH 3/4] honour *_ASKPASS for querying username and for querying
+ further actions on unknown certificates
+
+git-svn reads usernames (and answers for certificate errors) from an interactive terminal.
+This behavior cause GUIs to hang waiting for git-svn to complete (http://code.google.com/p/tortoisegit/issues/detail?id=967).
+
+Also see commit 56a853b62c0ae7ebaad0a7a0a704f5ef561eb795.
+
+Signed-off-by: Sven Strickroth <email@cs-ware.de>
+---
+ git-svn.perl |   13 ++++++++++---
+ 1 files changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 4fd4eca..b85a7de 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -4357,11 +4357,15 @@ sub ssl_server_trust {
+ 	                               issuer_dname fingerprint);
+ 	my $choice;
+ prompt:
+-	print STDERR $may_save ?
++	my $options = $may_save ?
+ 	      "(R)eject, accept (t)emporarily or accept (p)ermanently? " :
+ 	      "(R)eject or accept (t)emporarily? ";
+-	STDERR->flush;
+-	$choice = lc(substr(<STDIN> || 'R', 0, 1));
++	$choice = Git->prompt("Certificate unknown. " . $options);
++	if (!defined $choice) {
++		print STDERR $options;
++		STDERR->flush;
++		$choice = lc(substr(<STDIN> || 'R', 0, 1));
++	}
+ 	if ($choice =~ /^t$/i) {
+ 		$cred->may_save(undef);
+ 	} elsif ($choice =~ /^r$/i) {
+@@ -4404,6 +4408,9 @@ sub username {
+ 	if (defined $_username) {
+ 		$username = $_username;
+ 	} else {
++		$username = Git->prompt("Username");
++	}
++	if (!defined $username) {
+ 		print STDERR "Username: ";
+ 		STDERR->flush;
+ 		chomp($username = <STDIN>);
+-- 
+1.7.7.1.msysgit.0
+
+>From 2c1dbdae8024f28d17abfbdc7e45865a1277151a Mon Sep 17 00:00:00 2001
+From: Sven Strickroth <email@cs-ware.de>
+Date: Tue, 27 Dec 2011 00:42:07 +0100
+Subject: [PATCH 4/4] ignore empty *_ASKPASS variables
+
+Signed-off-by: Sven Strickroth <email@cs-ware.de>
+---
+ perl/Git.pm |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 8176d47..fade617 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -532,6 +532,9 @@ sub prompt {
+
+ sub _prompt {
+ 	my ($self, $askpass, $prompt) = _maybe_self(@_);
++	unless ($askpass) {
++		return undef;
++	}
+ 	my $ret;
+ 	open(PH, "-|", $askpass, $prompt);
+ 	$ret = <PH>;
+-- 
+1.7.7.1.msysgit.0
+
+-- 
+Best regards,
+ Sven Strickroth
+ ClamAV, a GPL anti-virus toolkit   http://www.clamav.net
+ PGP key id F5A9D4C4 @ any key-server
