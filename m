@@ -1,100 +1,100 @@
-From: Joey Hess <joey@kitenet.net>
-Subject: Re: [PATCH] add post-fetch hook
-Date: Tue, 27 Dec 2011 11:49:07 -0400
-Message-ID: <20111227154907.GB15006@gnu.kitenet.net>
-References: <20111224234212.GA21533@gnu.kitenet.net>
- <7v4nwpbaxq.fsf@alter.siamese.dyndns.org>
- <20111225035059.GA29852@gnu.kitenet.net>
- <7vsjk99exw.fsf@alter.siamese.dyndns.org>
- <20111226023154.GA3243@gnu.kitenet.net>
- <7vlipz930t.fsf@alter.siamese.dyndns.org>
- <20111226155152.GA29582@gnu.kitenet.net>
- <7v8vly8qqx.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] honour GIT_ASKPASS for querying username in git-svn
+Date: Tue, 27 Dec 2011 17:00:57 +0100
+Message-ID: <201112271700.58078.jnareb@gmail.com>
+References: <4EC52508.9070907@tu-clausthal.de> <m3d3baf5kd.fsf@localhost.localdomain> <4EF9D8B9.9060106@tu-clausthal.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="H1spWtNR+x+ondvy"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 27 16:49:34 2011
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+X-From: git-owner@vger.kernel.org Tue Dec 27 17:01:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RfZHR-000824-4H
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Dec 2011 16:49:33 +0100
+	id 1RfZSz-0003qQ-Lg
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Dec 2011 17:01:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754603Ab1L0PtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Dec 2011 10:49:12 -0500
-Received: from wren.kitenet.net ([80.68.85.49]:46113 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754350Ab1L0PtK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Dec 2011 10:49:10 -0500
-Received: from gnu.kitenet.net (sctv-77-102.mounet.com [216.145.77.102])
-	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id 12ACD132972;
-	Tue, 27 Dec 2011 10:49:09 -0500 (EST)
-Received: by gnu.kitenet.net (Postfix, from userid 1000)
-	id DF09C40E44; Tue, 27 Dec 2011 10:49:07 -0500 (EST)
+	id S1754596Ab1L0QBE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Dec 2011 11:01:04 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:45724 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754467Ab1L0QBD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Dec 2011 11:01:03 -0500
+Received: by eekc4 with SMTP id c4so11746340eek.19
+        for <git@vger.kernel.org>; Tue, 27 Dec 2011 08:01:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=gFBWmgHfLQ84KLXDweoVGNNCDXep6U2fAG1Bw6esOtQ=;
+        b=aiPQ75W8NMkYu4FjSvg2/1mYYpTBF3DY53WHNE2bBRHHfeHIhC8QX/gz6Iw/0Y5cUj
+         WPrPeS0rnxjYrNEVdFW67hG9QbzxZEzoLrHqVQH0V00eNY0iwv2FOnBDLHm2/59Xy8RS
+         eRft0IzQrosJVezGdakNEBrgiy6fcaD1VONes=
+Received: by 10.213.17.203 with SMTP id t11mr9083175eba.93.1325001661185;
+        Tue, 27 Dec 2011 08:01:01 -0800 (PST)
+Received: from [192.168.1.13] (abwg97.neoplus.adsl.tpnet.pl. [83.8.230.97])
+        by mx.google.com with ESMTPS id a60sm108142238eeb.4.2011.12.27.08.00.59
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 27 Dec 2011 08:01:00 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4EF9D8B9.9060106@tu-clausthal.de>
 Content-Disposition: inline
-In-Reply-To: <7v8vly8qqx.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187715>
 
+On Tue, 27 Dec 2011, Sven Strickroth wrote:
+> Am 27.12.2011 15:33 schrieb Jakub Narebski:
 
---H1spWtNR+x+ondvy
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>>> +sub prompt {
+>>> +	my ($self, $prompt) = _maybe_self(@_);
+>>> +	if (exists $ENV{'GIT_ASKPASS'}) {
+>>> +		return _prompt($ENV{'GIT_ASKPASS'}, $prompt);
+>>> +	} elsif (exists $ENV{'SSH_ASKPASS'}) {
+>>> +		return _prompt($ENV{'SSH_ASKPASS'}, $prompt);
+>>> +	} else {
+>>> +		return undef;
+>>> +	}
+>>> +}
+>> 
+>> ...and provide some kind of fallback even if neither of GIT_ASKPASS
+>> nor SSH_ASKPASS are set (perhaps assuming that some Perl packages from
+>> CPAN are installed).
+> 
+> If neither of GIT_ASKPASS nor SSH_ASKPASS are set the caller has to
+> handle the request. This has to be done this way, because of lots of
+> different needs (username, password (no echo) and so on).
 
-Junio C Hamano wrote:
-> Joey Hess <joey@kitenet.net> writes:
->=20
-> > .... And other code in git uses an async feeder similarly,
-> > see for example convert.c's apply_filter(). So I think this is ok..?
->=20
-> Yeah, I didn't look at your patch (sorry) but if it uses async like the
-> filtering codepath does, it should be perfectly fine (please forget about
-> the select(2) based kludge I alluded to; the async interface is the right
-> thing to use here).
+I think that Git.pm and therefore git commands written in Perl should
+behave the same as git command written in C; and I think builtins do
+use common gitprompt fallback.
+ 
+>>> +sub _prompt {
+>>> +	my ($self, $askpass, $prompt) = _maybe_self(@_);
+>>> +	my $ret;
+>>> +	open(PH, "-|", $askpass, $prompt);
+>>> +	$ret = <PH>;
+>>> +	$ret =~ s/[\012\015]//g; # strip \n\r
+>>> +	close(PH);
+>>> +	return $ret;
+>>> +}
+>> 
+>> Please, use modern Perl, in particula use lexical filehandles instead
+>> of typeglobs (which are global variables), i.e.
+> 
+> I used the same style as I found in Git.pm (see lines I removed in patch 2).
 
-No problem, I was surprised to be getting responses at all over the
-holidays. :)
+Yes, that should be fixed (together with host of other issues), but
+one should use modern and _better_ way (no possibility of action at
+distance).
 
-Then async also seems the right thing to use for the hook refactoring. A
-caller can provide two function pointers; a feeder function that is
-called async, and a reader that is *not* called async (which would allow
-it to modify program state), and the refactored hook function handles
-running the hook(s) and connecting them to the feeder and/or reader.
-
---=20
-see shy jo
-
---H1spWtNR+x+ondvy
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQIVAwUBTvno88kQ2SIlEuPHAQiVDw//ScTVQ3JGeyeCMZQ7Z6M1PH/NiAUApP74
-k79gpeQ2KrDU0VT8/BaOw8YcEAe0pD/xJkB2qTCT196WcdJ74n5EGyOu2HhkcGa2
-C/AMn9kHcD9bQ3qSzt64tDGnfXqgR4Ef2UYITzoNckLqU8OTRhb7EU+y/csq8Gj4
-wwSTJXGjZZGsZ4njinE25sBX4LpvVX1p3sU7zY4/a555c1X9FSZtvTqBJmRxacco
-Nn1ttlkCJdH45nVxtDjChRdIEsKTa+L2+UZf+sEAQN3PtAYMxy2BBQXslOenOPvn
-e9Yn31Uy6jQro6WkFVIo3afuzB7mpCP+mYH4ZGYW2HcLaAtbioB3h2y8ROcPoDbN
-Lr9KpqnPCInhGwO7ab/Za5hN1tWKZjBuuaU0A7xlPXd0lfdG8TjjVini+DaEKLth
-rBh3W5sxBal5xluZtcjcN9Jt41tOMeuDdWe1+9Q8kz9Lb0gcBsw0ufSKXO6bK1nU
-N2hqm+32bO9D2XSGxSZeVPbyxvI0g/YdQBhDFYHXGZB7XFngcasFk8pUGFmWW/Xm
-m4Fm/mivgo++xjEqsV6vFMFfOQwZwRHtMU8VmlaYvy22mK19oESKVyPxDIKmbusc
-0OtIzQ8dFkrrCyKwVXdcmhe3drjFfnQOHtTaleOLEtNNyGBDjDsWOGEFcIpcGcPU
-wcOo+IGg+/w=
-=c2IU
------END PGP SIGNATURE-----
-
---H1spWtNR+x+ondvy--
+-- 
+Jakub Narebski
+Poland
