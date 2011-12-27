@@ -1,92 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [Wish] use postimage when showing common context in "diff -w"?
-Date: Tue, 27 Dec 2011 14:16:56 -0800
-Message-ID: <7vlipx4q3r.fsf@alter.siamese.dyndns.org>
+From: Thomas Adam <thomas@xteddy.org>
+Subject: Re: [PATCH 1/5] add central method for prompting a user using
+ GIT_ASKPASS or SSH_ASKPASS
+Date: Tue, 27 Dec 2011 23:12:04 +0000
+Message-ID: <CA+39Oz5J82GVyLfzWbWz20VS=Gp=8q9WsHQY33GuOKT1PyFCbQ@mail.gmail.com>
+References: <4EC52508.9070907@tu-clausthal.de> <CABPQNSZ0iPAE+BnDU6Nz8_PkrAtPbjL4RoJuQS=Um2wxPt-2DQ@mail.gmail.com>
+ <4EC65DE4.90005@tu-clausthal.de> <CABPQNSbfM0JRVPk3fxfSEq7QaO-fynHM8FBGpPribdgeRqpZKA@mail.gmail.com>
+ <4ED0CE8B.70205@tu-clausthal.de> <20111130064401.GC5317@sigill.intra.peff.net>
+ <4EF907F1.1030801@tu-clausthal.de> <m3d3baf5kd.fsf@localhost.localdomain>
+ <4EF9D8B9.9060106@tu-clausthal.de> <4EF9EBF4.7070200@tu-clausthal.de>
+ <4EF9ECC0.606@tu-clausthal.de> <7vwr9h68t9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Joey Hess <joey@kitenet.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 27 23:17:19 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sven Strickroth <sven.strickroth@tu-clausthal.de>,
+	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 28 00:12:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RffKg-0005NB-7g
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Dec 2011 23:17:19 +0100
+	id 1RfgC2-0001DT-GT
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Dec 2011 00:12:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751837Ab1L0WRB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Dec 2011 17:17:01 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62249 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751759Ab1L0WQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Dec 2011 17:16:59 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C7BE06A5D;
-	Tue, 27 Dec 2011 17:16:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:cc:date:message-id:mime-version:content-type; s=sasl;
-	 bh=npj7kIWnQ1xwZ0rmKcPHJt2o+48=; b=Pnk5hLL/BS+gghEVbjPRRUvSpinI
-	/9sW3TxCxaLm8YtZ+Tn/Wt2NEESQUtEsOSbwmTvVTIiqvoTmprf6mOR37k+mUJ+c
-	C7oLQsGZ3ZxDdQlYkhcoln9AgA4uYeekw/Djgg3rcCUhp/Umlyb7a1vhq/Dtm+AH
-	u6cb6JoHfSNdrtY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:cc:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
-	NfbGTJO1QjYsZUStm/gaeYN3uqbSJAUK+g9x6LMOhCuFuEvm3Ua71MfceVAKla8h
-	hL3+FXfCKH5AYveOtPeXa+y5KWucvrVQdfSJbtKqsU3AmdXXGW+7xALhLVg9uTN8
-	st5cfu9KDJFPxOEzFxZDdluyykYOi7yeV8w22D+pPfs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BE4066A5C;
-	Tue, 27 Dec 2011 17:16:58 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2D3736A5B; Tue, 27 Dec 2011
- 17:16:58 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7DF2C1DC-30D8-11E1-95A2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752453Ab1L0XMW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Dec 2011 18:12:22 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:38545 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751775Ab1L0XMV convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Dec 2011 18:12:21 -0500
+Received: by obcwo16 with SMTP id wo16so7697027obc.19
+        for <git@vger.kernel.org>; Tue, 27 Dec 2011 15:12:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=x7nTzI7miA3qEm7qHgURpr+1gaQ5X6eEBW81lxFODbg=;
+        b=xDfBDxU0WY8nbrFMMCYl+7gL5NPNTtRucBwL/o+Os/Y8LwBtfSnFkpseTSsTbso7Gu
+         P+bEnCmbkAQ6tXuCBa06FGUXxpuxTfESWvsvTniWlnj8igiP2X2F2KhqEWYQs+1UzG2V
+         HxNNiIyA/SCORPnonTH8MZajl4lsZT82+xstc=
+Received: by 10.182.167.36 with SMTP id zl4mr22037046obb.54.1325027540340;
+ Tue, 27 Dec 2011 15:12:20 -0800 (PST)
+Received: by 10.182.44.104 with HTTP; Tue, 27 Dec 2011 15:12:04 -0800 (PST)
+In-Reply-To: <7vwr9h68t9.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: YdQAd-Q6ayRxapMjIa6EIXd66eY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187735>
 
-Joey's "write first for-merge ref to FETCH_HEAD first" ($gmane/187699)
-wraps an existing large for(;;) loop inside another new loop, making the
-existing code indented deeper.  After queuing the patch, "git show -w"
-displays a hunk like this [*1*]:
+On 27 December 2011 20:47, Junio C Hamano <gitster@pobox.com> wrote:
+> Sven Strickroth <sven.strickroth@tu-clausthal.de> writes:
+>> +sub askpass_prompt {
+>> + =C2=A0 =C2=A0 my ($self, $prompt) =3D _maybe_self(@_);
+>> + =C2=A0 =C2=A0 if (exists $ENV{'GIT_ASKPASS'}) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return _askpass_prompt($=
+ENV{'GIT_ASKPASS'}, $prompt);
+>> + =C2=A0 =C2=A0 } elsif (exists $ENV{'SSH_ASKPASS'}) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return _askpass_prompt($=
+ENV{'SSH_ASKPASS'}, $prompt);
+>> + =C2=A0 =C2=A0 } else {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return undef;
+>
+> Two problems with this if/elsif/else cascade.
+>
+> =C2=A0- If _askpass_prompt() fails to open the pipe to ENV{'GIT_ASKPA=
+SS'}, it
+> =C2=A0 will return 'undef' to us. Don't we want to fall back to SSH_A=
+SKPASS in
+> =C2=A0 such a case?
+>
+> =C2=A0- The last "return undef" makes all callers of this method to i=
+mplement a
+> =C2=A0 fall-back way somehow. I find it very likely that they will wa=
+nt to use
 
-+	/*
-+	 * The first pass writes objects to be merged and then the
-+	 * second pass writes the rest, in order to allow using
-+	 * FETCH_HEAD as a refname to refer to the ref to be merged.
-+	 */
-+	for (want_merge = 1; 0 <= want_merge; want_merge--) {
- 	for (rm = ref_map; rm; rm = rm->next) {
- 		struct ref *ref = NULL;
- 
-+			commit = lookup_commit_reference_gently(rm->old_sha1, 1);
-+			if (!commit)
-+				rm->merge = 0;
-+
-+			if (rm->merge != want_merge)
-+				continue;
-+
- 		if (rm->peer_ref) {
- 			ref = xcalloc(1, sizeof(*ref) + strlen(rm->peer_ref->name) + 1);
- 			strcpy(ref->name, rm->peer_ref->name);
+Not only that, "return undef" will have nasty side-effects if this
+subroutine is called in list-context -- it's usually discouraged to
+have explicit returns of "undef", where in scalar context that might
+be OK, but in list context, the caller will see:
 
-The context lines we can see in the above hunk are shown with incorrect
-indentation level; I think we are showing the lines from the preimage.
+(undef)
 
-It would be a really nice holiday gift to us, if somebody can fix this to
-show lines from the postimage. It would make reviewing the change much
-more pleasant.  I obviously cannot throw this into my Amazon wishlist, so
-instead I am posting it here ;-)
+and not:
 
+()
 
-[Footnote]
+i.e., the empty list.
 
-*1* The text has my style fix-ups in it and does not match what was
-posted. The patch lacked a sign-off and needs to be amended anyway. Also
-it needs to adjust some existing tests (at least 5515 seems to break for
-obvious reasons).
+-- Thomas Adam
