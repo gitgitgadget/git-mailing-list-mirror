@@ -1,126 +1,97 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
 Subject: Re: [PATCH] honour GIT_ASKPASS for querying username in git-svn
-Date: Tue, 27 Dec 2011 06:33:51 -0800 (PST)
-Message-ID: <m3d3baf5kd.fsf@localhost.localdomain>
-References: <4EC52508.9070907@tu-clausthal.de>
-	<CABPQNSZ0iPAE+BnDU6Nz8_PkrAtPbjL4RoJuQS=Um2wxPt-2DQ@mail.gmail.com>
-	<4EC65DE4.90005@tu-clausthal.de>
-	<CABPQNSbfM0JRVPk3fxfSEq7QaO-fynHM8FBGpPribdgeRqpZKA@mail.gmail.com>
-	<4ED0CE8B.70205@tu-clausthal.de>
-	<20111130064401.GC5317@sigill.intra.peff.net>
-	<4EF907F1.1030801@tu-clausthal.de>
+Date: Tue, 27 Dec 2011 15:39:53 +0100
+Message-ID: <4EF9D8B9.9060106@tu-clausthal.de>
+References: <4EC52508.9070907@tu-clausthal.de> <CABPQNSZ0iPAE+BnDU6Nz8_PkrAtPbjL4RoJuQS=Um2wxPt-2DQ@mail.gmail.com> <4EC65DE4.90005@tu-clausthal.de> <CABPQNSbfM0JRVPk3fxfSEq7QaO-fynHM8FBGpPribdgeRqpZKA@mail.gmail.com> <4ED0CE8B.70205@tu-clausthal.de> <20111130064401.GC5317@sigill.intra.peff.net> <4EF907F1.1030801@tu-clausthal.de> <m3d3baf5kd.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Sven Strickroth <sven.strickroth@tu-clausthal.de>
-X-From: git-owner@vger.kernel.org Tue Dec 27 15:34:00 2011
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 27 15:40:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RfY6J-00027K-Pi
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Dec 2011 15:34:00 +0100
+	id 1RfYC6-0000k4-SL
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Dec 2011 15:39:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754440Ab1L0Odz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Dec 2011 09:33:55 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:44572 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754414Ab1L0Ody (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Dec 2011 09:33:54 -0500
-Received: by eekc4 with SMTP id c4so11692623eek.19
-        for <git@vger.kernel.org>; Tue, 27 Dec 2011 06:33:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=wHlAcg8tVm027ghoeL07DuAxsTE+BTnGise7i7B08w0=;
-        b=WOF+ocsV8436C5eu5SMP382eT1YcI5FkjwbuirJd/iqV9Wln2q5No428Ghf00GvhG9
-         M0Z+u68oJ8t/TwVIViLDyTENozueQmLMoM4tco7QBP3go1wpPQxIHrQd6Cn5jCiizcSj
-         pW8YDgxjkjBpsaJ1OonlkxtsrCZVXJ3Lug01s=
-Received: by 10.213.14.72 with SMTP id f8mr660165eba.127.1324996433061;
-        Tue, 27 Dec 2011 06:33:53 -0800 (PST)
-Received: from localhost.localdomain (abwg97.neoplus.adsl.tpnet.pl. [83.8.230.97])
-        by mx.google.com with ESMTPS id q67sm45341412eea.8.2011.12.27.06.33.45
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 27 Dec 2011 06:33:51 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id pBREX7Vj029465;
-	Tue, 27 Dec 2011 15:33:18 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id pBREWotk029458;
-	Tue, 27 Dec 2011 15:32:50 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <4EF907F1.1030801@tu-clausthal.de>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754532Ab1L0Ojz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Dec 2011 09:39:55 -0500
+Received: from poseidon.rz.tu-clausthal.de ([139.174.2.21]:16603 "EHLO
+	poseidon.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754446Ab1L0Ojx (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Dec 2011 09:39:53 -0500
+Received: from poseidon.rz.tu-clausthal.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id 8FDE029A8A8;
+	Tue, 27 Dec 2011 15:39:52 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
+	 bh=uhq4qy6YTU6Crgm7Tt6iuXCgcL0=; b=fCxlnI8HE5DOhslaqTxO3cxP/oWa
+	vqOizloTQmnajhYsW5qDaZa5eoFH3YW5gqpYGXdZZ6/SE5dfdTLEP0hW2fcj0mHw
+	RCEmLVLhiBkzkXGhyDtt5VyGGYqahhF6MN/2ohSSDHWRk8fgzQdooasRBfXunRK7
+	/9EwFtN8nfnlKP0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
+	dkim1; b=VEmSQadpD0TcUqp/IOdN5hBNxijuQVc9mwMWhwhuFGFFD5qNNuA0/D/
+	qkLRNLzxpaorOuqTkjIGGYcxH/Vs86FNn1HyfuLFqW25JL6lthoE4RkyvGBQ/b6h
+	JURoPdBzA2QTvUFHR+djBG/zt0i75Ho9mwjdJB0enXTYxo2iUMD8=
+Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
+	by poseidon.rz.tu-clausthal.de (Postfix) with ESMTP id 6E47929A8A6;
+	Tue, 27 Dec 2011 15:39:52 +0100 (CET)
+Received: from [84.132.185.69] (account sstri@tu-clausthal.de HELO [192.168.178.20])
+  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.3)
+  with ESMTPSA id 25241807; Tue, 27 Dec 2011 15:39:52 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
+In-Reply-To: <m3d3baf5kd.fsf@localhost.localdomain>
+X-Enigmail-Version: 1.3.4
+X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187713>
 
-Sven Strickroth <sven.strickroth@tu-clausthal.de> writes:
-
-> +=item prompt ( PROMPT)
-> +
-> +Checks if GIT_ASKPASS or SSH_ASKPASS is set, and if yes
-> +use it and return answer from user.
-> +
-> +=cut
-
-I think it would be good idea to describe what this function is for...
-
-> +sub prompt {
-> +	my ($self, $prompt) = _maybe_self(@_);
-> +	if (exists $ENV{'GIT_ASKPASS'}) {
-> +		return _prompt($ENV{'GIT_ASKPASS'}, $prompt);
-> +	} elsif (exists $ENV{'SSH_ASKPASS'}) {
-> +		return _prompt($ENV{'SSH_ASKPASS'}, $prompt);
-> +	} else {
-> +		return undef;
-> +	}
-> +}
-
-...and provide some kind of fallback even if neither of GIT_ASKPASS
-nor SSH_ASKPASS are set (perhaps assuming that some Perl packages from
-CPAN are installed).
-
-> +sub _prompt {
-> +	my ($self, $askpass, $prompt) = _maybe_self(@_);
-> +	my $ret;
-> +	open(PH, "-|", $askpass, $prompt);
-> +	$ret = <PH>;
-> +	$ret =~ s/[\012\015]//g; # strip \n\r
-> +	close(PH);
-> +	return $ret;
-> +}
-
-Please, use modern Perl, in particula use lexical filehandles instead
-of typeglobs (which are global variables), i.e.
-
-  +	open my $fh, "-|", $askpass, $prompt
-  +		or die "...";
-  +	$ret = <$fh>;
-  +	chomp($ret);
-  +	close($fh)
-  +		or die "...";
-
-
-> -- 
-> 1.7.7.1.msysgit.0
+Am 27.12.2011 15:33 schrieb Jakub Narebski:
+>> +sub prompt {
+>> +	my ($self, $prompt) = _maybe_self(@_);
+>> +	if (exists $ENV{'GIT_ASKPASS'}) {
+>> +		return _prompt($ENV{'GIT_ASKPASS'}, $prompt);
+>> +	} elsif (exists $ENV{'SSH_ASKPASS'}) {
+>> +		return _prompt($ENV{'SSH_ASKPASS'}, $prompt);
+>> +	} else {
+>> +		return undef;
+>> +	}
+>> +}
 > 
-> From ef4c6557d1b0e33440d13c64742d44b2a22143f3 Mon Sep 17 00:00:00 2001
-> From: Sven Strickroth <email@cs-ware.de>
-> Date: Tue, 27 Dec 2011 00:34:09 +0100
-> Subject: [PATCH 2/4] switch to central prompt method
+> ...and provide some kind of fallback even if neither of GIT_ASKPASS
+> nor SSH_ASKPASS are set (perhaps assuming that some Perl packages from
+> CPAN are installed).
+
+If neither of GIT_ASKPASS nor SSH_ASKPASS are set the caller has to
+handle the request. This has to be done this way, because of lots of
+different needs (username, password (no echo) and so on).
+
+>> +sub _prompt {
+>> +	my ($self, $askpass, $prompt) = _maybe_self(@_);
+>> +	my $ret;
+>> +	open(PH, "-|", $askpass, $prompt);
+>> +	$ret = <PH>;
+>> +	$ret =~ s/[\012\015]//g; # strip \n\r
+>> +	close(PH);
+>> +	return $ret;
+>> +}
 > 
-> Signed-off-by: Sven Strickroth <email@cs-ware.de>
+> Please, use modern Perl, in particula use lexical filehandles instead
+> of typeglobs (which are global variables), i.e.
 
-Please send those patches as a separate emails, not concatenated in a
-single email (perhaps even with cover letter).
+I used the same style as I found in Git.pm (see lines I removed in patch 2).
 
-See Documentation/SubmittingPatches
-
-[...]
 -- 
-Jakub Narebski
+Best regards,
+ Sven Strickroth
+ ClamAV, a GPL anti-virus toolkit   http://www.clamav.net
+ PGP key id F5A9D4C4 @ any key-server
