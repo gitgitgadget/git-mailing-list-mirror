@@ -1,97 +1,100 @@
-From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
-Subject: Re: [PATCH] honour GIT_ASKPASS for querying username in git-svn
-Date: Tue, 27 Dec 2011 15:39:53 +0100
-Message-ID: <4EF9D8B9.9060106@tu-clausthal.de>
-References: <4EC52508.9070907@tu-clausthal.de> <CABPQNSZ0iPAE+BnDU6Nz8_PkrAtPbjL4RoJuQS=Um2wxPt-2DQ@mail.gmail.com> <4EC65DE4.90005@tu-clausthal.de> <CABPQNSbfM0JRVPk3fxfSEq7QaO-fynHM8FBGpPribdgeRqpZKA@mail.gmail.com> <4ED0CE8B.70205@tu-clausthal.de> <20111130064401.GC5317@sigill.intra.peff.net> <4EF907F1.1030801@tu-clausthal.de> <m3d3baf5kd.fsf@localhost.localdomain>
+From: Joey Hess <joey@kitenet.net>
+Subject: Re: [PATCH] add post-fetch hook
+Date: Tue, 27 Dec 2011 11:49:07 -0400
+Message-ID: <20111227154907.GB15006@gnu.kitenet.net>
+References: <20111224234212.GA21533@gnu.kitenet.net>
+ <7v4nwpbaxq.fsf@alter.siamese.dyndns.org>
+ <20111225035059.GA29852@gnu.kitenet.net>
+ <7vsjk99exw.fsf@alter.siamese.dyndns.org>
+ <20111226023154.GA3243@gnu.kitenet.net>
+ <7vlipz930t.fsf@alter.siamese.dyndns.org>
+ <20111226155152.GA29582@gnu.kitenet.net>
+ <7v8vly8qqx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 27 15:40:00 2011
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="H1spWtNR+x+ondvy"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 27 16:49:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RfYC6-0000k4-SL
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Dec 2011 15:39:59 +0100
+	id 1RfZHR-000824-4H
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Dec 2011 16:49:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754532Ab1L0Ojz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Dec 2011 09:39:55 -0500
-Received: from poseidon.rz.tu-clausthal.de ([139.174.2.21]:16603 "EHLO
-	poseidon.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754446Ab1L0Ojx (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Dec 2011 09:39:53 -0500
-Received: from poseidon.rz.tu-clausthal.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id 8FDE029A8A8;
-	Tue, 27 Dec 2011 15:39:52 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
-	 bh=uhq4qy6YTU6Crgm7Tt6iuXCgcL0=; b=fCxlnI8HE5DOhslaqTxO3cxP/oWa
-	vqOizloTQmnajhYsW5qDaZa5eoFH3YW5gqpYGXdZZ6/SE5dfdTLEP0hW2fcj0mHw
-	RCEmLVLhiBkzkXGhyDtt5VyGGYqahhF6MN/2ohSSDHWRk8fgzQdooasRBfXunRK7
-	/9EwFtN8nfnlKP0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
-	dkim1; b=VEmSQadpD0TcUqp/IOdN5hBNxijuQVc9mwMWhwhuFGFFD5qNNuA0/D/
-	qkLRNLzxpaorOuqTkjIGGYcxH/Vs86FNn1HyfuLFqW25JL6lthoE4RkyvGBQ/b6h
-	JURoPdBzA2QTvUFHR+djBG/zt0i75Ho9mwjdJB0enXTYxo2iUMD8=
-Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
-	by poseidon.rz.tu-clausthal.de (Postfix) with ESMTP id 6E47929A8A6;
-	Tue, 27 Dec 2011 15:39:52 +0100 (CET)
-Received: from [84.132.185.69] (account sstri@tu-clausthal.de HELO [192.168.178.20])
-  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.3)
-  with ESMTPSA id 25241807; Tue, 27 Dec 2011 15:39:52 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-In-Reply-To: <m3d3baf5kd.fsf@localhost.localdomain>
-X-Enigmail-Version: 1.3.4
-X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
+	id S1754603Ab1L0PtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Dec 2011 10:49:12 -0500
+Received: from wren.kitenet.net ([80.68.85.49]:46113 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754350Ab1L0PtK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Dec 2011 10:49:10 -0500
+Received: from gnu.kitenet.net (sctv-77-102.mounet.com [216.145.77.102])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id 12ACD132972;
+	Tue, 27 Dec 2011 10:49:09 -0500 (EST)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id DF09C40E44; Tue, 27 Dec 2011 10:49:07 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <7v8vly8qqx.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187714>
 
-Am 27.12.2011 15:33 schrieb Jakub Narebski:
->> +sub prompt {
->> +	my ($self, $prompt) = _maybe_self(@_);
->> +	if (exists $ENV{'GIT_ASKPASS'}) {
->> +		return _prompt($ENV{'GIT_ASKPASS'}, $prompt);
->> +	} elsif (exists $ENV{'SSH_ASKPASS'}) {
->> +		return _prompt($ENV{'SSH_ASKPASS'}, $prompt);
->> +	} else {
->> +		return undef;
->> +	}
->> +}
-> 
-> ...and provide some kind of fallback even if neither of GIT_ASKPASS
-> nor SSH_ASKPASS are set (perhaps assuming that some Perl packages from
-> CPAN are installed).
 
-If neither of GIT_ASKPASS nor SSH_ASKPASS are set the caller has to
-handle the request. This has to be done this way, because of lots of
-different needs (username, password (no echo) and so on).
+--H1spWtNR+x+ondvy
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->> +sub _prompt {
->> +	my ($self, $askpass, $prompt) = _maybe_self(@_);
->> +	my $ret;
->> +	open(PH, "-|", $askpass, $prompt);
->> +	$ret = <PH>;
->> +	$ret =~ s/[\012\015]//g; # strip \n\r
->> +	close(PH);
->> +	return $ret;
->> +}
-> 
-> Please, use modern Perl, in particula use lexical filehandles instead
-> of typeglobs (which are global variables), i.e.
+Junio C Hamano wrote:
+> Joey Hess <joey@kitenet.net> writes:
+>=20
+> > .... And other code in git uses an async feeder similarly,
+> > see for example convert.c's apply_filter(). So I think this is ok..?
+>=20
+> Yeah, I didn't look at your patch (sorry) but if it uses async like the
+> filtering codepath does, it should be perfectly fine (please forget about
+> the select(2) based kludge I alluded to; the async interface is the right
+> thing to use here).
 
-I used the same style as I found in Git.pm (see lines I removed in patch 2).
+No problem, I was surprised to be getting responses at all over the
+holidays. :)
 
--- 
-Best regards,
- Sven Strickroth
- ClamAV, a GPL anti-virus toolkit   http://www.clamav.net
- PGP key id F5A9D4C4 @ any key-server
+Then async also seems the right thing to use for the hook refactoring. A
+caller can provide two function pointers; a feeder function that is
+called async, and a reader that is *not* called async (which would allow
+it to modify program state), and the refactored hook function handles
+running the hook(s) and connecting them to the feeder and/or reader.
+
+--=20
+see shy jo
+
+--H1spWtNR+x+ondvy
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIVAwUBTvno88kQ2SIlEuPHAQiVDw//ScTVQ3JGeyeCMZQ7Z6M1PH/NiAUApP74
+k79gpeQ2KrDU0VT8/BaOw8YcEAe0pD/xJkB2qTCT196WcdJ74n5EGyOu2HhkcGa2
+C/AMn9kHcD9bQ3qSzt64tDGnfXqgR4Ef2UYITzoNckLqU8OTRhb7EU+y/csq8Gj4
+wwSTJXGjZZGsZ4njinE25sBX4LpvVX1p3sU7zY4/a555c1X9FSZtvTqBJmRxacco
+Nn1ttlkCJdH45nVxtDjChRdIEsKTa+L2+UZf+sEAQN3PtAYMxy2BBQXslOenOPvn
+e9Yn31Uy6jQro6WkFVIo3afuzB7mpCP+mYH4ZGYW2HcLaAtbioB3h2y8ROcPoDbN
+Lr9KpqnPCInhGwO7ab/Za5hN1tWKZjBuuaU0A7xlPXd0lfdG8TjjVini+DaEKLth
+rBh3W5sxBal5xluZtcjcN9Jt41tOMeuDdWe1+9Q8kz9Lb0gcBsw0ufSKXO6bK1nU
+N2hqm+32bO9D2XSGxSZeVPbyxvI0g/YdQBhDFYHXGZB7XFngcasFk8pUGFmWW/Xm
+m4Fm/mivgo++xjEqsV6vFMFfOQwZwRHtMU8VmlaYvy22mK19oESKVyPxDIKmbusc
+0OtIzQ8dFkrrCyKwVXdcmhe3drjFfnQOHtTaleOLEtNNyGBDjDsWOGEFcIpcGcPU
+wcOo+IGg+/w=
+=c2IU
+-----END PGP SIGNATURE-----
+
+--H1spWtNR+x+ondvy--
