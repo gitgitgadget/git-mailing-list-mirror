@@ -1,86 +1,119 @@
-From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
-Subject: Re: [PATCH 2/2] git-svn, perl/Git.pm: extend and use Git->prompt
- method for querying users
-Date: Wed, 28 Dec 2011 22:47:36 +0100
-Message-ID: <4EFB8E78.4090205@tu-clausthal.de>
-References: <4EC52508.9070907@tu-clausthal.de> <CABPQNSZ0iPAE+BnDU6Nz8_PkrAtPbjL4RoJuQS=Um2wxPt-2DQ@mail.gmail.com> <4EC65DE4.90005@tu-clausthal.de> <CABPQNSbfM0JRVPk3fxfSEq7QaO-fynHM8FBGpPribdgeRqpZKA@mail.gmail.com> <4ED0CE8B.70205@tu-clausthal.de> <20111130064401.GC5317@sigill.intra.peff.net> <4EF907F1.1030801@tu-clausthal.de> <m3d3baf5kd.fsf@localhost.localdomain> <4EF9D8B9.9060106@tu-clausthal.de> <4EF9EBF4.7070200@tu-clausthal.de> <4EF9ED58.8080205@tu-clausthal.de> <7vd3b967ql.fsf@alter.siamese.dyndns.org> <7vty4l4rr8.fsf@alter.siamese.dyndns.org> <4EFA5F08.2060705@tu-clausthal.de> <7vpqf91kqo.fsf@alter.siamese.dyndns.org> <4EFAF241.9050806@tu-clausthal.de> <7v39c41keo.fsf@alter.siamese.dyndns.org> <7vpqf8z8a6.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] gc --auto: warn garbage collection happens soon
+Date: Thu, 29 Dec 2011 04:50:49 +0700
+Message-ID: <CACsJy8BVWQHUfi3=fMiqFAfbFyTAV0LnY0yF0AbD_weT4bX6Hw@mail.gmail.com>
+References: <1324993534-16307-1-git-send-email-pclouds@gmail.com> <7vpqf94r8c.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 28 22:48:00 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 28 22:51:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rg1Lr-0001qr-8f
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Dec 2011 22:47:59 +0100
+	id 1Rg1PC-0004T3-Kw
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Dec 2011 22:51:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754505Ab1L1Vri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Dec 2011 16:47:38 -0500
-Received: from poseidon.rz.tu-clausthal.de ([139.174.2.21]:27011 "EHLO
-	poseidon.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754244Ab1L1Vrh (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Dec 2011 16:47:37 -0500
-Received: from poseidon.rz.tu-clausthal.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id 1B79829A2C2;
-	Wed, 28 Dec 2011 22:47:35 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
-	 bh=cgGTOcLuuA5K3YQoxTlfZqv4oJI=; b=8MhK6poGuLJHQzfvZWUICzMciUE6
-	+pF124tdhTzfaBjn0iIyv87d02qqU2D1DO/85hSVZTIybJAXhnli/VWDTJBAWHFz
-	IK5gYL5yBE2mNRZtx2IOIM2kuccmYMgnmB/mZ7rGQ9GJTuS07D7DOM3FafWYUN3y
-	5CelMHGkQM7v0dc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
-	dkim1; b=CY+w/CAn+gXhgwbSqv58UA70U326pAyIRyHnnHzcazALSqjBUcEOuaW
-	4iU2nSHX270RnZcBCTkojeBS7bcyqCgxWexwSi1mNjKD1sEXtJRvehlQ2nBEodlY
-	3VOmV7qsyuNEWOElLTgk/T0NpoVwfB+XMHAjkQ9HFOjNvYl58O/U=
-Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
-	by poseidon.rz.tu-clausthal.de (Postfix) with ESMTP id EEE9829A2BA;
-	Wed, 28 Dec 2011 22:47:34 +0100 (CET)
-Received: from [91.4.119.89] (account sstri@tu-clausthal.de HELO [192.168.178.20])
-  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.3)
-  with ESMTPSA id 25269186; Wed, 28 Dec 2011 22:47:34 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-In-Reply-To: <7vpqf8z8a6.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.3.4
-X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
+	id S1754546Ab1L1VvX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Dec 2011 16:51:23 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:43246 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754459Ab1L1VvV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Dec 2011 16:51:21 -0500
+Received: by eaad14 with SMTP id d14so5607476eaa.19
+        for <git@vger.kernel.org>; Wed, 28 Dec 2011 13:51:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=yzzs8+sw/gUe6Rg2SReO0vop5QRrEhEVmzTLHDgpF9Y=;
+        b=W9BgIj1c5P6Jnj25phJ0w2UwuVX1BTuUu5jvwJvWF4HDBJzeuX8kyNi8dePljr2atA
+         BWfsLnBjX2Au3fJ46e4I3PJJa33CowgJFLBGvQ6fFKCsvPSzGFEPWuzBrOc6G3B/kAor
+         aWCi7eIgXXkMho+RV+2lMtFrPFqXaG4xDYaOs=
+Received: by 10.204.48.148 with SMTP id r20mr3631354bkf.116.1325109080275;
+ Wed, 28 Dec 2011 13:51:20 -0800 (PST)
+Received: by 10.204.32.197 with HTTP; Wed, 28 Dec 2011 13:50:49 -0800 (PST)
+In-Reply-To: <7vpqf94r8c.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187762>
 
-Am 28.12.2011 22:38 schrieb Junio C Hamano:
-> I am however not sure if the second patch in this series is a good thing
-> in the current shape. For GUI users who do not have a terminal, earlier
-> they couldn't respond to these questions but now they can, so in that
-> narrow sense we are not going backwards.
-> 
-> But for people who use *_ASKPASS and are working from the terminal, it is
-> a regression to ask these non-password questions using *_ASKPASS. Most
-> likely, these helpers that are designed for password entry will hide what
-> is typed, and I also wouldn't be surprised if some of them have fairly low
-> input-length restriction that may be shorter than a long-ish pathname that
-> users might want to give as an answer, which they could do in the terminal
-> based interaction but will become impossible with this patch.
-> 
-> I suspect that we would need to enhance *_ASKPASS interface first, so that
-> we can ask things other than passwords. Until that happens, I do not think
-> we should apply the second patch to use *_ASKPASS for non-passwords.
+2011/12/28 Junio C Hamano <gitster@pobox.com>:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> w=
+rites:
+>
+>> This gives users a chance to run gc explicitly elsewhere if they do =
+not
+>> want gc to run suddenly in current terminal.
+>>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+>
+> As I am still in a cheerly holiday mood, let's be a bit philosophical=
+,
+> step back a bit and think.
+>
+> After this patch gets applied, will the users start feeling bothered =
+by
+> repeated "you will soon see auto-gc" messages and will want "you will=
+ soon
+> start seeing the you will soon see auto-gc messages" warnings?
 
-git-core also asks for username using *_ASKPASS, this is the reason why
-I implemented it this way. I noticed it when I tried to push to google
-code (using https).
+They should not for most of the time, given the default settings is
+warnings at 90% limits. If they do feel bothered, they could turn it
+off or just run "gc".
 
--- 
-Best regards,
- Sven Strickroth
- ClamAV, a GPL anti-virus toolkit   http://www.clamav.net
- PGP key id F5A9D4C4 @ any key-server
+> And if the answer to that tongue-in-cheek question is no, what is the
+> reason why the users will not find the messages disturbing, while loa=
+thing
+> the auto-gc?
+>
+> I suspect that is because auto-gc takes long time, making the user wa=
+it,
+> compared to the new message that may be noisy but quick. =C2=A0Perhap=
+s the real
+> cure for the disease is not to add the message but to make an auto-gc=
+ less
+> painful, no?
+
+It's something with expected run time of a command. When I'm about to
+run "commit", I know the command is fast and I expect the shell prompt
+soon. When I run "fetch", I know it may take a bit (or a lot) of time
+and I will be ready to make myself a cup of coffee while it's running.
+
+auto-gc is an unknown factor and may break my expectations. I would
+not mind if auto-gc is extremely fast, e.g. a couple of seconds
+maximum. But gc time seems to be proportional to repository size.
+
+> What are the things we could do to make auto-gc less painful?
+>
+> Are we doing something that is not necessary in auto-gc that takes ti=
+me
+> but that we can live without doing?
+>
+> It may be a better cure for the disease to force a full gc after
+> operations that we know the users already know to take long time (e.g=
+=2E a
+> clone, a large fetch), so that the next auto-gc do not have to do muc=
+h
+> work.
+
+git works best when everything is in one pack. So while we may be able
+to skip stuff and make auto-gc fast the first few times, eventually we
+need to do something like "git repack -ad" as part of auto-gc. I don't
+see any way to make that part complete in a few secs regardless repo
+size (unless packv4 comes in time and speeds up revlist
+significantly). So the pain will be there in the end, it's just
+delayed.
+
+There's another possibility (but not sure if it's feasible): to make
+auto-gc use up to certain amount of time. If it runs out of allocated
+time, it needs to save its state somewhere, somehow and resumes in
+next auto-gc.
+--=20
+Duy
