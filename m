@@ -1,8 +1,8 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] git-svn, perl/Git.pm: add central method for
- prompting passwords honoring GIT_ASKPASS and SSH_ASKPASS
-Date: Tue, 27 Dec 2011 18:34:27 -0800
-Message-ID: <7vboqt2zm4.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 2/2] git-svn, perl/Git.pm: extend and use Git->prompt
+ method for querying users
+Date: Tue, 27 Dec 2011 18:41:03 -0800
+Message-ID: <7vpqf91kqo.fsf@alter.siamese.dyndns.org>
 References: <4EC52508.9070907@tu-clausthal.de>
  <CABPQNSZ0iPAE+BnDU6Nz8_PkrAtPbjL4RoJuQS=Um2wxPt-2DQ@mail.gmail.com>
  <4EC65DE4.90005@tu-clausthal.de>
@@ -12,165 +12,105 @@ References: <4EC52508.9070907@tu-clausthal.de>
  <4EF907F1.1030801@tu-clausthal.de> <m3d3baf5kd.fsf@localhost.localdomain>
  <4EF9D8B9.9060106@tu-clausthal.de> <4EF9EBF4.7070200@tu-clausthal.de>
  <4EF9ED58.8080205@tu-clausthal.de> <7vd3b967ql.fsf@alter.siamese.dyndns.org>
- <7vty4l4rr8.fsf@alter.siamese.dyndns.org> <4EFA5EB3.4000802@tu-clausthal.de>
+ <7vty4l4rr8.fsf@alter.siamese.dyndns.org> <4EFA5F08.2060705@tu-clausthal.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
 	Jeff King <peff@peff.net>
 To: Sven Strickroth <sven.strickroth@tu-clausthal.de>
-X-From: git-owner@vger.kernel.org Wed Dec 28 03:34:52 2011
+X-From: git-owner@vger.kernel.org Wed Dec 28 03:41:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RfjLu-0007W1-Cj
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Dec 2011 03:34:50 +0100
+	id 1RfjSN-0007us-5c
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Dec 2011 03:41:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752995Ab1L1Ceb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Dec 2011 21:34:31 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59456 "EHLO
+	id S1753077Ab1L1ClI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Dec 2011 21:41:08 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62362 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752895Ab1L1Cea (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Dec 2011 21:34:30 -0500
+	id S1753011Ab1L1ClG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Dec 2011 21:41:06 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3297D7785;
-	Tue, 27 Dec 2011 21:34:29 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C86FC7876;
+	Tue, 27 Dec 2011 21:41:05 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=xZ8a3d9gOFU4deddegHExBMMXIY=; b=xF6tVHN2xu5uCgrkRtZo
-	MS5lf5LFaFQnZlSMaQUkmhGGa4KnGZXbFWD61T4ApJJW4jIyhTqcYfeNd+gKVUQP
-	tEg83XW57+akMlCdGMBgLQUOFs1nqFNIa/NHJL7GhBpbr77W3w6/gC9YJCodoO7x
-	vGFkgfi/Q8NrY9pLq80VAEo=
+	 s=sasl; bh=C090DmalxXrNEc2YrEKCX3fngLE=; b=a1Oei5pAwqP4egByStyB
+	oOitrVyCZ/Rzp9XykhD7bxL7vyRioeIdSNAEzDY8OK9mLmv+FI/hgaOWyg9cc4TL
+	eL7M2pC34asmEX9yweOGtFeikF6mHehSjzVv2kFfAe2e/1PdiA79K/oLfpb0muv/
+	p6UCV8Iz8UVm/qxJKJMgYeA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=ka9ozcPTtFaoyoVlyjlRprkj14Eo8lfhE2bw2sjL+RB0bI
-	LKF+9R1DDa6qo47KTzdMJ32DU+1PWEYVg5CHIy1/nvJg8/FkL1wod2FCCU+OsBdk
-	cKm/AMlCyh+U9UcdpQ1bROeuTfiTN6Gfte0m+RZd9fetPlSdtvDgfN9APdNpg=
+	 q=dns; s=sasl; b=Lqts1A2SNj9K4u6/bfx5AH6fsvBmOwwEXkRvRIg5FLEzfd
+	gwBTW953KhQVacph6i9+Vf9HK5web1enOBLBZzVTIB5j/9sKK71d8f4iqozZAzp2
+	txtvKMg6qbSelmfwH3xmEzV3GT6aMdwrBi40Ls7zOUpzGoFPIn5YRNP3aSPN0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2978F7784;
-	Tue, 27 Dec 2011 21:34:29 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C10F07875;
+	Tue, 27 Dec 2011 21:41:05 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 86D527783; Tue, 27 Dec 2011
- 21:34:28 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4B6BF7872; Tue, 27 Dec 2011
+ 21:41:05 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7715DFB0-30FC-11E1-B987-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 639213A4-30FD-11E1-832F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187743>
 
 Sven Strickroth <sven.strickroth@tu-clausthal.de> writes:
 
-> git-svn reads passwords from an interactive terminal or by using
-> GIT_ASKPASS helper tool. But if GIT_ASKPASS environment variable is not
-> set, git-svn does not try to use SSH_ASKPASS as git-core does. This
-> cause GUIs (w/o STDIN connected) to hang waiting forever for git-svn to
-> complete (http://code.google.com/p/tortoisegit/issues/detail?id=967).
->
-> Commit 56a853b62c0ae7ebaad0a7a0a704f5ef561eb795 tried to solve this
-> issue, but was incomplete as described above.
->
-> Instead of using hand-rolled prompt-response code that only works with
-> the interactive terminal, a reusable prompt() method is introduced in
-> this commit. This change also adds a fallback to SSH_ASKPASS.
->
-> Signed-off-by: Sven Strickroth <email@cs-ware.de>
-> ---
+> @@ -4357,11 +4357,10 @@ sub ssl_server_trust {
+>  	                               issuer_dname fingerprint);
+>  	my $choice;
+>  prompt:
+> -	print STDERR $may_save ?
+> +	my $options = $may_save ?
+>  	      "(R)eject, accept (t)emporarily or accept (p)ermanently? " :
+>  	      "(R)eject or accept (t)emporarily? ";
+> -	STDERR->flush;
+> -	$choice = lc(substr(<STDIN> || 'R', 0, 1));
+> +	$choice = substr(Git->prompt("Certificate unknown. " . $options) || 'R', 0, 1);
 
-Thanks. Vastly more readable ;-)
+I am afraid the extra "Certificate unknown. " prefix may make the prompt
+way too long to fit on a line on the terminal or in the GUI. Would it be
+Ok to perhaps add LF to make it a multi-line prompt? Do GUI based helpers
+make that into a dialog box with multi-line prompt, or do they just barf?
 
-I only have a few minor nits, and request for extra set of eyeballs from
-Perl-y people.
+>  	if ($choice =~ /^t$/i) {
+>  		$cred->may_save(undef);
 
->  sub _read_password {
->  	my ($prompt, $realm) = @_;
-> -	my $password = '';
-> -	if (exists $ENV{GIT_ASKPASS}) {
-> -		open(PH, "-|", $ENV{GIT_ASKPASS}, $prompt);
-> -		$password = <PH>;
-> -		$password =~ s/[\012\015]//; # \n\r
-> - ...
-> -		while (defined(my $key = Term::ReadKey::ReadKey(0))) {
-> -			last if $key =~ /[\012\015]/; # \n\r
-> -			$password .= $key;
-> -		}
-> - ...
-> +	my $password = Git->prompt($prompt);
->  	$password;
+We seem to have lost lc() there, but it probably is deliberate and
+harmless, as the value is checked with /^x$/i later.
+
+As we are making sure $choice has a single character anyway, I think that
+checking with "=~ /^x$/i" is unnecessarily ugly and wrong, even though it
+is obviously not the fault of this patch.
+
+> @@ -4378,10 +4377,7 @@ prompt:
+>  sub ssl_client_cert {
+>  	my ($cred, $realm, $may_save, $pool) = @_;
+>  	$may_save = undef if $_no_auth_cache;
+> -	print STDERR "Client certificate filename: ";
+> -	STDERR->flush;
+> -	chomp(my $filename = <STDIN>);
+> -	$cred->cert_file($filename);
+> +	$cred->cert_file(Git->prompt("Client certificate filename: "));
+>  	$cred->may_save($may_save);
+>  	$SVN::_Core::SVN_NO_ERROR;
 >  }
-> ...
-> +Check if GIT_ASKPASS or SSH_ASKPASS is set, use first matching for querying
-> +user and return answer. If no *_ASKPASS variable is set, the variable is
-> +empty or an error occoured, the terminal is tried as a fallback.
 
-Looks like a description that is correct, but I feel a slight hiccup when
-trying to read the first sentence aloud.  Perhaps other reviewers on the
-list can offer an easier to read alternative?
+We may later add an option to "prompt" method to allow the caller to say
+that we are asking for a filename, and let GUI prompt helper to run a file
+picker, but I think that is outside the immediate scope of this patch.
+Just a thing for the future to keep in mind.
 
-> +sub prompt {
-> +	my ($self, $prompt) = _maybe_self(@_);
-> +	my $ret;
-> +	if (exists $ENV{'GIT_ASKPASS'}) {
-> +		$ret = _prompt($ENV{'GIT_ASKPASS'}, $prompt);
-> +	}
-> +	if (!defined $ret && exists $ENV{'SSH_ASKPASS'}) {
-> +		$ret = _prompt($ENV{'SSH_ASKPASS'}, $prompt);
-> +	}
-> +	if (!defined $ret) {
-> +		print STDERR $prompt;
-> +		STDERR->flush;
-> +		require Term::ReadKey;
-> +		Term::ReadKey::ReadMode('noecho');
-> +		while (defined(my $key = Term::ReadKey::ReadKey(0))) {
-> +			last if $key =~ /[\012\015]/; # \n\r
-> +			$ret .= $key;
+This patch itself looks almost perfect to me (modulo the above minor
+nits), and except that it textually depends on 1/2 that may need to be
+updated.
 
-Unlike the original in _read_password, $ret ($password over there) is left
-"undef" here; I am wondering if "$ret .= $key" might trigger a warning and
-if that is the case, probably we should have an explicit "$ret = '';"
-before going into the while loop.
-
-> +sub _prompt {
-> +	my ($askpass, $prompt) = @_;
-> +	unless ($askpass) {
-> +		return undef;
-> +	}
-
-Perl gurus on the list might prefer to rewrite this with statement
-modifier as "return undef unless (...);" but I am not one of them.
-
-> +	my $ret;
-> +	open my $fh, "-|", $askpass, $prompt || return undef;
-
-I am so used see this spelled with the lower-precedence "or" like this
-
-	open my $fh, "-|", $askpass, $prompt
-        	or return undef;
-
-that I am no longer sure if the use of "||" is Ok here. Help from Perl
-gurus on the list?
-
-> +	$ret = <$fh>;
-> +	$ret =~ s/[\012\015]//g; # strip \n\r, chomp does not work on all systems (i.e. windows) as expected
-
-The original reads one line from the helper process, removes the first \n
-or \r (expecting there is only one), and returns the result. The new code
-reads one line, removes all \n and \r everywhere, and returns the result.
-
-I do not think it makes any difference in practice, but shouldn't this
-logically be more like "s/\r?\n$//", that is "remove the CRLF or LF at the
-end"?
-
-> +	close ($fh);
-
-It seems that we aquired a SP after "close" compared to the
-original. What's the prevailing coding style in our Perl code?
-
-This close() of pipe to the subprocess is where a lot of error checking
-happens, no? Can this return an error?
-
-I can see the original ignored an error condition, but do we care, or not
-care?
+Thanks.
