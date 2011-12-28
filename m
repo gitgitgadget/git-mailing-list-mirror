@@ -1,105 +1,105 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] gc --auto: warn garbage collection happens soon
-Date: Wed, 28 Dec 2011 16:30:18 -0500
-Message-ID: <20111228213018.GA22811@sigill.intra.peff.net>
-References: <1324993534-16307-1-git-send-email-pclouds@gmail.com>
- <7vpqf94r8c.fsf@alter.siamese.dyndns.org>
- <20111228184000.GA18780@sigill.intra.peff.net>
- <7vfwg41n3p.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] git-svn, perl/Git.pm: extend and use Git->prompt
+ method for querying users
+Date: Wed, 28 Dec 2011 13:38:25 -0800
+Message-ID: <7vpqf8z8a6.fsf@alter.siamese.dyndns.org>
+References: <4EC52508.9070907@tu-clausthal.de>
+ <CABPQNSZ0iPAE+BnDU6Nz8_PkrAtPbjL4RoJuQS=Um2wxPt-2DQ@mail.gmail.com>
+ <4EC65DE4.90005@tu-clausthal.de>
+ <CABPQNSbfM0JRVPk3fxfSEq7QaO-fynHM8FBGpPribdgeRqpZKA@mail.gmail.com>
+ <4ED0CE8B.70205@tu-clausthal.de>
+ <20111130064401.GC5317@sigill.intra.peff.net>
+ <4EF907F1.1030801@tu-clausthal.de> <m3d3baf5kd.fsf@localhost.localdomain>
+ <4EF9D8B9.9060106@tu-clausthal.de> <4EF9EBF4.7070200@tu-clausthal.de>
+ <4EF9ED58.8080205@tu-clausthal.de> <7vd3b967ql.fsf@alter.siamese.dyndns.org>
+ <7vty4l4rr8.fsf@alter.siamese.dyndns.org> <4EFA5F08.2060705@tu-clausthal.de>
+ <7vpqf91kqo.fsf@alter.siamese.dyndns.org> <4EFAF241.9050806@tu-clausthal.de>
+ <7v39c41keo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 28 22:30:43 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Sven Strickroth <sven.strickroth@tu-clausthal.de>,
+	Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 28 22:38:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rg159-00079U-3S
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Dec 2011 22:30:43 +0100
+	id 1Rg1Cj-0008Dq-85
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Dec 2011 22:38:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754437Ab1L1VaW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Dec 2011 16:30:22 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53774
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753261Ab1L1VaV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Dec 2011 16:30:21 -0500
-Received: (qmail 5521 invoked by uid 107); 28 Dec 2011 21:37:08 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Dec 2011 16:37:08 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Dec 2011 16:30:18 -0500
-Content-Disposition: inline
-In-Reply-To: <7vfwg41n3p.fsf@alter.siamese.dyndns.org>
+	id S1754440Ab1L1Via (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Dec 2011 16:38:30 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63725 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753261Ab1L1Vi2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Dec 2011 16:38:28 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B2485E47;
+	Wed, 28 Dec 2011 16:38:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RQMtjd8XZA9gsA8sHpAO56UK5dg=; b=WV/Asi
+	uLeKsC5Mw1rnsocKebdppSmZKaHQh6MVPpuWaTjFuCndds4+aywTg+OkTRwhD2p0
+	EnK8szj55mMypVVJ1mQ1JldBflAyiclmqcNPmqIIteRSsYrq98co2IlBZAVAlGFT
+	0Pir7jOCvJQ36Z16fkRLNGOSb8CpCQDHU+sW8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aaZFfrRIVvwZDs1ZjMvZfFP3T2sIcl4/
+	HDiNn1mU06uLIPlUNT7QMFKdXTINJyrfzufG9wB+EyC/UzN6665MvVdntMzAi77X
+	Spz2ujkyKvvFwuH3UpTFHX+DdAP/DeI3AtfIv41vuu6rxoKSocidyPUKrx7peBQk
+	p+fY3miOW0E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62C955E46;
+	Wed, 28 Dec 2011 16:38:27 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D64805E45; Wed, 28 Dec 2011
+ 16:38:26 -0500 (EST)
+In-Reply-To: <7v39c41keo.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 28 Dec 2011 13:00:31 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 46B71EA6-319C-11E1-862A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187760>
 
-On Wed, Dec 28, 2011 at 12:02:18PM -0800, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > [1] Actually, it's not just having objects. You may have just exploded
-> >     unreachable objects from a pack, but they are still younger than the
-> >     2 week expiration period. Therefore trying to prune them is
-> >     pointless, because even if they are unreachable, you won't delete
-> >     them. So you really want to say "how many actual candidate objects
-> >     do we have for pruning?"
-> 
-> An obvious knee-jerk reaction is "Ugh, if we have very recently repacked,
-> don't we know what are reachable and what are not already, and use that
-> knowledge while pruning to avoid traversing everything again?"
+> I actually was hoping that the answer is "it depends on the helper
+> specified by *_ASKPASS".
+>
+> In any case, let's not add that extra "Certificate unknown. " prefix at
+> all to avoid regressions and queue this patch series for real.
+>
+> After somebody comes up with a way to deal with overlong prompt, building
+> on top of this series, we can work on making this particular prompt longer
+> and more descriptive.
 
-Especially now that prune has learned about progress reporting, it's
-easy to see in "git gc" that the "Counting objects" phase of the repack
-and the connectivity search in prune are counting the same objects.  It
-would obviously be easy to just dump the set of sha1s in packed binary
-format, and let git-prune reference that.
+I've queued the two patches with minor tweaks.
 
-But it doesn't work in the general case. Running "git gc" will repack
-everything, and so it looks at all reachable objects. But "git gc
---auto" will typically do an incremental pack (unless you have too many
-packs), which means its counting objects phase only looks at part of
-the graph.  So that result can't be used for object reachability, since
-many objects won't be marked[1].
+I think the first patch is a definite improvement for both GUI users and
+terminal users who use the *_ASKPASS environment variable. Other parts of
+git already asks the latter their password using *_ASKPASS anyway, so I do
+not foresee complaints from them saying that git-svn suddenly stopped
+reading the password from the terminal.
 
-So yes, it's an optimization we can do, but it only works some of the
-time. And worse, it works in the time we care less (when we are doing a
-full repack anyway, so we are already spending more time counting
-objects, and more I/O rewriting existing packed objects), but not when
-we want it most (doing a few seconds of incremental repack during "git
-gc --auto", which balloons to a minute because of the prune time).
+I am however not sure if the second patch in this series is a good thing
+in the current shape. For GUI users who do not have a terminal, earlier
+they couldn't respond to these questions but now they can, so in that
+narrow sense we are not going backwards.
 
--Peff
+But for people who use *_ASKPASS and are working from the terminal, it is
+a regression to ask these non-password questions using *_ASKPASS. Most
+likely, these helpers that are designed for password entry will hide what
+is typed, and I also wouldn't be surprised if some of them have fairly low
+input-length restriction that may be shorter than a long-ish pathname that
+users might want to give as an answer, which they could do in the terminal
+based interaction but will become impossible with this patch.
 
-[1] It's tempting to say "well, we just repacked incrementally, so if
-    something was referenced and not packed, we would have just packed
-    it, right?" But look at how incremental packing works. We do a
-    traversal with "--unpacked", which means we don't dig down past
-    commit objects that are already packed. And that's why its fast.
-
-    But packs don't necessarily respect reachability. It's possible for
-    you to have object X in a pack, but X^{tree} is not (or X^, or
-    whatever)[2]. I believe using "git repack" would fail to actually
-    pack that. But that's OK, because it almost never happens, and the
-    worst case is that the object doesn't get packed until you do a full
-    repack.
-
-    But I'm not sure you would want the same level of shortcut for
-    git-prune, which would actually be _deleting_ the object. We want to
-    be very sure in that case.
-
-[2] The obvious way to get into this situation is to give weird rev-list
-    parameters to pack-objects. But I think you could also do it
-    accidentally by having commit X loose, then fetching history
-    containing commit Y that builds on X. If the fetch is big enough,
-    we'll keep the pack that we got from the other side. So X remains
-    loose, but its ancestors are packed. Running an incremental repack
-    will stop the traversal at Y and never consider X for packing.
-
-    I didn't actually test this, but that's my reading of the code (see
-    the revs->unpacked check in revision.c:get_commit_action).
+I suspect that we would need to enhance *_ASKPASS interface first, so that
+we can ask things other than passwords. Until that happens, I do not think
+we should apply the second patch to use *_ASKPASS for non-passwords.
