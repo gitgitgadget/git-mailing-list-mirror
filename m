@@ -1,77 +1,184 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] gc --auto: warn garbage collection happens soon
-Date: Wed, 28 Dec 2011 13:40:00 -0500
-Message-ID: <20111228184000.GA18780@sigill.intra.peff.net>
-References: <1324993534-16307-1-git-send-email-pclouds@gmail.com>
- <7vpqf94r8c.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/2] git-svn, perl/Git.pm: add central method for prompting passwords honoring GIT_ASKPASS and SSH_ASKPASS
+Date: Wed, 28 Dec 2011 19:56:29 +0100
+Message-ID: <201112281956.30289.jnareb@gmail.com>
+References: <4EC52508.9070907@tu-clausthal.de> <4EFA5EB3.4000802@tu-clausthal.de> <7vboqt2zm4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Sven Strickroth <sven.strickroth@tu-clausthal.de>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 28 19:40:12 2011
+X-From: git-owner@vger.kernel.org Wed Dec 28 19:56:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RfyQ5-00081k-QI
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Dec 2011 19:40:10 +0100
+	id 1Rfyg5-00051b-Rd
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Dec 2011 19:56:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754118Ab1L1SkF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Dec 2011 13:40:05 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53739
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752649Ab1L1SkD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Dec 2011 13:40:03 -0500
-Received: (qmail 4333 invoked by uid 107); 28 Dec 2011 18:46:50 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Dec 2011 13:46:50 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Dec 2011 13:40:00 -0500
+	id S1754379Ab1L1S4g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Dec 2011 13:56:36 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:34920 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754206Ab1L1S4e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Dec 2011 13:56:34 -0500
+Received: by eekc4 with SMTP id c4so12494976eek.19
+        for <git@vger.kernel.org>; Wed, 28 Dec 2011 10:56:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=JmYLpx5g3UWLVlfFtAsee3TviR5xUxC25Dp8yztO16Q=;
+        b=SsFvWvYj2NCvk2L07wdxoY8iGVNGEJqn8WgxV/13mu5pJ8Dc9EggM2+XQw2AdP+MeA
+         G5uw6kcF+RprMAgUANLnIolt6mDsnXPewDCPg6jUafCNqtpIy9B7oIogK/b4Is+mOG5u
+         +tjhn35KNtpSWdcuJrUi9s6Xu+KH8SHfdJO40=
+Received: by 10.213.34.71 with SMTP id k7mr9561575ebd.18.1325098593063;
+        Wed, 28 Dec 2011 10:56:33 -0800 (PST)
+Received: from [192.168.1.13] (abwj79.neoplus.adsl.tpnet.pl. [83.8.233.79])
+        by mx.google.com with ESMTPS id a60sm123790421eeb.4.2011.12.28.10.56.31
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 28 Dec 2011 10:56:32 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vboqt2zm4.fsf@alter.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <7vpqf94r8c.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187753>
 
-On Tue, Dec 27, 2011 at 01:52:35PM -0800, Junio C Hamano wrote:
+Junio C Hamano wrote:
+> Sven Strickroth <sven.strickroth@tu-clausthal.de> writes:
 
-> And if the answer to that tongue-in-cheek question is no, what is the
-> reason why the users will not find the messages disturbing, while loathing
-> the auto-gc?
+> I only have a few minor nits, and request for extra set of eyeballs from
+> Perl-y people.
 > 
-> I suspect that is because auto-gc takes long time, making the user wait,
-> compared to the new message that may be noisy but quick.  Perhaps the real
-> cure for the disease is not to add the message but to make an auto-gc less
-> painful, no?
+> >  sub _read_password {
+> >  	my ($prompt, $realm) = @_;
+> > -	my $password = '';
+> > -	if (exists $ENV{GIT_ASKPASS}) {
+> > -		open(PH, "-|", $ENV{GIT_ASKPASS}, $prompt);
+> > -		$password = <PH>;
+> > -		$password =~ s/[\012\015]//; # \n\r
+> > - ...
+> > -		while (defined(my $key = Term::ReadKey::ReadKey(0))) {
+> > -			last if $key =~ /[\012\015]/; # \n\r
+> > -			$password .= $key;
+> > -		}
+> > - ...
+> > +	my $password = Git->prompt($prompt);
+> >  	$password;
+> >  }
+> > ...
+> > +Check if GIT_ASKPASS or SSH_ASKPASS is set, use first matching for querying
+> > +user and return answer. If no *_ASKPASS variable is set, the variable is
+> > +empty or an error occoured, the terminal is tried as a fallback.
 > 
-> What are the things we could do to make auto-gc less painful?
->
-> Are we doing something that is not necessary in auto-gc that takes time
-> but that we can live without doing?
+> Looks like a description that is correct, but I feel a slight hiccup when
+> trying to read the first sentence aloud.  Perhaps other reviewers on the
+> list can offer an easier to read alternative?
 
-I don't personally find gc all that painful (though maybe that is
-because I tend to gc myself and rarely hit the auto-gc), but I have
-noticed that git-prune takes by far the most time to run. If you are
-just doing an incremental pack, you might be packing only a few thousand
-objects and not touching old history at all (and with many cores, the
-delta compression flies by). But prune requires running "git rev-list
---objects --all", which takes something like 45 seconds for linux-2.6 on
-my fast-ish laptop (and about 23 seconds for git.git).
+Perhaps
 
-We could perhaps cut out pruning in the auto-gc case unless there are a
-lot of objects left over after the packing phase. It's not worth doing a
-full prune to clean up a dozen objects[1]. It probably is if you have a
-thousand objects left after packing.
+  Query user for password with given PROMPT and return answer.  It respects
+  GIT_ASKPASS and SSH_ASKPASS environment variables, with terminal in a
+  password mode (no echo) as a fallback.  Returns undef if it cannot ask
+  for password. 
 
--Peff
+> > +sub prompt {
+> > +	my ($self, $prompt) = _maybe_self(@_);
+> > +	my $ret;
+> > +	if (exists $ENV{'GIT_ASKPASS'}) {
 
-[1] Actually, it's not just having objects. You may have just exploded
-    unreachable objects from a pack, but they are still younger than the
-    2 week expiration period. Therefore trying to prune them is
-    pointless, because even if they are unreachable, you won't delete
-    them. So you really want to say "how many actual candidate objects
-    do we have for pruning?"
+Wouldn't it be simpler and more resilent to just check for $ENV{'GIT_ASKPASS'}?
+Assuming that nobody uses command named '0' it would cover both GIT_ASKPASS
+not being set (!exists) and being set to empty value (eq '').
+
+> > +		$ret = _prompt($ENV{'GIT_ASKPASS'}, $prompt);
+> > +	}
+> > +	if (!defined $ret && exists $ENV{'SSH_ASKPASS'}) {
+> > +		$ret = _prompt($ENV{'SSH_ASKPASS'}, $prompt);
+> > +	}
+> > +	if (!defined $ret) {
+> > +		print STDERR $prompt;
+> > +		STDERR->flush;
+> > +		require Term::ReadKey;
+> > +		Term::ReadKey::ReadMode('noecho');
+> > +		while (defined(my $key = Term::ReadKey::ReadKey(0))) {
+> > +			last if $key =~ /[\012\015]/; # \n\r
+> > +			$ret .= $key;
+
+I wonder if the last part wouldn't be better to be refactored into
+a separate subroutine, e.g. _prompt_readkey.
+
+> 
+> Unlike the original in _read_password, $ret ($password over there) is left
+> "undef" here; I am wondering if "$ret .= $key" might trigger a warning and
+> if that is the case, probably we should have an explicit "$ret = '';"
+> before going into the while loop.
+
+No that is not a problem.  In Perl undefined variable functions as 0 in
+numeric context ($foo++), as '' in string context ($foo .= $key), and []
+in arrayref context (push @$foo, $key).
+
+> > +sub _prompt {
+> > +	my ($askpass, $prompt) = @_;
+> > +	unless ($askpass) {
+> > +		return undef;
+> > +	}
+> 
+> Perl gurus on the list might prefer to rewrite this with statement
+> modifier as "return undef unless (...);" but I am not one of them.
+> 
+> > +	my $ret;
+> > +	open my $fh, "-|", $askpass, $prompt || return undef;
+> 
+> I am so used see this spelled with the lower-precedence "or" like this
+> 
+> 	open my $fh, "-|", $askpass, $prompt
+>         	or return undef;
+> 
+> that I am no longer sure if the use of "||" is Ok here. Help from Perl
+> gurus on the list?
+
+It is incorrect, which you can check with B::Deparse.
+
+$ perl -MO=Deparse,-p -e 'open my $fh, "-|", $askpass, $prompt || return undef;'
+
+  open(my $fh, '-|', $askpass, ($prompt || return(undef)));
+ 
+Anyway, wouldn't it be simpler and better to use command_oneline or its
+backend here?
+
+> > +	$ret = <$fh>;
+> > +	$ret =~ s/[\012\015]//g; # strip \n\r, chomp does not work on all systems (i.e. windows) as expected
+> 
+> The original reads one line from the helper process, removes the first \n
+> or \r (expecting there is only one), and returns the result. The new code
+> reads one line, removes all \n and \r everywhere, and returns the result.
+> 
+> I do not think it makes any difference in practice, but shouldn't this
+> logically be more like "s/\r?\n$//", that is "remove the CRLF or LF at the
+> end"?
+> 
+> > +	close ($fh);
+> 
+> It seems that we aquired a SP after "close" compared to the
+> original. What's the prevailing coding style in our Perl code?
+> 
+> This close() of pipe to the subprocess is where a lot of error checking
+> happens, no? Can this return an error?
+> 
+> I can see the original ignored an error condition, but do we care, or not
+> care?
+ 
+If we use command_oneline or its backend we wouldn't have to worry
+about this.
+
+-- 
+Jakub Narebski
+Poland
