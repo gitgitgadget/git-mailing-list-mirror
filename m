@@ -1,78 +1,77 @@
-From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
-Subject: Re: [PATCH 1/2] git-svn, perl/Git.pm: add central method for prompting
- passwords honoring GIT_ASKPASS and SSH_ASKPASS
-Date: Wed, 28 Dec 2011 17:17:12 +0100
-Message-ID: <4EFB4108.5040704@tu-clausthal.de>
-References: <4EC52508.9070907@tu-clausthal.de> <CABPQNSZ0iPAE+BnDU6Nz8_PkrAtPbjL4RoJuQS=Um2wxPt-2DQ@mail.gmail.com> <4EC65DE4.90005@tu-clausthal.de> <CABPQNSbfM0JRVPk3fxfSEq7QaO-fynHM8FBGpPribdgeRqpZKA@mail.gmail.com> <4ED0CE8B.70205@tu-clausthal.de> <20111130064401.GC5317@sigill.intra.peff.net> <4EF907F1.1030801@tu-clausthal.de> <m3d3baf5kd.fsf@localhost.localdomain> <4EF9D8B9.9060106@tu-clausthal.de> <4EF9EBF4.7070200@tu-clausthal.de> <4EF9ED58.8080205@tu-clausthal.de> <7vd3b967ql.fsf@alter.siamese.dyndns.org> <7vty4l4rr8.fsf@alter.siamese.dyndns.org> <4EFA5EB3.4000802@tu-clausthal.de> <7vboqt2zm4.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] gc --auto: warn garbage collection happens soon
+Date: Wed, 28 Dec 2011 13:40:00 -0500
+Message-ID: <20111228184000.GA18780@sigill.intra.peff.net>
+References: <1324993534-16307-1-git-send-email-pclouds@gmail.com>
+ <7vpqf94r8c.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 28 17:17:26 2011
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 28 19:40:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RfwBr-00031a-9L
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Dec 2011 17:17:19 +0100
+	id 1RfyQ5-00081k-QI
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Dec 2011 19:40:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754026Ab1L1QRO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Dec 2011 11:17:14 -0500
-Received: from hades.rz.tu-clausthal.de ([139.174.2.20]:58129 "EHLO
-	hades.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753989Ab1L1QRN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Dec 2011 11:17:13 -0500
-Received: from hades.rz.tu-clausthal.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id BF62942203F;
-	Wed, 28 Dec 2011 17:17:11 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
-	 bh=rjz2ZkQig7IC6S/qI7kXCkMNuQI=; b=yI9vJ1JBZVO1F17Wz7gBIrjxA/91
-	9JZkHZk5MbDS2fA1AE5jkXmz+fY0s3uaOaklBWC9xSp/QTOT4+Tjz7FQ+ic7R7iW
-	UUTx+f5m/XoedxuvsNWjM4CAWNlEgr3hnkHgphAG3vn/FUgxtmYgRNfJ8LHj75bU
-	Zezr2pPkq+i0rr8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
-	dkim1; b=m4c7jtYWy6qGinskEWlLi6KTc/MJnNVfFyjpnLdJcjHRhg2S1u81h7m
-	pyta0VejbGqNmQFKyWtIS4HucfsqZNCEcI5YA6xz3LPaMnkYtx6NMbrfTy4L4/la
-	4hjmHZZm9HxwoGgph0CoC4R/WWWlQ75d/ERabIEv4qrWM70CL6+8=
-Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
-	by hades.rz.tu-clausthal.de (Postfix) with ESMTP id 8308642203D;
-	Wed, 28 Dec 2011 17:17:11 +0100 (CET)
-Received: from [84.132.183.113] (account sstri@tu-clausthal.de HELO [192.168.178.20])
-  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.3)
-  with ESMTPSA id 25261897; Wed, 28 Dec 2011 17:17:11 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-In-Reply-To: <7vboqt2zm4.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.3.4
-X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
+	id S1754118Ab1L1SkF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Dec 2011 13:40:05 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53739
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752649Ab1L1SkD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Dec 2011 13:40:03 -0500
+Received: (qmail 4333 invoked by uid 107); 28 Dec 2011 18:46:50 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 28 Dec 2011 13:46:50 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Dec 2011 13:40:00 -0500
+Content-Disposition: inline
+In-Reply-To: <7vpqf94r8c.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187752>
 
-Am 28.12.2011 03:34 schrieb Junio C Hamano:
->> +	close ($fh);
-> 
-> It seems that we aquired a SP after "close" compared to the
-> original. What's the prevailing coding style in our Perl code?
-> 
-> This close() of pipe to the subprocess is where a lot of error checking
-> happens, no? Can this return an error?
-> 
-> I can see the original ignored an error condition, but do we care, or not
-> care?
+On Tue, Dec 27, 2011 at 01:52:35PM -0800, Junio C Hamano wrote:
 
-close() can return a number in case of an error, but we already got our
-response/line, so why care?
+> And if the answer to that tongue-in-cheek question is no, what is the
+> reason why the users will not find the messages disturbing, while loathing
+> the auto-gc?
+> 
+> I suspect that is because auto-gc takes long time, making the user wait,
+> compared to the new message that may be noisy but quick.  Perhaps the real
+> cure for the disease is not to add the message but to make an auto-gc less
+> painful, no?
+> 
+> What are the things we could do to make auto-gc less painful?
+>
+> Are we doing something that is not necessary in auto-gc that takes time
+> but that we can live without doing?
 
--- 
-Best regards,
- Sven Strickroth
- ClamAV, a GPL anti-virus toolkit   http://www.clamav.net
- PGP key id F5A9D4C4 @ any key-server
+I don't personally find gc all that painful (though maybe that is
+because I tend to gc myself and rarely hit the auto-gc), but I have
+noticed that git-prune takes by far the most time to run. If you are
+just doing an incremental pack, you might be packing only a few thousand
+objects and not touching old history at all (and with many cores, the
+delta compression flies by). But prune requires running "git rev-list
+--objects --all", which takes something like 45 seconds for linux-2.6 on
+my fast-ish laptop (and about 23 seconds for git.git).
+
+We could perhaps cut out pruning in the auto-gc case unless there are a
+lot of objects left over after the packing phase. It's not worth doing a
+full prune to clean up a dozen objects[1]. It probably is if you have a
+thousand objects left after packing.
+
+-Peff
+
+[1] Actually, it's not just having objects. You may have just exploded
+    unreachable objects from a pack, but they are still younger than the
+    2 week expiration period. Therefore trying to prune them is
+    pointless, because even if they are unreachable, you won't delete
+    them. So you really want to say "how many actual candidate objects
+    do we have for pruning?"
