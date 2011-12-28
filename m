@@ -1,72 +1,74 @@
-From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
-Subject: Re: [PATCH 2/2] git-svn, perl/Git.pm: extend and use Git->prompt
- method for querying users
-Date: Wed, 28 Dec 2011 11:41:05 +0100
-Message-ID: <4EFAF241.9050806@tu-clausthal.de>
-References: <4EC52508.9070907@tu-clausthal.de> <CABPQNSZ0iPAE+BnDU6Nz8_PkrAtPbjL4RoJuQS=Um2wxPt-2DQ@mail.gmail.com> <4EC65DE4.90005@tu-clausthal.de> <CABPQNSbfM0JRVPk3fxfSEq7QaO-fynHM8FBGpPribdgeRqpZKA@mail.gmail.com> <4ED0CE8B.70205@tu-clausthal.de> <20111130064401.GC5317@sigill.intra.peff.net> <4EF907F1.1030801@tu-clausthal.de> <m3d3baf5kd.fsf@localhost.localdomain> <4EF9D8B9.9060106@tu-clausthal.de> <4EF9EBF4.7070200@tu-clausthal.de> <4EF9ED58.8080205@tu-clausthal.de> <7vd3b967ql.fsf@alter.siamese.dyndns.org> <7vty4l4rr8.fsf@alter.siamese.dyndns.org> <4EFA5F08.2060705@tu-clausthal.de> <7vpqf91kqo.fsf@alter.siamese.dyndns.org>
+From: Reza Mostafid <m.r.mostafid@gmail.com>
+Subject: Re: GIT and SSH
+Date: Wed, 28 Dec 2011 11:01:58 +0000 (UTC)
+Message-ID: <loom.20111228T115814-404@post.gmane.org>
+References: <loom.20111228T091942-66@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 28 11:41:34 2011
+X-From: git-owner@vger.kernel.org Wed Dec 28 12:02:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rfqwv-0004le-V5
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Dec 2011 11:41:34 +0100
+	id 1RfrHQ-0006Bh-OX
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Dec 2011 12:02:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753523Ab1L1KlO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Dec 2011 05:41:14 -0500
-Received: from poseidon.rz.tu-clausthal.de ([139.174.2.21]:28207 "EHLO
-	poseidon.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753504Ab1L1KlM (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Dec 2011 05:41:12 -0500
-Received: from poseidon.rz.tu-clausthal.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id 627B829AA37;
-	Wed, 28 Dec 2011 11:41:11 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
-	 bh=EwSfouXDjB8SIaumF9zCuXHvB5k=; b=nhBRjsoUvKeBGa0Ro/qtTQiOcZs+
-	SpFd6hqB/NcAP/ymua7vEwF/rbXZVOvse2O2wFIA2QmwjUF67QU8hZnUKcS0J/P6
-	1q4onyKA9FLfTFPsbsB07VfKfq1Owa4zfXPouhivRnAWZiYy/6b03cVXuW5Xumaw
-	1IBKECBli/k2bZU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
-	dkim1; b=cFrbocmMP3n22HkyyQm2X/fmQ03BI/DUHoOG/5eBxdtk4TUdOk+NOUk
-	TCrHJJACXMo16fxuBJWlmlygnTx5nVfvSmuaRe3kyoxY1Z9pfSb5knhiQEzrFSC2
-	dsbb/H9ixL8b+RkwOhZaiuBcQW7KL87J6kf/t+bt2h0ODlp2Tx8g=
-Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
-	by poseidon.rz.tu-clausthal.de (Postfix) with ESMTP id 8507D29A48C;
-	Wed, 28 Dec 2011 11:41:04 +0100 (CET)
-Received: from [84.132.183.113] (account sstri@tu-clausthal.de HELO [192.168.178.20])
-  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.3)
-  with ESMTPSA id 25256898; Wed, 28 Dec 2011 11:41:04 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-In-Reply-To: <7vpqf91kqo.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.3.4
-X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
+	id S1753569Ab1L1LCY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Dec 2011 06:02:24 -0500
+Received: from lo.gmane.org ([80.91.229.12]:49500 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753557Ab1L1LCX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Dec 2011 06:02:23 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RfrGu-0003iu-5T
+	for git@vger.kernel.org; Wed, 28 Dec 2011 12:02:12 +0100
+Received: from 213.207.203.115 ([213.207.203.115])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 28 Dec 2011 12:02:12 +0100
+Received: from m.r.mostafid by 213.207.203.115 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 28 Dec 2011 12:02:12 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 213.207.203.115 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.10) Gecko/20100915 Ubuntu/9.04 (jaunty) Firefox/3.6.10)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187749>
 
-Am 28.12.2011 03:41 schrieb Junio C Hamano:
-> I am afraid the extra "Certificate unknown. " prefix may make the prompt
-> way too long to fit on a line on the terminal or in the GUI. Would it be
-> Ok to perhaps add LF to make it a multi-line prompt? Do GUI based helpers
-> make that into a dialog box with multi-line prompt, or do they just barf?
+I forgot to mention, I am an embedded developer located in Iran.
 
-LF is problematic. But we could do $prompt =~ s/\n/ /g; in _prompt()-method.
+The filtering I am talking about is by the government. All ISP's get their
+bandwith from centrally allocated trunks. This allows control.
 
--- 
-Best regards,
- Sven Strickroth
- ClamAV, a GPL anti-virus toolkit   http://www.clamav.net
- PGP key id F5A9D4C4 @ any key-server
+I know that ssh packets get dropped for extended periods frequently.
+We have an Ubuntu virtual server outside of Iran which we use as a proxy and
+connect to it via 'ssh' sox provxy ( -D 8090 ).
+
+Many times some sort of script or intelligence is operation which severely
+throttles the connection as soon as the data rate exceeds certain "benign" 
+levels. All this has been confirmed by the network `gurus` and admin people I
+work with. This is the best we can tell from what we observe.
+
+As mentioned when we execute the simple GIT clone command from our VPS 
+( located outside Iran ) the command works flawlessly.
+
+What I would be interested in is to somehow make git avoid using transport
+over ssh. The government censors are interested only in blocking people
+accessing illicit sites via S.O.X-5 or VPN. 
+
+To them anything over SSH is suspicious. If we could somehow update using a
+plain transport method, they couldn't care less about source code being sent to 
+us.
+
+Regards
+
+Reza
