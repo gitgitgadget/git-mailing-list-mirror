@@ -1,184 +1,177 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 1/2] git-svn, perl/Git.pm: add central method for prompting passwords honoring GIT_ASKPASS and SSH_ASKPASS
-Date: Wed, 28 Dec 2011 19:56:29 +0100
-Message-ID: <201112281956.30289.jnareb@gmail.com>
-References: <4EC52508.9070907@tu-clausthal.de> <4EFA5EB3.4000802@tu-clausthal.de> <7vboqt2zm4.fsf@alter.siamese.dyndns.org>
+From: Joey Hess <joey@kitenet.net>
+Subject: Re: [PATCH] add post-fetch hook
+Date: Wed, 28 Dec 2011 15:30:08 -0400
+Message-ID: <20111228193008.GB17521@gnu.kitenet.net>
+References: <20111224234212.GA21533@gnu.kitenet.net>
+ <7v4nwpbaxq.fsf@alter.siamese.dyndns.org>
+ <20111225035059.GA29852@gnu.kitenet.net>
+ <7vsjk99exw.fsf@alter.siamese.dyndns.org>
+ <20111226023154.GA3243@gnu.kitenet.net>
+ <4EFA3833.80409@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Sven Strickroth <sven.strickroth@tu-clausthal.de>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 28 19:56:44 2011
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="3uo+9/B/ebqu+fSQ"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Dec 28 20:30:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rfyg5-00051b-Rd
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Dec 2011 19:56:42 +0100
+	id 1RfzCc-0002ah-TU
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Dec 2011 20:30:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754379Ab1L1S4g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Dec 2011 13:56:36 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:34920 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754206Ab1L1S4e (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Dec 2011 13:56:34 -0500
-Received: by eekc4 with SMTP id c4so12494976eek.19
-        for <git@vger.kernel.org>; Wed, 28 Dec 2011 10:56:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=JmYLpx5g3UWLVlfFtAsee3TviR5xUxC25Dp8yztO16Q=;
-        b=SsFvWvYj2NCvk2L07wdxoY8iGVNGEJqn8WgxV/13mu5pJ8Dc9EggM2+XQw2AdP+MeA
-         G5uw6kcF+RprMAgUANLnIolt6mDsnXPewDCPg6jUafCNqtpIy9B7oIogK/b4Is+mOG5u
-         +tjhn35KNtpSWdcuJrUi9s6Xu+KH8SHfdJO40=
-Received: by 10.213.34.71 with SMTP id k7mr9561575ebd.18.1325098593063;
-        Wed, 28 Dec 2011 10:56:33 -0800 (PST)
-Received: from [192.168.1.13] (abwj79.neoplus.adsl.tpnet.pl. [83.8.233.79])
-        by mx.google.com with ESMTPS id a60sm123790421eeb.4.2011.12.28.10.56.31
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 28 Dec 2011 10:56:32 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vboqt2zm4.fsf@alter.siamese.dyndns.org>
+	id S1754470Ab1L1TaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Dec 2011 14:30:14 -0500
+Received: from wren.kitenet.net ([80.68.85.49]:48483 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754220Ab1L1TaM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Dec 2011 14:30:12 -0500
+Received: from gnu.kitenet.net (tn-76-5-154-250.dhcp.embarqhsd.net [76.5.154.250])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id C15D0118349;
+	Wed, 28 Dec 2011 14:30:10 -0500 (EST)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id 0937E44768; Wed, 28 Dec 2011 14:30:09 -0500 (EST)
 Content-Disposition: inline
+In-Reply-To: <4EFA3833.80409@kdbg.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187754>
 
-Junio C Hamano wrote:
-> Sven Strickroth <sven.strickroth@tu-clausthal.de> writes:
 
-> I only have a few minor nits, and request for extra set of eyeballs from
-> Perl-y people.
-> 
-> >  sub _read_password {
-> >  	my ($prompt, $realm) = @_;
-> > -	my $password = '';
-> > -	if (exists $ENV{GIT_ASKPASS}) {
-> > -		open(PH, "-|", $ENV{GIT_ASKPASS}, $prompt);
-> > -		$password = <PH>;
-> > -		$password =~ s/[\012\015]//; # \n\r
-> > - ...
-> > -		while (defined(my $key = Term::ReadKey::ReadKey(0))) {
-> > -			last if $key =~ /[\012\015]/; # \n\r
-> > -			$password .= $key;
-> > -		}
-> > - ...
-> > +	my $password = Git->prompt($prompt);
-> >  	$password;
-> >  }
-> > ...
-> > +Check if GIT_ASKPASS or SSH_ASKPASS is set, use first matching for querying
-> > +user and return answer. If no *_ASKPASS variable is set, the variable is
-> > +empty or an error occoured, the terminal is tried as a fallback.
-> 
-> Looks like a description that is correct, but I feel a slight hiccup when
-> trying to read the first sentence aloud.  Perhaps other reviewers on the
-> list can offer an easier to read alternative?
+--3uo+9/B/ebqu+fSQ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Perhaps
+Johannes Sixt wrote:
+> If I read the loop below correctly, you should be able to run it using
+> only the functions sha1_to_hex(), strlen() and write_in_full(). This
+> would avoid any problems with concurrent calls to xmalloc().
+>=20
+> > +	int ret;
+> > +
+> > +	for (ref =3D post_fetch_hook_refs; ref; ref =3D ref->next) {
+> > +		strbuf_addstr(&buf, sha1_to_hex(ref->old_sha1));
+>=20
+> sha1_to_hex() works with a static buffer. Are you certain that it is not
+> called concurrently in the main thread?
 
-  Query user for password with given PROMPT and return answer.  It respects
-  GIT_ASKPASS and SSH_ASKPASS environment variables, with terminal in a
-  password mode (no echo) as a fallback.  Returns undef if it cannot ask
-  for password. 
+Thanks very much for pointing that thread-unsafty out.
 
-> > +sub prompt {
-> > +	my ($self, $prompt) = _maybe_self(@_);
-> > +	my $ret;
-> > +	if (exists $ENV{'GIT_ASKPASS'}) {
+Based on that, my current thinking for a generic hook interface is that,
+rather than the caller providing an arbitrary "feeder" function that gets
+run async, the caller should provide a function that generates a strbuf
+containing the stdout for the hook, and then a very simple async writer
+can handle the actual writing.
 
-Wouldn't it be simpler and more resilent to just check for $ENV{'GIT_ASKPASS'}?
-Assuming that nobody uses command named '0' it would cover both GIT_ASKPASS
-not being set (!exists) and being set to empty value (eq '').
+static int feed_hook(int in, int out, void *data)
+{
+        struct strbuf *buf =3D data;
+        return write_in_full(out, buf->buf, buf->len) !=3D buf->len;
+}
 
-> > +		$ret = _prompt($ENV{'GIT_ASKPASS'}, $prompt);
-> > +	}
-> > +	if (!defined $ret && exists $ENV{'SSH_ASKPASS'}) {
-> > +		$ret = _prompt($ENV{'SSH_ASKPASS'}, $prompt);
-> > +	}
-> > +	if (!defined $ret) {
-> > +		print STDERR $prompt;
-> > +		STDERR->flush;
-> > +		require Term::ReadKey;
-> > +		Term::ReadKey::ReadMode('noecho');
-> > +		while (defined(my $key = Term::ReadKey::ReadKey(0))) {
-> > +			last if $key =~ /[\012\015]/; # \n\r
-> > +			$ret .= $key;
+(I assume that write_in_full is safe to be run async?)
 
-I wonder if the last part wouldn't be better to be refactored into
-a separate subroutine, e.g. _prompt_readkey.
+I am working on a patch that will involve adding a hook_complex()
+and changing hook() to be implemented in terms of it. The header
+for that is included below, you should get a very good idea of how
+it will work from the data structure.
 
-> 
-> Unlike the original in _read_password, $ret ($password over there) is left
-> "undef" here; I am wondering if "$ret .= $key" might trigger a warning and
-> if that is the case, probably we should have an explicit "$ret = '';"
-> before going into the while loop.
+/*
+ * This data structure controls how a hook is run.
+ */
+struct hook {
+	/* The name of the hook being run. */
+	const char *name;
+	/* Parameters to pass to the hook program, not including the name
+	 * of the hook. May be NULL. */
+	struct argv_array *argv_array;
+	/* Pathname to an index file to use, or NULL if the hook
+	 * uses the default index file or no index is needed. */
+	const char *index_file;
+	/*
+	 * An arbitrary data structure, can be populated and modified to
+	 * communicate between the feeder, reader, and caller of the hook.
+	 */
+	void *data;
+	/*=20
+	 * A hook can optionally not consume all of its stdin.
+	 * If partial_stdin is 0, it is an error for some stdin not
+	 * to be consumed.
+	 */
+	int partial_stdin;
+	/*=20
+	 * feeder populates a strbuf with the content to send to the
+	 * hook on its standard input.
+	 *
+	 * May be NULL, if the hook does not consume standard input.
+	 *
+	 * Note that feeder might be run more than once, if multiple
+	 * programs are run as part of a single hook. It should avoid
+	 * taking any actions except for reading from data and generating
+	 * the strbuf. It will *not* be run async, and need not worry
+	 * about contending with other threads.
+	 */
+	struct strbuf *(*feeder)(struct hook *hook);
+	/*
+	 * reader processes the hook's standard output from the handle,
+	 * returning 0 on success, non-zero on failure.
+	 *
+	 * May be NULL, if the hook's stdin is not processed. (It will
+	 * instead be redirected to stderr.)
+	 *
+	 * Note that reader might be run more than once, if multiple
+	 * programs are run as part of a single hook. It should avoid
+	 * taking any actions except for reading from the input handle,
+	 * changing the content of data, and printing any necessary
+	 * warnings. It will *not* be run async, and need not worry
+	 * about contending with other threads.
+	 */
+	int (*reader)(struct hook *hook, int handle);
+};
 
-No that is not a problem.  In Perl undefined variable functions as 0 in
-numeric context ($foo++), as '' in string context ($foo .= $key), and []
-in arrayref context (push @$foo, $key).
+extern int run_hook(const char *index_file, const char *name, ...);
 
-> > +sub _prompt {
-> > +	my ($askpass, $prompt) = @_;
-> > +	unless ($askpass) {
-> > +		return undef;
-> > +	}
-> 
-> Perl gurus on the list might prefer to rewrite this with statement
-> modifier as "return undef unless (...);" but I am not one of them.
-> 
-> > +	my $ret;
-> > +	open my $fh, "-|", $askpass, $prompt || return undef;
-> 
-> I am so used see this spelled with the lower-precedence "or" like this
-> 
-> 	open my $fh, "-|", $askpass, $prompt
->         	or return undef;
-> 
-> that I am no longer sure if the use of "||" is Ok here. Help from Perl
-> gurus on the list?
+extern int run_hook_complex(struct hook *hook);
 
-It is incorrect, which you can check with B::Deparse.
 
-$ perl -MO=Deparse,-p -e 'open my $fh, "-|", $askpass, $prompt || return undef;'
+This design allows for a future where multiple scripts get run for a
+single hook. In that case, the feeder and reader functions would get
+called repeatedly in a loop, with a data flow like this, where the
+reader modifies hook.data, providing the next call of the feeder with
+the new data read from the hook script:
+    feeder | hook_script_1 | reader | feeder | hook_script_2 | reader
 
-  open(my $fh, '-|', $askpass, ($prompt || return(undef)));
- 
-Anyway, wouldn't it be simpler and better to use command_oneline or its
-backend here?
+--=20
+see shy jo
 
-> > +	$ret = <$fh>;
-> > +	$ret =~ s/[\012\015]//g; # strip \n\r, chomp does not work on all systems (i.e. windows) as expected
-> 
-> The original reads one line from the helper process, removes the first \n
-> or \r (expecting there is only one), and returns the result. The new code
-> reads one line, removes all \n and \r everywhere, and returns the result.
-> 
-> I do not think it makes any difference in practice, but shouldn't this
-> logically be more like "s/\r?\n$//", that is "remove the CRLF or LF at the
-> end"?
-> 
-> > +	close ($fh);
-> 
-> It seems that we aquired a SP after "close" compared to the
-> original. What's the prevailing coding style in our Perl code?
-> 
-> This close() of pipe to the subprocess is where a lot of error checking
-> happens, no? Can this return an error?
-> 
-> I can see the original ignored an error condition, but do we care, or not
-> care?
- 
-If we use command_oneline or its backend we wouldn't have to worry
-about this.
+--3uo+9/B/ebqu+fSQ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
--- 
-Jakub Narebski
-Poland
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIVAwUBTvtuQMkQ2SIlEuPHAQjIJA/+P6xKBsDa/ziy3J0x6YzQQl0fXvB0MDo0
+7MuT1MVTqj+c2Bcc+pdpWQCVnp1vpYIUZehoZbQZonQxi6kkeYZ+yoNpfyxOdC1l
+n2cFCw+IZ63A6Wyn9PXdXbzy22yoc3/B475j3UuHEW8WuGIfyXuu9Rjie6qYQq/S
+0ixZ4kVXPtVfVb+0FflS3UhHLtvCBIcvnhrWtpreNv3al51u1lPhQb76L3dhdunX
+vTyCPyy3BeaoXpiEc/dnYEfq07AX3KNAUNrbBZNse0YxhGdH1I6OqNVTVW28pbKH
+D5/KybJ4jve4zpWnzbgKI/qSbNbYfKjyf0CL6Wzy/xKXca997bLVOR4faMcUzV7f
+OxqfXDtDbr43RrpZ33zK3jPOIr99HB9TxLCWVHsZZb2ak6sL1BvC1Ws4FxrQyfKA
+1ywBFhj4DQ6mYiXbz8AYnrlEtKNkyfO4ybTJAPOLyRvIump/UV28Fe4Z24qkCFlZ
+3VxDFzLnQE+68DWDn7Tf1fAu6iYsp1+c8VdoKPwu7b4GhrxxQbD4AuA3ct9e6XNp
+MN7NSi+thUsX3r38NP6FdO+nYpei+/ad3AtgVM3aR/snFecYvacmyAb+5xMGYlJD
+cRm9XFoNwWjSrTOW28Q+RAWW0KAGQLUfU6ffkk6XeY73/CTW1BM+rCVYXs9lJIZv
+B12e4XbWkKE=
+=krgm
+-----END PGP SIGNATURE-----
+
+--3uo+9/B/ebqu+fSQ--
