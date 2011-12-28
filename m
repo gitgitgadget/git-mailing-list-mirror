@@ -1,134 +1,78 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: GIT and SSH
-Date: Wed, 28 Dec 2011 03:02:40 -0800 (PST)
-Message-ID: <m38vlxez79.fsf@localhost.localdomain>
-References: <loom.20111228T091942-66@post.gmane.org>
-	<CA++fsGFOC6bV4gC+ozBKP3EmoAX4CcfTrHjjpMWPkh7vYOfgAw@mail.gmail.com>
-	<20111228101512.GA2192@beez.lab.cmartin.tk>
+From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+Subject: Re: [PATCH 1/2] git-svn, perl/Git.pm: add central method for prompting
+ passwords honoring GIT_ASKPASS and SSH_ASKPASS
+Date: Wed, 28 Dec 2011 17:17:12 +0100
+Message-ID: <4EFB4108.5040704@tu-clausthal.de>
+References: <4EC52508.9070907@tu-clausthal.de> <CABPQNSZ0iPAE+BnDU6Nz8_PkrAtPbjL4RoJuQS=Um2wxPt-2DQ@mail.gmail.com> <4EC65DE4.90005@tu-clausthal.de> <CABPQNSbfM0JRVPk3fxfSEq7QaO-fynHM8FBGpPribdgeRqpZKA@mail.gmail.com> <4ED0CE8B.70205@tu-clausthal.de> <20111130064401.GC5317@sigill.intra.peff.net> <4EF907F1.1030801@tu-clausthal.de> <m3d3baf5kd.fsf@localhost.localdomain> <4EF9D8B9.9060106@tu-clausthal.de> <4EF9EBF4.7070200@tu-clausthal.de> <4EF9ED58.8080205@tu-clausthal.de> <7vd3b967ql.fsf@alter.siamese.dyndns.org> <7vty4l4rr8.fsf@alter.siamese.dyndns.org> <4EFA5EB3.4000802@tu-clausthal.de> <7vboqt2zm4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Dov Grobgeld <dov.grobgeld@gmail.com>,
-	Reza Mostafid <m.r.mostafid@gmail.com>, git@vger.kernel.org
-To: =?utf-8?b?Q2FybG9zIE1hcnTDrW4gTg==?= =?utf-8?b?aWV0bw==?= 
-	<cmn@elego.de>
-X-From: git-owner@vger.kernel.org Wed Dec 28 12:02:52 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 28 17:17:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RfrHY-0006op-4i
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Dec 2011 12:02:52 +0100
+	id 1RfwBr-00031a-9L
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Dec 2011 17:17:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753615Ab1L1LCo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Dec 2011 06:02:44 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:40401 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753571Ab1L1LCm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Dec 2011 06:02:42 -0500
-Received: by wibhm6 with SMTP id hm6so5497456wib.19
-        for <git@vger.kernel.org>; Wed, 28 Dec 2011 03:02:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=m4oybvcaA71u+A53N6+CnLlIQ6NuNm9ZXqEeEJay2oY=;
-        b=T1bRcdimtzLqGBH8QUGzScjtK7EqemyhVKEIjca+4uUyBIICqro3OEQXgrVBUoRuoY
-         QeUmDjypeNGPquO0AcKIuNfQUILu44kPVrA8dVN+A7wsSPWboPOE5eCHV4AHqq66Ydwu
-         /1fORJbkmPsRQTtEtJJdzWLKAERQqHjQooKVQ=
-Received: by 10.180.19.106 with SMTP id d10mr69425286wie.2.1325070161306;
-        Wed, 28 Dec 2011 03:02:41 -0800 (PST)
-Received: from localhost.localdomain (abwj79.neoplus.adsl.tpnet.pl. [83.8.233.79])
-        by mx.google.com with ESMTPS id w8sm73513061wiz.4.2011.12.28.03.02.39
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 28 Dec 2011 03:02:40 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id pBSB2a3b011335;
-	Wed, 28 Dec 2011 12:02:37 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id pBSB2Zeo011332;
-	Wed, 28 Dec 2011 12:02:35 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20111228101512.GA2192@beez.lab.cmartin.tk>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754026Ab1L1QRO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Dec 2011 11:17:14 -0500
+Received: from hades.rz.tu-clausthal.de ([139.174.2.20]:58129 "EHLO
+	hades.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753989Ab1L1QRN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Dec 2011 11:17:13 -0500
+Received: from hades.rz.tu-clausthal.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id BF62942203F;
+	Wed, 28 Dec 2011 17:17:11 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
+	 bh=rjz2ZkQig7IC6S/qI7kXCkMNuQI=; b=yI9vJ1JBZVO1F17Wz7gBIrjxA/91
+	9JZkHZk5MbDS2fA1AE5jkXmz+fY0s3uaOaklBWC9xSp/QTOT4+Tjz7FQ+ic7R7iW
+	UUTx+f5m/XoedxuvsNWjM4CAWNlEgr3hnkHgphAG3vn/FUgxtmYgRNfJ8LHj75bU
+	Zezr2pPkq+i0rr8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
+	dkim1; b=m4c7jtYWy6qGinskEWlLi6KTc/MJnNVfFyjpnLdJcjHRhg2S1u81h7m
+	pyta0VejbGqNmQFKyWtIS4HucfsqZNCEcI5YA6xz3LPaMnkYtx6NMbrfTy4L4/la
+	4hjmHZZm9HxwoGgph0CoC4R/WWWlQ75d/ERabIEv4qrWM70CL6+8=
+Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
+	by hades.rz.tu-clausthal.de (Postfix) with ESMTP id 8308642203D;
+	Wed, 28 Dec 2011 17:17:11 +0100 (CET)
+Received: from [84.132.183.113] (account sstri@tu-clausthal.de HELO [192.168.178.20])
+  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.3)
+  with ESMTPSA id 25261897; Wed, 28 Dec 2011 17:17:11 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
+In-Reply-To: <7vboqt2zm4.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.3.4
+X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187751>
 
-Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
-> On Wed, Dec 28, 2011 at 11:55:24AM +0200, Dov Grobgeld wrote:
+Am 28.12.2011 03:34 schrieb Junio C Hamano:
+>> +	close ($fh);
+> 
+> It seems that we aquired a SP after "close" compared to the
+> original. What's the prevailing coding style in our Perl code?
+> 
+> This close() of pipe to the subprocess is where a lot of error checking
+> happens, no? Can this return an error?
+> 
+> I can see the original ignored an error condition, but do we care, or not
+> care?
 
-> > Git supports multiple transport protocols. Among them are git, ssh,
-> > and https. (You can also use direct file system access, but it is
-> > questionable whether to call that a protocol). Each of the protocol=
-s
-> > have their advantages and drawbacks. The git protocol is only used =
-for
-> > reading, and not for writing, but is supposed to be very fast. The
+close() can return a number in case of an error, but we already got our
+response/line, so why care?
 
-=46YI git:// protocol can theoretically be used for pushing, but it is
-not recommended because git:// protocol is not authenthicated - that
-is why you need to enable pushing via git:// explicitly.
-
-Just git trivia.
-
-> > common firewall filtering of the git protocol port 9418 is another
-> > problem. ssh is the prefered protocol for writing to a remote
-> > protocol. But if ssh is filtered, then http/https may be used, whic=
-h
-> > is very slow for large repositories, but it has the advantage that =
-it
-> > is the least blocked protocol.
->=20
-> Slow for large repositories? Are you thinking of the dumb HTTP
-> transport? That one shouldn't be used for doing any serious work. The
-> Smart HTTP transport is just the git smart protocol (the same one
-> git:// and ssh:// URLs speak) wrapped inside HTTP communication. The
-> negotiation phase is a more expensive than with either git or ssh, as
-> HTTP is stateless and you need to remind the remote what you want and
-> what you've already agreed on, but the actual transfer of data is don=
-e
-> the same way than with the others so overall it shouldn't be that
-> noticeable.
-
-Note that for "smart" transports ("smart" HTTP, SSH) you need to have
-git installed on server, or at least have git-upload-pack and
-git-receive-pack somewhere (you can configure client where it is to be
-found on server).
-=20
-Note that git uses curl for both smart and dumb HTTP transports, so
-things like 'http_proxy' and 'HTTPS_PROXY' environment variables
-should work.
-
-> Now, to the OP's concerns: yes, the ssh transport does generate ssh
-> transport, as that's the whole point. You authenticate against the
-> remote machine's ssh daemon and run git-upload-pack or
-> git-receive-pack as needed (for fetching or pushing). If corporate
-> policy doesn't allow ssh you should either fix the policy or use the
-> smart HTTP protocol, though this involves messing with passwords and
-> their associated problems. I'm not saying ssh keys don't have their
-> complications, but I much prefer them.
-
-Note that if the problem is giving shell accounts with SSH access, the
-solution is to use one of git repository management tools, like
-Gitosis (Python + setuptools, no longer developed) or Gitolite (Perl).
-=46rom what I remember both use _single_ *restricted* account and
-public-key authenthication.
-=20
-If I am not mistaken Gitolite can help with "smart" HTTP transport
-access too.
-
-> We can't help you diagnose why your clone is stalling without more
-> information. It could be that the connection between the computers is
-> flaky, git trying to take too much memory on the remote or local
-> machines or any number of things. See if setting GIT_TRACE=3D1 in the
-> environment helps to see what's going on.
-
-Or even undocumented (!) GIT_TRACE_PACKET.
-
---=20
-Jakub Narebski
+-- 
+Best regards,
+ Sven Strickroth
+ ClamAV, a GPL anti-virus toolkit   http://www.clamav.net
+ PGP key id F5A9D4C4 @ any key-server
