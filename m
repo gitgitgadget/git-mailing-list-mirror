@@ -1,62 +1,72 @@
-From: Steven Sroka <sroka.steven@gmail.com>
-Subject: git clone problem
-Date: Wed, 28 Dec 2011 18:08:31 -0500
-Message-ID: <CAKn2qcUBRW6KLbkFDXMYMro4ZMOp3FG-G6xRofvyc0VK7vf_gA@mail.gmail.com>
+From: Michael Horowitz <michael.horowitz@ieee.org>
+Subject: git alias question
+Date: Wed, 28 Dec 2011 20:27:59 -0500
+Message-ID: <CAFLRbopjqW7OEWN4kxy+6Gb828h4zBC_h=4WiP-q1__LeezxUw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 29 00:09:02 2011
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 29 02:28:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rg2cH-0001NJ-3W
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Dec 2011 00:09:01 +0100
+	id 1Rg4mt-0004qu-UC
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Dec 2011 02:28:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752938Ab1L1XI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Dec 2011 18:08:57 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:46882 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752587Ab1L1XIx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Dec 2011 18:08:53 -0500
-Received: by werm1 with SMTP id m1so5942611wer.19
-        for <git@vger.kernel.org>; Wed, 28 Dec 2011 15:08:52 -0800 (PST)
+	id S1754656Ab1L2B2B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Dec 2011 20:28:01 -0500
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:39585 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754332Ab1L2B2A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Dec 2011 20:28:00 -0500
+Received: by dajs34 with SMTP id s34so8059883daj.19
+        for <git@vger.kernel.org>; Wed, 28 Dec 2011 17:27:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=ei7RPb0v/DaqKI8DRCIJICfPsi8AeWT36z5S0AviVgU=;
-        b=XIiYLojnZSiwitqvrqRONWW0K4FBYUXNMvFjqNaqygAx7CeULbzi9SqFjwjnUMPAfp
-         9XSQ9sXwy89buuxbKgcTIASNrNtUFRwAaBjs6z1szJNFgdA0FE4QrRMellWS2vxWF53P
-         dxsLg6Wmr/mKPvUScJnK3j+3i6hq1d+653BNA=
-Received: by 10.216.136.12 with SMTP id v12mr500309wei.21.1325113732223; Wed,
- 28 Dec 2011 15:08:52 -0800 (PST)
-Received: by 10.180.97.201 with HTTP; Wed, 28 Dec 2011 15:08:31 -0800 (PST)
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        bh=P8StIQW267Ael21q0Iq/MGZ63qvIg/vpSG/rhyEQkjQ=;
+        b=CFJD8AM9czBIgX8nn/MasoxGKaYEkLOTvYFYYvJm2PKqRLRV4Fjr3oUw7GSQXqyD4s
+         teJ5Xgsv/D+mKRFCWfd1zI8GcRGo58GGMjAsZAjlQIIgLE9BL9KWbq5ZRYn5KJM6TZzY
+         lz0c1YAfMu9+CG9K+9Aj6lk2EcerzQocsKgRM=
+Received: by 10.68.122.198 with SMTP id lu6mr47853263pbb.92.1325122079422;
+ Wed, 28 Dec 2011 17:27:59 -0800 (PST)
+Received: by 10.142.102.16 with HTTP; Wed, 28 Dec 2011 17:27:59 -0800 (PST)
+X-Google-Sender-Auth: qAkFwkRaYaDmSqDH4F3KDjMTQFg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187767>
 
-Hello everyone,
+Hello all,
 
-I don't know whether I'm having a git problem or a Gitorious problem,
-but when I try to clone a remote repository, I get this error:
+I have been unable to find a solution to this, so I figured I would
+post to this list...
 
-[steven@chakra-pc Projects]$ git clone
-https://git.gitorious.org/chakra/tribe.git
-Cloning into 'tribe'...
-error: Could not resolve host: git.gitorious.org; Cannot allocate
-memory (curl_result = 6, http_code = 0, sha1 =
-19e44a5608b262d81c06a00425db9e4f2d82ca98)
-error: Unable to find 91fd634acca7d88abb449b379c7c6730bf0df33d under
-https://git.gitorious.org/chakra/tribe.git
-Cannot obtain needed tree 91fd634acca7d88abb449b379c7c6730bf0df33d
-while processing commit 378b1f6d9bdca8ad3ce957a4f7a83c19691afb04.
-error: Fetch failed.
+I am trying to make an easy command to let me look at the last diff to
+a specified file, either plain or with a diff tool, such as vimdiff.
+This is the last actual change, not just HEAD^, because the file may
+not have changed in many commits.
 
-Anyone know what is going one?
+I was able to make the following 2 aliases, which work perfectly
+except for one problem...
 
--- 
-Steven Sroka
-(lin-unix)
+ldiff = "!git diff `git rev-list --reverse -n 2 HEAD -- $1` -- $1"
+ldifft = "!git difftool `git rev-list --reverse -n 2 HEAD -- $1` -- $1"
+
+The problem is the limitation that shell commands are always executed
+at the top-level directory of the repository.  Normally I am in a
+deeply nested directory, so if I specify the file name in that
+directory, it doesn't work.  Having to specify the full path relative
+to the top level makes these aliases more cumbersome to use than their
+worth.
+
+Is there a way to get around this, or even a completely different way
+to do this that I am missing?  I want to avoid making a completely
+separate shell script.
+
+Thanks,
+
+Mike
