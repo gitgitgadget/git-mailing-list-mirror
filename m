@@ -1,66 +1,81 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: [PATCH] Submodules always use a relative path to gitdir
-Date: Thu, 29 Dec 2011 23:48:41 +0100
-Message-ID: <CAJmizVZ_n9KmKWwDeLuYxBTWvndh5cTcvUbFduOtEcOPL=_WeQ@mail.gmail.com>
-References: <1325192426-10103-1-git-send-email-antony.male@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Dec 2011, #09; Tue, 27)
+Date: Thu, 29 Dec 2011 14:49:09 -0800
+Message-ID: <7vipkzvvru.fsf@alter.siamese.dyndns.org>
+References: <7v62h14mdt.fsf@alter.siamese.dyndns.org>
+ <CACsJy8A=xg_c9xbNvZH19LamEBsKSOO_X-KP2-wFMAARbeq3Fw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Antony Male <antony.male@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 29 23:49:01 2011
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 29 23:49:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RgOmS-0004RO-Kx
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Dec 2011 23:49:01 +0100
+	id 1RgOmj-0004fl-Iv
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Dec 2011 23:49:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754785Ab1L2Wso convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Dec 2011 17:48:44 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:56267 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754742Ab1L2Wsn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Dec 2011 17:48:43 -0500
-Received: by wibhm6 with SMTP id hm6so6597656wib.19
-        for <git@vger.kernel.org>; Thu, 29 Dec 2011 14:48:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=w2Cru6wjBIxsNInwPD8rgPcvSdBmkCFzbO6EdPLJ7Y4=;
-        b=kHBqoGlnV6n5DjaiEwDN8I45+Xzm7XBMny1GlorX/wNmshVA48JYRoCvig7K2dW7Uv
-         giUAXI5NNVCze1sXdtvkCe1ZjFolMJU2uaVmf+lVJa4xRgyAnOeMB4Tuehb7H7gza71l
-         NEm+3XID7VScZ7BMQwDKjqwOKtQHIkN30BEw0=
-Received: by 10.181.12.43 with SMTP id en11mr81891528wid.6.1325198922017; Thu,
- 29 Dec 2011 14:48:42 -0800 (PST)
-Received: by 10.227.197.205 with HTTP; Thu, 29 Dec 2011 14:48:41 -0800 (PST)
-In-Reply-To: <1325192426-10103-1-git-send-email-antony.male@gmail.com>
-X-Google-Sender-Auth: AuMsWk09qhALDhRPbOdNLC4j4BI
+	id S1754793Ab1L2WtO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Dec 2011 17:49:14 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39472 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754741Ab1L2WtM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Dec 2011 17:49:12 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D0F6612F;
+	Thu, 29 Dec 2011 17:49:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=AGMfMNThtVVI
+	yxwwgMrb8kzgS3I=; b=nvHNjILPvRhtQwy5iIrL3INFC1OikU/npWvaZEAOseGi
+	bCWNMTRfwqrYgDNJb4yUpcfeGriZ1TckP5Zgo5RXdZ3pzUY2SveV9qWvP00Bcbpc
+	tx4BM2lp+qywbyRnQGg7lVATVrFjn+/quySZ7SZz9Ndxw2xmVnqZiWVOKFZ1LkI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=qYVT8z
+	AgfGWndUiUZkFZ2VrCpLHH0F6xkD9a4u/gGZuAX40ld4nfbk4hAhGVQkxhkvd6bZ
+	PPEFugdYWBrC+XOFw2/QJicd+/LC6PFYfV/7aWv4rUKbpkbuXJxHioFIvO3VWetH
+	tJ404P9x8k6Au1GEsORQz83Srd3MaeT1uE0ks=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 034BB6129;
+	Thu, 29 Dec 2011 17:49:12 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 731806124; Thu, 29 Dec 2011
+ 17:49:11 -0500 (EST)
+In-Reply-To: <CACsJy8A=xg_c9xbNvZH19LamEBsKSOO_X-KP2-wFMAARbeq3Fw@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Thu, 29 Dec 2011 18:46:52 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 531A7688-326F-11E1-925F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187788>
 
-2011/12/29 Antony Male <antony.male@gmail.com>:
-<snip>
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0die "$(eval_ge=
-ttext "Clone of '\$url' into submodule path '\$path' failed")"
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0fi
-> + =C2=A0 =C2=A0 =C2=A0 echo "gitdir: $rel_gitdir" >"$path/.git"
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-This will replace an already created file. Is it really the best
-solution to create a gitfile with an absolute path and after that
-replace it with a relative path. Why not write the relative path from
-the beginning?
+> On Wed, Dec 28, 2011 at 6:37 AM, Junio C Hamano <gitster@pobox.com> w=
+rote:
+>> * nd/index-pack-no-recurse (2011-12-27) 4 commits
+>> =C2=A0- fixup! 3413d4d
+>> =C2=A0- index-pack: eliminate unlimited recursion in get_delta_base(=
+)
+>> =C2=A0- index-pack: eliminate recursion in find_unresolved_deltas
+>> =C2=A0- Eliminate recursion in setting/clearing marks in commit list
+>>
+>> Expecting a reroll.
+>
+> Hmm.. I thought you could easily squash the fixup in. Any reasons for
+> a reroll besides the fixup?
 
-The patch also breaks two tests:
-t7406 and t5526.
-
-Regards
-=46redrik
+The parts that needed fix-ups are the only parts I read. I didn't see a=
+ny
+comments on the list from the reviewers, and I think it is because nobo=
+dy
+read to comment on a series that needs such a quick fix-ups to compile =
+and
+run.
