@@ -1,51 +1,77 @@
-From: Mark Brown <broonie@opensource.wolfsonmicro.com>
-Subject: Re: [PATCH] gc --auto: warn garbage collection happens soon
-Date: Thu, 29 Dec 2011 18:29:24 +0000
-Message-ID: <20111229182924.GA32392@sirena.org.uk>
-References: <1324993534-16307-1-git-send-email-pclouds@gmail.com>
- <7vpqf94r8c.fsf@alter.siamese.dyndns.org>
+From: Tanaka Akira <akr@fsij.org>
+Subject: git-log --pretty=format:'[%x00]%w(0,0,1)' doesn't print NUL and "]"
+Date: Fri, 30 Dec 2011 03:41:20 +0900
+Message-ID: <CANjopZFqiy+Ai4u6QYYnza5J7A3NAt-f17yR9AsYok-g3Hbb3w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nguy???n Th??i Ng???c Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 29 19:29:35 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 29 19:41:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RgKjO-00032A-Hs
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Dec 2011 19:29:34 +0100
+	id 1RgKut-0003eE-I5
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Dec 2011 19:41:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752018Ab1L2S3a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Dec 2011 13:29:30 -0500
-Received: from cassiel.sirena.org.uk ([80.68.93.111]:60358 "EHLO
-	cassiel.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751221Ab1L2S33 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Dec 2011 13:29:29 -0500
-Received: from broonie by cassiel.sirena.org.uk with local (Exim 4.72)
-	(envelope-from <broonie@sirena.org.uk>)
-	id 1RgKjE-0008Qx-Q2; Thu, 29 Dec 2011 18:29:24 +0000
-Content-Disposition: inline
-In-Reply-To: <7vpqf94r8c.fsf@alter.siamese.dyndns.org>
-X-Cookie: You can't get there from here.
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: broonie@sirena.org.uk
-X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); SAEximRunCond expanded to false
+	id S1752063Ab1L2SlW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Dec 2011 13:41:22 -0500
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:52502 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751221Ab1L2SlV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Dec 2011 13:41:21 -0500
+Received: by wibhm6 with SMTP id hm6so6470213wib.19
+        for <git@vger.kernel.org>; Thu, 29 Dec 2011 10:41:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        bh=Cru7O7yNms/itstTHKh8e0zwdvuATabPiOEaDIR3k14=;
+        b=CDHnZXdB4zCApg7+UiZj932VZzOyEFEfkZv6j9Cn6MngvhW7/6PI2rnsB8tOIqiDpH
+         yBwqoMbU6+72ORvlK9q1ncbfIDc+u/Z8cqMKx9vLCGcReytnpD5OZINRmNcklSxBe+5U
+         fisGMFTP2pZJabEhT8oCOrMR4W8a02vBMd660=
+Received: by 10.181.13.17 with SMTP id eu17mr80947810wid.12.1325184080336;
+ Thu, 29 Dec 2011 10:41:20 -0800 (PST)
+Received: by 10.180.94.35 with HTTP; Thu, 29 Dec 2011 10:41:20 -0800 (PST)
+X-Google-Sender-Auth: y9V_DA6GazSfIrAiDOZ2WK_XtmQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187782>
 
-On Tue, Dec 27, 2011 at 01:52:35PM -0800, Junio C Hamano wrote:
+I found that git-log doesn't print characters in --pretty option as follows.
 
-> And if the answer to that tongue-in-cheek question is no, what is the
-> reason why the users will not find the messages disturbing, while loathing
-> the auto-gc?
+  % git log --pretty=format:'[%x00]%w(0,0,1)' |od -c
+  0000000   [  \n   [  \n   [  \n   [  \n   [  \n   [  \n   [  \n   [  \n
+  *
+  0022320   [  \n   [  \n   [  \n   [
+  0022327
 
-The main problem I've noticed with the auto gc is that git gui seems to
-want to do one at a much lower threashold than the command line tools
-(and far too aggressive), it seems that the logic that determines when
-to do one isn't quite in agreement within all the git tools.
+I think NUL and "]" should be printed.
+
+Note that git log works as I expected if I use %w(0,0,0) instead of %w(0,0,1),
+I don't use %w(0,0,1) or I use %x01 instead of %x00.
+
+  % git log --pretty=format:'[%x00]%w(0,0,0)' |od -c
+  0000000   [  \0   ]  \n   [  \0   ]  \n   [  \0   ]  \n   [  \0   ]  \n
+  *
+  0044640   [  \0   ]  \n   [  \0   ]  \n   [  \0   ]  \n   [  \0   ]
+  0044657
+  % git log --pretty=format:'[%x00]' |od -c
+  0000000   [  \0   ]  \n   [  \0   ]  \n   [  \0   ]  \n   [  \0   ]  \n
+  *
+  0044640   [  \0   ]  \n   [  \0   ]  \n   [  \0   ]  \n   [  \0   ]
+  0044657
+  % git log --pretty=format:'[%x01]%w(0,0,1)' |od -c
+  0000000   [ 001   ]  \n   [ 001   ]  \n   [ 001   ]  \n   [ 001   ]  \n
+  *
+  0044640   [ 001   ]  \n   [ 001   ]  \n   [ 001   ]  \n   [ 001   ]
+  0044657
+
+I used git 1.7.8.2.
+
+  % git --version
+  git version 1.7.8.2
+-- 
+Tanaka Akira
