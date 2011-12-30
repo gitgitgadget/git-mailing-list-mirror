@@ -1,92 +1,147 @@
-From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
-Subject: Re: [PATCH 2/2] git-svn, perl/Git.pm: extend and use Git->prompt
- method for querying users
-Date: Fri, 30 Dec 2011 15:53:30 +0100
-Message-ID: <4EFDD06A.3010708@tu-clausthal.de>
-References: <7vd3b967ql.fsf@alter.siamese.dyndns.org> <7vty4l4rr8.fsf@alter.siamese.dyndns.org> <4EFA5F08.2060705@tu-clausthal.de> <7vpqf91kqo.fsf@alter.siamese.dyndns.org> <4EFAF241.9050806@tu-clausthal.de> <7v39c41keo.fsf@alter.siamese.dyndns.org> <7vpqf8z8a6.fsf@alter.siamese.dyndns.org> <4EFB8E78.4090205@tu-clausthal.de> <7vlipwz5xs.fsf@alter.siamese.dyndns.org> <4EFD40CF.8000801@tu-clausthal.de> <20111230135423.GA1684@sigill.intra.peff.net>
+From: Joey Hess <joey@kitenet.net>
+Subject: Re: [PATCH 1/3] expanded hook api with stdio support
+Date: Fri, 30 Dec 2011 13:13:44 -0400
+Message-ID: <20111230171344.GA9667@gnu.kitenet.net>
+References: <1325207240-22622-1-git-send-email-joey@kitenet.net>
+ <1325207240-22622-2-git-send-email-joey@kitenet.net>
+ <4EFD88CB.3050403@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Dec 30 15:53:35 2011
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="J2SCkAp4GZ/dPZZf"
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Fri Dec 30 18:14:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rgdpt-00081t-PE
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Dec 2011 15:53:34 +0100
+	id 1Rgg1q-00078K-GY
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Dec 2011 18:14:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751809Ab1L3Oxa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Dec 2011 09:53:30 -0500
-Received: from hades.rz.tu-clausthal.de ([139.174.2.20]:60093 "EHLO
-	hades.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751769Ab1L3Ox3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Dec 2011 09:53:29 -0500
-Received: from hades.rz.tu-clausthal.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id C8810422071;
-	Fri, 30 Dec 2011 15:53:27 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
-	 bh=nKn+LFXQczTy1iIJHlojZ2VdEoA=; b=h7d1LAWd0N1x6shHCLCoKitkY7HD
-	WSqKuQfjNeQF2qooWNS9X4pRvcyNIbNSyubZKCLuA0v7gNVdoAaOuhD8npIrsSWa
-	n3h3smvBzXpPWrc1UQN8WKRMfnmmSSYEh9VWsS+U1WbBMpjGUgnHDMB86+PJodtV
-	D2FbYD9tXr4rO0E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
-	dkim1; b=JuD77yjU5/+tf9UcERbJl0LjE5GdLYgBDAixh7fD4peqvRQvtO6doGH
-	cvoCq7G0vErawEKVC5WMwb/eoWJJuYZTN9+QbLoqU6We5/Sk2G2p/q8B75CczpcZ
-	bjyRee7qQhoU/E0gbxFO0394j78F6pZEUpz7+TlBv+qyxfYNB9P4=
-Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
-	by hades.rz.tu-clausthal.de (Postfix) with ESMTP id 893B4422065;
-	Fri, 30 Dec 2011 15:53:27 +0100 (CET)
-Received: from [84.132.158.28] (account sstri@tu-clausthal.de HELO [192.168.178.20])
-  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.3)
-  with ESMTPSA id 25563912; Fri, 30 Dec 2011 15:53:27 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-In-Reply-To: <20111230135423.GA1684@sigill.intra.peff.net>
-X-Enigmail-Version: 1.3.4
-X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
+	id S1751181Ab1L3RNy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Dec 2011 12:13:54 -0500
+Received: from wren.kitenet.net ([80.68.85.49]:42442 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750863Ab1L3RNw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Dec 2011 12:13:52 -0500
+Received: from gnu.kitenet.net (dialup-4.88.8.192.Dial1.Atlanta1.Level3.net [4.88.8.192])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id 55F7F1183D4;
+	Fri, 30 Dec 2011 12:13:49 -0500 (EST)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id 81B824695F; Fri, 30 Dec 2011 12:13:44 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <4EFD88CB.3050403@kdbg.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187806>
 
-Am 30.12.2011 14:54 schrieb Jeff King:
->>> I thought that was updated with Peff's series recently?
->>
->> So, was this changed? git-core doesn't ask for a username using
->> *_ASKPASS helpers anymore?
-> 
-> No, it will. It's only that we will echo characters when using the
-> terminal prompt. In theory we could have an ASKPASS-style interface that
-> would would echo characters, but there's no such interface in common
-> use (i.e., we would have to invent it).
 
-I also updated the _ASKPASS helper of TortoiseGit so that it only shows
-asterisks if "pass" is not contained in the prompt.
+--J2SCkAp4GZ/dPZZf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> For credentials, it would be nice to be able to create a multi-field
-> dialog, like:
-> 
->   Username: <text input>
->   Password: <text input>
->   Remember password? [checkbox]
-> 
-> I was planning to do something custom for credentials as an extension to
-> the credential helper protocol, but this could also fall under the
-> heading of a general prompt helper.
+Johannes Sixt wrote:
+> IMHO, this is overengineered. I don't think that we need something like
+> this in the foreseeable future, particularly because such a pipeline or
+> multi-hook infrastructure can easily be constructed by the (single) hook
+> script itself.
 
-This might be problematic, because (for git-svn) username and password
-are not requested together.
+Junio seemed to think this was a good direction to move in and gave some
+examples in <7vlipz930t.fsf@alter.siamese.dyndns.org>
 
--- 
-Best regards,
- Sven Strickroth
- ClamAV, a GPL anti-virus toolkit   http://www.clamav.net
- PGP key id F5A9D4C4 @ any key-server
+Anyway, the minimum cases for run_hook_complex() to support are:
+
+* no stdin, no stdout
+* only stdin
+* stdin and stdout (needed for tweak-fetch)
+* only stdout (perhaps)
+
+The generator and reader members of struct hook allow the caller to
+easily specify which of these cases applies to a hook, and also provides
+a natural separation of the caller's stdin generation and stdout parsing
+code.
+
+That leaves the feeder and data members of struct hook as possible
+overengineering. See below regarding the feeder. The data member could
+be eliminated and global variables used by callers that need that,
+but I prefer designs that don't require global variables.
+
+> > +`run_hook_complex`::
+> > +
+> > +	Run a hook, with the caller providing its stdin and/or parsing its
+> > +	stdout.
+> > +	Takes a pointer to a `struct hook` that specifies the details,
+> > +	including the name of the hook, any parameters to pass to it,
+> > +	and how to handle the stdin and stdout. (See below.)
+> > +	If the hook does not exist or is not executable, the return value
+> > +	will be zero.
+> > +	If it is executable, the hook will be executed and the exit
+> > +	status of the hook is returned.
+>=20
+> What is the rationale for these error modes? It is as if a non-existent
+> or non-executable hook counts as 'success'. (I'm not saying that this
+> would be wrong, I'm just asking.)
+
+They are identical to how run_hook already works.
+A non-existant/non-executable hook *is* a valid configuration,
+indeed it's the most likely configuration.
+
+> > +/* A feeder that ensures the hook consumes all its stdin. */
+> > +int feed_hook_in_full(int handle, struct strbuf *buf, struct hook *hoo=
+k)
+> > +{
+> > +	if (write_in_full(handle, buf->buf, buf->len) !=3D buf->len) {
+> > +		warning("%s hook failed to consume all its input", hook->name);
+>=20
+> Really? Could there not be any other error condition? The warning would
+> be correct only if errno =3D=3D EPIPE, and this error will be returned on=
+ly
+> if SIGPIPE is ignored. Does this happen anywhere?
+>=20
+> Futhermore, if all data was written to the pipe successfully, there is
+> no way to know whether the reader consumed everything.
+>=20
+> IOW, I don't it is worth to make the distinction. However, I do think
+> that the parent process must be protected against SIGPIPE.
+
+Yes, this was not thought through, I missed that a write to a pipe can
+succeed (due to buffering) despite not being fully consumed.
+
+Dealing with the hook SIGPIPE issue is complicated as Jeff explains in
+<20111205214351.GA15029@sigill.intra.peff.net>, and I don't feel I'm the
+one to do it. I'm feeling like ripping the "feeder" stuff out of my
+patch, and not having my patch change the status quo on this issue.
+
+--=20
+see shy jo
+
+--J2SCkAp4GZ/dPZZf
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIVAwUBTv3xRckQ2SIlEuPHAQh94Q//SI9uR+ebFYgftkuAFBbpNOVemS6kLP45
+alfASNXqLGFV06a5DREFgsupM2t7Tbb2O1Q0GKNqb1zwRiUE3nBr9zKl5HaWx2/u
+N/V+cRea3xiljiFNnSYLfTDY3H9cXdv4EkdWB/c5VXBtDJg06jEKFtja0mGCwQJq
+7eC00IdPj38ZurtnoxRB1fJMgySzGjuARtoMdhsjmcPLOkmDpZixObQvZhWlEGIJ
+DB/4s4nRzr/Zx9YaO1zqOJG5e5rMQ59/HlmebbfzAGgr9cOni1On/CjIHuBM87/F
+nHsOmBBlt/YkFSt/wGS5EFDwt3h8lmXxwUQjdc2MAUrdStcPdCWSKKslicH4Y7qt
+nqkDTYykU+7CdosICMrl2uc8TmJ3d+yLofHGBeBhGSOFP079rBNzP+FURd3pgQyY
+YwEgfJ3umPau/YW7HgEdIezCl7BfnaG0WMVGb26yE+c5X/cn+QU2vxyZJEcxGkVQ
+82bfYRhk6jxCXURmwZVnCkeJt4uikCfNtWpmRML0/f0rhAUVDRklqTzYMjFNMNNu
+Wu8USy69+/PGIV3mdLuBUL0vXdLp8wlyfNI+l1Le2crpEbMkp/QWYAlvOreba1+x
+yluTj7OeDI0s/UQQzabBeu3AePtbgPvyhDWfDoysFMdxSRgktncW0p+IosDifDjq
+ohiB4bDNouQ=
+=WFRg
+-----END PGP SIGNATURE-----
+
+--J2SCkAp4GZ/dPZZf--
