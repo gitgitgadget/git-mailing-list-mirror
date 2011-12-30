@@ -1,88 +1,42 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: git alias question
-Date: Thu, 29 Dec 2011 17:59:58 -0800
-Message-ID: <CAJDDKr5a8TB82h4ULWtamLOVu_4Fv+cGw1YfEL987gM3yM4TMg@mail.gmail.com>
-References: <CAFLRbopjqW7OEWN4kxy+6Gb828h4zBC_h=4WiP-q1__LeezxUw@mail.gmail.com>
-	<CAD0k6qTp9sKCb==Jh1vuLuZoxx99Kt2Z=VAbjYbGaUE7nbOxdQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Horowitz <michael.horowitz@ieee.org>,
-	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Dave Borowitz <dborowitz@google.com>
-X-From: git-owner@vger.kernel.org Fri Dec 30 03:00:35 2011
+From: Joey Hess <joey@kitenet.net>
+Subject: extended hook api and tweak-fetch hook
+Date: Thu, 29 Dec 2011 21:07:17 -0400
+Message-ID: <1325207240-22622-1-git-send-email-joey@kitenet.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 30 03:30:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RgRlr-0003Xi-6j
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Dec 2011 03:00:35 +0100
+	id 1RgSF1-00089c-9G
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Dec 2011 03:30:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752869Ab1L3CAA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Dec 2011 21:00:00 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:54188 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752032Ab1L3B77 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Dec 2011 20:59:59 -0500
-Received: by yhr47 with SMTP id 47so8350872yhr.19
-        for <git@vger.kernel.org>; Thu, 29 Dec 2011 17:59:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=DzOYwV5tG2nsXvDKuAUIp+SCKCpbifUdjgfRQSH3Wvc=;
-        b=pdgDwH4OSAXzpYGXgieVH+Npsids/y61cTrzenroFw5a5U7iO4VGMinpJ7VjBATwN+
-         oN4jgzB+XJTLKowemng3QhflIpxTTXrEEzLa1b6mLqYXp8NwG/42quQisxBQh9KW1Uao
-         QD4biTLNnRdXHDGvThrXV+A6KVDmGyjodUehU=
-Received: by 10.236.181.136 with SMTP id l8mr49092110yhm.103.1325210398990;
- Thu, 29 Dec 2011 17:59:58 -0800 (PST)
-Received: by 10.146.243.7 with HTTP; Thu, 29 Dec 2011 17:59:58 -0800 (PST)
-In-Reply-To: <CAD0k6qTp9sKCb==Jh1vuLuZoxx99Kt2Z=VAbjYbGaUE7nbOxdQ@mail.gmail.com>
+	id S1754872Ab1L3CaK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Dec 2011 21:30:10 -0500
+Received: from wren.kitenet.net ([80.68.85.49]:54718 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754171Ab1L3CaI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Dec 2011 21:30:08 -0500
+Received: from gnu.kitenet.net (dialup-4.153.83.252.Dial1.Atlanta1.Level3.net [4.153.83.252])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id 58012119287
+	for <git@vger.kernel.org>; Thu, 29 Dec 2011 21:30:04 -0500 (EST)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id 31A2C46963; Thu, 29 Dec 2011 20:07:35 -0500 (EST)
+X-Mailer: git-send-email 1.7.7.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187791>
 
-On Thu, Dec 29, 2011 at 9:08 AM, Dave Borowitz <dborowitz@google.com> w=
-rote:
-> On Wed, Dec 28, 2011 at 17:27, Michael Horowitz
-> <michael.horowitz@ieee.org> wrote:
->> ldiff =3D "!git diff `git rev-list --reverse -n 2 HEAD -- $1` -- $1"
->
-> FWIW, you can also do this as:
-> =C2=A0ldiff =3D log -p -1 --format=3Dformat: --
->
->> ldifft =3D "!git difftool `git rev-list --reverse -n 2 HEAD -- $1` -=
-- $1"
->
-> I don't know that you can do something equivalent with difftool. I
-> suppose you could do the above with "GIT_EXTERNAL_DIFF=3D<some diffto=
-ol
-> wrapper> git ldiff", but that's not very helpful.
+This patch series adds an extended hook API, and uses it to implement
+the new tweak-fetch hook.
 
-difftool cannot be driven by log right now.  It is something we
-thought would be helpful in the past:
+The remaining hooks (that do not already use run_hook()) could be
+refactored later to use this new API.
 
-http://thread.gmane.org/gmane.comp.version-control.git/114269/focus=3D1=
-14367
-
-On 2009-03-23 Junio C Hamano <gitster <at> pobox.com> wrote:
-> Perhaps we would want a convenient way for "log -p" or "show -p" to d=
-rive
-> difftool as a backend?
-
-I think that's exactly it.  difftool wraps diff; a log equivalent
-would be quite helpful.
-
-One idea is for difftool to learn a "--log" option to make it wrap log
-instead.  I don't know if a diff-like command having a "--log" option
-is ideal from a consistency-of-user-interface POV so I'm open to
-ideas.  It is convenient, though.  It does seem like difftool would be
-a good place to expose this feature.
-
-I'd be interested in the "teach log / show -p about GIT_EXTERNAL_DIFF"
-route, if that sounds like a good idea.
---=20
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 David
+Also, the API has been designed to allow several programs to be run
+for a single hook, when someone wants to add that into git.
