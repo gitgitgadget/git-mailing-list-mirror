@@ -1,117 +1,90 @@
-From: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>
-Subject: Re: How to deal with historic tar-balls
-Date: Sun, 01 Jan 2012 20:04:29 +0100
-Message-ID: <4F00AE3D.9050102@dirk.my1.cc>
-References: <4EFF5CDA.5050809@gmail.com> <4EFFA868.50605@dbservice.com>
+From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+Subject: Re: [PATCH 2/2] git-svn, perl/Git.pm: extend and use Git->prompt
+ method for querying users
+Date: Sun, 01 Jan 2012 20:45:55 +0100
+Message-ID: <4F00B7F3.1060105@tu-clausthal.de>
+References: <4EC52508.9070907@tu-clausthal.de> <CABPQNSZ0iPAE+BnDU6Nz8_PkrAtPbjL4RoJuQS=Um2wxPt-2DQ@mail.gmail.com> <4EC65DE4.90005@tu-clausthal.de> <CABPQNSbfM0JRVPk3fxfSEq7QaO-fynHM8FBGpPribdgeRqpZKA@mail.gmail.com> <4ED0CE8B.70205@tu-clausthal.de> <20111130064401.GC5317@sigill.intra.peff.net> <4EF907F1.1030801@tu-clausthal.de> <m3d3baf5kd.fsf@localhost.localdomain> <4EF9D8B9.9060106@tu-clausthal.de> <4EF9EBF4.7070200@tu-clausthal.de> <4EF9ED58.8080205@tu-clausthal.de> <7vd3b967ql.fsf@alter.siamese.dyndns.org> <7vty4l4rr8.fsf@alter.siamese.dyndns.org> <4EFA5F08.2060705@tu-clausthal.de> <7vpqf91kqo.fsf@alter.siamese.dyndns.org> <4EFAF241.9050806@tu-clausthal.de> <7v39c41keo.fsf@alter.siamese.dyndns.org> <7vpqf8z8a6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: nn6eumtr <nn6eumtr@gmail.com>, git@vger.kernel.org
-To: Tomas Carnecky <tom@dbservice.com>
-X-From: git-owner@vger.kernel.org Sun Jan 01 20:06:56 2012
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 01 20:46:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RhQk7-0002GB-HB
-	for gcvg-git-2@lo.gmane.org; Sun, 01 Jan 2012 20:06:51 +0100
+	id 1RhRMN-0005x8-8D
+	for gcvg-git-2@lo.gmane.org; Sun, 01 Jan 2012 20:46:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752736Ab2AATGr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Jan 2012 14:06:47 -0500
-Received: from smtprelay01.ispgateway.de ([80.67.31.35]:52020 "EHLO
-	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751211Ab2AATGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Jan 2012 14:06:46 -0500
-Received: from [217.87.101.90] (helo=[192.168.2.100])
-	by smtprelay01.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1RhQhq-0006Y1-Ju; Sun, 01 Jan 2012 20:04:30 +0100
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:8.0) Gecko/20111105 Thunderbird/8.0
-In-Reply-To: <4EFFA868.50605@dbservice.com>
-X-Df-Sender: NzU3NjQ2
+	id S1752543Ab2AATp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Jan 2012 14:45:58 -0500
+Received: from poseidon.rz.tu-clausthal.de ([139.174.2.21]:23618 "EHLO
+	poseidon.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751895Ab2AATp5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Jan 2012 14:45:57 -0500
+Received: from poseidon.rz.tu-clausthal.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id DE9A323ABC;
+	Sun,  1 Jan 2012 20:45:54 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
+	 bh=IQBZ6w1mCcon1iNRd6ys0KvynXM=; b=cE4EP3w1AJeNvWlCwUH6bYEp0HjZ
+	ZDlXohiYCOOEXlhtye7qv7bl7WeGEyUvS3WSAny8f3W5uCSIxgjjeLCJXbaz5S+J
+	4zKBK2dh6hh6TkqWcyWuCTwFDTLNp45b7o/lmZIwnlMoCTog2j5gFEu4Ihgt/uNR
+	36tDjLO+q890fpY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
+	dkim1; b=ZC5goQZtrcdEIv8O5WOmWS7UoB7WCZg4r8A4wz4WIdoMnQFLPTfvWHA
+	AQng/sQI3tT8lw3X6sh5TNaM2XimbgnBDh0XNnBSdu9IylmIZjjh+8cAY6mNA+xG
+	iM0QS1zHdavdcJMnR8l0Y3n2kdxX3Lzv7Yv+5jAfHh1MME58lEuw=
+Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
+	by poseidon.rz.tu-clausthal.de (Postfix) with ESMTP id BAA3F23AB6;
+	Sun,  1 Jan 2012 20:45:54 +0100 (CET)
+Received: from [139.174.242.80] (account sstri@tu-clausthal.de [139.174.242.80] verified)
+  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.3)
+  with ESMTPSA id 25589715; Sun, 01 Jan 2012 20:45:54 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
+In-Reply-To: <7vpqf8z8a6.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.3.4
+X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187829>
 
-Am 01.01.2012 01:27 schrieb Tomas Carnecky:
-> On 12/31/11 8:04 PM, nn6eumtr wrote:
->> I have a number of older projects that I want to bring into a git
->> repository. They predate a lot of the popular scm systems, so they are
->> primarily a collection of tarballs today.
->>
->> I'm fairly new to git so I have a couple questions related to this:
->>
->> - What is the best approach for bringing them in? Do I just create a
->> repository, then unpack the files, commit them, clean out the
->> directory unpack the next tarball, and repeat until everything is loaded?
->>
->> - Do I need to pay special attention to files that are renamed/removed
->> from version to version?
->>
->> - If the timestamps change on a file but the actual content does not,
->> will git treat it as a non-change once it realizes the content hasn't
->> changed?
->>
->> - Last, if after loading the repository I find another version of the
->> files that predates those I've loaded, or are intermediate between two
->> commits I've already loaded, is there a way to go say that commit B is
->> actually the ancestor of commit C? (i.e. a->c becomes a->b->c if you
->> were to visualize the commit timeline or do diffs) Or do I just reload
->> the tarballs in order to achieve this?
-> 
-> There is a script which will import sources from multiple tarballs,
-> creating a commit with the contents of each tarball. It's in the git
-> repository under contrib/fast-import/import-tars.perl.
-> 
-> tom
+Am 28.12.2011 22:38 schrieb Junio C Hamano:
+> I am however not sure if the second patch in this series is a good thing
+> in the current shape. For GUI users who do not have a terminal, earlier
+> they couldn't respond to these questions but now they can, so in that
+> narrow sense we are not going backwards.
 
-@tom: True. I didn't know about that script, but it should work.
+> But for people who use *_ASKPASS and are working from the terminal, it is
+> a regression to ask these non-password questions using *_ASKPASS. Most
+> likely, these helpers that are designed for password entry will hide what
+> is typed, and I also wouldn't be surprised if some of them have fairly low
+> input-length restriction that may be shorter than a long-ish pathname that
+> users might want to give as an answer, which they could do in the terminal
+> based interaction but will become impossible with this patch.
 
-@nn6eumtr: Basically your workflow is perfect. But let me give you some
-explanation:
+I'm still for the second patch to be applied (maybe w/o the certificate
+filename prompt), too, because this makes git-svn behave the save way as
+git-core does (especially asking for username).
 
-git init
-foreach archive in *.tar; do
-    tar xf $archive
-    git add --all .
-    git commit -m "Added $archive"
-    # now remove everything except for the .git directory
-    # with regular shell commands (rm -rf *). Also remove
-    # any dot-files (and the tarball itself, if it's in the
-    # current directory).
-done
+Do you think that ppl. mainly using the terminal have *_ASKPASS set?
+Most GUIs I know do set it automatically.
 
-Notice the '--all' switch to 'git add': Normally, 'git add .' adds all
-files that match the given pattern '.', i.e. all files in the current
-directory (and below, it's recursive). The '--all' switch together with
-the pattern '.' adds or updates all files already known to git *AND*
-adds the files not yet known *AND* removes the files that are no longer
-in the working tree. That's exactly what you want.
+I agree that a new interface is needed (working on a patch), but before
+we hurry, we should make git-core and git-svn behave the same way.
 
-Consider archive1.tar with files A, B, C:
+Btw. git-svn also does not honour git-credentials.
 
-  git add --all . # will add A, B, and C
-
-Now remove A, B, C, and unpack archive2.tar. Assume it has files B, C,
-D. A was deleted, B was changed, C is unchanged, D is new.
-
-  git add --all . # will remove A, add B, leave C, add D.
-
-git will notice that C hasn't changed its content (timestamp doesn't
-matter).
-
-Without the '--all' switch, git would simply add B and D.
-
-There is no problem re-arranging the history after your import (see "git
-rebase --help", especially the --interactive section), but then you
-probably will have conflicts and have to resolve them. I'd suggest to
-re-start the import instead.
-
-Please note that "for archive in *.tar" will pick the tarballs in
-lexicographical order. That might not be your intention.
-
-HTH,
-    Dirk
+-- 
+Best regards,
+ Sven Strickroth
+ ClamAV, a GPL anti-virus toolkit   http://www.clamav.net
+ PGP key id F5A9D4C4 @ any key-server
