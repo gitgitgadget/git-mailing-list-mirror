@@ -1,71 +1,86 @@
-From: Tomas Carnecky <tom@dbservice.com>
-Subject: Re: How to deal with historic tar-balls
-Date: Sun, 01 Jan 2012 01:27:20 +0100
-Message-ID: <4EFFA868.50605@dbservice.com>
-References: <4EFF5CDA.5050809@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] git-svn, perl/Git.pm: extend and use Git->prompt
+ method for querying users
+Date: Sun, 01 Jan 2012 01:11:34 -0800
+Message-ID: <7v8vlrwzw9.fsf@alter.siamese.dyndns.org>
+References: <7vd3b967ql.fsf@alter.siamese.dyndns.org>
+ <7vty4l4rr8.fsf@alter.siamese.dyndns.org> <4EFA5F08.2060705@tu-clausthal.de>
+ <7vpqf91kqo.fsf@alter.siamese.dyndns.org> <4EFAF241.9050806@tu-clausthal.de>
+ <7v39c41keo.fsf@alter.siamese.dyndns.org>
+ <7vpqf8z8a6.fsf@alter.siamese.dyndns.org> <4EFB8E78.4090205@tu-clausthal.de>
+ <7vlipwz5xs.fsf@alter.siamese.dyndns.org> <4EFD40CF.8000801@tu-clausthal.de>
+ <20111230135423.GA1684@sigill.intra.peff.net>
+ <4EFDD06A.3010708@tu-clausthal.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: nn6eumtr <nn6eumtr@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 01 01:27:35 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>
+To: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+X-From: git-owner@vger.kernel.org Sun Jan 01 10:11:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rh9Gx-0007GD-Ab
-	for gcvg-git-2@lo.gmane.org; Sun, 01 Jan 2012 01:27:35 +0100
+	id 1RhHSD-00027x-2K
+	for gcvg-git-2@lo.gmane.org; Sun, 01 Jan 2012 10:11:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750861Ab2AAA11 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Dec 2011 19:27:27 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:58638 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750721Ab2AAA10 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Dec 2011 19:27:26 -0500
-Received: by eekc4 with SMTP id c4so14517842eek.19
-        for <git@vger.kernel.org>; Sat, 31 Dec 2011 16:27:24 -0800 (PST)
-Received: by 10.213.26.213 with SMTP id f21mr2352373ebc.27.1325377644836;
-        Sat, 31 Dec 2011 16:27:24 -0800 (PST)
-Received: from calvin.local (gw.ptr-62-65-141-13.customer.ch.netstream.com. [62.65.141.13])
-        by mx.google.com with ESMTPS id u53sm121770163eeu.6.2011.12.31.16.27.23
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 31 Dec 2011 16:27:24 -0800 (PST)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:9.0) Gecko/20111123 Thunderbird/9.0
-In-Reply-To: <4EFF5CDA.5050809@gmail.com>
+	id S1751800Ab2AAJLj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Jan 2012 04:11:39 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50395 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751555Ab2AAJLh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Jan 2012 04:11:37 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 929AB6EE3;
+	Sun,  1 Jan 2012 04:11:36 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AfVy/Kqoigdhe9ZfqP5wKHcoArU=; b=R8V8W9
+	9cH6NEKwm6ErULqEDKkO7Cz9XJ2c+YGfrLsAgPZgBdC4HCbQvvPVggNzW6uHwbd9
+	haTSJZHgXaJL5VlzIYAirP9tQknmdGVjpwWGCqfdzPuFpy5K/kYC0ctBmlPKNSk0
+	QXVhDVH6fbAd4CV6OAgR2mOI0dGqbop5dddJI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kJ5993J4m7Fa1IWGEhFgZqxwwa0XqGGA
+	4n3lu0ZIXkRRyC55DgK5njiNOyV8Gi2T1EXcV0CWsdg9Ma+0D3zhccI7EGJMwYMw
+	lInxxWJoUAILdCnCKgczl/Ul02LT0RHoj2hK7OQ5k2iRatMbO0BHZzRQMsFqzp1j
+	CF6jOLfzqbk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8976D6EE2;
+	Sun,  1 Jan 2012 04:11:36 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1C45C6EE1; Sun,  1 Jan 2012
+ 04:11:36 -0500 (EST)
+In-Reply-To: <4EFDD06A.3010708@tu-clausthal.de> (Sven Strickroth's message of
+ "Fri, 30 Dec 2011 15:53:30 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9B127842-3458-11E1-9A38-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187821>
 
-On 12/31/11 8:04 PM, nn6eumtr wrote:
-> I have a number of older projects that I want to bring into a git 
-> repository. They predate a lot of the popular scm systems, so they are 
-> primarily a collection of tarballs today.
->
-> I'm fairly new to git so I have a couple questions related to this:
->
-> - What is the best approach for bringing them in? Do I just create a 
-> repository, then unpack the files, commit them, clean out the 
-> directory unpack the next tarball, and repeat until everything is loaded?
->
-> - Do I need to pay special attention to files that are renamed/removed 
-> from version to version?
->
-> - If the timestamps change on a file but the actual content does not, 
-> will git treat it as a non-change once it realizes the content hasn't 
-> changed?
->
-> - Last, if after loading the repository I find another version of the 
-> files that predates those I've loaded, or are intermediate between two 
-> commits I've already loaded, is there a way to go say that commit B is 
-> actually the ancestor of commit C? (i.e. a->c becomes a->b->c if you 
-> were to visualize the commit timeline or do diffs) Or do I just reload 
-> the tarballs in order to achieve this?
+Sven Strickroth <sven.strickroth@tu-clausthal.de> writes:
 
-There is a script which will import sources from multiple tarballs, 
-creating a commit with the contents of each tarball. It's in the git 
-repository under contrib/fast-import/import-tars.perl.
+> Am 30.12.2011 14:54 schrieb Jeff King:
+> ...
+>>   Username: <text input>
+>>   Password: <text input>
+>>   Remember password? [checkbox]
+>> 
+>> I was planning to do something custom for credentials as an extension to
+>> the credential helper protocol, but this could also fall under the
+>> heading of a general prompt helper.
+>
+> This might be problematic, because (for git-svn) username and password
+> are not requested together.
 
-tom
+I do not think Peff means the dialog must ask these three items at the
+same time. The point is that other codepaths know they need to ask them
+and would benefit if they can instruct the dialog external helper to ask
+them in a single interaction. So if your callsite does not ask them
+together, it is OK. You can keep asking them separately in two dialog
+interactions.
