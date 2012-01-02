@@ -1,66 +1,93 @@
-From: Slawomir Testowy <slawomir.testowy@gmail.com>
-Subject: Re: What's the best way to push/fetch replace refs?
-Date: Mon, 2 Jan 2012 07:16:16 +0100
-Message-ID: <CAA61mJjCKJYAifD3DihAg+pH4Q0Z9y26n3P5KBBy09n-wK9LXg@mail.gmail.com>
-References: <CAA61mJgCjt0O5LE5OQ=aNbtUHCZeZdZ=3dXYTNv_AhFi7JXwkA@mail.gmail.com>
-	<CAP8UFD3KSjdZz1q+QYsH4JpRkiavtTbT1WqQSdxqCaxc24j=Rg@mail.gmail.com>
+From: Sudarshan Wadkar <wadkar@gmail.com>
+Subject: Odd remote: error: packfile ./objects/pack/pack-FOO.pack cannot be accessed
+Date: Mon, 2 Jan 2012 14:48:22 +0530
+Message-ID: <CAOoYcj0JO4q0GJRzuexQR6OAng2PdZX8gD7zNYNoOCmCCLqz4Q@mail.gmail.com>
+References: <CAOoYcj2pnNtK3RshcJFwiXK356cZz6M38-NG1_uORjknyhdAKQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 02 07:16:40 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 02 10:19:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RhbCJ-0007mt-2w
-	for gcvg-git-2@lo.gmane.org; Mon, 02 Jan 2012 07:16:39 +0100
+	id 1Rhe3H-0005Os-6A
+	for gcvg-git-2@lo.gmane.org; Mon, 02 Jan 2012 10:19:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751005Ab2ABGQS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jan 2012 01:16:18 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:53002 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750960Ab2ABGQR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jan 2012 01:16:17 -0500
-Received: by pbdu13 with SMTP id u13so8145221pbd.19
-        for <git@vger.kernel.org>; Sun, 01 Jan 2012 22:16:16 -0800 (PST)
+	id S1751354Ab2ABJTJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Jan 2012 04:19:09 -0500
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:53785 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751119Ab2ABJTI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Jan 2012 04:19:08 -0500
+Received: by wibhm6 with SMTP id hm6so8248972wib.19
+        for <git@vger.kernel.org>; Mon, 02 Jan 2012 01:19:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=DCGN5ijeKVteGVHLzGjOfNmt96B9YJLffUv9QuCUJMc=;
-        b=hvNTtgCFHT0Yt1+Bf4yWMz62L9Kawj6KYPIkJvKpwfYdNx6E1RyR0pwRLOwjDlXISD
-         C4uOMUHf2klIMR1pn0Lw9e+71esUVNdZ3f4DWDcIy7whRDBdZTNF/O5HgGMxOBP2q4Q9
-         WEpXOkQRPiqq5HQNe5hr4TZ/e8wxTvwEqV7xQ=
-Received: by 10.68.75.199 with SMTP id e7mr119939605pbw.128.1325484976594;
- Sun, 01 Jan 2012 22:16:16 -0800 (PST)
-Received: by 10.143.142.9 with HTTP; Sun, 1 Jan 2012 22:16:16 -0800 (PST)
-In-Reply-To: <CAP8UFD3KSjdZz1q+QYsH4JpRkiavtTbT1WqQSdxqCaxc24j=Rg@mail.gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        bh=kbs6d77YSi9JWXcMKsOQbCkkgNHYF2uCW4LxeNA+7FM=;
+        b=aITHhgaLwx0qQp+VDYIfQAON/+h6sk2JU3oBrM1av6O6FT44WI7NKStrhSnR+G84nx
+         TaE/5yfIHGWkto4Dxus7wbhnn904WyQzs8kw3YOnbYQ4pZDOi6MnSljxHbP5jb+JsHcE
+         3s7yMEPWNGYZnaMCfMhqvJ/PyGj85Rqo5QTbg=
+Received: by 10.216.137.195 with SMTP id y45mr32700636wei.45.1325495946214;
+ Mon, 02 Jan 2012 01:19:06 -0800 (PST)
+Received: by 10.223.156.144 with HTTP; Mon, 2 Jan 2012 01:18:22 -0800 (PST)
+In-Reply-To: <CAOoYcj2pnNtK3RshcJFwiXK356cZz6M38-NG1_uORjknyhdAKQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187836>
 
-2011/12/30 Christian Couder <christian.couder@gmail.com>:
-> On Fri, Dec 30, 2011 at 12:59 PM, Slawomir Testowy
-> <slawomir.testowy@gmail.com> wrote:
->>
->> # I also added "fetch = +refs/replace/*:refs/replace/*" to [remote
->> "origin"] in "b" and this also seems to work.
->
-> Yeah, the simplest is probably to just add "fetch =
-> +refs/replace/*:refs/replace/*" to the remote(s) you want to get the
-> replace refs from, and "push = +refs/replace/*:refs/replace/*" to the
-> remote(s) you want to push the replace refs to.
->
-> Regards,
-> Christian.
+I have a simple post-receive hook as follows :
 
-Thanks Christian, I thought maybe there is some magic "git clone
---get-also-replace-refs" or something. I'm asking because I'm about to
-tell people how to clone my repository and some of them don't know Git
-at all so I wanted to find out the simplest/best way to fetch replace refs.
+#!/bin/bash
+# using bash and not simple sh
+# simply checkout the master branch to notBare path, use tools from
+that portion to deploy further
+notBareRepo=3D'/home/sudhi/repo/notBare/myproj-master'
+GIT_WORK_TREE=3D"$notBareRepo" git reset --hard master
+#end post-receive
 
-Thanks.
+But when I push, I get this odd error from remote
+
+$ git push --verbose --mirror
+ssh://wadkar@192.168.1.177:7185/~wadkar/repo/bare/myproj.git
+Pushing to ssh://wadkar@192.168.1.177:7185/~wadkar/repo/bare/myproj.git
+Counting objects: 5, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 323 bytes, done.
+Total 3 (delta 2), reused 0 (delta 0)
+remote: error: packfile
+=2E/objects/pack/pack-17900952dc824651db15369a341eec8d3e8f39d2.pack
+cannot be accessed
+remote: HEAD is now at 4d5a6f1 Investigate and report odd error
+To ssh://wadkar@192.168.1.177:7185/~wadkar/repo/bare/myproj.git
+=A0=A0 d066a2f..4d5a6f1=A0 master -> master
+
+This happens even if I do a fresh clone on remote server as:
+
+$ cd repo/bare; git clone --mirror wadkar@my_ip_address:myproj
+
+Local " git fsck " reports few dangling blobs but nothing
+fancy/serious. Remote git version is 1.7.4.1 on a CentOS 5.7, while
+the local is same (1.7.4.1) on a Ubuntu 11.04.
+
+1. How bad is the situation?
+2. Have I done something wrong, or this is not my doing?
+3. The checked out version in repo/notBare is fine, and seems to be
+working (I can pass my unit-tests). Should I be worried?
+4. If not, then can I ignore this particular error and move on?
+
+-Sudarshan Wadkar
+
+"Success is getting what you want. Happiness is wanting what you get."
+- Dale Carnegie
+"It's always our decision who we are"
+- Robert Solomon in Waking Life
+"The truth is the truth, so all you can do is live with it."
+--Systematic Chaos
