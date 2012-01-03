@@ -1,85 +1,73 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Submodules always use a relative path to gitdir
-Date: Tue, 03 Jan 2012 11:58:22 -0800
-Message-ID: <7vobuktv6p.fsf@alter.siamese.dyndns.org>
-References: <1325192426-10103-1-git-send-email-antony.male@gmail.com>
- <7vsjk3vw67.fsf@alter.siamese.dyndns.org>
- <CABURp0pdvf9Eo_pM2UCYUBANOJOGON6pQS-SXuCWQE=s2XNOfQ@mail.gmail.com>
- <7vlipovd4n.fsf@alter.siamese.dyndns.org>
+Subject: Re: 1.7.7.3 wishlist: add --verbose option to git-tag
+Date: Tue, 03 Jan 2012 12:02:33 -0800
+Message-ID: <7vk458tuzq.fsf@alter.siamese.dyndns.org>
+References: <87d3b51vr0.fsf@cante.cante.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Antony Male <antony.male@gmail.com>, git@vger.kernel.org,
-	iveqy@iveqy.com
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 03 20:58:31 2012
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Tue Jan 03 21:02:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RiAVC-0007Wx-Jd
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Jan 2012 20:58:30 +0100
+	id 1RiAZF-0000ib-Q0
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Jan 2012 21:02:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752502Ab2ACT60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jan 2012 14:58:26 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37263 "EHLO
+	id S1753406Ab2ACUCi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jan 2012 15:02:38 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39105 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751976Ab2ACT6Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jan 2012 14:58:25 -0500
+	id S1752640Ab2ACUCg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jan 2012 15:02:36 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A892D5F12;
-	Tue,  3 Jan 2012 14:58:24 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CACF76099;
+	Tue,  3 Jan 2012 15:02:35 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=d6P82dLzlugVMqTrx9DP47ehvTs=; b=sAoXxT
-	OTpJ1IPc4VQrQ8J0/AdZQ2EiZ99m/4JIVwDroheSG5YmdIQXSvnNWLd240F+z+h+
-	b0Bu5XRzAzzmrHwbU6E6WQrfIeljT+50FM/8nFe3LYTP3c5oJr+OEKGEIHDSVU4T
-	PIfeT5tBACGLkcqaXZ4GxJTPw9Z9y9yyL+ubI=
+	:content-type; s=sasl; bh=MDJ/KIqICzARsbW5NMX1z8b6j3k=; b=XJyD3H
+	qRko+GRR9VL0gMzqwIzFTp1kWJ86Wb4fLBBvOd5i3Nzhrcuu7DwqcMFOGNjFeA6+
+	3Q/9OW5jKpvxl4lBGp5c0KIhDOmmJkih2Y7SvIaruapuEVr2+hs51Z4MI+OUUwCT
+	YPCr1pmnGl8/9rGNrG+17jQKSCRejB1H5jJ+4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=i1g85xURdGW89naLSjzeR4Ck8dOnqhTI
-	hy5ygKe3nf5Pr0lgWerG+pNt41Ff9RN/hP7+4A6SWboxa3T5mJ0HhPM7R7zxxGB5
-	gyMtr5DOQKV2YrQwFCtNlXnheG9IriKnnKJNysuEB2LvAL5N5mjoFC9N/niWwkos
-	nlCUwSsBpJ0=
+	:content-type; q=dns; s=sasl; b=rijGc6JN2gnJqXB3NChSJMx8c+rA1xBO
+	nzq78QwsEv7WrFE8jcQsujUILDdrrO126j8Lo5yPlwusN6/emj6a3CuxdANDDH9d
+	Q/XgILSQTkXoD+zFMkkXiu6zUV5yw8HDJa2PsE7grdStuAMQLpUXK9McQGm6nvlU
+	m5eaSPdELcU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E1865F11;
-	Tue,  3 Jan 2012 14:58:24 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C1BB36098;
+	Tue,  3 Jan 2012 15:02:35 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 324475F10; Tue,  3 Jan 2012
- 14:58:24 -0500 (EST)
-In-Reply-To: <7vlipovd4n.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 03 Jan 2012 10:45:28 -0800")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 754926097; Tue,  3 Jan 2012
+ 15:02:34 -0500 (EST)
+In-Reply-To: <87d3b51vr0.fsf@cante.cante.net> (Jari Aalto's message of "Sat,
+ 31 Dec 2011 01:32:19 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4B528A92-3645-11E1-80BE-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: E07F5726-3645-11E1-9764-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187885>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jari Aalto <jari.aalto@cante.net> writes:
 
-> ...
-> And the extent of the design of
+> In scripts it would be useful if "git tag" would provide option:
 >
->     echo "gitdir: $there" >.git && git config core.worktree "$(pwd)"
+>     --verbose
 >
-> is to work with the locations of these two places as they are set up.
-> Moving one or the other or both may or may not work without adjusting to
-> what you did. If you "mv $there $newlocation" (the repository) behind
-> Git's back, you may need to update .git to point at the new location of
-> the repository.  If you move your working tree woth "mv", you may need to
-> update core.worktree to point at the new location of the working tree.
-> And until you do so things may not work. That is why we do not explicitly
-> say "you can move them to arbitrary places without telling git and things
-> will work"---because that is not the case.
+> As in script:
+>
+>     git tag --verbose -m "Initial import" upstream/1.0
 
-Just to avoid any misunderstanding, I still agree with the overall goal of
-the original patch to allow moving the whole superproject tree, including
-its submodule repositories in its .git/modules/, and the working trees of
-itself and its submodules. It is a narrow special case with a very well
-defined relative relationships between the working tree of submodules and
-the repositories that control them, and having them point to each other
-with relative paths will make any post-move adjustments unnecessary, unlike
-more general unconstrained uses of the "gitdir: $there" mechanism.
+"In scripts", you are expected to be capable of doing anything fancy with
+"git cat-file tag", but we add things that turn out to be commonly needed.
+
+What does the proposed "--verbose" produce that makes scripts easier to
+write (i.e. avoids repeated post-processing of "git cat-file tag" output),
+and how commonly would what you propose apply to various people's needs
+other than yours?
