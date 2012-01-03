@@ -1,70 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fix hang in git fetch if pointed at a 0 length bundle
-Date: Tue, 03 Jan 2012 12:13:14 -0800
-Message-ID: <7v7h18tuhx.fsf@alter.siamese.dyndns.org>
-References: <20120103011352.GA13825@localhost>
- <20120103134603.GA31034@localhost>
+From: Jeff King <peff@peff.net>
+Subject: Re: Stashing individual files
+Date: Tue, 3 Jan 2012 15:13:23 -0500
+Message-ID: <20120103201323.GA4340@sigill.intra.peff.net>
+References: <CAJ6vYjduoBNrRcvcvQbX_yY-3-Qm5ZbXOM0WQpWRwC1H1OCqaA@mail.gmail.com>
+ <20120103190612.GC20926@sigill.intra.peff.net>
+ <7vfwfwtup7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brian Harring <ferringb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 03 21:13:24 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Chris Leong <walkraft@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 03 21:13:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RiAja-0004vl-Co
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Jan 2012 21:13:22 +0100
+	id 1RiAji-00050A-Bi
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Jan 2012 21:13:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754880Ab2ACUNS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jan 2012 15:13:18 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43835 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754873Ab2ACUNR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jan 2012 15:13:17 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C385F6387;
-	Tue,  3 Jan 2012 15:13:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Oa2wnBt7xZzCXbW1eDo0psrAG1Q=; b=RBAYT7
-	Lw/dcBCMQhv9795viHNCUaWCilU1XKHXjBXL35I/6h3QnVsNHWILGD2Kix9f5x3W
-	IMSzuRa+7tLcgRa310W8EliA4G7hbOLhCxdNxIqtE+/v7wVXOHxfyvYuHGJdlDWR
-	LZqbQwSjLsorLdpBIRezUobP+BWwM8LNN8th8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cAcnH79cdNDQPB4gGR0XphXxTiZgG2c5
-	Sam6DBC0qOxpGKxhQGVJrWHk02Jd7h1p8kKcFnkFrNILEttlVhPBa9xt5zO5iY+A
-	anKTEMs42CI7AVDL1EnWv42q10T4QvBqz8Gn/1gLZVVXdh/bCTClY+Fdqrhr2cKS
-	bRkKrClk3ag=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BA9A86386;
-	Tue,  3 Jan 2012 15:13:16 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 308836384; Tue,  3 Jan 2012
- 15:13:16 -0500 (EST)
-In-Reply-To: <20120103134603.GA31034@localhost> (Brian Harring's message of
- "Tue, 3 Jan 2012 05:46:03 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5EFDB7AE-3647-11E1-BA4B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754890Ab2ACUN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jan 2012 15:13:26 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55561
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754873Ab2ACUNZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jan 2012 15:13:25 -0500
+Received: (qmail 9817 invoked by uid 107); 3 Jan 2012 20:20:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Jan 2012 15:20:15 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Jan 2012 15:13:23 -0500
+Content-Disposition: inline
+In-Reply-To: <7vfwfwtup7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187891>
 
-Brian Harring <ferringb@gmail.com> writes:
+On Tue, Jan 03, 2012 at 12:08:52PM -0800, Junio C Hamano wrote:
 
-> git-repo if interupted at the exact wrong time will generate zero
-> length bundles- literal empty files.  git-repo is wrong here, but
-> git fetch shouldn't effectively spin loop if pointed at a zero
-> length bundle.
->
-> Signed-off-by: Brian Harring <ferringb@chromium.org>
-> ---
+> Jeff King <peff@peff.net> writes:
+> 
+> > I think that would be OK compromise, though. I'd rather not introduce a
+> > whole new "stashfiles" command (or even a new subcommand of stash) if we
+> > can avoid it.
+> 
+> Why wouldn't a simple "git diff -- paths >P.diff" work?
 
-Thanks.
+For all the same reasons that "git diff >P.diff" is not as good as a
+regular stash.
 
-Also thanks to all reviewers.
+> What does such a partial stash leave in the working tree, how does the
+> user deal with the remaining local changes, what happens after such a
+> partial stash is applied/popped?
+
+I would expect it to stash only the changes in the selected files,
+restoring them to their state in HEAD, and leave other files untouched.
+
+We already have partial stashing like this via "git stash -p".  This is
+just a shorthand for "say yes to all of the changes in foo.c, and no to
+everything else". So I don't see it as particularly new or dangerous.
+
+-Peff
