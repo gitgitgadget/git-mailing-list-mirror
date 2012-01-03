@@ -1,75 +1,69 @@
-From: manoj soni <manoj6891@gmail.com>
-Subject: Fwd: git and github query about maintaining project
-Date: Tue, 3 Jan 2012 14:42:38 -0500
-Message-ID: <CA+KSefW+K1hMiFkrFCP1LAVjfV9hECwFWAHz940fwGJawHuoFQ@mail.gmail.com>
-References: <CA+KSefVajgEBCH+31a0DLXPGUgb2yshxPeXV+SdmGvPFVBOBtg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] stash: Don't fail if work dir contains file named 'HEAD'
+Date: Tue, 03 Jan 2012 11:44:41 -0800
+Message-ID: <7vwr98tvti.fsf@alter.siamese.dyndns.org>
+References: <913BB2F9-3C51-44D0-BFEC-3A49A5EC9E15@JonathonMah.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 03 20:42:45 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jonathon Mah <me@JonathonMah.com>
+X-From: git-owner@vger.kernel.org Tue Jan 03 20:44:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RiAFv-0000SS-KY
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Jan 2012 20:42:44 +0100
+	id 1RiAHx-0001Cz-27
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Jan 2012 20:44:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754510Ab2ACTmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jan 2012 14:42:40 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:65034 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754428Ab2ACTmi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jan 2012 14:42:38 -0500
-Received: by dajs34 with SMTP id s34so10540484daj.19
-        for <git@vger.kernel.org>; Tue, 03 Jan 2012 11:42:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=z2c5uoF71QKvfRxzj7jSpmXC29o5XWS8kp7l/vcfvHs=;
-        b=VGdWfMbVnE2ZhVM3FbJgAgXYBvPnZQ/N2nu5CsuBB4ZmsmcI3LrKkVGcVFjt+Rtt4i
-         pvGnfQ+NtnrtfMrVnVX+KAb5xrxvosp5HibCz2iKd27MABWZCJWle+G+0mgoBc5wsKOD
-         sG6sIOVG0E1VEPerbJY7zPcn/3QckTiuTJORc=
-Received: by 10.68.212.232 with SMTP id nn8mr3019331pbc.105.1325619758332;
- Tue, 03 Jan 2012 11:42:38 -0800 (PST)
-Received: by 10.142.230.12 with HTTP; Tue, 3 Jan 2012 11:42:38 -0800 (PST)
-In-Reply-To: <CA+KSefVajgEBCH+31a0DLXPGUgb2yshxPeXV+SdmGvPFVBOBtg@mail.gmail.com>
+	id S1754573Ab2ACToo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jan 2012 14:44:44 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64396 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754438Ab2ACTon (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jan 2012 14:44:43 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 64DFC5AB9;
+	Tue,  3 Jan 2012 14:44:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=oqoecqaG3uLsnd+dGy8ctfM+5N0=; b=QzqGfhkrPqAxtojRD4hR
+	nwOlpzeT23/LrzjLuQzb2Sz0/tKEsJcx7OAIx/D3VxbyAYlW04UXY0oK680bfXqR
+	y+BxZsWAF44uLFbJc7kdUM/S2w6+b11+x/FPFgmqbRwB84COiDBgIIaUXASKu6nx
+	XKVploR9BqAwib0+6KNeZic=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=qyrNXbbJMHp+FFRPX5gBjxIHNpHtRw+0S0QMJXl3pSkASa
+	BmjkToufj0SKuxL+QcGUqzbnAbjP2dIx/RIdzRUmxY2LPOwRXtl5ByTMZDmlCD2u
+	y4CgwFz25kgE2pwMuLy9o6DPxpliGdL+5L+Sx8HcQL0euZR6SSZv3eSdcIZW0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D96A5AB8;
+	Tue,  3 Jan 2012 14:44:43 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CF15A5AB7; Tue,  3 Jan 2012
+ 14:44:42 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 61C12B82-3643-11E1-BAD7-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187882>
 
-Dear Admin,
-Forwarding you below email, which I have sent to wrong email address by mistake.
+Jonathon Mah <me@JonathonMah.com> writes:
 
-Thanks,
-Manoj
+> When performing a plain "git stash" (without --patch), git-diff would fail
+> with "fatal: ambiguous argument 'HEAD': both revision and filename". The
+> output was piped into git-update-index, masking the failed exit status.
+> The output is now sent to a temporary file (which is cleaned up by
+> existing code), and the exit status is checked. The "HEAD" arg to the
+> git-diff invocation has been disambiguated too, of course.
+>
+> In patch mode, "git stash -p" would fail harmlessly, leaving the working
+> dir untouched.
+>
+> Signed-off-by: Jonathon Mah <me@JonathonMah.com>
+> ---
 
-
----------- Forwarded message ----------
-From: manoj soni <manoj6891@gmail.com>
-Date: Tue, Jan 3, 2012 at 2:20 PM
-Subject: git and github query about maintaining project
-To: git@vger.kernel.orgm, support@github.com
-
-
-Dear Admin,
-I am using git along with github since august 2011. I am new to it but
-now I know it significantly. It is interesting and helpful.
-I have started with a already existing project (say P). We were two
-persons working on this project, so we forked P (on github). I got
-project forked copy C1 and my friend got C2. We each have committed to
-C1 and C2 independently. Now my friend merged his commits from C2 to P
-and moved out of this project. I have created a branch OLD in my
-repository C1 along with a already existing master branch. What I want
-to do that in my project C1, OLD branch should have all of my commits
-and master branch should be same as P. Please tell how should I do
-this? I am trying since a week to get it done, I have attempted some
-unsuccessful tries, which I can tell you if you want. If you need more
-information, please tell me.
-
-Hope to get response.
-I shall be thankful.
-Manoj Soni
+Thanks.
