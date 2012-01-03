@@ -1,64 +1,78 @@
-From: Chris Leong <walkraft@gmail.com>
-Subject: Re: Git ghost references
-Date: Tue, 3 Jan 2012 19:32:22 +1100
-Message-ID: <CAJ6vYjd2YLUa82tUrXq+N=7+kdVxH8ryS64mKKkwhA6K+QfcDw@mail.gmail.com>
-References: <CAJ6vYjfpx-hfDsd+urp5_iS99p0RhmxohOc+TNv7SUWFnYe5wQ@mail.gmail.com>
- <4F02BAF9.1000206@kdbg.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] fix hang in git fetch if pointed at a 0 length bundle
+Date: Tue, 03 Jan 2012 09:35:56 +0100
+Message-ID: <4F02BDEC.9060407@kdbg.org>
+References: <20120103011352.GA13825@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Jan 03 09:33:02 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, spearce@spearce.org
+To: Brian Harring <ferringb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 03 09:36:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rhznn-0008GN-Su
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Jan 2012 09:33:00 +0100
+	id 1Rhzqm-0000kC-Bn
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Jan 2012 09:36:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752582Ab2ACIcr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jan 2012 03:32:47 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:45724 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752570Ab2ACIcq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jan 2012 03:32:46 -0500
-Received: by eaad14 with SMTP id d14so8477965eaa.19
-        for <git@vger.kernel.org>; Tue, 03 Jan 2012 00:32:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=4ZLUUyUG5b2iAmrQNWGdus5ZAUncxm68mqlj7qBNb4o=;
-        b=kn9o1EuZ02aqVg+yCF7cDRgQsJ/alXDM3tc/2MmNmhcPV17WlqFThARp28xXsYwWvh
-         UPIfOsxNiA0VRBX3Y+siYOf6Ntte5jg+QKv0P3j+bsD9jO2/Nl4a1fmjRDr4E/zp3bkH
-         TjyBjiOB+OwcbTLX9RobklYKDIGDFRI1Ad6Tc=
-Received: by 10.205.134.139 with SMTP id ic11mr12275116bkc.114.1325579564486;
- Tue, 03 Jan 2012 00:32:44 -0800 (PST)
-Received: by 10.205.139.5 with HTTP; Tue, 3 Jan 2012 00:32:22 -0800 (PST)
-In-Reply-To: <4F02BAF9.1000206@kdbg.org>
+	id S1752051Ab2ACIgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jan 2012 03:36:00 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:38229 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751462Ab2ACIf7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jan 2012 03:35:59 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id CAC7D10021;
+	Tue,  3 Jan 2012 09:34:10 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 04B9319F43C;
+	Tue,  3 Jan 2012 09:35:56 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <20120103011352.GA13825@localhost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187855>
 
-I did have a production file in my .git and also an empty folder left
-in my remotes. Thanks heaps!
+Am 03.01.2012 02:13, schrieb Brian Harring:
+> git-repo if interupted at the exact wrong time will generate zero
+> length bundles- literal empty files.  git-repo is wrong here, but
+> git fetch shouldn't effectively spin loop if pointed at a zero
+> length bundle.
 
-On Tue, Jan 3, 2012 at 7:23 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 03.01.2012 00:42, schrieb Chris Leong:
->> I seem to have a "ghost reference" - ie. I can check out a reference
->> that doesn't appear to exist. Does anyone know what might cause this?
->>
->> ~/gaf-cvs (project-membership)$ g show-ref | grep production
->> ~/gaf-cvs (project-membership)$ g co production
->> Note: checking out 'production'.
->> ...
->
-> The most likely reason is that you have a ref 'production' directly in
-> the .git directory. Perhaps you or one of your scripts created it
-> accidentally using 'git update-ref production ae5b621', i.e., without
-> giving the full ref path name.
->
-> -- Hannes
+Adding a test case is very much appreciated.
+
+> +test_expect_success 'die if bundle file is empty' '
+
+How about 'empty bundle file is rejected'?
+
+> +
+> +   echo -n > empty-bundle
+
+'echo -n' is not portable; use simply
+
+	>empty-bundle &&
+
+(note the style: no blank after >). Also chain commands using &&.
+
+> +   timeout 5 git fetch empty-bundle
+
+Yes, there was an infinite loop. But we do not specifically protect our
+git invocations in the test suite against this sort of failure. Just write
+
+	test_must_fail git fetch empty-bundle
+
+and end the test case here.
+
+> +   ret=$?
+> +   [ $ret == 128 ] && return 0
+> +   return $ret
+> +
+> +'
+
+Furthermore, indentation should be one tabstop, not blanks.
+
+-- Hannes
