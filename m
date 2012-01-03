@@ -1,96 +1,74 @@
-From: Seth Robertson <in-gitvger@baka.org>
-Subject: Re: git and github query about maintaining project
-Date: Tue, 03 Jan 2012 15:21:37 -0500
-Message-ID: <201201032021.q03KLblT024296@no.baka.org>
-References: <CA+KSefVajgEBCH+31a0DLXPGUgb2yshxPeXV+SdmGvPFVBOBtg@mail.gmail.com>
-        <CA+KSefW+K1hMiFkrFCP1LAVjfV9hECwFWAHz940fwGJawHuoFQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
+From: jaalto <jari.aalto@cante.net>
+Subject: Re: 1.7.7.3 wishlist: add --verbose option to git-tag
+Date: Tue, 3 Jan 2012 22:28:21 +0200
+Message-ID: <20120103202821.GB19131@cante.cante.net>
+References: <87d3b51vr0.fsf@cante.cante.net>
+ <7vk458tuzq.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: manoj soni <manoj6891@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 03 21:21:50 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 03 21:39:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RiArl-0008Pp-IZ
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Jan 2012 21:21:49 +0100
+	id 1RiB8W-0006pU-0R
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Jan 2012 21:39:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755193Ab2ACUVo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jan 2012 15:21:44 -0500
-Received: from tsutomu.baka.org ([66.114.72.182]:57211 "EHLO tsutomu.baka.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755161Ab2ACUVl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jan 2012 15:21:41 -0500
-Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
-	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id q03KLbrB017263
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 3 Jan 2012 15:21:39 -0500
-Received: from no.baka.org (localhost [127.0.0.1])
-	by no.baka.org (8.14.4/8.14.0) with ESMTP id q03KLblT024296;
-	Tue, 3 Jan 2012 15:21:37 -0500
-In-reply-to: <CA+KSefW+K1hMiFkrFCP1LAVjfV9hECwFWAHz940fwGJawHuoFQ@mail.gmail.com>
-Comments: In reply to a message from "manoj soni <manoj6891@gmail.com>" dated "Tue, 03 Jan 2012 14:42:38 -0500."
+	id S1754858Ab2ACUjC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jan 2012 15:39:02 -0500
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108]:41945 "EHLO
+	emh02.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754410Ab2ACUjB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jan 2012 15:39:01 -0500
+X-Greylist: delayed 632 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Jan 2012 15:39:00 EST
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh02-2.mail.saunalahti.fi (Postfix) with SMTP id 36FE6EF8D5;
+	Tue,  3 Jan 2012 22:28:27 +0200 (EET)
+Received: from emh03.mail.saunalahti.fi ([62.142.5.109])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A018D132FAB; Tue, 03 Jan 2012 22:28:27 +0200
+Received: from cante.cante.net (a91-155-176-245.elisa-laajakaista.fi [91.155.176.245])
+	by emh03.mail.saunalahti.fi (Postfix) with ESMTP id C7CB5158A62;
+	Tue,  3 Jan 2012 22:28:24 +0200 (EET)
+Received: from jaalto by cante.cante.net with local (Exim 4.77)
+	(envelope-from <jaalto@cante.cante.net>)
+	id 1RiAy7-00035t-PN; Tue, 03 Jan 2012 22:28:24 +0200
+Content-Disposition: inline
+In-Reply-To: <7vk458tuzq.fsf@alter.siamese.dyndns.org>
+X-Gpg-Key-Id: 0xD189E680
+X-Gpg-Key-Info: http://key-server.de:11371/pks/lookup?search=0xD189E680&op=vindex
+X-Gpg-Key-Get: ttp://key-server.de:11371/pks/lookup?search=0xD189E680&op=get
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: jaalto@cante.cante.net
+X-SA-Exim-Scanned: No (on cante.cante.net); SAEximRunCond expanded to false
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187894>
 
+On 2012-01-03 12:02, Junio C Hamano wrote:
+| Jari Aalto <jari.aalto@cante.net> writes:
+| 
+| > In scripts it would be useful if "git tag" would provide option:
+| >
+| >     --verbose
+| >
+| > As in script:
+| >
+| >     git tag --verbose -m "Initial import" upstream/1.0
+| 
+| What does the proposed "--verbose" produce that makes scripts easier to
+| write
 
-In message <CA+KSefW+K1hMiFkrFCP1LAVjfV9hECwFWAHz940fwGJawHuoFQ@mail.gmail.com>, manoj soni writes:
+Not "easier write", but to display progress to user; show what is
+hapening. Similarly to other --verbose options. Messgae could be:
 
-    Forwarding you below email, which I have sent to wrong email address by mistake.
+	  "tagged: upstream/1.0 asd1234"
 
-You might want to ask on the IRC #git channel for tactical support
-questions, like this. irc://irc.freenode.net/git
-
-    we forked P (on github),  I got project forked copy C1
-
-    What I want to do that in my project C1, OLD branch should have
-    all of my commits and master branch should be same as P.
-
-Tactically, the answer to your question is as follows:
-----------------------------------------------------------------------
-# Create a new branch OLD from where master is (presumably containing your commits)
-git checkout -b OLD master
-
-# Share OLD with your forked C1 (if you want to)
-git push origin OLD
-git branch --set-upstream OLD origin/OLD
-
-# Get access to the repository you forked from
-git remote add P URL-TO-P
-git fetch P
-
-# Reset the master branch to the contents of P/master
-#  Please note that any uncommitted changes WILL BE LOST
-git checkout master
-git reset --hard P/master
-
-# Share your rewritten history with origin (C1)
-#  Please note, rewriting publicly visible history is a BAD IDEA.
-#  Anyone else who might have pulled the old history will have to do
-#  special things and may hate you forever.
-git push -f origin
-----------------------------------------------------------------------
-
-However, interpreting what you are really trying to do (get your
-changes and C2's changes put together and uploaded to P), this is what
-*I* would do:
-----------------------------------------------------------------------
-# Get access to the repository you forked from git remote add P
-URL-TO-P git fetch P
-
-# Merge your development with the other development that has been happening
-git merge origin/P
-
-# Share your rewritten history with origin (C1)
-git push
-
-# When you have finished testing (unless you are using the github pull request method)
-git push P master
-----------------------------------------------------------------------
-
-					-Seth Robertson
+Jari
