@@ -1,99 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Submodules always use a relative path to gitdir
-Date: Tue, 03 Jan 2012 10:27:30 -0800
-Message-ID: <7vsjjwvdyl.fsf@alter.siamese.dyndns.org>
-References: <1325192426-10103-1-git-send-email-antony.male@gmail.com>
- <7vsjk3vw67.fsf@alter.siamese.dyndns.org> <4F007492.8010909@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] git-svn, perl/Git.pm: extend and use Git->prompt
+ method for querying users
+Date: Tue, 3 Jan 2012 13:40:22 -0500
+Message-ID: <20120103184022.GA20926@sigill.intra.peff.net>
+References: <4EF9ED58.8080205@tu-clausthal.de>
+ <7vd3b967ql.fsf@alter.siamese.dyndns.org>
+ <7vty4l4rr8.fsf@alter.siamese.dyndns.org>
+ <4EFA5F08.2060705@tu-clausthal.de>
+ <7vpqf91kqo.fsf@alter.siamese.dyndns.org>
+ <4EFAF241.9050806@tu-clausthal.de>
+ <7v39c41keo.fsf@alter.siamese.dyndns.org>
+ <7vpqf8z8a6.fsf@alter.siamese.dyndns.org>
+ <4F00B7F3.1060105@tu-clausthal.de>
+ <7vzke4vebl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Antony Male <antony.male@gmail.com>, git@vger.kernel.org,
-	iveqy@iveqy.com
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Jan 03 19:27:41 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Sven Strickroth <sven.strickroth@tu-clausthal.de>,
+	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 03 19:40:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ri95H-0003of-Uj
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Jan 2012 19:27:40 +0100
+	id 1Ri9Hj-0000TM-3J
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Jan 2012 19:40:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754561Ab2ACS1e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jan 2012 13:27:34 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35123 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754538Ab2ACS1e (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jan 2012 13:27:34 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 961C67718;
-	Tue,  3 Jan 2012 13:27:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SQiJM+gBWlQZSc0YmjRMPN2qJkk=; b=jn/9y0
-	xg1x6PxtH0VbBUMfC73bl5swDqfj8gnTICdvbu7IXKxSBcktayMWkM7Nsagx7Ua7
-	WLBJZBZCHR8QuiZdMSwsMu7pF4qTPSTHSHFY/g2LlDfcafn+xB2yybu5WCW0WBjY
-	vjlxUZaSKC2e448b9e9ytF5pWQ7e1GpWyPchU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oNJeVwUvhBeMvnq3nv9WphBXTKOjSuyG
-	dKp9qxjKFT0JgnGJhLLzmYc8V2cBJWvIk6M2eyJpESoy9W8RJ+uLTke2gqOQtn6F
-	zz7i6iiaFL8/H45fGYwBtyQLA6YxS1U29sNW6iFcC/mjtzXf9JskrEUUrY/FrEHb
-	XNIr/lT5zbk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D3FB7716;
-	Tue,  3 Jan 2012 13:27:33 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5BF567714; Tue,  3 Jan 2012
- 13:27:32 -0500 (EST)
-In-Reply-To: <4F007492.8010909@web.de> (Jens Lehmann's message of "Sun, 01
- Jan 2012 15:58:26 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 99C7945E-3638-11E1-BD13-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754640Ab2ACSk0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jan 2012 13:40:26 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55479
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754582Ab2ACSkY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jan 2012 13:40:24 -0500
+Received: (qmail 8438 invoked by uid 107); 3 Jan 2012 18:47:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Jan 2012 13:47:14 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Jan 2012 13:40:22 -0500
+Content-Disposition: inline
+In-Reply-To: <7vzke4vebl.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187871>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+On Tue, Jan 03, 2012 at 10:19:42AM -0800, Junio C Hamano wrote:
 
-> Am 29.12.2011 23:40, schrieb Junio C Hamano:
->> Antony Male <antony.male@gmail.com> writes:
->> I further wonder if we can get away without using separate-git-dir option
->> in this codepath, though. IOW using
->> 
->>         git clone $quiet -bare ${reference:+"$reference"} "$url" "$gitdir"
->> 
->> might be a better solution.
->
-> A quick test shows that using a bare repo won't fly because without the
-> core.worktree setting commands that operate on the work tree can't be
-> run anymore inside submodules (starting with the initial checkout). 
+> For people who have been used to interact with git-svn from the terminal
+> but has *_ASKPASS for reasons other than their use of git-svn in their
+> environment, the change to the username codepath is technically a
+> regression, as they used to be able to see and correct typo while giving
+> their username but with the patch *_ASKPASS will kick in and they have to
+> type in bline, but I am not particularly worried about it. It is something
+> you type very often and committed to your muscle memory anyway.
 
-Probably the right thing to do would be to restructure the flow as I
-suggested, i.e.
+There is one difference between how git and ssh use the ASKPASS
+variable. In git, we try it _first_, and fall back to asking on the
+terminal.  For ssh, they first try the terminal, and fall back to
+askpass only when the terminal cannot be opened.
 
-	if we do not have it yet
-        then
-        	git clone --bare ...
-	fi
-	# now we have it, make sure they are correct
-	git config core.bare false
-	git config core.worktree $there
-        echo "gitdir: $here" >$there/.git
+If we tried the terminal first, then it wouldn't be a big deal to use
+*_ASKPASS more frequently, since it's a fallback. Of course, that in
+itself might be a regression for some people.
 
-> Yes, and the core.worktree setting also contains an absolute path. So
-> we must either make that relative too and rewrite it on every "git
-> submodule add" to record the possibly changed path there or make the
-> bare clone work with a work tree (which sounds a bit strange ;-).
+I wonder if we should make the order:
 
-Update of core.worktree has to be done regardless of the absolute/relative
-differences anyway, no?
+  1. GIT_ASKPASS
 
-The first version of the superproject you trigger module_clone for
-submodule $name may happen to have it at $path, module_clone notices that
-you do not have it, and the initial "clone --separate-git-dir" will set
-the core.worktree to $superproject/$path.  Nobody will update it after
-that, even when we check out different version of superproject that has
-the same submodule $name at a different location in the superproject.
+  2. terminal
+
+  3. SSH_ASKPASS
+
+to help make our use SSH_ASKPASS better match that of ssh. I dunno. I am
+not an askpass user these days, so I don't know what people expect or
+want.
+
+-Peff
