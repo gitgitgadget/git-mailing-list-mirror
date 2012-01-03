@@ -1,73 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 1.7.7.3 wishlist: add --verbose option to git-tag
-Date: Tue, 03 Jan 2012 12:02:33 -0800
-Message-ID: <7vk458tuzq.fsf@alter.siamese.dyndns.org>
-References: <87d3b51vr0.fsf@cante.cante.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH resend] Do not create commits whose message contains NUL
+Date: Tue, 3 Jan 2012 15:03:31 -0500
+Message-ID: <20120103200331.GG20926@sigill.intra.peff.net>
+References: <1323777368-19697-1-git-send-email-pclouds@gmail.com>
+ <20111213175932.GA1663@sigill.intra.peff.net>
+ <1325435251.4752.104.camel@drew-northup.unet.maine.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Tue Jan 03 21:02:42 2012
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Tue Jan 03 21:03:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RiAZF-0000ib-Q0
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Jan 2012 21:02:42 +0100
+	id 1RiAaA-000146-K4
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Jan 2012 21:03:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753406Ab2ACUCi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jan 2012 15:02:38 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39105 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752640Ab2ACUCg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jan 2012 15:02:36 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CACF76099;
-	Tue,  3 Jan 2012 15:02:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MDJ/KIqICzARsbW5NMX1z8b6j3k=; b=XJyD3H
-	qRko+GRR9VL0gMzqwIzFTp1kWJ86Wb4fLBBvOd5i3Nzhrcuu7DwqcMFOGNjFeA6+
-	3Q/9OW5jKpvxl4lBGp5c0KIhDOmmJkih2Y7SvIaruapuEVr2+hs51Z4MI+OUUwCT
-	YPCr1pmnGl8/9rGNrG+17jQKSCRejB1H5jJ+4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rijGc6JN2gnJqXB3NChSJMx8c+rA1xBO
-	nzq78QwsEv7WrFE8jcQsujUILDdrrO126j8Lo5yPlwusN6/emj6a3CuxdANDDH9d
-	Q/XgILSQTkXoD+zFMkkXiu6zUV5yw8HDJa2PsE7grdStuAMQLpUXK9McQGm6nvlU
-	m5eaSPdELcU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C1BB36098;
-	Tue,  3 Jan 2012 15:02:35 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 754926097; Tue,  3 Jan 2012
- 15:02:34 -0500 (EST)
-In-Reply-To: <87d3b51vr0.fsf@cante.cante.net> (Jari Aalto's message of "Sat,
- 31 Dec 2011 01:32:19 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E07F5726-3645-11E1-9764-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753686Ab2ACUDe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jan 2012 15:03:34 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55543
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752640Ab2ACUDd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jan 2012 15:03:33 -0500
+Received: (qmail 9573 invoked by uid 107); 3 Jan 2012 20:10:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Jan 2012 15:10:23 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Jan 2012 15:03:31 -0500
+Content-Disposition: inline
+In-Reply-To: <1325435251.4752.104.camel@drew-northup.unet.maine.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187886>
 
-Jari Aalto <jari.aalto@cante.net> writes:
+On Sun, Jan 01, 2012 at 11:27:31AM -0500, Drew Northup wrote:
 
-> In scripts it would be useful if "git tag" would provide option:
->
->     --verbose
->
-> As in script:
->
->     git tag --verbose -m "Initial import" upstream/1.0
+> I had already started experimenting with automatically detecting decent
+> UTF-16 a long while back so that compatible platforms could handle it
+> appropriately in terms of creating diffs and dealing with newline
+> munging between platforms. There is no 100% sure-fire check for UTF-16
+> if you don't already suspect it is possibly UTF-16. If we really want to
+> check for possible UTF-16 specifically I can scrape out the check I
+> wrote up and send it along.
 
-"In scripts", you are expected to be capable of doing anything fancy with
-"git cat-file tag", but we add things that turn out to be commonly needed.
+I also looked into this recently. You can generally detect UTF-16 by the
+BOM at the beginning of the file (which will also tell you the
+endian-ness). I did a simple test by integrating it into the check for
+binary-ness during diffs. However, as I recall, the result wasn't
+particularly useful. Some of the diff code wasn't happy with the
+embedded NUL bytes (i.e., there is code that assumes that NUL is the end
+of a string). Not to mention that ascii newline (0x0a) can appear as
+part of other characters in a wide encoding like utf-16. And since git
+outputs straight ascii for all of the diff boilerplate, you end up with
+a mish-mash of utf-16 and ascii (this is OK with utf-8, of course,
+because utf-8 is a superset of ascii).
 
-What does the proposed "--verbose" produce that makes scripts easier to
-write (i.e. avoids repeated post-processing of "git cat-file tag" output),
-and how commonly would what you propose apply to various people's needs
-other than yours?
+If anything, I think you would want to do something like "textconv" to
+convert the utf-16 into utf-8, then diff that. Git won't do it
+automatically based on encoding, but if you know the filenames of the
+utf-16 files in your repository, you can do something like:
+
+  echo 'foo.txt diff=utf16' >.gitattributes
+  git config diff.utf16.textconv 'iconv -f utf16 -t utf8'
+
+and get readable diffs. Of course you couldn't use that diff to apply a
+patch, though.
+
+I strongly suspect that not many people are really using git for utf-16
+files. Git treats them as binary, which makes them unpleasant for
+anything except simple storage.
+
+> The is_utf8 check was not written to detect 100% valid UTF-8 per-se. It
+> seems to me that it was written as part of the "is this a binary or not"
+> check in the add/commit path.
+
+We shouldn't care about binary file content at all in the add or commit
+code paths. I would guess we do only if you are using auto-crlf (but
+then, I don't think we care about utf8 in that cases, only whether line
+endings should be converted or not).
+
+We do check that the commit message itself is utf8, but only to generate
+a warning that you should set i81n.commitencoding.
+
+-Peff
