@@ -1,64 +1,93 @@
-From: Chris Leong <walkraft@gmail.com>
-Subject: Git ghost references
-Date: Tue, 3 Jan 2012 10:42:04 +1100
-Message-ID: <CAJ6vYjfpx-hfDsd+urp5_iS99p0RhmxohOc+TNv7SUWFnYe5wQ@mail.gmail.com>
+From: Brian Harring <ferringb@gmail.com>
+Subject: [PATCH] fix hang in git fetch if pointed at a 0 length bundle
+Date: Mon, 2 Jan 2012 17:13:52 -0800
+Message-ID: <20120103011352.GA13825@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Cc: spearce@spearce.org
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 03 00:42:50 2012
+X-From: git-owner@vger.kernel.org Tue Jan 03 02:14:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RhrWi-0008St-Vd
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Jan 2012 00:42:49 +0100
+	id 1Rhsx0-0000xF-PX
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Jan 2012 02:14:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753418Ab2ABXm2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jan 2012 18:42:28 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:62374 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753001Ab2ABXm1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jan 2012 18:42:27 -0500
-Received: by eaad14 with SMTP id d14so8283578eaa.19
-        for <git@vger.kernel.org>; Mon, 02 Jan 2012 15:42:25 -0800 (PST)
+	id S1751124Ab2ACBN5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jan 2012 20:13:57 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:51861 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751044Ab2ACBN4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jan 2012 20:13:56 -0500
+Received: by iaeh11 with SMTP id h11so30049028iae.19
+        for <git@vger.kernel.org>; Mon, 02 Jan 2012 17:13:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=biASJCzyqcRQUHivtgLtIdkL0O00lsYBvSlg/vYQTeA=;
-        b=SRPtRY0SLLb+UTiNpQ7BQ9wGd5BQVMg61mYeK2QXgTyaV8nIz6QmhcjzCMCMUUuSyO
-         aUm0hbtLK8IlUHDt6zvwA23TpJRNdWuq5KQFsia8s+87HHNoKK33zKZystZg9XXm9k7x
-         Wrl3Ez/z2p162HjaINZnPWhI3PNBAmcKMbM30=
-Received: by 10.204.32.146 with SMTP id c18mr9005245bkd.132.1325547745293;
- Mon, 02 Jan 2012 15:42:25 -0800 (PST)
-Received: by 10.205.139.5 with HTTP; Mon, 2 Jan 2012 15:42:04 -0800 (PST)
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=XjV8xb31Tw9N0MQlq+BMGgfVahmGYLgxbCGGWdi9Ez0=;
+        b=ngWMnyZ6Eq4lMw9p5UI3LpIF4SLwFagzQkfhhPgmMS6js0M7vxOhMgUgYkU+kktUPx
+         soiioqJ4hViPD8hY4XZxeQYJBvODsKNBdq6aHmDEuxapAM2/KqjM9Ot9a40Wpi0N6M5P
+         YtzACEWL1+hv7iGHkOpgwpHrQN6XdepJ1hGeg=
+Received: by 10.50.157.229 with SMTP id wp5mr61027642igb.22.1325553235449;
+        Mon, 02 Jan 2012 17:13:55 -0800 (PST)
+Received: from smtp.gmail.com:587 (74-95-192-101-SFBA.hfc.comcastbusiness.net. [74.95.192.101])
+        by mx.google.com with ESMTPS id r5sm72511411igl.3.2012.01.02.17.13.53
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 02 Jan 2012 17:13:54 -0800 (PST)
+Received: by smtp.gmail.com:587 (sSMTP sendmail emulation); Mon, 02 Jan 2012 17:13:52 -0800
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187852>
 
-I seem to have a "ghost reference" - ie. I can check out a reference
-that doesn't appear to exist. Does anyone know what might cause this?
+git-repo if interupted at the exact wrong time will generate zero
+length bundles- literal empty files.  git-repo is wrong here, but
+git fetch shouldn't effectively spin loop if pointed at a zero
+length bundle.
 
-~/gaf-cvs (project-membership)$ g show-ref | grep production
-~/gaf-cvs (project-membership)$ g gc --prune=now
-Counting objects: 117306, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (25270/25270), done.
-Writing objects: 100% (117306/117306), done.
-Total 117306 (delta 83839), reused 117283 (delta 83820)
-~/gaf-cvs (project-membership)$ g co production
-Note: checking out 'production'.
+Signed-off-by: Brian Harring <ferringb@chromium.org>
+---
+ bundle.c          |    2 +-
+ t/t5704-bundle.sh |   10 ++++++++++
+ 2 files changed, 11 insertions(+), 1 deletions(-)
 
-You are in 'detached HEAD' state. You can look around, make experimental
-changes and commit them, and you can discard any commits you make in this
-state without impacting any branches by performing another checkout.
-
-If you want to create a new branch to retain commits you create, you may
-do so (now or later) by using -b with the checkout command again. Example:
-
-  git checkout -b new_branch_name
-
-HEAD is now at ae5b621... Merge branch 'master' of git.freelancer.com:production
-~/gaf-cvs ((no branch))$
+diff --git a/bundle.c b/bundle.c
+index 4742f27..ac9cc20 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -31,7 +31,7 @@ static int strbuf_readline_fd(struct strbuf *sb, int fd)
+ 	while (1) {
+ 		char ch;
+ 		ssize_t len = xread(fd, &ch, 1);
+-		if (len < 0)
++		if (len <= 0)
+ 			return -1;
+ 		strbuf_addch(sb, ch);
+ 		if (ch == '\n')
+diff --git a/t/t5704-bundle.sh b/t/t5704-bundle.sh
+index 728ccd8..75ce5b8 100755
+--- a/t/t5704-bundle.sh
++++ b/t/t5704-bundle.sh
+@@ -53,4 +53,14 @@ test_expect_failure 'bundle --stdin <rev-list options>' '
+ 
+ '
+ 
++test_expect_success 'die if bundle file is empty' '
++
++   echo -n > empty-bundle
++   timeout 5 git fetch empty-bundle
++   ret=$?
++   [ $ret == 128 ] && return 0
++   return $ret
++
++'
++
+ test_done
+-- 
+1.7.8.2
