@@ -1,87 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Work around sed portability issue in
- t8006-blame-textconv
-Date: Tue, 03 Jan 2012 11:05:58 -0800
-Message-ID: <7vd3b0vc6h.fsf@alter.siamese.dyndns.org>
-References: <1325339068-6063-1-git-send-email-bwalton@artsci.utoronto.ca>
+From: Jeff King <peff@peff.net>
+Subject: Re: Stashing individual files
+Date: Tue, 3 Jan 2012 14:06:12 -0500
+Message-ID: <20120103190612.GC20926@sigill.intra.peff.net>
+References: <CAJ6vYjduoBNrRcvcvQbX_yY-3-Qm5ZbXOM0WQpWRwC1H1OCqaA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Ben Walton <bwalton@artsci.utoronto.ca>
-X-From: git-owner@vger.kernel.org Tue Jan 03 20:06:14 2012
+To: Chris Leong <walkraft@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 03 20:06:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ri9ga-0002ct-J2
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Jan 2012 20:06:12 +0100
+	id 1Ri9gi-0002gB-Ln
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Jan 2012 20:06:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754724Ab2ACTGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jan 2012 14:06:07 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49140 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754680Ab2ACTGG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jan 2012 14:06:06 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 86B827FEF;
-	Tue,  3 Jan 2012 14:06:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4gKLJ3fOYiMR50z5HLLnH30K/vQ=; b=eHsrKY
-	y8aTV/Ol//MwF63iVXnW/bcM1EJwTU+5q2xTfgNL6Hq4/LezW4hmuj/HJ07mQqQ2
-	jGAzrGMXqJUjGxvTniexO+F6wboxWGWZp2rU0M4+gdBOYsuiBuARTiYNBJgD5O68
-	miT8+90vlvj/Mb3xr8sQS1ZXoPUDAedzcRElg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cbCiVGlJ2bdjyDIISoup8Lcbf2o5m+Bd
-	w9l17jJ6n8big61TADhCwXNfJjqfHTxb2Z0KDtJp25ebAYt0nIoDgsdtS2eIvL1j
-	HID9xiVA2s0NKX+IZZM5FqmvqoXCp3Lge5G3y+8HSklDlySX4bSawkpsgoq+OdOi
-	wQ9POLoYDQs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DD357FEE;
-	Tue,  3 Jan 2012 14:06:05 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0E6407FED; Tue,  3 Jan 2012
- 14:06:04 -0500 (EST)
-In-Reply-To: <1325339068-6063-1-git-send-email-bwalton@artsci.utoronto.ca>
- (Ben Walton's message of "Sat, 31 Dec 2011 08:44:28 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FC3E9BF0-363D-11E1-98CB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754729Ab2ACTGQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jan 2012 14:06:16 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55503
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754680Ab2ACTGP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jan 2012 14:06:15 -0500
+Received: (qmail 8668 invoked by uid 107); 3 Jan 2012 19:13:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Jan 2012 14:13:05 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Jan 2012 14:06:12 -0500
+Content-Disposition: inline
+In-Reply-To: <CAJ6vYjduoBNrRcvcvQbX_yY-3-Qm5ZbXOM0WQpWRwC1H1OCqaA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187875>
 
-Ben Walton <bwalton@artsci.utoronto.ca> writes:
+On Tue, Jan 03, 2012 at 10:32:02AM +1100, Chris Leong wrote:
 
-> In test 'blame --textconv with local changes' of t8006-blame-textconv,
-> using /usr/xpg4/bin/sed on Solaris as set by SANE_TOOL_PATH, an
-> additional newline was added to the output from the 'helper' script
-> driven by git attributes.
->
-> This was noted by sed with a message such as:
-> sed: Missing newline at end of file zero.bin.
->
-> In turn, this was triggering a fatal error from git blame:
-> fatal: unable to read files to diff
+> Thanks for making such a wonderful product. I find the stash command
+> really useful, but it doesn't work very well when I just need to
+> temporarily revert one or two files. I know that there is the
+> interactive command, but if you have modified a large number of files,
+> then it takes quite a bit of effort. Is there any way I can define an
+> alias, stashfiles, so that I can just type git stashfiles file1 file2?
+> Also, please consider adding such a feature into a future version.
 
-Interesting. A file with incomplete line technically is not a text file
-and sed is supposed to work on text files, so it is allowed to be picky.
+I have sometimes wanted this, too. One problem is that the arguments in
+a "stash save" get sucked into the message. I really wish it were:
 
-> Use perl -p -e instead of sed -e to work around this portability issue
-> as it will not insert the newline.
+  git stash save [-m <msg>] [[--] <pathspec...>]
 
-I am not sure if additional newline is the problem, or the exit status
-from sed is, from your description. Your first paragraph says you will get
-output from sed but with an extra newline, and then later you said blame
-noticed an error in its attempt to read the contents. I am suspecting that
-it checked the exit status from the textconv subprocess and noticed the
-error and that is the cause of the issue, but could you clarify?  IOW, I
-am suspecting that replacing "as it will not insert the newline" with "as
-it does not error out on an incomplete line" is necessary in this
-sentence.
+which would match other git commands. And related, it would be nice to
+have:
 
-Thanks.
+  git stash foo.c bar.c
+
+but that conflicts with our safety-valve to avoid accidentally stashing
+when no command is given.
+
+For now, we could probably do it like this:
+
+  git stash save [<message>] [-- <pathspec...>]
+
+IOW, make the "--" a requirement for specifying filenames. The only
+regression is that "--" as a single argument can no longer be used in
+stash messages. So this works now:
+
+  git stash save working on foo -- needs bar
+
+but would be interpreted under my proposal as stashing "needs" and "bar"
+with the message "working on foo". You would instead have to spell it:
+
+  git stash save "working on foo -- needs bar"
+
+I think that would be OK compromise, though. I'd rather not introduce a
+whole new "stashfiles" command (or even a new subcommand of stash) if we
+can avoid it.
+
+-Peff
