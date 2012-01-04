@@ -1,80 +1,71 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] Catch invalid --depth option passed to clone or fetch
-Date: Wed,  4 Jan 2012 17:01:55 +0700
-Message-ID: <1325671315-24931-1-git-send-email-pclouds@gmail.com>
+From: Tor Arntsen <tor@spacetec.no>
+Subject: Re: Stashing individual files
+Date: Wed, 4 Jan 2012 11:12:27 +0100
+Message-ID: <CABNEGjzRZu_hpN+Do4=4abBKp0o3uKfrd-_A2y53a7V4mteNnw@mail.gmail.com>
+References: <CAJ6vYjduoBNrRcvcvQbX_yY-3-Qm5ZbXOM0WQpWRwC1H1OCqaA@mail.gmail.com>
+	<20120103190612.GC20926@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 04 11:02:15 2012
+Cc: Chris Leong <walkraft@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 04 11:12:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RiNfg-0002jE-05
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Jan 2012 11:02:12 +0100
+	id 1RiNpi-0006Vl-MC
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Jan 2012 11:12:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754973Ab2ADKCH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jan 2012 05:02:07 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:64078 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753229Ab2ADKCF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jan 2012 05:02:05 -0500
-Received: by iaeh11 with SMTP id h11so32327433iae.19
-        for <git@vger.kernel.org>; Wed, 04 Jan 2012 02:02:05 -0800 (PST)
+	id S1751232Ab2ADKMa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jan 2012 05:12:30 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:45217 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750862Ab2ADKM3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Jan 2012 05:12:29 -0500
+Received: by werm1 with SMTP id m1so8416051wer.19
+        for <git@vger.kernel.org>; Wed, 04 Jan 2012 02:12:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=XWOhDt4t66PTNuGTLaKviwl42S6PeRWMdY8Z0TlCjKs=;
-        b=BbZg8q764W8ftY1i8rC2bAyqm6CbaSb8RdvGxh8eLkh4iziSZrBRa8buTJJZ+Zpu1h
-         meCIKIY99LPhTE9EP/Rej4K9FIwweSxC2PF+9Uf7av/os6TTaZu3euQQC1W5X4fZDkLJ
-         aojGUTAK42yAABFLIGhGQsV4+73DMFDE5skH0=
-Received: by 10.42.162.130 with SMTP id y2mr57588430icx.26.1325671324883;
-        Wed, 04 Jan 2012 02:02:04 -0800 (PST)
-Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id lu10sm94738107igc.0.2012.01.04.02.02.00
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 04 Jan 2012 02:02:03 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 04 Jan 2012 17:01:57 +0700
-X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=9VMzU/rL6YmWYEeq7n1Y/llfbkHp5tZDYwvKb0InAVg=;
+        b=WOA+jam5TwjP2l1ntO8xYQob4uHvmDXeD0DezXnJnOUPMvKHV6wnY0/2aVnLUdBcqB
+         LXwTAY63QpqF89A3g9PNDQkCeg7Mn5KvMfJGZuKLGKK4m7pTmpJPdt1hEYxFMTp2VrZ1
+         fXIHP28Mv7M541lUlUAV4X+DBypcr29MJpuoQ=
+Received: by 10.216.139.156 with SMTP id c28mr36364725wej.34.1325671948039;
+ Wed, 04 Jan 2012 02:12:28 -0800 (PST)
+Received: by 10.223.103.135 with HTTP; Wed, 4 Jan 2012 02:12:27 -0800 (PST)
+In-Reply-To: <20120103190612.GC20926@sigill.intra.peff.net>
+X-Google-Sender-Auth: xle-1WxrDpRv5PxLJYhzVCbxXB4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187918>
 
+On Tue, Jan 3, 2012 at 20:06, Jeff King <peff@peff.net> wrote:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- transport.c |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
+> IOW, make the "--" a requirement for specifying filenames. The only
+> regression is that "--" as a single argument can no longer be used in
+> stash messages. So this works now:
+>
+> =A0git stash save working on foo -- needs bar
+>
+> but would be interpreted under my proposal as stashing "needs" and "b=
+ar"
+> with the message "working on foo". You would instead have to spell it=
+:
+>
+> =A0git stash save "working on foo -- needs bar"
 
-diff --git a/transport.c b/transport.c
-index 51814b5..8a13f43 100644
---- a/transport.c
-+++ b/transport.c
-@@ -474,8 +474,12 @@ static int set_git_option(struct git_transport_opt=
-ions *opts,
- 	} else if (!strcmp(name, TRANS_OPT_DEPTH)) {
- 		if (!value)
- 			opts->depth =3D 0;
--		else
--			opts->depth =3D atoi(value);
-+		else {
-+			char *end;
-+			opts->depth =3D strtol(value, &end, 0);
-+			if (*end)
-+				die("transport: invalid depth option '%s'", value);
-+		}
- 		return 0;
- 	}
- 	return 1;
---=20
-1.7.3.1.256.g2539c.dirty
+=46or what it's worth, that's how I always add messages to stash.. with
+quotes. It had never occured to me to use the form
+git stash save working on foo -- needs bar
+(no quotes), it's so ingrained that a multi-word message should be
+quoted that I would never have thought of even trying without the
+quotes! :-)
+
+-Tor
