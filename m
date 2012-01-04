@@ -1,104 +1,141 @@
-From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
-Subject: Re: [PATCH 1/2] git-svn, perl/Git.pm: add central method for prompting
- passwords honoring GIT_ASKPASS and SSH_ASKPASS
-Date: Wed, 04 Jan 2012 15:13:31 +0100
-Message-ID: <4F045E8B.4060200@tu-clausthal.de>
-References: <4EF9ED58.8080205@tu-clausthal.de> <7vd3b967ql.fsf@alter.siamese.dyndns.org> <7vty4l4rr8.fsf@alter.siamese.dyndns.org> <4EFA5EB3.4000802@tu-clausthal.de> <CACBZZX7P9PEq0wZp0d3dSwDjF6J6Z3cO4VtWc9_frBengtqPLw@mail.gmail.com> <7vboqks8la.fsf@alter.siamese.dyndns.org> <4F038EC8.505@tu-clausthal.de> <7v39bws4xi.fsf@alter.siamese.dyndns.org> <4F0405D4.9090102@tu-clausthal.de> <4F040E46.5030001@tu-clausthal.de> <20120104133459.GA6564@sigill.intra.peff.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] Do not fetch tags on new shallow clones
+Date: Wed, 4 Jan 2012 07:16:07 -0800
+Message-ID: <CAJo=hJsVvEuUp8AbkCrvGQCHb29EPBP5amKA8Hp2EmykRjynjw@mail.gmail.com>
+References: <1325676922-6995-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 04 15:13:42 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 04 16:16:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RiRb0-0006Kp-GF
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Jan 2012 15:13:38 +0100
+	id 1RiSZu-0003vh-C6
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Jan 2012 16:16:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754090Ab2ADON3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jan 2012 09:13:29 -0500
-Received: from poseidon.rz.tu-clausthal.de ([139.174.2.21]:19325 "EHLO
-	poseidon.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755311Ab2ADON1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Jan 2012 09:13:27 -0500
-Received: from poseidon.rz.tu-clausthal.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id 34C6824A60;
-	Wed,  4 Jan 2012 15:13:26 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
-	 bh=h48GWuvJrz8l0TLGWJ3S1MWCKQc=; b=oQ3kC88iA6+JFISQTISoYsmOOiX9
-	BftAKQ7CPEq6kTdQ9z5Gt4q1/uS2fT/FXLyHXmQj8H1Kw3W6iYfUKdBov3rsp16X
-	vJBcbV38c/m93UwTbAiycUHkBztMI7+Z0uEttqwVaa87UyaTTvm5Vy0ftVdMX+M/
-	cBDMLlDMZKG6aPk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
-	dkim1; b=5jfUngsG/j4FDRu7pTjPpBeoNbVyAPj+VudC18jL1fgxjEOeXbV6inn
-	bgoX0xaU02td/bvRyWj5Kvq1cHTmYNYlhZGt6BfDlmXs/73Ji4NR6CzUYVveaZAm
-	7LoO8tdiiJoeUTxmkpjdhT5yjgrzwVET8gF8ild66QPhxVviR3HQ=
-Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
-	by poseidon.rz.tu-clausthal.de (Postfix) with ESMTP id 10E6F249CE;
-	Wed,  4 Jan 2012 15:13:26 +0100 (CET)
-Received: from [139.174.4.12] (account sstri@tu-clausthal.de [139.174.4.12] verified)
-  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.3)
-  with ESMTPSA id 25680820; Wed, 04 Jan 2012 15:13:26 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-In-Reply-To: <20120104133459.GA6564@sigill.intra.peff.net>
-X-Enigmail-Version: 1.3.4
-X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
+	id S1755985Ab2ADPQa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jan 2012 10:16:30 -0500
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:43662 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755893Ab2ADPQ2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Jan 2012 10:16:28 -0500
+Received: by dajs34 with SMTP id s34so10991301daj.19
+        for <git@vger.kernel.org>; Wed, 04 Jan 2012 07:16:28 -0800 (PST)
+Received: by 10.68.197.165 with SMTP id iv5mr21049135pbc.69.1325690188310;
+ Wed, 04 Jan 2012 07:16:28 -0800 (PST)
+Received: by 10.68.26.37 with HTTP; Wed, 4 Jan 2012 07:16:07 -0800 (PST)
+In-Reply-To: <1325676922-6995-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187923>
 
-Am 04.01.2012 14:34 schrieb Jeff King:
-> Wouldn't you also have to drop checking of SSH_ASKPASS in the block
-> right before calling git_terminal_prompt (right before the context in
-> your patch)?
+2012/1/4 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>:
+> The main purpose of shallow clones is to reduce download. Fetching
+> tags likely defeats this purpose because old-enough repos tend to hav=
+e
+> a lot of tags, spreading across history, which may increase the numbe=
+r
+> of objects to download significantly.
 
-of course :( Thanks for spotting this...
+Thank you for looking at this. I complained about it to Junio many
+weeks ago, but never took the time myself to fix it. :-)
 
-diff --git a/prompt.c b/prompt.c
-index 72ab9de..230ac3c 100644
---- a/prompt.c
-+++ b/prompt.c
-@@ -45,16 +45,23 @@ char *git_prompt(const char *prompt, int flags)
- 		askpass = getenv("GIT_ASKPASS");
- 		if (!askpass)
- 			askpass = askpass_program;
--		if (!askpass)
--			askpass = getenv("SSH_ASKPASS");
- 		if (askpass && *askpass)
- 			return do_askpass(askpass, prompt);
- 	}
+> =C2=A0We should also fetch a single branch, but because branches are
+> =C2=A0usually less crowded and stay close the tip, they do not produc=
+e too
+> =C2=A0many extra objects. Let's leave it until somebody yells up.
 
- 	r = git_terminal_prompt(prompt, flags & PROMPT_ECHO);
--	if (!r)
--		die_errno("could not read '%s'", prompt);
--	return r;
-+	if (r)
-+		return r;
-+
-+	if (flags & PROMPT_ASKPASS) {
-+		const char *askpass;
-+
-+		askpass = getenv("SSH_ASKPASS");
-+		if (askpass && *askpass)
-+			return do_askpass(askpass, prompt);
-+	}
-+
-+	die_errno("could not read '%s'", prompt);
- }
+Depends on the project. In git.git maint stays relatively close to
+master, but its still not really that close. In other projects, there
+are certainly huge differences between two active branches, sometimes
+spanning years. Consider any product with a multiple year support
+contract on an older version, where the support contract demands
+patches for the older version to fix bugs.  :-)
 
- char *git_getpass(const char *prompt)
--- 
-Best regards,
- Sven Strickroth
- ClamAV, a GPL anti-virus toolkit   http://www.clamav.net
- PGP key id F5A9D4C4 @ any key-server
+I agree this can be looked at later with a different change, but there
+should be a way to specify exactly which branches you want to clone,
+especially in the shallow case.
+
+> =C2=A0We should also fetch tags that reference to downloaded objects.=
+ But I
+> =C2=A0don't know how fetch does that magic,
+
+If the remote advertises the capability "include-tag", and the client
+wants tags, it asks for that include-tag capability in its request.
+This is handled by the fetch_pack args field include_tag being set to
+1. When the remote side sees the client requesting include-tag and it
+packs the thing a tag points at, the tag is also packed, even though
+it wasn't explicitly requested by the client.
+
+> so for now users have to do
+> =C2=A0"git fetch" after cloning for tags. I have only gone as far as
+> =C2=A0fetching tags along by setting TRANS_OPT_FOLLOWTAGS? Help?
+
+Right. Set TRANS_OPT_FOLLOWTAGS in the transport structure to fetch
+only tags that are pointing at things already being sent. The delta
+increase in transfer is 1 object (the tag) and whatever that tag takes
+up on disk.
+
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 86db954..abd8578 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -428,7 +428,7 @@ static struct ref *wanted_peer_refs(const struct =
+ref *refs,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct ref **tail =3D head ? &head->next :=
+ &local_refs;
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0get_fetch_map(refs, refspec, &tail, 0);
+> - =C2=A0 =C2=A0 =C2=A0 if (!option_mirror)
+> + =C2=A0 =C2=A0 =C2=A0 if (!option_mirror && !option_depth)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0get_fetch_map(=
+refs, tag_refspec, &tail, 0);
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0return local_refs;
+
+I think if you just add this into your patch, you get the auto follow
+tag feature enabled:
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index efe8b6c..ecaafdb 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -641,6 +641,7 @@ int cmd_clone(int argc, const char **argv, const ch=
+ar *prefi
+                        die(_("Don't know how to clone %s"), transport-=
+>url);
+
+                transport_set_option(transport, TRANS_OPT_KEEP, "yes");
++               transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, "=
+1");
+
+                if (option_depth)
+                        transport_set_option(transport, TRANS_OPT_DEPTH=
+,
+
+totally untested (didn't even compile). This only works for the
+"remote" cases where the native Git protocol is used. A local clone
+using the hardlink or copy objects path, or a dumb HTTP or rsync clone
+will ignore the option and not supply you the tags.
+
+Annnddddd..... it doesn't appear to work.
+
+You need to copy a block of code from fetch. The problem is the object
+was copied locally by the transport, but the transport doesn't tell
+you what extra objects came along. Clone has to loop back through the
+advertised reference map from the transport, checking each tag to see
+if has_sha1_file() says the object exists locally. If it does, then
+clone needs to add that reference update to the set of things it will
+store (and print to the terminal).
+
+I think this loop is the find_non_local_tags() in builtin/fetch.c. Its
+been a long time since I hacked on this code. The JGit version of
+looking for these extra objects post transfer is more clearly
+documented. *sigh*
