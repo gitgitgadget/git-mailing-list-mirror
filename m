@@ -1,87 +1,95 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] gitweb: accept trailing "/" in $project_list
-Date: Wed,  4 Jan 2012 11:07:45 +0100
-Message-ID: <1325671665-16847-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jan 04 11:33:08 2012
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] Do not fetch tags on new shallow clones
+Date: Wed,  4 Jan 2012 18:35:22 +0700
+Message-ID: <1325676922-6995-1-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 04 12:36:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RiO9Z-00065K-1f
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Jan 2012 11:33:05 +0100
+	id 1RiP8W-0006EQ-9V
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Jan 2012 12:36:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753727Ab2ADKdA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jan 2012 05:33:00 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:35315 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752856Ab2ADKc6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jan 2012 05:32:58 -0500
-X-Greylist: delayed 1477 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Jan 2012 05:32:58 EST
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q04A7F6O018295
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 4 Jan 2012 11:07:15 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1RiNlZ-0005sc-C0; Wed, 04 Jan 2012 11:08:17 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1RiNlZ-0004QP-8h; Wed, 04 Jan 2012 11:08:17 +0100
-X-Mailer: git-send-email 1.7.8.384.g29bb3
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 04 Jan 2012 11:07:15 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q04A7F6O018295
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1326276435.91279@p/CLjSRaxREqifQCK01DdQ
+	id S1752785Ab2ADLfw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jan 2012 06:35:52 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:55039 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751291Ab2ADLfu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jan 2012 06:35:50 -0500
+Received: by iaeh11 with SMTP id h11so32437404iae.19
+        for <git@vger.kernel.org>; Wed, 04 Jan 2012 03:35:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=MjYHHMgTY3sFKNkiYMt6zX1A+KHNod1itCIDUH7mXKI=;
+        b=DrlkkNMxcjn4Bn/NKMKsU3yowdeIQX66x5MWN2FaPd5HtHLgdAQjBKfHTelsnYLEwE
+         JGhguNJTXLqVGrvgVQZOYb9BCMXYpI+tC4jVu4vfS7KN5x2msnOl60nlRoH1kqB+LegH
+         QUF8G0e854pszs2FsQF9ZW4ctmk83/d1HSHRs=
+Received: by 10.50.222.233 with SMTP id qp9mr67147077igc.1.1325676950033;
+        Wed, 04 Jan 2012 03:35:50 -0800 (PST)
+Received: from pclouds@gmail.com ([115.74.60.181])
+        by mx.google.com with ESMTPS id gh9sm116914763igb.3.2012.01.04.03.35.46
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 04 Jan 2012 03:35:48 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 04 Jan 2012 18:35:23 +0700
+X-Mailer: git-send-email 1.7.8.36.g69ee2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187920>
 
-The current code is removing the trailing "/", but computing the string
-length on the previous value, i.e. with the trailing "/". Later in the
-code, we do
+The main purpose of shallow clones is to reduce download. Fetching
+tags likely defeats this purpose because old-enough repos tend to have
+a lot of tags, spreading across history, which may increase the number
+of objects to download significantly.
 
-  my $path = substr($File::Find::name, $pfxlen + 1);
+=46or example, "git clone --depth=3D10 git://.../git.git" without chang=
+es
+fetches ~16M (50k objects). The same command with changes fetches
+~6.5M (10k objects).
 
-And the "$pfxlen + 1" is supposed to mean "the length of the prefix, plus
-1 for the / separating the prefix and the path", but with an incorrect
-$pfxlen, this basically eats the first character of the path, and yields
-"404 - No projects found".
-
-While we're there, also fix $pfxdepth to use $dir, although a change of 1
-in the depth shouldn't really matter.
-
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
-I'm not fluent in Perl, and not familiar at all with gitweb, but this
-sounds a rather obvious (too obvious?) fix.
+ This could also be applied for normal clones. But I don't think
+ there are many use cases for it, enough to deserve new --no-tags
+ option.
 
- gitweb/gitweb.perl |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ We should also fetch a single branch, but because branches are
+ usually less crowded and stay close the tip, they do not produce too
+ many extra objects. Let's leave it until somebody yells up.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index f80f259..4512b89 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2835,8 +2835,8 @@ sub git_get_projects_list {
- 		my $dir = $projects_list;
- 		# remove the trailing "/"
- 		$dir =~ s!/+$!!;
--		my $pfxlen = length("$projects_list");
--		my $pfxdepth = ($projects_list =~ tr!/!!);
-+		my $pfxlen = length("$dir");
-+		my $pfxdepth = ($dir =~ tr!/!!);
- 		# when filtering, search only given subdirectory
- 		if ($filter) {
- 			$dir .= "/$filter";
--- 
-1.7.8.384.g29bb3
+ We should also fetch tags that reference to downloaded objects. But I
+ don't know how fetch does that magic, so for now users have to do
+ "git fetch" after cloning for tags. I have only gone as far as
+ fetching tags along by setting TRANS_OPT_FOLLOWTAGS? Help?
+
+ builtin/clone.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 86db954..abd8578 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -428,7 +428,7 @@ static struct ref *wanted_peer_refs(const struct re=
+f *refs,
+ 	struct ref **tail =3D head ? &head->next : &local_refs;
+=20
+ 	get_fetch_map(refs, refspec, &tail, 0);
+-	if (!option_mirror)
++	if (!option_mirror && !option_depth)
+ 		get_fetch_map(refs, tag_refspec, &tail, 0);
+=20
+ 	return local_refs;
+--=20
+1.7.8.36.g69ee2
