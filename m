@@ -1,79 +1,90 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: accept trailing "/" in $project_list
-Date: Wed, 04 Jan 2012 09:51:14 -0800
-Message-ID: <7v39bvqru5.fsf@alter.siamese.dyndns.org>
-References: <1325671665-16847-1-git-send-email-Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH 1/2] daemon: add tests
+Date: Wed, 04 Jan 2012 10:00:07 -0800
+Message-ID: <7vy5tnpcuw.fsf@alter.siamese.dyndns.org>
+References: <7v8vlovavj.fsf@alter.siamese.dyndns.org>
+ <1325692539-26748-1-git-send-email-drizzd@aon.at>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Jan 04 18:51:21 2012
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Wed Jan 04 19:00:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RiUzh-0005cN-9s
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Jan 2012 18:51:21 +0100
+	id 1RiV8M-0001TI-2f
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Jan 2012 19:00:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750946Ab2ADRvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jan 2012 12:51:17 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36578 "EHLO
+	id S1754084Ab2ADSAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jan 2012 13:00:13 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39891 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750745Ab2ADRvQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jan 2012 12:51:16 -0500
+	id S1750887Ab2ADSAL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jan 2012 13:00:11 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7C7958BC;
-	Wed,  4 Jan 2012 12:51:15 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D63B85BF6;
+	Wed,  4 Jan 2012 13:00:10 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=owzF7zG8yofgsaf4c3sSQXghlcc=; b=rG4+o5
-	VyhDe/OhE/DPqcQnFzzfxbO7f2kF7PtTxYgwHhueVHDl/jfx16Dyy2S86t3r0hfE
-	BGFev5Vso4ajy2eXumxbMV25p08ncfVtBNFpiZe5NdiALhZ52np2Ubt9CqH7DbyW
-	XtD9wAdNsueShM5n1XVnRs/7FwvenaW2KAeDk=
+	:content-type; s=sasl; bh=z3oHHRz8hJoBU7qCX/U5Ghw8lCU=; b=yDA1Yo
+	AB/gN+TklrBHBgZuNAkhUdkov/Oxkj0FqmxaA+M66TS5BJufRyB7Unv+XSdAACCi
+	7pwBzlbfzFfVwsWlMyqT9GDfl0LzuXcHsezak3UG6lAmUdTUXdFya+woFJOwhUmL
+	DB1srEnFgrRY3yjPn/u3vAAjzkl+kYOrLURSU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=L3HE4QTBMLK47WChr7c6vyKIB5GTamun
-	qyp7uttS54XYKa1JsRJswDp4R2m+CsTUWhBmw4BZIL1SuFo7hlUAelaKH+mTpueW
-	VwQvfpwGva1++Uwc5ZhmO5X1H0OXr+YioH+NvgzWizu4EiVAO7FY1YGYl4JEANPX
-	l6qH770Iv+s=
+	:content-type; q=dns; s=sasl; b=tk1VNLx2cjuTbvXdFXFT5EHUPQLCTMM0
+	4Z0s26u0s22xjxfyNakmC3pDGW2OXE9vgILOu0o+oqAx+InSXmEkzuagrR4jVKXO
+	qZXyaYX5IBGKQ3Wm5BZfBz3HicSzg1MzsyqVTnnAjybvWe9EJt+CUT95qo+6FdzT
+	VT9YMM3vgtM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC10758BB;
-	Wed,  4 Jan 2012 12:51:15 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CDE4F5BF5;
+	Wed,  4 Jan 2012 13:00:10 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 61D9558BA; Wed,  4 Jan 2012
- 12:51:15 -0500 (EST)
-In-Reply-To: <1325671665-16847-1-git-send-email-Matthieu.Moy@imag.fr>
- (Matthieu Moy's message of "Wed, 4 Jan 2012 11:07:45 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 56B675BF4; Wed,  4 Jan 2012
+ 13:00:09 -0500 (EST)
+In-Reply-To: <1325692539-26748-1-git-send-email-drizzd@aon.at> (Clemens
+ Buchacher's message of "Wed, 4 Jan 2012 16:55:33 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B29CFB58-36FC-11E1-9822-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F0E4F928-36FD-11E1-B5CB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187936>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Clemens Buchacher <drizzd@aon.at> writes:
 
-> The current code is removing the trailing "/", but computing the string
-> length on the previous value, i.e. with the trailing "/". Later in the
-> code, we do
->
->   my $path = substr($File::Find::name, $pfxlen + 1);
->
-> And the "$pfxlen + 1" is supposed to mean "the length of the prefix, plus
-> 1 for the / separating the prefix and the path", but with an incorrect
-> $pfxlen, this basically eats the first character of the path, and yields
-> "404 - No projects found".
->
-> While we're there, also fix $pfxdepth to use $dir, although a change of 1
-> in the depth shouldn't really matter.
->
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
-> I'm not fluent in Perl, and not familiar at all with gitweb, but this
-> sounds a rather obvious (too obvious?) fix.
+> Are you saying that the name "daemon" is too general, and it should
+> instead be "lib-git-daemon.sh" and GIT_TEST_GIT_DAEMON? Or do you
+> mean that it is not general enough and it should be called
+> lib-networking.sh and "GIT_TEST_NETWORKING"?
 
-Yeah, probably not many people use $project_maxdepth with a meaningful
-value.
+The former. "daemon" is too general and letting "git daemon" squat on that
+name makes it harder for other people to build daemons for new git
+services and write tests for them.
+
+> Either way, I have no preference here. Feel free to change any way you
+> like.
+
+No thanks.
+
+>> >> +	# kill git-daemon child of git
+>> >> +	say >&3 "Stopping git daemon ..."
+>> >> +	pkill -P "$DAEMON_PID"
+>> 
+>> How portable is this one (I usually do not trust use of pkill anywhere)?
+>
+> I read that it is supposed to be more portable than skill or killall.
+> But I have no way to research this. I have implemented a workaround
+> using only 'ps' and 'kill' in [PATCH 3/6] avoid use of pkill.
+
+Yuck, that patch looks even uglier X-<.
+
+Do you really need to kill the children but not the daemon?
