@@ -1,55 +1,92 @@
-From: Victor Engmark <victor.engmark@terreactive.ch>
-Subject: Auto-refresh git-gui
-Date: Wed, 4 Jan 2012 10:15:47 +0100
-Message-ID: <20120104091547.GC3484@victor>
-Reply-To: git@vger.kernel.org
+From: Erik Blake <erik@icefield.yk.ca>
+Subject: Re: Warning from AV software about kill.exe
+Date: Wed, 04 Jan 2012 10:15:29 +0100
+Message-ID: <4F0418B1.5050403@icefield.yk.ca>
+References: <4EF2E08C.3050502@icefield.yk.ca> <87mxalkn9q.fsf@thomas.inf.ethz.ch> <878vm4lb9q.fsf@fox.patthoyts.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 04 10:42:53 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Wed Jan 04 10:55:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RiNMx-0003O0-Vj
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Jan 2012 10:42:52 +0100
+	id 1RiNZA-0000Bp-2d
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Jan 2012 10:55:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754867Ab2ADJms (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jan 2012 04:42:48 -0500
-Received: from gate.terreactive.ch ([212.90.202.121]:58280 "EHLO
-	mail.terreactive.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754696Ab2ADJmq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jan 2012 04:42:46 -0500
-X-Greylist: delayed 1611 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Jan 2012 04:42:46 EST
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-terreActive-From: victor.engmark@terreactive.ch
-X-Spam-Status: No
+	id S1754970Ab2ADJzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jan 2012 04:55:23 -0500
+Received: from bosmailout20.eigbox.net ([66.96.188.20]:38158 "EHLO
+	bosmailout20.eigbox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753229Ab2ADJzV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jan 2012 04:55:21 -0500
+X-Greylist: delayed 2384 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Jan 2012 04:55:21 EST
+Received: from bosmailscan01.eigbox.net ([10.20.15.1])
+	by bosmailout20.eigbox.net with esmtp (Exim)
+	id 1RiMwZ-0001Oh-IP
+	for git@vger.kernel.org; Wed, 04 Jan 2012 04:15:35 -0500
+Received: from bosimpout01.eigbox.net ([10.20.55.1])
+	by bosmailscan01.eigbox.net with esmtp (Exim)
+	id 1RiMwY-0004EZ-Mu; Wed, 04 Jan 2012 04:15:34 -0500
+Received: from bosauthsmtp04.eigbox.net ([10.20.18.4])
+	by bosimpout01.eigbox.net with NO UCE
+	id HMFa1i00205GATN01MFatV; Wed, 04 Jan 2012 04:15:34 -0500
+X-EN-OrigOutIP: 10.20.18.4
+X-EN-IMPSID: HMFa1i00205GATN01MFatV
+Received: from [77.40.181.154] (helo=[192.168.10.117])
+	by bosauthsmtp04.eigbox.net with esmtpa (Exim)
+	id 1RiMwY-0002ab-KG; Wed, 04 Jan 2012 04:15:34 -0500
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <878vm4lb9q.fsf@fox.patthoyts.tk>
+X-EN-UserInfo: 20c972d92b49a3da013d5f179c4005f2:fb4e807829017c6d805c060c7025d0c2
+X-EN-AuthUser: erik@icefield.yk.ca
+X-EN-OrigIP: 77.40.181.154
+X-EN-OrigHost: unknown
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187916>
 
-Is there some way to make `git-gui` rescan automatically when anything
-in the repository changes? That would enable a more fluid workflow when
-combined with other Git tools.
+Another way to implement this (on Windows) would be for the git programs 
+to tag themselves with a mutex. Then the "kill" program can determine 
+which git programs are running and send them user-defined windows 
+messages to shut themselves down. Alternatively, you could send the 
+programs the standard windows WM_CLOSE message, but the OS or an AV 
+program might still be troubled by that behaviour.
 
-Use cases:
-* "Dashboard" functionality to keep track of changes without having to
-run `git status` all the time.
-* `git` / `git-gui` introduction: See what happens live while working
-with the other tool.
+This is how we implement this type of behaviour in our windows programs. 
+It does not raise the ire of the OS or AV since you do not have one 
+process trying to shut down another. It also bypasses all issues with 
+process privileges etc.
 
--- 
-Victor Engmark
-terreActive AG
-Kasinostrasse 30
-CH-5001 Aarau
-Tel: +41 62 834 00 55
-Fax: +41 62 823 93 56
-www.terreactive.ch
+Erik
 
-Wir sichern Ihren Erfolg - seit 15 Jahren
+On 2011-12-22 19:19, Pat Thoyts wrote:
+> Thomas Rast<trast@student.ethz.ch>  writes:
+>
+>> Erik Blake<erik@icefield.yk.ca>  writes:
+>>
+>>> I'm running git under Win7 64. As I selected "Repository|Visualize all
+>>> branch history" in the git gui, my AV software (Trustport) trapped the
+>>> bin\kill.exe program for "trying to modify system global settings
+>>> (time, timezone, registry quota, etc.)"
+>>>
+>>> Does anyone know the details of this process and what it's function
+>>> is? First time I've seen it, though I'm a relatively new user.
+>> 'kill' is a standard unix utility that sends signals to processes, in
+>> particular signals that cause the processes to exit or be killed
+>> forcibly by the kernel, hence the name.  (I don't know how the windows
+>> equivalent works under the hood, but presumably it's something similar.)
+>>
+>> git-gui and gitk use kill to terminate background worker processes that
+>> are no longer needed because you closed the window their output would
+>> have been displayed in, etc.
+> You might try replacing the command in the tcl scripts with 'exec
+> taskkill /f /pid $pid' and see if that avoids the error. taskkill is
+> present on XP and above as part of the OS distribution so shouldn't
+> suffer any AV complaints.
+>
