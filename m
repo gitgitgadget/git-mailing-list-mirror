@@ -1,71 +1,87 @@
-From: Tor Arntsen <tor@spacetec.no>
-Subject: Re: Stashing individual files
-Date: Wed, 4 Jan 2012 11:12:27 +0100
-Message-ID: <CABNEGjzRZu_hpN+Do4=4abBKp0o3uKfrd-_A2y53a7V4mteNnw@mail.gmail.com>
-References: <CAJ6vYjduoBNrRcvcvQbX_yY-3-Qm5ZbXOM0WQpWRwC1H1OCqaA@mail.gmail.com>
-	<20120103190612.GC20926@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Chris Leong <walkraft@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 04 11:12:35 2012
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] gitweb: accept trailing "/" in $project_list
+Date: Wed,  4 Jan 2012 11:07:45 +0100
+Message-ID: <1325671665-16847-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Jan 04 11:33:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RiNpi-0006Vl-MC
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Jan 2012 11:12:35 +0100
+	id 1RiO9Z-00065K-1f
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Jan 2012 11:33:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751232Ab2ADKMa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jan 2012 05:12:30 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:45217 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750862Ab2ADKM3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Jan 2012 05:12:29 -0500
-Received: by werm1 with SMTP id m1so8416051wer.19
-        for <git@vger.kernel.org>; Wed, 04 Jan 2012 02:12:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=9VMzU/rL6YmWYEeq7n1Y/llfbkHp5tZDYwvKb0InAVg=;
-        b=WOA+jam5TwjP2l1ntO8xYQob4uHvmDXeD0DezXnJnOUPMvKHV6wnY0/2aVnLUdBcqB
-         LXwTAY63QpqF89A3g9PNDQkCeg7Mn5KvMfJGZuKLGKK4m7pTmpJPdt1hEYxFMTp2VrZ1
-         fXIHP28Mv7M541lUlUAV4X+DBypcr29MJpuoQ=
-Received: by 10.216.139.156 with SMTP id c28mr36364725wej.34.1325671948039;
- Wed, 04 Jan 2012 02:12:28 -0800 (PST)
-Received: by 10.223.103.135 with HTTP; Wed, 4 Jan 2012 02:12:27 -0800 (PST)
-In-Reply-To: <20120103190612.GC20926@sigill.intra.peff.net>
-X-Google-Sender-Auth: xle-1WxrDpRv5PxLJYhzVCbxXB4
+	id S1753727Ab2ADKdA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jan 2012 05:33:00 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:35315 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752856Ab2ADKc6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jan 2012 05:32:58 -0500
+X-Greylist: delayed 1477 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Jan 2012 05:32:58 EST
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q04A7F6O018295
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 4 Jan 2012 11:07:15 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1RiNlZ-0005sc-C0; Wed, 04 Jan 2012 11:08:17 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1RiNlZ-0004QP-8h; Wed, 04 Jan 2012 11:08:17 +0100
+X-Mailer: git-send-email 1.7.8.384.g29bb3
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 04 Jan 2012 11:07:15 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q04A7F6O018295
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1326276435.91279@p/CLjSRaxREqifQCK01DdQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187919>
 
-On Tue, Jan 3, 2012 at 20:06, Jeff King <peff@peff.net> wrote:
+The current code is removing the trailing "/", but computing the string
+length on the previous value, i.e. with the trailing "/". Later in the
+code, we do
 
-> IOW, make the "--" a requirement for specifying filenames. The only
-> regression is that "--" as a single argument can no longer be used in
-> stash messages. So this works now:
->
-> =A0git stash save working on foo -- needs bar
->
-> but would be interpreted under my proposal as stashing "needs" and "b=
-ar"
-> with the message "working on foo". You would instead have to spell it=
-:
->
-> =A0git stash save "working on foo -- needs bar"
+  my $path = substr($File::Find::name, $pfxlen + 1);
 
-=46or what it's worth, that's how I always add messages to stash.. with
-quotes. It had never occured to me to use the form
-git stash save working on foo -- needs bar
-(no quotes), it's so ingrained that a multi-word message should be
-quoted that I would never have thought of even trying without the
-quotes! :-)
+And the "$pfxlen + 1" is supposed to mean "the length of the prefix, plus
+1 for the / separating the prefix and the path", but with an incorrect
+$pfxlen, this basically eats the first character of the path, and yields
+"404 - No projects found".
 
--Tor
+While we're there, also fix $pfxdepth to use $dir, although a change of 1
+in the depth shouldn't really matter.
+
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+I'm not fluent in Perl, and not familiar at all with gitweb, but this
+sounds a rather obvious (too obvious?) fix.
+
+ gitweb/gitweb.perl |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index f80f259..4512b89 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2835,8 +2835,8 @@ sub git_get_projects_list {
+ 		my $dir = $projects_list;
+ 		# remove the trailing "/"
+ 		$dir =~ s!/+$!!;
+-		my $pfxlen = length("$projects_list");
+-		my $pfxdepth = ($projects_list =~ tr!/!!);
++		my $pfxlen = length("$dir");
++		my $pfxdepth = ($dir =~ tr!/!!);
+ 		# when filtering, search only given subdirectory
+ 		if ($filter) {
+ 			$dir .= "/$filter";
+-- 
+1.7.8.384.g29bb3
