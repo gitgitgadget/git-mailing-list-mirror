@@ -1,65 +1,77 @@
-From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Subject: git log --since --until
-Date: Wed, 4 Jan 2012 13:46:59 -0800
-Message-ID: <CAE1pOi30FL+hRSqr3XRNgvOr4yBcTsbTpiNXpxJ=CN1Q=JVo3w@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Users <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 04 22:47:07 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/3] verify_signed_buffer: fix stale comment
+Date: Wed,  4 Jan 2012 14:10:56 -0800
+Message-ID: <1325715058-11984-2-git-send-email-gitster@pobox.com>
+References: <1325715058-11984-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 04 23:11:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RiYfr-00069L-4O
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Jan 2012 22:47:07 +0100
+	id 1RiZ39-0000SF-5m
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Jan 2012 23:11:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756853Ab2ADVrB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jan 2012 16:47:01 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:64533 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756829Ab2ADVrA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jan 2012 16:47:00 -0500
-Received: by qcqz2 with SMTP id z2so10669353qcq.19
-        for <git@vger.kernel.org>; Wed, 04 Jan 2012 13:46:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=hyXPDa3fTgItOAiBBMoDYkDenASZa8eA3JsvxNrekV4=;
-        b=QGKOjIapLCIew22viBVzgficiwodSorXwcwIE50QRcoKmSdRCYTaoVyismMNqvqUCr
-         6Qeo44xMKkkOirNm0YwiSxmzD2dUs+AeC7ISFvzs2zeCBfESI5OW6jkfOV/DFUMXQVql
-         5ohYDK652iK76T9ZW49ycf06fe+Nqo0kLFPr4=
-Received: by 10.229.69.79 with SMTP id y15mr22224796qci.73.1325713619791; Wed,
- 04 Jan 2012 13:46:59 -0800 (PST)
-Received: by 10.229.191.140 with HTTP; Wed, 4 Jan 2012 13:46:59 -0800 (PST)
+	id S1757119Ab2ADWLE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jan 2012 17:11:04 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55683 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757086Ab2ADWLC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jan 2012 17:11:02 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E45216795
+	for <git@vger.kernel.org>; Wed,  4 Jan 2012 17:11:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=bMnH
+	LTVswJqZsf+KarunnjUBKjk=; b=X95WL9/315rXC315MffHrFlHOOuf9lQy4bQc
+	4GmrfE4Iu830C3d/IC0mtDonel2gdamebhA2GM4wuNgV77x6KdvgmT7RiQIHL8xl
+	Lqk6SfRfiR+eVBqvAZw0mVsHWpL1Kfbd7thC1UYU95BQcIQSMeJQ17X3G4VbUvjo
+	40ry5VM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=EFq7o4
+	aDKGYE9Opn1uLawWCWdDUqUZ44Q9Ez5GsmQhnHk+O4nUnio9B/+ILlrUCrpZ/sL7
+	zKlaDGQeQ2w+wAGbeP85VaM41VYj0ejMjpYtdu10izL9ysoJ9Z/FhLjpCp1AcX9g
+	OipBHbpVIkGjhojpMV0k/Nz9pbW99aHB7YwH0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC3A36794
+	for <git@vger.kernel.org>; Wed,  4 Jan 2012 17:11:01 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 72E9E6793 for
+ <git@vger.kernel.org>; Wed,  4 Jan 2012 17:11:01 -0500 (EST)
+X-Mailer: git-send-email 1.7.8.2.340.gd18f0f
+In-Reply-To: <1325715058-11984-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: FCA22EAC-3720-11E1-8CB5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187945>
 
-Hi all,
+The function used to take an integer flag to specify where the output
+should go, but these days we supply a strbuf to receive it.
 
-I need to write sort of a report listing what we worked on (month by
-month) over the last year. Yippie. ;-)
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ gpg-interface.c |    5 +----
+ 1 files changed, 1 insertions(+), 4 deletions(-)
 
-Luckily most of the information I can get from our Git logs but I
-noticed some "anomalies". The quotes are there because I do understand
-(or I think I do anyway) why those "anomalies" are there.
-
-As an example, I ran (on master)
-
-git log --since="01-Dec-2011" --until="31-Dec-2011"
-
-The returned list of commits also included a few from November. I'm
-guessing that's because --since and --until simply determine a start
-commit and an end commit in master and any commit that falls in that
-range is included, whether its actual commit date is in the originally
-specified date range or not.
-
-Is there a way to just get the commits made in December? (I can
-manually go through the list, of course, [and that's probably what
-I'll do] but playing with Git is more fun than writing a report. ;-) )
-
-Cheers,
-Hilco
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 18630ff..09ab64a 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -95,10 +95,7 @@ int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *sig
+ 
+ /*
+  * Run "gpg" to see if the payload matches the detached signature.
+- * gpg_output_to tells where the output from "gpg" should go:
+- *   < 0: /dev/null
+- *   = 0: standard error of the calling process
+- *   > 0: the specified file descriptor
++ * gpg_output, when set, receives the diagnostic output from GPG.
+  */
+ int verify_signed_buffer(const char *payload, size_t payload_size,
+ 			 const char *signature, size_t signature_size,
+-- 
+1.7.8.2.340.gd18f0f
