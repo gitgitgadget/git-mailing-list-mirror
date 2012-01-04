@@ -1,143 +1,68 @@
-From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
-Subject: Re: [PATCH 1/2] git-svn, perl/Git.pm: add central method for prompting
- passwords honoring GIT_ASKPASS and SSH_ASKPASS
-Date: Wed, 04 Jan 2012 09:31:02 +0100
-Message-ID: <4F040E46.5030001@tu-clausthal.de>
-References: <4EC52508.9070907@tu-clausthal.de> <CABPQNSZ0iPAE+BnDU6Nz8_PkrAtPbjL4RoJuQS=Um2wxPt-2DQ@mail.gmail.com> <4EC65DE4.90005@tu-clausthal.de> <CABPQNSbfM0JRVPk3fxfSEq7QaO-fynHM8FBGpPribdgeRqpZKA@mail.gmail.com> <4ED0CE8B.70205@tu-clausthal.de> <20111130064401.GC5317@sigill.intra.peff.net> <4EF907F1.1030801@tu-clausthal.de> <m3d3baf5kd.fsf@localhost.localdomain> <4EF9D8B9.9060106@tu-clausthal.de> <4EF9EBF4.7070200@tu-clausthal.de> <4EF9ED58.8080205@tu-clausthal.de> <7vd3b967ql.fsf@alter.siamese.dyndns.org> <7vty4l4rr8.fsf@alter.siamese.dyndns.org> <4EFA5EB3.4000802@tu-clausthal.de> <CACBZZX7P9PEq0wZp0d3dSwDjF6J6Z3cO4VtWc9_frBengtqPLw@mail.gmail.com> <7vboqks8la.fsf@alter.siamese.dyndns.org> <4F038EC8.505@tu-clausthal.de> <7v39bws4xi.fsf@alter.siamese.dyndns.org> <4F0405D4.9090102@tu-
- clausthal.de>
+From: Paul Chown <pmchown@yahoo.co.uk>
+Subject: Re: git-p4 under cygwin
+Date: Wed, 4 Jan 2012 08:54:45 +0000 (GMT)
+Message-ID: <1325667285.61811.YahooMailClassic@web132101.mail.ird.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 04 09:31:11 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Thomas Berg <merlin66b@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 04 10:00:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RiMFa-0002Ao-9J
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Jan 2012 09:31:11 +0100
+	id 1RiMiD-0004BS-HV
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Jan 2012 10:00:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753982Ab2ADIbD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jan 2012 03:31:03 -0500
-Received: from poseidon.rz.tu-clausthal.de ([139.174.2.21]:15267 "EHLO
-	poseidon.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752936Ab2ADIbB (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Jan 2012 03:31:01 -0500
-Received: from poseidon.rz.tu-clausthal.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id 34E3A29AED0;
-	Wed,  4 Jan 2012 09:31:00 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
-	 bh=GQYD5D33GB9g88C464Pca1sJJGQ=; b=wr6fW8cm/4PWVwQNSieqYVWUl+WD
-	EppeAiWIHTsULIHbC9YNZXb3Zg1hmuO1A2nYXTWtsu5ipQujjZjzPTFxBlkj8jo1
-	etzBtQvUISz/kcGlzek2Q4/wVCOgkhn82y7xu3tLnW14hjF2xlwt7pBFGm8cna2Z
-	HMFLDJmYA2nQd6o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
-	dkim1; b=5npXgXPeTsZ2+lnJKcJ3YYSdTfgdTYiLFZ47tf5Ab+zjHRHlGeYeh+f
-	9UAZaHwDMcPDAc9ZshC/layBMuhlcerjuCqyYkqGxIBinyTtJISRljvwuMgGyFSG
-	lZcpP6469pAvang/vpQgEKDVdzrCA/784AbcUYpFv3O/pD78edUY=
-Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
-	by poseidon.rz.tu-clausthal.de (Postfix) with ESMTP id 11BDD29AE3C;
-	Wed,  4 Jan 2012 09:31:00 +0100 (CET)
-Received: from [139.174.242.80] (account sstri@tu-clausthal.de [139.174.242.80] verified)
-  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.3)
-  with ESMTPSA id 25668723; Wed, 04 Jan 2012 09:31:00 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-In-Reply-To: <4F0405D4.9090102@tu-clausthal.de>
-X-Enigmail-Version: 1.3.4
-X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
+	id S1754084Ab2ADJAl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jan 2012 04:00:41 -0500
+Received: from nm1-vm0.bullet.mail.ird.yahoo.com ([77.238.189.95]:40509 "HELO
+	nm1-vm0.bullet.mail.ird.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752122Ab2ADJAk convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 4 Jan 2012 04:00:40 -0500
+X-Greylist: delayed 353 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Jan 2012 04:00:39 EST
+Received: from [77.238.189.52] by nm1.bullet.mail.ird.yahoo.com with NNFMP; 04 Jan 2012 08:54:45 -0000
+Received: from [212.82.108.240] by tm5.bullet.mail.ird.yahoo.com with NNFMP; 04 Jan 2012 08:54:45 -0000
+Received: from [127.0.0.1] by omp1005.mail.ird.yahoo.com with NNFMP; 04 Jan 2012 08:54:45 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 682103.76930.bm@omp1005.mail.ird.yahoo.com
+Received: (qmail 61923 invoked by uid 60001); 4 Jan 2012 08:54:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.co.uk; s=s1024; t=1325667285; bh=OG+8rrQvlGdVb3pSahWLbJOz/r7VojDUC7Uf/hUjTt4=; h=X-YMail-OSG:Received:X-Mailer:Message-ID:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding; b=5Xren1T+TycU8DozADMxzcAX6aOu/iwOM8vAuVvaS6oEjCz1itcIsKIPi2p7qTJewhyll5auw7LowsTOZnbOPTbrbX3CViHdZpyio7U9BOJwaxI3C2RsPSmPFvxJp5ziu/J3h1FqIOQWBKg5oy5fkr3BjRwhMAN8SUloVY97Bhg=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.co.uk;
+  h=X-YMail-OSG:Received:X-Mailer:Message-ID:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=QOyMdu4wpeh3CHREpdjstrjPzhdV49y3Y4Bx5qQs3PCYqt3b/2zSF4faXhSm3Clnv3UJ4uZePPZFU5sLmHcEoliTHOtn0/lzqY0bWykvT6WAolX3bZUPXy1L0UQ5zWb0Sg9XzxLUCD0RbOiteznA3wB8CcdtWyR0JmKm4LlS3xM=;
+X-YMail-OSG: 8hqhNAcVM1npaSrW5d688gzOEX1PZRtkd6eOI_dS0SpETLj
+ cevCYF4QvzLJML2wmGD0e9FUTPUXkokWor63rZzJXZSgo8FcBibB822awklZ
+ gszh7LbXhZTvnKMIxa0rWIrGi_Ok.sU7IUgmQGtFS1hOIBAEG8XdUC7cnAE3
+ r5b_QApc11wOmlVIwtVCvFlgmSNxPZUyyorrknMpH7e0WJBMGcM1VU3RCS6s
+ 1jN3gEji8BDEVFFXiJCe2dsB4VzNzsTa8SMc.W.Ju1CBfP9jl.Q6rPwC4EUR
+ 1oRXHRNtGM5DzMd4eHrFp.gXShPiCkQ0ZfDTEUEv6VDN0LLe4lmltBZqt5sY
+ hoVHEJU7l8hxE9fzr_sL5u1cCIYlwNNnqoySVjML9Ck59MrD5RE6LHIIHuR8
+ eZV7ff8imidNroZ_j
+Received: from [141.249.133.128] by web132101.mail.ird.yahoo.com via HTTP; Wed, 04 Jan 2012 08:54:45 GMT
+X-Mailer: YahooMailClassic/15.0.4 YahooMailWebService/0.8.115.331698
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187914>
 
-Am 04.01.2012 08:55 schrieb Sven Strickroth:
-> The Git.pm part is easy, but I also tried to update prompt.c (untested).
 
-I said "easy" and then I mailed the wrong/outdated patch :(
-I'm sorry for the noise.
+On 1/3/12, Thomas Berg <merlin66b@gmail.com> wrote:
+> On Tue, Jan 3, 2012 at 4:32 PM, Paul Chown <pmchown@yahoo.co.uk> wrote:
+>> Path '/cygdrive/c/work/perforce/config_test\...' is not under client's
+>> root 'c:\work\perforce\config_test'.
+>
+> Ah, sorry, I did not see this part of the error message when I first
+> replied. This does seem like a cygwin related problem. Not sure how
+> easy it is to solve. But as mentioned, msysgit works fine with git-p4.
+>
+> - Thomas
+>
 
-From: Sven Strickroth <email@cs-ware.de>
-Date: Wed, 4 Jan 2012 08:44:48 +0100
-Subject: [PATCH] Git.pm, prompt: try reading from interactive terminal
- before using SSH_ASKPASS
+Thanks! with msysgit it works a lot better. The 'vi' invocation failed during the submit, and I tried just about every EDITOR variation that I could think of without success, but I could workround that by setting EDITOR to use the Windows notepad.exe instead.
 
-SVN tries to read reading from interactive terminal before using
-SSH_ASKPASS helper. This change adjust git to behave the same way.
-
-Signed-off-by: Sven Strickroth <email@cs-ware.de>
----
- perl/Git.pm |    9 ++++-----
- prompt.c    |   14 +++++++++++---
- 2 files changed, 15 insertions(+), 8 deletions(-)
-
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 1c96a20..721aef7 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -530,13 +530,9 @@ sub prompt {
- 		$ret = _prompt($ENV{'GIT_ASKPASS'}, $prompt);
- 	}
- 	if (!defined $ret) {
--		$ret = _prompt($ENV{'SSH_ASKPASS'}, $prompt);
--	}
--	if (!defined $ret) {
- 		print STDERR $prompt;
- 		STDERR->flush;
- 		if ($isPassword) {
--			$ret = '';
- 			require Term::ReadKey;
- 			Term::ReadKey::ReadMode('noecho');
- 			while (defined(my $key = Term::ReadKey::ReadKey(0))) {
-@@ -551,10 +547,13 @@ sub prompt {
- 			if (defined $ret) {
- 				chomp($ret);
- 			} else {
--				$ret = '';
-+				undef $ret;
- 			}
- 		}
- 	}
-+	if (!defined $ret) {
-+		$ret = _prompt($ENV{'SSH_ASKPASS'}, $prompt);
-+	}
- 	return $ret;
- }
-
-diff --git a/prompt.c b/prompt.c
-index 72ab9de..e791619 100644
---- a/prompt.c
-+++ b/prompt.c
-@@ -52,9 +52,17 @@ char *git_prompt(const char *prompt, int flags)
- 	}
-
- 	r = git_terminal_prompt(prompt, flags & PROMPT_ECHO);
--	if (!r)
--		die_errno("could not read '%s'", prompt);
--	return r;
-+	if (r)
-+		return r;
-+
-+	if (flags & PROMPT_ASKPASS) {
-+		const char *askpass;
-+		askpass = getenv("SSH_ASKPASS");
-+		if (askpass && *askpass)
-+			return do_askpass(askpass, prompt);
-+	}
-+
-+	die_errno("could not read '%s'", prompt);
- }
-
- char *git_getpass(const char *prompt)
--- 
-Best regards,
- Sven Strickroth
- ClamAV, a GPL anti-virus toolkit   http://www.clamav.net
- PGP key id F5A9D4C4 @ any key-server
+Paul
