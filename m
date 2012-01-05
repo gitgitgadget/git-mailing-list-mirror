@@ -1,102 +1,68 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] Do not fetch tags on new shallow clones
-Date: Thu, 5 Jan 2012 07:16:14 -0800
-Message-ID: <CAJo=hJse=6+9DdDgwJOEas1kdbx946SSKeTjEMZrYUA6V+h=1Q@mail.gmail.com>
-References: <1325676922-6995-1-git-send-email-pclouds@gmail.com>
- <7vwr97nho7.fsf@alter.siamese.dyndns.org> <CAJo=hJvL2ebziPw=0q-e=G3WFEvEKtFR2xMFMiquSyrHJDradA@mail.gmail.com>
- <7vfwfuofnk.fsf@alter.siamese.dyndns.org>
+From: greened@obbligato.org (David A. Greene)
+Subject: Re: git-subtree
+Date: Thu, 05 Jan 2012 09:03:38 -0600
+Message-ID: <87ipkq199w.fsf@smith.obbligato.org>
+References: <nngaa638nwf.fsf@transit.us.cray.com>
+	<CALkWK0nU9iO_6CCbWw8c_Fz=xodkaAW4300Jpc7M7D+kBP=QRg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 05 16:16:44 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: David Greene <dag@cray.com>, git@vger.kernel.org
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 05 16:24:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rip3b-0000iV-7s
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Jan 2012 16:16:43 +0100
+	id 1RipB4-0004Tm-4x
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Jan 2012 16:24:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932476Ab2AEPQh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jan 2012 10:16:37 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:46069 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755296Ab2AEPQg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Jan 2012 10:16:36 -0500
-Received: by dajs34 with SMTP id s34so342609daj.19
-        for <git@vger.kernel.org>; Thu, 05 Jan 2012 07:16:35 -0800 (PST)
-Received: by 10.68.189.163 with SMTP id gj3mr6106033pbc.86.1325776595743; Thu,
- 05 Jan 2012 07:16:35 -0800 (PST)
-Received: by 10.68.26.37 with HTTP; Thu, 5 Jan 2012 07:16:14 -0800 (PST)
-In-Reply-To: <7vfwfuofnk.fsf@alter.siamese.dyndns.org>
+	id S1755753Ab2AEPYV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jan 2012 10:24:21 -0500
+Received: from dsl001-154-008.msp1.dsl.speakeasy.net ([72.1.154.8]:43164 "EHLO
+	smith.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754284Ab2AEPYV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jan 2012 10:24:21 -0500
+X-Greylist: delayed 1166 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Jan 2012 10:24:21 EST
+Received: from greened by smith.obbligato.org with local (Exim 4.77)
+	(envelope-from <greened@obbligato.org>)
+	id 1Rioqx-0000Tw-Ke; Thu, 05 Jan 2012 09:03:39 -0600
+In-Reply-To: <CALkWK0nU9iO_6CCbWw8c_Fz=xodkaAW4300Jpc7M7D+kBP=QRg@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Thu, 5 Jan 2012 16:58:22 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187980>
 
-2012/1/4 Junio C Hamano <gitster@pobox.com>:
-> Shawn Pearce <spearce@spearce.org> writes:
->> ... Its useful because cloning a branch immediately after it
->> has been tagged for a release should have `git describe` provide bac=
-k
->> the name of the release from the tag (assuming of course no new
->> commits were made since the tag).
-=2E..
-> ... this thing, once you have a "single ref only" stuff working. =A0A=
-fter
-> Linus announces that he released 3.2, you would do the poor emulation=
- of
-> "git archive | tar xf -" with something like:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
+
+> Hi David,
 >
-> =A0 =A0git clone --single=3Dv3.2 --shallow $there linux-3.2
+> David Greene wrote:
+>> I have a patch ready.
+>> How does the git community want the patch presented?
 >
-> and your "git describe" should fall out as a natural consequence out =
-of
-> everything else, without the usual "tag following" semantics, no?
+> Please read and follow the guidelines listed in
+> Documentation/SubmittingPatches.  The TL;DR version is: break it up
+> into logical reviewable commits based on the current `master` and use
+> git format-patch/ git send-email to send those commits to this mailing
+> list.
 
-I said "branch" not "tag". Of course a single ref clone might be able
-to be used on a tag.
+I've read that document.  The issue is that I didn't develop the code,
+Avery did.  This is a completely new tool for git and I don't have the
+first idea of what "logical" chunks would look like.  I assume, for
+example, that we'd want the first "chunk" to actually work and do
+something interesting.  I can go spend a bunch of time to see if I can
+grok enough to create these chunks but I wanted to check first and make
+sure that would be absolutely necessary.  It's a lot of time to learn a
+completely new codebase.  I was hoping to submit something soon and then
+learn the codebase gradually during maintenance/further development.
 
-If my project maintainer tags a release from "maint" and announces
-that, I should also be able to shallow clone maint and pick up the tag
-automatically if it is within the depth I have asked for from the
-server.
+How have completely new tools be introduced into the git mainline in the
+past?
 
-Consider this case, a client clones shallow with a depth of 1. Then
-does normal `git fetch` to keep up-to-date with the project. When the
-project places a new tag on a branch, our shallow follower will
-automatically get that tag during her next `git fetch`, because auto
-following tags is enabled in fetch and the tag's referent was included
-in the pack. Why is this case permitted to get a tag, and shallow
-clone is not?
+Thanks!
 
-Actually, I think you might find that a shallow client with depth of 1
-will automatically pick up a missing tag at the branch head on its
-next `git fetch`. It will see the tag's ^{} line advertise an object
-it has, and ask for the tag.
-
-We really should support auto-following tags within the history space
-the client already has. Its mostly done for us with the include-tag
-capability, the client just needs to make sure it asks for it from the
-server, and check to see if any tag reference points to an object it
-has.
-
-> you would do the poor emulation of
-> "git archive | tar xf -" with something like:
->
-> =A0 =A0git clone --single=3Dv3.2 --shallow $there linux-3.2
-
-Is it really that poor of an emulation? Like tar, we get only one copy
-of each file (assuming depth 1). Assuming --format=3Dtar.gz, both are
-compressed. I wonder how much better or worse the Git cross-object
-delta compression is than the libz rolling window. I could see how Git
-might be able to compress something like C source code smaller than
-tar | gzip by using delta compression on related files (e.g. Makefile
-in every directory, or *.h and *.c files pairing by type). An added
-advantage of the shallow clone is you can incrementally update that
-stream, as its easy to fetch a v3.2.1 patch release, or apply a patch
-and record it on top.
+                              -Dave
