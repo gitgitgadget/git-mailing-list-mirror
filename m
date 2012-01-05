@@ -1,101 +1,112 @@
 From: greened@obbligato.org (David A. Greene)
 Subject: Re: git-subtree
-Date: Thu, 05 Jan 2012 10:33:20 -0600
-Message-ID: <87sjjuyur3.fsf@smith.obbligato.org>
+Date: Thu, 05 Jan 2012 10:48:23 -0600
+Message-ID: <87obuiyu20.fsf@smith.obbligato.org>
 References: <nngaa638nwf.fsf@transit.us.cray.com>
-	<CALkWK0nU9iO_6CCbWw8c_Fz=xodkaAW4300Jpc7M7D+kBP=QRg@mail.gmail.com>
-	<87ipkq199w.fsf@smith.obbligato.org>
-	<CALkWK0k+AwCsizZFwbKKxuz0B4xLoyC4hAy3WRD=sLCq-HvvCw@mail.gmail.com>
+	<7vboqino1r.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Greene <dag@cray.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 05 23:24:40 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: David Greene <dag@cray.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 05 23:24:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rivjj-00020j-Rp
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Jan 2012 23:24:40 +0100
+	id 1Rivk1-000280-VW
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Jan 2012 23:24:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964837Ab2AEWY3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jan 2012 17:24:29 -0500
+	id S964819Ab2AEWY2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jan 2012 17:24:28 -0500
 Received: from dsl001-154-008.msp1.dsl.speakeasy.net ([72.1.154.8]:45713 "EHLO
 	smith.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932905Ab2AEWY2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Jan 2012 17:24:28 -0500
+	with ESMTP id S964813Ab2AEWY1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jan 2012 17:24:27 -0500
 Received: from greened by smith.obbligato.org with local (Exim 4.77)
 	(envelope-from <greened@obbligato.org>)
-	id 1RiqFl-0000P8-4K; Thu, 05 Jan 2012 10:33:21 -0600
-In-Reply-To: <CALkWK0k+AwCsizZFwbKKxuz0B4xLoyC4hAy3WRD=sLCq-HvvCw@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Thu, 5 Jan 2012 21:02:16 +0530")
+	id 1RiqUK-0001Zv-0e; Thu, 05 Jan 2012 10:48:24 -0600
+In-Reply-To: <7vboqino1r.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 05 Jan 2012 07:53:36 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188004>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Hi again,
+> David Greene <dag@cray.com> writes:
 >
-> [+CC: Junio Hamano, our maintainer]
+>> How does the git community want the patch presented?  Right now it's one
+>> monolithic thing.  I understand that isn't ideal but I don't think
+>> incorporating the entire GitHub master history is necessarily the best
+>> idea either.
 >
-> David A. Greene wrote:
->> I've read that document. =C2=A0The issue is that I didn't develop th=
-e code,
->> Avery did.
->
-> Not an issue as long as you have Avery's signoff.
+> It depends on the longer term vision of how the result of this submission
+> will evolve and more importantly, where you fit in the piture.
 
-As in a signed-off-by log entry on the commit?  I did a commit -s to ad=
-d
-my own signed-off-by tag and added a "From:" line in accordance with th=
-e
-SubmittingPatches document:
+This is a very fair question.  I'll try to answer it as best I can.  I
+think it mostly jibes with your suggested possible answer.
 
-  "If you are forwarding a patch from somebody else, optionally, at the
-   beginning of the e-mail message just before the commit message start=
-s,
-   you can put a "From: " line to name that person."
+I've been using git-subtree for about six months now and as an
+enthusiastic user who wants to introduce this too into my daily
+corporate work environment, I'd like to see it incorporated as an
+officially-supported git tool to make that introduction easier.
 
-I have not used signoffs before in my day-to-day git flow.  How do I go
-about getting one from Avery and incorporating it into the history in a=
-n
-autheticated way?  I'm assuming you don't want me to forge his sign-off=
-=2E
-:)
+So my intention is to make git-subtree an integral part of the core git
+suite and take on further maintenance and development along with Avery
+and the other git-subtree developers.
 
->>=C2=A0It's a lot of time to learn a
->> completely new codebase. =C2=A0I was hoping to submit something soon=
- and then
->> learn the codebase gradually during maintenance/further development.
->
-> We certainly don't want badly reviewed code that nobody understands
-> floating around in the codebase-=20
+I have not previously been a contributor to git-subtree and don't know
+the code at all but I am a quick learner.  The actual git-subtree code
+itself is not overwhelmingly large and strikes me as a tractable
+learning project.
 
-Certainly, I'm not trying to avoid review, just trying to figure out th=
-e
-most efficient mechanics.
+I approached Avery about submitting git-subtree to become part of the
+core git suite.  He responded positively but indicated he does not have
+the cycles to do it at this time.  He asked whether I could take on the
+job and I agreed.
 
-> so, I'd suggest sending out whatever you think is appropriate for the
-> first round of reviews, and see how things shape up from there.
+He mentioned that he'd talked to some developers at GitTogether and got
+a positive reponse there.  I don't know whether you were part of those
+discussions.  My impression is that the GitTogether discussions went
+well and there was general agreement that git-subtree would be a
+valuable addition to the core git suite.
 
-=46air enough.  I think I will take Jeff's suggested route and see wher=
-e
-that goes.
+I am perfectly happy to put this in contrib/ first if it eases the
+introduction.  I would like to move it to the subcommand area after
+getting everything in tip-top shape.  What I don't want is for it to
+languish forever in contrib/.  That means I'll need some guideline of
+the changes/standards necessary to qualify it for transition from
+contrib/ to an official subcommand.  I expect we'll develop that as we
+go along but I hope the git community has some institutional knowledge
+gathered from previous experience.
 
->> How have completely new tools be introduced into the git mainline in=
- the
->> past?
->
-> Yes.  For an example of something I was involved with but didn't
-> author, see vcs-svn/.
+I have asked Avery how he wants to do maintenance going forward.  I
+haven't heard back from him yet so I can't speak to whether the existing
+GitHub project will continue or not.  I'll pass along his thoughts when
+I get them.
 
-Ok, I'll look into that.  Thanks for the pointer.
+> Your answer might differ, of course, but the point is that we would need
+> to weigh pros and cons between inclusion of it in the git repository and
+> keeping it in Avery's repository and have him and his contributors
+> maintain, enhance and distribute it from there, and it largely depends on
+> the nature of the submission. Is it a "throw it over the wall" dump of a
+> large code of unknown quality that we need to clean up first without
+> knowing the vision of how "git subtree" should evolve by original author
+> and/or people who have been actively developing it?
+
+I certainly don't want this to be an "over the wall" operation.  I
+intend to participate in maintenance of git-subtree in the official git
+repository.
+
+So I'll go ahead and work on adding this to contrib/.  Once I get a
+response from Avery about his long-term vision I'll pass that along and
+we can have further discussion.  I may start sending patches to the
+mailing list for review before hearing back from him, however.
+
+Sound good?
 
                              -Dave
