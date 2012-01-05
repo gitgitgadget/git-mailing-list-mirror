@@ -1,82 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] daemon: add tests
-Date: Wed, 4 Jan 2012 21:55:59 -0500
-Message-ID: <20120105025559.GB7326@sigill.intra.peff.net>
-References: <7v8vlovavj.fsf@alter.siamese.dyndns.org>
- <1325692539-26748-1-git-send-email-drizzd@aon.at>
- <7vy5tnpcuw.fsf@alter.siamese.dyndns.org>
- <20120104204017.GC27567@ecki.lan>
- <7vaa63p11t.fsf@alter.siamese.dyndns.org>
- <20120104222649.GA14727@sigill.intra.peff.net>
- <20120105000713.GA24220@ecki.lan>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] Do not fetch tags on new shallow clones
+Date: Wed, 4 Jan 2012 19:05:07 -0800
+Message-ID: <CAJo=hJvL2ebziPw=0q-e=G3WFEvEKtFR2xMFMiquSyrHJDradA@mail.gmail.com>
+References: <1325676922-6995-1-git-send-email-pclouds@gmail.com> <7vwr97nho7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Thu Jan 05 03:56:09 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 05 04:05:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RidUu-0007lA-Be
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Jan 2012 03:56:08 +0100
+	id 1Ride1-0002BB-G7
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Jan 2012 04:05:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757069Ab2AEC4D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jan 2012 21:56:03 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58020
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754014Ab2AEC4C (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jan 2012 21:56:02 -0500
-Received: (qmail 22359 invoked by uid 107); 5 Jan 2012 03:02:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 04 Jan 2012 22:02:52 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Jan 2012 21:55:59 -0500
-Content-Disposition: inline
-In-Reply-To: <20120105000713.GA24220@ecki.lan>
+	id S1757652Ab2AEDF3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jan 2012 22:05:29 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:36981 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757519Ab2AEDF2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Jan 2012 22:05:28 -0500
+Received: by pbdu13 with SMTP id u13so67814pbd.19
+        for <git@vger.kernel.org>; Wed, 04 Jan 2012 19:05:28 -0800 (PST)
+Received: by 10.68.74.167 with SMTP id u7mr770835pbv.103.1325732728186; Wed,
+ 04 Jan 2012 19:05:28 -0800 (PST)
+Received: by 10.68.26.37 with HTTP; Wed, 4 Jan 2012 19:05:07 -0800 (PST)
+In-Reply-To: <7vwr97nho7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187964>
 
-On Thu, Jan 05, 2012 at 01:07:13AM +0100, Clemens Buchacher wrote:
+2012/1/4 Junio C Hamano <gitster@pobox.com>:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> w=
+rites:
+>> =C2=A0We should also fetch tags that reference to downloaded objects=
+=2E
+>
+> I do not think this has much merit.
 
-> On Wed, Jan 04, 2012 at 05:26:49PM -0500, Jeff King wrote:
-> > 
-> > Or is the problem the git wrapper itself, which doesn't kill its
-> > subprocess when it dies (which IMHO is a bug which we might want to
-> > fix)? In that case, couldn't we just use --pid-file to save the actual
-> > daemon pid, and then kill using that?
-> 
-> Or like this. Doesn't work with multiple children. I have yet to
-> check if we have those anywhere.
+I disagree. Its useful because cloning a branch immediately after it
+has been tagged for a release should have `git describe` provide back
+the name of the release from the tag (assuming of course no new
+commits were made since the tag).
 
-It so happens that I have just the patch you need. I've been meaning to
-go over it again and submit it:
+> The usual tag-following rules AFAIK
+> assumes that if you have the commit C then you ought to have all the
+> ancestors of C, which does not apply at all for the shallow hack to b=
+egin
+> with, and if you make the rule apply for the shallow hack, you would =
+end
+> up slurping the objects that are needed only for ancient versions, wh=
+ich
+> would defeat the objective of this patch, no?
 
-  run-command: optionally kill children on exit
-  https://github.com/peff/git/commit/5523d7ebf2a0386c9c61d7bfbc21375041df4989
+We aren't talking about fetching the ancient history tags. We are
+talking about fetching a tag that *directly* points at one of the
+commits we did download the complete tree of.
 
-The original use case was to help with this:
+> It also is my understanding that the shallow hack is almost always us=
+ed
+> with a depth of one, not a range, like "git archive | tar xf -", so i=
+f
+> anything, I would say a single-branch cloning has much higher priorit=
+y
+> than following tags.
 
-  https://github.com/peff/git/commit/79bf3f232f89c3e2f5284a3b7b71a667be8825d1
-
-> > As a side note, it looks like we just start the daemon with "git daemon
-> > &". Doesn't that create a race condition with the tests which
-> > immediately try to access it (i.e., the first test may run before the
-> > daemon actually opens the socket)?
-> 
-> That's correct. How would I fix that? Try connecting and sleep in a
-> loop until ready or timeout? Will look into that.
-
-Your choices are basically busy-waiting, or convincing the daemon to
-send a signal when it's ready to serve. I like the latter, but it does
-mean adding a small amount of code to git-daemon.
-
--Peff
+I think I agree with you on priority of work effort. But I lack time
+to make good on that by writing the code myself.  :-)
