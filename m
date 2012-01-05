@@ -1,149 +1,129 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] parse_object: try internal cache before reading object db
-Date: Thu, 5 Jan 2012 16:00:01 -0500
-Message-ID: <20120105210001.GA30549@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Limit refs to fetch to minimum in shallow clones
+Date: Thu, 05 Jan 2012 13:25:37 -0800
+Message-ID: <7vmxa1n8oe.fsf@alter.siamese.dyndns.org>
+References: <1325676922-6995-1-git-send-email-pclouds@gmail.com>
+ <1325743516-14940-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git-dev@github.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 05 22:00:14 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 05 22:25:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RiuQ1-00045w-74
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Jan 2012 22:00:13 +0100
+	id 1Riuok-00088j-QB
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Jan 2012 22:25:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932851Ab2AEVAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jan 2012 16:00:05 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58418
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932656Ab2AEVAE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jan 2012 16:00:04 -0500
-Received: (qmail 30329 invoked by uid 107); 5 Jan 2012 21:06:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 05 Jan 2012 16:06:55 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Jan 2012 16:00:01 -0500
-Content-Disposition: inline
+	id S932828Ab2AEVZm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jan 2012 16:25:42 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64582 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932707Ab2AEVZl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Jan 2012 16:25:41 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 123C2624B;
+	Thu,  5 Jan 2012 16:25:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=BiPaL0rqe1Og
+	rUy7jxN/bSPTcgQ=; b=c7d3mx1tSrHvazQKE8TtzCqPwiwyMegKznOWv86iYzwL
+	MwI5iFd0piDqnrDeR/78x/thpryxnFnVrodf/oC3nXj2gDbgCiv0txKmTQESr/LQ
+	5HMCafy5BlO2GXnXAn02xg9P1t9QOSejMAmY2Zh+zRic+8wvEgkiVdiBpwD9CN0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=DEm32X
+	BwfTC2xPMKjz0vBogAeQ5mVXoNiKgF6SqCiPmBJtgkGF2IQ4S7wm4Fv/V950rMWT
+	tgr2jmS9ar9zWZsek3HZrbdtvO+HYgX/lUgg43WP1Y22+9oNEAKWWEZYhpY/+oeR
+	vKmKQn9rTu3uVajZkIVBqREnvky24vI7s6Pks=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 081A96249;
+	Thu,  5 Jan 2012 16:25:40 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 80EEC6247; Thu,  5 Jan 2012
+ 16:25:39 -0500 (EST)
+In-Reply-To: <1325743516-14940-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 5 Jan
+ 2012 13:05:16 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D0A4C03A-37E3-11E1-B488-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187995>
 
-When parse_object is called, we do the following:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-  1. read the object data into a buffer via read_sha1_file
+> The main purpose of shallow clones is to reduce download by only
+> fetching objects up to a certain depth from the given refs. The numbe=
+r
+> of objects depends on how many refs to follow. So:
+>
+>  - Only fetch HEAD or the ref specified by --branch
+>  - Only fetch tags that point to downloaded objects
+>
+> More tags/branches can be fetched later using git-fetch as usual.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  Only lightly tested, but seems to work.
 
-  2. call parse_object_buffer, which then:
+Thanks.
 
-     a. calls the appropriate lookup_{commit,tree,blob,tag}
-	to either create a new "struct object", or to find
-	an existing one. We know the appropriate type from
-	the lookup in step 1.
+Perhaps you would want to add tests so that you do not have to say
+"lightly tested"?
 
-     b. calls the appropriate parse_{commit,tree,blob,tag}
-        to parse the buffer for the new (or existing) object
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index efe8b6c..8de9248 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -48,6 +48,7 @@ static int option_verbosity;
+>  static int option_progress;
+>  static struct string_list option_config;
+>  static struct string_list option_reference;
+> +static char *src_ref_prefix =3D "refs/heads/";
 
-In step 2b, all of the called functions are no-ops for
-object "X" if "X->object.parsed" is set. I.e., when we have
-already parsed an object, we end up going to a lot of work
-just to find out at a low level that there is nothing left
-for us to do (and we throw away the data from read_sha1_file
-unread).
+Would this be const?
 
-We can optimize this by moving the check for "do we have an
-in-memory object" from 2a before the expensive call to
-read_sha1_file in step 1.
+>  static int opt_parse_reference(const struct option *opt, const char =
+*arg, int unset)
+>  {
+> @@ -427,9 +428,27 @@ static struct ref *wanted_peer_refs(const struct=
+ ref *refs,
+>  	struct ref *local_refs =3D head;
+>  	struct ref **tail =3D head ? &head->next : &local_refs;
+> =20
+> -	get_fetch_map(refs, refspec, &tail, 0);
+> -	if (!option_mirror)
+> -		get_fetch_map(refs, tag_refspec, &tail, 0);
+> +	if (option_depth) {
+> +		struct ref *remote_head =3D NULL;
+> +
+> +		if (!option_branch)
+> +			remote_head =3D guess_remote_head(head, refs, 0);
+> +		else {
+> +			struct strbuf sb =3D STRBUF_INIT;
+> +			strbuf_addstr(&sb, src_ref_prefix);
+> +			strbuf_addstr(&sb, option_branch);
+> +			remote_head =3D find_ref_by_name(refs, sb.buf);
+> +			strbuf_release(&sb);
+> +		}
+> +
+> +		if (remote_head)
+> +			get_fetch_map(remote_head, refspec, &tail, 0);
 
-This might seem circular, since step 2a uses the type
-information determined in step 1 to call the appropriate
-lookup function. However, we can notice that all of the
-lookup_* functions are backed by lookup_object. In other
-words, all of the objects are kept in a master hash table,
-and we don't actually need the type to do the "do we have
-it" part of the lookup, only to do the "and create it if it
-doesn't exist" part.
+What happens when we fail to find any remote_head and make no call to
+get_fetch_map() here?  I am wondering if that should trigger an error
+here.
 
-This can save time whenever we call parse_object on the same
-sha1 twice in a single program. Some code paths already
-perform this optimization manually, with either:
+Also this breaks 5500 for rather obvious reasons, as the point of this
+patch is to reduce the object transferred when a shallow clone is made.
 
-  if (!obj->parsed)
-	  obj = parse_object(obj->sha1);
-
-if you already have a "struct object", or:
-
-  struct object *obj = lookup_unknown_object(sha1);
-  if (!obj || !obj->parsed)
-	  obj = parse_object(sha1);
-
-if you don't.  This patch moves the optimization into
-parse_object itself.
-
-Most git operations won't notice any impact. Either they
-don't parse a lot of duplicate sha1s, or the calling code
-takes special care not to re-parse objects. I timed two
-code paths that do benefit (there may be more, but these two
-were immediately obvious and easy to time).
-
-The first is fast-export, which calls parse_object on each
-object it outputs, like this:
-
-  object = parse_object(sha1);
-  if (!object)
-	  die(...);
-  if (object->flags & SHOWN)
-	  return;
-
-which means that just to realize we have already shown an
-object, we will read the whole object from disk!
-
-With this patch, my best-of-five time for "fast-export --all" on
-git.git dropped from 26.3s to 21.3s.
-
-The second case is upload-pack, which will call parse_object
-for each advertised ref (because it needs to peel tags to
-show "^{}" entries). This doesn't matter for most
-repositories, because they don't have a lot of refs pointing
-to the same objects. However, if you have a big alternates
-repository with a shared object db for a number of child
-repositories, then the alternates repository will have
-duplicated refs representing each of its children.
-
-For example, GitHub's alternates repository for git.git has
-~120,000 refs, of which only ~3200 are unique. The time for
-upload-pack to print its list of advertised refs dropped
-from 3.4s to 0.76s.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- object.c |    9 +++++++--
- 1 files changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/object.c b/object.c
-index d8d09f9..6b06297 100644
---- a/object.c
-+++ b/object.c
-@@ -191,10 +191,15 @@ struct object *parse_object(const unsigned char *sha1)
- 	enum object_type type;
- 	int eaten;
- 	const unsigned char *repl = lookup_replace_object(sha1);
--	void *buffer = read_sha1_file(sha1, &type, &size);
-+	void *buffer;
-+	struct object *obj;
-+
-+	obj = lookup_object(sha1);
-+	if (obj && obj->parsed)
-+		return obj;
- 
-+	buffer = read_sha1_file(sha1, &type, &size);
- 	if (buffer) {
--		struct object *obj;
- 		if (check_sha1_signature(repl, buffer, size, typename(type)) < 0) {
- 			free(buffer);
- 			error("sha1 mismatch %s\n", sha1_to_hex(repl));
--- 
-1.7.6.5.6.ge6248
+Perhaps there should be an option to give users the historical "all
+branches equally shallow" behaviour?
