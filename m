@@ -1,101 +1,82 @@
-From: greened@obbligato.org (David A. Greene)
-Subject: Re: git-subtree
-Date: Thu, 05 Jan 2012 16:16:53 -0600
-Message-ID: <8762gpyeui.fsf@smith.obbligato.org>
-References: <nngaa638nwf.fsf@transit.us.cray.com>
-	<CALkWK0nU9iO_6CCbWw8c_Fz=xodkaAW4300Jpc7M7D+kBP=QRg@mail.gmail.com>
-	<87ipkq199w.fsf@smith.obbligato.org>
-	<20120105154740.GA11475@sigill.intra.peff.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] Submodules always use a relative path to gitdir
+Date: Thu, 05 Jan 2012 23:52:54 +0100
+Message-ID: <4F0629C6.9010908@web.de>
+References: <1325192426-10103-1-git-send-email-antony.male@gmail.com> <7vsjk3vw67.fsf@alter.siamese.dyndns.org> <4F007492.8010909@web.de> <7vsjjwvdyl.fsf@alter.siamese.dyndns.org> <4F037CBF.9010005@web.de> <7vhb0csa6w.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	David Greene <dag@cray.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 05 23:25:04 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Antony Male <antony.male@gmail.com>, git@vger.kernel.org,
+	iveqy@iveqy.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 05 23:53:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rivk4-000280-7S
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Jan 2012 23:25:00 +0100
+	id 1RiwBP-0006HO-76
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Jan 2012 23:53:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964835Ab2AEWYw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jan 2012 17:24:52 -0500
-Received: from dsl001-154-008.msp1.dsl.speakeasy.net ([72.1.154.8]:45713 "EHLO
-	smith.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932516Ab2AEWY0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jan 2012 17:24:26 -0500
-Received: from greened by smith.obbligato.org with local (Exim 4.77)
-	(envelope-from <greened@obbligato.org>)
-	id 1RivcD-0000tw-AD; Thu, 05 Jan 2012 16:16:53 -0600
-In-Reply-To: <20120105154740.GA11475@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 5 Jan 2012 10:47:40 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+	id S932983Ab2AEWxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jan 2012 17:53:09 -0500
+Received: from fmmailgate05.web.de ([217.72.192.243]:58231 "EHLO
+	fmmailgate05.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932570Ab2AEWxI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jan 2012 17:53:08 -0500
+Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
+	by fmmailgate05.web.de (Postfix) with ESMTP id A17A668D0269
+	for <git@vger.kernel.org>; Thu,  5 Jan 2012 23:52:56 +0100 (CET)
+Received: from [192.168.178.43] ([91.3.186.209]) by smtp.web.de (mrweb001)
+ with ESMTPA (Nemesis) id 0McneT-1S0sXG0XVx-00Hwap; Thu, 05 Jan 2012 23:52:55
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
+In-Reply-To: <7vhb0csa6w.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: V02:K0:6QY2qArshYN5Dp0EXrs2LAImHzOPL9biU2HJZOxI8/Y
+ Qve1xRyGFXPlTUI3K7PjdnVnc4TFxIgDQgCWKHM2CgSdwyAKD7
+ ORdrTsncXLF8nwdlDIpTPiztLfCYteUFuCqVaIZoTLLy6qFY9H
+ jXqtOZNAxLHzO6yIUvSN8rilg8MZ20zO9Y5EWEuSe7R46PLwu5
+ JjEAwoLbvxSgUnKkyFBmg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188007>
 
-Jeff King <peff@peff.net> writes:
+Am 03.01.2012 23:17, schrieb Junio C Hamano:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+> 
+>> Not if we would implement a "if no worktree is set but we came here via
+>> a gitfile, then take the directory the gitfile was found in as worktree"
+>> heuristic. And that heuristic looks quite sane to me, as a gitfile can
+>> only be found in a work tree, or am I missing something obvious here?
+> 
+> Like it wouldn't work without changes to the core side?
 
-> I think this is also somewhat different in that git-subtree has a
-> multi-year history in git that we may want to keep. So it is more
+I totally agree that when just talking about being able to move the
+superproject around that approach is more invasive than just adding
+a relative core.worktree setting and is just not worth the hassle.
 
-I agree there may be some value in preserving this history.
+But I was also thinking about moving the submodule around inside the
+superproject. Until the gitfile was used that meant just mv'ing the
+submodule and changing the path in .gitmodules accordingly. Now you
+also have to adjust the core.worktree setting and maybe also the
+gitfile content (if you move the submodule out of the directory level
+it lived in before).
 
-> The biggest decision is whether or not to import the existing history.
+One solution I can think of is to teach "git mv" about submodules and
+let it do the necessary changes to .gitmodules (which seems to be a
+good idea anyways), core.worktree and the gitfile. The manipulation of
+core.worktree could be obsoleted by not using that setting but instead
+implementing the heuristic I described above. And if the gitfile could
+be taught somehow that a path in there is relative to the superprojects
+root directory, then it would never have to be changed either, restoring
+the behavior we had before introducing the gitfile.
 
-I agree.  I will leave that decision to the more experienced git
-developers.  I'm happy to work either way.
+So in the long run I suspect we might have to change core git anyways
+to make moving submodules easy for the user (surely "git mv" and maybe
+also the setup and gitfile code). Does that make more sense?
 
-> If we want to throw away the existing history, then I think you end up
-> doing the same munging as the latter option above, and then just make a
-> single patch out of it instead of a merge.
-
-Right.  That's the approach I've taken for now but it's easy to switch.
-There aren't that many changes.
-
-> I don't use git-subtree, but just glancing over the repo, it looks like
-> that munging is mostly:
->
->   1. git-subtree.sh stays, and gets added to git.git's top-level Makefile
-
-Done.
-
->   2. the test.sh script gets adapted into t/tXXXX-subtree.sh
-
-Done.
-
->   3. git-subtree.txt goes into Documentation/
-
-Done.
-
->   4. The rest of the files are infrastructure that can go away, as they
->      are a subset of what git.git already contains.
-
-Done.
-
-I have a patch that does all of the above but it is one monolithic blob.
-Like I said, the changes aren't extensive so it's easy for me to change
-strategies.
-
-> I'd favor keeping the history and doing the munge-overlay thing.
-
-Ok, that sounds fine to me.  I'll do that in a private branch.  What
-should I send as patches to the mailing list?  I'm assuming we don't
-want [PATCH 235/12342], etc. sent to the list chronicling the entire
-history.  :)
-
-> Although part of me wants to join the histories in a subtree so that we
-> can use "git subtree" to do it (which would just be cool),
-
-Heh.  I thought about that too.  :)
-
-> I think the resulting code layout doesn't make much sense unless
-> git-subtree is going to be maintained separately.
-
-Yeah, I agree.
-
-                                -Dave
+If not I'm fine with just setting core.worktree to a relative path in
+the git-submodule.sh script (like I did for the gitfile). And I'll look
+into teaching "git mv" about submodules right after that.
