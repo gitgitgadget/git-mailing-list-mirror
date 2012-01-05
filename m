@@ -1,7 +1,7 @@
 From: greened@obbligato.org (David A. Greene)
 Subject: Re: git-subtree
-Date: Thu, 05 Jan 2012 10:26:40 -0600
-Message-ID: <87zke2yv27.fsf@smith.obbligato.org>
+Date: Thu, 05 Jan 2012 16:16:53 -0600
+Message-ID: <8762gpyeui.fsf@smith.obbligato.org>
 References: <nngaa638nwf.fsf@transit.us.cray.com>
 	<CALkWK0nU9iO_6CCbWw8c_Fz=xodkaAW4300Jpc7M7D+kBP=QRg@mail.gmail.com>
 	<87ipkq199w.fsf@smith.obbligato.org>
@@ -11,24 +11,24 @@ Content-Type: text/plain; charset=us-ascii
 Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	David Greene <dag@cray.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 05 23:25:03 2012
+X-From: git-owner@vger.kernel.org Thu Jan 05 23:25:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rivk3-000280-Kf
+	id 1Rivk4-000280-7S
 	for gcvg-git-2@lo.gmane.org; Thu, 05 Jan 2012 23:25:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932957Ab2AEWYs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jan 2012 17:24:48 -0500
+	id S964835Ab2AEWYw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jan 2012 17:24:52 -0500
 Received: from dsl001-154-008.msp1.dsl.speakeasy.net ([72.1.154.8]:45713 "EHLO
 	smith.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S964816Ab2AEWY2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jan 2012 17:24:28 -0500
+	with ESMTP id S932516Ab2AEWY0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jan 2012 17:24:26 -0500
 Received: from greened by smith.obbligato.org with local (Exim 4.77)
 	(envelope-from <greened@obbligato.org>)
-	id 1Riq9I-0008M8-MM; Thu, 05 Jan 2012 10:26:40 -0600
+	id 1RivcD-0000tw-AD; Thu, 05 Jan 2012 16:16:53 -0600
 In-Reply-To: <20120105154740.GA11475@sigill.intra.peff.net> (Jeff King's
 	message of "Thu, 5 Jan 2012 10:47:40 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
@@ -36,7 +36,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188006>
 
 Jeff King <peff@peff.net> writes:
 
