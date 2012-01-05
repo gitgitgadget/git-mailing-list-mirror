@@ -1,115 +1,85 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] clone: allow detached checkout when --branch takes a tag
-Date: Thu,  5 Jan 2012 20:49:40 +0700
-Message-ID: <1325771380-18862-1-git-send-email-pclouds@gmail.com>
+From: Holger Hellmuth <hellmuth@ira.uka.de>
+Subject: Re: checkout on an empty directory fails
+Date: Thu, 05 Jan 2012 14:59:50 +0100
+Message-ID: <4F05ACD6.6040603@ira.uka.de>
+References: <4F0576D9.4030207@gmx.de> <CACsJy8A42n4t+WqGaTx7vDQ3jP_YkD1bB0WL9amrrg1B4eOx7w@mail.gmail.com> <4F0599E0.7090902@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 05 14:50:17 2012
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?UmVuw6kgRG/Dnw==?= <doss@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 05 14:59:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rinhx-0003JG-8B
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Jan 2012 14:50:17 +0100
+	id 1Rinr3-0007MT-Iu
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Jan 2012 14:59:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757198Ab2AENuK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jan 2012 08:50:10 -0500
-Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:40011 "EHLO
-	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757071Ab2AENuJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Jan 2012 08:50:09 -0500
-Received: by obcwo16 with SMTP id wo16so600116obc.19
-        for <git@vger.kernel.org>; Thu, 05 Jan 2012 05:50:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=FiYshrO+YHG54UGYQl6Nmsf6sxyH1+Dl/Cgw6k4yLbU=;
-        b=wgQ9phh43Gf+vj93pzTzQDxgchVrsHE81ph44gLl9CNBOM4wbugWqE2aTT4BvGu3j/
-         laNDbENE1/yzZ25IAX5c2XL2qir1H8E+oBGNcxyrmIARlV+KozkM3BmOg2soOwkHQ3O1
-         OTupZql4D/kAjUoUXJtCnaVtS4D/2QGlCVTt4=
-Received: by 10.50.184.134 with SMTP id eu6mr2685927igc.17.1325771408681;
-        Thu, 05 Jan 2012 05:50:08 -0800 (PST)
-Received: from pclouds@gmail.com ([115.74.56.82])
-        by mx.google.com with ESMTPS id x18sm201807962ibi.2.2012.01.05.05.50.04
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 05 Jan 2012 05:50:07 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 05 Jan 2012 20:49:41 +0700
-X-Mailer: git-send-email 1.7.8.36.g69ee2
+	id S932076Ab2AEN7c convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jan 2012 08:59:32 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:56487 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753094Ab2AEN7b (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Jan 2012 08:59:31 -0500
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1Rinqn-0004ye-AZ; Thu, 05 Jan 2012 14:59:30 +0100
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
+	id 1Rinqm-00009G-SM; Thu, 05 Jan 2012 14:59:24 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <4F0599E0.7090902@gmx.de>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1325771970.438620000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187977>
 
-This allows you to do "git clone --branch=3Dv1.7.8 git.git" and work
-right away from there. No big deal, just one more convenient step, I
-think. --branch taking a tag may be confusing though.
+On 05.01.2012 13:38, Ren=C3=A9 Do=C3=9F wrote:
+> git status says not special informations.
 
-We can still have master in this case instead of detached HEAD, which
-may make more sense because we use --branch. I don't care much which
-way should be used.
+  versus
 
-Like? Dislike?
+> red@linux-nrd1:~/iso/a> git status
+> # On branch master
+> # Changed but not updated:
+> # (use "git add/rm <file>..." to update what will be committed)
+> # (use "git checkout -- <file>..." to discard changes in working dire=
+ctory)
+> #
+> # deleted: SP601_RevC_annotated_master_ucf_8-28-09.ucf
+> # deleted: rtl/ether_speed.vhd
+> # deleted: rtl/ether_top.vhd
+> # deleted: rtl/ether_tx.vhd
+> # deleted: rtl/takt.vhd
+> # deleted: sim/makefile
+> # deleted: sim/tb_ether_top.vhd
+> #
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- builtin/clone.c |   20 +++++++++++++++++++-
- 1 files changed, 19 insertions(+), 1 deletions(-)
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 8f29912..97af4bd 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -23,6 +23,7 @@
- #include "branch.h"
- #include "remote.h"
- #include "run-command.h"
-+#include "tag.h"
+This *is* special information: It tells you that master has those 7=20
+files but your working directory has none of them (i.e. it is as if you=
 =20
- /*
-  * Overall FIXMEs:
-@@ -721,6 +722,14 @@ int cmd_clone(int argc, const char **argv, const c=
-har *prefix)
- 			strbuf_release(&head);
+had deleted them from your working directory).
+
+"git checkout <branch>" switches between branches, *but* leaves changes=
 =20
- 			if (!our_head_points_at) {
-+				strbuf_addstr(&head, "refs/tags/");
-+				strbuf_addstr(&head, option_branch);
-+				our_head_points_at =3D
-+					find_ref_by_name(mapped_refs, head.buf);
-+				strbuf_release(&head);
-+			}
-+
-+			if (!our_head_points_at) {
- 				warning(_("Remote branch %s not found in "
- 					"upstream %s, using HEAD instead"),
- 					option_branch, option_origin);
-@@ -750,7 +759,16 @@ int cmd_clone(int argc, const char **argv, const c=
-har *prefix)
- 			      reflog_msg.buf);
- 	}
+you made (files you edited, added or deleted) intact! This is so you ca=
+n=20
+switch branches before commiting if you suddenly realize you are in the=
 =20
--	if (our_head_points_at) {
-+	if (our_head_points_at &&
-+	    !prefixcmp(our_head_points_at->name, "refs/tags/")) {
-+		const struct ref *ref =3D our_head_points_at;
-+		struct object *o;
-+
-+		/* Detached HEAD */
-+		o =3D deref_tag(parse_object(ref->old_sha1), NULL, 0);
-+		update_ref(reflog_msg.buf, "HEAD", o->sha1, NULL,
-+			   REF_NODEREF, DIE_ON_ERR);
-+	} else if (our_head_points_at) {
- 		/* Local default branch link */
- 		create_symref("HEAD", our_head_points_at->name, NULL);
- 		if (!option_bare) {
---=20
-1.7.8.36.g69ee2
+wrong branch.
+
+"git checkout -- <paths...>" or in your case "git checkout -- ." is=20
+different, it really overwrites the files in your working dir with the=20
+versions stored somewhere else, by default from the index.
+
+ > What means the point in checkout?
+
+"." is simply your current directory
