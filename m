@@ -1,126 +1,76 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: How to deal with historic tar-balls
-Date: Thu, 05 Jan 2012 09:25:22 -0600
-Message-ID: <4F05C0E2.4050101@gmail.com>
-References: <4EFF5CDA.5050809@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: git-subtree
+Date: Thu, 5 Jan 2012 21:02:16 +0530
+Message-ID: <CALkWK0k+AwCsizZFwbKKxuz0B4xLoyC4hAy3WRD=sLCq-HvvCw@mail.gmail.com>
+References: <nngaa638nwf.fsf@transit.us.cray.com> <CALkWK0nU9iO_6CCbWw8c_Fz=xodkaAW4300Jpc7M7D+kBP=QRg@mail.gmail.com>
+ <87ipkq199w.fsf@smith.obbligato.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: nn6eumtr <nn6eumtr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 05 16:25:41 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Greene <dag@cray.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: "David A. Greene" <greened@obbligato.org>
+X-From: git-owner@vger.kernel.org Thu Jan 05 16:33:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RipCD-00050t-P9
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Jan 2012 16:25:38 +0100
+	id 1RipJI-0008Vh-TW
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Jan 2012 16:32:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932617Ab2AEPZ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jan 2012 10:25:29 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:62973 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932614Ab2AEPZ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jan 2012 10:25:27 -0500
-Received: by yenm11 with SMTP id m11so201269yen.19
-        for <git@vger.kernel.org>; Thu, 05 Jan 2012 07:25:27 -0800 (PST)
+	id S932620Ab2AEPcj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jan 2012 10:32:39 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:33007 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932549Ab2AEPci convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Jan 2012 10:32:38 -0500
+Received: by wgbdr13 with SMTP id dr13so755623wgb.1
+        for <git@vger.kernel.org>; Thu, 05 Jan 2012 07:32:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=jXvpVkvPnBybJtNy3n0QSmCHZ0goMZ3OiEw6qwaSO0k=;
-        b=qlOb/YmaWbHf7WDPurB5o/fJ/StZ3FOmYubwzwafyID9YMRCqDoGP9U8kAZWtA36mz
-         FRzvo1kCyJ7CudiFsD82osZXiQw8uJVmyLBtQfyXhykT9zEN/787Y9wy/EjbH0DkmDQe
-         L1KfeXFBsu57snnBP/f3g/xgqK0kpXR3zJoAM=
-Received: by 10.236.116.129 with SMTP id g1mr2107724yhh.107.1325777126994;
-        Thu, 05 Jan 2012 07:25:26 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id i50sm82201740yhk.11.2012.01.05.07.25.24
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 05 Jan 2012 07:25:25 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.25) Gecko/20111213 Thunderbird/3.1.17
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <4EFF5CDA.5050809@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=j86om6e7eyUnURPlFI0fXB0z08ySbG4dlD6CM0o9kfU=;
+        b=fJ8qH6DLVrIOpx9VQf7XW2mgceEXrferirmBJk5UA/HL83GpdJYgckelYBYc6fHvWj
+         VgNdTqV66ouhTGkkPdQR7VoxeuNp+PRWvgCfYJE8tm1gFYp8BMe3M73XE9rfHGFThg7k
+         hoAEPI+LKaUZ7oQSQvzdXkfjPlq0326YBBz/I=
+Received: by 10.227.197.19 with SMTP id ei19mr2191459wbb.6.1325777557341; Thu,
+ 05 Jan 2012 07:32:37 -0800 (PST)
+Received: by 10.216.175.3 with HTTP; Thu, 5 Jan 2012 07:32:16 -0800 (PST)
+In-Reply-To: <87ipkq199w.fsf@smith.obbligato.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/187982>
 
-On 12/31/2011 1:04 PM, nn6eumtr wrote:
-> I have a number of older projects that I want to bring into a git
-> repository. They predate a lot of the popular scm systems, so they
-> are primarily a collection of tarballs today.
->
-> I'm fairly new to git so I have a couple questions related to this:
->
-> - What is the best approach for bringing them in? Do I just create a
->  repository, then unpack the files, commit them, clean out the
-> directory unpack the next tarball, and repeat until everything is
-> loaded?
->
-> - Do I need to pay special attention to files that are
-> renamed/removed from version to version?
->
-> - If the timestamps change on a file but the actual content does not,
->  will git treat it as a non-change once it realizes the content
-> hasn't changed?
->
-> - Last, if after loading the repository I find another version of the
->  files that predates those I've loaded, or are intermediate between
-> two commits I've already loaded, is there a way to go say that commit
-> B is actually the ancestor of commit C? (i.e. a->c becomes a->b->c if
-> you were to visualize the commit timeline or do diffs) Or do I just
-> reload the tarballs in order to achieve this?
->
-The git-rm manpage contains instructions under the "vendor code drop"
-section on how to do this.  I imagine you will want to do each one
-manually instead of queueing them up in a script because you are likely 
-going to want to do appropriate clean up of the working tree in each 
-iteration before committing.  This is where you would review 
-renames/removes with git-status before you git-add and git-commit. 
-Also, if you are tracking permissions in git (the executable bit) then 
-you will want to filter out any noise generated by frivolous permissions 
-changes between the tarball contents.
+Hi again,
 
-In regard to inserting tarballs into the history that depends on when 
-you think you plan on doing that.  You are only going to be able to do 
-that before the history is published (made "public" for other repos to 
-pull down).  Otherwise you will be rewriting published history which is 
-a big no-no (see git-rebase manpage).  I suggest you do your homework 
-and order them properly before you start because that will be less work. 
-  If you still find that you missed something then you can use 
-interactive git-rebase to insert.  I'm assuming a single "master" branch 
-with linear history is your desired end result.  If you want to create 
-maintenance branches showing release history then you will definitely 
-need to do your homework first (see gitworkflow manpage).
+[+CC: Junio Hamano, our maintainer]
 
-If you venture into rebase territory by rewriting history (inserting 
-missed tarballs in between older commits) you will need to be sure to 
-review your automatic merge resolutions.  Git only generates 
-merge-conflicts on same-file-same-line conflicts.  It will auto-merge 
-same-file-different-line changes.
+David A. Greene wrote:
+> I've read that document. =C2=A0The issue is that I didn't develop the=
+ code,
+> Avery did.
 
-You also need to ask yourself if you really need a history of all those 
-versions.  To exaggerate, if all you really need is the current state 
-then you need to ask yourself if it's worth the effort to record the 
-previous states.  Maybe what you want is something in-between (a happy 
-medium).
+Not an issue as long as you have Avery's signoff.
 
-In regard to the 'start-over' method of inserting missed tarballs you 
-would just git-reset --hard to the commit you want to insert on-top-of, 
-add the tarball, and then re-apply the subsequent tarballs.  If you are 
-doing cleanup between commits then the rebase or cherry-pick of the 
-already cleaned-up subsequent commits from the "old-branch" (previous 
-attempt) onto the 'do-over' branch will likely be easier.  (You can just 
-do 'git branch old-branch' on your branch before the git-reset --hard 
-(do-over) and that will give you a "backup copy" of the "previous 
-attempt" called "old-branch" that you can salvage already-done-work from 
-by using rebase or cherry-pick.)
+>=C2=A0It's a lot of time to learn a
+> completely new codebase. =C2=A0I was hoping to submit something soon =
+and then
+> learn the codebase gradually during maintenance/further development.
 
-Hope this helps.
+We certainly don't want badly reviewed code that nobody understands
+floating around in the codebase- so, I'd suggest sending out whatever
+you think is appropriate for the first round of reviews, and see how
+things shape up from there.
 
-v/r,
-neal
+> How have completely new tools be introduced into the git mainline in =
+the
+> past?
+
+Yes.  For an example of something I was involved with but didn't
+author, see vcs-svn/.
+
+-- Ram
