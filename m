@@ -1,81 +1,99 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH] Documentation: rerere.enabled overrides [ -d rr-cache ]
-Date: Fri, 6 Jan 2012 14:08:02 +0100
-Message-ID: <f697b8eff63a8cdd1207c6bfd6b88c532832c6b5.1325855112.git.trast@student.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 06 14:08:14 2012
+From: mhagger@alum.mit.edu
+Subject: [PATCH 2/3] show_ref(): remove unused "flag" and "cb_data" arguments
+Date: Fri,  6 Jan 2012 15:12:32 +0100
+Message-ID: <1325859153-31016-3-git-send-email-mhagger@alum.mit.edu>
+References: <1325859153-31016-1-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 06 15:13:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rj9Wn-0002k7-MI
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Jan 2012 14:08:14 +0100
+	id 1RjAXQ-0004dd-Cd
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Jan 2012 15:12:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752197Ab2AFNIH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jan 2012 08:08:07 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:12657 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751090Ab2AFNIG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jan 2012 08:08:06 -0500
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 6 Jan
- 2012 14:07:59 +0100
-Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 6 Jan
- 2012 14:08:02 +0100
-X-Mailer: git-send-email 1.7.8.2.479.g7c686
-X-Originating-IP: [129.132.153.233]
+	id S1758707Ab2AFOMr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jan 2012 09:12:47 -0500
+Received: from mail.berlin.jpk.com ([212.222.128.130]:55319 "EHLO
+	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758674Ab2AFOMq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jan 2012 09:12:46 -0500
+Received: from michael.berlin.jpk.com ([192.168.100.152])
+	by mail.berlin.jpk.com with esmtp (Exim 4.50)
+	id 1RjANg-0007TD-On; Fri, 06 Jan 2012 15:02:52 +0100
+X-Mailer: git-send-email 1.7.8.2
+In-Reply-To: <1325859153-31016-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188024>
 
-The wording seems to suggest that you can only globally disable rerere
-with the rerere.enabled setting.  But the code actually consults the
-config first, and even creates rr-cache for the user if needed.
+From: Michael Haggerty <mhagger@alum.mit.edu>
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+The function is not used as a callback, so it doesn't need these
+arguments.  Also change its return type to void.
+
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
 
-Noticed while discussing rerere on IRC.  "Can be disabled by setting
-this option to false" is of course correct, but insinuates that
-setting it to 'true' still falls back to rr-cache, which it doesn't.
+I suppose, though I didn't verify, that the old function signature was
+a vestige of its earlier having been used as a callback function.  But
+it doesn't really matter; the point is that the extra arguments are
+currently not needed.
 
-git-rerere(1) does not mention the rr-cache fallback; I decided not to
-touch it as it's a bit of an implementation detail.  OTOH the
-auto-creation of rr-cache can cause strange behavior if a user has
-rerere.enabled unset and tries it once, as in
+ builtin/receive-pack.c |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
 
-  git config rerere.enabled true
-  git merge ...
-  git config --unset rerere.enabled
-
-
- Documentation/config.txt |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 68cf702..04f5e19 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1783,10 +1783,10 @@ rerere.autoupdate::
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 08df17e..65d129c 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -115,7 +115,7 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
+ 	return git_default_config(var, value, cb);
+ }
  
- rerere.enabled::
- 	Activate recording of resolved conflicts, so that identical
--	conflict hunks can be resolved automatically, should they
--	be encountered again.  linkgit:git-rerere[1] command is by
--	default enabled if you create `rr-cache` directory under
--	`$GIT_DIR`, but can be disabled by setting this option to false.
-+	conflict hunks can be resolved automatically, should they be
-+	encountered again.  By default, linkgit:git-rerere[1] is
-+	enabled if there is an `rr-cache` directory under the
-+	`$GIT_DIR`.
+-static int show_ref(const char *path, const unsigned char *sha1, int flag, void *cb_data)
++static void show_ref(const char *path, const unsigned char *sha1)
+ {
+ 	if (sent_capabilities)
+ 		packet_write(1, "%s %s\n", sha1_to_hex(sha1), path);
+@@ -125,10 +125,9 @@ static int show_ref(const char *path, const unsigned char *sha1, int flag, void
+ 			     " report-status delete-refs side-band-64k",
+ 			     prefer_ofs_delta ? " ofs-delta" : "");
+ 	sent_capabilities = 1;
+-	return 0;
+ }
  
- sendemail.identity::
- 	A configuration identity. When given, causes values in the
+-static int show_ref_cb(const char *path, const unsigned char *sha1, int flag, void *cb_data)
++static int show_ref_cb(const char *path, const unsigned char *sha1, int flag, void *unused)
+ {
+ 	path = strip_namespace(path);
+ 	/*
+@@ -141,7 +140,8 @@ static int show_ref_cb(const char *path, const unsigned char *sha1, int flag, vo
+ 	 */
+ 	if (!path)
+ 		path = ".have";
+-	return show_ref(path, sha1, flag, cb_data);
++	show_ref(path, sha1);
++	return 0;
+ }
+ 
+ static void add_one_alternate_sha1(const unsigned char sha1[20], void *unused)
+@@ -163,7 +163,7 @@ static void write_head_info(void)
+ 	sha1_array_clear(&sa);
+ 	for_each_ref(show_ref_cb, NULL);
+ 	if (!sent_capabilities)
+-		show_ref("capabilities^{}", null_sha1, 0, NULL);
++		show_ref("capabilities^{}", null_sha1);
+ 	clear_extra_refs();
+ 
+ 	/* EOF */
 -- 
-1.7.8.2.479.g7c686
+1.7.8.2
