@@ -1,122 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFD] Handling of non-UTF8 data in gitweb
-Date: Fri, 6 Jan 2012 17:35:31 +0100
-Message-ID: <201201061735.32908.jnareb@gmail.com>
-References: <201112041709.32212.jnareb@gmail.com>
+From: demerphq <demerphq@gmail.com>
+Subject: Aborting "git commit --interactive" discards updates to index (was:
+ Re: [ANNOUNCE] Git 1.7.6)
+Date: Fri, 6 Jan 2012 17:37:14 +0100
+Message-ID: <CANgJU+X+qLe3Aqy_ZpoSDKMuf=8=OxVvpkt0tGmSi=KVgti3HQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?J=C3=BCrgen_Kreileder?= <jk@blackdown.de>,
-	John Hawley <warthog9@kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 06 17:35:55 2012
+Cc: git@vger.kernel.org,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 06 17:37:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RjClh-0006Ge-6M
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Jan 2012 17:35:49 +0100
+	id 1RjCnD-000766-4Q
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Jan 2012 17:37:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030367Ab2AFQfn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Jan 2012 11:35:43 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:49042 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751166Ab2AFQfm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jan 2012 11:35:42 -0500
-Received: by eekc4 with SMTP id c4so1172699eek.19
-        for <git@vger.kernel.org>; Fri, 06 Jan 2012 08:35:41 -0800 (PST)
+	id S1758757Ab2AFQhQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Jan 2012 11:37:16 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:48021 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751495Ab2AFQhP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Jan 2012 11:37:15 -0500
+Received: by yenm11 with SMTP id m11so733674yen.19
+        for <git@vger.kernel.org>; Fri, 06 Jan 2012 08:37:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=lUeM4SxC7oRUN9orXLExxNjw05PzrYA6LqvhO+9kIFg=;
-        b=HwrXDvYeOnHi+eqZ7f4YdzUXp8pzk+FA9aBhCbTA3OtbwkxJK4vC7jbWi1apPE91Bm
-         jHfrrKp6jmHqPvSQBH8xOxM5Sg0XWAkLfZk4xyAMTESQImwEDJiiQPZw+Lab9FpJJpLy
-         vyVbTeki8phGcZwgr4+iCrR1CxKITSxqBT2K0=
-Received: by 10.14.29.77 with SMTP id h53mr2581696eea.51.1325867740026;
-        Fri, 06 Jan 2012 08:35:40 -0800 (PST)
-Received: from [192.168.1.13] (abwd1.neoplus.adsl.tpnet.pl. [83.8.227.1])
-        by mx.google.com with ESMTPS id b49sm218579849eec.9.2012.01.06.08.35.35
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 06 Jan 2012 08:35:37 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201112041709.32212.jnareb@gmail.com>
-Content-Disposition: inline
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ptyxneASGkkPlgbNtuN6Nn1tvnxzQS1pqw+afA21tyc=;
+        b=QyW8R/JvOmX0G+mNe8FQ8QVFDe9zIT6j9u4ItK+pZTV3ZOkx7bt9zJdxE+g/FOgnza
+         EgfDE/zUUpx3HcaUND1HQo6xbsfdZ3vk34GQeFWHgW0nVI0/LT0/TgAZaPi7/qQz3O0R
+         wzIhI0S2O6viNZEZZNE3UGf6xw8jqAlMziN80=
+Received: by 10.236.139.234 with SMTP id c70mr8338624yhj.33.1325867834406;
+ Fri, 06 Jan 2012 08:37:14 -0800 (PST)
+Received: by 10.236.63.2 with HTTP; Fri, 6 Jan 2012 08:37:14 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188035>
 
-On Sun, 4 Dec 2011, Jakub Narebski wrote:
->=20
-> Currently gitweb converts data it receives from git commands to Perl=20
-> internal utf8 representation via to_utf8() subroutine
-[...]
-> Each part of data must be handled separately.  It is quite error pron=
-e
-> process, as can be seen from quite a number of patches that fix handl=
-ing
-> of UTF-8 data (latest from J=C3=BCrgen).
->=20
->=20
-> Much, much simpler would be to force opening of all files (including=20
-> output pipes from git commands) in ':utf8' mode:
->=20
->   use open qw(:std :utf8);
->=20
-> [Note: perhaps instead of ':utf8' it should be ':encoding(UTF-8)'=20
->  there...]
->=20
-> But doing this would change gitweb behavior.  [...]
-[...]
-> I don't know if people are relying on the old behavior.  I guess
-> it could be emulated by defining our own 'utf-8-with-fallback'
-> encoding, or by defining our own PerlIO layer with PerlIO::via.
-> But it no longer be simple solution (though still automatic).
+On 27 June 2011 17:59, Junio C Hamano <gitster@pobox.com> wrote:
+> The latest feature release Git 1.7.6 is available at the usual
+> places:
+>
+> =A0http://www.kernel.org/pub/software/scm/git/
+[snip]
+> =A0* Aborting "git commit --interactive" discards updates to the inde=
+x
+> =A0 made during the interactive session.
 
-I have now created simple Encode::UTF8WithFallback module, so that
+Hi, I am wondering why this change was made?
 
-  use Encode::UTF8WithFallback;
-  use open IN =3D> ':encoding(utf8-with-fallback)';
+I can sort of understand if people do CTL-C during an interactive
+commit that throwing the results away might be useful (although I
+don't see why personally), but what I don't understand at all is why
+it happens when the "add --interactive" is completed properly, but the
+user decided not to actually commit. For me and a number of colleagues
+the normal reason we exit the commit part (that is exit the editor
+without modifying the commit message) is because we realize we forgot
+something, such as adding a new file, and want to exit out and re-add
+it. I am writing this after spending about 45 minutes showing a
+colleague how to use git commit --interactive, when we realized that
+we had forgotten to add a file. Needless to say he wasn't too happy
+about losing 45 minutes work and having to redo it.
 
-should be able to replace all calls to to_utf8() without any change
-in behavior; at least simple tests shows that.
+The new behavior potentially means that a lot of work (such as via the
+'e' option) is instantly discarded. I don't understand why this is
+perceived to be sensible behavior -- I thought the default policy for
+git would be to not lose work!
 
+I would really like an git config option to revert to the previous
+behavior of not throwing away what I staged, or even better have git
+commit --interactive ask me what I want to do, after all, it is an
+interactive process so it seems reasonable it asks before it does
+something like throw away work.
 
-There however are two problems with this solution:
+Yves
 
-1. Encode::UTF8WithFallback should really be a separate Perl module
-   in a separate file (e.g. 'gitweb/lib/Encode/UTF8WithFallback.pm');
-   I was not able to make it work without a separate file.
-
-   This means that it very much requires the change that allows splitti=
-ng
-   gitweb into many files and/or load extra helper modules, and/or requ=
-ire
-   extra non-core modules but provide and install them with gitweb if t=
-hey
-   are not available.  These changes are ready, and can be find in=20
-
-     'gitweb/split'
-  =20
-   branch in my git.git repositories:
-
-     http://repo.or.cz/w/git/jnareb-git.git
-     https://github.com/jnareb/git
-
-
-2. It turned out that the "open" pragma 1.04 from Perl v5.8.6 does not
-   work correctly.  We need at least "open" 1.06 (version 1.05 consists
-   supposedly only of documentation-only change).
-
-   Because "open" is a core Perl module (core pragma), this means that
-   gitweb will require in practice Perl v5.8.9 at least, increasing
-   version requirement from current v5.8.0
-=20
 --=20
-Jakub Narebski
-Poland
+perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
