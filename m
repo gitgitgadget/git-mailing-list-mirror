@@ -1,102 +1,237 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] clone: allow detached checkout when --branch takes a tag
-Date: Fri, 6 Jan 2012 14:35:21 +0700
-Message-ID: <CACsJy8B2FGzQ2FFAx2wJohmkWe41+UETx6FZFwLNGY2fb74ZNg@mail.gmail.com>
-References: <1325771380-18862-1-git-send-email-pclouds@gmail.com> <7v7h16nmpy.fsf@alter.siamese.dyndns.org>
+From: Sudarshan Wadkar <wadkar@gmail.com>
+Subject: Re: Odd remote: error: packfile ./objects/pack/pack-FOO.pack cannot
+ be accessed
+Date: Fri, 6 Jan 2012 13:31:43 +0530
+Message-ID: <CAOoYcj3frMhWt8K6HHBikSF1M_vJjSJ=-ML+yYA2E4MS=H=NkA@mail.gmail.com>
+References: <CAOoYcj2pnNtK3RshcJFwiXK356cZz6M38-NG1_uORjknyhdAKQ@mail.gmail.com>
+ <CAOoYcj0JO4q0GJRzuexQR6OAng2PdZX8gD7zNYNoOCmCCLqz4Q@mail.gmail.com> <20120103193349.GE20926@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 06 08:36:06 2012
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 06 09:02:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rj4LK-0003YG-QL
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Jan 2012 08:36:03 +0100
+	id 1Rj4ky-0003mX-64
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Jan 2012 09:02:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752468Ab2AFHfy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jan 2012 02:35:54 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:46299 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751103Ab2AFHfx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jan 2012 02:35:53 -0500
-Received: by eaad14 with SMTP id d14so816833eaa.19
-        for <git@vger.kernel.org>; Thu, 05 Jan 2012 23:35:52 -0800 (PST)
+	id S1754602Ab2AFIC1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Jan 2012 03:02:27 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:48634 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751974Ab2AFIC0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Jan 2012 03:02:26 -0500
+Received: by werm1 with SMTP id m1so939630wer.19
+        for <git@vger.kernel.org>; Fri, 06 Jan 2012 00:02:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=qFShqBtpJVlwQ0srys/EX0LjEZN7WvOJgIhRT0/4Iz8=;
-        b=chjbtKHbG0tZtf0nPsInwL5+HuSkBCifPLYd837xf8XXtEcRf+xCZBvRgq3bdRXjfO
-         IT0G9UuTDl7oULJRvvyXfSBYzkLZNOrPTPFCB+H0BpNTe/3LfT5kTubBIN9YPIxRqQVa
-         C5voYCjA4o579SBz2K2l3XYbDm4fawl4iS/LE=
-Received: by 10.204.9.218 with SMTP id m26mr2134698bkm.44.1325835352150; Thu,
- 05 Jan 2012 23:35:52 -0800 (PST)
-Received: by 10.204.32.197 with HTTP; Thu, 5 Jan 2012 23:35:21 -0800 (PST)
-In-Reply-To: <7v7h16nmpy.fsf@alter.siamese.dyndns.org>
+         :cc:content-type:content-transfer-encoding;
+        bh=1agEEHaiPxMBj6cy3lcpzIPJO+z/5xZAv7w0CrFxJfs=;
+        b=PdDnidP6xqWAokt1QtKLtPG+x/eNlniMk6b1yPB4GKj2VMqovuBuwq+X/aNTVxj/7P
+         RTC5VMiDcLahI+eIJx010fduRLWHY+N6kc7qJFY8rTITxjqWWfcsQVouUWkSAEPbVpZ1
+         UKpK3Hp3s6qOM0sAHi4g9MiWO+tMVLeiQ08wM=
+Received: by 10.216.139.155 with SMTP id c27mr2498809wej.37.1325836944204;
+ Fri, 06 Jan 2012 00:02:24 -0800 (PST)
+Received: by 10.223.156.144 with HTTP; Fri, 6 Jan 2012 00:01:43 -0800 (PST)
+In-Reply-To: <20120103193349.GE20926@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188015>
 
-2012/1/5 Junio C Hamano <gitster@pobox.com>:
-> Also, the user is likely to want to fetch and integrate from the origin
-> with his own history. How should "git pull" and "git fetch" work in the
-> resulting repository? What should the remote.origin.* look like?
+Peff,
 
-fetch should behave the same regardless this patch. remote.origin.*
-looks exactly the same. Branch tracking is not set up so pull works
-half way.
+Sorry for the delay in reply. Yes, it's the same pack. And if I do `ll
+=2E/object/pack/ ` on remote I can see the pack with read perms for all=
+=2E
+However, I observed that the pack I am getting now, is different from
+that in my previous email. I am not sure what caused it to change, as
+I did lot of commits/push to the remote. I tested with some test
+commits to see if it is caused by a particular branch, but the pack is
+still the same. Also, previously, if I would push to the remote in
+succession without committing anything, I would get "Everything up to
+date". But now, it seems that post-receive hook is called second time
+too, and I see the "error : packfile".
 
-> You clone a single lineage of the history, either shallowly or fully,
-> either starting at the tip of one single branch or a named tag.
+Here's a shell copy paste : http://pastie.org/3136111
+
+$ git status
+# On branch 0.0.4
+nothing to commit (working directory clean)
+$ git push ourCloud
+Total 0 (delta 0), reused 0 (delta 0)
+remote: error: packfile
+=2E/objects/pack/pack-ff7bb2bee430b314648c084970f6a6877b837a58.pack
+cannot be accessed
+remote: HEAD is now at cff7a3a Fix mapping action from keyword search t=
+o API
+remote: HEAD is now at cff7a3a Fix mapping action from keyword search t=
+o API
+remote: Successfully deployed master into /var/www/html/myProj-master
+remote: HEAD is now at 85534ca Test remote error packfile 2
+remote: Successfully deployed 0.0.4 into /var/www/html/myProj-0.0.4
+To ssh://wadkar@192.168.1.177:7185/~wadkar/repo/bare/myProj
+ + 85534ca...cff7a3a master -> master (forced update)
+$ git push ourCloud
+Total 0 (delta 0), reused 0 (delta 0)
+remote: error: packfile
+=2E/objects/pack/pack-ff7bb2bee430b314648c084970f6a6877b837a58.pack
+cannot be accessed
+remote: HEAD is now at cff7a3a Fix mapping action from keyword search t=
+o API
+remote: HEAD is now at cff7a3a Fix mapping action from keyword search t=
+o API
+remote: Successfully deployed master into /var/www/html/myProj-master
+remote: HEAD is now at 85534ca Test remote error packfile 2
+remote: Successfully deployed 0.0.4 into /var/www/html/myProj-0.0.4
+To ssh://wadkar@192.168.1.177:7185/~wadkar/repo/bare/myProj
+ + 85534ca...cff7a3a master -> master (forced update)
+$ vi README.txt #make changes
+$ git commit -am 'Test error packfile 3'
+ Test error packfile 3
+ 1 files changed, 0 insertions(+), 2 deletions(-)
+$ git push ourCloud
+Counting objects: 5, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 294 bytes, done.
+Total 3 (delta 2), reused 0 (delta 0)
+remote: error: packfile
+=2E/objects/pack/pack-ff7bb2bee430b314648c084970f6a6877b837a58.pack
+cannot be accessed
+remote: HEAD is now at cff7a3a Fix mapping action from keyword search t=
+o API
+remote: HEAD is now at cff7a3a Fix mapping action from keyword search t=
+o API
+remote: Successfully deployed master into /var/www/html/myProj-master
+remote: HEAD is now at a0e3f87 Test error packfile 3
+remote: Successfully deployed 0.0.4 into /var/www/html/myProj-0.0.4
+To ssh://wadkar@192.168.1.177:7185/~wadkar/repo/bare/myProj
+   85534ca..a0e3f87  0.0.4 -> 0.0.4
+ + 85534ca...cff7a3a master -> master (forced update)
+
+$ ssh -p 7185 wadkar@192.168.1.177
+##now on remote##
+$ ll repo/bare/myProj/objects/pack/
+total 672
+-r--r--r-- 1 wadkar wadkar  47496 Jan  2 16:52
+pack-ff7bb2bee430b314648c084970f6a6877b837a58.idx
+-r--r--r-- 1 wadkar wadkar 634393 Jan  2 16:52
+pack-ff7bb2bee430b314648c084970f6a6877b837a58.pack
+$ logout
+Connection to 192.168.1.177 closed.
+##back to local##
+$ git push ourCloud
+Total 0 (delta 0), reused 0 (delta 0)
+remote: error: packfile
+=2E/objects/pack/pack-ff7bb2bee430b314648c084970f6a6877b837a58.pack
+cannot be accessed
+remote: HEAD is now at cff7a3a Fix mapping action from keyword search t=
+o API
+remote: HEAD is now at cff7a3a Fix mapping action from keyword search t=
+o API
+remote: Successfully deployed master into /var/www/html/myProj-master
+remote: HEAD is now at a0e3f87 Test error packfile 3
+remote: Successfully deployed 0.0.4 into /var/www/html/myProj-0.0.4
+To ssh://wadkar@192.168.1.177:7185/~wadkar/repo/bare/myProj
+ + a0e3f87...cff7a3a master -> master (forced update)
+$ git push ourCloud
+Total 0 (delta 0), reused 0 (delta 0)
+remote: error: packfile
+=2E/objects/pack/pack-ff7bb2bee430b314648c084970f6a6877b837a58.pack
+cannot be accessed
+remote: HEAD is now at cff7a3a Fix mapping action from keyword search t=
+o API
+remote: HEAD is now at cff7a3a Fix mapping action from keyword search t=
+o API
+remote: Successfully deployed master into /var/www/html/myProj-master
+remote: HEAD is now at a0e3f87 Test error packfile 3
+remote: Successfully deployed 0.0.4 into /var/www/html/myProj-0.0.4
+To ssh://wadkar@192.168.1.177:7185/~wadkar/repo/bare/myProj
+ + a0e3f87...cff7a3a master -> master (forced update)
+$ ssh -p 7185 wadkar@192.168.1.177
+##now on remote##
+$ ll repo/bare/myProj/objects/pack/
+total 672
+-r--r--r-- 1 wadkar wadkar  47496 Jan  2 16:52
+pack-ff7bb2bee430b314648c084970f6a6877b837a58.idx
+-r--r--r-- 1 wadkar wadkar 634393 Jan  2 16:52
+pack-ff7bb2bee430b314648c084970f6a6877b837a58.pack
+$ logout
+Connection to 192.168.1.177 closed.
+##back to local##
+$ git checkout master
+Switched to branch 'master'
+$ git status
+# On branch master
+nothing to commit (working directory clean)
+$ echo 'Foo' >> README.txt
+$ git push ourCloud
+Counting objects: 5, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 305 bytes, done.
+Total 3 (delta 2), reused 0 (delta 0)
+remote: error: packfile
+=2E/objects/pack/pack-ff7bb2bee430b314648c084970f6a6877b837a58.pack
+cannot be accessed
+remote: HEAD is now at b220238 Test error packfile 4 (master)
+remote: HEAD is now at b220238 Test error packfile 4 (master)
+remote: Successfully deployed master into /var/www/html/myProj-master
+remote: HEAD is now at a0e3f87 Test error packfile 3
+remote: Successfully deployed 0.0.4 into /var/www/html/myProj-0.0.4
+To ssh://wadkar@192.168.1.177:7185/~wadkar/repo/bare/myProj
+ + a0e3f87...b220238 master -> master (forced update)
+
+$ ssh -p 7185 wadkar@192.168.1.177
+##now on remote##
+$ ll repo/bare/myProj/objects/pack/
+total 672
+-r--r--r-- 1 wadkar wadkar  47496 Jan  2 16:52
+pack-ff7bb2bee430b314648c084970f6a6877b837a58.idx
+-r--r--r-- 1 wadkar wadkar 634393 Jan  2 16:52
+pack-ff7bb2bee430b314648c084970f6a6877b837a58.pack
+
+
+-Sudarshan Wadkar
+
+"Success is getting what you want. Happiness is wanting what you get."
+- Dale Carnegie
+"It's always our decision who we are"
+- Robert Solomon in Waking Life
+"The truth is the truth, so all you can do is live with it."
+--Systematic Chaos
+
+
+
+On Wed, Jan 4, 2012 at 1:03 AM, Jeff King <peff@peff.net> wrote:
+> On Mon, Jan 02, 2012 at 02:48:22PM +0530, Sudarshan Wadkar wrote:
 >
-> What is the expected use scenario of a resulting repository of this new
-> feature? As this is creating a repository, not a tarball extract, you
-> certainly would want the user to build further history in the resulting
-> repository, and it would need a real branch at some point, preferably
-> before any new commit is made. Which makes me think that the only reason
-> we would use a detached HEAD would be because we cannot decide what name
-> to give to that single branch and make it the responsibility of the user
-> to run "git checkout -b $whatever" as the first thing.
-
-We can still commit with detached HEAD but I guess it's not
-recommended. For a quick, throwaway repository, it's probably OK.
-
-> I think the real cause of the above is because this patch and its previous
-> companion patch conflate the meaning of the "--branch" option with the
-> purpose of specifying which lineage of the history to copy. The option is
-> described to name the local branch that is checked out, instead of using
-> the the same name the remote's primary branch. But these patches abuse the
-> option to name something different at the same time---the endpoint of the
-> single lineage to be copied.
+>> But when I push, I get this odd error from remote
+>>
+>> $ git push --verbose --mirror
+>> ssh://wadkar@192.168.1.177:7185/~wadkar/repo/bare/myproj.git
+>> Pushing to ssh://wadkar@192.168.1.177:7185/~wadkar/repo/bare/myproj.=
+git
+>> Counting objects: 5, done.
+>> Delta compression using up to 4 threads.
+>> Compressing objects: 100% (3/3), done.
+>> Writing objects: 100% (3/3), 323 bytes, done.
+>> Total 3 (delta 2), reused 0 (delta 0)
+>> remote: error: packfile
+>> ./objects/pack/pack-17900952dc824651db15369a341eec8d3e8f39d2.pack
+>> cannot be accessed
+>> remote: HEAD is now at 4d5a6f1 Investigate and report odd error
+>> To ssh://wadkar@192.168.1.177:7185/~wadkar/repo/bare/myproj.git
+>> =A0=A0 d066a2f..4d5a6f1=A0 master -> master
 >
-> These two may often be the same, and use of "clone --branch=master" in
-> such a case would mean that you want to name the local branch of the final
-> checkout to be "master" _and_ the endpoint of the single lineage you are
-> copying is also their "master".
+> Is it always the same pack? If so, have you tried looking in the
+> objects/pack directory to make sure it's not a permissions problem?
 >
-> But the "tag" extension proposed with this change is different.
->
-> You are specifying an endpoint of the single lineage with the option that
-> is different from any of the branches at the origin, and because you used
-> the "--branch" option for that purpose, you lost the way to specify the
-> primary thing the option wanted to express: what the name of the resulting
-> checkout should be.
->
-> Perhaps something like "clone --branch=master --$endpoint=v1.7.8" that
-> says "I want a clone of the repository limited to a single lineage, whose
-> history ends at the commit pointed by the v1.7.8 tag, and name the local
-> checkout my master branch" be more appropriate?
-
-Branch naming is a local thing. Maybe we could get away with always
-name it "master" if fetched from a tag. Branch tracking is not set up
-in this case, so if they want to follow up with upstream, they have to
-do some more themselves (including renaming "master" to something else
-for less confusion with upstream "master"). New option is not easily
-discovered, while "git branch -r master foo" is quite easy.
--- 
-Duy
+> -Peff
