@@ -1,120 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: rerere.enabled overrides [ -d rr-cache ]
-Date: Fri, 06 Jan 2012 12:27:25 -0800
-Message-ID: <7vfwfsk24y.fsf@alter.siamese.dyndns.org>
-References: <f697b8eff63a8cdd1207c6bfd6b88c532832c6b5.1325855112.git.trast@student.ethz.ch>
+Subject: Re: [PATCH] parse_object: try internal cache before reading object
+ db
+Date: Fri, 06 Jan 2012 13:27:40 -0800
+Message-ID: <7v8vlkjzcj.fsf@alter.siamese.dyndns.org>
+References: <20120105210001.GA30549@sigill.intra.peff.net>
+ <7vipkpn87d.fsf@alter.siamese.dyndns.org>
+ <20120106191654.GA11022@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Jan 06 21:27:35 2012
+Cc: git@vger.kernel.org, git-dev@github.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 06 22:27:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RjGNx-0001Xd-Nk
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Jan 2012 21:27:34 +0100
+	id 1RjHKH-0006Zt-Nw
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Jan 2012 22:27:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030396Ab2AFU13 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jan 2012 15:27:29 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63101 "EHLO
+	id S1756464Ab2AFV1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jan 2012 16:27:44 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54021 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932638Ab2AFU12 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jan 2012 15:27:28 -0500
+	id S1752928Ab2AFV1o (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jan 2012 16:27:44 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4628F6BE8;
-	Fri,  6 Jan 2012 15:27:27 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7DA37C37;
+	Fri,  6 Jan 2012 16:27:42 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GGZef9zwhUTsGxi713eUlDaard4=; b=jMJch1
-	ZV7QF1v7nislygKojwhK6dZgD6GMSEiWKQ46SfHj82gDSEszUAnnYzqurGrXXWp6
-	nXwQ2Zt/LW3Iq4CMza2BNmWIRc6IBAEP1uHMg5FDgJ62XKw5+1DtOWwADjcOuX2g
-	WyMHxN5YCs+Z0oWRzkSgX6B2qPhNJK1NftAJU=
+	:content-type; s=sasl; bh=PC3sbEeQpcF4Dko3bvLy/ljqZTc=; b=GzIONI
+	tAc0B+nGPRGJvz+AhThXj4D4JD2igg1Gy42bSRPHa0XiaKEUXumCOY0rKtPApnTk
+	moYE4XbO22KEPL9OhjTiJ5JZ3U3q/Zt3Zi2Qhp81rHDZoCUW+0//t5VDMES0K9up
+	HbTXOdFCd/5Jn4irBWaL5vG5nIL7KNxVkzPEg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=I21BvJjbCPIMZt7AGP2XF/Iwel/1VGk7
-	PXQXe4tlkjxjLsRd6t0nOudlp8/nFDX9q9jDHrOfLDsYf8Aqm5ajrTYJ/qfHiLtg
-	ZYCorhe9lklqXZEPp7w1GuRtiYKZ1cdXodMU32RnJ62mChTAi6jfmo0BujjP96/3
-	R6PKWQvYlGk=
+	:content-type; q=dns; s=sasl; b=SkwYmJBmJOhdCgkPcJvlG0XSDjHe2e1C
+	mCjd60uR9bioEuDem7o6u3ubGvai8CzYWDyaQ6Us1hp9IeQtFNTt2b6zOkv4atxM
+	5Nv0i/CTXIXkvwiN5BpVFjrBh3xhbwqyGgb3BrTHIEWz1i5V6d7jGw1KoMoya3DQ
+	P7EuhfNYUQ4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D5306BE7;
-	Fri,  6 Jan 2012 15:27:27 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C9D4C7C35;
+	Fri,  6 Jan 2012 16:27:42 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B3B4D6BE6; Fri,  6 Jan 2012
- 15:27:26 -0500 (EST)
-In-Reply-To: <f697b8eff63a8cdd1207c6bfd6b88c532832c6b5.1325855112.git.trast@student.ethz.ch> (Thomas Rast's message of "Fri, 6 Jan 2012 14:08:02 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5D40D7C31; Fri,  6 Jan 2012
+ 16:27:42 -0500 (EST)
+In-Reply-To: <20120106191654.GA11022@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 6 Jan 2012 14:16:54 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D930B3C8-38A4-11E1-B79C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 4448A3D4-38AD-11E1-B2BF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188047>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Jeff King <peff@peff.net> writes:
 
-> git-rerere(1) does not mention the rr-cache fallback; I decided not to
-> touch it as it's a bit of an implementation detail.
-
-It is not an implementation detail but is a (n old) part of the external
-UI. Creating .git/rr-cache directory has been the only way to enable it
-for quite a while (ever since it was first written as a Perl script early
-2006, and the design even survived the rewrite in C late 2006). When the
-configuration variable rerere.enabled was introduced with b4372ef (Enable
-"git rerere" by the config variable rerere.enabled, 2007-07-06), we
-deliberately kept the external interface compatible to avoid disruption.
-
-And your "By default, ... is enabled if there is ... directory" below is
-exactly the right description.
-
-The manual page for "rerere" talks about "configuration variable
-rerere.enabled"; perhaps it should also refer to git config manual page to
-make it more discoverable?
-
-> ... OTOH the
-> auto-creation of rr-cache can cause strange behavior if a user has
-> rerere.enabled unset and tries it once, as in
+> Actually, we can do much better than that. Here are a few patches that
+> avoid parsing objects when possible. They drop the 3.4s to 2.0s. If you
+> combine them with the parse_object optimization, my 120K case drops to
+> around 0.68s.
 >
->   git config rerere.enabled true
->   git merge ...
->   git config --unset rerere.enabled
+> I don't know if it is really that worth it on top of the parse_object
+> optimization. It's almost negligible for the normal case...
+> ... OTOH, if you had some totally insane ref
+> structure, like 120K _unique_ refs (which would probably imply that
+> you're making one ref per commit or something silly like that. But hey,
+> people have suggested it in the past), then it could be a big
+> improvement.
 
-That is because the last one should be
-
-	git config --bool rerere.enabled false
-
-Perhaps the description for "--unset" option in the manual of "git config"
-is not clear enough that there is a difference between a variable not
-being set (i.e. we do not know anything about what the user wants) and a
-variable explicitly set to false (i.e. we do know the user does not want
-it)?  I doubt it, but you may want to check and clarify the section if
-needed.
-
-The patch itself looks good; it goes in the right direction.
-
-Thanks.
-
->  Documentation/config.txt |    8 ++++----
->  1 files changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 68cf702..04f5e19 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1783,10 +1783,10 @@ rerere.autoupdate::
->  
->  rerere.enabled::
->  	Activate recording of resolved conflicts, so that identical
-> -	conflict hunks can be resolved automatically, should they
-> -	be encountered again.  linkgit:git-rerere[1] command is by
-> -	default enabled if you create `rr-cache` directory under
-> -	`$GIT_DIR`, but can be disabled by setting this option to false.
-> +	conflict hunks can be resolved automatically, should they be
-> +	encountered again.  By default, linkgit:git-rerere[1] is
-> +	enabled if there is an `rr-cache` directory under the
-> +	`$GIT_DIR`.
->  
->  sendemail.identity::
->  	A configuration identity. When given, causes values in the
+Even though it is a bit scary kind of loosening of sanity checks that I
+hesitate to take at this late in the cycle, I think it makes sense. Let's
+queue them on 'pu' and aim for the next cycle.
