@@ -1,78 +1,72 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH 1/2] daemon: add tests
-Date: Fri, 6 Jan 2012 20:48:00 +0100
-Message-ID: <20120106194800.GA9301@ecki.lan>
-References: <7v8vlovavj.fsf@alter.siamese.dyndns.org>
- <1325692539-26748-1-git-send-email-drizzd@aon.at>
- <7vy5tnpcuw.fsf@alter.siamese.dyndns.org>
- <20120104204017.GC27567@ecki.lan>
- <7vaa63p11t.fsf@alter.siamese.dyndns.org>
- <20120104222649.GA14727@sigill.intra.peff.net>
- <20120105000713.GA24220@ecki.lan>
- <20120105025559.GB7326@sigill.intra.peff.net>
- <20120105160612.GA27251@ecki.lan>
- <20120106155204.GA17355@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Managing signed git tags and expiring keys
+Date: Fri, 06 Jan 2012 12:09:24 -0800
+Message-ID: <7vk454k2yz.fsf@alter.siamese.dyndns.org>
+References: <CABQG1aSY53-Z73CiUf2kstfaKLJ8zBGzu51CFdWHGiVR16JJ7w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 06 20:56:26 2012
+Cc: Git Users <git@vger.kernel.org>
+To: "Jonathan \"Duke\" Leto" <jonathan@leto.net>
+X-From: git-owner@vger.kernel.org Fri Jan 06 21:09:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RjFtp-0003K8-TQ
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Jan 2012 20:56:26 +0100
+	id 1RjG6W-0000xl-Q1
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Jan 2012 21:09:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758857Ab2AFT4V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jan 2012 14:56:21 -0500
-Received: from bsmtp3.bon.at ([213.33.87.17]:25305 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756423Ab2AFT4U (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jan 2012 14:56:20 -0500
-X-Greylist: delayed 99707 seconds by postgrey-1.27 at vger.kernel.org; Fri, 06 Jan 2012 14:56:20 EST
-Received: from localhost (unknown [80.123.242.182])
-	by bsmtp.bon.at (Postfix) with ESMTP id F372810012;
-	Fri,  6 Jan 2012 20:54:26 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20120106155204.GA17355@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1759038Ab2AFUJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jan 2012 15:09:27 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56935 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759021Ab2AFUJ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jan 2012 15:09:26 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 13900675D;
+	Fri,  6 Jan 2012 15:09:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lZQqv9WaKUhnTge7y1Hw7iO3MEM=; b=Ws11pv
+	Tp4q64z94H8oRAyklM2uINswHNAV0zUnDvbrRB+EXwTlwDLvHiolwGxlahPK4sR4
+	xXkrggMcuM3uzKmO5MkCVRcghOgSxiUFHllv3M1FjbrAd3tMBQcwN7eYQzY2Y4Qq
+	rlBS8lwSzQQcSLwj3u9IaKhcO+ahCMzg5hY/U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=S7TOjEQKhko7+CtG/FsMGsywEwtLgPD+
+	u+9PsrD95xOKDc7uTPZsC1y9dKSyM7+DWeDLqFQfyTXHAhJEGhtjJ0sgvySccBLB
+	udnKZPcr1iNk2cQQSEc9d5F2JkVsN6sxrHa1XAXTM2owlm6OzbbxuOTNI4R4hNzU
+	eJwwjt+HpoQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0754B675C;
+	Fri,  6 Jan 2012 15:09:26 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8F002675B; Fri,  6 Jan 2012
+ 15:09:25 -0500 (EST)
+In-Reply-To: <CABQG1aSY53-Z73CiUf2kstfaKLJ8zBGzu51CFdWHGiVR16JJ7w@mail.gmail.com>
+ (Jonathan Leto's message of "Fri, 6 Jan 2012 00:13:00 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 54C6406E-38A2-11E1-83C6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188045>
 
-On Fri, Jan 06, 2012 at 10:52:04AM -0500, Jeff King wrote:
-> > > 
-> > >   run-command: optionally kill children on exit
-> > >   https://github.com/peff/git/commit/5523d7ebf2a0386c9c61d7bfbc21375041df4989
-> > 
-> > Thanks, looks great. But if I add this on top (to enable this for
-> > "git daemon"), then t0001 kills my entire X session. Not sure yet
-> > what's going.
-> 
-> The fix is to move the recording of the PID up to a spot where we are
-> certain that it's a real PID. Fixup patch is below, and I'll push a new
-> version out to my github repo.
+"Jonathan \"Duke\" Leto" <jonathan@leto.net> writes:
 
-I have rebased Junio's cb/git-daemon-tests onto your
-jk/child-cleanup and replaced the call to pkill with a regular kill
-command.
+> When the key changes, all existing tags are signed with the previous
+> key in the chain of trust.
+>
+> Do people:
+> 1) resign all the tags, causing people to overwrite their local tags
+> 2) keep all versions of the keys in the chain of trust
+> 3) something else more involved?
+>
+> Is anybody doing this currently?
 
-On top of that, I have added two commits to fix the discussed race
-condition. I also verified that the race condition actually happens
-by adding an artificial delay in the daemon (this change is
-obviously not included).
-
-I pushed the new cb/git-daemon-tests to
-https://github.com/drizzd/git . If you have no objections I will
-post the entire series including your run-command and send-pack
-patches to the list.
-
-Clemens
+Many kernel.org users (Linus and myself included) changed their signing
+keys last year, so their project histories have tags signed with different
+keys. I highly doubt anybody revoked old key and re-signed his tags with
+new one.
