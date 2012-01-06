@@ -1,67 +1,70 @@
-From: "Jonathan \"Duke\" Leto" <jonathan@leto.net>
-Subject: Managing signed git tags and expiring keys
-Date: Fri, 6 Jan 2012 00:13:00 -0800
-Message-ID: <CABQG1aSY53-Z73CiUf2kstfaKLJ8zBGzu51CFdWHGiVR16JJ7w@mail.gmail.com>
+From: =?GB2312?B?0Oy1zw==?= <xudifsd@gmail.com>
+Subject: Re: Why usage function exit with code 129?
+Date: Fri, 6 Jan 2012 16:18:23 +0800
+Message-ID: <CAMocUqR5NtLJTzEDXN6Os=b0w1aP6BMb6uphNJgZWKFT0dJy-Q@mail.gmail.com>
+References: <CAMocUqSbiO2XC3PUEciyV3HxgqDPW_rTW-hYH4P=C=BFCSrQMQ@mail.gmail.com>
+	<CACsJy8Amo_9-9oCgHbwOZvTaNOV3Jj6wLCTU7nZT5LeA55=NEA@mail.gmail.com>
+	<CAMocUqSmes+x_tkP6V0OM5rQ5wDGmMm=Q2MFBPhz6Qvzz_SOTg@mail.gmail.com>
+	<CACsJy8D8uKGhtg4zjbHsJCGmqjTwodzFmAZ5w=aUx9CdadVAfw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git Users <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 06 09:13:07 2012
+Content-Type: text/plain; charset=GB2312
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?GB2312?B?R2l0INPKvP7B0LHt?= <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 06 09:18:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rj4vC-0007PX-K2
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Jan 2012 09:13:06 +0100
+	id 1Rj50R-0000zn-9g
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Jan 2012 09:18:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757469Ab2AFINB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jan 2012 03:13:01 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:56654 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750984Ab2AFINA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jan 2012 03:13:00 -0500
-Received: by yenm11 with SMTP id m11so569130yen.19
-        for <git@vger.kernel.org>; Fri, 06 Jan 2012 00:13:00 -0800 (PST)
+	id S932445Ab2AFIS0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Jan 2012 03:18:26 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:37694 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752468Ab2AFISZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Jan 2012 03:18:25 -0500
+Received: by bkcjm19 with SMTP id jm19so258028bkc.19
+        for <git@vger.kernel.org>; Fri, 06 Jan 2012 00:18:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        bh=EsgbSEEDO/IyfzxcmDsGFADlVSF1tqCInJ61/HXhQf4=;
-        b=Xqp6L7VzrG8VM4xgvTEfQVmEgaA/WNPV/lj0txurWXctr8i+n7U4d3g8mNht8PSeB9
-         mExq/+1svcn3AwLR8Uodgb69YIAW7bS4UJNiPXmpvVRCOGgOU/iedJth5DQUrS2b1/ro
-         F6IsC/zzInjOOdaXl6UzM5sPtT9E7cfA5aic0=
-Received: by 10.236.91.84 with SMTP id g60mr5779138yhf.90.1325837580144; Fri,
- 06 Jan 2012 00:13:00 -0800 (PST)
-Received: by 10.236.123.113 with HTTP; Fri, 6 Jan 2012 00:13:00 -0800 (PST)
-X-Google-Sender-Auth: IMiWVA7rnxSY8Nuws6gZ9AY6FAs
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=POgyw6m7KLa0EYga9pjvevfe4FlyLbHLWabslLPyHkk=;
+        b=pwCaN3qQBs0dSWBdcmW1QfzynkScy9Em/SWHg3VbRzVPAKRmjDiJAeln6ya2dehxoK
+         Fri3+LLhdd4Ro4nLmp/A+IXsHgENQ77gXNsdo4MSHDyoPauiWJOzbSnqwMDuXPltSBz9
+         dTv6Wzm6lJvzrq7O5Wk7xsbjB+lBBjRYs134s=
+Received: by 10.204.10.65 with SMTP id o1mr2161855bko.19.1325837903414; Fri,
+ 06 Jan 2012 00:18:23 -0800 (PST)
+Received: by 10.204.200.74 with HTTP; Fri, 6 Jan 2012 00:18:23 -0800 (PST)
+In-Reply-To: <CACsJy8D8uKGhtg4zjbHsJCGmqjTwodzFmAZ5w=aUx9CdadVAfw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188020>
 
-Howdy,
+=D4=DA 2012=C4=EA1=D4=C26=C8=D5 =CF=C2=CE=E74:11=A3=ACNguyen Thai Ngoc =
+Duy <pclouds@gmail.com> =D0=B4=B5=C0=A3=BA
+> 2012/1/6 =D0=EC=B5=CF <xudifsd@gmail.com>:
+>>>> [1] http://tldp.org/LDP/abs/html/exitcodes.html
+>>>
+>>> No it does not mean terminated by signals.
+>>> --
+>> In that case, why not just use another code instead of the code that
+>> leads misunderstanding? I mean, as far as I know, exit code between
+>> 129 and 255 are used to indicate the program terminated by signal. S=
+o
+>> that usage function can only exit with code between 1 and 127. Am I
+>> wrong?
+>
+> Because that code has been there too long (since 2005) any probably
+> all git commands, including plumbing ones, rely on it. Changing it no=
+w
+> may break existing scripts.
+> --
+> Duy
 
-My question is about the Git workflow in a repository which has signed
-tags and uses expiring keys in a chain of trust.
-
-When the key changes, all existing tags are signed with the previous
-key in the chain of trust.
-
-Do people:
-1) resign all the tags, causing people to overwrite their local tags
-2) keep all versions of the keys in the chain of trust
-3) something else more involved?
-
-Is anybody doing this currently?
-
-Thanks!
-
-Duke
-
--- 
-Jonathan "Duke" Leto <jonathan@leto.net>
-Leto Labs LLC
-209.691.DUKE // http://labs.leto.net
-NOTE: Personal email is only checked twice a day at 10am/2pm PST,
-please call/text for time-sensitive matters.
+Ok, that sounds logical.
