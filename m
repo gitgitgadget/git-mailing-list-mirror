@@ -1,96 +1,90 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] daemon: add tests
-Date: Fri, 06 Jan 2012 14:49:05 -0800
-Message-ID: <7vipkoih0e.fsf@alter.siamese.dyndns.org>
-References: <7v8vlovavj.fsf@alter.siamese.dyndns.org>
- <1325692539-26748-1-git-send-email-drizzd@aon.at>
- <7vy5tnpcuw.fsf@alter.siamese.dyndns.org> <20120104204017.GC27567@ecki.lan>
- <7vaa63p11t.fsf@alter.siamese.dyndns.org>
- <20120104222649.GA14727@sigill.intra.peff.net>
- <20120105000713.GA24220@ecki.lan>
- <20120105025559.GB7326@sigill.intra.peff.net>
- <20120105160612.GA27251@ecki.lan>
- <20120106155204.GA17355@sigill.intra.peff.net>
- <20120106194800.GA9301@ecki.lan>
+Subject: Re: [PATCH] Work around sed portability issue in
+ t8006-blame-textconv
+Date: Fri, 06 Jan 2012 14:53:33 -0800
+Message-ID: <7vehvcigsy.fsf@alter.siamese.dyndns.org>
+References: <1325339068-6063-1-git-send-email-bwalton@artsci.utoronto.ca>
+ <7vd3b0vc6h.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkg?= =?utf-8?B?Tmfhu41j?= Duy 
-	<pclouds@gmail.com>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Fri Jan 06 23:49:14 2012
+Cc: git@vger.kernel.org
+To: Ben Walton <bwalton@artsci.utoronto.ca>
+X-From: git-owner@vger.kernel.org Fri Jan 06 23:53:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RjIb3-0004rX-Ol
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Jan 2012 23:49:14 +0100
+	id 1RjIfN-0006vc-BR
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Jan 2012 23:53:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759102Ab2AFWtI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jan 2012 17:49:08 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57029 "EHLO
+	id S1759124Ab2AFWxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jan 2012 17:53:36 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58702 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753137Ab2AFWtH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jan 2012 17:49:07 -0500
+	id S1758833Ab2AFWxf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jan 2012 17:53:35 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 03471625E;
-	Fri,  6 Jan 2012 17:49:07 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 50F906361;
+	Fri,  6 Jan 2012 17:53:35 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PIZfhRtLMMbQnl2NNee9JWdWxig=; b=MV1zSS
-	+1dSNKxn8fDtRtQXfyg+963caVkLiXRCT3vYLUdOvqbI0xSUmRaVbqaElOmvar7V
-	0KShLpTk4upYUqTAgfk/qG88eBXncPIL8Lj7xI0MUV8zNylBqR2PwaelIBYnSTLb
-	qmzLEbgLpHrETaw04PBIPCLxHEPN32XWR6xQ0=
+	:content-type; s=sasl; bh=AO+R0yZT/OvNtHZWCl8q2PW2GgU=; b=wc9dDe
+	ZaAoML/LJMXM5sqaF13RD9eKcw9teetWgkxhPgGPNTsIRmdxUcZIQO3e/QJVpyI1
+	frSUC+iHCVMr+FEkBY5PTQqh+X1k/CkhpgWw4PrbWEABuOzQ2+GnK7QjiN6vsHwF
+	rjOhCOw3u3nzgaev1Bb5TpSaEQwh2D8CmqxVY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=suSFe8BD7Be676v/83fYodxpKSYnyhKc
-	hrNCD8lwxU7ZwO0luhPB4f92PRakC/fZ+RLqFp3lOvAUV4q3mYp2dzEekbH38Fuo
-	V9c22yvBs/KFY1lCQl1+LSu0f4GkkTvY8BTbeSMyBY0k2FXeYK/Z9GtkdJfPBATJ
-	/XWMbwN4J3s=
+	:content-type; q=dns; s=sasl; b=cKQ0yfvtqzvREzQqiCd7SLi8DqM7XYqs
+	LNI0mf+RBfs+5jJWnkj/n8i8O/XzHgrVoWZXmqxEQ2sC3O5N/u5g8ltc3ZYpsIma
+	J02HmkSQCwzQjs2CSDvlO6zsWufpDpEP88G6ifBEkeiDvgO2rWZ0irOQ65x6EWqJ
+	qufsclYc2iY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EDD07625C;
-	Fri,  6 Jan 2012 17:49:06 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4688F6360;
+	Fri,  6 Jan 2012 17:53:35 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7853A625B; Fri,  6 Jan 2012
- 17:49:06 -0500 (EST)
-In-Reply-To: <20120106194800.GA9301@ecki.lan> (Clemens Buchacher's message of
- "Fri, 6 Jan 2012 20:48:00 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CF3E9635F; Fri,  6 Jan 2012
+ 17:53:34 -0500 (EST)
+In-Reply-To: <7vd3b0vc6h.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 03 Jan 2012 11:05:58 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A37483B8-38B8-11E1-AC90-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 43648558-38B9-11E1-945E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188055>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I have rebased Junio's cb/git-daemon-tests onto your
-> jk/child-cleanup and replaced the call to pkill with a regular kill
-> command.
+> Ben Walton <bwalton@artsci.utoronto.ca> writes:
 >
-> On top of that, I have added two commits to fix the discussed race
-> condition. I also verified that the race condition actually happens
-> by adding an artificial delay in the daemon (this change is
-> obviously not included).
+>> In test 'blame --textconv with local changes' of t8006-blame-textconv,
+>> using /usr/xpg4/bin/sed on Solaris as set by SANE_TOOL_PATH, an
+>> additional newline was added to the output from the 'helper' script
+>> driven by git attributes.
+>>
+>> This was noted by sed with a message such as:
+>> sed: Missing newline at end of file zero.bin.
+>>
+>> In turn, this was triggering a fatal error from git blame:
+>> fatal: unable to read files to diff
 >
-> I pushed the new cb/git-daemon-tests to
-> https://github.com/drizzd/git . If you have no objections I will
-> post the entire series including your run-command and send-pack
-> patches to the list.
+> Interesting. A file with incomplete line technically is not a text file
+> and sed is supposed to work on text files, so it is allowed to be picky.
+>
+>> Use perl -p -e instead of sed -e to work around this portability issue
+>> as it will not insert the newline.
+>
+> I am not sure if additional newline is the problem, or the exit status
+> from sed is, from your description. Your first paragraph says you will get
+> output from sed but with an extra newline, and then later you said blame
+> noticed an error in its attempt to read the contents. I am suspecting that
+> it checked the exit status from the textconv subprocess and noticed the
+> error and that is the cause of the issue, but could you clarify?  IOW, I
+> am suspecting that replacing "as it will not insert the newline" with "as
+> it does not error out on an incomplete line" is necessary in this
+> sentence.
 
-Looked fine except that some patches seem to lack enough justification
-(justification in Peff's reply was good enough).
-
-I actually was thinking that the previous round was good enough (perhaps
-dropping the "pkill" bit altogether and replacing it with "kill" on the
-daemon process itself, if OSX folks complain loudly), so it is in "next"
-already, but it seems that the best course of action would be to drop it
-and queue your re-roll afresh, aiming for the next cycle.
-
-Thanks.
+Ping?
