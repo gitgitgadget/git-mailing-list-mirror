@@ -1,65 +1,101 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] Submodules always use a relative path to gitdir
-Date: Fri, 6 Jan 2012 22:07:09 +0700
-Message-ID: <CACsJy8Agw6aTu=odeJXEbYuWQnE228w24_baP8u2eiX2-BEpeA@mail.gmail.com>
-References: <1325192426-10103-1-git-send-email-antony.male@gmail.com>
- <7vsjk3vw67.fsf@alter.siamese.dyndns.org> <4F007492.8010909@web.de>
- <7vsjjwvdyl.fsf@alter.siamese.dyndns.org> <4F037CBF.9010005@web.de>
- <7vhb0csa6w.fsf@alter.siamese.dyndns.org> <4F0629C6.9010908@web.de>
- <7vlipllmfh.fsf@alter.siamese.dyndns.org> <CABURp0rFOFfX7eu-v6ZK07iTfXwhOne60d70GkCdOvx0k8BZkQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] daemon: add tests
+Date: Fri, 6 Jan 2012 10:52:04 -0500
+Message-ID: <20120106155204.GA17355@sigill.intra.peff.net>
+References: <7v8vlovavj.fsf@alter.siamese.dyndns.org>
+ <1325692539-26748-1-git-send-email-drizzd@aon.at>
+ <7vy5tnpcuw.fsf@alter.siamese.dyndns.org>
+ <20120104204017.GC27567@ecki.lan>
+ <7vaa63p11t.fsf@alter.siamese.dyndns.org>
+ <20120104222649.GA14727@sigill.intra.peff.net>
+ <20120105000713.GA24220@ecki.lan>
+ <20120105025559.GB7326@sigill.intra.peff.net>
+ <20120105160612.GA27251@ecki.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Antony Male <antony.male@gmail.com>, git@vger.kernel.org,
-	iveqy@iveqy.com
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 06 16:07:49 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Fri Jan 06 16:52:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RjBOW-0005GA-67
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Jan 2012 16:07:48 +0100
+	id 1RjC5W-0001iI-FH
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Jan 2012 16:52:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030355Ab2AFPHm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jan 2012 10:07:42 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:39641 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030329Ab2AFPHl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jan 2012 10:07:41 -0500
-Received: by eaad14 with SMTP id d14so1011826eaa.19
-        for <git@vger.kernel.org>; Fri, 06 Jan 2012 07:07:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=lkgQ3Oq+9pyeppdsH5Z52j0rj8X5VA2jDuIXZayDbRs=;
-        b=pWSiCU5A6cBDFDhFgcIpV/KRbAex8vkPQj6oOBujNIimx40dXJD/XrcAMaiNszoHxH
-         AsjdAe9IElAVoBwkyngi2jXxHmXPF4zHLqNdkiaW1lA7uQFeR7TPc6Ka5k7FR1toXgp9
-         CMT+pERLvLphR9jUbJ7YmdR17VGwNfaQHVQqw=
-Received: by 10.204.9.218 with SMTP id m26mr2691299bkm.44.1325862460186; Fri,
- 06 Jan 2012 07:07:40 -0800 (PST)
-Received: by 10.204.32.197 with HTTP; Fri, 6 Jan 2012 07:07:09 -0800 (PST)
-In-Reply-To: <CABURp0rFOFfX7eu-v6ZK07iTfXwhOne60d70GkCdOvx0k8BZkQ@mail.gmail.com>
+	id S1030384Ab2AFPwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jan 2012 10:52:09 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58738
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758750Ab2AFPwI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jan 2012 10:52:08 -0500
+Received: (qmail 6429 invoked by uid 107); 6 Jan 2012 15:58:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 06 Jan 2012 10:58:58 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 06 Jan 2012 10:52:04 -0500
+Content-Disposition: inline
+In-Reply-To: <20120105160612.GA27251@ecki.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188033>
 
-On Fri, Jan 6, 2012 at 9:26 PM, Phil Hord <phil.hord@gmail.com> wrote:
-> Do you see any _problem_ with making core.worktree a relative
-> directory in the specific case of git submodules?
+On Thu, Jan 05, 2012 at 05:06:15PM +0100, Clemens Buchacher wrote:
 
-Not a problem per se, but you should look at the comment at the top of
-t1510 to see where it is relative to. Two interesting rules:
+> On Wed, Jan 04, 2012 at 09:55:59PM -0500, Jeff King wrote:
+> > 
+> > It so happens that I have just the patch you need. I've been meaning to
+> > go over it again and submit it:
+> > 
+> >   run-command: optionally kill children on exit
+> >   https://github.com/peff/git/commit/5523d7ebf2a0386c9c61d7bfbc21375041df4989
+> 
+> Thanks, looks great. But if I add this on top (to enable this for
+> "git daemon"), then t0001 kills my entire X session. Not sure yet
+> what's going.
 
-2. .git file is relative to parent directory. .git file is basically
-   symlink in disguise. The directory where .git file points to will
-   become new git_dir.
+Yikes. Thanks for noticing.
 
-3. core.worktree is relative to git_dir.
--- 
-Duy
+What happens is we have a failure case in start_command, set pid to -1,
+and then fall through to the end of the function. So we end up marking
+"-1" for cleanup, which attempts to kill all processes.
+
+I never noticed it because it can only happen when fork() fails, or when
+a child process signals an exec failure (which happens all the time with
+aliases, but could not be triggered until your patch).
+
+The fix is to move the recording of the PID up to a spot where we are
+certain that it's a real PID. Fixup patch is below, and I'll push a new
+version out to my github repo.
+
+-Peff
+
+diff --git a/run-command.c b/run-command.c
+index aeb9c6e..614b722 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -353,6 +353,8 @@ fail_pipe:
+ 	if (cmd->pid < 0)
+ 		error("cannot fork() for %s: %s", cmd->argv[0],
+ 			strerror(failed_errno = errno));
++	else if (cmd->clean_on_exit)
++		mark_child_for_cleanup(cmd->pid);
+ 
+ 	/*
+ 	 * Wait for child's execvp. If the execvp succeeds (or if fork()
+@@ -374,8 +376,6 @@ fail_pipe:
+ 	}
+ 	close(notify_pipe[0]);
+ 
+-	if (cmd->clean_on_exit)
+-		mark_child_for_cleanup(cmd->pid);
+ }
+ #else
+ {
