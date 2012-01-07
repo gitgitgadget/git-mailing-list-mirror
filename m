@@ -1,73 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] credentials: unable to connect to cache daemon
-Date: Sat, 7 Jan 2012 09:55:38 -0500
-Message-ID: <20120107145538.GC2461@sigill.intra.peff.net>
-References: <20120104204017.GC27567@ecki.lan>
- <7vaa63p11t.fsf@alter.siamese.dyndns.org>
- <20120104222649.GA14727@sigill.intra.peff.net>
- <20120105000713.GA24220@ecki.lan>
- <20120105025559.GB7326@sigill.intra.peff.net>
- <20120105160612.GA27251@ecki.lan>
- <20120106155204.GA17355@sigill.intra.peff.net>
- <20120106194800.GA9301@ecki.lan>
- <20120106223215.GA13106@sigill.intra.peff.net>
- <20120107115434.GA8568@ecki.lan>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: How to deal with historic tar-balls
+Date: Sat, 07 Jan 2012 13:18:45 -0600
+Message-ID: <4F089A95.9050300@gmail.com>
+References: <4EFF5CDA.5050809@gmail.com> <4F05C0E2.4050101@gmail.com> <4F079BA1.3060907@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Sat Jan 07 15:55:58 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: nn6eumtr <nn6eumtr@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 07 20:19:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RjXgb-0008Eg-24
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Jan 2012 15:55:57 +0100
+	id 1RjbnM-0004An-58
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Jan 2012 20:19:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751916Ab2AGOzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Jan 2012 09:55:42 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60074
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751111Ab2AGOzm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jan 2012 09:55:42 -0500
-Received: (qmail 16476 invoked by uid 107); 7 Jan 2012 15:02:33 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.2.4)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 07 Jan 2012 10:02:33 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 07 Jan 2012 09:55:38 -0500
-Content-Disposition: inline
-In-Reply-To: <20120107115434.GA8568@ecki.lan>
+	id S1753259Ab2AGTSt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Jan 2012 14:18:49 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:64769 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753180Ab2AGTSs (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Jan 2012 14:18:48 -0500
+Received: by obcwo16 with SMTP id wo16so2935516obc.19
+        for <git@vger.kernel.org>; Sat, 07 Jan 2012 11:18:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=sd8uVQX4Apffq/t95V41STgGYVCsGdyD3B0ol78i+sk=;
+        b=OzUiQ8kMMIz1JTUlHEXhiaBgJZVY+wI+aRT25lKza7qtPrkRLPz6dfug7sJgPDh59o
+         zsAhpy+THImFyjS0U+3hrf9yVOF67R887GoqTpwe2bJTtxB77vhXWihbbhj/ajs0ouSP
+         B2LrcGargLrWzrjhC/P2JsvvJwFYiZ6VFbdLk=
+Received: by 10.182.54.33 with SMTP id g1mr8963196obp.19.1325963927810;
+        Sat, 07 Jan 2012 11:18:47 -0800 (PST)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id n4sm740993obv.10.2012.01.07.11.18.46
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 07 Jan 2012 11:18:47 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.25) Gecko/20111213 Thunderbird/3.1.17
+In-Reply-To: <4F079BA1.3060907@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188083>
 
-On Sat, Jan 07, 2012 at 12:54:36PM +0100, Clemens Buchacher wrote:
+On 1/6/2012 7:10 PM, nn6eumtr wrote:
+> Thanks for the response, there is lots of good information there.
+>
+> One clarification - can you track renames in git? I tried using git mv 
+> but from the status output it looks like it deleted the old file  and 
+> added the new file. I was expecting it to record some sort of 
+> indicator of the name change, instead it looks like a short-cut for 
+> delete & add, the docs aren't clear if that is the case.
+>
+(note: top-posting is not advised.)
+You are exactly right in your observation:  git-mv is only a shortcut 
+for 'remove old then add new'.  Git does not explicitly track 
+"renames".  It can detect renames easily in the cases where you really 
+just renamed the file and left the contents the same.  Git tracks 
+content (and trees) as opposed to files (and file names).  Git stores 
+the 'blob', aka 'contents' of files in the object store.  So if you have 
+30 files with different names and the exact same contents in your work 
+tree they are stored as a single blob in the .git/objects "object 
+store".  If some of your "renames" are really "I renamed it and then I 
+modified it" then git will have a harder time detecting the "rename" 
+depending on how much you modified it.  In such cases what you really 
+did is arguably not a "rename" anyway.  You can record your "renames" 
+manually in your commit message if appropriate.  If you have 5 minutes 
+you can watch this video from the 15:00 min to 20:59 min marks to get an 
+explanation of git-mv and rename-detection: 
+http://www.youtube.com/watch?v=j45cs5_nY2k (youtube searchstring: 'git 
+google tech talks', result: 'contributing with git'.)
 
-> Error out if we just spawned the daemon and yet we cannot connect.
-
-Actually it was intentional not to produce an error. The cache helper is
-just a cache, so I consider it "best effort", and if it cannot cache a
-password, it's not the end of the world. Git should continue, anyway.
-
-That being said, it's probably nicer to be informative in this case than
-not, since it is a configuration error the user probably would like to
-fix. And since the rewrite of the credential helper API, it's OK for
-helpers to return a failing exit code; git will just ignore it and keep
-going.
-
-So I think this is a reasonable thing to do.
-
-Acked-by: Jeff King <peff@peff.net>
-
-> And always release the string buffer.
-
-Oops, thanks.
-
--Peff
+v/r,
+neal
