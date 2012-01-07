@@ -1,65 +1,75 @@
-From: nn6eumtr <nn6eumtr@gmail.com>
-Subject: Re: How to deal with historic tar-balls
-Date: Fri, 06 Jan 2012 20:10:57 -0500
-Message-ID: <4F079BA1.3060907@gmail.com>
-References: <4EFF5CDA.5050809@gmail.com> <4F05C0E2.4050101@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] Documentation: rerere.enabled overrides [ -d rr-cache ]
+Date: Sat, 7 Jan 2012 02:42:39 +0100
+Message-ID: <87boqge19s.fsf@thomas.inf.ethz.ch>
+References: <f697b8eff63a8cdd1207c6bfd6b88c532832c6b5.1325855112.git.trast@student.ethz.ch>
+	<7vfwfsk24y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Neal Kreitzinger <nkreitzinger@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 07 02:11:02 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 07 02:42:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RjKoH-0004rP-Ls
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Jan 2012 02:11:02 +0100
+	id 1RjLJ6-00009K-7f
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Jan 2012 02:42:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759058Ab2AGBK5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jan 2012 20:10:57 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:65459 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758826Ab2AGBK4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jan 2012 20:10:56 -0500
-Received: by qcqz2 with SMTP id z2so1226289qcq.19
-        for <git@vger.kernel.org>; Fri, 06 Jan 2012 17:10:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=ZFTQygJM3Xm/NxRxC7j41K0TZ82NAqpjlpmNYECJRlI=;
-        b=R1E6/PqTGyzn4XAWa+RgwwandaYYlnum11qvIc0otOAxTFlR5+9ZdD/kdvB2Gg9SWB
-         AtdKyQwnkjQhwWvvNB+OU1hLJSRNHNxmIrlFZH0FJnf8mNIemILIGvvIhMdHoX5YCUkM
-         3YEFB4ZwXrAVLg/WhfDg4DzF8MT8gbTMzXT4U=
-Received: by 10.224.178.207 with SMTP id bn15mr10644124qab.34.1325898655719;
-        Fri, 06 Jan 2012 17:10:55 -0800 (PST)
-Received: from [192.168.0.7] (cpe-24-90-181-153.nyc.res.rr.com. [24.90.181.153])
-        by mx.google.com with ESMTPS id ft9sm125599237qab.20.2012.01.06.17.10.54
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 06 Jan 2012 17:10:54 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-In-Reply-To: <4F05C0E2.4050101@gmail.com>
+	id S1759225Ab2AGBmo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jan 2012 20:42:44 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:44791 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755035Ab2AGBmn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jan 2012 20:42:43 -0500
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Sat, 7 Jan
+ 2012 02:42:36 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (188.155.176.28) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Sat, 7 Jan
+ 2012 02:42:40 +0100
+In-Reply-To: <7vfwfsk24y.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 06 Jan 2012 12:27:25 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [188.155.176.28]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188059>
 
-Thanks for the response, there is lots of good information there.
+Junio C Hamano <gitster@pobox.com> writes:
 
-One clarification - can you track renames in git? I tried using git mv 
-but from the status output it looks like it deleted the old file  and 
-added the new file. I was expecting it to record some sort of indicator 
-of the name change, instead it looks like a short-cut for delete & add, 
-the docs aren't clear if that is the case.
+> The manual page for "rerere" talks about "configuration variable
+> rerere.enabled"; perhaps it should also refer to git config manual page to
+> make it more discoverable?
 
-On 1/5/2012 10:25 AM, Neal Kreitzinger wrote:
-...
-> going to want to do appropriate clean up of the working tree in each
-> iteration before committing. This is where you would review
-> renames/removes with git-status before you git-add and git-commit. Also,
-> if you are tracking permissions in git (the executable bit) then you
-> will want to filter out any noise generated by frivolous permissions
-> changes between the tarball contents.
-...
+Maybe, but it already says you should set the variable in two different
+places.
+
+> Thomas Rast <trast@student.ethz.ch> writes:
+>
+>> ... OTOH the
+>> auto-creation of rr-cache can cause strange behavior if a user has
+>> rerere.enabled unset and tries it once, as in
+>>
+>>   git config rerere.enabled true
+>>   git merge ...
+>>   git config --unset rerere.enabled
+>
+> That is because the last one should be
+>
+> 	git config --bool rerere.enabled false
+
+I definitely meant --unset.  If the user knows the distinction, and
+wants to return the variable to the state it had before his test
+(perhaps so that a future --global setting might take effect), he would
+use this sequence.  He might then be somewhat surprised to see that
+rerere is now permamently enabled for this repo.
+
+Probably I'm worrying too much about a weird fringe case though.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
