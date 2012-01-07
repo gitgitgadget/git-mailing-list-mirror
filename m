@@ -1,56 +1,65 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [ANNOUNCE] Git 1.7.9-rc0
-Date: Sat, 7 Jan 2012 00:23:25 -0000
-Organization: OPDS
-Message-ID: <7131768821D44C0BB1B31BAD672A2523@PhilipOakley>
-References: <7vr4zciji4.fsf@alter.siamese.dyndns.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: nn6eumtr <nn6eumtr@gmail.com>
+Subject: Re: How to deal with historic tar-balls
+Date: Fri, 06 Jan 2012 20:10:57 -0500
+Message-ID: <4F079BA1.3060907@gmail.com>
+References: <4EFF5CDA.5050809@gmail.com> <4F05C0E2.4050101@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jan 07 01:23:37 2012
+To: Neal Kreitzinger <nkreitzinger@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 07 02:11:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RjK4O-0003gV-Jv
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Jan 2012 01:23:36 +0100
+	id 1RjKoH-0004rP-Ls
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Jan 2012 02:11:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759000Ab2AGAXW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jan 2012 19:23:22 -0500
-Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:51559 "EHLO
-	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758732Ab2AGAXW (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Jan 2012 19:23:22 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AlYJAMqPB09cGnn8/2dsb2JhbABEhQ+FTaBegQiBBoFtAQQBAQUIAQEZFR4BASwCAwUCAQMVAQQCBSECAhQBBBoGBxcGARIIAgECAwGFNweCIgukaJEqgS+JTDNjBI0zmgk
-X-IronPort-AV: E=Sophos;i="4.71,471,1320624000"; 
-   d="scan'208";a="366070553"
-Received: from host-92-26-121-252.as13285.net (HELO PhilipOakley) ([92.26.121.252])
-  by out1.ip05ir2.opaltelecom.net with SMTP; 07 Jan 2012 00:23:04 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1759058Ab2AGBK5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jan 2012 20:10:57 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:65459 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758826Ab2AGBK4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jan 2012 20:10:56 -0500
+Received: by qcqz2 with SMTP id z2so1226289qcq.19
+        for <git@vger.kernel.org>; Fri, 06 Jan 2012 17:10:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=ZFTQygJM3Xm/NxRxC7j41K0TZ82NAqpjlpmNYECJRlI=;
+        b=R1E6/PqTGyzn4XAWa+RgwwandaYYlnum11qvIc0otOAxTFlR5+9ZdD/kdvB2Gg9SWB
+         AtdKyQwnkjQhwWvvNB+OU1hLJSRNHNxmIrlFZH0FJnf8mNIemILIGvvIhMdHoX5YCUkM
+         3YEFB4ZwXrAVLg/WhfDg4DzF8MT8gbTMzXT4U=
+Received: by 10.224.178.207 with SMTP id bn15mr10644124qab.34.1325898655719;
+        Fri, 06 Jan 2012 17:10:55 -0800 (PST)
+Received: from [192.168.0.7] (cpe-24-90-181-153.nyc.res.rr.com. [24.90.181.153])
+        by mx.google.com with ESMTPS id ft9sm125599237qab.20.2012.01.06.17.10.54
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 06 Jan 2012 17:10:54 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
+In-Reply-To: <4F05C0E2.4050101@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188058>
 
-minor spelling
-From: "Junio C Hamano" <gitster@pobox.com> Sent: Friday, January 06, 2012 
-9:55 PM
-> Git v1.7.9 Release Notes (draft)
-> ========================
->
-> * "git log --format='<format>'" learned new %g[nNeE] specifiers to
->   show information from the reflog entries when warlking the reflog
->   (i.e. with "-g").
+Thanks for the response, there is lots of good information there.
 
-s/warlking/walking/ 
+One clarification - can you track renames in git? I tried using git mv 
+but from the status output it looks like it deleted the old file  and 
+added the new file. I was expecting it to record some sort of indicator 
+of the name change, instead it looks like a short-cut for delete & add, 
+the docs aren't clear if that is the case.
+
+On 1/5/2012 10:25 AM, Neal Kreitzinger wrote:
+...
+> going to want to do appropriate clean up of the working tree in each
+> iteration before committing. This is where you would review
+> renames/removes with git-status before you git-add and git-commit. Also,
+> if you are tracking permissions in git (the executable bit) then you
+> will want to filter out any noise generated by frivolous permissions
+> changes between the tarball contents.
+...
