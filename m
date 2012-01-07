@@ -1,74 +1,61 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] Documentation: rerere.enabled overrides [ -d rr-cache ]
-Date: Sat, 7 Jan 2012 02:42:39 +0100
-Message-ID: <87boqge19s.fsf@thomas.inf.ethz.ch>
-References: <f697b8eff63a8cdd1207c6bfd6b88c532832c6b5.1325855112.git.trast@student.ethz.ch>
-	<7vfwfsk24y.fsf@alter.siamese.dyndns.org>
+Subject: Re: How to deal with historic tar-balls
+Date: Sat, 7 Jan 2012 02:50:13 +0100
+Message-ID: <87lipk46y2.fsf@thomas.inf.ethz.ch>
+References: <4EFF5CDA.5050809@gmail.com> <4F05C0E2.4050101@gmail.com>
+	<4F079BA1.3060907@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-Cc: <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 07 02:42:52 2012
+Cc: Neal Kreitzinger <nkreitzinger@gmail.com>, <git@vger.kernel.org>
+To: nn6eumtr <nn6eumtr@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 07 02:50:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RjLJ6-00009K-7f
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Jan 2012 02:42:52 +0100
+	id 1RjLQP-00034J-Rg
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Jan 2012 02:50:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759225Ab2AGBmo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jan 2012 20:42:44 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:44791 "EHLO edge10.ethz.ch"
+	id S1759323Ab2AGBuT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jan 2012 20:50:19 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:3553 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755035Ab2AGBmn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jan 2012 20:42:43 -0500
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Sat, 7 Jan
- 2012 02:42:36 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (188.155.176.28) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Sat, 7 Jan
- 2012 02:42:40 +0100
-In-Reply-To: <7vfwfsk24y.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 06 Jan 2012 12:27:25 -0800")
+	id S1759239Ab2AGBuS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jan 2012 20:50:18 -0500
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Sat, 7 Jan
+ 2012 02:50:11 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (188.155.176.28) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.355.2; Sat, 7 Jan
+ 2012 02:50:14 +0100
+In-Reply-To: <4F079BA1.3060907@gmail.com> (nn6eumtr@gmail.com's message of
+	"Fri, 06 Jan 2012 20:10:57 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
 X-Originating-IP: [188.155.176.28]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188060>
 
-Junio C Hamano <gitster@pobox.com> writes:
+nn6eumtr <nn6eumtr@gmail.com> writes:
 
-> The manual page for "rerere" talks about "configuration variable
-> rerere.enabled"; perhaps it should also refer to git config manual page to
-> make it more discoverable?
-
-Maybe, but it already says you should set the variable in two different
-places.
-
-> Thomas Rast <trast@student.ethz.ch> writes:
+> Thanks for the response, there is lots of good information there.
 >
->> ... OTOH the
->> auto-creation of rr-cache can cause strange behavior if a user has
->> rerere.enabled unset and tries it once, as in
->>
->>   git config rerere.enabled true
->>   git merge ...
->>   git config --unset rerere.enabled
->
-> That is because the last one should be
->
-> 	git config --bool rerere.enabled false
+> One clarification - can you track renames in git? I tried using git mv
+> but from the status output it looks like it deleted the old file  and
+> added the new file. I was expecting it to record some sort of
+> indicator of the name change, instead it looks like a short-cut for
+> delete & add, the docs aren't clear if that is the case.
 
-I definitely meant --unset.  If the user knows the distinction, and
-wants to return the variable to the state it had before his test
-(perhaps so that a future --global setting might take effect), he would
-use this sequence.  He might then be somewhat surprised to see that
-rerere is now permamently enabled for this repo.
+Git only stores snapshots; so for an ordinary (non-merge, non-root)
+commit, you have the "before" (parent) and "after" (commit's) snapshot.
+Everything is generated on the fly from that, including diffs, heuristic
+rename detection, pickaxe, ...
 
-Probably I'm worrying too much about a weird fringe case though.
+To apply rename detection when diffing (e.g. in diff, log, show,
+format-patch), use the -M flag.
 
 -- 
 Thomas Rast
