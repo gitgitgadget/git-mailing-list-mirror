@@ -1,7 +1,7 @@
 From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH 5/5] git-daemon tests: wait until daemon is ready
-Date: Sat,  7 Jan 2012 12:42:47 +0100
-Message-ID: <1325936567-3136-6-git-send-email-drizzd@aon.at>
+Subject: [PATCH 1/5] run-command: optionally kill children on exit
+Date: Sat,  7 Jan 2012 12:42:43 +0100
+Message-ID: <1325936567-3136-2-git-send-email-drizzd@aon.at>
 References: <7vipkoih0e.fsf@alter.siamese.dyndns.org>
  <1325936567-3136-1-git-send-email-drizzd@aon.at>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -17,81 +17,195 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RjUoE-0003Hb-Il
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Jan 2012 12:51:38 +0100
+	id 1RjUoF-0003Hb-41
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Jan 2012 12:51:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752375Ab2AGLvT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Jan 2012 06:51:19 -0500
-Received: from bsmtp3.bon.at ([213.33.87.17]:36279 "EHLO bsmtp.bon.at"
+	id S1752486Ab2AGLvW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Jan 2012 06:51:22 -0500
+Received: from bsmtp3.bon.at ([213.33.87.17]:36247 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752180Ab2AGLvP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jan 2012 06:51:15 -0500
+	id S1751599Ab2AGLvM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jan 2012 06:51:12 -0500
 Received: from localhost (unknown [80.123.242.182])
-	by bsmtp.bon.at (Postfix) with ESMTP id A757ACDF83;
-	Sat,  7 Jan 2012 12:52:09 +0100 (CET)
+	by bsmtp.bon.at (Postfix) with ESMTP id 7C03F10011;
+	Sat,  7 Jan 2012 12:49:18 +0100 (CET)
 X-Mailer: git-send-email 1.7.8
 In-Reply-To: <1325936567-3136-1-git-send-email-drizzd@aon.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188072>
 
-In start_daemon, git-daemon is started as a background process.  In
-theory, the tests may try to connect before the daemon had a chance
-to open a listening socket. Avoid this race condition by waiting
-for it to output "Ready to rumble". Any other output is considered
-an error and the test is aborted.
+From: Jeff King <peff@peff.net>
 
-Should git-daemon produce no output at all, lib-git-daemon would
-block forever. This could be fixed by introducing a timeout.  On
-the other hand, we have no timeout for other git commands which
-could suffer from the same problem. Since such a mechanism adds
-some complexity, I have decided against it.
+When we spawn a helper process, it should generally be done
+and finish_command called before we exit. However, if we
+exit abnormally due to an early return or a signal, the
+helper may continue to run in our absence.
+
+In the best case, this may simply be wasted CPU cycles or a
+few stray messages on a terminal. But it could also mean a
+process that the user thought was aborted continues to run
+to completion (e.g., a push's pack-objects helper will
+complete the push, even though you killed the push process).
+
+This patch provides infrastructure for run-command to keep
+track of PIDs to be killed, and clean them on signal
+reception or input, just as we do with tempfiles. PIDs can
+be added in two ways:
+
+  1. If NO_PTHREADS is defined, async helper processes are
+     automatically marked. By definition this code must be
+     ready to die when the parent dies, since it may be
+     implemented as a thread of the parent process.
+
+  2. If the run-command caller specifies the "clean_on_exit"
+     option. This is not the default, as there are cases
+     where it is OK for the child to outlive us (e.g., when
+     spawning a pager).
+
+PIDs are cleared from the kill-list automatically during
+wait_or_whine, which is called from finish_command and
+finish_async.
 
 Signed-off-by: Clemens Buchacher <drizzd@aon.at>
 ---
- t/lib-git-daemon.sh |   18 +++++++++++++++++-
- 1 files changed, 17 insertions(+), 1 deletions(-)
 
-diff --git a/t/lib-git-daemon.sh b/t/lib-git-daemon.sh
-index 5e81a25..ef2d01f 100644
---- a/t/lib-git-daemon.sh
-+++ b/t/lib-git-daemon.sh
-@@ -23,12 +23,27 @@ start_git_daemon() {
- 	trap 'code=$?; stop_git_daemon; (exit $code); die' EXIT
+Not sure if I can sign off without your sign-off. Should I have
+replaced this with Acked-by?
+
+ run-command.c |   68 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ run-command.h |    1 +
+ 2 files changed, 69 insertions(+), 0 deletions(-)
+
+diff --git a/run-command.c b/run-command.c
+index 1c51043..0204aaf 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1,8 +1,66 @@
+ #include "cache.h"
+ #include "run-command.h"
+ #include "exec_cmd.h"
++#include "sigchain.h"
+ #include "argv-array.h"
  
- 	say >&3 "Starting git daemon ..."
-+	mkfifo git_daemon_output
- 	git daemon --listen=127.0.0.1 --port="$LIB_GIT_DAEMON_PORT" \
- 		--reuseaddr --verbose \
- 		--base-path="$GIT_DAEMON_DOCUMENT_ROOT_PATH" \
- 		"$@" "$GIT_DAEMON_DOCUMENT_ROOT_PATH" \
--		>&3 2>&4 &
-+		>&3 2>git_daemon_output &
- 	GIT_DAEMON_PID=$!
-+	{
-+		read line
-+		echo >&4 "$line"
-+		cat >&4 &
++struct child_to_clean {
++	pid_t pid;
++	struct child_to_clean *next;
++};
++static struct child_to_clean *children_to_clean;
++static int installed_child_cleanup_handler;
 +
-+		# Check expected output
-+		if test x"$(expr "$line" : "\[[0-9]*\] \(.*\)")" != x"Ready to rumble"
-+		then
-+			kill "$GIT_DAEMON_PID"
-+			wait "$GIT_DAEMON_PID"
-+			trap 'die' EXIT
-+			error "git daemon failed to start"
-+		fi
-+	} <git_daemon_output
++static void cleanup_children(int sig)
++{
++	while (children_to_clean) {
++		struct child_to_clean *p = children_to_clean;
++		children_to_clean = p->next;
++		kill(p->pid, sig);
++		free(p);
++	}
++}
++
++static void cleanup_children_on_signal(int sig)
++{
++	cleanup_children(sig);
++	sigchain_pop(sig);
++	raise(sig);
++}
++
++static void cleanup_children_on_exit(void)
++{
++	cleanup_children(SIGTERM);
++}
++
++static void mark_child_for_cleanup(pid_t pid)
++{
++	struct child_to_clean *p = xmalloc(sizeof(*p));
++	p->pid = pid;
++	p->next = children_to_clean;
++	children_to_clean = p;
++
++	if (!installed_child_cleanup_handler) {
++		atexit(cleanup_children_on_exit);
++		sigchain_push_common(cleanup_children_on_signal);
++		installed_child_cleanup_handler = 1;
++	}
++}
++
++static void clear_child_for_cleanup(pid_t pid)
++{
++	struct child_to_clean **last, *p;
++
++	last = &children_to_clean;
++	for (p = children_to_clean; p; p = p->next) {
++		if (p->pid == pid) {
++			*last = p->next;
++			free(p);
++			return;
++		}
++	}
++}
++
+ static inline void close_pair(int fd[2])
+ {
+ 	close(fd[0]);
+@@ -130,6 +188,9 @@ static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
+ 	} else {
+ 		error("waitpid is confused (%s)", argv0);
+ 	}
++
++	clear_child_for_cleanup(pid);
++
+ 	errno = failed_errno;
+ 	return code;
  }
+@@ -292,6 +353,8 @@ fail_pipe:
+ 	if (cmd->pid < 0)
+ 		error("cannot fork() for %s: %s", cmd->argv[0],
+ 			strerror(failed_errno = errno));
++	else if (cmd->clean_on_exit)
++		mark_child_for_cleanup(cmd->pid);
  
- stop_git_daemon() {
-@@ -50,4 +65,5 @@ stop_git_daemon() {
- 		error "git daemon exited with status: $ret"
- 	fi
- 	GIT_DAEMON_PID=
-+	rm -f git_daemon_output
+ 	/*
+ 	 * Wait for child's execvp. If the execvp succeeds (or if fork()
+@@ -312,6 +375,7 @@ fail_pipe:
+ 		cmd->pid = -1;
+ 	}
+ 	close(notify_pipe[0]);
++
  }
+ #else
+ {
+@@ -356,6 +420,8 @@ fail_pipe:
+ 	failed_errno = errno;
+ 	if (cmd->pid < 0 && (!cmd->silent_exec_failure || errno != ENOENT))
+ 		error("cannot spawn %s: %s", cmd->argv[0], strerror(errno));
++	if (cmd->clean_on_exit && cmd->pid >= 0)
++		mark_child_for_cleanup(cmd->pid);
+ 
+ 	if (cmd->env)
+ 		free_environ(env);
+@@ -540,6 +606,8 @@ int start_async(struct async *async)
+ 		exit(!!async->proc(proc_in, proc_out, async->data));
+ 	}
+ 
++	mark_child_for_cleanup(async->pid);
++
+ 	if (need_in)
+ 		close(fdin[0]);
+ 	else if (async->in)
+diff --git a/run-command.h b/run-command.h
+index 56491b9..2a69466 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -38,6 +38,7 @@ struct child_process {
+ 	unsigned silent_exec_failure:1;
+ 	unsigned stdout_to_stderr:1;
+ 	unsigned use_shell:1;
++	unsigned clean_on_exit:1;
+ 	void (*preexec_cb)(void);
+ };
+ 
 -- 
 1.7.8
