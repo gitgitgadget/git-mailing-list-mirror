@@ -1,87 +1,89 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH] credentials: unable to connect to cache daemon
-Date: Sat, 7 Jan 2012 12:54:36 +0100
-Message-ID: <20120107115434.GA8568@ecki.lan>
-References: <7vy5tnpcuw.fsf@alter.siamese.dyndns.org>
- <20120104204017.GC27567@ecki.lan>
- <7vaa63p11t.fsf@alter.siamese.dyndns.org>
- <20120104222649.GA14727@sigill.intra.peff.net>
- <20120105000713.GA24220@ecki.lan>
- <20120105025559.GB7326@sigill.intra.peff.net>
- <20120105160612.GA27251@ecki.lan>
- <20120106155204.GA17355@sigill.intra.peff.net>
- <20120106194800.GA9301@ecki.lan>
- <20120106223215.GA13106@sigill.intra.peff.net>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH 1/5] run-command: optionally kill children on exit
+Date: Sat, 7 Jan 2012 13:45:03 +0100
+Message-ID: <CABPQNSb57LA6dYJvT7xF_vFfBFqKhCMbrQYp49_Ko1WmbUnYPw@mail.gmail.com>
+References: <7vipkoih0e.fsf@alter.siamese.dyndns.org> <1325936567-3136-1-git-send-email-drizzd@aon.at>
+ <1325936567-3136-2-git-send-email-drizzd@aon.at>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
 	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jan 07 13:03:16 2012
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Sat Jan 07 13:45:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RjUzT-0007yu-QA
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Jan 2012 13:03:16 +0100
+	id 1RjVeg-0000dJ-UY
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Jan 2012 13:45:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752284Ab2AGMCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Jan 2012 07:02:54 -0500
-Received: from bsmtp3.bon.at ([213.33.87.17]:38884 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751368Ab2AGMCx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jan 2012 07:02:53 -0500
-Received: from localhost (unknown [80.123.242.182])
-	by bsmtp.bon.at (Postfix) with ESMTP id 2C7BCA7EB9;
-	Sat,  7 Jan 2012 13:03:19 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20120106223215.GA13106@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752180Ab2AGMpq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Jan 2012 07:45:46 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:55331 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750987Ab2AGMpo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Jan 2012 07:45:44 -0500
+Received: by pbdu13 with SMTP id u13so1369180pbd.19
+        for <git@vger.kernel.org>; Sat, 07 Jan 2012 04:45:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=4W8ZkqvnVgQ0O50iB/44A+7fpJyw5pZd2vA2kfUyVbQ=;
+        b=SWyAxFvzZSScyIGWHtxgJqlrTnH1dAiZ835ZCc8n79UPhVF/QLvgFSRLTB8gnwnH0k
+         q8RSDaKy2GjyTGKhbh/wB8lkSFqYqCC0dw39yavA7e1a1G/Id/n1D+frngnKtnt26dzF
+         6o1ImFB+G/vSFlRmL1nU1mhAEBXOGoKD0Rfns=
+Received: by 10.68.191.100 with SMTP id gx4mr24117954pbc.26.1325940344262;
+ Sat, 07 Jan 2012 04:45:44 -0800 (PST)
+Received: by 10.68.8.7 with HTTP; Sat, 7 Jan 2012 04:45:03 -0800 (PST)
+In-Reply-To: <1325936567-3136-2-git-send-email-drizzd@aon.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188076>
 
-Error out if we just spawned the daemon and yet we cannot connect.
+On Sat, Jan 7, 2012 at 12:42 PM, Clemens Buchacher <drizzd@aon.at> wrot=
+e:
+> +static void cleanup_children(int sig)
+> +{
+> + =A0 =A0 =A0 while (children_to_clean) {
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 struct child_to_clean *p =3D children_t=
+o_clean;
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 children_to_clean =3D p->next;
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 kill(p->pid, sig);
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 free(p);
+> + =A0 =A0 =A0 }
+> +}
+> +
+> +static void cleanup_children_on_signal(int sig)
+> +{
+> + =A0 =A0 =A0 cleanup_children(sig);
+> + =A0 =A0 =A0 sigchain_pop(sig);
+> + =A0 =A0 =A0 raise(sig);
+> +}
+> +
 
-And always release the string buffer.
+Our Windows implementation of kill (mingw_kill in compat/mingw.c) only
+supports SIGKILL, so propagating other signals to child-processes will
+fail with EINVAL. That being said, Windows' support for signals is
+severely limited, but I'm not entirely sure which ones can be
+generated in this case.
 
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
+> @@ -312,6 +375,7 @@ fail_pipe:
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0cmd->pid =3D -1;
+> =A0 =A0 =A0 =A0}
+> =A0 =A0 =A0 =A0close(notify_pipe[0]);
+> +
+> =A0}
+> =A0#else
+> =A0{
 
-Hi Jeff,
-
-I wrote this while debugging why t0301-credential-cache.sh failed after
-I enabled cleanup_children by default. This error condition turned out
-not to be the problem, and this patch would not have helped in debugging
-this case. But I think it makes sense anyways.
-
- credential-cache.c |    7 +++----
- 1 files changed, 3 insertions(+), 4 deletions(-)
-
-diff --git a/credential-cache.c b/credential-cache.c
-index dc98372..8f25c06 100644
---- a/credential-cache.c
-+++ b/credential-cache.c
-@@ -71,11 +71,10 @@ static void do_cache(const char *socket, const char *action, int timeout,
- 			die_errno("unable to relay credential");
- 	}
- 
--	if (!send_request(socket, &buf))
--		return;
--	if (flags & FLAG_SPAWN) {
-+	if (send_request(socket, &buf) < 0 && flags & FLAG_SPAWN) {
- 		spawn_daemon(socket);
--		send_request(socket, &buf);
-+		if (send_request(socket, &buf) < 0)
-+			die_errno("unable to connect to cache daemon");
- 	}
- 	strbuf_release(&buf);
- }
--- 
-1.7.8
+This hunk is probably unintentional...
