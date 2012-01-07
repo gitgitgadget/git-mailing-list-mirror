@@ -1,62 +1,120 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: How to deal with historic tar-balls
-Date: Sat, 7 Jan 2012 02:50:13 +0100
-Message-ID: <87lipk46y2.fsf@thomas.inf.ethz.ch>
-References: <4EFF5CDA.5050809@gmail.com> <4F05C0E2.4050101@gmail.com>
-	<4F079BA1.3060907@gmail.com>
+From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
+Subject: Re: [PATCH 1/2] git-svn, perl/Git.pm: add central method for prompting
+ passwords honoring GIT_ASKPASS and SSH_ASKPASS
+Date: Sat, 07 Jan 2012 05:27:58 +0100
+Message-ID: <4F07C9CE.30905@tu-clausthal.de>
+References: <4EC52508.9070907@tu-clausthal.de> <CABPQNSZ0iPAE+BnDU6Nz8_PkrAtPbjL4RoJuQS=Um2wxPt-2DQ@mail.gmail.com> <4EC65DE4.90005@tu-clausthal.de> <CABPQNSbfM0JRVPk3fxfSEq7QaO-fynHM8FBGpPribdgeRqpZKA@mail.gmail.com> <4ED0CE8B.70205@tu-clausthal.de> <20111130064401.GC5317@sigill.intra.peff.net> <4EF907F1.1030801@tu-clausthal.de> <m3d3baf5kd.fsf@localhost.localdomain> <4EF9D8B9.9060106@tu-clausthal.de> <4EF9EBF4.7070200@tu-clausthal.de> <4EF9ED58.8080205@tu-clausthal.de> <7vd3b967ql.fsf@alter.siamese.dyndns.org> <7vty4l4rr8.fsf@alter.siamese.dyndns.org> <4EFA5EB3.4000802@tu-clausthal.de> <CACBZZX7P9PEq0wZp0d3dSwDjF6J6Z3cO4VtWc9_frBengtqPLw@mail.gmail.com> <7vboqks8la.fsf@alter.siamese.dyndns.org> <4F038EC8.505@tu-clausthal.de> <7v39bws4xi.fsf@alter.siamese.dyndns.org> <4F0405D4.9090102@tu-
+ clausthal.de> <4F040E46.5030001@tu-clausthal.de> <7vipkrp9pq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Neal Kreitzinger <nkreitzinger@gmail.com>, <git@vger.kernel.org>
-To: nn6eumtr <nn6eumtr@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 07 02:50:26 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 07 05:28:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RjLQP-00034J-Rg
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Jan 2012 02:50:26 +0100
+	id 1RjNtG-0007F9-82
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Jan 2012 05:28:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759323Ab2AGBuT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jan 2012 20:50:19 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:3553 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759239Ab2AGBuS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jan 2012 20:50:18 -0500
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Sat, 7 Jan
- 2012 02:50:11 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (188.155.176.28) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.355.2; Sat, 7 Jan
- 2012 02:50:14 +0100
-In-Reply-To: <4F079BA1.3060907@gmail.com> (nn6eumtr@gmail.com's message of
-	"Fri, 06 Jan 2012 20:10:57 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [188.155.176.28]
+	id S1758538Ab2AGE14 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jan 2012 23:27:56 -0500
+Received: from hades.rz.tu-clausthal.de ([139.174.2.20]:35584 "EHLO
+	hades.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751832Ab2AGE14 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jan 2012 23:27:56 -0500
+Received: from hades.rz.tu-clausthal.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id A9AC44220AF;
+	Sat,  7 Jan 2012 05:27:53 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
+	 bh=lqAiN+L6xCTApXuisF0NjlDoff0=; b=LrElUJY/28jZv4Ta0Zs4Hke20oWQ
+	WmbVwdkY3T6dhHLfVX5FTpLC8dQNtGFbNcTgXYDg7AZ+5jZ3Vu49BO+tIF5QEbAd
+	TWUcvebRnwD+LqLInmiijnI0oiLAs0X48sk2ZBqQehzGQN+bVTSUS/y+CF3b9+Is
+	HbsBTs7rodMI0cs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
+	message-id:date:from:mime-version:to:cc:subject:references
+	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
+	dkim1; b=nca7Pldk695jRZV3C0kRjPpW20FAE1r4umLw9wfJkcfXvnj82KH7A0a
+	YFzwhg4TABhI5QfdvpQKHTUYTk7WLi5Gm19iCr0EodEWPcRGwCs7xLLZDSvlF3wB
+	a2G6jNdwOKzP0kC8PGUPo8aF/88yK1Y9u6XFqnQyu5BLCcbyMvSI=
+Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
+	by hades.rz.tu-clausthal.de (Postfix) with ESMTP id 68E3242202A;
+	Sat,  7 Jan 2012 05:27:53 +0100 (CET)
+Received: from [139.174.5.137] (account sstri@tu-clausthal.de [139.174.5.137] verified)
+  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.3)
+  with ESMTPSA id 25774080; Sat, 07 Jan 2012 05:27:53 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
+In-Reply-To: <7vipkrp9pq.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.3.4
+X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188062>
 
-nn6eumtr <nn6eumtr@gmail.com> writes:
+Hi,
 
-> Thanks for the response, there is lots of good information there.
->
-> One clarification - can you track renames in git? I tried using git mv
-> but from the status output it looks like it deleted the old file  and
-> added the new file. I was expecting it to record some sort of
-> indicator of the name change, instead it looks like a short-cut for
-> delete & add, the docs aren't clear if that is the case.
+Am 04.01.2012 20:08 schrieb Junio C Hamano:
+> Is there a way to ask Term::ReadKey (or possibly some other module) if we
+> will be able to interact with the terminal _before_ we give that prompt?
+> 
+> The simplest would be to do this, I would think, but I didn't test it.
+> 
+> 	if (!defined $ret && -t) {
+> 		print STDERR $prompt;
+> 		if ($isPassword) {
+>                 	...
+> 	}
 
-Git only stores snapshots; so for an ordinary (non-merge, non-root)
-commit, you have the "before" (parent) and "after" (commit's) snapshot.
-Everything is generated on the fly from that, including diffs, heuristic
-rename detection, pickaxe, ...
+-t does not help, but I think it's not a big deal if the prompt is printed on
+the terminal and also on the ASKPASS-helper.
 
-To apply rename detection when diffing (e.g. in diff, log, show,
-format-patch), use the -M flag.
+Using Term::ReadLine seems to help:
+...
+		$ret = _prompt($ENV{'SSH_ASKPASS'}, $prompt);
+	}
+	if (!defined $ret) {
+		use Term::Readline;
+		my $term = Term::ReadLine->new("Git.pm");
+		if ($isPassword) {
+			require Term::ReadKey;
+			Term::ReadKey::ReadMode('noecho');
+		}
+		$ret = $term->readline($prompt);
+		if ($isPassword) {
+			Term::ReadKey::ReadMode('restore');
+			print STDERR "\n";
+			
+		}
+	}
+	if (!defined $ret) {
+		$ret = _prompt($ENV{'SSH_ASKPASS'}, $prompt);
+...
+
+But I'm not sure if this is what we want, because you can go with the cursor
+over the whole terminal.
+
+A better (working) alternative might be:
+...
+		$ret = _prompt($ENV{'SSH_ASKPASS'}, $prompt);
+	}
+	use Term::Readline;
+	my $term = Term::ReadLine->new("Git.pm");
+	if (!defined $ret && fileno($term->IN)) {
+ 		print STDERR $prompt;
+ 		if ($isPassword) {
+                 	...
+ 	}
+...
 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Best regards,
+ Sven Strickroth
+ ClamAV, a GPL anti-virus toolkit   http://www.clamav.net
+ PGP key id F5A9D4C4 @ any key-server
