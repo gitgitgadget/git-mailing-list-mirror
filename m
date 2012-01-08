@@ -1,58 +1,59 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH 1/5] run-command: optionally kill children on exit
-Date: Sun, 8 Jan 2012 21:56:58 +0100
-Message-ID: <20120108205657.GB3394@ecki.lan>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/5 v2] dashed externals: kill children on exit
+Date: Sun, 8 Jan 2012 16:07:39 -0500
+Message-ID: <20120108210739.GA18311@sigill.intra.peff.net>
 References: <7vipkoih0e.fsf@alter.siamese.dyndns.org>
  <1325936567-3136-1-git-send-email-drizzd@aon.at>
- <1325936567-3136-2-git-send-email-drizzd@aon.at>
- <CABPQNSb57LA6dYJvT7xF_vFfBFqKhCMbrQYp49_Ko1WmbUnYPw@mail.gmail.com>
+ <1325936567-3136-3-git-send-email-drizzd@aon.at>
+ <20120107145004.GB2461@sigill.intra.peff.net>
+ <7v4nw6hfpy.fsf@alter.siamese.dyndns.org>
+ <20120108204109.GA3394@ecki.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
 	Jonathan Nieder <jrnieder@gmail.com>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
 	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
 	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 08 22:05:42 2012
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Sun Jan 08 22:07:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rjzvw-0002qp-Ei
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 22:05:40 +0100
+	id 1Rjzxy-0003wi-IC
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 22:07:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754527Ab2AHVFR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Jan 2012 16:05:17 -0500
-Received: from bsmtp3.bon.at ([213.33.87.17]:43877 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754383Ab2AHVFQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jan 2012 16:05:16 -0500
-Received: from localhost (unknown [80.123.242.182])
-	by bsmtp.bon.at (Postfix) with ESMTP id D77362C4003;
-	Sun,  8 Jan 2012 22:06:08 +0100 (CET)
+	id S1754531Ab2AHVHm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jan 2012 16:07:42 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60433
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754383Ab2AHVHl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jan 2012 16:07:41 -0500
+Received: (qmail 26601 invoked by uid 107); 8 Jan 2012 21:14:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 08 Jan 2012 16:14:34 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 08 Jan 2012 16:07:39 -0500
 Content-Disposition: inline
-In-Reply-To: <CABPQNSb57LA6dYJvT7xF_vFfBFqKhCMbrQYp49_Ko1WmbUnYPw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20120108204109.GA3394@ecki.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188136>
 
-On Sat, Jan 07, 2012 at 01:45:03PM +0100, Erik Faye-Lund wrote:
+On Sun, Jan 08, 2012 at 09:41:09PM +0100, Clemens Buchacher wrote:
+
+> What I had previously enabled child cleanup for all callers of
+> run_command_v_opt. There is quite a few of those as well, most of them
+> not related to dashed externals at all.
 > 
-> Our Windows implementation of kill (mingw_kill in compat/mingw.c) only
-> supports SIGKILL, so propagating other signals to child-processes will
-> fail with EINVAL. That being said, Windows' support for signals is
-> severely limited, but I'm not entirely sure which ones can be
-> generated in this case.
+> So I reworked that patch a bit to enable cleanup only for dashed
+> externals. This is a replacement for "[PATCH 2/5] run-command: kill
+> children on exit by default".
 
-On Linux at least, SIGKILL is not a viable alternative for SIGTERM,
-since it does not give the child process to do any cleanup of its own
-(such as signaling its own children, for example).
+Thanks, this looks much closer to what I was expecting.
 
-In any case, due this whole experience, and recently another one with
-overzealous virus scanners, I have added a "get rid of dashed externals"
-work item to my TODO list.
+-Peff
