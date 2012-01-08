@@ -1,82 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/5] run-command: kill children on exit by default
-Date: Sat, 07 Jan 2012 22:26:49 -0800
-Message-ID: <7v4nw6hfpy.fsf@alter.siamese.dyndns.org>
-References: <7vipkoih0e.fsf@alter.siamese.dyndns.org>
- <1325936567-3136-1-git-send-email-drizzd@aon.at>
- <1325936567-3136-3-git-send-email-drizzd@aon.at>
- <20120107145004.GB2461@sigill.intra.peff.net>
+From: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+Subject: Re: SVN -> Git *but* with special changes
+Date: Sun, 8 Jan 2012 11:33:03 +0100
+Message-ID: <20120108103303.GC2714@centaur.lab.cmartin.tk>
+References: <1317227849979-6840904.post@n2.nabble.com>
+ <20110928190445.GC1482@sigill.intra.peff.net>
+ <1325999031923-7163706.post@n2.nabble.com>
+ <20120108051051.GA10129@sigill.intra.peff.net>
+ <1325999865995-7163737.post@n2.nabble.com>
+ <1326000327637-7163752.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkg?= =?utf-8?B?Tmfhu41j?= Duy 
-	<pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jan 08 07:27:19 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ew6BAiZeqk4r7MaW"
+Cc: git@vger.kernel.org
+To: Abscissa <bus_nabble_git@semitwist.com>
+X-From: git-owner@vger.kernel.org Sun Jan 08 11:33:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RjmDu-0002sU-U9
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 07:27:19 +0100
+	id 1Rjq4C-0006fK-Ba
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 11:33:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751670Ab2AHG0x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Jan 2012 01:26:53 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46942 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751568Ab2AHG0w (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jan 2012 01:26:52 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F1667CC9;
-	Sun,  8 Jan 2012 01:26:51 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=b3emmnyTxIyVr2oKONk819+M1Xs=; b=OJr+et
-	U3ZAYN8aDAXUJuTs4mkVuI4EuuM2r+WZ3Pl/pdlPAWrIsie1cbNp6HcLGqON2Ksc
-	ixw567XV33/eR96MBbrIxTbrFMlhG3c4VhQxqPz4xebKqWCLBu9RJEQSZuJfEW5K
-	voefHntZnmklgvOFGwzeacd8r261dJzKGQ5sc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J5YO+GPCSB/2rK/12nhWyduCPYYRdNkK
-	ur/PGq5cRUJaEhOc9MsbhKIURPMUJ6j9m4Y++kbJXNb9wPtuYYyfv4ZD9l5ByQ6c
-	Onl0Pu8o+7n9jGO75ECloxPsW7SVbD6WyituqRx27f1g3I3eIF7nvr5LEcFRP2c7
-	j0tylB0Lh3E=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 35B137CC8;
-	Sun,  8 Jan 2012 01:26:51 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A98D87CC7; Sun,  8 Jan 2012
- 01:26:50 -0500 (EST)
-In-Reply-To: <20120107145004.GB2461@sigill.intra.peff.net> (Jeff King's
- message of "Sat, 7 Jan 2012 09:50:04 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BFCFF7A4-39C1-11E1-9B81-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751963Ab2AHKdE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jan 2012 05:33:04 -0500
+Received: from kimmy.cmartin.tk ([91.121.65.165]:37168 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751264Ab2AHKdD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jan 2012 05:33:03 -0500
+Received: from centaur.lab.cmartin.tk (brln-4db9ffcd.pool.mediaWays.net [77.185.255.205])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id 3B5A2461C3;
+	Sun,  8 Jan 2012 11:32:50 +0100 (CET)
+Received: (nullmailer pid 9534 invoked by uid 1000);
+	Sun, 08 Jan 2012 10:33:03 -0000
+Mail-Followup-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	Abscissa <bus_nabble_git@semitwist.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <1326000327637-7163752.post@n2.nabble.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188097>
 
-Jeff King <peff@peff.net> writes:
 
-> On Sat, Jan 07, 2012 at 12:42:44PM +0100, Clemens Buchacher wrote:
->
->> It feels natural for a user to view git commands as monolithic
->> commands with a single thread of execution. If the parent git
->> command dies, it should therefore clean up its child processes as
->> well. So enable the cleanup mechanism by default.
->
-> I'm not sure this is a good idea. run_command is used in ~70 places in
-> git, and I'm sure at least one of them is going to be unhappy (I see you
-> found one in credential-cache, but how many others are there). I'd
-> rather be conservative and leave the default the same, and then switch
-> over callsites that make sense.
+--ew6BAiZeqk4r7MaW
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yeah, I agree 100% with that reasoning. I seem to recall that was how this
-commit was done in what I privately reviewed after Clemens announced his
-github branch?
+On Sat, Jan 07, 2012 at 09:25:27PM -0800, Abscissa wrote:
+> Well that's strange, it finished "upgrading", but now git is still just
+> reporting 1.7.0.4, which is *exactly* the same version it said before. The
+> git-svn package should already be up-to-date because I just installed it=
+=20
+> today. So I don't know what's up with that.
+
+Nothing odd about that. apt-get upgrade means "upgrade my system". If
+you want to get a newer version of package X, you do apt-get install X
+and it will install the latest version of that package.
+
+Your OS seems ancient, you might be better off installing from source.
+
+   cmn
+
+--ew6BAiZeqk4r7MaW
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAEBAgAGBQJPCXDfAAoJEHKRP1jG7ZzT21oH/2gwA/7QIHYxzZxXIL+DSjYS
+MNUtqr3778YZior+P0o3kNR738AY79x99msc26Sx+NytSpQIDYMxgGVxcS9/3dqB
+L1GP4evjPXqzCRE5kh0zL6t3GogVFdS168RyvXYsPWg0kdGKQWNJ0at0Wci55JLE
+4jhECSrNlFtaynVstZ7DNY/plqxK7MtMXmqXBDYGxf0DuOBRjcLqCGSJn+ZF4tsu
+Bk3tpP5PA1m+1tytP+ImxuEvK7lXwHgs2L1t3xnup00JIaM7+6DWi7xmKthQ4sA2
+amAJnq/ZI/ZinZ90BlJo4ewj31Qzsw11Ofn1Fs/yujevLV68xtTqc+XR47mA4v8=
+=IYw2
+-----END PGP SIGNATURE-----
+
+--ew6BAiZeqk4r7MaW--
