@@ -1,219 +1,146 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH 2/3] fix push --quiet: add 'quiet' capability to receive-pack
-Date: Sun,  8 Jan 2012 22:06:20 +0100
-Message-ID: <1326056781-17456-3-git-send-email-drizzd@aon.at>
-References: <1326056781-17456-1-git-send-email-drizzd@aon.at>
-Cc: git@vger.kernel.org, Todd Zullinger <tmz@pobox.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 08 22:15:45 2012
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 5/6] revert: report fine-grained error messages from insn
+ parser
+Date: Sun, 8 Jan 2012 15:33:18 -0600
+Message-ID: <20120108213318.GQ1942@burratino>
+References: <1326025653-11922-1-git-send-email-artagnon@gmail.com>
+ <1326025653-11922-6-git-send-email-artagnon@gmail.com>
+ <20120108200748.GJ1942@burratino>
+ <CALkWK0mStgcb4EBB+ni9fisDJY=13cJZWCTEcgfyOUyAXbc=tA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 08 22:28:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rk05g-0007hm-Ss
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 22:15:45 +0100
+	id 1Rk0Hp-0005gS-53
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 22:28:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754563Ab2AHVPB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Jan 2012 16:15:01 -0500
-Received: from bsmtp3.bon.at ([213.33.87.17]:46078 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754528Ab2AHVOm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jan 2012 16:14:42 -0500
-Received: from localhost (unknown [80.123.242.182])
-	by bsmtp.bon.at (Postfix) with ESMTP id CC9A813004F;
-	Sun,  8 Jan 2012 22:13:02 +0100 (CET)
-X-Mailer: git-send-email 1.7.8
-In-Reply-To: <1326056781-17456-1-git-send-email-drizzd@aon.at>
+	id S1754552Ab2AHV2M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Jan 2012 16:28:12 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:64048 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754504Ab2AHV2M convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Jan 2012 16:28:12 -0500
+Received: by iaeh11 with SMTP id h11so5763416iae.19
+        for <git@vger.kernel.org>; Sun, 08 Jan 2012 13:28:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=FI8DA0lcSPYfkh9pQKKkGdz20/CRINkl/sNaQILVO3c=;
+        b=rVdyWTEAaWsnrSMgSqJI2vXXmypd1j0l5FCORpS+OojVKaafgBWmzEgAWUps/zb1JM
+         zcSEFC+yN4jg6tikusUmhCjsd3vfsrqlYlbo5elJMOp5W3yx7/cDhSzfbwnisKoWcQvu
+         QbV0FN38+gnBJNdDBI+BCzSN4F2u/w6urDrjM=
+Received: by 10.50.183.199 with SMTP id eo7mr16521480igc.5.1326058091665;
+        Sun, 08 Jan 2012 13:28:11 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id gh7sm120392103igb.1.2012.01.08.13.28.10
+        (version=SSLv3 cipher=OTHER);
+        Sun, 08 Jan 2012 13:28:11 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0mStgcb4EBB+ni9fisDJY=13cJZWCTEcgfyOUyAXbc=tA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188141>
 
-Currently, git push --quiet produces some non-error output, e.g.:
+Ramkumar Ramachandra wrote:
+> Jonathan Nieder wrote:
+>> Ramkumar Ramachandra wrote:
 
- $ git push --quiet
- Unpacking objects: 100% (3/3), done.
+>>> =C2=A0 =C2=A0 =C2=A0 /* Eat up extra spaces/ tabs before object nam=
+e */
+>>> - =C2=A0 =C2=A0 padding =3D strspn(bol, " \t");
+>>> - =C2=A0 =C2=A0 if (!padding)
+>>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -1;
+>>> - =C2=A0 =C2=A0 bol +=3D padding;
+>>> + =C2=A0 =C2=A0 bol +=3D strspn(bol, " \t");
+[...]
+> Not a bugfix: since I have to report sensible error messages now, I
+> changed the "pick" and "revert" checks to "pick " || "pick\t" and
+> "revert " || "revert\t" -- then, I can report "invalid action" if it
+> doesn't match instead of a useless "missing space after action".
 
-This fixes a bug reported for the fedora git package:
+Ah, I forgot that the "if (!padding)" check noticed errors like
 
- https://bugzilla.redhat.com/show_bug.cgi?id=725593
+	picking foo
 
-Reported-by: Jesse Keating <jkeating@redhat.com>
-Cc: Todd Zullinger <tmz@pobox.com>
+before.  So this is just a code cleanup, with no functional effect.
 
-Commit 90a6c7d4 (propagate --quiet to send-pack/receive-pack)
-introduced the --quiet option to receive-pack and made send-pack
-pass that option. Older versions of receive-pack do not recognize
-the option, however, and terminate immediately. The commit was
-therefore reverted.
+However, you can still report "invalid action" with the old code
+structure --- it would just mean duplicating an error message in the
+code, since you reach the same conclusion by two code paths.  So it's
+a relevant cleanup, but I'd still suggest lifting it into a patch that
+comes before so future readers can assure themselves that it introduces
+no functional change instead of being confused.
 
-This change instead adds a 'quiet' capability to receive-pack,
-which is a backwards compatible.
+[...]
+>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return error(_("%s:%d: =
+Not a valid commit: %.*s"),
+>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 todo_file, lineno, (int)error_len, bol);
+>>> + =C2=A0 =C2=A0 }
+>>
+>> Hmm, this one can be emitted even when there was no corruption or
+>> internal error, because the user removed a commit she was
+>> cherry-picking and the gc-ed before a "git cherry-pick --continue".
+>> Alternatively, it can happen because the repository has grown very
+>> crowded and what used to be an unambiguous commit name no longer is
+>> one (not enough digits). =C2=A0Will the error message be intuitive i=
+n these
+>> situations?
+>
+> Something like "Unable to look up commit: %s" perhaps?
 
-In addition, this fixes push --quiet via http: A verbosity of 0
-means quiet for remote helpers.
+My "alternatively" was bogus --- lookup_commit_reference takes a (raw)
+full commit name as its argument.
 
-Reported-by: Tobias Ulmer <tobiasu@tmux.org>
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
- builtin/receive-pack.c   |   14 ++++++++++++--
- builtin/send-pack.c      |   13 ++++++++++---
- remote-curl.c            |    4 +++-
- t/t5523-push-upstream.sh |    7 +++++++
- t/t5541-http-push.sh     |    8 ++++++++
- 5 files changed, 40 insertions(+), 6 deletions(-)
+I dunno.  The question was not actually rhetorical --- I just meant
+that it's worth thinking about these cases.  There are a few cases:
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index d8ddcaa..31d17cf 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -33,6 +33,7 @@ static int transfer_unpack_limit = -1;
- static int unpack_limit = 100;
- static int report_status;
- static int use_sideband;
-+static int quiet;
- static int prefer_ofs_delta = 1;
- static int auto_update_server_info;
- static int auto_gc = 1;
-@@ -122,7 +123,7 @@ static int show_ref(const char *path, const unsigned char *sha1, int flag, void
- 	else
- 		packet_write(1, "%s %s%c%s%s\n",
- 			     sha1_to_hex(sha1), path, 0,
--			     " report-status delete-refs side-band-64k",
-+			     " report-status delete-refs side-band-64k quiet",
- 			     prefer_ofs_delta ? " ofs-delta" : "");
- 	sent_capabilities = 1;
- 	return 0;
-@@ -736,6 +737,8 @@ static struct command *read_head_info(void)
- 				report_status = 1;
- 			if (parse_feature_request(feature_list, "side-band-64k"))
- 				use_sideband = LARGE_PACKET_MAX;
-+			if (parse_feature_request(feature_list, "quiet"))
-+				quiet = 1;
- 		}
- 		cmd = xcalloc(1, sizeof(struct command) + len - 80);
- 		hashcpy(cmd->old_sha1, old_sha1);
-@@ -789,8 +792,10 @@ static const char *unpack(void)
- 
- 	if (ntohl(hdr.hdr_entries) < unpack_limit) {
- 		int code, i = 0;
--		const char *unpacker[4];
-+		const char *unpacker[5];
- 		unpacker[i++] = "unpack-objects";
-+		if (quiet)
-+			unpacker[i++] = "-q";
- 		if (fsck_objects)
- 			unpacker[i++] = "--strict";
- 		unpacker[i++] = hdr_arg;
-@@ -904,6 +909,11 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 		const char *arg = *argv++;
- 
- 		if (*arg == '-') {
-+			if (!strcmp(arg, "--quiet")) {
-+				quiet = 1;
-+				continue;
-+			}
-+
- 			if (!strcmp(arg, "--advertise-refs")) {
- 				advertise_refs = 1;
- 				continue;
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index cd1115f..71f258e 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -263,6 +263,8 @@ int send_pack(struct send_pack_args *args,
- 		args->use_ofs_delta = 1;
- 	if (server_supports("side-band-64k"))
- 		use_sideband = 1;
-+	if (!server_supports("quiet"))
-+		args->quiet = 0;
- 
- 	if (!remote_refs) {
- 		fprintf(stderr, "No refs in common and none specified; doing nothing.\n"
-@@ -301,11 +303,12 @@ int send_pack(struct send_pack_args *args,
- 			char *old_hex = sha1_to_hex(ref->old_sha1);
- 			char *new_hex = sha1_to_hex(ref->new_sha1);
- 
--			if (!cmds_sent && (status_report || use_sideband)) {
--				packet_buf_write(&req_buf, "%s %s %s%c%s%s",
-+			if (!cmds_sent && (status_report || use_sideband || args->quiet)) {
-+				packet_buf_write(&req_buf, "%s %s %s%c%s%s%s",
- 					old_hex, new_hex, ref->name, 0,
- 					status_report ? " report-status" : "",
--					use_sideband ? " side-band-64k" : "");
-+					use_sideband ? " side-band-64k" : "",
-+					args->quiet ? " quiet" : "");
- 			}
- 			else
- 				packet_buf_write(&req_buf, "%s %s %s",
-@@ -439,6 +442,10 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 				args.force_update = 1;
- 				continue;
- 			}
-+			if (!strcmp(arg, "--quiet")) {
-+				args.quiet = 1;
-+				continue;
-+			}
- 			if (!strcmp(arg, "--verbose")) {
- 				args.verbose = 1;
- 				continue;
-diff --git a/remote-curl.c b/remote-curl.c
-index 48c20b8..bcbc7fb 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -770,7 +770,9 @@ static int push_git(struct discovery *heads, int nr_spec, char **specs)
- 		argv[argc++] = "--thin";
- 	if (options.dry_run)
- 		argv[argc++] = "--dry-run";
--	if (options.verbosity > 1)
-+	if (options.verbosity == 0)
-+		argv[argc++] = "--quiet";
-+	else if (options.verbosity > 1)
- 		argv[argc++] = "--verbose";
- 	argv[argc++] = url;
- 	for (i = 0; i < nr_spec; i++)
-diff --git a/t/t5523-push-upstream.sh b/t/t5523-push-upstream.sh
-index c229fe6..9ee52cf 100755
---- a/t/t5523-push-upstream.sh
-+++ b/t/t5523-push-upstream.sh
-@@ -108,4 +108,11 @@ test_expect_failure TTY 'push --no-progress suppresses progress' '
- 	! grep "Writing objects" err
- '
- 
-+test_expect_success TTY 'quiet push' '
-+	ensure_fresh_upstream &&
-+
-+	test_terminal git push --quiet --no-progress upstream master 2>&1 | tee output &&
-+	test_cmp /dev/null output
-+'
-+
- test_done
-diff --git a/t/t5541-http-push.sh b/t/t5541-http-push.sh
-index 9b85d42..0c3cd3b 100755
---- a/t/t5541-http-push.sh
-+++ b/t/t5541-http-push.sh
-@@ -5,6 +5,7 @@
- 
- test_description='test smart pushing over http via http-backend'
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-terminal.sh
- 
- if test -n "$NO_CURL"; then
- 	skip_all='skipping test, git built without http support'
-@@ -186,5 +187,12 @@ test_expect_success 'push --mirror to repo with alternates' '
- 	git push --mirror "$HTTPD_URL"/smart/alternates-mirror.git
- '
- 
-+test_expect_success TTY 'quiet push' '
-+	cd "$ROOT_PATH"/test_repo_clone &&
-+	test_commit quiet &&
-+	test_terminal git push --quiet --no-progress 2>&1 | tee output &&
-+	test_cmp /dev/null output
-+'
-+
- stop_httpd
- test_done
--- 
-1.7.8
+ - missing object
+ - object is present but corrupt
+ - object is a blob, not a commit
+
+In the second case, there's an error message printed describing the
+problem, but in the other two there isn't.  The other callers tend to
+say "not a valid <foo>" or "could not lookup commit <foo>, so I guess
+
+	error: .git/sequencer/todo:5: not a valid commit: 78a89f493
+
+would be fine.
+
+Except that this focusses on the .git/sequencer/todo filename which
+would leave the person debugging astray.  It is not that
+=2Egit/sequencer/todo contains a typo (that would have been caught by
+get_sha1), but that it referred to a bad object or non-commit.  Maybe
+something in the direction of
+
+	error: cannot pick 78a89f493 because it is not a valid commit
+
+would be more helpful.
+
+Is this the right moment to report that error?  Will the operator be
+happy that we errored out right away before cherry-picking anything
+and wasting the human's time in assisting with that process, or will
+she be unhappy that inability to do something later that she might
+have been planning on skipping anyway prevented making progress right
+away?  (I'm not sure what the best thing to do is --- I guess some
+advice like
+
+	hint: to abort, use cherry-pick --abort
+	hint: to skip or replace that commit, use cherry-pick --edit
+
+would help.)
+
+Thanks for some food for thought.
+Jonathan
