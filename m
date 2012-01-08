@@ -1,70 +1,56 @@
-From: Thomas Hochstein <thh@inter.net>
-Subject: Re: SVN -> Git *but* with special changes
-Date: Sun, 08 Jan 2012 12:24:16 +0100
-Message-ID: <gcvg.1201081224.65@landroval.ancalagon.de>
-References: <1317227849979-6840904.post@n2.nabble.com> <20110928190445.GC1482@sigill.intra.peff.net> <1325999031923-7163706.post@n2.nabble.com> <20120108051051.GA10129@sigill.intra.peff.net> <1325999865995-7163737.post@n2.nabble.com> <1326000327637-7163752.post@n2.nabble.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 0/6] The move to sequencer.c
+Date: Sun, 8 Jan 2012 13:28:53 -0600
+Message-ID: <20120108192853.GE1942@burratino>
+References: <1326025653-11922-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 08 14:05:55 2012
+Cc: Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 08 20:24:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RjsRd-00064f-7L
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 14:05:53 +0100
+	id 1RjyLb-0005E0-Ej
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 20:24:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753462Ab2AHNFd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Jan 2012 08:05:33 -0500
-Received: from lo.gmane.org ([80.91.229.12]:39806 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751388Ab2AHNFc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jan 2012 08:05:32 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RjsRH-0005sc-FQ
-	for git@vger.kernel.org; Sun, 08 Jan 2012 14:05:31 +0100
-Received: from p4fcce763.dip.t-dialin.net ([79.204.231.99])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 08 Jan 2012 14:05:31 +0100
-Received: from thh by p4fcce763.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 08 Jan 2012 14:05:31 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: p4fcce763.dip.t-dialin.net
-User-Agent: ForteAgent/6.00-32.1186  Hamster/2.1.0.11
-X-Uptime: 2 day(s), 17 hour(s), 33 minute(s), 11 second(s) [landroval | 66535]
+	id S1753493Ab2AHTXq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jan 2012 14:23:46 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:34170 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752455Ab2AHTXp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jan 2012 14:23:45 -0500
+Received: by iaeh11 with SMTP id h11so5647361iae.19
+        for <git@vger.kernel.org>; Sun, 08 Jan 2012 11:23:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=zBk0aHWxS8OLimTlQBZXYx/VUwLwUyRWBQVI3Z/1ugk=;
+        b=p200aL3NDRzzwEbXWMGH+sJ5n2GVtp01uCS9OfMEv76jmXkz/Z6WtMaMp5T2WWd+uI
+         c+3BovYCjT3lhu7W0FfEAa6A+7u3eGIKHgV9elKHgJm4dSeeFweOp+dzWX3Dj1AeqTJm
+         HqLoQ6i09t9MOoUZFKLy1EO7zmVC2kLU8zy48=
+Received: by 10.50.183.199 with SMTP id eo7mr16233058igc.5.1326050624882;
+        Sun, 08 Jan 2012 11:23:44 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id yg2sm11696070igb.1.2012.01.08.11.23.44
+        (version=SSLv3 cipher=OTHER);
+        Sun, 08 Jan 2012 11:23:44 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1326025653-11922-1-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188115>
 
-Abscissa wrote:
+(-cc: Junio)
+Ramkumar Ramachandra wrote:
 
-> Well that's strange, it finished "upgrading", but now git is still just
-> reporting 1.7.0.4, which is *exactly* the same version it said before. 
+> I've tried a slightly different approach: the objective of the patches
+> seem to be much clearer this time.
 
-What kind of distribution do you use?
-
-"apt-get" sounds like Debian or Ubuntu, but those all have at least
-git 1.7.1:
-
-| Debian versions:
-| stable      1:1.7.2.5-3 
-| stable-bpo  1:1.7.7.3-1~bpo60+2 
-| testing     1:1.7.7.3-1 
-| unstable    1:1.7.8.2-1 
-| exp         1:1.7.8~rc3-1 
-
-| Ubuntu versions:
-| Precise Pangolin  1:1.7.7.3-1
-| Oneiric Ocelot    1:1.7.5.4-1
-| Natty Narwhal     1:1.7.4.1-3
-| Maverick Meerkat  1:1.7.1-1.1ubuntu0.1
-
--thh
+For the sake of new and forgetful readers: what is that objective?
