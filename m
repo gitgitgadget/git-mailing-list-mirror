@@ -1,187 +1,125 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 5/6] revert: report fine-grained error messages from insn parser
-Date: Mon, 9 Jan 2012 01:46:07 +0530
-Message-ID: <CALkWK0mStgcb4EBB+ni9fisDJY=13cJZWCTEcgfyOUyAXbc=tA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/6] revert: don't let revert continue a cherry-pick
+Date: Sun, 8 Jan 2012 14:22:16 -0600
+Message-ID: <20120108202216.GL1942@burratino>
 References: <1326025653-11922-1-git-send-email-artagnon@gmail.com>
- <1326025653-11922-6-git-send-email-artagnon@gmail.com> <20120108200748.GJ1942@burratino>
+ <1326025653-11922-4-git-send-email-artagnon@gmail.com>
+ <20120108193749.GH1942@burratino>
+ <CALkWK0=-AWy7HnVASB1rt8njavTYOhV7Zxsdq4TE+VShVZmEzQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 08 21:16:43 2012
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 08 21:17:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RjzAW-0004mw-V6
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 21:16:41 +0100
+	id 1RjzB5-00052Y-V8
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 21:17:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754449Ab2AHUQa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Jan 2012 15:16:30 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:55776 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751282Ab2AHUQ3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 Jan 2012 15:16:29 -0500
-Received: by wibhm6 with SMTP id hm6so2135970wib.19
-        for <git@vger.kernel.org>; Sun, 08 Jan 2012 12:16:28 -0800 (PST)
+	id S1754496Ab2AHURK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Jan 2012 15:17:10 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:47469 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751282Ab2AHURJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Jan 2012 15:17:09 -0500
+Received: by iaeh11 with SMTP id h11so5696037iae.19
+        for <git@vger.kernel.org>; Sun, 08 Jan 2012 12:17:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=KzkPuTSJFOWua8Db7B/JOmmz7GQgifrjBmiejM8GGGg=;
-        b=kUl7F6GGtel05ZB7cYDIH29R/1cvmxBIyS57EsKHnlC4l4PVxjO+RZo3EXSnzL+dKU
-         UE+krsQSD23R/9QM8856AYl0I5iNe45SlKCdk+ZRbrn2H96xsYruV3ccZU1cJnGsKqPq
-         CCBrrBOiV2cm75Iy0eix0A16tZCSxe1+4AiYI=
-Received: by 10.180.77.200 with SMTP id u8mr427571wiw.18.1326053788193; Sun,
- 08 Jan 2012 12:16:28 -0800 (PST)
-Received: by 10.216.175.3 with HTTP; Sun, 8 Jan 2012 12:16:07 -0800 (PST)
-In-Reply-To: <20120108200748.GJ1942@burratino>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=C/tlraGgf9Kzm3u9fueldccAlNzy7UwDpzQdGsHlEVo=;
+        b=G4HCmB3Ch7QghAcq8fElHeQ/Wij/saRddN0rAR9NW94hhEBlHVr8fcYTv9wtNfR9IH
+         Tl5o6v+FHdwZCLcpJQVq7dOcymEH2NwcLif2agb/c8tMTBaXL/srAU5+gV1KD3zeHR2c
+         LAAxJjSy6/eMIDw1MNCPTKMZIKgBmO7gAHGFY=
+Received: by 10.50.195.227 with SMTP id ih3mr16203854igc.19.1326053829125;
+        Sun, 08 Jan 2012 12:17:09 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id i2sm11720492igq.6.2012.01.08.12.17.08
+        (version=SSLv3 cipher=OTHER);
+        Sun, 08 Jan 2012 12:17:08 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0=-AWy7HnVASB1rt8njavTYOhV7Zxsdq4TE+VShVZmEzQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188127>
 
-Hi,
+Ramkumar Ramachandra wrote:
+> Jonathan Nieder wrote:
 
-Jonathan Nieder wrote:
-> Ramkumar Ramachandra wrote:
+>> I don't know --- it's not confusing to me. =C2=A0Could you explain f=
+urther
+>> what harm the current behavior does? =C2=A0E.g., could it cause me t=
+o
+>> misunderstand some basic concepts, or could it lead me to run comman=
+ds
+>> that cause me to scratch my head or lose data?
 >
->> Three kinds of errors can arise from parsing '.git/sequencer/todo':
->> 1. Unrecognized action
->> 2. Malformed object name
->> 3. Object name does not refer to a valid commit
->>
->> Since we would like to make the instruction sheet user-editable in t=
-he
->> future (much like the 'rebase -i' sheet), report more fine-grained
->> parse errors prefixed with the filename and line number.
->
-> Seems like a sensible idea. =C2=A0In other words,
-> [...]
+> Junio explained this to me in [1].  It's very unnatural for a user to
+> want to execute "git cherry-pick --continue" when the previous comman=
+d
+> was a "git revert": it probably means that she forgot about the
+> in-progress "git revert".
+[...]
+> [1]: http://thread.gmane.org/gmane.comp.version-control.git/185355
 
-Thanks for the new wording.
+I don't think that's what Junio said.
 
-> [...]
->> --- a/builtin/revert.c
->> +++ b/builtin/revert.c
->> @@ -714,26 +714,29 @@ static int format_todo(struct strbuf *buf, str=
-uct replay_insn_list *todo_list)
->> =C2=A0 =C2=A0 =C2=A0 return 0;
->> =C2=A0}
->>
->> -static int parse_insn_line(char *bol, char *eol, struct replay_insn=
-_list *item)
->> +static int parse_insn_line(char *bol, char *eol,
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 struct replay_insn_list *item, int lineno)
->> =C2=A0{
->> + =C2=A0 =C2=A0 const char *todo_file =3D git_path(SEQ_TODO_FILE);
->
-> This idiom is _still_ scary. =C2=A0I don't want to have to shout abou=
-t
-> this, but why didn't the commit message at least acknowledge it to pu=
-t
-> the reader's mind at ease when this has come up again and again?
+Did this actually happen, or is it a theoretical worry?  I think I woul=
+d
+be more likely to run "git cherry-pick <foo>..<bar>" than "git
+cherry-pick --continue" if I had forgotten about an in-progress
+revert.  The former already errors out with a sensible message.
 
-Carried over from the previous re-roll; sorry I didn't pay enough atten=
-tion.
+Or is the problem that I might run:
 
-> [...]
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 bol +=3D strlen("revert =
-");
->> + =C2=A0 =C2=A0 } else {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_len =3D eol - bol =
-> 255 ? 255 : eol - bol;
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return error(_("%s:%d: U=
-nrecognized action: %.*s"),
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 todo_file, lineno, (int)error_len, bol);
->
-> Ah, so my example above was wrong: the actual message is
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0error: .git/sequencer/todo:5: Unrecognized=
- action: the quick bro
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0wn fox jumps over the lazy dog
->
-> I guess that's fine. =C2=A0Is it intended?
->
->> + =C2=A0 =C2=A0 }
->>
->> =C2=A0 =C2=A0 =C2=A0 /* Eat up extra spaces/ tabs before object name=
- */
->> - =C2=A0 =C2=A0 padding =3D strspn(bol, " \t");
->> - =C2=A0 =C2=A0 if (!padding)
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -1;
->> - =C2=A0 =C2=A0 bol +=3D padding;
->> + =C2=A0 =C2=A0 bol +=3D strspn(bol, " \t");
->
-> What does this have to do with the stated goal of the patch? =C2=A0It=
- seems
-> to me that an unrelated and unadvertised bugfix snuck in.
+	git revert foo..bar
+	git reset --merge; # conflict --- let's clean this up
 
-Not a bugfix: since I have to report sensible error messages now, I
-changed the "pick" and "revert" checks to "pick " || "pick\t" and
-"revert " || "revert\t" -- then, I can report "invalid action" if it
-doesn't match instead of a useless "missing space after action".
+	# ah, I remember reverting the patch that conflicted before;
+	# let's reuse the resolution.
+	git cherry-pick baz
+	edit file.c; # another conflict, sigh
+	git add file.c
+	git cherry-pick --continue; # oops!
 
-> [...]
-> By the way, this is gross. =C2=A0Probably get_sha1 should grow a vari=
-ant
-> that takes a buffer and a length.
+?  That seems like a real worry, but the same problem could happen
+with cherry-pick used both for the multipick and single-pick, so I
+don't think your patch fundamentally addresses it.
 
-Yes; will do.
+In other words, this is a problem caused by the overloading of the
+same cherry-pick command for single-pick and multi-pick.  I think it
+should be preventable by remembering which action failed when stopping
+a sequence and doing only a single-pick resume if
+CHERRY_PICK_HEAD/REVERT_HEAD/whatever doesn't match that.
 
-> [...]
->> =C2=A0 =C2=A0 =C2=A0 item->operand =3D lookup_commit_reference(commi=
-t_sha1);
->> - =C2=A0 =C2=A0 if (!item->operand)
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -1;
->> + =C2=A0 =C2=A0 if (!item->operand) {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_len =3D eol - bol =
-> 255 ? 255 : eol - bol;
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return error(_("%s:%d: N=
-ot a valid commit: %.*s"),
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 todo_file, lineno, (int)error_len, bol);
->> + =C2=A0 =C2=A0 }
->
-> Hmm, this one can be emitted even when there was no corruption or
-> internal error, because the user removed a commit she was
-> cherry-picking and the gc-ed before a "git cherry-pick --continue".
-> Alternatively, it can happen because the repository has grown very
-> crowded and what used to be an unambiguous commit name no longer is
-> one (not enough digits). =C2=A0Will the error message be intuitive in=
- these
-> situations?
+The "oops" is bad since the operator might have been intending to run
+some more tests and amend as necessary before continuing the
+multi-pick.  It is not _that_ bad, since more typically one would have
+already run some tests before running cherry-pick --continue to commit
+the resolution.  Still probably worth fixing.
 
-Something like "Unable to look up commit: %s" perhaps?
+> The problem becomes more serious when the
+> sequencer grows more capabilities: a "git merge --continue" to
+> continue a "git am" sounds much more absurd.  Ofcourse, we will
+> provide a way to continue any sequencer operation in the future: "git
+> continue" seems to be a good candidate.
 
-> [...]
->> @@ -761,8 +770,8 @@ static int parse_insn_buffer(char *buf, struct r=
-eplay_insn_list **todo_list)
->>
->> =C2=A0 =C2=A0 =C2=A0 for (i =3D 1; *p; i++) {
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 char *eol =3D strch=
-rnul(p, '\n');
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (parse_insn_line(p, e=
-ol, &item) < 0)
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 return error(_("Could not parse line %d."), i);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (parse_insn_line(p, e=
-ol, &item, i) < 0)
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 return -1;
->
-> Not related to this patch, but why the "< 0" test? =C2=A0It makes thi=
-s
-> reader worry that there is some unusual return value convention that
-> he should be taking into account.
+I don't understand why "cherry-pick --continue" resuming a revert
+sequence implies that "merge --continue" would have to as well.
 
-Right.  Will fix.
+All that said, forbidding cherry-pick --continue from resuming a
+revert sequence would be fine with me, _as long as the semantics are
+clearly spelled out in the commit message and documentation_.  What
+happens when there is a mixture of picks and reverts?
 
 Thanks.
-
--- Ram
+Jonathan
