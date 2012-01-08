@@ -1,106 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH][RFC] git on Mac OS and precomposed unicode
-Date: Sat, 07 Jan 2012 18:46:13 -0800
-Message-ID: <7vboqehpxm.fsf@alter.siamese.dyndns.org>
-References: <201201072059.19103.tboegi@web.de>
+From: Abscissa <bus_nabble_git@semitwist.com>
+Subject: Re: SVN -> Git *but* with special changes
+Date: Sat, 7 Jan 2012 21:03:51 -0800 (PST)
+Message-ID: <1325999031923-7163706.post@n2.nabble.com>
+References: <1317227849979-6840904.post@n2.nabble.com> <20110928190445.GC1482@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Jan 08 03:46:24 2012
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 08 06:04:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rjim7-00043Q-Az
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 03:46:23 +0100
+	id 1Rjkvc-0004K5-Ua
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 06:04:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752718Ab2AHCqS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Jan 2012 21:46:18 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57192 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751779Ab2AHCqR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Jan 2012 21:46:17 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 312CC7AF7;
-	Sat,  7 Jan 2012 21:46:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=0pU5FGQYuDK6
-	+40uReR68vNcf/g=; b=bNX1UGQKu0TGmMp7yw0dwJ3+Ld7Z09lXrfeUcWCizZmH
-	6hvNsXRGw/nC+n8Mcl3uwPE3Fn11ZQJv6teipJ07leC8a13DCrAMGf8nLk+EJYel
-	hnWVwIwB2GpWAC5y/1jrKIToSdFr6TnPu2fYPKnBiUSE061BNmpiimpl6cuezSs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Oas8D5
-	P0f0MSAYlgLZ8UbD3zFBoUpSu/GImCNU0hlD+QYhueePtF5rNqWL/5vYNSvrNDDF
-	USPRDWEvVFAvdG/SKT8q0JK7Yaiq77aj7Ky74O1xWa/AH4ElbpmIIw6Ed8LM5Ca/
-	X7sHHW10M42kqXt8AaT2mLkBTmOZ139YOEFUk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 27B6B7AF6;
-	Sat,  7 Jan 2012 21:46:16 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 469B07AF4; Sat,  7 Jan 2012
- 21:46:15 -0500 (EST)
-In-Reply-To: <201201072059.19103.tboegi@web.de> ("Torsten =?utf-8?Q?B?=
- =?utf-8?Q?=C3=B6gershausen=22's?= message of "Sat, 7 Jan 2012 20:59:18
- +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EEE06CE6-39A2-11E1-A348-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751067Ab2AHFDz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jan 2012 00:03:55 -0500
+Received: from sam.nabble.com ([216.139.236.26]:57564 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750698Ab2AHFDy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jan 2012 00:03:54 -0500
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <bus_nabble_git@semitwist.com>)
+	id 1Rjkv9-0005tr-U2
+	for git@vger.kernel.org; Sat, 07 Jan 2012 21:03:51 -0800
+In-Reply-To: <20110928190445.GC1482@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188091>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>If you import with
+>git-svn, it supports "--preserve-empty-dirs", which will do this for you
+>automatically. 
 
-> Implementation:
-> Two files are added to the "compat" directory, darwin.h and darwin.c.
-> They implement basically 3 new functions:
-> darwin_opendir(), darwin_readdir() and darwin_closedir().
+I came across this, and it seems to mostly work:
+http://john.albin.net/git/git-svn-migrate
 
-I haven't looked at the patch yet but that sounds exactly the right way=
- to
-go about this. Nice.
+Except it fails to do the "--preserve-empty-dirs". It does say that it
+passes any options it doesn't recognize directly to git-svn, so I gave it
+that, but just got:
 
-> No decomposed file names in a git repository:
-> In order to prevent that ever a file name in decomposed unicode is en=
-tering
-> the index, a "brute force" attempt is taken:
-> all arguments into git (technically argv[1]..argv[n]) are converted i=
-nto
-> precomposed unicode.
+- Cloning repository...
+Unknown option: preserve-empty-dirs
 
-That also sounds sensible, but...
+Now, I realize this isn't a forum for that particular "git-svn-migrate"
+tool, and I don't expect anyone to go digging though it on my account, so
+I'm willing to try to add it into the script if I can just find out the
+proper way to use "--preserve-empty-dirs".
 
-> This is done in git.c by calling argv_precompose() for all commands
-> except "git commit".
+However, I suspect that script may not be my problem at all: If I do this:
 
-=2E.. I think it generally is a bad idea to say "all except foo". There=
- may
-be a reason why "foo" happens to be special in today's code, but who sa=
-ys
-there won't be another command "bar" that shares the same reason with
-"foo" to be treated specially? Or depending on the options, perhaps som=
-e
-codepath of "foo" may not want the special casing and want to go throug=
-h
-the argv_precompose(), no?
+git svn help | grep preserve
 
-After all, "git commit -- pathspec" will have to get the pathspec from =
-the
-command line, and match them against the paths in the index, the latter=
- of
-which you are keeping in the canonical form, so you would want the argv=
-[]
-also be in the same form, and applying your argv_precompose() would be =
-a
-sensible way to do so, no?
+I get absolutely nothing. There doesn't seem to be a
+"--preserve-empty-dirs".
 
-I would also suspect that the cleanest way to implement it is to replac=
-e
-the main() entry point (see how compat/mingw.h does this).
+
+--
+View this message in context: http://git.661346.n2.nabble.com/SVN-Git-but-with-special-changes-tp6840904p7163706.html
+Sent from the git mailing list archive at Nabble.com.
