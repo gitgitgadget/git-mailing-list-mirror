@@ -1,100 +1,89 @@
-From: Adam Borowski <kilobyte@angband.pl>
-Subject: Re: SVN -> Git *but* with special changes
-Date: Sun, 8 Jan 2012 13:08:07 +0100
-Message-ID: <20120108120807.GA7360@angband.pl>
-References: <1317227849979-6840904.post@n2.nabble.com>
- <20110928190445.GC1482@sigill.intra.peff.net>
- <1325999031923-7163706.post@n2.nabble.com>
- <20120108051051.GA10129@sigill.intra.peff.net>
- <1325999865995-7163737.post@n2.nabble.com>
- <1326000327637-7163752.post@n2.nabble.com>
- <20120108103303.GC2714@centaur.lab.cmartin.tk>
- <m2hb06mpwn.fsf@linux-m68k.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="MGYHOYXEY6WxJCY8"
-Cc: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
-	Abscissa <bus_nabble_git@semitwist.com>, git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sun Jan 08 13:09:04 2012
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH 0/6] The move to sequencer.c
+Date: Sun,  8 Jan 2012 17:57:27 +0530
+Message-ID: <1326025653-11922-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 08 13:29:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RjrYb-0000DX-CZ
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 13:09:01 +0100
+	id 1RjrsK-0008F4-El
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 13:29:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753408Ab2AHMIi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Jan 2012 07:08:38 -0500
-Received: from tartarus.angband.pl ([89.206.35.136]:50210 "EHLO
-	tartarus.angband.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752734Ab2AHMIi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jan 2012 07:08:38 -0500
-Received: from kilobyte by tartarus.angband.pl with local (Exim 4.72)
-	(envelope-from <kilobyte@tartarus.angband.pl>)
-	id 1RjrXj-0001wY-GJ; Sun, 08 Jan 2012 13:08:07 +0100
-Content-Disposition: inline
-In-Reply-To: <m2hb06mpwn.fsf@linux-m68k.org>
-X-Junkbait: adolf@angband.pl, zareba@angband.pl
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: kilobyte@tartarus.angband.pl
-X-SA-Exim-Scanned: No (on tartarus.angband.pl); SAEximRunCond expanded to false
+	id S1753155Ab2AHM3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jan 2012 07:29:10 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:64499 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751388Ab2AHM3J (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jan 2012 07:29:09 -0500
+Received: by iaeh11 with SMTP id h11so5271273iae.19
+        for <git@vger.kernel.org>; Sun, 08 Jan 2012 04:29:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=cLsK8W7gkIBMtlDcZCStEKu123qtKSFW9F6yTs5AM9k=;
+        b=aYgtkHRUnaZ04paiOojEV7KuO3+JIRAwR/0j0tXdKw9q7utR41Ir5P0LC2xTsD4TX4
+         avGB+zt6xfwmKodDQJLJ0xQRa9QiWUv80LZs7chNRovn6fQK4Ny58n3CRvExvfS6OhR0
+         ttK2gYRlXp3a7mMENnfrZo84bQkcCojMQF9Wo=
+Received: by 10.50.219.225 with SMTP id pr1mr5480253igc.21.1326025747698;
+        Sun, 08 Jan 2012 04:29:07 -0800 (PST)
+Received: from localhost.localdomain ([203.110.240.205])
+        by mx.google.com with ESMTPS id r5sm106707878igl.3.2012.01.08.04.29.03
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 08 Jan 2012 04:29:06 -0800 (PST)
+X-Mailer: git-send-email 1.7.8.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188106>
+
+Hi,
+
+I've tried a slightly different approach: the objective of the patches
+seem to be much clearer this time.
+
+[1/6] revert: move replay_action, replay_subcommand to header
+[2/6] revert: decouple sequencer actions from builtin commands
+[3/6] revert: don't let revert continue a cherry-pick
+[4/6] revert: allow mixing "pick" and "revert" actions
+[5/6] revert: report fine-grained error messages from insn parser
+[6/6] sequencer: factor code out of revert builtin
 
 
---MGYHOYXEY6WxJCY8
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+[1/6] first moves out a couple of data structures to the header
 
-On Sun, Jan 08, 2012 at 11:47:52AM +0100, Andreas Schwab wrote:
-> Carlos Mart=EDn Nieto <cmn@elego.de> writes:
-> > On Sat, Jan 07, 2012 at 09:25:27PM -0800, Abscissa wrote:
-> >> Well that's strange, it finished "upgrading", but now git is still just
-> >> reporting 1.7.0.4, which is *exactly* the same version it said before.=
- The
-> >> git-svn package should already be up-to-date because I just installed =
-it=20
-> >> today. So I don't know what's up with that.
-> >
-> > Nothing odd about that. apt-get upgrade means "upgrade my system". If
-> > you want to get a newer version of package X, you do apt-get install X
-> > and it will install the latest version of that package.
->=20
-> If apt-get upgrade doesn't get you a newer version then apt-get install
-> won't help you either.
+[2/6] decouples "actions" from a "commands" completely.  Although this
+sort of separation might not be necessary at this stage (because we
+just have a couple of actions that directly correspond to builtin
+commands), I think it makes [4/6] much easier to read.
 
-No, this is true only if none of packages involved uses a new library
-(including new sonames).  "apt-get upgrade" is forbidden to add or remove
-packages, and thus will skip upgrades that need a new dependency.
-The message at the end will mention "## not upgraded" though.
+[3/6] mainly exists so that [4/6] doesn't allow 'git revert
+--continue' to continue a 'git cherry-pick' and viceversa.  Note that
+a 'git revert --continue' can execute an instruction sheet with "pick"
+instructions and viceversa after [4/6].
 
-"apt-get install X" or "apt-get dist-upgrade" have no such restrictions.
+[4/6] should be very clear this time: do_pick_commit() takes an extra
+argument "action", and checks that instead of the "opts->command"
+everywhere.  The parser is also updated to parse into (commit, action)
+pairs.
 
---=20
-1KB		// Yo momma uses IPv4!
+[5/6] is fairly straightforward.
 
---MGYHOYXEY6WxJCY8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+[6/6] makes the final move.  This is something I've been pushing for
+quite some time: exciting things like 'git continue' will follow this.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Cheers!
 
-iQEcBAEBCgAGBQJPCYcnAAoJECw7Q2/qxoEB7mgH/0GEu+CmIsOUArOeeI+xFBVN
-HvvKs4VQRfszTNcSmDai2Rc+tWcYbKXMsr5ApOAmRBi0BXvbdmO9v4W++OVJBiTv
-jzXFVLXJNvYvlkwX3dwzXHdfcQIHKb+2SNDK8QRN2dr0YMNNLx3+Elq5PKnuyn+Q
-tstsVwIwE/umyFfIjFrMLy1KnjK8nNn5y89KYYzkGC6l//bV7sgKvpZhL5pTVfqn
-xOD7ob4mpkuuu2HSJUfGcGzrWishLGvSeXqem4oCD2FNWAu15IBDNyl3D88X9pIc
-un4Y7YJYVhYnfBtIf4i3a3sG92f8ag5Z4kKn4WlB2Yew+xJJEMTJn9IQw8pdKfw=
-=EF3K
------END PGP SIGNATURE-----
+ builtin/revert.c                |  959 +-------------------------------------
+ sequencer.c                     |  987 ++++++++++++++++++++++++++++++++++++++-
+ sequencer.h                     |   49 ++
+ t/t3510-cherry-pick-sequence.sh |   57 ++-
+ 4 files changed, 1088 insertions(+), 964 deletions(-)
 
---MGYHOYXEY6WxJCY8--
+-- 
+1.7.8.2
