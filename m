@@ -1,56 +1,55 @@
-From: Abscissa <bus_nabble_git@semitwist.com>
-Subject: Re: SVN -> Git *but* with special changes
-Date: Sun, 8 Jan 2012 14:28:42 -0800 (PST)
-Message-ID: <1326061722334-7165979.post@n2.nabble.com>
-References: <1317227849979-6840904.post@n2.nabble.com> <20110928190445.GC1482@sigill.intra.peff.net> <1325999031923-7163706.post@n2.nabble.com> <20120108051051.GA10129@sigill.intra.peff.net> <1325999865995-7163737.post@n2.nabble.com> <1326000327637-7163752.post@n2.nabble.com> <20120108103303.GC2714@centaur.lab.cmartin.tk> <m2hb06mpwn.fsf@linux-m68k.org> <20120108120807.GA7360@angband.pl>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] rebase --fix: interactive fixup mode
+Date: Sun, 8 Jan 2012 23:25:47 +0100
+Message-ID: <20120108222545.GB22680@ecki.lan>
+References: <20120108213134.GA18671@ecki.lan>
+ <20120108220127.GA4050@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 08 23:28:48 2012
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 08 23:34:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rk1EN-000180-PL
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 23:28:48 +0100
+	id 1Rk1Jc-0003Wt-2J
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 23:34:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754679Ab2AHW2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Jan 2012 17:28:43 -0500
-Received: from sam.nabble.com ([216.139.236.26]:57261 "EHLO sam.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754651Ab2AHW2n (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jan 2012 17:28:43 -0500
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <bus_nabble_git@semitwist.com>)
-	id 1Rk1EI-0003sK-B3
-	for git@vger.kernel.org; Sun, 08 Jan 2012 14:28:42 -0800
-In-Reply-To: <20120108120807.GA7360@angband.pl>
+	id S1754651Ab2AHWeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jan 2012 17:34:06 -0500
+Received: from bsmtp3.bon.at ([213.33.87.17]:57715 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754602Ab2AHWeF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jan 2012 17:34:05 -0500
+Received: from localhost (unknown [80.123.242.182])
+	by bsmtp.bon.at (Postfix) with ESMTP id E931A1000F;
+	Sun,  8 Jan 2012 23:32:10 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20120108220127.GA4050@burratino>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188149>
 
-I see. That's strange, I've been using "apt-get upgrade xxx" for at least a
-couple years, I can't believe I never knew that! Thanks for the detailed
-info, everyone (and for the patience!)
+On Sun, Jan 08, 2012 at 04:01:27PM -0600, Jonathan Nieder wrote:
+> 
+> Funny. :)  I wonder if this is possible to generalize, to something like
+> 
+> 	git rebase -i foo^{last-merge}
+> 
+> What do you think?
 
-In answer to someone's question, yea, it's Ubuntu (Kubuntu 10.04, and yea, I
-know that's old, but it's not my primary system and I haven't had a chance
-yet to upgrade it and get everything set back up again). I also tried it on
-a Debian 6 Live/Persistent system and got the same results...apparently for
-the same reason.
+I suppose if the history has no merges, I would return the root commit?
 
-I did manage to get 1.7.8 installed (on both systems) by downloading and
-installing the source (it was kind of a pain figuring out the names of some
-of the dependent packages, but I managed to get it.)
+Uh, and now I realize I have a bug. In a repo with only linear history:
 
-So hopefully this should all work now...
-
-
---
-View this message in context: http://git.661346.n2.nabble.com/SVN-Git-but-with-special-changes-tp6840904p7165979.html
-Sent from the git mailing list archive at Nabble.com.
+$ git rebase --fix
+fatal: ambiguous argument '4ccf67b9fa2ae247e55b86648d650cb368f286c2^': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions
+fatal: Needed a single revision
+invalid upstream 4ccf67b9fa2ae247e55b86648d650cb368f286c2^
