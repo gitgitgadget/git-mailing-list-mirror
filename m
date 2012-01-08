@@ -1,66 +1,91 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/6] revert: decouple sequencer actions from builtin
- commands
-Date: Sun, 8 Jan 2012 14:09:10 -0600
-Message-ID: <20120108200910.GK1942@burratino>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 3/6] revert: don't let revert continue a cherry-pick
+Date: Mon, 9 Jan 2012 01:33:41 +0530
+Message-ID: <CALkWK0=-AWy7HnVASB1rt8njavTYOhV7Zxsdq4TE+VShVZmEzQ@mail.gmail.com>
 References: <1326025653-11922-1-git-send-email-artagnon@gmail.com>
- <1326025653-11922-3-git-send-email-artagnon@gmail.com>
- <20120108193454.GG1942@burratino>
- <CALkWK0kHn+SDaeRHa8bUHWvOEVkr01sVDzvnw9E+-Nne2cii1Q@mail.gmail.com>
+ <1326025653-11922-4-git-send-email-artagnon@gmail.com> <20120108193749.GH1942@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 08 21:04:11 2012
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 08 21:04:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RjyyR-0007DA-3T
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 21:04:11 +0100
+	id 1RjyyR-0007DA-Li
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 21:04:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754479Ab2AHUEG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Jan 2012 15:04:06 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:48123 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754449Ab2AHUEE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 Jan 2012 15:04:04 -0500
-Received: by iaeh11 with SMTP id h11so5684138iae.19
-        for <git@vger.kernel.org>; Sun, 08 Jan 2012 12:04:03 -0800 (PST)
+	id S1754462Ab2AHUEF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Jan 2012 15:04:05 -0500
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:52094 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753985Ab2AHUED convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Jan 2012 15:04:03 -0500
+Received: by wibhm6 with SMTP id hm6so2131972wib.19
+        for <git@vger.kernel.org>; Sun, 08 Jan 2012 12:04:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=WlxMe89FpIQP+zM6akkz0CjMqFwrNx4CijSQhRx0lwo=;
-        b=BHHTzoVq7DxrbOta8D6uH5CArAtLW/E2CT/ugR8YzhF6QGDH6sCtk1ik3SH/bCR6Bk
-         DtPqRNLhc985F2L1Wrdz9nR2HdHQGvwINhUnR78dtUFwE1Dg8QQps+VF/0YYgVoimPam
-         8TOs2+4xnVPfj2yIhbIUzbVs5oev2PI6zLVmk=
-Received: by 10.50.186.226 with SMTP id fn2mr16269145igc.25.1326053043153;
-        Sun, 08 Jan 2012 12:04:03 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id h9sm241926721ibh.11.2012.01.08.12.04.02
-        (version=SSLv3 cipher=OTHER);
-        Sun, 08 Jan 2012 12:04:02 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0kHn+SDaeRHa8bUHWvOEVkr01sVDzvnw9E+-Nne2cii1Q@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Q2Uz3Kz6GusiSQ6Ax3NyvpnwGk4DhDB1YMqygbOa4pI=;
+        b=abVHFipVVz097AaBoC0JjNp5+K0kNyP6NGvvLLtyrI8mAeU8pWOvdw+s+M+SeQXXd/
+         AB0Nfs/KEG0vN9rbaj9FfY1mmtKAhuM0z1Ds7XgeD8cxNY3w9fdhHnBqX234xPvXc9+y
+         LETkgXOv8nbDG8mjt9TVGh6gdozzg9D7OA6jw=
+Received: by 10.180.103.2 with SMTP id fs2mr382657wib.21.1326053042189; Sun,
+ 08 Jan 2012 12:04:02 -0800 (PST)
+Received: by 10.216.175.3 with HTTP; Sun, 8 Jan 2012 12:03:41 -0800 (PST)
+In-Reply-To: <20120108193749.GH1942@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188124>
 
-Ramkumar Ramachandra wrote:
-> Jonathan Nieder wrote:
+Hi,
 
->> So what change does the patch actually make? =C2=A0Is this a renamin=
-g?
+Jonathan Nieder wrote:
+> Ramkumar Ramachandra wrote:
 >
-> Yes, it renames "action" to "command" where appropriate.
+>> When we allow mixing "revert" and "pick" instructions in the same
+>> sheet in the next patch, the following workflow would be perfectly
+>> valid:
+>>
+>> =C2=A0 $ git cherry-pick base..latercommit
+>> =C2=A0 [conflict occurs]
+>> =C2=A0 $ edit problematicfile
+>> =C2=A0 $ git add problematicfile
+>> =C2=A0 $ git revert --continue
+>> =C2=A0 [finishes successfully]
+>
+> Does "workflow" mean "sequence of commands"?
 
-Wouldn't a simple renaming have a diffstat with the same number of adde=
-d
-and removed lines?
+Yes.  Clarified wording.
+
+>> This is confusing to the operator, because the sequencer is an
+>> implementation detail hidden behind the 'git cherry-pick' and 'git
+>> revert' builtins.
+>
+> I don't know --- it's not confusing to me. =C2=A0Could you explain fu=
+rther
+> what harm the current behavior does? =C2=A0E.g., could it cause me to
+> misunderstand some basic concepts, or could it lead me to run command=
+s
+> that cause me to scratch my head or lose data?
+
+Junio explained this to me in [1].  It's very unnatural for a user to
+want to execute "git cherry-pick --continue" when the previous command
+was a "git revert": it probably means that she forgot about the
+in-progress "git revert".  The problem becomes more serious when the
+sequencer grows more capabilities: a "git merge --continue" to
+continue a "git am" sounds much more absurd.  Ofcourse, we will
+provide a way to continue any sequencer operation in the future: "git
+continue" seems to be a good candidate.
+
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/185355
+
+Thanks.
+
+-- Ram
