@@ -1,78 +1,79 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: SVN -> Git *but* with special changes
-Date: Sun, 08 Jan 2012 11:47:52 +0100
-Message-ID: <m2hb06mpwn.fsf@linux-m68k.org>
-References: <1317227849979-6840904.post@n2.nabble.com>
-	<20110928190445.GC1482@sigill.intra.peff.net>
-	<1325999031923-7163706.post@n2.nabble.com>
-	<20120108051051.GA10129@sigill.intra.peff.net>
-	<1325999865995-7163737.post@n2.nabble.com>
-	<1326000327637-7163752.post@n2.nabble.com>
-	<20120108103303.GC2714@centaur.lab.cmartin.tk>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2 1/6] t5601: add &&
+Date: Sun,  8 Jan 2012 18:46:23 +0700
+Message-ID: <1326023188-15559-1-git-send-email-pclouds@gmail.com>
+References: <1325771380-18862-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Abscissa <bus_nabble_git@semitwist.com>, git@vger.kernel.org
-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Sun Jan 08 11:48:00 2012
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 08 12:47:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RjqIB-0003VN-S1
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 11:48:00 +0100
+	id 1RjrDN-0000TL-76
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 12:47:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752050Ab2AHKrz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Jan 2012 05:47:55 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:36682 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751264Ab2AHKry (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jan 2012 05:47:54 -0500
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 45C0F1C0C156;
-	Sun,  8 Jan 2012 11:47:50 +0100 (CET)
-X-Auth-Info: 0x2tPPo7MFqlD7VdWdLf2r04cxh7iOihnrI0FNfeJso=
-Received: from linux.local (ppp-88-217-114-77.dynamic.mnet-online.de [88.217.114.77])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 1E38D1C00153;
-	Sun,  8 Jan 2012 11:47:50 +0100 (CET)
-Received: by linux.local (Postfix, from userid 501)
-	id AFD711E52FA; Sun,  8 Jan 2012 11:47:54 +0100 (CET)
-X-Yow: I'm EXCITED!!  I want a FLANK STEAK WEEK-END!!  I think I'm JULIA
- CHILD!!
-In-Reply-To: <20120108103303.GC2714@centaur.lab.cmartin.tk> ("Carlos
- =?utf-8?Q?Mart=C3=ADn?=
-	Nieto"'s message of "Sun, 8 Jan 2012 11:33:03 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.92 (gnu/linux)
+	id S1752734Ab2AHLq5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Jan 2012 06:46:57 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:39267 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750967Ab2AHLq4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jan 2012 06:46:56 -0500
+Received: by iaeh11 with SMTP id h11so5239138iae.19
+        for <git@vger.kernel.org>; Sun, 08 Jan 2012 03:46:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=XZ/4TAceu8h18hypUkLWKsSeAoZe9jduhWdWb7ngp84=;
+        b=xF4IYCPFvqVKKfMksxbb1/tKltVWP7vX7bRjb5/mghCf/Gec6zRZZexXpjiYIDZWk0
+         0wYebpdSRtW34/wj8FhVmbn0q5jAz3e8emokyCKn06K77VK6NYymashhKV/Vz3RS4HQS
+         b0qDoI1/zZ3Tz4x30hc27uO2M1ROAsmv51+7I=
+Received: by 10.50.180.167 with SMTP id dp7mr5261900igc.26.1326023216390;
+        Sun, 08 Jan 2012 03:46:56 -0800 (PST)
+Received: from pclouds@gmail.com ([115.74.35.243])
+        by mx.google.com with ESMTPS id py4sm9486387igc.2.2012.01.08.03.46.51
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 08 Jan 2012 03:46:55 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 08 Jan 2012 18:46:29 +0700
+X-Mailer: git-send-email 1.7.8.36.g69ee2
+In-Reply-To: <1325771380-18862-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188099>
 
-Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
 
-> On Sat, Jan 07, 2012 at 09:25:27PM -0800, Abscissa wrote:
->> Well that's strange, it finished "upgrading", but now git is still j=
-ust
->> reporting 1.7.0.4, which is *exactly* the same version it said befor=
-e. The
->> git-svn package should already be up-to-date because I just installe=
-d it=20
->> today. So I don't know what's up with that.
->
-> Nothing odd about that. apt-get upgrade means "upgrade my system". If
-> you want to get a newer version of package X, you do apt-get install =
-X
-> and it will install the latest version of that package.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ t/t5601-clone.sh |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-If apt-get upgrade doesn't get you a newer version then apt-get install
-won't help you either.  Both use the same installation source.
-
-Andreas.
-
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 87ee016..49821eb 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -9,9 +9,9 @@ test_expect_success setup '
+ 	rm -fr .git &&
+ 	test_create_repo src &&
+ 	(
+-		cd src
+-		>file
+-		git add file
++		cd src &&
++		>file &&
++		git add file &&
+ 		git commit -m initial
+ 	)
+=20
 --=20
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
-ED5
-"And now for something completely different."
+1.7.8.36.g69ee2
