@@ -1,51 +1,44 @@
-From: Jeff King <peff@peff.net>
+From: Abscissa <bus_nabble_git@semitwist.com>
 Subject: Re: SVN -> Git *but* with special changes
-Date: Sun, 8 Jan 2012 00:10:51 -0500
-Message-ID: <20120108051051.GA10129@sigill.intra.peff.net>
-References: <1317227849979-6840904.post@n2.nabble.com>
- <20110928190445.GC1482@sigill.intra.peff.net>
- <1325999031923-7163706.post@n2.nabble.com>
+Date: Sat, 7 Jan 2012 21:17:45 -0800 (PST)
+Message-ID: <1325999865995-7163737.post@n2.nabble.com>
+References: <1317227849979-6840904.post@n2.nabble.com> <20110928190445.GC1482@sigill.intra.peff.net> <1325999031923-7163706.post@n2.nabble.com> <20120108051051.GA10129@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Abscissa <bus_nabble_git@semitwist.com>
-X-From: git-owner@vger.kernel.org Sun Jan 08 06:11:20 2012
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 08 06:17:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rjl2O-0006Ir-1G
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 06:11:20 +0100
+	id 1Rjl8i-00085j-G2
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Jan 2012 06:17:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751113Ab2AHFKy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Jan 2012 00:10:54 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60205
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750775Ab2AHFKy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jan 2012 00:10:54 -0500
-Received: (qmail 21512 invoked by uid 107); 8 Jan 2012 05:17:46 -0000
-Received: from sigill-wired.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.8)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 08 Jan 2012 00:17:46 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 08 Jan 2012 00:10:51 -0500
-Content-Disposition: inline
-In-Reply-To: <1325999031923-7163706.post@n2.nabble.com>
+	id S1751262Ab2AHFRq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jan 2012 00:17:46 -0500
+Received: from sam.nabble.com ([216.139.236.26]:58274 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751113Ab2AHFRq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jan 2012 00:17:46 -0500
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <bus_nabble_git@semitwist.com>)
+	id 1Rjl8c-0006sv-02
+	for git@vger.kernel.org; Sat, 07 Jan 2012 21:17:46 -0800
+In-Reply-To: <20120108051051.GA10129@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188093>
 
-On Sat, Jan 07, 2012 at 09:03:51PM -0800, Abscissa wrote:
+Ok, I see. It's reporting 1.7.0, so that would explain it. One "sudo apt-get
+upgrade git" and...erm...well, it seems to be upgrading my whole damn
+computer, but I'll see how it all works out. Thanks!
 
-> However, I suspect that script may not be my problem at all: If I do this:
-> 
-> git svn help | grep preserve
-> 
-> I get absolutely nothing. There doesn't seem to be a
-> "--preserve-empty-dirs".
 
-What version of git are you using? That option was added in git 1.7.7.
-
--Peff
+--
+View this message in context: http://git.661346.n2.nabble.com/SVN-Git-but-with-special-changes-tp6840904p7163737.html
+Sent from the git mailing list archive at Nabble.com.
