@@ -1,43 +1,51 @@
-From: Jan Engelhardt <jengelh@medozas.de>
-Subject: gitignore warn about ** submission
-Date: Mon,  9 Jan 2012 16:40:46 +0100
-Message-ID: <1326123647-18352-1-git-send-email-jengelh@medozas.de>
-Cc: trast@student.ethz.ch
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 09 16:41:08 2012
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] gitignore: warn about pointless syntax
+Date: Mon, 9 Jan 2012 11:28:02 -0500
+Message-ID: <20120109162802.GA2374@sigill.intra.peff.net>
+References: <1326123647-18352-1-git-send-email-jengelh@medozas.de>
+ <1326123647-18352-2-git-send-email-jengelh@medozas.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, trast@student.ethz.ch
+To: Jan Engelhardt <jengelh@medozas.de>
+X-From: git-owner@vger.kernel.org Mon Jan 09 17:28:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkHLJ-0008VK-MN
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Jan 2012 16:41:02 +0100
+	id 1RkI51-0003ah-Jk
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Jan 2012 17:28:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755729Ab2AIPkx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jan 2012 10:40:53 -0500
-Received: from seven.medozas.de ([188.40.89.202]:42885 "EHLO seven.medozas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755706Ab2AIPkx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jan 2012 10:40:53 -0500
-Received: by seven.medozas.de (Postfix, from userid 25121)
-	id 8981621A0A6F; Mon,  9 Jan 2012 16:40:50 +0100 (CET)
-X-Mailer: git-send-email 1.7.7
+	id S932261Ab2AIQ2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jan 2012 11:28:08 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60661
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932170Ab2AIQ2H (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jan 2012 11:28:07 -0500
+Received: (qmail 358 invoked by uid 107); 9 Jan 2012 16:34:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 09 Jan 2012 11:34:58 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 Jan 2012 11:28:02 -0500
+Content-Disposition: inline
+In-Reply-To: <1326123647-18352-2-git-send-email-jengelh@medozas.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188176>
 
+On Mon, Jan 09, 2012 at 04:40:47PM +0100, Jan Engelhardt wrote:
 
-The following changes since commit eac2d83247ea0a265d923518c26873bb12c33778:
+> +static inline void check_bogus_wildcard(const char *file, const char *p)
+> +{
+> +	if (strstr(p, "**") == NULL)
+> +		return;
+> +	warning(_("Pattern \"%s\" from file \"%s\": Double asterisk does not "
+> +		"have a special meaning and is interpreted just like a single "
+> +		"asterisk.\n"), file, p);
 
-  Git 1.7.9-rc0 (2012-01-06 12:51:09 -0800)
+Wouldn't this also match the meaningful "foo\**"?
 
-are available in the git repository at:
-  git://dev.medozas.de/git master
-
-Jan Engelhardt (1):
-      gitignore: warn about pointless syntax
-
- dir.c |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
+-Peff
