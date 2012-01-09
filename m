@@ -1,72 +1,56 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] rebase --fix: interactive fixup mode
-Date: Mon, 9 Jan 2012 08:44:49 +0700
-Message-ID: <CACsJy8CKK0EAy79Fahi64bUw2kfr=eunegbeA7oX_XaXEBFr2g@mail.gmail.com>
-References: <20120108213134.GA18671@ecki.lan> <20120108220127.GA4050@burratino>
-Mime-Version: 1.0
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: Re: [PATCH] Work around sed portability issue in t8006-blame-textconv
+Date: Sun, 08 Jan 2012 22:40:44 -0500
+Message-ID: <1326080292-sup-3735@pinkfloyd.chass.utoronto.ca>
+References: <1325339068-6063-1-git-send-email-bwalton@artsci.utoronto.ca> <7vd3b0vc6h.fsf@alter.siamese.dyndns.org> <7vehvcigsy.fsf@alter.siamese.dyndns.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 09 02:45:27 2012
+Content-Transfer-Encoding: 8bit
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 09 04:41:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rk4Ih-0001sc-Cd
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Jan 2012 02:45:27 +0100
+	id 1Rk66g-0003g0-6r
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Jan 2012 04:41:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755153Ab2AIBpW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Jan 2012 20:45:22 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:60524 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755005Ab2AIBpV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 Jan 2012 20:45:21 -0500
-Received: by bkcjm19 with SMTP id jm19so1192689bkc.19
-        for <git@vger.kernel.org>; Sun, 08 Jan 2012 17:45:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=L4AOCEfDZqz9SehEUQFMo/Eftjux55rygHMUfRmDcN0=;
-        b=uOlJe9ERv34l86VLd7/fW+r2jZvU8whaU4/TIyeDV+PSsn6/59FahZp4fwh7i1UGGT
-         OFH+bFy3jQlgk1OdQouVDCcKcEIx18qFC1JLvrO7AZ5V3jK5N+ovRJOmqaBNEttQDY60
-         0ydTaJAH12RwLzP2Q9TT20FGieJ5bTR0JGOkk=
-Received: by 10.204.156.83 with SMTP id v19mr6593502bkw.40.1326073520141; Sun,
- 08 Jan 2012 17:45:20 -0800 (PST)
-Received: by 10.204.66.77 with HTTP; Sun, 8 Jan 2012 17:44:49 -0800 (PST)
-In-Reply-To: <20120108220127.GA4050@burratino>
+	id S1755353Ab2AIDkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Jan 2012 22:40:46 -0500
+Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:58494 "EHLO
+	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755251Ab2AIDkq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jan 2012 22:40:46 -0500
+Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:59022 ident=93)
+	by garcia.cquest.utoronto.ca with esmtp (Exim 4.63)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1Rk66G-0006ch-J3; Sun, 08 Jan 2012 22:40:44 -0500
+Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1Rk66G-00077d-I8; Sun, 08 Jan 2012 22:40:44 -0500
+In-reply-to: <7vehvcigsy.fsf@alter.siamese.dyndns.org>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188154>
 
-2012/1/9 Jonathan Nieder <jrnieder@gmail.com>:
-> Funny. :) =C2=A0I wonder if this is possible to generalize, to someth=
-ing like
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git rebase -i foo^{last-merge}
->
-> or even something like
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git rebase -i foo^{first:--merges}
->
-> (where "<commit>^{first:<rev-list args>}" would mean something like
-> "the first commit listed by "git rev-list <rev-list args> <commit>").
-> What do you think?
+Excerpts from Junio C Hamano's message of Fri Jan 06 17:53:33 -0500 2012:
 
-Is something like this over-generalized?
+> Ping?
 
-http://kerneltrap.org/mailarchive/git/2010/12/24/47502
+Sorry, I was out of email contact since last Sunday.  I'll look at
+this tomorrow.  I think I tested the exit status from
+/usr/xpg4/bin/sed on this file by hand and found that it was exiting
+cleanly, but I'll verify and let you know.  If you're correct, I'll
+adjust the commit message accordingly.
 
-A good thing I see from having a specific option for "-i HEAD~n" is
-that it's potentially shorter to type. For someone who does rebase a
-lot and has CapsLock turned to Ctrl, it helps. Maybe "rebase -I" =3D=3D
-"rebase -i HEAD^{last-merge}" (or "rebase -i
-<the-revision-used-last-time>") and "rebase -I <n>" =3D=3D "rebase -i
-HEAD~<n>"?
---=20
-Duy
+Thanks
+-Ben
+--
+Ben Walton
+Systems Programmer - CHASS
+University of Toronto
+C:416.407.5610 | W:416.978.4302
