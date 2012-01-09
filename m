@@ -1,98 +1,119 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Please support add -p with a new file, to add only part of the
- file
-Date: Mon, 9 Jan 2012 14:47:21 -0600
-Message-ID: <20120109204721.GC23825@burratino>
-References: <20120109105134.1239.39047.reportbug@leaf>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH][RFC] git on Mac OS and precomposed unicode
+Date: Mon, 09 Jan 2012 21:47:07 +0100
+Message-ID: <4F0B524B.8090203@web.de>
+References: <201201072059.19103.tboegi@web.de> <7vboqehpxm.fsf@alter.siamese.dyndns.org> <4F0B196B.8010904@web.de> <7vty44eksp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Wincent Colaiuta <win@wincent.com>,
-	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
-To: Josh Triplett <josh@joshtriplett.org>
-X-From: git-owner@vger.kernel.org Mon Jan 09 21:42:24 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 09 21:47:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkM2x-0006q0-91
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Jan 2012 21:42:23 +0100
+	id 1RkM87-0001QT-PU
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Jan 2012 21:47:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933307Ab2AIUmU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jan 2012 15:42:20 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:40319 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933151Ab2AIUmT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jan 2012 15:42:19 -0500
-Received: by vbbfc26 with SMTP id fc26so2985174vbb.19
-        for <git@vger.kernel.org>; Mon, 09 Jan 2012 12:42:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Bj9uHyaS1ttArx8C+pLIzxb2W2qITpmgQd8Qaeki1p8=;
-        b=ez8mBLR1kvSMgCJAam3r1fbaG1o/v2/9wmy5uwOs+uUzyCeUrWshJJmR+6K0hvV/2O
-         MY35B6hroDWApbobmdw56kn0gWbXCWDX6CaW2vfBhMO9jqFEOzE/6kCrsNSMSJdenGbB
-         0NgJssnw2vPq2bLZic9Q9Ia2Ietq+HoCaRilU=
-Received: by 10.182.202.69 with SMTP id kg5mr11954052obc.35.1326141738647;
-        Mon, 09 Jan 2012 12:42:18 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id m2sm5124097obu.3.2012.01.09.12.42.17
-        (version=SSLv3 cipher=OTHER);
-        Mon, 09 Jan 2012 12:42:17 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20120109105134.1239.39047.reportbug@leaf>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755830Ab2AIUri convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Jan 2012 15:47:38 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:48945 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755256Ab2AIUrh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jan 2012 15:47:37 -0500
+Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
+	by fmmailgate01.web.de (Postfix) with ESMTP id A68611A8843B1
+	for <git@vger.kernel.org>; Mon,  9 Jan 2012 21:47:20 +0100 (CET)
+Received: from [192.168.209.16] ([194.22.188.61]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0MDxWR-1Rvevp16HH-00H4Dp; Mon, 09 Jan 2012 21:47:19
+ +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <7vty44eksp.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: V02:K0:XaW3p53yTxeKKcLIQYf7J9G+w9d42IS7dbkJXlycUVJ
+ UhWL5LsGK1q+vVqaFtPtRWljBkzy/WuIJd17UIceKKJl2oS0Vq
+ DYlkb9g9aYHyaE0jkf91FbSpADm9rkrrtnfnXkbjdKmNtsuQ8e
+ B9PvziVibih7Y0ioZLtYsBog0iB+fvveHucLlltEgNNOSKbbC3
+ eUM+hlADS1Gk9+0rC7c+Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188190>
 
-(+cc: Wincent who brought us the "add -p" shortcut --- thanks!; Thomas,
- who expanded its scope to git checkout et al; and Jeff, who has done
- some hacking on it)
-Hi Josh,
+On 01/09/2012 08:29 PM, Junio C Hamano wrote:
+> Torsten B=C3=B6gershausen<tboegi@web.de>  writes:
+>
+>> On 08.01.12 03:46, Junio C Hamano wrote:
+>> ...
+>>> That also sounds sensible, but...
+>>>
+>>>> This is done in git.c by calling argv_precompose() for all command=
+s
+>>>> except "git commit".
+>>>
+>>> ... I think it generally is a bad idea to say "all except foo". The=
+re may
+>>> be a reason why "foo" happens to be special in today's code, but wh=
+o says
+>>> there won't be another command "bar" that shares the same reason wi=
+th
+>>> "foo" to be treated specially? Or depending on the options, perhaps=
+ some
+>>> codepath of "foo" may not want the special casing and want to go th=
+rough
+>>> the argv_precompose(), no?
+>>>
+>>> After all, "git commit -- pathspec" will have to get the pathspec f=
+rom the
+>>> command line,...
+>>
+>> Thanks Junio for catching this.
+>> I added a new test case as well as fixed the code.
+>
+> I think you are sidestepping the real issue I raised, which is:
+>
+>      What is the reason why you do not want to feed the precompose he=
+lper
+>      with some arguments to 'git commit', while it is OK to pass all
+>      arguments to other commands through precomposition?
+>
+> I admit it was my fault that I did not spell it out clearly in my
+> response.
+>
+> I understand that arguments other than pathspec and revs could be lef=
+t in
+> decomposed form, but is there any harm in canonicalizing any and all
+> command line parameters given in decomposed form consistently into
+> precomposed form? What problem are you trying to solve by special cas=
+ing
+> "git commit"? That is the real question to be answered, as there may =
+be
+> other commands some of whose arguments may not want to be canonicaliz=
+ed
+> due to the same reason, but you simply overlooked them. When other pe=
+ople
+> need to fix that oversight, they need a clearly written criterion wha=
+t
+> kind of arguments should not be fixed and why.
+>
+> And the reason cannot be a desire to pass the value to "--message"
+> argument intact [*1*]; it is not like osx cannot handle text in
+> precomposed form, right?
 
-Josh Triplett wrote:
+The short answer for treating "git commit" special:
+   The test suite didn't pass any more. (t4201-shortlog.sh)
+   This seems more and more to be a bad excuse...
+The long answer:
+   I have to look into that more deeply.
 
-> I recently found myself with a new file that I needed to check in part
-> of with several commits.  I wanted to use "git add -p newfile" and use
-> 'e' to add and commit several times (along with corresponding bits in
-> existing files).  However, "git add -p" does not work on a new file,
-> only an existing file.
+Thanks for your replies.
+/Torsten
 
-Yep.  A workaround is to use "git add -N newfile" before running
-"git add -p newfile".
+     (And yes, Mac OS can handle precomposed unicode (at least the
+      western european code points))
 
-I imagine "git add -p '*.c'" should also offer to add hunks from
-source files that git doesn't know about yet, too.
-
-Here's a quick demo (untested) that might _almost_ do the right thing.
-Unfortunately it leaves intent-to-add entries around even for files
-the operator rejects.  Anyway, maybe it can be a good starting point
-for playing around.
-
-Hope that helps,
-Jonathan
-
- git-add--interactive.perl |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
-
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 8f0839d2..6e99ff1b 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -1619,6 +1619,10 @@ sub main_loop {
- process_args();
- refresh();
- if ($patch_mode) {
-+	if ($patch_mode eq 'stage') {
-+		# NEEDSWORK: should use "git update-index --intent-to-add"
-+		system(qw(git add --intent-to-add --), @ARGV);
-+	}
- 	patch_update_cmd();
- }
- else {
--- 
-1.7.8.2
+[snip]
