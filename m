@@ -1,119 +1,79 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH][RFC] git on Mac OS and precomposed unicode
-Date: Mon, 09 Jan 2012 21:47:07 +0100
-Message-ID: <4F0B524B.8090203@web.de>
-References: <201201072059.19103.tboegi@web.de> <7vboqehpxm.fsf@alter.siamese.dyndns.org> <4F0B196B.8010904@web.de> <7vty44eksp.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] gitweb: Fix actionless dispatch for non-existent
+ objects
+Date: Mon, 09 Jan 2012 13:30:35 -0800
+Message-ID: <7v8vlgef7o.fsf@alter.siamese.dyndns.org>
+References: <20120107104552.26867.41282.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 09 21:47:45 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 09 22:30:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkM87-0001QT-PU
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Jan 2012 21:47:44 +0100
+	id 1RkMnl-0008G5-An
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Jan 2012 22:30:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755830Ab2AIUri convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Jan 2012 15:47:38 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:48945 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755256Ab2AIUrh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jan 2012 15:47:37 -0500
-Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
-	by fmmailgate01.web.de (Postfix) with ESMTP id A68611A8843B1
-	for <git@vger.kernel.org>; Mon,  9 Jan 2012 21:47:20 +0100 (CET)
-Received: from [192.168.209.16] ([194.22.188.61]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0MDxWR-1Rvevp16HH-00H4Dp; Mon, 09 Jan 2012 21:47:19
- +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <7vty44eksp.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:XaW3p53yTxeKKcLIQYf7J9G+w9d42IS7dbkJXlycUVJ
- UhWL5LsGK1q+vVqaFtPtRWljBkzy/WuIJd17UIceKKJl2oS0Vq
- DYlkb9g9aYHyaE0jkf91FbSpADm9rkrrtnfnXkbjdKmNtsuQ8e
- B9PvziVibih7Y0ioZLtYsBog0iB+fvveHucLlltEgNNOSKbbC3
- eUM+hlADS1Gk9+0rC7c+Q==
+	id S1755541Ab2AIVaj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jan 2012 16:30:39 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48933 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755355Ab2AIVai (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jan 2012 16:30:38 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7272B71DA;
+	Mon,  9 Jan 2012 16:30:37 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8boS3xkCmTPNEhYdGx4dGlVP4Bg=; b=KMCK8O
+	rM5wtg1SCk/2mN0L+cOmz7Ylg74J7lnHRfT2vLag0WH/dWCSLm3om4RDl3OtpR4a
+	sSQETcfCH2XLxTo78vTVym8hCLpmPaDwwdFYT3aqJVLxwFppQZcgoslazDkByghQ
+	MNQq8fc8agd72gkcgyYfWWmrdZFBDnMmS3D+g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kDh3o3wggOu6jX7ySe1AYb/G07Ic1huv
+	VGxCJCh8SXsHdcser9Ed9qJ3yjX6Dp5ZnNBKhAn5UrUGEdrusYDmXZo/tWTAN+Al
+	62MdMql12kB631pG1jRYfss8pVSjTXvZsDRFTLrYyiE+XSyKqFMc7MbhYJHLvl7M
+	5KBCKUQhTBc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A1D371D9;
+	Mon,  9 Jan 2012 16:30:37 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DEF0271D8; Mon,  9 Jan 2012
+ 16:30:36 -0500 (EST)
+In-Reply-To: <20120107104552.26867.41282.stgit@localhost.localdomain> (Jakub
+ Narebski's message of "Sat, 07 Jan 2012 11:47:38 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2B8D25F0-3B09-11E1-A36A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188191>
 
-On 01/09/2012 08:29 PM, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen<tboegi@web.de>  writes:
->
->> On 08.01.12 03:46, Junio C Hamano wrote:
->> ...
->>> That also sounds sensible, but...
->>>
->>>> This is done in git.c by calling argv_precompose() for all command=
-s
->>>> except "git commit".
->>>
->>> ... I think it generally is a bad idea to say "all except foo". The=
-re may
->>> be a reason why "foo" happens to be special in today's code, but wh=
-o says
->>> there won't be another command "bar" that shares the same reason wi=
-th
->>> "foo" to be treated specially? Or depending on the options, perhaps=
- some
->>> codepath of "foo" may not want the special casing and want to go th=
-rough
->>> the argv_precompose(), no?
->>>
->>> After all, "git commit -- pathspec" will have to get the pathspec f=
-rom the
->>> command line,...
->>
->> Thanks Junio for catching this.
->> I added a new test case as well as fixed the code.
->
-> I think you are sidestepping the real issue I raised, which is:
->
->      What is the reason why you do not want to feed the precompose he=
-lper
->      with some arguments to 'git commit', while it is OK to pass all
->      arguments to other commands through precomposition?
->
-> I admit it was my fault that I did not spell it out clearly in my
-> response.
->
-> I understand that arguments other than pathspec and revs could be lef=
-t in
-> decomposed form, but is there any harm in canonicalizing any and all
-> command line parameters given in decomposed form consistently into
-> precomposed form? What problem are you trying to solve by special cas=
-ing
-> "git commit"? That is the real question to be answered, as there may =
-be
-> other commands some of whose arguments may not want to be canonicaliz=
-ed
-> due to the same reason, but you simply overlooked them. When other pe=
-ople
-> need to fix that oversight, they need a clearly written criterion wha=
-t
-> kind of arguments should not be fixed and why.
->
-> And the reason cannot be a desire to pass the value to "--message"
-> argument intact [*1*]; it is not like osx cannot handle text in
-> precomposed form, right?
+Jakub Narebski <jnareb@gmail.com> writes:
 
-The short answer for treating "git commit" special:
-   The test suite didn't pass any more. (t4201-shortlog.sh)
-   This seems more and more to be a bad excuse...
-The long answer:
-   I have to look into that more deeply.
+> When gitweb URL does not provide action explicitly, e.g.
+>
+>   http://git.example.org/repo.git/branch
+>
+> dispatch() tries to guess action (view to be used) based on remaining
+> parameters.  Among others it is based on the type of requested object,
+> which gave problems when asking for non-existent branch or file (for
+> example misspelt name).
 
-Thanks for your replies.
-/Torsten
+Ok. "gave problems" is a bit unclear to see why explicitly calling
+die_error() is an improvement, though. What is the nature of the
+"problems"? Giving a server error 500 because later codepaths tried to
+call an undefined subroutine?
 
-     (And yes, Mac OS can handle precomposed unicode (at least the
-      western european code points))
+> Now undefined $action from dispatch() should not result in problems.
 
-[snip]
+Again, unspecified "problems" here. I'd like this sentence to end with
+"should not result in X but gives an explicit '404 not found' error".
+
+Thanks.
