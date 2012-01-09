@@ -1,65 +1,98 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH] rebase --fix: interactive fixup mode
-Date: Mon, 9 Jan 2012 21:33:58 +0100
-Message-ID: <20120109203357.GC25269@ecki>
-References: <20120108213134.GA18671@ecki.lan>
- <7vfwfpg5st.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Please support add -p with a new file, to add only part of the
+ file
+Date: Mon, 9 Jan 2012 14:47:21 -0600
+Message-ID: <20120109204721.GC23825@burratino>
+References: <20120109105134.1239.39047.reportbug@leaf>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 09 21:42:23 2012
+Cc: git@vger.kernel.org, Wincent Colaiuta <win@wincent.com>,
+	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
+To: Josh Triplett <josh@joshtriplett.org>
+X-From: git-owner@vger.kernel.org Mon Jan 09 21:42:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkM2w-0006q0-ND
+	id 1RkM2x-0006q0-91
 	for gcvg-git-2@lo.gmane.org; Mon, 09 Jan 2012 21:42:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933256Ab2AIUmS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jan 2012 15:42:18 -0500
-Received: from bsmtp3.bon.at ([213.33.87.17]:34909 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S933151Ab2AIUmR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jan 2012 15:42:17 -0500
-Received: from localhost (p5B22D760.dip.t-dialin.net [91.34.215.96])
-	by bsmtp.bon.at (Postfix) with ESMTP id 217EDA7EB8;
-	Mon,  9 Jan 2012 21:42:42 +0100 (CET)
+	id S933307Ab2AIUmU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jan 2012 15:42:20 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:40319 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933151Ab2AIUmT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jan 2012 15:42:19 -0500
+Received: by vbbfc26 with SMTP id fc26so2985174vbb.19
+        for <git@vger.kernel.org>; Mon, 09 Jan 2012 12:42:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Bj9uHyaS1ttArx8C+pLIzxb2W2qITpmgQd8Qaeki1p8=;
+        b=ez8mBLR1kvSMgCJAam3r1fbaG1o/v2/9wmy5uwOs+uUzyCeUrWshJJmR+6K0hvV/2O
+         MY35B6hroDWApbobmdw56kn0gWbXCWDX6CaW2vfBhMO9jqFEOzE/6kCrsNSMSJdenGbB
+         0NgJssnw2vPq2bLZic9Q9Ia2Ietq+HoCaRilU=
+Received: by 10.182.202.69 with SMTP id kg5mr11954052obc.35.1326141738647;
+        Mon, 09 Jan 2012 12:42:18 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id m2sm5124097obu.3.2012.01.09.12.42.17
+        (version=SSLv3 cipher=OTHER);
+        Mon, 09 Jan 2012 12:42:17 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <7vfwfpg5st.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20120109105134.1239.39047.reportbug@leaf>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188189>
 
-On Sun, Jan 08, 2012 at 02:58:42PM -0800, Junio C Hamano wrote:
-> Clemens Buchacher <drizzd@aon.at> writes:
-> >
-> > In order to determine a suitable range automatically, it is a reasonable
-> > heuristic to rebase onto the most recent merge commit.
-> 
-> I understand the problem you are trying to solve, but I am not sure if
-> this is a good idea from the UI point of view for two reasons.
-> 
->  - "We want to limit the extent of the operation to commits since the last
->    merge" is by itself a reasonable thing to ask, and I do not think it
->    should be limited to "rebase". If we had an extended SHA-1 syntax to
->    express it, for example, you may want to say "I want to see what I did
->    since the last merge" and run "git log $last_merge_before_HEAD..".
->    Perhaps HEAD~{merge} or something?
+(+cc: Wincent who brought us the "add -p" shortcut --- thanks!; Thomas,
+ who expanded its scope to git checkout et al; and Jeff, who has done
+ some hacking on it)
+Hi Josh,
 
-Ok, sounds reasonable.
+Josh Triplett wrote:
 
-I am not sure what to do if the history has no merges, though.  If it's
-just rev-parse HEAD~{merge} I suppose I could return nothing, or an
-error. But what about the HEAD~{merge}..HEAD range? I think it would be
-useful if that were not an error but the entire history.
+> I recently found myself with a new file that I needed to check in part
+> of with several commits.  I wanted to use "git add -p newfile" and use
+> 'e' to add and commit several times (along with corresponding bits in
+> existing files).  However, "git add -p" does not work on a new file,
+> only an existing file.
 
->  - If your "rebase --fix" is to "fix" things, what is "rebase -i" about?
+Yep.  A workaround is to use "git add -N newfile" before running
+"git add -p newfile".
 
-I would have suggested this to be the default behavior for rebase -i
-without an <upstream> argument, but unfortunately we already handle this
-case using @{upstream}.
+I imagine "git add -p '*.c'" should also offer to add hunks from
+source files that git doesn't know about yet, too.
+
+Here's a quick demo (untested) that might _almost_ do the right thing.
+Unfortunately it leaves intent-to-add entries around even for files
+the operator rejects.  Anyway, maybe it can be a good starting point
+for playing around.
+
+Hope that helps,
+Jonathan
+
+ git-add--interactive.perl |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 8f0839d2..6e99ff1b 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -1619,6 +1619,10 @@ sub main_loop {
+ process_args();
+ refresh();
+ if ($patch_mode) {
++	if ($patch_mode eq 'stage') {
++		# NEEDSWORK: should use "git update-index --intent-to-add"
++		system(qw(git add --intent-to-add --), @ARGV);
++	}
+ 	patch_update_cmd();
+ }
+ else {
+-- 
+1.7.8.2
