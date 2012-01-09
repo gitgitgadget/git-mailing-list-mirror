@@ -1,72 +1,78 @@
-From: "norbert.nemec" <norbert.nemec@native-instruments.de>
-Subject: Mark and protect local commits?
-Date: Mon, 09 Jan 2012 09:29:04 +0100
-Message-ID: <jee8ii$6ft$1@dough.gmane.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] rebase --fix: interactive fixup mode
+Date: Mon, 9 Jan 2012 02:43:09 -0600
+Message-ID: <20120109084309.GD23422@burratino>
+References: <20120108213134.GA18671@ecki.lan>
+ <20120108220127.GA4050@burratino>
+ <CACsJy8CKK0EAy79Fahi64bUw2kfr=eunegbeA7oX_XaXEBFr2g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 09 09:30:32 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 09 09:38:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkAcg-0006b2-Ti
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Jan 2012 09:30:31 +0100
+	id 1RkAk9-0001fP-56
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Jan 2012 09:38:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754536Ab2AIIaZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jan 2012 03:30:25 -0500
-Received: from lo.gmane.org ([80.91.229.12]:57406 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752232Ab2AIIaY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jan 2012 03:30:24 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RkAcZ-0006X1-2a
-	for git@vger.kernel.org; Mon, 09 Jan 2012 09:30:23 +0100
-Received: from 93.92.134.38 ([93.92.134.38])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 09 Jan 2012 09:30:23 +0100
-Received: from norbert.nemec by 93.92.134.38 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 09 Jan 2012 09:30:23 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 93.92.134.38
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:8.0) Gecko/20111105 Thunderbird/8.0
+	id S1755150Ab2AIIiH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jan 2012 03:38:07 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:62608 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754462Ab2AIIiF (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Jan 2012 03:38:05 -0500
+Received: by obcwo16 with SMTP id wo16so3750574obc.19
+        for <git@vger.kernel.org>; Mon, 09 Jan 2012 00:38:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=IMVb/zLWlUm/oaYo+2B4vxFNzAQhvVZz97KiloiA/g4=;
+        b=TyUA4T2LXWrHr3ptf72t6mI1ztUDUNUgo/FFy47LuYA0CYHDSzB3mBLcraQAQAnUYP
+         8ok3w5tKuBnBFKbqFzZ59IVHqXEXTrhWnAJ0Sak+V+H9MOLfeOwOR3ygSusm4ucysiLL
+         Gkwe9usGiqgEIMLIukvOG/SKuCQRgg3hbkJJY=
+Received: by 10.182.182.65 with SMTP id ec1mr13603431obc.6.1326098284655;
+        Mon, 09 Jan 2012 00:38:04 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id f7sm2544418obx.11.2012.01.09.00.38.03
+        (version=SSLv3 cipher=OTHER);
+        Mon, 09 Jan 2012 00:38:04 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CACsJy8CKK0EAy79Fahi64bUw2kfr=eunegbeA7oX_XaXEBFr2g@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188161>
 
-Hi there,
+Nguyen Thai Ngoc Duy wrote:
 
-I have often wished that there were ways to
+> Is something like this over-generalized?
+>
+> http://kerneltrap.org/mailarchive/git/2010/12/24/47502
 
-a) protect certain commits from leaving the local repository
+Yes, I suspect that at the moment (i.e., in the absence of a large
+collection of examples to show their utility), both your ^{~custom}
+and my ^{first:rev-list args} are overengineered, and that they do
+something that is more clearly expressed using the shell's command
+substitution feature:
 
-b) mark commits that have already left the local repository
+	git rebase -i $(git rev-list --merges HEAD | head -1)
 
+So why did I suggest it?
 
-To be more specific:
+I guess I was reacting to the implementation of the
+rebase-recent-commits command.  I understand that it was a sketch, but
+it felt a little ad hoc.  If it could be expressed as a clean
+two-liner, I would be more comfortable since the burden of maintaining
+it would be less.
 
-a) Sometimes, I try out certain experimental features and want to make 
-sure they don't accidentally end up out in the wild. If there were a 
-flag to explicitly mark them "private", any non-local operation (push, 
-pull, etc) on these commits could create an error message.
+Thanks for clarifying.
 
-b) For history-rewriting operations, it is important to know which 
-commits are out in the wild and which are not. In a "push"-setup working 
-copy, git should be able to keep track of this. Any newly created commit 
-would be marked as "unpublished" and the mark would be removed when the 
-commit is pushed. Any history-rewriting would be prevented on published 
-commits.
-
-
-Has anyone else thought along these lines?
-
-Greetings,
-Norbert
+Sincerely,
+Jonathan
