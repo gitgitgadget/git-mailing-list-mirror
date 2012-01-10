@@ -1,82 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: [BUG] gitattribute macro expansion oddity
-Date: Tue, 10 Jan 2012 02:03:01 -0500
-Message-ID: <20120110070300.GA17086@sigill.intra.peff.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [linux.conf.au] VCS Interoperability
+Date: Tue, 10 Jan 2012 14:18:17 +0530
+Message-ID: <CALkWK0kMmDMZ4wiMSmOfwBLzd+xBEA+WKsviu9FVcvj9eZEahg@mail.gmail.com>
+References: <CAFfmPPMH2643JMMZdVbOQJL7DB-DiRYQS8x0TqEaSbGmhMdBNw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Henrik =?utf-8?Q?Grubbstr=C3=B6m?= <grubba@grubba.org>,
-	git-dev@github.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 10 08:03:21 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>
+To: David Michael Barr <davidbarr@google.com>
+X-From: git-owner@vger.kernel.org Tue Jan 10 09:48:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkVjs-0000k4-Rt
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 08:03:21 +0100
+	id 1RkXNt-0004gZ-HW
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 09:48:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756115Ab2AJHDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jan 2012 02:03:07 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33450
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754465Ab2AJHDE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2012 02:03:04 -0500
-Received: (qmail 7437 invoked by uid 107); 10 Jan 2012 07:09:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 10 Jan 2012 02:09:57 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jan 2012 02:03:01 -0500
-Content-Disposition: inline
+	id S1754222Ab2AJIsk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jan 2012 03:48:40 -0500
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:44112 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754028Ab2AJIsj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Jan 2012 03:48:39 -0500
+Received: by wibhm6 with SMTP id hm6so3198894wib.19
+        for <git@vger.kernel.org>; Tue, 10 Jan 2012 00:48:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=nj1OYPATFRSUan+L0sJyHSk9K+wnzl1c3WO9mBRdnjc=;
+        b=xuznclxfxuty/3ljIrAJDULCV8AzeCCVEDB/LAgJWU784eC//q6ao30Ll4aJTN9I0F
+         /C+L1HBvL/9lsCB9yM8+h3bqTzzT+Y/Wpw6u5CCDOWrKyVmvxxH9EwVhdlMKCJE9clCF
+         sP37YTPmV9yKe90kiCl0exRGVgGVPUjsTdnEw=
+Received: by 10.180.103.2 with SMTP id fs2mr10294300wib.21.1326185318198; Tue,
+ 10 Jan 2012 00:48:38 -0800 (PST)
+Received: by 10.216.175.3 with HTTP; Tue, 10 Jan 2012 00:48:17 -0800 (PST)
+In-Reply-To: <CAFfmPPMH2643JMMZdVbOQJL7DB-DiRYQS8x0TqEaSbGmhMdBNw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188228>
 
-I'm seeing some very odd behavior with git's attribute expansion for
-diffs. You can see it with this repository:
+Hi David,
 
-  git clone git://github.com/libgit2/libgit2sharp.git
+David Michael Barr wrote:
+> Next week, I'll be presenting =C2=A0a summary of the past 2 years wor=
+k
+> on improving svn interoperability for git.
+> I'm requesting feedback from anyone who cares with regard to
+> what they'd like to hear about.
 
-Try a diff of a non-binary file:
+Nice.  As a lay person attending the conference, here are a few things
+I think I'd like to hear:
+- Why this project is so challenging compared to say, a git-hg bridge
+or a git-darcs bridge.  What makes Subversion especially hard to deal
+with?
+- What is the biggest motivation for developing the svnrdump/ svnrload
+combination?  Are there any other usecases for the tools?
+- How has this project contributed to the development of the
+fast-import infrastructure?  Can these changes be used to improve
+other/ future remote helpers?
+- You've spoken about exporting Subversion history to Git so far, but
+what about the reverse?  Which parts of the picture are still missing?
 
-  $ git show 2a0f4bf7 LibGit2Sharp/Configuration.cs
-  ...
-  diff --git a/LibGit2Sharp/Configuration.cs b/LibGit2Sharp/Configuration.cs
-  index 83cc9d6..9ab0b60 100644
-  --- a/LibGit2Sharp/Configuration.cs
-  +++ b/LibGit2Sharp/Configuration.cs
+Thanks.
 
-Looks OK. Now try a diff that also has a binary file (that is marked
-such via gitattributes):
-
-  $ git show 2a0f4bf7 Lib/NativeBinaries/x86/git2.dll \
-                      LibGit2Sharp/Configuration.cs
-  ...
-  diff --git a/Lib/NativeBinaries/x86/git2.dll b/Lib/NativeBinaries/x86/git2.dll
-  index dab0d04..8de18ab 100644
-  Binary files a/Lib/NativeBinaries/x86/git2.dll and b/Lib/NativeBinaries/x86/git2.dll differ
-  diff --git a/LibGit2Sharp/Configuration.cs b/LibGit2Sharp/Configuration.cs
-  index 83cc9d6..9ab0b60 100644
-  Binary files a/LibGit2Sharp/Configuration.cs and b/LibGit2Sharp/Configuration.cs differ
-
-Now the Configuration.cs blobs appear binary!
-
-It has nothing to do with pathspecs; if you do a non-limited diff of
-2a0f4bf7, you'll see many of the files appear as binary. Running it
-through the debugger, it looks like we are getting wrong diff attribute
-values for later paths, as if the earlier lookups are somehow polluting
-the attribute stack.
-
-The gitattributes in this repository look reasonably sane, but even if
-they were not, nothing should make a file have different attributes
-based on other files that were diffed.
-
-Bisection points to ec775c4 (attr: Expand macros immediately when
-encountered., 2010-04-06), but it's too late for me to dig further
-tonight. Cc'ing Junio as the author of the attr code and Henrik as the
-author of ec775c4.
-
--Peff
+-- Ram
