@@ -1,58 +1,82 @@
-From: Jan Engelhardt <jengelh@medozas.de>
-Subject: Re: [PATCH] gitignore: warn about pointless syntax
-Date: Tue, 10 Jan 2012 08:02:53 +0100 (CET)
-Message-ID: <alpine.LNX.2.01.1201100801330.28967@frira.zrqbmnf.qr>
-References: <1326123647-18352-1-git-send-email-jengelh@medozas.de> <1326123647-18352-2-git-send-email-jengelh@medozas.de> <20120109162802.GA2374@sigill.intra.peff.net> <7vhb04ek6e.fsf@alter.siamese.dyndns.org> <20120109223358.GA9902@sigill.intra.peff.net>
- <alpine.LNX.2.01.1201100639340.11534@frira.zrqbmnf.qr> <7vd3asayfx.fsf@alter.siamese.dyndns.org> <alpine.LNX.2.01.1201100744340.17336@frira.zrqbmnf.qr>
+From: Jeff King <peff@peff.net>
+Subject: [BUG] gitattribute macro expansion oddity
+Date: Tue, 10 Jan 2012 02:03:01 -0500
+Message-ID: <20120110070300.GA17086@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	trast@student.ethz.ch
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 10 08:03:20 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Henrik =?utf-8?Q?Grubbstr=C3=B6m?= <grubba@grubba.org>,
+	git-dev@github.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 10 08:03:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkVjs-0000k4-AC
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 08:03:20 +0100
+	id 1RkVjs-0000k4-Rt
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 08:03:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756088Ab2AJHCz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jan 2012 02:02:55 -0500
-Received: from seven.medozas.de ([188.40.89.202]:47081 "EHLO seven.medozas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754542Ab2AJHCy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2012 02:02:54 -0500
-Received: by seven.medozas.de (Postfix, from userid 25121)
-	id 56F5921A0A0D; Tue, 10 Jan 2012 08:02:53 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by seven.medozas.de (Postfix) with ESMTP id 2CB6C21A0A0C;
-	Tue, 10 Jan 2012 08:02:53 +0100 (CET)
-In-Reply-To: <alpine.LNX.2.01.1201100744340.17336@frira.zrqbmnf.qr>
-User-Agent: Alpine 2.01 (LNX 1266 2009-07-14)
+	id S1756115Ab2AJHDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jan 2012 02:03:07 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33450
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754465Ab2AJHDE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2012 02:03:04 -0500
+Received: (qmail 7437 invoked by uid 107); 10 Jan 2012 07:09:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 10 Jan 2012 02:09:57 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jan 2012 02:03:01 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188226>
 
-On Tuesday 2012-01-10 08:01, Jan Engelhardt wrote:
->>
->>You can either adjust the people, i.e. teach that their "false" assumption
->>is wrong and the feature they expect is available but not in a way that
->>they expect. Or you can adjust the tool to match their expectation.
->>[...]in real life, people are harder to train than tools[...]
->
->Though, having one more way to do things leads to a certain mess at a 
->later point, if such mess is not already present. I am thinking here of 
->the precedent iptables option parser set by removing support for 
->exclamation marks in odd positions, as it was redundant ("more than 1 
->way"), was only supported by ~45% of all options and had to be 
->explicitly invoked at every callsite - so in fact was harder on users 
->than git would be for **. There were a few mails by people who could not 
->seem to read error messages, but overall, within 6-9 months, everything 
->was quiet again. So, that's the empiric result of what teaching-the-tool 
->would do.
+I'm seeing some very odd behavior with git's attribute expansion for
+diffs. You can see it with this repository:
 
-~ teaching-the-user would entail - it's factually problemfree.
+  git clone git://github.com/libgit2/libgit2sharp.git
+
+Try a diff of a non-binary file:
+
+  $ git show 2a0f4bf7 LibGit2Sharp/Configuration.cs
+  ...
+  diff --git a/LibGit2Sharp/Configuration.cs b/LibGit2Sharp/Configuration.cs
+  index 83cc9d6..9ab0b60 100644
+  --- a/LibGit2Sharp/Configuration.cs
+  +++ b/LibGit2Sharp/Configuration.cs
+
+Looks OK. Now try a diff that also has a binary file (that is marked
+such via gitattributes):
+
+  $ git show 2a0f4bf7 Lib/NativeBinaries/x86/git2.dll \
+                      LibGit2Sharp/Configuration.cs
+  ...
+  diff --git a/Lib/NativeBinaries/x86/git2.dll b/Lib/NativeBinaries/x86/git2.dll
+  index dab0d04..8de18ab 100644
+  Binary files a/Lib/NativeBinaries/x86/git2.dll and b/Lib/NativeBinaries/x86/git2.dll differ
+  diff --git a/LibGit2Sharp/Configuration.cs b/LibGit2Sharp/Configuration.cs
+  index 83cc9d6..9ab0b60 100644
+  Binary files a/LibGit2Sharp/Configuration.cs and b/LibGit2Sharp/Configuration.cs differ
+
+Now the Configuration.cs blobs appear binary!
+
+It has nothing to do with pathspecs; if you do a non-limited diff of
+2a0f4bf7, you'll see many of the files appear as binary. Running it
+through the debugger, it looks like we are getting wrong diff attribute
+values for later paths, as if the earlier lookups are somehow polluting
+the attribute stack.
+
+The gitattributes in this repository look reasonably sane, but even if
+they were not, nothing should make a file have different attributes
+based on other files that were diffed.
+
+Bisection points to ec775c4 (attr: Expand macros immediately when
+encountered., 2010-04-06), but it's too late for me to dig further
+tonight. Cc'ing Junio as the author of the attr code and Henrik as the
+author of ec775c4.
+
+-Peff
