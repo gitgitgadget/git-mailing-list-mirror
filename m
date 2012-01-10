@@ -1,94 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: leaky cherry-pick
-Date: Tue, 10 Jan 2012 14:50:17 -0500
-Message-ID: <20120110195017.GA19961@sigill.intra.peff.net>
-References: <20120109223737.GA1589@padd.com>
- <CALkWK0nwE0c6qVvbauPrjmb3NX4NDeGSrvrC2ry2bjMeM4Hr0A@mail.gmail.com>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: [PATCH] rebase --fix: interactive fixup mode
+Date: Tue, 10 Jan 2012 13:58:04 -0600
+Message-ID: <4F0C984C.8040907@gmail.com>
+References: <20120108213134.GA18671@ecki.lan> <4F0AA7E2.9010200@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 10 20:50:26 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Jan 10 20:58:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkhiD-0004yy-MD
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 20:50:26 +0100
+	id 1Rkhq6-0000sU-7E
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 20:58:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932479Ab2AJTuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jan 2012 14:50:20 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33924
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932308Ab2AJTuT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2012 14:50:19 -0500
-Received: (qmail 13593 invoked by uid 107); 10 Jan 2012 19:57:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 10 Jan 2012 14:57:13 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jan 2012 14:50:17 -0500
-Content-Disposition: inline
-In-Reply-To: <CALkWK0nwE0c6qVvbauPrjmb3NX4NDeGSrvrC2ry2bjMeM4Hr0A@mail.gmail.com>
+	id S932556Ab2AJT6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jan 2012 14:58:10 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:42201 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932527Ab2AJT6I (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2012 14:58:08 -0500
+Received: by ghbg21 with SMTP id g21so2350774ghb.19
+        for <git@vger.kernel.org>; Tue, 10 Jan 2012 11:58:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=DQqmfin2WhMgW1laRrNxE+PrRDgaLZp4NpKszrsuTzY=;
+        b=i6P3ONYIqpYtphSPfyz3ClCsv+WSUYbaTVQOaRG9p/Tlka1FJohDaT0kItxdZn7SIC
+         Q5EivbJQiAo75XQJM8K17vYgOmZmuWoNS2qyeye5dGBHJvE7D0W+ZkFxXIkxmbNMcFAf
+         0JLAkCHhwDwSeLNzvG6XHp2mF7OnAVsT3iC1c=
+Received: by 10.236.156.7 with SMTP id l7mr29533856yhk.60.1326225488405;
+        Tue, 10 Jan 2012 11:58:08 -0800 (PST)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id h11sm4991659and.7.2012.01.10.11.58.06
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 10 Jan 2012 11:58:07 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.25) Gecko/20111213 Thunderbird/3.1.17
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <4F0AA7E2.9010200@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188289>
 
-On Tue, Jan 10, 2012 at 10:58:45AM +0530, Ramkumar Ramachandra wrote:
+On 1/9/2012 2:40 AM, Michael Haggerty wrote:
+>
+> Two comments:
+>
+> * The name "--fix" might be confusing because of its similarity to the
+> "fixup" command that can be specified in the interactive instructions file.
+>
+> * I agree with you that "interactive rebase is frequently used not to
+> rebase history, but to manipulate recent commits".  In fact, I use
+> interactive rebase *only* for manipulating recent commits and
+> non-interactive rebase *only* for changing commits' ancestry.  I think
+> it is a good idea to make these two uses more distinct.  For example, it
+> makes me nervous that I might mis-type the<upstream>  parameter when I
+> am trying to touch up commits and end up inadvertently rebasing the
+> commits onto a new parent.
+>
+He could all it --touchup like you did above.
 
-> Interesting- I wonder where .gitattributes parsing code fits into all
-> this.  The purpose of bootstrap _attr_stack() is to populate
-> attr_stack for its callers.  Lots of memory allocation happening in
-> handle_attr_line() -- that information is returned to
-> bootstrap_attr_stack().  We have to keep backtracking until that
-> information is provably useless and free it.  Hm, convert_attrs() (in
-> convert.c) is a common caller in both cases, but the populated
-> attr_stack is local to attr.c; I wonder if this is the problem.  If my
-> hunch is right, it should be a trivial fix (caution: untested):
-> 
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> 
-> diff --git a/attr.c b/attr.c
-> index 76b079f..12e3824 100644
-> --- a/attr.c
-> +++ b/attr.c
-> @@ -745,6 +745,7 @@ int git_check_attr(const char *path, int num,
-> struct git_attr_check *check)
->  		check[i].value = value;
->  	}
-> 
-> +	drop_attr_stack();
->  	return 0;
->  }
-
-I don't think this is right. The attr_stack is intentionally kept in
-place after a lookup as a cache, because callers are very likely to
-lookup nearby filenames. The first thing we do is pop unrelated parts of
-the stack, keep the early bits, and then push any new needed
-directories.
-
-So if you do a lookup for "foo/bar/baz/file1", the stack afterwards would
-be:
-
-  $GIT_DIR/info/attributes
-  foo/bar/baz/.gitattributes
-  foo/bar/.gitattributes
-  foo/.gitattributes
-  .gitattributes
-  [builtins]
-
-If you then do a lookup for "foo/bar/baz/file2", it can use the exact
-same stack without looking for or reparsing the attribute files. If you
-then do a lookup for "foo/bar/bleep/file", it pops only the entry for
-"foo/bar/baz/.gitattributes", and pushes only the entry for
-"foo/bar/bleep/.gitattributes".
-
-The calling code _could_ say "btw, I am done with attributes now, so
-free the memory". But we don't bother, since it's a small amount of
-memory, and other parts of the code may want it later.
-
--Peff
+v/r,
+neal
