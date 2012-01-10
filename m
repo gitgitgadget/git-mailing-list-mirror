@@ -1,102 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] xdiff: print post-image for common records instead of
- pre-image
-Date: Tue, 10 Jan 2012 14:58:42 -0800
-Message-ID: <7vy5tf88rh.fsf@alter.siamese.dyndns.org>
-References: <7vlipx4q3r.fsf@alter.siamese.dyndns.org>
- <4F072B9C.1030005@lsrfire.ath.cx>
+From: Steven Line <sline00@gmail.com>
+Subject: (unknown)
+Date: Tue, 10 Jan 2012 16:56:28 -0700
+Message-ID: <CAJ1a7SqErXtmnS1=_O_BjbrKVMNWeKyenGruqQjcDZZy_jb9sg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Joey Hess <joey@kitenet.net>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Wed Jan 11 00:25:45 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 11 00:56:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rkl4a-000817-TD
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 00:25:45 +0100
+	id 1RklYn-0004d4-Nx
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 00:56:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933049Ab2AJXZi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jan 2012 18:25:38 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59093 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933679Ab2AJW6o convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jan 2012 17:58:44 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 258E1520C;
-	Tue, 10 Jan 2012 17:58:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=6Qnu4wVzHd+V
-	zG7Iz1UuiTcQQNE=; b=w0Jw4hibB06c/+ON8EOwmDFn7rx+BRIyeIx9Jh34W6gS
-	2SGBg+HPPGhp5sO4oSPfrW2JZe23ZfTMUd1R/GWrW8Cx9KqBQnyA7IRsRat7sV0e
-	DvXptpoTpt9hy9cVt8Qo95EXGTR63BilAptQ5O40iQ5ZeiESkTTAZ3Bh7eAC9H0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=qWW3UN
-	6YEyXIHaFH6MwTg4K5hBJdrhIa0bukzJ00x+OZGbAJ3fi0uvalX6zHhFScZOrrid
-	FlBIvbgLbt4EMC/gCoF27Vhy3G0hbYiuI1VeOfNUwBao0yM4XzTEgg5uTZXHcJnW
-	EBM8w8+BI25srfqWRp5gni0/mMjqseNa1eTyE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C0AE520B;
-	Tue, 10 Jan 2012 17:58:44 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 99A09520A; Tue, 10 Jan 2012
- 17:58:43 -0500 (EST)
-In-Reply-To: <4F072B9C.1030005@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Fri, 06 Jan 2012 18:13:00 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A517CEFE-3BDE-11E1-810D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757124Ab2AJX4k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jan 2012 18:56:40 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:57790 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752881Ab2AJX43 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2012 18:56:29 -0500
+Received: by eekd4 with SMTP id d4so32386eek.19
+        for <git@vger.kernel.org>; Tue, 10 Jan 2012 15:56:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=SmnZbzWNXulz1chWV77yCtAPDdJf6qSZc86lCR36260=;
+        b=iRXuBNxDPWaGk2aL1Mta3O+hd+RVjVXHIP5TFoPGe2Jfrrc3ypL28HMlHUllv/9xwg
+         dSZnsFnVQ6Y/kQNA//ssQVJc4hqA6i6MqCrEAWC8HGDNg+56nCgFW1FXFlYvJ0SUwUYs
+         CHuXwJ6bpv/Q4rWjO1Xq/Wz9YaulBjFYSe8UA=
+Received: by 10.152.113.101 with SMTP id ix5mr9750966lab.16.1326239788395;
+ Tue, 10 Jan 2012 15:56:28 -0800 (PST)
+Received: by 10.152.128.132 with HTTP; Tue, 10 Jan 2012 15:56:28 -0800 (PST)
+Subject: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188306>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Hi All,
 
-> Normally it doesn't matter if we show the pre-image or th post-image
-> for the common parts of a diff because they are the same.  If
-> white-space changes are ignored they can differ, though.  The
-> new text after applying the diff is more interesting in that case,
-> so show that instead of the old contents.
->
-> Note: GNU diff shows the pre-image.
->
-> Suggested-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+First off I am a new user to git, I'm not a git developer or power
+user.  Am I in the right mailing list?  If not could somebody point me
+where I could get some help from experienced git people?
 
-I was looking at this one again, and I think one possible downside of
-showing post-image for the context lines is that the resulting patch wo=
-uld
-not apply to the pre-image tree anymore. Probably GNU folks thought tha=
-t
-it is a big enough issue. Or perhaps they didn't simply care either way=
- ;-)
+Here's the problem:
+I need some help getting my subversion repository cloned over to git.
+Our svn repository has about 12,000 commits, when I run
+git svn clone -s  -A authors.txt
+svn+ssh://csvn@source.res.ourdomain.com/home/svn/sem sem
+It runs for about 2h 15m then completes with no error messages. I have
+also cloned starting at revision 6300, about the middle of the svn
+repository, and I get the same results as below.
 
-In any case, showing pre-image lines as the context at least makes the
-patch easier to apply, but the result would be different from the inten=
-ded
-post-image and would appear as if indentation fixes in the patch are
-reverted, so you would need manual fix-up after applying such a patch
-generated with (gnu) "diff -w".
+After cloning, I cd into the sem directory and run
 
-I tried to generate an output from "show -w", with this change, on a
-commit that is largely indentation fix. The resulting patch seems to ap=
-ply
-cleanly with "apply --ignore-space-change" to the parent of the commit
-"show -w" was taken from; of course the result needs some manual fix-up=
-s
-for the indentation changes, but that is not a news anyway.  So I suspe=
-ct
-it won't be a huge downside and I think the benefit of being able to se=
-e
-the post-image in the context when the user is more interested in how t=
-he
-file looks like after the change outweighs it.
+$ git log
+fatal: bad default revision 'HEAD'
 
-Thanks again.
+$ git log --all  # this seems to work
+
+$ git branch -a # shows only about half the branches that should have
+been cloned
+
+$ ls -al sem
+total 6
+drwxr-xr-x   3 git      other        512 Jan 10 20:58 ./
+drwxr-xr-x   6 git      root         512 Jan 10 20:58 ../
+drwxr-xr-x   9 git      other        512 Jan 10 23:13 .git/
+
+I think this means the clone terminated prematurely but other than
+that I'm stuck. There were no error messages from the clone.  Could
+somebody give me some suggestions on what to try?  I haven't found the
+answer via google yet.
+
+Thank you for any help.
+
+--
+Steven Line
+303-910-1212
