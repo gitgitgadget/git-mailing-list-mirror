@@ -1,85 +1,122 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] attr: don't confuse prefixes with leading directories
-Date: Tue, 10 Jan 2012 17:31:04 -0500
-Message-ID: <20120110223104.GA28592@sigill.intra.peff.net>
-References: <20120110070300.GA17086@sigill.intra.peff.net>
- <4F0BFE6E.6080904@alum.mit.edu>
- <20120110171100.GA18962@sigill.intra.peff.net>
- <20120110180820.GA15273@sigill.intra.peff.net>
- <20120110182140.GB15273@sigill.intra.peff.net>
- <7vlipf9xbe.fsf@alter.siamese.dyndns.org>
- <20120110192810.GA16018@sigill.intra.peff.net>
- <7v7h0z9ufu.fsf@alter.siamese.dyndns.org>
+From: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+Subject: Re: [BUG] git archive broken in 1.7.8.1
+Date: Tue, 10 Jan 2012 23:50:11 +0100
+Message-ID: <20120110225011.GJ2714@centaur.lab.cmartin.tk>
+References: <5142795.2dTmMhVRTP@xps>
+ <20120110213344.GI2714@centaur.lab.cmartin.tk>
+ <1431498.0yPWNQLupF@xps>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 10 23:31:15 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="9/eUdp+dLtKXvemk"
+Cc: git@vger.kernel.org, peff@peff.net
+To: Albert Astals Cid <aacid@kde.org>
+X-From: git-owner@vger.kernel.org Tue Jan 10 23:50:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkkDq-0007yg-Ay
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 23:31:14 +0100
+	id 1RkkWC-0000HL-6D
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 23:50:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932361Ab2AJWbJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jan 2012 17:31:09 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33986
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754943Ab2AJWbH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2012 17:31:07 -0500
-Received: (qmail 15450 invoked by uid 107); 10 Jan 2012 22:38:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 10 Jan 2012 17:38:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jan 2012 17:31:04 -0500
+	id S1756596Ab2AJWuG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jan 2012 17:50:06 -0500
+Received: from kimmy.cmartin.tk ([91.121.65.165]:58537 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752530Ab2AJWuF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2012 17:50:05 -0500
+Received: from centaur.lab.cmartin.tk (brln-4db9d122.pool.mediaWays.net [77.185.209.34])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id 4ED49461C3;
+	Tue, 10 Jan 2012 23:49:51 +0100 (CET)
+Received: (nullmailer pid 13025 invoked by uid 1000);
+	Tue, 10 Jan 2012 22:50:11 -0000
+Mail-Followup-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	Albert Astals Cid <aacid@kde.org>, git@vger.kernel.org,
+	peff@peff.net
 Content-Disposition: inline
-In-Reply-To: <7v7h0z9ufu.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <1431498.0yPWNQLupF@xps>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188300>
 
-On Tue, Jan 10, 2012 at 12:25:09PM -0800, Junio C Hamano wrote:
 
-> Sorry for sending a half-baked response.  The initial draft of my response
-> had just "that makes sense" and nothing else in the first paragraph.
-> 
-> If the original meant to be defensive, it should have had your "extra
-> defensive" die(), but it didn't.
-> [...]
-> diff --git a/attr.c b/attr.c
-> index ad7eb9c..4d3b61a 100644
-> --- a/attr.c
-> +++ b/attr.c
-> @@ -566,7 +567,9 @@ static void prepare_attr_stack(const char *path, int dirlen)
->  
->  	/*
->  	 * Pop the ones from directories that are not the prefix of
-> -	 * the path we are checking.
-> +	 * the path we are checking. Break out of the loop when we see
-> +	 * the root one (whose origin is an empty string "") or the builtin
-> +	 * one (whose origin is NULL) without popping it.
->  	 */
->  	while (attr_stack->origin) {
->  		int namelen = strlen(attr_stack->origin);
-> @@ -586,6 +589,13 @@ static void prepare_attr_stack(const char *path, int dirlen)
->  	 * Read from parent directories and push them down
->  	 */
->  	if (!is_bare_repository() || direction == GIT_ATTR_INDEX) {
-> +		/*
-> +		 * bootstrap_attr_stack() should have added, and the
-> +		 * above loop should have stopped before popping, the
-> +		 * root element whose attr_stack->origin is set to an
-> +		 * empty string.
-> +		 */ 
-> +		assert(attr_stack->origin);
->  		while (1) {
->  			char *cp;
+--9/eUdp+dLtKXvemk
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yeah, this version looks good to me (though I thought we usually spelled
-assert as die("BUG: ...")).
+On Tue, Jan 10, 2012 at 11:05:45PM +0100, Albert Astals Cid wrote:
+> El Dimarts, 10 de gener de 2012, a les 22:33:44, Carlos Mart=C3=ADn Nieto=
+ va=20
+> escriure:
+> > On Tue, Jan 10, 2012 at 10:18:41PM +0100, Albert Astals Cid wrote:
+> > > CC me on answers since i'm not subscribed to the list
+> > >=20
+> > > Hi, one of our [KDE] anongit servers was updated to 1.7.8.1 and not t=
+he
+> > > syntax
+> > >=20
+> > > git archive --remote=3Dgit://anongit.kde.org/repo.git HEAD:path
+> >=20
+> > This syntax is no longer allowed due to some security tightening. Use
+> > the alternate syntax
+> >=20
+> >     git archive --remote=3Dgit://anongit.kde.org/repo.git HEAD -- path
+>=20
+> Unfortunately this producess a tarball with a different layout, e.g.
+>=20
+> git archive --remote=3Dgit://anongit.kde.org/kgraphviewer.git HEAD:doc/en=
+_US
+>   gives me a tarball with the doc/en_US files in the root
+>=20
+> git archive --remote=3Dgit://anongit.kde.org/kgraphviewer.git HEAD -- doc=
+/en_US
+>   gives me a tarball with the doc/en_US folders and then the files
+>=20
+> Is there a way to keep the old behaviour or do we need to update our scri=
+pts?
 
--Peff
+Not as far as I know. However, the commit that hardened the input
+(ee27ca4a781844: archive: don't let remote clients get unreachable
+commits, 2011-11-17) does state that HEAD:doc/en_US should be valid,
+so it looks like it's actually a regression. As it's bedtime in my
+timezone, I'm blaming Peff and I'll look into this if it hasn't been
+fixed by the time I get to the office tomorrow.
+
+>=20
+> Thanks for the fast answer!
+>=20
+> Albert
+>=20
+> >=20
+> > > does not seem to return a valid tar archive anymore when it did work
+> > > previously. In fact the man page of my version has that syntax in one=
+ of
+> > > the examples.
+> >=20
+> > That sounds like a documentation bug.
+
+Notice that the syntax is for the local case, not for --remote.
+
+   cmn
+
+--9/eUdp+dLtKXvemk
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAEBAgAGBQJPDMCjAAoJEHKRP1jG7ZzTXlYIAIxPglMwXfnc+TXH5QmbSQQt
+0DIxyT4ccWmuzqc/PY2MAD3666u2JAubLNSuw3KfllskwgnxyvTMrhvyGPcYgKv5
+ODMCbOSsD7DsVsKq1AsMyHl8rrYpmtNF3fNrugy3kFJK/+1ZCoeRVgD1ErGs1IY2
+vQQUc3RZ8ccpeX39O3Z3VHhYnqZgUFSkUOg8AuXyCThECHuloA4DGBj/mv7BiIpT
+1tgQGt12kwaazHJPmDhbsSFs+ZDplBqhNCRzmyjHP/zFlopZQdwNQbULyVDeLrqR
+R86xIIduH7UyBQEKmTiwzImMrKtNzyRZJM2yyDCNk4Y2guJIDpy3/0Ss3mAXZTw=
+=r3WR
+-----END PGP SIGNATURE-----
+
+--9/eUdp+dLtKXvemk--
