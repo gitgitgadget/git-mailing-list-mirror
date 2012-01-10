@@ -1,80 +1,93 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: git-send-email: bug with sendemail.multiedit
-Date: Tue, 10 Jan 2012 10:56:58 +0100
-Message-ID: <87sjjnlw2d.fsf@thomas.inf.ethz.ch>
-References: <1AC16B4B-8376-4A50-A900-BB8E704FAB82@gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v3 00/10] nd/clone-detached
+Date: Tue, 10 Jan 2012 16:56:57 +0700
+Message-ID: <1326189427-20800-1-git-send-email-pclouds@gmail.com>
+References: <1326023188-15559-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Pierre Habouzit <madcoder@debian.org>, <pierre.habouzit@m4x.org>,
-	<git@vger.kernel.org>
-To: Jean-Francois Dagenais <jeff.dagenais@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 10 10:57:10 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 10 10:57:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkYS5-0004os-OR
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 10:57:10 +0100
+	id 1RkYSJ-0004vf-Rj
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 10:57:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754469Ab2AJJ5D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jan 2012 04:57:03 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:17132 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752470Ab2AJJ5B (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2012 04:57:01 -0500
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 10 Jan
- 2012 10:56:59 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 10 Jan
- 2012 10:56:58 +0100
-In-Reply-To: <1AC16B4B-8376-4A50-A900-BB8E704FAB82@gmail.com> (Jean-Francois
-	Dagenais's message of "Mon, 9 Jan 2012 14:09:30 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1755630Ab2AJJ5T convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jan 2012 04:57:19 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:48718 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755038Ab2AJJ5S (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2012 04:57:18 -0500
+Received: by iabz25 with SMTP id z25so664914iab.19
+        for <git@vger.kernel.org>; Tue, 10 Jan 2012 01:57:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=riDV/rl6FfCZyt5Q7vd/UaJdhC74nJL5nncgvLZ+SjY=;
+        b=FxiDAhLrRDboxsqWIPiGAfIfN2IPsPkv7aqb30dO7aqG3+oV2fUx62AhUt0qZT2Pa2
+         qRw5QhACXksQJ0VYZcaRRCsBIZE9xzIeIP8u1xuNt+BiQ74MJuTLykK8X2UQbKuJ5H6O
+         rmHsHelkNhlgzFCagFyfE27B+KmlzynKewHy4=
+Received: by 10.50.76.162 with SMTP id l2mr1439171igw.1.1326189438110;
+        Tue, 10 Jan 2012 01:57:18 -0800 (PST)
+Received: from pclouds@gmail.com ([113.161.77.29])
+        by mx.google.com with ESMTPS id l28sm261446341ibc.3.2012.01.10.01.57.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 10 Jan 2012 01:57:17 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 10 Jan 2012 16:57:08 +0700
+X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
+In-Reply-To: <1326023188-15559-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188232>
 
-Jean-Francois Dagenais <jeff.dagenais@gmail.com> writes:
+Compare to v2, this round does more refactoring, which makes
+cmd_clone() looks easier to follow in the end, in my opinion.
 
-> Bonjour Pierre! ... and all git developers!
->
-> I think there is a bug with git-send-email.perl's evaluation of the sendemail.multiedit config variable.
->
-> I was only able to make the "do_edit()" function detect it as false by setting the variable to "0" instead
-> of "false", like so:
->
-> git config --global sendemail.multiedit 0
->
-> otherwise do_edit evaluates it as true and invokes the editor with all files as argument.
+There's also 7/10 that refuses --branch=3D<nonexistent>. I don't know i=
+f
+I react too strong. The current behavior is fall back to remote's HEAD
+(and detached HEAD if remote's HEAD is detached). Maybe we should only
+refuse it when it leads to detached HEAD and let it fall back to
+remote's HEAD otherwise.
 
-The patch below looks like the obvious fix.  Perhaps you can test it?
+The last two patches remain debatable. If we disallow detached HEAD
+from new clones, perhaps we could put <tag>^{commit} to
+refs/heads/master then drop the last patch. t3501.6, t5527.2, t5707.5,
+t7406.29 likes to have detached HEAD, but those can be fixed.
 
-diff --git i/git-send-email.perl w/git-send-email.perl
-index d491db9..7ac0a7d 100755
---- i/git-send-email.perl
-+++ w/git-send-email.perl
-@@ -210,6 +210,7 @@ sub do_edit {
-     "signedoffbycc" => [\$signed_off_by_cc, undef],
-     "signedoffcc" => [\$signed_off_by_cc, undef],      # Deprecated
-     "validate" => [\$validate, 1],
-+    "multiedit" => [\$multiedit, undef],
- );
- 
- my %config_settings = (
-@@ -227,7 +228,6 @@ sub do_edit {
-     "bcc" => \@bcclist,
-     "suppresscc" => \@suppress_cc,
-     "envelopesender" => \$envelope_sender,
--    "multiedit" => \$multiedit,
-     "confirm"   => \$confirm,
-     "from" => \$sender,
-     "assume8bitencoding" => \$auto_8bit_encoding,
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (10):
+  t5601: add missing && cascade
+  clone: write detached HEAD in bare repositories
+  clone: factor out checkout code
+  clone: factor out HEAD update code
+  clone: factor out remote ref writing
+  clone: delay cloning until after remote HEAD checking
+  clone: --branch=3D<branch> always means refs/heads/<branch>
+  clone: refuse to clone if --branch points to bogus ref
+  clone: allow --branch to take a tag
+  clone: print advice on checking out detached HEAD
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+ Documentation/git-clone.txt |    5 +-
+ advice.c                    |   14 +++
+ advice.h                    |    1 +
+ builtin/checkout.c          |   16 +---
+ builtin/clone.c             |  252 +++++++++++++++++++++++++----------=
+--------
+ t/t5601-clone.sh            |   40 ++++++-
+ t/t5706-clone-branch.sh     |    8 +-
+ transport.c                 |    5 +-
+ 8 files changed, 207 insertions(+), 134 deletions(-)
+
+--=20
+1.7.3.1.256.g2539c.dirty
