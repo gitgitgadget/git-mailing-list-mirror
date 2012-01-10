@@ -1,75 +1,57 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: [PATCH] Use perl instead of sed for t8006-blame-textconv test
-Date: Mon,  9 Jan 2012 21:47:33 -0500
-Message-ID: <1326163653-26565-2-git-send-email-bwalton@artsci.utoronto.ca>
-References: <7vd3b0vc6h.fsf@alter.siamese.dyndns.org>
- <1326163653-26565-1-git-send-email-bwalton@artsci.utoronto.ca>
-Cc: Ben Walton <bwalton@artsci.utoronto.ca>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jan 10 03:47:49 2012
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 4/6] revert: allow mixing "pick" and "revert" actions
+Date: Tue, 10 Jan 2012 09:10:45 +0530
+Message-ID: <CALkWK0mahdUKSWdeE18z4_9ubE4MY+qatzr2pCJ=0kFEWRhaHw@mail.gmail.com>
+References: <1326025653-11922-1-git-send-email-artagnon@gmail.com>
+ <1326025653-11922-5-git-send-email-artagnon@gmail.com> <20120108194014.GI1942@burratino>
+ <CALkWK0mYbBsZN1UX9YM0VWQezZsBpJCcEgKirCggtNXs0HZ-8g@mail.gmail.com>
+ <20120108214042.GR1942@burratino> <20120108215510.GS1942@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 10 04:41:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkRkY-0008NB-1b
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 03:47:46 +0100
+	id 1RkSaK-0004rD-3w
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 04:41:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755979Ab2AJCrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jan 2012 21:47:39 -0500
-Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:54301 "EHLO
-	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755961Ab2AJCri (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jan 2012 21:47:38 -0500
-Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:59773 ident=93)
-	by garcia.cquest.utoronto.ca with esmtp (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1RkRkP-0000St-0b; Mon, 09 Jan 2012 21:47:37 -0500
-Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1RkRkO-0006v5-Vj; Mon, 09 Jan 2012 21:47:36 -0500
-X-Mailer: git-send-email 1.7.4.1
-In-Reply-To: <1326163653-26565-1-git-send-email-bwalton@artsci.utoronto.ca>
+	id S1756047Ab2AJDlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jan 2012 22:41:09 -0500
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:40876 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755999Ab2AJDlI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jan 2012 22:41:08 -0500
+Received: by wgbdt14 with SMTP id dt14so2190718wgb.1
+        for <git@vger.kernel.org>; Mon, 09 Jan 2012 19:41:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=PmvDY8P1o8ZeWsgcDCeXjcMdJX/xIlqqNIHto2drGCE=;
+        b=H04WnyrDeGUW/LU9AdA+8v1qzrOZvvkuw1wCfiOt1IkYMoL5F0l3e0E817ifHyzqnt
+         ehVq+Lo/0U/49vojErn6v+QXD68aszsiSdlnIve+G3+LLaZZ+x1zsOI5rUn0CsbLraYW
+         LUhPZDBEmULuKzsJH5ujqZ/lOIFZnoAKs0DH0=
+Received: by 10.180.103.2 with SMTP id fs2mr9076556wib.21.1326166866277; Mon,
+ 09 Jan 2012 19:41:06 -0800 (PST)
+Received: by 10.216.175.3 with HTTP; Mon, 9 Jan 2012 19:40:45 -0800 (PST)
+In-Reply-To: <20120108215510.GS1942@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188212>
 
-In test 'blame --textconv with local changes' of t8006-blame-textconv,
-using /usr/xpg4/bin/sed (as set by SANE_TOOL_PATH), an additional
-newline was added to the output from the 'helper' script.
+Hi Jonathan,
 
-This was noted by sed with a message such as:
-sed: Missing newline at end of file zero.bin.
+Jonathan Nieder wrote:
+> On second thought, do you have a link to the last submitted version,
+> and do you remember if there were any important changes since then?
+> The base for that one should be closer to "master", I think.
 
-Sed then exits with status 2 causing the helper script to also exit
-with status 2.
+There you go: http://thread.gmane.org/gmane.comp.version-control.git/186638/focus=186644
 
-In turn, this was triggering a fatal error from git blame:
-fatal: unable to read files to diff
-
-To work around this difference in sed behaviour, use perl -p instead
-of sed -e as it exits cleanly and does not insert the additional
-newline.
-
-Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
----
- t/t8006-blame-textconv.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/t/t8006-blame-textconv.sh b/t/t8006-blame-textconv.sh
-index 4ee42f1..c3c22f7 100755
---- a/t/t8006-blame-textconv.sh
-+++ b/t/t8006-blame-textconv.sh
-@@ -10,7 +10,7 @@ find_blame() {
- cat >helper <<'EOF'
- #!/bin/sh
- grep -q '^bin: ' "$1" || { echo "E: $1 is not \"binary\" file" 1>&2; exit 1; }
--sed 's/^bin: /converted: /' "$1"
-+perl -p -e 's/^bin: /converted: /' "$1"
- EOF
- chmod +x helper
- 
--- 
-1.7.8.2
+-- Ram
