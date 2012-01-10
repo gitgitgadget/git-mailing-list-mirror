@@ -1,105 +1,65 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [BUG] gitattribute macro expansion oddity
-Date: Tue, 10 Jan 2012 10:01:34 +0100
-Message-ID: <4F0BFE6E.6080904@alum.mit.edu>
-References: <20120110070300.GA17086@sigill.intra.peff.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] gitignore: warn about pointless syntax
+Date: Tue, 10 Jan 2012 10:44:58 +0100
+Message-ID: <87d3arnb6t.fsf@thomas.inf.ethz.ch>
+References: <1326123647-18352-1-git-send-email-jengelh@medozas.de>
+	<1326123647-18352-2-git-send-email-jengelh@medozas.de>
+	<20120109162802.GA2374@sigill.intra.peff.net>
+	<7vhb04ek6e.fsf@alter.siamese.dyndns.org>
+	<20120109223358.GA9902@sigill.intra.peff.net>
+	<alpine.LNX.2.01.1201100639340.11534@frira.zrqbmnf.qr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?SGVucmlrIEdydWJic3Ryw7Zt?= <grubba@grubba.org>,
-	git-dev@github.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 10 10:02:16 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	<git@vger.kernel.org>
+To: Jan Engelhardt <jengelh@medozas.de>
+X-From: git-owner@vger.kernel.org Tue Jan 10 10:45:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkXax-0002sW-K0
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 10:02:15 +0100
+	id 1RkYGf-00074o-EM
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 10:45:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755463Ab2AJJCI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jan 2012 04:02:08 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:43280 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755426Ab2AJJCF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2012 04:02:05 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q0A91YnJ026271
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 10 Jan 2012 10:01:34 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.24) Gecko/20111108 Lightning/1.0b2 Thunderbird/3.1.16
-In-Reply-To: <20120110070300.GA17086@sigill.intra.peff.net>
-X-Enigmail-Version: 1.1.2
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1755923Ab2AJJpE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jan 2012 04:45:04 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:41713 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754928Ab2AJJpB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2012 04:45:01 -0500
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 10 Jan
+ 2012 10:44:57 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 10 Jan
+ 2012 10:44:58 +0100
+In-Reply-To: <alpine.LNX.2.01.1201100639340.11534@frira.zrqbmnf.qr> (Jan
+	Engelhardt's message of "Tue, 10 Jan 2012 06:42:11 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188230>
 
-On 01/10/2012 08:03 AM, Jeff King wrote:
-> I'm seeing some very odd behavior with git's attribute expansion for
-> diffs. You can see it with this repository:
-> 
->   git clone git://github.com/libgit2/libgit2sharp.git
-> 
-> Try a diff of a non-binary file: [...]
+Jan Engelhardt <jengelh@medozas.de> writes:
+>
+> As I see it, foo/**/*.o for example is equal to placing "*.o" in
+> foo/.gitignore, so the feature is already implemented, just not
+> through the syntax people falsely assume it is. And that is the
+> reason for wanting to output a warning. If it was me, I'd even make
+> it use error(),
 
-The problem has nothing with diffing; simply interrogating the attribute
-values gives different results depending on the order of the files:
+No, please don't even think about it.  Having an error() there would
+mean that git would be essentially useless in repositories that have
+this mistake, and the user may not be in a position to fix the
+repository!
 
-$ git check-attr --all Lib/NativeBinaries/x86/git2.dll
-LibGit2Sharp/Configuration.cs
-Lib/NativeBinaries/x86/git2.dll: binary: set
-Lib/NativeBinaries/x86/git2.dll: diff: unset
-Lib/NativeBinaries/x86/git2.dll: text: unset
-LibGit2Sharp/Configuration.cs: binary: set
-LibGit2Sharp/Configuration.cs: diff: unset
-LibGit2Sharp/Configuration.cs: text: unset
-LibGit2Sharp/Configuration.cs: crlf: set
-$ git check-attr --all LibGit2Sharp/Configuration.cs
-Lib/NativeBinaries/x86/git2.dll
-LibGit2Sharp/Configuration.cs: diff: csharp
-LibGit2Sharp/Configuration.cs: crlf: set
-Lib/NativeBinaries/x86/git2.dll: binary: set
-Lib/NativeBinaries/x86/git2.dll: diff: unset
-Lib/NativeBinaries/x86/git2.dll: text: unset
-
-It also doesn't depend on the fact that Lib/.gitattributes uses CRLF as
-its EOL, nor does it depend on the use of the "binary" macro.  However,
-it does depend on the fact that the directory name "Lib" matches the
-first part of the directory name "LibGit2Sharp".  Here is a simplified
-demonstration of the problem:
-
-a=LibA/a.txt
-b=Lib/b.bin
-rm -rf foo
-git init foo
-cd foo
-mkdir $(dirname $a) $(dirname $b)
-touch $a $b
-echo '*.txt foo' >.gitattributes
-echo '* bar' >$(dirname $b)/.gitattributes
-git add .
-git commit -am 'Demonstrate problem'
-echo '================================================='
-git check-attr --all $b $a
-echo '================================================='
-git check-attr --all $a $b
-echo '================================================='
-
-The attributes of $a are different depending on what order $a and $b
-appear in the "git check-attr" command line.
-
-Changing the example to "a=foo/a.txt" makes the problem go away.
-
-Michael
+(He could drag along a local change to that effect, which is highly
+annoying if the repository is otherwise read-only for him.)
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Thomas Rast
+trast@{inf,student}.ethz.ch
