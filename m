@@ -1,53 +1,92 @@
-From: Uri Okrent <uokrent@gmail.com>
-Subject: Re: Auto-refresh git-gui
-Date: Tue, 10 Jan 2012 18:14:04 +0200
-Message-ID: <CALPkawZR6PU5wNrdG03L9iAk85K4ZEFakF5oQK2fqdqWUMjJzA@mail.gmail.com>
-References: <20120104091547.GC3484@victor> <20120104163338.GA27567@ecki.lan> <20120105080322.GD3484@victor>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: victor.engmark@terreactive.ch
-X-From: git-owner@vger.kernel.org Tue Jan 10 17:14:49 2012
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH v2 0/8] The move to sequencer.c
+Date: Tue, 10 Jan 2012 21:43:51 +0530
+Message-ID: <1326212039-13806-1-git-send-email-artagnon@gmail.com>
+References: <1326025653-11922-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 10 17:15:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkeLW-0004TR-SR
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 17:14:47 +0100
+	id 1RkeMY-00059f-1E
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 17:15:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932114Ab2AJQO1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jan 2012 11:14:27 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:34947 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932082Ab2AJQO0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jan 2012 11:14:26 -0500
-Received: by vbbfc26 with SMTP id fc26so3621690vbb.19
-        for <git@vger.kernel.org>; Tue, 10 Jan 2012 08:14:25 -0800 (PST)
+	id S1756544Ab2AJQPi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jan 2012 11:15:38 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:50928 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756537Ab2AJQPg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2012 11:15:36 -0500
+Received: by ggdk6 with SMTP id k6so301248ggd.19
+        for <git@vger.kernel.org>; Tue, 10 Jan 2012 08:15:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=mIX1WAwQQxgPi1W3rI+cZnRxukSMz8ZUtGyw0U1zBVg=;
-        b=kPA5LXzD+yMZjozq+ZGsBiCqlnIz6WB0SbH0ZQGDDMrXl45T5UwV2YLsh7O9q58LB2
-         ExY6Hdm71nS1vtA8B8Ivgev77b6muRven5xvOVNAde85IFzMAn3YkXjIZQP47YQzd9Bj
-         1mXyGQRfPmGsS8c8kFcNE4CBu0eN/T0lmSoys=
-Received: by 10.52.21.129 with SMTP id v1mr9650504vde.78.1326212065222; Tue,
- 10 Jan 2012 08:14:25 -0800 (PST)
-Received: by 10.52.169.101 with HTTP; Tue, 10 Jan 2012 08:14:04 -0800 (PST)
-In-Reply-To: <20120105080322.GD3484@victor>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=7IJ6hOFOo9j9lUuAY8od5TABa2BcKynYHJPeIBtkNyI=;
+        b=L8/GThFZLxpThRuAWzlJgDd3qbVpX+N4+7EuXEq6oSqvBkUhmrV3ITT/flVxiNnQG+
+         0GmyMYwwcCY3hcBo/DboPsErEmITWMc6pREc1VVqVXikfmtcjjBBlwAYhsrX2XcYPmY4
+         SwYEeyoSZ610J/xlI6QDkJRXWPDH6LuVHRwFg=
+Received: by 10.50.156.138 with SMTP id we10mr2500182igb.10.1326212135259;
+        Tue, 10 Jan 2012 08:15:35 -0800 (PST)
+Received: from localhost.localdomain ([203.110.240.205])
+        by mx.google.com with ESMTPS id lu10sm129662851igc.0.2012.01.10.08.15.22
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 10 Jan 2012 08:15:25 -0800 (PST)
+X-Mailer: git-send-email 1.7.8.2
+In-Reply-To: <1326025653-11922-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188256>
 
-Not to muddy the waters, but if you're open to alternatives, if you
-have inotify installed, git cola will automatically update it's status
-whenever files in your repository change.
---=20
-=C2=A0=C2=A0 Uri
+Hi,
 
-Please consider the environment before printing this message.
-http://wwf.panda.org/savepaper/
+The big changes in this round are:
+
+1. Dropped "revert: don't let revert continue a cherry-pick" from the
+   last round after a quick discussion with Jonathan.
+
+2. Separated out "revert: separate out parse errors logically" from
+   "revert: report fine-grained errors from insn parser".  Definitely
+   looks clearer.
+
+3. Improved "revert: report fine-grained errors from insn parser" by
+   eliminating repetition.  20 is a bit arbitrary, but it looks pretty
+   enough on my terminal.
+
+4. Added "sha1_name: introduce getn_sha1() to take length" and
+   "revert: use getn_sha1() to simplify insn parsing".  I'm happy with
+   them.  Name is inspired from the strncmp() variant of strcmp().
+
+5. Included minimal API documentation with "sequencer: factor code out
+   of revert builtin".
+
+Thanks for reading.  I think I'll work on fixing the memory leaks now.
+
+Ramkumar Ramachandra (8):
+  revert: prepare to move replay_action to header
+  revert: decouple sequencer actions from builtin commands
+  revert: allow mixing "pick" and "revert" actions
+  revert: separate out parse errors logically
+  revert: report fine-grained errors from insn parser
+  sha1_name: introduce getn_sha1() to take length
+  revert: use getn_sha1() to simplify insn parsing
+  sequencer: factor code out of revert builtin
+
+ Documentation/technical/api-sequencer.txt |   22 +
+ builtin/revert.c                          |  958 +----------------------------
+ cache.h                                   |    1 +
+ sequencer.c                               |  925 ++++++++++++++++++++++++++++-
+ sequencer.h                               |   48 ++
+ sha1_name.c                               |   23 +-
+ t/t3510-cherry-pick-sequence.sh           |   46 +-
+ 7 files changed, 1056 insertions(+), 967 deletions(-)
+ create mode 100644 Documentation/technical/api-sequencer.txt
+
+-- 
+1.7.8.2
