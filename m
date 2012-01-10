@@ -1,60 +1,61 @@
-From: Albert Astals Cid <aacid@kde.org>
-Subject: [BUG] git archive broken in 1.7.8.1
-Date: Tue, 10 Jan 2012 22:18:41 +0100
-Message-ID: <5142795.2dTmMhVRTP@xps>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 10 22:18:52 2012
+From: Seth Robertson <in-gitvger@baka.org>
+Subject: Re: rsync a *bunch* of git repos
+Date: Tue, 10 Jan 2012 16:24:50 -0500
+Message-ID: <201201102124.q0ALOowL026941@no.baka.org>
+References: <20120110211548.GD10255@titan.lakedaemon.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org
+To: Jason <git@lakedaemon.net>
+X-From: git-owner@vger.kernel.org Tue Jan 10 22:25:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rkj5n-0006oN-Kb
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 22:18:51 +0100
+	id 1RkjBj-0001Gw-Lc
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 22:25:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756842Ab2AJVSr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jan 2012 16:18:47 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:63485 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752676Ab2AJVSq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2012 16:18:46 -0500
-Received: by eekc41 with SMTP id c41so8096eek.19
-        for <git@vger.kernel.org>; Tue, 10 Jan 2012 13:18:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=sender:from:to:subject:date:message-id:user-agent:mime-version
-         :content-transfer-encoding:content-type;
-        bh=aNRg1dr1S6UMFD8xlRyDmK/xsVDhRvIUqdzB/qfDr9Y=;
-        b=P4vVKY9mtPCwvTVQu8idyI+GH7yuH/mJ2a7UW3UhiJWX8NYtnwmdSyChyd7mK6ymeQ
-         NzGRpVyyR3mztS9la5eiPm7gvl8z82YkMEeDbJDPLZGrdzlu3bR/Hg7avBmEGJsv5HZl
-         LF78LJ7qBMHMbw/BoBIPkL2Mlc3iL6an26ijw=
-Received: by 10.14.2.79 with SMTP id 55mr5995009eee.20.1326230323560;
-        Tue, 10 Jan 2012 13:18:43 -0800 (PST)
-Received: from xps.localnet (business-89-133-214-66.business.broadband.hu. [89.133.214.66])
-        by mx.google.com with ESMTPS id t59sm309039052eeh.10.2012.01.10.13.18.41
-        (version=SSLv3 cipher=OTHER);
-        Tue, 10 Jan 2012 13:18:42 -0800 (PST)
-User-Agent: KMail/4.7.3 (Linux/3.0.0-15-generic; KDE/4.7.3; x86_64; ; )
+	id S1756861Ab2AJVYy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jan 2012 16:24:54 -0500
+Received: from tsutomu.baka.org ([66.114.72.182]:40733 "EHLO tsutomu.baka.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756734Ab2AJVYx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2012 16:24:53 -0500
+Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
+	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id q0ALOo7f008140
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 10 Jan 2012 16:24:50 -0500
+Received: from no.baka.org (localhost [127.0.0.1])
+	by no.baka.org (8.14.4/8.14.0) with ESMTP id q0ALOowL026941;
+	Tue, 10 Jan 2012 16:24:50 -0500
+In-reply-to: <20120110211548.GD10255@titan.lakedaemon.net>
+Comments: In reply to a message from "Jason <git@lakedaemon.net>" dated "Tue, 10 Jan 2012 16:15:48 -0500."
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188293>
 
-CC me on answers since i'm not subscribed to the list
 
-Hi, one of our [KDE] anongit servers was updated to 1.7.8.1 and not the syntax
+In message <20120110211548.GD10255@titan.lakedaemon.net>, Jason writes:
 
-git archive --remote=git://anongit.kde.org/repo.git HEAD:path
+    The nuts and bolts of this aren't difficult, the problem is I don't have
+    a complete understanding of how git stores data.  I've heard in the
+    past that it uses a lot of hardlinks and softlinks.  I need to make
+    sure, that once I transfer the data, and reboot the machine with the new
+    partition mounted under /home, that all my git repos will be okay.
 
-does not seem to return a valid tar archive anymore when it did work 
-previously. In fact the man page of my version has that syntax in one of the 
-examples.
+Under most circumstances, git will do the right thing.  Only if you
+use specific flags on clone (like --shared or --reference) might
+something go wrong, and as the manual page explains, you can use
+git-repack to undo these.
 
-Is that a regression or should have never it worked and the current behaviour 
-is the correct one?
+The real solution is, after you rsync, to:
 
-Albert
+for f in */.git; do (cd $f; git fsck >&/dev/null || echo "$f is BAD!!"); done
+
+If you get no output, you should be golden.  If you get output, check
+to make sure the repo you are copying from is good as well.
+
+					-Seth Robertson
