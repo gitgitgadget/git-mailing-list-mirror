@@ -1,85 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] gitignore: warn about pointless syntax
-Date: Tue, 10 Jan 2012 13:51:05 -0500
-Message-ID: <20120110185105.GD15273@sigill.intra.peff.net>
-References: <1326123647-18352-1-git-send-email-jengelh@medozas.de>
- <1326123647-18352-2-git-send-email-jengelh@medozas.de>
- <20120109162802.GA2374@sigill.intra.peff.net>
- <7vhb04ek6e.fsf@alter.siamese.dyndns.org>
- <20120109223358.GA9902@sigill.intra.peff.net>
- <alpine.LNX.2.01.1201100639340.11534@frira.zrqbmnf.qr>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 4/8] revert: separate out parse errors logically
+Date: Tue, 10 Jan 2012 13:03:11 -0600
+Message-ID: <20120110190311.GD22184@burratino>
+References: <1326025653-11922-1-git-send-email-artagnon@gmail.com>
+ <1326212039-13806-1-git-send-email-artagnon@gmail.com>
+ <1326212039-13806-5-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	trast@student.ethz.ch
-To: Jan Engelhardt <jengelh@medozas.de>
-X-From: git-owner@vger.kernel.org Tue Jan 10 19:51:15 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 10 19:58:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rkgmw-0007tN-M1
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 19:51:15 +0100
+	id 1Rkgtp-0003JR-IP
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 19:58:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756677Ab2AJSvJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jan 2012 13:51:09 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33814
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755320Ab2AJSvI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2012 13:51:08 -0500
-Received: (qmail 12634 invoked by uid 107); 10 Jan 2012 18:58:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 10 Jan 2012 13:58:01 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jan 2012 13:51:05 -0500
+	id S1756720Ab2AJS6O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jan 2012 13:58:14 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:40280 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756664Ab2AJS6M (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2012 13:58:12 -0500
+Received: by ghbg21 with SMTP id g21so2314260ghb.19
+        for <git@vger.kernel.org>; Tue, 10 Jan 2012 10:58:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=svbF1DOevG9sp1EM2qyHGBxuJUeasZJ5ileqBIUEA8E=;
+        b=on3oEExd61W/blkMjE0pJbaf+6b+ZvNeFh2dFFGRO8B9sE8nrpx3aPDdmG+/MTBtzj
+         vQryvBRgn5wx6Z29nXrqc1Do+6bAbdvUaFgI8FMXPbK9bOIR78j5dkJXG2E0W3KYasrv
+         JOaMgYgZQ6tLUnVMZeOjSkQQKLnKU5+y0I2FI=
+Received: by 10.101.117.14 with SMTP id u14mr3728598anm.63.1326221891609;
+        Tue, 10 Jan 2012 10:58:11 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id i12sm1405648anm.6.2012.01.10.10.58.10
+        (version=SSLv3 cipher=OTHER);
+        Tue, 10 Jan 2012 10:58:11 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <alpine.LNX.2.01.1201100639340.11534@frira.zrqbmnf.qr>
+In-Reply-To: <1326212039-13806-5-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188280>
 
-On Tue, Jan 10, 2012 at 06:42:11AM +0100, Jan Engelhardt wrote:
+Ramkumar Ramachandra wrote:
 
-> >You only have to implement proper backslash decoding, so I think it is
-> >not as hard as reimplementing fnmatch:
-> >[...]
-> >
-> >That being said, if this is such a commonly-requested feature
-> 
-> Was it actually requested, or did you mean "commonly attempted use"?
+>                 For the first kind of error, it is insufficient to
+> check if the buffer beings with a "pick" or "revert", otherwise the
+> following insn sheet would be interpreted as having a malformed object
+> name:
 
-Both. I meant in my sentence "if this is such a big problem that we need
-to add a check for it, then surely it is something people would like to
-be using". But if you peruse the list archives, you can find several
-people mentioning that they would like it.
+> pickle a1fe57~2
+>
+> In reality, the issue is that "pickle" is an unrecognized instruction.
+> So, check that the buffer starts with ("pick " or "pick\t") and
+> ("revert " or "revert\t").
 
-> As I see it, foo/**/*.o for example is equal to placing "*.o" in
-> foo/.gitignore, so the feature is already implemented, just not
-> through the syntax people falsely assume it is. And that is the
-> reason for wanting to output a warning. If it was me, I'd even make
-> it use error(), because that is the only way to educate people (and
-> it works), but alas, some on the list might consider that too harsh.
+Sorry, the above description just leaves me more confused than before.
 
-Those features aren't exactly equivalent. Off the top of my head, I can
-think of a few reasons to prefer using the top-level:
+What _actual impact_ does this patch have?  And why do we want it?
+And what could be the bad side effects?  Everything else is just
+irrelevant.
 
-  - you simply prefer it because it keeps your rules grouped in a more
-    logical way
-
-  - you don't control the sub-tree (e.g., it is brought in by sub-tree
-    merge, or you have an agreement with other devs not to touch things
-    in it. Also, I don't think .gitignores cross submodule boundaries
-    currently, but it is something that could happen eventually).
-
-  - you can write more complex rules with "**" that would otherwise
-    necessitate writing multiple rules split across directories
-
-Don't get me wrong. I am not a huge proponent of "**", and I could
-really care less if we implement it or not, and we have survived many
-years without it. It just seems to me that if it's worth warning about,
-it's worth implementing.
-
--Peff
+Before reading the above description, I thought this was just a code
+cleanup.  So either the description or my reading is completely
+confused.
