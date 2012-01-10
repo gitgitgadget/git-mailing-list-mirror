@@ -1,105 +1,112 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 4/8] revert: separate out parse errors logically
-Date: Tue, 10 Jan 2012 21:43:55 +0530
-Message-ID: <1326212039-13806-5-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 6/8] sha1_name: introduce getn_sha1() to take length
+Date: Tue, 10 Jan 2012 21:43:57 +0530
+Message-ID: <1326212039-13806-7-git-send-email-artagnon@gmail.com>
 References: <1326025653-11922-1-git-send-email-artagnon@gmail.com>
  <1326212039-13806-1-git-send-email-artagnon@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 10 17:16:28 2012
+X-From: git-owner@vger.kernel.org Tue Jan 10 17:16:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkeN7-0005XL-1b
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 17:16:25 +0100
+	id 1RkeN8-0005XL-7H
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 17:16:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932226Ab2AJQP4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jan 2012 11:15:56 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:51935 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932143Ab2AJQPz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2012 11:15:55 -0500
-Received: by ghbg21 with SMTP id g21so2204286ghb.19
-        for <git@vger.kernel.org>; Tue, 10 Jan 2012 08:15:55 -0800 (PST)
+	id S932256Ab2AJQQH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jan 2012 11:16:07 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:47391 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932143Ab2AJQQF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2012 11:16:05 -0500
+Received: by mail-iy0-f174.google.com with SMTP id z25so1076194iab.19
+        for <git@vger.kernel.org>; Tue, 10 Jan 2012 08:16:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=2YN5oPOjIitNJT1r5r7nn585DlmX06JytksYgrrJQ6k=;
-        b=Gls0q2n6OutAJtPPugLayaVHt4Rx2jHX9v90i9Vbpb7mm0IByI9P0uNXoOTnDbj+6E
-         MerpwIEHD++XJeLyy908fsW/Uti/D8TDeiY3UhvVcdD+QPHVbIsxJOKOA6RnSWOPU745
-         bh/R8CEuLyauSdaiPdy6mg2SWo2DEo/swa8Jk=
-Received: by 10.50.155.195 with SMTP id vy3mr2878966igb.12.1326212154754;
-        Tue, 10 Jan 2012 08:15:54 -0800 (PST)
+        bh=p+RwGsbT6/UTFhnvDtGWjZIqlPBC/WcYiAZNd3aLPcM=;
+        b=f9lRIZn2K2Hmmr/OMhPGotQn6uK6pmNfuw3/dnuTjjNWCqa/F104YHQcu5EaGcpKyl
+         5XFeVpWzHpl1R3VWpMhoFV6iHtIh9J1GICY2L64tg66H75QdEb3CKOjpOxSYO5wFdeiu
+         +gWS97DDJ1tdtiyeOQw6KSKG6dyFu96iE2yqg=
+Received: by 10.43.124.130 with SMTP id go2mr13790321icc.20.1326212164922;
+        Tue, 10 Jan 2012 08:16:04 -0800 (PST)
 Received: from localhost.localdomain ([203.110.240.205])
-        by mx.google.com with ESMTPS id lu10sm129662851igc.0.2012.01.10.08.15.49
+        by mx.google.com with ESMTPS id lu10sm129662851igc.0.2012.01.10.08.16.01
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 10 Jan 2012 08:15:52 -0800 (PST)
+        Tue, 10 Jan 2012 08:16:04 -0800 (PST)
 X-Mailer: git-send-email 1.7.8.2
 In-Reply-To: <1326212039-13806-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188263>
 
-Three kinds of errors can arise from parsing the instruction sheet:
-1. Unrecognized action
-2. Malformed object name
-3. Object name does not refer to a valid commit
+Introduce a variant of get_sha1() that additionally takes the length
+of the buffer, so it can parse object names from buffers that don't
+necessarily terminate with NUL.
 
-The next patch makes an attempt to make the parser report meaningful
-errors by replacing the "return -1" with "return error(...)"
-appropriately.  For the first kind of error, it is insufficient to
-check if the buffer beings with a "pick" or "revert", otherwise the
-following insn sheet would be interpreted as having a malformed object
-name:
-
-pickle a1fe57~2
-
-In reality, the issue is that "pickle" is an unrecognized instruction.
-So, check that the buffer starts with ("pick " or "pick\t") and
-("revert " or "revert\t").
-
+Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- builtin/revert.c |   15 ++++++---------
- 1 files changed, 6 insertions(+), 9 deletions(-)
+ cache.h     |    1 +
+ sha1_name.c |   23 +++++++++++++++++++----
+ 2 files changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 1841ffa..9a09471 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -736,22 +736,19 @@ static int parse_insn_line(char *bol, char *eol, struct replay_insn_list *item)
+diff --git a/cache.h b/cache.h
+index 10afd71..8bb6759 100644
+--- a/cache.h
++++ b/cache.h
+@@ -812,6 +812,7 @@ struct object_context {
+ };
+ 
+ extern int get_sha1(const char *str, unsigned char *sha1);
++extern int getn_sha1(const char *name, int namelen, unsigned char *sha1);
+ extern int get_sha1_with_mode_1(const char *str, unsigned char *sha1, unsigned *mode, int only_to_die, const char *prefix);
+ static inline int get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode)
  {
- 	unsigned char commit_sha1[20];
- 	char *end_of_object_name;
--	int saved, status, padding;
-+	int saved, status;
+diff --git a/sha1_name.c b/sha1_name.c
+index 03ffc2c..31d412e 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -1019,12 +1019,11 @@ static char *resolve_relative_path(const char *rel)
+ 			   rel);
+ }
  
--	if (!prefixcmp(bol, "pick")) {
-+	if (!prefixcmp(bol, "pick ") || !prefixcmp(bol, "pick\t")) {
- 		item->action = REPLAY_PICK;
--		bol += strlen("pick");
--	} else if (!prefixcmp(bol, "revert")) {
-+		bol += strlen("pick ");
-+	} else if (!prefixcmp(bol, "revert ") || !prefixcmp(bol, "revert\t")) {
- 		item->action = REPLAY_REVERT;
--		bol += strlen("revert");
-+		bol += strlen("revert ");
- 	} else
- 		return -1;
+-int get_sha1_with_context_1(const char *name, unsigned char *sha1,
+-			    struct object_context *oc,
+-			    int only_to_die, const char *prefix)
++static int getn_sha1_with_context_1(const char *name, int namelen,
++				unsigned char *sha1, struct object_context *oc,
++				int only_to_die, const char *prefix)
+ {
+ 	int ret, bracket_depth;
+-	int namelen = strlen(name);
+ 	const char *cp;
  
- 	/* Eat up extra spaces/ tabs before object name */
--	padding = strspn(bol, " \t");
--	if (!padding)
--		return -1;
--	bol += padding;
-+	bol += strspn(bol, " \t");
- 
- 	end_of_object_name = bol + strcspn(bol, " \t\n");
- 	saved = *end_of_object_name;
+ 	memset(oc, 0, sizeof(*oc));
+@@ -1134,3 +1133,19 @@ int get_sha1_with_context_1(const char *name, unsigned char *sha1,
+ 	}
+ 	return ret;
+ }
++
++int get_sha1_with_context_1(const char *name, unsigned char *sha1,
++			struct object_context *oc,
++			int only_to_die, const char *prefix)
++{
++	int namelen = strlen(name);
++	return getn_sha1_with_context_1(name, namelen, sha1,
++					oc, only_to_die, prefix);
++}
++
++/* A variant of get_sha1 that takes a length. */
++int getn_sha1(const char *name, int namelen, unsigned char *sha1)
++{
++	struct object_context unused;
++	return getn_sha1_with_context_1(name, namelen, sha1, &unused, 0, NULL);
++}
 -- 
 1.7.8.2
