@@ -1,61 +1,74 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v2 3/3] index-pack: eliminate unlimited recursion in get_delta_base()
-Date: Tue, 10 Jan 2012 20:16:33 +0700
-Message-ID: <CACsJy8C00qRn0adD+ZG78Q2tXD2C3vh_Ci0zYonqi8zgVWZyjg@mail.gmail.com>
-References: <1324901080-23215-1-git-send-email-pclouds@gmail.com>
- <1326081546-29320-4-git-send-email-pclouds@gmail.com> <7vvcokcwvt.fsf@alter.siamese.dyndns.org>
- <CACsJy8A-FOpjDeTpxMze7jouceWMJHND_V2fyV5pLNKF8xp8kQ@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Please support add -p with a new file, to add only part of the file
+Date: Tue, 10 Jan 2012 15:07:16 +0100
+Message-ID: <87ty43fy7f.fsf@thomas.inf.ethz.ch>
+References: <20120109105134.1239.39047.reportbug@leaf>
+	<20120109204721.GC23825@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 10 14:17:15 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Josh Triplett <josh@joshtriplett.org>, <git@vger.kernel.org>,
+	Wincent Colaiuta <win@wincent.com>, Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 10 15:07:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkbZi-0001El-Bz
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 14:17:14 +0100
+	id 1RkcMI-0003XB-Hw
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 15:07:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756235Ab2AJNRH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jan 2012 08:17:07 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:37998 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756232Ab2AJNRG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2012 08:17:06 -0500
-Received: by bkvi17 with SMTP id i17so387044bkv.19
-        for <git@vger.kernel.org>; Tue, 10 Jan 2012 05:17:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=u+OvKA4Ww3nGWTtuGpjDozOSvUC81lZwwDVaFUP0Gjw=;
-        b=DPXx+o1jIhInY3PRLShiUxcStUyFwO5vfRewqCRetayZEePozjT+amDyVAipnP0m4G
-         h2r8W2u/+LTgBqbcX71oCAKKEOEYj5GXNmntP0lMZareAq108HlMBEM2tJ94+X3xMNRn
-         kVGxFcV0rZE/0ZHbmJtU20xMGE08t4I5Kh4tE=
-Received: by 10.204.147.194 with SMTP id m2mr8672425bkv.22.1326201424150; Tue,
- 10 Jan 2012 05:17:04 -0800 (PST)
-Received: by 10.204.66.77 with HTTP; Tue, 10 Jan 2012 05:16:33 -0800 (PST)
-In-Reply-To: <CACsJy8A-FOpjDeTpxMze7jouceWMJHND_V2fyV5pLNKF8xp8kQ@mail.gmail.com>
+	id S1752078Ab2AJOHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jan 2012 09:07:21 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:24018 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751975Ab2AJOHU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2012 09:07:20 -0500
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 10 Jan
+ 2012 15:07:16 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 10 Jan
+ 2012 15:07:17 +0100
+In-Reply-To: <20120109204721.GC23825@burratino> (Jonathan Nieder's message of
+	"Mon, 9 Jan 2012 14:47:21 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188249>
 
-On Tue, Jan 10, 2012 at 8:03 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> correct? Yeah I think it's simpler than current code.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-I wrote about core.deltabasecachelimit, then deleted it, thinking it
-should be ok, but how do handle the case when you use up cache limit?
-Some handled objects may be freed when we're short on cache and need
-to be resolved again before we could resolve an unhandled object.
+> Josh Triplett wrote:
+>
+>> I recently found myself with a new file that I needed to check in part
+>> of with several commits.  I wanted to use "git add -p newfile" and use
+>> 'e' to add and commit several times (along with corresponding bits in
+>> existing files).  However, "git add -p" does not work on a new file,
+>> only an existing file.
+>
+> Yep.  A workaround is to use "git add -N newfile" before running
+> "git add -p newfile".
+>
+> I imagine "git add -p '*.c'" should also offer to add hunks from
+> source files that git doesn't know about yet, too.
+> 
+> Here's a quick demo (untested) that might _almost_ do the right thing.
+> Unfortunately it leaves intent-to-add entries around even for files
+> the operator rejects.  Anyway, maybe it can be a good starting point
+> for playing around.
 
-Assume we're at the limit, have resolved A, which has two children B
-and C. When we resolve B we need to free A to keep it fit in cache. By
-the time we look at C, A needs to be resolved again. Without tracing
-back (i.e. what get_base_data() does), we don't know what we need to
-re-resolve among all handled objects.
+I think a proper solution needs a way to generate a diff that includes
+all of the named files (even untracked).  AFAICS there is no such
+feature in the diff-* commands right now.
+
+A not-so-proper solution might of course start by looking at which files
+are untracked, and only run the 'git add -N' immediately before patch
+application.
+
 -- 
-Duy
+Thomas Rast
+trast@{inf,student}.ethz.ch
