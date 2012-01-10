@@ -1,59 +1,78 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v2 6/6] clone: print advice on checking out detached HEAD
-Date: Tue, 10 Jan 2012 08:54:22 +0700
-Message-ID: <CACsJy8CuYkzFVrEG6T2HUAwJGnjit2xWt3VSN-9USt7h+B_CBw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/6] clone: factor out checkout code
+Date: Tue, 10 Jan 2012 09:01:18 +0700
+Message-ID: <CACsJy8DZpA0sQ6ZYjgrp8PsRTsYm0nOfSXcDOEhB2TRjqwbM0Q@mail.gmail.com>
 References: <1325771380-18862-1-git-send-email-pclouds@gmail.com>
- <1326023188-15559-1-git-send-email-pclouds@gmail.com> <1326023188-15559-6-git-send-email-pclouds@gmail.com>
- <7v4nw4cs1x.fsf@alter.siamese.dyndns.org>
+ <1326023188-15559-1-git-send-email-pclouds@gmail.com> <1326023188-15559-3-git-send-email-pclouds@gmail.com>
+ <7vd3ascs85.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 10 02:55:04 2012
+X-From: git-owner@vger.kernel.org Tue Jan 10 03:01:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkQvX-0003y1-7U
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 02:55:03 +0100
+	id 1RkR2B-0006mI-Qb
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 03:01:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933641Ab2AJBy4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jan 2012 20:54:56 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:53943 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932253Ab2AJByy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jan 2012 20:54:54 -0500
-Received: by bkvi17 with SMTP id i17so78818bkv.19
-        for <git@vger.kernel.org>; Mon, 09 Jan 2012 17:54:53 -0800 (PST)
+	id S932281Ab2AJCBv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Jan 2012 21:01:51 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:43996 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751493Ab2AJCBu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Jan 2012 21:01:50 -0500
+Received: by eaad14 with SMTP id d14so2354356eaa.19
+        for <git@vger.kernel.org>; Mon, 09 Jan 2012 18:01:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Z70o5H+K+V+/MH6zuyekZ+5Swmpx6Qj0i1qXivjpFLo=;
-        b=Xe1+6ySy4Z+FDryvwSuK18SCYx9BOAa2ROdyWEDgdQS6iEMyo/INH6XQ0817GI6oAR
-         kuSOX0lIyY5wIJIObJE2+xugw8by03wzlo+sfJTHXqdSalcO/ZlH02/QGRhqjl/p+2NI
-         keIyeJbw3WLg6RSQtQzRLmu5gj7SzMhViYQkQ=
-Received: by 10.205.132.14 with SMTP id hs14mr8217547bkc.130.1326160493167;
- Mon, 09 Jan 2012 17:54:53 -0800 (PST)
-Received: by 10.204.66.77 with HTTP; Mon, 9 Jan 2012 17:54:22 -0800 (PST)
-In-Reply-To: <7v4nw4cs1x.fsf@alter.siamese.dyndns.org>
+         :cc:content-type:content-transfer-encoding;
+        bh=i4IYYf2LGVZ6etwqoVVP4MC+LfWFT0jYoT8O+E/HrmE=;
+        b=VW2mrm7vEiRPWcL3cKX1RGb6AWCsPFqfv259Xe039fp8vBC3CNiq663Jt37OXj0EOm
+         80MXj+YpyxrR66Ksao22R/9742m4vLu1RBdzgy1HHcTDrU30X5jduWiNs5Vd9AzQ5AIv
+         uVlLS4ZW1TTR4ydB1mEyG1waDnkFPfUdaaEeg=
+Received: by 10.204.154.136 with SMTP id o8mr8250830bkw.112.1326160909373;
+ Mon, 09 Jan 2012 18:01:49 -0800 (PST)
+Received: by 10.204.66.77 with HTTP; Mon, 9 Jan 2012 18:01:18 -0800 (PST)
+In-Reply-To: <7vd3ascs85.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188208>
 
 2012/1/10 Junio C Hamano <gitster@pobox.com>:
-> This patch makes 100% sense _if_ we let clone result in a repository with
-> a detached HEAD, which I am not sure if it is a good idea, or if it is
-> better to fail the attempt to clone to give incentive to the owner of the
-> remote repository to fix it.
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> w=
+rites:
+>
+>> Read HEAD from disk instead of relying on local variable
+>> our_head_points_at, so that if earlier code fails to make HEAD
+>> properly, it'll be detected.
+>
+> The end result might be more or less the same with your patch from th=
+e
+> end-user's point of view, but "if earlier code fails", shouldn't you
+> detect and diagnose it right there?
 
-Then a hostile remote can stop users from cloning his repository by
-detaching HEAD? That's not nice. On the other hand, if specifying
---branch=<wrong-branch> leads to detached case, then we should
-probably refuse to clone. But that should happen before transferring
-the pack.
--- 
+Sure, but another fence does not harm. There's also one thing I missed
+in the commit message that it makes update head code and checkout code
+more independent. Update head code does not need to maintain
+our_head_points_at at the end for checkout anymore.
+
+> If you observe lack of "HEAD" in checkout(), you cannot tell if that =
+was
+> because the remote did not have anything usable in the first place, o=
+r
+> because we knew where it should point at (and may have even attempted=
+ to
+> create it) but somehow failed to make it point at it.
+
+The lack of HEAD probably won't happen because HEAD is created by
+default in init-db. This is mainly to catch invalid HEAD (like putting
+"refs/tags/something" in HEAD).
+--=20
 Duy
