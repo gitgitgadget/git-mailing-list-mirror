@@ -1,78 +1,97 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v2 3/6] clone: factor out checkout code
-Date: Tue, 10 Jan 2012 12:57:23 +0700
-Message-ID: <CACsJy8DG2CCbDipfFEp2JM5wb0Nn9F7v8Cxx1bPAZ-40OdEA9A@mail.gmail.com>
-References: <1325771380-18862-1-git-send-email-pclouds@gmail.com>
- <1326023188-15559-1-git-send-email-pclouds@gmail.com> <1326023188-15559-3-git-send-email-pclouds@gmail.com>
- <7vd3ascs85.fsf@alter.siamese.dyndns.org> <CACsJy8DZpA0sQ6ZYjgrp8PsRTsYm0nOfSXcDOEhB2TRjqwbM0Q@mail.gmail.com>
- <7vhb04b1bc.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitignore: warn about pointless syntax
+Date: Mon, 09 Jan 2012 22:01:06 -0800
+Message-ID: <7vd3asayfx.fsf@alter.siamese.dyndns.org>
+References: <1326123647-18352-1-git-send-email-jengelh@medozas.de>
+ <1326123647-18352-2-git-send-email-jengelh@medozas.de>
+ <20120109162802.GA2374@sigill.intra.peff.net>
+ <7vhb04ek6e.fsf@alter.siamese.dyndns.org>
+ <20120109223358.GA9902@sigill.intra.peff.net>
+ <alpine.LNX.2.01.1201100639340.11534@frira.zrqbmnf.qr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 10 06:58:00 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	trast@student.ethz.ch
+To: Jan Engelhardt <jengelh@medozas.de>
+X-From: git-owner@vger.kernel.org Tue Jan 10 07:01:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkUie-0008Mj-DO
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 06:58:00 +0100
+	id 1RkUlo-0001Ar-PB
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 07:01:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752666Ab2AJF54 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jan 2012 00:57:56 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:56417 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751680Ab2AJF5z convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jan 2012 00:57:55 -0500
-Received: by bkvi17 with SMTP id i17so182689bkv.19
-        for <git@vger.kernel.org>; Mon, 09 Jan 2012 21:57:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=qIyojvKiqK2X4ggyZd3i0oO28NHrvOmtaHxLbrOxXFI=;
-        b=Rwq/Ox+w1V2tPqtJtVZarTpz5Ox7vUczRYVjk+PN9lGmb1weK5D5MDxpWdA2GUTh6d
-         Vrui7wYcqp3E1GnAh8xHJPEgsCD2fdm3KjRomS+xNF2C+TSGsDHo2odav9PHW1fs22XM
-         8gYneU9ch4V86xQucOrZAMFZLgjRPSmvYM/bU=
-Received: by 10.205.122.138 with SMTP id gg10mr8410741bkc.94.1326175074167;
- Mon, 09 Jan 2012 21:57:54 -0800 (PST)
-Received: by 10.204.66.77 with HTTP; Mon, 9 Jan 2012 21:57:23 -0800 (PST)
-In-Reply-To: <7vhb04b1bc.fsf@alter.siamese.dyndns.org>
+	id S1753069Ab2AJGBL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jan 2012 01:01:11 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39183 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752411Ab2AJGBK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2012 01:01:10 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C57816FE8;
+	Tue, 10 Jan 2012 01:01:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Ug/Lg3zoXzOMfSbOZ6TQyTPT55k=; b=v5RVSV
+	iyCmXGPpU73MTzxMY1NY+RmE29LP6szBmCtLkVlg79eq1B15+iKAbCNqyVm4e/H4
+	vnT+qdd0evJ8/1r4iKbZPE2wKlmzXqmipJfBN+iVM7rqVXnBxynALHhLO/d3T8o8
+	4Ydq/U81KP8yjRybvoS9ehxLDzETENrjwEbD0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CeMYpyK2IKbuoDR+sfg8TPwrT3SHRsup
+	EjnqwcjRziy63D3HwfbkNrQwHA7F4dofWRYn0tlTVacqnbAFtErsDdbCNJvLtHh3
+	WYDza3l0ia493TTqX55PfR4fWxi6QcQhXQCGSG6W5BdFI5DMfz0CO6NuAykuWLd/
+	0+MHQ32GVpE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BBC7A6FE7;
+	Tue, 10 Jan 2012 01:01:09 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4AA826FE6; Tue, 10 Jan 2012
+ 01:01:08 -0500 (EST)
+In-Reply-To: <alpine.LNX.2.01.1201100639340.11534@frira.zrqbmnf.qr> (Jan
+ Engelhardt's message of "Tue, 10 Jan 2012 06:42:11 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7D48CAB0-3B50-11E1-A81F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188223>
 
-On Tue, Jan 10, 2012 at 11:59 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->> There's also one thing I missed in the commit message that it makes
->> update head code and checkout code more independent. Update head cod=
-e
->> does not need to maintain our_head_points_at at the end for checkout
->> anymore.
->
-> I like that reasoning in general. The logic ought to be:
->
-> =C2=A0- Learn what the remote has;
->
-> =C2=A0- Combine it with --branch parameter, determine what local bran=
-ch our
-> =C2=A0 head _should_ point at;
->
-> =C2=A0- Make our head point at it, and check it out.
->
-> I wonder if we can somehow make the above logic more clear in the
-> code. Perhaps the first two could be made into a single helper functi=
-on
-> "decide_local_branch()", and the third would be the "checkout()" func=
-tion
-> in your patch, updated to take "const char *" parameter or something?
+Jan Engelhardt <jengelh@medozas.de> writes:
 
-yeah, I split the first two into update_head() but dropped it for some
-reasons I don't remember. That would make the main function easier to
-follow. I'll look at it again.
---=20
-Duy
+> On Monday 2012-01-09 23:33, Jeff King wrote:
+>>On Mon, Jan 09, 2012 at 11:43:21AM -0800, Junio C Hamano wrote:
+>>
+>>>>>+static inline void check_bogus_wildcard(const char *file, const char *p)
+>>>>>+{
+>>>>>+	if (strstr(p, "**") == NULL)
+>>>>>+		return;
+>>>>>+	warning(_("Pattern \"%s\" from file \"%s\": Double asterisk does not "
+>>>>>+		"have a special meaning and is interpreted just like a single "
+>>>>>+		"asterisk.\n"), file, p);
+>>
+>>You only have to implement proper backslash decoding, so I think it is
+>>not as hard as reimplementing fnmatch:
+>>[...]
+>>
+>>That being said, if this is such a commonly-requested feature
+>
+> Was it actually requested, or did you mean "commonly attempted use"?
+>
+> As I see it, foo/**/*.o for example is equal to placing "*.o" in
+> foo/.gitignore, so the feature is already implemented, just not
+> through the syntax people falsely assume it is.
+
+You can either adjust the people, i.e. teach that their "false" assumption
+is wrong and the feature they expect is available but not in a way that
+they expect.
+
+Or you can adjust the tool to match their expectation.
+
+The point that Peff correctly read between my lines is that in real life,
+people are harder to train than tools and often the latter is a better
+approach, especially if it does not amount to too much more work than
+doing the former.
