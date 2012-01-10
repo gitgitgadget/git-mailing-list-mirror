@@ -1,87 +1,57 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Regulator updates for 3.3
-Date: Tue, 10 Jan 2012 14:54:27 -0800
-Message-ID: <CA+55aFxvQF=Bm4ae6euB_UO8otMCuN9Lv37Zn3TpE-L7JH3Kzw@mail.gmail.com>
-References: <20120109073727.GF22134@opensource.wolfsonmicro.com>
- <CA+55aFyhoh0rT_ujuE1w3RpuR7kqivYFwPpm66VC-xtq1PiGUQ@mail.gmail.com>
- <20120110184530.GE7164@opensource.wolfsonmicro.com> <CA+55aFxXb7wqfrpozS6iH0k25y-+Uy8_Tavv59JXMhaWrjXLaw@mail.gmail.com>
- <20120110222711.GK7164@opensource.wolfsonmicro.com>
+From: Allan Wind <allan_wind@lifeintegrity.com>
+Subject: Re: [BUG] git archive broken in 1.7.8.1
+Date: Tue, 10 Jan 2012 18:01:22 -0500
+Message-ID: <20120110230122.GA24020@vent.lifeintegrity.localnet>
+References: <5142795.2dTmMhVRTP@xps>
+ <20120110213344.GI2714@centaur.lab.cmartin.tk>
+ <1431498.0yPWNQLupF@xps>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Liam Girdwood <lrg@ti.com>, linux-kernel@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Mark Brown <broonie@opensource.wolfsonmicro.com>
-X-From: linux-kernel-owner@vger.kernel.org Tue Jan 10 23:55:11 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 11 00:11:13 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Rkkaz-0002n5-EE
-	for glk-linux-kernel-3@lo.gmane.org; Tue, 10 Jan 2012 23:55:09 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1RkkqW-0001qw-02
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 00:11:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756652Ab2AJWyt (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 10 Jan 2012 17:54:49 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:43486 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751647Ab2AJWys (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 10 Jan 2012 17:54:48 -0500
-Received: by wgbdr10 with SMTP id dr10so113853wgb.1
-        for <multiple recipients>; Tue, 10 Jan 2012 14:54:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=YHLezSllR5cQmhTSrLKTARKlvKmGFq+KvGgbbagOVnk=;
-        b=GKmIYnHbv7HE2UUI9xNTeG7TsG04+uCrGn1sgifo3TlzVAMs0zFKKeRSg/vLFfA+ii
-         7E851t+wZLcq5YMKm0T95ecpFm9an3oFcXa4L2JaeQt111SffENrDXxJWXIEIf33Kbqy
-         hU3xq6boBzYcF8EieycmJ/D9utIFuWeT9WfJo=
-Received: by 10.180.19.138 with SMTP id f10mr47356480wie.3.1326236087092; Tue,
- 10 Jan 2012 14:54:47 -0800 (PST)
-Received: by 10.216.172.213 with HTTP; Tue, 10 Jan 2012 14:54:27 -0800 (PST)
-In-Reply-To: <20120110222711.GK7164@opensource.wolfsonmicro.com>
-X-Google-Sender-Auth: xCqIsQ7YZkUlLzTFpFo2HRARxGE
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1757000Ab2AJXKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jan 2012 18:10:49 -0500
+Received: from lifeintegrity.com ([173.48.39.13]:53975 "EHLO
+	pawan.lifeintegrity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756980Ab2AJXKs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2012 18:10:48 -0500
+X-Greylist: delayed 564 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Jan 2012 18:10:48 EST
+Received: from vent.lifeintegrity.com (173-162-190-62-NewEngland.hfc.comcastbusiness.net [173.162.190.62])
+	by submission.lifeintegrity.com (Postfix) with ESMTPS id 4EC9A208
+	for <git@vger.kernel.org>; Tue, 10 Jan 2012 23:01:22 +0000 (UTC)
+Received: by vent.lifeintegrity.com (Postfix, from userid 1000)
+	id 0D487182AF7; Tue, 10 Jan 2012 23:01:22 +0000 (UTC)
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <1431498.0yPWNQLupF@xps>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188301>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188302>
 
-On Tue, Jan 10, 2012 at 2:27 PM, Mark Brown
-<broonie@opensource.wolfsonmicro.com> wrote:
->
-> Especially in the cases where the lack of the bug fix breaks the new
-> code it sems sensible enough to want to do the merges so that the
-> history includes things that actually work.
+On 2012-01-10 23:05:45, Albert Astals Cid wrote:
+> Unfortunately this producess a tarball with a different layout, e.g.
+> 
+> git archive --remote=git://anongit.kde.org/kgraphviewer.git HEAD:doc/en_US
+>   gives me a tarball with the doc/en_US files in the root
 
-So I don't mind merges if they have a lear reason for existing.
+Meaning the files you have stored in git under doc/en_US are 
+dumped in the root directory of the tar?  That does not sound 
+like desired behavior for the feature.
 
-This is actually one of my major gripes with the git UI, and one of
-the few areas where I really think I screwed up: I made merging *too*
-easy by default. I should have made it always start up an editor for a
-merge message, the way it does for a commit - rather than just do a
-trivial pointless merge without even asking the user for a reason for
-the merge.
 
-So looking at that almost two months of regulator history in
-
-   gitk d52739c62e00..269d430131b6
-
-I would not have reacted badly at all if there were one or two of
-those merges, and they actually had a reason associated with them.
-Sadly, due to that git UI mess-up, that's harder to do than it should
-be. Oh, it's easy enough with "git merge --no-commit" followed by just
-"git commit", and then you get the normal git editor window.
-
-So right now "git merge" (and "git pull") make it too easy to make
-those meaningless merge commits. If instead of seven pointless merges
-you had (say) had two merges that had messages about *why* they
-weren't pointless, I'd be perfectly happy.
-
-Addid junio and git to the cc just to bring up this issue of bad UI
-once again. I realize it could break old scripts to start up an editor
-window, but still..
-
-                       Linus
+/Allan
+-- 
+Allan Wind
+Life Integrity, LLC
+<http://lifeintegrity.com>
