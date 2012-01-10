@@ -1,111 +1,104 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] attr: don't confuse prefixes with leading directories
-Date: Tue, 10 Jan 2012 14:32:06 -0500
-Message-ID: <20120110193206.GA16826@sigill.intra.peff.net>
-References: <20120110070300.GA17086@sigill.intra.peff.net>
- <4F0BFE6E.6080904@alum.mit.edu>
- <20120110171100.GA18962@sigill.intra.peff.net>
- <20120110180820.GA15273@sigill.intra.peff.net>
- <20120110182140.GB15273@sigill.intra.peff.net>
- <7vlipf9xbe.fsf@alter.siamese.dyndns.org>
- <20120110192810.GA16018@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Please support add -p with a new file, to add only part of the
+ file
+Date: Tue, 10 Jan 2012 11:33:39 -0800
+Message-ID: <7vd3ar9wto.fsf@alter.siamese.dyndns.org>
+References: <20120109105134.1239.39047.reportbug@leaf>
+ <20120109204721.GC23825@burratino> <87ty43fy7f.fsf@thomas.inf.ethz.ch>
+ <7vpqer9znv.fsf@alter.siamese.dyndns.org>
+ <20120110183833.GA15787@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 10 20:32:19 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Josh Triplett <josh@joshtriplett.org>, git@vger.kernel.org,
+	Wincent Colaiuta <win@wincent.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 10 20:33:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkhQd-0003dN-Vw
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 20:32:16 +0100
+	id 1RkhSC-0004ut-3F
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 20:33:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932605Ab2AJTcJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jan 2012 14:32:09 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33903
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932175Ab2AJTcI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2012 14:32:08 -0500
-Received: (qmail 13256 invoked by uid 107); 10 Jan 2012 19:39:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 10 Jan 2012 14:39:02 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jan 2012 14:32:06 -0500
-Content-Disposition: inline
-In-Reply-To: <20120110192810.GA16018@sigill.intra.peff.net>
+	id S932989Ab2AJTdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jan 2012 14:33:43 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53284 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932175Ab2AJTdm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2012 14:33:42 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA7917A16;
+	Tue, 10 Jan 2012 14:33:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=t5cXrGq5J5kteOMeI8igaxHvP7M=; b=jKkMGY
+	LMwHJAHRBopyUp+UYM0nhcBM/4+FDszADSt041ZZUmDpshpJVegmE8YYGDoWShoy
+	ODd7QLPlVQ2lB8iqSTEChXP+Tx4+LpeDCtEx/NhXe86UmZLG4hGoj2Io5rEhSogT
+	UM24GrODOtG3we5Bj6ISgGQMwrfK1KaiTd9uI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YW96WD90m2qqddMXNiNhEfmIOxYKZPJi
+	1qc9wI2b+UlrzPpIfNBjpVBqgtoHMUHfRklC6gdTCAE6dpgzuubWL2Ifec8aeSKD
+	cWzec5HQo2hR7GlHSoy9Yw8jeHmGNfa1Wf9TEJ11MRBDyS3ZHlpFDxc/WsESZ6XH
+	eN2BKdb/U4g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CFCF27A15;
+	Tue, 10 Jan 2012 14:33:41 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 30BF07A14; Tue, 10 Jan 2012
+ 14:33:41 -0500 (EST)
+In-Reply-To: <20120110183833.GA15787@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 10 Jan 2012 13:38:33 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0046227A-3BC2-11E1-9C0B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188285>
 
-On Tue, Jan 10, 2012 at 02:28:10PM -0500, Jeff King wrote:
+Jeff King <peff@peff.net> writes:
 
-> On Tue, Jan 10, 2012 at 11:23:01AM -0800, Junio C Hamano wrote:
-> 
-> > > I'm not sure if the right solution is to change the popping loop to:
-> > >
-> > >   /* we will never run out of stack, because we always have the root */
-> > >   while (attr_stack->origin) {
-> > >           ...
-> > 
-> > Yeah, that makes sense, as that existing check "attr_stack &&" was a
-> > misguided defensive coding, that was _not_ defensive at all as we didn't
-> > do anything after we stop iterating from that loop and without checking
-> > dereferenced attr_stack->origin, which was a simple bogosity.
-> > 
-> > >
-> > > Or to be extra defensive and put:
-> > >
-> > >   if (!attr_stack)
-> > >           die("BUG: we ran out of attr stack!?");
-> > >
-> > > after the loop, or to somehow handle the case of an empty attr stack
-> > > below (which is hard to do, because it can't be triggered, so I have no
-> > > idea what it would mean).
-> > 
-> > And this is even more so.
-> 
-> I wasn't clear: the second one is "even more so" making sense, or "even
-> more so" misguided defensive coding?
+>> Even if you start with "add -N", there won't be individual "hunks" you can
+>> pick and choose from diffing emptiness and the whole new file, so you end
+>> up using "edit hunk" interface.
+>
+> I don't think the main impetus for this is that people necessarily want
+> to pick and choose hunks from added files.
 
-If the latter, then I think we want this:
+Well, read the subject of your e-mail and tell me what it says ;-)
 
--- >8 --
-Subject: [PATCH] attr: drop misguided defensive coding
+And that is why I was contrasting an imaginary workflow to use the
+existing "add -p" with requested "allow it to be used with new files" with
+what somebody may "emulate" without help from "add -p" machinery, which
+is:
 
-In prepare_attr_stack, we pop the old elements of the stack
-(which were left from a previous lookup and may or may not
-be useful to us). Our loop to do so checks that we never
-reach the top of the stack. However, the code immediately
-afterwards will segfault if we did actually reach the top of
-the stack.
+	$ cp newfile.c newfile.c-saved
+        $ edit newfile.c ;# delete all the things you do not want for now
+        $ git add newfile.c
+        $ mv newfile.c-saved newfile.c
 
-Fortunately, this is not an actual bug, since we will never
-pop all of the stack elements (we will always keep the root
-gitattributes, as well as the builtin ones). So the extra
-check in the loop condition simply clutters the code and
-makes the intent less clear. Let's get rid of it.
+I just had to point the above out, even though I agree with the use case
+you shown below for final verification. They are quite different topic, as
+"git diff" won't be very useful for 'inspect changes' step in the "new
+file" case to begin with.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- attr.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/attr.c b/attr.c
-index fa975da..cf8f2bc 100644
---- a/attr.c
-+++ b/attr.c
-@@ -577,7 +577,7 @@ static void prepare_attr_stack(const char *path)
- 	 * Pop the ones from directories that are not the prefix of
- 	 * the path we are checking.
- 	 */
--	while (attr_stack && attr_stack->origin) {
-+	while (attr_stack->origin) {
- 		int namelen = strlen(attr_stack->origin);
- 
- 		elem = attr_stack;
--- 
-1.7.9.rc0.33.gd3c17
+>   $ hack hack hack
+>   $ git add -p ;# inspect and add changes
+>   $ git commit
+>
+> which is very similar to the traditional git workflow:
+>
+>   $ hack hack hack
+>   $ git diff ;# inspect changes
+>   $ git add foo ;# add changes
+>   $ git commit
+>
+> I find myself using "add -p" almost exclusively these days, as it
+> combines the two middle steps (and even though I usually am just hitting
+> "y" after inspection, when I _do_ want to make a change, I am right
+> there in the hunk selection loop already).
