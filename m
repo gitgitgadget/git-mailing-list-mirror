@@ -1,160 +1,82 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v3 10/10] clone: print advice on checking out detached HEAD
-Date: Tue, 10 Jan 2012 16:57:07 +0700
-Message-ID: <1326189427-20800-11-git-send-email-pclouds@gmail.com>
-References: <1326023188-15559-1-git-send-email-pclouds@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: git grep doesn't follow symbolic link
+Date: Tue, 10 Jan 2012 11:00:34 +0100
+Message-ID: <877h0zlvwd.fsf@thomas.inf.ethz.ch>
+References: <CAPRVejc7xND_8Y=Pb5rYGEcaKYUaX7_WkSro-_EL8tTGxkfY3Q@mail.gmail.com>
+	<CALkWK0=-LZH4MYhX50v-RWpGA2r+6q50YxsKaOxc0mJ__yuK7g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 10 10:58:57 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Bertrand BENOIT <projettwk@users.sourceforge.net>,
+	<git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 10 11:00:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkYTo-0005p9-GB
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 10:58:56 +0100
+	id 1RkYVW-0006nT-7y
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Jan 2012 11:00:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755947Ab2AJJ6v convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jan 2012 04:58:51 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:48718 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755939Ab2AJJ6t (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2012 04:58:49 -0500
-Received: by mail-iy0-f174.google.com with SMTP id z25so664914iab.19
-        for <git@vger.kernel.org>; Tue, 10 Jan 2012 01:58:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=8jP2aCjwREiyCzZMSjKI5fZeXCeR/QwS3rLqbO0n7qk=;
-        b=nbgM6NLFtxotaXK6Q7EU4iOJAbtBsCGzDcnFGpZzvLGWynmJDCSc8TkTT2AxDreg7s
-         AzyJkWe5x06thi1gG5F/BT9h7eWb451tIUCNh8xo7aLFTIWkX+28/+ei4oZRZY60GadF
-         RMRKcwqqa69CSdaXd8Jlw821syGbrOTNBLKvc=
-Received: by 10.50.159.131 with SMTP id xc3mr1327486igb.27.1326189529601;
-        Tue, 10 Jan 2012 01:58:49 -0800 (PST)
-Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id py4sm1971631igc.2.2012.01.10.01.58.45
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 10 Jan 2012 01:58:48 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 10 Jan 2012 16:58:41 +0700
-X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
-In-Reply-To: <1326023188-15559-1-git-send-email-pclouds@gmail.com>
+	id S1752613Ab2AJKAh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jan 2012 05:00:37 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:43013 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751184Ab2AJKAg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2012 05:00:36 -0500
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 10 Jan
+ 2012 11:00:33 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 10 Jan
+ 2012 11:00:34 +0100
+In-Reply-To: <CALkWK0=-LZH4MYhX50v-RWpGA2r+6q50YxsKaOxc0mJ__yuK7g@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Tue, 10 Jan 2012 11:26:36 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188243>
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- advice.c           |   14 ++++++++++++++
- advice.h           |    1 +
- builtin/checkout.c |   16 +---------------
- builtin/clone.c    |    5 ++++-
- 4 files changed, 20 insertions(+), 16 deletions(-)
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-diff --git a/advice.c b/advice.c
-index e02e632..3e1a145 100644
---- a/advice.c
-+++ b/advice.c
-@@ -64,3 +64,17 @@ void NORETURN die_resolve_conflict(const char *me)
- 	error_resolve_conflict(me);
- 	die("Exiting because of an unresolved conflict.");
- }
-+
-+void detach_advice(const char *new_name)
-+{
-+	const char fmt[] =3D
-+	"Note: checking out '%s'.\n\n"
-+	"You are in 'detached HEAD' state. You can look around, make experime=
-ntal\n"
-+	"changes and commit them, and you can discard any commits you make in=
- this\n"
-+	"state without impacting any branches by performing another checkout.=
-\n\n"
-+	"If you want to create a new branch to retain commits you create, you=
- may\n"
-+	"do so (now or later) by using -b with the checkout command again. Ex=
-ample:\n\n"
-+	"  git checkout -b new_branch_name\n\n";
-+
-+	fprintf(stderr, fmt, new_name);
-+}
-diff --git a/advice.h b/advice.h
-index e5d0af7..7bda45b 100644
---- a/advice.h
-+++ b/advice.h
-@@ -14,5 +14,6 @@ int git_default_advice_config(const char *var, const =
-char *value);
- void advise(const char *advice, ...);
- int error_resolve_conflict(const char *me);
- extern void NORETURN die_resolve_conflict(const char *me);
-+void detach_advice(const char *new_name);
-=20
- #endif /* ADVICE_H */
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index f1984d9..5bf96ba 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -514,20 +514,6 @@ static void report_tracking(struct branch_info *ne=
-w)
- 	strbuf_release(&sb);
- }
-=20
--static void detach_advice(const char *old_path, const char *new_name)
--{
--	const char fmt[] =3D
--	"Note: checking out '%s'.\n\n"
--	"You are in 'detached HEAD' state. You can look around, make experime=
-ntal\n"
--	"changes and commit them, and you can discard any commits you make in=
- this\n"
--	"state without impacting any branches by performing another checkout.=
-\n\n"
--	"If you want to create a new branch to retain commits you create, you=
- may\n"
--	"do so (now or later) by using -b with the checkout command again. Ex=
-ample:\n\n"
--	"  git checkout -b new_branch_name\n\n";
--
--	fprintf(stderr, fmt, new_name);
--}
--
- static void update_refs_for_switch(struct checkout_opts *opts,
- 				   struct branch_info *old,
- 				   struct branch_info *new)
-@@ -575,7 +561,7 @@ static void update_refs_for_switch(struct checkout_=
-opts *opts,
- 			   REF_NODEREF, DIE_ON_ERR);
- 		if (!opts->quiet) {
- 			if (old->path && advice_detached_head)
--				detach_advice(old->path, new->name);
-+				detach_advice(new->name);
- 			describe_detached_head(_("HEAD is now at"), new->commit);
- 		}
- 	} else if (new->path) {	/* Switch branches. */
-diff --git a/builtin/clone.c b/builtin/clone.c
-index ed18c1a..70f0280 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -502,7 +502,10 @@ static int checkout(void)
- 			  "unable to checkout.\n"));
- 		return 0;
- 	}
--	if (strcmp(head, "HEAD")) {
-+	if (!strcmp(head, "HEAD")) {
-+		if (advice_detached_head)
-+			detach_advice(sha1_to_hex(sha1));
-+	} else {
- 		if (prefixcmp(head, "refs/heads/"))
- 			die(_("HEAD not found below refs/heads!"));
- 	}
---=20
-1.7.3.1.256.g2539c.dirty
+> Hi Bertrand,
+>
+> Bertrand BENOIT wrote:
+>> When using git grep, symbolic links are not followed.
+>> Is it a wanted behavior ?
+>
+> I'd imagine so: symbolic links are not portable across different file
+> systems; Git's internal representation of a symbolic link is a file
+> containing the path of the file to be linked to.
+
+I'd actually welcome a fix to this general area, for an entirely
+different reason.  With bash and ordinary diff I can do things like
+
+  diff -u <(ls) <(cd elsewhere && ls) | less
+
+But I lose all the cute features of git-diff.  I *could* say
+
+  git diff --no-index <(ls) <(cd elsewhere && ls)
+
+and it helpfully tells me
+
+  diff --git 1/dev/fd/63 2/dev/fd/62
+  index 55ccbe5..d796c45 120000
+  --- 1/dev/fd/63
+  +++ 2/dev/fd/62
+  @@ -1 +1 @@
+  -pipe:[607341]
+  \ No newline at end of file
+  +pipe:[607343]
+  \ No newline at end of file
+
+Of course that's diff and not grep, but I think they suffer from the
+same flaw: they share the file-kind handling logic of the rest of git in
+a case where it's not very helpful.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
