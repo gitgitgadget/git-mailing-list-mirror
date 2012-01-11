@@ -1,212 +1,180 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 1/2] cache-tree: update API to take abitrary flags
-Date: Wed, 11 Jan 2012 16:59:41 +0700
-Message-ID: <1326275982-29866-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 2/2] commit: add --skip-intent-to-add to allow commit with i-t-a entries in index
+Date: Wed, 11 Jan 2012 16:59:42 +0700
+Message-ID: <1326275982-29866-3-git-send-email-pclouds@gmail.com>
 References: <1326261707-11484-1-git-send-email-pclouds@gmail.com>
 Cc: git@vger.kernel.org,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 11 11:00:21 2012
+X-From: git-owner@vger.kernel.org Wed Jan 11 11:00:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rkuyi-0007Kj-2o
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 11:00:20 +0100
+	id 1Rkuyj-0007Kj-P1
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 11:00:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757353Ab2AKKAE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jan 2012 05:00:04 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:42218 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756834Ab2AKKAA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jan 2012 05:00:00 -0500
-Received: by mail-iy0-f174.google.com with SMTP id z25so884554iab.19
-        for <git@vger.kernel.org>; Wed, 11 Jan 2012 01:59:59 -0800 (PST)
+	id S1757371Ab2AKKAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jan 2012 05:00:11 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:35277 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757182Ab2AKKAI (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Jan 2012 05:00:08 -0500
+Received: by obbup16 with SMTP id up16so621498obb.19
+        for <git@vger.kernel.org>; Wed, 11 Jan 2012 02:00:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=a2S1Q2O7kaa6t6rZWxL5DBNb4Yu7jSKMygXVG17jdyI=;
-        b=NQTRSN2DeMveaTQZ2BBR7X+UtOff7uUwZPhc2HoszAiH+i1UTn+91HJZA3pzTteLjU
-         hRduGnvFiLWUrHmEtcmvuB1uXiiPHnNGATfkMKClynDayU5VGtydLPoQUYyOK7o/oWGj
-         D0mWZoYlO0hbAFNGkcm+spIGmWouQH+u/yfmE=
-Received: by 10.43.117.194 with SMTP id fn2mr25235459icc.53.1326275999834;
-        Wed, 11 Jan 2012 01:59:59 -0800 (PST)
+        bh=h5LWbBy8I1aruOke1D08NdSOVxJgy4iys1hKL4tdwRw=;
+        b=mHm54GVQ/iZ09ws8cXdJxskfY268vbtMT7CNcWNRDzgGpQr0o4btXkzjp2JPJOb2yy
+         9rR/EPGh6uaWnu/eWtvXBc7CgwFClSJ5ICf94SVQq6WFxYEXQ1T+qOxeMP3u/epcmzvP
+         PJE5KE7dgxGcHH7pa8r/fyyr/J/r+iSgdyBoM=
+Received: by 10.50.87.164 with SMTP id az4mr4136404igb.27.1326276007795;
+        Wed, 11 Jan 2012 02:00:07 -0800 (PST)
 Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id g34sm3521259ibk.10.2012.01.11.01.59.56
+        by mx.google.com with ESMTPS id r18sm3595095ibh.4.2012.01.11.02.00.03
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 11 Jan 2012 01:59:59 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 11 Jan 2012 16:59:51 +0700
+        Wed, 11 Jan 2012 02:00:06 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 11 Jan 2012 16:59:59 +0700
 X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
 In-Reply-To: <1326261707-11484-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188352>
 
 ---
- builtin/commit.c       |    4 ++--
- cache-tree.c           |   27 ++++++++++++---------------
- cache-tree.h           |    4 +++-
- merge-recursive.c      |    2 +-
- test-dump-cache-tree.c |    2 +-
- 5 files changed, 19 insertions(+), 20 deletions(-)
+ builtin/commit.c      |   10 +++++++---
+ cache-tree.c          |    8 +++++---
+ cache-tree.h          |    1 +
+ t/t2203-add-intent.sh |   17 +++++++++++++++++
+ 4 files changed, 30 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/commit.c b/builtin/commit.c
-index eba1377..bf42bb3 100644
+index bf42bb3..021206e 100644
 --- a/builtin/commit.c
 +++ b/builtin/commit.c
-@@ -400,7 +400,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix,
+@@ -86,6 +86,7 @@ static int all, also, interactive, patch_interactive, only, amend, signoff;
+ static int edit_flag = -1; /* unspecified */
+ static int quiet, verbose, no_verify, allow_empty, dry_run, renew_authorship;
+ static int no_post_rewrite, allow_empty_message;
++static int cache_tree_flags, skip_intent_to_add;
+ static char *untracked_files_arg, *force_date, *ignore_submodule_arg;
+ static char *sign_commit;
+ 
+@@ -170,6 +171,7 @@ static struct option builtin_commit_options[] = {
+ 	OPT_BOOLEAN(0, "amend", &amend, "amend previous commit"),
+ 	OPT_BOOLEAN(0, "no-post-rewrite", &no_post_rewrite, "bypass post-rewrite hook"),
+ 	{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg, "mode", "show untracked files, optional modes: all, normal, no. (Default: all)", PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
++	OPT_BOOL(0, "skip-intent-to-add", &skip_intent_to_add, "allow intent-to-add entries in index"),
+ 	/* end commit contents options */
+ 
+ 	{ OPTION_BOOLEAN, 0, "allow-empty", &allow_empty, NULL,
+@@ -400,7 +402,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix,
  		fd = hold_locked_index(&index_lock, 1);
  		add_files_to_cache(also ? prefix : NULL, pathspec, 0);
  		refresh_cache_or_die(refresh_flags);
--		update_main_cache_tree(1);
-+		update_main_cache_tree(WRITE_TREE_SILENT);
+-		update_main_cache_tree(WRITE_TREE_SILENT);
++		update_main_cache_tree(cache_tree_flags | WRITE_TREE_SILENT);
  		if (write_cache(fd, active_cache, active_nr) ||
  		    close_lock_file(&index_lock))
  			die(_("unable to write new_index file"));
-@@ -421,7 +421,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix,
+@@ -421,7 +423,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix,
  		fd = hold_locked_index(&index_lock, 1);
  		refresh_cache_or_die(refresh_flags);
  		if (active_cache_changed) {
--			update_main_cache_tree(1);
-+			update_main_cache_tree(WRITE_TREE_SILENT);
+-			update_main_cache_tree(WRITE_TREE_SILENT);
++			update_main_cache_tree(cache_tree_flags | WRITE_TREE_SILENT);
  			if (write_cache(fd, active_cache, active_nr) ||
  			    commit_locked_index(&index_lock))
  				die(_("unable to write new_index file"));
+@@ -870,7 +872,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 	 */
+ 	discard_cache();
+ 	read_cache_from(index_file);
+-	if (update_main_cache_tree(0)) {
++	if (update_main_cache_tree(cache_tree_flags)) {
+ 		error(_("Error building trees"));
+ 		return 0;
+ 	}
+@@ -1088,6 +1090,8 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 		cleanup_mode = CLEANUP_ALL;
+ 	else
+ 		die(_("Invalid cleanup mode %s"), cleanup_arg);
++	if (skip_intent_to_add)
++		cache_tree_flags = WRITE_TREE_INTENT_TO_ADD_OK;
+ 
+ 	handle_untracked_files_arg(s);
+ 
 diff --git a/cache-tree.c b/cache-tree.c
-index 8de3959..16355d6 100644
+index 16355d6..b8593e0 100644
 --- a/cache-tree.c
 +++ b/cache-tree.c
-@@ -150,9 +150,10 @@ void cache_tree_invalidate_path(struct cache_tree *it, const char *path)
- }
- 
- static int verify_cache(struct cache_entry **cache,
--			int entries, int silent)
-+			int entries, int flags)
- {
- 	int i, funny;
-+	int silent = flags & WRITE_TREE_SILENT;
- 
- 	/* Verify that the tree is merged */
+@@ -159,7 +159,9 @@ static int verify_cache(struct cache_entry **cache,
  	funny = 0;
-@@ -241,10 +242,11 @@ static int update_one(struct cache_tree *it,
- 		      int entries,
- 		      const char *base,
- 		      int baselen,
--		      int missing_ok,
--		      int dryrun)
-+		      int flags)
- {
- 	struct strbuf buffer;
-+	int missing_ok = flags & WRITE_TREE_MISSING_OK;
-+	int dryrun = flags & WRITE_TREE_DRY_RUN;
- 	int i;
+ 	for (i = 0; i < entries; i++) {
+ 		struct cache_entry *ce = cache[i];
+-		if (ce_stage(ce) || (ce->ce_flags & CE_INTENT_TO_ADD)) {
++		if (ce_stage(ce) ||
++		    ((flags & WRITE_TREE_INTENT_TO_ADD_OK) == 0 &&
++		     (ce->ce_flags & CE_INTENT_TO_ADD))) {
+ 			if (silent)
+ 				return -1;
+ 			if (10 < ++funny) {
+@@ -339,8 +341,8 @@ static int update_one(struct cache_tree *it,
+ 				mode, sha1_to_hex(sha1), entlen+baselen, path);
+ 		}
  
- 	if (0 <= it->entry_count && has_sha1_file(it->sha1))
-@@ -288,8 +290,7 @@ static int update_one(struct cache_tree *it,
- 				    cache + i, entries - i,
- 				    path,
- 				    baselen + sublen + 1,
--				    missing_ok,
--				    dryrun);
-+				    flags);
- 		if (subcnt < 0)
- 			return subcnt;
- 		i += subcnt - 1;
-@@ -371,15 +372,13 @@ static int update_one(struct cache_tree *it,
- int cache_tree_update(struct cache_tree *it,
- 		      struct cache_entry **cache,
- 		      int entries,
--		      int missing_ok,
--		      int dryrun,
--		      int silent)
-+		      int flags)
- {
- 	int i;
--	i = verify_cache(cache, entries, silent);
-+	i = verify_cache(cache, entries, flags);
- 	if (i)
- 		return i;
--	i = update_one(it, cache, entries, "", 0, missing_ok, dryrun);
-+	i = update_one(it, cache, entries, "", 0, flags);
- 	if (i < 0)
- 		return i;
- 	return 0;
-@@ -572,11 +571,9 @@ int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix)
+-		if (ce->ce_flags & CE_REMOVE)
+-			continue; /* entry being removed */
++		if (ce->ce_flags & (CE_REMOVE | CE_INTENT_TO_ADD))
++			continue; /* entry being removed or placeholder */
  
- 	was_valid = cache_tree_fully_valid(active_cache_tree);
- 	if (!was_valid) {
--		int missing_ok = flags & WRITE_TREE_MISSING_OK;
--
- 		if (cache_tree_update(active_cache_tree,
- 				      active_cache, active_nr,
--				      missing_ok, 0, 0) < 0)
-+				      flags) < 0)
- 			return WRITE_TREE_UNMERGED_INDEX;
- 		if (0 <= newfd) {
- 			if (!write_cache(newfd, active_cache, active_nr) &&
-@@ -672,10 +669,10 @@ int cache_tree_matches_traversal(struct cache_tree *root,
- 	return 0;
- }
- 
--int update_main_cache_tree (int silent)
-+int update_main_cache_tree (int flags)
- {
- 	if (!the_index.cache_tree)
- 		the_index.cache_tree = cache_tree();
- 	return cache_tree_update(the_index.cache_tree,
--				 the_index.cache, the_index.cache_nr, 0, 0, silent);
-+				 the_index.cache, the_index.cache_nr, flags);
- }
+ 		strbuf_grow(&buffer, entlen + 100);
+ 		strbuf_addf(&buffer, "%o %.*s%c", mode, entlen, path + baselen, '\0');
 diff --git a/cache-tree.h b/cache-tree.h
-index 0ec0b2a..d8cb2e9 100644
+index d8cb2e9..865733c 100644
 --- a/cache-tree.h
 +++ b/cache-tree.h
-@@ -29,13 +29,15 @@ void cache_tree_write(struct strbuf *, struct cache_tree *root);
- struct cache_tree *cache_tree_read(const char *buffer, unsigned long size);
- 
- int cache_tree_fully_valid(struct cache_tree *);
--int cache_tree_update(struct cache_tree *, struct cache_entry **, int, int, int, int);
-+int cache_tree_update(struct cache_tree *, struct cache_entry **, int, int);
- 
- int update_main_cache_tree(int);
- 
- /* bitmasks to write_cache_as_tree flags */
- #define WRITE_TREE_MISSING_OK 1
+@@ -38,6 +38,7 @@ int update_main_cache_tree(int);
  #define WRITE_TREE_IGNORE_CACHE_TREE 2
-+#define WRITE_TREE_DRY_RUN 4
-+#define WRITE_TREE_SILENT 8
+ #define WRITE_TREE_DRY_RUN 4
+ #define WRITE_TREE_SILENT 8
++#define WRITE_TREE_INTENT_TO_ADD_OK 16
  
  /* error return codes */
  #define WRITE_TREE_UNREADABLE_INDEX (-1)
-diff --git a/merge-recursive.c b/merge-recursive.c
-index d83cd6c..6479a60 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -264,7 +264,7 @@ struct tree *write_tree_from_memory(struct merge_options *o)
+diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
+index 2543529..990c765 100755
+--- a/t/t2203-add-intent.sh
++++ b/t/t2203-add-intent.sh
+@@ -44,6 +44,23 @@ test_expect_success 'cannot commit with i-t-a entry' '
+ 	test_must_fail git commit -m initial
+ '
  
- 	if (!cache_tree_fully_valid(active_cache_tree) &&
- 	    cache_tree_update(active_cache_tree,
--			      active_cache, active_nr, 0, 0, 0) < 0)
-+			      active_cache, active_nr, 0) < 0)
- 		die("error building trees");
- 
- 	result = lookup_tree(active_cache_tree->sha1);
-diff --git a/test-dump-cache-tree.c b/test-dump-cache-tree.c
-index e6c2923..a6ffdf3 100644
---- a/test-dump-cache-tree.c
-+++ b/test-dump-cache-tree.c
-@@ -59,6 +59,6 @@ int main(int ac, char **av)
- 	struct cache_tree *another = cache_tree();
- 	if (read_cache() < 0)
- 		die("unable to read index file");
--	cache_tree_update(another, active_cache, active_nr, 0, 1, 0);
-+	cache_tree_update(another, active_cache, active_nr, WRITE_TREE_DRY_RUN);
- 	return dump_cache_tree(active_cache_tree, another, "");
- }
++test_expect_success 'can commit with i-t-a entry' '
++	git reset --hard &&
++	echo xyzzy >rezrov &&
++	echo frotz >nitfol &&
++	git add rezrov &&
++	git add -N nitfol &&
++	git commit --skip-intent-to-add -m initial &&
++	git ls-tree -r HEAD >actual &&
++	cat >expected <<EOF &&
++100644 blob ce013625030ba8dba906f756967f9e9ca394464a	elif
++100644 blob ce013625030ba8dba906f756967f9e9ca394464a	file
++100644 blob cf7711b63209d0dbc2d030f7fe3513745a9880e4	rezrov
++EOF
++	test_cmp expected actual &&
++	git reset HEAD^
++'
++
+ test_expect_success 'can commit with an unrelated i-t-a entry in index' '
+ 	git reset --hard &&
+ 	echo xyzzy >rezrov &&
 -- 
 1.7.3.1.256.g2539c.dirty
