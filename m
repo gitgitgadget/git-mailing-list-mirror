@@ -1,100 +1,61 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [BUG] gitattribute macro expansion oddity
-Date: Wed, 11 Jan 2012 05:37:59 +0100
-Message-ID: <4F0D1227.5020509@alum.mit.edu>
-References: <20120110070300.GA17086@sigill.intra.peff.net> <7v1ur7bhhe.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] t2203: fix wrong commit command
+Date: Wed, 11 Jan 2012 11:43:04 +0700
+Message-ID: <CACsJy8CjWBRtj3x3guyu-iJeTYxcRriXKbE=Be-rG=Rmesgt=g@mail.gmail.com>
+References: <1326252098-2891-1-git-send-email-pclouds@gmail.com> <CALkWK0kDBFvssyX2ZPJ9WNzfNXD=wEJoXTRVpFWm1TDKJrvNzA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	=?ISO-8859-1?Q?Henrik?= =?ISO-8859-1?Q?_Grubbstr=F6m?= 
-	<grubba@grubba.org>, git-dev@github.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 11 05:38:29 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 11 05:43:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkpxC-0003rL-OR
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 05:38:27 +0100
+	id 1Rkq2W-0005Rp-UC
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 05:43:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756786Ab2AKEiM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jan 2012 23:38:12 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:60171 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932750Ab2AKEiK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2012 23:38:10 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.134] (p54BED6D5.dip.t-dialin.net [84.190.214.213])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q0B4bxiP007103
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 11 Jan 2012 05:38:00 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.24) Gecko/20111108 Lightning/1.0b2 Thunderbird/3.1.16
-In-Reply-To: <7v1ur7bhhe.fsf@alter.siamese.dyndns.org>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1756767Ab2AKEnh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jan 2012 23:43:37 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:46885 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756739Ab2AKEng convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Jan 2012 23:43:36 -0500
+Received: by bkvi17 with SMTP id i17so220495bkv.19
+        for <git@vger.kernel.org>; Tue, 10 Jan 2012 20:43:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=hw9v501pKF/76fsMA8GdCICloH9BTIoErQyL/Qgf220=;
+        b=UF69at3OOoiUxD2NwraUZKS07qZmJNTMieA6s+hQLVuGHL1oh6uixYp6CQ3N0KGGeZ
+         NSyBTfw0DGh2dAEj1B2zLgYYxlzH9IIAKoDUV5ppFfGJdxNJY3f+fMRTXe88JIkrQGWb
+         ivG/JYcuwYM6JQ7QSFepOPhpFqoNmXEIcUT+w=
+Received: by 10.205.132.14 with SMTP id hs14mr9720289bkc.130.1326257015126;
+ Tue, 10 Jan 2012 20:43:35 -0800 (PST)
+Received: by 10.204.66.77 with HTTP; Tue, 10 Jan 2012 20:43:04 -0800 (PST)
+In-Reply-To: <CALkWK0kDBFvssyX2ZPJ9WNzfNXD=wEJoXTRVpFWm1TDKJrvNzA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188327>
 
-On 01/10/2012 06:22 PM, Junio C Hamano wrote:
-> Regardless of this unrelated regression, after looking at what ec775c4
-> wanted to do again, I am very much tempted to just revert it.
-> 
-> It aimed to take these three
-> 
->         *       ident
->         foo     mybin
->         bar     mybin ident
-> 
-> and wanted to omit 'ident' from "foo" when there is this macro definition
-> elsewhere:
-> 
-> 	[attr] mybin binary -ident
-> 
-> But the real point of the macro was that the users do not have to know
-> their internals, iow, if you explicitly specify a pattern that overrides
-> the contents of the macro, that explicit pattern should win. When deciding
-> the value of "ident" attribute for path "foo", "* ident" is stronger than
-> "foo mybin" (the latter of which does not say anything about 'ident'
-> explicitly).
+2012/1/11 Ramkumar Ramachandra <artagnon@gmail.com>:
+> Hi Duy,
+>
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>> Add commit message to avoid commit's aborting due to the lack of
+>> commit message, not because there are INTENT_TO_ADD entries in index=
+=2E
+>
+> Is there any way to differentiate between the two kinds of errors, so
+> that we can avoid this in the future? =C2=A0Can we grep the error mes=
+sage
+> for something, or inspect the exit status?
 
-I like the simplicity of the rule "apply attributes in the order found
-in the .gitattributes files" better than the rule you are proposing,
-which seems like it will become more complicated to explain.
-
-For example, it would seem under your rule for the above example that
-the "mybin" macro should bestow on file foo the "binary" attribute and
-also the "mybin" attribute (given that macros are themselves
-attributes), but not "-ident".
-
-You would also have to decide and explain whether a macro that invokes a
-macro that sets or clears attribute "foo" is "weaker" than a simple
-macro that clears or sets attribute "foo".
-
-I have one real-life use case that would become more difficult with your
-rule:
-
-# Marker for textlike files whose EOL characters haven't been
-# normalized yet:
-[attr]eol-fixme -text !eol
-
-*.cc text eol=lf
-
-
-# Then later, perhaps in some subdirectory's .gitattributes:
-SomeParticularScrewedUpFile.cc eol-fixme
-
-
-The point of the eol-fixme macro is (1) to prevent git from throwing a
-tantrum and (2) to mark the file as needing cleanup sometime in the future.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+commit exits with 1 in both cases, so no.
+--=20
+Duy
