@@ -1,91 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] diff-index: pass pathspec down to unpack-trees
- machinery
-Date: Wed, 11 Jan 2012 00:05:12 -0800
-Message-ID: <7vvcoi7jgn.fsf@alter.siamese.dyndns.org>
-References: <7vty9054qr.fsf@alter.siamese.dyndns.org>
- <1314653603-7533-1-git-send-email-gitster@pobox.com>
- <1314653603-7533-4-git-send-email-gitster@pobox.com>
- <20120111063104.GA3153@burratino>
+Subject: Re: [PATCH RFC] commit: allow to commit even if there are
+ intent-to-add entries
+Date: Wed, 11 Jan 2012 00:08:24 -0800
+Message-ID: <7vr4z67jbb.fsf@alter.siamese.dyndns.org>
+References: <1326261707-11484-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 11 09:05:27 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 11 09:08:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RktBU-0000et-Bd
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 09:05:24 +0100
+	id 1RktEX-0001pK-Iq
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 09:08:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756648Ab2AKIFR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jan 2012 03:05:17 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56160 "EHLO
+	id S1755776Ab2AKII3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jan 2012 03:08:29 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57145 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755393Ab2AKIFP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jan 2012 03:05:15 -0500
+	id S1753317Ab2AKII1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Jan 2012 03:08:27 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8AD64592C;
-	Wed, 11 Jan 2012 03:05:14 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB2F959C7;
+	Wed, 11 Jan 2012 03:08:26 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LiYboDQ5b8WjsOJdGRvWvRRzPWA=; b=SzUnlH
-	57b2g1ulv4CM4HDcgW4iaiTo8IsAByH+8hhpqVlXAJPkycwIGhkcIuQ1Hk07KxP3
-	s3LtD5Ml3QY9T0+HIgYvzQezXLTg19ZKx1nxx3FaiV5p2y43/09aXe36AOO9CH6i
-	p964ibGpAl65OWsFi+EIQR5+Um7k4Zi6DAGKE=
+	:content-type:content-transfer-encoding; s=sasl; bh=HxO+049qIw34
+	Y6SIKDtNghDhjEY=; b=RSoS9pYtFLX7hAlf/1t3EaONNLedC89hQRbqxT+KnW7k
+	DhVaPDnpd5wkIr19pacSgFhQb1d4TT1bHhOS0W/Bu+qVZcbcE5qiGA8fXLXpqJhT
+	DrTY9JLBmADMw9QZ9IVIdBHBkILuQyFAsXGUEUCTbUswFUO9YxfkaLKRfUhrMj0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Cf0T/MWF7hVXk1B01ujhHt9/sv9LzqG6
-	8Xrdys4uzO0G49MBiZ8CnVISm5XvWOJsV4wG38nYUC7z8lbGSE3E3K9Aap+4u00q
-	XB40J1oMdqcV4jPPGag2ZKL/cufkQBW9GwGmc7wl3Jaf/qkYJZcbPCfEftwW0yJL
-	NBRPIJKtuEQ=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=DXEtLV
+	DiWNM2YjMl9Q0iGotnKBL8J0tcCi6PHRg+vqYu6TiMHN1Lj0zbJDiedVgr/sMGZO
+	4QZ4W4tUKBIJhrMjA9smBiQjBKvQhtcB8X3gYylczVanGUGwkH7yvtbOh91Z2bRO
+	mrdHUU/RtR+U6/YEa8/woPuSEOyr8SW13QjOE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 82B62592B;
-	Wed, 11 Jan 2012 03:05:14 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D1FA759C5;
+	Wed, 11 Jan 2012 03:08:26 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 07F70592A; Wed, 11 Jan 2012
- 03:05:13 -0500 (EST)
-In-Reply-To: <20120111063104.GA3153@burratino> (Jonathan Nieder's message of
- "Wed, 11 Jan 2012 00:31:04 -0600")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 627FF59C2; Wed, 11 Jan 2012
+ 03:08:26 -0500 (EST)
+In-Reply-To: <1326261707-11484-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 11 Jan
+ 2012 13:01:47 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FDB23BA2-3C2A-11E1-99F4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 705BAB02-3C2B-11E1-822F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188340>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> Junio C Hamano wrote:
->
->> And finally, pass the pathspec down through unpack_trees() to traverse_trees()
->> callchain.
->
-> In git versions which include the patch described above, the unchanged
-> subdir/hello.h shows up as a newly added file.  Reverting that patch
-> (v1.7.7.1~22^2, diff-index: pass pathspec down to unpack-trees
-> machinery, 2011-08-29) makes "git diff HEAD" with wildcards work
-> again.
+> This patch replaces the approach in 331fcb5 (git add --intent-to-add:
+> do not let an empty blob be committed by accident) regarding i-t-a
+> entries: instead of forbidding i-t-a entries at commit time, we can
+> simply ignore them.
 
-I suspect that the particular change on the side branch predates Nguyen's
-effort to unify the pathspec semantics to teach the wildcard (i.e. not the
-traditional "prefix match") to the tree traversal code, but it is fairly
-late here, so I didn't check.
+I have a mild suspicion that in earlier incarnation of the patch we use=
+d
+to let empty blobs committed, and then we used to instead not commit
+anything at all for such a path, and the real users were bitten by eith=
+er
+of these approaches, forgetting to add the contents to the final commit=
+=2E
 
-I think the right fix is to update the logic that still assumes that a
-pathspec used for tree traversal is always prefix match when leaving the
-traversal early, and instead use the proper matching logic that knows that
-a wildcard pathspec needs to dig deeper into the tree regardless (I think
-the pathspec implementation used in "git grep" got this right, but please
-double check), so that we do not dig unnecessary subtrees when pathspecs
-are all prefixes, but still keep digging when there is a wildcard match.
-
-I suspect that it would lead to a fairly complete unification of the three
-implementations of pathspec matching logic and would allow us to also do
-something like "git log -- '*.h'" for free.
+So I am not sure if this is such a good idea.
