@@ -1,97 +1,94 @@
-From: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: git diff <file> HEAD^:<file> error message
-Date: Wed, 11 Jan 2012 12:18:31 +0100
-Message-ID: <20120111111831.GB15232@beez.lab.cmartin.tk>
+From: Pat Thoyts <patthoyts@gmail.com>
+Subject: Re: [msysGit] [PATCH 2/2] git-cvsexportcommit: Fix calling Perl's
+ rel2abs() on MSYS
+Date: Wed, 11 Jan 2012 11:29:53 +0000
+Message-ID: <CABNJ2GKRD-v85zA8dgoQUn66FcFp1ZsqxnOrJOYeaf+QCdDkSQ@mail.gmail.com>
+References: <4F0D5367.1000506@gmail.com>
+	<4F0D5486.7020707@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="cvVnyQ+4j833TQvp"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 11 12:18:41 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: msysgit@googlegroups.com, git@vger.kernel.org
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 11 12:30:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkwCW-0003Y9-7a
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 12:18:40 +0100
+	id 1RkwNY-0008In-SO
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 12:30:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932326Ab2AKLSf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jan 2012 06:18:35 -0500
-Received: from kimmy.cmartin.tk ([91.121.65.165]:42313 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756590Ab2AKLSe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jan 2012 06:18:34 -0500
-Received: from beez.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 2E0BA461C3
-	for <git@vger.kernel.org>; Wed, 11 Jan 2012 12:18:21 +0100 (CET)
-Received: (nullmailer pid 10480 invoked by uid 1000);
-	Wed, 11 Jan 2012 11:18:31 -0000
-Mail-Followup-To: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
-	git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932939Ab2AKL3y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jan 2012 06:29:54 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:36813 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932432Ab2AKL3x convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Jan 2012 06:29:53 -0500
+Received: by iabz25 with SMTP id z25so988033iab.19
+        for <git@vger.kernel.org>; Wed, 11 Jan 2012 03:29:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=K4xzA9pqYtjj58ZKbviltFhp5iNBBXH8APAUd2gjc9M=;
+        b=aDmmNKMOyDTtqfsHooOR6Fg63pn/NYnk/4HdFr7tIOS9rPc+OqGm5LwpO9i6E+ck+X
+         kT2icy9UuJYGkVANblEQluo93oj0HCP/qOhiZhxc7LALdF7R5+ONYvIFeIe1uF0/kXt0
+         e2jKpn6+pSLl/kYpT0cII6ALPfQbMhgku51NI=
+Received: by 10.50.76.162 with SMTP id l2mr6472240igw.1.1326281393373; Wed, 11
+ Jan 2012 03:29:53 -0800 (PST)
+Received: by 10.231.18.4 with HTTP; Wed, 11 Jan 2012 03:29:53 -0800 (PST)
+In-Reply-To: <4F0D5486.7020707@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188356>
 
+On 11 January 2012 09:21, Sebastian Schuberth <sschuberth@gmail.com> wr=
+ote:
+> Due to MSYS path mangling GIT_DIR contains a Windows-style path when
+> checked inside a Perl script even if GIT_DIR was previously set to an
+> MSYS-style path in a shell script. So explicitly convert to an MSYS-s=
+tyle
+> path before calling Perl's rel2abs() to make it work.
+>
+> This fix was inspired by a very similar patch in WebKit:
+>
+> http://trac.webkit.org/changeset/76255/trunk/Tools/Scripts/commit-log=
+-editor
+>
+> Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+> ---
+> =C2=A0git-cvsexportcommit.perl | =C2=A0 =C2=A07 +++++++
+> =C2=A01 files changed, 7 insertions(+), 0 deletions(-)
+>
+> diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
+> index 39a426e..e6bf252 100755
+> --- a/git-cvsexportcommit.perl
+> +++ b/git-cvsexportcommit.perl
+> @@ -30,6 +30,13 @@ if ($opt_w || $opt_W) {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0chomp($gd);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0$ENV{GIT_DIR} =
+=3D $gd;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+> +
+> + =C2=A0 =C2=A0 =C2=A0 # On MSYS, convert a Windows-style path to an =
+MSYS-style path
+> + =C2=A0 =C2=A0 =C2=A0 # so that rel2abs() below works correctly.
+> + =C2=A0 =C2=A0 =C2=A0 if ($^O eq 'msys') {
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 $ENV{GIT_DIR} =3D~=
+ s#^([[:alpha:]]):/#/$1/#;
+> + =C2=A0 =C2=A0 =C2=A0 }
+> +
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# Make sure GIT_DIR is absolute
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ENV{GIT_DIR} =3D File::Spec->rel2abs($ENV=
+{GIT_DIR});
+> =C2=A0}
+> --
+> 1.7.9.rc0.5096.g30a61
+>
 
---cvVnyQ+4j833TQvp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Cool - works for me. I just assumed we didn't support cvsexport.
 
-Hello,
-
-I was trying to figure out why running
-
-   git diff HEAD^:RelNotes RelNotes
-
-gives the expected output (on maint it tells me that the stable
-version changed from 1.7.8.3 to 1.7.8.4) but swapping the arguments
-doesn't.
-
-   git diff RelNotes HEAD^:RelNotes
-
-doesn't show the opposite patch but tells me that RelNotes doesn't
-exist in HEAD^ which is clearly a lie (it sounds like it's a
-misunderstanding on git's part, but it's certainly not the truth). In
-both cases, verify_filename gets called and tries to stat both
-HEAD^:RelNotes and RelNotes. In the "bad" (latter) case, after it
-fails to find a file named "HEAD^:RelNotes" it ends up calling
-diagnose_invalid_sha1_path which is not correct according to the
-command just before the function
-
-    /* Must be called only when object_name:filename doesn't exist. */
-
-It looks like get_sha1_with_context_1 gets confused because we pass it
-a filename which looks like object_name:filename even though we
-earlier parsed it simply as a filename which happens to have a colon
-inside it.
-
-Another issue is that I'm not sure that the error message should even
-get shown. The documentation tells me that I should be able to compare
-two random blobs, though this mode doesn't seem to work if the first
-argument is a file. I realise that a file isn't a blob, but since
-specifying the arguments the other way around (blob, file) does work,
-it looks to me like it should as well.
-
-   cmn
-
---cvVnyQ+4j833TQvp
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAEBAgAGBQJPDXAHAAoJEHKRP1jG7ZzTZ+MIAJk/7ooinoWVPslkPFeT/igw
-erM5jiaik/QkSGedv0jH4z8Xn24ddRKgHqwhpzZD4xgkgRfXB1LiQkW/amCRUSbM
-xk0Vx7rt1G9BagwcoUE0wHyxuVJ4wy4AQb+LhLTOWH4IUFJ6Rnr3zcDbe74wk0Bd
-3MzoCYunTDJOoGM1Sfz6t8RjDsd99NgTeqGJ5RWCm6CNyUAiMuu2pMvbR1PQdLZ/
-WW84Xh7P5jYLBbgVKbXgvjPwz7KRD/N68+DdT5szXC9c3UGYLP/K/y6DkTLmLzVd
-/8pDaNcgSEZMuKSClynfcPhqudbqF+tkE++DF/4/cAWoUwLcWmvtkdPDsZbCkCA=
-=uMpr
------END PGP SIGNATURE-----
-
---cvVnyQ+4j833TQvp--
+Tested-by: Pat Thoyts <patthoyts@users.sourceforge.net>
