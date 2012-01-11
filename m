@@ -1,83 +1,80 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/8] revert: decouple sequencer actions from builtin
- commands
-Date: Wed, 11 Jan 2012 07:18:54 -0600
-Message-ID: <20120111131854.GG32173@burratino>
-References: <1326025653-11922-1-git-send-email-artagnon@gmail.com>
- <1326212039-13806-1-git-send-email-artagnon@gmail.com>
- <1326212039-13806-3-git-send-email-artagnon@gmail.com>
- <20120110183857.GC22184@burratino>
- <CALkWK0k=44znLr2oYSx61Mk=qdAurona0f0H4i4=YXNSAeQhHQ@mail.gmail.com>
- <CALkWK0=bEPPv4rtPrMrQnk3MK=JY4-wwAByWPmzg86NBm_56iQ@mail.gmail.com>
- <20120111050404.GA13507@burratino>
- <CALkWK0kJpEXvBMV=D7h91sz7U2sLvXdW1UzomW0kG2bbM+byYA@mail.gmail.com>
+From: Sergio <sergio.callegari@gmail.com>
+Subject: Re: rsync a *bunch* of git repos
+Date: Wed, 11 Jan 2012 13:22:54 +0000 (UTC)
+Message-ID: <loom.20120111T141805-791@post.gmane.org>
+References: <20120110211548.GD10255@titan.lakedaemon.net> <201201102124.q0ALOowL026941@no.baka.org> <25207BDC675840DEA94AA2B04D6783BD@PhilipOakley> <7v39bn9onl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 11 14:14:04 2012
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 11 14:23:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rky0C-0005xo-5N
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 14:14:04 +0100
+	id 1Rky9A-0002jM-EX
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 14:23:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757490Ab2AKNN7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jan 2012 08:13:59 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:36313 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757226Ab2AKNN6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jan 2012 08:13:58 -0500
-Received: by ggdk6 with SMTP id k6so281979ggd.19
-        for <git@vger.kernel.org>; Wed, 11 Jan 2012 05:13:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=hmWYqi7kEn5mVbzun99wknlp3U2Z67PwLA2riPRBfas=;
-        b=fmGY43sbobVe+ZTA6htCVE8wPE+OfZ+Apzn4lJCNFnRK5xMxpo4owy2JQTkxJbRXP/
-         Rgf1IMsIjStkQ+2OalnI/txlSl34bM1lkUhZbfw8/LGAd6ejz9usXxMm9EoGyYTiPPhO
-         aBg3h9NYpws/TmralJs0HxZqwh1pfgw36OiM0=
-Received: by 10.50.160.201 with SMTP id xm9mr7271143igb.16.1326287637926;
-        Wed, 11 Jan 2012 05:13:57 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id gh7sm2781393igb.1.2012.01.11.05.13.57
-        (version=SSLv3 cipher=OTHER);
-        Wed, 11 Jan 2012 05:13:57 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0kJpEXvBMV=D7h91sz7U2sLvXdW1UzomW0kG2bbM+byYA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757505Ab2AKNXP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jan 2012 08:23:15 -0500
+Received: from lo.gmane.org ([80.91.229.12]:39872 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756547Ab2AKNXO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jan 2012 08:23:14 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Rky8y-0002d8-FC
+	for git@vger.kernel.org; Wed, 11 Jan 2012 14:23:12 +0100
+Received: from i2-ve060.ingce.unibo.it ([137.204.107.60])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Jan 2012 14:23:08 +0100
+Received: from sergio.callegari by i2-ve060.ingce.unibo.it with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Jan 2012 14:23:08 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 137.204.107.60 (Mozilla/5.0 (Ubuntu; X11; Linux x86_64; rv:9.0.1) Gecko/20100101 Firefox/9.0.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188365>
 
-Ramkumar Ramachandra wrote:
+Junio C Hamano <gitster <at> pobox.com> writes:
 
->                                                             Once the
-> painful move to sequencer.c is completed, we can think about all these
-> things.
+> 
+> "Philip Oakley" <philipoakley <at> iee.org> writes:
+> 
+> > I think there is an exception for certain git submodule setups with
+> > local repos, where the gitdir link is hard coded to the absolute
+> > machine path. There has been some discussion on the list recently
+> > about trying to cover this case.
+> 
+> But if you read the original post carefully, all repositories involved are
+> under /home before the transition, and they will move to the exact same
+> place under /home anyway, so I do not think the discussion you have in
+> mind would apply to this case.
+> 
+> The only thing that is needed after the move would be to run
+> 
+> 	git update-index --refresh
+> 
+> in all of the repositories, I think.
+> 
+> 
 
-Honestly, moving code verbatim between files is very easy.  Repeatedly
-rebasing a patch that carries out such a move would presumably be
-hard, though.  But this pain is unnecessary!
+I keep a desktop and a laptop in sync with unison (which uses rsync) and I
+confirm that git is entirely happy about that.
 
-Just like I haven't been reviewing the code movement, I'd be perfectly
-happy to read a "patch" that says
+the git update-index --refresh is necessary, otherwise git status will
+incorrectly report dirty trees.
 
-	"And then we move the functions from the following list to
-	sequencer.c.  I'll send a patch doing so once work has settled
-	down in patches earlier in this series."
+I wonder if it would not make sense to incorporate the update-index --refresh in
+the git status command.
 
-Now you are telling me that in the super-final future my worries are
-valid, but I should forget about them today, because later in this
-series there is some code movement.  That we need to get this painful
-part over with.  I would be much more comforted if you said that in
-the future my worries were _not_ valid, that the current design is a
-good one, and that these patches are not making the program worse;
-otherwise, wouldn't it be better to skip whichever are the
-questionable patches and just carry out the code movement, which
-doesn't depend on them?
+As an aside: git works fine when repos are transferred with rsync, but git packs
+are not rsync friendly nor friendly with backup strategies using binary deltas.
