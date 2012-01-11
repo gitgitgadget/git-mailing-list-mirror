@@ -1,98 +1,121 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/8] revert: decouple sequencer actions from builtin
- commands
-Date: Wed, 11 Jan 2012 03:52:36 -0600
-Message-ID: <20120111095236.GB31670@burratino>
-References: <1326212039-13806-1-git-send-email-artagnon@gmail.com>
- <1326212039-13806-3-git-send-email-artagnon@gmail.com>
- <20120110183857.GC22184@burratino>
- <CALkWK0k=44znLr2oYSx61Mk=qdAurona0f0H4i4=YXNSAeQhHQ@mail.gmail.com>
- <CALkWK0=bEPPv4rtPrMrQnk3MK=JY4-wwAByWPmzg86NBm_56iQ@mail.gmail.com>
- <20120111050404.GA13507@burratino>
- <CALkWK0kJpEXvBMV=D7h91sz7U2sLvXdW1UzomW0kG2bbM+byYA@mail.gmail.com>
- <CALkWK0muXXKu37_qQ8E+LEZiCxebWvWghkc8QjyfdBazjLOstw@mail.gmail.com>
- <20120111054954.GB13507@burratino>
- <CALkWK0=o+KkV08G9JuTaG8Vtb-AzHQVMQPzMy8td_iBVnGX4Dg@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: Re: [PATCH RFC] commit: allow to commit even if there are intent-to-add entries
+Date: Wed, 11 Jan 2012 16:59:40 +0700
+Message-ID: <1326275982-29866-1-git-send-email-pclouds@gmail.com>
+References: <1326261707-11484-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 11 10:47:49 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 11 11:00:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkumY-0001dX-SG
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 10:47:47 +0100
+	id 1RkuyP-00079O-9H
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 11:00:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757355Ab2AKJrl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jan 2012 04:47:41 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:41473 "EHLO
+	id S1753040Ab2AKJ7z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jan 2012 04:59:55 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:42218 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756616Ab2AKJrk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jan 2012 04:47:40 -0500
-Received: by iabz25 with SMTP id z25so870675iab.19
-        for <git@vger.kernel.org>; Wed, 11 Jan 2012 01:47:39 -0800 (PST)
+	with ESMTP id S1752499Ab2AKJ7x (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jan 2012 04:59:53 -0500
+Received: by iabz25 with SMTP id z25so884554iab.19
+        for <git@vger.kernel.org>; Wed, 11 Jan 2012 01:59:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=em8ic3JQ+oDoGZf8IzzM0z9k5zw8Cge9AWD1gGCzAFw=;
-        b=uzBYFBSapeuzB6eJFrK3ePJbOw8gK52osO4hNT470b8HFbMKioM8222T2MfaUdKPSv
-         LGqRomko4JJk0gdHaUnoDyp9ylZKLLO/ycXgtbnpvqxtQSi9Uf9s2BkDCZHsetJ3nhm+
-         a42HLU2e0zpUTrjvo8fUKadJ+TwUmX4Nw2toI=
-Received: by 10.42.151.195 with SMTP id f3mr25334994icw.19.1326275259779;
-        Wed, 11 Jan 2012 01:47:39 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id x18sm3506449ibi.2.2012.01.11.01.47.38
-        (version=SSLv3 cipher=OTHER);
-        Wed, 11 Jan 2012 01:47:39 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0=o+KkV08G9JuTaG8Vtb-AzHQVMQPzMy8td_iBVnGX4Dg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=shw7EhqClQ+rnF/jvK4l+v1p94UKZEqTR0BE9R43ZpM=;
+        b=cfGYvkx5DdOPryN/7ABNAbkGPPBosEglQG0m3v14eLkcuK5TtQsfpGWNJqYPN3Iwcd
+         Ov6p+SKkATETFppCsPzKnC1HJvqEGUUoLEOhmzfZhdgvr21QHwDejUqhRVW1UhuG6Hy7
+         IKnpLSSjfraIOrGs3hGgMoJF5rLiXhwfoAS18=
+Received: by 10.50.207.72 with SMTP id lu8mr6435025igc.0.1326275992077;
+        Wed, 11 Jan 2012 01:59:52 -0800 (PST)
+Received: from pclouds@gmail.com ([113.161.77.29])
+        by mx.google.com with ESMTPS id g34sm3520064ibk.10.2012.01.11.01.59.48
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 11 Jan 2012 01:59:51 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 11 Jan 2012 16:59:43 +0700
+X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
+In-Reply-To: <1326261707-11484-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188350>
 
-Ramkumar Ramachandra wrote:
+2012/1/11 Junio C Hamano <gitster@pobox.com>:
+> I have a mild suspicion that in earlier incarnation of the patch we u=
+sed
+> to let empty blobs committed, and then we used to instead not commit
+> anything at all for such a path, and the real users were bitten by ei=
+ther
+> of these approaches, forgetting to add the contents to the final comm=
+it.
+>
+> So I am not sure if this is such a good idea.
 
->                                                              how does
-> the sequencer know what to do with this hypothetical command string
-> (say "cherry-pick") on a fresh invocation?  It needs to translate this
-> into a replay_action at some point, right?  There are atleast three
-> places where this happens: prepare_revs(), walk_revs_populate_todo(),
-> and single_pick().
+I found your elaborate writing [1] about it. These are the
+interpretations listed in that post:
 
-I see.
+-- 8< --
+When running "commit" and "status" with files marked with "intent to ad=
+d",
+I think there are three possible interpretations of what the user wants=
+ to
+do.
 
-Perhaps cherry-pick and revert should be different values for
-replay_subcommand, to avoid conflating the mechanics and the command
-name?  Resulting in something like this:
+ (1) I earlier said "I'll decide the exact contents to be committed for
+     these paths and tell you by running 'git add' later." when I said
+     'git add -N'.  But I forgot to do so before running "git commit".
+     Thanks for catching this mistake and erroring out.
 
-	enum replay_subcommand {
-		REPLAY_PICK_REVISIONS,
-		REPLAY_REVERT_REVISIONS,
-		REPLAY_EDIT_SEQUENCE,
-		REPLAY_REMOVE_STATE,
-		REPLAY_CONTINUE,
-		REPLAY_SKIP,
-		REPLAY_ROLLBACK
-	};
+ (2) I said "I'll decide the exact content to be committed ... later."
+     when I said 'git add -N'. I am running "git commit" now, but I sti=
+ll
+     don't know what the final contents for this path should be.  I
+     changed my mind, and I do not want to include the addition of thes=
+e
+     paths in the commit I am making.  Please do not error out, but jus=
+t
+     ignore the earlier 'add -N' for now.
 
-Though this dispatcher on an enum to perform many different actions
-already felt a bit awkward, so an alternative could be
+ (3) I said "I'll decide the exact content to be committed ... later."
+     when I said 'git add -N'. I am running "git commit" now, without
+     explicitly telling you with 'git add' about the final contents for
+     these paths.  Please take it as an implicit hint that I am happy w=
+ith
+     the contents in the working tree and commit them as if I said 'git
+     add' on these paths, but do leave modifications to already tracked
+     paths that I haven't added with 'git add'.
+-- 8< --
 
-	extern int pick_revisions(struct replay_opts *opts);
-	extern int revert_revisions(struct replay_opts *opts);
+So (1) may be the safe and sane interpretation and should be the
+default. But perhaps we should allow (2) also, for example with
+--skip-intent-to-add option? It's really frustrating to remove all
+i-t-a, commit (I don't do "commit <path>"), then add them back.
 
-	extern int launch_sequence_editor(struct replay_opts *opts);
-	extern void remove_sequencer_state(void);
-	extern int sequencer_continue(struct replay_opts *opts);
-	extern int sequencer_skip(struct replay_opts *opts);
-	extern int sequencer_rollback(struct replay_opts *opts);
+[1] http://article.gmane.org/gmane.comp.version-control.git/170658
 
-which would make it easier to add arguments specific to any one of the
-routines as appropriate.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (2):
+  cache-tree: update API to take abitrary flags
+  commit: add --skip-intent-to-add to allow commit with i-t-a entries
+    in index
+
+ builtin/commit.c       |   10 +++++++---
+ cache-tree.c           |   35 +++++++++++++++++------------------
+ cache-tree.h           |    5 ++++-
+ merge-recursive.c      |    2 +-
+ t/t2203-add-intent.sh  |   17 +++++++++++++++++
+ test-dump-cache-tree.c |    2 +-
+ 6 files changed, 47 insertions(+), 24 deletions(-)
+
+--=20
+1.7.3.1.256.g2539c.dirty
