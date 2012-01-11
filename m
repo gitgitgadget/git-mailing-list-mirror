@@ -1,94 +1,92 @@
-From: Pat Thoyts <patthoyts@gmail.com>
-Subject: Re: [msysGit] [PATCH 2/2] git-cvsexportcommit: Fix calling Perl's
- rel2abs() on MSYS
-Date: Wed, 11 Jan 2012 11:29:53 +0000
-Message-ID: <CABNJ2GKRD-v85zA8dgoQUn66FcFp1ZsqxnOrJOYeaf+QCdDkSQ@mail.gmail.com>
-References: <4F0D5367.1000506@gmail.com>
-	<4F0D5486.7020707@gmail.com>
+From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
+Subject: =?UTF-8?q?=5BPATCH=5D=20archive=3A=20re-allow=20HEAD=3ADocumentation=20on=20a=20remote=20invocation?=
+Date: Wed, 11 Jan 2012 13:12:38 +0100
+Message-ID: <1326283958-30271-1-git-send-email-cmn@elego.de>
+References: <20120110232132.GA29245@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: msysgit@googlegroups.com, git@vger.kernel.org
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 11 12:30:05 2012
+Cc: git@vger.kernel.org, Albert Astals Cid <aacid@kde.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 11 13:12:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkwNY-0008In-SO
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 12:30:05 +0100
+	id 1Rkx2s-0002F3-VY
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 13:12:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932939Ab2AKL3y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jan 2012 06:29:54 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:36813 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932432Ab2AKL3x convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Jan 2012 06:29:53 -0500
-Received: by iabz25 with SMTP id z25so988033iab.19
-        for <git@vger.kernel.org>; Wed, 11 Jan 2012 03:29:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=K4xzA9pqYtjj58ZKbviltFhp5iNBBXH8APAUd2gjc9M=;
-        b=aDmmNKMOyDTtqfsHooOR6Fg63pn/NYnk/4HdFr7tIOS9rPc+OqGm5LwpO9i6E+ck+X
-         kT2icy9UuJYGkVANblEQluo93oj0HCP/qOhiZhxc7LALdF7R5+ONYvIFeIe1uF0/kXt0
-         e2jKpn6+pSLl/kYpT0cII6ALPfQbMhgku51NI=
-Received: by 10.50.76.162 with SMTP id l2mr6472240igw.1.1326281393373; Wed, 11
- Jan 2012 03:29:53 -0800 (PST)
-Received: by 10.231.18.4 with HTTP; Wed, 11 Jan 2012 03:29:53 -0800 (PST)
-In-Reply-To: <4F0D5486.7020707@gmail.com>
+	id S1756878Ab2AKMMl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jan 2012 07:12:41 -0500
+Received: from kimmy.cmartin.tk ([91.121.65.165]:50635 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756702Ab2AKMMk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jan 2012 07:12:40 -0500
+Received: from beez.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id 4B883461C3;
+	Wed, 11 Jan 2012 13:12:27 +0100 (CET)
+Received: (nullmailer pid 30339 invoked by uid 1000);
+	Wed, 11 Jan 2012 12:12:38 -0000
+X-Mailer: git-send-email 1.7.8.352.g876a6f
+In-Reply-To: <20120110232132.GA29245@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188357>
 
-On 11 January 2012 09:21, Sebastian Schuberth <sschuberth@gmail.com> wr=
-ote:
-> Due to MSYS path mangling GIT_DIR contains a Windows-style path when
-> checked inside a Perl script even if GIT_DIR was previously set to an
-> MSYS-style path in a shell script. So explicitly convert to an MSYS-s=
-tyle
-> path before calling Perl's rel2abs() to make it work.
->
-> This fix was inspired by a very similar patch in WebKit:
->
-> http://trac.webkit.org/changeset/76255/trunk/Tools/Scripts/commit-log=
--editor
->
-> Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
-> ---
-> =C2=A0git-cvsexportcommit.perl | =C2=A0 =C2=A07 +++++++
-> =C2=A01 files changed, 7 insertions(+), 0 deletions(-)
->
-> diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
-> index 39a426e..e6bf252 100755
-> --- a/git-cvsexportcommit.perl
-> +++ b/git-cvsexportcommit.perl
-> @@ -30,6 +30,13 @@ if ($opt_w || $opt_W) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0chomp($gd);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0$ENV{GIT_DIR} =
-=3D $gd;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-> +
-> + =C2=A0 =C2=A0 =C2=A0 # On MSYS, convert a Windows-style path to an =
-MSYS-style path
-> + =C2=A0 =C2=A0 =C2=A0 # so that rel2abs() below works correctly.
-> + =C2=A0 =C2=A0 =C2=A0 if ($^O eq 'msys') {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 $ENV{GIT_DIR} =3D~=
- s#^([[:alpha:]]):/#/$1/#;
-> + =C2=A0 =C2=A0 =C2=A0 }
-> +
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0# Make sure GIT_DIR is absolute
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ENV{GIT_DIR} =3D File::Spec->rel2abs($ENV=
-{GIT_DIR});
-> =C2=A0}
-> --
-> 1.7.9.rc0.5096.g30a61
->
+The tightening done in (ee27ca4a: archive: don't let remote clients
+get unreachable commits, 2011-11-17) went too far and disallowed
+HEAD:Documentation as it would try to find "HEAD:Documentation" as a
+ref.
 
-Cool - works for me. I just assumed we didn't support cvsexport.
+Only DWIM the "HEAD" part to see if it exists as a ref. Once we're
+sure that we've been given a valid ref, we follow the normal code
+path. This still disallows attempts to access commits which are not
+branch tips.
 
-Tested-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+---
+
+AFAICT this should still be safe. Using HEAD^:Documentation or
+<sha1>:Documentation still complains that HEAD^ and <sha1> aren't
+refs.
+
+ archive.c |   19 +++++++++++++------
+ 1 files changed, 13 insertions(+), 6 deletions(-)
+
+diff --git a/archive.c b/archive.c
+index 164bbd0..4735bfb 100644
+--- a/archive.c
++++ b/archive.c
+@@ -260,14 +260,21 @@ static void parse_treeish_arg(const char **argv,
+ 	/* Remotes are only allowed to fetch actual refs */
+ 	if (remote) {
+ 		char *ref =3D NULL;
+-		if (!dwim_ref(name, strlen(name), sha1, &ref))
+-			die("no such ref: %s", name);
++		const char *refname, *colon =3D NULL;
++
++		colon =3D strchr(name, ':');
++		if (colon)
++			refname =3D xstrndup(name, colon - name);
++		else
++			refname =3D name;
++
++		if (!dwim_ref(refname, strlen(refname), sha1, &ref))
++			die("no such ref: %s", refname);
+ 		free(ref);
+ 	}
+-	else {
+-		if (get_sha1(name, sha1))
+-			die("Not a valid object name");
+-	}
++
++	if (get_sha1(name, sha1))
++		die("Not a valid object name");
+=20
+ 	commit =3D lookup_commit_reference_gently(sha1, 1);
+ 	if (commit) {
+--=20
+1.7.8.352.g876a6f
