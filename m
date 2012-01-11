@@ -1,89 +1,166 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/8] revert: decouple sequencer actions from builtin
- commands
-Date: Tue, 10 Jan 2012 23:49:54 -0600
-Message-ID: <20120111054954.GB13507@burratino>
-References: <1326025653-11922-1-git-send-email-artagnon@gmail.com>
- <1326212039-13806-1-git-send-email-artagnon@gmail.com>
- <1326212039-13806-3-git-send-email-artagnon@gmail.com>
- <20120110183857.GC22184@burratino>
- <CALkWK0k=44znLr2oYSx61Mk=qdAurona0f0H4i4=YXNSAeQhHQ@mail.gmail.com>
- <CALkWK0=bEPPv4rtPrMrQnk3MK=JY4-wwAByWPmzg86NBm_56iQ@mail.gmail.com>
- <20120111050404.GA13507@burratino>
- <CALkWK0kJpEXvBMV=D7h91sz7U2sLvXdW1UzomW0kG2bbM+byYA@mail.gmail.com>
- <CALkWK0muXXKu37_qQ8E+LEZiCxebWvWghkc8QjyfdBazjLOstw@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH RFC] commit: allow to commit even if there are intent-to-add entries
+Date: Wed, 11 Jan 2012 13:01:47 +0700
+Message-ID: <1326261707-11484-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 11 06:45:04 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 11 07:02:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rkqzg-0005q5-6b
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 06:45:04 +0100
+	id 1RkrG8-0002Vf-At
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 07:02:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752694Ab2AKFo7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jan 2012 00:44:59 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:60186 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751146Ab2AKFo6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jan 2012 00:44:58 -0500
-Received: by ggdk6 with SMTP id k6so166026ggd.19
-        for <git@vger.kernel.org>; Tue, 10 Jan 2012 21:44:58 -0800 (PST)
+	id S1753032Ab2AKGB6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jan 2012 01:01:58 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:49041 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752303Ab2AKGB5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Jan 2012 01:01:57 -0500
+Received: by obbup16 with SMTP id up16so399576obb.19
+        for <git@vger.kernel.org>; Tue, 10 Jan 2012 22:01:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=d/idI+yMEzYesKNb9hSv7TCNQrMCn1GbPG31hVTzr4c=;
-        b=ecQyemfH1+xBkzemuZ6A702oYIG94mVqwX3431bc+Sr7p6qMoYWMF6r/t2BIokwVRa
-         ci1wh6hKKt1wBdQHZMpbVwSTuZkD+zZeLU+VMr9HSyQkCVSNACVCVMLt+2u2g3++Yqn8
-         //9GGQzB7DRJ/1VRRa9vXj/nbK9q8qQJKf63w=
-Received: by 10.100.244.37 with SMTP id r37mr9615903anh.11.1326260697977;
-        Tue, 10 Jan 2012 21:44:57 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id i50sm691877yhk.11.2012.01.10.21.44.56
-        (version=SSLv3 cipher=OTHER);
-        Tue, 10 Jan 2012 21:44:57 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0muXXKu37_qQ8E+LEZiCxebWvWghkc8QjyfdBazjLOstw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=K5d+3YRRrFlMQPt3r8tjELsE9x7IZzkcF4zTJKD7hVg=;
+        b=g6isQyzYxXQN4iVjZy9Gv0lG2DU6/9RSgUQwkT5LvK0Nt10r6m5F5wGNJtp+B+jT13
+         A15PJI1jE5DdYWeAhw46Yd+UQRx1bbo2JroE7TRykeCTUrqTAwVASCXzsDHgk8aJJ67s
+         P5HGsV8OR5XhrzcyEa5SsXwAVz9RGLL6kbZ5M=
+Received: by 10.50.236.67 with SMTP id us3mr5196986igc.14.1326261717309;
+        Tue, 10 Jan 2012 22:01:57 -0800 (PST)
+Received: from pclouds@gmail.com ([113.161.77.29])
+        by mx.google.com with ESMTPS id rc7sm6991156igb.0.2012.01.10.22.01.53
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 10 Jan 2012 22:01:56 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 11 Jan 2012 13:01:48 +0700
+X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188334>
 
-Ramkumar Ramachandra wrote:
+This patch replaces the approach in 331fcb5 (git add --intent-to-add:
+do not let an empty blob be committed by accident) regarding i-t-a
+entries: instead of forbidding i-t-a entries at commit time, we can
+simply ignore them.
 
-> Hi Jonathan,
->
-> I wrote a new commit message for this patch.  Perhaps it can help clarify?
+We already ignore CE_REMOVE entries while updating cache-tree. Putting
+CE_INTENT_TO_ADD ones in the same category should not cause any negativ=
+e
+effects regarding cache-tree.
 
-Thanks.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ On the few chances I have to use "git add -N" it does not fit well
+ with "git add -p; git diff --cached; git commit -m foo" style. I
+ think this may be a good thing to do.
 
->   revert: decouple sequencer actions from commands
->
->   Currently, we have two actions "pick" and "revert" that directly
->   correspond to the action of the commands 'git cherry-pick' and 'git
->   revert' respectively.
+ builtin/commit.c      |    2 +-
+ builtin/write-tree.c  |    2 +-
+ cache-tree.c          |   14 +++++---------
+ t/t2203-add-intent.sh |   10 +++++++++-
+ 4 files changed, 16 insertions(+), 12 deletions(-)
 
-Well, let's start here.  The two insns "pick" and "revert" and the
-ability to mix them doesn't have much to do with the picture, does it?
-
-I think the actual problem being solved is that insn types, as described
-by the replay_action enum, are being abused to refer to top-level git
-commands "revert" and "cherry-pick".  The sequencer isn't supposed to
-care which top-level git command called it, except in some messages, so
-we'd certainly like to stop pretending that has something to do with
-insn types.
-
-Based on what you've said, correcting this cleanly is complicated in
-some places by the inconvenient fact that the sequencer _does_ care
-which top-level git command called it.  (I haven't checked this; I'm
-just taking it on faith from you.)  If we want to let other git
-commands (like "git rebase" or "git sequence") call into the
-sequencer, that sounds like a way bigger problem than any conflict of
-terminology.
+diff --git a/builtin/commit.c b/builtin/commit.c
+index eba1377..767b78a 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -871,7 +871,7 @@ static int prepare_to_commit(const char *index_file=
+, const char *prefix,
+ 	discard_cache();
+ 	read_cache_from(index_file);
+ 	if (update_main_cache_tree(0)) {
+-		error(_("Error building trees"));
++		error(_("Error building trees; the index is unmerged?"));
+ 		return 0;
+ 	}
+=20
+diff --git a/builtin/write-tree.c b/builtin/write-tree.c
+index b223af4..68baa24 100644
+--- a/builtin/write-tree.c
++++ b/builtin/write-tree.c
+@@ -46,7 +46,7 @@ int cmd_write_tree(int argc, const char **argv, const=
+ char *unused_prefix)
+ 		die("%s: error reading the index", me);
+ 		break;
+ 	case WRITE_TREE_UNMERGED_INDEX:
+-		die("%s: error building trees", me);
++		die("%s: error building trees; the index is unmerged?", me);
+ 		break;
+ 	case WRITE_TREE_PREFIX_ERROR:
+ 		die("%s: prefix %s not found", me, prefix);
+diff --git a/cache-tree.c b/cache-tree.c
+index 8de3959..47defd1 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -158,19 +158,15 @@ static int verify_cache(struct cache_entry **cach=
+e,
+ 	funny =3D 0;
+ 	for (i =3D 0; i < entries; i++) {
+ 		struct cache_entry *ce =3D cache[i];
+-		if (ce_stage(ce) || (ce->ce_flags & CE_INTENT_TO_ADD)) {
++		if (ce_stage(ce)) {
+ 			if (silent)
+ 				return -1;
+ 			if (10 < ++funny) {
+ 				fprintf(stderr, "...\n");
+ 				break;
+ 			}
+-			if (ce_stage(ce))
+-				fprintf(stderr, "%s: unmerged (%s)\n",
+-					ce->name, sha1_to_hex(ce->sha1));
+-			else
+-				fprintf(stderr, "%s: not added yet\n",
+-					ce->name);
++			fprintf(stderr, "%s: unmerged (%s)\n",
++				ce->name, sha1_to_hex(ce->sha1));
+ 		}
+ 	}
+ 	if (funny)
+@@ -338,8 +334,8 @@ static int update_one(struct cache_tree *it,
+ 				mode, sha1_to_hex(sha1), entlen+baselen, path);
+ 		}
+=20
+-		if (ce->ce_flags & CE_REMOVE)
+-			continue; /* entry being removed */
++		if (ce->ce_flags & (CE_REMOVE | CE_INTENT_TO_ADD))
++			continue; /* entry being removed or just placeholder */
+=20
+ 		strbuf_grow(&buffer, entlen + 100);
+ 		strbuf_addf(&buffer, "%o %.*s%c", mode, entlen, path + baselen, '\0'=
+);
+diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
+index 2543529..65430e4 100755
+--- a/t/t2203-add-intent.sh
++++ b/t/t2203-add-intent.sh
+@@ -41,7 +41,15 @@ test_expect_success 'cannot commit with i-t-a entry'=
+ '
+ 	echo frotz >nitfol &&
+ 	git add rezrov &&
+ 	git add -N nitfol &&
+-	test_must_fail git commit -m initial
++	git commit -m initial &&
++	git ls-tree -r HEAD >actual &&
++	cat >expected <<EOF &&
++100644 blob ce013625030ba8dba906f756967f9e9ca394464a	elif
++100644 blob ce013625030ba8dba906f756967f9e9ca394464a	file
++100644 blob cf7711b63209d0dbc2d030f7fe3513745a9880e4	rezrov
++EOF
++	test_cmp expected actual &&
++	git reset HEAD^
+ '
+=20
+ test_expect_success 'can commit with an unrelated i-t-a entry in index=
+' '
+--=20
+1.7.3.1.256.g2539c.dirty
