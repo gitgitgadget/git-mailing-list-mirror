@@ -1,43 +1,44 @@
 From: Steven Line <sline00@gmail.com>
-Subject: (unknown)
-Date: Tue, 10 Jan 2012 16:56:28 -0700
-Message-ID: <CAJ1a7SqErXtmnS1=_O_BjbrKVMNWeKyenGruqQjcDZZy_jb9sg@mail.gmail.com>
+Subject: git svn clone terminating prematurely (I think)
+Date: Tue, 10 Jan 2012 17:02:09 -0700
+Message-ID: <CAJ1a7SrkDOyNRv8Spo4xvoKjP4zaXteim4h3JGcWU-nYDugx9Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 11 00:56:58 2012
+X-From: git-owner@vger.kernel.org Wed Jan 11 01:02:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RklYn-0004d4-Nx
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 00:56:58 +0100
+	id 1Rkldy-0006kz-IW
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 01:02:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757124Ab2AJX4k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jan 2012 18:56:40 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:57790 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752881Ab2AJX43 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jan 2012 18:56:29 -0500
-Received: by eekd4 with SMTP id d4so32386eek.19
-        for <git@vger.kernel.org>; Tue, 10 Jan 2012 15:56:28 -0800 (PST)
+	id S1756622Ab2AKACO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jan 2012 19:02:14 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:45489 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751576Ab2AKACM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jan 2012 19:02:12 -0500
+Received: by eaad14 with SMTP id d14so46477eaa.19
+        for <git@vger.kernel.org>; Tue, 10 Jan 2012 16:02:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=SmnZbzWNXulz1chWV77yCtAPDdJf6qSZc86lCR36260=;
-        b=iRXuBNxDPWaGk2aL1Mta3O+hd+RVjVXHIP5TFoPGe2Jfrrc3ypL28HMlHUllv/9xwg
-         dSZnsFnVQ6Y/kQNA//ssQVJc4hqA6i6MqCrEAWC8HGDNg+56nCgFW1FXFlYvJ0SUwUYs
-         CHuXwJ6bpv/Q4rWjO1Xq/Wz9YaulBjFYSe8UA=
-Received: by 10.152.113.101 with SMTP id ix5mr9750966lab.16.1326239788395;
- Tue, 10 Jan 2012 15:56:28 -0800 (PST)
-Received: by 10.152.128.132 with HTTP; Tue, 10 Jan 2012 15:56:28 -0800 (PST)
-Subject: 
+        bh=zKMJol+1SoGvy93FRo8zwbxuu7rTIESmDB+rP+oL5Rg=;
+        b=FXDDpEGbgujWrDHL5W0t98LFe8dlzeEk50P2az/E/zIJQffuRh5gXeCWYEVMh/heAL
+         l2RczhOB/Wcr5L12B3MnJM/aQ1Y1Mf45ZsrYOO0X6nRcfwUhmcB2A/VJ2YmBkmmunYXy
+         V5zWR7eUBMgki+Evm/iOnl1VMfRJnCusnHWNU=
+Received: by 10.112.84.163 with SMTP id a3mr4923711lbz.53.1326240129778; Tue,
+ 10 Jan 2012 16:02:09 -0800 (PST)
+Received: by 10.152.128.132 with HTTP; Tue, 10 Jan 2012 16:02:09 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188307>
+
+Reposting this with a better subject than (unknown) . . .
 
 Hi All,
 
@@ -49,7 +50,7 @@ Here's the problem:
 I need some help getting my subversion repository cloned over to git.
 Our svn repository has about 12,000 commits, when I run
 git svn clone -s  -A authors.txt
-svn+ssh://csvn@source.res.ourdomain.com/home/svn/sem sem
+svn+ssh://csvn <at> source.res.ourdomain.com/home/svn/sem sem
 It runs for about 2h 15m then completes with no error messages. I have
 also cloned starting at revision 6300, about the middle of the svn
 repository, and I get the same results as below.
@@ -77,6 +78,7 @@ answer via google yet.
 
 Thank you for any help.
 
---
+-- 
 Steven Line
 303-910-1212
+sline00@gmail.com
