@@ -1,52 +1,58 @@
-From: "Andreas T.Auer" <andreas.t.auer_gtml_37453@ursus.ath.cx>
-Subject: Re: rsync a *bunch* of git repos
-Date: Wed, 11 Jan 2012 09:01:39 +0100
-Message-ID: <4F0D41E3.5020908@ursus.ath.cx>
-References: <20120110211548.GD10255@titan.lakedaemon.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t2203: fix wrong commit command
+Date: Wed, 11 Jan 2012 00:09:45 -0800
+Message-ID: <7vmx9u7j92.fsf@alter.siamese.dyndns.org>
+References: <1326252098-2891-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jason <git@lakedaemon.net>
-X-From: git-owner@vger.kernel.org Wed Jan 11 09:09:44 2012
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 11 09:09:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RktFe-0002JL-Kf
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 09:09:42 +0100
+	id 1RktFq-0002Ng-3l
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 09:09:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756657Ab2AKIJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jan 2012 03:09:37 -0500
-Received: from brln-4dba5aac.pool.mediaWays.net ([77.186.90.172]:11816 "EHLO
-	here" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756117Ab2AKIJg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jan 2012 03:09:36 -0500
-X-Greylist: delayed 478 seconds by postgrey-1.27 at vger.kernel.org; Wed, 11 Jan 2012 03:09:36 EST
-Received: from [192.168.0.14] (unknown [192.168.0.14])
-	by here (Postfix) with ESMTP id 006561B05FA;
-	Wed, 11 Jan 2012 09:01:36 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20111110 Icedove/3.0.11
-In-Reply-To: <20120110211548.GD10255@titan.lakedaemon.net>
+	id S1756830Ab2AKIJs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jan 2012 03:09:48 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57442 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756117Ab2AKIJs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jan 2012 03:09:48 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A52359E2;
+	Wed, 11 Jan 2012 03:09:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=aZsTky
+	1FSJ9UOiWcd2PyvHtc9QPgg4ek/xCWIKoTopbQNEYU0mpG376vMtpuJiJdTgMrt9
+	1/DFBnU69BkI94WWjI7b5T3Tk1VBK38xArxPEkWpAX0DrEWYeOz3Lx8DKR4G2G4Z
+	D2v7bjYWKbGmTJwuIbEAWA+hbXziZcQI/PCxA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=h7ZzdzcBrRZaeMSd7ln2xw5PSXtAmBob
+	nxtiSTlgcH713speC856Wq93lJ4yZZGq0Akc8bHOC3S4fbj1HUL3rpBcKoueNIu+
+	XuUDvQ3jIrzF7k8N20cRw5d28pjRorc2Mkf46GG9I4QQBoywUPZ9cN2yrK5upMyw
+	wYwIBwJUHbk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8138359E1;
+	Wed, 11 Jan 2012 03:09:47 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CEFBF59E0; Wed, 11 Jan 2012
+ 03:09:46 -0500 (EST)
+In-Reply-To: <1326252098-2891-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 11 Jan
+ 2012 10:21:38 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A04E63AE-3C2B-11E1-B51B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188342>
 
-On 10.01.2012 22:15 Jason wrote:
-> The nuts and bolts of this aren't difficult, the problem is I don't have
-> a complete understanding of how git stores data.  I've heard in the
-> past that it uses a lot of hardlinks and softlinks.  I need to make
-> sure, that once I transfer the data, and reboot the machine with the new
-> partition mounted under /home, that all my git repos will be okay.
->
->    
-As far as I know git uses hardlinks to save diskspace, but it doesn't 
-rely on hardlinks to work. It also works with filesystems that don't 
-support hardlinks.
-But without hardlinks you will probably waste disk space so I recommend 
-the -H parameter to rsync, which preserve hardlinks, if possible. If you 
-have hundreds of git repos that are cloned from each other, than this 
-should make a difference.
+Thanks.
