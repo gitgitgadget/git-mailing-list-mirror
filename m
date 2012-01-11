@@ -1,132 +1,138 @@
-From: Paul Gortmaker <paul.gortmaker@windriver.com>
-Subject: Re: Regulator updates for 3.3
-Date: Wed, 11 Jan 2012 13:40:27 -0500
-Message-ID: <20120111184026.GA23952@windriver.com>
-References: <20120109073727.GF22134@opensource.wolfsonmicro.com>
- <CA+55aFyhoh0rT_ujuE1w3RpuR7kqivYFwPpm66VC-xtq1PiGUQ@mail.gmail.com>
- <20120110184530.GE7164@opensource.wolfsonmicro.com>
- <CA+55aFxXb7wqfrpozS6iH0k25y-+Uy8_Tavv59JXMhaWrjXLaw@mail.gmail.com>
- <20120110222711.GK7164@opensource.wolfsonmicro.com>
- <CA+55aFxvQF=Bm4ae6euB_UO8otMCuN9Lv37Zn3TpE-L7JH3Kzw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 06/10] clone: delay cloning until after remote HEAD
+ checking
+Date: Wed, 11 Jan 2012 11:36:44 -0800
+Message-ID: <7v8vle6ng3.fsf@alter.siamese.dyndns.org>
+References: <1326023188-15559-1-git-send-email-pclouds@gmail.com>
+ <1326189427-20800-7-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Mark Brown <broonie@opensource.wolfsonmicro.com>,
-	Liam Girdwood <lrg@ti.com>, <linux-kernel@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: linux-kernel-owner@vger.kernel.org Wed Jan 11 19:40:46 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 11 20:36:56 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Rl36K-0003Sq-EO
-	for glk-linux-kernel-3@lo.gmane.org; Wed, 11 Jan 2012 19:40:44 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Rl3yg-00067A-MK
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 20:36:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933884Ab2AKSki (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 11 Jan 2012 13:40:38 -0500
-Received: from mail.windriver.com ([147.11.1.11]:47022 "EHLO
-	mail.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933111Ab2AKSkh (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 11 Jan 2012 13:40:37 -0500
-Received: from ALA-HCA.corp.ad.wrs.com (ala-hca [147.11.189.40])
-	by mail.windriver.com (8.14.3/8.14.3) with ESMTP id q0BIeSCY018919
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
-	Wed, 11 Jan 2012 10:40:28 -0800 (PST)
-Received: from yow-pgortmak-d1 (128.224.146.65) by ALA-HCA.corp.ad.wrs.com
- (147.11.189.50) with Microsoft SMTP Server (TLS) id 14.1.255.0; Wed, 11 Jan
- 2012 10:40:28 -0800
-Received: from paul by yow-pgortmak-d1 with local (Exim 4.74)	(envelope-from
- <paul.gortmaker@windriver.com>)	id 1Rl363-0006Fi-3I; Wed, 11 Jan 2012
- 13:40:27 -0500
-Content-Disposition: inline
-In-Reply-To: <CA+55aFxvQF=Bm4ae6euB_UO8otMCuN9Lv37Zn3TpE-L7JH3Kzw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1757350Ab2AKTgt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jan 2012 14:36:49 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60679 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755898Ab2AKTgs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Jan 2012 14:36:48 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD82C6CA1;
+	Wed, 11 Jan 2012 14:36:46 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=zsk4rEh/Zpqs
+	8jo1oLS95QwsJyo=; b=HvHugbjNf/ULZVYLWXNcTjN5DnjV6b7zb/WyR0hpbRSn
+	xUCHiFgpEBMAJheSwOmMpC38wAIsKW/15J6AzvqbChREfucouJQyg6pWswPU19i6
+	EZeOAx4q9+aePOVjYkad4xCWreZC76kXz3iBht17eYzJIVHQ9x6aAcchRsClOzk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=YI0d24
+	xSwpswgrESQrH9w1cDqrIte2C9mg0OxBp9BJdtVpmpeK71kC5dh9M17k5WGtnrnd
+	TOBVc8cXnlW5hjEEeiKXIiK/ciWdZtdBURbkPKAvcyJBxsdrlhPAR4mbpwXljQ5Y
+	O6NBdAnAWbCh7eVhjW6oMoKNIUCdqYhZUASKE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B546F6CA0;
+	Wed, 11 Jan 2012 14:36:46 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0CFB76C9F; Wed, 11 Jan 2012
+ 14:36:45 -0500 (EST)
+In-Reply-To: <1326189427-20800-7-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 10 Jan
+ 2012 16:57:03 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 98DE1AC8-3C8B-11E1-86D5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188383>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188384>
 
-[Re: Regulator updates for 3.3] On 10/01/2012 (Tue 14:54) Linus Torvalds wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-[...]
+> This gives us an opportunity to abort the command during remote HEAD
+> check without wasting much bandwidth.
+>
+> Cloning with remote-helper remains before the check because the remot=
+e
+> helper updates mapped_refs, which is necessary for remote ref checks.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  I'm not familiar with remote-helper to see if there's any better way
+>  to do this..
+> ...
+> +	refs =3D transport_get_remote_refs(transport);
+> +	mapped_refs =3D refs ? wanted_peer_refs(refs, refspec) : NULL;
+> +
+> +	/*
+> +	 * mapped_refs may be updated if transport-helper is used so
+> +	 * we need fetch it early because remote_head code below
+> +	 * relies on it.
+> +	 *
+> +	 * for normal clones, transport_get_remote_refs() should
+> +	 * return reliable ref set, we can delay cloning until after
+> +	 * remote HEAD check.
+> +	 */
+> +	if (!is_local && remote->foreign_vcs && refs)
+> +		transport_fetch_refs(transport, mapped_refs);
+> +
 
-> So right now "git merge" (and "git pull") make it too easy to make
-> those meaningless merge commits. If instead of seven pointless merges
+I like the goal of this change, but wouldn't remote->url indicate it is=
+ a
+remote that needs a helper invocation by having double-colon in it,
+without having an explicit value in foreign_vcs field?
 
-It looks like the editor-by-default solution is a go, but there still
-might be value in increasing the visibility of the pointless merges
-via. the patch below.
+Would it be cleaner if transport_get() learned to mark the transport as
+needing special treatment (i.e. we won't know the final ref mapping unt=
+il
+we fetch the data from the other side) and check is made on that mark l=
+eft
+in the transport, instead of foreign_vcs in remote?
 
-Paul.
+> diff --git a/transport.c b/transport.c
+> index a99b7c9..aae9889 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -895,8 +895,10 @@ struct transport *transport_get(struct remote *r=
+emote, const char *url)
+> =20
+>  		while (is_urlschemechar(p =3D=3D url, *p))
+>  			p++;
+> -		if (!prefixcmp(p, "::"))
+> +		if (!prefixcmp(p, "::")) {
+>  			helper =3D xstrndup(url, p - url);
+> +			remote->foreign_vcs =3D helper;
+> +		}
+>  	}
+> =20
+>  	if (helper) {
 
-> you had (say) had two merges that had messages about *why* they
-> weren't pointless, I'd be perfectly happy.
-> 
-> Addid junio and git to the cc just to bring up this issue of bad UI
-> once again. I realize it could break old scripts to start up an editor
-> window, but still..
-> 
->                        Linus
+Ahhh, Ok. You are reusing the existing "foreign_vcs" field exactly for
+that purpose. Earlier the field was strictly for configured .vcs value,
+but now you use it also for the helper embedded within the URL, which
+sounds like the right change to me.
 
+> @@ -938,6 +940,7 @@ struct transport *transport_get(struct remote *re=
+mote, const char *url)
+>  		char *handler =3D xmalloc(len + 1);
+>  		handler[len] =3D 0;
+>  		strncpy(handler, url, len);
+> +		remote->foreign_vcs =3D helper;
+>  		transport_helper_init(ret, handler);
+>  	}
 
->From 1a548fa97b78cebcded15d2b00ee3d826f731abd Mon Sep 17 00:00:00 2001
-From: Paul Gortmaker <paul.gortmaker@windriver.com>
-Date: Wed, 11 Jan 2012 10:33:45 -0500
-Subject: [PATCH] merge: Make merge strategy message follow the diffstat
-
-One of the common problems I've seen with people who are
-somewhat new to git is that they don't realize that a pull
-is a fetch+merge.  They simply decide they want all the
-latest stuff and issue a git pull without really thinking
-if they are on a branch with local commits or on master,
-where a fast forward can take place.
-
-But the one line message that tells you whether you got a fast
-forward or a real merge commit is usually pushed off the
-screen by all the diffstat information.  So these users won't
-even know that their pull has created a merge, and chances
-are they will never change their workflow.
-
-By moving the message after the diffstat, there is a better
-chance that people will be aware they've done a pointless
-merge commit.
-
-Signed-off-by: Paul Gortmaker <paul.gortmaker@windriver.com>
-
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 3a45172..9471588 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -370,12 +370,12 @@ static void finish(struct commit *head_commit,
- {
- 	struct strbuf reflog_message = STRBUF_INIT;
- 	const unsigned char *head = head_commit->object.sha1;
-+	int automsg = 0;
- 
--	if (!msg)
-+	if (!msg) {
-+		automsg = 1;
- 		strbuf_addstr(&reflog_message, getenv("GIT_REFLOG_ACTION"));
--	else {
--		if (verbosity >= 0)
--			printf("%s\n", msg);
-+	} else {
- 		strbuf_addf(&reflog_message, "%s: %s",
- 			getenv("GIT_REFLOG_ACTION"), msg);
- 	}
-@@ -409,6 +409,9 @@ static void finish(struct commit *head_commit,
- 		diff_flush(&opts);
- 	}
- 
-+	if (!automsg && verbosity >= 0)
-+		printf("%s\n", msg);
-+
- 	/* Run a post-merge hook */
- 	run_hook(NULL, "post-merge", squash ? "1" : "0", NULL);
- 
--- 
-1.7.4.4
+This I am not sure. What value does "helper" variable have at this poin=
+t
+in the flow? Wouldn't it be a NULL? Or did you mean "handler"?
