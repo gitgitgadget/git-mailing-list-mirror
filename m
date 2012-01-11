@@ -1,81 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
 Subject: Re: leaky cherry-pick
-Date: Wed, 11 Jan 2012 00:16:50 -0800
-Message-ID: <7vipki7ix9.fsf@alter.siamese.dyndns.org>
-References: <20120109223737.GA1589@padd.com>
- <CALkWK0nwE0c6qVvbauPrjmb3NX4NDeGSrvrC2ry2bjMeM4Hr0A@mail.gmail.com>
- <20120110195017.GA19961@sigill.intra.peff.net>
- <CALkWK0kDnxjtQ+ihH_dif_7yivHLd=pibao4KPs_PDXfc2UMOA@mail.gmail.com>
+Date: Wed, 11 Jan 2012 14:30:16 +0530
+Message-ID: <CALkWK0m+okqJk05BMQAEMww6FNLxaLVhAM92WmUDeA_J-drOdg@mail.gmail.com>
+References: <20120109223737.GA1589@padd.com> <CALkWK0nwE0c6qVvbauPrjmb3NX4NDeGSrvrC2ry2bjMeM4Hr0A@mail.gmail.com>
+ <20120110195017.GA19961@sigill.intra.peff.net> <CALkWK0kDnxjtQ+ihH_dif_7yivHLd=pibao4KPs_PDXfc2UMOA@mail.gmail.com>
+ <7vipki7ix9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Jeff King <peff@peff.net>, Pete Wyckoff <pw@padd.com>,
 	git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 11 09:17:00 2012
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 11 10:00:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RktMg-00050x-QV
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 09:16:59 +0100
+	id 1Rku3F-0005lv-TD
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 10:00:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756594Ab2AKIQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jan 2012 03:16:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59661 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752172Ab2AKIQx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jan 2012 03:16:53 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 94D715B39;
-	Wed, 11 Jan 2012 03:16:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IXlTD5n+h1MyUPluXVzmrjuPpu8=; b=KBU0NW
-	OAQM56jz2k2VEzQKp3Rdif8kD+esFMRyaWdNfxeBMVgrTh8PCl3tvPcUpdyZ/xsM
-	S3bW11/ULfw+2gpBvOAkDVZ/0x2aj5CHT2zkM4j3s2Fery5aabR4s0oXgI26H55F
-	ujM5LQA+fGd/A+exgauIqvb5ZBoSswGgez7xQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=h3qtNWIgFt45m6iqZx6y43+vRtyp5FGI
-	Cgk5w17HaX+BEedDgTkUd0pUvfJszRgRvPg79QzMn3qyQRlsmkR3ObuQ36e1Scft
-	4SuDXR52Hoyl8KBF3Xec7EI3yPZbJKrkRMOOnPaPtQQpowstXuB1lNCI6g2qRzEP
-	Hdm6op1YF/Q=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8CA255B38;
-	Wed, 11 Jan 2012 03:16:52 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 127825B37; Wed, 11 Jan 2012
- 03:16:51 -0500 (EST)
-In-Reply-To: <CALkWK0kDnxjtQ+ihH_dif_7yivHLd=pibao4KPs_PDXfc2UMOA@mail.gmail.com>
- (Ramkumar Ramachandra's message of "Wed, 11 Jan 2012 09:00:11 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9DC34E00-3C2C-11E1-A8E6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756622Ab2AKJAj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jan 2012 04:00:39 -0500
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:39945 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756117Ab2AKJAi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Jan 2012 04:00:38 -0500
+Received: by wibhm14 with SMTP id hm14so181226wib.19
+        for <git@vger.kernel.org>; Wed, 11 Jan 2012 01:00:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=tNMXa25BWHr/AbKHlnc/2/XMwuFxsLOhgCUslYfScDk=;
+        b=F3xfgdhb3x8cJm242WorwZx6bwQrKMh3IYtZLjwmEcASjOw8KbHT5vHBxVrco9cSIp
+         D+3iHXH7Vy/XojCREXVDbTlt70aHMKZkmOlm672zUZdkprroOonCIyaJ4P14CfWSC4/I
+         GMdFM700uAUvGhJh/yhwwRZpO9xGQrcSzrlJ4=
+Received: by 10.180.104.5 with SMTP id ga5mr9013773wib.21.1326272437286; Wed,
+ 11 Jan 2012 01:00:37 -0800 (PST)
+Received: by 10.216.175.3 with HTTP; Wed, 11 Jan 2012 01:00:16 -0800 (PST)
+In-Reply-To: <7vipki7ix9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188344>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
-
->> If you then do a lookup for "foo/bar/baz/file2", it can use the exact
->> same stack without looking for or reparsing the attribute files. If you
->> then do a lookup for "foo/bar/bleep/file", it pops only the entry for
->> "foo/bar/baz/.gitattributes", and pushes only the entry for
->> "foo/bar/bleep/.gitattributes".
+Junio C Hamano wrote:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
 >
-> I see.  Thanks for the excellent explanation-  I'll try implementing
-> this scheme.
+>>> If you then do a lookup for "foo/bar/baz/file2", it can use the exa=
+ct
+>>> same stack without looking for or reparsing the attribute files. If=
+ you
+>>> then do a lookup for "foo/bar/bleep/file", it pops only the entry f=
+or
+>>> "foo/bar/baz/.gitattributes", and pushes only the entry for
+>>> "foo/bar/bleep/.gitattributes".
+>>
+>> I see. =C2=A0Thanks for the excellent explanation- =C2=A0I'll try im=
+plementing
+>> this scheme.
+>
+> I somehow have a feeling that you did not read the conclusion in Peff=
+'s
+> message correctly. =C2=A0The code only keeps data from one active pat=
+h of
+> per-directory .gitattributes files to the leaf of a working tree and
+> releases unneeded data (IOW, it "pops" the attr_stack elements) when =
+it
+> goes on to look at the next path, so my understanding is that there i=
+s
+> nothing to "try implementing" here.
 
-I somehow have a feeling that you did not read the conclusion in Peff's
-message correctly.  The code only keeps data from one active path of
-per-directory .gitattributes files to the leaf of a working tree and
-releases unneeded data (IOW, it "pops" the attr_stack elements) when it
-goes on to look at the next path, so my understanding is that there is
-nothing to "try implementing" here.
+My bad-  I thought the current implementation doesn't release the
+unneeded data.  So, does the entire 7 KB of leaked data come from one
+active path?
 
-Unless attr.c::free_attr_elem() is leaky, that is. If that were the case,
-such a leak will accumulate and would make a difference.
+-- Ram
