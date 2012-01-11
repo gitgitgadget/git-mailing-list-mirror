@@ -1,86 +1,85 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 2/8] revert: decouple sequencer actions from builtin commands
-Date: Wed, 11 Jan 2012 14:49:56 +0530
-Message-ID: <CALkWK0=o+KkV08G9JuTaG8Vtb-AzHQVMQPzMy8td_iBVnGX4Dg@mail.gmail.com>
-References: <1326025653-11922-1-git-send-email-artagnon@gmail.com>
- <1326212039-13806-1-git-send-email-artagnon@gmail.com> <1326212039-13806-3-git-send-email-artagnon@gmail.com>
- <20120110183857.GC22184@burratino> <CALkWK0k=44znLr2oYSx61Mk=qdAurona0f0H4i4=YXNSAeQhHQ@mail.gmail.com>
- <CALkWK0=bEPPv4rtPrMrQnk3MK=JY4-wwAByWPmzg86NBm_56iQ@mail.gmail.com>
- <20120111050404.GA13507@burratino> <CALkWK0kJpEXvBMV=D7h91sz7U2sLvXdW1UzomW0kG2bbM+byYA@mail.gmail.com>
- <CALkWK0muXXKu37_qQ8E+LEZiCxebWvWghkc8QjyfdBazjLOstw@mail.gmail.com> <20120111054954.GB13507@burratino>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: [PATCH 2/2] git-cvsexportcommit: Fix calling Perl's rel2abs() on
+ MSYS
+Date: Wed, 11 Jan 2012 10:21:10 +0100
+Message-ID: <4F0D5486.7020707@gmail.com>
+References: <4F0D5367.1000506@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 11 10:20:44 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: msysgit@googlegroups.com, git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Wed Jan 11 10:21:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RkuMO-0005m3-II
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 10:20:44 +0100
+	id 1RkuNC-0006EP-I2
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 10:21:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757078Ab2AKJUa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jan 2012 04:20:30 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:36777 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756767Ab2AKJUS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Jan 2012 04:20:18 -0500
-Received: by werm1 with SMTP id m1so347358wer.19
-        for <git@vger.kernel.org>; Wed, 11 Jan 2012 01:20:17 -0800 (PST)
+	id S1757340Ab2AKJVR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jan 2012 04:21:17 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:63957 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752172Ab2AKJVO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jan 2012 04:21:14 -0500
+Received: by bkvi17 with SMTP id i17so351705bkv.19
+        for <git@vger.kernel.org>; Wed, 11 Jan 2012 01:21:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=+w4+WD3tbFx/3mF2MZlQFiaXNSRXIeycf5o113UGzKo=;
-        b=fvxB9wmWF2KzHWo05fEWTMZ2mHgJ10UVNHQVXZTa9Oc3tIdaGJyDMFrHiqVlZeahjd
-         XfKnFffnwLXHscw72iK2xEDB5M7ZEdnh32tVBz8nNRkdjOqmCn8hOGFsJYNHnjP+DMVU
-         6P/aHd+c23KCQ/oM8VBrLyzuf4CvIi27UGMrw=
-Received: by 10.180.94.102 with SMTP id db6mr10912126wib.0.1326273617230; Wed,
- 11 Jan 2012 01:20:17 -0800 (PST)
-Received: by 10.216.175.3 with HTTP; Wed, 11 Jan 2012 01:19:56 -0800 (PST)
-In-Reply-To: <20120111054954.GB13507@burratino>
+        h=message-id:date:from:user-agent:mime-version:newsgroups:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=GqkuF+x0G+gLxFfYHHsGpHtoRwtxG4uYV4VsZ8fuQKs=;
+        b=S6we0KkFuzrSZETGJ7piGsoKqLR8FlQsmYVuRmIOSjFxS4nSn0cxIHd1vctwWCsnhp
+         MejP/0CkUMpCWlWmfamWB8oyZn20c4fyfDTPQrctFKFQ8RZ1PpcUyg6uC4hizGFFObWC
+         2gW+58sOE0Iqa83a24cu5Y9zetjO4r9ycIE8k=
+Received: by 10.204.136.203 with SMTP id s11mr9965887bkt.66.1326273672874;
+        Wed, 11 Jan 2012 01:21:12 -0800 (PST)
+Received: from [130.73.68.203] (jambul.zib.de. [130.73.68.203])
+        by mx.google.com with ESMTPS id w3sm1978812bkq.3.2012.01.11.01.21.11
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 11 Jan 2012 01:21:12 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+Newsgroups: gmane.comp.version-control.msysgit,gmane.comp.version-control.git
+In-Reply-To: <4F0D5367.1000506@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188348>
 
-Jonathan Nieder wrote:
-> Well, let's start here. =C2=A0The two insns "pick" and "revert" and t=
-he
-> ability to mix them doesn't have much to do with the picture, does it=
-?
->
-> I think the actual problem being solved is that insn types, as descri=
-bed
-> by the replay_action enum, are being abused to refer to top-level git
-> commands "revert" and "cherry-pick". =C2=A0The sequencer isn't suppos=
-ed to
-> care which top-level git command called it, except in some messages, =
-so
-> we'd certainly like to stop pretending that has something to do with
-> insn types.
+Due to MSYS path mangling GIT_DIR contains a Windows-style path when
+checked inside a Perl script even if GIT_DIR was previously set to an
+MSYS-style path in a shell script. So explicitly convert to an MSYS-style
+path before calling Perl's rel2abs() to make it work.
 
-Exactly.  I'll update the commit message.
+This fix was inspired by a very similar patch in WebKit:
 
-> Based on what you've said, correcting this cleanly is complicated in
-> some places by the inconvenient fact that the sequencer _does_ care
-> which top-level git command called it. =C2=A0(I haven't checked this;=
- I'm
-> just taking it on faith from you.) =C2=A0If we want to let other git
-> commands (like "git rebase" or "git sequence") call into the
-> sequencer, that sounds like a way bigger problem than any conflict of
-> terminology.
+http://trac.webkit.org/changeset/76255/trunk/Tools/Scripts/commit-log-editor
 
-There's no need to trust me: just think about the problem.  We fill
-out a replay_opts structure to call into the sequencer with- how does
-the sequencer know what to do with this hypothetical command string
-(say "cherry-pick") on a fresh invocation?  It needs to translate this
-into a replay_action at some point, right?  There are atleast three
-places where this happens: prepare_revs(), walk_revs_populate_todo(),
-and single_pick().
+Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+---
+ git-cvsexportcommit.perl |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
 
--- Ram
+diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
+index 39a426e..e6bf252 100755
+--- a/git-cvsexportcommit.perl
++++ b/git-cvsexportcommit.perl
+@@ -30,6 +30,13 @@ if ($opt_w || $opt_W) {
+ 		chomp($gd);
+ 		$ENV{GIT_DIR} = $gd;
+ 	}
++
++	# On MSYS, convert a Windows-style path to an MSYS-style path
++	# so that rel2abs() below works correctly.
++	if ($^O eq 'msys') {
++		$ENV{GIT_DIR} =~ s#^([[:alpha:]]):/#/$1/#;
++	}
++
+ 	# Make sure GIT_DIR is absolute
+ 	$ENV{GIT_DIR} = File::Spec->rel2abs($ENV{GIT_DIR});
+ }
+-- 
+1.7.9.rc0.5096.g30a61
