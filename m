@@ -1,117 +1,76 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: git svn dcommit sends to wrong branch
-Date: Wed, 11 Jan 2012 16:31:10 +0100
-Message-ID: <877h0yz269.fsf@thomas.inf.ethz.ch>
-References: <20120110161843.GC8196@victor> <20120111140513.GA12633@victor>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: Re* Regulator updates for 3.3
+Date: Wed, 11 Jan 2012 11:14:17 -0500
+Message-ID: <CABURp0qwjNmHtgkCqdsOk7+_isbpGB6S43WudRgbvE4xnvGUOg@mail.gmail.com>
+References: <20120109073727.GF22134@opensource.wolfsonmicro.com>
+ <CA+55aFyhoh0rT_ujuE1w3RpuR7kqivYFwPpm66VC-xtq1PiGUQ@mail.gmail.com>
+ <20120110184530.GE7164@opensource.wolfsonmicro.com> <CA+55aFxXb7wqfrpozS6iH0k25y-+Uy8_Tavv59JXMhaWrjXLaw@mail.gmail.com>
+ <20120110222711.GK7164@opensource.wolfsonmicro.com> <CA+55aFxvQF=Bm4ae6euB_UO8otMCuN9Lv37Zn3TpE-L7JH3Kzw@mail.gmail.com>
+ <7vmx9v7z1r.fsf@alter.siamese.dyndns.org> <CA+55aFx5NATrpLnkMiV2vAxSAJPK7wkY2vyHbyeZGgT9+jP06w@mail.gmail.com>
+ <7vehv77xeq.fsf@alter.siamese.dyndns.org> <CA+55aFzuGtJkQFDooSGWQ2_NiJVHN2E7S5dmOnWTYn8_s8Gg3g@mail.gmail.com>
+ <7vzkdu7miv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Victor Engmark <victor.engmark@terreactive.ch>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 11 16:31:20 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Mark Brown <broonie@opensource.wolfsonmicro.com>,
+	Liam Girdwood <lrg@ti.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 11 17:14:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rl092-0003ky-AY
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 16:31:20 +0100
+	id 1Rl0p4-0003MJ-C5
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 17:14:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932986Ab2AKPbO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jan 2012 10:31:14 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:33216 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755380Ab2AKPbN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jan 2012 10:31:13 -0500
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 11 Jan
- 2012 16:31:09 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 11 Jan
- 2012 16:31:11 +0100
-In-Reply-To: <20120111140513.GA12633@victor> (Victor Engmark's message of
-	"Wed, 11 Jan 2012 15:05:13 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1757648Ab2AKQOk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jan 2012 11:14:40 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:50601 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751001Ab2AKQOj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jan 2012 11:14:39 -0500
+Received: by werm1 with SMTP id m1so645643wer.19
+        for <git@vger.kernel.org>; Wed, 11 Jan 2012 08:14:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=2Mf3noLWtk0K0U09V8T7wAZWGNeC22SGoLSY41KpT34=;
+        b=X8eJIcdJC1UOltchIkjiawIaVuFe2BFrUjMrhfVGYvpuprKSxglwu0ChZktv/UbIhY
+         5mTjrcrCmr3gukxqsQYIPadpx733Gz4sK9iI6ZqQH34DzrzX/AXXcIBNrZHUHKxhInOr
+         HIFDt38maGtWHYrsaSfBXAu6c48VNXMaHZ60U=
+Received: by 10.180.20.69 with SMTP id l5mr11834329wie.19.1326298478331; Wed,
+ 11 Jan 2012 08:14:38 -0800 (PST)
+Received: by 10.216.19.82 with HTTP; Wed, 11 Jan 2012 08:14:17 -0800 (PST)
+In-Reply-To: <7vzkdu7miv.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188369>
 
-Victor Engmark <victor.engmark@terreactive.ch> writes:
-
-> This message was never delivered and no error message ever came back; is
-> there some weird filtering going on?
-
-It was delivered, see e.g.
-
-  http://thread.gmane.org/gmane.comp.version-control.git/188265
-
-However, my reply ended up not having a Cc to you because your
-Mail-Followup-To header fooled Gnus into believing you didn't want that
-to happen.  Please do not set this header; we Cc everyone involved in
-discussions so far, and MFT makes it that much less convenient to
-achieve that.
-
-Since you are apparently not subscribed (otherwise you should have
-received my reply), please find a cut&paste of the original reply below.
-
----- 8< ----
-Victor Engmark <victor.engmark@terreactive.ch> writes:
-
-> Commands:
+On Wed, Jan 11, 2012 at 1:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
+[...]
 >
-> git svn clone -s -r 1:HEAD http://svn/repo
-> cd repo
-> git commit [thrice, in master only]
-
-Which git version is this?  Before 1.6.5 (b186a261 to be precise)
-git-svn pointed master at the branch where the last commit in SVN
-happened, which is not necessarily trunk.  After that it tries to point
-it at trunk instead.  You can find out, e.g., by saying 'git show' on
-the fresh clone and looking at the git-svn-id line.
-
-> git rebase --interactive HEAD~20 [i.e., started rebase in commits before
-> the clone]
-> [Merged two commits I had made *after* the clone]
-> git commit ...
-> git dcommit
+> With that caveat, the patch should look like this.
 >
-> This created commits on
-> <http://svn/repo/branches/branch_name>! Why? Is it because HEAD~20's
-> git-svn-id <http://svn/repo/branches/branch_name@22481> is on that
-> branch?
+> -- >8 --
+> Subject: [PATCH] merge: use editor by default in interactive sessions
+>
+> Traditionally, a cleanly resolved merge was committed by "git merge" using
+> the auto-generated merge commit log message with invoking the editor.
+>
+> After 5 years of use in the field, it turns out that many people perform
+> too many unjustified backmerges of the upstream history into their topic
+> branches. These merges are not just useless, but they are more often than
+> not explained and making the end result unreadable when it gets time for
+> merging their history back to their upstream.
 
-The rule is that the commits go to the branch named in the git-svn-id
-line of the most recent first-parent ancestor of HEAD.
+Typo, I think.  I believe you meant "they are more often than not not
+explained", but as this is unclear, maybe you can use "they are
+usually not explained" or "they more often than not go in without
+explanation".
 
-You can find the "base" commit in question with
-
-  git log -1 --first-parent --grep=^git-svn-id:
-
-> And more importantly, how do I "replay" my commits on trunk?
-
-You need to rebase the commits on trunk, and (very important) strip the
-git-svn-id lines from their messages.  If you only had a handful of
-commits, your best bet is to use something like
-
-  git checkout -b newbranch
-  git rebase -i --onto svn/trunk svn/branch_name  # or whatever git-svn named the remote branches
-  # edit all the 'pick' into 'reword'
-  # in every commit message editor that pops up, remove the git-svn-id line
-
-  gitk  # make sure that you like the resulting history!
-  git svn dcommit
-
-(If you have many commits, git-filter-branch can do the removal
-automatically, but it's a bit of a loaded gun pointed at your foot.)
-
-If your git-rebase is too old for 'reword', you can use 'edit' instead
-and then, every time that git-rebase drops you into a command line, say
-
-  git commit --amend   # and edit the commit message
-  git rebase --continue
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+P
