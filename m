@@ -1,82 +1,75 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Re* Regulator updates for 3.3
-Date: Wed, 11 Jan 2012 08:23:01 -0800
-Message-ID: <CA+55aFy679Skqi_D3x8=M=mwZiViMX9EbZrqP11riiLb_Hzb9g@mail.gmail.com>
-References: <20120109073727.GF22134@opensource.wolfsonmicro.com>
- <CA+55aFyhoh0rT_ujuE1w3RpuR7kqivYFwPpm66VC-xtq1PiGUQ@mail.gmail.com>
- <20120110184530.GE7164@opensource.wolfsonmicro.com> <CA+55aFxXb7wqfrpozS6iH0k25y-+Uy8_Tavv59JXMhaWrjXLaw@mail.gmail.com>
- <20120110222711.GK7164@opensource.wolfsonmicro.com> <CA+55aFxvQF=Bm4ae6euB_UO8otMCuN9Lv37Zn3TpE-L7JH3Kzw@mail.gmail.com>
- <7vmx9v7z1r.fsf@alter.siamese.dyndns.org> <CA+55aFx5NATrpLnkMiV2vAxSAJPK7wkY2vyHbyeZGgT9+jP06w@mail.gmail.com>
- <7vehv77xeq.fsf@alter.siamese.dyndns.org> <CA+55aFzuGtJkQFDooSGWQ2_NiJVHN2E7S5dmOnWTYn8_s8Gg3g@mail.gmail.com>
- <7vzkdu7miv.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 2/8] revert: decouple sequencer actions from builtin commands
+Date: Wed, 11 Jan 2012 22:09:04 +0530
+Message-ID: <CALkWK0=gvsvqk7Th7YY_eRzb+Ri52AZbOVokC98i9BXVAJOZEw@mail.gmail.com>
+References: <1326025653-11922-1-git-send-email-artagnon@gmail.com>
+ <1326212039-13806-1-git-send-email-artagnon@gmail.com> <1326212039-13806-3-git-send-email-artagnon@gmail.com>
+ <20120110183857.GC22184@burratino> <CALkWK0k=44znLr2oYSx61Mk=qdAurona0f0H4i4=YXNSAeQhHQ@mail.gmail.com>
+ <CALkWK0=bEPPv4rtPrMrQnk3MK=JY4-wwAByWPmzg86NBm_56iQ@mail.gmail.com>
+ <20120111050404.GA13507@burratino> <CALkWK0kJpEXvBMV=D7h91sz7U2sLvXdW1UzomW0kG2bbM+byYA@mail.gmail.com>
+ <20120111131854.GG32173@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Mark Brown <broonie@opensource.wolfsonmicro.com>,
-	Liam Girdwood <lrg@ti.com>, linux-kernel@vger.kernel.org,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: linux-kernel-owner@vger.kernel.org Wed Jan 11 17:23:38 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 11 17:39:46 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Rl0xc-0000VK-2z
-	for glk-linux-kernel-3@lo.gmane.org; Wed, 11 Jan 2012 17:23:36 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Rl1DA-0001QP-FV
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 17:39:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757614Ab2AKQX0 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 11 Jan 2012 11:23:26 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:46261 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752104Ab2AKQXX (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 11 Jan 2012 11:23:23 -0500
-Received: by wibhm14 with SMTP id hm14so497438wib.19
-        for <multiple recipients>; Wed, 11 Jan 2012 08:23:22 -0800 (PST)
+	id S1756974Ab2AKQjf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jan 2012 11:39:35 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:60726 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751745Ab2AKQje convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Jan 2012 11:39:34 -0500
+Received: by werm1 with SMTP id m1so666489wer.19
+        for <git@vger.kernel.org>; Wed, 11 Jan 2012 08:39:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=ntXZER73eFpzMSbPfd1B6q3H6gTFNZqooZAHB4unr2M=;
-        b=Celfa5XpwzAb0Krg78xY+EBw6cnvhwHHc72ktj59UuHhx6z7EcJQE3XfZg6BNC22zY
-         XNhkY5c+i/EV8gxcyCJOw2SjVX9gCsVDUGG/1VbZQJk7Cx9u27loUVM0YoE3mdWFWtk0
-         5ZG/fOf8fE0NIXFd0PLdl/wVJHlbAKDZ+/5Og=
-Received: by 10.180.19.138 with SMTP id f10mr53946196wie.3.1326299002214; Wed,
- 11 Jan 2012 08:23:22 -0800 (PST)
-Received: by 10.216.172.213 with HTTP; Wed, 11 Jan 2012 08:23:01 -0800 (PST)
-In-Reply-To: <7vzkdu7miv.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: x7lpfQ3WB0_YcDUmbICwHR-iPA8
-Sender: linux-kernel-owner@vger.kernel.org
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=SqppMutjQOllwEhasHtevm8Vt6z7nVg3ebBVzaEYgMQ=;
+        b=ZKBzfd7nogWmwgS9Wv5PqAuW3goFDpr5pfr76qt3DdVC8kEpjbRPdVRLtNdelFTDcS
+         1oVTRmm5ldpySsnmJuvJletd/rDV5M1or0GVLfhzDMHgBm5UXQ+KgxbM50ItEV40E32Z
+         VsQtwNVARKFkOkk/+yECDm16xWZJciLuGj8Mg=
+Received: by 10.216.134.69 with SMTP id r47mr11353965wei.17.1326299970955;
+ Wed, 11 Jan 2012 08:39:30 -0800 (PST)
+Received: by 10.216.175.3 with HTTP; Wed, 11 Jan 2012 08:39:04 -0800 (PST)
+In-Reply-To: <20120111131854.GG32173@burratino>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188370>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188371>
 
-On Tue, Jan 10, 2012 at 10:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Jonathan Nieder wrote:
+> Honestly, moving code verbatim between files is very easy. =C2=A0Repe=
+atedly
+> rebasing a patch that carries out such a move would presumably be
+> hard, though. =C2=A0But this pain is unnecessary!
 >
-> What makes me uneasy about the idea of running the editor by default is
-> that many people still use Git as a better CVS/SVN. Their workflow is to
-> build randomly on their 'master', attempt to push and get rejected, pull
-> only so that they can push out, and then push the merge result out.
+> Just like I haven't been reviewing the code movement, I'd be perfectl=
+y
+> happy to read a "patch" that says
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0"And then we move the functions from the f=
+ollowing list to
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0sequencer.c. =C2=A0I'll send a patch doing=
+ so once work has settled
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0down in patches earlier in this series."
 
-Sure. And I don't think we can do much about it. They'll either set
-the legacy flag, or they'll just exit the editor without adding
-anything useful (if you come from a CVS background in particular, you
-probably never learnt to do good commit logs anyway).
+More than the pain of rebasing the patch everytime, I guess what I'm
+asking is: is it worth stretching my foresight like this?  Once the
+code is in sequencer.c, it just becomes so much easier for me to write
+scratch code to help me wrap my head around the generalization.  If
+the answer to the question is yes, I suppose it makes sense to submit
+the good parts now and work on the other parts over an extended period
+of time.
 
-So it will be a bit more work for the bad workflow, I agree - although
-if it really irritates people, they can just set that GIT_MERGE_LEGACY
-in their .bashrc files or something. But we can *hope* that even those
-people might sometimes actually talk about what/why they are doing
-things, or maybe even learn about that whole "distributed" thing.
-
-I agree that is unlikely to ever happen, though. It's more likely that
-they will change their aliases so that their "update" command just
-adds the --no-edit flag. Regardless, it doesn't sound *too* onerous to
-work around.
-
-Patch looks good to me. I would personally have compared "st_mode"
-instead of (or in addition to) "st_rdev", but I don't think it matters
-all that much.
-
-                                 Linus
+-- Ram
