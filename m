@@ -1,65 +1,59 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: rsync a *bunch* of git repos
-Date: Wed, 11 Jan 2012 10:52:30 -0600
-Message-ID: <4F0DBE4E.30401@gmail.com>
-References: <20120110211548.GD10255@titan.lakedaemon.net> <201201102124.q0ALOowL026941@no.baka.org> <25207BDC675840DEA94AA2B04D6783BD@PhilipOakley> <7v39bn9onl.fsf@alter.siamese.dyndns.org> <loom.20120111T141805-791@post.gmane.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 2/8] revert: decouple sequencer actions from builtin commands
+Date: Wed, 11 Jan 2012 22:22:25 +0530
+Message-ID: <CALkWK0=obkB=uxtgKJpBWQ-YUsiOjHeegx3d5NHMTub-8nU_Dw@mail.gmail.com>
+References: <1326025653-11922-1-git-send-email-artagnon@gmail.com>
+ <1326212039-13806-1-git-send-email-artagnon@gmail.com> <1326212039-13806-3-git-send-email-artagnon@gmail.com>
+ <20120110183857.GC22184@burratino> <CALkWK0k=44znLr2oYSx61Mk=qdAurona0f0H4i4=YXNSAeQhHQ@mail.gmail.com>
+ <CALkWK0=bEPPv4rtPrMrQnk3MK=JY4-wwAByWPmzg86NBm_56iQ@mail.gmail.com>
+ <20120111050404.GA13507@burratino> <CALkWK0kJpEXvBMV=D7h91sz7U2sLvXdW1UzomW0kG2bbM+byYA@mail.gmail.com>
+ <20120111131854.GG32173@burratino> <CALkWK0=gvsvqk7Th7YY_eRzb+Ri52AZbOVokC98i9BXVAJOZEw@mail.gmail.com>
+ <20120111164758.GD1891@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Sergio <sergio.callegari@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 11 17:52:41 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 11 17:52:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rl1Pk-0000Dm-Ks
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 17:52:41 +0100
+	id 1Rl1Px-0000J2-34
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Jan 2012 17:52:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932315Ab2AKQwf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jan 2012 11:52:35 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:61956 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757195Ab2AKQwe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jan 2012 11:52:34 -0500
-Received: by yhjj63 with SMTP id j63so409346yhj.19
-        for <git@vger.kernel.org>; Wed, 11 Jan 2012 08:52:34 -0800 (PST)
+	id S932474Ab2AKQws (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jan 2012 11:52:48 -0500
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:52787 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932432Ab2AKQwr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jan 2012 11:52:47 -0500
+Received: by wibhm14 with SMTP id hm14so521507wib.19
+        for <git@vger.kernel.org>; Wed, 11 Jan 2012 08:52:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=ZzQR8OfyRUWt/CAwHhJ0zD1AlgI96sksDYX6xo4CYrc=;
-        b=ZG9fZUj++vtD3BfMZEjuFugAZYhewbPY/CFEKj7PHgnmZ2ZwBCGIgJgVSZTSaz3vB4
-         VqgO3RJ/EgvwdvF+AJHrq5dQ7AxkW/UkYkVGjFN9hK47cGKp85puvYdhoZ6IzZO4mcg5
-         Sr9VoVwrGZPtbffnYbkfl3PZugDW1JCnngmfg=
-Received: by 10.236.173.133 with SMTP id v5mr31630463yhl.73.1326300754206;
-        Wed, 11 Jan 2012 08:52:34 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id j11sm5340069anl.8.2012.01.11.08.52.33
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 11 Jan 2012 08:52:33 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.25) Gecko/20111213 Thunderbird/3.1.17
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <loom.20120111T141805-791@post.gmane.org>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=IqUUfsFRFTzccWNmzyh2UjCczPRE2yHAnLfI/AXkG7o=;
+        b=Cocv1B3AyKbu4ezfOd8V/G3QIQ3ktRqegv59CpAL3ysFlTTAsK5NwEPgz2yxVmvt4T
+         gR85ia07Zo1r8AV2S8b+KviwRo+SRWQMKI1LmKqjfbzvelsz8y8ZMyPGpee29RKJwXns
+         Y2+F60/8mMkeeJj6X3TfwfdSlmHvI14+RgNSw=
+Received: by 10.180.82.5 with SMTP id e5mr12122504wiy.18.1326300766240; Wed,
+ 11 Jan 2012 08:52:46 -0800 (PST)
+Received: by 10.216.175.3 with HTTP; Wed, 11 Jan 2012 08:52:25 -0800 (PST)
+In-Reply-To: <20120111164758.GD1891@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188374>
 
-On 1/11/2012 7:22 AM, Sergio wrote:
+Jonathan Nieder wrote:
+> In that case, why not just a patch to move the code to sequencer.c,
+> with whatever is the minimum of related fixes (just namespace stuff,
+> I'd imagine) before it?
 
->
-> As an aside: git works fine when repos are transferred with rsync, but git packs
-> are not rsync friendly nor friendly with backup strategies using binary deltas.
->
-All these answers are assuming that your source git repos are quiet 
-during the rsync.  If they are not quiet during the rsync then you are 
-going to need a more tailored rsync to do things in a certain order. 
-See this thread for details: 
-http://thread.gmane.org/gmane.comp.version-control.git/168699
+Cool, I'll do that then.  I thought what I'd originally posted was an
+acceptable minimum to show the motivation for the move.
 
-v/r,
-neal
+-- Ram
