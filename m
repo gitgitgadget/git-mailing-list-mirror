@@ -1,102 +1,94 @@
-From: Yves Goergen <nospam.list@unclassified.de>
-Subject: Bug? Git checkout fails with a wrong error message
-Date: Thu, 12 Jan 2012 18:44:03 +0000 (UTC)
-Message-ID: <loom.20120112T193624-86@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 12 19:50:20 2012
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH v2] cherry-pick: add failing test for out-of-order pick
+Date: Fri, 13 Jan 2012 00:35:31 +0530
+Message-ID: <1326395132-18947-1-git-send-email-artagnon@gmail.com>
+References: <20120112183246.GB6038@burratino>
+Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 12 20:06:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RlPj6-00058H-CO
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 19:50:16 +0100
+	id 1RlPzG-00056W-4B
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 20:06:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754834Ab2ALSuL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jan 2012 13:50:11 -0500
-Received: from lo.gmane.org ([80.91.229.12]:58582 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754582Ab2ALSuK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2012 13:50:10 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RlPix-000507-Nd
-	for git@vger.kernel.org; Thu, 12 Jan 2012 19:50:07 +0100
-Received: from DSL01.83.171.170.242.ip-pool.NEFkom.net ([83.171.170.242])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 12 Jan 2012 19:50:07 +0100
-Received: from nospam.list by DSL01.83.171.170.242.ip-pool.NEFkom.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 12 Jan 2012 19:50:07 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 83.171.170.242 (Mozilla/5.0 (Windows NT 5.1; rv:9.0.1) Gecko/20100101 Firefox/9.0.1)
+	id S1754893Ab2ALTGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jan 2012 14:06:53 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:44697 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754593Ab2ALTGw (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Jan 2012 14:06:52 -0500
+Received: by obcva7 with SMTP id va7so1077869obc.19
+        for <git@vger.kernel.org>; Thu, 12 Jan 2012 11:06:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=8jNZCB6C1bNCgTkH/OyymVsrPKHa1NNts0gzIUWy5x0=;
+        b=CnwT9z/7lhBWI1+jKamMrmzdHBBmD1G6d6F0I+BduoM+G3yD/Qyp73dj8rpBjReHhh
+         MQoQIL44d65VNDbKpuEiYjNxC574ECKzVRSP03PN+ipZj+TN9oDM1BxKj4AxtYNfywHv
+         8mlYxMic7ZBkRG17+j8u5kaXxSSyTgTmklRFg=
+Received: by 10.50.47.136 with SMTP id d8mr5554746ign.21.1326395211886;
+        Thu, 12 Jan 2012 11:06:51 -0800 (PST)
+Received: from localhost.localdomain ([203.110.240.205])
+        by mx.google.com with ESMTPS id he16sm20069003ibb.9.2012.01.12.11.06.47
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 12 Jan 2012 11:06:51 -0800 (PST)
+X-Mailer: git-send-email 1.7.8.2
+In-Reply-To: <20120112183246.GB6038@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188470>
 
-Hi,
+The invocation
 
-I am using Git alone for my local software project in Visual Studio 2010. I've
-been on the master branch most of the time. Recently I created a new branch to
-do a larger refactoring of one of the dialogue windows. I did the following
-modifications:
+  $ git cherry-pick commit3 commit1 commit2
 
-* Rename Form1 to Form1a (including all depending files)
-* Add new Form1
+picks commits after sorting by date order, which is counter-intuitive.
+Add a failing test to t3508 (cherry-pick-many-commits) documenting
+this behavior.
 
-I checked this change into the branch, say form-refactoring. Interestingly, Git
-didn't notice that I renamed the file Form1.cs into Form1a.cs and created a
-brand new, totally different Form1.cs, but instead it noticed a new Form1a.cs
-file and found a whole lot of differences between the previous and new Form1.cs
-files. This will of course lead to totally garbaged diffs, but I don't care in
-this case as long as all files are handled correctly in the end.
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ Had some weird compulsion to conform to the style of the other tests
+ in the previous iteration.
 
-Then I switched back to master to do some other small changes. Nothing
-conflicting. Until now, everything worked fine.
+ t/t3508-cherry-pick-many-commits.sh |   17 +++++++++++++++++
+ 1 files changed, 17 insertions(+), 0 deletions(-)
 
-Today, I wanted to switch back to my branch form-refactoring to continue that
-work. But all I get is the following message:
-
------
-git.exe checkout    form-refactoring
-
-Aborting
-error: The following untracked working tree files would be overwritten by
-checkout:
-Form1.Designer.cs
-Please move or remove them before you can switch branches.
------
-
-What is that supposed to be? The mentioned file is not untracked. Neither in the
-master branch, nor in the form-refactoring branch. It is part of both branches,
-but one is not a descendent of the other (because it was recreated on the
-form-refactoring branch, if that matters). What would happen if I delete it, is
-it gone for good then? I don't trust Git to bring back the correct file if I
-delete something now. I did not play with any file at all outside of my
-mentioned Git operations, so why should I play around with any file to continue
-using Git operations now? Git broke it, Git's supposed to handle it now!
-
-Here's some other input:
-
-There are no uncommitted changes in my working directory. 'git status' doesn't
-list anything.
-
-The file in question is not untracked. Right now on the master branch, it has a
-green checkmark in Explorer (provided by TortoiseGit) and it has a history as
-well. There are more Form....Designer.cs files that don't cause any trouble.
-
-'git clean -f -d', 'git reset --hard HEAD', 'git stash' do nothing and don't
-help resolving the issue.
-
-Right now, I cannot continue with my work because I cannot switch branches. Is
-there an easy solution to this? Is my Git repository broken, all by standard
-operations?
+diff --git a/t/t3508-cherry-pick-many-commits.sh b/t/t3508-cherry-pick-many-commits.sh
+index 8e09fd0..d9d632d 100755
+--- a/t/t3508-cherry-pick-many-commits.sh
++++ b/t/t3508-cherry-pick-many-commits.sh
+@@ -59,6 +59,23 @@ test_expect_success 'cherry-pick first..fourth works' '
+ 	check_head_differs_from fourth
+ '
+ 
++test_expect_failure 'cherry-pick picks commits in the order requested' '
++	git checkout -f master &&
++	git reset --hard first &&
++	test_tick &&
++	git cherry-pick fourth second third &&
++	{
++		git rev-list --reverse HEAD |
++		git diff-tree --stdin -s --format=%s
++	} >actual &&
++	cat >expect <<-\EOF &&
++	fourth
++	second
++	third
++	EOF
++	test_cmp expect actual
++'
++
+ test_expect_success 'cherry-pick --strategy resolve first..fourth works' '
+ 	cat <<-\EOF >expected &&
+ 	Trying simple merge.
+-- 
+1.7.8.2
