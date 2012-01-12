@@ -1,89 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] archive: re-allow HEAD:Documentation on a remote
- invocation
-Date: Wed, 11 Jan 2012 18:46:56 -0800
-Message-ID: <7vipkh4oyn.fsf@alter.siamese.dyndns.org>
-References: <20120110232132.GA29245@sigill.intra.peff.net>
- <1326283958-30271-1-git-send-email-cmn@elego.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] get_sha1_with_context: report features used in
+ resolution
+Date: Wed, 11 Jan 2012 21:51:26 -0500
+Message-ID: <20120112025126.GA25365@sigill.intra.peff.net>
+References: <20120111193916.GA12333@sigill.intra.peff.net>
+ <20120111194210.GA12441@sigill.intra.peff.net>
+ <7vmx9t4pgj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Albert Astals Cid <aacid@kde.org>
-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Thu Jan 12 03:47:08 2012
+Cc: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	git@vger.kernel.org, Albert Astals Cid <aacid@kde.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 12 03:51:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RlAgy-0002hv-NA
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 03:47:05 +0100
+	id 1RlAlK-00042Z-3v
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 03:51:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752282Ab2ALCrA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jan 2012 21:47:00 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62274 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751958Ab2ALCq7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Jan 2012 21:46:59 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CF24C68B1;
-	Wed, 11 Jan 2012 21:46:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=+n8HZ6Po6Udy
-	GkeQy4Gzri6MYB0=; b=ulhiDz0LI4UE9m0YImRFsWov+ODlUjeYkmZFO6u2ghY7
-	eY4sD8IAasYNxtCBE5XG78m1zO2G/a71FVR/MaEQDQ00v6wlNQD5BMuBty0rL51c
-	u2KJCKRxw5ywdizu/KKYbzGNreoCSJSrbyVSCAnrNhcT/JssjnoiRad4fLo0rXI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=r5bTFS
-	SKiOZVjaDQVHG4xBFsJJhMRW51vtKpXg7LfpjoDH/GqUUgwk0Dv/JyQhj5i3K9yG
-	4sv074bwIYwcxiUkp7iNP0CeI0I0Fiqy3JMgFsEI3E6puP/nSRYXli7gHdsWHEYr
-	FwaoxAE/yZSCzOfJ/fZsjTDBeHsSEfWDRoyeY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AA5A668B0;
-	Wed, 11 Jan 2012 21:46:58 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3B95868AF; Wed, 11 Jan 2012
- 21:46:58 -0500 (EST)
-In-Reply-To: <1326283958-30271-1-git-send-email-cmn@elego.de> ("Carlos
- =?utf-8?Q?Mart=C3=ADn?= Nieto"'s message of "Wed, 11 Jan 2012 13:12:38
- +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B221FDBA-3CC7-11E1-A831-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752364Ab2ALCv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jan 2012 21:51:29 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35578
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752198Ab2ALCv2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jan 2012 21:51:28 -0500
+Received: (qmail 26850 invoked by uid 107); 12 Jan 2012 02:58:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 11 Jan 2012 21:58:23 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Jan 2012 21:51:26 -0500
+Content-Disposition: inline
+In-Reply-To: <7vmx9t4pgj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188417>
 
-Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
+On Wed, Jan 11, 2012 at 06:36:12PM -0800, Junio C Hamano wrote:
 
-> The tightening done in (ee27ca4a: archive: don't let remote clients
-> get unreachable commits, 2011-11-17) went too far and disallowed
-> HEAD:Documentation as it would try to find "HEAD:Documentation" as a
-> ref.
+> Jeff King <peff@peff.net> writes:
+> 
+> > Most callers generally treat get_sha1 as a black box, giving
+> > it a string from the user and expecting to get a sha1 in
+> > return. The get_sha1_with_context function gives callers
+> > more information about what happened while resolving the
+> > object name so they can make better decisions about how to
+> > use the result. We currently use this only to provide
+> > information about the path entry used to find a blob.
+> >
+> > We don't currently provide any information about the
+> > resolution rules that were used to reach the final object.
+> > Some callers may want these in order to enforce a policy
+> > that a particular subset of the lookup rules are used (e.g.,
+> > when serving remote requests).
+> >
+> > This patch adds a set of bit-fields that document the use of
+> > particular features during an object lookup.
+> >
+> > Signed-off-by: Jeff King <peff@peff.net>
+> > ---
+> > The diffstat looks a little scary, but it is mostly just the internal
+> > get_sha1 functions learning to pass the object_context around.
+> 
+> Hmm, shouldn't this also cover peel_to_type()?  That would have made it
+> also apply to the maintenance track.
 
-I do not think it went too far. Actually we discussed this exact issue
-when the topic was cooking, and saw no objections. The commit in questi=
-on
-itself advertises this restriction.
+I don't see how peel_to_type is relevant. As far as get_sha1 is
+concerned, the interesting thing is actually calling peel_onion. It does
+get the context passed to it in my patch, but I didn't bother marking
+that the peel feature was used (because it wasn't relevant to the policy
+I wanted to implement in the follow-on patch).
 
-Why are we loosening it now? I do not see a compelling reason to do so.
+But we could pretty easily mark the use of the peel feature, too.
 
-> Only DWIM the "HEAD" part to see if it exists as a ref. Once we're
-> sure that we've been given a valid ref, we follow the normal code
-> path. This still disallows attempts to access commits which are not
-> branch tips.
->
-> Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
-> ---
-> AFAICT this should still be safe. Using HEAD^:Documentation or
-> <sha1>:Documentation still complains that HEAD^ and <sha1> aren't
-> refs.
+I'm not sure what you mean about the maintenance track, though. AFAICT,
+we don't separately call peel_to_type, but just potentially use it as
+part of get_sha1_with_context. Am I missing something?
 
-Having said that, I think I agree this is a safe thing to do, _if_ we w=
-ant
-to loosen it.
+-Peff
