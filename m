@@ -1,95 +1,83 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH] stash show: use default pretty format
-Date: Thu, 12 Jan 2012 15:05:53 +0800
-Message-ID: <1326351953-3724-1-git-send-email-rctay89@gmail.com>
-Cc: "Junio C Hamano" <gitster@pobox.com>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 12 08:06:07 2012
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 2/3] am: learn passing -b to mailinfo
+Date: Thu, 12 Jan 2012 09:52:59 +0100
+Message-ID: <8762ghxpxw.fsf@thomas.inf.ethz.ch>
+References: <e915a551c9bbf12f4d8fd929e9ed24f3223790ee.1326312730.git.trast@student.ethz.ch>
+	<19539098c07a207f3bd24f5a145ba3b6c5e46766.1326312730.git.trast@student.ethz.ch>
+	<7vzkdt4s9l.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Cc: <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 12 09:53:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RlEjf-00058F-C2
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 08:06:07 +0100
+	id 1RlGPF-0002aD-Cq
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 09:53:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752022Ab2ALHGE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jan 2012 02:06:04 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:33075 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751536Ab2ALHGB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2012 02:06:01 -0500
-Received: by ghbg16 with SMTP id g16so124203ghb.19
-        for <git@vger.kernel.org>; Wed, 11 Jan 2012 23:06:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=a86riA9Ykz8HDdjOOEoORMTovvyWfAPVG5ba4yYzFEo=;
-        b=o5bBh7ojuhNh0y1WSeFEIoofB4Rtq002LuJ98DhNoIC0OHbwoRHoulJfSp4Edn6Zgq
-         1Prtzf4M3m9i0OIiHopxaNA0q/65gJVb2JmkeAVkVuwdWuuGtGpDDByl2Jae3gZ1e8uI
-         HWbcadDj/ACYry/qsQIrRBWzm18ftDB2W55QU=
-Received: by 10.236.152.35 with SMTP id c23mr3544804yhk.58.1326351961181;
-        Wed, 11 Jan 2012 23:06:01 -0800 (PST)
-Received: from localhost (nusnet-228-27.dynip.nus.edu.sg. [137.132.228.27])
-        by mx.google.com with ESMTPS id u47sm7072674yhl.0.2012.01.11.23.05.57
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 11 Jan 2012 23:05:59 -0800 (PST)
-X-Mailer: git-send-email 1.7.7.1.msysgit.0.dirty
+	id S1752896Ab2ALIxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jan 2012 03:53:05 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:9677 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751794Ab2ALIxD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jan 2012 03:53:03 -0500
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 12 Jan
+ 2012 09:53:00 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 12 Jan
+ 2012 09:53:00 +0100
+In-Reply-To: <7vzkdt4s9l.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 11 Jan 2012 17:35:34 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188434>
 
-By default (ie. when stash show is invoked without any arguments), the
-diff stat of the stashed changes is displayed. Let git-diff decide the
-default pretty format to use.
+Junio C Hamano <gitster@pobox.com> writes:
 
-This gives git more consistency, as users who have set their
-pretty.format config would naturally expect `git-stash show` to display
-the diff in the same pretty format as the other diff-producing procelain
-like git-log and git-show.
+> Thomas Rast <trast@student.ethz.ch> writes:
+>
+>> @@ -571,8 +574,8 @@ then
+>>  else
+>>  	utf8=-n
+>>  fi
+>> -if test "$(cat "$dotest/keep")" = t
+>> -then
+>> +keep=$(cat "$dotest/keep")
+>> +if test "$keep" = t
+>>  	keep=-k
+>>  fi
+>
+> Curious.
+>
+> Who writes 't' to $dotest/keep after this patch is applied?
 
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
----
- git-stash.sh     |    2 +-
- t/t3903-stash.sh |    4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+Nobody; like the commit message says, I was just trying to help users
+upgrading from one version to the next in the middle of an 'am', which
+almost worked except for
 
-diff --git a/git-stash.sh b/git-stash.sh
-index fe4ab28..a0db3de 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -271,7 +271,7 @@ list_stash () {
- show_stash () {
- 	assert_stash_like "$@"
- 
--	git diff ${FLAGS:---stat} $b_commit $w_commit
-+	git diff ${FLAGS} $b_commit $w_commit
- }
- 
- #
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index dbe2ac1..7a18af8 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -446,7 +446,7 @@ test_expect_success 'stash show - stashes on stack, stash-like argument' '
- 	 file |    1 +
- 	 1 files changed, 1 insertions(+), 0 deletions(-)
- 	EOF
--	git stash show ${STASH_ID} >actual &&
-+	git stash show --stat ${STASH_ID} >actual &&
- 	test_cmp expected actual
- '
- 
-@@ -484,7 +484,7 @@ test_expect_success 'stash show - no stashes on stack, stash-like argument' '
- 	 file |    1 +
- 	 1 files changed, 1 insertions(+), 0 deletions(-)
- 	EOF
--	git stash show ${STASH_ID} >actual &&
-+	git stash show --stat ${STASH_ID} >actual &&
- 	test_cmp expected actual
- '
- 
+> I suspect that this patch was not tested in a way to exercise this
+> codepath; shell would have barfed when seeing the lack of "then" here, no?
+
+(ouch)
+
+> I also do not want to worry about "echo" portability issues that may come
+> from an existing
+>
+> 	echo "$keep" >"$dotest/keep"
+>
+> that this patch does not touch.
+
+Good point, thanks.  I'll reroll with printf.  Should I keep the
+upgrade path compatibility?
+
 -- 
-1.7.9.rc0.132.ge406
+Thomas Rast
+trast@{inf,student}.ethz.ch
