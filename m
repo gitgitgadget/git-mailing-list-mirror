@@ -1,82 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: leaky cherry-pick
-Date: Wed, 11 Jan 2012 22:05:03 -0500
-Message-ID: <20120112030503.GA26363@sigill.intra.peff.net>
-References: <20120109223737.GA1589@padd.com>
- <CALkWK0nwE0c6qVvbauPrjmb3NX4NDeGSrvrC2ry2bjMeM4Hr0A@mail.gmail.com>
- <20120110195017.GA19961@sigill.intra.peff.net>
- <CALkWK0kDnxjtQ+ihH_dif_7yivHLd=pibao4KPs_PDXfc2UMOA@mail.gmail.com>
- <7vipki7ix9.fsf@alter.siamese.dyndns.org>
- <CALkWK0m+okqJk05BMQAEMww6FNLxaLVhAM92WmUDeA_J-drOdg@mail.gmail.com>
- <20120111195605.GB12333@sigill.intra.peff.net>
- <7v7h0x6b89.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH RFC] commit: allow to commit even if there are
+ intent-to-add entries
+Date: Wed, 11 Jan 2012 19:05:48 -0800
+Message-ID: <7vaa5t4o37.fsf@alter.siamese.dyndns.org>
+References: <1326261707-11484-1-git-send-email-pclouds@gmail.com>
+ <7vr4z67jbb.fsf@alter.siamese.dyndns.org> <20120111110222.GA32173@burratino>
+ <7vr4z654m3.fsf@alter.siamese.dyndns.org>
+ <CACsJy8CHOuZMP4hWp6Lb_TbdfwSgofSg_0tDZ4oDcD0veie2Dw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Pete Wyckoff <pw@padd.com>, git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 12 04:05:12 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Will Palmer <wmpalmer@gmail.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 12 04:05:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RlAyW-0008Ki-8G
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 04:05:12 +0100
+	id 1RlAzD-0000BU-HW
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 04:05:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752465Ab2ALDFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jan 2012 22:05:08 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35607
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752392Ab2ALDFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jan 2012 22:05:06 -0500
-Received: (qmail 27351 invoked by uid 107); 12 Jan 2012 03:12:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 11 Jan 2012 22:12:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Jan 2012 22:05:03 -0500
-Content-Disposition: inline
-In-Reply-To: <7v7h0x6b89.fsf@alter.siamese.dyndns.org>
+	id S1752474Ab2ALDFv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jan 2012 22:05:51 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36023 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752392Ab2ALDFu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jan 2012 22:05:50 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 886436D03;
+	Wed, 11 Jan 2012 22:05:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9tYBBuvDF71yKweFDRie8gYbsb4=; b=WqLbs/
+	ELAlXSCbhfTZo26aTUoaoDYxv8ZNJji4plMXSF+Uvb1GHdeuzbv5eJRhsSX0nS25
+	9LC8kvq+ZRBZh/jLxLuFUUmqrjA9h2bu0F3SSSSgprvy/Itsy143+oJFl5FMk80h
+	/uf1frHZ8x0M8d+tN5TVB2hMGafBA2RKdZ4so=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UHdn+4VXmShQOXoK9QtPyFHmfmBEObFY
+	p/U0kFl/ugQCQPHmwSMc2JmNBBNaWFAS4O1UOAGsSHKXxGNYy7AxsQxLl7zy9DCT
+	2eE9AQz7TmGjcrO2wnSB5Oc5L5YfCJI+gz3ZgaxlF/Hsgy2rGcfL/9XDAtSt/D4T
+	OGHkWlkaZL4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7E9FA6D00;
+	Wed, 11 Jan 2012 22:05:50 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 125726CFF; Wed, 11 Jan 2012
+ 22:05:49 -0500 (EST)
+In-Reply-To: <CACsJy8CHOuZMP4hWp6Lb_TbdfwSgofSg_0tDZ4oDcD0veie2Dw@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Thu, 12 Jan 2012 09:53:22 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 54C1A974-3CCA-11E1-B729-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188424>
 
-On Wed, Jan 11, 2012 at 04:00:38PM -0800, Junio C Hamano wrote:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> Yeah, that is definitely a leak.
+>> I really wish it were the case, but I doubt it.
+>>
+>> People from other VCS background seem to still think that "commit" without
+>> paths should commit everything; after getting told that "what you add to
+>> the index is what you will commit", I can easily see this commint: but but
+>> but I told Git that I _want_ to add with -N! Why aren't you committing it?
+>
+> I see "-N" just as an indication, not really an "add" operation.
 
-Here it is with a commit message. "valgrind git cherry-pick" reports no
-leaks in the attr code after this (but unfortunately still lots of leaks
-from unpack-trees).
-
--Peff
-
--- >8 --
-Subject: [PATCH] attr: fix leak in free_attr_elem
-
-This function frees the individual "struct match_attr"s we
-have allocated, but forgot to free the array holding their
-pointers, leading to a very minor memory leak.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- attr.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/attr.c b/attr.c
-index 96eda0e..303751f 100644
---- a/attr.c
-+++ b/attr.c
-@@ -301,6 +301,7 @@ static void free_attr_elem(struct attr_stack *e)
- 		}
- 		free(a);
- 	}
-+	free(e->attrs);
- 	free(e);
- }
- 
--- 
-1.7.9.rc0.33.gd3c17
+But the thing is, what _you_, who knows a bit more than these new people
+about Git, see does not matter, because they would not listen to you.
