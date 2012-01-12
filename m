@@ -1,98 +1,126 @@
-From: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: git diff <file> HEAD^:<file> error message
-Date: Thu, 12 Jan 2012 11:31:52 +0100
-Message-ID: <20120112103152.GC11984@beez.lab.cmartin.tk>
-References: <20120111111831.GB15232@beez.lab.cmartin.tk>
- <7vr4z54pwp.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] word-diff: ignore '\ No newline at eof' marker
+Date: Thu, 12 Jan 2012 12:15:33 +0100
+Message-ID: <902665ee053876c2684f5b935ee4f81e77122802.1326366909.git.trast@student.ethz.ch>
+References: <4F0EA23D.3010603@yandex-team.ru>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="7qSK/uQB79J36Y4o"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 12 11:32:01 2012
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ivan Shirokoff <shirokoff@yandex-team.ru>
+X-From: git-owner@vger.kernel.org Thu Jan 12 12:15:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RlHwu-0003nD-UZ
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 11:32:01 +0100
+	id 1RlIdC-0007DL-3C
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 12:15:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751739Ab2ALKb4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jan 2012 05:31:56 -0500
-Received: from kimmy.cmartin.tk ([91.121.65.165]:51964 "EHLO kimmy.cmartin.tk"
+	id S1753300Ab2ALLPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jan 2012 06:15:37 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:24908 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751317Ab2ALKbz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2012 05:31:55 -0500
-Received: from beez.lab.cmartin.tk (z39c5.pia.fu-berlin.de [87.77.57.197])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 40383461C3;
-	Thu, 12 Jan 2012 11:31:41 +0100 (CET)
-Received: (nullmailer pid 32294 invoked by uid 1000);
-	Thu, 12 Jan 2012 10:31:52 -0000
-Mail-Followup-To: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vr4z54pwp.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753117Ab2ALLPg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jan 2012 06:15:36 -0500
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 12 Jan
+ 2012 12:15:33 +0100
+Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 12 Jan
+ 2012 12:15:33 +0100
+X-Mailer: git-send-email 1.7.9.rc0.168.g3847c
+In-Reply-To: <4F0EA23D.3010603@yandex-team.ru>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188442>
 
+The word-diff logic accumulates + and - lines until another line type
+appears (normally [ @\]), at which point it generates the word diff.
+This is usually correct, but it breaks when the preimage does not have
+a newline at EOF:
 
---7qSK/uQB79J36Y4o
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+  $ printf "%s" "a a a" >a
+  $ printf "%s\n" "a ab a" >b
+  $ git diff --no-index --word-diff a b
+  diff --git 1/a 2/b
+  index 9f68e94..6a7c02f 100644
+  --- 1/a
+  +++ 2/b
+  @@ -1 +1 @@
+  [-a a a-]
+   No newline at end of file
+  {+a ab a+}
 
-On Wed, Jan 11, 2012 at 06:26:30PM -0800, Junio C Hamano wrote:
-> Carlos Mart=EDn Nieto <cmn@elego.de> writes:
->=20
-> > I was trying to figure out why running
-> >
-> >    git diff HEAD^:RelNotes RelNotes
-> >
-> > gives the expected output (on maint it tells me that the stable
-> > version changed from 1.7.8.3 to 1.7.8.4) but swapping the arguments
-> > doesn't.
-> >
-> >    git diff RelNotes HEAD^:RelNotes
-> >
-> > doesn't show the opposite patch ...
->=20
-> That comes from the general argument parsing rules of Git, namely, global
-> options (e.g. --paginate) first, then subcommand name, followed by dashed
-> options, revs and finally the paths. Once you give "RelNotes", which
-> cannot be a rev, you cannot give a rev.
->=20
-> We _could_ special case the rule for "diff", but we simply didn't bother,
-> as the resulting code (and the implications of special casing) would be
-> too ugly to live to support such a corner case usage, especially when you
-> could always say "-R" to reverse the output.
+Because of the order of the lines in a unified diff
 
-The rule "non-rev stops rev parsing" is fair enough. The error message
-is still very misleading, as it lies about RelNotes not being in HEAD^
-and gives the impression that it was parsed as a rev (which I guess it
-was, but only to show the message).
+  @@ -1 +1 @@
+  -a a a
+  \ No newline at end of file
+  +a ab a
 
-   cmn
+the '\' line flushed the buffers, and the - and + lines were never
+matched with each other.
 
+A proper fix would defer such markers until the end of the hunk.
+However, word-diff is inherently whitespace-ignoring, so as a cheap
+fix simply ignore the marker (and hide it from the output).
 
---7qSK/uQB79J36Y4o
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+We use a prefix match for '\ ' to parallel the logic in
+apply.c:parse_fragment().  We currently do not localize this string
+(just accept other variants of it in git-apply), but this should be
+future-proof.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+Noticed-by: Ivan Shirokoff <shirokoff@yandex-team.ru>
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
+ diff.c                |    8 ++++++++
+ t/t4034-diff-words.sh |   14 ++++++++++++++
+ 2 files changed, 22 insertions(+), 0 deletions(-)
 
-iQEcBAEBAgAGBQJPDraYAAoJEHKRP1jG7ZzTLkkH/0ib2iLePDYxmp2+dGitpWbW
-xb79AmY7hjXLzfH96XgnIbN2Ry3acDIFX0TFWdwN8Qv1/pbIIFXbUQ1IlmVkp6nX
-ngD10lPS6nr0jLxtXhn8K3VZ7WvLgG/acwqcQtufNB4UwdJc93b5mGnQeTLs7jtj
-awW8tnSfknC1btppE2ZH0mtP4ikW2aVha6HhufFOyqYRpDWqy5AoQKB6EROap3Ar
-qROh517of01MW9D4+oeyzN6jpUITgVnQefIZCW+KYfIupKKXMIN0eD+7ji8P/c9o
-NJnv2BryA27h4552WMmG6H03LvIqMy9TCMqYz0Pmm9aVmD5QR3KbB54MEDfAYeI=
-=9qKM
------END PGP SIGNATURE-----
-
---7qSK/uQB79J36Y4o--
+diff --git a/diff.c b/diff.c
+index a65223a..996cc60 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1113,6 +1113,14 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 			diff_words_append(line, len,
+ 					  &ecbdata->diff_words->plus);
+ 			return;
++		} else if (!prefixcmp(line, "\\ ")) {
++			/*
++			 * Silently eat the "no newline at eof" marker
++			 * (we are diffing without regard to
++			 * whitespace anyway), and defer processing:
++			 * more '+' lines could be after it.
++			 */
++			return;
+ 		}
+ 		diff_words_flush(ecbdata);
+ 		if (ecbdata->diff_words->type == DIFF_WORDS_PORCELAIN) {
+diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+index 6f1e5a2..5c20121 100755
+--- a/t/t4034-diff-words.sh
++++ b/t/t4034-diff-words.sh
+@@ -334,4 +334,18 @@ test_expect_success 'word-diff with diff.sbe' '
+ 	word_diff --word-diff=plain
+ '
+ 
++test_expect_success 'word-diff with no newline at EOF' '
++	cat >expect <<-\EOF &&
++	diff --git a/pre b/post
++	index 7bf316e..3dd0303 100644
++	--- a/pre
++	+++ b/post
++	@@ -1 +1 @@
++	a a [-a-]{+ab+} a a
++	EOF
++	printf "%s" "a a a a a" >pre &&
++	printf "%s" "a a ab a a" >post &&
++	word_diff --word-diff=plain
++'
++
+ test_done
+-- 
+1.7.9.rc0.168.g3847c
