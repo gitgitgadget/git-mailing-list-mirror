@@ -1,83 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] stash show: use default pretty format
-Date: Thu, 12 Jan 2012 11:06:53 -0800
-Message-ID: <7vy5tc210y.fsf@alter.siamese.dyndns.org>
-References: <1326351953-3724-1-git-send-email-rctay89@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [BUG] multi-commit cherry-pick messes up the order of commits
+Date: Thu, 12 Jan 2012 20:21:48 +0100
+Message-ID: <4F0F32CC.8040404@kdbg.org>
+References: <20120111173101.GQ30469@goldbirke> <CAP8UFD2uLoqzXRxssjwwW1Vk8RuNF_5OT1d7Z7hiRQ+Rq=UM1A@mail.gmail.com> <20120112144409.GV30469@goldbirke> <20120112165329.GA17173@sigill.intra.peff.net> <CALkWK0=Mv_tzNw-hN_9fAr+vABappndEK5iSWQHDk8Yk6Z-stw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 12 20:07:07 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>,
+	=?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder@ira.uka.de>,
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 12 20:22:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RlPzM-00059u-Bw
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 20:07:04 +0100
+	id 1RlQE7-0004Bx-Jz
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 20:22:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754900Ab2ALTG5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jan 2012 14:06:57 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56547 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754593Ab2ALTG4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2012 14:06:56 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB90370DB;
-	Thu, 12 Jan 2012 14:06:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PQALx2SbY+JrR1Q1uOYoZr//4oU=; b=eoPpKg
-	gJXeNCwzMa7Jza5AiJ4gu5nKytfdGgk+nAc3n+rPqzaSAKgBlZgE3xRmUAe90koM
-	8WTv9+aU6XxUnJ5NCAtZ+XH9pQ7y4Ilm1q1qQ3HClNTbwElzZEdZaSfM6CPBulln
-	G9ha/UOc6jM/IqFm/Br+QePzbZC03yKe8M1tM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yhlWCe3P6VS7ukvnkVpR5tjXXdR6E+UI
-	/QBeGfpWTdDOG+b4WpGfO3ky6pCYY86essjxRyBhbbDoPxkh7dHiIvXL4quBgpfF
-	SOUuEZymOHvnfEetoARumCk8Ow/rVfCqkr07/wuHL94bFIOmZQ2hP9YdF6DAViiQ
-	hZ5S3Qs9Ldo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D279070DA;
-	Thu, 12 Jan 2012 14:06:55 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 44D9670D9; Thu, 12 Jan 2012
- 14:06:55 -0500 (EST)
-In-Reply-To: <1326351953-3724-1-git-send-email-rctay89@gmail.com> (Tay Ray
- Chuan's message of "Thu, 12 Jan 2012 15:05:53 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 97E5D85C-3D50-11E1-AC6D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754499Ab2ALTWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jan 2012 14:22:15 -0500
+Received: from bsmtp5.bon.at ([195.3.86.187]:53120 "EHLO lbmfmo03.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752926Ab2ALTWO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jan 2012 14:22:14 -0500
+Received: from bsmtp.bon.at (unknown [192.168.181.105])
+	by lbmfmo03.bon.at (Postfix) with ESMTP id 6CB12CE197
+	for <git@vger.kernel.org>; Thu, 12 Jan 2012 20:23:10 +0100 (CET)
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 2EB982C4005;
+	Thu, 12 Jan 2012 20:22:48 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id E999519F620;
+	Thu, 12 Jan 2012 20:21:48 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <CALkWK0=Mv_tzNw-hN_9fAr+vABappndEK5iSWQHDk8Yk6Z-stw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188472>
 
-Tay Ray Chuan <rctay89@gmail.com> writes:
+Am 12.01.2012 18:09, schrieb Ramkumar Ramachandra:
+> @@ -2054,7 +2054,10 @@ int prepare_revision_walk(struct rev_info *revs)
+>                 if (commit) {
+>                         if (!(commit->object.flags & SEEN)) {
+>                                 commit->object.flags |= SEEN;
+> -                               commit_list_insert_by_date(commit,
+> &revs->commits
+> +                               if (revs->literal_order)
+> +                                       commit_list_insert(commit,
+> &revs->commits
+> +                               else
+> +
+> commit_list_insert_by_date(commit, &revs-
 
-> By default (ie. when stash show is invoked without any arguments), the
-> diff stat of the stashed changes is displayed. Let git-diff decide the
-> default pretty format to use.
->
-> This gives git more consistency, as users who have set their
-> pretty.format config would naturally expect `git-stash show` to display
-> the diff in the same pretty format as the other diff-producing procelain
-> like git-log and git-show.
+Why do we need a new flag?
 
-A handful of issues:
+  git show origin/master origin/maint
+  git show origin/maint origin/master
 
- - The stash entries, unlike the usual commits you store on branches and
-   inspect with "show", are designed to be quick escapes for emergency
-   interruption, and "--stat" is a good default to remind the user what
-   she was working on before she was interrupted _without_ scrolling the
-   top of the screen away by showing the full diff.  Careful design
-   decisions far outweigh mechanical application of "consistency for the
-   sake of consistency".
+show the revisions in different order, in particular, in the order
+requested on the command line. Shoudn't cherry-pick be able to do the
+same without new hacks?
 
- - What does "pretty.format" has anything to do with "stash"?
-
- - If it does, why doesn't the script read from it?
-
- - How does this justify the UI regression for people who are used to the
-   good default "--stat" they have been seeing?
+-- Hannes
