@@ -1,47 +1,68 @@
-From: lists@haller-berlin.de (Stefan Haller)
-Subject: Zsh completion regression
-Date: Thu, 12 Jan 2012 12:52:27 +0100
-Message-ID: <1kdr5xk.1sopzul1hygnbrM%lists@haller-berlin.de>
-Cc: szeder@ira.uka.de (=?ISO-8859-1?Q?SZEDER_G=E1bor?=)
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 12 12:55:03 2012
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [BUG] multi-commit cherry-pick messes up the order of commits
+Date: Thu, 12 Jan 2012 14:31:30 +0100
+Message-ID: <CAP8UFD2uLoqzXRxssjwwW1Vk8RuNF_5OT1d7Z7hiRQ+Rq=UM1A@mail.gmail.com>
+References: <20120111173101.GQ30469@goldbirke>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Thu Jan 12 14:31:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RlJEi-0007Hx-4N
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 12:54:28 +0100
+	id 1RlKkx-0004dk-Va
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 14:31:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752517Ab2ALLyV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jan 2012 06:54:21 -0500
-Received: from server90.greatnet.de ([83.133.96.186]:50281 "EHLO
-	server90.greatnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751860Ab2ALLyV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2012 06:54:21 -0500
-Received: from [192.168.0.42] (nat1.ableton.net [217.110.199.117])
-	by server90.greatnet.de (Postfix) with ESMTPA id F23672A0548;
-	Thu, 12 Jan 2012 12:50:36 +0100 (CET)
-User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.7.2 (x86))
+	id S1753529Ab2ALNbb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Jan 2012 08:31:31 -0500
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:44952 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753346Ab2ALNba convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Jan 2012 08:31:30 -0500
+Received: by dajs34 with SMTP id s34so1073387daj.19
+        for <git@vger.kernel.org>; Thu, 12 Jan 2012 05:31:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=PygLlOvB+Mq3jF9iJ/8ZgseGm93s1rWtMd+4yx1zdFQ=;
+        b=U8dDtaCv2Zpdl3h9Gfkoi49B5rLaKBVvJUTbutXKu13Low6uRKbFQK0IASfS0jIsqz
+         7oKUjMrO6tArOtSwxbvXBE2bVOWhe8aO96neJ6/w/vjyTOCPzDxKwVJazgKaQeYUMHhI
+         2jDyYdzDazS27l+pZ6O9a1IHRoOSUrbf3m2ko=
+Received: by 10.68.191.3 with SMTP id gu3mr8109693pbc.112.1326375090354; Thu,
+ 12 Jan 2012 05:31:30 -0800 (PST)
+Received: by 10.143.141.8 with HTTP; Thu, 12 Jan 2012 05:31:30 -0800 (PST)
+In-Reply-To: <20120111173101.GQ30469@goldbirke>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188444>
 
-I'm using zsh   4.3.11.
+Hi all,
 
-When I type "git log mas<TAB>", it completes to "git log master\ " (a
-backslash, a space, and then the cursor).
+2012/1/11 SZEDER G=E1bor <szeder@ira.uka.de>:
+>
+> As far as I can tell, this buggy behavior is as old as multi-commit
+> cherry-pick itself, i.e. 7e2bfd3f (revert: allow cherry-picking more
+> than one commit, 2010-06-02).
 
-Bisecting points to "a31e626 completion: optimize refs completion."
-Before this commit, I get "git log master" (with no space at the end).
+Thanks for the very detailed report!
 
-My completion-fu is not strong enough to dig into this myself, but I'll
-be happy to help test, or do whatever else helps.
+I didn't test nor even compiled anything but maybe this can be fixed
+by adding something like:
 
+opts->revs->topo_order =3D 1;
 
--- 
-Stefan Haller
-Berlin, Germany
-http://www.haller-berlin.de/
+in parse_args() or in prepare_revs()
+
+I will try to have a look tonight.
+
+Thanks again,
+Christian.
