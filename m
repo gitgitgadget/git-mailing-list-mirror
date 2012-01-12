@@ -1,82 +1,88 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [BUG] multi-commit cherry-pick messes up the order of commits
-Date: Thu, 12 Jan 2012 15:44:09 +0100
-Message-ID: <20120112144409.GV30469@goldbirke>
-References: <20120111173101.GQ30469@goldbirke>
-	<CAP8UFD2uLoqzXRxssjwwW1Vk8RuNF_5OT1d7Z7hiRQ+Rq=UM1A@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Zsh completion regression
+Date: Thu, 12 Jan 2012 15:56:28 +0100
+Message-ID: <vpq62ghj7fn.fsf@bauges.imag.fr>
+References: <1kdr5xk.1sopzul1hygnbrM%lists@haller-berlin.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Couder <chriscool@tuxfamily.org>, <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 12 15:44:18 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	szeder@ira.uka.de (SZEDER =?iso-8859-1?Q?G=E1bor?=)
+To: lists@haller-berlin.de (Stefan Haller)
+X-From: git-owner@vger.kernel.org Thu Jan 12 15:56:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RlLt4-0006ak-1I
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 15:44:18 +0100
+	id 1RlM5B-0005ZQ-Uz
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 15:56:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753606Ab2ALOoN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Jan 2012 09:44:13 -0500
-Received: from ex-e-2.perimeter.fzi.de ([141.21.8.251]:52443 "EHLO
-	ex-e-2.perimeter.fzi.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753168Ab2ALOoM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2012 09:44:12 -0500
-Received: from ex-ca-ht-1.fzi.de (141.21.32.98) by ex-e-2.perimeter.fzi.de
- (141.21.8.251) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 12 Jan
- 2012 15:44:06 +0100
-Received: from localhost6.localdomain6 (141.21.50.31) by ex-ca-ht-1.fzi.de
- (141.21.32.98) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 12 Jan
- 2012 15:44:08 +0100
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD2uLoqzXRxssjwwW1Vk8RuNF_5OT1d7Z7hiRQ+Rq=UM1A@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753859Ab2ALO4n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jan 2012 09:56:43 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:51968 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753855Ab2ALO4m (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jan 2012 09:56:42 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q0CEsxgl012822
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 12 Jan 2012 15:54:59 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1RlM4r-0002CQ-6M; Thu, 12 Jan 2012 15:56:29 +0100
+In-Reply-To: <1kdr5xk.1sopzul1hygnbrM%lists@haller-berlin.de> (Stefan Haller's
+	message of "Thu, 12 Jan 2012 12:52:27 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 12 Jan 2012 15:55:00 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q0CEsxgl012822
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1326984900.96903@xmQVzi4pvAgjWosWeLreNQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188449>
 
-Hi,
+lists@haller-berlin.de (Stefan Haller) writes:
 
+> I'm using zsh   4.3.11.
+>
+> When I type "git log mas<TAB>", it completes to "git log master\ " (a
+> backslash, a space, and then the cursor).
 
-On Thu, Jan 12, 2012 at 02:31:30PM +0100, Christian Couder wrote:
-> Hi all,
->=20
-> 2012/1/11 SZEDER G=E1bor <szeder@ira.uka.de>:
-> >
-> > As far as I can tell, this buggy behavior is as old as multi-commit
-> > cherry-pick itself, i.e. 7e2bfd3f (revert: allow cherry-picking mor=
-e
-> > than one commit, 2010-06-02).
->=20
-> Thanks for the very detailed report!
->=20
-> I didn't test nor even compiled anything but maybe this can be fixed
-> by adding something like:
->=20
-> opts->revs->topo_order =3D 1;
->=20
-> in parse_args() or in prepare_revs()
->=20
-> I will try to have a look tonight.
+Same here (although I've been too lazy to bisect myself).
 
-[Beware, I'm mostly clueless about git internals.]
+The following patch makes the situation better, but is not really a fix:
 
-I don't think that any commit reordering, whether it's based on
-committer date, topology, or whatever, is acceptable.  Commits must be
-picked in the exact order they are specified on the command line.
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -525,7 +525,7 @@ __gitcomp ()
+ __gitcomp_nl ()
+ {
+        local s=$'\n' IFS=' '$'\t'$'\n'
+-       local cur_="$cur" suffix=" "
++       local cur_="$cur" suffix=""
+ 
+        if [ $# -gt 2 ]; then
+                cur_="$3"
 
-Besides, AFAICT, parse_args() sets opts->revs->no_walk =3D 1, which wil=
-l
-cause prepare_revision_walk() to return before it would reach the
-topo_order condition, so opts->revs->topo_order =3D 1 wouldn't have any
-effect.
+With this, the trailing space isn't added, but e.g. "git checkout
+master<TAB>" does not add the trailing space, at all.
 
+The problem is a little bit below:
 
-Best,
-G=E1bor
+	IFS=$s
+	COMPREPLY=($(compgen -P "${2-}" -S "$suffix" -W "$1" -- "$cur_"))
+
+The -S "$suffix" adds a space to the completion, but ZSH escapes the
+space (which sounds sensible in general, but is not at all what we
+expect). My completion-fu isn't good enough to get any further either
+unfortunately.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
