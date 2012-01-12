@@ -1,88 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] multi-commit cherry-pick messes up the order of commits
-Date: Thu, 12 Jan 2012 10:41:29 -0800
-Message-ID: <7v62gg3grq.fsf@alter.siamese.dyndns.org>
-References: <20120111173101.GQ30469@goldbirke>
- <CAP8UFD2uLoqzXRxssjwwW1Vk8RuNF_5OT1d7Z7hiRQ+Rq=UM1A@mail.gmail.com>
- <20120112144409.GV30469@goldbirke>
- <20120112165329.GA17173@sigill.intra.peff.net>
- <20120112174731.GA6038@burratino>
+From: Yves Goergen <nospam.list@unclassified.de>
+Subject: Bug? Git checkout fails with a wrong error message
+Date: Thu, 12 Jan 2012 18:44:03 +0000 (UTC)
+Message-ID: <loom.20120112T193624-86@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 12 19:41:38 2012
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 12 19:50:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RlPaj-0000d9-5n
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 19:41:37 +0100
+	id 1RlPj6-00058H-CO
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 19:50:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754777Ab2ALSlc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jan 2012 13:41:32 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45622 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754049Ab2ALSlc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2012 13:41:32 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 74ACA6923;
-	Thu, 12 Jan 2012 13:41:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=i6HjJgTj0ClCoVgVOO52b1/+8S4=; b=E10Bkl
-	0gqawApDPP4Yafvo3Sdx4h0dNscXOWWcHm36kQeOlXj3+CwY2akiesaBkebmt9Mw
-	DwM7+wkngMOzdkWWIXndy2Ag9VDtFkVy3UYMtG7n3rQb5wU3opaqJTW4fHNaksHY
-	OlMEQcA/UXHBM5strMiSivcuGnw+HY0MGk+t0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lulMP2UeTP+vofQ0TIPsd8iiCKlQ/HBA
-	oYnB/j+QOjW1MehLV1Ulbmk3eMKo5pwraH9VFha03MMUOdBlnKfQtQ5js+/3IgRg
-	WL/Osdv7aYgYHFJrjd2MXH4EtXDqUJd/P9o+QcE5NL1KggIvUfl5d7NC2F8n5FEG
-	bFrQrfR9DNw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A9B36922;
-	Thu, 12 Jan 2012 13:41:31 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D51916921; Thu, 12 Jan 2012
- 13:41:30 -0500 (EST)
-In-Reply-To: <20120112174731.GA6038@burratino> (Jonathan Nieder's message of
- "Thu, 12 Jan 2012 11:47:32 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0B54ED72-3D4D-11E1-9FF5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754834Ab2ALSuL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jan 2012 13:50:11 -0500
+Received: from lo.gmane.org ([80.91.229.12]:58582 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754582Ab2ALSuK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jan 2012 13:50:10 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RlPix-000507-Nd
+	for git@vger.kernel.org; Thu, 12 Jan 2012 19:50:07 +0100
+Received: from DSL01.83.171.170.242.ip-pool.NEFkom.net ([83.171.170.242])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 12 Jan 2012 19:50:07 +0100
+Received: from nospam.list by DSL01.83.171.170.242.ip-pool.NEFkom.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 12 Jan 2012 19:50:07 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 83.171.170.242 (Mozilla/5.0 (Windows NT 5.1; rv:9.0.1) Gecko/20100101 Firefox/9.0.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188469>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Hi,
 
-> Yes, exactly.  Another question: what should
->
-> 	git cherry-pick master..next maint..master
->
-> do?
+I am using Git alone for my local software project in Visual Studio 2010. I've
+been on the master branch most of the time. Recently I created a new branch to
+do a larger refactoring of one of the dialogue windows. I did the following
+modifications:
 
-Revision ranges are not defined as a union of sets, but a single set as a
-range between zero or more bottom (UNINTERESTING) commits and zero or more
-top commits, the ones reachable from the top but not from the bottom, so
-the above will work as if you said "^master ^maint master next", which is
-the same as "master..next" (if you assume all of "maint" is contained in
-"master" all of which is contained in "next", of course).
+* Rename Form1 to Form1a (including all depending files)
+* Add new Form1
 
-And it is not likely to change soon.
+I checked this change into the branch, say form-refactoring. Interestingly, Git
+didn't notice that I renamed the file Form1.cs into Form1a.cs and created a
+brand new, totally different Form1.cs, but instead it noticed a new Form1a.cs
+file and found a whole lot of differences between the previous and new Form1.cs
+files. This will of course lead to totally garbaged diffs, but I don't care in
+this case as long as all files are handled correctly in the end.
 
-In the longer term (or in an alternate universe where we were inventing
-Git from scratch today without any existing users), we may want to revamp
-the revision machinery, taking advantage of the recent addition of the
-"cmdline" facility to it, so that we would walk ranges "master..next" and
-"maint..master" independently, clearing the object flags as needed between
-the separate traversals as needed, and then take a union of these ranges,
-before returning results from get_revision() calls.
+Then I switched back to master to do some other small changes. Nothing
+conflicting. Until now, everything worked fine.
+
+Today, I wanted to switch back to my branch form-refactoring to continue that
+work. But all I get is the following message:
+
+-----
+git.exe checkout    form-refactoring
+
+Aborting
+error: The following untracked working tree files would be overwritten by
+checkout:
+Form1.Designer.cs
+Please move or remove them before you can switch branches.
+-----
+
+What is that supposed to be? The mentioned file is not untracked. Neither in the
+master branch, nor in the form-refactoring branch. It is part of both branches,
+but one is not a descendent of the other (because it was recreated on the
+form-refactoring branch, if that matters). What would happen if I delete it, is
+it gone for good then? I don't trust Git to bring back the correct file if I
+delete something now. I did not play with any file at all outside of my
+mentioned Git operations, so why should I play around with any file to continue
+using Git operations now? Git broke it, Git's supposed to handle it now!
+
+Here's some other input:
+
+There are no uncommitted changes in my working directory. 'git status' doesn't
+list anything.
+
+The file in question is not untracked. Right now on the master branch, it has a
+green checkmark in Explorer (provided by TortoiseGit) and it has a history as
+well. There are more Form....Designer.cs files that don't cause any trouble.
+
+'git clean -f -d', 'git reset --hard HEAD', 'git stash' do nothing and don't
+help resolving the issue.
+
+Right now, I cannot continue with my work because I cannot switch branches. Is
+there an easy solution to this? Is my Git repository broken, all by standard
+operations?
