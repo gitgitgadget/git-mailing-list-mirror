@@ -1,153 +1,76 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 2/2] diff --word-diff: use non-whitespace regex by default
-Date: Thu, 12 Jan 2012 10:22:03 +0100
-Message-ID: <87ipkhqnr8.fsf@thomas.inf.ethz.ch>
-References: <1326302702-4536-1-git-send-email-rctay89@gmail.com>
-	<1326302702-4536-2-git-send-email-rctay89@gmail.com>
-	<87lipexawp.fsf@thomas.inf.ethz.ch>
-	<CALUzUxo3DcKqC6sQFQ1Oi0vgASFSHCcmOgHAj2_4c3vEjy663w@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] diff --no-index: support more than one file pair
+Date: Thu, 12 Jan 2012 10:30:36 +0100
+Message-ID: <vpqmx9te08z.fsf@bauges.imag.fr>
+References: <1326359371-13528-1-git-send-email-pclouds@gmail.com>
+	<vpq39bll1ua.fsf@bauges.imag.fr>
+	<CACsJy8BvA_o1+xrOx4hYhmwNWpsRnh5+mftb471h3yFW2b6vhA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 12 10:22:30 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 12 10:30:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RlGrd-0006lC-46
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 10:22:29 +0100
+	id 1RlGzg-0001zd-1j
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 10:30:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753181Ab2ALJWW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jan 2012 04:22:22 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:14463 "EHLO edge10.ethz.ch"
+	id S1753204Ab2ALJan (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jan 2012 04:30:43 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:44542 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752856Ab2ALJWH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2012 04:22:07 -0500
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 12 Jan
- 2012 10:22:03 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 12 Jan
- 2012 10:22:03 +0100
-In-Reply-To: <CALUzUxo3DcKqC6sQFQ1Oi0vgASFSHCcmOgHAj2_4c3vEjy663w@mail.gmail.com>
-	(Tay Ray Chuan's message of "Thu, 12 Jan 2012 08:52:49 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1751715Ab2ALJak (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jan 2012 04:30:40 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q0C9TGUV011975
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 12 Jan 2012 10:29:16 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1RlGzU-0003qj-NG; Thu, 12 Jan 2012 10:30:36 +0100
+In-Reply-To: <CACsJy8BvA_o1+xrOx4hYhmwNWpsRnh5+mftb471h3yFW2b6vhA@mail.gmail.com>
+	(Nguyen Thai Ngoc Duy's message of "Thu, 12 Jan 2012 16:17:57 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 12 Jan 2012 10:29:17 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q0C9TGUV011975
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1326965358.27742@B99buVWh7hl/i2us0RyKPw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188440>
 
-Tay Ray Chuan <rctay89@gmail.com> writes:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> On Thu, Jan 12, 2012 at 4:05 AM, Thomas Rast <trast@student.ethz.ch> wrote:
->> Tay Ray Chuan <rctay89@gmail.com> writes:
->>
->>> Factor out the comprehensive non-whitespace regex in use by PATTERNS and
->>> IPATTERN and use it as the word-diff regex for the default diff driver.
->>
->> Why?
-
-Sorry for distracting you with the performance argument; it was mostly
-the first thing that came to my mind that I could use to ask for the
-motivation, and evaluation of tradeoffs, that both were missing from the
-proposed commit message.
-
-> But I think it's worthwhile to trade-off performance for a sensible
-> default. Something like
+> Single operation has its advantages:
 >
->   matrix[a,b,c]
->   matrix[d,b,c]
->
-> gives
->
->   matrix[[-a-]{+d+},b,c]
->
-> and when we have
->
->   ImagineALanguageLikeFoo
->   ImagineALanguageLikeBar
->
-> we get
->
->   ImagineALanguageLike[-Foo-]{+Bar+}
+>  - one pager
+>  - one stat and summary
 
-In that case (and I should have read the original patch), I am
-definitely against this change.  It turns the default word-diff into
-character-diff, which is something entirely different, and frequently
-useless precisely for the reason you state:
+I buy these, and I understand why they apply to "git diff" and not GNU
+diff.
 
-> (But I cheated. Foo and Bar have no common characters in common; if
-> they did, the word diff would be messy.)
+>  - might be easier to script (just throw them all to xargs)
 
-Case in point, consider my patch sent out yesterday
+I don't see a use-case where a command produces old1 new1 old2 new2, but
+if there is one, then "| xargs -n 2 diff" is the solution. You don't
+need your patch.
 
-  http://article.gmane.org/gmane.comp.version-control.git/188391
+>  - hell, i might even benefit from git copy/modify detection
 
-It consists of a one-hunk doc update.  word-diff is not brilliant:
-
-  -k::
-          Usually the program [-'cleans up'-]{+removes email cruft from+} the Subject:
-          header line to extract the title line for the commit log
-          [-message,-]
-  [-      among which (1) remove 'Re:' or 're:', (2) leading-]
-  [-      whitespaces, (3) '[' up to ']', typically '[PATCH]', and-]
-  [-      then prepends "[PATCH] ".-]{+message.+}  This [-flag forbids-]{+option prevents+} this munging, and is most
-          useful when used to read back 'git format-patch -k' output.
-[snip the rest as it's only {+}]
-
-But character-diff tries too hard to find common subsequences:
-
-  $ g show HEAD^^ --word-diff-regex='[^[:space:]]' | xsel
-  -k::
-          Usually the program [-'cl-]{+remov+}e[-an-]s {+email cr+}u[-p'-]{+ft from+} the Subject:
-          header line to extract the title line for the commit log
-          message[-,-]
-  [-      among which (1) remove 'Re:' or 're:', (2) leading-]
-  [-      w-]{+.  T+}hi[-te-]s[-paces, (3) '[' up t-] o[-']', ty-]p[-ically '[PATCH]', and-]t[-he-]{+io+}n pre[-p-]{+v+}en[-ds "[PATCH] ".  This flag forbid-]{+t+}s this munging, and is most
-          useful when used to read back 'git format-patch -k' output.
-[snip]
-
-Wouldn't you agree that
-
-  w-]{+.  T+}hi[-te-]s[-paces, (3) '[' up t-] o[-']', ty-]p[
-
-is just line noise?  The colors don't even help as most of it is removed
-(red).
-
-Regarding your examples
-
-> [1] http://article.gmane.org/gmane.comp.version-control.git/105896
-> [2] http://article.gmane.org/gmane.comp.version-control.git/105237
-
-first please notice that both of them were written before (and actually
-discussing) the introduction of the wordRegex feature.  At this point,
-we were trying to make up our minds w.r.t. how powerful the feature
-needs to be.  Nowadays (or in fact, starting a few days after those
-emails) the user can easily achieve everything discussed here by setting
-the wordRegex to taste.
-
-That being said, I can see some arguments for changing the default to
-split punctuation into a separate word.  That is, whereas the current
-default is semantically equivalent to a wordRegex of
-
-  [^[:space:]]*
-
-(but has a faster code path) and your proposal is equivalent to
-
-  [^[:space:]]|UTF_8_GUARD
-
-I think there is a case to be made for a default of
-
-  [^[:space:]]|([[:alnum:]]|UTF_8_GUARD)+
-
-or some such.  There's a lot of bikeshedding lurking in the (non)extent
-of the [[:alnum:]] here, however.
+I don't see how, if you specify explicitely the pairs (old, new). You
+may have such benefit if you let the command-line express "here's a
+bunch of old files, and a bunch of new ones", but not with your proposed
+syntax.
 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
