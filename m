@@ -1,81 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: leaky cherry-pick
-Date: Wed, 11 Jan 2012 16:00:38 -0800
-Message-ID: <7v7h0x6b89.fsf@alter.siamese.dyndns.org>
-References: <20120109223737.GA1589@padd.com>
- <CALkWK0nwE0c6qVvbauPrjmb3NX4NDeGSrvrC2ry2bjMeM4Hr0A@mail.gmail.com>
- <20120110195017.GA19961@sigill.intra.peff.net>
- <CALkWK0kDnxjtQ+ihH_dif_7yivHLd=pibao4KPs_PDXfc2UMOA@mail.gmail.com>
- <7vipki7ix9.fsf@alter.siamese.dyndns.org>
- <CALkWK0m+okqJk05BMQAEMww6FNLxaLVhAM92WmUDeA_J-drOdg@mail.gmail.com>
- <20120111195605.GB12333@sigill.intra.peff.net>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH 2/2] diff --word-diff: use non-whitespace regex by default
+Date: Thu, 12 Jan 2012 08:52:49 +0800
+Message-ID: <CALUzUxo3DcKqC6sQFQ1Oi0vgASFSHCcmOgHAj2_4c3vEjy663w@mail.gmail.com>
+References: <1326302702-4536-1-git-send-email-rctay89@gmail.com>
+	<1326302702-4536-2-git-send-email-rctay89@gmail.com>
+	<87lipexawp.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Pete Wyckoff <pw@padd.com>, git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 12 01:00:47 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Jan 12 01:52:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rl862-0001vA-G1
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 01:00:46 +0100
+	id 1Rl8uV-0005Lx-Sq
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 01:52:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751295Ab2ALAAm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jan 2012 19:00:42 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35126 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751206Ab2ALAAl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jan 2012 19:00:41 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EDC246366;
-	Wed, 11 Jan 2012 19:00:40 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Kg511csJH91awHSVEYrSDYne2t4=; b=e09CSt
-	kHFbAxc2T3RzenUYfzdnS+HdXHL7aLW8ilS+53hUXBzE6YLgWPcMgMrsr202KOjq
-	7KHiSO6xDTm4WaXOzf7YZk9uMRjLdHFOH8pESVsqQzm325b5NRPp2UAQ7Nw3cs99
-	/5sidg6S0vysyhzr37AVPySxwxB4vpYrky13o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SdDURvGuw9JnTq6fpg44Qr6fo6+unZHh
-	ra6jHFSm7P5g31iH4vO9p0D3gb7oMH6iHoraohRnVK3g8Xg63TgyuSG8Ts7pT1DA
-	sUr0P6VPLKT1yMh5t2wfP/yLXXDq1CYSshLv4n4DJxyirTU8uOLAwHcBzM3LWcJk
-	yUeBkCCV8kY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E4A816365;
-	Wed, 11 Jan 2012 19:00:40 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5E4F66363; Wed, 11 Jan 2012
- 19:00:40 -0500 (EST)
-In-Reply-To: <20120111195605.GB12333@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 11 Jan 2012 14:56:05 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 76DDC228-3CB0-11E1-A790-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751792Ab2ALAwv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jan 2012 19:52:51 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:35823 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751719Ab2ALAwu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Jan 2012 19:52:50 -0500
+Received: by werm1 with SMTP id m1so982672wer.19
+        for <git@vger.kernel.org>; Wed, 11 Jan 2012 16:52:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=B8k9hQNIow0b8OUGiiNX/w0sBsh5hLAj/aICnPCRdZU=;
+        b=L8k0wNwFcQ5A9CMHXUwIeyWDTit7WCuNDVaJfQqIc7KJuHKcUuvTUSZSyEJrFWJOW/
+         81PLzHu1UELtHDdBtco1yJeqDZsY+wLe6uY6puxN9cO7+3kkscKVJD7bmw6M3xsyKt3v
+         71nCG/5yjeWWYi61fyQSFOkTIPwHUphazlPCQ=
+Received: by 10.180.96.7 with SMTP id do7mr14870043wib.16.1326329569490; Wed,
+ 11 Jan 2012 16:52:49 -0800 (PST)
+Received: by 10.223.92.135 with HTTP; Wed, 11 Jan 2012 16:52:49 -0800 (PST)
+In-Reply-To: <87lipexawp.fsf@thomas.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188409>
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> Maybe this?
+Thomas, first off, thanks for looking through this.
+
+On Thu, Jan 12, 2012 at 4:05 AM, Thomas Rast <trast@student.ethz.ch> wr=
+ote:
+> Tay Ray Chuan <rctay89@gmail.com> writes:
 >
-> diff --git a/attr.c b/attr.c
-> index 76b079f..1656db4 100644
-> --- a/attr.c
-> +++ b/attr.c
-> @@ -301,6 +301,7 @@ static void free_attr_elem(struct attr_stack *e)
->  		}
->  		free(a);
->  	}
-> +	free(e->attrs);
->  	free(e);
->  }
+>> Factor out the comprehensive non-whitespace regex in use by PATTERNS=
+ and
+>> IPATTERN and use it as the word-diff regex for the default diff driv=
+er.
+>
+> Why?
+>
+> I seem to recall that the motivation for keeping the original code as=
+-is
+> instead of just emulating its behavior with a default regex was that =
+it
+> is faster. =A0So disabling the default mode should at least have an
+> advantage?
+>
+> </devils-advocate>
 
-Yeah, that is definitely a leak.
+If you're talking about speed, yeah, that's probably true.
+
+But I think it's worthwhile to trade-off performance for a sensible
+default. Something like
+
+  matrix[a,b,c]
+  matrix[d,b,c]
+
+gives
+
+  matrix[[-a-]{+d+},b,c]
+
+and when we have
+
+  ImagineALanguageLikeFoo
+  ImagineALanguageLikeBar
+
+we get
+
+  ImagineALanguageLike[-Foo-]{+Bar+}
+
+(But I cheated. Foo and Bar have no common characters in common; if
+they did, the word diff would be messy.)
+
+Both of which seem sensible. From a usability/effectiveness
+standpoint, I think it's more useful than what the current word-diff
+defaults to - the whole line is taken as a "word", with the pre-image
+shown as deleted and the post-image as added; we don't even try to run
+LCS on it.
+
+Examples are lifted from:
+[1] http://article.gmane.org/gmane.comp.version-control.git/105896
+[2] http://article.gmane.org/gmane.comp.version-control.git/105237
+
+--=20
+Cheers,
+Ray Chuan
