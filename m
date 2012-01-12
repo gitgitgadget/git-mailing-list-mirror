@@ -1,86 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] multi-commit cherry-pick messes up the order of commits
-Date: Thu, 12 Jan 2012 11:53:29 -0500
-Message-ID: <20120112165329.GA17173@sigill.intra.peff.net>
-References: <20120111173101.GQ30469@goldbirke>
- <CAP8UFD2uLoqzXRxssjwwW1Vk8RuNF_5OT1d7Z7hiRQ+Rq=UM1A@mail.gmail.com>
- <20120112144409.GV30469@goldbirke>
+From: =?ISO-8859-1?Q?R=FCdiger?= Sonderfeld <ruediger@c-plusplus.de>
+Subject: Re: [PATCH] git-blame.el: Fix compilation warnings.
+Date: Thu, 12 Jan 2012 18:08:21 +0100
+Message-ID: <2304907.sEfEeC6Eon@descartes>
+References: <2608010.fNV39qBMLu@descartes> <20120112162617.GA2479@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Thu Jan 12 17:53:53 2012
+Cc: git@vger.kernel.org, davidk@lysator.liu.se,
+	Sergei Organov <osv@javad.com>, Kevin Ryde <user42@zip.com.au>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 12 18:08:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RlNuM-000388-Oc
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 17:53:47 +0100
+	id 1RlO8k-0003io-GQ
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 18:08:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754385Ab2ALQxe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Jan 2012 11:53:34 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36102
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754325Ab2ALQxd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2012 11:53:33 -0500
-Received: (qmail 32572 invoked by uid 107); 12 Jan 2012 17:00:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 Jan 2012 12:00:27 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Jan 2012 11:53:29 -0500
-Content-Disposition: inline
-In-Reply-To: <20120112144409.GV30469@goldbirke>
+	id S1754170Ab2ALRIb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Jan 2012 12:08:31 -0500
+Received: from ptmx.org ([178.63.28.110]:37793 "EHLO ptmx.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752143Ab2ALRIa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Jan 2012 12:08:30 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by ptmx.org (Postfix) with ESMTP id A3D18257AD;
+	Thu, 12 Jan 2012 18:08:29 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at ptmx.org
+Received: from ptmx.org ([127.0.0.1])
+	by localhost (ptmx.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id N86sOjj2nm-9; Thu, 12 Jan 2012 18:08:28 +0100 (CET)
+Received: from descartes.localnet (93-82-12-214.adsl.highway.telekom.at [93.82.12.214])
+	by ptmx.org (Postfix) with ESMTPSA id 9A407201B8;
+	Thu, 12 Jan 2012 18:08:26 +0100 (CET)
+User-Agent: KMail/4.7.3 (Linux/3.0.0-14-generic; KDE/4.7.4; x86_64; ; )
+In-Reply-To: <20120112162617.GA2479@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188455>
 
-On Thu, Jan 12, 2012 at 03:44:09PM +0100, SZEDER G=C3=A1bor wrote:
+Hi,
 
-> > Thanks for the very detailed report!
-> >=20
-> > I didn't test nor even compiled anything but maybe this can be fixe=
-d
-> > by adding something like:
-> >=20
-> > opts->revs->topo_order =3D 1;
-> >=20
-> > in parse_args() or in prepare_revs()
-> >=20
-> > I will try to have a look tonight.
+On Thursday 12 January 2012 10:26:41 Jonathan Nieder wrote:
+> These lines should be left out [*].
+
+Sorry, I wasn't sure whether to remove them or not. I followed the desc=
+ription=20
+in git-format-patch(1) on how to send patches with kmail. I'll remove t=
+hem in=20
+the future. Thanks for the advice.
+=20
+> I assume this was prompted by warning messages like this one:
 >=20
-> [Beware, I'm mostly clueless about git internals.]
+> 	In git-blame-cleanup:
+> 	git-blame.el:306:6:Warning: `mapcar' called for effect; use `mapc' o=
+r
+> `dolist' instead
 >=20
-> I don't think that any commit reordering, whether it's based on
-> committer date, topology, or whatever, is acceptable.  Commits must b=
-e
-> picked in the exact order they are specified on the command line.
+> Looks reasonable to my very much untrained eyes, and it's consistent
+> with the hints Kevin gave at [1].
 
-I thought the multi-commit cherry-pick was supposed to take arbitrary
-revision arguments, so you can do:
+Yes. I think the warnings are correct and should be addressed. E.g. Usi=
+ng=20
+mapcar compared to mapc is slower due to the required accumulation of t=
+he=20
+results and the additional garbage collection costs. It's not very dram=
+atic=20
+but there is no reason not to fix it imho.
 
-  git cherry-pick master..topic
-
-and likewise you can spell it:
-
-  git cherry-pick topic ^master
-
-or:
-
-  git cherry-pick ^master topic
-
-So the order of arguments isn't relevant in those cases; the graph
-ordering is. I agree it would be nice to make:
-
-  git cherry-pick commit1 commit3 commit2
-
-work in the order specified, but how does that interact with existing
-cases that provide more traditional revision arguments?
-
--Peff
+Regards,
+R=C3=BCdiger
