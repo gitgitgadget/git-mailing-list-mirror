@@ -1,83 +1,153 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 2/3] am: learn passing -b to mailinfo
-Date: Thu, 12 Jan 2012 09:52:59 +0100
-Message-ID: <8762ghxpxw.fsf@thomas.inf.ethz.ch>
-References: <e915a551c9bbf12f4d8fd929e9ed24f3223790ee.1326312730.git.trast@student.ethz.ch>
-	<19539098c07a207f3bd24f5a145ba3b6c5e46766.1326312730.git.trast@student.ethz.ch>
-	<7vzkdt4s9l.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 12 09:53:11 2012
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] diff --no-index: support more than one file pair
+Date: Thu, 12 Jan 2012 16:09:31 +0700
+Message-ID: <1326359371-13528-1-git-send-email-pclouds@gmail.com>
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 12 10:09:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RlGPF-0002aD-Cq
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 09:53:11 +0100
+	id 1RlGfQ-00019z-51
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 10:09:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752896Ab2ALIxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jan 2012 03:53:05 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:9677 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751794Ab2ALIxD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2012 03:53:03 -0500
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 12 Jan
- 2012 09:53:00 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 12 Jan
- 2012 09:53:00 +0100
-In-Reply-To: <7vzkdt4s9l.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 11 Jan 2012 17:35:34 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1753032Ab2ALJJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jan 2012 04:09:47 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:44168 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752849Ab2ALJJo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jan 2012 04:09:44 -0500
+Received: by iabz25 with SMTP id z25so2452789iab.19
+        for <git@vger.kernel.org>; Thu, 12 Jan 2012 01:09:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=ZQBMt2on463syW7jlGO/HAhNDa0ARw3lLxEyhT5DpII=;
+        b=Zx5+Ev4CpBSCoPSyqB/DpzxgX3iwAUeZfQfnUdqxEyxWVmixwIVaxamXkoDToBuNY3
+         wReqFS9q9OuH28yC+XeF6U5o7a2kR69nroiIhYmcbe1NZE5KSvMYWvhq+Ph+huIeKo3n
+         ixacnMybg6uq+SZqqFeNFCeAnW5OcwjACbF+A=
+Received: by 10.50.181.169 with SMTP id dx9mr11015419igc.0.1326359383360;
+        Thu, 12 Jan 2012 01:09:43 -0800 (PST)
+Received: from pclouds@gmail.com ([113.161.77.29])
+        by mx.google.com with ESMTPS id 5sm15092261ibe.8.2012.01.12.01.09.39
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 12 Jan 2012 01:09:42 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 12 Jan 2012 16:09:33 +0700
+X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188435>
 
-Junio C Hamano <gitster@pobox.com> writes:
+This allows you to do
 
-> Thomas Rast <trast@student.ethz.ch> writes:
->
->> @@ -571,8 +574,8 @@ then
->>  else
->>  	utf8=-n
->>  fi
->> -if test "$(cat "$dotest/keep")" = t
->> -then
->> +keep=$(cat "$dotest/keep")
->> +if test "$keep" = t
->>  	keep=-k
->>  fi
->
-> Curious.
->
-> Who writes 't' to $dotest/keep after this patch is applied?
+git diff --no-index file1.old file1.new file2.old file2.new...
 
-Nobody; like the commit message says, I was just trying to help users
-upgrading from one version to the next in the middle of an 'am', which
-almost worked except for
+It could be seen as an abuse of "git --no-index", but it's very
+tempting considering many bells and whistles git's diff machinery
+provides.
 
-> I suspect that this patch was not tested in a way to exercise this
-> codepath; shell would have barfed when seeing the lack of "then" here, no?
+Signed-off-by: A Clearcase user who has had enough with "ct diff"
+---
+ Sorry I used git@vger as a personal archive, but this might benefit
+ others as well, I think.
 
-(ouch)
+ diff-no-index.c |   38 +++++++++++++++++++++-----------------
+ 1 files changed, 21 insertions(+), 17 deletions(-)
 
-> I also do not want to worry about "echo" portability issues that may come
-> from an existing
->
-> 	echo "$keep" >"$dotest/keep"
->
-> that this patch does not touch.
-
-Good point, thanks.  I'll reroll with printf.  Should I keep the
-upgrade path compatibility?
-
+diff --git a/diff-no-index.c b/diff-no-index.c
+index 3a36144..b4f6d06 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -199,12 +199,8 @@ void diff_no_index(struct rev_info *revs,
+ 		     !path_outside_repo(argv[i+1])))
+ 			return;
+ 	}
+-	if (argc != i + 2)
+-		usagef("git diff %s <path> <path>",
+-		       no_index ? "--no-index" : "[--no-index]");
+-
+ 	diff_setup(&revs->diffopt);
+-	for (i = 1; i < argc - 2; ) {
++	for (i = 1; i < argc; ) {
+ 		int j;
+ 		if (!strcmp(argv[i], "--no-index"))
+ 			i++;
+@@ -214,13 +210,19 @@ void diff_no_index(struct rev_info *revs,
+ 		}
+ 		else if (!strcmp(argv[i], "--"))
+ 			i++;
+-		else {
++		else if (argv[i][0] == '-') {
+ 			j = diff_opt_parse(&revs->diffopt, argv + i, argc - i);
+ 			if (!j)
+ 				die("invalid diff option/value: %s", argv[i]);
+ 			i += j;
+ 		}
++		else
++			break;
+ 	}
++	if ((argc - i) % 2)
++		usagef("git diff %s <path> <path>%s",
++		       no_index ? "--no-index" : "[--no-index]",
++		       no_index ? "[ <path> <path>...]" : "");
+ 
+ 	/*
+ 	 * If the user asked for our exit code then don't start a
+@@ -229,13 +231,15 @@ void diff_no_index(struct rev_info *revs,
+ 	if (!DIFF_OPT_TST(&revs->diffopt, EXIT_WITH_STATUS))
+ 		setup_pager();
+ 
++	/* argv now only contains paths */
++	argv += i;
++	argc -= i;
++
+ 	if (prefix) {
+ 		int len = strlen(prefix);
+-		const char *paths[3];
+-		memset(paths, 0, sizeof(paths));
+ 
+-		for (i = 0; i < 2; i++) {
+-			const char *p = argv[argc - 2 + i];
++		for (i = 0; i < argc; i++) {
++			const char *p = argv[i];
+ 			/*
+ 			 * stdin should be spelled as '-'; if you have
+ 			 * path that is '-', spell it as ./-.
+@@ -243,12 +247,10 @@ void diff_no_index(struct rev_info *revs,
+ 			p = (strcmp(p, "-")
+ 			     ? xstrdup(prefix_filename(prefix, len, p))
+ 			     : p);
+-			paths[i] = p;
++			argv[i] = p;
+ 		}
+-		diff_tree_setup_paths(paths, &revs->diffopt);
+ 	}
+-	else
+-		diff_tree_setup_paths(argv + argc - 2, &revs->diffopt);
++
+ 	revs->diffopt.skip_stat_unmatch = 1;
+ 	if (!revs->diffopt.output_format)
+ 		revs->diffopt.output_format = DIFF_FORMAT_PATCH;
+@@ -260,9 +262,11 @@ void diff_no_index(struct rev_info *revs,
+ 	if (diff_setup_done(&revs->diffopt) < 0)
+ 		die("diff_setup_done failed");
+ 
+-	if (queue_diff(&revs->diffopt, revs->diffopt.pathspec.raw[0],
+-		       revs->diffopt.pathspec.raw[1]))
+-		exit(1);
++	while (argv[0] && argv[1]) {
++		if (queue_diff(&revs->diffopt, argv[0], argv[1]))
++			exit(1);
++		argv += 2;
++	}
+ 	diff_set_mnemonic_prefix(&revs->diffopt, "1/", "2/");
+ 	diffcore_std(&revs->diffopt);
+ 	diff_flush(&revs->diffopt);
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+1.7.3.1.256.g2539c.dirty
