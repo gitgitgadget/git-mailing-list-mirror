@@ -1,70 +1,129 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [BUG] multi-commit cherry-pick messes up the order of commits
-Date: Thu, 12 Jan 2012 20:21:48 +0100
-Message-ID: <4F0F32CC.8040404@kdbg.org>
-References: <20120111173101.GQ30469@goldbirke> <CAP8UFD2uLoqzXRxssjwwW1Vk8RuNF_5OT1d7Z7hiRQ+Rq=UM1A@mail.gmail.com> <20120112144409.GV30469@goldbirke> <20120112165329.GA17173@sigill.intra.peff.net> <CALkWK0=Mv_tzNw-hN_9fAr+vABappndEK5iSWQHDk8Yk6Z-stw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] word-diff: ignore '\ No newline at eof' marker
+Date: Thu, 12 Jan 2012 11:23:59 -0800
+Message-ID: <7vty40208g.fsf@alter.siamese.dyndns.org>
+References: <4F0EA23D.3010603@yandex-team.ru>
+ <902665ee053876c2684f5b935ee4f81e77122802.1326366909.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	=?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder@ira.uka.de>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 12 20:22:20 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Ivan Shirokoff <shirokoff@yandex-team.ru>, <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Jan 12 20:24:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RlQE7-0004Bx-Jz
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 20:22:20 +0100
+	id 1RlQFt-00051u-6C
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 20:24:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754499Ab2ALTWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jan 2012 14:22:15 -0500
-Received: from bsmtp5.bon.at ([195.3.86.187]:53120 "EHLO lbmfmo03.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752926Ab2ALTWO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2012 14:22:14 -0500
-Received: from bsmtp.bon.at (unknown [192.168.181.105])
-	by lbmfmo03.bon.at (Postfix) with ESMTP id 6CB12CE197
-	for <git@vger.kernel.org>; Thu, 12 Jan 2012 20:23:10 +0100 (CET)
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 2EB982C4005;
-	Thu, 12 Jan 2012 20:22:48 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id E999519F620;
-	Thu, 12 Jan 2012 20:21:48 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <CALkWK0=Mv_tzNw-hN_9fAr+vABappndEK5iSWQHDk8Yk6Z-stw@mail.gmail.com>
+	id S1754880Ab2ALTYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jan 2012 14:24:05 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63629 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752926Ab2ALTYB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jan 2012 14:24:01 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F1AF2754B;
+	Thu, 12 Jan 2012 14:24:00 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ubyOYO8jGmgN8UZJjefGmaF1odg=; b=tficua
+	bpae7mjt7YIxdiPVhDDTJhWSxANDCCrovyQ4FZJbdEWAKFwh3u+/4uZ7Xa4vEojp
+	ct5+dAUdGoN+8sGzlULlXemVQHLLD+CwcGpW24qz5ofsVJ+/JI7cXHfVTKjRLxQQ
+	pNkOlc4WhSVgjW7rjtLxe5rnBiQ8+tA6NneRg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=o9JB8ZvH1sFRbp8Js3gu8rYSq3CPaiJY
+	MPGFUH7a+OnWzO1GvGttD3whAZ9VkOkOwL3RvKC+ap3wNt65CCHFMKddVaf5FdFh
+	ny5NEF9GYSF3PgQ7WwEungfKsa20YC9U1aVY5Mv1VGkDmaw37lQlZhNscisLgWuF
+	ZjCRkG7Iexw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6ABC754A;
+	Thu, 12 Jan 2012 14:24:00 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5929E7549; Thu, 12 Jan 2012
+ 14:24:00 -0500 (EST)
+In-Reply-To: <902665ee053876c2684f5b935ee4f81e77122802.1326366909.git.trast@student.ethz.ch> (Thomas Rast's message of "Thu, 12 Jan 2012 12:15:33 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FAE5456C-3D52-11E1-AF43-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188473>
 
-Am 12.01.2012 18:09, schrieb Ramkumar Ramachandra:
-> @@ -2054,7 +2054,10 @@ int prepare_revision_walk(struct rev_info *revs)
->                 if (commit) {
->                         if (!(commit->object.flags & SEEN)) {
->                                 commit->object.flags |= SEEN;
-> -                               commit_list_insert_by_date(commit,
-> &revs->commits
-> +                               if (revs->literal_order)
-> +                                       commit_list_insert(commit,
-> &revs->commits
-> +                               else
+Thomas Rast <trast@student.ethz.ch> writes:
+
+> A proper fix would defer such markers until the end of the hunk.
+> However, word-diff is inherently whitespace-ignoring, so as a cheap
+> fix simply ignore the marker (and hide it from the output).
+
+Sounds like a very sensible simplification of the issue.
+
+> We use a prefix match for '\ ' to parallel the logic in
+> apply.c:parse_fragment().  We currently do not localize this string
+> (just accept other variants of it in git-apply), but this should be
+> future-proof.
+>
+> Noticed-by: Ivan Shirokoff <shirokoff@yandex-team.ru>
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+> ---
+>
+>  diff.c                |    8 ++++++++
+>  t/t4034-diff-words.sh |   14 ++++++++++++++
+>  2 files changed, 22 insertions(+), 0 deletions(-)
+>
+> diff --git a/diff.c b/diff.c
+> index a65223a..996cc60 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -1113,6 +1113,14 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+>  			diff_words_append(line, len,
+>  					  &ecbdata->diff_words->plus);
+>  			return;
+> +		} else if (!prefixcmp(line, "\\ ")) {
+> +			/*
+> +			 * Silently eat the "no newline at eof" marker
+> +			 * (we are diffing without regard to
+> +			 * whitespace anyway), and defer processing:
+> +			 * more '+' lines could be after it.
+> +			 */
+> +			return;
+>  		}
+>  		diff_words_flush(ecbdata);
+
+It took me a while to realize "defer processing" in the comment was meant
+to justify the placement of the new block _before_ this flush. Perhaps
+rephrasing it to "return without calling diff_words_flush()" would make it
+more readable?
+
+Otherwise the patch looks good.
+
+Thanks.
+
+>  		if (ecbdata->diff_words->type == DIFF_WORDS_PORCELAIN) {
+> diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+> index 6f1e5a2..5c20121 100755
+> --- a/t/t4034-diff-words.sh
+> +++ b/t/t4034-diff-words.sh
+> @@ -334,4 +334,18 @@ test_expect_success 'word-diff with diff.sbe' '
+>  	word_diff --word-diff=plain
+>  '
+>  
+> +test_expect_success 'word-diff with no newline at EOF' '
+> +	cat >expect <<-\EOF &&
+> +	diff --git a/pre b/post
+> +	index 7bf316e..3dd0303 100644
+> +	--- a/pre
+> +	+++ b/post
+> +	@@ -1 +1 @@
+> +	a a [-a-]{+ab+} a a
+> +	EOF
+> +	printf "%s" "a a a a a" >pre &&
+> +	printf "%s" "a a ab a a" >post &&
+> +	word_diff --word-diff=plain
+> +'
 > +
-> commit_list_insert_by_date(commit, &revs-
-
-Why do we need a new flag?
-
-  git show origin/master origin/maint
-  git show origin/maint origin/master
-
-show the revisions in different order, in particular, in the order
-requested on the command line. Shoudn't cherry-pick be able to do the
-same without new hacks?
-
--- Hannes
+>  test_done
