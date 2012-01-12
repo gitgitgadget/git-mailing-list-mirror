@@ -1,78 +1,86 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: [PATCH] diff --no-index: support more than one file pair
-Date: Thu, 12 Jan 2012 10:37:37 -0600
-Message-ID: <4F0F0C51.3050706@gmail.com>
-References: <1326359371-13528-1-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] multi-commit cherry-pick messes up the order of commits
+Date: Thu, 12 Jan 2012 11:53:29 -0500
+Message-ID: <20120112165329.GA17173@sigill.intra.peff.net>
+References: <20120111173101.GQ30469@goldbirke>
+ <CAP8UFD2uLoqzXRxssjwwW1Vk8RuNF_5OT1d7Z7hiRQ+Rq=UM1A@mail.gmail.com>
+ <20120112144409.GV30469@goldbirke>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 12 17:37:49 2012
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Thu Jan 12 17:53:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RlNet-0002Do-NM
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 17:37:48 +0100
+	id 1RlNuM-000388-Oc
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Jan 2012 17:53:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753561Ab2ALQhn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Jan 2012 11:37:43 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:36508 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751752Ab2ALQhm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jan 2012 11:37:42 -0500
-Received: by yenm10 with SMTP id m10so1028865yen.19
-        for <git@vger.kernel.org>; Thu, 12 Jan 2012 08:37:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=LUq9CJfLtpfi4rR08KoQByXOgYDhBSwPwy29ziH0HtM=;
-        b=blU9twNhdHaBgEAM9kNMowVNZYPJQnuRfi7XNVHzbkQrJcVsh5ayL9IQErhLk4WBbQ
-         x6Y4x4h9WoMUte35AxspazJoFpFZOLUXvUNi+X0miATwWttoXDPQdJgfdD9FPgAoL0BN
-         ndRsSMRHVAX4gJMnw+mg/2aLl9e2qhYiYQRHk=
-Received: by 10.236.129.177 with SMTP id h37mr7224045yhi.9.1326386261419;
-        Thu, 12 Jan 2012 08:37:41 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id i6sm14919865and.3.2012.01.12.08.37.40
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 12 Jan 2012 08:37:40 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.25) Gecko/20111213 Thunderbird/3.1.17
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <1326359371-13528-1-git-send-email-pclouds@gmail.com>
+	id S1754385Ab2ALQxe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Jan 2012 11:53:34 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36102
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754325Ab2ALQxd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jan 2012 11:53:33 -0500
+Received: (qmail 32572 invoked by uid 107); 12 Jan 2012 17:00:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 Jan 2012 12:00:27 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Jan 2012 11:53:29 -0500
+Content-Disposition: inline
+In-Reply-To: <20120112144409.GV30469@goldbirke>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188454>
 
-On 1/12/2012 3:09 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-> This allows you to do
->
-> git diff --no-index file1.old file1.new file2.old file2.new...
->
-> It could be seen as an abuse of "git --no-index", but it's very
-> tempting considering many bells and whistles git's diff machinery
-> provides.
->
-I see that git-diff can be used in place of linux diff for totally=20
-untracked file pairs (which is kind of neat, I guess, if you're partial=
-=20
-to git like I am and would probably prefer to use it as your primary=20
-file-system interface if you could).  I assume this new syntax implies=20
-manual usage since scripting this input is less straightforward than=20
-iterating thru a single pair via xargs, etc.  In that context, I also=20
-see that git-difftool doesn't bring up kdiff3 (or whatever) but just=20
-does a text diff (git 1.7.1) which is mildly disappointing for mere=20
-mortals like myself who prefer to read side-by-side gui diffs over text=
-=20
-diffS.  This, of course, is also preference for someone like me who=20
-wouldn't mind prefixing all of my commands with "git " ;-)
+On Thu, Jan 12, 2012 at 03:44:09PM +0100, SZEDER G=C3=A1bor wrote:
 
-v/r,
-neal
+> > Thanks for the very detailed report!
+> >=20
+> > I didn't test nor even compiled anything but maybe this can be fixe=
+d
+> > by adding something like:
+> >=20
+> > opts->revs->topo_order =3D 1;
+> >=20
+> > in parse_args() or in prepare_revs()
+> >=20
+> > I will try to have a look tonight.
+>=20
+> [Beware, I'm mostly clueless about git internals.]
+>=20
+> I don't think that any commit reordering, whether it's based on
+> committer date, topology, or whatever, is acceptable.  Commits must b=
+e
+> picked in the exact order they are specified on the command line.
+
+I thought the multi-commit cherry-pick was supposed to take arbitrary
+revision arguments, so you can do:
+
+  git cherry-pick master..topic
+
+and likewise you can spell it:
+
+  git cherry-pick topic ^master
+
+or:
+
+  git cherry-pick ^master topic
+
+So the order of arguments isn't relevant in those cases; the graph
+ordering is. I agree it would be nice to make:
+
+  git cherry-pick commit1 commit3 commit2
+
+work in the order specified, but how does that interact with existing
+cases that provide more traditional revision arguments?
+
+-Peff
