@@ -1,98 +1,65 @@
 From: Yves Goergen <nospam.list@unclassified.de>
-Subject: Re: Bug? Git checkout fails with a wrong error message
-Date: Fri, 13 Jan 2012 18:46:07 +0100
-Message-ID: <4F106DDF.4040408@unclassified.de>
-References: <loom.20120112T193624-86@post.gmane.org> <4F1028AD.9080701@ira.uka.de>
+Subject: Re: Bug! Git merge also fails with a wrong error message
+Date: Fri, 13 Jan 2012 19:49:17 +0100
+Message-ID: <4F107CAD.1020103@unclassified.de>
+References: <loom.20120112T193624-86@post.gmane.org> <loom.20120113T181805-423@post.gmane.org> <20120113175040.GC9373@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Holger Hellmuth <hellmuth@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri Jan 13 19:09:45 2012
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 13 19:49:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RllZO-0005DY-JU
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 19:09:42 +0100
+	id 1RlmC6-0007RE-EK
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 19:49:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753506Ab2AMSJi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jan 2012 13:09:38 -0500
-Received: from dotforward.de ([178.63.102.138]:52875 "EHLO dotforward.de"
+	id S1758807Ab2AMSt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jan 2012 13:49:28 -0500
+Received: from dotforward.de ([178.63.102.138]:55742 "EHLO dotforward.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752231Ab2AMSJh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2012 13:09:37 -0500
-X-Greylist: delayed 1406 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 Jan 2012 13:09:37 EST
+	id S1758801Ab2AMStX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jan 2012 13:49:23 -0500
 Received: from dsl01.83.171.159.183.ip-pool.nefkom.net ([83.171.159.183] helo=[192.168.1.13])
 	by dotforward.de with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.71)
 	(envelope-from <nospam.list@unclassified.de>)
-	id 1RllCa-0000L3-G9; Fri, 13 Jan 2012 18:46:08 +0100
+	id 1RlmBi-0002LG-Fe; Fri, 13 Jan 2012 19:49:18 +0100
 User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
-In-Reply-To: <4F1028AD.9080701@ira.uka.de>
+In-Reply-To: <20120113175040.GC9373@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188524>
 
-On 13.01.2012 13:50 CE(S)T, Holger Hellmuth wrote:
-> Important information missing: What version of git are you using? Should 
-> the version number begin with 1.6 or even lower you will get the advice 
-> to update your version to something non-ancient. Lots of bug-fixes 
-> happened in-between.
+On 13.01.2012 18:50 CE(S)T, Jeff King wrote:
+> Whether a file in the working tree is tracked or not does not have to do
+> with the history, but rather with whether it is mentioned in the index.
 
-The first bug happened with msysGit 1.7.6 and 1.7.8, the second one
-(reported now) with 1.7.8. That update didn't change a thing.
+I'm not using the index. In fact I don't even know how that what I have
+read about it can be useful.
 
-> I assume .cs is a C source file for visual studio, not a generated file, 
-> right ?
+> Does the file appear in "git ls-files"?
 
-.cs is C# code and .Designer.cs files are used internally by the Visual
-Studio designer. They're not supposed to be edited by the programmer and
-contain lots of stuff that changes all the time. So they are generated
-and presented in a different way.
+Yes, it's in the list along with all other files.
 
-> git does not record renames like cvs/svn do. It operates on snapshots 
-> and infers renames through comparisions. So if the next commit has a 
-> file missing and the same or similar file contents under some different 
-> path, it reports it as a rename. You can try -M with git log or git diff 
-> so that git expends more effort to detect renames+edits. Or you could 
-> avoid doing renames and edits of the same file in the same commit.
+> It sounds like you are perhaps making changes in the working tree and
+> index, and then trying to checkout/merge on top of that. In that case
+> "git status" would report the file as renamed, but it's possible the
+> file is still in the working tree. From git's perspective the file is no
+> longer tracked, but the operations you are requesting would overwrite
+> the new contents (and git is being safe by refusing to do so).
 
-I renamed the file and created a new one with the same name. Is it so
-simple to crash the Git repository?
+Here's the git status output:
+# On branch master
+nothing to commit (working directory clean)
 
->> -----
->> git.exe checkout    form-refactoring
->>
->> Aborting
->> error: The following untracked working tree files would be overwritten by
->> checkout:
->> Form1.Designer.cs
->> Please move or remove them before you can switch branches.
->> -----
-> 
-> You didn't mention that filename before (please assume people not 
-> accustomed to the ways of Visual Studio 2010). Is that another file you 
-> renamed and created new in the form-refactoring branch?
-
-Form1.cs, Form1.Designer.cs and Form1.resx all belong together and are
-renamed atomically. If I rename "Form1" in the project, actually these 3
-files are renamed on disk.
-
-> What does git diff -- Form1.Designer.cs' say?
-
-Nothing.
-
-> What does 'git diff form-refactoring -- Form1.Designer.cs' say?
-
-All lines deleted.
-
-Will this message also appear on the mailing list where I posted my
-first message with Gmane? (That's the only thing I've found on the
-official Git website.)
+I have switched to master and the very next action was trying the merge.
+There's no change in the working directory, and nothing uncommitted.
 
 -- 
 Yves Goergen "LonelyPixel" <nospam.list@unclassified.de>
