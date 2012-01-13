@@ -1,82 +1,72 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] merge: Make merge strategy message follow the diffstat
-Date: Fri, 13 Jan 2012 11:49:34 -0800
-Message-ID: <CA+55aFxw_-0h1FDmPRVif3LM03Qh3-6haA7=KYbae8pSFbpW2w@mail.gmail.com>
-References: <20120109073727.GF22134@opensource.wolfsonmicro.com>
- <CA+55aFyhoh0rT_ujuE1w3RpuR7kqivYFwPpm66VC-xtq1PiGUQ@mail.gmail.com>
- <20120110184530.GE7164@opensource.wolfsonmicro.com> <CA+55aFxXb7wqfrpozS6iH0k25y-+Uy8_Tavv59JXMhaWrjXLaw@mail.gmail.com>
- <20120110222711.GK7164@opensource.wolfsonmicro.com> <CA+55aFxvQF=Bm4ae6euB_UO8otMCuN9Lv37Zn3TpE-L7JH3Kzw@mail.gmail.com>
- <20120111184026.GA23952@windriver.com> <7vaa5rzaax.fsf_-_@alter.siamese.dyndns.org>
- <CACsJy8BmFgssTAh=1U7JgBsGG-tSaWXQzZeODND3icXY3QUxug@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] git-show-ref doc: typeset regexp in fixed width
+ font
+Date: Fri, 13 Jan 2012 11:51:00 -0800
+Message-ID: <7vwr8vxty3.fsf@alter.siamese.dyndns.org>
+References: <1326472756-15227-1-git-send-email-mhagger@alum.mit.edu>
+ <1326472756-15227-3-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Paul Gortmaker <paul.gortmaker@windriver.com>,
-	Mark Brown <broonie@opensource.wolfsonmicro.com>,
-	Liam Girdwood <lrg@ti.com>, linux-kernel@vger.kernel.org,
-	Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 13 20:50:04 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
+To: mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Fri Jan 13 20:51:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rln8U-0001RF-4s
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 20:50:02 +0100
+	id 1Rln9c-00026s-1r
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 20:51:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758959Ab2AMTt6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jan 2012 14:49:58 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:43774 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753317Ab2AMTt4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2012 14:49:56 -0500
-Received: by werb13 with SMTP id b13so676170wer.19
-        for <multiple recipients>; Fri, 13 Jan 2012 11:49:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=2LbZZf+Y2aAVhK+jpE0xE5SM7Gdwhm2S89+6/ART65c=;
-        b=Z7l5Vu7iaSuFzV3vg27IiDCl5otsEdcF8ThHJm4GyEM9ARDxHuaGuvGds86QCs7Buz
-         d74IdYZdlVPznqxhiKCTOrddFUs5B3XU8hPbweL4zmgQbATIFgLcQB4xs1+7OrX7Zlgx
-         V2VbAFFCK0390ejiA8BX8hUQUwdgnT9U8tpzM=
-Received: by 10.216.139.195 with SMTP id c45mr55113wej.18.1326484195234; Fri,
- 13 Jan 2012 11:49:55 -0800 (PST)
-Received: by 10.216.172.213 with HTTP; Fri, 13 Jan 2012 11:49:34 -0800 (PST)
-In-Reply-To: <CACsJy8BmFgssTAh=1U7JgBsGG-tSaWXQzZeODND3icXY3QUxug@mail.gmail.com>
-X-Google-Sender-Auth: jnLFKSvZBggjDLhAE5PAoAWZBhY
+	id S1758928Ab2AMTvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jan 2012 14:51:08 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42755 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753419Ab2AMTvE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jan 2012 14:51:04 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A1075D65;
+	Fri, 13 Jan 2012 14:51:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NbvX4uoCkEszczwkB54SjE4ToU8=; b=lMFL7p
+	VhhzqwwkddvP/wTEc5ZMs1BF5ZtvbfYlKC1ljhwks/rd0YmXIos0LQ4Q20kENRIy
+	geKacjFOu0QD/y1EpV5kzzQTsbr+JhflRvAYaewM3+x9tZ2xI/ky0LbR2XefJTmY
+	F0IgqIolsQjesCeo1o34zpeQnVGCc+fkeU4A4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=odbb/xaUqPRAiUMrW5NtaYfcoHTvoskU
+	J1Dj8V5W/fy73goW9YGSHTML7B9Q/IHRsHiLbqXVf9lZiHQQDB3Sj0+uHsypXjoX
+	DT2GDcr9E71DUJcF6JbygQV8r/H1/p3t2zp8qCA7As9+TpE7YVRE1Apbgt39fDGW
+	qY9HrrFkxek=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8148E5D63;
+	Fri, 13 Jan 2012 14:51:02 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EE9DB5D60; Fri, 13 Jan 2012
+ 14:51:01 -0500 (EST)
+In-Reply-To: <1326472756-15227-3-git-send-email-mhagger@alum.mit.edu>
+ (mhagger@alum.mit.edu's message of "Fri, 13 Jan 2012 17:39:16 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EBDD6A68-3E1F-11E1-BC85-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188535>
 
-On Fri, Jan 13, 2012 at 11:27 AM, Nguyen Thai Ngoc Duy
-<pclouds@gmail.com> wrote:
+mhagger@alum.mit.edu writes:
+
+> From: Michael Haggerty <mhagger@alum.mit.edu>
 >
-> Still, diffstat from a fetch/pull is sometimes too verbose. It'd be
-> better if we have something that fit in one screen (dirstat or maybe
-> just a first few lines from diffstat then ellipsis) then refer users
-> to "git diff --stat HEAD@{1}" for more detail stat.
+>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+> Optional; I think it looks better.
 
-Yeah, I've wanted that. Show the beginning, the end, and the summary
-line of the diffstat would be lovely.
+I agree it looks better, too, as long as everybody's copy of AsciiDoc
+groks it. I see "`<something>`" in many places in the other pages, so this
+should be safe.
 
-It would be lovely in "git commit" too. Not just
-
-    Modified: filename
-
-but a diffstat that shows now many lines.
-
-And what I've *really* wanted is to actually see the diff itself if it
-is small. So some kind of "dynamic summary": for one-liners (or
-ten-liners), show the whole diff. For medium-sized changes, show the
-whole diffstat. And for really big changes, show an outline and the
-"768 files changed, 179851 lines added, 7630 lines removed" stats.
-
-IOW, whatever fits in, say, 50 lines or less.
-
-That would be absolutely lovely if somebody were to do it.
-
-                  Linus
+Thanks for resending. Will queue.
