@@ -1,147 +1,99 @@
-From: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-Subject: Re: Bug! Git merge also fails with a wrong error message
-Date: Fri, 13 Jan 2012 18:56:17 +0100
-Message-ID: <20120113175617.GE2850@centaur.lab.cmartin.tk>
-References: <loom.20120112T193624-86@post.gmane.org>
- <loom.20120113T181805-423@post.gmane.org>
+From: Yves Goergen <nospam.list@unclassified.de>
+Subject: Re: Bug? Git checkout fails with a wrong error message
+Date: Fri, 13 Jan 2012 18:46:07 +0100
+Message-ID: <4F106DDF.4040408@unclassified.de>
+References: <loom.20120112T193624-86@post.gmane.org> <4F1028AD.9080701@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="0/kgSOzhNoDC5T3a"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Yves Goergen <nospam.list@unclassified.de>
-X-From: git-owner@vger.kernel.org Fri Jan 13 18:56:27 2012
+To: Holger Hellmuth <hellmuth@ira.uka.de>
+X-From: git-owner@vger.kernel.org Fri Jan 13 19:09:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RllMZ-0007KZ-6j
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 18:56:27 +0100
+	id 1RllZO-0005DY-JU
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 19:09:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758604Ab2AMR4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jan 2012 12:56:15 -0500
-Received: from kimmy.cmartin.tk ([91.121.65.165]:51974 "EHLO kimmy.cmartin.tk"
+	id S1753506Ab2AMSJi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jan 2012 13:09:38 -0500
+Received: from dotforward.de ([178.63.102.138]:52875 "EHLO dotforward.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751754Ab2AMR4P (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2012 12:56:15 -0500
-Received: from centaur.lab.cmartin.tk (brln-4db9f5ad.pool.mediaWays.net [77.185.245.173])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id BB62C461BE;
-	Fri, 13 Jan 2012 18:56:01 +0100 (CET)
-Received: (nullmailer pid 27180 invoked by uid 1000);
-	Fri, 13 Jan 2012 17:56:17 -0000
-Mail-Followup-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	Yves Goergen <nospam.list@unclassified.de>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <loom.20120113T181805-423@post.gmane.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752231Ab2AMSJh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jan 2012 13:09:37 -0500
+X-Greylist: delayed 1406 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 Jan 2012 13:09:37 EST
+Received: from dsl01.83.171.159.183.ip-pool.nefkom.net ([83.171.159.183] helo=[192.168.1.13])
+	by dotforward.de with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.71)
+	(envelope-from <nospam.list@unclassified.de>)
+	id 1RllCa-0000L3-G9; Fri, 13 Jan 2012 18:46:08 +0100
+User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
+In-Reply-To: <4F1028AD.9080701@ira.uka.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188523>
 
+On 13.01.2012 13:50 CE(S)T, Holger Hellmuth wrote:
+> Important information missing: What version of git are you using? Should 
+> the version number begin with 1.6 or even lower you will get the advice 
+> to update your version to something non-ancient. Lots of bug-fixes 
+> happened in-between.
 
---0/kgSOzhNoDC5T3a
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The first bug happened with msysGit 1.7.6 and 1.7.8, the second one
+(reported now) with 1.7.8. That update didn't change a thing.
 
-On Fri, Jan 13, 2012 at 05:37:38PM +0000, Yves Goergen wrote:
-> I have updates to this issue.
+> I assume .cs is a C source file for visual studio, not a generated file, 
+> right ?
 
-You still haven't told us what version of (msys)git you're using nor
-have you provided a transcript of your session or found a minimal
-reproducible example.
+.cs is C# code and .Designer.cs files are used internally by the Visual
+Studio designer. They're not supposed to be edited by the programmer and
+contain lots of stuff that changes all the time. So they are generated
+and presented in a different way.
 
-Gmane is a mailing list viewer and there /only/ is the real maling
-list. The e-mail you provided for yourself looks bogus, but if it
-isn't, you'll notice we communicate via e-mail.
+> git does not record renames like cvs/svn do. It operates on snapshots 
+> and infers renames through comparisions. So if the next commit has a 
+> file missing and the same or similar file contents under some different 
+> path, it reports it as a rename. You can try -M with git log or git diff 
+> so that git expends more effort to detect renames+edits. Or you could 
+> avoid doing renames and edits of the same file in the same commit.
 
->=20
-> After asking several people who didn't believe me,
-> after all I could pass all checks to ensure that
-> the file in question really is tracked, despite the error
-> message telling it is not. (The file has a history, it is
-> part of the branch,
-> git status behaves as expected when I rename it, and so on.)
->=20
-> I had found a workaround hack to access my
-> data again: I have cloned the repo
-> into another directory, then switched to
-> the branch in there (it actually
-> worked) and used BeyondCompare to manually(!)
-> switch my original repo and
-> working directory by copying some (not all) files
-> in .git and all differences in
-> the working directory.
->=20
-> That worked fine at first, I could commit to that branch.
->=20
-> Today I wanted to merge that branch into master again.
-> Switching to master was
-> fine, but merging from the form-refactoring branch
-> now fails for the very same
-> "reason":
->=20
-> -----
-> git.exe merge    --no-commit form-refactoring
->=20
-> error: The following untracked working tree files
-> would be overwritten by merge:
-> Form1.Designer.cs
-> Please move or remove them before you can merge.
-> Aborting
-> -----
->=20
-> Again, that file is NOT untracked. Git just fails
-> processing its own data. I
-> cannot move that file because it is part of the
-> other branch and must be merged now.
->=20
-> Am I now supposed to checkout both branches and
-> do the merge somehow on my own?
->=20
-> Maybe it's not a good idea to use branching and
-> then rename, create and delete
-> files on that branch, as switching and merging
-> fail completely afterwards. And
-> in the end, maybe Git isn't all that good and
-> some of the alternatives with real
-> file tracking should be preferred.
->=20
-> I, for one, have lost a great amount of trust
-> in Git in the last two days.
->=20
-> (Sorry for the formatting mess, but the stupid Gmane
-> post editor forced me to do that or it wouldn't
-> accept my message... Don't you have a real mailing
-> list, if there's no web forum??)
->=20
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->=20
+I renamed the file and created a new one with the same name. Is it so
+simple to crash the Git repository?
 
---=20
-Carlos Mart=C3=ADn Nieto | http://cmartin.tk
+>> -----
+>> git.exe checkout    form-refactoring
+>>
+>> Aborting
+>> error: The following untracked working tree files would be overwritten by
+>> checkout:
+>> Form1.Designer.cs
+>> Please move or remove them before you can switch branches.
+>> -----
+> 
+> You didn't mention that filename before (please assume people not 
+> accustomed to the ways of Visual Studio 2010). Is that another file you 
+> renamed and created new in the form-refactoring branch?
 
-"=C2=BFC=C3=B3mo voy a decir bobadas si soy mudo?" -- CACHAI
+Form1.cs, Form1.Designer.cs and Form1.resx all belong together and are
+renamed atomically. If I rename "Form1" in the project, actually these 3
+files are renamed on disk.
 
---0/kgSOzhNoDC5T3a
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+> What does git diff -- Form1.Designer.cs' say?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+Nothing.
 
-iQEcBAEBAgAGBQJPEHBBAAoJEHKRP1jG7ZzTfMQIAJJ43l1199ZDjdPvqvp9KLCt
-T0k0OPSkVOeUke8gpxILrmkeItBjUHfzZjnH8x/gEBboVtAyJaB6Ci3ozi4FJLpi
-URq+o6frRbxParakSl+f8h53w99yXvoU8UxtDBsYuhMRUSCtTlQ4tdWqotQyhj9L
-+f65TQP4sNFXtnfD3RvCXmZoK/lipShvc39noIv0A1tsqnKc8636CnF90buvvfFk
-Mk50Ev+LsrCOND1TkZpUbmaYANWHFl106oa68GOxeD4gt2/W73jxp0ObxOQbCbqV
-l3/mOoEYclBQDd5QCMt/xLimtaiviLNTv3U76zynCrc1h9BuhWSYKib+zwoQwkE=
-=e8Hk
------END PGP SIGNATURE-----
+> What does 'git diff form-refactoring -- Form1.Designer.cs' say?
 
---0/kgSOzhNoDC5T3a--
+All lines deleted.
+
+Will this message also appear on the mailing list where I posted my
+first message with Gmane? (That's the only thing I've found on the
+official Git website.)
+
+-- 
+Yves Goergen "LonelyPixel" <nospam.list@unclassified.de>
+Visit my web laboratory at http://beta.unclassified.de
