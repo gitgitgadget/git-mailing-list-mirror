@@ -1,160 +1,63 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v4 10/10] clone: print advice on checking out detached HEAD
-Date: Fri, 13 Jan 2012 14:22:02 +0700
-Message-ID: <1326439322-15648-11-git-send-email-pclouds@gmail.com>
-References: <1326189427-20800-1-git-send-email-pclouds@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: thin packs ending up fat
+Date: Fri, 13 Jan 2012 09:28:43 +0100
+Message-ID: <CACBZZX567mHKXDtTcb+zFKtr2ZvcssF+O=w-x86PfNh+5tTpRg@mail.gmail.com>
+References: <20120112221523.GA3663@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 13 08:23:49 2012
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 13 09:29:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RlbUL-0008I5-IS
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 08:23:49 +0100
+	id 1RlcVr-0006WD-QD
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 09:29:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753394Ab2AMHXp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jan 2012 02:23:45 -0500
-Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:47911 "EHLO
-	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752151Ab2AMHXo (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Jan 2012 02:23:44 -0500
-Received: by mail-tul01m020-f174.google.com with SMTP id va7so1809394obc.19
-        for <git@vger.kernel.org>; Thu, 12 Jan 2012 23:23:44 -0800 (PST)
+	id S1754003Ab2AMI3J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jan 2012 03:29:09 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:51489 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751936Ab2AMI3H (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Jan 2012 03:29:07 -0500
+Received: by lago2 with SMTP id o2so129645lag.19
+        for <git@vger.kernel.org>; Fri, 13 Jan 2012 00:29:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=jp8MKPHQQV03qSLonYunuY65diZVV+mpjQZ9R1d+dS8=;
-        b=w4N/7W9qzByTvBQbmaP8Q0utZACQiPmlZ6xJuVYy6XDAKa7kol+3AHRBlF8z2Yi13k
-         NFzXrIs9U8VIJ4K+DmBIMAoaIA5xsSAQ2Ulp7wbVSdsn0Q5lh1cpodWCEOKVH5pfmaoT
-         DMH+EI4NzwGiTs/liEmWGpRTxP4xq237V/Fd4=
-Received: by 10.50.77.129 with SMTP id s1mr1432570igw.25.1326439423944;
-        Thu, 12 Jan 2012 23:23:43 -0800 (PST)
-Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id i2sm5080799igq.6.2012.01.12.23.23.40
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 12 Jan 2012 23:23:43 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 13 Jan 2012 14:23:34 +0700
-X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
-In-Reply-To: <1326189427-20800-1-git-send-email-pclouds@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Wnh3jud7oKuw5omJC4M4WVbFasVDEaSTxIm/XLhCZQM=;
+        b=uHn6toPvTrgoJfCEjRQ7alRlPhLypxWALHjl32xDkmVeKU/FSsfvKz0AVaGvKiIK2D
+         dLJ2JeSxbwsYV8ppmhWXfS82KQssilvwbHw6xG/qF7mLsHOCZmTsA8EA6VjMLuQdm9Eu
+         10x8OZT4pY3dtIAZdZSu3V+thiNssv2xBkpJ8=
+Received: by 10.112.99.65 with SMTP id eo1mr316594lbb.31.1326443344537; Fri,
+ 13 Jan 2012 00:29:04 -0800 (PST)
+Received: by 10.112.82.5 with HTTP; Fri, 13 Jan 2012 00:28:43 -0800 (PST)
+In-Reply-To: <20120112221523.GA3663@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188508>
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- advice.c           |   14 ++++++++++++++
- advice.h           |    1 +
- builtin/checkout.c |   16 +---------------
- builtin/clone.c    |    5 ++++-
- 4 files changed, 20 insertions(+), 16 deletions(-)
+On Thu, Jan 12, 2012 at 23:15, Jeff King <peff@peff.net> wrote:
 
-diff --git a/advice.c b/advice.c
-index e02e632..3e1a145 100644
---- a/advice.c
-+++ b/advice.c
-@@ -64,3 +64,17 @@ void NORETURN die_resolve_conflict(const char *me)
- 	error_resolve_conflict(me);
- 	die("Exiting because of an unresolved conflict.");
- }
-+
-+void detach_advice(const char *new_name)
-+{
-+	const char fmt[] =3D
-+	"Note: checking out '%s'.\n\n"
-+	"You are in 'detached HEAD' state. You can look around, make experime=
-ntal\n"
-+	"changes and commit them, and you can discard any commits you make in=
- this\n"
-+	"state without impacting any branches by performing another checkout.=
-\n\n"
-+	"If you want to create a new branch to retain commits you create, you=
- may\n"
-+	"do so (now or later) by using -b with the checkout command again. Ex=
-ample:\n\n"
-+	"  git checkout -b new_branch_name\n\n";
-+
-+	fprintf(stderr, fmt, new_name);
-+}
-diff --git a/advice.h b/advice.h
-index e5d0af7..7bda45b 100644
---- a/advice.h
-+++ b/advice.h
-@@ -14,5 +14,6 @@ int git_default_advice_config(const char *var, const =
-char *value);
- void advise(const char *advice, ...);
- int error_resolve_conflict(const char *me);
- extern void NORETURN die_resolve_conflict(const char *me);
-+void detach_advice(const char *new_name);
-=20
- #endif /* ADVICE_H */
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index f1984d9..5bf96ba 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -514,20 +514,6 @@ static void report_tracking(struct branch_info *ne=
-w)
- 	strbuf_release(&sb);
- }
-=20
--static void detach_advice(const char *old_path, const char *new_name)
--{
--	const char fmt[] =3D
--	"Note: checking out '%s'.\n\n"
--	"You are in 'detached HEAD' state. You can look around, make experime=
-ntal\n"
--	"changes and commit them, and you can discard any commits you make in=
- this\n"
--	"state without impacting any branches by performing another checkout.=
-\n\n"
--	"If you want to create a new branch to retain commits you create, you=
- may\n"
--	"do so (now or later) by using -b with the checkout command again. Ex=
-ample:\n\n"
--	"  git checkout -b new_branch_name\n\n";
--
--	fprintf(stderr, fmt, new_name);
--}
--
- static void update_refs_for_switch(struct checkout_opts *opts,
- 				   struct branch_info *old,
- 				   struct branch_info *new)
-@@ -575,7 +561,7 @@ static void update_refs_for_switch(struct checkout_=
-opts *opts,
- 			   REF_NODEREF, DIE_ON_ERR);
- 		if (!opts->quiet) {
- 			if (old->path && advice_detached_head)
--				detach_advice(old->path, new->name);
-+				detach_advice(new->name);
- 			describe_detached_head(_("HEAD is now at"), new->commit);
- 		}
- 	} else if (new->path) {	/* Switch branches. */
-diff --git a/builtin/clone.c b/builtin/clone.c
-index a3c8f78..bfdafaa 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -506,7 +506,10 @@ static int checkout(void)
- 			  "unable to checkout.\n"));
- 		return 0;
- 	}
--	if (strcmp(head, "HEAD")) {
-+	if (!strcmp(head, "HEAD")) {
-+		if (advice_detached_head)
-+			detach_advice(sha1_to_hex(sha1));
-+	} else {
- 		if (prefixcmp(head, "refs/heads/"))
- 			die(_("HEAD not found below refs/heads!"));
- 	}
---=20
-1.7.3.1.256.g2539c.dirty
+I'd be interested in testing this on some other repos I have. How
+exactly did you get this:
+
+> -- >8 --
+> 8b0e15fa95e11965f18c8d2585dc8ffd9bfc9356 ^7f41b6bbe3181dc4d1687db036bf22316997a1bf
+> 34c4461ae3b353e8c931565d5527b98ed12e3735 ^8b0e15fa95e11965f18c8d2585dc8ffd9bfc9356
+> 463b0ea22b5b9a882e8140d0308433d8cbd0d1fe ^34c4461ae3b353e8c931565d5527b98ed12e3735
+> 288396994f077eec7e7db0017838a5afbfbf81e3 ^463b0ea22b5b9a882e8140d0308433d8cbd0d1fe
+> 05f6edcd2a418a88eeb953d51408a6aeef312f5c ^288396994f077eec7e7db0017838a5afbfbf81e3
+> 08cfdbb88cd6225b4fc4b8a3cecd0e01758c835d ^05f6edcd2a418a88eeb953d51408a6aeef312f5c
+
+>From this:
+
+> In the first, I used the reflog entries from my
+> refs/remotes/origin/master ref.
+
+I can't make "git reflog refs/remotes/..." show me anything similar.
