@@ -1,77 +1,66 @@
 From: Yves Goergen <nospam.list@unclassified.de>
 Subject: Re: Bug! Git merge also fails with a wrong error message
-Date: Fri, 13 Jan 2012 19:59:34 +0100
-Message-ID: <4F107F16.30009@unclassified.de>
-References: <loom.20120112T193624-86@post.gmane.org> <loom.20120113T181805-423@post.gmane.org> <20120113175617.GE2850@centaur.lab.cmartin.tk>
+Date: Fri, 13 Jan 2012 20:05:56 +0100
+Message-ID: <4F108094.5080705@unclassified.de>
+References: <loom.20120112T193624-86@post.gmane.org> <loom.20120113T181805-423@post.gmane.org> <20120113175040.GC9373@sigill.intra.peff.net> <4F107CAD.1020103@unclassified.de> <20120113185436.GA13522@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?UTF-8?B?Q2FybG9zIE1hcnTDrW4gTmlldG8=?= <cmn@elego.de>,
-	Yves Goergen <nospam.list@unclassified.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 13 19:59:43 2012
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 13 20:06:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RlmLn-0003p7-FR
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 19:59:43 +0100
+	id 1RlmRu-0006bW-NO
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 20:06:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758821Ab2AMS7i convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jan 2012 13:59:38 -0500
-Received: from dotforward.de ([178.63.102.138]:56469 "EHLO dotforward.de"
+	id S1758859Ab2AMTF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jan 2012 14:05:58 -0500
+Received: from dotforward.de ([178.63.102.138]:56903 "EHLO dotforward.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753499Ab2AMS7i (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2012 13:59:38 -0500
+	id S1758811Ab2AMTF6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jan 2012 14:05:58 -0500
 Received: from dsl01.83.171.159.183.ip-pool.nefkom.net ([83.171.159.183] helo=[192.168.1.13])
 	by dotforward.de with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.71)
 	(envelope-from <nospam.list@unclassified.de>)
-	id 1RlmLf-0002Z7-Lo; Fri, 13 Jan 2012 19:59:35 +0100
+	id 1RlmRo-0002i4-PR; Fri, 13 Jan 2012 20:05:56 +0100
 User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
-In-Reply-To: <20120113175617.GE2850@centaur.lab.cmartin.tk>
+In-Reply-To: <20120113185436.GA13522@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188528>
 
-On 13.01.2012 18:56 CE(S)T, Carlos Mart=C3=ADn Nieto wrote:
-> You still haven't told us what version of (msys)git you're using nor
-> have you provided a transcript of your session or found a minimal
-> reproducible example.
+On 13.01.2012 19:54 CE(S)T, Jeff King wrote:
+> Whether you realize it or not, git is using the index to store state.
+> When you "git add", "git rm", or "git mv", it is updating the index.
 
-In case one of my other mails didn't arrive, the Git version is 1.7.8.
+I'm using TortoiseGit most of the time and that doesn't expose the
+concept of an "index". I edit files as usual, then select "commit" and
+get the commit dialogue. In there I enter the commit message and select
+all files to commit. I can add new files right there. There is no
+two-step procedure.
 
-There is no session transcript because I use TortoiseGit and I'm not
-going to add a screencast here.
+> I notice that in your first mail, you mentioned a problem with
+> "checkout", and in the second one, a problem with "merge". Do you still
+> have the repo around with the "checkout" problem? If so, is the file
+> also in your "git ls-files" output in that repo?
 
-> Gmane is a mailing list viewer and there /only/ is the real maling
-> list. The e-mail you provided for yourself looks bogus, but if it
-> isn't, you'll notice we communicate via e-mail.
+Yes, I have made a backup of the repo right after the initial problem
+arose. And the git ls-files output is the same regarding that file.
 
-Well, I am very confused. Starting from git-scm.com, the only support
-site is a mailing list, and the hyperlink on that word sends me to Gman=
-e
-which says I am in a newsgroup called "gmane.comp.version-control.git".
-Since I don't have access to the news system, I need to use the Gmane
-website. I don't know exactly what it is. I know mailing lists, but tha=
-t
-doesn't look like one at all. There's not even a subscription page or
-address. For users of the modern web who are not familiar with 70s nntp
-technology and cannot use a mailing list by merely knowing its address,
-this is very support-unfriendly. I almost would have considered that th=
-e
-official Git website doesn't want to offer any support at all. In that
-case I would likely have searched for an alternative and switched right
-away. Assuming I could have extracted the remainders of my source code
-from the broken Git repository.
+> Which version of git are you using? There were many bugs fixed around
+> this area of merge around the v1.7.7 timeframe.
 
-So am I now subscribed to that "git@vger.kernel.org" mailing list and d=
-o
-my posts show up there? I have no idea what's going on, neither in my
-repository, nor in this mailing list. Confusing and intransparent.
+msysGit 1.7.8 on Windows XP SP3. It's a "preview" but since Git is so
+old now and there's been nothing but "previews", I consider msysGit's
+meaning of the word "preview" as "stable".
 
---=20
+-- 
 Yves Goergen "LonelyPixel" <nospam.list@unclassified.de>
 Visit my web laboratory at http://beta.unclassified.de
