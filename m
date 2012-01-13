@@ -1,84 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: thin packs ending up fat
-Date: Thu, 12 Jan 2012 23:19:37 -0800
-Message-ID: <7vmx9sysqe.fsf@alter.siamese.dyndns.org>
-References: <20120112221523.GA3663@sigill.intra.peff.net>
- <20120112223234.GA4949@sigill.intra.peff.net>
- <7vwr8wz8u9.fsf@alter.siamese.dyndns.org>
- <20120113015117.GA8245@sigill.intra.peff.net>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v4 00/10] nd/clone-detached
+Date: Fri, 13 Jan 2012 14:21:52 +0700
+Message-ID: <1326439322-15648-1-git-send-email-pclouds@gmail.com>
+References: <1326189427-20800-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 13 08:19:47 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 13 08:22:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RlbQP-0006zh-GF
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 08:19:45 +0100
+	id 1RlbSt-0007qa-2K
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 08:22:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752481Ab2AMHTl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jan 2012 02:19:41 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56410 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752436Ab2AMHTk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2012 02:19:40 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ECF0776EC;
-	Fri, 13 Jan 2012 02:19:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KwWKBlcr6JxpBiLZEHcbtajs4lE=; b=kHxzwc
-	8EpHTbhhgHkjDj4z85s5pE9w9+h1sSomO/NPg0NiAmw13siKsadLzVhf6y6N3S8s
-	pds1g0dY5gov8MhmsFx4pv4WHR0uaJFzkC/u3jUMEYdeUcaVwWVbQbMXeiihTkYB
-	oBRdmoSrq7pfrVsr2RRg/ZP+vxWf7sjpbQFCA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ugYph56HSjVJUvyulCjthYLv4HEvHB8z
-	levcfLR0Bpt1bCC6Hlptugs+cQkSer8aAKjLgMjKV6tLStzqBQBYeP/XT/xy+anO
-	d64Z3znXHHT0FDn5iiUOtgNyk/qQFrcbxadZakYgw10ecQbZFi9F2X7gqcDmcDpD
-	NzwVtTWwnpQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E2D6776EB;
-	Fri, 13 Jan 2012 02:19:38 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 79C8976EA; Fri, 13 Jan 2012
- 02:19:38 -0500 (EST)
-In-Reply-To: <20120113015117.GA8245@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 12 Jan 2012 20:51:17 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F404572E-3DB6-11E1-AA42-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752504Ab2AMHWO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jan 2012 02:22:14 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:35052 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752214Ab2AMHWO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jan 2012 02:22:14 -0500
+Received: by iabz25 with SMTP id z25so3939442iab.19
+        for <git@vger.kernel.org>; Thu, 12 Jan 2012 23:22:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=P2iFZtLZViTeYGKuX0+BJRssHNDrjPYd0iItFL5AljE=;
+        b=c2IuH9VKYYS6JYN+JB+oezhjhON4pZVYhMCc9UrNEZ1NobBpZM4BcT0X7njMQ5fNDF
+         5TR0hkfdF1dvrQOSa2ovIqX/60wJtAbNRgMGX7xlgpJicyVuYCT3f2MXDrthjX9OaXO3
+         nHyKnmdOS8CF8ICpw+BiPQJSTbRQ1jTRvLZN8=
+Received: by 10.50.180.138 with SMTP id do10mr1452741igc.20.1326439333544;
+        Thu, 12 Jan 2012 23:22:13 -0800 (PST)
+Received: from pclouds@gmail.com ([113.161.77.29])
+        by mx.google.com with ESMTPS id pb6sm13076511igc.5.2012.01.12.23.22.08
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 12 Jan 2012 23:22:12 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 13 Jan 2012 14:22:02 +0700
+X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
+In-Reply-To: <1326189427-20800-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188497>
 
-Jeff King <peff@peff.net> writes:
+Some comment updates after discussion and squash in the fixup patch.
+The code is exactly the same as nd/clone-detached in pu.
 
-> On Thu, Jan 12, 2012 at 05:31:42PM -0800, Junio C Hamano wrote:
->
->> From: Jeff King <peff@peff.net>
->> Subject: [PATCH] thin-pack: try harder to create delta against preferred base
->
-> I just sat down to write a nicer commit message, and behold, it was done
-> for me. Thanks.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (10):
+  t5601: add missing && cascade
+  clone: write detached HEAD in bare repositories
+  clone: factor out checkout code
+  clone: factor out HEAD update code
+  clone: factor out remote ref writing
+  clone: delay cloning until after remote HEAD checking
+  clone: --branch=3D<branch> always means refs/heads/<branch>
+  clone: refuse to clone if --branch points to bogus ref
+  clone: allow --branch to take a tag
+  clone: print advice on checking out detached HEAD
 
-Thank _you_ for a quick response and correction.
+ Documentation/git-clone.txt |    5 +-
+ advice.c                    |   14 +++
+ advice.h                    |    1 +
+ builtin/checkout.c          |   16 +---
+ builtin/clone.c             |  256 +++++++++++++++++++++++++----------=
+--------
+ t/t5601-clone.sh            |   40 ++++++-
+ t/t5706-clone-branch.sh     |    8 +-
+ transport.c                 |    5 +-
+ 8 files changed, 211 insertions(+), 134 deletions(-)
 
-I wanted to make sure I understood the root cause of the issue and the
-approach the patch takes to address it, instead of committing something
-that smelled correct. And the only way I know to do so is to write it
-down.
-
-Especiallly, before coming up with the description, I was wondering if
-this kind of symptom appears in non-thin cases, but after writing down the
-justification for this patch, it became clear that we wouldn't have to
-worry too much about that case. In a non-thin pack, we need to record one
-object at least in a delta family in inflated base form, so we may as well
-send that one near the tip that is already in that form for that, letting
-the existing "avoid futile delta" heuristics to kick in. Other objects in
-the same delta family will delta against it.
+--=20
+1.7.3.1.256.g2539c.dirty
