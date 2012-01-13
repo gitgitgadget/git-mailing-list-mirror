@@ -1,88 +1,161 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [RFC][PATCH v2] git on Mac OS and precomposed unicode
-Date: Fri, 13 Jan 2012 22:52:46 +0100
-Message-ID: <4F10A7AE.6030004@web.de>
-References: <201201091745.30415.tboegi@web.de> <7vd3asejrr.fsf@alter.siamese.dyndns.org>
+From: tb <tboegi@web.de>
+Subject: [RFC][PATCH v3] git on Mac OS and precomposed unicode
+Date: Fri, 13 Jan 2012 22:53:00 +0100
+Message-ID: <201201132253.00799.tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, tb <tboegi@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 13 22:53:06 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: tboegi@web.de
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 13 22:53:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rlp3Z-0003pB-QO
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 22:53:06 +0100
+	id 1Rlp3y-0003yl-FF
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 22:53:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759287Ab2AMVxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jan 2012 16:53:00 -0500
-Received: from fmmailgate02.web.de ([217.72.192.227]:43558 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754002Ab2AMVw7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2012 16:52:59 -0500
-Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 0047C1BFA101B
-	for <git@vger.kernel.org>; Fri, 13 Jan 2012 22:52:53 +0100 (CET)
-Received: from [192.168.209.16] ([194.22.188.61]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0Lilcj-1SOSan3Jcb-00cfII; Fri, 13 Jan 2012 22:52:52
+	id S1759295Ab2AMVx0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jan 2012 16:53:26 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:48045 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754002Ab2AMVxZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Jan 2012 16:53:25 -0500
+Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 8CE4F1A8CB25B
+	for <git@vger.kernel.org>; Fri, 13 Jan 2012 22:53:12 +0100 (CET)
+Received: from wanderer.localnet ([194.22.188.61]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0M2dxF-1Sdv2u1iTN-00s8G5; Fri, 13 Jan 2012 22:53:09
  +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <7vd3asejrr.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:500Z4vqX9fha32QG+qjEmiCNiBdqNUf92mcb7UmPYhb
- Svtp2hDBG555KWYGXYwSgewudLYz4bFZz7/EQVGoH3YJLYkPQi
- 0pOB4O6d7egBbxYbsB3ovDKSrR2pc8CSzWvkLRRnXO5WXE2K4k
- HWfPaGsaLJL0tMqJAH5VWzlcFkuqwqXn6XesjNIdY9jAg/hwQb
- w2fuBoN4NmC4LLuIt5Vjg==
+X-Provags-ID: V02:K0:L0Q96Cr648e/cfdTHrM9va0L97xX0Jq+Zs7/bxEOWDm
+ UPbrfPl5A9SYwuR6a9RHlQBzb/WAxNxnIes9Ahpq9DmNYjmGfy
+ 75XYREUOPIDV3MHvPMlR3DcfXWbQSmz3zV3+h8LqQr+Juu7by+
+ ZgLt+jMW0GVX72D8k0coffP782h71LFSZjeczy4rYgw75L2qXy
+ NtrC3HJNOIUwvrN9BpP1A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188540>
 
-On 01/09/2012 08:52 PM, Junio C Hamano wrote:
-[snip]
- >probe_utf8_pathname_composition(path, len);
-Done
+Changes since V2:
+- renamed compat/darwin.[ch] into compat/precomposed_utf8.[ch]
+- builtin/init-db.c: use probe_utf8_pathname_composition()
+- fix in reencode_string_iconv(): Don't call iconv_close()
+- Allways convert all arguments, no special handling for "git commit"
+Changes since last version:
+- Improved testcase t/t3910-mac-os-precompose.sh:
+  test "git commit -- pathspec" (Thanks Junio)
+- Improved the converting of argv[] for "git commit"
 
-[snip]
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Purpose:
+This patch is a suggestion to work around the unpleasenties
+when Mac OS is decomposing unicode filenames.
 
- >and implementation of the function body in compat/darwin.c (Didn't I see a
- >comment on the name of this file, by the way? What was the conclusion of
- > the discussion?).
+The suggested change:
+a) is only used under Mac OS
+b) can be switched off by a configuration variable
+c) is optimized to handle ASCII only filename
+d) will improve the interwork between Mac OS, Linux and Windows*
+   via git push/pull, using USB sticks (technically speaking VFAT)
+   or mounted network shares using samba.
 
-I renamed the compat/darwin.[ch] into compat/precomposed_utf8.[ch]
->> +{
->> +	int i = 0;
->> +	int first_arg = 0; /* convert everything */
->> +	const char *oldarg;
->> +	char *newarg;
->> +	iconv_t ic_precompose;
->> +
->> +	git_config(precomposed_unicode_config, NULL);
->
-> Hmmmmm.  Is it safe to call git_config() this early in the program?  Have
-> we determined if we are in a git managed repository and where its $GIT_DIR
-> is?
->
-According to my understanding, yes:
-git_config is called with the custom function precomposed_unicode_config():
-
-git_config(precomposed_unicode_config, NULL);
+* (Not all Windows versions support UTF-8 yet:
+   Msysgit needs the unicode branch, cygwin supports UTF-8 since 1.7)
 
 
-where
-  precomposed_unicode_config()
+Runtime configuration:
+A new confguration variable is added: "core.precomposedunicode"
+This variable is only used on Mac OS.
+If set to false, git behaves exactly as older versions of git.
+When a new git version is installed and there is a repository
+where the configuration "core.precomposedunicode" is not present,
+the new git is backward compatible.
 
-fishes for the config variable  "core.precomposedunicode" and puts the 
-result into
-int precomposed_unicode_config.
+When core.precomposedunicode=3Dtrue, all filenames are stored in precom=
+posed
+unicode in the index (technically speaking precomposed UTF-8).
+Even when readdir() under Mac OS returns filenames as decomposed.
 
-After that, when precomposed_unicode_config==0, argv_precomposed() will 
-return.
+Implementation:
+Two files are added to the "compat" directory, darwin.h and darwin.c.
+They implement basically 4 new functions:
+precomposed_utf8_opendir(), precomposed_utf8_readdir(),
+precomposed_utf8_closedir() argv_precompose()
 
 
-  I'll send the V3 RFC/PATCH
-/Torsten
+
+Compile time configuration:
+A new compiler option PRECOMPOSED_UNICODE is introduced in the Makefile=
+,
+so that the patch can be switched off completely at compile time.
+
+No decomposed file names in a git repository:
+In order to prevent that ever a file name in decomposed unicode is ente=
+ring
+the index, a "brute force" attempt is taken:
+all arguments into git (technically argv[1]..argv[n]) are converted int=
+o
+precomposed unicode.
+This is done in git.c by calling argv_precompose().
+This function is actually a #define, and it is only defined under Mac O=
+S.
+Nothing is converted on any other OS.
+
+Implementation details:
+The main work is done in precomposed_utf8_readdir() and argv_precompose=
+().
+The conversion into precomposed unicode is done by using iconv,
+where decomposed is denoted by "UTF-8-MAC" and precomposed is "UTF-8".
+When already precomposed unicode is precomposed, the string is returned
+unchanged.
+
+Thread save:
+Since there is no need for argv_precompose()to be thread-save, one icon=
+v
+instance is created at the beginning and kept for all conversions.
+Even readdir() is not thread-save, so that precomposed_utf8_opendir() w=
+ill call
+iconv_open() once and keep the instance for all calls of precomposed_ut=
+f8_readdir()
+until precomposed_utf8_close() is called.
+
+Auto sensing:
+When creating a new git repository with "git init" or "git clone", the
+"core.precomposedunicode" will be set automatically to "true" or "false=
+".
+
+Typically core.precomposedunicode is "true" on HFS and VFAT.
+It is even true for file systems mounted via SAMBA onto a Linux box,
+and "false" for drives mounted via NFS onto a Linux box.
+
+
+New test case:
+The new t3910-mac-os-precompose.sh is added to check if a filename
+can be reached either in precomposed or decomposed unicode (NFC or NFD)=
+=2E
+
+
+
+Torsten B=C3=B6gershausen (1):
+  git on Mac OS and precomposed unicode
+
+ Documentation/config.txt     |    9 ++
+ Makefile                     |    3 +
+ builtin/init-db.c            |    2 +
+ compat/precomposed_utf8.c    |  213 ++++++++++++++++++++++++++++++++++=
+++++++++
+ compat/precomposed_utf8.h    |   39 ++++++++
+ git-compat-util.h            |    9 ++
+ git.c                        |    1 +
+ t/t0050-filesystem.sh        |    1 +
+ t/t3910-mac-os-precompose.sh |  117 +++++++++++++++++++++++
+ 9 files changed, 394 insertions(+), 0 deletions(-)
+ create mode 100644 compat/precomposed_utf8.c
+ create mode 100644 compat/precomposed_utf8.h
+ create mode 100755 t/t3910-mac-os-precompose.sh
+
+--=20
+1.7.8.rc0.43.gb49a8
