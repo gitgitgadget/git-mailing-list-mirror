@@ -1,586 +1,97 @@
-From: tb <tboegi@web.de>
-Subject: [RFC][PATCH v3] git on Mac OS and precomposed unicode
-Date: Fri, 13 Jan 2012 22:53:12 +0100
-Message-ID: <201201132253.13269.tboegi@web.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC][PATCH v3] git on Mac OS and precomposed unicode
+Date: Fri, 13 Jan 2012 16:56:00 -0600
+Message-ID: <20120113225559.GA7343@burratino>
+References: <201201132253.00799.tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: tboegi@web.de
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 13 22:53:43 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: tb <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Fri Jan 13 23:56:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rlp49-00043T-Qd
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 22:53:42 +0100
+	id 1Rlq2e-0005i4-Sw
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 23:56:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759298Ab2AMVxh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jan 2012 16:53:37 -0500
-Received: from fmmailgate03.web.de ([217.72.192.234]:59064 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754002Ab2AMVxg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Jan 2012 16:53:36 -0500
-Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
-	by fmmailgate03.web.de (Postfix) with ESMTP id D6CFD1AFA6F13
-	for <git@vger.kernel.org>; Fri, 13 Jan 2012 22:53:19 +0100 (CET)
-Received: from wanderer.localnet ([194.22.188.61]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0LuMER-1SnESG23nD-011Vy4; Fri, 13 Jan 2012 22:53:19
- +0100
-X-Provags-ID: V02:K0:F934r7PmtXpRySKwX0JHKd/HZFna4ry4tQPy5bYs4r2
- dwUQdCxJZkg6y8Ko5b4u/xFS9vTVHVZlzKH/e+bKCRkHCR3USn
- vttH5Y9lyURwCQRCKsjJwoWelGoju527gAvrc0GanmgPDBX+2W
- Pvd7wZ73/Ty3RrMUB4NLVjt5Tg3CDRqC/cBm8znEJAAVwWpMBw
- ZZ/EagTaLkIkPzys4gr2w==
+	id S932977Ab2AMW4J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jan 2012 17:56:09 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:37072 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932936Ab2AMW4I (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jan 2012 17:56:08 -0500
+Received: by iabz25 with SMTP id z25so4978299iab.19
+        for <git@vger.kernel.org>; Fri, 13 Jan 2012 14:56:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=sK8OBWiNxHP6mwO1tC9oukJjy4f26VyiGcdzyiC1Xck=;
+        b=MKONn2UTUpx4sN10cASI1K39dTPx9J2TyBMcnrt5AuWup/kI599kyYaUxsy4/N2Q5w
+         5y+4fcRK1/cH7sqAMEv2wUSg9LiLLjQ1Rtlx1lgxBXwDtrCPpCgzD9b5/ywCngCSyX8O
+         rjhdC35GJMZDr1nbHYCSf+fN60PXT0cJ+Yap4=
+Received: by 10.43.47.135 with SMTP id us7mr2144775icb.31.1326495367619;
+        Fri, 13 Jan 2012 14:56:07 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id he16sm33564200ibb.9.2012.01.13.14.56.06
+        (version=SSLv3 cipher=OTHER);
+        Fri, 13 Jan 2012 14:56:06 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <201201132253.00799.tboegi@web.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188542>
 
-Allow git on Mac OS to store file names in the index in precomposed uni=
-code,
-while the file system used decomposed unicode.
+Hi,
 
-When a file called "LATIN CAPITAL LETTER A WITH DIAERESIS"
-(in utf-8 encoded as 0xc3 0x84) is created,
-the filesystem converts "precomposed unicode" into "decomposed unicode"=
-,
-which means that readdir() will return 0x41 0xcc 0x88.
-When true, git reverts the unicode decomposition of filenames.
-This is useful when pulling/pushing from repositories containing utf-8
-encoded filenames using precomposed utf-8 (like Linux).
+tb wrote:
 
-This feature is automatically switched on when "git init" is run,
-and the file system is doing UTF-8 decompostion.
-(Which has been observed on HFS+, SMBFS and VFAT, but not on NFS)
-It can be switched off by setting core.macosforcenfc=3Dfalse
+> Purpose:
+[...]
+> Runtime configuration:
+[...]
+> Implementation:
+[...]
+> Compile time configuration:
+[...]
+> Implementation details:
+[....]
+> Thread safety:
+[...]
+> Auto sensing:
+[...]
+> New test case:
 
-It is implemented by re-defining the readdir() functions.
-=46ile names are converted into precomposed UTF-8.
+This information, to the extent that it is useful at all, belongs in
+the commit log.  That is, the commit message should concisely say
+everything a person would want to know when reading a patch, whether
+reading it to review it for inclusion, to make sure it still works
+when making a related change, to consider whether it is safe to
+upgrade to a version including the change, to understand what is
+happening when a bug is tracked down to be caused by that commit, or
+for some other reason.
 
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
- Documentation/config.txt     |    9 ++
- Makefile                     |    3 +
- builtin/init-db.c            |    2 +
- compat/precomposed_utf8.c    |  213 ++++++++++++++++++++++++++++++++++=
-++++++++
- compat/precomposed_utf8.h    |   39 ++++++++
- git-compat-util.h            |    9 ++
- git.c                        |    1 +
- t/t0050-filesystem.sh        |    1 +
- t/t3910-mac-os-precompose.sh |  117 +++++++++++++++++++++++
- 9 files changed, 394 insertions(+), 0 deletions(-)
- create mode 100644 compat/precomposed_utf8.c
- create mode 100644 compat/precomposed_utf8.h
- create mode 100755 t/t3910-mac-os-precompose.sh
+So please do not use a cover letter that separates this information
+when sending a single patch.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 2959390..01b9465 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -175,6 +175,15 @@ The default is false, except linkgit:git-clone[1] =
-or linkgit:git-init[1]
- will probe and set core.ignorecase true if appropriate when the reposi=
-tory
- is created.
-=20
-+core.precomposedunicode::
-+	This option is only used by Mac OS implementation of git.
-+	When core.precomposedunicode=3Dtrue,
-+	git reverts the unicode decomposition of filenames done by Mac OS.
-+	This is useful when pulling/pushing from repositories containing utf-=
-8
-+	encoded filenames using precomposed unicode (like Linux).
-+	When false, file names are handled fully transparent by git.
-+	If in doubt, set core.precomposedunicode=3Dfalse.
-+
- core.trustctime::
- 	If false, the ctime differences between the index and the
- 	working tree are ignored; useful when the inode change time
-diff --git a/Makefile b/Makefile
-index b21d2f1..a912b45 100644
---- a/Makefile
-+++ b/Makefile
-@@ -519,6 +519,7 @@ LIB_H +=3D compat/bswap.h
- LIB_H +=3D compat/cygwin.h
- LIB_H +=3D compat/mingw.h
- LIB_H +=3D compat/obstack.h
-+LIB_H +=3D compat/precomposed_utf8.h
- LIB_H +=3D compat/win32/pthread.h
- LIB_H +=3D compat/win32/syslog.h
- LIB_H +=3D compat/win32/poll.h
-@@ -884,6 +885,8 @@ ifeq ($(uname_S),Darwin)
- 	endif
- 	NO_MEMMEM =3D YesPlease
- 	USE_ST_TIMESPEC =3D YesPlease
-+	COMPAT_OBJS +=3D compat/precomposed_utf8.o
-+	BASIC_CFLAGS +=3D -DPRECOMPOSED_UNICODE
- endif
- ifeq ($(uname_S),SunOS)
- 	NEEDS_SOCKET =3D YesPlease
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 0dacb8b..06953df 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -290,6 +290,8 @@ static int create_default_files(const char *templat=
-e_path)
- 		strcpy(path + len, "CoNfIg");
- 		if (!access(path, F_OK))
- 			git_config_set("core.ignorecase", "true");
-+
-+		probe_utf8_pathname_composition(path, len);
- 	}
-=20
- 	return reinit;
-diff --git a/compat/precomposed_utf8.c b/compat/precomposed_utf8.c
-new file mode 100644
-index 0000000..46d35af
---- /dev/null
-+++ b/compat/precomposed_utf8.c
-@@ -0,0 +1,213 @@
-+#define __PRECOMPOSED_UNICODE_C__
-+
-+#include <stdlib.h>
-+#include <string.h>
-+#include <stdio.h>
-+#include <stdint.h>
-+
-+#include "../cache.h"
-+#include "../utf8.h"
-+
-+#include "precomposed_utf8.h"
-+
-+static int mac_os_precomposed_unicode;
-+const static char *repo_encoding =3D "UTF-8";
-+const static char *path_encoding =3D "UTF-8-MAC";
-+
-+
-+/* Code borrowed from utf8.c */
-+#if defined(OLD_ICONV) || (defined(__sun__) && !defined(_XPG6))
-+	typedef const char * iconv_ibp;
-+#else
-+	typedef char * iconv_ibp;
-+#endif
-+
-+static char *reencode_string_iconv(const char *in, size_t insz, iconv_=
-t conv)
-+{
-+	size_t outsz, outalloc;
-+	char *out, *outpos;
-+	iconv_ibp cp;
-+
-+	outsz =3D insz;
-+	outalloc =3D outsz + 1; /* for terminating NUL */
-+	out =3D xmalloc(outalloc);
-+	outpos =3D out;
-+	cp =3D (iconv_ibp)in;
-+
-+	while (1) {
-+		size_t cnt =3D iconv(conv, &cp, &insz, &outpos, &outsz);
-+
-+		if (cnt =3D=3D -1) {
-+			size_t sofar;
-+			if (errno !=3D E2BIG) {
-+				free(out);
-+				return NULL;
-+			}
-+			/* insz has remaining number of bytes.
-+			 * since we started outsz the same as insz,
-+			 * it is likely that insz is not enough for
-+			 * converting the rest.
-+			 */
-+			sofar =3D outpos - out;
-+			outalloc =3D sofar + insz * 2 + 32;
-+			out =3D xrealloc(out, outalloc);
-+			outpos =3D out + sofar;
-+			outsz =3D outalloc - sofar - 1;
-+		}
-+		else {
-+			*outpos =3D '\0';
-+			break;
-+		}
-+	}
-+	return out;
-+}
-+
-+static size_t has_utf8(const char *s, size_t maxlen, size_t *strlen_c)
-+{
-+	const uint8_t *utf8p =3D (const uint8_t*) s;
-+	size_t strlen_chars =3D 0;
-+	size_t ret =3D 0;
-+
-+	if ((!utf8p) || (!*utf8p))
-+		return 0;
-+
-+	while((*utf8p) && maxlen) {
-+		if (*utf8p & 0x80)
-+			ret++;
-+		strlen_chars++;
-+		utf8p++;
-+		maxlen--;
-+	}
-+	if (strlen_c)
-+		*strlen_c =3D strlen_chars;
-+
-+	return ret;
-+}
-+
-+
-+void probe_utf8_pathname_composition(char *path, int len)
-+{
-+	const static char *auml_nfc =3D "\xc3\xa4";
-+	const static char *auml_nfd =3D "\x61\xcc\x88";
-+	int output_fd;
-+	path[len] =3D 0;
-+	strcpy(path + len, auml_nfc);
-+	output_fd =3D open(path, O_CREAT|O_EXCL|O_RDWR, 0600);
-+	if (output_fd >=3D0) {
-+		close(output_fd);
-+		path[len] =3D 0;
-+		strcpy(path + len, auml_nfd);
-+		if (0 =3D=3D access(path, R_OK))
-+			git_config_set("core.precomposedunicode", "true");
-+		else
-+			git_config_set("core.precomposedunicode", "false");
-+		path[len] =3D 0;
-+		strcpy(path + len, auml_nfc);
-+		unlink(path);
-+	}
-+}
-+
-+
-+static int precomposed_unicode_config(const char *var, const char *val=
-ue, void *cb)
-+{
-+	if (!strcasecmp(var, "core.precomposedunicode")) {
-+		mac_os_precomposed_unicode =3D git_config_bool(var, value);
-+		return 0;
-+	}
-+	return 1;
-+}
-+
-+void argv_precompose(int argc, const char **argv)
-+{
-+	int i =3D 0;
-+	const char *oldarg;
-+	char *newarg;
-+	iconv_t ic_precompose;
-+
-+	git_config(precomposed_unicode_config, NULL);
-+	if (!mac_os_precomposed_unicode)
-+		return;
-+
-+	ic_precompose =3D iconv_open(repo_encoding, path_encoding);
-+	if (ic_precompose =3D=3D (iconv_t) -1)
-+		return;
-+
-+	while (i < argc) {
-+		size_t namelen;
-+		oldarg =3D argv[i];
-+		if (has_utf8(oldarg, (size_t)-1, &namelen)) {
-+			newarg =3D reencode_string_iconv(oldarg, namelen, ic_precompose);
-+			if (newarg)
-+				argv[i] =3D newarg;
-+		}
-+		i++;
-+	}
-+	iconv_close(ic_precompose);
-+}
-+
-+
-+PRECOMPOSED_UTF_DIR * precomposed_utf8_opendir(const char *dirname)
-+{
-+	PRECOMPOSED_UTF_DIR *precomposed_utf8_dir;
-+	precomposed_utf8_dir =3D malloc(sizeof(PRECOMPOSED_UTF_DIR));
-+	if (!precomposed_utf8_dir)
-+		return NULL;
-+
-+	precomposed_utf8_dir->dirp =3D opendir(dirname);
-+	if (!precomposed_utf8_dir->dirp) {
-+		free(precomposed_utf8_dir);
-+		return NULL;
-+	}
-+	precomposed_utf8_dir->ic_precompose =3D iconv_open(repo_encoding, pat=
-h_encoding);
-+	if (precomposed_utf8_dir->ic_precompose =3D=3D (iconv_t) -1) {
-+		closedir(precomposed_utf8_dir->dirp);
-+		free(precomposed_utf8_dir);
-+		return NULL;
-+	}
-+
-+	return precomposed_utf8_dir;
-+}
-+
-+struct dirent * precomposed_utf8_readdir(PRECOMPOSED_UTF_DIR *precompo=
-sed_utf8_dirp)
-+{
-+	struct dirent *res;
-+	size_t namelen =3D 0;
-+
-+	res =3D readdir(precomposed_utf8_dirp->dirp);
-+	if (!res || !mac_os_precomposed_unicode || !has_utf8(res->d_name, (si=
-ze_t)-1, &namelen))
-+		return res;
-+	else {
-+		int olderrno =3D errno;
-+		size_t outsz =3D sizeof(precomposed_utf8_dirp->dirent_nfc.d_name) - =
-1; /* one for \0 */
-+		char *outpos =3D precomposed_utf8_dirp->dirent_nfc.d_name;
-+		iconv_ibp cp;
-+		size_t cnt;
-+		size_t insz =3D namelen;
-+		cp =3D (iconv_ibp)res->d_name;
-+
-+		/* Copy all data except the name */
-+		memcpy(&precomposed_utf8_dirp->dirent_nfc, res,
-+		       sizeof(precomposed_utf8_dirp->dirent_nfc)-sizeof(precomposed_=
-utf8_dirp->dirent_nfc.d_name));
-+		errno =3D 0;
-+
-+		cnt =3D iconv(precomposed_utf8_dirp->ic_precompose, &cp, &insz, &out=
-pos, &outsz);
-+		if (cnt < sizeof(precomposed_utf8_dirp->dirent_nfc.d_name) -1) {
-+			*outpos =3D 0;
-+			errno =3D olderrno;
-+			return &precomposed_utf8_dirp->dirent_nfc;
-+		}
-+		errno =3D olderrno;
-+		return res;
-+	}
-+}
-+
-+
-+int precomposed_utf8_closedir(PRECOMPOSED_UTF_DIR *precomposed_utf8_di=
-rp)
-+{
-+	int ret_value;
-+	ret_value =3D closedir(precomposed_utf8_dirp->dirp);
-+	if (precomposed_utf8_dirp->ic_precompose !=3D (iconv_t)-1)
-+		iconv_close(precomposed_utf8_dirp->ic_precompose);
-+	free(precomposed_utf8_dirp);
-+	return ret_value;
-+}
-diff --git a/compat/precomposed_utf8.h b/compat/precomposed_utf8.h
-new file mode 100644
-index 0000000..3eca7b9
---- /dev/null
-+++ b/compat/precomposed_utf8.h
-@@ -0,0 +1,39 @@
-+#ifndef __PRECOMPOSED_UNICODE_H__
-+#if defined (PRECOMPOSED_UNICODE)
-+#include <sys/stat.h>
-+#include <sys/types.h>
-+#include <dirent.h>
-+#include <iconv.h>
-+
-+
-+typedef struct {
-+	iconv_t ic_precompose;
-+	DIR *dirp;
-+	struct dirent dirent_nfc;
-+} PRECOMPOSED_UTF_DIR;
-+
-+char *str_precompose(const char *in, iconv_t ic_precompose);
-+void argv_precompose(int argc, const char **argv);
-+void probe_utf8_pathname_composition(char *, int);
-+
-+PRECOMPOSED_UTF_DIR *precomposed_utf8_opendir(const char *dirname);
-+struct dirent *precomposed_utf8_readdir(PRECOMPOSED_UTF_DIR *dirp);
-+int precomposed_utf8_closedir(PRECOMPOSED_UTF_DIR *dirp);
-+
-+#ifndef __PRECOMPOSED_UNICODE_C__
-+
-+#define opendir(n) precomposed_utf8_opendir(n)
-+#define readdir(d) precomposed_utf8_readdir(d)
-+#define closedir(d) precomposed_utf8_closedir(d)
-+#define DIR PRECOMPOSED_UTF_DIR
-+#endif  /* __PRECOMPOSED_UNICODE_C__ */
-+
-+#else
-+
-+#define str_precompose(in,i_nfd2nfc) (NULL)
-+#define argv_precompose(c,v)
-+#define probe_utf8_pathname_composition(a,b)
-+#endif /* PRECOMPOSED_UNICODE */
-+
-+#define  __PRECOMPOSED_UNICODE_H__
-+#endif /* __PRECOMPOSED_UNICODE_H__ */
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 230e198..708b178 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -90,6 +90,15 @@
- #include <windows.h>
- #endif
-=20
-+#if defined (PRECOMPOSED_UNICODE)
-+#include "compat/precomposed_utf8.h"
-+#else
-+#define str_precompose(in,i_nfd2nfc) (NULL)
-+#define argv_precompose(c,v)
-+#define probe_utf8_pathname_composition(a,b)
-+
-+#endif
-+
- #include <unistd.h>
- #include <stdio.h>
- #include <sys/stat.h>
-diff --git a/git.c b/git.c
-index 8e34903..6b2ffb7 100644
---- a/git.c
-+++ b/git.c
-@@ -298,6 +298,7 @@ static int run_builtin(struct cmd_struct *p, int ar=
-gc, const char **argv)
- 		    startup_info->have_repository) /* get_git_dir() may set up repo,=
- avoid that */
- 			trace_repo_setup(prefix);
- 	}
-+	argv_precompose(argc, argv);
- 	commit_pager_choice();
-=20
- 	if (!help && p->option & NEED_WORK_TREE)
-diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
-index 1542cf6..befe39e 100755
---- a/t/t0050-filesystem.sh
-+++ b/t/t0050-filesystem.sh
-@@ -126,6 +126,7 @@ test_expect_success "setup unicode normalization te=
-sts" '
-=20
-   test_create_repo unicode &&
-   cd unicode &&
-+  git config core.precomposedunicode false &&
-   touch "$aumlcdiar" &&
-   git add "$aumlcdiar" &&
-   git commit -m initial &&
-diff --git a/t/t3910-mac-os-precompose.sh b/t/t3910-mac-os-precompose.s=
-h
-new file mode 100755
-index 0000000..439e266
---- /dev/null
-+++ b/t/t3910-mac-os-precompose.sh
-@@ -0,0 +1,117 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2012 Torsten B=C3=B6gershausen
-+#
-+
-+test_description=3D'utf-8 decomposed (nfd) converted to precomposed (n=
-fc)'
-+
-+. ./test-lib.sh
-+
-+Adiarnfc=3D`printf '\303\204'`
-+Odiarnfc=3D`printf '\303\226'`
-+Adiarnfd=3D`printf 'A\314\210'`
-+Odiarnfd=3D`printf 'O\314\210'`
-+
-+mkdir junk &&
-+>junk/"$Adiarnfc" &&
-+case "$(cd junk && echo *)" in
-+	"$Adiarnfd")
-+	test_nfd=3D1
-+	;;
-+	*)	;;
-+esac
-+rm -rf junk
-+
-+if test "$test_nfd"
-+then
-+	test_expect_success "detect if nfd needed" '
-+		precomposedunicode=3D`git config --bool core.precomposedunicode` &&
-+		test "$precomposedunicode" =3D true
-+	'
-+	test_expect_success "setup" '
-+		>x &&
-+		git add x &&
-+		git commit -m "1st commit" &&
-+		git rm x &&
-+		git commit -m "rm x"
-+	'
-+	test_expect_success "setup case mac" '
-+		git checkout -b mac_os
-+	'
-+	# This will test nfd2nfc in readdir()
-+	test_expect_success "add file Adiarnfc" '
-+		echo f.Adiarnfc >f.$Adiarnfc &&
-+		git add f.$Adiarnfc &&
-+		git commit -m "add f.$Adiarnfc"
-+	'
-+	# This will test nfd2nfc in git stage()
-+	test_expect_success "stage file d.Adiarnfd/f.Adiarnfd" '
-+		mkdir d.$Adiarnfd &&
-+		echo d.$Adiarnfd/f.$Adiarnfd >d.$Adiarnfd/f.$Adiarnfd &&
-+		git stage d.$Adiarnfd/f.$Adiarnfd &&
-+		git commit -m "add d.$Adiarnfd/f.$Adiarnfd"
-+	'
-+	test_expect_success "add link Adiarnfc" '
-+		ln -s d.$Adiarnfd/f.$Adiarnfd l.$Adiarnfc &&
-+		git add l.$Adiarnfc &&
-+		git commit -m "add l.Adiarnfc"
-+	'
-+	# This will test git log
-+	test_expect_success "git log f.Adiar" '
-+		git log f.$Adiarnfc > f.Adiarnfc.log &&
-+		git log f.$Adiarnfd > f.Adiarnfd.log &&
-+		test -s f.Adiarnfc.log &&
-+		test -s f.Adiarnfd.log &&
-+		test_cmp f.Adiarnfc.log f.Adiarnfd.log &&
-+		rm f.Adiarnfc.log f.Adiarnfd.log
-+	'
-+	# This will test git ls-files
-+	test_expect_success "git lsfiles f.Adiar" '
-+		git ls-files f.$Adiarnfc > f.Adiarnfc.log &&
-+		git ls-files f.$Adiarnfd > f.Adiarnfd.log &&
-+		test -s f.Adiarnfc.log &&
-+		test -s f.Adiarnfd.log &&
-+		test_cmp f.Adiarnfc.log f.Adiarnfd.log &&
-+		rm f.Adiarnfc.log f.Adiarnfd.log
-+	'
-+	# This will test git mv
-+	test_expect_success "git mv" '
-+		git mv f.$Adiarnfd f.$Odiarnfc &&
-+		git mv d.$Adiarnfd d.$Odiarnfc &&
-+		git mv l.$Adiarnfd l.$Odiarnfc &&
-+		git commit -m "mv Adiarnfd Odiarnfc"
-+	'
-+	# Files can be checked out as nfc
-+	# And the link has been corrected from nfd to nfc
-+	test_expect_success "git checkout nfc" '
-+		rm f.$Odiarnfc &&
-+		git checkout f.$Odiarnfc
-+	'
-+	# Make it possible to checkout files with their NFD names
-+	test_expect_success "git checkout file nfd" '
-+		rm -f f.* &&
-+		git checkout f.$Odiarnfd
-+	'
-+	# Make it possible to checkout links with their NFD names
-+	test_expect_success "git checkout link nfd" '
-+		rm l.* &&
-+		git checkout l.$Odiarnfd
-+	'
-+	test_expect_success "setup case mac2" '
-+		git checkout master &&
-+		git reset --hard &&
-+		git checkout -b mac_os_2
-+	'
-+	# This will test nfd2nfc in git commit
-+	test_expect_success "commit file d2.Adiarnfd/f.Adiarnfd" '
-+		mkdir d2.$Adiarnfd &&
-+		echo d2.$Adiarnfd/f.$Adiarnfd >d2.$Adiarnfd/f.$Adiarnfd &&
-+		git add d2.$Adiarnfd/f.$Adiarnfd &&
-+		git commit -m "add d2.$Adiarnfd/f.$Adiarnfd" -- d2.$Adiarnfd/f.$Adia=
-rnfd
-+	'
-+else
-+	 say "Skipping nfc/nfd tests"
-+fi
-+		#git commit -m "add d2.$Adiarnfd/f.$Adiarnfd" -- d2.$Adiarnfd/f.$Adi=
-arnfd
-+
-+test_done
---=20
-1.7.8.rc0.43.gb49a8
+> Changes since [...]
+
+This kind of information that does not belong in the commit message
+can go after the "---" in the same message as the patch.
+
+I haven't read the patch yet, except to glance at it and see some
+nitpicks I can mention later (e.g., source files should not #include
+anything else before git-compat-util.h or cache.h), and the approach
+seems likely to be sane; I'm mentioning this to help you present the
+information in a way that can save myself and other reviewers some
+trouble for the next round.
+
+Thanks much for your work, and hope that helps.
+
+Regards,
+Jonathan
