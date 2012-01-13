@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v4 09/10] clone: allow --branch to take a tag
-Date: Fri, 13 Jan 2012 14:22:01 +0700
-Message-ID: <1326439322-15648-10-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v4 10/10] clone: print advice on checking out detached HEAD
+Date: Fri, 13 Jan 2012 14:22:02 +0700
+Message-ID: <1326439322-15648-11-git-send-email-pclouds@gmail.com>
 References: <1326189427-20800-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,129 +11,150 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 13 08:23:40 2012
+X-From: git-owner@vger.kernel.org Fri Jan 13 08:23:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RlbUC-0008Ez-G8
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 08:23:40 +0100
+	id 1RlbUL-0008I5-IS
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 08:23:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753087Ab2AMHXg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jan 2012 02:23:36 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:35052 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752984Ab2AMHXf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2012 02:23:35 -0500
-Received: by mail-iy0-f174.google.com with SMTP id z25so3939442iab.19
-        for <git@vger.kernel.org>; Thu, 12 Jan 2012 23:23:35 -0800 (PST)
+	id S1753394Ab2AMHXp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jan 2012 02:23:45 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:47911 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752151Ab2AMHXo (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Jan 2012 02:23:44 -0500
+Received: by mail-tul01m020-f174.google.com with SMTP id va7so1809394obc.19
+        for <git@vger.kernel.org>; Thu, 12 Jan 2012 23:23:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=O2ZQcngxr+nrbDGnSLE5lYP6of6vmbZo162PULUOtX4=;
-        b=ha/CoheLJEsYdiEuO5/1lpMCbig3317agShgCkIAqp9Sw/9+KUqDg9bkqwBJ3dvdes
-         SZZPfCOdZorIDW9TDrpVEB3Rc1hWpA+01sECo4kGjr4iePwXWGPetA4RyF8X7NbaZnbr
-         paT3jWLf7hfVF+GaEbt1A5Tne/7yLNcudJxmQ=
-Received: by 10.42.171.136 with SMTP id j8mr1695864icz.1.1326439415272;
-        Thu, 12 Jan 2012 23:23:35 -0800 (PST)
+        bh=jp8MKPHQQV03qSLonYunuY65diZVV+mpjQZ9R1d+dS8=;
+        b=w4N/7W9qzByTvBQbmaP8Q0utZACQiPmlZ6xJuVYy6XDAKa7kol+3AHRBlF8z2Yi13k
+         NFzXrIs9U8VIJ4K+DmBIMAoaIA5xsSAQ2Ulp7wbVSdsn0Q5lh1cpodWCEOKVH5pfmaoT
+         DMH+EI4NzwGiTs/liEmWGpRTxP4xq237V/Fd4=
+Received: by 10.50.77.129 with SMTP id s1mr1432570igw.25.1326439423944;
+        Thu, 12 Jan 2012 23:23:43 -0800 (PST)
 Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id r5sm13094094igl.3.2012.01.12.23.23.31
+        by mx.google.com with ESMTPS id i2sm5080799igq.6.2012.01.12.23.23.40
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 12 Jan 2012 23:23:34 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 13 Jan 2012 14:23:25 +0700
+        Thu, 12 Jan 2012 23:23:43 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 13 Jan 2012 14:23:34 +0700
 X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
 In-Reply-To: <1326189427-20800-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188506>
-
-Because a tag ref cannot be put to HEAD, HEAD will become detached.
-This is consistent with "git checkout <tag>".
-
-This is mostly useful in shallow clone, where it allows you to clone a
-tag in addtion to branches.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188507>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/git-clone.txt |    5 +++--
- builtin/clone.c             |   13 +++++++++++++
- t/t5601-clone.sh            |    9 +++++++++
- 3 files changed, 25 insertions(+), 2 deletions(-)
+ advice.c           |   14 ++++++++++++++
+ advice.h           |    1 +
+ builtin/checkout.c |   16 +---------------
+ builtin/clone.c    |    5 ++++-
+ 4 files changed, 20 insertions(+), 16 deletions(-)
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 4b8b26b..db2b29c 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -146,8 +146,9 @@ objects from the source repository into a pack in t=
-he cloned repository.
- -b <name>::
- 	Instead of pointing the newly created HEAD to the branch pointed
- 	to by the cloned repository's HEAD, point to `<name>` branch
--	instead. In a non-bare repository, this is the branch that will
--	be checked out.
-+	instead. `--branch` can also take tags and treat them like
-+	detached HEAD. In a non-bare repository, this is the branch
-+	that will be checked out.
+diff --git a/advice.c b/advice.c
+index e02e632..3e1a145 100644
+--- a/advice.c
++++ b/advice.c
+@@ -64,3 +64,17 @@ void NORETURN die_resolve_conflict(const char *me)
+ 	error_resolve_conflict(me);
+ 	die("Exiting because of an unresolved conflict.");
+ }
++
++void detach_advice(const char *new_name)
++{
++	const char fmt[] =3D
++	"Note: checking out '%s'.\n\n"
++	"You are in 'detached HEAD' state. You can look around, make experime=
+ntal\n"
++	"changes and commit them, and you can discard any commits you make in=
+ this\n"
++	"state without impacting any branches by performing another checkout.=
+\n\n"
++	"If you want to create a new branch to retain commits you create, you=
+ may\n"
++	"do so (now or later) by using -b with the checkout command again. Ex=
+ample:\n\n"
++	"  git checkout -b new_branch_name\n\n";
++
++	fprintf(stderr, fmt, new_name);
++}
+diff --git a/advice.h b/advice.h
+index e5d0af7..7bda45b 100644
+--- a/advice.h
++++ b/advice.h
+@@ -14,5 +14,6 @@ int git_default_advice_config(const char *var, const =
+char *value);
+ void advise(const char *advice, ...);
+ int error_resolve_conflict(const char *me);
+ extern void NORETURN die_resolve_conflict(const char *me);
++void detach_advice(const char *new_name);
 =20
- --upload-pack <upload-pack>::
- -u <upload-pack>::
+ #endif /* ADVICE_H */
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index f1984d9..5bf96ba 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -514,20 +514,6 @@ static void report_tracking(struct branch_info *ne=
+w)
+ 	strbuf_release(&sb);
+ }
+=20
+-static void detach_advice(const char *old_path, const char *new_name)
+-{
+-	const char fmt[] =3D
+-	"Note: checking out '%s'.\n\n"
+-	"You are in 'detached HEAD' state. You can look around, make experime=
+ntal\n"
+-	"changes and commit them, and you can discard any commits you make in=
+ this\n"
+-	"state without impacting any branches by performing another checkout.=
+\n\n"
+-	"If you want to create a new branch to retain commits you create, you=
+ may\n"
+-	"do so (now or later) by using -b with the checkout command again. Ex=
+ample:\n\n"
+-	"  git checkout -b new_branch_name\n\n";
+-
+-	fprintf(stderr, fmt, new_name);
+-}
+-
+ static void update_refs_for_switch(struct checkout_opts *opts,
+ 				   struct branch_info *old,
+ 				   struct branch_info *new)
+@@ -575,7 +561,7 @@ static void update_refs_for_switch(struct checkout_=
+opts *opts,
+ 			   REF_NODEREF, DIE_ON_ERR);
+ 		if (!opts->quiet) {
+ 			if (old->path && advice_detached_head)
+-				detach_advice(old->path, new->name);
++				detach_advice(new->name);
+ 			describe_detached_head(_("HEAD is now at"), new->commit);
+ 		}
+ 	} else if (new->path) {	/* Switch branches. */
 diff --git a/builtin/clone.c b/builtin/clone.c
-index 6a2886a..a3c8f78 100644
+index a3c8f78..bfdafaa 100644
 --- a/builtin/clone.c
 +++ b/builtin/clone.c
-@@ -471,6 +471,11 @@ static void update_head(const struct ref *our, con=
-st struct ref *remote,
- 			update_ref(msg, "HEAD", our->old_sha1, NULL, 0, DIE_ON_ERR);
- 			install_branch_config(0, head, option_origin, our->name);
- 		}
-+	} else if (our) {
-+		struct commit *c =3D lookup_commit_reference(our->old_sha1);
-+		/* --branch specifies a non-branch (i.e. tags), detach HEAD */
-+		update_ref(msg, "HEAD", c->object.sha1,
-+			   NULL, REF_NODEREF, DIE_ON_ERR);
- 	} else if (remote) {
- 		/*
- 		 * We know remote HEAD points to a non-branch, or
-@@ -770,6 +775,14 @@ int cmd_clone(int argc, const char **argv, const c=
-har *prefix)
- 				find_ref_by_name(mapped_refs, head.buf);
- 			strbuf_release(&head);
-=20
-+			if (!our_head_points_at) {
-+				strbuf_addstr(&head, "refs/tags/");
-+				strbuf_addstr(&head, option_branch);
-+				our_head_points_at =3D
-+					find_ref_by_name(mapped_refs, head.buf);
-+				strbuf_release(&head);
-+			}
-+
- 			if (!our_head_points_at)
- 				die(_("Remote branch %s not found in "
- 				      "upstream %s, using HEAD instead"),
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index e0b8db6..67869b4 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -271,4 +271,13 @@ test_expect_success 'clone from original with rela=
-tive alternate' '
- 	grep /src/\\.git/objects target-10/objects/info/alternates
- '
-=20
-+test_expect_success 'clone checking out a tag' '
-+	git clone --branch=3Dsome-tag src dst.tag &&
-+	GIT_DIR=3Dsrc/.git git rev-parse some-tag >expected &&
-+	test_cmp expected dst.tag/.git/HEAD &&
-+	GIT_DIR=3Ddst.tag/.git git config remote.origin.fetch >fetch.actual &=
-&
-+	echo "+refs/heads/*:refs/remotes/origin/*" >fetch.expected &&
-+	test_cmp fetch.expected fetch.actual
-+'
-+
- test_done
+@@ -506,7 +506,10 @@ static int checkout(void)
+ 			  "unable to checkout.\n"));
+ 		return 0;
+ 	}
+-	if (strcmp(head, "HEAD")) {
++	if (!strcmp(head, "HEAD")) {
++		if (advice_detached_head)
++			detach_advice(sha1_to_hex(sha1));
++	} else {
+ 		if (prefixcmp(head, "refs/heads/"))
+ 			die(_("HEAD not found below refs/heads!"));
+ 	}
 --=20
 1.7.3.1.256.g2539c.dirty
