@@ -1,133 +1,109 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: Bug? Git checkout fails with a wrong error message
-Date: Fri, 13 Jan 2012 20:28:44 +0100
-Message-ID: <4F1085EC.9010708@ira.uka.de>
-References: <loom.20120112T193624-86@post.gmane.org> <4F1028AD.9080701@ira.uka.de> <4F106DDF.4040408@unclassified.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Bug! Git merge also fails with a wrong error message
+Date: Fri, 13 Jan 2012 11:34:29 -0800 (PST)
+Message-ID: <m3mx9re6t0.fsf@localhost.localdomain>
+References: <loom.20120112T193624-86@post.gmane.org>
+	<loom.20120113T181805-423@post.gmane.org>
+	<20120113175617.GE2850@centaur.lab.cmartin.tk>
+	<4F107F16.30009@unclassified.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?UTF-8?B?Q2FybG9zIE1h?= =?UTF-8?B?cnTDrW4gTmlldG8=?= 
-	<cmn@elego.de>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?b?Q2FybG9zIE1hcnTDrW4gTg==?= =?utf-8?b?aWV0bw==?= 
+	<cmn@elego.de>, git@vger.kernel.org
 To: Yves Goergen <nospam.list@unclassified.de>
-X-From: git-owner@vger.kernel.org Fri Jan 13 20:29:06 2012
+X-From: git-owner@vger.kernel.org Fri Jan 13 20:34:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RlmoD-0007wT-Sf
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 20:29:06 +0100
+	id 1RlmtY-0002CJ-Tr
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 20:34:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758812Ab2AMT3A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jan 2012 14:29:00 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:46411 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753346Ab2AMT3A (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Jan 2012 14:29:00 -0500
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1Rlmnd-0003Iq-Vq; Fri, 13 Jan 2012 20:28:59 +0100
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	id 1Rlmnd-0001Yg-NG; Fri, 13 Jan 2012 20:28:29 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <4F106DDF.4040408@unclassified.de>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1326482939.120579000
+	id S1753701Ab2AMTec convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jan 2012 14:34:32 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:35464 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753499Ab2AMTeb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Jan 2012 14:34:31 -0500
+Received: by eaal12 with SMTP id l12so299441eaa.19
+        for <git@vger.kernel.org>; Fri, 13 Jan 2012 11:34:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=bhtKtpAwrxxdJiV4pYGQcGRg0uf13ohFT5TI7/YOJhk=;
+        b=pjCVXxzQhBxZ0nXIw/WVqYxJ7oTSzT7wz6k6g7yYbc7GZIgu25VeJZalgcCZwJrTez
+         Brfa9s308E2rRPW9na4QohNhz6KzLlFHt3LZymKMfAZMmXxEAa/RCfkJLimmcZ1tZxAF
+         RO6CoP0d6t8lOl/wKoY6rq9B4zyW/N7NXS7ww=
+Received: by 10.213.34.2 with SMTP id j2mr282733ebd.21.1326483270101;
+        Fri, 13 Jan 2012 11:34:30 -0800 (PST)
+Received: from localhost.localdomain (abwn18.neoplus.adsl.tpnet.pl. [83.8.237.18])
+        by mx.google.com with ESMTPS id y12sm33289373eeb.11.2012.01.13.11.34.28
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 13 Jan 2012 11:34:29 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q0DJXsUV003321;
+	Fri, 13 Jan 2012 20:34:04 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id q0DJXWUU003316;
+	Fri, 13 Jan 2012 20:33:32 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <4F107F16.30009@unclassified.de>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188533>
 
-Added Peff and Carlos to the CC so they see this part of the thread too.
+Yves Goergen <nospam.list@unclassified.de> writes:
+> On 13.01.2012 18:56 CE(S)T, Carlos Mart=C3=ADn Nieto wrote:
+=20
+> > Gmane is a mailing list viewer and there /only/ is the real maling
+> > list. The e-mail you provided for yourself looks bogus, but if it
+> > isn't, you'll notice we communicate via e-mail.
+>=20
+> Well, I am very confused. Starting from git-scm.com, the only support
+> site is a mailing list, and the hyperlink on that word sends me to Gm=
+ane
+> which says I am in a newsgroup called "gmane.comp.version-control.git=
+".
 
-On 13.01.2012 18:46, Yves Goergen wrote:
-> On 13.01.2012 13:50 CE(S)T, Holger Hellmuth wrote:
->> Important information missing: What version of git are you using? Should
->> the version number begin with 1.6 or even lower you will get the advice
->> to update your version to something non-ancient. Lots of bug-fixes
->> happened in-between.
->
-> The first bug happened with msysGit 1.7.6 and 1.7.8, the second one
-> (reported now) with 1.7.8. That update didn't change a thing.
->
->> I assume .cs is a C source file for visual studio, not a generated file,
->> right ?
->
-> .cs is C# code and .Designer.cs files are used internally by the Visual
-> Studio designer. They're not supposed to be edited by the programmer and
-> contain lots of stuff that changes all the time. So they are generated
-> and presented in a different way.
+Note however that the _text_ of the hyperlink is
 
-Is it possible that Visual Studio changes them while you are comitting?
+  git@vger.kernel.org mailing list
 
->> git does not record renames like cvs/svn do. It operates on snapshots
->> and infers renames through comparisions. So if the next commit has a
->> file missing and the same or similar file contents under some different
->> path, it reports it as a rename. You can try -M with git log or git diff
->> so that git expends more effort to detect renames+edits. Or you could
->> avoid doing renames and edits of the same file in the same commit.
->
-> I renamed the file and created a new one with the same name. Is it so
-> simple to crash the Git repository?
+> Since I don't have access to the news system, I need to use the Gmane
+> website. I don't know exactly what it is.
 
-Who said anything about crash? git simply doesn't care whether a change 
-is because of a rename. It isn't special or different to any change you 
-can make to a file
+GMane is an e-mail to news gateway, and a mailing list archive. It
+exposes mailing list as a newsgroup, so it can be read and written to
+via newsreader (via Usenet).
 
+Perhaps better solution would be to use mailto:git@vger.kernel.org
+link, and add a sentence about archives / alternative interfaces.
 
->>> -----
->>> git.exe checkout    form-refactoring
->>>
->>> Aborting
->>> error: The following untracked working tree files would be overwritten by
->>> checkout:
->>> Form1.Designer.cs
->>> Please move or remove them before you can switch branches.
->>> -----
->>
->> You didn't mention that filename before (please assume people not
->> accustomed to the ways of Visual Studio 2010). Is that another file you
->> renamed and created new in the form-refactoring branch?
->
-> Form1.cs, Form1.Designer.cs and Form1.resx all belong together and are
-> renamed atomically. If I rename "Form1" in the project, actually these 3
-> files are renamed on disk.
+>                                  I know mailing lists, but that
+> doesn't look like one at all. There's not even a subscription page or
+> address.=20
 
-As an aside, if .Designer.cs is generated automatically from Form1.cs it 
-shouldn't be tracked at all. Maybe tortoise git has a global gitignore 
-with a line "*.Designer.cs" in it to account for that fact. Maybe this 
-lead to the error message?
+git@vger.kernel.org is a public non-subscribe mailing list; you don't
+need to subscribe to post requests there.  Note that it is a custom on
+this mailing list to always include all participants in given
+(sub)thread directly in Cc, so you should get responses to your emails
+even if you are not subscribed.
 
->> What does git diff -- Form1.Designer.cs' say?
->
-> Nothing.
->
->> What does 'git diff form-refactoring -- Form1.Designer.cs' say?
->
-> All lines deleted.
+[...]
+> So am I now subscribed to that "git@vger.kernel.org" mailing list and=
+ do
+> my posts show up there? I have no idea what's going on, neither in my
+> repository, nor in this mailing list. Confusing and non-transparent.
 
-Really all lines? That would indicate that you don't have a file 
-Form1.Designer.cs (or an empty one) in your working directory in branch 
-master. In case there is no file (as seen by git) the output of diff 
-should compare with /dev/null aka the void aka <I don't know how this 
-prints on the windows side>. Also notice the line "deleted file mode ..."
+If you send email to git@vger.kernel.org, it would also appear on
+GMane.
 
- > git diff master -- zumf
-diff --git a/zumf b/zumf
-deleted file mode 100644
-index 925eccd..0000000
---- a/zumf
-+++ /dev/null
-@@ -1 +0,0 @@
-
-Or did you just mean "all the shown lines in the diff were fronted by a 
-minus sign"? Which would just indicate that the file in form-refactoring 
-is a superset of the one in master.
-
-(As you can see, actual reproduction of command line output is very 
-helpful to avoid ambiguity and can give further hints)
+--=20
+Jakub Narebski
