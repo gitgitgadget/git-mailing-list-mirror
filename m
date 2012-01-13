@@ -1,68 +1,133 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] merge: Make merge strategy message follow the diffstat
-Date: Sat, 14 Jan 2012 02:27:01 +0700
-Message-ID: <CACsJy8BmFgssTAh=1U7JgBsGG-tSaWXQzZeODND3icXY3QUxug@mail.gmail.com>
-References: <20120109073727.GF22134@opensource.wolfsonmicro.com>
- <CA+55aFyhoh0rT_ujuE1w3RpuR7kqivYFwPpm66VC-xtq1PiGUQ@mail.gmail.com>
- <20120110184530.GE7164@opensource.wolfsonmicro.com> <CA+55aFxXb7wqfrpozS6iH0k25y-+Uy8_Tavv59JXMhaWrjXLaw@mail.gmail.com>
- <20120110222711.GK7164@opensource.wolfsonmicro.com> <CA+55aFxvQF=Bm4ae6euB_UO8otMCuN9Lv37Zn3TpE-L7JH3Kzw@mail.gmail.com>
- <20120111184026.GA23952@windriver.com> <7vaa5rzaax.fsf_-_@alter.siamese.dyndns.org>
+From: Holger Hellmuth <hellmuth@ira.uka.de>
+Subject: Re: Bug? Git checkout fails with a wrong error message
+Date: Fri, 13 Jan 2012 20:28:44 +0100
+Message-ID: <4F1085EC.9010708@ira.uka.de>
+References: <loom.20120112T193624-86@post.gmane.org> <4F1028AD.9080701@ira.uka.de> <4F106DDF.4040408@unclassified.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Paul Gortmaker <paul.gortmaker@windriver.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Mark Brown <broonie@opensource.wolfsonmicro.com>,
-	Liam Girdwood <lrg@ti.com>, linux-kernel@vger.kernel.org,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 13 20:27:53 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	=?UTF-8?B?Q2FybG9zIE1h?= =?UTF-8?B?cnTDrW4gTmlldG8=?= 
+	<cmn@elego.de>
+To: Yves Goergen <nospam.list@unclassified.de>
+X-From: git-owner@vger.kernel.org Fri Jan 13 20:29:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rlmn3-0007MA-CR
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 20:27:53 +0100
+	id 1RlmoD-0007wT-Sf
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 20:29:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758909Ab2AMT1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jan 2012 14:27:35 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:53124 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753585Ab2AMT1d (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2012 14:27:33 -0500
-Received: by bkuw12 with SMTP id w12so205620bku.19
-        for <multiple recipients>; Fri, 13 Jan 2012 11:27:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=mnmuWfkSz3A/c1tggSWMXbX7CU5z6xEuqc4Fp2Qj2E8=;
-        b=V6L7vnRbGX2kiZIZlXu8uUwqbOeMFSH8jVe88OTjMtWLC1yh61QdS9BZ/UwDbmYZ57
-         f7/NJ75CwUpl+aLnamGExiN25Ki7NtX1gu+oQDHFbWsm3hlBRLqPRlyHNgVYqx5/B4Ga
-         DYzuIYIXmkntXHqsZaebKXFPJ1FKmcwuli2LY=
-Received: by 10.204.156.156 with SMTP id x28mr1009237bkw.76.1326482852337;
- Fri, 13 Jan 2012 11:27:32 -0800 (PST)
-Received: by 10.204.66.77 with HTTP; Fri, 13 Jan 2012 11:27:01 -0800 (PST)
-In-Reply-To: <7vaa5rzaax.fsf_-_@alter.siamese.dyndns.org>
+	id S1758812Ab2AMT3A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jan 2012 14:29:00 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:46411 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753346Ab2AMT3A (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Jan 2012 14:29:00 -0500
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1Rlmnd-0003Iq-Vq; Fri, 13 Jan 2012 20:28:59 +0100
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
+	id 1Rlmnd-0001Yg-NG; Fri, 13 Jan 2012 20:28:29 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <4F106DDF.4040408@unclassified.de>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1326482939.120579000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188532>
 
-On Sat, Jan 14, 2012 at 2:12 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Paul Gortmaker <paul.gortmaker@windriver.com> writes:
+Added Peff and Carlos to the CC so they see this part of the thread too.
+
+On 13.01.2012 18:46, Yves Goergen wrote:
+> On 13.01.2012 13:50 CE(S)T, Holger Hellmuth wrote:
+>> Important information missing: What version of git are you using? Should
+>> the version number begin with 1.6 or even lower you will get the advice
+>> to update your version to something non-ancient. Lots of bug-fixes
+>> happened in-between.
 >
->> By moving the message after the diffstat, there is a better chance that
->> people will be aware they've done a pointless merge commit.
+> The first bug happened with msysGit 1.7.6 and 1.7.8, the second one
+> (reported now) with 1.7.8. That update didn't change a thing.
+>
+>> I assume .cs is a C source file for visual studio, not a generated file,
+>> right ?
+>
+> .cs is C# code and .Designer.cs files are used internally by the Visual
+> Studio designer. They're not supposed to be edited by the programmer and
+> contain lots of stuff that changes all the time. So they are generated
+> and presented in a different way.
+
+Is it possible that Visual Studio changes them while you are comitting?
+
+>> git does not record renames like cvs/svn do. It operates on snapshots
+>> and infers renames through comparisions. So if the next commit has a
+>> file missing and the same or similar file contents under some different
+>> path, it reports it as a rename. You can try -M with git log or git diff
+>> so that git expends more effort to detect renames+edits. Or you could
+>> avoid doing renames and edits of the same file in the same commit.
+>
+> I renamed the file and created a new one with the same name. Is it so
+> simple to crash the Git repository?
+
+Who said anything about crash? git simply doesn't care whether a change 
+is because of a rename. It isn't special or different to any change you 
+can make to a file
+
+
+>>> -----
+>>> git.exe checkout    form-refactoring
+>>>
+>>> Aborting
+>>> error: The following untracked working tree files would be overwritten by
+>>> checkout:
+>>> Form1.Designer.cs
+>>> Please move or remove them before you can switch branches.
+>>> -----
 >>
->> Signed-off-by: Paul Gortmaker <paul.gortmaker@windriver.com>
+>> You didn't mention that filename before (please assume people not
+>> accustomed to the ways of Visual Studio 2010). Is that another file you
+>> renamed and created new in the form-refactoring branch?
 >
-> I think the goal of the change may be worthy
+> Form1.cs, Form1.Designer.cs and Form1.resx all belong together and are
+> renamed atomically. If I rename "Form1" in the project, actually these 3
+> files are renamed on disk.
 
-Still, diffstat from a fetch/pull is sometimes too verbose. It'd be
-better if we have something that fit in one screen (dirstat or maybe
-just a first few lines from diffstat then ellipsis) then refer users
-to "git diff --stat HEAD@{1}" for more detail stat.
--- 
-Duy
+As an aside, if .Designer.cs is generated automatically from Form1.cs it 
+shouldn't be tracked at all. Maybe tortoise git has a global gitignore 
+with a line "*.Designer.cs" in it to account for that fact. Maybe this 
+lead to the error message?
+
+>> What does git diff -- Form1.Designer.cs' say?
+>
+> Nothing.
+>
+>> What does 'git diff form-refactoring -- Form1.Designer.cs' say?
+>
+> All lines deleted.
+
+Really all lines? That would indicate that you don't have a file 
+Form1.Designer.cs (or an empty one) in your working directory in branch 
+master. In case there is no file (as seen by git) the output of diff 
+should compare with /dev/null aka the void aka <I don't know how this 
+prints on the windows side>. Also notice the line "deleted file mode ..."
+
+ > git diff master -- zumf
+diff --git a/zumf b/zumf
+deleted file mode 100644
+index 925eccd..0000000
+--- a/zumf
++++ /dev/null
+@@ -1 +0,0 @@
+
+Or did you just mean "all the shown lines in the diff were fronted by a 
+minus sign"? Which would just indicate that the file in form-refactoring 
+is a superset of the one in master.
+
+(As you can see, actual reproduction of command line output is very 
+helpful to avoid ambiguity and can give further hints)
