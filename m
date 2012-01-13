@@ -1,65 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] gitweb: Fix file links in "grep" search
-Date: Fri, 13 Jan 2012 11:18:42 -0800
-Message-ID: <7v62gfza0d.fsf@alter.siamese.dyndns.org>
-References: <CA+uOhx6i-07kW8K0y3Co++2ABD=Lmaq3r4h1hN4YLskAE+hR1Q@mail.gmail.com>
- <7vhb0cqpix.fsf@alter.siamese.dyndns.org>
- <CANQwDwfnp167Uth5TLbCD6OR-Xe6JD-2vENiJVnipi1YdjnMPQ@mail.gmail.com>
- <201201052126.49087.jnareb@gmail.com>
- <CA+uOhx7QwRQJzyYBCkmVDBRCMt0i_ZqS=sfTG0VmNiVv2dVoww@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] merge: Make merge strategy message follow the diffstat
+Date: Sat, 14 Jan 2012 02:27:01 +0700
+Message-ID: <CACsJy8BmFgssTAh=1U7JgBsGG-tSaWXQzZeODND3icXY3QUxug@mail.gmail.com>
+References: <20120109073727.GF22134@opensource.wolfsonmicro.com>
+ <CA+55aFyhoh0rT_ujuE1w3RpuR7kqivYFwPpm66VC-xtq1PiGUQ@mail.gmail.com>
+ <20120110184530.GE7164@opensource.wolfsonmicro.com> <CA+55aFxXb7wqfrpozS6iH0k25y-+Uy8_Tavv59JXMhaWrjXLaw@mail.gmail.com>
+ <20120110222711.GK7164@opensource.wolfsonmicro.com> <CA+55aFxvQF=Bm4ae6euB_UO8otMCuN9Lv37Zn3TpE-L7JH3Kzw@mail.gmail.com>
+ <20120111184026.GA23952@windriver.com> <7vaa5rzaax.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Thomas Perl <th.perl@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 13 20:18:51 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Paul Gortmaker <paul.gortmaker@windriver.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Mark Brown <broonie@opensource.wolfsonmicro.com>,
+	Liam Girdwood <lrg@ti.com>, linux-kernel@vger.kernel.org,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 13 20:27:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RlmeI-0003XZ-CO
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 20:18:50 +0100
+	id 1Rlmn3-0007MA-CR
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 20:27:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758799Ab2AMTSp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jan 2012 14:18:45 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63320 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753745Ab2AMTSp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2012 14:18:45 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A087455A9;
-	Fri, 13 Jan 2012 14:18:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ylcEpnnw3rhw5TtcL3OLG64BBPo=; b=NOc3z1
-	zoqAm23qx19nA9tk9nZ+4EwwyS0TgwugtteB8kA+oBwUctrTbnHl9sQ488Z0NT+v
-	ICxiE0Cg84KxV7dP7VisnHbCtzW2sJuamKnSLU+X+zrAlXoZMrcP9sVPGlZ7dm3W
-	1rucCUqbaphkuTGJDjgR9sUjL0xkGAgPO7w8U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bslHDj2VkNbm5Ho9GX1NTGu4fcQ3DhvA
-	hFFCNnrQACgn7mTv9MRREGuF+Wk97M1XbFJQ7rUIVXU7rrUw1uZ9+uEijyAZ+QWR
-	jr/q6POwVe9Eijcsc3kYktVOQIgNBi93vdAmb7TTPmzmc1A80XeYRywwhd4Zc2g2
-	YwoO43mcd1Q=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 977AD55A8;
-	Fri, 13 Jan 2012 14:18:44 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2390D55A7; Fri, 13 Jan 2012
- 14:18:44 -0500 (EST)
-In-Reply-To: <CA+uOhx7QwRQJzyYBCkmVDBRCMt0i_ZqS=sfTG0VmNiVv2dVoww@mail.gmail.com> (Thomas
- Perl's message of "Fri, 13 Jan 2012 15:09:27 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 68D3A62C-3E1B-11E1-9CB1-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758909Ab2AMT1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jan 2012 14:27:35 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:53124 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753585Ab2AMT1d (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jan 2012 14:27:33 -0500
+Received: by bkuw12 with SMTP id w12so205620bku.19
+        for <multiple recipients>; Fri, 13 Jan 2012 11:27:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=mnmuWfkSz3A/c1tggSWMXbX7CU5z6xEuqc4Fp2Qj2E8=;
+        b=V6L7vnRbGX2kiZIZlXu8uUwqbOeMFSH8jVe88OTjMtWLC1yh61QdS9BZ/UwDbmYZ57
+         f7/NJ75CwUpl+aLnamGExiN25Ki7NtX1gu+oQDHFbWsm3hlBRLqPRlyHNgVYqx5/B4Ga
+         DYzuIYIXmkntXHqsZaebKXFPJ1FKmcwuli2LY=
+Received: by 10.204.156.156 with SMTP id x28mr1009237bkw.76.1326482852337;
+ Fri, 13 Jan 2012 11:27:32 -0800 (PST)
+Received: by 10.204.66.77 with HTTP; Fri, 13 Jan 2012 11:27:01 -0800 (PST)
+In-Reply-To: <7vaa5rzaax.fsf_-_@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188531>
 
-Thomas Perl <th.perl@gmail.com> writes:
+On Sat, Jan 14, 2012 at 2:12 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Paul Gortmaker <paul.gortmaker@windriver.com> writes:
+>
+>> By moving the message after the diffstat, there is a better chance that
+>> people will be aware they've done a pointless merge commit.
+>>
+>> Signed-off-by: Paul Gortmaker <paul.gortmaker@windriver.com>
+>
+> I think the goal of the change may be worthy
 
-> As far as I'm concerned, the patch can be applied and fixes the bug.
-
-Thanks.
+Still, diffstat from a fetch/pull is sometimes too verbose. It'd be
+better if we have something that fit in one screen (dirstat or maybe
+just a first few lines from diffstat then ellipsis) then refer users
+to "git diff --stat HEAD@{1}" for more detail stat.
+-- 
+Duy
