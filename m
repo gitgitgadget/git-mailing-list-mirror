@@ -1,72 +1,65 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] git-show-ref doc: typeset regexp in fixed width
- font
-Date: Fri, 13 Jan 2012 11:51:00 -0800
-Message-ID: <7vwr8vxty3.fsf@alter.siamese.dyndns.org>
-References: <1326472756-15227-1-git-send-email-mhagger@alum.mit.edu>
- <1326472756-15227-3-git-send-email-mhagger@alum.mit.edu>
+Subject: Re: [PATCH v4 00/10] nd/clone-detached
+Date: Fri, 13 Jan 2012 11:52:43 -0800
+Message-ID: <7vvcofxtv8.fsf@alter.siamese.dyndns.org>
+References: <1326189427-20800-1-git-send-email-pclouds@gmail.com>
+ <1326439322-15648-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
-To: mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Fri Jan 13 20:51:12 2012
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 13 20:52:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rln9c-00026s-1r
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 20:51:12 +0100
+	id 1RlnBC-0003BZ-Kj
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 20:52:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758928Ab2AMTvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jan 2012 14:51:08 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42755 "EHLO
+	id S1758931Ab2AMTwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jan 2012 14:52:46 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43618 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753419Ab2AMTvE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2012 14:51:04 -0500
+	id S1758929Ab2AMTwp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jan 2012 14:52:45 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A1075D65;
-	Fri, 13 Jan 2012 14:51:03 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CE8B45E31;
+	Fri, 13 Jan 2012 14:52:44 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NbvX4uoCkEszczwkB54SjE4ToU8=; b=lMFL7p
-	VhhzqwwkddvP/wTEc5ZMs1BF5ZtvbfYlKC1ljhwks/rd0YmXIos0LQ4Q20kENRIy
-	geKacjFOu0QD/y1EpV5kzzQTsbr+JhflRvAYaewM3+x9tZ2xI/ky0LbR2XefJTmY
-	F0IgqIolsQjesCeo1o34zpeQnVGCc+fkeU4A4=
+	:content-type; s=sasl; bh=HYX6BsDRdXqSLZvNoG+x/Yovst0=; b=YVJN9w
+	wOQRgjnajF0WrAWDWeyEe8FQRHoH3TEw4k8E8BCfrxTnMn9G36fISBzueYpaJxQd
+	0OCJyXATqHMQwLN9p1nUTZfTp4d+Z99BKFxKDMygNhDyjvp6vhFTTcP//iHM/L8t
+	i2g81IzucXYvkcl0x2rhOuCt0KOx/pqlY+jws=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=odbb/xaUqPRAiUMrW5NtaYfcoHTvoskU
-	J1Dj8V5W/fy73goW9YGSHTML7B9Q/IHRsHiLbqXVf9lZiHQQDB3Sj0+uHsypXjoX
-	DT2GDcr9E71DUJcF6JbygQV8r/H1/p3t2zp8qCA7As9+TpE7YVRE1Apbgt39fDGW
-	qY9HrrFkxek=
+	:content-type; q=dns; s=sasl; b=lmHaEDACmQ0uE+Xx2O66AhsXg824bVU+
+	8Ry8L14NxhPwUp7YT/GXOwcp/JWeZt+cQVhTlcxG/6Ky3kVZZn6KeYOZFg/qndZ4
+	CDwScm5VSYSAZFFwrrs3Ql4nL8A0S4l5/wqXzHns72cspUonB/quQ0ALbEPzhsDP
+	+3BDVjrkC7A=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8148E5D63;
-	Fri, 13 Jan 2012 14:51:02 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C63445E30;
+	Fri, 13 Jan 2012 14:52:44 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EE9DB5D60; Fri, 13 Jan 2012
- 14:51:01 -0500 (EST)
-In-Reply-To: <1326472756-15227-3-git-send-email-mhagger@alum.mit.edu>
- (mhagger@alum.mit.edu's message of "Fri, 13 Jan 2012 17:39:16 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 613755E2C; Fri, 13 Jan 2012
+ 14:52:44 -0500 (EST)
+In-Reply-To: <1326439322-15648-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 13 Jan
+ 2012 14:21:52 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EBDD6A68-3E1F-11E1-BC85-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 28E97E60-3E20-11E1-B4DF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188536>
 
-mhagger@alum.mit.edu writes:
+Thanks, replaced (and updated comment strings read much better).
 
-> From: Michael Haggerty <mhagger@alum.mit.edu>
->
->
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
-> Optional; I think it looks better.
+There were some conlicts I had to resolve while merging this to 'pu'.
+I would appreciate it if you can eyeball it to make sure I didn't make
+silly mistakes there.
 
-I agree it looks better, too, as long as everybody's copy of AsciiDoc
-groks it. I see "`<something>`" in many places in the other pages, so this
-should be safe.
-
-Thanks for resending. Will queue.
+Thanks.
