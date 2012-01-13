@@ -1,116 +1,164 @@
-From: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-Subject: Re: fetch for bare repository
-Date: Fri, 13 Jan 2012 16:18:45 +0100
-Message-ID: <20120113151845.GD2850@centaur.lab.cmartin.tk>
-References: <4F100A7B.3030001@gmail.com>
- <20120113134058.GB2850@centaur.lab.cmartin.tk>
- <4F103797.7060906@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: thin packs ending up fat
+Date: Fri, 13 Jan 2012 10:55:36 -0500
+Message-ID: <20120113155536.GB9373@sigill.intra.peff.net>
+References: <20120112221523.GA3663@sigill.intra.peff.net>
+ <CACBZZX567mHKXDtTcb+zFKtr2ZvcssF+O=w-x86PfNh+5tTpRg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="1ccMZA6j1vT5UqiK"
-Cc: git@vger.kernel.org
-To: "Dmitry A. Ashkadov" <dmitry.ashkadov@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 13 16:18:49 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 13 16:56:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rliu1-0007EJ-1v
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 16:18:49 +0100
+	id 1RljUr-0002yS-8K
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Jan 2012 16:56:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758291Ab2AMPSo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jan 2012 10:18:44 -0500
-Received: from kimmy.cmartin.tk ([91.121.65.165]:41069 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758276Ab2AMPSn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jan 2012 10:18:43 -0500
-Received: from centaur.lab.cmartin.tk (brln-4db9f5ad.pool.mediaWays.net [77.185.245.173])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 81B07461BE;
-	Fri, 13 Jan 2012 16:18:30 +0100 (CET)
-Received: (nullmailer pid 17438 invoked by uid 1000);
-	Fri, 13 Jan 2012 15:18:45 -0000
-Mail-Followup-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	"Dmitry A. Ashkadov" <dmitry.ashkadov@gmail.com>,
-	git@vger.kernel.org
+	id S1758393Ab2AMP4o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jan 2012 10:56:44 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36713
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758383Ab2AMPzi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jan 2012 10:55:38 -0500
+Received: (qmail 10108 invoked by uid 107); 13 Jan 2012 16:02:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 13 Jan 2012 11:02:33 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Jan 2012 10:55:36 -0500
 Content-Disposition: inline
-In-Reply-To: <4F103797.7060906@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CACBZZX567mHKXDtTcb+zFKtr2ZvcssF+O=w-x86PfNh+5tTpRg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188516>
 
+On Fri, Jan 13, 2012 at 09:28:43AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
 
---1ccMZA6j1vT5UqiK
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Jan 13, 2012 at 05:54:31PM +0400, Dmitry A. Ashkadov wrote:
-> 13.01.2012 17:40, Carlos Mart=C3=ADn Nieto =D0=BF=D0=B8=D1=88=D0=B5=D1=82:
-> >On Fri, Jan 13, 2012 at 02:42:03PM +0400, Dmitry A. Ashkadov wrote:
-> >>Hello!
-> >>
-> >>I can't understand how to fetch branches from external repository
-> >>for bare repository.
-> >What you probably want is a mirror (git clone --mirror). Unless you
-> >tell git that you want a mirror, it's going to assume that you want a
-> >bare repo to push your own changes up to it. Such a repo has no need
-> >to be kept up to date, so clone doesn't set up any fetch refspecs.
+> On Thu, Jan 12, 2012 at 23:15, Jeff King <peff@peff.net> wrote:
 >=20
-> I don't have access to an origin repository. So, I need bare
-> repository and push changes up to it. So, I think the word "mirror"
-> isn't applicable to private repository.
-
-When you say access here, do you mean that you can't push to it? When
-I say access later on, it means being able to fetch from it.
-Otherwise I don't see how you could have cloned from it. If your
-private repository's braches to reflect what's upstream, I'd call that
-a mirror.
-
+> I'd be interested in testing this on some other repos I have. How
+> exactly did you get this:
 >=20
-> >Stepping back, do you need to fetch those branches into the private
-> >repo? If you still have access to the main repo and that's where the
-> >main project development is happening, why not use upstream's repo to
-> >get those changes to your local repo (as in the one you use to work)?
-> >It sounds like you're trying to replicate a centralised VCS'
-> >workflow. Git works like a network and you can merge a branch from
-> >upstream if you need to and then push to the private repo.
+> > -- >8 --
+> > 8b0e15fa95e11965f18c8d2585dc8ffd9bfc9356 ^7f41b6bbe3181dc4d1687db03=
+6bf22316997a1bf
+> > 34c4461ae3b353e8c931565d5527b98ed12e3735 ^8b0e15fa95e11965f18c8d258=
+5dc8ffd9bfc9356
+> > 463b0ea22b5b9a882e8140d0308433d8cbd0d1fe ^34c4461ae3b353e8c931565d5=
+527b98ed12e3735
+> > 288396994f077eec7e7db0017838a5afbfbf81e3 ^463b0ea22b5b9a882e8140d03=
+08433d8cbd0d1fe
+> > 05f6edcd2a418a88eeb953d51408a6aeef312f5c ^288396994f077eec7e7db0017=
+838a5afbfbf81e3
+> > 08cfdbb88cd6225b4fc4b8a3cecd0e01758c835d ^05f6edcd2a418a88eeb953d51=
+408a6aeef312f5c
 >=20
-> Yes, I can add one more remote to my local repository, then fetch
-> changes from it and push it to private repository. But I thought
-> that update private repository is the best way.
+> From this:
+>=20
+> > In the first, I used the reflog entries from my
+> > refs/remotes/origin/master ref.
+>=20
+> I can't make "git reflog refs/remotes/..." show me anything similar.
 
-Best way to achieve what? If you want your private repo to reflect
-what's upstream, doing the inital clone with --mirror (or setting the
-remote.origin.fetch config variable to "+refs/*:refs/*", which is the
-main difference) will let you run 'git fetch' on that repo and get the
-changes.
+I just looked in the reflog file directly:
 
-But what I was asking was whether you actually need to bother with
-that operation. If you need to merge or rebase from upstream, a push
-will include those new changes, as they're now in your branch, so what
-advantage do you get from copying those branches from upstream if
-they're just the same?
+  perl -alne 'print "$F[1] ^$F[0]"' \
+    .git/logs/refs/remotes/origin/master
 
-   cmn
+Note that these are just an approximation of what was fetched each time=
+=2E
+The real fetches packed objects for other refs, too. But with respect t=
+o
+this patch, the result should be the same (since the interesting thing
+is the graph boundaries that are packed, so the size of the slice of
+history is what's important).
 
---1ccMZA6j1vT5UqiK
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+The other slight inaccuracy is that my tests repack the whole repo, and
+then simulate old fetches from that repo. When I actually fetched
+7f415b6..8b0e15fa from upstream, all of those later commits didn't
+actually exist yet. And therefore the blobs in those tip commits were
+actually more likely to be non-delta, and therefore this optimization i=
+s
+more likely to help (because we already re-tried deltas if the target
+object was delta'd against something else).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+At least in theory. In practice, the variance of the improvement it
+provides to each pack is so quite high. Some packs don't benefit at all=
+,
+because the preferred bases simply aren't that useful, or are perhaps
+already being used. Some packs can have improvements in the 70-80%
+range.
 
-iQEcBAEBAgAGBQJPEEtVAAoJEHKRP1jG7ZzTBWMH/2H8iHbfiFmdhvzsqsiwyqd8
-ig+OV6KqbHPSzbjm5fEOSlXKwlilbNICmPNUVRSbBklcxuvOvwxI14sQW8yRsMbZ
-CoowL4L4CoEMl0zBvyXieKCYUHlYG3xPJb5eAcOH77lvleqKWd091e7J1Ohkys59
-wusMtcllUpog10VfT7jU+5SWzQdWayPgdcHGmHyzCvcDY3GKW9N8YjrX6gQFVKp2
-W17O6wrJseRAxOCc6gadupzvJDWeSiKlBncHc2SX8r8mu/8x8HCWuNnFCllz5c/3
-KnDLnI18hqmlaEC3M6n77ek0W6ObgxIxDvP646Da4ICM49v5u6BPHGCS725bVBM=
-=4irK
------END PGP SIGNATURE-----
+The numbers I reported were averaged over all of the packs in the
+dataset. You can see individual packs with the script I provided
+earlier:
 
---1ccMZA6j1vT5UqiK--
+  # before patch
+  ./test-pack <dataset-fetch >output-fetch-before
+  # after patch
+  ./test-pack <dataset-fetch >output-fetch-after
+
+  # collate results
+  paste output-fetch-{before,after} |
+  perl -alne 'print "$F[0] $F[2] " .
+                int(0.5 + (($F[0] - $F[2]) / $F[0] * 100))'
+
+The output is below. You can also feed the percentages through this poo=
+r
+man's graph generator to see just how wildly it varies:
+
+  perl -alne 'print "*" x $F[2]'
+
+-Peff
+
+-- >8 --
+154471 92495 40
+41970 24681 41
+102816 71062 31
+21089 21089 0
+57900 13345 77
+75666 61518 19
+163516 107785 34
+44913 15795 65
+85452 77832 9
+102034 93336 9
+10095 8283 18
+86078 65495 24
+1854 1854 0
+16079 8125 49
+13830 7119 49
+1283 1283 0
+4697 2633 44
+4584 3818 17
+21535 18953 12
+3800 3800 0
+13963 10215 27
+4453 4073 9
+1029 598 42
+111233 68267 39
+879 879 0
+96628 86206 11
+3287 3287 0
+71212 20832 71
+132916 100268 25
+170716 40959 76
+1830 1262 31
+243950 133932 45
+64588 31546 51
+1108 1108 0
+6488 6488 0
+101179 64014 37
+114760 18969 83
+23443 19445 17
+28207 28080 0
+2317 2317 0
+110890 53555 52
+5660 5543 2
+18683 18683 0
+4709 4709 0
