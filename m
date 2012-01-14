@@ -1,75 +1,106 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH 2/2] git-gui: fix applying line/ranges when the selection
- ends at the begin of a line
-Date: Sat, 14 Jan 2012 12:23:34 +0100
-Message-ID: <CAKPyHN0Mj-cus5WWDpHG_mtWJhe6_4hxEzSn6pk0a88hytgVVg@mail.gmail.com>
-References: <cccd6193cf3bfe170e14270204d735a842bb8563.1326116492.git.bert.wesarg@googlemail.com>
-	<37339be035746797fcec7634e3560ffcd5b26cf3.1326116492.git.bert.wesarg@googlemail.com>
-	<CAKPyHN0tqQKuPONj_F9MXbgoHxeoZ7pFVSLPNWHddnA8340MGA@mail.gmail.com>
-	<7vaa5qydj7.fsf@alter.siamese.dyndns.org>
+From: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+Subject: Re: Commit changes to remote repository
+Date: Sat, 14 Jan 2012 12:31:41 +0100
+Message-ID: <20120114113141.GG2850@centaur.lab.cmartin.tk>
+References: <1326486589088-7185551.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Pat Thoyts <patthoyts@users.sourceforge.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 14 12:24:01 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="DqhR8hV3EnoxUkKN"
+Cc: git@vger.kernel.org
+To: ruperty <rupert@moonsit.co.uk>
+X-From: git-owner@vger.kernel.org Sat Jan 14 12:32:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rm1iK-0000gH-Nl
-	for gcvg-git-2@lo.gmane.org; Sat, 14 Jan 2012 12:24:01 +0100
+	id 1Rm1q7-0003Fu-Mr
+	for gcvg-git-2@lo.gmane.org; Sat, 14 Jan 2012 12:32:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753806Ab2ANLXh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Jan 2012 06:23:37 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:47395 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753291Ab2ANLXg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jan 2012 06:23:36 -0500
-Received: by wibhm14 with SMTP id hm14so968653wib.19
-        for <git@vger.kernel.org>; Sat, 14 Jan 2012 03:23:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=xyCeJadgks+LBU942O+Ufl1Dr0m5VyZ/9Bgoh4Wr0M0=;
-        b=UGnCVoJbYED+IE1gsqnK25Jvr4eQWFc4DIgajeNabT67HW6IW28K/Lf2UaRv/uFW6W
-         CpqWDPqlqvLTc7WEt6FaSOmztDwuCjOXegvi0XkK1reFuv15OR8dpz86VwzNzp2RbaUW
-         t3wXt5vWkMRUgFaFDtwuKFiTl06Le4akgh3bw=
-Received: by 10.180.75.7 with SMTP id y7mr7965531wiv.2.1326540214913; Sat, 14
- Jan 2012 03:23:34 -0800 (PST)
-Received: by 10.223.118.10 with HTTP; Sat, 14 Jan 2012 03:23:34 -0800 (PST)
-In-Reply-To: <7vaa5qydj7.fsf@alter.siamese.dyndns.org>
+	id S1753853Ab2ANLbi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jan 2012 06:31:38 -0500
+Received: from kimmy.cmartin.tk ([91.121.65.165]:60937 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753788Ab2ANLbh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jan 2012 06:31:37 -0500
+Received: from centaur.lab.cmartin.tk (brln-4d0c0748.pool.mediaWays.net [77.12.7.72])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id 79A64461BE;
+	Sat, 14 Jan 2012 12:31:24 +0100 (CET)
+Received: (nullmailer pid 6123 invoked by uid 1000);
+	Sat, 14 Jan 2012 11:31:41 -0000
+Mail-Followup-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	ruperty <rupert@moonsit.co.uk>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <1326486589088-7185551.post@n2.nabble.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188560>
 
-On Sat, Jan 14, 2012 at 08:00, Junio C Hamano <gitster@pobox.com> wrote:
-> Bert Wesarg <bert.wesarg@googlemail.com> writes:
->
->> On Mon, Jan 9, 2012 at 14:43, Bert Wesarg <bert.wesarg@googlemail.com> wrote:
->>> Selecting also the trailing newline of a line for staging/unstaging would
->>> have resulted in also staging/unstaging of the next line.
->>
->> same here, could you please consider pushing this into the 1.7.9
->> release. I see no point in waiting for the next release.
->
-> I do not use git-gui myself, so I wasn't paying much attention to these
-> two patches.
->
-> If these two fixes are for a new feature that was not present in v1.7.8
-> but has already been merged before v1.7.8-rc1, then do please make sure to
-> push them forward.
->
-> On the other hand, if they are fixes for an old feature that was already
-> in v1.7.8, then it is a bit too late for the next release.
->
 
-Thanks, considering this, than these two patches have to wait for the
-next release.
+--DqhR8hV3EnoxUkKN
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Bert
+On Fri, Jan 13, 2012 at 12:29:49PM -0800, ruperty wrote:
+> Being new to git I am probably not doing things correctly so pointers in =
+the
+> right direction would be useful.
+>=20
+> What I want to do make changes on my laptop and commit them to a remote
+> repository. Here is what I have done,
+>=20
+> 1. Created a repository on my remote linux host, in a folder of cource co=
+de,
+> by,
+>=20
+>    git init
+>    git add *
+>    git commit
+>=20
+> 2. On my laptop I did a git clone pointing by ssh to the remote repo which
+> downloaded all the files to my local system.
+>=20
+> 3. I changed a file locally and did a commit.
+>=20
+> 4. I then wanted to update the remote repo with my change, which I did wi=
+th
+> a git push, but that didn't work, getting this error,
+>=20
+>     remote: error: refusing to update checked out branch:
+> refs/heads/master=1B[K
+>     remote: error: By default, updating the current branch in a non-bare
+> repository=1B[K.......
+>=20
+>=20
+> What am I doing wrong?
 
-> Thanks.
+You're trying to push to a non-bare repository and change the
+currently active branch, which can cause problems, so git isn't
+letting you. There's an explanation of bare and non-bare at
+http://bare-vs-nonbare.gitrecipes.de/ but the short and sweet is that
+you should init the repo you want to use as the central point with
+--bare and do modifications locally and then push there.
+
+   cmn
+
+--DqhR8hV3EnoxUkKN
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAEBAgAGBQJPEWedAAoJEHKRP1jG7ZzToIUH/0vJ6bfR5zuUxxA5kotxymx+
+mDoCWZc0oaXp71Mahd0P/qlju8P01BO4/UjaQ73c3FFS10bFBH5byRHlTtIKUCtN
+2D1pulpRHU4giubVxAXIoQxclyMqVjG18Ah7Pcf8zPpl7R7HZlpF9CKueNpEwCKk
+JGA3SaipNvR+JMwkAYFoccMb9Bkw3OPYO1Bqu9bJ1QmOWGJlBnXN+ZFvpmJ1K6cS
+o3T/TV4z3vmZ3H5NLluMkAcvd0lKnxf6/u30xd0f0xA5ehwEE6O76Agkm6K2+z3l
+ha78CV9UOHlxYKnGiY9Jjyov1cLHFwMMc9Lxv+EVoA2z1oLmX+Gf0YvTa+Ahsn4=
+=vC49
+-----END PGP SIGNATURE-----
+
+--DqhR8hV3EnoxUkKN--
