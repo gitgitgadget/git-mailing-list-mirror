@@ -1,91 +1,89 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH 2/2] git-gui: fix applying line/ranges when the selection
- ends at the begin of a line
-Date: Sat, 14 Jan 2012 13:08:37 +0100
-Message-ID: <CAKPyHN1CQ4nHDSgsd2862_AugsDR6m1BcZ+rgOkPJr4E6eYaEA@mail.gmail.com>
-References: <cccd6193cf3bfe170e14270204d735a842bb8563.1326116492.git.bert.wesarg@googlemail.com>
-	<37339be035746797fcec7634e3560ffcd5b26cf3.1326116492.git.bert.wesarg@googlemail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v3 0/3] nd/index-pack-no-recurse
+Date: Sat, 14 Jan 2012 19:19:52 +0700
+Message-ID: <1326543595-28300-1-git-send-email-pclouds@gmail.com>
+References: <1326081546-29320-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Sat Jan 14 13:08:44 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 14 13:20:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rm2Pc-0006xv-1l
-	for gcvg-git-2@lo.gmane.org; Sat, 14 Jan 2012 13:08:44 +0100
+	id 1Rm2bK-0002IC-UH
+	for gcvg-git-2@lo.gmane.org; Sat, 14 Jan 2012 13:20:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754030Ab2ANMIj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Jan 2012 07:08:39 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:51523 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753788Ab2ANMIi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Jan 2012 07:08:38 -0500
-Received: by wgbds12 with SMTP id ds12so3951430wgb.1
-        for <git@vger.kernel.org>; Sat, 14 Jan 2012 04:08:37 -0800 (PST)
+	id S1754115Ab2ANMU0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Jan 2012 07:20:26 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:36772 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753839Ab2ANMUZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jan 2012 07:20:25 -0500
+Received: by iaby12 with SMTP id y12so695187iab.19
+        for <git@vger.kernel.org>; Sat, 14 Jan 2012 04:20:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Ip8LJAhd/wcR6kSUZd2Rcibie8mR1KVwrLbsiML6dEE=;
-        b=Hswq5Ka/W1gp2oURhZ7uOTjniizn3Wmz4lNl4mNK0XZaaVZIKRfYSPMmuiHdgtE3JS
-         BzOMJ2RRgherNkq7Ygg/UfXJa4PkYmuxSQWHRw4O965C2qCFAcsT+OmQFYIBgFgo1YJU
-         fvEal/No5DmI9jtgU9NyNkXxN4uFOdDRBq8QA=
-Received: by 10.180.99.225 with SMTP id et1mr8156807wib.2.1326542917306; Sat,
- 14 Jan 2012 04:08:37 -0800 (PST)
-Received: by 10.223.118.10 with HTTP; Sat, 14 Jan 2012 04:08:37 -0800 (PST)
-In-Reply-To: <37339be035746797fcec7634e3560ffcd5b26cf3.1326116492.git.bert.wesarg@googlemail.com>
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=xpHvE0+Qcqk0P3N0WOYbp2lCQ+qXu28idLj1Dm1r8Jg=;
+        b=cSBhr173LEJbMa2Rr0SPsfscClK26I0BdbNKGJzYr/SQJjSpLxaceUKKp3GhT7fgGc
+         o2Mvmja3RlrBpf+MNY1anCdqBca/Nhyo3T11xMIq+vxXSTXLznCioW1ikYBqSZ0GIJdm
+         IG1Iv5PsVM45rPE1F4U68qH4ZHLsrIE4I2RrA=
+Received: by 10.50.15.161 with SMTP id y1mr5929458igc.4.1326543625189;
+        Sat, 14 Jan 2012 04:20:25 -0800 (PST)
+Received: from pclouds@gmail.com ([115.74.41.201])
+        by mx.google.com with ESMTPS id q30sm40529225ibc.1.2012.01.14.04.20.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 14 Jan 2012 04:20:24 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 14 Jan 2012 19:19:56 +0700
+X-Mailer: git-send-email 1.7.8.36.g69ee2
+In-Reply-To: <1326081546-29320-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188563>
 
-On Mon, Jan 9, 2012 at 14:43, Bert Wesarg <bert.wesarg@googlemail.com> =
-wrote:
-> Selecting also the trailing newline of a line for staging/unstaging w=
-ould
-> have resulted in also staging/unstaging of the next line.
+This round adds more explanation in commit message of 2/3 and comment
+before get_base_data() in 3/3. Changes in 3/3 does not really address
+Junio's concern regarding maintainability though.
 
-The fix is not complete, this logic should only be applied if we have
-actually a range. I will send a replacement patch in the coming days.
+It also fixes a regression in 3/3. In current code, get_base_data()
+goes up as far as the first deflated parent. v2 of this series always
+goes up to top parent. v3 fixes this.
 
-Bert
+Junio raised a point about depth-first vs breadth-first search in 1/3. =
+I
+have not addressed that either, but it makes me wonder if we may
+benefit from using bfs in find_unresolved_deltas(), 2/3. If the delta
+chains form a fork-like figure (e.g. long delta chains sharing common
+base), then we may run out of cache doing dfs on one chain, by the
+time we get back on the common base, we would need to deflate them
+again.
 
->
-> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
-> ---
-> =C2=A0lib/diff.tcl | =C2=A0 =C2=A08 +++++++-
-> =C2=A01 files changed, 7 insertions(+), 1 deletions(-)
->
-> diff --git a/lib/diff.tcl b/lib/diff.tcl
-> index 63f8742..a750ea7 100644
-> --- a/lib/diff.tcl
-> +++ b/lib/diff.tcl
-> @@ -632,7 +632,13 @@ proc apply_range_or_line {x y} {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0set first_l [$ui_diff index "$first linest=
-art"]
-> - =C2=A0 =C2=A0 =C2=A0 set last_l [$ui_diff index "$last lineend"]
-> + =C2=A0 =C2=A0 =C2=A0 # don't include the next line if $last points =
-to the start of a line
-> + =C2=A0 =C2=A0 =C2=A0 # ie. <lno>.0
-> + =C2=A0 =C2=A0 =C2=A0 if {[lindex [split $last .] 1] =3D=3D 0} {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 set last_l [$ui_di=
-ff index "$last -1 line lineend"]
-> + =C2=A0 =C2=A0 =C2=A0 } else {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 set last_l [$ui_di=
-ff index "$last lineend"]
-> + =C2=A0 =C2=A0 =C2=A0 }
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if {$current_diff_path eq {} || $current_d=
-iff_header eq {}} return
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if {![lock_index apply_hunk]} return
-> --
-> 1.7.8.1.873.gfea665
->
+Another observation is recursion in get_base_data() is unlikely to be
+called in real life. With 16M default delta base cache, git.git does
+not trigger it at all. Perhaps repos with large blobs have better chanc=
+e..
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (3):
+  Eliminate recursion in setting/clearing marks in commit list
+  index-pack: eliminate recursion in find_unresolved_deltas
+  index-pack: eliminate unlimited recursion in get_base_data()
+
+ builtin/index-pack.c |  164 ++++++++++++++++++++++++++++++++++--------=
+-------
+ commit.c             |   13 ++++-
+ revision.c           |   45 +++++++++-----
+ 3 files changed, 154 insertions(+), 68 deletions(-)
+
+--=20
+1.7.8.36.g69ee2
