@@ -1,82 +1,93 @@
-From: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: git-upload-archive help was not shown correctly
-Date: Sat, 14 Jan 2012 16:46:33 +0100
-Message-ID: <20120114154633.GA3444@beez.lab.cmartin.tk>
-References: <1326548416.5992.1.camel@devendra-Linux>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Sending patches with KMail
+Date: Sat, 14 Jan 2012 12:31:11 -0600
+Message-ID: <20120114183111.GC27850@burratino>
+References: <2608010.fNV39qBMLu@descartes>
+ <20120112162617.GA2479@burratino>
+ <2304907.sEfEeC6Eon@descartes>
+ <20120113233158.GD7343@burratino>
+ <7vlipbxfne.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Qxx1br4bt0+wmkIi"
-Cc: git@vger.kernel.org
-To: devendra <dev@savarinetworks.com>
-X-From: git-owner@vger.kernel.org Sat Jan 14 16:46:51 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?Q?R=C3=BCdiger?= Sonderfeld <ruediger@c-plusplus.de>,
+	git@vger.kernel.org, davidk@lysator.liu.se,
+	Sergei Organov <osv@javad.com>, Kevin Ryde <user42@zip.com.au>,
+	Michele Ballabio <barra_cuda@katamail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 14 19:31:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rm5og-0001nO-Ho
-	for gcvg-git-2@lo.gmane.org; Sat, 14 Jan 2012 16:46:50 +0100
+	id 1Rm8O0-0002AC-9T
+	for gcvg-git-2@lo.gmane.org; Sat, 14 Jan 2012 19:31:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755160Ab2ANPqh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Jan 2012 10:46:37 -0500
-Received: from kimmy.cmartin.tk ([91.121.65.165]:49210 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755035Ab2ANPqg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jan 2012 10:46:36 -0500
-Received: from beez.lab.cmartin.tk (dslb-188-103-127-226.pools.arcor-ip.net [188.103.127.226])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 5BEF5461BE;
-	Sat, 14 Jan 2012 16:46:22 +0100 (CET)
-Received: (nullmailer pid 27466 invoked by uid 1000);
-	Sat, 14 Jan 2012 15:46:33 -0000
-Mail-Followup-To: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
-	devendra <dev@savarinetworks.com>, git@vger.kernel.org
+	id S1756398Ab2ANSbX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Jan 2012 13:31:23 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:46721 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756324Ab2ANSbW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jan 2012 13:31:22 -0500
+Received: by iagf6 with SMTP id f6so122679iag.19
+        for <git@vger.kernel.org>; Sat, 14 Jan 2012 10:31:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=hy+435NcBaJqMWa1GivxMBBtQpc3WKC1LZaXUMmgunM=;
+        b=A26Gs9giuxY8++dLf+3ixTSXd/CScRk3yDPQ5S8P+NJWtlx1XSTPhj9rbz0xKgFG6Q
+         iUnuyG80x4ufey2Adw0NqVqL8SrCupIqSijKOhZNLjAyqDPIwno6ae5JiL/x7w1UrdYO
+         dcHYetyZUm/wlRodn3yxzXRBn2pIGbc0Ckqm8=
+Received: by 10.50.189.194 with SMTP id gk2mr3320405igc.0.1326565881758;
+        Sat, 14 Jan 2012 10:31:21 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id xu6sm22056094igb.7.2012.01.14.10.31.19
+        (version=SSLv3 cipher=OTHER);
+        Sat, 14 Jan 2012 10:31:21 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <1326548416.5992.1.camel@devendra-Linux>
+In-Reply-To: <7vlipbxfne.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188574>
 
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
---Qxx1br4bt0+wmkIi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> The hints at [1] might also be useful, in case you would like to try
+>> and consider improving the manpage to document them if they work.
+>
+> Don't you need similar updates to sections for other MUAs and procedures?
 
-On Sat, Jan 14, 2012 at 07:10:16PM +0530, devendra wrote:
-> Hi git folks,
->=20
-> the command git-upload-archive is not properly showing usage info when
-> ran barely with out any args.
+Thunderbird approach 3, yes[*].  The others, no.
 
-git-upload-package is not for human use. It's what gets run on the
-remote end when you run e.g. 'git archive --remote=3Dorigin HEAD'
+[...]
+> Perhaps rephrasing the early part of the Discussion section, with an
+> illustration that is designed to be more visible, would be a better
+> approach?
 
->=20
-> it shows some kind of unwanted garbage instead of showing a nice help
-> message.
+I understand what you mean, but I don't think so.  The Discussion
+section already seems clear to me, so I would prefer to wait to hear
+from someone confused by it to find what exactly in it needs tweaking.
+Adding additional paragraphs for each potential misunderstanding by
+people who have not necessarily read the section has the potential to
+backfire and lead even more people not to read the section...
 
-It's trying to talk to git. What you see is the "Git Smart
-Protocol". What were you trying to do?
+My favorite approach would be to introduce a new option
+--format=plain|mbox, with the default being mbox, allowing
+format-patch --format=plain to produce a nice patch that does _not_
+include a "From " line or q-encode its header lines, ready for use
+without much tweaking in an email body as an attachment.  Then we can
+just say "If you are not importing your patch as an mbox file, use the
+--format=plain option".
 
-   cmn
+Sane?
 
---Qxx1br4bt0+wmkIi
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+Jonathan
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAEBAgAGBQJPEaNZAAoJEHKRP1jG7ZzTbggH/iM1r8+XOfEA4nmydlP/K+fC
-rsFSDXTI/0gQmavmN54YoXqNtjEJHY2X7E8O8drHCSKqDkzBbOBfRNf8P5RZnGDp
-3F7exrRJr6wqolBUYwh+2AU8LGioRNYzqsepQQohO/cDkuXKTSbayCC0l0/xSpGP
-JlZfWn+GIIBVYvHHrRDURFGPGAn8wHmhhf3NdjuNXy+cMKUVgopMVLTTdMvHa5GG
-vOCzTg1PK4gO3OlULCbIa6TMgPXklIV2KROWUv5a0hGnIgo42E1x320HDIJKDJWv
-QYn27W25svx4e/s2DCdAO/RUR+4hYWHGlMl5n1dHaLhxRU7hGGs1eyOz9mNYYRA=
-=tbd9
------END PGP SIGNATURE-----
-
---Qxx1br4bt0+wmkIi--
+[*] Though I'd rather just remove it, since "how to use an external
+editor" seems orthogonal to "how to teach Thunderbird not to mangle my
+patches".
