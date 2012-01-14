@@ -1,92 +1,65 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] bash-completion: don't add quoted space for ZSH (fix regression)
-Date: Sat, 14 Jan 2012 19:55:36 +0100
-Message-ID: <1326567336-2173-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <20120114152030.GX30469@goldbirke>
+From: =?ISO-8859-1?Q?R=FCdiger?= Sonderfeld <ruediger@c-plusplus.de>
+Subject: Re: Sending patches with KMail (Re: [PATCH] git-blame.el: Fix compilation warnings.)
+Date: Sat, 14 Jan 2012 20:18:08 +0100
+Message-ID: <5720118.t52aoWEQJn@descartes>
+References: <2608010.fNV39qBMLu@descartes> <20120113233158.GD7343@burratino> <7vlipbxfne.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Jan 14 19:56:08 2012
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	davidk@lysator.liu.se, Sergei Organov <osv@javad.com>,
+	Kevin Ryde <user42@zip.com.au>,
+	Michele Ballabio <barra_cuda@katamail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 14 20:18:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rm8lq-00033U-OR
-	for gcvg-git-2@lo.gmane.org; Sat, 14 Jan 2012 19:56:07 +0100
+	id 1Rm97X-00030T-N7
+	for gcvg-git-2@lo.gmane.org; Sat, 14 Jan 2012 20:18:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756114Ab2ANSzo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Jan 2012 13:55:44 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:34942 "EHLO rominette.imag.fr"
+	id S1755938Ab2ANTSY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Jan 2012 14:18:24 -0500
+Received: from ptmx.org ([178.63.28.110]:57147 "EHLO ptmx.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756098Ab2ANSzn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Jan 2012 13:55:43 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q0EIs2tf022250
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 14 Jan 2012 19:54:02 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Rm8lO-0003zb-Ix; Sat, 14 Jan 2012 19:55:38 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1Rm8lO-0000Zj-Er; Sat, 14 Jan 2012 19:55:38 +0100
-X-Mailer: git-send-email 1.7.9.rc0.25.gb9a1f.dirty
-In-Reply-To: <20120114152030.GX30469@goldbirke>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 14 Jan 2012 19:54:02 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q0EIs2tf022250
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1327172043.32824@+DJby7R6zznX99qEsx3KTg
+	id S1754713Ab2ANTSX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Jan 2012 14:18:23 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by ptmx.org (Postfix) with ESMTP id 8E5BA257FA;
+	Sat, 14 Jan 2012 20:18:17 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at ptmx.org
+Received: from ptmx.org ([127.0.0.1])
+	by localhost (ptmx.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 8MyCQoppUe2Q; Sat, 14 Jan 2012 20:18:14 +0100 (CET)
+Received: from descartes.localnet (213-33-31-7.adsl.highway.telekom.at [213.33.31.7])
+	by ptmx.org (Postfix) with ESMTPSA id 422E3206BA;
+	Sat, 14 Jan 2012 20:18:13 +0100 (CET)
+User-Agent: KMail/4.7.3 (Linux/3.0.0-14-generic; KDE/4.7.4; x86_64; ; )
+In-Reply-To: <7vlipbxfne.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188577>
 
-Commit a31e626 (completion: optimize refs completion) introduced a
-regression for ZSH users: ref names were completed with a quoted traili=
-ng
-space (i.e. "git checkout ma" completes to "git checkout master\ "). Th=
-e
-space is convenient for bash users since we use "-o nospace", but a
-quoted space is worse than nothing. The absence of trailing space for Z=
-SH
-is a long-standing issue, that this patch is not fixing. We just fix th=
-e
-regression by not appending a space when the shell is ZSH.
+On Friday 13 January 2012 16:59:49 Junio C Hamano wrote:
+> Perhaps rephrasing the early part of the Discussion section, with an
+> illustration that is designed to be more visible, would be a better
+> approach?
 
-Original-patch-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
-Reported-by: Stefan Haller <lists@haller-berlin.de>
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- contrib/completion/git-completion.bash |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+Why not do both?
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index b0062ba..488e1f4 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -534,6 +534,12 @@ __gitcomp_nl ()
- 		fi
- 	fi
-=20
-+	# ZSH would quote the trailing space added with -S. bash users
-+	# will appreciate the extra space to compensate the use of -o nospace=
-=2E
-+	if [ -n "${ZSH_VERSION-}" ] && [ "$suffix" =3D " " ]; then
-+		suffix=3D""
-+	fi
-+
- 	IFS=3D$s
- 	COMPREPLY=3D($(compgen -P "${2-}" -S "$suffix" -W "$1" -- "$cur_"))
- }
---=20
-1.7.9.rc0.25.gb9a1f.dirty
+I think you are right, that it is currently not very visible in the Dis=
+cussion=20
+section. But on the other hand if you have a step by step guide it shou=
+ld=20
+probably mention that as well. It has nothing to do with laziness. But =
+most=20
+people follow a step by step guide because they expect that it illustra=
+tes the=20
+correct procedure. Jonathan's addition is short but effective.
+
+Regards,
+R=C3=BCdiger
