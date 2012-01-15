@@ -1,116 +1,92 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v2 2/2] tree_entry_interesting: make recursive mode
- default
-Date: Sun, 15 Jan 2012 17:03:27 +0700
-Message-ID: <20120115100327.GA10735@do>
-References: <1326341371-16628-1-git-send-email-pclouds@gmail.com>
- <1326533003-19686-1-git-send-email-pclouds@gmail.com>
- <1326533003-19686-2-git-send-email-pclouds@gmail.com>
- <7v8vl9wtfg.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Bug! Git merge also fails with a wrong error message
+Date: Sun, 15 Jan 2012 11:08:38 +0100
+Message-ID: <201201151108.39335.jnareb@gmail.com>
+References: <loom.20120112T193624-86@post.gmane.org> <m3mx9re6t0.fsf@localhost.localdomain> <4F128B81.2000502@unclassified.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 15 11:04:03 2012
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Carlos =?utf-8?q?Mart=C3=ADn_Nieto?= <cmn@elego.de>,
+	git@vger.kernel.org
+To: Yves Goergen <nospam.list@unclassified.de>
+X-From: git-owner@vger.kernel.org Sun Jan 15 11:08:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RmMwU-0002h2-IL
-	for gcvg-git-2@lo.gmane.org; Sun, 15 Jan 2012 11:04:02 +0100
+	id 1RmN13-00045H-Im
+	for gcvg-git-2@lo.gmane.org; Sun, 15 Jan 2012 11:08:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752077Ab2AOKD6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Jan 2012 05:03:58 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:40183 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751935Ab2AOKD5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jan 2012 05:03:57 -0500
-Received: by iagf6 with SMTP id f6so878101iag.19
-        for <git@vger.kernel.org>; Sun, 15 Jan 2012 02:03:56 -0800 (PST)
+	id S1752129Ab2AOKIk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jan 2012 05:08:40 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:53225 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751707Ab2AOKIj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jan 2012 05:08:39 -0500
+Received: by eekd4 with SMTP id d4so1555704eek.19
+        for <git@vger.kernel.org>; Sun, 15 Jan 2012 02:08:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=HtdkirZ9s3kCvusEFxZwNr2XFSW518+y8PKG4WQ1KLw=;
-        b=c16AJoEapK03ZbcebKjMWXOkvXX4kOpLakh340ppgW/cKKBqMF751N26rGMvOZb9HH
-         N/y4Wf2xyoptMdSt58JyAykSqbBcGryheIf/in50klebaIHqUqrYByVwpcpUiAn6hoEA
-         ewrdhmgZaZKIUs6OWPPb5IwZtpKqfyLiQdWVs=
-Received: by 10.42.150.6 with SMTP id y6mr6561407icv.14.1326621836884;
-        Sun, 15 Jan 2012 02:03:56 -0800 (PST)
-Received: from pclouds@gmail.com ([115.74.41.201])
-        by mx.google.com with ESMTPS id pb6sm26226750igc.5.2012.01.15.02.03.53
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=87ow26KWhiyVre0KcO7sVwGSKw4E6WC56N8O3ld/JJs=;
+        b=ew99Fb6q0V3FfiSkIVW8Azjos8h6Lw2zOJRqOR/tUMHZQf6n+KeZDi3QK5NdlyA8BT
+         4NPweSY3e+s+t3vzUb/7rgGsxPfASI4BQhh0fQnXTjGGPTfmoqjot84G4RttPwD8t6HS
+         WU5l+kPCIpMHW0rE9O4Ac2aqHCw9ERmlfs+KM=
+Received: by 10.213.9.139 with SMTP id l11mr1655837ebl.5.1326622116445;
+        Sun, 15 Jan 2012 02:08:36 -0800 (PST)
+Received: from [192.168.1.13] (absh180.neoplus.adsl.tpnet.pl. [83.8.127.180])
+        by mx.google.com with ESMTPS id s16sm56080910eef.2.2012.01.15.02.08.34
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 15 Jan 2012 02:03:55 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 15 Jan 2012 17:03:27 +0700
+        Sun, 15 Jan 2012 02:08:35 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4F128B81.2000502@unclassified.de>
 Content-Disposition: inline
-In-Reply-To: <7v8vl9wtfg.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188597>
 
-On Sat, Jan 14, 2012 at 07:12:03PM -0800, Junio C Hamano wrote:
-> That makes my head hurt and makes me suspect there is something
-> fundamentally wrong in the patch.  Sigh...
+On Sun, 15 Jan 2012, Yves Goergen wrote:
+> On 13.01.2012 20:34 CE(S)T, Jakub Narebski wrote:
 
-I'll need to think about it. In the meantime perhaps the following
-bandage patch would suffice, rather than revert 2f88c19 (diff-index:
-pass pathspec down to unpack-trees machinery)
+> > > Since I don't have access to the news system, I need to use the Gmane
+> > > website. I don't know exactly what it is.
+> > 
+> > GMane is an e-mail to news gateway, and a mailing list archive. It
+> > exposes mailing list as a newsgroup, so it can be read and written to
+> > via newsreader (via Usenet).
+> 
+> I have Thunderbird, but I have no usenet server to entry in a usenet
+> account, so as I said, I don't have access to that part of the internet.
+> I had at university, but that's some time ago now.
 
--- 8< --
-Subject: [PATCH] diff-index: enable recursive pathspec matching in unpa=
-ck_trees
+GMane serves as a Usenet server; that is how it works as mail to news
+gateway.  The server name is news.gmane.org... or you can try using the
+following URL
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- diff-lib.c               |    2 ++
- t/t4010-diff-pathspec.sh |    8 ++++++++
- 2 files changed, 10 insertions(+), 0 deletions(-)
+  nntp://news.gmane.org/gmane.comp.version-control.git
+ 
+> > git@vger.kernel.org is a public non-subscribe mailing list; you don't
+> > need to subscribe to post requests there.  Note that it is a custom on
+> > this mailing list to always include all participants in given
+> > (sub)thread directly in Cc, so you should get responses to your emails
+> > even if you are not subscribed.
+> 
+> Good to know NOW. It really should have informed me in the first place
+> on that website. It's a vital information without which you likely won't
+> get anywhere (as I).
 
-diff --git a/diff-lib.c b/diff-lib.c
-index 62f4cd9..fc0dff3 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -469,6 +469,8 @@ static int diff_cache(struct rev_info *revs,
- 	opts.src_index =3D &the_index;
- 	opts.dst_index =3D NULL;
- 	opts.pathspec =3D &revs->diffopt.pathspec;
-+	opts.pathspec->recursive =3D 1;
-+	opts.pathspec->max_depth =3D -1;
-=20
- 	init_tree_desc(&t, tree->buffer, tree->size);
- 	return unpack_trees(1, &t, &opts);
-diff --git a/t/t4010-diff-pathspec.sh b/t/t4010-diff-pathspec.sh
-index fbc8cd8..af5134b 100755
---- a/t/t4010-diff-pathspec.sh
-+++ b/t/t4010-diff-pathspec.sh
-@@ -48,6 +48,14 @@ test_expect_success \
-      compare_diff_raw current expected'
-=20
- cat >expected <<\EOF
-+:100644 100644 766498d93a4b06057a8e49d23f4068f1170ff38f 0a41e115ab61be=
-0328a19b29f18cdcb49338d516 M	path1/file1
-+EOF
-+test_expect_success \
-+    '"*file1" should show path1/file1' \
-+    'git diff-index --cached $tree -- "*file1" >current &&
-+     compare_diff_raw current expected'
-+
-+cat >expected <<\EOF
- :100644 100644 766498d93a4b06057a8e49d23f4068f1170ff38f 0a41e115ab61be=
-0328a19b29f18cdcb49338d516 M	file0
- EOF
- test_expect_success \
---=20
-1.7.8.36.g69ee2
+You can get this information on GitCommunity page on Git Wiki.  For the
+time being (while Git Wiki is served as set of static pages of exported
+contents because of lack of hardware) you can find it here:
 
--- 8< --
---=20
-Duy
+  https://git.wiki.kernel.org/articles/g/i/t/GitCommunity_c4e3.html
+
+-- 
+Jakub Narebski
+Poland
