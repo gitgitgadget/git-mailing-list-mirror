@@ -1,130 +1,86 @@
-From: Matthias Fechner <idefix@fechner.net>
-Subject: Cannot push a commit
-Date: Sun, 15 Jan 2012 10:09:52 +0100
-Message-ID: <4F1297E0.1060703@fechner.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: git grep doesn't follow symbolic link
+Date: Sun, 15 Jan 2012 16:47:31 +0700
+Message-ID: <CACsJy8CaBAEJo_LuvjYhb2kfofH83cbR5DFDffmmCU3uJFqk+g@mail.gmail.com>
+References: <CAPRVejc7xND_8Y=Pb5rYGEcaKYUaX7_WkSro-_EL8tTGxkfY3Q@mail.gmail.com>
+ <CALkWK0=-LZH4MYhX50v-RWpGA2r+6q50YxsKaOxc0mJ__yuK7g@mail.gmail.com>
+ <877h0zlvwd.fsf@thomas.inf.ethz.ch> <7vwr8za04q.fsf@alter.siamese.dyndns.org>
+ <CACsJy8BfvhWxqBOj=+7AiF8dZBVEASAuxiOsjOvpmfE3uPrO3A@mail.gmail.com> <7v1ur1yazf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 15 10:38:58 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Pang Yan Han <pangyanhan@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Bertrand BENOIT <projettwk@users.sourceforge.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 15 10:48:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RmMYD-0004Ns-6c
-	for gcvg-git-2@lo.gmane.org; Sun, 15 Jan 2012 10:38:57 +0100
+	id 1RmMh8-0006o9-FW
+	for gcvg-git-2@lo.gmane.org; Sun, 15 Jan 2012 10:48:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751560Ab2AOJib (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jan 2012 04:38:31 -0500
-Received: from anny.lostinspace.de ([80.190.182.2]:31767 "EHLO
-	anny.lostinspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751377Ab2AOJia (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jan 2012 04:38:30 -0500
-X-Greylist: delayed 1704 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 Jan 2012 04:38:29 EST
-Received: from server.idefix.lan (ppp-88-217-26-89.dynamic.mnet-online.de [88.217.26.89])
-	(authenticated bits=0)
-	by anny.lostinspace.de (8.14.5/8.14.5) with ESMTP id q0F99ulu047784
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Sun, 15 Jan 2012 10:10:02 +0100 (CET)
-	(envelope-from idefix@fechner.net)
-Received: from server.idefix.lan (localhost [IPv6:::1])
-	by server.idefix.lan (Postfix) with ESMTP id 4EEC7394A
-	for <git@vger.kernel.org>; Sun, 15 Jan 2012 10:09:56 +0100 (CET)
-X-Virus-Scanned: amavisd-new at fechner.net
-Received: from server.idefix.lan ([127.0.0.1])
-	by server.idefix.lan (server.idefix.lan [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id ofj25GiIclb9 for <git@vger.kernel.org>;
-	Sun, 15 Jan 2012 10:09:55 +0100 (CET)
-Received: from [IPv6:2001:a60:f035:1:92e:1cf9:c174:8615] (unknown [IPv6:2001:a60:f035:1:92e:1cf9:c174:8615])
-	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
-	(No client certificate requested)
-	by server.idefix.lan (Postfix) with ESMTPSA id 01FA9393F
-	for <git@vger.kernel.org>; Sun, 15 Jan 2012 10:09:52 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-X-Enigmail-Version: 1.3.4
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.7 (anny.lostinspace.de [80.190.182.2]); Sun, 15 Jan 2012 10:10:02 +0100 (CET)
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,UNPARSEABLE_RELAY
-	autolearn=ham version=3.3.2
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on anny.lostinspace.de
+	id S1751818Ab2AOJsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jan 2012 04:48:06 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:64335 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751604Ab2AOJsD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jan 2012 04:48:03 -0500
+Received: by bkuw12 with SMTP id w12so918978bku.19
+        for <git@vger.kernel.org>; Sun, 15 Jan 2012 01:48:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=UMZ02xJRDEqsuIia+ImjmgELCxsuLFuJT4cerhQFj9I=;
+        b=LDywk0PS0xihVOxbdqwCEK75fmmz1IMKhWHpMx+u2HI82CnSBHmH3hWY4c495nMy2w
+         rnG8u5IwwKxsU6+V1fWoei0tOPE1IiYfif6aUnCFu414GOkwpJHPmE1Wqfm5XKjIe1Ol
+         vK22TIv41YofFWW6zdRm973z5yjd/9BfHcfTk=
+Received: by 10.204.154.200 with SMTP id p8mr3079323bkw.4.1326620882196; Sun,
+ 15 Jan 2012 01:48:02 -0800 (PST)
+Received: by 10.204.66.77 with HTTP; Sun, 15 Jan 2012 01:47:31 -0800 (PST)
+In-Reply-To: <7v1ur1yazf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188594>
 
-Dear List,
+On Sun, Jan 15, 2012 at 9:07 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stop and think what "git diff --follow-symlinks v1.3.0 v1.7.0" should do
+> when these versions record a symbolic link, "from user perspective", if
+> the link points outside the tracked contents. Naturally, the users would
+> expect that the comparison is made between the contents of the file back
+> when v1.3.0 was tagged and the contents of the file (which may or may not
+> be the same path depending on the target of that symbolic link) back when
+> v1.7.0 was tagged.
+>
+> But that is something that the user is *NOT* tracking with the system, and
+> hence something we cannot give the right answer. Your "--follow-symlinks"
+> option only encourages the *wrong* perception on the users' side, without
+> supporting what it appears to promise to the users. Why could it be an
+> improvement?
 
-I have a big problem with a file which I cannot push to my central git
-repository.
-The file can be found here:
-http://dl.fechner.net/APP_UD.sch
+It's not wrong per se. It's an implication that users have to take
+when they choose to use it. We may help make it clear that the
+symlinks point to untracked files by putting some indication in the
+diff.
 
-What I did to reproduce it:
-On my server (freebsd with git 1.7.8.3)
-cd
-mkdir git-test
-cd git-test
-git init --bare
+When I do "git log -Sfoo -- '*.cxx'" I don't really care if bar.cxx is
+a symlink. Neither does my compiler. It may be a symlink's target
+change that makes "foo" appear. Git could help me detect that quickly
+instead of sticking with tracked contents only.
 
-On my client a windows pc with tortoise git 1.7.6.0 and git 1.7.8.msysgit.0
-I cloned the repository over ssh
-Added a small test.txt file, commit and pushed it to the server,
-everything is fine.
-Then a copied the file above to the local repo, added it and commited it.
-If I try to push it, I get the error message:
-git.exe push --progress  "origin" master:master
+Even if we decide --follow-symlinks=untracked is a bad idea,
+--follow-symlinks=tracked (i.e. follow symlinks to tracked files only)
+is still a good thing to support. And I suspect that's a more common
+case as linking outside repository could is undeterministic.
 
-Counting objects: 4, done.
-Compressing objects: 100% (3/3)
-Writing objects: 100% (3/3), 80.00 KiB | 137 KiB/s
-Writing objects: 100% (3/3), 91.63 KiB | 137 KiB/s, done.
-Total 3 (delta 0), reused 0 (delta 0)
-fatal: early EOF
-error: unpack failed: unpack-objects abnormal exit
-To idefix@fechner.net:git-test
-! [remote rejected] master -> master (n/a (unpacker error))
-error: failed to push some refs to 'idefix@fechner.net:git-test'
-
-git config -l shows on the windows pc:
-core.symlinks=false
-core.autocrlf=false
-color.diff=auto
-color.status=auto
-color.branch=auto
-color.interactive=true
-pack.packsizelimit=2g
-help.format=html
-http.sslcainfo=/bin/curl-ca-bundle.crt
-sendemail.smtpserver=/bin/msmtp.exe
-diff.astextplain.textconv=astextplain
-rebase.autosquash=true
-user.name=Matthias Fechner
-user.email=idefix@fechner.net
-core.autocrlf=false
-core.safecrlf=false
-core.repositoryformatversion=0
-core.filemode=false
-core.bare=false
-core.logallrefupdates=true
-core.symlinks=false
-core.ignorecase=true
-core.hidedotfiles=dotGitOnly
-remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
-remote.origin.url=idefix@fechner.net:git-test
-remote.origin.puttykeyfile=
-branch.master.remote=origin
-branch.master.merge=refs/heads/master
-
-How can I solve this problem?
-Is this maybe a bug in git?
-
-Thanks a lot
-Matthias
-
+The "=tracked" could be dropped if we have no other option value. I'm
+thinking of --follow-symlinks=submodule, which is currently covered by
+a separate option name.
 -- 
-
-"Programming today is a race between software engineers striving to
-build bigger and better idiot-proof programs, and the universe trying to
-produce bigger and better idiots. So far, the universe is winning." --
-Rich Cook
+Duy
