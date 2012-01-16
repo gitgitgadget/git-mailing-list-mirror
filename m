@@ -1,122 +1,71 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH 3/3] git-p4: Add test case for complex branch import
-Date: Mon, 16 Jan 2012 14:12:54 -0500
-Message-ID: <20120116191254.GB21996@padd.com>
-References: <1326674360-2771-1-git-send-email-vitor.hda@gmail.com>
- <1326674360-2771-4-git-send-email-vitor.hda@gmail.com>
+From: Holger Hellmuth <hellmuth@ira.uka.de>
+Subject: Re: The shared Git repo used by git-new-workdir
+Date: Mon, 16 Jan 2012 20:15:22 +0100
+Message-ID: <4F14774A.40100@ira.uka.de>
+References: <CAE1pOi3fBUBeNuhJqtJhxuMfz2G3iYOJy7U2HX6Nv4kqjcbnhw@mail.gmail.com>	<4F1467C1.504@ira.uka.de> <CAE1pOi3JocCoDGAmpCYdGdJN4E1nz8O4_i0MtLhwhP_axmH-uw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Vitor Antunes <vitor.hda@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 16 20:13:09 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Users <git@vger.kernel.org>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 16 20:15:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RmrzL-00056n-SZ
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Jan 2012 20:13:04 +0100
+	id 1Rms1b-0005vt-BL
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Jan 2012 20:15:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755933Ab2APTM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jan 2012 14:12:59 -0500
-Received: from honk.padd.com ([74.3.171.149]:37778 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755069Ab2APTM6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jan 2012 14:12:58 -0500
-Received: from arf.padd.com (unknown [50.55.142.76])
-	by honk.padd.com (Postfix) with ESMTPSA id D2ACDE8B;
-	Mon, 16 Jan 2012 11:12:57 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 6C3C031446; Mon, 16 Jan 2012 14:12:54 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <1326674360-2771-4-git-send-email-vitor.hda@gmail.com>
+	id S1756007Ab2APTPU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jan 2012 14:15:20 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:40035 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755760Ab2APTPT (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Jan 2012 14:15:19 -0500
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1Rms1Q-0003Zj-RM; Mon, 16 Jan 2012 20:15:17 +0100
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
+	id 1Rms1P-0003sC-Bs; Mon, 16 Jan 2012 20:15:11 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <CAE1pOi3JocCoDGAmpCYdGdJN4E1nz8O4_i0MtLhwhP_axmH-uw@mail.gmail.com>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1326741318.060820000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188646>
 
-vitor.hda@gmail.com wrote on Mon, 16 Jan 2012 00:39 +0000:
-> diff --git a/t/t9801-git-p4-branch.sh b/t/t9801-git-p4-branch.sh
-> +test_expect_success 'git-p4 add complex branches' '
-> +	test_when_finished cleanup_git &&
-> +	test_create_repo "$git" &&
-> +	(
-> +		cd "$cli" &&
-> +		changelist=$(p4 changes -m1 //depot/... | cut -d" " -f2) &&
-> +		changelist=$((changelist - 5)) &&
-> +		p4 integrate //depot/branch1/...@$changelist //depot/branch4/... &&
-> +		p4 submit -d "branch4" &&
-> +		changelist=$((changelist + 2)) &&
-> +		p4 integrate //depot/branch1/...@$changelist //depot/branch5/... &&
-> +		p4 submit -d "branch5" &&
-> +		cd "$TRASH_DIRECTORY"
-> +	)
-> +'
+On 16.01.2012 19:57, Hilco Wijbenga wrote:
+> In my working directory:
+> hilco@centaur /mnt/lacie/workspaces/my-project-master
+> my-project-master (master $ u=)$ git status
+> # On branch master
+> nothing to commit (working directory clean)
+>
+> In the shared repo:
+> hilco@centaur ~/git-clones/my-project my-project (master +$ u=)$ git status
+> # On branch master
+> # Changes to be committed:
+> #   (use "git reset HEAD<file>..." to unstage)
+> #
+> #       deleted:    .gitattributes
+> #       modified:   .gitignore
+> #       new file:   ...
+> ... hundreds more ...
 
-Sorry: I think I wanted the "$"s removed from inside $((..)).
-Turns out that some shells don't grok that.  The above should be:
+This is related to your using two repos with the same branch 
+(irrespective of root repo or not).
 
-	changelist=$(($changelist - 5)) &&
+There is nothing wrong with that per se, but if you add/commit/merge etc 
+in one of those two, the working directory and index of the other repo 
+doesn't get updated automatically. You would have to do "git reset 
+--hard" in that repo to get it up-to-date
 
-You can drop the last cd to $TRASH_DIRECTORY since you're inside
-a subshell.  (Nice addition of the subshells.)
-
-> +
-> +# Configure branches through git-config and clone them. git-p4 will only be able
-> +# to clone the original structure if it is able to detect the origin changelist
-> +# of each branch.
-> +test_expect_success 'git-p4 clone complex branches' '
-> +	test_when_finished cleanup_git &&
-> +	test_create_repo "$git" &&
-> +	(
-> +		test_when_finished cleanup_git &&
-> +		test_create_repo "$git" &&
-
-These two lines can go; you already did it outside the subshell.
-
-> +		cd "$git" &&
-> +		git config git-p4.branchList branch1:branch2 &&
-> +		git config --add git-p4.branchList branch1:branch3 &&
-> +		git config --add git-p4.branchList branch1:branch4 &&
-> +		git config --add git-p4.branchList branch1:branch5 &&
-> +		"$GITP4" clone --dest=. --detect-branches //depot@all &&
-> +		git log --all --graph --decorate --stat &&
-> +		git reset --hard p4/depot/branch1 &&
-> +		test -f file1 &&
-> +		test -f file2 &&
-> +		test -f file3 &&
-
-There are preferred functions for these tests, I learned recently:
-
-	test_path_is_file file1 &&
-
-> +		grep -q update file2 &&
-> +		git reset --hard p4/depot/branch2 &&
-> +		test -f file1 &&
-> +		test -f file2 &&
-> +		test ! -f file3 &&
-
-Similarly
-
-	test_path_is_missing file3 &&
-
-> +		! grep -q update file2 &&
-> +		git reset --hard p4/depot/branch3 &&
-> +		test -f file1 &&
-> +		test -f file2 &&
-> +		test -f file3 &&
-> +		grep -q update file2 &&
-> +		git reset --hard p4/depot/branch4 &&
-> +		test -f file1 &&
-> +		test -f file2 &&
-> +		test ! -f file3 &&
-> +		! grep -q update file2 &&
-> +		git reset --hard p4/depot/branch5 &&
-> +		test -f file1 &&
-> +		test -f file2 &&
-> +		test -f file3 &&
-> +		! grep -q update file2 &&
-> +		test ! -d .git/git-p4-tmp
-> +	)
-> +'
+If you want to avoid this just don't check out the same branch in any 
+two repos, root or not.
