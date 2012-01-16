@@ -1,73 +1,71 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: The shared Git repo used by git-new-workdir
-Date: Mon, 16 Jan 2012 19:09:05 +0100
-Message-ID: <4F1467C1.504@ira.uka.de>
-References: <CAE1pOi3fBUBeNuhJqtJhxuMfz2G3iYOJy7U2HX6Nv4kqjcbnhw@mail.gmail.com>
+From: Richard Hartmann <richih.mailinglist@gmail.com>
+Subject: Simulating an empty git repository without having said repository on disk
+Date: Mon, 16 Jan 2012 19:34:04 +0100
+Message-ID: <CAD77+gR=txp8sKrA57ztQX0a1-QZM7wwR6ThBq77c=c+AbsS0w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Users <git@vger.kernel.org>
-To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 16 19:09:10 2012
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 16 19:34:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RmqzV-0004U5-AN
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Jan 2012 19:09:09 +0100
+	id 1RmrO3-0000ej-SN
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Jan 2012 19:34:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755787Ab2APSJD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jan 2012 13:09:03 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:37690 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755736Ab2APSJC (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Jan 2012 13:09:02 -0500
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1RmqzH-0005EH-7K; Mon, 16 Jan 2012 19:09:00 +0100
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	id 1RmqzH-0007HA-2i; Mon, 16 Jan 2012 19:08:55 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <CAE1pOi3fBUBeNuhJqtJhxuMfz2G3iYOJy7U2HX6Nv4kqjcbnhw@mail.gmail.com>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1326737340.264960000
+	id S1755857Ab2APSe1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jan 2012 13:34:27 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:48454 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755069Ab2APSe0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Jan 2012 13:34:26 -0500
+Received: by obcva7 with SMTP id va7so4873502obc.19
+        for <git@vger.kernel.org>; Mon, 16 Jan 2012 10:34:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=lSd9rTGOBGk/mJ2/3RUnYpVtYgUJNTwd7sPW9ONg5wM=;
+        b=XfvML7vXdB5jXW5lsj5BY9RUfU9ErtzwWcIU4qlbeOBNBslJnrzUhxrIiJSnJLxLZF
+         k9xI8B2HSXJ50sSYWwfWqnyrAL+H2DYKsHgxJhMwLiShH22zQwnivseEJpE928d9yR/M
+         Dgm4rol4prwzwyStoX+ROv6lZlLdti5qw7wf8=
+Received: by 10.182.48.100 with SMTP id k4mr8974517obn.55.1326738866217; Mon,
+ 16 Jan 2012 10:34:26 -0800 (PST)
+Received: by 10.182.49.168 with HTTP; Mon, 16 Jan 2012 10:34:04 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188638>
 
-On 14.01.2012 21:59, Hilco Wijbenga wrote:
-> Hi all,
->
-> First off, I use git-new-workdir a lot and it's working great. Kudos
-> to its developers!
->
-> I have been looking at the Git clone that is at the root of
-> git-new-workdir (i.e. the repository that is reused by all my
-> git-new-workdir created directories). This repo shows a lot of
-> activity when I run "git status" there.
->
-> So now I'm wondering. Should I simply ignore this completely? Or is
-> there some "clean up" I can do so that "git status" shows nothing? Or
-> would I destroy my git-new-workdir directories doing that? So far I've
-> only used this repo to create branches (i.e. to run git-new-workdir).
->
-> I would like to understand a bit better how I should treat this repo.
-> Whether it's basically a "do-not-touch" environment or whether I can
-> safely treat it as a normal Git repo.
+Hi all,
 
-Take a look at the rather simple script git-new-workdir (everything 
-important happens in the last 20 lines). It just makes logical links to 
-all files (mostly directories) under .git except three files that relate 
-to the index (mainly the index file itself and HEAD)
+for vcsh[1], I need a rather hackish feature: List all files untracked
+by vcsh. The plan to achieve this is:
 
-That would suggest that normal git operations operating on files in 
-those directories happen identical whether you are in the root repo or 
-in any of the satellites. Only where the whole repo is acted upon (git 
-clone, cp/rsync or deletion of the whole repo) the root repo would be 
-"special".
+Get lists of all files by all repos which' GIT_WORK_TREE is in one
+directory ($HOME, by default), merge all lists into one and use that
+as a .gitignore or exclude. Then run `git status` with $GIT_WORK_TREE
+pointing to $HOME while using said ignore/exclude. That will give me a
+list of all files & directories which are not tracked by any of the
+git repos managed by vcsh.
+
+I could create an empty git repo to run this operation in, but that
+seems wasteful. Thus, I would prefer to run this command against a
+non-existing, empty git repo. Problem is, I could not find a way to do
+this.
+
+
+I know the empty tree's SHA is hard-coded into git so I was hoping
+there would be a way to trick git using this, but I couldn't find a
+way.
+
+
+Any and all help appreciated, even if it's just a "no, this is not possible"
+
+
+Thanks,
+Richard
+
+
+[1] https://github.com/RichiH/vcsh
