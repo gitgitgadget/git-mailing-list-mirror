@@ -1,68 +1,70 @@
-From: Matthias Fechner <idefix@fechner.net>
-Subject: Re: Cannot push a commit
-Date: Mon, 16 Jan 2012 19:59:06 +0100
-Message-ID: <4F14737A.4040607@fechner.net>
-References: <4F1297E0.1060703@fechner.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Bug? Git checkout fails with a wrong error message
+Date: Mon, 16 Jan 2012 14:09:56 -0500
+Message-ID: <20120116190956.GA13802@sigill.intra.peff.net>
+References: <loom.20120112T193624-86@post.gmane.org>
+ <4F1028AD.9080701@ira.uka.de>
+ <4F106DDF.4040408@unclassified.de>
+ <4F1085EC.9010708@ira.uka.de>
+ <4F128AD0.5020101@unclassified.de>
+ <4F1404E7.9040805@ira.uka.de>
+ <4F14718B.80209@unclassified.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 16 19:59:29 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Holger Hellmuth <hellmuth@ira.uka.de>, git@vger.kernel.org,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+To: Yves Goergen <nospam.list@unclassified.de>
+X-From: git-owner@vger.kernel.org Mon Jan 16 20:10:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RmrmC-0006ip-ED
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Jan 2012 19:59:28 +0100
+	id 1RmrwU-0003T5-GS
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Jan 2012 20:10:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756079Ab2APS7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jan 2012 13:59:21 -0500
-Received: from anny.lostinspace.de ([80.190.182.2]:54170 "EHLO
-	anny.lostinspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756067Ab2APS7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jan 2012 13:59:19 -0500
-Received: from server.idefix.lan (ppp-88-217-19-224.dynamic.mnet-online.de [88.217.19.224])
-	(authenticated bits=0)
-	by anny.lostinspace.de (8.14.5/8.14.5) with ESMTP id q0GIx8vI046157
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Mon, 16 Jan 2012 19:59:13 +0100 (CET)
-	(envelope-from idefix@fechner.net)
-Received: from server.idefix.lan (localhost [IPv6:::1])
-	by server.idefix.lan (Postfix) with ESMTP id A97D93DCB
-	for <git@vger.kernel.org>; Mon, 16 Jan 2012 19:59:08 +0100 (CET)
-X-Virus-Scanned: amavisd-new at fechner.net
-Received: from server.idefix.lan ([127.0.0.1])
-	by server.idefix.lan (server.idefix.lan [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id rhaevTkYPrTZ for <git@vger.kernel.org>;
-	Mon, 16 Jan 2012 19:59:08 +0100 (CET)
-Received: from [IPv6:2001:a60:f035:1:1060:889d:8e34:21b3] (unknown [IPv6:2001:a60:f035:1:1060:889d:8e34:21b3])
-	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
-	(No client certificate requested)
-	by server.idefix.lan (Postfix) with ESMTPSA id 3C9CC3DBE
-	for <git@vger.kernel.org>; Mon, 16 Jan 2012 19:59:08 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-In-Reply-To: <4F1297E0.1060703@fechner.net>
-X-Enigmail-Version: 1.3.4
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.7 (anny.lostinspace.de [80.190.182.2]); Mon, 16 Jan 2012 19:59:13 +0100 (CET)
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,UNPARSEABLE_RELAY
-	autolearn=ham version=3.3.2
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on anny.lostinspace.de
+	id S1755879Ab2APTKA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jan 2012 14:10:00 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39395
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754760Ab2APTJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jan 2012 14:09:59 -0500
+Received: (qmail 13512 invoked by uid 107); 16 Jan 2012 19:16:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 16 Jan 2012 14:16:55 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jan 2012 14:09:56 -0500
+Content-Disposition: inline
+In-Reply-To: <4F14718B.80209@unclassified.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188644>
 
-Am 15.01.2012 10:09, schrieb Matthias Fechner:
-> Dear List,
-> 
-> I have a big problem with a file which I cannot push to my central git
-> repository.
-> The file can be found here:
-> http://dl.fechner.net/APP_UD.sch
+On Mon, Jan 16, 2012 at 07:50:51PM +0100, Yves Goergen wrote:
 
-where should I raise a bug report for this?
+> It's getting more weird. I believe that (msys)Git doesn't really know
+> how the filesystem on its operating system works. I have made some more
+> changes now and want to commit them. TortoiseGit reports the files
+> Form1.Designer.cs and Form1.designer.cs (note the case difference) as
+> modified and ready to commit. How is that supposed to work? On Windows,
+> file names are case-insensitive (as on MacOS X) and both names refer to
+> the absolute same file. 'git status' has the very same listing with that
+> same file twice.
 
-Bye
-Matthias
+What is the output of "git config core.ignorecase" in your repository?
+
+> If the index is such a problem child, how can I safely delete it
+> completely and maybe have it regenerated if Git can't live without it?
+
+If you delete your index, it will appear to git as if you have staged
+all files for deletion (if you run "git status", for example). You can
+then run "git reset" to regenerate it based on the last commit.
+
+But I doubt that will help your problem. It seems unlikely to me that
+the source of the problem is a corrupted index, but rather is some
+corner case in case-insensitive comparisons between the index and the
+working tree.
+
+-Peff
