@@ -1,101 +1,147 @@
-From: Junio C Hamano <junio@pobox.com>
-Subject: Re: Re* Regulator updates for 3.3
-Date: Mon, 16 Jan 2012 15:33:00 -0800
-Message-ID: <7v62gbussz.fsf@alter.siamese.dyndns.org>
-References: <20120109073727.GF22134@opensource.wolfsonmicro.com>
- <CA+55aFyhoh0rT_ujuE1w3RpuR7kqivYFwPpm66VC-xtq1PiGUQ@mail.gmail.com>
- <20120110184530.GE7164@opensource.wolfsonmicro.com>
- <CA+55aFxXb7wqfrpozS6iH0k25y-+Uy8_Tavv59JXMhaWrjXLaw@mail.gmail.com>
- <20120110222711.GK7164@opensource.wolfsonmicro.com>
- <CA+55aFxvQF=Bm4ae6euB_UO8otMCuN9Lv37Zn3TpE-L7JH3Kzw@mail.gmail.com>
- <7vmx9v7z1r.fsf@alter.siamese.dyndns.org>
- <CA+55aFx5NATrpLnkMiV2vAxSAJPK7wkY2vyHbyeZGgT9+jP06w@mail.gmail.com>
- <7vehv77xeq.fsf@alter.siamese.dyndns.org>
- <CA+55aFzuGtJkQFDooSGWQ2_NiJVHN2E7S5dmOnWTYn8_s8Gg3g@mail.gmail.com>
- <7vzkdu7miv.fsf@alter.siamese.dyndns.org> <4F136BE4.4040502@pcharlan.com>
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: Re: [PATCH 2/3] git-p4: Search for parent commit on branch creation
+Date: Mon, 16 Jan 2012 23:41:39 +0000
+Message-ID: <CAOpHH-UkyK-c_AHUOPbQQmW9cQQypDvirMR0Jb7vTGSQF7RZpw@mail.gmail.com>
+References: <1326674360-2771-1-git-send-email-vitor.hda@gmail.com>
+ <1326674360-2771-3-git-send-email-vitor.hda@gmail.com> <20120116185738.GA21996@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Mark Brown <broonie@opensource.wolfsonmicro.com>,
-	Liam Girdwood <lrg@ti.com>, linux-kernel@vger.kernel.org,
-	Git Mailing List <git@vger.kernel.org>
-To: Pete Harlan <pgit@pcharlan.com>
-X-From: linux-kernel-owner@vger.kernel.org Tue Jan 17 00:33:17 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Tue Jan 17 00:42:20 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Rmw3B-0007L5-14
-	for glk-linux-kernel-3@lo.gmane.org; Tue, 17 Jan 2012 00:33:17 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1RmwBt-0002ut-Fz
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 00:42:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751907Ab2APXdF (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 16 Jan 2012 18:33:05 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58268 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751434Ab2APXdC (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 16 Jan 2012 18:33:02 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CD045480;
-	Mon, 16 Jan 2012 18:33:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sB0TlAKQljj3ii+UvHlC6MvQrzU=; b=rQz4nC
-	XgHa2ioeZr3uj7juBI2kN/t8bELB6wbNLqZXgTPPpEUU1T2ndyNb8C+yA6ZMuDf1
-	i8fCoYmvWrpSK2YDSLzOysI8xBIuqicCA2AUCyiX2dNJPRWrSQtyTUulCKEHW/B2
-	I7gy/QfayvNdYzLKKycwr30rvMEKzZvlxNyZE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FWPginPHV86PAQie3B+SHF+6YBdWkDxM
-	e8TnCQRBI4uu0ME4aA9jf0ZqQUBwxv4hJmgJFEtPUwLWDhtxmyOVO1zpA7HJglM5
-	0rjjKXNLtbIxsJZcaGWd0+SrE566Tn40E6ApRJ21YpboAjTy+jxPeyajjEKf8TdM
-	Ge4U4SpEZio=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 14340547F;
-	Mon, 16 Jan 2012 18:33:02 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 93B6A547E; Mon, 16 Jan 2012
- 18:33:01 -0500 (EST)
-In-Reply-To: <4F136BE4.4040502@pcharlan.com> (Pete Harlan's message of "Sun,
- 15 Jan 2012 16:14:28 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6E3BF7DC-409A-11E1-AE25-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1751930Ab2APXmN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Jan 2012 18:42:13 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:57826 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750696Ab2APXmM convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jan 2012 18:42:12 -0500
+Received: by lahc1 with SMTP id c1so1206498lah.19
+        for <git@vger.kernel.org>; Mon, 16 Jan 2012 15:42:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=rN1VHJeaiexxMD2iXUEsIpa6xlqmcnc5O1KJ1F23ZKk=;
+        b=AXPYxv5qyx1CoUJEEXt89cIRFWfr0bfyv5kwrt6u8WfYsnnjgONP2mgXx6qXAeFqPX
+         hd1yRjWrsaFwka8nAUOclGvyUMByNd2ZqNupWyKfezpwc5xxbxm2BH8tZaH9oETnW3en
+         2mvD6JpAZFv98t+L10Wjd2v2SRsdhex7IuMI8=
+Received: by 10.112.98.37 with SMTP id ef5mr3689731lbb.73.1326757330485; Mon,
+ 16 Jan 2012 15:42:10 -0800 (PST)
+Received: by 10.152.6.197 with HTTP; Mon, 16 Jan 2012 15:41:39 -0800 (PST)
+In-Reply-To: <20120116185738.GA21996@padd.com>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188674>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188675>
 
-Pete Harlan <pgit@pcharlan.com> writes:
+On Mon, Jan 16, 2012 at 6:57 PM, Pete Wyckoff <pw@padd.com> wrote:
+> This looks much better without the need for "--force". =A0It'll be
+> great to fix this major branch detection problem. =A0Can you make a
+> couple of further minor changes?
 
-> On 01/10/2012 10:59 PM, Junio C Hamano wrote:
->> There may be existing scripts that leave the standard input and the
->> standard output of the "git merge" connected to whatever environment the
->> scripts were started, and such invocation might trigger the above
->> "interactive session" heuristics. Such scripts can export GIT_MERGE_LEGACY
->> environment variable set to "yes" to force the traditional behaviour.
+Of course I can :)
+
+>> diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+>> @@ -2012,7 +2014,28 @@ class P4Sync(Command, P4UserMap):
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0self.commit(descrip=
+tion, filesForCommit, branch, [branchPrefix], parent)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0parentFound =3D 0
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if len(parent) > 0:
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0self.checkp=
+oint()
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0for blob in=
+ read_pipe_lines("git rev-list --reverse --no-merges %s" % parent):
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0blo=
+b =3D blob.strip()
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0tem=
+pBranch =3D self.tempBranchLocation + os.sep + "%d-%s" % (change, blob)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if =
+self.verbose:
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0print "Creating temporary branch: " + tempBranch
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0sel=
+f.commit(description, filesForCommit, tempBranch, [branchPrefix], blob)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0sel=
+f.tempBranches.append(tempBranch)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0sel=
+f.checkpoint()
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if =
+len( read_pipe("git diff-tree %s %s" % (blob, tempBranch)) ) =3D=3D 0:
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0parentFound =3D 1
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0if self.verbose:
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 =A0 =A0print "Found parent of %s in commit %s" % (branch, blob)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0break
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if parentFound:
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0self.commit=
+(description, filesForCommit, branch, [branchPrefix], blob)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0else:
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if self.ver=
+bose:
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0pri=
+nt "Parent of %s not found. Committing into head of %s" % (branch, pare=
+nt)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0self.commit=
+(description, filesForCommit, branch, [branchPrefix], parent)
 >
-> The name GIT_MERGE_LEGACY gives no clue about what flavor of legacy
-> merge behavior is being enabled.  Something like GIT_MERGE_LEGACY_EDIT
-> might be clearer, or perhaps just have GIT_MERGE_EDIT=0 to get the old
-> behavior without reference to whether or not that behavior is
-> considered legacy.
+> 1. =A0Move the tempBranch commit outside of the "for blob" loop.
+> =A0 =A0It can have no parent, and the diff-tree will still tell you
+> =A0 =A0if you found the same contents. =A0Instead of a ref for
+> =A0 =A0each blob inspected for each change, you'll just have one ref
+> =A0 =A0per change. =A0Only one checkpoint() after the tempBranch
+> =A0 =A0commit should be needed.
 
-Hrm.
+You're right. Completely oversaw that. Will improve the code
+accordingly.
 
-The only case your suggestion may make a difference would be when we find
-another earlier UI mistake we would want to correct in a backward
-incompatible way that affects _existing_ scripts.
+> 2. =A0Nit. =A0parentFound is boolean, use True/False, not 1/0.
 
-With your suggestion, they need to export "GIT_MERGE_EDIT=0" today, and
-they will need to update again to export "GIT_MERGE_SOMETHINGELSE=0" when
-such an incompatible change comes.
+That was not a nice thing to do... thanks for noticing :)
 
-With a single "GIT_MERGE_LEGACY=YesPlease", they can be future-proofed today
-and will not be affected when we make another incompatible change.
+>> @@ -2347,6 +2370,12 @@ class P4Sync(Command, P4UserMap):
+>> + =A0 =A0 =A0 =A0# Cleanup temporary branches created during import
+>> + =A0 =A0 =A0 =A0if self.tempBranches !=3D []:
+>> + =A0 =A0 =A0 =A0 =A0 =A0for branch in self.tempBranches:
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0os.remove(".git" + os.sep + branch)
+>> + =A0 =A0 =A0 =A0 =A0 =A0os.rmdir(".git" + os.sep + self.tempBranchL=
+ocation)
+>> +
+>
+> 3. =A0Deleting refs should probably use "git update-ref -d"
+> =A0 =A0just in case GIT_DIR is not ".git". =A0I think you could just
+> =A0 =A0leave the "git-p4-tmp" directory around, but use
+> =A0 =A0os.environ["GIT_DIR"] instead of ".git" if you want to
+> =A0 =A0delete it.
 
-So I am not sure why separating the big-red-switch into smaller pieces
-would be an improvement, especially wnen the scripts that want to specify
-finer-grained control of features can use "--[no-]edit" options to
-explicitly ask for it.
+Will use os.environ.get, which can be configured to return ".git" if
+$GIT_DIR is not defined. Is this ok?
+
+> 4. =A0Paths are best manipulated with os.path.join(dir, file), to han=
+dle
+> =A0 =A0weirdnesses like drive letters.
+
+Perfect. I was completely unaware of that method. Thanks for the tip.
+
+> Eventually if the fast-import protocol learns to delete the refs
+> it creates, we can clean up a bit more nicely. =A0I think there was
+> agreement this was a good idea, just needs someone to do it
+> sometime.
+
+One can always hope ;)
+
+Thanks,
+Vitor
