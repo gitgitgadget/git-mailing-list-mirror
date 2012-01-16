@@ -1,88 +1,113 @@
-From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Subject: Re: The shared Git repo used by git-new-workdir
-Date: Mon, 16 Jan 2012 10:57:12 -0800
-Message-ID: <CAE1pOi3JocCoDGAmpCYdGdJN4E1nz8O4_i0MtLhwhP_axmH-uw@mail.gmail.com>
-References: <CAE1pOi3fBUBeNuhJqtJhxuMfz2G3iYOJy7U2HX6Nv4kqjcbnhw@mail.gmail.com>
-	<4F1467C1.504@ira.uka.de>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCH 2/3] git-p4: Search for parent commit on branch creation
+Date: Mon, 16 Jan 2012 13:57:38 -0500
+Message-ID: <20120116185738.GA21996@padd.com>
+References: <1326674360-2771-1-git-send-email-vitor.hda@gmail.com>
+ <1326674360-2771-3-git-send-email-vitor.hda@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Users <git@vger.kernel.org>
-To: Holger Hellmuth <hellmuth@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Jan 16 19:57:25 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Vitor Antunes <vitor.hda@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 16 19:57:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rmrk8-0005Zb-8S
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Jan 2012 19:57:20 +0100
+	id 1Rmrkk-0005tq-5u
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Jan 2012 19:57:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756264Ab2APS5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jan 2012 13:57:14 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:35547 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756252Ab2APS5N (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jan 2012 13:57:13 -0500
-Received: by yhnn56 with SMTP id n56so1309009yhn.19
-        for <git@vger.kernel.org>; Mon, 16 Jan 2012 10:57:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=rnyEDQUaUxNDyPBkTt5FO3BrJ2R/wXipS8Am6/GvWiU=;
-        b=CPFAbSKXq4CKqcoBGhFKawUlamjTt8P0rg940gTcxCFkk8E+Tdxw/1IAuPMyWqbHdw
-         DeordrgtC2NVULbm7BfUmghHT001NzY3PfjETwzXKGl82EZe66cNwyhEmV6SvsGsJWJK
-         ogWrvHJdC1etFzvHAeEK7KGffJABQkZYpanzQ=
-Received: by 10.236.155.104 with SMTP id i68mr18246364yhk.37.1326740232724;
- Mon, 16 Jan 2012 10:57:12 -0800 (PST)
-Received: by 10.236.50.44 with HTTP; Mon, 16 Jan 2012 10:57:12 -0800 (PST)
-In-Reply-To: <4F1467C1.504@ira.uka.de>
+	id S1756217Ab2APS5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jan 2012 13:57:45 -0500
+Received: from honk.padd.com ([74.3.171.149]:35497 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756192Ab2APS5o (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jan 2012 13:57:44 -0500
+Received: from arf.padd.com (unknown [50.55.142.76])
+	by honk.padd.com (Postfix) with ESMTPSA id 97E02E8B;
+	Mon, 16 Jan 2012 10:57:42 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 01A9931446; Mon, 16 Jan 2012 13:57:38 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <1326674360-2771-3-git-send-email-vitor.hda@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188641>
 
-On 16 January 2012 10:09, Holger Hellmuth <hellmuth@ira.uka.de> wrote:
-> On 14.01.2012 21:59, Hilco Wijbenga wrote:
-> Take a look at the rather simple script git-new-workdir (everything
-> important happens in the last 20 lines). It just makes logical links to all
-> files (mostly directories) under .git except three files that relate to the
-> index (mainly the index file itself and HEAD)
+vitor.hda@gmail.com wrote on Mon, 16 Jan 2012 00:39 +0000:
+> To find out which is its parent the commit of the new branch is applied
+> sequentially to each blob of the parent branch from the newest to the
+> oldest. The first blob which results in a zero diff is considered the
+> parent commit. If none is found, then the commit is applied to the top
+> of the parent branch.
+> 
+> A fast-import "checkpoint" call is required for each comparison because
+> diff-tree is only able to work with blobs on disk. But most of these
+> commits will not be part of the final imported tree, making fast-import
+> fail. To avoid this, the temporary branches are tracked and then removed
+> at the end of the import process.
 
-Yes, I did that but I cannot figure out from that why I see lots of
-files and such staged for commit on master when I almost never work on
-master. I only use master to pull in upstream and to merge in one of
-my branches and push. So unless I'm doing that, I would expect "git
-status" to not output anything.
+This looks much better without the need for "--force".  It'll be
+great to fix this major branch detection problem.  Can you make a
+couple of further minor changes?
 
-> That would suggest that normal git operations operating on files in those
-> directories happen identical whether you are in the root repo or in any of
-> the satellites. Only where the whole repo is acted upon (git clone, cp/rsync
-> or deletion of the whole repo) the root repo would be "special".
+> diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+> @@ -2012,7 +2014,28 @@ class P4Sync(Command, P4UserMap):
+> -                        self.commit(description, filesForCommit, branch, [branchPrefix], parent)
+> +                        parentFound = 0
+> +                        if len(parent) > 0:
+> +                            self.checkpoint()
+> +                            for blob in read_pipe_lines("git rev-list --reverse --no-merges %s" % parent):
+> +                                blob = blob.strip()
+> +                                tempBranch = self.tempBranchLocation + os.sep + "%d-%s" % (change, blob)
+> +                                if self.verbose:
+> +                                    print "Creating temporary branch: " + tempBranch
+> +                                self.commit(description, filesForCommit, tempBranch, [branchPrefix], blob)
+> +                                self.tempBranches.append(tempBranch)
+> +                                self.checkpoint()
+> +                                if len( read_pipe("git diff-tree %s %s" % (blob, tempBranch)) ) == 0:
+> +                                    parentFound = 1
+> +                                    if self.verbose:
+> +                                        print "Found parent of %s in commit %s" % (branch, blob)
+> +                                    break
+> +                        if parentFound:
+> +                            self.commit(description, filesForCommit, branch, [branchPrefix], blob)
+> +                        else:
+> +                            if self.verbose:
+> +                                print "Parent of %s not found. Committing into head of %s" % (branch, parent)
+> +                            self.commit(description, filesForCommit, branch, [branchPrefix], parent)
 
-That all makes sense to me and is what I was expecting. So why is "git
-status" on master displaying anything?
+1.  Move the tempBranch commit outside of the "for blob" loop.
+    It can have no parent, and the diff-tree will still tell you
+    if you found the same contents.  Instead of a ref for
+    each blob inspected for each change, you'll just have one ref
+    per change.  Only one checkpoint() after the tempBranch
+    commit should be needed.
 
-Here is what I see:
+2.  Nit.  parentFound is boolean, use True/False, not 1/0.
 
-In my working directory:
-hilco@centaur /mnt/lacie/workspaces/my-project-master
-my-project-master (master $ u=)$ git status
-# On branch master
-nothing to commit (working directory clean)
+> @@ -2347,6 +2370,12 @@ class P4Sync(Command, P4UserMap):
+> +        # Cleanup temporary branches created during import
+> +        if self.tempBranches != []:
+> +            for branch in self.tempBranches:
+> +                os.remove(".git" + os.sep + branch)
+> +            os.rmdir(".git" + os.sep + self.tempBranchLocation)
+> +
 
-In the shared repo:
-hilco@centaur ~/git-clones/my-project my-project (master +$ u=)$ git status
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#       deleted:    .gitattributes
-#       modified:   .gitignore
-#       new file:   ...
-... hundreds more ...
+3.  Deleting refs should probably use "git update-ref -d"
+    just in case GIT_DIR is not ".git".  I think you could just
+    leave the "git-p4-tmp" directory around, but use
+    os.environ["GIT_DIR"] instead of ".git" if you want to
+    delete it.
 
-Is this related to my use of a symlink? I have a symlink
-"~/workspaces" pointing to /mnt/lacie/workspaces/. Is that somehow
-affecting things?
+4.  Paths are best manipulated with os.path.join(dir, file), to handle
+    weirdnesses like drive letters.
+
+Eventually if the fast-import protocol learns to delete the refs
+it creates, we can clean up a bit more nicely.  I think there was
+agreement this was a good idea, just needs someone to do it
+sometime.
+
+		-- Pete
