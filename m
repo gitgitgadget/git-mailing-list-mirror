@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v5 06/10] clone: delay cloning until after remote HEAD checking
-Date: Mon, 16 Jan 2012 16:46:12 +0700
-Message-ID: <1326707176-8045-7-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v5 07/10] clone: --branch=<branch> always means refs/heads/<branch>
+Date: Mon, 16 Jan 2012 16:46:13 +0700
+Message-ID: <1326707176-8045-8-git-send-email-pclouds@gmail.com>
 References: <1326439322-15648-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,204 +11,139 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 16 10:47:23 2012
+X-From: git-owner@vger.kernel.org Mon Jan 16 10:47:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rmj9t-0002xK-WF
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Jan 2012 10:47:22 +0100
+	id 1RmjA4-00032J-Kc
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Jan 2012 10:47:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753915Ab2APJrR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Jan 2012 04:47:17 -0500
+	id S1753916Ab2APJrZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Jan 2012 04:47:25 -0500
 Received: from mail-iy0-f174.google.com ([209.85.210.174]:55465 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753801Ab2APJrQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jan 2012 04:47:16 -0500
+	with ESMTP id S1753801Ab2APJrY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jan 2012 04:47:24 -0500
 Received: by mail-iy0-f174.google.com with SMTP id f6so2315494iag.19
-        for <git@vger.kernel.org>; Mon, 16 Jan 2012 01:47:15 -0800 (PST)
+        for <git@vger.kernel.org>; Mon, 16 Jan 2012 01:47:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=lEBlyeLVXoV8o3f7qKZsG6CdgwX2j0XG7M28LPUAKZ4=;
-        b=Ieq2km8Ip4olVRUUygQmCsXHdxo6Dff4v34GYidZmhey69hUs4pYE9wZYqwF5jAL0O
-         Qwk25F3c6jPoBZZ0Xk1c6JWMMywJ9kn+l6vTV5h+R4X14gZqyfaF5jnFHH4+7WUzCcAN
-         yPIkEGP+XZ9c3ejy3zT/7Zke/hl2VF4/TYB1U=
-Received: by 10.50.170.35 with SMTP id aj3mr12310053igc.2.1326707235811;
-        Mon, 16 Jan 2012 01:47:15 -0800 (PST)
+        bh=/qB19oHvKyGC1eMx2sFB0EIkFHKqms4njyPf0zobjzA=;
+        b=QjKKSEwTSBkVnNjuBuMQwPXRoiIN7tRkllYQg3fn4xaci5tTyT2qEjXNxZSuH7jn02
+         B1CbP6Q8Vuvet0qKnMJ2li35ir4GmLSOjTGLFNrNqjssVhYdeslbcrFhNyrNjePxYH30
+         Ra7fptVJC5gZCdMN7v35TbiSNQd1J0IQvsXY0=
+Received: by 10.50.194.202 with SMTP id hy10mr12297254igc.23.1326707243922;
+        Mon, 16 Jan 2012 01:47:23 -0800 (PST)
 Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id py9sm32299092igc.2.2012.01.16.01.47.11
+        by mx.google.com with ESMTPS id uz5sm7066763igc.0.2012.01.16.01.47.20
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 16 Jan 2012 01:47:14 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 16 Jan 2012 16:47:06 +0700
+        Mon, 16 Jan 2012 01:47:23 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 16 Jan 2012 16:47:14 +0700
 X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
 In-Reply-To: <1326439322-15648-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188622>
 
-This gives us an opportunity to abort the command during remote HEAD
-check without wasting much bandwidth.
-
-Cloning with remote-helper remains before the check because the remote
-helper updates mapped_refs, which is necessary for remote ref checks.
-foreign_vcs field is used to indicate the transport is handled by
-remote helper.
+It does not make sense to look outside refs/heads for HEAD's target
+(src_ref_prefix can be set to "refs/" if --mirror is used) because ref
+code only allows symref in form refs/heads/...
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/clone.c |   54 +++++++++++++++++++++++++++--------------------=
--------
- transport.c     |    5 ++++-
- 2 files changed, 31 insertions(+), 28 deletions(-)
+ builtin/clone.c |   30 ++++++++++++++++--------------
+ 1 files changed, 16 insertions(+), 14 deletions(-)
 
 diff --git a/builtin/clone.c b/builtin/clone.c
-index 2733fa4..a1fbb3b 100644
+index a1fbb3b..253a794 100644
 --- a/builtin/clone.c
 +++ b/builtin/clone.c
-@@ -364,13 +364,8 @@ static void copy_or_link_directory(struct strbuf *=
-src, struct strbuf *dest,
- 	closedir(dir);
- }
+@@ -48,7 +48,6 @@ static int option_verbosity;
+ static int option_progress;
+ static struct string_list option_config;
+ static struct string_list option_reference;
+-static const char *src_ref_prefix =3D "refs/heads/";
 =20
--static const struct ref *clone_local(const char *src_repo,
--				     const char *dest_repo)
-+static void clone_local(const char *src_repo, const char *dest_repo)
+ static int opt_parse_reference(const struct option *opt, const char *a=
+rg, int unset)
  {
--	const struct ref *ret;
--	struct remote *remote;
--	struct transport *transport;
--
- 	if (option_shared) {
- 		struct strbuf alt =3D STRBUF_INIT;
- 		strbuf_addf(&alt, "%s/objects", src_repo);
-@@ -386,13 +381,8 @@ static const struct ref *clone_local(const char *s=
-rc_repo,
- 		strbuf_release(&dest);
- 	}
-=20
--	remote =3D remote_get(src_repo);
--	transport =3D transport_get(remote, src_repo);
--	ret =3D transport_get_remote_refs(transport);
--	transport_disconnect(transport);
- 	if (0 <=3D option_verbosity)
- 		printf(_("done.\n"));
--	return ret;
+@@ -413,6 +412,17 @@ static void remove_junk_on_signal(int signo)
+ 	raise(signo);
  }
 =20
- static const char *junk_work_tree;
-@@ -619,6 +609,7 @@ int cmd_clone(int argc, const char **argv, const ch=
++static struct ref *find_remote_branch(const struct ref *refs, const ch=
+ar *branch)
++{
++	struct ref *ref;
++	struct strbuf head =3D STRBUF_INIT;
++	strbuf_addstr(&head, "refs/heads/");
++	strbuf_addstr(&head, branch);
++	ref =3D find_ref_by_name(refs, head.buf);
++	strbuf_release(&head);
++	return ref;
++}
++
+ static struct ref *wanted_peer_refs(const struct ref *refs,
+ 		struct refspec *refspec)
+ {
+@@ -425,13 +435,8 @@ static struct ref *wanted_peer_refs(const struct r=
+ef *refs,
+=20
+ 		if (!option_branch)
+ 			remote_head =3D guess_remote_head(head, refs, 0);
+-		else {
+-			struct strbuf sb =3D STRBUF_INIT;
+-			strbuf_addstr(&sb, src_ref_prefix);
+-			strbuf_addstr(&sb, option_branch);
+-			remote_head =3D find_ref_by_name(refs, sb.buf);
+-			strbuf_release(&sb);
+-		}
++		else
++			remote_head =3D find_remote_branch(refs, option_branch);
+=20
+ 		if (!remote_head && option_branch)
+ 			warning(_("Could not find remote branch %s to clone."),
+@@ -502,7 +507,7 @@ static void update_remote_refs(const struct ref *re=
+fs,
+ static void update_head(const struct ref *our, const struct ref *remot=
+e,
+ 			const char *msg)
+ {
+-	if (our) {
++	if (our && !prefixcmp(our->name, "refs/heads/")) {
+ 		/* Local default branch link */
+ 		create_symref("HEAD", our->name, NULL);
+ 		if (!option_bare) {
+@@ -609,6 +614,7 @@ int cmd_clone(int argc, const char **argv, const ch=
 ar *prefix)
  	struct strbuf key =3D STRBUF_INIT, value =3D STRBUF_INIT;
  	struct strbuf branch_top =3D STRBUF_INIT, reflog_msg =3D STRBUF_INIT;
  	struct transport *transport =3D NULL;
-+	struct remote *remote;
++	const char *src_ref_prefix =3D "refs/heads/";
+ 	struct remote *remote;
  	int err =3D 0;
 =20
- 	struct refspec *refspec;
-@@ -773,13 +764,10 @@ int cmd_clone(int argc, const char **argv, const =
-char *prefix)
+@@ -807,12 +813,8 @@ int cmd_clone(int argc, const char **argv, const c=
+har *prefix)
+ 			guess_remote_head(remote_head, mapped_refs, 0);
 =20
- 	strbuf_reset(&value);
+ 		if (option_branch) {
+-			struct strbuf head =3D STRBUF_INIT;
+-			strbuf_addstr(&head, src_ref_prefix);
+-			strbuf_addstr(&head, option_branch);
+ 			our_head_points_at =3D
+-				find_ref_by_name(mapped_refs, head.buf);
+-			strbuf_release(&head);
++				find_remote_branch(mapped_refs, option_branch);
 =20
--	if (is_local) {
--		refs =3D clone_local(path, git_dir);
--		mapped_refs =3D wanted_peer_refs(refs, refspec);
--	} else {
--		struct remote *remote =3D remote_get(option_origin);
--		transport =3D transport_get(remote, remote->url[0]);
-+	remote =3D remote_get(option_origin);
-+	transport =3D transport_get(remote, remote->url[0]);
-=20
-+	if (!is_local) {
- 		if (!transport->get_refs_list || !transport->fetch)
- 			die(_("Don't know how to clone %s"), transport->url);
-=20
-@@ -796,14 +784,23 @@ int cmd_clone(int argc, const char **argv, const =
-char *prefix)
- 		if (option_upload_pack)
- 			transport_set_option(transport, TRANS_OPT_UPLOADPACK,
- 					     option_upload_pack);
--
--		refs =3D transport_get_remote_refs(transport);
--		if (refs) {
--			mapped_refs =3D wanted_peer_refs(refs, refspec);
--			transport_fetch_refs(transport, mapped_refs);
--		}
- 	}
-=20
-+	refs =3D transport_get_remote_refs(transport);
-+	mapped_refs =3D refs ? wanted_peer_refs(refs, refspec) : NULL;
-+
-+	/*
-+	 * mapped_refs may be updated if transport-helper is used so
-+	 * we need fetch it early because remote_head code below
-+	 * relies on it.
-+	 *
-+	 * for normal clones, transport_get_remote_refs() should
-+	 * return reliable ref set, we can delay cloning until after
-+	 * remote HEAD check.
-+	 */
-+	if (!is_local && remote->foreign_vcs && refs)
-+		transport_fetch_refs(transport, mapped_refs);
-+
- 	if (refs) {
- 		remote_head =3D find_ref_by_name(refs, "HEAD");
- 		remote_head_points_at =3D
-@@ -838,15 +835,18 @@ int cmd_clone(int argc, const char **argv, const =
-char *prefix)
- 					      "refs/heads/master");
- 	}
-=20
-+	if (is_local)
-+		clone_local(path, git_dir);
-+	else if (refs && !remote->foreign_vcs)
-+		transport_fetch_refs(transport, mapped_refs);
-+
- 	update_remote_refs(refs, mapped_refs, remote_head_points_at,
- 			   branch_top.buf, reflog_msg.buf);
-=20
- 	update_head(our_head_points_at, remote_head, reflog_msg.buf);
-=20
--	if (transport) {
--		transport_unlock_pack(transport);
--		transport_disconnect(transport);
--	}
-+	transport_unlock_pack(transport);
-+	transport_disconnect(transport);
-=20
- 	err =3D checkout();
-=20
-diff --git a/transport.c b/transport.c
-index a99b7c9..4366639 100644
---- a/transport.c
-+++ b/transport.c
-@@ -895,8 +895,10 @@ struct transport *transport_get(struct remote *rem=
-ote, const char *url)
-=20
- 		while (is_urlschemechar(p =3D=3D url, *p))
- 			p++;
--		if (!prefixcmp(p, "::"))
-+		if (!prefixcmp(p, "::")) {
- 			helper =3D xstrndup(url, p - url);
-+			remote->foreign_vcs =3D helper;
-+		}
- 	}
-=20
- 	if (helper) {
-@@ -938,6 +940,7 @@ struct transport *transport_get(struct remote *remo=
-te, const char *url)
- 		char *handler =3D xmalloc(len + 1);
- 		handler[len] =3D 0;
- 		strncpy(handler, url, len);
-+		remote->foreign_vcs =3D handler;
- 		transport_helper_init(ret, handler);
- 	}
-=20
+ 			if (!our_head_points_at) {
+ 				warning(_("Remote branch %s not found in "
 --=20
 1.7.3.1.256.g2539c.dirty
