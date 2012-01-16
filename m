@@ -1,78 +1,120 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] test_interactive: interactive debugging in test scripts
-Date: Mon, 16 Jan 2012 15:19:22 -0500
-Message-ID: <20120116201922.GB18699@sigill.intra.peff.net>
-References: <4F133069.10308@web.de>
- <20120115232413.GA14724@sigill.intra.peff.net>
- <20120116154953.GA21238@padd.com>
+Subject: Re: Simulating an empty git repository without having said
+ repository on disk
+Date: Mon, 16 Jan 2012 15:41:31 -0500
+Message-ID: <20120116204131.GC18699@sigill.intra.peff.net>
+References: <CAD77+gR=txp8sKrA57ztQX0a1-QZM7wwR6ThBq77c=c+AbsS0w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Mon Jan 16 21:19:33 2012
+Cc: Git List <git@vger.kernel.org>
+To: Richard Hartmann <richih.mailinglist@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 16 21:41:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rmt1f-0007Hb-K5
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Jan 2012 21:19:31 +0100
+	id 1RmtN5-000195-Sx
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Jan 2012 21:41:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756070Ab2APUTZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jan 2012 15:19:25 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39443
+	id S1756679Ab2APUlf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jan 2012 15:41:35 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39449
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755957Ab2APUTZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jan 2012 15:19:25 -0500
-Received: (qmail 17803 invoked by uid 107); 16 Jan 2012 20:26:21 -0000
+	id S1755684Ab2APUle (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jan 2012 15:41:34 -0500
+Received: (qmail 17887 invoked by uid 107); 16 Jan 2012 20:48:30 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 16 Jan 2012 15:26:21 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jan 2012 15:19:22 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 16 Jan 2012 15:48:30 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jan 2012 15:41:31 -0500
 Content-Disposition: inline
-In-Reply-To: <20120116154953.GA21238@padd.com>
+In-Reply-To: <CAD77+gR=txp8sKrA57ztQX0a1-QZM7wwR6ThBq77c=c+AbsS0w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188651>
 
-On Mon, Jan 16, 2012 at 10:49:53AM -0500, Pete Wyckoff wrote:
+On Mon, Jan 16, 2012 at 07:34:04PM +0100, Richard Hartmann wrote:
 
-> And it is necessary to export any test variables you want to use
-> in the debug shell.  I often cut-n-paste lines containing
-> TEST_DIRECTORY and TRASH_DIRECTORY; there could be others,
-> in test scripts and helper libraries too.
-
-Yeah, exporting a few common ones would be helpful. I really wish there
-was a way to ask a shell to stop running the script and start doing
-interactive things in the current shell context, but no such thing
-exists AFAIK (you can hack it with a read-eval loop, but you are missing
-many of the useful input-handling bits like tab completion. Hmm, I
-wonder if bash's "read -e" would be enough, though).
-
-I kind of wonder if that is over-engineering, though. I'd like a perfect
-debugging environment, but the fact of the matter is that writing,
-maintaining, and making it work in every case that comes up is probably
-a lot more work than just fiddling with the scripts now and then. This
-code isn't even meant to be run except in such fiddling circumstances.
-
-> While it would be nice to use:
+> for vcsh[1], I need a rather hackish feature: List all files untracked
+> by vcsh. The plan to achieve this is:
 > 
->     test_interactive gdb --args git ...
-> 
-> the path is setup to invoke the script in bin-wrappers/git,
-> requiring either --with-dashes or something like
-> 
->     test_interactive gdb --args "$GIT_EXEC_PATH"/git ...
+> Get lists of all files by all repos which' GIT_WORK_TREE is in one
+> directory ($HOME, by default), merge all lists into one and use that
+> as a .gitignore or exclude. Then run `git status` with $GIT_WORK_TREE
+> pointing to $HOME while using said ignore/exclude. That will give me a
+> list of all files & directories which are not tracked by any of the
+> git repos managed by vcsh.
 
-Yeah. I have before patched the bin-wrappers script to accept a
-GIT_WRAPPER_PREFIX variable, so you can just set that and have it run
-gdb on your invocation. But even that's not enough for externals. I've
-been tempted to actually carry around a run-time option to exec
-externals via gdb, but I didn't want to pollute the regular code base
-(and you can usually get by with just running "gdb git-foo" directly).
+I don't use vcsh, but I seem to recall that it works by overlaying the
+working trees of different repositories on each other, right? So you
+can't just say "oh, files in foo/ belong to repository 'bar'". You must
+take the union of the set of tracked files from all repos, then find the
+difference of that from the set of all files.
+
+Can individual repos mark things as excluded, too? Or do you have a
+master exclusion list? I.e., if I decide that I don't want "foo" tracked
+at all, how do I tell vcsh?
+
+> I could create an empty git repo to run this operation in, but that
+> seems wasteful. Thus, I would prefer to run this command against a
+> non-existing, empty git repo. Problem is, I could not find a way to do
+> this.
+> 
+> I know the empty tree's SHA is hard-coded into git so I was hoping
+> there would be a way to trick git using this, but I couldn't find a
+> way.
+
+I'm not sure why you care about the empty tree if you are only looking
+at untracked files. Or perhaps the problem is that you are using "git
+status", which fundamentally cares about looking at differences between
+HEAD and the index, even though you don't care in this case. In that case,
+maybe "git ls-files -o" would be more appropriate?
+
+The most straightforward way in git would be to generate a temporary
+index that mentions all of the tracked files, like this:
+
+  tmp=/some/tmp/index
+  rm -f $tmp
+  for i in repo; do
+    git --git-dir=$repo ls-files -z |
+      GIT_INDEX_FILE=$tmp xargs -0 git update-index --add
+  done
+  GIT_INDEX_FILE=$tmp git ls-files -o
+
+but that is very close to your "create an empty git repo" (in fact, you
+might even need to in order for update-index to be happy). But it would
+give you a place to put a master exclusion list (you would use it as
+--exclude=... in the final ls-files).
+
+If you have per-repo exclusion lists, then you could take a different
+approach, and simply run "git ls-files -o" for each repository. Any
+files which appeared in _every_ output would be untracked (since tracked
+files or individually-excluded files would be omitted from at least one
+repo). Like:
+
+  # get the list of untracked files from each repo's perspective
+  count=0
+  for i in repo; do
+    count=$(($count + 1))
+    git --git-dir=$repo ls-files -o
+  done >output
+
+  # now count how many times each entry appears. Truly untracked things
+  # appear $count times.
+  sort <output |
+  uniq -c |
+  perl -lne "/^\s*$count (.*)/ and print \$1"
+
+The downside is that you are doing $count traversals of the untracked
+directories. On an OS with a reasonable lstat and a directory structure
+that fits into cache, that is probably not too big a deal, though.
+
+> Any and all help appreciated, even if it's just a "no, this is not possible"
+
+I took a lot of guesses at exactly what you want. It might be more clear
+if you gave us an example situation along with the output you expect.
 
 -Peff
