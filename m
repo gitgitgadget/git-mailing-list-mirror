@@ -1,84 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] test-lib: add the test_bash convenience function
-Date: Sun, 15 Jan 2012 18:24:13 -0500
-Message-ID: <20120115232413.GA14724@sigill.intra.peff.net>
-References: <4F133069.10308@web.de>
+From: Pete Harlan <pgit@pcharlan.com>
+Subject: Re: Re* Regulator updates for 3.3
+Date: Sun, 15 Jan 2012 16:14:28 -0800
+Message-ID: <4F136BE4.4040502@pcharlan.com>
+References: <20120109073727.GF22134@opensource.wolfsonmicro.com> <CA+55aFyhoh0rT_ujuE1w3RpuR7kqivYFwPpm66VC-xtq1PiGUQ@mail.gmail.com> <20120110184530.GE7164@opensource.wolfsonmicro.com> <CA+55aFxXb7wqfrpozS6iH0k25y-+Uy8_Tavv59JXMhaWrjXLaw@mail.gmail.com> <20120110222711.GK7164@opensource.wolfsonmicro.com> <CA+55aFxvQF=Bm4ae6euB_UO8otMCuN9Lv37Zn3TpE-L7JH3Kzw@mail.gmail.com> <7vmx9v7z1r.fsf@alter.siamese.dyndns.org> <CA+55aFx5NATrpLnkMiV2vAxSAJPK7wkY2vyHbyeZGgT9+jP06w@mail.gmail.com> <7vehv77xeq.fsf@alter.siamese.dyndns.org> <CA+55aFzuGtJkQFDooSGWQ2_NiJVHN2E7S5dmOnWTYn8_s8Gg3g@mail.gmail.com> <7vzkdu7miv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Jan 16 00:24:23 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Mark Brown <broonie@opensource.wolfsonmicro.com>,
+	Liam Girdwood <lrg@ti.com>, linux-kernel@vger.kernel.org,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 16 01:14:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RmZR0-0007vZ-KU
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Jan 2012 00:24:22 +0100
+	id 1RmaDa-0006mA-DT
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Jan 2012 01:14:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752541Ab2AOXYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jan 2012 18:24:17 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38997
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750811Ab2AOXYQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jan 2012 18:24:16 -0500
-Received: (qmail 26948 invoked by uid 107); 15 Jan 2012 23:31:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 15 Jan 2012 18:31:11 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 15 Jan 2012 18:24:13 -0500
-Content-Disposition: inline
-In-Reply-To: <4F133069.10308@web.de>
+	id S1751818Ab2APAOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jan 2012 19:14:30 -0500
+Received: from caibbdcaaaaf.dreamhost.com ([208.113.200.5]:56344 "EHLO
+	homiemail-a48.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751045Ab2APAO3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Jan 2012 19:14:29 -0500
+Received: from homiemail-a48.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a48.g.dreamhost.com (Postfix) with ESMTP id E4B9F4F8057;
+	Sun, 15 Jan 2012 16:14:28 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pcharlan.com; h=message-id:date
+	:from:mime-version:to:cc:subject:references:in-reply-to
+	:content-type:content-transfer-encoding; q=dns; s=pcharlan.com;
+	 b=VBSVS1HLXjYrEAgz7hm6JpVNWXne3tW65JzTe2rjCl5R1/9tH9EoivU3juxm6
+	P/tjKyiaKSa4K/jF0YaRGMoLLY97DcCKIrdc5PCXjK4ErPf31No5JwS3O6VcRDkj
+	D7QVFfSfvF6Aa5Ut68I4hK5X3cai0sOcGOWCcEnw38p1mQ=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pcharlan.com; h=message-id
+	:date:from:mime-version:to:cc:subject:references:in-reply-to
+	:content-type:content-transfer-encoding; s=pcharlan.com; bh=3pOt
+	a3MmNBF52XTXGFVhzitXG50=; b=PoleND3pV/CajvhcQU+MrKh/zoqQSQZJN3kq
+	k0gSXjXm9PBjrcWLy+wkIXwu2bbSpKheqthl1t/9WR/aiOGcPeUDKnakQcDveFqt
+	edsQBgxVZVjLTenX/CRNGZ9VhNZfEak/91bk4j1P1i9vzcgOdlNm8pmGgiSZ8R5M
+	1z6s0Mw=
+Received: from [192.168.0.106] (185.132-78-65.ftth.swbr.surewest.net [65.78.132.185])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: pgit@pcharlan.com)
+	by homiemail-a48.g.dreamhost.com (Postfix) with ESMTPSA id AF5644F8058;
+	Sun, 15 Jan 2012 16:14:28 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:8.0) Gecko/20111124 Thunderbird/8.0
+In-Reply-To: <7vzkdu7miv.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188600>
 
-On Sun, Jan 15, 2012 at 09:00:41PM +0100, Jens Lehmann wrote:
+On 01/10/2012 10:59 PM, Junio C Hamano wrote:
+> There may be existing scripts that leave the standard input and the
+> standard output of the "git merge" connected to whatever environment the
+> scripts were started, and such invocation might trigger the above
+> "interactive session" heuristics. Such scripts can export GIT_MERGE_LEGACY
+> environment variable set to "yes" to force the traditional behaviour.
 
-> Since 781f76b15 (test-lib: redirect stdin of tests) you can't simply put a
-> "bash &&" into a test for debugging purposes anymore. Instead you'll have
-> to use "bash <&6 >&3 2>&4".
+The name GIT_MERGE_LEGACY gives no clue about what flavor of legacy
+merge behavior is being enabled.  Something like GIT_MERGE_LEGACY_EDIT
+might be clearer, or perhaps just have GIT_MERGE_EDIT=0 to get the old
+behavior without reference to whether or not that behavior is
+considered legacy.
 
-Yeah, an unfortunate side effect.
-
-If you're not relying on particular state in the middle of a chain of
-commands, you can just put the "bash" outside of the test_expect_*. But
-sometimes you do care about having it in the middle.
-
-> As that invocation is not that easy to remember add the test_bash
-> convenience function. This function also checks if the -v flag is given
-> and will complain if that is not the case instead of letting the test
-> hang until ^D is pressed.
-
-Nice. Many times I have added such a "bash" or "gdb" invocation then
-forgotten "-v", only to scratch my head at why the test seemed to be
-hanging.
-
-Two minor nits on the patch itself:
-
-> +# Stop execution and start a bash shell. This is useful for debugging tests
-> +# and only makes sense together with "-v".
-> +
-> +test_bash () {
-> +	if test "$verbose" = t; then
-> +		bash <&6 >&3 2>&4
-> +	else
-> +		say >&5 "skipping test_bash as it makes no sense without -v"
-> +	fi
-> +}
-
-1. It may be worth putting a warning in the comment that this is never
-   to be used in a real test, but only temporarily inserted.
-
-2. I do this not just with bash, but with "gdb". I wonder if it is worth
-   making this "test_foo bash", for some value of "foo" (the ones that
-   occur to me are "debug" and "run", but of course they are taken).
-
-   Actually, I wonder if the existing test_debug could handle this
-   already (though you do have to remember to add "--debug" to your
-   command line, then).
-
--Peff
+--Pete
