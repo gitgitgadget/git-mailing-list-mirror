@@ -1,160 +1,156 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v5 10/10] clone: print advice on checking out detached HEAD
-Date: Mon, 16 Jan 2012 16:46:16 +0700
-Message-ID: <1326707176-8045-11-git-send-email-pclouds@gmail.com>
-References: <1326439322-15648-1-git-send-email-pclouds@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH v2 1/2] am: learn passing -b to mailinfo
+Date: Mon, 16 Jan 2012 11:53:00 +0100
+Message-ID: <a804650f805fd8c89a843302cb92bbbdf36b8c0b.1326710194.git.trast@student.ethz.ch>
+References: <8762ghxpxw.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 16 10:48:00 2012
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 16 11:53:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RmjAU-0003Dl-1G
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Jan 2012 10:47:58 +0100
+	id 1RmkBm-0004xs-Uq
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Jan 2012 11:53:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753926Ab2APJru convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Jan 2012 04:47:50 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:55465 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753801Ab2APJrs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jan 2012 04:47:48 -0500
-Received: by mail-iy0-f174.google.com with SMTP id f6so2315494iag.19
-        for <git@vger.kernel.org>; Mon, 16 Jan 2012 01:47:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=rdgFOdPf3QUlAOOsfOEoQyaeIxT0+38Sd8IAcRKty60=;
-        b=jkp7zRtjATGEJs99MOYfFiic3uuEdcY321GhcJF61eXaTPkmu6CnvSBiwuCUniqzlI
-         gm4rAMRbApR4d/OZwkquBWhEE2qCTobkoFycDbzcwEb/Qa1XKfGt+3cwhHp5kk85WWuQ
-         CzDjTUOAkqxA+XuLPfwJOfLO07JXYbsItnRYw=
-Received: by 10.43.46.196 with SMTP id up4mr9752825icb.23.1326707268635;
-        Mon, 16 Jan 2012 01:47:48 -0800 (PST)
-Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id or2sm20412179igc.5.2012.01.16.01.47.44
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 16 Jan 2012 01:47:47 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 16 Jan 2012 16:47:39 +0700
-X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
-In-Reply-To: <1326439322-15648-1-git-send-email-pclouds@gmail.com>
+	id S1754134Ab2APKxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jan 2012 05:53:08 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:53873 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753228Ab2APKxF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jan 2012 05:53:05 -0500
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 16 Jan
+ 2012 11:53:00 +0100
+Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 16 Jan
+ 2012 11:53:01 +0100
+X-Mailer: git-send-email 1.7.9.rc0.168.g3847c
+In-Reply-To: <8762ghxpxw.fsf@thomas.inf.ethz.ch>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188626>
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
+git-am could pass -k to mailinfo, but not -b.  Introduce an option
+that does so.  We change the meaning of the 'keep' state file, but are
+careful not to cause a problem unless you downgrade in the middle of
+an 'am' run.
+
+This uncovers a bug in mailinfo -b, hence the failing test.
+
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- advice.c           |   14 ++++++++++++++
- advice.h           |    1 +
- builtin/checkout.c |   16 +---------------
- builtin/clone.c    |    5 ++++-
- 4 files changed, 20 insertions(+), 16 deletions(-)
 
-diff --git a/advice.c b/advice.c
-index e02e632..3e1a145 100644
---- a/advice.c
-+++ b/advice.c
-@@ -64,3 +64,17 @@ void NORETURN die_resolve_conflict(const char *me)
- 	error_resolve_conflict(me);
- 	die("Exiting because of an unresolved conflict.");
- }
+This fixes the broken 'if', and the use of 'echo' with an argument
+that starts with '-'.
+
+ Documentation/git-am.txt |    3 +++
+ git-am.sh                |   12 ++++++++----
+ t/t4150-am.sh            |   14 ++++++++++++--
+ 3 files changed, 23 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index 887466d..ee6cca2 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -40,6 +40,9 @@ OPTIONS
+ --keep::
+ 	Pass `-k` flag to 'git mailinfo' (see linkgit:git-mailinfo[1]).
+ 
++--keep-non-patch::
++	Pass `-b` flag to 'git mailinfo' (see linkgit:git-mailinfo[1]).
 +
-+void detach_advice(const char *new_name)
-+{
-+	const char fmt[] =3D
-+	"Note: checking out '%s'.\n\n"
-+	"You are in 'detached HEAD' state. You can look around, make experime=
-ntal\n"
-+	"changes and commit them, and you can discard any commits you make in=
- this\n"
-+	"state without impacting any branches by performing another checkout.=
-\n\n"
-+	"If you want to create a new branch to retain commits you create, you=
- may\n"
-+	"do so (now or later) by using -b with the checkout command again. Ex=
-ample:\n\n"
-+	"  git checkout -b new_branch_name\n\n";
+ --keep-cr::
+ --no-keep-cr::
+ 	With `--keep-cr`, call 'git mailsplit' (see linkgit:git-mailsplit[1])
+diff --git a/git-am.sh b/git-am.sh
+index 1c13b13..b8adde7 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -15,6 +15,7 @@ q,quiet         be quiet
+ s,signoff       add a Signed-off-by line to the commit message
+ u,utf8          recode into utf8 (default)
+ k,keep          pass -k flag to git-mailinfo
++keep-non-patch  pass -b flag to git-mailinfo
+ keep-cr         pass --keep-cr flag to git-mailsplit for mbox format
+ no-keep-cr      do not pass --keep-cr flag to git-mailsplit independent of am.keepcr
+ c,scissors      strip everything before a scissors line
+@@ -386,7 +387,9 @@ do
+ 	--no-utf8)
+ 		utf8= ;;
+ 	-k|--keep)
+-		keep=t ;;
++		keep=-k ;;
++	--keep-non-patch)
++		keep=-b ;;
+ 	-c|--scissors)
+ 		scissors=t ;;
+ 	--no-scissors)
+@@ -398,7 +401,7 @@ do
+ 	--abort)
+ 		abort=t ;;
+ 	--rebasing)
+-		rebasing=t threeway=t keep=t scissors=f no_inbody_headers=t ;;
++		rebasing=t threeway=t keep=-k scissors=f no_inbody_headers=t ;;
+ 	-d|--dotest)
+ 		die "$(gettext "-d option is no longer supported.  Do not use.")"
+ 		;;
+@@ -529,7 +532,7 @@ else
+ 	echo "$threeway" >"$dotest/threeway"
+ 	echo "$sign" >"$dotest/sign"
+ 	echo "$utf8" >"$dotest/utf8"
+-	echo "$keep" >"$dotest/keep"
++	printf "%s" "$keep" >"$dotest/keep"
+ 	echo "$scissors" >"$dotest/scissors"
+ 	echo "$no_inbody_headers" >"$dotest/no_inbody_headers"
+ 	echo "$GIT_QUIET" >"$dotest/quiet"
+@@ -571,7 +574,8 @@ then
+ else
+ 	utf8=-n
+ fi
+-if test "$(cat "$dotest/keep")" = t
++keep=$(cat "$dotest/keep")
++if test "$keep" = t
+ then
+ 	keep=-k
+ fi
+diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+index d7d9ccc..7e7c83c 100755
+--- a/t/t4150-am.sh
++++ b/t/t4150-am.sh
+@@ -237,7 +237,7 @@ test_expect_success 'am stays in branch' '
+ 
+ test_expect_success 'am --signoff does not add Signed-off-by: line if already there' '
+ 	git format-patch --stdout HEAD^ >patch3 &&
+-	sed -e "/^Subject/ s,\[PATCH,Re: Re: Re: & 1/5 v2," patch3 >patch4 &&
++	sed -e "/^Subject/ s,\[PATCH,Re: Re: Re: & 1/5 v2] [foo," patch3 >patch4 &&
+ 	rm -fr .git/rebase-apply &&
+ 	git reset --hard &&
+ 	git checkout HEAD^ &&
+@@ -259,7 +259,17 @@ test_expect_success 'am --keep really keeps the subject' '
+ 	git am --keep patch4 &&
+ 	! test -d .git/rebase-apply &&
+ 	git cat-file commit HEAD >actual &&
+-	grep "Re: Re: Re: \[PATCH 1/5 v2\] third" actual
++	grep "Re: Re: Re: \[PATCH 1/5 v2\] \[foo\] third" actual
++'
 +
-+	fprintf(stderr, fmt, new_name);
-+}
-diff --git a/advice.h b/advice.h
-index e5d0af7..7bda45b 100644
---- a/advice.h
-+++ b/advice.h
-@@ -14,5 +14,6 @@ int git_default_advice_config(const char *var, const =
-char *value);
- void advise(const char *advice, ...);
- int error_resolve_conflict(const char *me);
- extern void NORETURN die_resolve_conflict(const char *me);
-+void detach_advice(const char *new_name);
-=20
- #endif /* ADVICE_H */
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index f1984d9..5bf96ba 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -514,20 +514,6 @@ static void report_tracking(struct branch_info *ne=
-w)
- 	strbuf_release(&sb);
- }
-=20
--static void detach_advice(const char *old_path, const char *new_name)
--{
--	const char fmt[] =3D
--	"Note: checking out '%s'.\n\n"
--	"You are in 'detached HEAD' state. You can look around, make experime=
-ntal\n"
--	"changes and commit them, and you can discard any commits you make in=
- this\n"
--	"state without impacting any branches by performing another checkout.=
-\n\n"
--	"If you want to create a new branch to retain commits you create, you=
- may\n"
--	"do so (now or later) by using -b with the checkout command again. Ex=
-ample:\n\n"
--	"  git checkout -b new_branch_name\n\n";
--
--	fprintf(stderr, fmt, new_name);
--}
--
- static void update_refs_for_switch(struct checkout_opts *opts,
- 				   struct branch_info *old,
- 				   struct branch_info *new)
-@@ -575,7 +561,7 @@ static void update_refs_for_switch(struct checkout_=
-opts *opts,
- 			   REF_NODEREF, DIE_ON_ERR);
- 		if (!opts->quiet) {
- 			if (old->path && advice_detached_head)
--				detach_advice(old->path, new->name);
-+				detach_advice(new->name);
- 			describe_detached_head(_("HEAD is now at"), new->commit);
- 		}
- 	} else if (new->path) {	/* Switch branches. */
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 651b4cc..72eebca 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -563,7 +563,10 @@ static int checkout(void)
- 			  "unable to checkout.\n"));
- 		return 0;
- 	}
--	if (strcmp(head, "HEAD")) {
-+	if (!strcmp(head, "HEAD")) {
-+		if (advice_detached_head)
-+			detach_advice(sha1_to_hex(sha1));
-+	} else {
- 		if (prefixcmp(head, "refs/heads/"))
- 			die(_("HEAD not found below refs/heads!"));
- 	}
---=20
-1.7.3.1.256.g2539c.dirty
++test_expect_failure 'am --keep-non-patch really keeps the non-patch part' '
++	rm -fr .git/rebase-apply &&
++	git reset --hard &&
++	git checkout HEAD^ &&
++	git am --keep-non-patch patch4 &&
++	! test -d .git/rebase-apply &&
++	git cat-file commit HEAD >actual &&
++	grep "^\[foo\] third" actual
+ '
+ 
+ test_expect_success 'am -3 falls back to 3-way merge' '
+-- 
+1.7.9.rc0.168.g3847c
