@@ -1,71 +1,78 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: Bug? Git checkout fails with a wrong error message
-Date: Mon, 16 Jan 2012 12:07:19 +0100
-Message-ID: <4F1404E7.9040805@ira.uka.de>
-References: <loom.20120112T193624-86@post.gmane.org> <4F1028AD.9080701@ira.uka.de> <4F106DDF.4040408@unclassified.de> <4F1085EC.9010708@ira.uka.de> <4F128AD0.5020101@unclassified.de>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] bash-completion: don't add quoted space for ZSH (fix regression)
+Date: Mon, 16 Jan 2012 12:49:08 +0100
+Message-ID: <vpqhazv3m17.fsf@bauges.imag.fr>
+References: <20120114152030.GX30469@goldbirke>
+	<1326567336-2173-1-git-send-email-Matthieu.Moy@imag.fr>
+	<7vsjjhwvdy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?UTF-8?B?Q2FybG9zIE1h?= =?UTF-8?B?cnTDrW4gTmlldG8=?= 
-	<cmn@elego.de>
-To: Yves Goergen <nospam.list@unclassified.de>
-X-From: git-owner@vger.kernel.org Mon Jan 16 12:07:26 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 16 12:49:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RmkPN-000346-7w
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Jan 2012 12:07:25 +0100
+	id 1Rml3v-0004Yb-CW
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Jan 2012 12:49:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754103Ab2APLHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jan 2012 06:07:19 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:50782 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753931Ab2APLHS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Jan 2012 06:07:18 -0500
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1RmkP8-0007vI-Fc; Mon, 16 Jan 2012 12:07:15 +0100
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	id 1RmkP6-0004zR-6K; Mon, 16 Jan 2012 12:07:08 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <4F128AD0.5020101@unclassified.de>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1326712035.755950000
+	id S1754219Ab2APLtO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jan 2012 06:49:14 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:47940 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753596Ab2APLtO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jan 2012 06:49:14 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q0GBlZKu019656
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 16 Jan 2012 12:47:35 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Rml3k-00043a-AU; Mon, 16 Jan 2012 12:49:08 +0100
+In-Reply-To: <7vsjjhwvdy.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sat, 14 Jan 2012 18:29:45 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 16 Jan 2012 12:47:36 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q0GBlZKu019656
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1327319256.50467@0keopa9ALD1jib1TkVR/iw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188629>
 
-On 15.01.2012 09:14, Yves Goergen wrote:
-> On 13.01.2012 20:28 CE(S)T, Holger Hellmuth wrote:
->> Is it possible that Visual Studio changes them while you are comitting?
->
-> No. Those files may only be modified while open.
->
->>> I renamed the file and created a new one with the same name. Is it so
->>> simple to crash the Git repository?
->>
->> Who said anything about crash? git simply doesn't care whether a change
->> is because of a rename. It isn't special or different to any change you
->> can make to a file
->
-> Well, there is a tracked file about which Git says it's untracked. How
-> would you describe such internal inconsistency? Maybe corruption would
-> fit better.
+Junio C Hamano <gitster@pobox.com> writes:
 
-The original point I was trying to make was that git rename is made out 
-of the rather simple operations git add <newname> and git rm <oldname>. 
-Not a seldom used function but the basic operations of the vcs. It must 
-be one heck of a corner case or a bit flip in the hardware.
+> but is that the right thing to do if suffix came from "$4"?
+>
+> As far as I can see, "$4" is used to append "." in very limited cases, and
+> nobody explicitly passes SP as "$4" when calling this, so it may be easier
+> to read if you moved this before that "if we have 3 or more args, use the
+> fourth one as the suffix" block, i.e. something like this?
 
-The most likely place where the corruption could be is the index. This 
-is actually a simple file located in .git\ that can be recreated by 
-deleting that file and doing "git reset". I would shut down tortoise-git 
-(i.e. the explorer) before doing this and use the command line.
+Why not, but in case someone explicitely passes " " as $4 in the future,
+it's likely to be better to strip it for the same reason we strip it here.
+
+I don't care much either way in this case.
+
+> +	# Because we use '-o nospace' under bash, we need to compensate
+> +	# for it by appending SP after completed word ourselves.
+> +	local suffix="${BASH_VERSION+ }"
+
+Not sure why you reworded the comment, but I don't think it's a good
+idea to remove the "ZSH would quote the trailing space added with -S"
+that I had added, because this is really the reason we do a special case
+here. Your version is misleading, because we use -o nospace for ZSH too.
+
+So, overall, I prefer my version ;-).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
