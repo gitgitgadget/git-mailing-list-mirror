@@ -1,71 +1,119 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: The shared Git repo used by git-new-workdir
-Date: Mon, 16 Jan 2012 20:15:22 +0100
-Message-ID: <4F14774A.40100@ira.uka.de>
-References: <CAE1pOi3fBUBeNuhJqtJhxuMfz2G3iYOJy7U2HX6Nv4kqjcbnhw@mail.gmail.com>	<4F1467C1.504@ira.uka.de> <CAE1pOi3JocCoDGAmpCYdGdJN4E1nz8O4_i0MtLhwhP_axmH-uw@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Bug? Git checkout fails with a wrong error message
+Date: Mon, 16 Jan 2012 20:17:17 +0100
+Message-ID: <87r4yzzcci.fsf@thomas.inf.ethz.ch>
+References: <loom.20120112T193624-86@post.gmane.org>
+	<4F1028AD.9080701@ira.uka.de> <4F106DDF.4040408@unclassified.de>
+	<4F1085EC.9010708@ira.uka.de> <4F128AD0.5020101@unclassified.de>
+	<4F1404E7.9040805@ira.uka.de> <4F14718B.80209@unclassified.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Users <git@vger.kernel.org>
-To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 16 20:15:32 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Holger Hellmuth <hellmuth@ira.uka.de>, <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+To: Yves Goergen <nospam.list@unclassified.de>
+X-From: git-owner@vger.kernel.org Mon Jan 16 20:17:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rms1b-0005vt-BL
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Jan 2012 20:15:23 +0100
+	id 1Rms3b-0007fM-8t
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Jan 2012 20:17:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756007Ab2APTPU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jan 2012 14:15:20 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:40035 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755760Ab2APTPT (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Jan 2012 14:15:19 -0500
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1Rms1Q-0003Zj-RM; Mon, 16 Jan 2012 20:15:17 +0100
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	id 1Rms1P-0003sC-Bs; Mon, 16 Jan 2012 20:15:11 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <CAE1pOi3JocCoDGAmpCYdGdJN4E1nz8O4_i0MtLhwhP_axmH-uw@mail.gmail.com>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1326741318.060820000
+	id S1756119Ab2APTRW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jan 2012 14:17:22 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:26268 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755069Ab2APTRV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jan 2012 14:17:21 -0500
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 16 Jan
+ 2012 20:17:16 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (80.219.158.96) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 16 Jan
+ 2012 20:17:18 +0100
+In-Reply-To: <4F14718B.80209@unclassified.de> (Yves Goergen's message of "Mon,
+	16 Jan 2012 19:50:51 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [80.219.158.96]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188647>
 
-On 16.01.2012 19:57, Hilco Wijbenga wrote:
-> In my working directory:
-> hilco@centaur /mnt/lacie/workspaces/my-project-master
-> my-project-master (master $ u=)$ git status
-> # On branch master
-> nothing to commit (working directory clean)
->
-> In the shared repo:
-> hilco@centaur ~/git-clones/my-project my-project (master +$ u=)$ git status
-> # On branch master
-> # Changes to be committed:
-> #   (use "git reset HEAD<file>..." to unstage)
-> #
-> #       deleted:    .gitattributes
-> #       modified:   .gitignore
-> #       new file:   ...
-> ... hundreds more ...
+Yves Goergen <nospam.list@unclassified.de> writes:
 
-This is related to your using two repos with the same branch 
-(irrespective of root repo or not).
+> It's getting more weird. I believe that (msys)Git doesn't really know
+> how the filesystem on its operating system works. I have made some more
+> changes now and want to commit them. TortoiseGit reports the files
+> Form1.Designer.cs and Form1.designer.cs (note the case difference) as
+> modified and ready to commit. How is that supposed to work?
 
-There is nothing wrong with that per se, but if you add/commit/merge etc 
-in one of those two, the working directory and index of the other repo 
-doesn't get updated automatically. You would have to do "git reset 
---hard" in that repo to get it up-to-date
+Depends.
 
-If you want to avoid this just don't check out the same branch in any 
-two repos, root or not.
+If you work together with developers who have a case-sensitive FS (such
+as Linux, or with the right options OS X), it's entirely possible that
+this file exists in both spellings within the repository.
+
+Otherwise, because Git needs to have the ability to store such
+spellings, there are some ways of introducing them (e.g.,
+git-update-index).
+
+I suspect the adoption rate of TortoiseGit across this list is about 0%,
+partly because it is a Windows-only tool, partly because it was written
+almost entirely without interacting with the Git list.  So speaking in
+TortoiseGit terms here will most likely get you nowhere.
+
+> If the index is such a problem child, how can I safely delete it
+> completely and maybe have it regenerated if Git can't live without it?
+
+The index is not only, as its name might imply, a throw-away cache.  It
+is also used as the area where you prepare the contents of the next
+commit, and thus might hold data you do not want to lose.  Nevertheless,
+you can discard and reset it to the contents of HEAD with
+
+  rm -f .git/index
+  git reset
+
+> Great, I have the same file with an equal name twice in my repository
+> (with 'git ls-files').
+> 
+> How stupid! Git, go learn file names.
+
+Please cut&paste (!) actual command invocations (!) and outputs.
+
+To see why this is important, consider
+
+  "I have the same file with an equal name twice in my repository"
+
+Judging by how this thread is going, there are at least four ways this
+could be interpreted:
+
+* You have the byte-for-byte identical file name listed twice in the
+  index.  That would be a pretty bad bug.
+
+* Ditto, but in a commit.
+
+* You have two filenames in the index that differ only by case, which
+  makes them identical to your OS.
+
+* Ditto, but in a commit.
+
+See what I mean?
+
+So please, let's be precise.  You could start by cut&pasting the outputs
+of the following commands:
+
+  git ls-tree -r HEAD
+  git ls-files --debug
+  git status -s
+
+Otherwise, you can keep throwing around fuzzy complaints all you want
+but nobody will be able to help you because we cannot determine the
+exact state that your repository is in.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
