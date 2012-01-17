@@ -1,79 +1,78 @@
-From: Yves Goergen <nospam.list@unclassified.de>
-Subject: Re: Bug? Git checkout fails with a wrong error message
-Date: Tue, 17 Jan 2012 08:41:45 +0100
-Message-ID: <4F152639.9010505@unclassified.de>
-References: <loom.20120112T193624-86@post.gmane.org> <4F1028AD.9080701@ira.uka.de> <4F106DDF.4040408@unclassified.de> <4F1085EC.9010708@ira.uka.de> <4F128AD0.5020101@unclassified.de> <4F1404E7.9040805@ira.uka.de> <4F14718B.80209@unclassified.de> <20120116190956.GA13802@sigill.intra.peff.net> <4F1494AA.1000004@unclassified.de> <20120116212709.GA21770@sigill.intra.peff.net>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: [PATCH] merge: Make merge strategy message follow the diffstat
+Date: Tue, 17 Jan 2012 17:03:03 +0900
+Message-ID: <buomx9mhi2w.fsf@dhlpc061.dev.necel.com>
+References: <20120109073727.GF22134@opensource.wolfsonmicro.com>
+ <CA+55aFyhoh0rT_ujuE1w3RpuR7kqivYFwPpm66VC-xtq1PiGUQ@mail.gmail.com>
+ <20120110184530.GE7164@opensource.wolfsonmicro.com>
+ <CA+55aFxXb7wqfrpozS6iH0k25y-+Uy8_Tavv59JXMhaWrjXLaw@mail.gmail.com>
+ <20120110222711.GK7164@opensource.wolfsonmicro.com>
+ <CA+55aFxvQF=Bm4ae6euB_UO8otMCuN9Lv37Zn3TpE-L7JH3Kzw@mail.gmail.com>
+ <20120111184026.GA23952@windriver.com>
+ <7vaa5rzaax.fsf_-_@alter.siamese.dyndns.org>
+ <CACsJy8BmFgssTAh=1U7JgBsGG-tSaWXQzZeODND3icXY3QUxug@mail.gmail.com>
+ <CA+55aFxw_-0h1FDmPRVif3LM03Qh3-6haA7=KYbae8pSFbpW2w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Holger Hellmuth <hellmuth@ira.uka.de>, git@vger.kernel.org,
-	=?UTF-8?B?Q2FybG9zIE1hcnTDrW4gTmlldG8=?= <cmn@elego.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 17 08:42:10 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Paul Gortmaker <paul.gortmaker@windriver.com>,
+	Mark Brown <broonie@opensource.wolfsonmicro.com>,
+	Liam Girdwood <lrg@ti.com>, linux-kernel@vger.kernel.org,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: linux-kernel-owner@vger.kernel.org Tue Jan 17 09:03:47 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rn3gE-0008DZ-Ke
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 08:42:06 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1Rn419-0007aV-EG
+	for glk-linux-kernel-3@lo.gmane.org; Tue, 17 Jan 2012 09:03:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752157Ab2AQHly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jan 2012 02:41:54 -0500
-Received: from dotforward.de ([178.63.102.138]:42350 "EHLO dotforward.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752058Ab2AQHlx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jan 2012 02:41:53 -0500
-Received: from dsl01.83.171.184.42.ip-pool.nefkom.net ([83.171.184.42] helo=[192.168.1.13])
-	by dotforward.de with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.71)
-	(envelope-from <nospam.list@unclassified.de>)
-	id 1Rn3fu-0006CF-Tb; Tue, 17 Jan 2012 08:41:47 +0100
-User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
-In-Reply-To: <20120116212709.GA21770@sigill.intra.peff.net>
-Sender: git-owner@vger.kernel.org
+	id S1752343Ab2AQIDK (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 17 Jan 2012 03:03:10 -0500
+Received: from relmlor2.renesas.com ([210.160.252.172]:62371 "EHLO
+	relmlor2.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752179Ab2AQIDI (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 17 Jan 2012 03:03:08 -0500
+Received: from relmlir1.idc.renesas.com ([10.200.68.151])
+ by relmlor2.idc.renesas.com ( SJSMS)
+ with ESMTP id <0LXX006Q0NP6G0D0@relmlor2.idc.renesas.com>; Tue,
+ 17 Jan 2012 17:03:06 +0900 (JST)
+Received: from relmlac1.idc.renesas.com ([10.200.69.21])
+ by relmlir1.idc.renesas.com (SJSMS)
+ with ESMTP id <0LXX001NYNP2MRG0@relmlir1.idc.renesas.com>; Tue,
+ 17 Jan 2012 17:03:06 +0900 (JST)
+Received: by relmlac1.idc.renesas.com (Postfix, from userid 0)
+	id 95CD580030; Tue, 17 Jan 2012 17:03:06 +0900 (JST)
+Received: from relmlac1.idc.renesas.com (localhost [127.0.0.1])
+	by relmlac1.idc.renesas.com (Postfix) with ESMTP id 8AE5E80195; Tue,
+ 17 Jan 2012 17:03:06 +0900 (JST)
+Received: from relmlii1.idc.renesas.com [10.200.68.65]	by
+ relmlac1.idc.renesas.com with ESMTP id TAE17467; Tue,
+ 17 Jan 2012 17:03:06 +0900
+X-IronPort-AV: E=Sophos;i="4.71,522,1320591600";   d="scan'208";a="63617572"
+Received: from unknown (HELO relay41.aps.necel.com) ([10.29.19.9])
+ by relmlii1.idc.renesas.com with ESMTP; Tue, 17 Jan 2012 17:03:06 +0900
+Received: from dhlpc061 (dhlpc061.dev.necel.com [10.114.96.217])
+	by relay41.aps.necel.com (8.14.4+Sun/8.14.4) with ESMTP id q0H8347L029854;
+ Tue, 17 Jan 2012 17:03:04 +0900 (JST)
+Received: by dhlpc061 (Postfix, from userid 31295)	id 1381452E738; Tue,
+ 17 Jan 2012 17:03:04 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-reply-to: <CA+55aFxw_-0h1FDmPRVif3LM03Qh3-6haA7=KYbae8pSFbpW2w@mail.gmail.com>
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188697>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188698>
 
-On 16.01.2012 22:27 CE(S)T, Jeff King wrote:
-> On Mon, Jan 16, 2012 at 10:20:42PM +0100, Yves Goergen wrote:
-> 
->> On 16.01.2012 20:09 CE(S)T, Jeff King wrote:
->>> What is the output of "git config core.ignorecase" in your repository?
->> None, i.e. an empty line.
-> 
-> That's odd. When the repository is first created, git will do a test to
-> see whether the filesystem supports case-sensitivity, and will set
-> core.ignorecase if it does not. Might this repository have been created
-> on a different filesystem, and then moved onto the case-insensitive
-> filesystem?
-> 
-> Or might it have been created by something other than core git? I don't
-> know whether one can create a repo in TortoiseGit, or if so how it does
-> so.
+So ... "--shortish-diffthingy"
 
-It may have been created through the Visual Studio source provider for
-Git, which is configured to use TortoiseGit which in turn uses msysGit.
-But I have not written any of those programmes so I cannot guarantee for
-what they do.
-
-> In any case, try doing:
-> 
->   git config core.ignorecase true
-> 
-> and see if that clears up your problems.
-
-'git config core.ignorecase' now outputs "true" but I can still commit
-the same file (modified) twice. So this doesn't help.
-
-Meanwhile I have browsed my other code projects and found that the
-designer-generated file name is sometimes with a "D" and sometimes with
-a "d", so it's usually inconsistent. I haven't figured out where that
-comes from but it means that this is a common issue that Git needs to
-handle well to be usable on Windows. But we're not there yet.
+-miles
 
 -- 
-Yves Goergen "LonelyPixel" <nospam.list@unclassified.de>
-Visit my web laboratory at http://beta.unclassified.de
+Zeal, n. A certain nervous disorder afflicting the young and inexperienced.
