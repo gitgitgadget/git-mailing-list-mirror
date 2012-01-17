@@ -1,54 +1,91 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: git-grep while excluding files in a blacklist
-Date: Tue, 17 Jan 2012 16:19:49 +0700
-Message-ID: <CACsJy8A8eWt_wcxWrdjgmkHZpS1bBet7DTT-bRf9zrxfszUtjw@mail.gmail.com>
-References: <CA++fsGHGrNQzR-schP0yTXnD4jkYJjHHVk6QoJvfxPX9mguJPQ@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] bash-completion: don't add quoted space for ZSH (fix regression)
+Date: Tue, 17 Jan 2012 13:21:33 +0100
+Message-ID: <vpqr4yy1pv6.fsf@bauges.imag.fr>
+References: <20120114152030.GX30469@goldbirke>
+	<1326567336-2173-1-git-send-email-Matthieu.Moy@imag.fr>
+	<7vsjjhwvdy.fsf@alter.siamese.dyndns.org>
+	<vpqhazv3m17.fsf@bauges.imag.fr>
+	<7vsjjfuuwk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Dov Grobgeld <dov.grobgeld@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 17 10:20:30 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 17 13:21:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rn5DS-00057R-5N
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 10:20:30 +0100
+	id 1Rn82w-0005ps-70
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 13:21:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751943Ab2AQJUY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jan 2012 04:20:24 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:52172 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751340Ab2AQJUV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jan 2012 04:20:21 -0500
-Received: by bkas6 with SMTP id s6so1397327bka.19
-        for <git@vger.kernel.org>; Tue, 17 Jan 2012 01:20:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=L2M0WPqI4tMRrnXrBpr/18fFRNBccP2fQH55MkCADPA=;
-        b=NxMX2R3+vewrzaZe8oQl01QIZnaRT76LBQGgNXOje/YK5sEXMHRpv2oAMB+e9MdYIo
-         E4OHOxUwhh20b3YZBFyww/CGPlcXf87zPUyBhWqUIPXOVO5snQF5xe7RWaJB4/AVI0Xb
-         nNwkA8e0p/0KIWd7ZKbI6KVfS3Yn0dOXBWZus=
-Received: by 10.204.157.130 with SMTP id b2mr4911593bkx.22.1326792020208; Tue,
- 17 Jan 2012 01:20:20 -0800 (PST)
-Received: by 10.205.123.145 with HTTP; Tue, 17 Jan 2012 01:19:49 -0800 (PST)
-In-Reply-To: <CA++fsGHGrNQzR-schP0yTXnD4jkYJjHHVk6QoJvfxPX9mguJPQ@mail.gmail.com>
+	id S1753037Ab2AQMVp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jan 2012 07:21:45 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:40883 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752870Ab2AQMVm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jan 2012 07:21:42 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q0HCJvcs022780
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 17 Jan 2012 13:19:58 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Rn82f-0002rv-N0; Tue, 17 Jan 2012 13:21:33 +0100
+In-Reply-To: <7vsjjfuuwk.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 16 Jan 2012 14:47:39 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 17 Jan 2012 13:19:58 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q0HCJvcs022780
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1327407602.48198@18nUclRcDjjctHMVN//1EQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188704>
 
-On Tue, Jan 17, 2012 at 4:14 PM, Dov Grobgeld <dov.grobgeld@gmail.com> wrote:
-> Does git-grep allow searching for a pattern in all files *except*
-> files matching a pattern. E.g. in our project we have multiple DLL's
-> in git, but when searching I would like to exclude these for speed. Is
-> that possible with git-grep?
+Junio C Hamano <gitster@pobox.com> writes:
 
-Not from command line, no. You can put "*.dll" to .gitignore file then
-"git grep --exclude-standard".
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> but is that the right thing to do if suffix came from "$4"?
+>>>
+>>> As far as I can see, "$4" is used to append "." in very limited cases, and
+>>> nobody explicitly passes SP as "$4" when calling this, so it may be easier
+>>> to read if you moved this before that "if we have 3 or more args, use the
+>>> fourth one as the suffix" block, i.e. something like this?
+>>
+>> Why not, but in case someone explicitely passes " " as $4 in the future,
+>> it's likely to be better to strip it for the same reason we strip it here.
+>
+> I doubt that would be sufficent or appropriate. If some caller _WANTS_ to
+> add a SP, shouldn't we be devising a way to tell zsh to add it without
+> quoting,
+
+Yes, this is the point. But up to now, nobody found such a way so we're
+just trying to work around it in the less painfull way for the user.
+
+If someone _wants_ to add a SP, then he still can't do it portably with
+your patch, because the space will be quoted for bash users, and not for
+ZSH users, so one of them will be unhappy.
+
+> So does that mean we would be forcing zsh users to add SP themselves? 
+
+Yes, but we already do so. From my commit message:
+
+  The absence of trailing space for ZSH is a long-standing issue, that
+  this patch is not fixing.
+
+;-).
+
 -- 
-Duy
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
