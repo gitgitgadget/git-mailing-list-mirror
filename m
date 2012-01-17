@@ -1,91 +1,89 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Interactive rebase with submodules
-Date: Tue, 17 Jan 2012 22:29:33 +0100
-Message-ID: <4F15E83D.10509@web.de>
-References: <4F15C22C.3020902@metanate.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCH 2/3] git-p4: Search for parent commit on branch creation
+Date: Tue, 17 Jan 2012 17:18:30 -0500
+Message-ID: <20120117221830.GA366@padd.com>
+References: <1326674360-2771-1-git-send-email-vitor.hda@gmail.com>
+ <1326674360-2771-3-git-send-email-vitor.hda@gmail.com>
+ <20120116185738.GA21996@padd.com>
+ <CAOpHH-UkyK-c_AHUOPbQQmW9cQQypDvirMR0Jb7vTGSQF7RZpw@mail.gmail.com>
+ <CAOpHH-XUj7tF4O_kXfxq2e9Y4VmybNLCqGku_-9H1X+c7v=xwQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: John Keeping <john@metanate.com>
-X-From: git-owner@vger.kernel.org Tue Jan 17 22:29:54 2012
+To: Vitor Antunes <vitor.hda@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 17 23:18:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnGbH-000084-2M
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 22:29:51 +0100
+	id 1RnHMU-0000D8-Jj
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 23:18:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755798Ab2AQV3q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jan 2012 16:29:46 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:39177 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755177Ab2AQV3p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jan 2012 16:29:45 -0500
-Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 6B6EE1A903960
-	for <git@vger.kernel.org>; Tue, 17 Jan 2012 22:29:34 +0100 (CET)
-Received: from [192.168.178.43] ([91.3.175.223]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0LrKEG-1SnibK0bHw-013TjC; Tue, 17 Jan 2012 22:29:34
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-In-Reply-To: <4F15C22C.3020902@metanate.com>
-X-Provags-ID: V02:K0:wxs/2HL+bCzMObL9kUUYyZIEkJEd6m9kdarigGEh6Fu
- hraYzKz4YwqeSDA0TjDLTqKt/8JbH1xPs6PxKh1UyuFSYr5a3a
- 2ye0mMCNk5yVY2HSMNsxAcLY+FvBuR2vnGe/kBKQAgLsNn+HEK
- NNJhkygcRn2zWXtzOl5gez8HYeVzYc9m1NdqHd9xpuDbplsswl
- Zf1M/u2ARaGXrsnjxp6Sg==
+	id S1756003Ab2AQWSe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Jan 2012 17:18:34 -0500
+Received: from honk.padd.com ([74.3.171.149]:59558 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755234Ab2AQWSd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jan 2012 17:18:33 -0500
+Received: from arf.padd.com (unknown [50.55.142.76])
+	by honk.padd.com (Postfix) with ESMTPSA id 1514A5B3A;
+	Tue, 17 Jan 2012 14:18:33 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 3351831446; Tue, 17 Jan 2012 17:18:30 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <CAOpHH-XUj7tF4O_kXfxq2e9Y4VmybNLCqGku_-9H1X+c7v=xwQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188723>
 
-Am 17.01.2012 19:47, schrieb John Keeping:
-> I've encountered a scenario where git rebase --interactive drops a commit which contains a modification to a submodule but no other changes.
-> 
-> This occurs when there is a conflict when applying the commit (for example if the submodule's history has been rewritten and you are rewriting the parent repository to match the new version of the submodule).
-> 
-> To clarify:
-> 
-> git rebase -i
-> # Edit a commit, switching submodule to an unrelated commit
-> git rebase --continue
-> # Conflict in submodule, checkout the correct submodule commit
-> git add path/to/submodule
-> # Only change in index is updated submodule
-> git rebase --continue
-> # No commit is created for the submodule change
-> 
-> 
-> This appears to be because the git-rebase--interactive script inspects whether there is anything to commit when `rebase --continue` is invoked by running:
-> 
->     git diff-index --cached --quiet --ignore-submodules HEAD --
+vitor.hda@gmail.com wrote on Tue, 17 Jan 2012 00:10 +0000:
+> On Mon, Jan 16, 2012 at 11:41 PM, Vitor Antunes <vitor.hda@gmail.com>=
+ wrote:
+> > On Mon, Jan 16, 2012 at 6:57 PM, Pete Wyckoff <pw@padd.com> wrote:
+> >> 1. =A0Move the tempBranch commit outside of the "for blob" loop.
+> >> =A0 =A0It can have no parent, and the diff-tree will still tell yo=
+u
+> >> =A0 =A0if you found the same contents. =A0Instead of a ref for
+> >> =A0 =A0each blob inspected for each change, you'll just have one r=
+ef
+> >> =A0 =A0per change. =A0Only one checkpoint() after the tempBranch
+> >> =A0 =A0commit should be needed.
+> >
+> > You're right. Completely oversaw that. Will improve the code
+> > accordingly.
+>=20
+> Apparently I did not oversee it. Assume you have added a new file to
+> HEAD of parent branch, but you branched from a previous commit. When =
+the
+> new branch is committed over HEAD the new file will, incorrectly, be
+> part of it and diff-tree will not work as expected.
 
-Thanks for pinning that down.
+I don't get it.  This algorithm works on the fact that a "branch"
+in p4 creates a new change that looks exactly like a previous
+change.
 
-> Is there a reason for the `--ignore-submodules` in this command? Removing that option results in the expected behaviour.
+The git-p4 sync step, when it detects a branch, starts by saving
+the change in a commit with parent =3D null, so it is its own new
+branch, an orphan, with no parents.
 
-Yes, removing it will help your use case but break others. The reason
-for that is that because submodules are not updated during a rebase
-it doesn't make sense to compare their HEAD to what is recorded in
-the superproject, as that might have been changed by an earlier
-commit. And as the submodules HEAD hasn't been updated back then,
-it is stale and will always show up as modified (even if it wasn't).
+Now the task is to find some commit that has an identical tree to
+this temporary one.  You walk back all known p4 commits to try to
+find one that is the same.  It doesn't matter if any of those p4
+commits have other commits on top of them.
 
-> I can understand not updating submodules while running the rebase, but I expected that having resolved a conflict and added my change to the index it would be applied by `git rebase --continue`, as indeed it is if there happen to be other (non-submodule) changes in the same commit.
+At each step in the backward walk, the comparison is against the
+unchanged orphan commit.
 
-The irony is that you would have to update submodules (or at least
-their HEAD and use "--ignore-submodules=dirty") while running rebase
-to make that work in all cases ;-)
+An ascii-art picture might help me.  Or even a test case.
 
-But just updating the HEAD would be dangerous as you would have to be
-very careful to restore the submodules HEAD after the rebase, or the
-submodule's work tree will be out of sync.
+> I should avoid taking 6 months to submit a patch to avoid forgetting =
+why
+> I did what I did :)
 
-I suspect in the long run a rebase should, e.g. when invoked with
---recurse-submodules, update the submodules too and won't use the
---ignore-submodule option for diff anymore ... then everything
-should Just Work. But until that happens, I don't see a solution
-for your problem.
+Yeah, and now you have to explain it all over to me again too.  :)
+
+		-- Pete
