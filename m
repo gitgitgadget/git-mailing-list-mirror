@@ -1,129 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv3 10/13] credentials: add "cache" helper
-Date: Tue, 17 Jan 2012 01:02:32 -0500
-Message-ID: <20120117060232.GA27343@sigill.intra.peff.net>
-References: <20111210102827.GA16460@sigill.intra.peff.net>
- <20111210103407.GJ16529@sigill.intra.peff.net>
- <20120110015038.GA17754@burratino>
- <20120110044430.GA23619@sigill.intra.peff.net>
- <20120110045733.GA12460@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Re* Regulator updates for 3.3
+Date: Mon, 16 Jan 2012 22:13:02 -0800
+Message-ID: <7vboq2uaa9.fsf@alter.siamese.dyndns.org>
+References: <20120109073727.GF22134@opensource.wolfsonmicro.com>
+ <CA+55aFyhoh0rT_ujuE1w3RpuR7kqivYFwPpm66VC-xtq1PiGUQ@mail.gmail.com>
+ <20120110184530.GE7164@opensource.wolfsonmicro.com>
+ <CA+55aFxXb7wqfrpozS6iH0k25y-+Uy8_Tavv59JXMhaWrjXLaw@mail.gmail.com>
+ <20120110222711.GK7164@opensource.wolfsonmicro.com>
+ <CA+55aFxvQF=Bm4ae6euB_UO8otMCuN9Lv37Zn3TpE-L7JH3Kzw@mail.gmail.com>
+ <7vmx9v7z1r.fsf@alter.siamese.dyndns.org>
+ <CA+55aFx5NATrpLnkMiV2vAxSAJPK7wkY2vyHbyeZGgT9+jP06w@mail.gmail.com>
+ <7vehv77xeq.fsf@alter.siamese.dyndns.org>
+ <CA+55aFzuGtJkQFDooSGWQ2_NiJVHN2E7S5dmOnWTYn8_s8Gg3g@mail.gmail.com>
+ <7vzkdu7miv.fsf@alter.siamese.dyndns.org> <4F136BE4.4040502@pcharlan.com>
+ <7v62gbussz.fsf@alter.siamese.dyndns.org> <4F15080C.6060004@pcharlan.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 17 07:02:46 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Mark Brown <broonie@opensource.wolfsonmicro.com>,
+	Liam Girdwood <lrg@ti.com>, linux-kernel@vger.kernel.org,
+	Git Mailing List <git@vger.kernel.org>
+To: Pete Harlan <pgit@pcharlan.com>
+X-From: linux-kernel-owner@vger.kernel.org Tue Jan 17 07:13:24 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rn283-0000wc-SZ
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 07:02:44 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1Rn2IO-0004As-FZ
+	for glk-linux-kernel-3@lo.gmane.org; Tue, 17 Jan 2012 07:13:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751217Ab2AQGCi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jan 2012 01:02:38 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39893
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750735Ab2AQGCh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jan 2012 01:02:37 -0500
-Received: (qmail 24002 invoked by uid 107); 17 Jan 2012 06:09:34 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 17 Jan 2012 01:09:34 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Jan 2012 01:02:32 -0500
-Content-Disposition: inline
-In-Reply-To: <20120110045733.GA12460@sigill.intra.peff.net>
-Sender: git-owner@vger.kernel.org
+	id S1751743Ab2AQGNI (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 17 Jan 2012 01:13:08 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64041 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750916Ab2AQGNG (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 17 Jan 2012 01:13:06 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 006237DD0;
+	Tue, 17 Jan 2012 01:13:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ScuacaJZRjQ+YCSOCws2stgzzHY=; b=ieaEhQ
+	RotmqyGkoxl3NGCbBeTn0VyY0/wginrL9ZLYgZSCvvX5TEvB5QNfW0VX7WYHISMz
+	BWKBm7AMPia0saO7AChOPH8OrXQQbKcShxZdlyQtnCos8T1QI5Tq45fB6pCgCBy4
+	gVGKPARn8cBOju6WX5foZuYNeT8Cokza42vI0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UnTRmuNZGjIirqK0x6ykVLBJ3D9vHLY/
+	gMVTT0DBrr0BCrsAdiZSlxdCVQIjZVQ7wGxm2nrQZ4XL4qjx7bRXkC+Z+DWBqo7j
+	DKUdRn6IHsKbiNcuRPHv4fFa/YPyBmFLA96g2sLf68IJtbfr0c7eSkyC0m5c4ZGb
+	47iBBdhum9Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB5977DCF;
+	Tue, 17 Jan 2012 01:13:04 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6B4E77DCD; Tue, 17 Jan 2012
+ 01:13:04 -0500 (EST)
+In-Reply-To: <4F15080C.6060004@pcharlan.com> (Pete Harlan's message of "Mon,
+ 16 Jan 2012 21:33:00 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 51068708-40D2-11E1-8E2A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188690>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188691>
 
-On Mon, Jan 09, 2012 at 11:57:33PM -0500, Jeff King wrote:
+Pete Harlan <pgit@pcharlan.com> writes:
 
-> Subject: [PATCH] credential-cache: report more daemon connection errors
-> 
-> Originally, this code remained relatively silent when we
-> failed to connect to the cache. The idea was that it was
-> simply a cache, and we didn't want to bother the user with
-> temporary failures (the worst case is that we would simply
-> ask their password again).
-> 
-> However, if you have a configuration failure or other
-> problem, it is helpful for the daemon to report those
-> problems. Git will happily ignore the failed error code, but
-> the extra information to stderr can help the user diagnose
-> the problem.
+> ... The
+> only time I think I'd prefer "LEGACY" is if you're planning on
+> deprecating and removing it eventually and you want to indicate
+> something to that effect in the name.
 
-This actually has a minor regression, fixed below.
+The discussion that led to the naming of that LEGACY token needs to be
+re-read, then. The kind of "LEGACY" you prefer is exactly why the
+environment variable is called LEGACY in the patch you are commenting on,
+written in response to Linus's suggestion to switch the default, even
+though I am not 100% buying it.
 
--- >8 --
-Subject: [PATCH] credential-cache: ignore "connection refused" errors
+Having said that, I think I am wasting my time responding to this thread
+during the feature-freeze period for v1.7.9, as I am not a big fan of
+switching the default without adequate warning and transition plans, after
+getting burned by the "'git-foo' vs 'git foo'" flames back in the v1.6.0
+release. We would likely to take a gradual and smoother migration route to
+transition, e.g. v1.7.9 to introduce "merge --edit", v1.7.10 to introduce
+a configuration variable merge.edit (lack of which gives a warning and an
+advice message while defaulting to 'no' to preserve the traditional
+behaviour), and finally v1.8.0 (or v2.0) to flip the default to 'yes'
+(while the configuration still giving a warning and an advice message)
+that "merge --no-edit" can still countermand.
 
-The credential-cache helper will try to connect to its
-daemon over a unix socket. Originally, a failure to do so
-was silently ignored, and we would either give up (if
-performing a "get" or "erase" operation), or spawn a new
-daemon (for a "store" operation).
-
-But since 8ec6c8d, we try to report more errors. We detect a
-missing daemon by checking for ENOENT on our connection
-attempt.  If the daemon is missing, we continue as before
-(giving up or spawning a new daemon). For any other error,
-we die and report the problem.
-
-However, checking for ENOENT is not sufficient for a missing
-daemon. We might also get ECONNREFUSED if a dead daemon
-process left a stale socket. This generally shouldn't
-happen, as the daemon cleans up after itself, but the daemon
-may not always be given a chance to do so (e.g., power loss,
-"kill -9").
-
-The resulting state is annoying not just because the helper
-outputs an extra useless message, but because it actually
-blocks the helper from spawning a new daemon to replace the
-stale socket.
-
-Fix it by checking for ECONNREFUSED.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-If we really want to go belt-and-suspenders, the logic should perhaps be
-changed to:
-
-  if (send_request(socket, &buf < 0) {
-          /* if we're starting a new one, who cares why it didn't work */
-          if (flags & FLAG_SPAWN) {
-                  spawn_daemon(socket);
-                  if (send_request(socket, &buf) < 0)
-                          die_errno("unable to connect to spawned daemon");
-          }
-          /* otherwise, report any non-minor errors */
-          else if(errno != ENOENT && errno != ECONNREFUSED)
-                  die_errno("unable to connect to cache daemon");
-          /* otherwise we are just missing the daemon, and we can ignore */
-  }
-
-but that implies there is some condition besides ENOENT and ECONNREFUSED
-where actually starting a new daemon (which will try to unlink whatever
-is there now!) would be a good idea. I'd rather be conservative and
-see if anybody reports a real-world case.
-
- credential-cache.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/credential-cache.c b/credential-cache.c
-index 1933018..9a03792 100644
---- a/credential-cache.c
-+++ b/credential-cache.c
-@@ -72,7 +72,7 @@ static void do_cache(const char *socket, const char *action, int timeout,
- 	}
- 
- 	if (send_request(socket, &buf) < 0) {
--		if (errno != ENOENT)
-+		if (errno != ENOENT && errno != ECONNREFUSED)
- 			die_errno("unable to connect to cache daemon");
- 		if (flags & FLAG_SPAWN) {
- 			spawn_daemon(socket);
--- 
-1.7.9.rc0.33.gd3c17
+So you have until v1.7.10 to decide a good name for the overriding
+environment variable.
