@@ -1,82 +1,111 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] bash-completion: don't add quoted space for ZSH (fix
- regression)
-Date: Tue, 17 Jan 2012 10:46:48 -0800
-Message-ID: <7vty3urwtj.fsf@alter.siamese.dyndns.org>
-References: <20120114152030.GX30469@goldbirke>
- <1326567336-2173-1-git-send-email-Matthieu.Moy@imag.fr>
- <7vsjjhwvdy.fsf@alter.siamese.dyndns.org> <vpqhazv3m17.fsf@bauges.imag.fr>
- <7vsjjfuuwk.fsf@alter.siamese.dyndns.org> <vpqr4yy1pv6.fsf@bauges.imag.fr>
+Subject: Re: [PATCH] i18n: disable i18n for shell scripts if NO_GETTEXT
+ defined
+Date: Tue, 17 Jan 2012 11:08:34 -0800
+Message-ID: <7vfwfervt9.fsf@alter.siamese.dyndns.org>
+References: <CALxABCZME-g++HxMsD4Nrn1J6s27vN7M_KQSVT3PeLWBqP7qJg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jan 17 19:47:01 2012
+Cc: Git Mailing List <git@vger.kernel.org>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= Bjarmason 
+	<avarab@gmail.com>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 17 20:08:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnE3f-00027S-WE
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 19:47:00 +0100
+	id 1RnEOf-0006cj-W5
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 20:08:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754846Ab2AQSqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jan 2012 13:46:53 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47776 "EHLO
+	id S1753127Ab2AQTIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jan 2012 14:08:37 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61923 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753887Ab2AQSqv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jan 2012 13:46:51 -0500
+	id S1751266Ab2AQTIg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jan 2012 14:08:36 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D7A364BB;
-	Tue, 17 Jan 2012 13:46:50 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 399FC68D0;
+	Tue, 17 Jan 2012 14:08:36 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Jl5Kl+WCghGZ5knUD1Rj6vMRx6M=; b=q+4cJ9
-	n0TADH/DVRYsRStSn9R6dNYqr5jSPGx2J2voj6n2c0KBnw6PZ7ek/fxiASjPZ9pf
-	uCzs+w3J1FwO3HTdClcg8k8R4SOnmNGAL4251F6vfq9aZ0I1RNyg7IYzkuT5GH5+
-	Oz0BKZhrivDIqqeSeauNgyXM5JPwG/Dn8rTu8=
+	:content-type; s=sasl; bh=4nYAuCuWtjaVdgN8DiUcfXpw374=; b=NjrKYM
+	/B1PRC+JV0n3jY3tPYBPCn2Q5ShCKrCo3GkuX67dfbgoOJ8mGWox7tqLmtbY64S1
+	h/u3xhB8wGv2B5a1qlt7gIa9eN8d6B5J/Vyc1scxoQcM5U3NzURwJfkiCj4tl42l
+	7MZnlNS8i6wdjw+b+XArQc6iv0Zf/a4NhhLuA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ld+lY19SBVqpLaMb0dG27opbAVQ8RM6N
-	5jBxvmU4eh07NtZ+nuQkvHvN+u6pGvhjEZoJ11Ba8O7djRsMWVVoAvGEV1bbG0j0
-	y3inCVwIsFJOhNqh60gYFw/pD5cd8hygZ2b1wdY8GLQoY9tPjHI4GnqaWoo0FB2T
-	XRxQw/zik94=
+	:content-type; q=dns; s=sasl; b=FZy4D6qBc6M7tFd/gGZqSh9yZ5mNGVOK
+	Hrr37UEcCrx4Vg2AtY0iITj5ijCRzC8iRN3kAUB3zYT3T1VpPT+AzcOuy+WTkox7
+	SrtdPeKp6OdS49GAV8M37FUYigSFNgk/otWrUsOJYwrv2bmDeBOz4JRUW9WWSvnS
+	BIz0NSJRIzY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 432CB64B9;
-	Tue, 17 Jan 2012 13:46:50 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2FFC268CF;
+	Tue, 17 Jan 2012 14:08:36 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CBF2E64B7; Tue, 17 Jan 2012
- 13:46:49 -0500 (EST)
-In-Reply-To: <vpqr4yy1pv6.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Tue, 17 Jan 2012 13:21:33 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 99D4768CE; Tue, 17 Jan 2012
+ 14:08:35 -0500 (EST)
+In-Reply-To: <CALxABCZME-g++HxMsD4Nrn1J6s27vN7M_KQSVT3PeLWBqP7qJg@mail.gmail.com> (Alex
+ Riesen's message of "Tue, 17 Jan 2012 14:42:01 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9D760082-413B-11E1-94D0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A7C69D14-413E-11E1-BF43-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188711>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Alex Riesen <raa.lkml@gmail.com> writes:
 
->> I doubt that would be sufficent or appropriate. If some caller _WANTS_ to
->> add a SP, shouldn't we be devising a way to tell zsh to add it without
->> quoting,
+> From: Alex Riesen <raa.lkml@gmail.com>
+> Date: Tue, 17 Jan 2012 14:25:24 +0100
+> Subject: [PATCH] i18n: disable i18n for shell scripts if NO_GETTEXT defined
 >
-> Yes, this is the point. But up to now, nobody found such a way so we're
-> just trying to work around it in the less painfull way for the user.
+> Otherwise the i18n is used in the scripts even with NO_GETTEXT set.
+> It is very unexpected.
+>
+> I generally disable i18n on my working systems as they are generally very
+> out-of-date and not supported by any sane developer. In particular the
+> gettext provided with this (very old) Cygwin distribution is fubar and
+> never produces any output.
+> ---
 
-Ok, I take it that the original patch is meant as a small step in making
-it a usable state, by not adding useless "quoted SP". In the ideal world
-it may be better to add SP but we do not know how without zsh interfering
-with our attempt to do so and adding an unwanted quoting, so we are taking
-the second best approach that we at least know works.
+Thanks for spotting. I agree that we should honor NO_GETTEXT here.
 
-Which is fine by me, and as you said, the completion script always asked
-zsh users to add SP themselves, so it is not even a regression.
+But the result of the patch looks almost unreadable. could we restructure
+the script like this instead?
 
-The real reason I am continuing this thread is to keep it alive so that a
-zsh guru would jump in from somewhere and show us "here is how to tell Zsh
-not to quote $suffix"; that does not seem to be happening yet, so let's
-use your patch as-is.
+        # Decide what to do...
+        GIT_INTERNAL_GETTEXT_SH_SCHEME=fallthrough
+	if test -n "@@NO_GETTEXT@@$GIT_INTERNAL_GETTEXT_TEST_FALLBACKS"
+	then
+		: no probing necessary
+        elif test -n "$GIT_GETTEXT_POISON"
+        then
+                GIT_INTERNAL_GETTEXT_SH_SCHEME=poison
+        elif type gettext.sh >/dev/null 2>&1
+        then
+                GIT_INTERNAL_GETTEXT_SH_SCHEME=gnu
+        elif test "$(gettext -h 2>&1)" = "-h"
+        then
+                GIT_INTERNAL_GETTEXT_SH_SCHEME=solaris
+        fi
+        export GIT_INTERNAL_GETTEXT_SH_SCHEME
+
+        # ... and then carry out the decision
+        case "$GIT_INTERNAL_GETTEXT_SH_SCHEME" in
+        gnu)
+                ... gnu definition here ...
+                ;;
+        solaris)
+                ... solaris cdefinition here ...
+                ;;
+        poison)
+                ... poison cdefinition here ...
+                ;;
+        *)
+                ... fallthru definition here ...
+                ;;
+        esac
