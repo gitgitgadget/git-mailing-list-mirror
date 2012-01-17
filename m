@@ -1,78 +1,144 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [PATCH] merge: Make merge strategy message follow the diffstat
-Date: Tue, 17 Jan 2012 17:03:03 +0900
-Message-ID: <buomx9mhi2w.fsf@dhlpc061.dev.necel.com>
-References: <20120109073727.GF22134@opensource.wolfsonmicro.com>
- <CA+55aFyhoh0rT_ujuE1w3RpuR7kqivYFwPpm66VC-xtq1PiGUQ@mail.gmail.com>
- <20120110184530.GE7164@opensource.wolfsonmicro.com>
- <CA+55aFxXb7wqfrpozS6iH0k25y-+Uy8_Tavv59JXMhaWrjXLaw@mail.gmail.com>
- <20120110222711.GK7164@opensource.wolfsonmicro.com>
- <CA+55aFxvQF=Bm4ae6euB_UO8otMCuN9Lv37Zn3TpE-L7JH3Kzw@mail.gmail.com>
- <20120111184026.GA23952@windriver.com>
- <7vaa5rzaax.fsf_-_@alter.siamese.dyndns.org>
- <CACsJy8BmFgssTAh=1U7JgBsGG-tSaWXQzZeODND3icXY3QUxug@mail.gmail.com>
- <CA+55aFxw_-0h1FDmPRVif3LM03Qh3-6haA7=KYbae8pSFbpW2w@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH] test-lib: add the test_pause convenience function
+Date: Tue, 17 Jan 2012 09:21:16 +0100
+Message-ID: <4F152F7C.9020902@web.de>
+References: <4F133069.10308@web.de> <20120115232413.GA14724@sigill.intra.peff.net> <7vk44ruupe.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Paul Gortmaker <paul.gortmaker@windriver.com>,
-	Mark Brown <broonie@opensource.wolfsonmicro.com>,
-	Liam Girdwood <lrg@ti.com>, linux-kernel@vger.kernel.org,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: linux-kernel-owner@vger.kernel.org Tue Jan 17 09:03:47 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+	Pete Wyckoff <pw@padd.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 17 09:21:45 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Rn419-0007aV-EG
-	for glk-linux-kernel-3@lo.gmane.org; Tue, 17 Jan 2012 09:03:43 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Rn4Ia-00063h-TN
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 09:21:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752343Ab2AQIDK (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 17 Jan 2012 03:03:10 -0500
-Received: from relmlor2.renesas.com ([210.160.252.172]:62371 "EHLO
-	relmlor2.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752179Ab2AQIDI (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 17 Jan 2012 03:03:08 -0500
-Received: from relmlir1.idc.renesas.com ([10.200.68.151])
- by relmlor2.idc.renesas.com ( SJSMS)
- with ESMTP id <0LXX006Q0NP6G0D0@relmlor2.idc.renesas.com>; Tue,
- 17 Jan 2012 17:03:06 +0900 (JST)
-Received: from relmlac1.idc.renesas.com ([10.200.69.21])
- by relmlir1.idc.renesas.com (SJSMS)
- with ESMTP id <0LXX001NYNP2MRG0@relmlir1.idc.renesas.com>; Tue,
- 17 Jan 2012 17:03:06 +0900 (JST)
-Received: by relmlac1.idc.renesas.com (Postfix, from userid 0)
-	id 95CD580030; Tue, 17 Jan 2012 17:03:06 +0900 (JST)
-Received: from relmlac1.idc.renesas.com (localhost [127.0.0.1])
-	by relmlac1.idc.renesas.com (Postfix) with ESMTP id 8AE5E80195; Tue,
- 17 Jan 2012 17:03:06 +0900 (JST)
-Received: from relmlii1.idc.renesas.com [10.200.68.65]	by
- relmlac1.idc.renesas.com with ESMTP id TAE17467; Tue,
- 17 Jan 2012 17:03:06 +0900
-X-IronPort-AV: E=Sophos;i="4.71,522,1320591600";   d="scan'208";a="63617572"
-Received: from unknown (HELO relay41.aps.necel.com) ([10.29.19.9])
- by relmlii1.idc.renesas.com with ESMTP; Tue, 17 Jan 2012 17:03:06 +0900
-Received: from dhlpc061 (dhlpc061.dev.necel.com [10.114.96.217])
-	by relay41.aps.necel.com (8.14.4+Sun/8.14.4) with ESMTP id q0H8347L029854;
- Tue, 17 Jan 2012 17:03:04 +0900 (JST)
-Received: by dhlpc061 (Postfix, from userid 31295)	id 1381452E738; Tue,
- 17 Jan 2012 17:03:04 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-reply-to: <CA+55aFxw_-0h1FDmPRVif3LM03Qh3-6haA7=KYbae8pSFbpW2w@mail.gmail.com>
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1752259Ab2AQIVk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jan 2012 03:21:40 -0500
+Received: from fmmailgate05.web.de ([217.72.192.243]:42476 "EHLO
+	fmmailgate05.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752130Ab2AQIVj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jan 2012 03:21:39 -0500
+Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
+	by fmmailgate05.web.de (Postfix) with ESMTP id CEB226914659
+	for <git@vger.kernel.org>; Tue, 17 Jan 2012 09:21:20 +0100 (CET)
+Received: from [192.168.178.43] ([91.3.199.218]) by smtp.web.de (mrweb001)
+ with ESMTPA (Nemesis) id 0MRTvU-1SFh0K20Uq-00SoD4; Tue, 17 Jan 2012 09:21:20
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
+In-Reply-To: <7vk44ruupe.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: V02:K0:4nK4IOSOQOY5gf3uaEnhflUBrqWy/bJctV+JTeLs5l0
+ sjaiZRd+m7e6Mr9u/60+Afiscaoypt5Gveaqx4oGtCN6raa7rQ
+ Zh+lWcT5Kjwr2DUIGN34iP8RP3Jo30cF3d/JJOk/Outg6xY7uN
+ DsorNGQnb1WTXl6rGO54fuhShwqEIe87xwEK3X6rzm+Jn3FiUP
+ RPQylNDLoIUVoC/nlZONA==
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188698>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188699>
 
-So ... "--shortish-diffthingy"
+Since 781f76b15 (test-lib: redirect stdin of tests) you can't simply put a
+"bash &&" into a test for debugging purposes anymore. Instead you'll have
+to use "bash <&6 >&3 2>&4".
 
--miles
+As that invocation is not that easy to remember add the test_pause
+convenience function. This function also checks if the -v flag is given
+and will error out if that is not the case instead of letting the test
+hang until ^D is pressed.
 
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
+
+Am 16.01.2012 23:51, schrieb Junio C Hamano:
+> Jeff King <peff@peff.net> writes:
+> 
+>> Nice. Many times I have added such a "bash" or "gdb" invocation then
+>> forgotten "-v", only to scratch my head at why the test seemed to be
+>> hanging.
+>>
+>> Two minor nits on the patch itself:
+>> ...
+>> 1. It may be worth putting a warning in the comment that this is never
+>>    to be used in a real test, but only temporarily inserted.
+>>
+>> 2. I do this not just with bash, but with "gdb". I wonder if it is worth
+>>    making this "test_foo bash", for some value of "foo" (the ones that
+>>    occur to me are "debug" and "run", but of course they are taken).
+>>
+>>    Actually, I wonder if the existing test_debug could handle this
+>>    already (though you do have to remember to add "--debug" to your
+>>    command line, then).
+> 
+> I wondered the same thing from a different angle. My first reaction was
+> "Why is this called 'bash' not 'sh'?" which naturally led to the same
+> direction as yours "why not an arbitrary command 'test_debug xxx'?"
+> 
+> test_pause perhaps?
+
+I really don't care deeply about the name, so test_pause is absolutely
+ok for me. I added some documentation in t/README too and made it an
+error when --verbose is not used.
+
+Is it ok to invoke bash here or should sh be used?
+
+
+ t/README      |   13 +++++++++++++
+ t/test-lib.sh |   13 +++++++++++++
+ 2 files changed, 26 insertions(+), 0 deletions(-)
+
+diff --git a/t/README b/t/README
+index c85abaf..c09c582 100644
+--- a/t/README
++++ b/t/README
+@@ -548,6 +548,19 @@ library for your script to use.
+ 		...
+ 	'
+
++ - test_pause
++
++	This command is useful for writing and debugging tests and must be
++	removed before submitting. It halts the execution of the test and
++	spawns a shell in the trash directory. Exit the shell to continue
++	the test. Example:
++
++	test_expect_success 'test' '
++		git do-something >actual &&
++		test_pause &&
++		test_cmp expected actual
++	'
++
+ Prerequisites
+ -------------
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index a65dfc7..85084c4 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -329,6 +329,19 @@ test_tick () {
+ 	export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
+ }
+
++# Stop execution and start a shell. This is useful for debugging tests and
++# only makes sense together with "-v".
++#
++# Be sure to remove all invocations of this command before submitting.
++
++test_pause () {
++	if test "$verbose" = t; then
++		bash <&6 >&3 2>&4
++	else
++		error >&5 "test_pause requires --verbose"
++	fi
++}
++
+ # Call test_commit with the arguments "<message> [<file> [<contents>]]"
+ #
+ # This will commit a file with the given contents and the given commit
 -- 
-Zeal, n. A certain nervous disorder afflicting the young and inexperienced.
+1.7.9.rc1.2.g0b847.dirty
