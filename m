@@ -1,147 +1,83 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] i18n: disable i18n for shell scripts if NO_GETTEXT defined
-Date: Tue, 17 Jan 2012 14:42:01 +0100
-Message-ID: <CALxABCZME-g++HxMsD4Nrn1J6s27vN7M_KQSVT3PeLWBqP7qJg@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 28/51] refs.c: rename ref_array -> ref_dir
+Date: Tue, 17 Jan 2012 16:07:05 +0100
+Message-ID: <4F158E99.2020906@alum.mit.edu>
+References: <1323668338-1764-1-git-send-email-mhagger@alum.mit.edu> <1323668338-1764-29-git-send-email-mhagger@alum.mit.edu> <7v7h21xps9.fsf@alter.siamese.dyndns.org> <4EE6E61F.8080405@alum.mit.edu> <7vk461vuy9.fsf@alter.siamese.dyndns.org> <4EE7A387.3070400@alum.mit.edu> <4EE7CDF2.3040408@alum.mit.edu> <7vzkewt5qu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=e89a8f6436f82ae55c04b6b98071
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 17 14:42:30 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Drew Northup <drew.northup@maine.edu>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 17 16:07:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rn9Iy-0004jd-Lk
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 14:42:29 +0100
+	id 1RnAdg-0001fU-Jz
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 16:07:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753558Ab2AQNmX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jan 2012 08:42:23 -0500
-Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:44784 "EHLO
-	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753293Ab2AQNmW (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jan 2012 08:42:22 -0500
-Received: by obcva7 with SMTP id va7so5849336obc.19
-        for <git@vger.kernel.org>; Tue, 17 Jan 2012 05:42:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=ZAVa6nsFTqY9MHrqowP2cE4pTxiX2FRA3Tz02eF3v3A=;
-        b=vt0AgVRPz69S41BXm3xYMYGq8/ccNw5T01W7rt2YMVPNL+X//PIZijXWHzgzKqXSxz
-         khfTGyZmYedgc7CMyVD37BKvCdNJN1IkQnZYXQUSHZ+y9hg3LSUXI5MN3kDMhFPvLYOf
-         Gt/mtWKEPAT+wo6pT0G3xwrnAi9Y/aqsLX+7Y=
-Received: by 10.182.131.37 with SMTP id oj5mr15085132obb.63.1326807742342;
- Tue, 17 Jan 2012 05:42:22 -0800 (PST)
-Received: by 10.182.226.41 with HTTP; Tue, 17 Jan 2012 05:42:01 -0800 (PST)
+	id S1754669Ab2AQPHw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jan 2012 10:07:52 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:55679 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753763Ab2AQPHv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jan 2012 10:07:51 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q0HF75O9022794
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 17 Jan 2012 16:07:05 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.24) Gecko/20111108 Lightning/1.0b2 Thunderbird/3.1.16
+In-Reply-To: <7vzkewt5qu.fsf@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188707>
 
---e89a8f6436f82ae55c04b6b98071
-Content-Type: text/plain; charset=UTF-8
+On 12/14/2011 12:24 AM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>> ...  But there are so many calls to the
+>> for_each_ref*() family of functions that I wasn't able to determine
+>> exactly which should allow for extra refs and which shouldn't.
+> 
+> Only the ones that follow add_extra_ref() in the control flow.
+> 
+> builtin/clone.c adds them in setup_reference() to deal with --reference.
+> The objects known to be complete in these repositories we borrow from
+> need to be marked complete on our end (i.e. clone does not have to fetch)
+> and transport_fetch_refs() that eventually goes to fetch_refs_via_pack()
+> that calls fetch_pack() uses this information. All three for_each_ref()
+> calls in builtin/fetch-pack.c are about "what are the objects that we know
+> are complete?" and needs to pay attention to extra refs.
+> 
+> Having said that, I have a slight suspicion that you might be able to
+> eliminate this one in clone.  setup_reference() adds the reference
+> repository to the $GIT_DIR/objects/info/alternates, and the fetch logic
+> already knows to account for the refs in alternate repositories via
+> insert_alternate_refs() callchain.
 
-Otherwise the i18n is used in the scripts even with NO_GETTEXT set.
-It is very unexpected.
+If I comment out the call from add_one_reference() to add_extra_ref()
+then I get a single failure, in t5700:
 
----
+not ok - 8 fetched no objects
+#	! grep "^want" "$U"
 
-I usually disable i18n on my working systems as they are generally very
-out-of-date and not supported by any sane developer. In particular the
-gettext provided with this (very old) Cygwin distribution is fubar and
-never produces any output.
+So your suspicion does not seem to be borne out (at least not in the
+naivest form).
 
- Makefile       |    1 +
- git-sh-i18n.sh |    4 ++--
- 2 files changed, 3 insertions(+), 2 deletions(-)
+Still studying...
+Michael
 
-diff --git a/Makefile b/Makefile
-index a782409..d82ea6a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1887,6 +1887,7 @@ sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-     -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
-     -e 's|@@LOCALEDIR@@|$(localedir_SQ)|g' \
-     -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
-+    -e 's/@@NO_GETTEXT@@/$(NO_GETTEXT)/g' \
-     -e $(BROKEN_PATH_FIX) \
-     $@.sh >$@+
- endef
-diff --git a/git-sh-i18n.sh b/git-sh-i18n.sh
-index b4575fb..7f7e32b 100644
---- a/git-sh-i18n.sh
-+++ b/git-sh-i18n.sh
-@@ -18,7 +18,7 @@ export TEXTDOMAINDIR
-
- if test -z "$GIT_GETTEXT_POISON"
- then
--	if test -z "$GIT_INTERNAL_GETTEXT_TEST_FALLBACKS" && type gettext.sh
->/dev/null 2>&1
-+	if test -z "@@NO_GETTEXT@@" && test -z
-"$GIT_INTERNAL_GETTEXT_TEST_FALLBACKS" && type gettext.sh >/dev/null
-2>&1
- 	then
- 		# This is GNU libintl's gettext.sh, we don't need to do anything
- 		# else than setting up the environment and loading gettext.sh
-@@ -29,7 +29,7 @@ then
- 		# can't.
- 		. gettext.sh
-
--	elif test -z "$GIT_INTERNAL_GETTEXT_TEST_FALLBACKS" && test
-"$(gettext -h 2>&1)" = "-h"
-+	elif test -z "@@NO_GETTEXT@@" && test -z
-"$GIT_INTERNAL_GETTEXT_TEST_FALLBACKS" && test "$(gettext -h 2>&1)" =
-"-h"
- 	then
- 		# We don't have gettext.sh, but there's a gettext binary in our
- 		# path. This is probably Solaris or something like it which has a
 -- 
-1.7.8.2.388.ge40c2
-
---e89a8f6436f82ae55c04b6b98071
-Content-Type: text/x-patch; charset=US-ASCII; 
-	name="0001-disable-i18n-for-shell-scripts-if-NO_GETTEXT-def.diff"
-Content-Disposition: attachment; 
-	filename="0001-disable-i18n-for-shell-scripts-if-NO_GETTEXT-def.diff"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_gxiyzb9r0
-
-RnJvbSAzNmU3M2ZlMTRjYmVjZDA0NTEyYTZlOGEyMWI5ZWIxNGQyNzhkMWRjIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
-OiBUdWUsIDE3IEphbiAyMDEyIDE0OjI1OjI0ICswMTAwClN1YmplY3Q6IFtQQVRDSF0gaTE4bjog
-ZGlzYWJsZSBpMThuIGZvciBzaGVsbCBzY3JpcHRzIGlmIE5PX0dFVFRFWFQgZGVmaW5lZAoKT3Ro
-ZXJ3aXNlIHRoZSBpMThuIGlzIHVzZWQgaW4gdGhlIHNjcmlwdHMgZXZlbiB3aXRoIE5PX0dFVFRF
-WFQgc2V0LgpJdCBpcyB2ZXJ5IHVuZXhwZWN0ZWQuCgpJIGdlbmVyYWxseSBkaXNhYmxlIGkxOG4g
-b24gbXkgd29ya2luZyBzeXN0ZW1zIGFzIHRoZXkgYXJlIGdlbmVyYWxseSB2ZXJ5Cm91dC1vZi1k
-YXRlIGFuZCBub3Qgc3VwcG9ydGVkIGJ5IGFueSBzYW5lIGRldmVsb3Blci4gSW4gcGFydGljdWxh
-ciB0aGUKZ2V0dGV4dCBwcm92aWRlZCB3aXRoIHRoaXMgKHZlcnkgb2xkKSBDeWd3aW4gZGlzdHJp
-YnV0aW9uIGlzIGZ1YmFyIGFuZApuZXZlciBwcm9kdWNlcyBhbnkgb3V0cHV0LgotLS0KIE1ha2Vm
-aWxlICAgICAgIHwgICAgMSArCiBnaXQtc2gtaTE4bi5zaCB8ICAgIDQgKystLQogMiBmaWxlcyBj
-aGFuZ2VkLCAzIGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvTWFr
-ZWZpbGUgYi9NYWtlZmlsZQppbmRleCBhNzgyNDA5Li5kODJlYTZhIDEwMDY0NAotLS0gYS9NYWtl
-ZmlsZQorKysgYi9NYWtlZmlsZQpAQCAtMTg4Nyw2ICsxODg3LDcgQEAgc2VkIC1lICcxc3wjIS4q
-L3NofCMhJChTSEVMTF9QQVRIX1NRKXwnIFwKICAgICAtZSAncy9AQEdJVF9WRVJTSU9OQEAvJChH
-SVRfVkVSU0lPTikvZycgXAogICAgIC1lICdzfEBATE9DQUxFRElSQEB8JChsb2NhbGVkaXJfU1Ep
-fGcnIFwKICAgICAtZSAncy9AQE5PX0NVUkxAQC8kKE5PX0NVUkwpL2cnIFwKKyAgICAtZSAncy9A
-QE5PX0dFVFRFWFRAQC8kKE5PX0dFVFRFWFQpL2cnIFwKICAgICAtZSAkKEJST0tFTl9QQVRIX0ZJ
-WCkgXAogICAgICRALnNoID4kQCsKIGVuZGVmCmRpZmYgLS1naXQgYS9naXQtc2gtaTE4bi5zaCBi
-L2dpdC1zaC1pMThuLnNoCmluZGV4IGI0NTc1ZmIuLjdmN2UzMmIgMTAwNjQ0Ci0tLSBhL2dpdC1z
-aC1pMThuLnNoCisrKyBiL2dpdC1zaC1pMThuLnNoCkBAIC0xOCw3ICsxOCw3IEBAIGV4cG9ydCBU
-RVhURE9NQUlORElSCiAKIGlmIHRlc3QgLXogIiRHSVRfR0VUVEVYVF9QT0lTT04iCiB0aGVuCi0J
-aWYgdGVzdCAteiAiJEdJVF9JTlRFUk5BTF9HRVRURVhUX1RFU1RfRkFMTEJBQ0tTIiAmJiB0eXBl
-IGdldHRleHQuc2ggPi9kZXYvbnVsbCAyPiYxCisJaWYgdGVzdCAteiAiQEBOT19HRVRURVhUQEAi
-ICYmIHRlc3QgLXogIiRHSVRfSU5URVJOQUxfR0VUVEVYVF9URVNUX0ZBTExCQUNLUyIgJiYgdHlw
-ZSBnZXR0ZXh0LnNoID4vZGV2L251bGwgMj4mMQogCXRoZW4KIAkJIyBUaGlzIGlzIEdOVSBsaWJp
-bnRsJ3MgZ2V0dGV4dC5zaCwgd2UgZG9uJ3QgbmVlZCB0byBkbyBhbnl0aGluZwogCQkjIGVsc2Ug
-dGhhbiBzZXR0aW5nIHVwIHRoZSBlbnZpcm9ubWVudCBhbmQgbG9hZGluZyBnZXR0ZXh0LnNoCkBA
-IC0yOSw3ICsyOSw3IEBAIHRoZW4KIAkJIyBjYW4ndC4KIAkJLiBnZXR0ZXh0LnNoCiAKLQllbGlm
-IHRlc3QgLXogIiRHSVRfSU5URVJOQUxfR0VUVEVYVF9URVNUX0ZBTExCQUNLUyIgJiYgdGVzdCAi
-JChnZXR0ZXh0IC1oIDI+JjEpIiA9ICItaCIKKwllbGlmIHRlc3QgLXogIkBATk9fR0VUVEVYVEBA
-IiAmJiB0ZXN0IC16ICIkR0lUX0lOVEVSTkFMX0dFVFRFWFRfVEVTVF9GQUxMQkFDS1MiICYmIHRl
-c3QgIiQoZ2V0dGV4dCAtaCAyPiYxKSIgPSAiLWgiCiAJdGhlbgogCQkjIFdlIGRvbid0IGhhdmUg
-Z2V0dGV4dC5zaCwgYnV0IHRoZXJlJ3MgYSBnZXR0ZXh0IGJpbmFyeSBpbiBvdXIKIAkJIyBwYXRo
-LiBUaGlzIGlzIHByb2JhYmx5IFNvbGFyaXMgb3Igc29tZXRoaW5nIGxpa2UgaXQgd2hpY2ggaGFz
-IGEKLS0gCjEuNy44LjIuMzg4LmdlNDBjMgoK
---e89a8f6436f82ae55c04b6b98071--
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
