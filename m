@@ -1,72 +1,106 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: Re: [PATCH 2/3] git-p4: Search for parent commit on branch creation
-Date: Tue, 17 Jan 2012 00:10:17 +0000
-Message-ID: <CAOpHH-XUj7tF4O_kXfxq2e9Y4VmybNLCqGku_-9H1X+c7v=xwQ@mail.gmail.com>
-References: <1326674360-2771-1-git-send-email-vitor.hda@gmail.com>
- <1326674360-2771-3-git-send-email-vitor.hda@gmail.com> <20120116185738.GA21996@padd.com>
- <CAOpHH-UkyK-c_AHUOPbQQmW9cQQypDvirMR0Jb7vTGSQF7RZpw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Commit changes to remote repository
+Date: Mon, 16 Jan 2012 16:12:30 -0800
+Message-ID: <7vpqejtcep.fsf@alter.siamese.dyndns.org>
+References: <1326486589088-7185551.post@n2.nabble.com>
+ <20120114113141.GG2850@centaur.lab.cmartin.tk>
+ <vpqboq6fjfy.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Tue Jan 17 01:10:56 2012
+Cc: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	ruperty <rupert@moonsit.co.uk>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jan 17 01:12:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rmwdb-0006Li-Qr
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 01:10:56 +0100
+	id 1RmwfG-00076q-Dg
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 01:12:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751216Ab2AQAKv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Jan 2012 19:10:51 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:41749 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751067Ab2AQAKu convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jan 2012 19:10:50 -0500
-Received: by lahc1 with SMTP id c1so1215818lah.19
-        for <git@vger.kernel.org>; Mon, 16 Jan 2012 16:10:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=oGfThIZZOqT7qJHhvopefapjwo6FIuv0EQ6vpFQ4y7Q=;
-        b=mqdCwPUzu4rZbwYpwooh0PMEQrV4VUHkx78AQVlZpPUJ+sCnKkGMeHYECiT7l8qcEL
-         e0m8okuKxh4sVmDXUy2CUYDRRXlaIoX79E+7FSyYaq4dti3aBuuvkFStK65g7WR3NVge
-         dvCjXxcsXvcPRW57gqkJyE09chOl2Hkpx35HU=
-Received: by 10.152.147.137 with SMTP id tk9mr360647lab.8.1326759049262; Mon,
- 16 Jan 2012 16:10:49 -0800 (PST)
-Received: by 10.152.6.197 with HTTP; Mon, 16 Jan 2012 16:10:17 -0800 (PST)
-In-Reply-To: <CAOpHH-UkyK-c_AHUOPbQQmW9cQQypDvirMR0Jb7vTGSQF7RZpw@mail.gmail.com>
+	id S1751067Ab2AQAMe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Jan 2012 19:12:34 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38326 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750853Ab2AQAMd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Jan 2012 19:12:33 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2911F5C13;
+	Mon, 16 Jan 2012 19:12:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=6NqiaUnzMkHq
+	8Lh+N0SqFcq3IY8=; b=j4bQ2ODwIiILifJD79IuS+/MGXTSrOTZXh0JQ7TDXzl5
+	mLxUb8b6TdKrep8atazh3EvuUzpx8HybYugKB7wNLLpLj4Y0Dv+BwjFaYLyQkyrj
+	pCsgewaSTa0xxErdCxzuMmZPPEeQJzqgCJz1adcrUHwBlBlZ+XreO19RMgLfe8k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Q6Gv85
+	2TBiSZp6ogGXGdPltfNOM7HjwdZpLNwvZ9xYB58vXFCTA/k5SxZ1MZ/ocy9m+Jug
+	M97Ow1PFjKpUPJbc3ERLsya4Pq7tyhX1bci5Tfs8s865vapMe5uCtey/uzzT+scb
+	/Kjczq/OjGugz0AEr+9ssNr8eb89jFtG+h+r8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A6B45C12;
+	Mon, 16 Jan 2012 19:12:32 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 944DA5C11; Mon, 16 Jan 2012
+ 19:12:31 -0500 (EST)
+In-Reply-To: <vpqboq6fjfy.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Sat, 14 Jan 2012 15:27:29 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F2DA2612-409F-11E1-A280-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188678>
 
-On Mon, Jan 16, 2012 at 11:41 PM, Vitor Antunes <vitor.hda@gmail.com> w=
-rote:
-> On Mon, Jan 16, 2012 at 6:57 PM, Pete Wyckoff <pw@padd.com> wrote:
->> 1. =A0Move the tempBranch commit outside of the "for blob" loop.
->> =A0 =A0It can have no parent, and the diff-tree will still tell you
->> =A0 =A0if you found the same contents. =A0Instead of a ref for
->> =A0 =A0each blob inspected for each change, you'll just have one ref
->> =A0 =A0per change. =A0Only one checkpoint() after the tempBranch
->> =A0 =A0commit should be needed.
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+
+> Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
 >
-> You're right. Completely oversaw that. Will improve the code
-> accordingly.
+>> You're trying to push to a non-bare repository and change the
+>> currently active branch, which can cause problems, so git isn't
+>> letting you. There's an explanation of bare and non-bare at
+>> http://bare-vs-nonbare.gitrecipes.de/ but the short and sweet is tha=
+t
+>> you should init the repo you want to use as the central point with
+>> --bare and do modifications locally and then push there.
+>
+> An alternative is to push to a temporary, non-checked-out branch.
 
-Apparently I did not oversee it. Assume you have added a new file to
-HEAD of parent branch, but you branched from a previous commit. When th=
-e
-new branch is committed over HEAD the new file will, incorrectly, be
-part of it and diff-tree will not work as expected.
+Or more generally, treat such a push as if you are pulling in the oppos=
+ite
+direction. So in this example,
 
-I should avoid taking 6 months to submit a patch to avoid forgetting wh=
-y
-I did what I did :)
+> I sometimes do
+>
+>   laptop$ git push desktop HEAD:incomming
+>
+> and then
+>
+>   desktop$ git merge incomming
 
-Vitor
+you pretend as if you are running "git pull" on your desktop in order t=
+o
+integrate the work done on your laptop. If you did
+
+    desktop$ git pull laptop
+
+you would store where the branches on the laptop are in the remote
+tracking branches for "laptop" remote in your desktop's repository.
+
+So a good way to simulate that would be:
+
+    laptop$ git push desktop master:refs/remotes/laptop/master
+
+and then run:
+
+    desktop$ git merge laptop/master
+
+> The push does not disturb the worktree on the desktop, and the merge =
+is
+> done manually on the receiving machine.
