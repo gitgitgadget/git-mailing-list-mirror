@@ -1,97 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Re* Regulator updates for 3.3
-Date: Mon, 16 Jan 2012 22:13:02 -0800
-Message-ID: <7vboq2uaa9.fsf@alter.siamese.dyndns.org>
-References: <20120109073727.GF22134@opensource.wolfsonmicro.com>
- <CA+55aFyhoh0rT_ujuE1w3RpuR7kqivYFwPpm66VC-xtq1PiGUQ@mail.gmail.com>
- <20120110184530.GE7164@opensource.wolfsonmicro.com>
- <CA+55aFxXb7wqfrpozS6iH0k25y-+Uy8_Tavv59JXMhaWrjXLaw@mail.gmail.com>
- <20120110222711.GK7164@opensource.wolfsonmicro.com>
- <CA+55aFxvQF=Bm4ae6euB_UO8otMCuN9Lv37Zn3TpE-L7JH3Kzw@mail.gmail.com>
- <7vmx9v7z1r.fsf@alter.siamese.dyndns.org>
- <CA+55aFx5NATrpLnkMiV2vAxSAJPK7wkY2vyHbyeZGgT9+jP06w@mail.gmail.com>
- <7vehv77xeq.fsf@alter.siamese.dyndns.org>
- <CA+55aFzuGtJkQFDooSGWQ2_NiJVHN2E7S5dmOnWTYn8_s8Gg3g@mail.gmail.com>
- <7vzkdu7miv.fsf@alter.siamese.dyndns.org> <4F136BE4.4040502@pcharlan.com>
- <7v62gbussz.fsf@alter.siamese.dyndns.org> <4F15080C.6060004@pcharlan.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/4] Remove a user of extra_refs in clone
+Date: Tue, 17 Jan 2012 01:35:11 -0500
+Message-ID: <20120117063511.GA27770@sigill.intra.peff.net>
+References: <1326779434-20106-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Mark Brown <broonie@opensource.wolfsonmicro.com>,
-	Liam Girdwood <lrg@ti.com>, linux-kernel@vger.kernel.org,
-	Git Mailing List <git@vger.kernel.org>
-To: Pete Harlan <pgit@pcharlan.com>
-X-From: linux-kernel-owner@vger.kernel.org Tue Jan 17 07:13:24 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>
+To: mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Tue Jan 17 07:35:25 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Rn2IO-0004As-FZ
-	for glk-linux-kernel-3@lo.gmane.org; Tue, 17 Jan 2012 07:13:24 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Rn2dg-0002ZX-2T
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 07:35:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751743Ab2AQGNI (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 17 Jan 2012 01:13:08 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64041 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750916Ab2AQGNG (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 17 Jan 2012 01:13:06 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 006237DD0;
-	Tue, 17 Jan 2012 01:13:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ScuacaJZRjQ+YCSOCws2stgzzHY=; b=ieaEhQ
-	RotmqyGkoxl3NGCbBeTn0VyY0/wginrL9ZLYgZSCvvX5TEvB5QNfW0VX7WYHISMz
-	BWKBm7AMPia0saO7AChOPH8OrXQQbKcShxZdlyQtnCos8T1QI5Tq45fB6pCgCBy4
-	gVGKPARn8cBOju6WX5foZuYNeT8Cokza42vI0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UnTRmuNZGjIirqK0x6ykVLBJ3D9vHLY/
-	gMVTT0DBrr0BCrsAdiZSlxdCVQIjZVQ7wGxm2nrQZ4XL4qjx7bRXkC+Z+DWBqo7j
-	DKUdRn6IHsKbiNcuRPHv4fFa/YPyBmFLA96g2sLf68IJtbfr0c7eSkyC0m5c4ZGb
-	47iBBdhum9Q=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB5977DCF;
-	Tue, 17 Jan 2012 01:13:04 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6B4E77DCD; Tue, 17 Jan 2012
- 01:13:04 -0500 (EST)
-In-Reply-To: <4F15080C.6060004@pcharlan.com> (Pete Harlan's message of "Mon,
- 16 Jan 2012 21:33:00 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 51068708-40D2-11E1-8E2A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1751743Ab2AQGfR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jan 2012 01:35:17 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:40946
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750916Ab2AQGfQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jan 2012 01:35:16 -0500
+Received: (qmail 24160 invoked by uid 107); 17 Jan 2012 06:42:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 17 Jan 2012 01:42:12 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Jan 2012 01:35:11 -0500
+Content-Disposition: inline
+In-Reply-To: <1326779434-20106-1-git-send-email-mhagger@alum.mit.edu>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188691>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188692>
 
-Pete Harlan <pgit@pcharlan.com> writes:
+On Tue, Jan 17, 2012 at 06:50:30AM +0100, mhagger@alum.mit.edu wrote:
 
-> ... The
-> only time I think I'd prefer "LEGACY" is if you're planning on
-> deprecating and removing it eventually and you want to indicate
-> something to that effect in the name.
+> When cloning, write_remote_refs() creates local packed refs from the
+> refs read from the remote repository.  It does this by creating extra
+> refs for the references then calling pack_refs() to bake the extra
+> refs into the packed-refs file, then calling clear_extra_refs().
+> 
+> This is silly and relies on the kludgy extra_refs mechanism, which I
+> want to get rid of.  Instead, add a function call add_packed_ref() to
+> the refs API, and use it to create packed refs (in the memory cache)
+> directly.  Then call pack_refs() as before to write the packed-refs
+> file.
 
-The discussion that led to the naming of that LEGACY token needs to be
-re-read, then. The kind of "LEGACY" you prefer is exactly why the
-environment variable is called LEGACY in the patch you are commenting on,
-written in response to Linus's suggestion to switch the default, even
-though I am not 100% buying it.
+I certainly approve of the goal.
 
-Having said that, I think I am wasting my time responding to this thread
-during the feature-freeze period for v1.7.9, as I am not a big fan of
-switching the default without adequate warning and transition plans, after
-getting burned by the "'git-foo' vs 'git foo'" flames back in the v1.6.0
-release. We would likely to take a gradual and smoother migration route to
-transition, e.g. v1.7.9 to introduce "merge --edit", v1.7.10 to introduce
-a configuration variable merge.edit (lack of which gives a warning and an
-advice message while defaulting to 'no' to preserve the traditional
-behaviour), and finally v1.8.0 (or v2.0) to flip the default to 'yes'
-(while the configuration still giving a warning and an advice message)
-that "merge --no-edit" can still countermand.
+> Because the new add_packed_ref() function allows references (perhaps
+> many of them) to be added to an existing ref_array, it would be
+> inefficient to re-sort the list after every addition.  So instead,
+> append new entries to the end of the ref_array and note that the array
+> is unsorted.  Then, before the ref_array is used, check if it is
+> unsorted and sort it if necessary.
 
-So you have until v1.7.10 to decide a good name for the overriding
-environment variable.
+Makes sense.
+
+> A side effect of this change is that the new packed references are
+> left in the in-memory packed reference cache after the return from
+> write_remote_refs() (whereas previously, the refs were stored as
+> temporary extra refs that were purged before return from the
+> function).  I can't see any place in the following code where this
+> would make a difference, but there is quite a bit of code there so it
+> is hard to audit.  Confirmation that this is OK would be welcome.
+
+Actually, I think you may be fixing an extremely minor bug with this.
+
+If later code in clone tries to resolve one of the refs in
+refs/remotes/<origin>/, the current code will see that it doesn't exist
+as a ref file (because we wrote it packed) and call get_packed_ref. That
+checks the cached refs list, which will claim that did_packed is true,
+but the "packed" array will be empty. Which is wrong; we _do_ have that
+ref, and our cache is stale. After writing the packed list, the current
+code probably ought to be calling invalidate_ref_cache(). It was only
+the fact that most of the remaining code didn't care that this wasn't a
+bug in the first place.
+
+Your code makes more sense, in that it will keep the packed_refs list up
+to date, and later calls to resolve_ref will properly find those refs.
+
+The only place where I can detect a change in behavior is in the reflog
+creation. When we write the refs/remotes/<origin>/HEAD ref, we call
+create_symref, which in turn will decide whether to write a reflog entry
+or not based on whether the pointed-to ref exists (because if we are
+making a symref to something that doesn't exist, we have no sha1 to
+write in the reflog entry). So before, we got no reflog for
+refs/remotes/<origin>/HEAD (because we erroneously thought that
+refs/remotes/origin/master (or whatever) did not exist). With your
+patches, the reflog entry is created.
+
+I doubt anyone ever noticed, but now that code is at least working as
+intended.
+
+> Michael Haggerty (4):
+>   pack_refs(): remove redundant check
+>   ref_array: keep track of whether references are sorted
+>   add_packed_ref(): new function in the refs API.
+>   write_remote_refs(): create packed (rather than extra) refs
+
+I won't respond to each patch individually. All of them looked good to
+me. Thanks for a very pleasant read.
+
+-Peff
