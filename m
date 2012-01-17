@@ -1,100 +1,79 @@
-From: Pete Harlan <pgit@pcharlan.com>
-Subject: Re: Re* Regulator updates for 3.3
-Date: Mon, 16 Jan 2012 21:33:00 -0800
-Message-ID: <4F15080C.6060004@pcharlan.com>
-References: <20120109073727.GF22134@opensource.wolfsonmicro.com> <CA+55aFyhoh0rT_ujuE1w3RpuR7kqivYFwPpm66VC-xtq1PiGUQ@mail.gmail.com> <20120110184530.GE7164@opensource.wolfsonmicro.com> <CA+55aFxXb7wqfrpozS6iH0k25y-+Uy8_Tavv59JXMhaWrjXLaw@mail.gmail.com> <20120110222711.GK7164@opensource.wolfsonmicro.com> <CA+55aFxvQF=Bm4ae6euB_UO8otMCuN9Lv37Zn3TpE-L7JH3Kzw@mail.gmail.com> <7vmx9v7z1r.fsf@alter.siamese.dyndns.org> <CA+55aFx5NATrpLnkMiV2vAxSAJPK7wkY2vyHbyeZGgT9+jP06w@mail.gmail.com> <7vehv77xeq.fsf@alter.siamese.dyndns.org> <CA+55aFzuGtJkQFDooSGWQ2_NiJVHN2E7S5dmOnWTYn8_s8Gg3g@mail.gmail.com> <7vzkdu7miv.fsf@alter.siamese.dyndns.org> <4F136BE4.4040502@pcharlan.com> <7v62gbussz.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Mark Brown <broonie@opensource.wolfsonmicro.com>,
-	Liam Girdwood <lrg@ti.com>, linux-kernel@vger.kernel.org,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junio@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 17 06:33:51 2012
+From: mhagger@alum.mit.edu
+Subject: [PATCH 0/4] Remove a user of extra_refs in clone
+Date: Tue, 17 Jan 2012 06:50:30 +0100
+Message-ID: <1326779434-20106-1-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 17 06:50:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rn1g7-0000lQ-3A
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 06:33:51 +0100
+	id 1Rn1wd-0005w5-Es
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 06:50:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750799Ab2AQFdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jan 2012 00:33:06 -0500
-Received: from caibbdcaaaaf.dreamhost.com ([208.113.200.5]:50341 "EHLO
-	homiemail-a43.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750714Ab2AQFdF (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jan 2012 00:33:05 -0500
-X-Greylist: delayed 105516 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Jan 2012 00:33:05 EST
-Received: from homiemail-a43.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a43.g.dreamhost.com (Postfix) with ESMTP id 3B34A8C06E;
-	Mon, 16 Jan 2012 21:33:01 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pcharlan.com; h=message-id:date
-	:from:mime-version:to:cc:subject:references:in-reply-to
-	:content-type:content-transfer-encoding; q=dns; s=pcharlan.com;
-	 b=NsDvZQG6jHlwoWNVuvoGpnsXW/Vsm8TrDBa3l+jeE9IfkLX5b+ZVl7HYqhGMc
-	VGAihzq7O/YgjF8SFshYKvG7EDnUMlxduEEjrrYSvEhHeo/jWeQc5DK5EqVm4qRZ
-	3ePLMCsyskiR+2lIhkjlnfIDjh/1YG1BndwITheAkZlJWM=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pcharlan.com; h=message-id
-	:date:from:mime-version:to:cc:subject:references:in-reply-to
-	:content-type:content-transfer-encoding; s=pcharlan.com; bh=1f13
-	tkULGdVJ+XDLYlQBGhH7cfM=; b=J0R8QV3YoLVhyreNBsLQXNQK95jMyWv/icSX
-	85IW1FAULdflFnS0lb6mvtRMzGa1iz3kvFlDgq6kCcraq1o1W2vC1g1cmzP7+464
-	ilKgFkZtOGp2/f7YKtceM31C+9nygNx2TTC+Qjq7GP06cr0hLvx6M3/UpG6N9Rx9
-	FRA+CiA=
-Received: from [192.168.0.106] (185.132-78-65.ftth.swbr.surewest.net [65.78.132.185])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: pgit@pcharlan.com)
-	by homiemail-a43.g.dreamhost.com (Postfix) with ESMTPSA id ECC048C05F;
-	Mon, 16 Jan 2012 21:33:00 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:8.0) Gecko/20111124 Thunderbird/8.0
-In-Reply-To: <7v62gbussz.fsf@alter.siamese.dyndns.org>
+	id S1750825Ab2AQFuv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jan 2012 00:50:51 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:50010 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750725Ab2AQFuu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jan 2012 00:50:50 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from michael.fritz.box (p54BEDA74.dip.t-dialin.net [84.190.218.116])
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q0H5oam2006829;
+	Tue, 17 Jan 2012 06:50:37 +0100
+X-Mailer: git-send-email 1.7.8.3
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188685>
 
-On 01/16/2012 03:33 PM, Junio C Hamano wrote:
-> Pete Harlan <pgit@pcharlan.com> writes:
-> 
->> On 01/10/2012 10:59 PM, Junio C Hamano wrote:
->>> There may be existing scripts that leave the standard input and the
->>> standard output of the "git merge" connected to whatever environment the
->>> scripts were started, and such invocation might trigger the above
->>> "interactive session" heuristics. Such scripts can export GIT_MERGE_LEGACY
->>> environment variable set to "yes" to force the traditional behaviour.
->>
->> The name GIT_MERGE_LEGACY gives no clue about what flavor of legacy
->> merge behavior is being enabled.  Something like GIT_MERGE_LEGACY_EDIT
->> might be clearer, or perhaps just have GIT_MERGE_EDIT=0 to get the old
->> behavior without reference to whether or not that behavior is
->> considered legacy.
-> 
-> Hrm.
-> 
-> The only case your suggestion may make a difference would be when we find
-> another earlier UI mistake we would want to correct in a backward
-> incompatible way that affects _existing_ scripts.
-> 
-> With your suggestion, they need to export "GIT_MERGE_EDIT=0" today, and
-> they will need to update again to export "GIT_MERGE_SOMETHINGELSE=0" when
-> such an incompatible change comes.
+From: Michael Haggerty <mhagger@alum.mit.edu>
 
-Which is a good thing, because maybe they started using Git after the
-current proposed change (which they like), and what you see as new
-becomes their "legacy" behavior.  If you change something after that,
-you can't use GIT_MERGE_LEGACY=yes for that one also because which
-legacy is it preserving?
+When cloning, write_remote_refs() creates local packed refs from the
+refs read from the remote repository.  It does this by creating extra
+refs for the references then calling pack_refs() to bake the extra
+refs into the packed-refs file, then calling clear_extra_refs().
 
-In general, naming configuration variables "DO_IT_<THIS_WAY>" instead
-of "DO_IT_THE_OLD_WAY" is better because it's self-documenting.  The
-only time I think I'd prefer "LEGACY" is if you're planning on
-deprecating and removing it eventually and you want to indicate
-something to that effect in the name.
+This is silly and relies on the kludgy extra_refs mechanism, which I
+want to get rid of.  Instead, add a function call add_packed_ref() to
+the refs API, and use it to create packed refs (in the memory cache)
+directly.  Then call pack_refs() as before to write the packed-refs
+file.
 
---
-Pete Harlan
-pgit@pcharlan.com
+Because the new add_packed_ref() function allows references (perhaps
+many of them) to be added to an existing ref_array, it would be
+inefficient to re-sort the list after every addition.  So instead,
+append new entries to the end of the ref_array and note that the array
+is unsorted.  Then, before the ref_array is used, check if it is
+unsorted and sort it if necessary.
+
+A side effect of this change is that the new packed references are
+left in the in-memory packed reference cache after the return from
+write_remote_refs() (whereas previously, the refs were stored as
+temporary extra refs that were purged before return from the
+function).  I can't see any place in the following code where this
+would make a difference, but there is quite a bit of code there so it
+is hard to audit.  Confirmation that this is OK would be welcome.
+
+Michael Haggerty (4):
+  pack_refs(): remove redundant check
+  ref_array: keep track of whether references are sorted
+  add_packed_ref(): new function in the refs API.
+  write_remote_refs(): create packed (rather than extra) refs
+
+ builtin/clone.c |    3 +--
+ pack-refs.c     |    3 +--
+ refs.c          |   39 ++++++++++++++++++++++++++++++++-------
+ refs.h          |    6 ++++++
+ 4 files changed, 40 insertions(+), 11 deletions(-)
+
+-- 
+1.7.8.3
