@@ -1,110 +1,113 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/4] Remove a user of extra_refs in clone
-Date: Tue, 17 Jan 2012 01:35:11 -0500
-Message-ID: <20120117063511.GA27770@sigill.intra.peff.net>
-References: <1326779434-20106-1-git-send-email-mhagger@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git grep doesn't follow symbolic link
+Date: Mon, 16 Jan 2012 22:44:51 -0800
+Message-ID: <7v7h0qu8t8.fsf@alter.siamese.dyndns.org>
+References: <CAPRVejc7xND_8Y=Pb5rYGEcaKYUaX7_WkSro-_EL8tTGxkfY3Q@mail.gmail.com>
+ <CALkWK0=-LZH4MYhX50v-RWpGA2r+6q50YxsKaOxc0mJ__yuK7g@mail.gmail.com>
+ <877h0zlvwd.fsf@thomas.inf.ethz.ch> <7vwr8za04q.fsf@alter.siamese.dyndns.org>
+ <CACsJy8BfvhWxqBOj=+7AiF8dZBVEASAuxiOsjOvpmfE3uPrO3A@mail.gmail.com>
+ <7v1ur1yazf.fsf@alter.siamese.dyndns.org>
+ <CACsJy8CaBAEJo_LuvjYhb2kfofH83cbR5DFDffmmCU3uJFqk+g@mail.gmail.com>
+ <7vwr8ruv1j.fsf@alter.siamese.dyndns.org>
+ <CACsJy8B9AGuRSx_5P22TOsqrA1rTEjQb78NN7PcTuK53iUmP_w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johan Herland <johan@herland.net>
-To: mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Tue Jan 17 07:35:25 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pang Yan Han <pangyanhan@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Bertrand BENOIT <projettwk@users.sourceforge.net>,
+	git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 17 07:45:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rn2dg-0002ZX-2T
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 07:35:24 +0100
+	id 1Rn2nO-0005sa-3F
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 07:45:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751743Ab2AQGfR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jan 2012 01:35:17 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:40946
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750916Ab2AQGfQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jan 2012 01:35:16 -0500
-Received: (qmail 24160 invoked by uid 107); 17 Jan 2012 06:42:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 17 Jan 2012 01:42:12 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Jan 2012 01:35:11 -0500
-Content-Disposition: inline
-In-Reply-To: <1326779434-20106-1-git-send-email-mhagger@alum.mit.edu>
+	id S1751998Ab2AQGoz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Jan 2012 01:44:55 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40318 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751886Ab2AQGoz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Jan 2012 01:44:55 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0AC4F4228;
+	Tue, 17 Jan 2012 01:44:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=k/xxyf2nwAZ2
+	hrShnaO3EjqLWvs=; b=e/3H9hZkkENqQxrnDsFt0/W3TKzT2CpVXPQobWkbQvru
+	e4q2TRu0WXpylgyJL+aFZLpl5OFz9YiaIEnk9MqolyTTdK9c1+4Q2D/Qw2bhBsEz
+	Ji0a7hSNXVfqcSDdItCvDj3QQcV6+v+ZX7LilCI6E9hQ+d6SQWZGOK2LjJkMIuk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=o733Bg
+	w7dHrZD+z+/Vs3ty8/VlsLGeA6fQLvhYgJSZxCAZUlY9QOEucvByHm9LnCoQtB6G
+	U6YGtNQw2TyJxOVCshhyTt+b8wOsXsyVdYxoM4Nzqe1C85XE+xNl0aSq/koPtdZv
+	XDZmmVUDW8VTvQI8twLTpQznAmjLkOWeNjGgg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0225F4227;
+	Tue, 17 Jan 2012 01:44:54 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 795AC4226; Tue, 17 Jan 2012
+ 01:44:53 -0500 (EST)
+In-Reply-To: <CACsJy8B9AGuRSx_5P22TOsqrA1rTEjQb78NN7PcTuK53iUmP_w@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Tue, 17 Jan 2012 08:55:28 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C2E98CC2-40D6-11E1-9DE0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188693>
 
-On Tue, Jan 17, 2012 at 06:50:30AM +0100, mhagger@alum.mit.edu wrote:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> When cloning, write_remote_refs() creates local packed refs from the
-> refs read from the remote repository.  It does this by creating extra
-> refs for the references then calling pack_refs() to bake the extra
-> refs into the packed-refs file, then calling clear_extra_refs().
-> 
-> This is silly and relies on the kludgy extra_refs mechanism, which I
-> want to get rid of.  Instead, add a function call add_packed_ref() to
-> the refs API, and use it to create packed refs (in the memory cache)
-> directly.  Then call pack_refs() as before to write the packed-refs
-> file.
+> OK resolving links to untracked contents is bad and should only be
+> supported in --no-index case, resolving links to tracked contents sho=
+uld
+> be ok in principal?
 
-I certainly approve of the goal.
+Conceptually it is not as bad, but I doubt it is still "ok".
 
-> Because the new add_packed_ref() function allows references (perhaps
-> many of them) to be added to an existing ref_array, it would be
-> inefficient to re-sort the list after every addition.  So instead,
-> append new entries to the end of the ref_array and note that the array
-> is unsorted.  Then, before the ref_array is used, check if it is
-> unsorted and sort it if necessary.
+It would defeat one of the fundamental properties of Git (or any conten=
+t
+based revision control scheme for that matter): a tree object records t=
+he
+hash of its contents, so if two subtrees agree at the content hash leve=
+l,
+you do not have to descend into them to compare what they contain.
 
-Makes sense.
+Imagine that you have a symlink at a/b/c/d that points a file e at the
+root level, and you are running "git log a/b/c".  Even if the entire
+hierarchy a/ does not change in a commit since its parent, you may have=
+ to
+show a/b/c/d only because "e" has changed.
 
-> A side effect of this change is that the new packed references are
-> left in the in-memory packed reference cache after the return from
-> write_remote_refs() (whereas previously, the refs were stored as
-> temporary extra refs that were purged before return from the
-> function).  I can't see any place in the following code where this
-> would make a difference, but there is quite a bit of code there so it
-> is hard to audit.  Confirmation that this is OK would be welcome.
+So I suspect that the required change would involve a lot more than a
+na=C3=AFve "when we reach the leaf level, if it is a symlink, read the =
+link
+contents and call get_tree_entry() to dereference the blob, or if the l=
+ink
+points outside the tree, use 0{40} to say 'contents undefined'".
 
-Actually, I think you may be fixing an extremely minor bug with this.
+After you compare 'a' of parent and child and find them to be identical=
+,
+you still need to anticipate that the hierarchy _might_ have a symbolic
+link somewhere deep inside, and read _everything_ at least once in orde=
+r
+to find symbolic links and where they point at (if you did that to pare=
+nt
+already, and if you know that the child agrees with it at 'a', then you
+can obviously do not have to read everything in the child---you know th=
+e
+parent and the child have the same _contents_ in 'a' at that point). An=
+d
+then grab the pointee out of parent tree and child tree to compare.
 
-If later code in clone tries to resolve one of the refs in
-refs/remotes/<origin>/, the current code will see that it doesn't exist
-as a ref file (because we wrote it packed) and call get_packed_ref. That
-checks the cached refs list, which will claim that did_packed is true,
-but the "packed" array will be empty. Which is wrong; we _do_ have that
-ref, and our cache is stale. After writing the packed list, the current
-code probably ought to be calling invalidate_ref_cache(). It was only
-the fact that most of the remaining code didn't care that this wasn't a
-bug in the first place.
-
-Your code makes more sense, in that it will keep the packed_refs list up
-to date, and later calls to resolve_ref will properly find those refs.
-
-The only place where I can detect a change in behavior is in the reflog
-creation. When we write the refs/remotes/<origin>/HEAD ref, we call
-create_symref, which in turn will decide whether to write a reflog entry
-or not based on whether the pointed-to ref exists (because if we are
-making a symref to something that doesn't exist, we have no sha1 to
-write in the reflog entry). So before, we got no reflog for
-refs/remotes/<origin>/HEAD (because we erroneously thought that
-refs/remotes/origin/master (or whatever) did not exist). With your
-patches, the reflog entry is created.
-
-I doubt anyone ever noticed, but now that code is at least working as
-intended.
-
-> Michael Haggerty (4):
->   pack_refs(): remove redundant check
->   ref_array: keep track of whether references are sorted
->   add_packed_ref(): new function in the refs API.
->   write_remote_refs(): create packed (rather than extra) refs
-
-I won't respond to each patch individually. All of them looked good to
-me. Thanks for a very pleasant read.
-
--Peff
+I personally do not think it is worth it.
