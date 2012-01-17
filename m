@@ -1,103 +1,82 @@
-From: Yves Goergen <nospam.list@unclassified.de>
-Subject: Re: Bug? Git checkout fails with a wrong error message
-Date: Tue, 17 Jan 2012 18:56:42 +0100
-Message-ID: <4F15B65A.8070009@unclassified.de>
-References: <loom.20120112T193624-86@post.gmane.org>	<4F1028AD.9080701@ira.uka.de> <4F106DDF.4040408@unclassified.de>	<4F1085EC.9010708@ira.uka.de> <4F128AD0.5020101@unclassified.de>	<4F1404E7.9040805@ira.uka.de> <4F14718B.80209@unclassified.de>	<87r4yzzcci.fsf@thomas.inf.ethz.ch> <4F152767.9010104@unclassified.de> <87ipkaogyj.fsf@thomas.inf.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] bash-completion: don't add quoted space for ZSH (fix
+ regression)
+Date: Tue, 17 Jan 2012 10:46:48 -0800
+Message-ID: <7vty3urwtj.fsf@alter.siamese.dyndns.org>
+References: <20120114152030.GX30469@goldbirke>
+ <1326567336-2173-1-git-send-email-Matthieu.Moy@imag.fr>
+ <7vsjjhwvdy.fsf@alter.siamese.dyndns.org> <vpqhazv3m17.fsf@bauges.imag.fr>
+ <7vsjjfuuwk.fsf@alter.siamese.dyndns.org> <vpqr4yy1pv6.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Holger Hellmuth <hellmuth@ira.uka.de>, Jeff King <peff@peff.net>,
-	=?UTF-8?B?Q2FybG9zIE1hcnTDrW4gTmlldG8=?= <cmn@elego.de>,
-	git@vger.kernel.org, Erik Faye-Lund <kusmabite@gmail.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jan 17 18:57:09 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jan 17 19:47:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnDHR-0004NV-2l
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 18:57:09 +0100
+	id 1RnE3f-00027S-WE
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Jan 2012 19:47:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753322Ab2AQR46 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jan 2012 12:56:58 -0500
-Received: from dotforward.de ([178.63.102.138]:34898 "EHLO dotforward.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753175Ab2AQR44 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jan 2012 12:56:56 -0500
-Received: from dsl01.83.171.184.42.ip-pool.nefkom.net ([83.171.184.42] helo=[192.168.1.13])
-	by dotforward.de with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.71)
-	(envelope-from <nospam.list@unclassified.de>)
-	id 1RnDH1-0005Ls-QP; Tue, 17 Jan 2012 18:56:44 +0100
-User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
-In-Reply-To: <87ipkaogyj.fsf@thomas.inf.ethz.ch>
+	id S1754846Ab2AQSqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jan 2012 13:46:53 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47776 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753887Ab2AQSqv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jan 2012 13:46:51 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D7A364BB;
+	Tue, 17 Jan 2012 13:46:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Jl5Kl+WCghGZ5knUD1Rj6vMRx6M=; b=q+4cJ9
+	n0TADH/DVRYsRStSn9R6dNYqr5jSPGx2J2voj6n2c0KBnw6PZ7ek/fxiASjPZ9pf
+	uCzs+w3J1FwO3HTdClcg8k8R4SOnmNGAL4251F6vfq9aZ0I1RNyg7IYzkuT5GH5+
+	Oz0BKZhrivDIqqeSeauNgyXM5JPwG/Dn8rTu8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ld+lY19SBVqpLaMb0dG27opbAVQ8RM6N
+	5jBxvmU4eh07NtZ+nuQkvHvN+u6pGvhjEZoJ11Ba8O7djRsMWVVoAvGEV1bbG0j0
+	y3inCVwIsFJOhNqh60gYFw/pD5cd8hygZ2b1wdY8GLQoY9tPjHI4GnqaWoo0FB2T
+	XRxQw/zik94=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 432CB64B9;
+	Tue, 17 Jan 2012 13:46:50 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CBF2E64B7; Tue, 17 Jan 2012
+ 13:46:49 -0500 (EST)
+In-Reply-To: <vpqr4yy1pv6.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Tue, 17 Jan 2012 13:21:33 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9D760082-413B-11E1-94D0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188710>
 
-On 17.01.2012 09:45 CE(S)T, Thomas Rast wrote:
-> It would also be interesting to know for how long this problem has
-> existed.  You can search for the offending commit with something like
-> 
->   git log --name-status --diff-filter=A -- "PosterWantsItCensored.*"
-> 
-> which should normally give you just one or two commits, namely the
-> one(s) that introduced the two files.
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-I have found two commits adding that file. The second one has the file
-with the then-already-present name modified and the new spelling added.
-I could have noticed that at commit time, but that's the very commit
-where I also renamed the original files and recreated them in the Forms
-designer. 1) This may have led me to overlook that additional add and 2)
-this may be the source of the spelling difference because the file was
-newly created.
+>> I doubt that would be sufficent or appropriate. If some caller _WANTS_ to
+>> add a SP, shouldn't we be devising a way to tell zsh to add it without
+>> quoting,
+>
+> Yes, this is the point. But up to now, nobody found such a way so we're
+> just trying to work around it in the less painfull way for the user.
 
-> As for the fix, there are two-and-two-thirds cases. (...)
+Ok, I take it that the original patch is meant as a small step in making
+it a usable state, by not adding useless "quoted SP". In the ideal world
+it may be better to add SP but we do not know how without zsh interfering
+with our attempt to do so and adding an unwanted quoting, so we are taking
+the second best approach that we at least know works.
 
-That all sounds quite complicated. The "offending" commit is quite a
-while back so replacing the last commit is not a solution.
+Which is fine by me, and as you said, the completion script always asked
+zsh users to add SP themselves, so it is not even a regression.
 
-This is just my personal repository that should help me out with finding
-changes when I find something broken that wasn't before. Deleting and
-recreating the "hub" (bare) and the other working repository would be
-okay for me in this case. I have decided that it is also okay to fix the
-error by new commits. To avoid all further issues with this, I have
-renamed the file, committed the deletion, renamed it back and then
-committed the add. The revsion in between won't compile, but it's got a
-message with it and the compiler error would be obvious.
-
-> You should really read up on this, e.g.
-> 
->   http://tomayko.com/writings/the-thing-about-git
-> 
-> AFAIK everyone who groks the feature uses it daily.
-
-It's on my to-read list. Looks like an interesting article from reading
-the beginning of it.
-
-I have done a test, too: I have set the core.ignorecase setting to false
-(or deleted its entry) and then renamed one of the files in my working
-directory only in case. TortoiseGit has offered me adding the new
-spelling for a commit. After setting the core.ignorecase setting to
-true, it has not offered any change to commit anymore. So it looks like
-this is just the setting that every repository for Windows use should -
-no - must have, and it was missing here.
-
-Just like that stupid autocrlf that causes more issues than it solves. I
-regularly see files with all lines changed and the diff says that both
-files only differ in line endings. But I have no sure observation on
-whether that value was set or unset in those cases. I'll have to look
-after that, too.
-
-These two config settings are not cloned with the repository, are they?
-
-Also, TortoiseGit already sets ignorecase = true. So maybe the Visual
-Studio provider does the init on its own and is missing that. Or I have
-at some time cloned the repository and the setting wasn't copied over.
-
--- 
-Yves Goergen "LonelyPixel" <nospam.list@unclassified.de>
-Visit my web laboratory at http://beta.unclassified.de
+The real reason I am continuing this thread is to keep it alive so that a
+zsh guru would jump in from somewhere and show us "here is how to tell Zsh
+not to quote $suffix"; that does not seem to be happening yet, so let's
+use your patch as-is.
