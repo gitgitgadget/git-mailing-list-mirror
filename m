@@ -1,101 +1,97 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: How to migrate a complex directory structure from SVN to GIT?
-Date: Wed, 18 Jan 2012 11:43:48 +0100
-Message-ID: <4F16A264.9030503@alum.mit.edu>
-References: <1326828837924-7197567.post@n2.nabble.com>
+From: John Keeping <john@metanate.com>
+Subject: Re: Interactive rebase with submodules
+Date: Wed, 18 Jan 2012 11:21:18 +0000
+Message-ID: <4F16AB2E.30706@metanate.com>
+References: <4F15C22C.3020902@metanate.com> <4F15E83D.10509@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Asuka <c.bauers@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 18 11:43:58 2012
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Jan 18 12:21:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnSzk-0004mV-Ke
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Jan 2012 11:43:56 +0100
+	id 1RnTa1-0000vj-1W
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Jan 2012 12:21:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752851Ab2ARKnw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jan 2012 05:43:52 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:36898 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752790Ab2ARKnv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jan 2012 05:43:51 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q0IAhmko018068
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 18 Jan 2012 11:43:49 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.24) Gecko/20111108 Lightning/1.0b2 Thunderbird/3.1.16
-In-Reply-To: <1326828837924-7197567.post@n2.nabble.com>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1752208Ab2ARLVV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jan 2012 06:21:21 -0500
+Received: from shrek.metanate.com ([193.123.6.120]:42515 "EHLO
+	shrek.metanate.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752063Ab2ARLVU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jan 2012 06:21:20 -0500
+Received: from farnsworth.metanate.com ([193.123.6.36])
+	by shrek.metanate.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.76)
+	(envelope-from <john@metanate.com>)
+	id 1RnTZu-0005A1-Mk; Wed, 18 Jan 2012 11:21:18 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:9.0) Gecko/20120105 Thunderbird/9.0
+In-Reply-To: <4F15E83D.10509@web.de>
+X-DCC--Metrics: shrek; whitelist
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188745>
 
-On 01/17/2012 08:33 PM, Asuka wrote:
-> I would like to migrate my svn repository to git. The structure looks like
-> the following:
-> 
-> svn
->    |_Project1
->          |_subproject1
->                |_branches
->                       |_branch1
->                       |_branch2
->                |_trunk
->                |_tags
->                       |_tagv1
->    |_Non-JavaProject
->          |_subproject
->    |_Project2
->           |_AnotherSubproject
->                |_SubSubproject
->           |_Subproject2
->                |_branches
->                |_tags
->           |_Subproject3
->                |_trunk
->           |_Subproject4
->                |_Subsubproject
->                        |_branches
->                        |_tags
->                        |_trunk
-> 
-> I would like to migrate all branches and tags
+On 17/01/12 21:29, Jens Lehmann wrote:
+> Am 17.01.2012 19:47, schrieb John Keeping:
+>> This appears to be because the git-rebase--interactive script inspects whether there is anything to commit when `rebase --continue` is invoked by running:
+>>
+>>      git diff-index --cached --quiet --ignore-submodules HEAD --
+ >
+>> Is there a reason for the `--ignore-submodules` in this command? Removing that option results in the expected behaviour.
+>
+> Yes, removing it will help your use case but break others. The reason
+> for that is that because submodules are not updated during a rebase
+> it doesn't make sense to compare their HEAD to what is recorded in
+> the superproject, as that might have been changed by an earlier
+> commit. And as the submodules HEAD hasn't been updated back then,
+> it is stale and will always show up as modified (even if it wasn't).
 
-This can be confusing because Subversion confounds the namespace for
-lines of development (trunk, branches, and tags) with those of filename
-paths.  The basic rule is: normally each trunk/branches/tag triplet
-corresponds to a single project, and each project should be converted
-into a separate git repository.
+Is this worse than the current behaviour?  If I perform a rebase where 
+there is a (non-submodule) conflict in a commit where a submodule 
+changes I can see something like:
 
-In your case it is hard to tell where the project boundaries are without
-more information.
+# Changes to be committed:
+#     modified:    path/to/submodule
+#
+# Unmerged paths:
+#     both modified:      path/to/file
+#
+# Changes not staged for commit:
+#     modified:    path/to/submodule (new commits)
 
-If some projects don't have branches or tags, that is OK; you can
-configure git-svn pretty flexibly.
+This occurs if a later commit in the rebase will modify the submodule. 
+In this case, `rebase --continue` correctly recreates the commit once I 
+have resolved the conflict in the file, ignoring the unstaged submodule 
+changes.
 
-If some have branches and/or tags but not trunk, give it a try; I'm not
-sure whether git-svn can handle it.
+>> I can understand not updating submodules while running the rebase, but I expected that having resolved a conflict and added my change to the index it would be applied by `git rebase --continue`, as indeed it is if there happen to be other (non-submodule) changes in the same commit.
+>
+> The irony is that you would have to update submodules (or at least
+> their HEAD and use "--ignore-submodules=dirty") while running rebase
+> to make that work in all cases ;-)
 
-If some subprojects (including their trunk/branches/tags directories)
-are nested within the source code of the enclosing projects (thus
-entangling the namespaces), then you have chaos even in the Subversion
-world.  Such a mess can probably also be rescued, but it will be more
-involved.  For example, you might use svndumpfilter to strip
-improperly-nested projects out of (copies of) your Subversion repository
-*before* converting the enclosing project, or play some kind of
-git-filter-branch tricks *after* the conversion.
+I don't this this is the case, since diff-tree is being invoked with 
+--cached won't it ignore changes in the work tree anyway?
 
-Michael
+> But just updating the HEAD would be dangerous as you would have to be
+> very careful to restore the submodules HEAD after the rebase, or the
+> submodule's work tree will be out of sync.
+
+Just updating HEAD in the submodule without touching its work tree 
+doesn't seem like a good idea.  I think it will cause a lot more 
+confusion when running `git status` which will show unexpected modified 
+content for the submodule.
+
+Since I did not expect rebase to perform a submodule update, I was not 
+surprised to see unstaged submodule changes when rebasing, but I did 
+expect rebase to commit anything I had added to the index.
+
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+John
