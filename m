@@ -1,76 +1,67 @@
-From: Chris Westin <cwestin@yahoo.com>
-Subject: Looking for speakers on DVCS
-Date: Wed, 18 Jan 2012 05:57:32 -0800 (PST)
-Message-ID: <1326895052.61036.YahooMailNeo@web31807.mail.mud.yahoo.com>
-Reply-To: Chris Westin <cwestin@yahoo.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] i18n: disable i18n for shell scripts if NO_GETTEXT defined
+Date: Wed, 18 Jan 2012 15:25:54 +0100
+Message-ID: <CALxABCYXWxp=wVahbPjt9V4n5P7EQnqFFT3S5Dc7Co-P9BGJFQ@mail.gmail.com>
+References: <CALxABCZME-g++HxMsD4Nrn1J6s27vN7M_KQSVT3PeLWBqP7qJg@mail.gmail.com>
+ <7vfwfervt9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 18 14:57:43 2012
+Cc: Git Mailing List <git@vger.kernel.org>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 18 15:26:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnW1C-0003wX-0D
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Jan 2012 14:57:38 +0100
+	id 1RnWT7-0006l0-1j
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Jan 2012 15:26:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757545Ab2ARN5d convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Jan 2012 08:57:33 -0500
-Received: from nm15-vm0.bullet.mail.sp2.yahoo.com ([98.139.91.208]:48656 "HELO
-	nm15-vm0.bullet.mail.sp2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1757530Ab2ARN5d convert rfc822-to-8bit
+	id S1757695Ab2ARO0T convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Jan 2012 09:26:19 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:37311 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757648Ab2ARO0R convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jan 2012 08:57:33 -0500
-Received: from [98.139.91.63] by nm15.bullet.mail.sp2.yahoo.com with NNFMP; 18 Jan 2012 13:57:32 -0000
-Received: from [72.30.22.36] by tm3.bullet.mail.sp2.yahoo.com with NNFMP; 18 Jan 2012 13:57:32 -0000
-Received: from [127.0.0.1] by omp1066.mail.sp2.yahoo.com with NNFMP; 18 Jan 2012 13:57:32 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 703064.86882.bm@omp1066.mail.sp2.yahoo.com
-Received: (qmail 36552 invoked by uid 60001); 18 Jan 2012 13:57:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1326895052; bh=jpmmts1yf4Ttos9x8kY+be3ckQSOw7hBH6yrdmvJh+A=; h=X-YMail-OSG:Received:X-Mailer:Message-ID:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=nGaNmt6NK+qdRmLdaNWleJY+UZ43TnTXpN5gQlLGDIHrx34TJ9Qv2om4ajCpENut5CMSGAZ8u20fAUHS1iOhpvlD4lZqbizD/n9rCLOoBUdIKpAzYPdQ9GVoqjR7ONWg8bEeyDMnZr5R15I75oB3D3EdyO7M0KZHh1P9RHI33Hg=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Mailer:Message-ID:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=iSLTEmPoRDAZxjMAxLzOFTjscqwSn6Hulxx6FhAx39/yOZYS7Z8462p0LxZaKvbD9ExsGScyNpTZyGj6ZLi2JOf3IuB8Hd4OxxbKdpeLNcKUcIHn4L5KZ60FpsuqbJh64AiImHgpzprtUW5Z5raSlkRNiyde/D6GN1cp0qCyFec=;
-X-YMail-OSG: _qVjxfIVM1nv21KsdgOVzfLV8XBiHLWyIZ7f6j6_FGqRMqU
- M4Xre7b_7UISyryyABmBfL0wNN7_ktsCtjnEldmL32mzQzDsOUvlpocaVpUE
- 81j5IvlP.DVSxUlDOOuLUo08ZsW7YYbXLeMh5kzAoXTnMFGzcWrY7qx2U4dS
- 39R8HOTNZ5YtV7DIeAJZvOuoozEL3hlsIQLsWOJb19QN.tZuNRihFuro9G4I
- 3WuYIln5oVSVz4.DKvsB6TdjaUNEwVT8zuhAOWl_CCrHf6zFsxF5_zstYZxT
- 0D3dk8FMyoHklJEcnXU3iOU8OibyVX3LjnwNcTyKG5oiZnSZqtkKz2B18boT
- RbtRAiyA7aMMsoXoyRh8R2tbhQQjH_6mSvg3inGcreImMZBjWPi2K4whQvvx
- vcKN8TzGvbZD.Qaoi_ijqj5wWYYpHyVZ3B.1sn3jNcrzu5vv6lZFUXcoS2X0
- c7uwlhY6o06vwlHvlCm08nR9tPe6L_t3qPe_4XaWkQlsLQb1UZVIoaCWAobC
- 0VJT3EkkB2.6Fb3.Xs9R0e8f2MFhvDwd7w9UYl6xzJgjyWQe8Pu6s6VIV5yz
- cTMclSa2XwZQivC.mxX_vBTslOhi3oOd5iBZG6mnw
-Received: from [96.238.223.83] by web31807.mail.mud.yahoo.com via HTTP; Wed, 18 Jan 2012 05:57:32 PST
-X-Mailer: YahooMailWebService/0.8.116.338427
+	Wed, 18 Jan 2012 09:26:17 -0500
+Received: by obcva7 with SMTP id va7so7316165obc.19
+        for <git@vger.kernel.org>; Wed, 18 Jan 2012 06:26:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=FAmYt9odgRyeLDtZ2XcIpBKPUjqNjsmrK62Zh2faM2g=;
+        b=UhDkliQN1KpDoXC0FCe/0DPhWydMeZmC4sw0Yd0YKJUioTO1ABGgrswcS+MrnGk/Nx
+         c5gw7sz1trKmf5RMHl5sbNVExS6tkuMI47WwNhfv4jgGeAgw8qqXO3HHRYrWRzgpQ8aX
+         2Qjydo86cLlxhmwtkSfppdsClTvXYF2sl7GzA=
+Received: by 10.182.38.70 with SMTP id e6mr346416obk.13.1326896777283; Wed, 18
+ Jan 2012 06:26:17 -0800 (PST)
+Received: by 10.182.226.41 with HTTP; Wed, 18 Jan 2012 06:25:54 -0800 (PST)
+In-Reply-To: <7vfwfervt9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188747>
 
-I organize the speakers for the Bay Area Large-Scale Production Enginee=
-ring
-meetup (http://www.meetup.com/SF-Bay-Area-Large-Scale-Production-Engine=
-ering/ ;
-take a look at the "PAST" tab to see the kinds of events we've had).
+On Tue, Jan 17, 2012 at 20:08, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> Alex Riesen <raa.lkml@gmail.com> writes:
+> Thanks for spotting. I agree that we should honor NO_GETTEXT here.
+>
+> But the result of the patch looks almost unreadable. could we restruc=
+ture
+> the script like this instead?
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# Decide what to do...
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0GIT_INTERNAL_GETTEXT_SH_SCHEME=3Dfallthrou=
+gh
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if test -n "@@NO_GETTEXT@@$GIT_INTERNAL_GE=
+TTEXT_TEST_FALLBACKS"
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0then
 
-=46or our February event, on Thursday February 16th
-(http://www.meetup.com/SF-Bay-Area-Large-Scale-Production-Engineering/e=
-vents/40058152/), I'm putting together an evening of talks on distribut=
-ed version=A0control systems, and am looking for speakers. =A0I usually=
- try to arrange three
-20-25 minute talks around a single topic or theme -- this time it would=
- be=A0DVCSes.
-
-If you're going to be in the Bay Area on that date, and could give a ta=
-lk,
-please contact me through that meetup, or at cwestin (at) yahoo (dot) c=
-om.
-
-Thanks!
-Chris Westin
+Oh, it is much nicer indeed. I shall redo the patch as soon as I get of=
+f
+this crappy winxp computer.
