@@ -1,73 +1,101 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: found some code...
-Date: Wed, 18 Jan 2012 10:56:14 +0100
-Message-ID: <4F16973E.8040302@ira.uka.de>
-References: <loom.20120118T015734-175@post.gmane.org> <CAH5451k4bMJtMLsaFi6g_uRGTL0OdQ5Z1Pss3xuMdWYs+6VcLQ@mail.gmail.com> <2918969.0SyTOLELv0@reg-desktop>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: How to migrate a complex directory structure from SVN to GIT?
+Date: Wed, 18 Jan 2012 11:43:48 +0100
+Message-ID: <4F16A264.9030503@alum.mit.edu>
+References: <1326828837924-7197567.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Andrew Ardill <andrew.ardill@gmail.com>, git@vger.kernel.org
-To: Ron Eggler <ron.eggler@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 18 10:56:19 2012
+Cc: git@vger.kernel.org
+To: Asuka <c.bauers@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 18 11:43:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnSFd-00056k-Ru
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Jan 2012 10:56:18 +0100
+	id 1RnSzk-0004mV-Ke
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Jan 2012 11:43:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757302Ab2ARJ4N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jan 2012 04:56:13 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:49202 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756308Ab2ARJ4M (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jan 2012 04:56:12 -0500
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1RnSFR-0003Mv-U2; Wed, 18 Jan 2012 10:56:11 +0100
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	id 1RnSFR-0002if-PA; Wed, 18 Jan 2012 10:56:05 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <2918969.0SyTOLELv0@reg-desktop>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1326880571.409141000
+	id S1752851Ab2ARKnw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jan 2012 05:43:52 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:36898 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752790Ab2ARKnv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jan 2012 05:43:51 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q0IAhmko018068
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 18 Jan 2012 11:43:49 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.24) Gecko/20111108 Lightning/1.0b2 Thunderbird/3.1.16
+In-Reply-To: <1326828837924-7197567.post@n2.nabble.com>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188744>
 
-On 18.01.2012 03:49, Ron Eggler wrote:
-> On January 18, 2012 12:16:49 PM Andrew Ardill wrote:
->> Hi Ron,
->>
->> On 18 January 2012 12:02, Ron Eggler<ron.eggler@gmail.com>  wrote:
->>> Hi There,
->>>
->>> Some mishap had happened with my project:
->>> I found a piece of code that is the most recent one that never got
->>> commited to the repository. It is dated December 5th and it definitely
->>> is the most recent piece of code.
->>> Now in the mean time I switched computers so I had to reinstall git and
->>> get create new local folders. Now this directory with the most recent
->>> code, shows every file as unversioned which should not be true.
->>> Only a couple, maybe 3 files had changed with that last change. Now when
->>> I commit this now, is that gonna mess up my old repo or can I safely
->>> gio ahead and commit that most recent code (even tho it might commit
->>> the whole folder) - it almost seems like it forgot which files
->>> were in the repo vs. which files were in my local folder...
+On 01/17/2012 08:33 PM, Asuka wrote:
+> I would like to migrate my svn repository to git. The structure looks like
+> the following:
+> 
+> svn
+>    |_Project1
+>          |_subproject1
+>                |_branches
+>                       |_branch1
+>                       |_branch2
+>                |_trunk
+>                |_tags
+>                       |_tagv1
+>    |_Non-JavaProject
+>          |_subproject
+>    |_Project2
+>           |_AnotherSubproject
+>                |_SubSubproject
+>           |_Subproject2
+>                |_branches
+>                |_tags
+>           |_Subproject3
+>                |_trunk
+>           |_Subproject4
+>                |_Subsubproject
+>                        |_branches
+>                        |_tags
+>                        |_trunk
+> 
+> I would like to migrate all branches and tags
 
-Try "git update-index --refresh", more info in this recent thread 
-"http://comments.gmane.org/gmane.comp.version-control.git/188291"
+This can be confusing because Subversion confounds the namespace for
+lines of development (trunk, branches, and tags) with those of filename
+paths.  The basic rule is: normally each trunk/branches/tag triplet
+corresponds to a single project, and each project should be converted
+into a separate git repository.
 
-If this doesn't help:
-Human language is very ambiguous. What do you mean by "found a piece of 
-code"? Somewhere outside the repository, in a branch inside the 
-repository, in a subdirectory?
-What do you mean by "get create new local folders"? Do you mean a folder 
-where you copied the repository or do you mean folders inside your 
-repository where you created new files with your editor?
+In your case it is hard to tell where the project boundaries are without
+more information.
+
+If some projects don't have branches or tags, that is OK; you can
+configure git-svn pretty flexibly.
+
+If some have branches and/or tags but not trunk, give it a try; I'm not
+sure whether git-svn can handle it.
+
+If some subprojects (including their trunk/branches/tags directories)
+are nested within the source code of the enclosing projects (thus
+entangling the namespaces), then you have chaos even in the Subversion
+world.  Such a mess can probably also be rescued, but it will be more
+involved.  For example, you might use svndumpfilter to strip
+improperly-nested projects out of (copies of) your Subversion repository
+*before* converting the enclosing project, or play some kind of
+git-filter-branch tricks *after* the conversion.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
