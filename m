@@ -1,74 +1,92 @@
-From: Jason Wenger <jcwenger@gmail.com>
-Subject: Interesting behavior in git mergetool with no BASE revision
-Date: Wed, 18 Jan 2012 17:05:56 -0600
-Message-ID: <CAM6z=4_+yC4EnL9SZFd6=Nxs89QeHevNCakVzVycGBe7G+nTKQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Checking out orphans with -f
+Date: Wed, 18 Jan 2012 15:12:15 -0800
+Message-ID: <7vk44oli5s.fsf@alter.siamese.dyndns.org>
+References: <201201181207.05967.mfick@codeaurora.org>
+ <7vsjjcljmj.fsf@alter.siamese.dyndns.org>
+ <201201181550.23792.mfick@codeaurora.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 19 00:06:25 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Martin Fick <mfick@codeaurora.org>
+X-From: git-owner@vger.kernel.org Thu Jan 19 00:12:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RneaG-0007Ly-Gi
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 00:06:24 +0100
+	id 1Rneg4-0002UB-FI
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 00:12:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754929Ab2ARXGU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Jan 2012 18:06:20 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:63427 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752085Ab2ARXGT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jan 2012 18:06:19 -0500
-Received: by eaac11 with SMTP id c11so1108889eaa.19
-        for <git@vger.kernel.org>; Wed, 18 Jan 2012 15:06:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=nebLfbBuVybmY9abnE7E7KfJ7t0VOliqYqlTKJ3gIiE=;
-        b=dvboX1G4ABk018sbpw/jWlIKw7ceDedPmID9N5t1krnUjSK/LQLCSOGldJVudg0ce9
-         RBbM2paR5KN6+OPbGOQ8MmmBi1TDnqbcG+eCSc74iQrfo0qIO59DZ1apU6Sa61dOpwWM
-         YeJUKiBGmLRAST0qOaVylY3AnnYrWYY4wfVO0=
-Received: by 10.213.29.135 with SMTP id q7mr6022243ebc.49.1326927978350; Wed,
- 18 Jan 2012 15:06:18 -0800 (PST)
-Received: by 10.213.36.16 with HTTP; Wed, 18 Jan 2012 15:05:56 -0800 (PST)
+	id S1755210Ab2ARXMU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jan 2012 18:12:20 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40535 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752752Ab2ARXMS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jan 2012 18:12:18 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F0197020;
+	Wed, 18 Jan 2012 18:12:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=k5wJqPuIcKn6aL7sAtkCWpgQHgg=; b=X19jTg
+	1XCvoYgRrUTdsuNMJU2bzhy+nV0ZmUn8zNvOglFlDtI0K0MgK8TtESZXSJLjw7nv
+	fwm8h//YwfDx0pGE9rkL2h5tkd6QPpa/4NJ+fFELFiqLMyUwET07R9ZxeFdXrX62
+	+vldjDBtQTVogTb51IykfrXS3gnnBWH0g2FO8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wbb7yhzKBbb/WdZTeK4wN9IjkyQ0UWCa
+	kxrMJuZoBA/H8OZa2Fd/3EuWsxnQjcxwgw63V2JGg67qH8T/4rl9WyO8T3pvP6VN
+	gFBwBOfFiH8vKTvy9r9VMwHP3W2oKCsKC5mo4PjgRDToAWlncmAsrnm66i78TkTy
+	KvuNcG7eogc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 05F46701F;
+	Wed, 18 Jan 2012 18:12:18 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 64F16701E; Wed, 18 Jan 2012
+ 18:12:17 -0500 (EST)
+In-Reply-To: <201201181550.23792.mfick@codeaurora.org> (Martin Fick's message
+ of "Wed, 18 Jan 2012 15:50:23 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DD7338A0-4229-11E1-B216-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188777>
 
-Doing a git merge on=A01.7.4.3, on a case where both branches have a
-file created, and the base does not. =A0Per git-mergetool:
+Martin Fick <mfick@codeaurora.org> writes:
 
-"the configured command line will be invoked with $BASE set to the
-name of a temporary file containing the common base for the merge, if
-available;"
+> Actually, no I can't.  I can check out some other branch 
+> (assuming I have one), but I cannot then delete a, it 
+> appears to already be deleted by virtue of checking out 
+> another branch.  I like that since I never checked it in, 
+> better to clean up the garbage.
 
-So testing in this case, I set my mergetool cmd as "echo $MERGED
-$LOCAL $REMOTE $BASE", and I get the following:
+Good.
 
-cio/.cproject ./cio/.cproject.LOCAL.9029.cproject
-=2E/cio/.cproject.REMOTE.9029.cproject
-=2E/cio/.cproject.BASE.9029.cproject
+> ...but why can't I then 
+> checkout another orphan to do the same thing?
 
-ls -a cio shows the following files:
+I am not surprised if the original contributor who wanted to add --orphan
+did not address corner cases.  It is very plausible that we did not try as
+hard to nitpick the code for complete support of such corner cases as I
+and other contributors usually do for more important features.
 
-=2Ecproject
-=2Ecproject.LOCAL.9325.cproject
-=2Ecproject.BACKUP.9325.cproject
-=2Ecproject.REMOTE.9325.cproject
+So... Patches welcome ;-)
 
-So the lack of base file makes sense -- There is no base to start
-from. =A0However, $BASE evaluates to=A0./cio/.cproject.BASE.9029.cproje=
-ct,
-which is a nonexistent file. =A0This makes my actual mergetool upset to
-no end. =A0Intuitively=A0from documents, I would expect $BASE to=A0eval=
-uate
-to an empty string in this case.
+Having said that, there are many things to consider to fill the corner
+case you seem to be interested to add support for.
 
-Is this intended behavior?
-
---Jason C. Wenger
+The "orphaned" state is like immediately after "git init". Because you do
+not have any current commit, you cannot create an orphan branch based the
+state immediately after "git init", either. You are nominally on your
+'master' branch, but it does not have anything yet; you are expected to
+turn it into a real branch by creating a commit soon, but until you do so,
+you are kind of in-limbo. It is understandable that there will be many
+operations that will not make any sense until you first get out of this
+in-limbo state.  For example, you cannot (and do not have to) delete the
+branch and if you have a commit (e.g. you can fetch one from another
+place) you can check it out and the 'master' will be gone, because you
+never created it in the first place.
