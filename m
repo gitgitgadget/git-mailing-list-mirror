@@ -1,85 +1,73 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v2 2/2] tree_entry_interesting: make recursive mode
- default
-Date: Wed, 18 Jan 2012 15:59:52 +0700
-Message-ID: <20120118085951.GA704@duynguyen-vnpc.dek-tpc.internal>
-References: <1326341371-16628-1-git-send-email-pclouds@gmail.com>
- <1326533003-19686-1-git-send-email-pclouds@gmail.com>
- <1326533003-19686-2-git-send-email-pclouds@gmail.com>
- <7v8vl9wtfg.fsf@alter.siamese.dyndns.org>
- <20120115100327.GA10735@do>
- <7v1uqzwaxs.fsf@alter.siamese.dyndns.org>
+From: Holger Hellmuth <hellmuth@ira.uka.de>
+Subject: Re: found some code...
+Date: Wed, 18 Jan 2012 10:56:14 +0100
+Message-ID: <4F16973E.8040302@ira.uka.de>
+References: <loom.20120118T015734-175@post.gmane.org> <CAH5451k4bMJtMLsaFi6g_uRGTL0OdQ5Z1Pss3xuMdWYs+6VcLQ@mail.gmail.com> <2918969.0SyTOLELv0@reg-desktop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 18 10:00:14 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Andrew Ardill <andrew.ardill@gmail.com>, git@vger.kernel.org
+To: Ron Eggler <ron.eggler@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 18 10:56:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnRNM-0000SI-RJ
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Jan 2012 10:00:13 +0100
+	id 1RnSFd-00056k-Ru
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Jan 2012 10:56:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756643Ab2ARJAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jan 2012 04:00:05 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:63190 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756547Ab2ARJAD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jan 2012 04:00:03 -0500
-Received: by iagf6 with SMTP id f6so5678151iag.19
-        for <git@vger.kernel.org>; Wed, 18 Jan 2012 01:00:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=tPDwC+ymqhhZKW4hFMTtylX5jycFLUY8Aq8yT51vYNQ=;
-        b=qNINB4w43neO6cDXtyUa5Gbq9SRwRo6RzdYE808ZAs2XXveCj07aw7nn/gJ8cN64Hy
-         M6D6SAohcmRb7ZNPbld2GTOHVL2UNSmwMn9poQD/YA+AWawRc2fPAul8fxMLcUK6mDLB
-         YaqWtk+Kkgaqc9p785pKIr83FSraVXs5+hRnw=
-Received: by 10.50.178.106 with SMTP id cx10mr3596401igc.15.1326877203119;
-        Wed, 18 Jan 2012 01:00:03 -0800 (PST)
-Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id va6sm43487401igc.6.2012.01.18.00.59.57
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 18 Jan 2012 01:00:00 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 18 Jan 2012 15:59:52 +0700
-Content-Disposition: inline
-In-Reply-To: <7v1uqzwaxs.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1757302Ab2ARJ4N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jan 2012 04:56:13 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:49202 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756308Ab2ARJ4M (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jan 2012 04:56:12 -0500
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1RnSFR-0003Mv-U2; Wed, 18 Jan 2012 10:56:11 +0100
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
+	id 1RnSFR-0002if-PA; Wed, 18 Jan 2012 10:56:05 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <2918969.0SyTOLELv0@reg-desktop>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1326880571.409141000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188743>
 
-On Mon, Jan 16, 2012 at 02:15:59PM -0800, Junio C Hamano wrote:
-> Yeah, the logic of this correction is very clear. Because diff_cache is
-> about walking a flat index, the "recursive pathspec" that allows us to
-> look into deeper levels in directory hierarchy should be set, and also we
-> should not be limiting the depth of the match in any way by setting the
-> max_depth to "unlimited".
+On 18.01.2012 03:49, Ron Eggler wrote:
+> On January 18, 2012 12:16:49 PM Andrew Ardill wrote:
+>> Hi Ron,
+>>
+>> On 18 January 2012 12:02, Ron Eggler<ron.eggler@gmail.com>  wrote:
+>>> Hi There,
+>>>
+>>> Some mishap had happened with my project:
+>>> I found a piece of code that is the most recent one that never got
+>>> commited to the repository. It is dated December 5th and it definitely
+>>> is the most recent piece of code.
+>>> Now in the mean time I switched computers so I had to reinstall git and
+>>> get create new local folders. Now this directory with the most recent
+>>> code, shows every file as unversioned which should not be true.
+>>> Only a couple, maybe 3 files had changed with that last change. Now when
+>>> I commit this now, is that gonna mess up my old repo or can I safely
+>>> gio ahead and commit that most recent code (even tho it might commit
+>>> the whole folder) - it almost seems like it forgot which files
+>>> were in the repo vs. which files were in my local folder...
 
-For the record, enabling wildcard in git-log is just as simple. But I
-guess you don't want more changes this late in rc cycles.
+Try "git update-index --refresh", more info in this recent thread 
+"http://comments.gmane.org/gmane.comp.version-control.git/188291"
 
--- 8< --
-diff --git a/revision.c b/revision.c
-index 064e351..c426271 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1816,6 +1816,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 
- 	if (revs->prune_data.nr) {
- 		diff_tree_setup_paths(revs->prune_data.raw, &revs->pruning);
-+		revs->pruning.pathspec.recursive = 1;
-+		revs->pruning.pathspec.max_depth = -1;
- 		/* Can't prune commits with rename following: the paths change.. */
- 		if (!DIFF_OPT_TST(&revs->diffopt, FOLLOW_RENAMES))
- 			revs->prune = 1;
--- 8< --
-
---
-Duy
+If this doesn't help:
+Human language is very ambiguous. What do you mean by "found a piece of 
+code"? Somewhere outside the repository, in a branch inside the 
+repository, in a subdirectory?
+What do you mean by "get create new local folders"? Do you mean a folder 
+where you copied the repository or do you mean folders inside your 
+repository where you created new files with your editor?
