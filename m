@@ -1,66 +1,73 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: git-grep while excluding files in a blacklist
-Date: Wed, 18 Jan 2012 08:24:03 +0700
-Message-ID: <CACsJy8C0aXgecCWHrCK3yzNLWnWX4g81x-OzZCY0xtonbspzXw@mail.gmail.com>
-References: <CA++fsGHGrNQzR-schP0yTXnD4jkYJjHHVk6QoJvfxPX9mguJPQ@mail.gmail.com>
- <CACsJy8A8eWt_wcxWrdjgmkHZpS1bBet7DTT-bRf9zrxfszUtjw@mail.gmail.com> <7v4nvurszj.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Using signed tag in pull requests
+Date: Tue, 17 Jan 2012 17:47:15 -0800
+Message-ID: <7vwr8pok7w.fsf@alter.siamese.dyndns.org>
+References: <7vehuyosaa.fsf@alter.siamese.dyndns.org>
+ <CAH5451nSMcJ50fu2qtMkw4zPpx-Kg-k-jqCcpryu+pkC8JX8rw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Dov Grobgeld <dov.grobgeld@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 18 02:24:41 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: linux-kernel-owner@vger.kernel.org Wed Jan 18 02:47:34 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnKGW-0001yD-SA
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Jan 2012 02:24:41 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1RnKcf-0002AX-Ra
+	for glk-linux-kernel-3@lo.gmane.org; Wed, 18 Jan 2012 02:47:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754380Ab2ARBYg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jan 2012 20:24:36 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:53183 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753852Ab2ARBYf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jan 2012 20:24:35 -0500
-Received: by bkas6 with SMTP id s6so2282564bka.19
-        for <git@vger.kernel.org>; Tue, 17 Jan 2012 17:24:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=OTnodAWid9rV5qf2Yh2ipqkwL/osih4joyexwUw9Ikc=;
-        b=jaJyrFfhVxXE458q7tackFvI0Pdt9EF/B7CKKz61ULdM49iY25853Rvmy+nADjvu5+
-         T6XDITOWQ0aLqqGb8bEC7RYQBHWWVU1jU8urdnDQMZiCOGrhNoIZyLJNlAHpSri52Lsa
-         TIOuIpWaapH6bCJfJDcSj5Cq3cwBvKxUmHL14=
-Received: by 10.205.132.14 with SMTP id hs14mr7862430bkc.130.1326849874289;
- Tue, 17 Jan 2012 17:24:34 -0800 (PST)
-Received: by 10.205.123.145 with HTTP; Tue, 17 Jan 2012 17:24:03 -0800 (PST)
-In-Reply-To: <7v4nvurszj.fsf@alter.siamese.dyndns.org>
-Sender: git-owner@vger.kernel.org
+	id S1756511Ab2ARBrT (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 17 Jan 2012 20:47:19 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65025 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755528Ab2ARBrS (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 17 Jan 2012 20:47:18 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DBB85B38;
+	Tue, 17 Jan 2012 20:47:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EnO/7RC5VG0umfkroV5sCusP6g8=; b=BtY6wV
+	BEmg550uo1vfZU35MXi8k7B+S8xp1lOlBam0BY52MVMmh2UDCf965D2VQGBYZnOQ
+	gdNzKXn3GsDEnW7HOLMVpNo0ADPOPUANAeTPfAluEOSNXGG1WnED6A5ZdVTuhJ09
+	otU6fC3dj2lcBwWttg665Kxrbb0TQQDuTVlH8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=O1nS1pqy1f7ljXRMiLqaiUT1P3Zf8maQ
+	BQzqU1GzF/OBrLSlBnvqFY1LmFQc02IiRSHGHyxf1DVGrdSPoPM1etKlraKVUTfc
+	GwsgjO4zwC1j+6jKK7A2KjnCy5IrjutmOM2e4erUESCYEZY2fkLrSfWTMxVMeL3j
+	mvEOBN92xWY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 459C55B37;
+	Tue, 17 Jan 2012 20:47:17 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C9C595B36; Tue, 17 Jan 2012
+ 20:47:16 -0500 (EST)
+In-Reply-To: <CAH5451nSMcJ50fu2qtMkw4zPpx-Kg-k-jqCcpryu+pkC8JX8rw@mail.gmail.com> (Andrew
+ Ardill's message of "Wed, 18 Jan 2012 12:07:18 +1100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 59EB689E-4176-11E1-8E61-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188734>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188735>
 
-On Wed, Jan 18, 2012 at 3:09 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->
->> On Tue, Jan 17, 2012 at 4:14 PM, Dov Grobgeld <dov.grobgeld@gmail.com> wrote:
->>> Does git-grep allow searching for a pattern in all files *except*
->>> files matching a pattern. E.g. in our project we have multiple DLL's
->>> in git, but when searching I would like to exclude these for speed. Is
->>> that possible with git-grep?
->>
->> Not from command line, no. You can put "*.dll" to .gitignore file then
->> "git grep --exclude-standard".
->
-> No rush, but is this something we would eventually want to handle with the
-> negative pathspec?
+Andrew Ardill <andrew.ardill@gmail.com> writes:
 
-Definitely. But because I'm stuck at adding "seen" feature from
-match_pathspec_depth to tree_entry_interesting, that probably won't
-happen this year. Adding "--exclude=<pattern>" to git-grep is a more
-plausible option.
--- 
-Duy
+>> Starting from Git release v1.7.9, a contributor can add a signed tag to
+>> the commit at the tip of the history and ask the integrator to pull that
+>> signed tag. When the integrator runs `git pull`, the signed tag is
+>> automatically verified to assure that the history is not tampered with.
+>> In addition, the resulting merge commit records the content of the signed
+>> tag, so that other people can verify that the branch merged by the
+>> contributor was signed by the contributor, without fetching the signed tag
+>
+> I think you mean to say 'the branch merged by the integrator was signed
+> by the contributor'.
+
+Definitely. I'll update my local copy.
+
+Thanks for spotting this.
