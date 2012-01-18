@@ -1,75 +1,65 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: best way to fastforward all tracking branches after a fetch
-Date: Wed, 18 Jan 2012 07:20:45 +0530
-Message-ID: <CAMK1S_hK_shh5g8BOxhKz3tw2m=kp6qZM1ZTQOOnY2eMNzL3hA@mail.gmail.com>
-References: <jbvj5o$skt$1@dough.gmane.org>
-	<20111217101009.GA19248@sita-lt.atc.tcs.com>
-	<20111217101106.GB19248@sita-lt.atc.tcs.com>
-	<CAEY4ZpPKLrWQpEUYkwST8Fh40JwrjxvD+6yML6A+=XpsYmPevg@mail.gmail.com>
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: Using signed tag in pull requests
+Date: Wed, 18 Jan 2012 13:34:14 +1100
+Message-ID: <CAH5451mz7NpDyL9O708siBdgSC7eXZi=VWk5qd2Ghm0PmWZ9NQ@mail.gmail.com>
+References: <7vehuyosaa.fsf@alter.siamese.dyndns.org> <CAH5451nSMcJ50fu2qtMkw4zPpx-Kg-k-jqCcpryu+pkC8JX8rw@mail.gmail.com>
+ <7vwr8pok7w.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Gelonida N <gelonida@gmail.com>, git@vger.kernel.org
-To: Nazri Ramliy <ayiehere@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 18 02:50:53 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: linux-kernel-owner@vger.kernel.org Wed Jan 18 03:34:50 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnKfr-0003O0-GA
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Jan 2012 02:50:51 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1RnLML-00028k-Lk
+	for glk-linux-kernel-3@lo.gmane.org; Wed, 18 Jan 2012 03:34:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756514Ab2ARBuq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jan 2012 20:50:46 -0500
-Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:47397 "EHLO
-	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753852Ab2ARBuq (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jan 2012 20:50:46 -0500
-Received: by obcva7 with SMTP id va7so6583843obc.19
-        for <git@vger.kernel.org>; Tue, 17 Jan 2012 17:50:45 -0800 (PST)
+	id S1756735Ab2ARCei (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 17 Jan 2012 21:34:38 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:53370 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756531Ab2ARCeg (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 17 Jan 2012 21:34:36 -0500
+Received: by lahc1 with SMTP id c1so1915914lah.19
+        for <multiple recipients>; Tue, 17 Jan 2012 18:34:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=oJhw5gu6/kJLfE68ebdNVxPeaLNhp6LSKn5bVqlKXE4=;
-        b=xtpvAwFF/T7lnradK3B5yseTsCTb099yI4BGBvIztq3Sqo4Cv744rfE+9sWsnJpnkZ
-         8riy4KruXzCQOJqv2g3IjdJi9r0cAnvboCstKsqzD7SfSshumGFNz0OwVZ1+nwdSulcg
-         zMc7mxE1758Gaq6L1bLqdZ4roRQhEagie7voM=
-Received: by 10.182.11.37 with SMTP id n5mr8196093obb.13.1326851445645; Tue,
- 17 Jan 2012 17:50:45 -0800 (PST)
-Received: by 10.182.51.170 with HTTP; Tue, 17 Jan 2012 17:50:45 -0800 (PST)
-In-Reply-To: <CAEY4ZpPKLrWQpEUYkwST8Fh40JwrjxvD+6yML6A+=XpsYmPevg@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
+        bh=sZ73Fofty0ewtxBsRK7rkaM5Gd5DaCt0Prcu6fzrmYU=;
+        b=Atzyskdf1dv2POpSyeWNSBiOcyNJhCWGgbrmkYwYqTaYROGqFW4r+F1K1E+1LSHglH
+         vmYkgV/zHMTytD6rxLaJ6HRkpaU9eLnv1apunCfgumGdlKB9wqc45gTX58qT4jrXFvRt
+         OR0cWS9hzkWga4rVsWjIcUIFe37hS2Gx/9iy0=
+Received: by 10.112.100.199 with SMTP id fa7mr4720319lbb.89.1326854075233;
+ Tue, 17 Jan 2012 18:34:35 -0800 (PST)
+Received: by 10.152.14.71 with HTTP; Tue, 17 Jan 2012 18:34:14 -0800 (PST)
+In-Reply-To: <7vwr8pok7w.fsf@alter.siamese.dyndns.org>
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188737>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188738>
 
-(sorry about that previous email; hit send in error.  Here's the complete one)
-
-On Mon, Dec 19, 2011 at 12:01 PM, Nazri Ramliy <ayiehere@gmail.com> wrote:
-> On Sat, Dec 17, 2011 at 6:11 PM, Sitaram Chamarty <sitaramc@gmail.com> wrote:
->> oops; forgot the program...
+On 18 January 2012 12:47, Junio C Hamano <gitster@pobox.com> wrote:
+> Andrew Ardill <andrew.ardill@gmail.com> writes:
 >
-> This is nice!
+>>> Starting from Git release v1.7.9, a contributor can add a signed tag to
+>>> the commit at the tip of the history and ask the integrator to pull that
+>>> signed tag. When the integrator runs `git pull`, the signed tag is
+>>> automatically verified to assure that the history is not tampered with.
+>>> In addition, the resulting merge commit records the content of the signed
+>>> tag, so that other people can verify that the branch merged by the
+>>> contributor was signed by the contributor, without fetching the signed tag
+>>
+>> I think you mean to say 'the branch merged by the integrator was signed
+>> by the contributor'.
 >
-> Stick it on github, or somewhere, please, so that I can always get the
-> latest and greatest?
+> Definitely. I'll update my local copy.
 >
-> Thanks.
->
-> nazri
+> Thanks for spotting this.
 
-ok; it's on github: http://github.com/sitaramc/git-tools (they're all
-standalone tools; you don't have to use the others)
-
-The output is now colorised, and it will now also tell you, for each
-remote you have, what branches you are hiding from them and what they
-have which you have not started tracking locally.
-
-a "screenshot" is at
-http://sitaramc.github.com/git-tools/index.html#index_git_branch_check_
-
-I notice I'm using it more and more, often even as a replacement for
-'git status'... at least for repos where I'm juggling multiple
-remotes.
+No worries. That's the whole point right? :D
