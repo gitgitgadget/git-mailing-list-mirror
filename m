@@ -1,91 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-add: allow --ignore-missing always, not just in dry
- run
-Date: Wed, 18 Jan 2012 14:56:12 -0800
-Message-ID: <7vobu0liwj.fsf@alter.siamese.dyndns.org>
-References: <1326923544-8287-1-git-send-email-dieter@plaetinck.be>
+From: Jason Wenger <jcwenger@gmail.com>
+Subject: Interesting behavior in git mergetool with no BASE revision
+Date: Wed, 18 Jan 2012 17:05:56 -0600
+Message-ID: <CAM6z=4_+yC4EnL9SZFd6=Nxs89QeHevNCakVzVycGBe7G+nTKQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dieter Plaetinck <dieter@plaetinck.be>
-X-From: git-owner@vger.kernel.org Wed Jan 18 23:56:20 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 19 00:06:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RneQW-00010Z-Eq
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Jan 2012 23:56:20 +0100
+	id 1RneaG-0007Ly-Gi
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 00:06:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753943Ab2ARW4Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jan 2012 17:56:16 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34460 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751433Ab2ARW4P (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jan 2012 17:56:15 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF9246CB7;
-	Wed, 18 Jan 2012 17:56:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5AvmXEa8Vkn7jbt13YI3qwvF8kg=; b=AtAJec
-	TZ4wikixyXNlyNVZ64+e7UayDrkDGBbiGMz/2NlS75Vn+42Kg0mKeqXi8A+osJLR
-	kNcKGVbYGfGvjtAP4RPsPVEoRzF1yp7f6yOcoNmCc3BYmYeUvSyOmzUyOcgyyVxb
-	LnNutEhLHrBlLS4Fkmk3naepgm+neXGyZYeEw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rT35LwF+IfJ8UTfMNif55O61Osv22OLy
-	JvomK/Otl5wc36TC20AHYBQ+n7ZYQjas2rpT/z8dKrAQv1d0MqQzWqJ1Hos79a6q
-	HSL/TDxL8KwcSOhWOH7NVjQd9d2Hwi6wlZqOsZ571/b0g5XvgGt/m1ZPMZuRf8wV
-	aKdg61kEf+8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A73076CB6;
-	Wed, 18 Jan 2012 17:56:14 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3D2086CB5; Wed, 18 Jan 2012
- 17:56:14 -0500 (EST)
-In-Reply-To: <1326923544-8287-1-git-send-email-dieter@plaetinck.be> (Dieter
- Plaetinck's message of "Wed, 18 Jan 2012 22:52:24 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9F5C4CA2-4227-11E1-9FDE-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754929Ab2ARXGU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Jan 2012 18:06:20 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:63427 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752085Ab2ARXGT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jan 2012 18:06:19 -0500
+Received: by eaac11 with SMTP id c11so1108889eaa.19
+        for <git@vger.kernel.org>; Wed, 18 Jan 2012 15:06:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        bh=nebLfbBuVybmY9abnE7E7KfJ7t0VOliqYqlTKJ3gIiE=;
+        b=dvboX1G4ABk018sbpw/jWlIKw7ceDedPmID9N5t1krnUjSK/LQLCSOGldJVudg0ce9
+         RBbM2paR5KN6+OPbGOQ8MmmBi1TDnqbcG+eCSc74iQrfo0qIO59DZ1apU6Sa61dOpwWM
+         YeJUKiBGmLRAST0qOaVylY3AnnYrWYY4wfVO0=
+Received: by 10.213.29.135 with SMTP id q7mr6022243ebc.49.1326927978350; Wed,
+ 18 Jan 2012 15:06:18 -0800 (PST)
+Received: by 10.213.36.16 with HTTP; Wed, 18 Jan 2012 15:05:56 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188776>
 
-Dieter Plaetinck <dieter@plaetinck.be> writes:
+Doing a git merge on=A01.7.4.3, on a case where both branches have a
+file created, and the base does not. =A0Per git-mergetool:
 
-> There is no need to restrict use of --ignore-missing to dry runs,
-> it can be useful to ignore missing files during normal operation as
-> well.
->
-> Signed-off-by: Dieter Plaetinck <dieter@plaetinck.be>
+"the configured command line will be invoked with $BASE set to the
+name of a temporary file containing the common base for the merge, if
+available;"
 
-Sorry, but for this kind of change, we would want to see a justification
-that is much better than that. The default around here is not to change an
-established behaviour without a good reason.
+So testing in this case, I set my mergetool cmd as "echo $MERGED
+$LOCAL $REMOTE $BASE", and I get the following:
 
-Have you dug into the list archive to see _why_ we decided not to allow
-this option in the real run in the first place? You would need to find "By
-letting the command ignore missing paths, the user can get into X and Y
-situations and we would want to avoid it. We however need to give users a
-way to see if there is something missing, hence we add it when we are
-under dry-run option." and refute that previous justification, arguing why
-X and Y is something we should _not_ be worrying about, to make a good
-case for this change.
+cio/.cproject ./cio/.cproject.LOCAL.9029.cproject
+=2E/cio/.cproject.REMOTE.9029.cproject
+=2E/cio/.cproject.BASE.9029.cproject
 
-In this particular case, my gut feeling is that this might a change in the
-good direction (but I strongly suspect that I am not recalling the real
-reason why we didn't allow it when we introduced this option).
+ls -a cio shows the following files:
 
-If somebody is writing a script using "git add" (which is not recommended
-to begin with), it is tempting to say 'git add $list_of_possible_files' in
-such a script when the script _knows_ that the list it is giving to "git
-add" may contain a path that does not exist, and wants to ignore missing
-ones.
+=2Ecproject
+=2Ecproject.LOCAL.9325.cproject
+=2Ecproject.BACKUP.9325.cproject
+=2Ecproject.REMOTE.9325.cproject
 
-But then the script could easily filter what does not exist before
-compiling such a list, so that is not a very strong reason to advocate
-it.
+So the lack of base file makes sense -- There is no base to start
+from. =A0However, $BASE evaluates to=A0./cio/.cproject.BASE.9029.cproje=
+ct,
+which is a nonexistent file. =A0This makes my actual mergetool upset to
+no end. =A0Intuitively=A0from documents, I would expect $BASE to=A0eval=
+uate
+to an empty string in this case.
+
+Is this intended behavior?
+
+--Jason C. Wenger
