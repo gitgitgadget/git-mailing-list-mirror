@@ -1,78 +1,73 @@
-From: Andrew Ardill <andrew.ardill@gmail.com>
-Subject: Re: found some code...
-Date: Wed, 18 Jan 2012 12:16:49 +1100
-Message-ID: <CAH5451k4bMJtMLsaFi6g_uRGTL0OdQ5Z1Pss3xuMdWYs+6VcLQ@mail.gmail.com>
-References: <loom.20120118T015734-175@post.gmane.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] branch: borrow --sort and --count from for-each-ref
+Date: Wed, 18 Jan 2012 08:20:05 +0700
+Message-ID: <CACsJy8An5oYv_Ki2oFezykSDFXmprPq07G7G4xq+srhcpP+OHg@mail.gmail.com>
+References: <1326805907-19416-1-git-send-email-pclouds@gmail.com> <7vvcoaqe9h.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Ron Eggler <ron.eggler@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 18 02:17:17 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 18 02:20:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnK9M-0007Ug-Uj
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Jan 2012 02:17:17 +0100
+	id 1RnKCj-0000Sx-GA
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Jan 2012 02:20:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754396Ab2ARBRM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jan 2012 20:17:12 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:61365 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754181Ab2ARBRL (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jan 2012 20:17:11 -0500
-Received: by lahc1 with SMTP id c1so1890054lah.19
-        for <git@vger.kernel.org>; Tue, 17 Jan 2012 17:17:10 -0800 (PST)
+	id S1755464Ab2ARBUi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Jan 2012 20:20:38 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:64977 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755418Ab2ARBUh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Jan 2012 20:20:37 -0500
+Received: by bkas6 with SMTP id s6so2280353bka.19
+        for <git@vger.kernel.org>; Tue, 17 Jan 2012 17:20:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=atB58XHeisBnDcdw5ftgtswuHVeOOA7nI+g8QGGC7qU=;
-        b=W483eEBTmsN7pH/MpjAABinLixfTHHIL3ahwwNvXSPF5OPi8DEh5m2xJXuP1apWp3o
-         +c4AcUE0Y4Az/Lo9rdHRiX99rt+mLg8kovLwBUUkqHEZD+yJeNmRxk9kAoQmVYHIz0XA
-         Ht91JTGBGUViBax3FrqjIWibe/5kggZaMhoj8=
-Received: by 10.112.100.199 with SMTP id fa7mr4668656lbb.89.1326849430267;
- Tue, 17 Jan 2012 17:17:10 -0800 (PST)
-Received: by 10.152.14.71 with HTTP; Tue, 17 Jan 2012 17:16:49 -0800 (PST)
-In-Reply-To: <loom.20120118T015734-175@post.gmane.org>
+         :cc:content-type:content-transfer-encoding;
+        bh=c6CO6BskZohcLo1h64J0FWa6xbGT0nevwWEGYktZcUM=;
+        b=YeVhaZGLc7g2Wx00VLTiHzAMkKNow+ob4ToDCaNhDeSUw2w3bfzQs2iLpKtbXhYwZ8
+         pM6Do7WCBbtgxAmyrpXuPZIQF0FPE3t/uvR/JBgxsIybK2NyGSZq8ZVhOoOnQg07BGds
+         wAv5ktMxmBr4kOvVStbuSyvaS2d9r0a1bMDFM=
+Received: by 10.205.128.140 with SMTP id he12mr1568555bkc.76.1326849636168;
+ Tue, 17 Jan 2012 17:20:36 -0800 (PST)
+Received: by 10.205.123.145 with HTTP; Tue, 17 Jan 2012 17:20:05 -0800 (PST)
+In-Reply-To: <7vvcoaqe9h.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188733>
 
-Hi Ron,
-
-On 18 January 2012 12:02, Ron Eggler <ron.eggler@gmail.com> wrote:
-> Hi There,
+2012/1/18 Junio C Hamano <gitster@pobox.com>:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> w=
+rites:
 >
-> Some mishap had happened with my project:
-> I found a piece of code that is the most recent one that never got commited to
-> the repository. It is dated December 5th and it definitely is the most recent
-> piece of code.
-> Now in the mean time I switched computers so I had to reinstall git and get
-> create new local folders. Now this directory with the most recent code, shows
-> every file as unversioned which should not be true.
-> Only a couple, maybe 3 files had changed with that last change. Now when I commit
-> this now, is that gonna mess up my old repo or can I safely gio ahead and commit
-> that most recent code (even tho it might commit the whole folder) - it almost
-> seems like it forgot which files
-> were in the repo vs. which files were in my local folder...
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+>> ---
+>> =C2=A0Some time ago, I posted a patch that added date sort to git-br=
+anch
+>> =C2=A0and Peff pointed me to for-each-ref. I did not look at it clos=
+ely.
+>> =C2=A0Now it does not seem hard to lend some code from for-each-ref =
+to
+>> =C2=A0git-branch. I can list 10 most recently touched branches with
+>>
+>> =C2=A0 git branch --sort=3D-committerdate -v --count=3D10
+>>
+>> =C2=A0kind of cool. I don't think adding --format is necessary becau=
+se
+>> =C2=A0git-branch already has its own formatting.
 >
-> Thanks for hints and suggestions how I get myself cleanly out of this mess!
-> Thanks,
-> Ron
->
+> Why do we even need this for "git branch", when "git for-each-ref
+> refs/heads" already does this?
 
-Out of interest, how did you transfer the existing code onto the new
-machine? In particular, did you clone the existing repository using
-git clone, or using some other method (such as zipping/emailing)? If
-it was not via clone, did you copy the .git subdirectory, or did you
-recreate it?
-
-Is the old repository (on the old computer) still available?
-
-Regards,
-
-Andrew Ardill
+coloring, current branch marking, "branch -v", more accessible command
+(I did not know about for-each-ref until Jeff told me)
+--=20
+Duy
