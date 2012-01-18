@@ -1,80 +1,71 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: post-update to stash after push to non-bare current branch
-Date: Wed, 18 Jan 2012 14:38:24 -0800
-Message-ID: <7vwr8oljq7.fsf@alter.siamese.dyndns.org>
-References: <jf70vc$kol$1@dough.gmane.org> <4F171088.4080006@gmail.com>
- <4F1714AD.4090706@gmail.com>
+Subject: Re: Checking out orphans with -f
+Date: Wed, 18 Jan 2012 14:40:36 -0800
+Message-ID: <7vsjjcljmj.fsf@alter.siamese.dyndns.org>
+References: <201201181207.05967.mfick@codeaurora.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 18 23:38:38 2012
+Cc: git@vger.kernel.org
+To: Martin Fick <mfick@codeaurora.org>
+X-From: git-owner@vger.kernel.org Wed Jan 18 23:40:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rne9I-0007bI-N1
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Jan 2012 23:38:33 +0100
+	id 1RneBP-0000QZ-IJ
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Jan 2012 23:40:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753579Ab2ARWi1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jan 2012 17:38:27 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60456 "EHLO
+	id S1754289Ab2ARWkj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jan 2012 17:40:39 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61412 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751344Ab2ARWi0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jan 2012 17:38:26 -0500
+	id S1751336Ab2ARWki (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jan 2012 17:40:38 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E0754699D;
-	Wed, 18 Jan 2012 17:38:25 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 67C8B69E8;
+	Wed, 18 Jan 2012 17:40:38 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Jw1r3dv/39AWnSnzoXYX/QWett8=; b=LTGQ6C
-	4B7hdhhzqUfNip4ST1FB7wZ4QPiL7cLw24gdr/Y3bRyW4h1ChlFdpbmGOGyTi+WG
-	dk6NNypnHf6hRmC2fHla5Sk+yQRTLwuhHpcPycHHq4vzy3e36L3KXw5IsUXSjRzT
-	RfqCe/azoi0+1x/WPF/lUL1HySsHzAv2y3p4M=
+	:content-type; s=sasl; bh=0wn3rhBCUW8y8u3P6uzIFK66/ns=; b=pt2LSC
+	k9s9qQncxZrQHmWXUDi+zsjQRKjdDVNvlO9sHQOjL9GaiN04OfQfmPq3+N1Z+Zyz
+	lHeRWZF7oN6No6Va2tgGhBa2xG9KQ/XLfNJtYhbILAWjT80Ll9Z/sG2uoYtIivrI
+	ZjbxkRo2wNwZaCe0NUGYeWbrRyprxcbAn0ZEU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gyI6hy3yun0zdaGvNJWB4x3CT66JtrJe
-	cE/Iu65QQl3H31SjZeowCwM4d4nDbqX62MnN4O0olWx4wPvM4V0o6SDybxH5Pffn
-	DydV2Z3UKil1lcknUlUfXQvv2MlbIIBetT9Q/lYD9+W9C7Kpf7NLzPB6PFgFLfX/
-	Tdjpl7XJQe8=
+	:content-type; q=dns; s=sasl; b=atLazjn/yeUxpbbZTL2fBzb0PxFgnbui
+	KlV0CbvjxdtGFn18CrN0gf008fN6+0pyFQeaXa+/WPHhOhfVLNoXCKw7fnx7bS8p
+	MJef7+YWgPzZrIOy8vtqzW2RgJETTgZi46xOhm1+vm3WCGCsBSangv4816nc/CJr
+	OM+KOBbIybA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D6D9C699C;
-	Wed, 18 Jan 2012 17:38:25 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EAE369E7;
+	Wed, 18 Jan 2012 17:40:38 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6DD066999; Wed, 18 Jan 2012
- 17:38:25 -0500 (EST)
-In-Reply-To: <4F1714AD.4090706@gmail.com> (Neal Kreitzinger's message of
- "Wed, 18 Jan 2012 12:51:25 -0600")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D060A69E6; Wed, 18 Jan 2012
+ 17:40:37 -0500 (EST)
+In-Reply-To: <201201181207.05967.mfick@codeaurora.org> (Martin Fick's message
+ of "Wed, 18 Jan 2012 12:07:05 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 224E6BE8-4225-11E1-95E6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 713970C2-4225-11E1-AE02-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188771>
 
-Neal Kreitzinger <nkreitzinger@gmail.com> writes:
+Martin Fick <mfick@codeaurora.org> writes:
 
-> hooks/post-update is:
+> I am trying to write some scripts which do various things to 
+> a git repo and I have run into a issue where I think that 
+> git behavior with respect to orphan branches is potentially 
+> undesirable.  If I type:
 >
-> git stash save
-> echo "worktree+index of non-bare remote current branch stashed for safety"
-> git reset --hard
-> echo "git-reset --hard on current remote branch to ensure clean state"
+>   git checkout --orphan a
 >
-> message is echoed, but git-reset --hard does not appear to have really
-> worked. (git 1.7.1)
+> I cannot easily abandon this state
 
-Have you checked where in the filesystem hierarchy that script is run
-(hint: pwd)?
+What do you mean by "abandon"?
 
-Also it is unclear why you keep saying "stash". What kind of changes are
-you expecting to be saved to the stash? Will they be changes that are not
-source controlled that you would rather not to see? In other words, after
-running "stash" every time somebody pushes and having accumulated many
-stash entries, when do you plan to pop these stashed changes?
-
-I would have expect that such a repository to reject a push if the working
-tree is dirty, and run checkout in post-update, though.
+If you want to remove a branch "a" because you do not need it, you can
+check out some other branch and say "git branch -D a", no?
