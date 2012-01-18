@@ -1,70 +1,85 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] bash-completion: don't add quoted space for ZSH (fix regression)
-Date: Wed, 18 Jan 2012 09:16:09 +0100
-Message-ID: <vpqlip5qvcm.fsf@bauges.imag.fr>
-References: <20120114152030.GX30469@goldbirke>
-	<1326567336-2173-1-git-send-email-Matthieu.Moy@imag.fr>
-	<CAMP44s2nYMmfC36+pGaYfOZUQy3fLMYDuaSriPYjHBeApmsRVg@mail.gmail.com>
-	<CAMP44s0T15idhwb6Eae5vdMxf25KK9MhY57mBf+BFN=OSC6Lhg@mail.gmail.com>
-	<7vzkdmqebh.fsf@alter.siamese.dyndns.org>
-	<CAMP44s3GMGMD5Y9Z=Uu_e55_eZOG2zY76u8B=ORKsMx6yoXW5Q@mail.gmail.com>
-	<7v1uqxq4jm.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v2 2/2] tree_entry_interesting: make recursive mode
+ default
+Date: Wed, 18 Jan 2012 15:59:52 +0700
+Message-ID: <20120118085951.GA704@duynguyen-vnpc.dek-tpc.internal>
+References: <1326341371-16628-1-git-send-email-pclouds@gmail.com>
+ <1326533003-19686-1-git-send-email-pclouds@gmail.com>
+ <1326533003-19686-2-git-send-email-pclouds@gmail.com>
+ <7v8vl9wtfg.fsf@alter.siamese.dyndns.org>
+ <20120115100327.GA10735@do>
+ <7v1uqzwaxs.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 18 09:16:21 2012
+X-From: git-owner@vger.kernel.org Wed Jan 18 10:00:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnQgu-0004Ln-42
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Jan 2012 09:16:21 +0100
+	id 1RnRNM-0000SI-RJ
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Jan 2012 10:00:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756193Ab2ARIQP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jan 2012 03:16:15 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:59362 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752947Ab2ARIQP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jan 2012 03:16:15 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q0I8EVFu009489
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 18 Jan 2012 09:14:31 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1RnQgj-0000rR-Fe; Wed, 18 Jan 2012 09:16:09 +0100
-In-Reply-To: <7v1uqxq4jm.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Tue, 17 Jan 2012 15:42:53 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 18 Jan 2012 09:14:31 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q0I8EVFu009489
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1327479273.38211@HFvdBkWKIyrAyLhfztRZfw
+	id S1756643Ab2ARJAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jan 2012 04:00:05 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:63190 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756547Ab2ARJAD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jan 2012 04:00:03 -0500
+Received: by iagf6 with SMTP id f6so5678151iag.19
+        for <git@vger.kernel.org>; Wed, 18 Jan 2012 01:00:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=tPDwC+ymqhhZKW4hFMTtylX5jycFLUY8Aq8yT51vYNQ=;
+        b=qNINB4w43neO6cDXtyUa5Gbq9SRwRo6RzdYE808ZAs2XXveCj07aw7nn/gJ8cN64Hy
+         M6D6SAohcmRb7ZNPbld2GTOHVL2UNSmwMn9poQD/YA+AWawRc2fPAul8fxMLcUK6mDLB
+         YaqWtk+Kkgaqc9p785pKIr83FSraVXs5+hRnw=
+Received: by 10.50.178.106 with SMTP id cx10mr3596401igc.15.1326877203119;
+        Wed, 18 Jan 2012 01:00:03 -0800 (PST)
+Received: from pclouds@gmail.com ([113.161.77.29])
+        by mx.google.com with ESMTPS id va6sm43487401igc.6.2012.01.18.00.59.57
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 18 Jan 2012 01:00:00 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 18 Jan 2012 15:59:52 +0700
+Content-Disposition: inline
+In-Reply-To: <7v1uqzwaxs.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188742>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Jan 16, 2012 at 02:15:59PM -0800, Junio C Hamano wrote:
+> Yeah, the logic of this correction is very clear. Because diff_cache is
+> about walking a flat index, the "recursive pathspec" that allows us to
+> look into deeper levels in directory hierarchy should be set, and also we
+> should not be limiting the depth of the match in any way by setting the
+> max_depth to "unlimited".
 
-> OK, so the issue the patch addresses may not be a regression in the
-> upcoming v1.7.9 we want to fix quickly,
+For the record, enabling wildcard in git-log is just as simple. But I
+guess you don't want more changes this late in rc cycles.
 
-I'm running ZSH 4.3.10 (Debian stable), and for me it is a regression.
-It seems there is another bug elsewhere affecting more recent ZSH (I
-don't have a recent ZSH version installed to test), but fixing the
-regression for old ZSH is still worth it. I'm not even sur the issue
-with recent ZSH is related.
+-- 8< --
+diff --git a/revision.c b/revision.c
+index 064e351..c426271 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1816,6 +1816,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 
+ 	if (revs->prune_data.nr) {
+ 		diff_tree_setup_paths(revs->prune_data.raw, &revs->pruning);
++		revs->pruning.pathspec.recursive = 1;
++		revs->pruning.pathspec.max_depth = -1;
+ 		/* Can't prune commits with rename following: the paths change.. */
+ 		if (!DIFF_OPT_TST(&revs->diffopt, FOLLOW_RENAMES))
+ 			revs->prune = 1;
+-- 8< --
 
-At worse, my patch is not intrusive and can easily be reworked later.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+--
+Duy
