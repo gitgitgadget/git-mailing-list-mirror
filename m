@@ -1,138 +1,145 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Interactive rebase with submodules
-Date: Wed, 18 Jan 2012 21:38:19 +0100
-Message-ID: <4F172DBB.4080303@web.de>
-References: <4F15C22C.3020902@metanate.com> <4F15E83D.10509@web.de> <4F16AB2E.30706@metanate.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] pulling signed tag: add howto document
+Date: Wed, 18 Jan 2012 13:22:09 -0800
+Message-ID: <7v62g8n1tq.fsf@alter.siamese.dyndns.org>
+References: <7vehuyosaa.fsf@alter.siamese.dyndns.org>
+ <7v62g9q55f.fsf@alter.siamese.dyndns.org> <4F16E228.5050203@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: John Keeping <john@metanate.com>
-X-From: git-owner@vger.kernel.org Wed Jan 18 21:38:46 2012
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Wed Jan 18 22:22:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RncHL-0003ba-3Y
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Jan 2012 21:38:43 +0100
+	id 1Rncxh-0007ip-4P
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Jan 2012 22:22:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757449Ab2ARUiZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jan 2012 15:38:25 -0500
-Received: from fmmailgate02.web.de ([217.72.192.227]:36247 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756406Ab2ARUiY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jan 2012 15:38:24 -0500
-Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
-	by fmmailgate02.web.de (Postfix) with ESMTP id CD87B1BFE5988
-	for <git@vger.kernel.org>; Wed, 18 Jan 2012 21:38:22 +0100 (CET)
-Received: from [192.168.178.43] ([91.3.164.132]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0MAMTy-1Ry1ae0kMU-00BEYl; Wed, 18 Jan 2012 21:38:22
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-In-Reply-To: <4F16AB2E.30706@metanate.com>
-X-Provags-ID: V02:K0:Gyrte0TJDHDCEUNm4eTTfxwZwu1/sOxdC2jvBIxn6cY
- uSfY6zrJaQbowDs+kVNoC4TSA97sozsTfUZatbb9vWn6gRi18N
- nKx/ET51IiZmz+de5WDYbXz81KVvPBXKBopSin5pf+nYDt3fko
- WN23UbnOOzcPYBzPYD6qLsqyF82WrlnaM4oeIKME0PfRSYlOY8
- BRPaRVphEOjD25QteMyFA==
+	id S1751132Ab2ARVWO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jan 2012 16:22:14 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61936 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750709Ab2ARVWN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jan 2012 16:22:13 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F3DE7A2B;
+	Wed, 18 Jan 2012 16:22:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DGevYUiuipO/ybuzz41DfBf1ufE=; b=vALyVA
+	Q7GIUqrZ7cVuCfIBYdvWH62VOrvYGEFLHJl6WHf150RMNhrUZQWGLoT777jcB4N+
+	3I7VyFHmvy+2mWehp6VxfXJF3sp1Fo/RTcXkSNkYUI63ShO1V9gfpu/GdhkvXYwr
+	6ciuLR+Sv3iCtBchKydwSyI7Prr0mTCRQFBBc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xMJgKxeYVphmjlM1RG7L+94uq9/ZOWvt
+	q2u3F68A1si0tfVPY5vJtfMIvb6oAhhYbo7I3we13zt0Kt7uRXlQkfR3b9zRjpq7
+	K45FxBBYmnoihKxB8zB7YJ3otlvtamwJUPjfVS2sBF6H4rkCHLw4CwNtYD9eIVrA
+	hOueyR7mJtc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 168E27A2A;
+	Wed, 18 Jan 2012 16:22:12 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 69C267A29; Wed, 18 Jan 2012
+ 16:22:10 -0500 (EST)
+In-Reply-To: <4F16E228.5050203@xiplink.com> (Marc Branchaud's message of
+ "Wed, 18 Jan 2012 10:15:52 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7B621E92-421A-11E1-A3D6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188763>
 
-Am 18.01.2012 12:21, schrieb John Keeping:
-> On 17/01/12 21:29, Jens Lehmann wrote:
->> Am 17.01.2012 19:47, schrieb John Keeping:
->>> This appears to be because the git-rebase--interactive script inspects whether there is anything to commit when `rebase --continue` is invoked by running:
->>>
->>>      git diff-index --cached --quiet --ignore-submodules HEAD --
->>
->>> Is there a reason for the `--ignore-submodules` in this command? Removing that option results in the expected behaviour.
->>
->> Yes, removing it will help your use case but break others. The reason
->> for that is that because submodules are not updated during a rebase
->> it doesn't make sense to compare their HEAD to what is recorded in
->> the superproject, as that might have been changed by an earlier
->> commit. And as the submodules HEAD hasn't been updated back then,
->> it is stale and will always show up as modified (even if it wasn't).
-> 
-> Is this worse than the current behaviour?
+Marc Branchaud <marcnarc@xiplink.com> writes:
 
-If we break established behavior that would be worse unless we have
-a *very* good reason to do so. But please see below ...
+>> +A contributor or a lieutenant
+>> +-----------------------------
+>> +
+>> +After preparing her work to be pulled, the contributor uses `git tag -s`
+>> +to create a signed tag [*1*]:
+>
+> Given that the rest of the text refers to the gist of this footnote, I think
+> it'd be better to put the note's text here instead of as a footnote.
 
->  If I perform a rebase where there is a (non-submodule) conflict in a commit where a submodule changes I can see something like:
-> 
-> # Changes to be committed:
-> #     modified:    path/to/submodule
-> #
-> # Unmerged paths:
-> #     both modified:      path/to/file
-> #
-> # Changes not staged for commit:
-> #     modified:    path/to/submodule (new commits)
-> 
-> This occurs if a later commit in the rebase will modify the submodule. In this case, `rebase --continue` correctly recreates the commit once I have resolved the conflict in the file, ignoring the unstaged submodule changes.
+Hmm, I'll try to see how well it reads after moving the text here. Thanks.
 
-Yeah, as rebase doesn't touch the submodules, that is expected.
+>> +
+>> +------------
+>> + $ git checkout work
+>> + $ ... "git pull" from sublieutenants, "git commit" your own work ...
+>> + $ git tag -s -m "Completed frotz feature" frotz-for-xyzzy work
+>> +------------
+>> +
+>> +and pushes the tag out to her publishing repository [*2*]. There is no
+>
+> This footnote speaks of the example using a +, but the example does no such
+> thing.
+>
+>> +need to push the `work` branch or anything else:
+>> +
+>> +------------
+>> + $ git push example.com:/git/froboz.git/ +frotz-for-xyzzy
+>> +------------
 
->>> I can understand not updating submodules while running the rebase, but I expected that having resolved a conflict and added my change to the index it would be applied by `git rebase --continue`, as indeed it is if there happen to be other (non-submodule) changes in the same commit.
->>
->> The irony is that you would have to update submodules (or at least
->> their HEAD and use "--ignore-submodules=dirty") while running rebase
->> to make that work in all cases ;-)
-> 
-> I don't this this is the case, since diff-tree is being invoked with --cached won't it ignore changes in the work tree anyway?
+Do you not see the plus in front of +'frotz-for-xyzzy' above, or am I
+missing something?
 
-Right, thanks for nudging me with the clue bat ...
+>> +In the editor, the integrator will see something like this:
+>> +
+>> +------------
+>> + Merge tag 'frotz-for-xyzzy' of example.com:/git/froboz.git/
+>> +
+>> + Completed frotz feature
+>> + # gpg: Signature made Fri 02 Dec 2011 10:03:01 AM PST using RSA key ID 96AFE6CB
+>> + # gpg: Good signature from "Con Tributor <nitfol@example.com>"
+>> +------------
+>> +
+>> +provided if the signature in the signed tag verifies correctly. Notice
+>
+> s/if //
 
-I missed the "--cached" option and did not question if the code does
-what the commit message of 6848d58c6 (where the --ignore-submodules
-option was introduced) said:
+Noted.
 
-    Ignore dirty submodule states during rebase and stash
+>> +repository (i.e. `git tag -l` won't list frotz-for-xyzzy tag in the above
+>
+> s/list/list the/
 
-    When rebasing or stashing, chances are that you do not care about
-    dirty submodules, since they are not updated by those actions anyway.
-    So ignore the submodules' states.
+Noted.
 
-    Note: the submodule states -- as committed in the superproject --
-    will still be stashed and rebased, it is _just_ the state of the
-    submodule in the working tree which is ignored.
+>> +There is no need to fetch and keep a signed tag like `frotz-for-xyzzy`
+>> +that is used for frequent "pull" exchange in the long term just for such
+>> +auditing purposes, as the signature is recorded as part of the merge
+>> +commit.
+>
+> I had trouble parsing this sentence.  I think part of the problem is that
+> it's comparing the actual implementation to an earlier proposed design that
+> was rejected.  So it's trying to sell the reader on a feature of the
+> implemented design, but the reader doesn't care.
+>
+> How about this instead:
+>
+> There is no need for the auditor to explicitly fetch the contributor's
+> signature, or to even be aware of what tag(s) the contributor and integrator
+> used to communicate the signature.  All the required information is recorded
+> as part of the merge commit.
 
-I think this logic misses the case when only submodule changes are left
-in a commit.
+Ok, that is much easier to read.
 
->> But just updating the HEAD would be dangerous as you would have to be
->> very careful to restore the submodules HEAD after the rebase, or the
->> submodule's work tree will be out of sync.
-> 
-> Just updating HEAD in the submodule without touching its work tree doesn't seem like a good idea.  I think it will cause a lot more confusion when running `git status` which will show unexpected modified content for the submodule.
+>> +
+>> +
+>> +Footnotes
+>> +---------
+>> +
+>> +*1* This example uses the `-m` option to create a signed tag with just a
+>> +single liner message, but this is for illustration purposes only. It is
+>
+> s/single liner/single-line/
 
-Yes, we agree here.
+Noted.
 
-> Since I did not expect rebase to perform a submodule update, I was not surprised to see unstaged submodule changes when rebasing, but I did expect rebase to commit anything I had added to the index.
-
-Right.
-
-I'll have to add some tests for that case, but I doubt I'll manage that
-today. Until I can provide a complete patch, this diff should fix your
-problem (no, I did not test if that change is enough to fix the problem,
-but at least it does not break the test suite ;-):
-
----------------8<--------------
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 5812222..4546749 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -672,7 +672,7 @@ rearrange_squash () {
- case "$action" in
- continue)
-        # do we have anything to commit?
--       if git diff-index --cached --quiet --ignore-submodules HEAD --
-+       if git diff-index --cached --quiet HEAD --
-        then
-                : Nothing to commit -- skip this
-        else
+Thanks.
