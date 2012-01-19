@@ -1,79 +1,98 @@
-From: Jehan Bing <jehan@orb.com>
-Subject: Re: Rebase and incrementing version numbers
-Date: Thu, 19 Jan 2012 13:07:29 -0800
-Message-ID: <4F188611.20205@orb.com>
-References: <CADo4Y9jGYJasDL9m7_50aOTrOyoezdyg=vcsZhQ87Qk-1XfTUQ@mail.gmail.com> <CADo4Y9iKvoXhKg5pEAB+cbA7Rkfa=nF4TLu0xgcS3dnkNi_n4g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-add: allow --ignore-missing always, not just in dry
+ run
+Date: Thu, 19 Jan 2012 13:26:40 -0800
+Message-ID: <7vk44nidtb.fsf@alter.siamese.dyndns.org>
+References: <1326923544-8287-1-git-send-email-dieter@plaetinck.be>
+ <7vobu0liwj.fsf@alter.siamese.dyndns.org>
+ <20120119115216.2773a02f@plaetinck.be>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Michael Nahas <mike.nahas@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 19 22:07:44 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
+To: Dieter Plaetinck <dieter@plaetinck.be>
+X-From: git-owner@vger.kernel.org Thu Jan 19 22:26:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnzCy-00027Y-5v
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 22:07:44 +0100
+	id 1RnzVT-0006GU-9j
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 22:26:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933057Ab2ASVHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jan 2012 16:07:39 -0500
-Received: from lo.gmane.org ([80.91.229.12]:59440 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932818Ab2ASVHi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2012 16:07:38 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RnzCr-00024J-5A
-	for git@vger.kernel.org; Thu, 19 Jan 2012 22:07:37 +0100
-Received: from 173-167-111-189-sfba.hfc.comcastbusiness.net ([173.167.111.189])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 19 Jan 2012 22:07:37 +0100
-Received: from jehan by 173-167-111-189-sfba.hfc.comcastbusiness.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 19 Jan 2012 22:07:37 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 173-167-111-189-sfba.hfc.comcastbusiness.net
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-In-Reply-To: <CADo4Y9iKvoXhKg5pEAB+cbA7Rkfa=nF4TLu0xgcS3dnkNi_n4g@mail.gmail.com>
+	id S1751792Ab2ASV0o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jan 2012 16:26:44 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42815 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751670Ab2ASV0n (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jan 2012 16:26:43 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 28C435EDE;
+	Thu, 19 Jan 2012 16:26:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=lKn5dl+uMm7imSHbMw0H9bHBpJI=; b=YA0+ynjgCaZuJ+/iMdZO
+	sidtU6mX0a+JBmSzQKhHOCtx7PMRSdIRdbxATKuyXfWgqqIVISv3EP/QGOgyNg/c
+	MCyLyoaqFeCFHR0ZeVacUBg5ME8R7bXiFQ03zL6bapyYhN6Dh9NKx9qZsd1s8Vs5
+	/iA28bGPYCA583oh8N2mlc4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=HutjxKuW4MtzjjpQEw8lBcVgSszHfUtdsEIxZYCNYhEkwZ
+	cS5kWUk0hDDl1qy3erpOQICIPzEgd/m+WYPBH+ORol6S7gJYa+SedDymze1PxSem
+	bOeY95ycsZYQJtAFn0Iw807ruVMz2zOQQ1077S5Lf48CT+FTYf6/fd4VcrFWI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1FBC35EDD;
+	Thu, 19 Jan 2012 16:26:42 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 947115EDC; Thu, 19 Jan 2012
+ 16:26:41 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 476DEE52-42E4-11E1-8A7B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188837>
 
-On 2012-01-19 09:20, Michael Nahas wrote:
-> The problem I'm running into is that whenever I change a file in a
-> directory, I have to bump up the version number in the configuration
-> file.  The larger version value in the config file causes my changes
-> to be loaded over the old ones.
->
-> Most of my commits are edits to a file like "foo.js" and an increment
-> to the version number in "config".  Ideally, each of my features
-> should live in a single commit and I should be able to make a sequence
-> of them, each time incrementing the version number in config.
->
-> The problem I'm running into starts with me editing version=100.  I
-> create new commits where I set the version to 101, 102, 103, 104.
-> When I go to push ("git svn dcommit"), my coworkers have incremented
-> the version to 103.  So, I rebase my changes, and get conflicts every
-> time because of the version number!
->
-> Is there a good way to avoid these conflicts?  Is there a hook I can
-> write?  Is there a change to this process that would work smoother
-> with Git and its distributed development?  It's okay if the version
-> number skips numbers (e.g., jumps from 100 to 104), as long as it
-> increases.
+Dieter Plaetinck <dieter@plaetinck.be> writes:
 
-Maybe you can do something with "git rerere" 
-(http://progit.org/2010/03/08/rerere.html). It supposed to automatically 
-resolve known conflicts.
+> So basically, if this tool needs to check which files still/no-longer
+> exist before calling git-add, that's vulnerable to race conditions.
 
-I've never used myself, I just know it exists, so I don't know it's 
-usable in your case. But possibly you would pre-fill the rerere cache 
-(assuming that the format is simple enough) then just run rebase.
+I do not think you are solving the real problem in your script even if you
+allowed "add --ignore-missing".
 
-	Jehan
+I suspect you are making things even worse by using "--ignore-missing" in
+your script. If a user is actively updating the files in the filesystem,
+at least "git add" without "--ignore-missing" would catch the case where
+you _thought_ the user modified but still has the file, but in reality the
+further updates in the working tree removed the file, which is a clear
+indication that the rate you are processing the notify stream is slower
+than the activity generated by the user and allows you to notice that you
+may be better off waiting a bit until things calm down before running your
+automated commit.
+
+Also, with or without "--ignore-missing", I think we have safety valves to
+cause "git add" fail if the file being added is updated while git is
+working on it (i.e. we read and compute the object name, and then store it
+compressed, and check the hash of what is stored matches the object name
+we computed earlier, which would fail if the file is updated in the middle
+at the right time).
+
+This means that the "--ignore-missing" option will _not_ eliminate all
+cases where "git add" may detect an error and fails. In other words, your
+script needs to deal with error return from "git add" anyway even if we
+applied your patch and you used "--ignore-missing" in your script.
+
+I have to say that the basic premise of your script is simply broken, and
+I am afraid that it is unfixable without an atomic snapshot support from
+the underlying filesystem (i.e. take a snapshot, run 'git add' on it, and
+then release the snapshot).
+
+Having said all that, I do agree to the view that it is OK to let it
+happen if the user explicitly asks a typo'ed pathspec on the command line
+to be ignored for interactive use cases, and for that reason alone, I am
+not fundamentally opposed to allowing the use of --ignore-missing outside
+the --dry-run context.
+
+Thanks.
