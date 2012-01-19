@@ -1,152 +1,69 @@
 From: Luke Diamand <luke@diamand.org>
-Subject: [PATCHv4 1/5] git-p4: handle p4 branches and labels containing shell chars
-Date: Thu, 19 Jan 2012 09:52:25 +0000
-Message-ID: <1326966749-9077-2-git-send-email-luke@diamand.org>
+Subject: [PATCHv4 2/5] git-p4: cope with labels with empty descriptions
+Date: Thu, 19 Jan 2012 09:52:26 +0000
+Message-ID: <1326966749-9077-3-git-send-email-luke@diamand.org>
 References: <1326966749-9077-1-git-send-email-luke@diamand.org>
 Cc: Pete Wyckoff <pw@padd.com>, Vitor Antunes <vitor.hda@gmail.com>,
 	Luke Diamand <luke@diamand.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 19 10:52:57 2012
+X-From: git-owner@vger.kernel.org Thu Jan 19 10:52:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rnofv-00023s-Rq
+	id 1Rnofw-00023s-C0
 	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 10:52:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756301Ab2ASJwm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1756511Ab2ASJww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jan 2012 04:52:52 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:46638 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754527Ab2ASJwm (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 19 Jan 2012 04:52:42 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:55543 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756208Ab2ASJwk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2012 04:52:40 -0500
-Received: by wics10 with SMTP id s10so212436wic.19
-        for <git@vger.kernel.org>; Thu, 19 Jan 2012 01:52:39 -0800 (PST)
-Received: by 10.180.19.97 with SMTP id d1mr42555198wie.12.1326966759369;
-        Thu, 19 Jan 2012 01:52:39 -0800 (PST)
+Received: by werb13 with SMTP id b13so1052333wer.19
+        for <git@vger.kernel.org>; Thu, 19 Jan 2012 01:52:40 -0800 (PST)
+Received: by 10.216.139.217 with SMTP id c67mr160028wej.21.1326966760806;
+        Thu, 19 Jan 2012 01:52:40 -0800 (PST)
 Received: from ethel.diamand (cpc1-cmbg14-2-0-cust973.5-4.cable.virginmedia.com. [86.26.7.206])
-        by mx.google.com with ESMTPS id bj10sm27093411wib.9.2012.01.19.01.52.37
+        by mx.google.com with ESMTPS id bj10sm27093411wib.9.2012.01.19.01.52.39
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 19 Jan 2012 01:52:38 -0800 (PST)
+        Thu, 19 Jan 2012 01:52:40 -0800 (PST)
 X-Mailer: git-send-email 1.7.8.rc1.209.geac91.dirty
 In-Reply-To: <1326966749-9077-1-git-send-email-luke@diamand.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188801>
 
-Don't use shell expansion when detecting branches, as it will
-fail if the branch name contains a shell metachar. Similarly
-for labels.
-
-Add additional test for branches with shell metachars.
+Use an explicit length for the data in a label, rather
+than EOT, so that labels with empty descriptions are
+passed through correctly.
 
 Signed-off-by: Luke Diamand <luke@diamand.org>
 ---
- contrib/fast-import/git-p4        |    8 +++---
- t/t9803-git-p4-shell-metachars.sh |   48 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 52 insertions(+), 4 deletions(-)
+ contrib/fast-import/git-p4 |    8 +++++---
+ 1 files changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 5aacea8..163e95a 100755
+index 163e95a..5b59bc8 100755
 --- a/contrib/fast-import/git-p4
 +++ b/contrib/fast-import/git-p4
-@@ -799,7 +799,7 @@ class P4Submit(Command, P4UserMap):
-     def canChangeChangelists(self):
-         # check to see if we have p4 admin or super-user permissions, either of
-         # which are required to modify changelists.
--        results = p4CmdList("protects %s" % self.depotPath)
-+        results = p4CmdList(["protects", self.depotPath])
-         for r in results:
-             if r.has_key('perm'):
-                 if r['perm'] == 'admin':
-@@ -1769,7 +1769,7 @@ class P4Sync(Command, P4UserMap):
-     def getLabels(self):
-         self.labels = {}
+@@ -1752,9 +1752,11 @@ class P4Sync(Command, P4UserMap):
+                     else:
+                         tagger = "%s <a@b> %s %s" % (owner, epoch, self.tz)
+                     self.gitStream.write("tagger %s\n" % tagger)
+-                    self.gitStream.write("data <<EOT\n")
+-                    self.gitStream.write(labelDetails["Description"])
+-                    self.gitStream.write("EOT\n\n")
++
++                    description = labelDetails["Description"]
++                    self.gitStream.write("data %d\n" % len(description))
++                    self.gitStream.write(description)
++                    self.gitStream.write("\n")
  
--        l = p4CmdList("labels %s..." % ' '.join (self.depotPaths))
-+        l = p4CmdList(["labels"] + ["%s..." % p for p in self.depotPaths])
-         if len(l) > 0 and not self.silent:
-             print "Finding files belonging to labels in %s" % `self.depotPaths`
- 
-@@ -1811,7 +1811,7 @@ class P4Sync(Command, P4UserMap):
-             command = "branches"
- 
-         for info in p4CmdList(command):
--            details = p4Cmd("branch -o %s" % info["branch"])
-+            details = p4Cmd(["branch", "-o", info["branch"]])
-             viewIdx = 0
-             while details.has_key("View%s" % viewIdx):
-                 paths = details["View%s" % viewIdx].split(" ")
-@@ -1949,7 +1949,7 @@ class P4Sync(Command, P4UserMap):
-         sourceRef = self.gitRefForBranch(sourceBranch)
-         #print "source " + sourceBranch
- 
--        branchParentChange = int(p4Cmd("changes -m 1 %s...@1,%s" % (sourceDepotPath, firstChange))["change"])
-+        branchParentChange = int(p4Cmd(["changes", "-m", "1", "%s...@1,%s" % (sourceDepotPath, firstChange)])["change"])
-         #print "branch parent: %s" % branchParentChange
-         gitParent = self.gitCommitByP4Change(sourceRef, branchParentChange)
-         if len(gitParent) > 0:
-diff --git a/t/t9803-git-p4-shell-metachars.sh b/t/t9803-git-p4-shell-metachars.sh
-index db04375..db67020 100755
---- a/t/t9803-git-p4-shell-metachars.sh
-+++ b/t/t9803-git-p4-shell-metachars.sh
-@@ -57,6 +57,54 @@ test_expect_success 'deleting with shell metachars' '
- 	)
- '
- 
-+# Create a branch with a shell metachar in its name
-+#
-+# 1. //depot/main
-+# 2. //depot/branch$3
-+
-+test_expect_success 'branch with shell char' '
-+	test_when_finished cleanup_git &&
-+	test_create_repo "$git" &&
-+	(
-+		cd "$cli" &&
-+
-+		mkdir -p main &&
-+
-+		echo f1 >main/f1 &&
-+		p4 add main/f1 &&
-+		p4 submit -d "main/f1" &&
-+
-+		p4 integrate //depot/main/... //depot/branch\$3/... &&
-+		p4 submit -d "integrate main to branch\$3" &&
-+
-+		echo f1 >branch\$3/shell_char_branch_file &&
-+		p4 add branch\$3/shell_char_branch_file &&
-+		p4 submit -d "branch\$3/shell_char_branch_file" &&
-+
-+		p4 branch -i <<-EOF &&
-+		Branch: branch\$3
-+		View: //depot/main/... //depot/branch\$3/...
-+		EOF
-+
-+		p4 edit main/f1 &&
-+		echo "a change" >> main/f1 &&
-+		p4 submit -d "a change" main/f1 &&
-+
-+		p4 integrate -b branch\$3 &&
-+		p4 resolve -am branch\$3/... &&
-+		p4 submit -d "integrate main to branch\$3" &&
-+
-+		cd "$git" &&
-+
-+		git config git-p4.branchList main:branch\$3 &&
-+		"$GITP4" clone --dest=. --detect-branches //depot@all &&
-+		git log --all --graph --decorate --stat &&
-+		git reset --hard p4/depot/branch\$3 &&
-+		test -f shell_char_branch_file &&
-+		test -f f1
-+	)
-+'
-+
- test_expect_success 'kill p4d' '
- 	kill_p4d
- '
+                 else:
+                     if not self.silent:
 -- 
 1.7.8.rc1.209.geac91.dirty
