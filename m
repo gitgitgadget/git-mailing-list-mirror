@@ -1,121 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] i18n: disable i18n for shell scripts if NO_GETTEXT
- defined
-Date: Wed, 18 Jan 2012 16:17:36 -0800
-Message-ID: <7vfwfclf4v.fsf@alter.siamese.dyndns.org>
-References: <CALxABCZME-g++HxMsD4Nrn1J6s27vN7M_KQSVT3PeLWBqP7qJg@mail.gmail.com>
- <CACBZZX4TsL-tj04PmUwGNWjXO+JY-8unAv-aRKOGvgB71qdYCg@mail.gmail.com>
- <CALxABCadHdvR02Br9e6STy0w+EPoycUKr62RiSUSP_EPF-TH3g@mail.gmail.com>
- <CACBZZX4tB6DGV-1tiuOamq7ACPk0a-=1Pb9Vk1SgyDqAq-EFOw@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Unexpected "clean -Xd" behavior
+Date: Wed, 18 Jan 2012 18:29:04 -0600
+Message-ID: <20120119002904.GA14107@burratino>
+References: <4F1384AE.1050209@pcharlan.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 19 01:17:45 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Shawn Bohrer <shawn.bohrer@gmail.com>
+To: Pete Harlan <pgit@pcharlan.com>
+X-From: git-owner@vger.kernel.org Thu Jan 19 01:29:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnfhI-00069C-Sx
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 01:17:45 +0100
+	id 1Rnft3-0004JJ-EB
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 01:29:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754247Ab2ASARl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Jan 2012 19:17:41 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64730 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753744Ab2ASARk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jan 2012 19:17:40 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EF837BAF;
-	Wed, 18 Jan 2012 19:17:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=bJrrEB+9G8Wl
-	dg9nX0MfIW9KNkU=; b=Lozrwdii2ss++FM9d5XlCVaFBsA8aJ4slVB2aiVU6vzc
-	vAjmL9CJ/beGEJFZVqODDffwqT/Mmpf/9ZQ6xgkbMG83e66QgjY97WrJqoZisiuL
-	5DoIR1wHZps+6/Az537psn+HXHPViOK4qShgwrx+y+iIMC4IsSyS+Zc41+ZWzwI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=uUDEsc
-	afpRubIJ2TVCGWufNtel/DUBImSH5Fv1I7iW2DubrzWszMG+UBIHbt2p4H55/+3r
-	YiLlybjy8XhnaBUXaajdX89Jm4sH+/+vnvkswEqLhu6czMjJenoNed7TdxrcaNGF
-	+JfWNcGHX5H0JVODxuLOfDKan3OEPIWFnANSI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4572B7BAD;
-	Wed, 18 Jan 2012 19:17:39 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9F75F7BAB; Wed, 18 Jan 2012
- 19:17:38 -0500 (EST)
-In-Reply-To: <CACBZZX4tB6DGV-1tiuOamq7ACPk0a-=1Pb9Vk1SgyDqAq-EFOw@mail.gmail.com>
- (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 19 Jan
- 2012 00:18:54 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FEB112AE-4232-11E1-BBC3-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754529Ab2ASA3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jan 2012 19:29:17 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:41352 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754402Ab2ASA3Q (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jan 2012 19:29:16 -0500
+Received: by obcva7 with SMTP id va7so7980266obc.19
+        for <git@vger.kernel.org>; Wed, 18 Jan 2012 16:29:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=IJF1xySd8CEOV2kJ9+ooi6oXANjggFKQe2BJPmf5URE=;
+        b=DrY6cAYK6/DkYGaUwiQmKagEBNuGUokqruqWDaooDW0U8ddI59m/hZun8PTq8YRA/2
+         j05SEy6sltrv/OIOlkYS1qB/P9abQvQqAGC59Vv3EF0IH3xk5wBA+JMbCSTQQZQQfB2+
+         OT1Bdq4y41Xagz95ccRrrYRt51Aunoq1ubKAE=
+Received: by 10.50.193.229 with SMTP id hr5mr24885816igc.15.1326932956191;
+        Wed, 18 Jan 2012 16:29:16 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id x18sm94599328ibi.2.2012.01.18.16.29.14
+        (version=SSLv3 cipher=OTHER);
+        Wed, 18 Jan 2012 16:29:15 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <4F1384AE.1050209@pcharlan.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188782>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+(+cc: Duy, Shawn)
+Hi,
 
-> On Wed, Jan 18, 2012 at 19:57, Alex Riesen <raa.lkml@gmail.com> wrote=
-:
-> ...
->> Well, if I say NO_GETTEXT, I kind of want none of local gettext,
->> whether it works, or not.
+Pete Harlan wrote:
+
+> When a directory contains nothing but an ignored subdirectory, that
+> subdirectory does not get removed by "git clean -Xdf".
 >
-> That's not what NO_GETTEXT means, and not what it *should* mean. It
-> means that your output won't be translated, but we might still make
-> use of a locally installed library to provide the gettext() and
-> eval_gettext() functions.
-
-You are right.
-
-In the current approach we take for shell scripts, we cannot have "No i=
-18n
-whatsoever and messages are emit with printf and echo". We always have =
-to
-go through gettext/eval_gettext even though they may be an implementati=
-on
-that does not do i18n at all.
-
-> Now I haven't done exhaustive tests but this is the sort of slowdown
-> we might be looking at on Linux for output,...
-
-I think we judged that it is OK not to worry about the performance of
-message generation, back when we decided to take the current approach.
-
-> Anyway speed is the least of the issues here, it's not like we're ver=
-y
-> constrained by spewing out gettext output.
+> For example, in a new directory:
 >
-> I just think we should consider portability more carefully than "it
-> doesn't work on one obscure setup, let's change it everywhere", when
-> actually it's working just fine in most places.
-> ...
-> But in summary: We shouldn't be *always* using fallback functions
-> whether they're the C stuff in compat/* or the gettext fallbacks in
-> git-sh-i18n.sh just because there's some version out there of the
-> system-supplied functions that's broken.
->=20
-> It makes sense to prefer the system functions by default in both
-> cases, but when the OS one can be broken or lacking we can just add
-> probes or Makefile options like we do for fnmatch() with the
-> NO_FNMATCH_CASEFOLD switch.
+> # git init
+> Initialized empty Git repository in /tmp/foo/.git/
+> # echo a/ >.gitignore
+> # git add .gitignore
+> # git commit -m "Initial commit"
+> [master (root-commit) c3af24c] Initial commit
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>  create mode 100644 .gitignore
+> # mkdir -p foo/a
+> # touch foo/a/junk.o
+> # git status
+> # On branch master
+> nothing to commit (working directory clean)
+> # git clean -Xdn  # <--- DOES NOT MENTION foo/a
+> # touch foo/x.c
+> # git clean -Xdn  # <--- DITTO WITH UNTRACKED IN foo
+> # git add foo/x.c
+> # git clean -Xdn  # <--- WITH TRACKED IN foo, WILL REMOVE a/
+> Would remove foo/a/
+> #
+>
+> Is this intentional?  It's interfering with my using "git clean" to
+> remove built objects, which happen to be in a dedicated temporary
+> subdirectory.
 
-So we need "MY_GETTEXT_IS_BROKEN" to decline the use of system gettext
-in addition to "NO_GETTEXT" to ask Git not to translate the messages. I=
-s
-that correct?
+Sounds like a bug.  Duy, Shawn, any hints?
 
-If that is the case, should we do something like
-
-	LANG=3DC LC_ALL=3DC
-        export LANG LC_ALL
-
-in our shell scripts, when building for NO_GETTEXT target?
+Thanks,
+Jonathan
