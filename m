@@ -1,72 +1,84 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [BUG ?] completion of stash name with git stash
-Date: Thu, 19 Jan 2012 19:14:16 +0100
-Message-ID: <87obtzlfuv.fsf@thomas.inf.ethz.ch>
-References: <loom.20120119T141601-606@post.gmane.org>
-	<87lip3mzsz.fsf@thomas.inf.ethz.ch>
-	<loom.20120119T172954-563@post.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] i18n: disable i18n for shell scripts if NO_GETTEXT
+ defined
+Date: Thu, 19 Jan 2012 10:30:10 -0800
+Message-ID: <7vhazrk0jx.fsf@alter.siamese.dyndns.org>
+References: <CALxABCZME-g++HxMsD4Nrn1J6s27vN7M_KQSVT3PeLWBqP7qJg@mail.gmail.com>
+ <CACBZZX4TsL-tj04PmUwGNWjXO+JY-8unAv-aRKOGvgB71qdYCg@mail.gmail.com>
+ <CALxABCadHdvR02Br9e6STy0w+EPoycUKr62RiSUSP_EPF-TH3g@mail.gmail.com>
+ <CACBZZX4tB6DGV-1tiuOamq7ACPk0a-=1Pb9Vk1SgyDqAq-EFOw@mail.gmail.com>
+ <7vfwfclf4v.fsf@alter.siamese.dyndns.org> <4F17C294.6010004@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <git@vger.kernel.org>
-To: Mathieu CLAVEL <math.clavel@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 19 19:14:27 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Jan 19 19:30:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnwVH-0006ma-Cs
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 19:14:27 +0100
+	id 1Rnwl2-0000hh-Il
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 19:30:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932734Ab2ASSOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jan 2012 13:14:23 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:31023 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932685Ab2ASSOV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2012 13:14:21 -0500
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 19 Jan
- 2012 19:14:16 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (188.155.176.28) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 19 Jan
- 2012 19:14:18 +0100
-In-Reply-To: <loom.20120119T172954-563@post.gmane.org> (Mathieu CLAVEL's
-	message of "Thu, 19 Jan 2012 16:34:05 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [188.155.176.28]
+	id S932698Ab2ASSaj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jan 2012 13:30:39 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48743 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932594Ab2ASSaO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jan 2012 13:30:14 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6AC3A58D1;
+	Thu, 19 Jan 2012 13:30:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4/SYRfG0/w3wJhax66uG1JWnCaE=; b=qbI+ru
+	GfFVzUhUC1/YmCNvxUSpAUeiYS+9tOnKsNy/C1rd2QpOfIfaBm5PhqGbxDB6hZLa
+	JGdBaQ8aJeW+jWEUh9VAE532AbvGYYVzYbp4GQPF4+jralGBdkSGeA7FcFIpil1m
+	bLogqo+0RpcWkak+v5eJxhvheGtBm/0gcWYDM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pNYsUsoDr51mKETN1S1tl8VW/ahFj4l5
+	CfS6AS0vMhmWPo3hT4Dq6WfjXx2sLpxH2K48QUhwhlcJj4JeW+2cSg/85/SfCxxx
+	hv+DD5xwbc58toALVP6+9HmI7cI5W0BjVdPnuUbRnMVGadRFSCjCwn9E0r0VhudP
+	sEI9FRWwluQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 61DFE58D0;
+	Thu, 19 Jan 2012 13:30:13 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E220058CE; Thu, 19 Jan 2012
+ 13:30:11 -0500 (EST)
+In-Reply-To: <4F17C294.6010004@viscovery.net> (Johannes Sixt's message of
+ "Thu, 19 Jan 2012 08:13:24 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9F7D11CC-42CB-11E1-8F02-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188823>
 
-Mathieu CLAVEL <math.clavel@gmail.com> writes:
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-> Thomas Rast <trast <at> student.ethz.ch> writes:
+> ... We have, e.g., NO_MMAP, and I can set it to request
+> that some alternative is used, even if I have a working mmap(). The option
+> name "NO_GETTEXT" is in exactly the same spirit.
 >
->> This works for me using git completion as shipped with v1.7.9-rc2 and
->> bash 4.2.10.  Double-tabbing at 'git stash drop ' prints a list of
->> stashes as expected.  Which bash version are you using?
+>> In the current approach we take for shell scripts, we cannot have "No i18n
+>> whatsoever and messages are emit with printf and echo". We always have to
+>> go through gettext/eval_gettext even though they may be an implementation
+>> that does not do i18n at all.
 >
->
-> $ bash --version
-> GNU bash, version 3.1.0(1)-release (i686-pc-msys)
-> Copyright (C) 2005 Free Software Foundation, Inc.
->
-> It's the version ship with the last version of msysGit.
-> I'm not sure I can update bash on Windows without any risk to break something.
-> So, do you think it's coming from the bash version ?
+> Just like we go through _() in C code, even though there may be an
+> implementation that does not do i18n at all, right?
 
-Indeed, I compiled bash 3.1 and with that (and otherwise the same bashrc
-etc.) I can reproduce.  Ditto for 4.0-rc1, which was the newest version
-in the repository where I found the bash source[1], so I couldn't
-bisect.  Perhaps if you can hunt down something newer you could try to
-find the version where it starts working.
+Yes, just like that. The small detail that _() can be #define'd out to
+empty while gettext/eval_gettext cannot be made to be no-impact like that
+does not really matter.
 
+> In C, it is easy, in shell code it may be more involved.
 
-
-[1] git://gitorious.org/bash/bash.git
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Correct.
