@@ -1,67 +1,106 @@
-From: Michael Nahas <mike.nahas@gmail.com>
-Subject: Re: Rebase and incrementing version numbers
-Date: Thu, 19 Jan 2012 15:06:10 -0500
-Message-ID: <CADo4Y9hFgd5vU-EY6x4=hUyVDmANmgw6mH0u2=7Me=yFO5n2kg@mail.gmail.com>
-References: <CADo4Y9jGYJasDL9m7_50aOTrOyoezdyg=vcsZhQ87Qk-1XfTUQ@mail.gmail.com>
-	<CADo4Y9iKvoXhKg5pEAB+cbA7Rkfa=nF4TLu0xgcS3dnkNi_n4g@mail.gmail.com>
-	<CANgJU+WWq=+BP1ZDbGY3weB5Xey2TtbryDJvz5=eMLFzNet3xQ@mail.gmail.com>
-	<CADo4Y9is9mBOJaU+YRTMedTz7FfDrMFoDiqiUvQpVxQpyariPQ@mail.gmail.com>
-	<CAJsNXTkDdHTMqmXCynT2nEYyuTmSF53RVtG2V+v7b+qcsYYufg@mail.gmail.com>
-Reply-To: mike@nahas.com
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [RFC] Making pathspec limited log play nicer with --first-parent
+Date: Thu, 19 Jan 2012 12:15:53 -0800
+Message-ID: <CA+55aFxucaeX7it_Kj7WV3ZbwCukN+wvbuxqJzh3V5Rxz4ib1g@mail.gmail.com>
+References: <7v1uqvjwga.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: demerphq <demerphq@gmail.com>, git@vger.kernel.org
-To: PJ Weisberg <pj@irregularexpressions.net>
-X-From: git-owner@vger.kernel.org Thu Jan 19 21:06:17 2012
+Content-Type: multipart/mixed; boundary=001636c5a4ce5e330204b6e73c87
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 19 21:16:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnyFU-000430-0x
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 21:06:16 +0100
+	id 1RnyPD-00027K-Qk
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 21:16:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932878Ab2ASUGM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Jan 2012 15:06:12 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:60115 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932487Ab2ASUGL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Jan 2012 15:06:11 -0500
-Received: by vbbfp1 with SMTP id fp1so253005vbb.19
-        for <git@vger.kernel.org>; Thu, 19 Jan 2012 12:06:10 -0800 (PST)
+	id S932769Ab2ASUQP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jan 2012 15:16:15 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:53617 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932690Ab2ASUQO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jan 2012 15:16:14 -0500
+Received: by werb13 with SMTP id b13so278140wer.19
+        for <git@vger.kernel.org>; Thu, 19 Jan 2012 12:16:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        bh=MDZsrllA8te4lJkAYtPWJpwJc8TZI/lDn/3dbssmnWY=;
-        b=uP1PHo9/nh+CvR3m4gizOLM6VOYe/EadQdouZnMKollH8d9xDAwu/iIklL7tqfhU0D
-         pshoRLDXIkkpu2N9wM0CAdsrguEmVsHt8m1zDtMuKGDJseT8nxKuSlz0bcBEzaFRYJ7r
-         sQze0IGyqSPaF6FaYdN381tsvqBZUOpLnBmCs=
-Received: by 10.52.177.40 with SMTP id cn8mr326622vdc.43.1327003570421; Thu,
- 19 Jan 2012 12:06:10 -0800 (PST)
-Received: by 10.52.64.231 with HTTP; Thu, 19 Jan 2012 12:06:10 -0800 (PST)
-In-Reply-To: <CAJsNXTkDdHTMqmXCynT2nEYyuTmSF53RVtG2V+v7b+qcsYYufg@mail.gmail.com>
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=a1AZBil1LSS7qX3oJAu14Cl5Uawi/gXZgQ+rPi+OCEw=;
+        b=ZkOSws2Lj1vW/gABVZTpJ1c/w1rQK25AJWjG1F6vOnISf0GCZSfDFKw5TVRdO5t3kq
+         9InjBcf0Rp8YDOkZBp67fs0QMxv3czEfJjRGW+qSV2dRLdUBvAEKVK3URaqE8C3L3FMb
+         DelLrtu5mIHheEz0TtEOUgXgVdlu5oYOWlWCA=
+Received: by 10.216.131.106 with SMTP id l84mr11771090wei.29.1327004173349;
+ Thu, 19 Jan 2012 12:16:13 -0800 (PST)
+Received: by 10.216.63.135 with HTTP; Thu, 19 Jan 2012 12:15:53 -0800 (PST)
+In-Reply-To: <7v1uqvjwga.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: dE5PbEYB9hz5qqmvDKlfoC5J-_M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188832>
 
-> Suggestion #1: =A0Just put $Rev$ into the file and be done with it un=
-til
-> the team moves over to Git (at which point you can figure something
-> else out).
+--001636c5a4ce5e330204b6e73c87
+Content-Type: text/plain; charset=ISO-8859-1
+
+On Thu, Jan 19, 2012 at 11:58 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Suggestion #2: =A0In your release process, put something like `sed -e
-> "s/@@id@@/$(date +%s)/" source-dir/config > release-dir/config`
->
-> -PJ
+> Comments?
 
-Ideally, this value only increments with a change in a certain director=
-y.
+Looks conceptually right, but I do have to admit to hating that new variable.
 
-I think using either $Rev$ or a data+time value conditioned on a file
-changing in a directory might work.  Thanks!
+I don't see a better way to do it, though. Sure, you could do it with just
 
-Mike
+   if (revs->first_parent_only && pp != &commit->parents)
+             break;
+
+and avoid the new variable that way, but that replaces the annoying
+variable with a pretty subtle thing.
+
+Or we could re-write that while() loop and move the 'parent' variable
+into it. Like the appended untested thing.
+
+But maybe your patch is better, and my dislike for that parent counter
+is just irrational.
+
+                  Linus
+
+--001636c5a4ce5e330204b6e73c87
+Content-Type: text/x-patch; charset=US-ASCII; name="patch.diff"
+Content-Disposition: attachment; filename="patch.diff"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_gxm7zpn80
+
+IHJldmlzaW9uLmMgfCAgIDE2ICsrKysrKysrKystLS0tLS0KIDEgZmlsZXMgY2hhbmdlZCwgMTAg
+aW5zZXJ0aW9ucygrKSwgNiBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9yZXZpc2lvbi5jIGIv
+cmV2aXNpb24uYwppbmRleCAwNjRlMzUxMDg0NzguLjVlOGViMzc5YzM2OSAxMDA2NDQKLS0tIGEv
+cmV2aXNpb24uYworKysgYi9yZXZpc2lvbi5jCkBAIC00MTUsNyArNDE1LDcgQEAgc3RhdGljIGlu
+dCByZXZfc2FtZV90cmVlX2FzX2VtcHR5KHN0cnVjdCByZXZfaW5mbyAqcmV2cywgc3RydWN0IGNv
+bW1pdCAqY29tbWl0KQogCiBzdGF0aWMgdm9pZCB0cnlfdG9fc2ltcGxpZnlfY29tbWl0KHN0cnVj
+dCByZXZfaW5mbyAqcmV2cywgc3RydWN0IGNvbW1pdCAqY29tbWl0KQogewotCXN0cnVjdCBjb21t
+aXRfbGlzdCAqKnBwLCAqcGFyZW50OworCXN0cnVjdCBjb21taXRfbGlzdCAqKnBwOwogCWludCB0
+cmVlX2NoYW5nZWQgPSAwLCB0cmVlX3NhbWUgPSAwOwogCiAJLyoKQEAgLTQ0MSw4ICs0NDEsMTQg
+QEAgc3RhdGljIHZvaWQgdHJ5X3RvX3NpbXBsaWZ5X2NvbW1pdChzdHJ1Y3QgcmV2X2luZm8gKnJl
+dnMsIHN0cnVjdCBjb21taXQgKmNvbW1pdCkKIAkJcmV0dXJuOwogCiAJcHAgPSAmY29tbWl0LT5w
+YXJlbnRzOwotCXdoaWxlICgocGFyZW50ID0gKnBwKSAhPSBOVUxMKSB7Ci0JCXN0cnVjdCBjb21t
+aXQgKnAgPSBwYXJlbnQtPml0ZW07CisJZG8geworCQlzdHJ1Y3QgY29tbWl0X2xpc3QgKnBhcmVu
+dCA9ICpwcDsKKwkJc3RydWN0IGNvbW1pdCAqcDsKKworCQlpZiAoIXBhcmVudCkKKwkJCWJyZWFr
+OworCQlwcCA9ICZwYXJlbnQtPm5leHQ7CisJCXAgPSBwYXJlbnQtPml0ZW07CiAKIAkJaWYgKHBh
+cnNlX2NvbW1pdChwKSA8IDApCiAJCQlkaWUoImNhbm5vdCBzaW1wbGlmeSBjb21taXQgJXMgKGJl
+Y2F1c2Ugb2YgJXMpIiwKQEAgLTQ1OCw3ICs0NjQsNiBAQCBzdGF0aWMgdm9pZCB0cnlfdG9fc2lt
+cGxpZnlfY29tbWl0KHN0cnVjdCByZXZfaW5mbyAqcmV2cywgc3RydWN0IGNvbW1pdCAqY29tbWl0
+KQogCQkJCSAqIHRvIGxvc2UgdGhlIG90aGVyIGJyYW5jaGVzIG9mIHRoaXMKIAkJCQkgKiBtZXJn
+ZSwgc28gd2UganVzdCBrZWVwIGdvaW5nLgogCQkJCSAqLwotCQkJCXBwID0gJnBhcmVudC0+bmV4
+dDsKIAkJCQljb250aW51ZTsKIAkJCX0KIAkJCXBhcmVudC0+bmV4dCA9IE5VTEw7CkBAIC00ODcs
+MTEgKzQ5MiwxMCBAQCBzdGF0aWMgdm9pZCB0cnlfdG9fc2ltcGxpZnlfY29tbWl0KHN0cnVjdCBy
+ZXZfaW5mbyAqcmV2cywgc3RydWN0IGNvbW1pdCAqY29tbWl0KQogCQljYXNlIFJFVl9UUkVFX09M
+RDoKIAkJY2FzZSBSRVZfVFJFRV9ESUZGRVJFTlQ6CiAJCQl0cmVlX2NoYW5nZWQgPSAxOwotCQkJ
+cHAgPSAmcGFyZW50LT5uZXh0OwogCQkJY29udGludWU7CiAJCX0KIAkJZGllKCJiYWQgdHJlZSBj
+b21wYXJlIGZvciBjb21taXQgJXMiLCBzaGExX3RvX2hleChjb21taXQtPm9iamVjdC5zaGExKSk7
+Ci0JfQorCX0gd2hpbGUgKCFyZXZzLT5maXJzdF9wYXJlbnRfb25seSk7CiAJaWYgKHRyZWVfY2hh
+bmdlZCAmJiAhdHJlZV9zYW1lKQogCQlyZXR1cm47CiAJY29tbWl0LT5vYmplY3QuZmxhZ3MgfD0g
+VFJFRVNBTUU7Cg==
+--001636c5a4ce5e330204b6e73c87--
