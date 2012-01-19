@@ -1,98 +1,140 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-add: allow --ignore-missing always, not just in dry
- run
-Date: Thu, 19 Jan 2012 13:26:40 -0800
-Message-ID: <7vk44nidtb.fsf@alter.siamese.dyndns.org>
-References: <1326923544-8287-1-git-send-email-dieter@plaetinck.be>
- <7vobu0liwj.fsf@alter.siamese.dyndns.org>
- <20120119115216.2773a02f@plaetinck.be>
+Subject: Re: [PATCH v2 1/2] am: learn passing -b to mailinfo
+Date: Thu, 19 Jan 2012 13:26:48 -0800
+Message-ID: <7vd3afidt3.fsf@alter.siamese.dyndns.org>
+References: <8762ghxpxw.fsf@thomas.inf.ethz.ch>
+ <a804650f805fd8c89a843302cb92bbbdf36b8c0b.1326710194.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-To: Dieter Plaetinck <dieter@plaetinck.be>
-X-From: git-owner@vger.kernel.org Thu Jan 19 22:26:51 2012
+Cc: <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Jan 19 22:27:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnzVT-0006GU-9j
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 22:26:51 +0100
+	id 1RnzVb-0006Lt-7G
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 22:26:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751792Ab2ASV0o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jan 2012 16:26:44 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42815 "EHLO
+	id S1751234Ab2ASV0v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jan 2012 16:26:51 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42885 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751670Ab2ASV0n (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2012 16:26:43 -0500
+	id S1750993Ab2ASV0u (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jan 2012 16:26:50 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 28C435EDE;
-	Thu, 19 Jan 2012 16:26:42 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 35CCA5EE9;
+	Thu, 19 Jan 2012 16:26:50 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=lKn5dl+uMm7imSHbMw0H9bHBpJI=; b=YA0+ynjgCaZuJ+/iMdZO
-	sidtU6mX0a+JBmSzQKhHOCtx7PMRSdIRdbxATKuyXfWgqqIVISv3EP/QGOgyNg/c
-	MCyLyoaqFeCFHR0ZeVacUBg5ME8R7bXiFQ03zL6bapyYhN6Dh9NKx9qZsd1s8Vs5
-	/iA28bGPYCA583oh8N2mlc4=
+	 s=sasl; bh=t8C2rObG0KcwxBm/gTZ5quqbbhg=; b=f80UuJlBIvzPnjC9RFE4
+	yIZVmBtJfMTjuKZv8VbgVdRpaevG2oirnOYX09ynaz5kd7LNRxYFXtB5CYAFKAf6
+	XsMjzI7H/1HnEosAcGlw2UxJi7XaEBps3byb/9X9ksDaGHqdWMMAHWCA2l4Iuuhe
+	8CibfpUuu86Pr27hiZwRs9E=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=HutjxKuW4MtzjjpQEw8lBcVgSszHfUtdsEIxZYCNYhEkwZ
-	cS5kWUk0hDDl1qy3erpOQICIPzEgd/m+WYPBH+ORol6S7gJYa+SedDymze1PxSem
-	bOeY95ycsZYQJtAFn0Iw807ruVMz2zOQQ1077S5Lf48CT+FTYf6/fd4VcrFWI=
+	 q=dns; s=sasl; b=hXkObGt86FY+SOK8ItguP+E+VH0s0iWc0u5qwNFS1GsTu1
+	Eqp5a/2sryoP0ibNRakQzZBouqGx+auZEN1DfT8sCFZKb5q8fWG5mbgXaTB9IwQe
+	TOsvDpGVB9VxgaptbEXfMEVKAaj3Rv/KxzChH0alTMCjM+vdjJbrS+DpDQz6w=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1FBC35EDD;
-	Thu, 19 Jan 2012 16:26:42 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D64A5EE8;
+	Thu, 19 Jan 2012 16:26:50 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 947115EDC; Thu, 19 Jan 2012
- 16:26:41 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 997D95EE7; Thu, 19 Jan 2012
+ 16:26:49 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 476DEE52-42E4-11E1-8A7B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 4C35BE88-42E4-11E1-A8BC-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188838>
 
-Dieter Plaetinck <dieter@plaetinck.be> writes:
+Thomas Rast <trast@student.ethz.ch> writes:
 
-> So basically, if this tool needs to check which files still/no-longer
-> exist before calling git-add, that's vulnerable to race conditions.
+> git-am could pass -k to mailinfo, but not -b.  Introduce an option
+> that does so.  We change the meaning of the 'keep' state file, but are
+> careful not to cause a problem unless you downgrade in the middle of
+> an 'am' run.
+>
+> This uncovers a bug in mailinfo -b, hence the failing test.
+>
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+> ---
+>
+> This fixes the broken 'if', and the use of 'echo' with an argument
+> that starts with '-'.
 
-I do not think you are solving the real problem in your script even if you
-allowed "add --ignore-missing".
+After re-reading the code that parses the command line options given to
+"am" and the previous invocation state we read from $dotest/*, however, I
+think the way this change uses $keep makes things somewhat inconsistent
+and harder to follow.
 
-I suspect you are making things even worse by using "--ignore-missing" in
-your script. If a user is actively updating the files in the filesystem,
-at least "git add" without "--ignore-missing" would catch the case where
-you _thought_ the user modified but still has the file, but in reality the
-further updates in the working tree removed the file, which is a clear
-indication that the rate you are processing the notify stream is slower
-than the activity generated by the user and allows you to notice that you
-may be better off waiting a bit until things calm down before running your
-automated commit.
+Currently the variables are given abstract meaning (e.g. "are we told to
+record to utf8? yes or no") when we parse our command line options and
+read from the previous invocation state, and then based on that abstract
+meaning, a later code decides what exact option we throw at the git
+commands we invoke (e.g. "utf8=t" -> "-u").
 
-Also, with or without "--ignore-missing", I think we have safety valves to
-cause "git add" fail if the file being added is updated while git is
-working on it (i.e. we read and compute the object name, and then store it
-compressed, and check the hash of what is stored matches the object name
-we computed earlier, which would fail if the file is updated in the middle
-at the right time).
-
-This means that the "--ignore-missing" option will _not_ eliminate all
-cases where "git add" may detect an error and fails. In other words, your
-script needs to deal with error return from "git add" anyway even if we
-applied your patch and you used "--ignore-missing" in your script.
-
-I have to say that the basic premise of your script is simply broken, and
-I am afraid that it is unfixable without an atomic snapshot support from
-the underlying filesystem (i.e. take a snapshot, run 'git add' on it, and
-then release the snapshot).
-
-Having said all that, I do agree to the view that it is OK to let it
-happen if the user explicitly asks a typo'ed pathspec on the command line
-to be ignored for interactive use cases, and for that reason alone, I am
-not fundamentally opposed to allowing the use of --ignore-missing outside
-the --dry-run context.
+How about doing something like this instead at least for now?  It might be
+better to decide when we parse our options and $dotest/* immediately what
+options we give to the git commands we run (which your patch does but only
+to $keep option), but that kind of change (1) belongs to a separate topic
+and should be done consistently to all options, and (2) I am not convinced
+if it is necessarily a good change.
 
 Thanks.
+
+diff --git a/git-am.sh b/git-am.sh
+index 6cdd591..8b755d9 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -15,6 +15,7 @@ q,quiet         be quiet
+ s,signoff       add a Signed-off-by line to the commit message
+ u,utf8          recode into utf8 (default)
+ k,keep          pass -k flag to git-mailinfo
++keep-non-patch  pass -b flag to git-mailinfo
+ keep-cr         pass --keep-cr flag to git-mailsplit for mbox format
+ no-keep-cr      do not pass --keep-cr flag to git-mailsplit independent of am.keepcr
+ c,scissors      strip everything before a scissors line
+@@ -345,6 +346,8 @@ do
+ 		utf8= ;;
+ 	-k|--keep)
+ 		keep=t ;;
++	--keep-non-patch)
++		keep=b ;;
+ 	-c|--scissors)
+ 		scissors=t ;;
+ 	--no-scissors)
+@@ -522,16 +525,25 @@ case "$resolved" in
+ 	fi
+ esac
+ 
++# Now, decide what command line options we will give to the git
++# commands we invoke, based on the result of parsing command line
++# options and previous invocation state stored in $dotest/ files.
++
+ if test "$(cat "$dotest/utf8")" = t
+ then
+ 	utf8=-u
+ else
+ 	utf8=-n
+ fi
+-if test "$(cat "$dotest/keep")" = t
+-then
+-	keep=-k
+-fi
++keep=$(cat "$dotest/keep")
++case "$keep" in
++t)
++	keep=-k ;;
++b)
++	keep=-b ;;
++*)
++	keep= ;;
++esac
+ case "$(cat "$dotest/keepcr")" in
+ t)
+ 	keepcr=--keep-cr ;;
