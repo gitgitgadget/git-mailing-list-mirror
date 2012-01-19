@@ -1,94 +1,100 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH 1/4] git-p4: handle p4 branches and labels containing
- shell chars
-Date: Thu, 19 Jan 2012 09:12:16 +0000
-Message-ID: <4F17DE70.2010204@diamand.org>
-References: <1326755689-3344-1-git-send-email-luke@diamand.org> <1326755689-3344-2-git-send-email-luke@diamand.org> <20120117223949.GA811@padd.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] i18n: disable i18n for shell scripts if NO_GETTEXT defined
+Date: Thu, 19 Jan 2012 10:13:20 +0100
+Message-ID: <CALxABCbaBmP6k5TYrYLCYm8oiv=9cF=N7_opSTKUnbkz5b-cwg@mail.gmail.com>
+References: <CALxABCZME-g++HxMsD4Nrn1J6s27vN7M_KQSVT3PeLWBqP7qJg@mail.gmail.com>
+ <CACBZZX4TsL-tj04PmUwGNWjXO+JY-8unAv-aRKOGvgB71qdYCg@mail.gmail.com>
+ <CALxABCadHdvR02Br9e6STy0w+EPoycUKr62RiSUSP_EPF-TH3g@mail.gmail.com> <CACBZZX4tB6DGV-1tiuOamq7ACPk0a-=1Pb9Vk1SgyDqAq-EFOw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Thu Jan 19 10:12:29 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 19 10:14:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rno2l-0003P2-Jc
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 10:12:27 +0100
+	id 1Rno4J-0004KO-Gb
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 10:14:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755198Ab2ASJMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jan 2012 04:12:23 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:52308 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752890Ab2ASJMT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2012 04:12:19 -0500
-Received: by werb13 with SMTP id b13so1029036wer.19
-        for <git@vger.kernel.org>; Thu, 19 Jan 2012 01:12:18 -0800 (PST)
-Received: by 10.216.145.1 with SMTP id o1mr69812wej.45.1326964338208;
-        Thu, 19 Jan 2012 01:12:18 -0800 (PST)
-Received: from [86.26.7.206] (cpc1-cmbg14-2-0-cust973.5-4.cable.virginmedia.com. [86.26.7.206])
-        by mx.google.com with ESMTPS id fv6sm64137664wib.8.2012.01.19.01.12.16
-        (version=SSLv3 cipher=OTHER);
-        Thu, 19 Jan 2012 01:12:16 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
-In-Reply-To: <20120117223949.GA811@padd.com>
+	id S1755977Ab2ASJOA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Jan 2012 04:14:00 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:59719 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755701Ab2ASJNl convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jan 2012 04:13:41 -0500
+Received: by obcva7 with SMTP id va7so8393449obc.19
+        for <git@vger.kernel.org>; Thu, 19 Jan 2012 01:13:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=kfVHM+ZqmQuqi8RpUXATBRl9+nz9gCzpKq9g4DS4Kdw=;
+        b=Sunk5o0rHbP6SuKNz6OmR2Ag7sX9N6C89dRezXx14F99q+wrMh5rQokekWPFFol7hn
+         BeN6Wr46Hdsm4to4UfN2JRAnZ40NOEUHRq2bMbd6t5259TYJi9jsVKIuB/t9sf5P41f/
+         NM9gBlwx2oYxztzs95z7ac3QWflF4dt8OII0E=
+Received: by 10.182.38.70 with SMTP id e6mr3133874obk.13.1326964421173; Thu,
+ 19 Jan 2012 01:13:41 -0800 (PST)
+Received: by 10.182.226.41 with HTTP; Thu, 19 Jan 2012 01:13:20 -0800 (PST)
+In-Reply-To: <CACBZZX4tB6DGV-1tiuOamq7ACPk0a-=1Pb9Vk1SgyDqAq-EFOw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188796>
 
-On 17/01/12 22:39, Pete Wyckoff wrote:
-> luke@diamand.org wrote on Mon, 16 Jan 2012 23:14 +0000:
->> Don't use shell expansion when detecting branches, as it will
->> fail if the branch name contains a shell metachar. Similarly
->> for labels.
+On Thu, Jan 19, 2012 at 00:18, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
+avarab@gmail.com> wrote:
+> On Wed, Jan 18, 2012 at 19:57, Alex Riesen <raa.lkml@gmail.com> wrote=
+:
 >>
->> Add additional test for branches with shell metachars.
+>> Well, if I say NO_GETTEXT, I kind of want none of local gettext,
+>> whether it works, or not.
 >
-> Nice.  There will be a fixup on a command in Vitor's series,
-> depending on which goes first.  He'll have a couple of
-> un-listified read_pipe{,_lines} that we should treat similarly.
+> That's not what NO_GETTEXT means, and not what it *should* mean. It
+> means that your output won't be translated, but we might still make
+> use of a locally installed library to provide the gettext() and
+> eval_gettext() functions.
+
+I would never guess all that by its name: NO_GETTEXT. I wanted to
+say: there is no gettext in this installation, don't even try it.
+
+> This approach has worked everywhere so far (Linux, OSX, *BSD etc.),
+> and you want to change *everywhere* because you have some completely
+> broken Cygwin install.
+
+Just as I said.
+
+> How did you even get that install? Is it a known issue? Some ancient
+> now-fixed bug?
+
+It is very likely. Or probably just a one installation problem: the
+problem is not consistently everywhere here. Some installations
+work (if slow).
+
+> What version of Cygwin / gettext etc.
+
+No idea. The person or persons who did this to me have no idea either.
+
+> Now I'm not saying that we shouldn't fix this, I just don't think tha=
+t
+> this is the right way to go about it.
+
+And I agree.
+
+> But in summary: We shouldn't be *always* using fallback functions
+> whether they're the C stuff in compat/* or the gettext fallbacks in
+> git-sh-i18n.sh just because there's some version out there of the
+> system-supplied functions that's broken.
 >
->> @@ -1758,7 +1758,7 @@ class P4Sync(Command, P4UserMap):
->>       def getLabels(self):
->>           self.labels = {}
->>
->> -        l = p4CmdList("labels %s..." % ' '.join (self.depotPaths))
->> +        l = p4CmdList(["labels", "%s..." % ' '.join (self.depotPaths)])
->>           if len(l)>  0 and not self.silent:
->>               print "Finding files belonging to labels in %s" % `self.depotPaths`
->
-> I suspect the command "p4" "labels" "//depot/foo/...  //depot/bar/..."
-> might confuse p4, but haven't tested.  Maybe tuck each one in its
-> own argument?
->
->      ["labels"] + ["%s..." % p for p in self.depotPaths]
+> It makes sense to prefer the system functions by default in both
+> cases, but when the OS one can be broken or lacking we can just add
+> probes or Makefile options like we do for fnmatch() with the
+> NO_FNMATCH_CASEFOLD switch.
 
-Yes, you're right. I'll resubmit. I suspect the previous code was 
-actually broken as well as you end up with the "..." only on the last depot.
-
->
-> What happened to your failing test?  It's fun to keep the broken
-> ones around to inspire others to fix them.
-
-I'll send that one through as well. I actually had a fix, but it needs 
-to be reworked now. I'm reluctant to try to do much more on this though 
-unless someone can tell me how the --detect-labels code can ever really 
-work.
-
-i.e. if you do:
-
-  p4 submit
-  git-p4 rebase --detect-labels
-  p4 tag LABEL_A
-  git-p4 rebase --detect-labels
-
-At this point, LABEL_A won't show up in git until the _next_ p4 commit.
-
-It's slowly working it's way towards the top of my todo list though!
-
-Regards!
-Luke
+Yes, and I personally shall welcome a chance to insult the local IT
+by suggesting BROKEN_SH_GETTEXT. Not that they get the point...
