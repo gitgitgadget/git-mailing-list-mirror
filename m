@@ -1,140 +1,136 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [RFC] Making pathspec limited log play nicer with --first-parent
-Date: Thu, 19 Jan 2012 11:58:45 -0800
-Message-ID: <7v1uqvjwga.fsf@alter.siamese.dyndns.org>
+From: Michael Nahas <mike.nahas@gmail.com>
+Subject: Re: Rebase and incrementing version numbers
+Date: Thu, 19 Jan 2012 15:02:46 -0500
+Message-ID: <CADo4Y9iJyirdkEr1GCg9BD5rwX9=1uKptqHsiWB0_MiDKb_wUA@mail.gmail.com>
+References: <CADo4Y9jGYJasDL9m7_50aOTrOyoezdyg=vcsZhQ87Qk-1XfTUQ@mail.gmail.com>
+	<CADo4Y9iKvoXhKg5pEAB+cbA7Rkfa=nF4TLu0xgcS3dnkNi_n4g@mail.gmail.com>
+	<1327000803.5947.59.camel@centaur.lab.cmartin.tk>
+Reply-To: mike@nahas.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 19 20:58:56 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Thu Jan 19 21:03:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rny8K-0007YC-P8
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 20:58:53 +0100
+	id 1RnyCJ-0001v6-Ri
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 21:03:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932917Ab2AST6u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jan 2012 14:58:50 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62928 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932487Ab2AST6s (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2012 14:58:48 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 482AA740B;
-	Thu, 19 Jan 2012 14:58:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=k
-	xtcgyzwp7qE0ZF/eN9Qjd6i7cI=; b=Lb3qiMXY4LH/OeM6ypUmudt6X7KBQN763
-	7dJFS2E3JCKWADsY1wfzARhrXlK5g7CR8nxXO2wB8PXkj5OsM5HAO39cjFPDu976
-	XffxstikIyvWyKGzZDJBvCCYkChH23K4LXs8MZB78Yy3ECyY7nTRa26LvVbyWP0u
-	vMnPoCvg30=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; q=dns; s=
-	sasl; b=bi53wb1PqxkvjCTvoi1LNNZAGNObyuH4cxtWeVqlxuTYmatJU1Y+Nt3F
-	3owgjGG3T3gtXTgZANYSIIhIUKf6T0RpdRPVJ9Fpo3ikUOpOplhaPhdCXe2r5bNy
-	XtZAxCBHYVMWXdf52+/MNRAoIexYSFsMu0GUXZnQWxxgWwGOb6M=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 40357740A;
-	Thu, 19 Jan 2012 14:58:47 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 72C5D7409; Thu, 19 Jan 2012
- 14:58:46 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FF33DACC-42D7-11E1-854E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932978Ab2ASUCu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Jan 2012 15:02:50 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:37252 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932945Ab2ASUCr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Jan 2012 15:02:47 -0500
+Received: by vcbfo1 with SMTP id fo1so257722vcb.19
+        for <git@vger.kernel.org>; Thu, 19 Jan 2012 12:02:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=UC3QvN9+43kCkkq5bp0JjE8T+4VRejxTv5IePaKxffE=;
+        b=mY+szCzTM3wd92c2UIwjrkkosmaYi5BBZ2QH3YuKi9rGO+y+entQohIf+AGflU/Y/v
+         X9FIBWGVj7anm+wPc3eU5wOLIatVkCNi7DFBfhe8a2moAZdf7SmjOW0PQa53r+OM7ful
+         32k6Fugx5GtSrkpXHU4MRGz1vKZiM5YK/E+ds=
+Received: by 10.220.215.65 with SMTP id hd1mr16149788vcb.46.1327003366377;
+ Thu, 19 Jan 2012 12:02:46 -0800 (PST)
+Received: by 10.52.64.231 with HTTP; Thu, 19 Jan 2012 12:02:46 -0800 (PST)
+In-Reply-To: <1327000803.5947.59.camel@centaur.lab.cmartin.tk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188829>
 
-I often find myself frustrated when I receive an update to a part of the
-project and want to find the latest commit that merges the topic branch
-that touched the same area.
+I'm guessing here, but I believe the "version number" is used to make
+a directory on the production machine.  Thus, older versions of the
+javascript are available on the production machines under their older
+version number.  If there's an issue in production with the new
+version, code can be redirected to use the older version that is still
+in its directory.
 
-For example, I wanted to find the latest merge of any git-p4 related topic
-so that I can fork a new topic branch to keep Luke's updates posted today.
+So it probably looks like:
+/100/js/<files>
+/101/js/<files>
+/103/js/<files>
+/104/js/<files>
 
-Without pathspec, "git log --first-parent" traverses the first-parent
-chain just fine, and "-m --stat" shows the list of paths touched by the
-merge, so we _could_ ask the question this way:
+If something goes wrong with version 104, the admin can just tell the
+machine to use version 103 instead of 104.
 
-    $ git log --first-parent --oneline -m --stat master |
-      sed -e '/^ contrib\/fast-import\/git-p4 /q' | tail
-      
-The above finds that 8cbfc11 (Merge branch 'pw/p4-view-updates',
-2012-01-06) was such a commit.
+You're right that incrementing this version number is probably not an
+issue for SVN users because they put N features in a single commit and
+they update the version number once.   With git, a user can put N
+features in N commits and changing the version number really belongs
+in each commit.  This makes rebasing suck.
 
-But a more natural way to spell it does not work as expected:
 
-    $ git log --first-parent --oneline -m --stat -1 master -- \
-      contrib/fast-import/git-p4
-
-This finds ecb7cf9 (git-p4: rewrite view handling, 2012-01-02), which is a
-part of the merged topic branch and is _not_ on the first-parent path from
-the 'master':
-
-    $ git show-branch 8cbfc11 ecb7cf9
-    ! [8cbfc11] Merge branch 'pw/p4-view-updates'
-     ! [ecb7cf9] git-p4: rewrite view handling
-    --
-    -  [8cbfc11] Merge branch 'pw/p4-view-updates'
-    +  [8cbfc11^2] git-p4: view spec documentation
-    ++ [ecb7cf9] git-p4: rewrite view handling
-
-The problem happens when the merge simplification logic kicks in when the
-traversal inspects the merge 8cbfc11. In this case, the history leading to
-the tip of 'master' did not touch git-p4 since 'pw/p4-view-updates' topic
-forked from it, and the result of the merge is simply a copy from the tip
-of the topic branch in the view limited by the given pathspec.  The merge
-simplification logic discards the first-parent of the merge and pretends
-as if the sole parent of the merge is its second parent, i.e. the tip of
-the topic. The history traversal veers off to the side branch, possibly
-skipping a large swath of the mainline history if the topic forked from it
-long in the past, but that only happens when the mainline did not touch
-the paths in the limited view since the side topic forked, so it is not
-losing information---but it still is wrong to show the commits on the side
-topic when we are explicitly asked to show the first-parent chain.
-
-Here is an attempt to fix this issue, by not allowing us to compare the
-merge result with anything but the first parent when --first-parent is in
-effect, to avoid the history traversal veering off to the side branch.
-
-As this touches deep innards of a scary hairball that is the revision
-traversal machinery, I am obviously not considering it as a 1.7.9
-material, but I think we would want to fix it at some point, hopefully
-soon.
-
-With this patch, the "more natural way" finds the merge commit I am
-looking for.
-
-Comments?
-
----
- revision.c |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
-
-diff --git a/revision.c b/revision.c
-index 064e351..9e4596d 100644
---- a/revision.c
-+++ b/revision.c
-@@ -416,7 +416,7 @@ static int rev_same_tree_as_empty(struct rev_info *revs, struct commit *commit)
- static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
- {
- 	struct commit_list **pp, *parent;
--	int tree_changed = 0, tree_same = 0;
-+	int tree_changed = 0, tree_same = 0, nth_parent = 0;
- 
- 	/*
- 	 * If we don't do pruning, everything is interesting
-@@ -444,6 +444,8 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
- 	while ((parent = *pp) != NULL) {
- 		struct commit *p = parent->item;
- 
-+		if (revs->first_parent_only && nth_parent++)
-+			break;
- 		if (parse_commit(p) < 0)
- 			die("cannot simplify commit %s (because of %s)",
- 			    sha1_to_hex(commit->object.sha1),
+On Thu, Jan 19, 2012 at 2:20 PM, Carlos Mart=EDn Nieto <cmn@elego.de> w=
+rote:
+> On Thu, 2012-01-19 at 12:20 -0500, Michael Nahas wrote:
+>> I'm at a new job and using Git-SVN at a place that is accustomed to =
+SVN.
+>>
+>> The problem I'm running into is that whenever I change a file in a
+>> directory, I have to bump up the version number in the configuration
+>> file. =A0The larger version value in the config file causes my chang=
+es
+>> to be loaded over the old ones.
+>
+> Is this a deployment script that does this? Why can't it look at whet=
+her
+> files have changed? If a feature isn't ready for production, why is i=
+t
+> in a branch that gets deployed?
+>
+>>
+>> Most of my commits are edits to a file like "foo.js" and an incremen=
+t
+>> to the version number in "config". =A0Ideally, each of my features
+>> should live in a single commit and I should be able to make a sequen=
+ce
+>> of them, each time incrementing the version number in config.
+>>
+>
+> So if you've changed the file but don't increase the config file's
+> version, it means that the change isn't ready for production? If that=
+'s
+> the case, you've just implemented branches, poorly.
+>
+> Contrary to what apparently many people think, subversion does suppor=
+t
+> branches. Get your team to use them.
+>
+>> The problem I'm running into starts with me editing version=3D100. =A0=
+I
+>> create new commits where I set the version to 101, 102, 103, 104.
+>> When I go to push ("git svn dcommit"), my coworkers have incremented
+>> the version to 103. =A0So, I rebase my changes, and get conflicts ev=
+ery
+>> time because of the version number!
+>
+> This sounds like a race condition that the svn users might be avoidin=
+g
+> by committing everything immediately. Sounds like a buggy development
+> process.
+>
+>>
+>> Is there a good way to avoid these conflicts? =A0Is there a hook I c=
+an
+>> write? =A0Is there a change to this process that would work smoother
+>> with Git and its distributed development? =A0It's okay if the versio=
+n
+>> number skips numbers (e.g., jumps from 100 to 104), as long as it
+>> increases.
+>
+> You could write a merge driver that detects this situation and writes=
+ in
+> a higher number, but it's all working around the fact that it's a rac=
+e
+> condition.
+>
+> =A0 cmn
