@@ -1,91 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-add: allow --ignore-missing always, not just in dry
- run
-Date: Thu, 19 Jan 2012 10:46:26 -0800
-Message-ID: <7v8vl3jzst.fsf@alter.siamese.dyndns.org>
-References: <1326923544-8287-1-git-send-email-dieter@plaetinck.be>
- <7vobu0liwj.fsf@alter.siamese.dyndns.org> <8762g87y4q.fsf@thomas.inf.ethz.ch>
+From: Michael Nahas <mike.nahas@gmail.com>
+Subject: Re: Rebase and incrementing version numbers
+Date: Thu, 19 Jan 2012 13:48:38 -0500
+Message-ID: <CADo4Y9is9mBOJaU+YRTMedTz7FfDrMFoDiqiUvQpVxQpyariPQ@mail.gmail.com>
+References: <CADo4Y9jGYJasDL9m7_50aOTrOyoezdyg=vcsZhQ87Qk-1XfTUQ@mail.gmail.com>
+	<CADo4Y9iKvoXhKg5pEAB+cbA7Rkfa=nF4TLu0xgcS3dnkNi_n4g@mail.gmail.com>
+	<CANgJU+WWq=+BP1ZDbGY3weB5Xey2TtbryDJvz5=eMLFzNet3xQ@mail.gmail.com>
+Reply-To: mike@nahas.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Jan 19 19:46:50 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: demerphq <demerphq@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 19 19:48:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rnx0a-0002b5-MC
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 19:46:49 +0100
+	id 1Rnx2S-0003uC-0r
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 19:48:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932607Ab2ASSq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jan 2012 13:46:29 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57270 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932543Ab2ASSq2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2012 13:46:28 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E1255D69;
-	Thu, 19 Jan 2012 13:46:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pXmp9VLRJn8RigRh8BMw2p2PKHU=; b=EHFwkQ
-	xqS+ivbMOJ+QUzf2iuaFXg/IjRt4XaUs+voY3b7O7Pja1m19Oh7sI8x1SZJEREWa
-	6Z+WnsAIdpfRfqpwsKH2Jx0pTOtYNajBuGAOh8v91hhnCjAYQQd/7K7S3/Abs9MM
-	Ya3YNzfa0rLA806t/YYoCcsJNnYWe694P02WY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iiU66h2kjEwwHEc8PakKWyOinpIXMV9Y
-	Nw+5yqNWdKxPKNrlt6emN6OTuByCDP5a4GgV1mXkwYh3JBilj5sOZA1PqRGD/3EW
-	OIm/eczr2yYTew0jnE9vLo7eFkOIndOazQMSXT3x1xAOndaqW56d6JDFeWedjSgK
-	5Rfemuu6oh0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 458F75D68;
-	Thu, 19 Jan 2012 13:46:28 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CF46B5D67; Thu, 19 Jan 2012
- 13:46:27 -0500 (EST)
-In-Reply-To: <8762g87y4q.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
- "Thu, 19 Jan 2012 12:03:17 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E52EAFD0-42CD-11E1-895A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932644Ab2ASSsk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jan 2012 13:48:40 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:37619 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932543Ab2ASSsj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jan 2012 13:48:39 -0500
+Received: by vcbfo1 with SMTP id fo1so198724vcb.19
+        for <git@vger.kernel.org>; Thu, 19 Jan 2012 10:48:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=6W4HuGkn6Cg95ON41AA06Zjp0zZhQvOfnysSO6guwSo=;
+        b=cg6+cM2tYsk3WL1xoNRtDBj14jHWb5cDmdPg8O8RnQ2xsMz9fh+LUgWiHMJ/4pjWIe
+         ypTCzx0WVZqEUncYlxp37E6/QpkCVblD0gYytwiIKpspRIx5g7eX1IjLWMNU8FgUjfCj
+         MS21BIy7uht3S5gkDAD19CYEJxKBQrhE6WApE=
+Received: by 10.52.177.40 with SMTP id cn8mr217173vdc.43.1326998918918; Thu,
+ 19 Jan 2012 10:48:38 -0800 (PST)
+Received: by 10.52.64.231 with HTTP; Thu, 19 Jan 2012 10:48:38 -0800 (PST)
+In-Reply-To: <CANgJU+WWq=+BP1ZDbGY3weB5Xey2TtbryDJvz5=eMLFzNet3xQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188825>
 
-Thomas Rast <trast@student.ethz.ch> writes:
-
-> [dropped Dieter as this really goes off on an internal tangent]
+On Thu, Jan 19, 2012 at 1:12 PM, demerphq <demerphq@gmail.com> wrote:
+> Stop using version numbers and start using the git sha1 of the code
+> you are using.
 >
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> If somebody is writing a script using "git add" (which is not recommended
->> to begin with)
->
-> Can we still stick to that stance?  Our tests are increasingly using
-> 'git add' instead of 'git update-index --add':
->
->   $ git grep 'git[ -]add' t/ | wc -l
->   1540
->   $ git grep 'git[ -]update-index --add' t/ | wc -l
->   269
->   $ git grep 'git[ -]update-index --add' v1.6.0 t/ | wc -l
->   251
->   $ git grep 'git[ -]add' v1.6.0 t/ | wc -l
->   705
+> Yves
 
-Stop being silly.
+1. Others in the group use SVN.
+2. The version number needs to be increasing, to work with the current
+process.  SHA1's are random.
+3. The "git sha1" for the commit/snapshot cannot be put into the
+config file, which is part of the snapshot.
 
-Have you actually looked at these usage?  Some of them are genuinely
-testing if "git add" works correctly, so it is out of the scope of this
-discussion, but others that could be "git update-index" are feeding the
-paths known to the script to exist (and we want 'git add' to error out
-if that is not the case).
-
-More generally, scripts in t/ directories are "scripts", but it is totally
-different from the kind of "user facing script that behaves as if it is a
-complete command, taking its own command line arguments, passing them
-through to the underlying plumbing commands".
+Mike
