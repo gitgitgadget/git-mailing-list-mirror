@@ -1,84 +1,72 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Re: Rebase and incrementing version numbers
-Date: Thu, 19 Jan 2012 19:12:21 +0100
-Message-ID: <CANgJU+WWq=+BP1ZDbGY3weB5Xey2TtbryDJvz5=eMLFzNet3xQ@mail.gmail.com>
-References: <CADo4Y9jGYJasDL9m7_50aOTrOyoezdyg=vcsZhQ87Qk-1XfTUQ@mail.gmail.com>
-	<CADo4Y9iKvoXhKg5pEAB+cbA7Rkfa=nF4TLu0xgcS3dnkNi_n4g@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [BUG ?] completion of stash name with git stash
+Date: Thu, 19 Jan 2012 19:14:16 +0100
+Message-ID: <87obtzlfuv.fsf@thomas.inf.ethz.ch>
+References: <loom.20120119T141601-606@post.gmane.org>
+	<87lip3mzsz.fsf@thomas.inf.ethz.ch>
+	<loom.20120119T172954-563@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: mike@nahas.com
-X-From: git-owner@vger.kernel.org Thu Jan 19 19:12:28 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: <git@vger.kernel.org>
+To: Mathieu CLAVEL <math.clavel@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 19 19:14:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnwTL-0005ag-Lf
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 19:12:28 +0100
+	id 1RnwVH-0006ma-Cs
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 19:14:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932684Ab2ASSMX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Jan 2012 13:12:23 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:43380 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932195Ab2ASSMW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Jan 2012 13:12:22 -0500
-Received: by yenm6 with SMTP id m6so149629yen.19
-        for <git@vger.kernel.org>; Thu, 19 Jan 2012 10:12:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=HxDAUqrv/cTAGYCo/ZV2rX3VDyBGgw80cKaS3JL3UnQ=;
-        b=CxE0kXyOlSiHjzdzaTRwkczoaiWTqSZz7eZy40w1pRRZBqWtKBPLCKXFIwPkI36LDo
-         Tmh+R7FNWuSIc2kZ6djFDtAUYug2mHSKWZvCAjKND3RG1L3gpsN34fLa9AZLrnf0Jo4j
-         8aEHTdRuRzhKD/k2JCg4Oh4VEDYIbaxvP1qy0=
-Received: by 10.236.9.97 with SMTP id 61mr41105506yhs.71.1326996741924; Thu,
- 19 Jan 2012 10:12:21 -0800 (PST)
-Received: by 10.236.63.2 with HTTP; Thu, 19 Jan 2012 10:12:21 -0800 (PST)
-In-Reply-To: <CADo4Y9iKvoXhKg5pEAB+cbA7Rkfa=nF4TLu0xgcS3dnkNi_n4g@mail.gmail.com>
+	id S932734Ab2ASSOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jan 2012 13:14:23 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:31023 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932685Ab2ASSOV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jan 2012 13:14:21 -0500
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 19 Jan
+ 2012 19:14:16 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (188.155.176.28) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 19 Jan
+ 2012 19:14:18 +0100
+In-Reply-To: <loom.20120119T172954-563@post.gmane.org> (Mathieu CLAVEL's
+	message of "Thu, 19 Jan 2012 16:34:05 +0000 (UTC)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [188.155.176.28]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188822>
 
-On 19 January 2012 18:20, Michael Nahas <mike.nahas@gmail.com> wrote:
-> I'm at a new job and using Git-SVN at a place that is accustomed to S=
-VN.
->
-> The problem I'm running into is that whenever I change a file in a
-> directory, I have to bump up the version number in the configuration
-> file. =A0The larger version value in the config file causes my change=
-s
-> to be loaded over the old ones.
->
-> Most of my commits are edits to a file like "foo.js" and an increment
-> to the version number in "config". =A0Ideally, each of my features
-> should live in a single commit and I should be able to make a sequenc=
-e
-> of them, each time incrementing the version number in config.
->
-> The problem I'm running into starts with me editing version=3D100. =A0=
-I
-> create new commits where I set the version to 101, 102, 103, 104.
-> When I go to push ("git svn dcommit"), my coworkers have incremented
-> the version to 103. =A0So, I rebase my changes, and get conflicts eve=
-ry
-> time because of the version number!
->
-> Is there a good way to avoid these conflicts? =A0Is there a hook I ca=
-n
-> write? =A0Is there a change to this process that would work smoother
-> with Git and its distributed development? =A0It's okay if the version
-> number skips numbers (e.g., jumps from 100 to 104), as long as it
-> increases.
+Mathieu CLAVEL <math.clavel@gmail.com> writes:
 
-Stop using version numbers and start using the git sha1 of the code
-you are using.
+> Thomas Rast <trast <at> student.ethz.ch> writes:
+>
+>> This works for me using git completion as shipped with v1.7.9-rc2 and
+>> bash 4.2.10.  Double-tabbing at 'git stash drop ' prints a list of
+>> stashes as expected.  Which bash version are you using?
+>
+>
+> $ bash --version
+> GNU bash, version 3.1.0(1)-release (i686-pc-msys)
+> Copyright (C) 2005 Free Software Foundation, Inc.
+>
+> It's the version ship with the last version of msysGit.
+> I'm not sure I can update bash on Windows without any risk to break something.
+> So, do you think it's coming from the bash version ?
 
-Yves
+Indeed, I compiled bash 3.1 and with that (and otherwise the same bashrc
+etc.) I can reproduce.  Ditto for 4.0-rc1, which was the newest version
+in the repository where I found the bash source[1], so I couldn't
+bisect.  Perhaps if you can hunt down something newer you could try to
+find the version where it starts working.
 
---=20
-perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
+
+
+[1] git://gitorious.org/bash/bash.git
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
