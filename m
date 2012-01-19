@@ -1,52 +1,64 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCHv4 0/5] git-p4: small fixes to branches and labels
-Date: Thu, 19 Jan 2012 10:19:34 -0500
-Message-ID: <20120119151934.GA3698@padd.com>
-References: <1326966749-9077-1-git-send-email-luke@diamand.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: More support on branch description?
+Date: Thu, 19 Jan 2012 22:24:24 +0700
+Message-ID: <CACsJy8DTw-8Sm09hzHoHP8eFVGCX_kkrvhj+8v3MXz2eohfaEQ@mail.gmail.com>
+References: <CACsJy8D0_EB6jN7KxpzLtnPnj0HjdU6sNHJRyqXJf-2-ZNatFA@mail.gmail.com>
+ <4F183365.5010607@elegosoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Vitor Antunes <vitor.hda@gmail.com>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Thu Jan 19 16:19:44 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Michael Schubert <mschub@elegosoft.com>
+X-From: git-owner@vger.kernel.org Thu Jan 19 16:25:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RntmB-0001Cn-EK
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 16:19:43 +0100
+	id 1RntrK-0004tp-7s
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 16:25:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932164Ab2ASPTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jan 2012 10:19:38 -0500
-Received: from honk.padd.com ([74.3.171.149]:40236 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753248Ab2ASPTh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2012 10:19:37 -0500
-Received: from arf.padd.com (unknown [50.55.142.76])
-	by honk.padd.com (Postfix) with ESMTPSA id C5A552106;
-	Thu, 19 Jan 2012 07:19:36 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 303A2313B5; Thu, 19 Jan 2012 10:19:34 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <1326966749-9077-1-git-send-email-luke@diamand.org>
+	id S932167Ab2ASPY6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Jan 2012 10:24:58 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:58348 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932144Ab2ASPY5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Jan 2012 10:24:57 -0500
+Received: by bkas6 with SMTP id s6so31950bka.19
+        for <git@vger.kernel.org>; Thu, 19 Jan 2012 07:24:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=nm1h3DJlvewAGdWAUPCBCTasEE1lDjPpaZ6yGkjz2xk=;
+        b=KEetQgxHDKyAp79Xb3CpzFYdeJGVoAFMeYq6hr3XXaib9WXDwH9Fkg4NyPk0Pl9pFQ
+         DPk2beJoqydWR9/hkSAj3LfMvSwPEHKAKB65qj4X6NUZCnHdcsQxPmcih9RaGn5ji+Eq
+         N107W7VFKIDN+X5EtKQOB9rtugDJWMDaRVH64=
+Received: by 10.204.154.211 with SMTP id p19mr2440361bkw.130.1326986695239;
+ Thu, 19 Jan 2012 07:24:55 -0800 (PST)
+Received: by 10.205.123.145 with HTTP; Thu, 19 Jan 2012 07:24:24 -0800 (PST)
+In-Reply-To: <4F183365.5010607@elegosoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188816>
 
-luke@diamand.org wrote on Thu, 19 Jan 2012 09:52 +0000:
-> This is the fourth version of some small fixes to git-p4 branch and
-> label handling, incorporating a fix from Pete Wyckoff and an
-> additional failing test.
-> 
-> This change does not fix the other problems with git-p4 labels:
-> 
-> - two p4 labels on the same changelist will fall over
-> - labels must match exactly the list of files imported
-> - you can't import a label without a p4 commit
+On Thu, Jan 19, 2012 at 10:14 PM, Michael Schubert <mschub@elegosoft.co=
+m> wrote:
+> Junio suggested a new option "--verbose-format" for branch some weeks
+> ago:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0http://thread.gmane.org/gmane.comp.version=
+-control.git/186727
+>
+> I planned on working on it, but haven't found the time yet nor do I
+> really know which way to go.? (pretty.c seems to be the right
+> place for format code, but it's very commit format specific atm.)
 
-This all looks great to me.  Thanks for adding that failing test,
-and fixing the pre-existing bug in invoking p4 labels.
-
-		-- Pete
+Thanks. I must have missed that. There's another piece of formatting
+code in "for-each-ref --format" command (I happened to have a look at
+it a few days ago). It's ref-specific, probably closer than pretty.c
+for this kind of stuff.
+--=20
+Duy
