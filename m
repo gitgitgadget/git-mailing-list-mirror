@@ -1,68 +1,81 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] git-add: allow --ignore-missing always, not just in dry run
-Date: Thu, 19 Jan 2012 12:03:17 +0100
-Message-ID: <8762g87y4q.fsf@thomas.inf.ethz.ch>
-References: <1326923544-8287-1-git-send-email-dieter@plaetinck.be>
-	<7vobu0liwj.fsf@alter.siamese.dyndns.org>
+From: Mathieu CLAVEL <math.clavel@gmail.com>
+Subject: [BUG ?] completion of stash name with git stash
+Date: Thu, 19 Jan 2012 13:21:53 +0000 (UTC)
+Message-ID: <loom.20120119T141601-606@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 19 12:03:26 2012
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 19 14:25:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rnpm9-0003Al-9K
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 12:03:25 +0100
+	id 1Rnrzf-0002AH-4z
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 14:25:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753601Ab2ASLDV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jan 2012 06:03:21 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:58075 "EHLO edge10.ethz.ch"
+	id S1756747Ab2ASNZN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jan 2012 08:25:13 -0500
+Received: from lo.gmane.org ([80.91.229.12]:43233 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752410Ab2ASLDU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2012 06:03:20 -0500
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 19 Jan
- 2012 12:03:15 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 19 Jan
- 2012 12:03:17 +0100
-In-Reply-To: <7vobu0liwj.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 18 Jan 2012 14:56:12 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1752081Ab2ASNZM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jan 2012 08:25:12 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RnrzL-00023w-Ba
+	for git@vger.kernel.org; Thu, 19 Jan 2012 14:25:11 +0100
+Received: from 249-137-167-83.reverse.alphalink.fr ([83.167.137.249])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 19 Jan 2012 14:25:11 +0100
+Received: from math.clavel by 249-137-167-83.reverse.alphalink.fr with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 19 Jan 2012 14:25:11 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 83.167.137.249 (Mozilla/5.0 (Windows NT 5.1; rv:9.0.1) Gecko/20100101 Firefox/9.0.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188810>
 
-[dropped Dieter as this really goes off on an internal tangent]
+Hello,
 
-Junio C Hamano <gitster@pobox.com> writes:
+I first posted that message on the group for msysgit [1].
 
-> If somebody is writing a script using "git add" (which is not recommended
-> to begin with)
+====
 
-Can we still stick to that stance?  Our tests are increasingly using
-'git add' instead of 'git update-index --add':
+I'm using mysgit 1.7.8 on XP.
 
-  $ git grep 'git[ -]add' t/ | wc -l
-  1540
-  $ git grep 'git[ -]update-index --add' t/ | wc -l
-  269
-  $ git grep 'git[ -]update-index --add' v1.6.0 t/ | wc -l
-  251
-  $ git grep 'git[ -]add' v1.6.0 t/ | wc -l
-  705
+I think the stash name completion has a problem.
+I don't know if it's a problem from my system, mysgit or git.
 
-So while git(1) still says git-add is porcelain (and thus not to be used
-for scripting), it has mostly superseded 'git update-index --add' in new
-script usage even within git.git.  I suspect the same goes for things
-like git-rm, git-commit, etc.
+Here are the steps to reproduce (you need to have at least 2 stashed commits).
+'+ tab =>' means using the tab to autocomplete the current command. Left part is
+before completion, right tab is after completion.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+$ git stash list
+stash@{0}: WIP on feature/preservation_offres: 7f2c9a8 import.cmd : import par
+lot de 10.000 contrats
+stash@{1}: WIP on feature/echeancier: ddb7bb0 Mockito : 1.8.5 -> 1.9.0
+
+$ git stash drop '+ tab =>' $ git stash drop stash@{
+
+$ git stash drop stash@{0 '+ tab =>' $ git stash drop stashstash@{0}
+
+I don't know if it's relevant, but I also have 'git flow' and 'git flow
+completion' installed, and as said in a previous thread, 'git flow completion'
+isn't working with alias [2].
+
+====
+
+Regards,
+
+Mathieu CLAVEL
+
+[1] https://groups.google.com/d/topic/msysgit/AgGY7wl8IJQ/discussion
+[2] https://groups.google.com/d/msg/msysgit/UnBHlY9eAK0/JfdH7q2hcsAJ
