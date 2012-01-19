@@ -1,56 +1,60 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: diff --minimal as default?
-Date: Thu, 19 Jan 2012 15:22:04 +0100
-Message-ID: <8762g7u60j.fsf@thomas.inf.ethz.ch>
-References: <CAA5Ydx_ZqnaWRK3cEvMkULcrGx8B1MUyi2-Ca8eSBmbDg==fDQ@mail.gmail.com>
+From: Michael Schubert <mschub@elegosoft.com>
+Subject: Re: More support on branch description?
+Date: Thu, 19 Jan 2012 16:14:45 +0100
+Message-ID: <4F183365.5010607@elegosoft.com>
+References: <CACsJy8D0_EB6jN7KxpzLtnPnj0HjdU6sNHJRyqXJf-2-ZNatFA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <git@vger.kernel.org>
-To: Victor Engmark <victor.engmark@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 19 15:22:16 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 19 16:16:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnssX-00087y-HA
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 15:22:13 +0100
+	id 1Rntio-00076p-BR
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 16:16:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752206Ab2ASOWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jan 2012 09:22:09 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:13894 "EHLO edge10.ethz.ch"
+	id S932087Ab2ASPQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jan 2012 10:16:10 -0500
+Received: from mx0.elegosoft.com ([78.47.87.163]:52640 "EHLO mx0.elegosoft.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751706Ab2ASOWH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2012 09:22:07 -0500
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 19 Jan
- 2012 15:22:02 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 19 Jan
- 2012 15:22:05 +0100
-In-Reply-To: <CAA5Ydx_ZqnaWRK3cEvMkULcrGx8B1MUyi2-Ca8eSBmbDg==fDQ@mail.gmail.com>
-	(Victor Engmark's message of "Thu, 19 Jan 2012 14:41:18 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1753248Ab2ASPQI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jan 2012 10:16:08 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id 14656DEA09;
+	Thu, 19 Jan 2012 16:16:06 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id H-Ft9OeVXP40; Thu, 19 Jan 2012 16:15:58 +0100 (CET)
+Received: from [160.45.94.222] (unknown [160.45.94.222])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id 053A2DEA02;
+	Thu, 19 Jan 2012 16:15:58 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:9.0) Gecko/20111224 Thunderbird/9.0.1
+In-Reply-To: <CACsJy8D0_EB6jN7KxpzLtnPnj0HjdU6sNHJRyqXJf-2-ZNatFA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188814>
 
-Victor Engmark <victor.engmark@gmail.com> writes:
+On 01/19/2012 03:14 PM, Nguyen Thai Ngoc Duy wrote:
+> The coming v1.7.9 will introduce branch description, mainly used in
+> integration process. I think we could make it useful for users who
+> don't extensively use request-pull/format-patch. Showing a short
+> summary along with branch name in "git branch" would be nice. "branch
+> -v" is already used for something else, maybe we can come up with
+> another option, or "-v -v"? Another place we could show branch
+> description is "git status". What do you think?
 
-> Git v1.7.8 supports `diff --minimal`. I've got cycles to spare and
-> usually small files - Is there (or will there be) a configuration
-> option to set this as the default? If not I'll just use an alias, but
-> there should still be an inverse option to be able to override it in
-> special cases.
+Junio suggested a new option "--verbose-format" for branch some weeks
+ago:
 
-AFAIK no config option is planned; you could make a patch :-)
+	http://thread.gmane.org/gmane.comp.version-control.git/186727
 
-But there's --no-minimal, following the usual pattern for boolean
-options.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+I planned on working on it, but haven't found the time yet nor do I
+really know which way to go.? (pretty.c seems to be the right
+place for format code, but it's very commit format specific atm.)
