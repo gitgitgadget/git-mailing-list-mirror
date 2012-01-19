@@ -1,84 +1,137 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Unexpected "clean -Xd" behavior
-Date: Thu, 19 Jan 2012 14:31:32 +0700
-Message-ID: <CACsJy8AE+rwmOVUZez5GRXRHJsTy+W8ekzr59NTd7_C+gB0Byw@mail.gmail.com>
-References: <4F1384AE.1050209@pcharlan.com> <20120119002904.GA14107@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] Git bisect not finding the right commit
+Date: Thu, 19 Jan 2012 00:20:08 -0800
+Message-ID: <7vlip4je87.fsf@alter.siamese.dyndns.org>
+References: <87r4yw8j4i.fsf@franz.ak.mind.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pete Harlan <pgit@pcharlan.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Shawn Bohrer <shawn.bohrer@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 19 08:32:12 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: andreas.koenig.7os6VVqR@franz.ak.mind.de (Andreas J. Koenig)
+X-From: git-owner@vger.kernel.org Thu Jan 19 09:20:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnmTj-000855-EO
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 08:32:11 +0100
+	id 1RnnEH-0007YP-VB
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 09:20:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752850Ab2ASHcH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Jan 2012 02:32:07 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:48885 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752535Ab2ASHcF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Jan 2012 02:32:05 -0500
-Received: by bkas6 with SMTP id s6so3519868bka.19
-        for <git@vger.kernel.org>; Wed, 18 Jan 2012 23:32:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=XATP4wheA7C8+1yFioKkDVe40QkiiLLfqC52GTbM0uw=;
-        b=hIKlCLn+N0DMvpxRaBse+g+Fx0VC/5ERMLLz5AKzLK3cr/x1e37MK92H08ZkA4hrQ1
-         ufJ9WpWXGa4zgP67F313xYYtMnkIjunrDQ+QuD8AFg/q4NnTrz0/hIkjcXAt2nSBNeHK
-         Y374EPf//rNoSMDPrnEv1345JPmcCAYKPM1YI=
-Received: by 10.204.154.211 with SMTP id p19mr1785450bkw.130.1326958324238;
- Wed, 18 Jan 2012 23:32:04 -0800 (PST)
-Received: by 10.205.123.145 with HTTP; Wed, 18 Jan 2012 23:31:32 -0800 (PST)
-In-Reply-To: <20120119002904.GA14107@burratino>
+	id S1754373Ab2ASIUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jan 2012 03:20:13 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50038 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752739Ab2ASIUM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jan 2012 03:20:12 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D724A41AD;
+	Thu, 19 Jan 2012 03:20:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ALrRpD/hCWHWuCqwJkEsO2eYg3Y=; b=aLgur7
+	Wex/OltIm/bE6UXdeua1sxUF88sFwiT+InldyX/6JLo8BKMSCo2R6yqPaWjL88LY
+	Vd/dKxHowZdQWFTdJjD+7asq1Y7MnprQFwzzqGrqr5KJ1IiTvmG9qPH23l9GIjW/
+	c8C9SQcGNHRTE41dnL349yLWrLOZxfel2C8A8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XQhGRprDnD+hK4MmK2Nhecwsx4XkTlPm
+	JerO90EWK3Y3LUS84aDo3sdZLHB2QQgQbxB03MS/orxIbQx7kEy6KZeRePSkJb4A
+	lzczoGmgqOzPMyN32wGZG7hlO5oMorOhU6zK9OunpbAss48Hi8Y4ZNCGBQ/pB7y9
+	M3Lg+Z1jR/4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CE83141AC;
+	Thu, 19 Jan 2012 03:20:10 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1812141AB; Thu, 19 Jan 2012
+ 03:20:10 -0500 (EST)
+In-Reply-To: <87r4yw8j4i.fsf@franz.ak.mind.de> (Andreas J. Koenig's message
+ of "Thu, 19 Jan 2012 04:29:49 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 67191FF6-4276-11E1-90F1-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188793>
 
-2012/1/19 Jonathan Nieder <jrnieder@gmail.com>:
-> Pete Harlan wrote:
+andreas.koenig.7os6VVqR@franz.ak.mind.de (Andreas J. Koenig) writes:
+
+> A v5.15.5
+> B v5.15.5-20-gfd76d40
+> C v5.15.5-81-gcfe287a
+> D v5.15.5-159-ga71d67b
+> E v5.15.4-110-g27b29ec
+> F v5.15.4-169-g3582575
 >
->> When a directory contains nothing but an ignored subdirectory, that
->> subdirectory does not get removed by "git clean -Xdf".
->>
->> For example, in a new directory:
->>
->> # git init
->> Initialized empty Git repository in /tmp/foo/.git/
->> # echo a/ >.gitignore
->> # git add .gitignore
->> # git commit -m "Initial commit"
->> [master (root-commit) c3af24c] Initial commit
->> =C2=A01 files changed, 1 insertions(+), 0 deletions(-)
->> =C2=A0create mode 100644 .gitignore
->> # mkdir -p foo/a
->> # touch foo/a/junk.o
->> # git status
->> # On branch master
->> nothing to commit (working directory clean)
->> # git clean -Xdn =C2=A0# <--- DOES NOT MENTION foo/a
+> The change in perl I tried to locate was v5.15.5-13-gff0cf12, between A
+> and B. Bisect did not find it, it returned me E instead. Here the wrong
+> bisect output:
 
--X is to remove ignored files _only_ (DIR_SHOW_IGNORED flag). And
-"foo" is not ignored according to .gitignore, so it cuts short there
-and never gets to "foo/a". -x works. May be intentional, may be not
-(we hit a corner case). I don't know. Commit message b991625 might
-help:
+Just for the sake of simplicity, I'll call ff0cf12 "Q" (the Questionable
+one).
 
-    dir.c: Omit non-excluded directories with dir->show_ignored
+> % git bisect start v5.15.5-159-ga71d67b v5.15.5
 
-    This makes "git-ls-files --others --directory --ignored" behave
-    as documented and consequently also fixes "git-clean -d -X".
-    Previously, git-clean would remove non-excluded directories
-    even when using the -X option.
---=20
-Duy
+You start by telling Git that D is bad and A is good.
+
+I can see that D does contain Q (i.e. "git log D..Q" gives nothing), which
+you should read as "D is _contaminated_ by the breakage Q introduced", so
+D is indeed bad.
+
+On the other hand, A does _not_ contain Q (i.e. "git log A..Q" gives
+output), which you should read as "A is _not_ contaminated by the breakage
+Q introduced", so A is indeed good.
+
+So far so good...
+
+> Already on 'blead'
+> Bisecting: 77 revisions left to test after this (roughly 6 steps)
+> [cfe287a06b2ed98c25aebb477f6b400409f1fc85] Merge remote-tracking branch 'p5p/smoke-me/gsoc-pod' into blead
+> % git describe
+> v5.15.5-81-gcfe287a
+
+This is your "C", and "git log C..Q" does not give anything. C is
+contaminated by Q, hence it is bad.
+
+> % git bisect bad
+> Bisecting: 40 revisions left to test after this (roughly 5 steps)
+> [baf7658bacfa659cdab08050470b20ebd5973384] Update htmlview.t for new Pod::Html
+> % git describe
+> v5.15.4-149-gbaf7658
+
+Here, baf7658 does not contain Q, so you are supposed to answer it is
+GOOD.
+
+> % git bisect bad
+
+But you answered that it is BAD.
+
+Why?
+
+What caused you to say "bad" here to a commit that could not possibly have
+inherited the breakage Q introduced?
+
+One plausible explanation is that whatever symptom you are seeing in Perl
+at version Q that you call "bad" may not be caused by a single root cause,
+and a similar (or the same) symptom somehow appears at this version that
+is _NOT_ contaminated by Q.
+
+Another plausible scenario is that the symptom you are chasing may not be
+reliably reproducible.
+
+"bisection" by nature is an optimization technique applicable only when
+you are chasing a reliably reproducible symptom that is caused by a single
+cause, a breakage that existed in a single old version that is inherited
+to all its descendants, and the "bad" symptom did not appear in any
+version that does not inherit the breakage from that single problematic
+commit.  If you have a history A--B--C--D--E, in which B breaks something,
+C fixes its breakage and then D reintroduces another breakage that shows
+the same symptom, you can not optimize the search for a problem using
+bisect. You need to check each and every version.
+
+Of course, people sometimes simply get confused and mistakenly say BAD
+when they wanted to say GOOD. That may be a simpler explanation of what
+happened to your bisection.
+
+Anyway, the remainder of your bisect sequence is GiGo, so I'll snip them
+and will not quote.
