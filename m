@@ -1,111 +1,119 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: Rebase and incrementing version numbers
-Date: Fri, 20 Jan 2012 08:33:57 +1100
-Message-ID: <CAH3Anro8T4SJqBvw1E_7u__4kYyB6hMCYPbtHSVxkgSUYSb2+A@mail.gmail.com>
-References: <CADo4Y9jGYJasDL9m7_50aOTrOyoezdyg=vcsZhQ87Qk-1XfTUQ@mail.gmail.com>
-	<CADo4Y9iKvoXhKg5pEAB+cbA7Rkfa=nF4TLu0xgcS3dnkNi_n4g@mail.gmail.com>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: post-update to stash after push to non-bare current branch
+Date: Thu, 19 Jan 2012 15:48:18 -0600
+Message-ID: <4F188FA2.1000209@gmail.com>
+References: <jf70vc$kol$1@dough.gmane.org> <4F171088.4080006@gmail.com> <4F1714AD.4090706@gmail.com> <7vwr8oljq7.fsf@alter.siamese.dyndns.org> <4F1764B9.90907@gmail.com> <7vboq0ld5e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: mike@nahas.com
-X-From: git-owner@vger.kernel.org Thu Jan 19 22:34:06 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 19 22:48:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnzcS-0002BC-30
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 22:34:04 +0100
+	id 1RnzqO-00036m-5Z
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 22:48:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751681Ab2ASVd7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Jan 2012 16:33:59 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:54526 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750993Ab2ASVd6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Jan 2012 16:33:58 -0500
-Received: by wics10 with SMTP id s10so332001wic.19
-        for <git@vger.kernel.org>; Thu, 19 Jan 2012 13:33:57 -0800 (PST)
+	id S1753909Ab2ASVsY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jan 2012 16:48:24 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:55216 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753601Ab2ASVsX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jan 2012 16:48:23 -0500
+Received: by yhoo21 with SMTP id o21so280115yho.19
+        for <git@vger.kernel.org>; Thu, 19 Jan 2012 13:48:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=EId5unTfNAPOUx5zUYhx5NFoFEy4GQD4VyeLBJtwpsE=;
-        b=TtST4lOfibc/0OIVp/Isyxun+G4zQBi8Hdzm6VbqeXsz6MWGHSMQQ4uSXYojySxyK/
-         e3mpsePwi5SU48nAh8LccX9I3CG/8f9rsngnRGdXynVFih8kfBGt7jO7o4vba1jUVpT/
-         osOlr3ixEtBxXsS3j7UC51ArO2jl4tekqrG10=
-Received: by 10.181.11.163 with SMTP id ej3mr47457765wid.4.1327008837571; Thu,
- 19 Jan 2012 13:33:57 -0800 (PST)
-Received: by 10.180.79.195 with HTTP; Thu, 19 Jan 2012 13:33:57 -0800 (PST)
-In-Reply-To: <CADo4Y9iKvoXhKg5pEAB+cbA7Rkfa=nF4TLu0xgcS3dnkNi_n4g@mail.gmail.com>
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=2QsU9hhb01X+3t0B0/VL2tJPWY8yFm/Iy33P2UjkhHg=;
+        b=K///ipyqp7XzEV7uaQnLmhflNqycpUWawontYN4RmCvlUkl7oISNc05IBYuqhyetH8
+         +LsfifS3wK0SMrSdRKTPCOVc2yKdVRIJWbi+4Fk2oNRUydjf0iNfQdyX7kRufrKxqG5g
+         9ukPfZSk8HBMSsHOp58tIpcg9ca5o+dG/bNgI=
+Received: by 10.236.181.198 with SMTP id l46mr42551871yhm.40.1327009702707;
+        Thu, 19 Jan 2012 13:48:22 -0800 (PST)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id u47sm1295089yhl.0.2012.01.19.13.48.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 19 Jan 2012 13:48:21 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.25) Gecko/20111213 Thunderbird/3.1.17
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <7vboq0ld5e.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188840>
 
-On Fri, Jan 20, 2012 at 4:20 AM, Michael Nahas <mike.nahas@gmail.com> w=
-rote:
-> I'm at a new job and using Git-SVN at a place that is accustomed to S=
-VN.
+On 1/18/2012 7:00 PM, Junio C Hamano wrote:
+> Neal Kreitzinger<nkreitzinger@gmail.com>  writes:
 >
-> The problem I'm running into is that whenever I change a file in a
-> directory, I have to bump up the version number in the configuration
-> file. =C2=A0The larger version value in the config file causes my cha=
-nges
-> to be loaded over the old ones.
+>>> Have you checked where in the filesystem hierarchy that script is run
+>>> (hint: pwd)?
+>>>
+>> echo pwd in post-update echoes /path/WORKTREE/.git in git-push stdout.
+>> ...
+>> 'git-checkout -f' works manually, but in post-update hook...
 >
-> Most of my commits are edits to a file like "foo.js" and an increment
-> to the version number in "config". =C2=A0Ideally, each of my features
-> should live in a single commit and I should be able to make a sequenc=
-e
-> of them, each time incrementing the version number in config.
->
-> The problem I'm running into starts with me editing version=3D100. =C2=
-=A0I
-> create new commits where I set the version to 101, 102, 103, 104.
-> When I go to push ("git svn dcommit"), my coworkers have incremented
-> the version to 103. =C2=A0So, I rebase my changes, and get conflicts =
-every
-> time because of the version number!
->
-> Is there a good way to avoid these conflicts? =C2=A0Is there a hook I=
- can
-> write? =C2=A0Is there a change to this process that would work smooth=
-er
-> with Git and its distributed development? =C2=A0It's okay if the vers=
-ion
-> number skips numbers (e.g., jumps from 100 to 104), as long as it
-> increases.
->
-> Thanks,
->
-> Mike
+> Stronger hint. Did you run "git checkout -f" in /path/WORKTREE/.git to
+> back that "works manually" claim?
 
-I wonder if you can defer your changes to the config files until after
-you have synced with the current SVN head, so that you typically only
-modify the latest configuration file. Then use git to work out what
-numbers you have to update (by working out which files you changed
-that the SVN upstream has not seen yet). Not perfect, because of race
-conditions, and may not work with your integration testing processes,
-but perhaps worth considering.
+(Manual behavior):
+If pwd is WORKTREE/ then git-checkout has correct effect, ie. worktree, 
+index, and HEAD match.
+If pwd is WORKTREE/.git/ then git-checkout complains 'must be run in a 
+worktree' and has no effect.
 
-Something like:
+(post-update hook behavior):
+If pwd is WORKTREE/.git/ then git-push verbage does not complain, and 
+git-checkout exits zero status but has incorrect effect, ie. index and 
+HEAD match, but worktree matches HEAD@{1}.
+If pwd is WORKTREE/ then git-push complains 'not a git repository', and 
+git-checkout exits non-zero status and has no effect, ie. worktree and 
+index match HEAD@{1}.
 
-1. pull latest SVN
-2. work on file
-3. test. skip back to 2 until done.
-4. ready to push to upstream
-5. pull latest SVN
-6. calculate configuration changes required
-7. apply configuration changes
-8. push work + configuration changes upstream
+Evidence:
 
-So, there is a window between steps 5 and 8 where you might still have
-to deal with a conflict, but at least it  should be much reduced.
+(post-update hook script):
+MYPWD=`pwd`
+echo $MYPWD
+pushd /home/neal/FSNMSTHTML
+MYPWD=`pwd`
+echo $MYPWD
+git checkout -f HEAD
+if [ $? -ne 0 ]; then
+   echo "error on checkout!"
+else
+   echo "checkout HEAD to non-bare remote current branch after push"
+fi
+echo $MYPWD
+popd
+MYPWD=`pwd`
+echo $MYPWD
 
-I agree with other comments, though, a saner approach might be to
-generate the configuration as part of a build process rather than
-trying to maintain it in source control.
+(git-push verbage):
+$ git push origin HEAD
+Counting objects: 9, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 462 bytes, done.
+Total 5 (delta 4), reused 0 (delta 0)
+Unpacking objects: 100% (5/5), done.
+remote: warning: updating the current branch
+remote: /home/neal/FSNMSTHTML/.git
+remote: ~/FSNMSTHTML ~/FSNMSTHTML/.git
+remote: /home/neal/FSNMSTHTML
+remote: fatal: Not a git repository: '.'
+remote: error on checkout!
+remote: /home/neal/FSNMSTHTML
+remote: ~/FSNMSTHTML/.git
+remote: /home/neal/FSNMSTHTML/.git
+To file:///home/neal/FSNMSTHTML
+    cee9269..34dc5a9  HEAD -> master
 
-jon.
+v/r,
+neal
