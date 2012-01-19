@@ -1,140 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] am: learn passing -b to mailinfo
-Date: Thu, 19 Jan 2012 13:26:48 -0800
-Message-ID: <7vd3afidt3.fsf@alter.siamese.dyndns.org>
-References: <8762ghxpxw.fsf@thomas.inf.ethz.ch>
- <a804650f805fd8c89a843302cb92bbbdf36b8c0b.1326710194.git.trast@student.ethz.ch>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: Rebase and incrementing version numbers
+Date: Fri, 20 Jan 2012 08:33:57 +1100
+Message-ID: <CAH3Anro8T4SJqBvw1E_7u__4kYyB6hMCYPbtHSVxkgSUYSb2+A@mail.gmail.com>
+References: <CADo4Y9jGYJasDL9m7_50aOTrOyoezdyg=vcsZhQ87Qk-1XfTUQ@mail.gmail.com>
+	<CADo4Y9iKvoXhKg5pEAB+cbA7Rkfa=nF4TLu0xgcS3dnkNi_n4g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Jan 19 22:27:00 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: mike@nahas.com
+X-From: git-owner@vger.kernel.org Thu Jan 19 22:34:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RnzVb-0006Lt-7G
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 22:26:59 +0100
+	id 1RnzcS-0002BC-30
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 22:34:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751234Ab2ASV0v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jan 2012 16:26:51 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42885 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750993Ab2ASV0u (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2012 16:26:50 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 35CCA5EE9;
-	Thu, 19 Jan 2012 16:26:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=t8C2rObG0KcwxBm/gTZ5quqbbhg=; b=f80UuJlBIvzPnjC9RFE4
-	yIZVmBtJfMTjuKZv8VbgVdRpaevG2oirnOYX09ynaz5kd7LNRxYFXtB5CYAFKAf6
-	XsMjzI7H/1HnEosAcGlw2UxJi7XaEBps3byb/9X9ksDaGHqdWMMAHWCA2l4Iuuhe
-	8CibfpUuu86Pr27hiZwRs9E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=hXkObGt86FY+SOK8ItguP+E+VH0s0iWc0u5qwNFS1GsTu1
-	Eqp5a/2sryoP0ibNRakQzZBouqGx+auZEN1DfT8sCFZKb5q8fWG5mbgXaTB9IwQe
-	TOsvDpGVB9VxgaptbEXfMEVKAaj3Rv/KxzChH0alTMCjM+vdjJbrS+DpDQz6w=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D64A5EE8;
-	Thu, 19 Jan 2012 16:26:50 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 997D95EE7; Thu, 19 Jan 2012
- 16:26:49 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4C35BE88-42E4-11E1-A8BC-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751681Ab2ASVd7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Jan 2012 16:33:59 -0500
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:54526 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750993Ab2ASVd6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Jan 2012 16:33:58 -0500
+Received: by wics10 with SMTP id s10so332001wic.19
+        for <git@vger.kernel.org>; Thu, 19 Jan 2012 13:33:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=EId5unTfNAPOUx5zUYhx5NFoFEy4GQD4VyeLBJtwpsE=;
+        b=TtST4lOfibc/0OIVp/Isyxun+G4zQBi8Hdzm6VbqeXsz6MWGHSMQQ4uSXYojySxyK/
+         e3mpsePwi5SU48nAh8LccX9I3CG/8f9rsngnRGdXynVFih8kfBGt7jO7o4vba1jUVpT/
+         osOlr3ixEtBxXsS3j7UC51ArO2jl4tekqrG10=
+Received: by 10.181.11.163 with SMTP id ej3mr47457765wid.4.1327008837571; Thu,
+ 19 Jan 2012 13:33:57 -0800 (PST)
+Received: by 10.180.79.195 with HTTP; Thu, 19 Jan 2012 13:33:57 -0800 (PST)
+In-Reply-To: <CADo4Y9iKvoXhKg5pEAB+cbA7Rkfa=nF4TLu0xgcS3dnkNi_n4g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188839>
 
-Thomas Rast <trast@student.ethz.ch> writes:
-
-> git-am could pass -k to mailinfo, but not -b.  Introduce an option
-> that does so.  We change the meaning of the 'keep' state file, but are
-> careful not to cause a problem unless you downgrade in the middle of
-> an 'am' run.
+On Fri, Jan 20, 2012 at 4:20 AM, Michael Nahas <mike.nahas@gmail.com> w=
+rote:
+> I'm at a new job and using Git-SVN at a place that is accustomed to S=
+VN.
 >
-> This uncovers a bug in mailinfo -b, hence the failing test.
+> The problem I'm running into is that whenever I change a file in a
+> directory, I have to bump up the version number in the configuration
+> file. =C2=A0The larger version value in the config file causes my cha=
+nges
+> to be loaded over the old ones.
 >
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-> ---
+> Most of my commits are edits to a file like "foo.js" and an increment
+> to the version number in "config". =C2=A0Ideally, each of my features
+> should live in a single commit and I should be able to make a sequenc=
+e
+> of them, each time incrementing the version number in config.
 >
-> This fixes the broken 'if', and the use of 'echo' with an argument
-> that starts with '-'.
+> The problem I'm running into starts with me editing version=3D100. =C2=
+=A0I
+> create new commits where I set the version to 101, 102, 103, 104.
+> When I go to push ("git svn dcommit"), my coworkers have incremented
+> the version to 103. =C2=A0So, I rebase my changes, and get conflicts =
+every
+> time because of the version number!
+>
+> Is there a good way to avoid these conflicts? =C2=A0Is there a hook I=
+ can
+> write? =C2=A0Is there a change to this process that would work smooth=
+er
+> with Git and its distributed development? =C2=A0It's okay if the vers=
+ion
+> number skips numbers (e.g., jumps from 100 to 104), as long as it
+> increases.
+>
+> Thanks,
+>
+> Mike
 
-After re-reading the code that parses the command line options given to
-"am" and the previous invocation state we read from $dotest/*, however, I
-think the way this change uses $keep makes things somewhat inconsistent
-and harder to follow.
+I wonder if you can defer your changes to the config files until after
+you have synced with the current SVN head, so that you typically only
+modify the latest configuration file. Then use git to work out what
+numbers you have to update (by working out which files you changed
+that the SVN upstream has not seen yet). Not perfect, because of race
+conditions, and may not work with your integration testing processes,
+but perhaps worth considering.
 
-Currently the variables are given abstract meaning (e.g. "are we told to
-record to utf8? yes or no") when we parse our command line options and
-read from the previous invocation state, and then based on that abstract
-meaning, a later code decides what exact option we throw at the git
-commands we invoke (e.g. "utf8=t" -> "-u").
+Something like:
 
-How about doing something like this instead at least for now?  It might be
-better to decide when we parse our options and $dotest/* immediately what
-options we give to the git commands we run (which your patch does but only
-to $keep option), but that kind of change (1) belongs to a separate topic
-and should be done consistently to all options, and (2) I am not convinced
-if it is necessarily a good change.
+1. pull latest SVN
+2. work on file
+3. test. skip back to 2 until done.
+4. ready to push to upstream
+5. pull latest SVN
+6. calculate configuration changes required
+7. apply configuration changes
+8. push work + configuration changes upstream
 
-Thanks.
+So, there is a window between steps 5 and 8 where you might still have
+to deal with a conflict, but at least it  should be much reduced.
 
-diff --git a/git-am.sh b/git-am.sh
-index 6cdd591..8b755d9 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -15,6 +15,7 @@ q,quiet         be quiet
- s,signoff       add a Signed-off-by line to the commit message
- u,utf8          recode into utf8 (default)
- k,keep          pass -k flag to git-mailinfo
-+keep-non-patch  pass -b flag to git-mailinfo
- keep-cr         pass --keep-cr flag to git-mailsplit for mbox format
- no-keep-cr      do not pass --keep-cr flag to git-mailsplit independent of am.keepcr
- c,scissors      strip everything before a scissors line
-@@ -345,6 +346,8 @@ do
- 		utf8= ;;
- 	-k|--keep)
- 		keep=t ;;
-+	--keep-non-patch)
-+		keep=b ;;
- 	-c|--scissors)
- 		scissors=t ;;
- 	--no-scissors)
-@@ -522,16 +525,25 @@ case "$resolved" in
- 	fi
- esac
- 
-+# Now, decide what command line options we will give to the git
-+# commands we invoke, based on the result of parsing command line
-+# options and previous invocation state stored in $dotest/ files.
-+
- if test "$(cat "$dotest/utf8")" = t
- then
- 	utf8=-u
- else
- 	utf8=-n
- fi
--if test "$(cat "$dotest/keep")" = t
--then
--	keep=-k
--fi
-+keep=$(cat "$dotest/keep")
-+case "$keep" in
-+t)
-+	keep=-k ;;
-+b)
-+	keep=-b ;;
-+*)
-+	keep= ;;
-+esac
- case "$(cat "$dotest/keepcr")" in
- t)
- 	keepcr=--keep-cr ;;
+I agree with other comments, though, a saner approach might be to
+generate the configuration as part of a build process rather than
+trying to maintain it in source control.
+
+jon.
