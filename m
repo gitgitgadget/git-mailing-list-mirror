@@ -1,60 +1,52 @@
-From: Michael Schubert <mschub@elegosoft.com>
-Subject: Re: More support on branch description?
-Date: Thu, 19 Jan 2012 16:14:45 +0100
-Message-ID: <4F183365.5010607@elegosoft.com>
-References: <CACsJy8D0_EB6jN7KxpzLtnPnj0HjdU6sNHJRyqXJf-2-ZNatFA@mail.gmail.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCHv4 0/5] git-p4: small fixes to branches and labels
+Date: Thu, 19 Jan 2012 10:19:34 -0500
+Message-ID: <20120119151934.GA3698@padd.com>
+References: <1326966749-9077-1-git-send-email-luke@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 19 16:16:14 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Vitor Antunes <vitor.hda@gmail.com>
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Thu Jan 19 16:19:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rntio-00076p-BR
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 16:16:14 +0100
+	id 1RntmB-0001Cn-EK
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Jan 2012 16:19:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932087Ab2ASPQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jan 2012 10:16:10 -0500
-Received: from mx0.elegosoft.com ([78.47.87.163]:52640 "EHLO mx0.elegosoft.com"
+	id S932164Ab2ASPTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jan 2012 10:19:38 -0500
+Received: from honk.padd.com ([74.3.171.149]:40236 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753248Ab2ASPQI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jan 2012 10:16:08 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.elegosoft.com (Postfix) with ESMTP id 14656DEA09;
-	Thu, 19 Jan 2012 16:16:06 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
-Received: from mx0.elegosoft.com ([127.0.0.1])
-	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id H-Ft9OeVXP40; Thu, 19 Jan 2012 16:15:58 +0100 (CET)
-Received: from [160.45.94.222] (unknown [160.45.94.222])
-	by mx0.elegosoft.com (Postfix) with ESMTPSA id 053A2DEA02;
-	Thu, 19 Jan 2012 16:15:58 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:9.0) Gecko/20111224 Thunderbird/9.0.1
-In-Reply-To: <CACsJy8D0_EB6jN7KxpzLtnPnj0HjdU6sNHJRyqXJf-2-ZNatFA@mail.gmail.com>
+	id S1753248Ab2ASPTh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jan 2012 10:19:37 -0500
+Received: from arf.padd.com (unknown [50.55.142.76])
+	by honk.padd.com (Postfix) with ESMTPSA id C5A552106;
+	Thu, 19 Jan 2012 07:19:36 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 303A2313B5; Thu, 19 Jan 2012 10:19:34 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <1326966749-9077-1-git-send-email-luke@diamand.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188815>
 
-On 01/19/2012 03:14 PM, Nguyen Thai Ngoc Duy wrote:
-> The coming v1.7.9 will introduce branch description, mainly used in
-> integration process. I think we could make it useful for users who
-> don't extensively use request-pull/format-patch. Showing a short
-> summary along with branch name in "git branch" would be nice. "branch
-> -v" is already used for something else, maybe we can come up with
-> another option, or "-v -v"? Another place we could show branch
-> description is "git status". What do you think?
+luke@diamand.org wrote on Thu, 19 Jan 2012 09:52 +0000:
+> This is the fourth version of some small fixes to git-p4 branch and
+> label handling, incorporating a fix from Pete Wyckoff and an
+> additional failing test.
+> 
+> This change does not fix the other problems with git-p4 labels:
+> 
+> - two p4 labels on the same changelist will fall over
+> - labels must match exactly the list of files imported
+> - you can't import a label without a p4 commit
 
-Junio suggested a new option "--verbose-format" for branch some weeks
-ago:
+This all looks great to me.  Thanks for adding that failing test,
+and fixing the pre-existing bug in invoking p4 labels.
 
-	http://thread.gmane.org/gmane.comp.version-control.git/186727
-
-I planned on working on it, but haven't found the time yet nor do I
-really know which way to go.? (pretty.c seems to be the right
-place for format code, but it's very commit format specific atm.)
+		-- Pete
