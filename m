@@ -1,149 +1,77 @@
-From: andreas.koenig.7os6VVqR@franz.ak.mind.de (Andreas J. Koenig)
-Subject: Re: [BUG] Git bisect not finding the right commit
-Date: Fri, 20 Jan 2012 08:56:50 +0100
-Message-ID: <87ehuu958d.fsf@franz.ak.mind.de>
-References: <87r4yw8j4i.fsf@franz.ak.mind.de>
-	<7vlip4je87.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: More support on branch description?
+Date: Fri, 20 Jan 2012 15:24:18 +0700
+Message-ID: <CACsJy8CULRFOk0-LqL03gHD2jy39rb39MCdMnQ5r2bnTyDjBKw@mail.gmail.com>
+References: <CACsJy8D0_EB6jN7KxpzLtnPnj0HjdU6sNHJRyqXJf-2-ZNatFA@mail.gmail.com>
+ <7v4nvrib7u.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 20 08:57:20 2012
+X-From: git-owner@vger.kernel.org Fri Jan 20 09:24:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ro9Lb-0004OF-22
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 08:57:19 +0100
+	id 1Ro9mK-0002O9-QY
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 09:24:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752333Ab2ATH5L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jan 2012 02:57:11 -0500
-Received: from rz1.akoenig.de ([83.223.90.65]:58834 "EHLO rz1.akoenig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751953Ab2ATH45 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jan 2012 02:56:57 -0500
-Received: from franz.ak.mind.de (p4FC97530.dip.t-dialin.net [79.201.117.48])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "franz.ak.mind.de", Issuer "franz.ak.mind.de" (not verified))
-	by rz1.akoenig.de (Postfix) with ESMTPS id 9F1BF20034;
-	Fri, 20 Jan 2012 08:37:19 +0100 (CET)
-Received: from k75.linux.bogus (localhost.localdomain [127.0.0.1])
-	by k75.linux.bogus (8.14.3/8.14.3/Debian-9.4) with ESMTP id q0K7upDM018394
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 20 Jan 2012 08:56:51 +0100
-Received: (from k@localhost)
-	by k75.linux.bogus (8.14.3/8.14.3/Submit) id q0K7uoQX018393;
-	Fri, 20 Jan 2012 08:56:50 +0100
-X-Authentication-Warning: k75.linux.bogus: k set sender to andreas.koenig.7os6VVqR@franz.ak.mind.de using -f
-In-Reply-To: <7vlip4je87.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 19 Jan 2012 00:20:08 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1752176Ab2ATIYv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Jan 2012 03:24:51 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:48562 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751187Ab2ATIYv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Jan 2012 03:24:51 -0500
+Received: by werb13 with SMTP id b13so188957wer.19
+        for <git@vger.kernel.org>; Fri, 20 Jan 2012 00:24:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=tj9/y7iTqZ88sU1ecpTx/aGfKu5P78fX53sFMkipfWw=;
+        b=CuYYGBYskyH+KtOWrBVm1e8OWh1TNuxocBuTd7v0u7CnBWma0uNzHQSsE1ih8ISn0z
+         mA4vZRCbsKQ4R1TjN2nSYrb8VunD5s+hSjQfF0xR7hukZLSfbEmIqtkUpJ6nyYR/tO0k
+         1kMLzMcA91Dnywv/tX30vwdSaaKjWxW2IjHYg=
+Received: by 10.216.131.91 with SMTP id l69mr479905wei.28.1327047889614; Fri,
+ 20 Jan 2012 00:24:49 -0800 (PST)
+Received: by 10.223.2.139 with HTTP; Fri, 20 Jan 2012 00:24:18 -0800 (PST)
+In-Reply-To: <7v4nvrib7u.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188870>
 
->>>>> On Thu, 19 Jan 2012 00:20:08 -0800, Junio C Hamano <gitster@pobox.com> said:
+On Fri, Jan 20, 2012 at 5:22 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> You however are misguided to say "Showing a short summary along...".
 
- jch> andreas.koenig.7os6VVqR@franz.ak.mind.de (Andreas J. Koenig) writes:
- >> A v5.15.5
- >> B v5.15.5-20-gfd76d40
- >> C v5.15.5-81-gcfe287a
- >> D v5.15.5-159-ga71d67b
- >> E v5.15.4-110-g27b29ec
- >> F v5.15.4-169-g3582575
- >> 
- >> The change in perl I tried to locate was v5.15.5-13-gff0cf12, between A
- >> and B. Bisect did not find it, it returned me E instead. Here the wrong
- >> bisect output:
+It should have been "short status".
 
- jch> Just for the sake of simplicity, I'll call ff0cf12 "Q" (the Questionable
- jch> one).
+> The branch description support is to give users a place to record det=
+ailed
+> explanation about a branch, similar in size to what you would normall=
+y
+> place in a log message of a commit or a cover letter of a series. =C2=
+=A0There
+> wasn't any convenient place to do so for a branch that is (1) inheren=
+tly a
+> moving target while it is being developed and (2) is not a good match=
+ for
+> tags and notes.
 
- >> % git bisect start v5.15.5-159-ga71d67b v5.15.5
+I was thinking about that (and wondering if I abused
+branch.*.description), maybe we can have a similar convention for
+commit message, one short line, empty line, then more detail
+explanation. But branch.*.description is tied to
+format-patch/request-pull, maybe another config key.
 
- jch> You start by telling Git that D is bad and A is good.
+> There already is a good place for a brief summary and it is called "b=
+ranch
+> name". Name your branches just like you name your functions.
 
- jch> I can see that D does contain Q (i.e. "git log D..Q" gives nothing), which
- jch> you should read as "D is _contaminated_ by the breakage Q introduced", so
- jch> D is indeed bad.
-
- jch> On the other hand, A does _not_ contain Q (i.e. "git log A..Q" gives
- jch> output), which you should read as "A is _not_ contaminated by the breakage
- jch> Q introduced", so A is indeed good.
-
- jch> So far so good...
-
- >> Already on 'blead'
- >> Bisecting: 77 revisions left to test after this (roughly 6 steps)
- >> [cfe287a06b2ed98c25aebb477f6b400409f1fc85] Merge remote-tracking branch 'p5p/smoke-me/gsoc-pod' into blead
- >> % git describe
- >> v5.15.5-81-gcfe287a
-
- jch> This is your "C", and "git log C..Q" does not give anything. C is
- jch> contaminated by Q, hence it is bad.
-
- >> % git bisect bad
- >> Bisecting: 40 revisions left to test after this (roughly 5 steps)
- >> [baf7658bacfa659cdab08050470b20ebd5973384] Update htmlview.t for new Pod::Html
- >> % git describe
- >> v5.15.4-149-gbaf7658
-
- jch> Here, baf7658 does not contain Q, so you are supposed to answer it is
- jch> GOOD.
-
- >> % git bisect bad
-
- jch> But you answered that it is BAD.
-
- jch> Why?
-
-The reason turned out to be that a perl module that was involved in the
-testing had been upgraded in the meantime (YAML-0.77 to 0.78). So your
-whole answer was correctly describing the situation. From this point
-GiGo started to happen because the rest of the tests involved also used
-the newer version of that module while some other tests were done with
-the older version.
-
-So thank you for clearing that up!
-
- jch> [...]
-
->>>>> On Thu, 19 Jan 2012 09:23:01 +0100, Johannes Sixt <j.sixt@viscovery.net> said:
-
- js> Am 1/19/2012 4:29, schrieb Andreas J. Koenig:
- >> - A -> B      ->     C - D ->
- >>          \         /
- >>           - E - F -
- >> 
- >> A v5.15.5
- >> B v5.15.5-20-gfd76d40
- >> C v5.15.5-81-gcfe287a
- >> D v5.15.5-159-ga71d67b
- >> E v5.15.4-110-g27b29ec
- >> F v5.15.4-169-g3582575
-
- js> I haven't looked at the actual history, but given the names of the commits
- js> as produced by git-describe, I doubt that your history graph sketched
- js> above is correct. Doesn't it look more like this:
-
- js>       A -- B -- C -- D --
- js>      /         /
- js>  -- X -- E -- F
-
- js> where X is v5.15.4?
-
-Yes, thank you for finding that out. X is actually v5.15.4-109-g3ea0c58
-and since there was a long timespan between the start of the development
-of the code and the merge (May-Nov), the gitk presentation got a bit
-complex to read.
-
- js> To find a commit between A and B, you must declare F as "good".
-
-Correct! The reason it happened described above.
-
-Thank you folks for taking the time and making such a careful assessment!
--- 
-andreas
+Yes, but it's not suitable for current status of the branch.
+--=20
+Duy
