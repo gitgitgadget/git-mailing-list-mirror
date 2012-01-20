@@ -1,136 +1,170 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
 Subject: Re: [PATCH] i18n: disable i18n for shell scripts if NO_GETTEXT defined
-Date: Fri, 20 Jan 2012 10:50:23 +0100
-Message-ID: <CACBZZX7iiF2um11FvD+MBz=rZb7RrHtCJp3PqexLnSp3-Cbqug@mail.gmail.com>
+Date: Fri, 20 Jan 2012 11:40:38 +0100
+Message-ID: <CALxABCZWBtgX736Acoy-CCAz8RJb0EKnHf+7g72dOdVS+BOhSw@mail.gmail.com>
 References: <CALxABCZME-g++HxMsD4Nrn1J6s27vN7M_KQSVT3PeLWBqP7qJg@mail.gmail.com>
  <CACBZZX4TsL-tj04PmUwGNWjXO+JY-8unAv-aRKOGvgB71qdYCg@mail.gmail.com>
  <CALxABCadHdvR02Br9e6STy0w+EPoycUKr62RiSUSP_EPF-TH3g@mail.gmail.com>
  <CACBZZX4tB6DGV-1tiuOamq7ACPk0a-=1Pb9Vk1SgyDqAq-EFOw@mail.gmail.com>
- <7vfwfclf4v.fsf@alter.siamese.dyndns.org> <4F17C294.6010004@viscovery.net> <7vhazrk0jx.fsf@alter.siamese.dyndns.org>
+ <7vfwfclf4v.fsf@alter.siamese.dyndns.org> <4F17C294.6010004@viscovery.net>
+ <7vhazrk0jx.fsf@alter.siamese.dyndns.org> <CACBZZX7iiF2um11FvD+MBz=rZb7RrHtCJp3PqexLnSp3-Cbqug@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Alex Riesen <raa.lkml@gmail.com>,
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
 	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 20 10:50:54 2012
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 20 11:41:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RoB7T-0002eC-6T
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 10:50:51 +0100
+	id 1RoBuL-0005Rh-Gc
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 11:41:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752667Ab2ATJuq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jan 2012 04:50:46 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:53245 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752692Ab2ATJuo (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Jan 2012 04:50:44 -0500
-Received: by mail-lpp01m010-f46.google.com with SMTP id c1so204857lah.19
-        for <git@vger.kernel.org>; Fri, 20 Jan 2012 01:50:44 -0800 (PST)
+	id S1751482Ab2ATKlA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Jan 2012 05:41:00 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:57100 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751217Ab2ATKk7 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jan 2012 05:40:59 -0500
+Received: by obcva7 with SMTP id va7so529274obc.19
+        for <git@vger.kernel.org>; Fri, 20 Jan 2012 02:40:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=ryHMJPS5rQDYnUZKMviA+PnRs9JAjNZs3gNBD2mY+lc=;
-        b=hqVk9P5fB01rboe9Bhc2xmQpnZgzdXXMj+Nb1YqxoNn12FaKu9piiqK+M9w6A4yuAp
-         pGUw01g9h9xPv+pVJA8USnQGCqhYYX73foQdDUYFVjOFyyfXkFwXv3eK8ZG+QPGNJb8Y
-         OJknFMauBFnr2bIyX9/dLyETA6bsRaFjzfAow=
-Received: by 10.152.144.133 with SMTP id sm5mr14523505lab.38.1327053044132;
- Fri, 20 Jan 2012 01:50:44 -0800 (PST)
-Received: by 10.112.4.136 with HTTP; Fri, 20 Jan 2012 01:50:23 -0800 (PST)
-In-Reply-To: <7vhazrk0jx.fsf@alter.siamese.dyndns.org>
+         :cc:content-type:content-transfer-encoding;
+        bh=kSszv5MCP9xmn0F9vgNnHZs+HlQYYrsh5fqXp5JSXfE=;
+        b=Wsm4OjM9VO6VTa0l8c3nLZgtcmto7APVMYmpAflTNY9T9yT2H4Gmgq6xuomQhy7Bz+
+         XsuD1KWnoBbyjcK7CHVPzO2ISd5LTWsDCfE98v21aS7oJaeBmWJrNYDM7YcQgC5XKDav
+         lea96zC+jTXzXVXupZg1qR6UGXALYE+z9AN98=
+Received: by 10.182.38.70 with SMTP id e6mr7242889obk.13.1327056059184; Fri,
+ 20 Jan 2012 02:40:59 -0800 (PST)
+Received: by 10.182.226.41 with HTTP; Fri, 20 Jan 2012 02:40:38 -0800 (PST)
+In-Reply-To: <CACBZZX7iiF2um11FvD+MBz=rZb7RrHtCJp3PqexLnSp3-Cbqug@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188873>
 
-On Thu, Jan 19, 2012 at 19:30, Junio C Hamano <gitster@pobox.com> wrote:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
+On Fri, Jan 20, 2012 at 10:50, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
+avarab@gmail.com> wrote:
+> However with the shell code we can:
 >
->> ... We have, e.g., NO_MMAP, and I can set it to request
->> that some alternative is used, even if I have a working mmap(). The option
->> name "NO_GETTEXT" is in exactly the same spirit.
->>
->>> In the current approach we take for shell scripts, we cannot have "No i18n
->>> whatsoever and messages are emit with printf and echo". We always have to
->>> go through gettext/eval_gettext even though they may be an implementation
->>> that does not do i18n at all.
->>
->> Just like we go through _() in C code, even though there may be an
->> implementation that does not do i18n at all, right?
+> =C2=A01. Be using the system gettext & eval_gettext to get translatio=
+ns.
 >
-> Yes, just like that. The small detail that _() can be #define'd out to
-> empty while gettext/eval_gettext cannot be made to be no-impact like that
-> does not really matter.
+> =C2=A02. Be using the system gettext & eval_gettext as pass-through, =
+either
+> =C2=A0 =C2=A0because we don't have translations since we've installed=
+ with
+> =C2=A0 =C2=A0NO_GETTEXT=3DYesPlease, or because we're in the C locale=
+=2E
 >
->> In C, it is easy, in shell code it may be more involved.
+> =C2=A03. Haven't detected that gettext.sh etc. exists, so we have to =
+provide
+> =C2=A0 =C2=A0our own fallbacks.
 >
-> Correct.
+> The proposed patch would move all users of NO_GETTEXT=3DYesPlease to =
+#3,
+> even though on most platforms we don't need to define our own dummy
+> fallbacks since the system already provides them.
+>
+> I don't particularly like it because I'd rather use the OS vendor's
+> implementation if possible, even for fallback.
 
-To elaborate, the C code can:
+Well, I dunno. I wouldn't trust anything to this particular "OS vendoer=
+".
 
- * Use the system gettext library to get translations.
+> However it being broken is also unacceptable, but I think the way
+> forward is to detect the breakage either at compile time or at
+> runtime, ...
 
- * Use the system gettext library, but effectively be pass-through
-   because the user has the C locale.
+Better at runtime, unless the packager explicitly stated they don't wan=
+t
+any of this.
 
- * Use our fallback functions which in any modern compiler will be
-   optimized out.
+> ... to that end Alex could you provide us with the output from
+> the following commands on the offending system where this is broken:
+>
+> =C2=A0 =C2=A0$ type gettext.sh
 
-However with the shell code we can:
+gettext.sh is /usr/bin/gettext.sh
 
- 1. Be using the system gettext & eval_gettext to get translations.
+> =C2=A0 =C2=A0$ gettext.sh --version
 
- 2. Be using the system gettext & eval_gettext as pass-through, either
-    because we don't have translations since we've installed with
-    NO_GETTEXT=YesPlease, or because we're in the C locale.
+/usr/bin/gettext.sh (GNU gettext-runtime) 0.18.1
+Copyright (C) 2003-2007 Free Software Foundation, Inc.
+License GPLv2+: GNU GPL version 2 or later <http://gnu.org/licenses/gpl=
+=2Ehtml>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Written by Bruno Haible
 
- 3. Haven't detected that gettext.sh etc. exists, so we have to provide
-    our own fallbacks.
+> =C2=A0 =C2=A0$ gettext -h
 
-The proposed patch would move all users of NO_GETTEXT=YesPlease to #3,
-even though on most platforms we don't need to define our own dummy
-fallbacks since the system already provides them.
+Nothing. Exit code 127.
 
-I don't particularly like it because I'd rather use the OS vendor's
-implementation if possible, even for fallback.
+> =C2=A0 =C2=A0$ gettext "some test text"
 
-However it being broken is also unacceptable, but I think the way
-forward is to detect the breakage either at compile time or at
-runtime, to that end Alex could you provide us with the output from
-the following commands on the offending system where this is broken:
+Nothing. Exit code 127.
 
-    $ type gettext.sh
-    $ gettext.sh --version
-    $ gettext -h
-    $ gettext "some test text"
-    $ . gettext.sh
-    eval_gettext
-    $ variable=value eval_gettext "some \$variable"
+> =C2=A0 =C2=A0$ . gettext.sh
 
-Then how the eval_gettext function is defined:
+Nothing. Exit code 0.
 
-    $ type eval_gettext
-    eval_gettext is a function
-    eval_gettext ()
-    {
-        gettext "$1" | ( export PATH `envsubst --variables "$1"`;
-        envsubst "$1" )
-    }
+> =C2=A0 =C2=A0eval_gettext
 
-And then a --version for whatever programs that function uses,
-e.g. here:
+Nothing. Exit code 127.
 
-    $ envsubst --version
+> =C2=A0 =C2=A0$ variable=3Dvalue eval_gettext "some \$variable"
 
-Once we know how it breaks we can e.g. add configure tests for
-checking whether we can use the system's gettext library for the
-fallbacks.
+Nothing. Exit code 127.
 
-Could you also run the git test suite as described in t/README? I'd
-expect a lot of the i18n tests to fail, but it would be curious to see
-which ones exactly.
+> Then how the eval_gettext function is defined:
+>
+> =C2=A0 =C2=A0$ type eval_gettext
+
+eval_gettext is a function
+eval_gettext ()
+{
+    gettext "$1" | ( export PATH `envsubst --variables "$1"`;
+    envsubst "$1" )
+}
+
+> And then a --version for whatever programs that function uses,
+> e.g. here:
+>
+> =C2=A0 =C2=A0$ envsubst --version
+
+Nothing. Exit code 127.
+
+> Once we know how it breaks we can e.g. add configure tests for
+> checking whether we can use the system's gettext library for the
+> fallbacks.
+
+The exit code seems to be a good enough test here, but testing some
+output (or even translation) would be safer.
+
+I believe gettext (the binary) just doesn't start at all here. Maybe
+some Cygwin library wrong or missing library. Happens all the time
+here, as we have different Cygwin installations depending on the
+currently used toolchain. QNX Momentics, in particular. Different
+versions of them, and it is too cumbersome to keep them apart.
+
+> Could you also run the git test suite as described in t/README? I'd
+> expect a lot of the i18n tests to fail, but it would be curious to se=
+e
+> which ones exactly.
+
+Yes, they do. Can't run them on this problematic system, because they
+tend to crash it, if run for an undetermined while. On the other system=
+,
+which can run them, gettext works (it is an older Cygwin installation),
+so almost all tests pass (some still don't, but for reasons unrelated).
+Strangely enough, the problematic system can build. So I don't copy
+the git binaries, they are actually built on that system.
