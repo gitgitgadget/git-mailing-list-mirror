@@ -1,62 +1,61 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [Q] Determing if a commit is reachable from the HEAD ?
-Date: Fri, 20 Jan 2012 15:13:58 +0100
-Message-ID: <m2ehuu8nrt.fsf@igel.home>
-References: <201201201433.30267.brian.foster@maxim-ic.com>
+From: "Justin P. Mattock" <justinmattock@gmail.com>
+Subject: crash with git and latest mainline: EIP: 0060:[<c106c2d2>] EFLAGS:
+ 00210006 CPU: 0
+Date: Fri, 20 Jan 2012 07:00:00 -0800
+Message-ID: <4F198170.9070605@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git mailing list <git@vger.kernel.org>
-To: Brian Foster <brian.foster@maxim-ic.com>
-X-From: git-owner@vger.kernel.org Fri Jan 20 15:14:31 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+X-From: linux-kernel-owner@vger.kernel.org Fri Jan 20 16:00:20 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RoFEd-0006cG-8u
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 15:14:31 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1RoFwv-0003bn-SK
+	for glk-linux-kernel-3@lo.gmane.org; Fri, 20 Jan 2012 16:00:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753279Ab2ATOOF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jan 2012 09:14:05 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:41919 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751570Ab2ATOOD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jan 2012 09:14:03 -0500
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 5DB5E1C1DA09;
-	Fri, 20 Jan 2012 15:13:58 +0100 (CET)
-X-Auth-Info: j/nPlVgtL/8u8V1RYbAR/BS9cau7OO7YrNfDMfBnT6k=
-Received: from igel.home (ppp-93-104-154-113.dynamic.mnet-online.de [93.104.154.113])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 941AD1C0005A;
-	Fri, 20 Jan 2012 15:13:58 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id 4A0D5CA299; Fri, 20 Jan 2012 15:13:58 +0100 (CET)
-X-Yow: HELLO, little boys!   Gimme a MINT TULIP!!  Let's do the BOSSA NOVA!!
-In-Reply-To: <201201201433.30267.brian.foster@maxim-ic.com> (Brian Foster's
-	message of "Fri, 20 Jan 2012 14:33:29 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.92 (gnu/linux)
-Sender: git-owner@vger.kernel.org
+	id S1753567Ab2ATPAJ (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 20 Jan 2012 10:00:09 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:60363 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752383Ab2ATPAE (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 20 Jan 2012 10:00:04 -0500
+Received: by iaeh11 with SMTP id h11so424571iae.19
+        for <multiple recipients>; Fri, 20 Jan 2012 07:00:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        bh=INdgkoVu5i8+F7jjk9HUa8pdcseQgVwQP0+z9IYAJhY=;
+        b=HTvrwV/2UQhp2RyYuz2VNdLNRnbjAZtKXLepPtxBXh0SbaDnq3ZgEZraSvbdq3CtQN
+         fTqCcspkaNBuYOP/dsrk6PYJk54RueiboXN6+d7Kxkw+rr6LHPRfwce6H7yn4t5Kq1Dq
+         oLARds2ATgH8GKzXUbdA4WDZNN3eF/hHoLMyU=
+Received: by 10.50.6.227 with SMTP id e3mr2910207iga.20.1327071604020;
+        Fri, 20 Jan 2012 07:00:04 -0800 (PST)
+Received: from [192.168.5.144] ([64.134.224.181])
+        by mx.google.com with ESMTPS id f8sm10759211ibl.6.2012.01.20.07.00.02
+        (version=SSLv3 cipher=OTHER);
+        Fri, 20 Jan 2012 07:00:03 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:8.0) Gecko/20111124 Thunderbird/8.0
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188880>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188881>
 
-Brian Foster <brian.foster@maxim-ic.com> writes:
+not sure if this means anything or not, but I was doing a apt-get 
+upgrade and a git pull at the same time and had a total system freeze.
+I was only able to capture an image of the crash. here are the images of it:
 
->  In a script, how can I determine commit Y is reachable
->  from the current HEAD ?
+http://www.flickr.com/photos/44066293@N08/6730938347/in/photostream
+http://www.flickr.com/photos/44066293@N08/6730937479/in/photostream
+http://www.flickr.com/photos/44066293@N08/6730936509/in/photostream
 
-test $(git merge-base HEAD Y) = $(git rev-parse Y)
+will keep an eye out or for this, tried to reproduce but with no luck 
+doing so.
 
->  And, much more importantly
->  for my purposes, that commit N is _not_-reachable from
->  the current HEAD ?
-
-test $(git merge-base HEAD N) != $(git rev-parse N)
-
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Justin P. Mattock
