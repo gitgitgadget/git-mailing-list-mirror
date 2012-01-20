@@ -1,84 +1,90 @@
-From: Kirill Smelkov <kirr@navytux.spb.ru>
-Subject: Re: [PATCH] t/Makefile: Use $(sort ...) explicitly where needed
-Date: Fri, 20 Jan 2012 10:34:50 +0400
-Organization: St.Petersburg State University
-Message-ID: <20120120063450.GA15371@mini.zxlink>
-References: <1327004244-18892-1-git-send-email-kirr@navytux.spb.ru>
- <7v8vl3ic6o.fsf@alter.siamese.dyndns.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: Interesting behavior in git mergetool with no BASE revision
+Date: Thu, 19 Jan 2012 22:43:24 -0800
+Message-ID: <CAJDDKr5mUiJkNk-urNn5fP5x+gkzaTfx2y=K1S0AJZCy7Muwdg@mail.gmail.com>
+References: <CAM6z=4_+yC4EnL9SZFd6=Nxs89QeHevNCakVzVycGBe7G+nTKQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Kirill Smelkov <kirr@navytux.spb.ru>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 20 07:40:25 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jason Wenger <jcwenger@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 20 07:43:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ro898-0007j6-Tl
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 07:40:23 +0100
+	id 1Ro8C9-0000kP-Kj
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 07:43:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751302Ab2ATGkS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jan 2012 01:40:18 -0500
-Received: from forward2.mail.yandex.net ([77.88.46.7]:49329 "EHLO
-	forward2.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750825Ab2ATGkR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jan 2012 01:40:17 -0500
-X-Greylist: delayed 372 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Jan 2012 01:40:16 EST
-Received: from smtp4.mail.yandex.net (smtp4.mail.yandex.net [77.88.46.104])
-	by forward2.mail.yandex.net (Yandex) with ESMTP id 01CD512A3BB9;
-	Fri, 20 Jan 2012 10:34:01 +0400 (MSK)
-Received: from smtp4.mail.yandex.net (localhost [127.0.0.1])
-	by smtp4.mail.yandex.net (Yandex) with ESMTP id D72A35C03A2;
-	Fri, 20 Jan 2012 10:34:01 +0400 (MSK)
-Received: from unknown (unknown [83.171.93.225])
-	by smtp4.mail.yandex.net (nwsmtp/Yandex) with ESMTP id Xn783V3V-Y17iJrC6;
-	Fri, 20 Jan 2012 10:34:01 +0400
-X-Yandex-Spam: 1
-Received: from kirr by mini.zxlink with local (Exim 4.77)
-	(envelope-from <kirr@mini.zxlink>)
-	id 1Ro83m-0004KJ-J3; Fri, 20 Jan 2012 10:34:50 +0400
-Content-Disposition: inline
-In-Reply-To: <7v8vl3ic6o.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751820Ab2ATGnZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Jan 2012 01:43:25 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:39475 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751691Ab2ATGnZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Jan 2012 01:43:25 -0500
+Received: by yenm6 with SMTP id m6so116726yen.19
+        for <git@vger.kernel.org>; Thu, 19 Jan 2012 22:43:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=mM5Bv/WwuzArzQYe2LgOT6UPVRvwa89Fj9vA9T6ytnc=;
+        b=XiXSe0yoJVgCm84aXWfvYDBCyQQtnfu0LyRyTrUrkuMPOsHAf1dO8IFmadZkRI4Spp
+         bMbYKaCm/7ochaEyhTSkHTwF9DNC3Bp5zy7jXfCRR/+h3PAlACoyrptTCzjaUiAvl1vI
+         DopmsmOf/0H7+pMrWFwo0EKRKUAQcpEl1jKZU=
+Received: by 10.236.116.129 with SMTP id g1mr42484142yhh.107.1327041804473;
+ Thu, 19 Jan 2012 22:43:24 -0800 (PST)
+Received: by 10.146.151.11 with HTTP; Thu, 19 Jan 2012 22:43:24 -0800 (PST)
+In-Reply-To: <CAM6z=4_+yC4EnL9SZFd6=Nxs89QeHevNCakVzVycGBe7G+nTKQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188852>
 
-On Thu, Jan 19, 2012 at 02:01:51PM -0800, Junio C Hamano wrote:
-> Kirill Smelkov <kirr@navytux.spb.ru> writes:
-> 
-> > Starting from GNU Make 3.82 $(wildcard ...) no longer sorts the result
-> > (from NEWS):
-> >
-> >     * WARNING: Backward-incompatibility!
-> >       Wildcards were not documented as returning sorted values, but the results
-> >       have been sorted up until this release..  If your makefiles require sorted
-> >       results from wildcard expansions, use the $(sort ...)  function to request
-> >       it explicitly.
-> >
-> >     http://repo.or.cz/w/make.git/commitdiff/2a59dc32aaf0681dec569f32a9d7ab88a379d34f
-> >
-> > so we have to sort tests list or else they are executed in seemingly
-> > random order even for -j1.
-> 
-> I do not necessarily buy your "so we HAVE TO, OR ELSE".
-> 
-> Even though I can understand "We can sort the list of tests _if_ we do not
-> want them executed in seemingly random order when running 'make -j1'", I
-> tend to think that *if* is a big one.  Aren't these tests designed not to
-> depend on each other anyway?
+On Wed, Jan 18, 2012 at 3:05 PM, Jason Wenger <jcwenger@gmail.com> wrot=
+e:
+> Doing a git merge on=C2=A01.7.4.3, on a case where both branches have=
+ a
+> file created, and the base does not. =C2=A0Per git-mergetool:
+>
+> "the configured command line will be invoked with $BASE set to the
+> name of a temporary file containing the common base for the merge, if
+> available;"
+>
+> So testing in this case, I set my mergetool cmd as "echo $MERGED
+> $LOCAL $REMOTE $BASE", and I get the following:
 
-Yes, they don't depend on each other, but what's the point in not
-sorting them? I usually watch test progress visually, and if tests are
-sorted, even with make -j4 they go more or less incrementally by their t
-number.
+I have not seen this in practice.  Maybe escape the variables?
 
-On my netbook, adding $(sort ...) adds approximately 0.008s to make
-startup, so imho there is no performance penalty to adding that sort.
+In any case, I added a test case to cover this case.  I think we
+should at least provide an empty file in place of a missing $BASE.
 
 
-Thanks,
-Kirill
+
+> cio/.cproject ./cio/.cproject.LOCAL.9029.cproject
+> ./cio/.cproject.REMOTE.9029.cproject
+> ./cio/.cproject.BASE.9029.cproject
+>
+> ls -a cio shows the following files:
+>
+> .cproject
+> .cproject.LOCAL.9325.cproject
+> .cproject.BACKUP.9325.cproject
+> .cproject.REMOTE.9325.cproject
+>
+> So the lack of base file makes sense -- There is no base to start
+> from. =C2=A0However, $BASE evaluates to=C2=A0./cio/.cproject.BASE.902=
+9.cproject,
+> which is a nonexistent file. =C2=A0This makes my actual mergetool ups=
+et to
+> no end. =C2=A0Intuitively=C2=A0from documents, I would expect $BASE t=
+o=C2=A0evaluate
+> to an empty string in this case.
+>
+> Is this intended behavior?
+
+Not really.  I'll send a patch shortly.
+--=20
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 David
