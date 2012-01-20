@@ -1,148 +1,97 @@
-From: Nathan Bullock <nathanbullock@gmail.com>
-Subject: Re: Autocompletion - commands no longer work as stand alone
-Date: Fri, 20 Jan 2012 14:33:03 -0500
-Message-ID: <CAPx=VfrZ+TZhX51gUfyep2Az0zwmdM3YsEkLMzxa7LSEUFzOnw@mail.gmail.com>
-References: <CAPx=Vfp_HVr5W1fFic_1k+JsKr2RAKd-RK=VkfSgo7qkb5GsAw@mail.gmail.com>
-	<CAPx=Vfqj3UZuFv3Xmupy7k9arUxyZJyprm628p9QVKabdOz8cw@mail.gmail.com>
-	<7vwr8mdvo8.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] i18n: disable i18n for shell scripts if NO_GETTEXT
+ defined
+Date: Fri, 20 Jan 2012 11:35:39 -0800
+Message-ID: <7vsjjadv5g.fsf@alter.siamese.dyndns.org>
+References: <CALxABCZME-g++HxMsD4Nrn1J6s27vN7M_KQSVT3PeLWBqP7qJg@mail.gmail.com>
+ <CACBZZX4TsL-tj04PmUwGNWjXO+JY-8unAv-aRKOGvgB71qdYCg@mail.gmail.com>
+ <CALxABCadHdvR02Br9e6STy0w+EPoycUKr62RiSUSP_EPF-TH3g@mail.gmail.com>
+ <CACBZZX4tB6DGV-1tiuOamq7ACPk0a-=1Pb9Vk1SgyDqAq-EFOw@mail.gmail.com>
+ <7vfwfclf4v.fsf@alter.siamese.dyndns.org> <4F17C294.6010004@viscovery.net>
+ <7vhazrk0jx.fsf@alter.siamese.dyndns.org>
+ <CACBZZX7iiF2um11FvD+MBz=rZb7RrHtCJp3PqexLnSp3-Cbqug@mail.gmail.com>
+ <CALxABCZWBtgX736Acoy-CCAz8RJb0EKnHf+7g72dOdVS+BOhSw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 20 20:33:12 2012
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 20 20:35:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RoKD0-0006Bg-P2
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 20:33:11 +0100
+	id 1RoKFW-0007SR-R1
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 20:35:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754681Ab2ATTdH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Jan 2012 14:33:07 -0500
-Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:44200 "EHLO
-	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753659Ab2ATTdD convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jan 2012 14:33:03 -0500
-Received: by obcva7 with SMTP id va7so1089792obc.19
-        for <git@vger.kernel.org>; Fri, 20 Jan 2012 11:33:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=w6baHczs0imf8VWD2JOFnkUYO8OfeXaxNiA2YLxT6PU=;
-        b=IDGRYpdFlirIpb/rTHhGYN3y2D4MCixzWPivuwmNta/DRWrX73FBd6axJCf7AanrLN
-         NVGktMULvJAgeFst4mp0uTkDXrxyXT7hfWmY5wYuDbMaPeC8ZTVqrYans+3sZ9VO7hvK
-         B8fJw6sUXVwyCyKLCzfe0yJfW3C12yzCaVwLs=
-Received: by 10.182.59.41 with SMTP id w9mr27918251obq.70.1327087983253; Fri,
- 20 Jan 2012 11:33:03 -0800 (PST)
-Received: by 10.60.43.170 with HTTP; Fri, 20 Jan 2012 11:33:03 -0800 (PST)
-In-Reply-To: <7vwr8mdvo8.fsf@alter.siamese.dyndns.org>
+	id S1755105Ab2ATTfn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Jan 2012 14:35:43 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49009 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753659Ab2ATTfm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Jan 2012 14:35:42 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 98E7B7A49;
+	Fri, 20 Jan 2012 14:35:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=/MEPKSk7VtC6
+	rOcibS55kG+Uhrg=; b=q42LBNRH+V0Kn1sS2RwBuOlgcBmuUaFFWA0tANNeO3Ct
+	rs9R1x4hhXDddrCX0Oot/UkOQGMQrVJC6biEORoMaccq4t7fn7PzW2eo36hbeaxl
+	fH2iCYjYOxpyteimMHC1Zw5g1Ay8DFr0ng6UqTbMR/mfg1/ishv7ABwrDbCfELY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=W7vII/
+	W7u5OZse+OKBp3TeECBssFMw2mG6n9a7y13pBT2ZTJ4DJuXPZHQbBDHvPD/dN4Xr
+	/35MOR9oeettB0fin+weSzRz6Iv/1V9TzpyYu2I8D9QC0iv6sxokW1UTBfSACV42
+	YxlyW30ZtntUrB+GaZ1Irq6q0kS7rVwQvG8H4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E8E97A48;
+	Fri, 20 Jan 2012 14:35:41 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 22B4C7A46; Fri, 20 Jan 2012
+ 14:35:41 -0500 (EST)
+In-Reply-To: <CALxABCZWBtgX736Acoy-CCAz8RJb0EKnHf+7g72dOdVS+BOhSw@mail.gmail.com> (Alex
+ Riesen's message of "Fri, 20 Jan 2012 11:40:38 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EFE55F16-439D-11E1-8350-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188896>
 
-So just as a comment on the use of underscores. The actual main auto
-complete function, _git, also starts with an underscore. From looking
-at the code it looked like the double underscore functions were the
-internal ones.
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-
-2012/1/20 Junio C Hamano <gitster@pobox.com>:
-> Pinging Szeder. I personally do not think it is a crime for us to bre=
-ak
-> anything that uses an internal function whose name begins with unders=
-core,
-> but people more deeply involved in this part of the system may have i=
-deas
-> to help supporting even such users.
+>> And then a --version for whatever programs that function uses,
+>> e.g. here:
+>>
+>> =C2=A0 =C2=A0$ envsubst --version
 >
-> Nathan Bullock <nathanbullock@gmail.com> writes:
->
->> I have for a number of years had the following in my .bashrc
->>
->> alias br=3D"git branch"
->> complete -F _git_branch br
->>
->> As well as similar commands for co and log.
->>
->> Recently though this broke, now when I type something like "br
->> mas<command completion>" it will occasionally complain with messages
->> like:
->> bash: [: 1: unary operator expected
->>
->> From digging through the source it looks like this was broken back i=
-n
->> April. (The commit is show at the bottom of this email.)
->>
->> So my questions are:
->> 1. Is it reasonable for things like _git_branch to work as a
->> standalone autocompletion function instead of having to go through
->> _git? I certainly like it to work as a standalone function. I also u=
-se
->> it to add autocompletion to other bash scripts that I use frequently=
-=2E
->>
->> 2. If I add code that verifies that the variable cword exists at the
->> start of these functions and only if not call something like
->> _get_comp_words_by_ref -n =3D: cur words cword prev. Would that be
->> reasonable? I think this should address the performance concerns tha=
-t
->> caused these to be removed in the first place, but it may make the
->> code uglier.
->>
->> I have already added wrapper functions in my bashrc so that this is =
-no
->> longer a problem for me, but there may be other people who start
->> hitting this as well once they start using newer versions of git.
->>
->> Nathan
->>
->>
->> commit da4902a73017ad82b9926d03101ec69a2802d1e7
->> Author: SZEDER G=E1bor <szeder@ira.uka.de>
->> Date: =A0 Thu Apr 28 18:01:52 2011 +0200
->>
->> =A0 =A0completion: remove unnecessary _get_comp_words_by_ref() invoc=
-ations
->>
->> =A0 =A0In v1.7.4-rc0~11^2~2 (bash: get --pretty=3Dm<tab> completion =
-to work
->> =A0 =A0with bash v4, 2010-12-02) we started to use _get_comp_words_b=
-y_ref()
->> =A0 =A0to access completion-related variables. =A0That was large cha=
-nge, and to
->> =A0 =A0make it easily reviewable, we invoked _get_comp_words_by_ref(=
-) in each
->> =A0 =A0completion function and systematically replaced every occuran=
-ce of
->> =A0 =A0bash's completion-related variables ($COMP_WORDS and $COMP_CW=
-ORD) with
->> =A0 =A0variables set by _get_comp_words_by_ref().
->>
->> =A0 =A0This has the downside that _get_comp_words_by_ref() is invoke=
-d several
->> =A0 =A0times during a single completion. =A0The worst offender is pe=
-rhaps 'git
->> =A0 =A0log mas<TAB>': during the completion of 'master'
->> =A0 =A0_get_comp_words_by_ref() is invoked no less than six times.
->>
->> =A0 =A0However, the variables $prev, $cword, and $words provided by
->> =A0 =A0_get_comp_words_by_ref() are not modified in any of the compl=
-etion
->> =A0 =A0functions, and the previous commit ensures that the $cur vari=
-able is
->> =A0 =A0not modified as well. =A0This makes it possible to invoke
->> =A0 =A0_get_comp_words_by_ref() to get those variables only once in =
-our
->> =A0 =A0toplevel completion functions _git() and _gitk(), and all oth=
-er
->> =A0 =A0completion functions will inherit them.
->>
->> =A0 =A0Signed-off-by: SZEDER G=E1bor <szeder@ira.uka.de>
->> =A0 =A0Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Nothing. Exit code 127.
+
+Interesting.
+
+    $ wonbsubst --version; echo $?
+    bash: wonbsubst: command not found
+    127
+
+Perhaps your distro lacks a necessary package dependencies between gett=
+ext
+and envsubst?
+
+> I believe gettext (the binary) just doesn't start at all here. Maybe
+> some Cygwin library wrong or missing library. Happens all the time
+> here,...
+
+Aha.
+
+I guess we either leave it broken for broken installation or add an ext=
+ra
+"MY_GETTEXT_IS_BROKEN" option; in either way, it does not sound like a
+serious enough issue that is widespread to be urgently fixed during the
+feature freeze.
