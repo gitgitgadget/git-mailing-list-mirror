@@ -1,165 +1,92 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: =?UTF-8?q?=5BPATCH=5D=20git-sh-i18n=3A=20detect=20and=20avoid=20broken=20gettext=281=29=20implementation?=
-Date: Fri, 20 Jan 2012 12:49:35 +0000
-Message-ID: <1327063775-28420-1-git-send-email-avarab@gmail.com>
-References: <CALxABCZWBtgX736Acoy-CCAz8RJb0EKnHf+7g72dOdVS+BOhSw@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] git-add: allow --ignore-missing always, not just in dry run
+Date: Fri, 20 Jan 2012 13:56:31 +0100
+Message-ID: <87mx9icz28.fsf@thomas.inf.ethz.ch>
+References: <1326923544-8287-1-git-send-email-dieter@plaetinck.be>
+	<7vobu0liwj.fsf@alter.siamese.dyndns.org>
+	<8762g87y4q.fsf@thomas.inf.ethz.ch>
+	<7v8vl3jzst.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 20 13:49:52 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 20 13:56:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RoDui-0003qY-2S
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 13:49:52 +0100
+	id 1RoE1K-0007oa-I3
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 13:56:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751853Ab2ATMtr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Jan 2012 07:49:47 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:34216 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750950Ab2ATMtq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jan 2012 07:49:46 -0500
-Received: by wics10 with SMTP id s10so364115wic.19
-        for <git@vger.kernel.org>; Fri, 20 Jan 2012 04:49:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=Fg4scEb+Qo9iAInJQf/3Z5zRyo4QHodOht3ZJ8uRU4A=;
-        b=snwACtPWj7/pIPDl682TYrd6u+TiQXkyiKWKIiC7QeR5p4XTEGEDYtckGFFkjTYh1A
-         VFIU+TS/CW/ZU9bKcwA7z5wLxxw0iaBx9cNLmfsT+eGe7HIwJ15BK+m0BQfKcVxYiWNW
-         yIqHfJHp9OVIcSbkCSO+HlfjrX6bobG823NAw=
-Received: by 10.180.99.100 with SMTP id ep4mr8555368wib.7.1327063785608;
-        Fri, 20 Jan 2012 04:49:45 -0800 (PST)
-Received: from w.nix.is (w.nix.is. [188.40.98.140])
-        by mx.google.com with ESMTPS id fy5sm8738177wib.7.2012.01.20.04.49.44
-        (version=SSLv3 cipher=OTHER);
-        Fri, 20 Jan 2012 04:49:45 -0800 (PST)
-X-Mailer: git-send-email 1.7.7.3
-In-Reply-To: <CALxABCZWBtgX736Acoy-CCAz8RJb0EKnHf+7g72dOdVS+BOhSw@mail.gmail.com>
+	id S1752935Ab2ATM4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jan 2012 07:56:38 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:25802 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752445Ab2ATM4h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jan 2012 07:56:37 -0500
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 20 Jan
+ 2012 13:56:33 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (192.101.176.246) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 20 Jan
+ 2012 13:56:33 +0100
+In-Reply-To: <7v8vl3jzst.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 19 Jan 2012 10:46:26 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [192.101.176.246]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188875>
 
-Even though we can load gettext.sh the gettext(1) and eval_gettext
-functions it provides might be completely broken. This reportedly
-happens on some Cygwin installations where we can load gettext.sh, but
-gettext and eval_gettext both return exit code 127 and no output.
+Junio C Hamano <gitster@pobox.com> writes:
 
-The reason we're trying to load gettext.sh (or the equivalent Solaris
-implementation) at all is so we don't have to provide our own fallback
-implementation if the OS already has one installed, but because we
-didn't test whether it actually worked under GNU gettext we might end
-up with broken functions.
+> Thomas Rast <trast@student.ethz.ch> writes:
+>
+>>   $ git grep 'git[ -]add' t/ | wc -l
+>>   1540
+>>   $ git grep 'git[ -]update-index --add' t/ | wc -l
+>>   269
+>>   $ git grep 'git[ -]update-index --add' v1.6.0 t/ | wc -l
+>>   251
+>>   $ git grep 'git[ -]add' v1.6.0 t/ | wc -l
+>>   705
+>
+> Stop being silly.
+>
+> Have you actually looked at these usage?  Some of them are genuinely
+> testing if "git add" works correctly, so it is out of the scope of this
+> discussion, but others that could be "git update-index" are feeding the
+> paths known to the script to exist (and we want 'git add' to error out
+> if that is not the case).
 
-Change the detection in git-sh-i18n so that it tests that the output
-of "gettext test" produces "test", on Solaris we already test that
-"gettext -h" produces "-h", so we were already guarded against the
-same sort of failure there.
+I'm sorry if I sound silly, that was totally not the point.  I also
+admit that I did not look at the usages at all.  I merely wanted to
+point out that the understanding in the git community *itself* has
+evolved to use git-add instead of git update-index --add in its own
+scripting.  Admittedly the statistics are even more striking than I
+could possibly hope for.
 
-Reported-by: Alex Riesen <raa.lkml@gmail.com>
----
-Here's a minimal patch to git-sh-i18n that should make things work on
-Cygwin and any other platforms with broken gettext functions while
-also using the OS-provided functions if they work.
+So I am challenging the notion that git-add is not recommended for use
+in scripts, which is how I understood your parenthetical remark
 
-I've added a new t0201-gettext-fallbacks-broken-gettext.sh test that
-tests this. This required a small change in lib-gettext.sh so I
-wouldn't load test-lib.sh twice.
+} If somebody is writing a script using "git add" (which is not recommended
+} to begin with)
 
-Note that there's already a t0201* test in the repo. Maybe we want to
-increment all the gettext test numbers by one to make room for it?
+We're no longer following that advice ourselves, how can we expect users
+to adhere to it?
 
-As an aside I'm really not a big fan of having hardcoded numbers in
-the test files like this. We don't care about the order of execution
-here.
+> More generally, scripts in t/ directories are "scripts", but it is totally
+> different from the kind of "user facing script that behaves as if it is a
+> complete command, taking its own command line arguments, passing them
+> through to the underlying plumbing commands".
 
- git-sh-i18n.sh                              |    2 +-
- t/lib-gettext.sh                            |    7 +++++-
- t/t0201-gettext-fallbacks-broken-gettext.sh |   28 +++++++++++++++++++=
-++++++++
- 3 files changed, 35 insertions(+), 2 deletions(-)
- create mode 100755 t/t0201-gettext-fallbacks-broken-gettext.sh
+I don't understand what distinction you are trying to make here.  Maybe
+my mental model of the plumbing/porcelain separation (which is mostly
+about interface stability) is wrong?
 
-diff --git a/git-sh-i18n.sh b/git-sh-i18n.sh
-index b4575fb..26a57b0 100644
---- a/git-sh-i18n.sh
-+++ b/git-sh-i18n.sh
-@@ -18,7 +18,7 @@ export TEXTDOMAINDIR
-=20
- if test -z "$GIT_GETTEXT_POISON"
- then
--	if test -z "$GIT_INTERNAL_GETTEXT_TEST_FALLBACKS" && type gettext.sh =
->/dev/null 2>&1
-+	if test -z "$GIT_INTERNAL_GETTEXT_TEST_FALLBACKS" && type gettext.sh =
->/dev/null 2>&1 && test "$(gettext test 2>&1)" =3D "test"
- 	then
- 		# This is GNU libintl's gettext.sh, we don't need to do anything
- 		# else than setting up the environment and loading gettext.sh
-diff --git a/t/lib-gettext.sh b/t/lib-gettext.sh
-index 0f76f6c..2c5b758 100644
---- a/t/lib-gettext.sh
-+++ b/t/lib-gettext.sh
-@@ -3,7 +3,12 @@
- # Copyright (c) 2010 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
- #
-=20
--. ./test-lib.sh
-+if test -z "$TEST_DIRECTORY"
-+then
-+	# In case the test loaded test-lib.sh by itself to do some tests
-+	# prior to loading us.
-+	. ./test-lib.sh
-+fi
-=20
- GIT_TEXTDOMAINDIR=3D"$GIT_BUILD_DIR/po/build/locale"
- GIT_PO_PATH=3D"$GIT_BUILD_DIR/po"
-diff --git a/t/t0201-gettext-fallbacks-broken-gettext.sh b/t/t0201-gett=
-ext-fallbacks-broken-gettext.sh
-new file mode 100755
-index 0000000..92b95ae
---- /dev/null
-+++ b/t/t0201-gettext-fallbacks-broken-gettext.sh
-@@ -0,0 +1,28 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2012 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-+#
-+
-+test_description=3D'Gettext Shell fallbacks with broken gettext'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'set up a fake broken gettext(1)' '
-+	cat >gettext <<-\EOF &&
-+	#!/bin/sh
-+	exit 1
-+	EOF
-+	chmod +x gettext &&
-+    ! ./gettext
-+'
-+
-+PATH=3D.:$PATH
-+. "$TEST_DIRECTORY"/lib-gettext.sh
-+
-+test_expect_success C_LOCALE_OUTPUT '$GIT_INTERNAL_GETTEXT_SH_SCHEME" =
-is fallthrough with broken gettext(1)' '
-+    echo fallthrough >expect &&
-+    echo $GIT_INTERNAL_GETTEXT_SH_SCHEME >actual &&
-+    test_cmp expect actual
-+'
-+
-+test_done
---=20
-1.7.7.3
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
