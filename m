@@ -1,103 +1,220 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH] mergetool: Provide an empty file when no base exists
-Date: Thu, 19 Jan 2012 23:07:03 -0800
-Message-ID: <CAJDDKr5Z8JHq7H8ZZVLJvYaR+m4HarYdv2FB7p5ByYbDBemBig@mail.gmail.com>
-References: <CAJDDKr5mUiJkNk-urNn5fP5x+gkzaTfx2y=K1S0AJZCy7Muwdg@mail.gmail.com>
-	<1327042010-79552-1-git-send-email-davvid@gmail.com>
-	<7vhazqhn8u.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 20 08:07:42 2012
+Subject: [PATCH] mergetool: Provide an empty file when no base exists
+Date: Thu, 19 Jan 2012 23:10:53 -0800
+Message-ID: <1327043453-80965-1-git-send-email-davvid@gmail.com>
+References: <7vhazqhn8u.fsf@alter.siamese.dyndns.org>
+Cc: jcwenger@gmail.com, git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Jan 20 08:11:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ro8ZZ-0003zg-NI
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 08:07:42 +0100
+	id 1Ro8cw-0005hm-9l
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 08:11:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751835Ab2ATHHF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Jan 2012 02:07:05 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:55864 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751670Ab2ATHHE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Jan 2012 02:07:04 -0500
-Received: by ghbg18 with SMTP id g18so103986ghb.19
-        for <git@vger.kernel.org>; Thu, 19 Jan 2012 23:07:03 -0800 (PST)
+	id S1751859Ab2ATHLG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jan 2012 02:11:06 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:38284 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751353Ab2ATHLC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jan 2012 02:11:02 -0500
+Received: by iagf6 with SMTP id f6so509483iag.19
+        for <git@vger.kernel.org>; Thu, 19 Jan 2012 23:11:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=9Auo8dQokOScDTNVHYk709hAATpALy/wMP99hS+x6DY=;
-        b=WLb2AB+xB5CQm19wVk5qyzmC4i8o8wzmaoNc+TmV2KgW+H7TzGE5CoQ3a5sMWSN1OE
-         ohUE2z/gYBt7+xqZqNBHO0ugQDaeUlAjWPZFMSLB+0LMiaoNtgpO97f+GDAcYTtIobyy
-         1dN6C/Wd2aa9EQE9fGgeRTD5RRQFipGEzNCFY=
-Received: by 10.236.189.105 with SMTP id b69mr11162918yhn.90.1327043223412;
- Thu, 19 Jan 2012 23:07:03 -0800 (PST)
-Received: by 10.146.151.11 with HTTP; Thu, 19 Jan 2012 23:07:03 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=yEjXiV46PT2Uxwpu5sX+h9N/tf9CYpRtIr8RkckogoE=;
+        b=dEfC0DWr+mtIklRLUZs7Vq5f1hzdpshBdqGUfzKL/OY49Y5+w2mo5csUTgyap/WRoP
+         nOJXjTfOgY4c8XOoAuQZkxWt5mXlTMeEun1LSceoc0XhBWKpXLw4QZoOpiFj6EDPxwVy
+         s2i6MuYBkOhl7qKhh4ziWKXUNL041oDku6Nlw=
+Received: by 10.42.148.1 with SMTP id p1mr25026143icv.27.1327043462193;
+        Thu, 19 Jan 2012 23:11:02 -0800 (PST)
+Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.dsltransport.net. [208.106.56.2])
+        by mx.google.com with ESMTPS id l28sm6822437ibc.3.2012.01.19.23.11.00
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 19 Jan 2012 23:11:01 -0800 (PST)
+X-Mailer: git-send-email 1.7.9.rc2.1.gdcba7
 In-Reply-To: <7vhazqhn8u.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188857>
 
-On Thu, Jan 19, 2012 at 11:00 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> David Aguilar <davvid@gmail.com> writes:
->
->> Some mergetools cannot cope when $BASE is missing.
->> This can happen when two branches add the same file.
->> Provide an empty file to make these tools happy.
->>
->> Reported-by: Jason Wenger <jcwenger@gmail.com>
->> Signed-off-by: David Aguilar <davvid@gmail.com>
->> ---
->> =C2=A0git-mergetool.sh =C2=A0 =C2=A0 | =C2=A0 =C2=A06 +++++-
->> =C2=A0t/t7610-mergetool.sh | =C2=A0 27 ++++++++++++++++++++++++++-
->> =C2=A02 files changed, 31 insertions(+), 2 deletions(-)
->>
->> diff --git a/git-mergetool.sh b/git-mergetool.sh
->> index 085e213..8521b81 100755
->> --- a/git-mergetool.sh
->> +++ b/git-mergetool.sh
->> @@ -224,7 +224,11 @@ merge_file () {
->> =C2=A0 =C2=A0 =C2=A0mv -- "$MERGED" "$BACKUP"
->> =C2=A0 =C2=A0 =C2=A0cp -- "$BACKUP" "$MERGED"
->>
->> - =C2=A0 =C2=A0base_present =C2=A0 && checkout_staged_file 1 "$MERGE=
-D" "$BASE"
->> + =C2=A0 =C2=A0if base_present; then
->> + =C2=A0 =C2=A0 checkout_staged_file 1 "$MERGED" "$BASE"
->> + =C2=A0 =C2=A0else
->> + =C2=A0 =C2=A0 touch "$BASE"
->> + =C2=A0 =C2=A0fi
->
-> Using "touch" for things like this is a disease.
->
-> You not just want to make sure it exists, but also you want to make s=
-ure
-> it is empty, so it would make your intention more explicit and clear =
-if
-> you wrote this as
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0>"$BASE"
->
-> instead.
->
-> I also wonder if it may help mergetools if we come up with a fake bas=
-e
-> image using the common material between the two files, in a way simil=
-ar to
-> how git-merge-one-file.sh does it (look for "Added $4 in both, but
-> differently"), but obviously it would belong to a separate patch.
->
-> Thanks.
+Some mergetools cannot cope when $BASE is missing.
+This can happen when two branches add the same file.
+Provide an empty file to make these tools happy.
 
-Ah, thanks for the pointer.  I'll resend shortly.  A "fake base" would
-be very helpful.
---=20
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 David
+Reported-by: Jason Wenger <jcwenger@gmail.com>
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+ git-mergetool.sh     |    6 +++++-
+ t/t7610-mergetool.sh |   27 ++++++++++++++++++++++++++-
+ 2 files changed, 31 insertions(+), 2 deletions(-)
+
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 085e213..0131559 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -224,7 +224,11 @@ merge_file () {
+     mv -- "$MERGED" "$BACKUP"
+     cp -- "$BACKUP" "$MERGED"
+ 
+-    base_present   && checkout_staged_file 1 "$MERGED" "$BASE"
++    if base_present; then
++	checkout_staged_file 1 "$MERGED" "$BASE"
++    else
++	:>"$BASE"
++    fi
+     local_present  && checkout_staged_file 2 "$MERGED" "$LOCAL"
+     remote_present && checkout_staged_file 3 "$MERGED" "$REMOTE"
+ 
+diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+index 4aab2a7..2272743 100755
+--- a/t/t7610-mergetool.sh
++++ b/t/t7610-mergetool.sh
+@@ -39,6 +39,7 @@ test_expect_success 'setup' '
+     echo branch1 change >file1 &&
+     echo branch1 newfile >file2 &&
+     echo branch1 spaced >"spaced name" &&
++    echo branch1 both added > both &&
+     echo branch1 change file11 >file11 &&
+     echo branch1 change file13 >file13 &&
+     echo branch1 sub >subdir/file3 &&
+@@ -50,6 +51,7 @@ test_expect_success 'setup' '
+ 	git checkout -b submod-branch1
+     ) &&
+     git add file1 "spaced name" file11 file13 file2 subdir/file3 submod &&
++    git add both &&
+     git rm file12 &&
+     git commit -m "branch1 changes" &&
+ 
+@@ -58,6 +60,7 @@ test_expect_success 'setup' '
+     echo master updated >file1 &&
+     echo master new >file2 &&
+     echo master updated spaced >"spaced name" &&
++    echo master both added > both &&
+     echo master updated file12 >file12 &&
+     echo master updated file14 >file14 &&
+     echo master new sub >subdir/file3 &&
+@@ -69,18 +72,22 @@ test_expect_success 'setup' '
+ 	git checkout -b submod-master
+     ) &&
+     git add file1 "spaced name" file12 file14 file2 subdir/file3 submod &&
++    git add both &&
+     git rm file11 &&
+     git commit -m "master updates" &&
+ 
+     git config merge.tool mytool &&
+     git config mergetool.mytool.cmd "cat \"\$REMOTE\" >\"\$MERGED\"" &&
+-    git config mergetool.mytool.trustExitCode true
++    git config mergetool.mytool.trustExitCode true &&
++    git config mergetool.mybase.cmd "cat \"\$BASE\" >\"\$MERGED\"" &&
++    git config mergetool.mybase.trustExitCode true
+ '
+ 
+ test_expect_success 'custom mergetool' '
+     git checkout -b test1 branch1 &&
+     git submodule update -N &&
+     test_must_fail git merge master >/dev/null 2>&1 &&
++    ( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+     ( yes "" | git mergetool file1 file1 ) &&
+     ( yes "" | git mergetool file2 "spaced name" >/dev/null 2>&1 ) &&
+     ( yes "" | git mergetool subdir/file3 >/dev/null 2>&1 ) &&
+@@ -101,6 +108,7 @@ test_expect_success 'mergetool crlf' '
+     ( yes "" | git mergetool file1 >/dev/null 2>&1 ) &&
+     ( yes "" | git mergetool file2 >/dev/null 2>&1 ) &&
+     ( yes "" | git mergetool "spaced name" >/dev/null 2>&1 ) &&
++    ( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+     ( yes "" | git mergetool subdir/file3 >/dev/null 2>&1 ) &&
+     ( yes "d" | git mergetool file11 >/dev/null 2>&1 ) &&
+     ( yes "d" | git mergetool file12 >/dev/null 2>&1 ) &&
+@@ -131,6 +139,7 @@ test_expect_success 'mergetool on file in parent dir' '
+ 	cd subdir &&
+ 	( yes "" | git mergetool ../file1 >/dev/null 2>&1 ) &&
+ 	( yes "" | git mergetool ../file2 ../spaced\ name >/dev/null 2>&1 ) &&
++	( yes "" | git mergetool ../both >/dev/null 2>&1 ) &&
+ 	( yes "d" | git mergetool ../file11 >/dev/null 2>&1 ) &&
+ 	( yes "d" | git mergetool ../file12 >/dev/null 2>&1 ) &&
+ 	( yes "l" | git mergetool ../submod >/dev/null 2>&1 ) &&
+@@ -212,6 +221,7 @@ test_expect_success 'deleted vs modified submodule' '
+     test_must_fail git merge master &&
+     test -n "$(git ls-files -u)" &&
+     ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
++    ( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
+     ( yes "r" | git mergetool submod ) &&
+     rmdir submod && mv submod-movedaside submod &&
+@@ -228,6 +238,7 @@ test_expect_success 'deleted vs modified submodule' '
+     test_must_fail git merge master &&
+     test -n "$(git ls-files -u)" &&
+     ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
++    ( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
+     ( yes "l" | git mergetool submod ) &&
+     test ! -e submod &&
+@@ -241,6 +252,7 @@ test_expect_success 'deleted vs modified submodule' '
+     test_must_fail git merge test6 &&
+     test -n "$(git ls-files -u)" &&
+     ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
++    ( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
+     ( yes "r" | git mergetool submod ) &&
+     test ! -e submod &&
+@@ -256,6 +268,7 @@ test_expect_success 'deleted vs modified submodule' '
+     test_must_fail git merge test6 &&
+     test -n "$(git ls-files -u)" &&
+     ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
++    ( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
+     ( yes "l" | git mergetool submod ) &&
+     test "$(cat submod/bar)" = "master submodule" &&
+@@ -279,6 +292,7 @@ test_expect_success 'file vs modified submodule' '
+     test_must_fail git merge master &&
+     test -n "$(git ls-files -u)" &&
+     ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
++    ( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
+     ( yes "r" | git mergetool submod ) &&
+     rmdir submod && mv submod-movedaside submod &&
+@@ -294,6 +308,7 @@ test_expect_success 'file vs modified submodule' '
+     test_must_fail git merge master &&
+     test -n "$(git ls-files -u)" &&
+     ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
++    ( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
+     ( yes "l" | git mergetool submod ) &&
+     git submodule update -N &&
+@@ -309,6 +324,7 @@ test_expect_success 'file vs modified submodule' '
+     test_must_fail git merge test7 &&
+     test -n "$(git ls-files -u)" &&
+     ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
++    ( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
+     ( yes "r" | git mergetool submod ) &&
+     test -d submod.orig &&
+@@ -324,6 +340,7 @@ test_expect_success 'file vs modified submodule' '
+     test_must_fail git merge test7 &&
+     test -n "$(git ls-files -u)" &&
+     ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
++    ( yes "" | git mergetool both>/dev/null 2>&1 ) &&
+     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
+     ( yes "l" | git mergetool submod ) &&
+     test "$(cat submod/bar)" = "master submodule" &&
+@@ -445,4 +462,12 @@ test_expect_success 'directory vs modified submodule' '
+     git submodule update -N
+ '
+ 
++test_expect_success 'file with no base' '
++    git checkout -b test13 branch1 &&
++    test_must_fail git merge master &&
++    git mergetool --no-prompt --tool mybase -- base &&
++    test "$(cat "$MERGED")" = "" &&
++    git reset --hard master >/dev/null 2>&1
++'
++
+ test_done
+-- 
+1.7.9.rc2.1.gdcba7
