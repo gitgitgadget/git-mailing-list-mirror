@@ -1,108 +1,98 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] remote-curl: Fix push status report when all branches
- fail
-Date: Fri, 20 Jan 2012 10:18:03 -0800
-Message-ID: <7vfwfafdb8.fsf@alter.siamese.dyndns.org>
-References: <8739bacpql.fsf@thomas.inf.ethz.ch>
- <1327079011-24788-1-git-send-email-spearce@spearce.org>
+Subject: Re: [PATCH v3] mergetool: Provide an empty file when needed
+Date: Fri, 20 Jan 2012 10:28:25 -0800
+Message-ID: <7vbopyfcty.fsf@alter.siamese.dyndns.org>
+References: <7vy5t2g6za.fsf@alter.siamese.dyndns.org>
+ <1327045655-3368-1-git-send-email-davvid@gmail.com>
+ <CAJDDKr71Q9ihLZdP1Pu=ebpvX0EPvW-9bN6kZz9MeuhYKZzh+Q@mail.gmail.com>
+ <CAM6z=4-HfRAjJjnYqfoiYsYjiZJSsbkCaW-VtLWvoeFM0xsB9g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Jan 20 19:18:13 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
+To: Jason Wenger <jcwenger@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 20 19:28:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RoJ2S-0005r4-UJ
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 19:18:13 +0100
+	id 1RoJCV-0003TX-9X
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 19:28:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754140Ab2ATSSJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jan 2012 13:18:09 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50219 "EHLO
+	id S1754189Ab2ATS22 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Jan 2012 13:28:28 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53708 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753590Ab2ATSSF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jan 2012 13:18:05 -0500
+	id S1753855Ab2ATS21 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Jan 2012 13:28:27 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 495206BF4;
-	Fri, 20 Jan 2012 13:18:05 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C3F76D60;
+	Fri, 20 Jan 2012 13:28:27 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3dUEjhCIo1PrEL+2QHVHQdb6vCc=; b=UFYi76
-	lE6hCiF+oEMLn0NsZp5+7JGWl3XIy9E6fvnhx0OVdezL/MQB9YoKA6ECnxHEUP7x
-	v8pph4Q+RlozRry+LsJnrXr1KZXIAepBs8anbyLxP9dERSErIAtb7P/rmD73MweT
-	X150lk18dkef3vLQGbF1daWo2nOAoSYCvjvXU=
+	:content-type:content-transfer-encoding; s=sasl; bh=SRhqAMhEQ62i
+	IvuBocfB6PLGRJU=; b=PgFGZOe5YMB2Vdp1eiLFJex4H93Lqjv8FEdgyS8a4WgZ
+	VTEePcFfXCmPQj56SGK/qCtDyUo07NK/oRQL3U9mUucsfNCoQwGtF7Z8ZaR0aBmq
+	YsJcmG8BCb39GrKedhtyYQ/dwA8ITDe8TT1ooSQ2dCyBQ5zcBGNui9m+SoP2QN8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ddURKWTqBkMZNuXOAGFyt8Mi8FFbcLYI
-	VqKIQ9NIFCOZwhOulZZe1KWB7NGx6y78BYEl5oEkWLjy9GrEIv1F2xHBq/NE2/JU
-	ddgVWeLTYSt9gIO3ncQ3NHtecTZDss6xiaYT1912/yoRjsaTB0vnbEgvl2rOMzdf
-	adU30Ww5x6I=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=j/XB09
+	PSfHWhqB6EvurAsRiObsMcx842wrgl5uH5q70YOMLou+krlK0jvnUOMDvEO4JG6w
+	jYQH3I7gw7OXyXcXhVhdtoIPt4eqD/sCRQm7DNejhJfpDTUT9CDrn3SuhNnaVs0e
+	WBO1qFohifIiW8dSoU9dPN/pAxcDWtysZU9ZE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 412B66BF3;
-	Fri, 20 Jan 2012 13:18:05 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 339936D5F;
+	Fri, 20 Jan 2012 13:28:27 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B512D6BF2; Fri, 20 Jan 2012
- 13:18:04 -0500 (EST)
-In-Reply-To: <1327079011-24788-1-git-send-email-spearce@spearce.org> (Shawn
- O. Pearce's message of "Fri, 20 Jan 2012 09:03:31 -0800")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 87E726D5C; Fri, 20 Jan 2012
+ 13:28:26 -0500 (EST)
+In-Reply-To: <CAM6z=4-HfRAjJjnYqfoiYsYjiZJSsbkCaW-VtLWvoeFM0xsB9g@mail.gmail.com> (Jason
+ Wenger's message of "Fri, 20 Jan 2012 08:03:01 -0600")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1876D7DA-4393-11E1-9169-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 8B187770-4394-11E1-A254-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188892>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Jason Wenger <jcwenger@gmail.com> writes:
 
-> Always print a blank line after the send-pack process terminates,
-> ensuring the helper status report (if it was output) will be
-> correctly parsed by the calling transport-helper.c. This ensures
-> the helper doesn't abort before the status report can be shown to
-> the user.
+> On Fri, Jan 20, 2012 at 01:53, David Aguilar <davvid@gmail.com> wrote=
+:
+>> On Thu, Jan 19, 2012 at 11:47 PM, David Aguilar <davvid@gmail.com> w=
+rote:
+>>> Some merge tools cannot cope when $LOCAL, $BASE, or $REMOTE
+>>> are missing. =C2=A0$BASE can be missing when two branches
+>>> independently add the same filename. =C2=A0$LOCAL and $REMOTE
+>>> can be missing when a delete/modify conflict occurs.
+>>>
+>>> Provide an empty file to make these tools happy.
 >
-> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-> ---
+> This is cleaner, yes -- but is this extra processing on $LOCAL and
+> $REMOTE necessary?  Git mergetool doesn't actually call an external
+> mergetool during del/mod conflicts -- instead it goes into an
+> alternate processing and prompts the user interactively whether to
+> take the deleted or modified file.  Can these changes be reached?
+> (command line option I'm not aware of?)
 
-Thanks; let's do the following on top of this patch, so that:
+Thanks for a careful reading. I did not read outside the context of the
+patch so I didn't know if we had special cases for del/mod.
 
- - We won't miss a "git push" that errorneously succeeds; and
+A bigger question is if the del/mod codepaths are negatively affected b=
+y
+the presense of these superfluous empty $LOCAL/$REMOTE files. If they a=
+re,
+this change will _break_ things. If they are not, I think the change wo=
+uld
+be OK.
 
- - We won't be affected by any future change in the sideband #2
-   demultiplexor of the amount of "padding".
-
- t/t5541-http-push.sh |    9 +++++----
- 1 files changed, 5 insertions(+), 4 deletions(-)
-
-diff --git b/t/t5541-http-push.sh a/t/t5541-http-push.sh
-index d3e340e..b8f4c2a 100755
---- b/t/t5541-http-push.sh
-+++ a/t/t5541-http-push.sh
-@@ -101,8 +101,8 @@ exit 1
- EOF
- chmod a+x "$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git/hooks/update"
- 
--printf 'remote: error: hook declined to update refs/heads/dev2        \n' >exp
--cat >>exp <<EOF
-+cat >exp <<EOF
-+remote: error: hook declined to update refs/heads/dev2
- To http://127.0.0.1:$LIB_HTTPD_PORT/smart/test_repo.git
-  ! [remote rejected] dev2 -> dev2 (hook declined)
- error: failed to push some refs to 'http://127.0.0.1:5541/smart/test_repo.git'
-@@ -115,8 +115,9 @@ test_expect_success 'rejected update prints status' '
- 	git add path4 &&
- 	test_tick &&
- 	git commit -m dev2 &&
--	git push origin dev2 2>act
--	test_cmp exp act
-+	test_must_fail git push origin dev2 2>act &&
-+	sed -e "/^remote: /s/ *$//" <act >cmp &&
-+	test_cmp exp cmp
- '
- rm -f "$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git/hooks/update"
- 
-
-   
+Another small worry is that this could potentially negatively affect so=
+me
+merge tools that are sufficiently clueful, if it can give different and
+better results for a true two-way-merge than a simulated two-way-merge
+this patch feeds them by using a three-way-merge with an empty file as =
+a
+base.
