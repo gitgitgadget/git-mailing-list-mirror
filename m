@@ -1,73 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-sh-i18n: detect and avoid broken gettext(1)
- implementation
-Date: Fri, 20 Jan 2012 12:21:31 -0800
-Message-ID: <7vfwfadt10.fsf@alter.siamese.dyndns.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] git-sh-i18n: detect and avoid broken gettext(1) implementation
+Date: Fri, 20 Jan 2012 21:24:00 +0100
+Message-ID: <CALxABCZnz-8BuXf=-HrH7UZXi6pQ3VzL4HrOKgKHqWwUMnwJQA@mail.gmail.com>
 References: <CALxABCZWBtgX736Acoy-CCAz8RJb0EKnHf+7g72dOdVS+BOhSw@mail.gmail.com>
- <1327063775-28420-1-git-send-email-avarab@gmail.com>
- <7vobtydu0o.fsf@alter.siamese.dyndns.org>
- <CALxABCZJATyVRf9akmfpn3WpJ8Xt80Ky0isFOTwDGpFKvFp3nw@mail.gmail.com>
+ <1327063775-28420-1-git-send-email-avarab@gmail.com> <7vobtydu0o.fsf@alter.siamese.dyndns.org>
+ <CALxABCZJATyVRf9akmfpn3WpJ8Xt80Ky0isFOTwDGpFKvFp3nw@mail.gmail.com> <7vfwfadt10.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
 	git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 20 21:21:41 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 20 21:24:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RoKxw-0008Cq-44
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 21:21:40 +0100
+	id 1RoL0c-0001I3-VZ
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 21:24:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755012Ab2ATUVf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jan 2012 15:21:35 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37634 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754080Ab2ATUVf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jan 2012 15:21:35 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EA505319;
-	Fri, 20 Jan 2012 15:21:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=u+XMW+5nOHEebk/8cxU3y4XUnTc=; b=ppp1eu
-	su0ZSAHuDS0l1GeYBu5JJEWmmgEMK3/RvSnovfx1l4p4HNhUq8IaIoxp1tbnzTcT
-	xDsvcuRtyTFovCoUzaIyJAACJEgSUwWqpMzF2ewbh/1GDA0a5E6i0vU7r/Dhogru
-	dut8Gd1eohOPEZHUas9BglBYMxLK2w5LPnsU4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=r3pWW4AVP0eBuVX8ICCxRIe3qyGLc5Ev
-	Jrvf9IG33G2h1lJcCeIfUQlF8eUX/e1EbtqYVEBmt7tXPd9Dt6tMOZqIll+mMngh
-	UC0YFj2wBylqXLnIhPUsAn6yb3TxVjp1dX5V+ihIHNx15POW63LipcubUtG0oz87
-	4tjPurMNVHw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 557F75318;
-	Fri, 20 Jan 2012 15:21:34 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DE3735317; Fri, 20 Jan 2012
- 15:21:33 -0500 (EST)
-In-Reply-To: <CALxABCZJATyVRf9akmfpn3WpJ8Xt80Ky0isFOTwDGpFKvFp3nw@mail.gmail.com> (Alex
- Riesen's message of "Fri, 20 Jan 2012 21:13:01 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 58AC5E68-43A4-11E1-BBCB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753767Ab2ATUYW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jan 2012 15:24:22 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:56862 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753281Ab2ATUYV (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Jan 2012 15:24:21 -0500
+Received: by obcva7 with SMTP id va7so1144330obc.19
+        for <git@vger.kernel.org>; Fri, 20 Jan 2012 12:24:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Hh7GJh0pJ4sspOOv/ozEuLLzbUO/Y60A8nsC4Y4/810=;
+        b=WkbWT9ty3JLFyY1+kSMqe6nqt/lOLCY2z+HMY/1hPZvuSXeaHZ54SZVTA9Rs8doArQ
+         F8fI+FxsAM2BoFUGcJr9xdEl1kBvpXTLDjPRUW7zPLxD4HQbbdG7Q2I74u6e6jx/316T
+         Gs2maZrNlqSa/+fPJNP3s5tFRRN1MBgu4UKeg=
+Received: by 10.182.160.5 with SMTP id xg5mr4470838obb.53.1327091061192; Fri,
+ 20 Jan 2012 12:24:21 -0800 (PST)
+Received: by 10.182.226.41 with HTTP; Fri, 20 Jan 2012 12:24:00 -0800 (PST)
+In-Reply-To: <7vfwfadt10.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188901>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
-
->> ... At build time, instead
->> of, or in addition to, the $(cmd_munge_script), we could replace the
->> single @@GETTEXT_SH_SCHEME@@ token above with whatever scheme we want to
->> use to hardcode the decision we make at the compile time.
+On Fri, Jan 20, 2012 at 21:21, Junio C Hamano <gitster@pobox.com> wrote:
+> Alex Riesen <raa.lkml@gmail.com> writes:
 >
-> I can imagine a Solaris system being upgraded to GNU gettext _after_ Git
-> installation. Hardcoding the decision might break git scripts then.
+>>> ... At build time, instead
+>>> of, or in addition to, the $(cmd_munge_script), we could replace the
+>>> single @@GETTEXT_SH_SCHEME@@ token above with whatever scheme we want to
+>>> use to hardcode the decision we make at the compile time.
+>>
+>> I can imagine a Solaris system being upgraded to GNU gettext _after_ Git
+>> installation. Hardcoding the decision might break git scripts then.
+>
+> Just like you would break http transport by removing libcurl after
+> installing Git? What else is new?
 
-Just like you would break http transport by removing libcurl after
-installing Git? What else is new?
+Removing - yes, upgrading it - very unlikely. Besides, the current version
+wont have problems with such an upgrade.
