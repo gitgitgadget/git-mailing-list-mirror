@@ -1,94 +1,239 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] i18n: disable i18n for shell scripts if NO_GETTEXT defined
-Date: Fri, 20 Jan 2012 20:45:37 +0100
-Message-ID: <CALxABCYSH4KOtss96dtu8tw0SQd4yFuCaX+XajAY4Fbrdez+7Q@mail.gmail.com>
-References: <CALxABCZME-g++HxMsD4Nrn1J6s27vN7M_KQSVT3PeLWBqP7qJg@mail.gmail.com>
- <CACBZZX4TsL-tj04PmUwGNWjXO+JY-8unAv-aRKOGvgB71qdYCg@mail.gmail.com>
- <CALxABCadHdvR02Br9e6STy0w+EPoycUKr62RiSUSP_EPF-TH3g@mail.gmail.com>
- <CACBZZX4tB6DGV-1tiuOamq7ACPk0a-=1Pb9Vk1SgyDqAq-EFOw@mail.gmail.com>
- <7vfwfclf4v.fsf@alter.siamese.dyndns.org> <4F17C294.6010004@viscovery.net>
- <7vhazrk0jx.fsf@alter.siamese.dyndns.org> <CACBZZX7iiF2um11FvD+MBz=rZb7RrHtCJp3PqexLnSp3-Cbqug@mail.gmail.com>
- <CALxABCZWBtgX736Acoy-CCAz8RJb0EKnHf+7g72dOdVS+BOhSw@mail.gmail.com> <7vsjjadv5g.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-sh-i18n: detect and avoid broken gettext(1)
+ implementation
+Date: Fri, 20 Jan 2012 12:00:07 -0800
+Message-ID: <7vobtydu0o.fsf@alter.siamese.dyndns.org>
+References: <CALxABCZWBtgX736Acoy-CCAz8RJb0EKnHf+7g72dOdVS+BOhSw@mail.gmail.com>
+ <1327063775-28420-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 20 20:46:28 2012
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 20 21:00:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RoKPr-0005CZ-CS
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 20:46:27 +0100
+	id 1RoKdJ-0004OX-L1
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 21:00:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755192Ab2ATTqK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Jan 2012 14:46:10 -0500
-Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:47571 "EHLO
-	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755597Ab2ATTp6 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jan 2012 14:45:58 -0500
-Received: by obcva7 with SMTP id va7so1102530obc.19
-        for <git@vger.kernel.org>; Fri, 20 Jan 2012 11:45:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=SIObwCRIS+dfgMRAewhkvPvOcLbNIm5T05FY4r1b5rI=;
-        b=HNWxPd/0tF6ebLjl0VfTNfdC1F1ZsAtkoB/z9/yvVdKcP5VLoZ50I/5xVvu7n6ukYK
-         nReP1FRROS5up4s39oLu0OCTDB5SzwyPN3iq+nN2CqsQM4bw1ply4p7eb6yU8tpTjtkW
-         DvEB5hGFgq5nSyYKt7SpWVmuVRGdX/EI5quoo=
-Received: by 10.182.117.8 with SMTP id ka8mr27753225obb.73.1327088758215; Fri,
- 20 Jan 2012 11:45:58 -0800 (PST)
-Received: by 10.182.226.41 with HTTP; Fri, 20 Jan 2012 11:45:37 -0800 (PST)
-In-Reply-To: <7vsjjadv5g.fsf@alter.siamese.dyndns.org>
+	id S1751196Ab2ATUAN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Jan 2012 15:00:13 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59344 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750706Ab2ATUAL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Jan 2012 15:00:11 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B35637EFF;
+	Fri, 20 Jan 2012 15:00:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=VfXL4oXqXSoh
+	KIYMwvU1lFq4LFc=; b=IbR9oBBkojem9IQT6YAUfp99yOB7eJKd2ORC7nPTCx7O
+	rjQLSgLzRRS3ChhMh+mNKSV9e4x9rt3sib8kyHxAJ+UMQLDnD9ipeCCjlIKyawZH
+	+vtB5J74446RfMJBL+xENhqmuy4TRHygWAmPgCBHgfDlKa6+X/k4ekyiBmLINtE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=QDOJRz
+	Uwe4P6x3TXjLGbz3kbwDQYusR25j9Mv1DhEi+MuilWpvvrXBtTTecra+3tnHBGb3
+	sNT3hd6eZkOHkCmmiDLjYLO0+/HBCdF6uHmEsHfvomtYw78b3FvxsEJIEb7MO7V/
+	5tOtxnJHZAx+LpRqeimUt/AajObqhKRKpsF6Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB3017EFE;
+	Fri, 20 Jan 2012 15:00:10 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6AC627EF4; Fri, 20 Jan 2012
+ 15:00:08 -0500 (EST)
+In-Reply-To: <1327063775-28420-1-git-send-email-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 20 Jan
+ 2012 12:49:35 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5B119932-43A1-11E1-A20A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188898>
 
-On Fri, Jan 20, 2012 at 20:35, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> Alex Riesen <raa.lkml@gmail.com> writes:
->
->>> And then a --version for whatever programs that function uses,
->>> e.g. here:
->>>
->>> =C2=A0 =C2=A0$ envsubst --version
->>
->> Nothing. Exit code 127.
->
-> Interesting.
->
-> =C2=A0 =C2=A0$ wonbsubst --version; echo $?
-> =C2=A0 =C2=A0bash: wonbsubst: command not found
-> =C2=A0 =C2=A0127
->
-> Perhaps your distro lacks a necessary package dependencies between ge=
-ttext
-> and envsubst?
->
->> I believe gettext (the binary) just doesn't start at all here. Maybe
->> some Cygwin library wrong or missing library. Happens all the time
->> here,...
->
-> Aha.
->
-> I guess we either leave it broken for broken installation or add an e=
-xtra
-> "MY_GETTEXT_IS_BROKEN" option; in either way, it does not sound like =
-a
-> serious enough issue that is widespread to be urgently fixed during t=
-he
-> feature freeze.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-=C3=86var already posted a very cute little fix for this, which looks
-pretty minimal and is very obvious.
+> Here's a minimal patch to git-sh-i18n that should make things work on
+> Cygwin and any other platforms with broken gettext functions while
+> also using the OS-provided functions if they work.
 
-P.S. Sorry for html mail before (tried to use the Android Gmail client)=
-=2E
+> I've added a new t0201-gettext-fallbacks-broken-gettext.sh test that
+> tests this. This required a small change in lib-gettext.sh so I
+> wouldn't load test-lib.sh twice.
+>
+> Note that there's already a t0201* test in the repo. Maybe we want to
+> increment all the gettext test numbers by one to make room for it?
+>
+> As an aside I'm really not a big fan of having hardcoded numbers in
+> the test files like this. We don't care about the order of execution
+> here.
+
+We do not care the order but we do care about the uniqueness in paralle=
+l
+test execution.
+
+It does appear that we need a bit better preprocessing of git-sh-i18n a=
+t
+the compile time now. How about applying the restructuring shown in the
+patch by Alex (without the @@NO_GETTEXT@@ bit) first without changing a=
+ny
+logic, then try making the "First decide what scheme to use" part light=
+er
+weight by replacing the runtime "type gettext.sh" and such checks with
+some preprocessing?
+
+IOW, the first step would look like the attached patch, and then we can
+replace the entire "First decide" part if/elif/fi chain with just this:
+
+	# The scheme to use
+        : ${GIT_INTERNAL_GETTEXT_SH_SCHEME:=3D@@GETTEXT_SH_SCHEME@@}
+
+so that t/lib-gettext.sh can define and export GIT_INTERNAL_GETTEXT_SH =
+to
+always get what it wants to test (fallthrough?). At build time, instead
+of, or in addition to, the $(cmd_munge_script), we could replace the
+single @@GETTEXT_SH_SCHEME@@ token above with whatever scheme we want t=
+o
+use to hardcode the decision we make at the compile time.
+
+Hmm?
+
+ git-sh-i18n.sh |  103 +++++++++++++++++++++++++++---------------------=
+--------
+ 1 files changed, 50 insertions(+), 53 deletions(-)
+
+diff --git a/git-sh-i18n.sh b/git-sh-i18n.sh
+index 26a57b0..6648bd3 100644
+--- a/git-sh-i18n.sh
++++ b/git-sh-i18n.sh
+@@ -16,61 +16,45 @@ else
+ fi
+ export TEXTDOMAINDIR
+=20
+-if test -z "$GIT_GETTEXT_POISON"
++# First decide what scheme to use...
++GIT_INTERNAL_GETTEXT_SH_SCHEME=3Dfallthrough
++if test -n "$GIT_INTERNAL_GETTEXT_TEST_FALLBACKS"
++then
++	: no probing necessary
++elif test -n "$GIT_GETTEXT_POISON"
+ then
+-	if test -z "$GIT_INTERNAL_GETTEXT_TEST_FALLBACKS" && type gettext.sh =
+>/dev/null 2>&1 && test "$(gettext test 2>&1)" =3D "test"
+-	then
+-		# This is GNU libintl's gettext.sh, we don't need to do anything
+-		# else than setting up the environment and loading gettext.sh
+-		GIT_INTERNAL_GETTEXT_SH_SCHEME=3Dgnu
+-		export GIT_INTERNAL_GETTEXT_SH_SCHEME
+-
+-		# Try to use libintl's gettext.sh, or fall back to English if we
+-		# can't.
+-		. gettext.sh
+-
+-	elif test -z "$GIT_INTERNAL_GETTEXT_TEST_FALLBACKS" && test "$(gettex=
+t -h 2>&1)" =3D "-h"
+-	then
+-		# We don't have gettext.sh, but there's a gettext binary in our
+-		# path. This is probably Solaris or something like it which has a
+-		# gettext implementation that isn't GNU libintl.
+-		GIT_INTERNAL_GETTEXT_SH_SCHEME=3Dsolaris
+-		export GIT_INTERNAL_GETTEXT_SH_SCHEME
+-
+-		# Solaris has a gettext(1) but no eval_gettext(1)
+-		eval_gettext () {
+-			gettext "$1" | (
+-				export PATH $(git sh-i18n--envsubst --variables "$1");
+-				git sh-i18n--envsubst "$1"
+-			)
+-		}
+-
+-	else
+-		# Since gettext.sh isn't available we'll have to define our own
+-		# dummy pass-through functions.
+-
+-		# Tell our tests that we don't have the real gettext.sh
+-		GIT_INTERNAL_GETTEXT_SH_SCHEME=3Dfallthrough
+-		export GIT_INTERNAL_GETTEXT_SH_SCHEME
+-
+-		gettext () {
+-			printf "%s" "$1"
+-		}
+-
+-		eval_gettext () {
+-			printf "%s" "$1" | (
+-				export PATH $(git sh-i18n--envsubst --variables "$1");
+-				git sh-i18n--envsubst "$1"
+-			)
+-		}
+-	fi
+-else
+-	# Emit garbage under GETTEXT_POISON=3DYesPlease. Unlike the C tests
+-	# this relies on an environment variable
+-
+ 	GIT_INTERNAL_GETTEXT_SH_SCHEME=3Dpoison
+-	export GIT_INTERNAL_GETTEXT_SH_SCHEME
++elif type gettext.sh >/dev/null 2>&1
++then
++	# GNU libintl's gettext.sh
++	GIT_INTERNAL_GETTEXT_SH_SCHEME=3Dgnu
++elif test "$(gettext -h 2>&1)" =3D "-h"
++then
++	# gettext binary exists but no gettext.sh. likely to be a gettext
++	# binary on a Solaris or something that is not GNU libintl and
++	# lack eval_gettext.
++	GIT_INTERNAL_GETTEXT_SH_SCHEME=3Dgettext_without_eval_gettext
++fi
++export GIT_INTERNAL_GETTEXT_SH_SCHEME
+=20
++# ... and then follow that decision.
++case "$GIT_INTERNAL_GETTEXT_SH_SCHEME" in
++gnu)
++	# Use libintl's gettext.sh, or fall back to English if we can't.
++	. gettext.sh
++	;;
++gettext_without_eval_gettext)
++	# Solaris has a gettext(1) but no eval_gettext(1)
++	eval_gettext () {
++		gettext "$1" | (
++			export PATH $(git sh-i18n--envsubst --variables "$1");
++			git sh-i18n--envsubst "$1"
++		)
++	}
++	;;
++poison)
++	# Emit garbage so that tests that incorrectly rely on translatable
++	# strings will fail.
+ 	gettext () {
+ 		printf "%s" "# GETTEXT POISON #"
+ 	}
+@@ -78,7 +62,20 @@ else
+ 	eval_gettext () {
+ 		printf "%s" "# GETTEXT POISON #"
+ 	}
+-fi
++	;;
++*)
++	gettext () {
++		printf "%s" "$1"
++	}
++
++	eval_gettext () {
++		printf "%s" "$1" | (
++			export PATH $(git sh-i18n--envsubst --variables "$1");
++			git sh-i18n--envsubst "$1"
++		)
++	}
++	;;
++esac
+=20
+ # Git-specific wrapper functions
+ gettextln () {
