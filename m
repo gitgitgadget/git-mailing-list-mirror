@@ -1,61 +1,55 @@
-From: "Justin P. Mattock" <justinmattock@gmail.com>
-Subject: crash with git and latest mainline: EIP: 0060:[<c106c2d2>] EFLAGS:
- 00210006 CPU: 0
-Date: Fri, 20 Jan 2012 07:00:00 -0800
-Message-ID: <4F198170.9070605@gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] remote-curl: Fix push status report when all branches fail
+Date: Fri, 20 Jan 2012 07:15:02 -0800
+Message-ID: <CAJo=hJtCb=WFfuSKWvPk+S4sRQmSGemG_Ugqj+k1TZCOJj9vLQ@mail.gmail.com>
+References: <7vzkdjgv1i.fsf@alter.siamese.dyndns.org> <1327029129-11424-1-git-send-email-spearce@spearce.org>
+ <7vobtyhq16.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-X-From: linux-kernel-owner@vger.kernel.org Fri Jan 20 16:00:20 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 20 16:16:52 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1RoFwv-0003bn-SK
-	for glk-linux-kernel-3@lo.gmane.org; Fri, 20 Jan 2012 16:00:18 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1RoGCx-0006A0-Em
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 16:16:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753567Ab2ATPAJ (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Fri, 20 Jan 2012 10:00:09 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:60363 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752383Ab2ATPAE (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Fri, 20 Jan 2012 10:00:04 -0500
-Received: by iaeh11 with SMTP id h11so424571iae.19
-        for <multiple recipients>; Fri, 20 Jan 2012 07:00:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        bh=INdgkoVu5i8+F7jjk9HUa8pdcseQgVwQP0+z9IYAJhY=;
-        b=HTvrwV/2UQhp2RyYuz2VNdLNRnbjAZtKXLepPtxBXh0SbaDnq3ZgEZraSvbdq3CtQN
-         fTqCcspkaNBuYOP/dsrk6PYJk54RueiboXN6+d7Kxkw+rr6LHPRfwce6H7yn4t5Kq1Dq
-         oLARds2ATgH8GKzXUbdA4WDZNN3eF/hHoLMyU=
-Received: by 10.50.6.227 with SMTP id e3mr2910207iga.20.1327071604020;
-        Fri, 20 Jan 2012 07:00:04 -0800 (PST)
-Received: from [192.168.5.144] ([64.134.224.181])
-        by mx.google.com with ESMTPS id f8sm10759211ibl.6.2012.01.20.07.00.02
-        (version=SSLv3 cipher=OTHER);
-        Fri, 20 Jan 2012 07:00:03 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:8.0) Gecko/20111124 Thunderbird/8.0
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1753919Ab2ATPQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jan 2012 10:16:46 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:50321 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753717Ab2ATPPX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jan 2012 10:15:23 -0500
+Received: by pbaa10 with SMTP id a10so376082pba.19
+        for <git@vger.kernel.org>; Fri, 20 Jan 2012 07:15:23 -0800 (PST)
+Received: by 10.68.212.130 with SMTP id nk2mr19818333pbc.69.1327072523130;
+ Fri, 20 Jan 2012 07:15:23 -0800 (PST)
+Received: by 10.68.50.10 with HTTP; Fri, 20 Jan 2012 07:15:02 -0800 (PST)
+In-Reply-To: <7vobtyhq16.fsf@alter.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188881>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188882>
 
-not sure if this means anything or not, but I was doing a apt-get 
-upgrade and a git pull at the same time and had a total system freeze.
-I was only able to capture an image of the crash. here are the images of it:
+On Thu, Jan 19, 2012 at 22:00, Junio C Hamano <gitster@pobox.com> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+>> +cat >exp <<EOF
+>> +remote: error: hook declined to update refs/heads/dev2
+>
+> Curious. Where do we get these eight trailing whitespaces?
 
-http://www.flickr.com/photos/44066293@N08/6730938347/in/photostream
-http://www.flickr.com/photos/44066293@N08/6730937479/in/photostream
-http://www.flickr.com/photos/44066293@N08/6730936509/in/photostream
+I think this is padding being added to the end of the line by
+recv_sideband(). I noticed the trailing whitespace in the diff, but
+the test passed with it present, so I had to leave it in.
 
-will keep an eye out or for this, tried to reproduce but with no luck 
-doing so.
+> The call to rp_error("hook declined to update %s", name) seems to be
+> giving the name properly.
 
-Justin P. Mattock
+Yea, I think the server is sending the correct data in the sideband
+channel, its just the sideband client padding out the line. I think
+this padding is a fudge against progress meters that are being written
+and over-written with \r lines in subsequent sideband packets.
