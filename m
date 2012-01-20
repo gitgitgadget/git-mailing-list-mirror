@@ -1,220 +1,99 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] mergetool: Provide an empty file when no base exists
-Date: Thu, 19 Jan 2012 23:10:53 -0800
-Message-ID: <1327043453-80965-1-git-send-email-davvid@gmail.com>
-References: <7vhazqhn8u.fsf@alter.siamese.dyndns.org>
-Cc: jcwenger@gmail.com, git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Jan 20 08:11:11 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t/Makefile: Use $(sort ...) explicitly where needed
+Date: Thu, 19 Jan 2012 23:14:18 -0800
+Message-ID: <7vbopyhmlx.fsf@alter.siamese.dyndns.org>
+References: <1327004244-18892-1-git-send-email-kirr@navytux.spb.ru>
+ <7v8vl3ic6o.fsf@alter.siamese.dyndns.org>
+ <20120120063450.GA15371@mini.zxlink>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Kirill Smelkov <kirr@navytux.spb.ru>
+X-From: git-owner@vger.kernel.org Fri Jan 20 08:14:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ro8cw-0005hm-9l
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 08:11:10 +0100
+	id 1Ro8g5-0007DK-Hr
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Jan 2012 08:14:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751859Ab2ATHLG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jan 2012 02:11:06 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:38284 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751353Ab2ATHLC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jan 2012 02:11:02 -0500
-Received: by iagf6 with SMTP id f6so509483iag.19
-        for <git@vger.kernel.org>; Thu, 19 Jan 2012 23:11:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=yEjXiV46PT2Uxwpu5sX+h9N/tf9CYpRtIr8RkckogoE=;
-        b=dEfC0DWr+mtIklRLUZs7Vq5f1hzdpshBdqGUfzKL/OY49Y5+w2mo5csUTgyap/WRoP
-         nOJXjTfOgY4c8XOoAuQZkxWt5mXlTMeEun1LSceoc0XhBWKpXLw4QZoOpiFj6EDPxwVy
-         s2i6MuYBkOhl7qKhh4ziWKXUNL041oDku6Nlw=
-Received: by 10.42.148.1 with SMTP id p1mr25026143icv.27.1327043462193;
-        Thu, 19 Jan 2012 23:11:02 -0800 (PST)
-Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.dsltransport.net. [208.106.56.2])
-        by mx.google.com with ESMTPS id l28sm6822437ibc.3.2012.01.19.23.11.00
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 19 Jan 2012 23:11:01 -0800 (PST)
-X-Mailer: git-send-email 1.7.9.rc2.1.gdcba7
-In-Reply-To: <7vhazqhn8u.fsf@alter.siamese.dyndns.org>
+	id S1751295Ab2ATHOV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jan 2012 02:14:21 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47676 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750966Ab2ATHOU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jan 2012 02:14:20 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E7B82727;
+	Fri, 20 Jan 2012 02:14:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vdn31OK4+zPiVwfAWpq6RDbL/YI=; b=a8jB5X
+	wlLqJZpOvlC/xegajk14IFSg1gFpmeOCKgFK0OumIoAtideqHhkUakbQ2mpt2Juq
+	Q3WOOkXJCpAReI2fmcxS19wwNp+WIx82FPPIuDAkbVcPkrCHYthiGwBaVoxo8OPb
+	5fbtLDC6KetMAS69l+cpXxp8IiLHTPf4RBCnI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FWvK4oR5nnfTctOxohp+BK29iBD+Z/cr
+	ot8hiGJTm9wlef0pWsMUnubM6feiqbeznCNasld5saDvoicp9ykF4QEdkrAowv8M
+	vWEx8KgzeG+M+/ELyaXAw/3yQ9o6YSIgdNoYfT1CG2jZM5RAbqv2qU8QzMzCNmm5
+	3pvaWJry+t0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 457C62726;
+	Fri, 20 Jan 2012 02:14:20 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 98D7B2725; Fri, 20 Jan 2012
+ 02:14:19 -0500 (EST)
+In-Reply-To: <20120120063450.GA15371@mini.zxlink> (Kirill Smelkov's message
+ of "Fri, 20 Jan 2012 10:34:50 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5ED8770E-4336-11E1-A70C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188858>
 
-Some mergetools cannot cope when $BASE is missing.
-This can happen when two branches add the same file.
-Provide an empty file to make these tools happy.
+Kirill Smelkov <kirr@navytux.spb.ru> writes:
 
-Reported-by: Jason Wenger <jcwenger@gmail.com>
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
- git-mergetool.sh     |    6 +++++-
- t/t7610-mergetool.sh |   27 ++++++++++++++++++++++++++-
- 2 files changed, 31 insertions(+), 2 deletions(-)
+>> I do not necessarily buy your "so we HAVE TO, OR ELSE".
+>> 
+>> Even though I can understand "We can sort the list of tests _if_ we do not
+>> want them executed in seemingly random order when running 'make -j1'", I
+>> tend to think that *if* is a big one.  Aren't these tests designed not to
+>> depend on each other anyway?
+>
+> Yes, they don't depend on each other, but what's the point in not
+> sorting them? I usually watch test progress visually, and if tests are
+> sorted, even with make -j4 they go more or less incrementally by their t
+> number.
+>
+> On my netbook, adding $(sort ...) adds approximately 0.008s to make
+> startup, so imho there is no performance penalty to adding that sort.
 
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 085e213..0131559 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -224,7 +224,11 @@ merge_file () {
-     mv -- "$MERGED" "$BACKUP"
-     cp -- "$BACKUP" "$MERGED"
- 
--    base_present   && checkout_staged_file 1 "$MERGED" "$BASE"
-+    if base_present; then
-+	checkout_staged_file 1 "$MERGED" "$BASE"
-+    else
-+	:>"$BASE"
-+    fi
-     local_present  && checkout_staged_file 2 "$MERGED" "$LOCAL"
-     remote_present && checkout_staged_file 3 "$MERGED" "$REMOTE"
- 
-diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index 4aab2a7..2272743 100755
---- a/t/t7610-mergetool.sh
-+++ b/t/t7610-mergetool.sh
-@@ -39,6 +39,7 @@ test_expect_success 'setup' '
-     echo branch1 change >file1 &&
-     echo branch1 newfile >file2 &&
-     echo branch1 spaced >"spaced name" &&
-+    echo branch1 both added > both &&
-     echo branch1 change file11 >file11 &&
-     echo branch1 change file13 >file13 &&
-     echo branch1 sub >subdir/file3 &&
-@@ -50,6 +51,7 @@ test_expect_success 'setup' '
- 	git checkout -b submod-branch1
-     ) &&
-     git add file1 "spaced name" file11 file13 file2 subdir/file3 submod &&
-+    git add both &&
-     git rm file12 &&
-     git commit -m "branch1 changes" &&
- 
-@@ -58,6 +60,7 @@ test_expect_success 'setup' '
-     echo master updated >file1 &&
-     echo master new >file2 &&
-     echo master updated spaced >"spaced name" &&
-+    echo master both added > both &&
-     echo master updated file12 >file12 &&
-     echo master updated file14 >file14 &&
-     echo master new sub >subdir/file3 &&
-@@ -69,18 +72,22 @@ test_expect_success 'setup' '
- 	git checkout -b submod-master
-     ) &&
-     git add file1 "spaced name" file12 file14 file2 subdir/file3 submod &&
-+    git add both &&
-     git rm file11 &&
-     git commit -m "master updates" &&
- 
-     git config merge.tool mytool &&
-     git config mergetool.mytool.cmd "cat \"\$REMOTE\" >\"\$MERGED\"" &&
--    git config mergetool.mytool.trustExitCode true
-+    git config mergetool.mytool.trustExitCode true &&
-+    git config mergetool.mybase.cmd "cat \"\$BASE\" >\"\$MERGED\"" &&
-+    git config mergetool.mybase.trustExitCode true
- '
- 
- test_expect_success 'custom mergetool' '
-     git checkout -b test1 branch1 &&
-     git submodule update -N &&
-     test_must_fail git merge master >/dev/null 2>&1 &&
-+    ( yes "" | git mergetool both >/dev/null 2>&1 ) &&
-     ( yes "" | git mergetool file1 file1 ) &&
-     ( yes "" | git mergetool file2 "spaced name" >/dev/null 2>&1 ) &&
-     ( yes "" | git mergetool subdir/file3 >/dev/null 2>&1 ) &&
-@@ -101,6 +108,7 @@ test_expect_success 'mergetool crlf' '
-     ( yes "" | git mergetool file1 >/dev/null 2>&1 ) &&
-     ( yes "" | git mergetool file2 >/dev/null 2>&1 ) &&
-     ( yes "" | git mergetool "spaced name" >/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool both >/dev/null 2>&1 ) &&
-     ( yes "" | git mergetool subdir/file3 >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file12 >/dev/null 2>&1 ) &&
-@@ -131,6 +139,7 @@ test_expect_success 'mergetool on file in parent dir' '
- 	cd subdir &&
- 	( yes "" | git mergetool ../file1 >/dev/null 2>&1 ) &&
- 	( yes "" | git mergetool ../file2 ../spaced\ name >/dev/null 2>&1 ) &&
-+	( yes "" | git mergetool ../both >/dev/null 2>&1 ) &&
- 	( yes "d" | git mergetool ../file11 >/dev/null 2>&1 ) &&
- 	( yes "d" | git mergetool ../file12 >/dev/null 2>&1 ) &&
- 	( yes "l" | git mergetool ../submod >/dev/null 2>&1 ) &&
-@@ -212,6 +221,7 @@ test_expect_success 'deleted vs modified submodule' '
-     test_must_fail git merge master &&
-     test -n "$(git ls-files -u)" &&
-     ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool both >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
-     ( yes "r" | git mergetool submod ) &&
-     rmdir submod && mv submod-movedaside submod &&
-@@ -228,6 +238,7 @@ test_expect_success 'deleted vs modified submodule' '
-     test_must_fail git merge master &&
-     test -n "$(git ls-files -u)" &&
-     ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool both >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
-     ( yes "l" | git mergetool submod ) &&
-     test ! -e submod &&
-@@ -241,6 +252,7 @@ test_expect_success 'deleted vs modified submodule' '
-     test_must_fail git merge test6 &&
-     test -n "$(git ls-files -u)" &&
-     ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool both >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
-     ( yes "r" | git mergetool submod ) &&
-     test ! -e submod &&
-@@ -256,6 +268,7 @@ test_expect_success 'deleted vs modified submodule' '
-     test_must_fail git merge test6 &&
-     test -n "$(git ls-files -u)" &&
-     ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool both >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
-     ( yes "l" | git mergetool submod ) &&
-     test "$(cat submod/bar)" = "master submodule" &&
-@@ -279,6 +292,7 @@ test_expect_success 'file vs modified submodule' '
-     test_must_fail git merge master &&
-     test -n "$(git ls-files -u)" &&
-     ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool both >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
-     ( yes "r" | git mergetool submod ) &&
-     rmdir submod && mv submod-movedaside submod &&
-@@ -294,6 +308,7 @@ test_expect_success 'file vs modified submodule' '
-     test_must_fail git merge master &&
-     test -n "$(git ls-files -u)" &&
-     ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool both >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
-     ( yes "l" | git mergetool submod ) &&
-     git submodule update -N &&
-@@ -309,6 +324,7 @@ test_expect_success 'file vs modified submodule' '
-     test_must_fail git merge test7 &&
-     test -n "$(git ls-files -u)" &&
-     ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool both >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
-     ( yes "r" | git mergetool submod ) &&
-     test -d submod.orig &&
-@@ -324,6 +340,7 @@ test_expect_success 'file vs modified submodule' '
-     test_must_fail git merge test7 &&
-     test -n "$(git ls-files -u)" &&
-     ( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool both>/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
-     ( yes "l" | git mergetool submod ) &&
-     test "$(cat submod/bar)" = "master submodule" &&
-@@ -445,4 +462,12 @@ test_expect_success 'directory vs modified submodule' '
-     git submodule update -N
- '
- 
-+test_expect_success 'file with no base' '
-+    git checkout -b test13 branch1 &&
-+    test_must_fail git merge master &&
-+    git mergetool --no-prompt --tool mybase -- base &&
-+    test "$(cat "$MERGED")" = "" &&
-+    git reset --hard master >/dev/null 2>&1
-+'
-+
- test_done
--- 
-1.7.9.rc2.1.gdcba7
+Heh, who said anything about performance?
+
+I was pointing out that your justification "we HAVE TO" was wrong.
+
+If you are doing this for perceived prettyness and not as a fix for any
+correctness issue, I want to see the patch honestly described as such;
+that's all.
+
+By the way, if I recall correctly, $(sort) in GNU make not just sorts but
+as a nice side effect removes duplicates. So if we used a(n fictional)
+construct in our Makefile like this:
+
+    T = $(wildcard *.sh a.*)
+
+that might produce duplicates (i.e. "a.sh" might appear twice), which
+might leave us two identical pathnames in $T and cause us trouble.  Even
+if we do not have such a use currently, rewriting $(wildcard) like your
+patch does using $(sort $(wildcard ...)) may be a good way to future-proof
+our Makefile, and if you justify your patch that way, it would be a
+possible correctness hardening, not just cosmetics, and phrasing it with
+"HAVE TO" may be justifiable.
+
+Care to try if $(wildcard *.sh a.*) give you duplicated output with newer
+GNU make? I am lazy but am a bit curious ;-)
