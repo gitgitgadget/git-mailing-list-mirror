@@ -1,120 +1,79 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: [PATCH v2 2/3] git-p4: Search for parent commit on branch creation
-Date: Sat, 21 Jan 2012 00:21:31 +0000
-Message-ID: <1327105292-30092-3-git-send-email-vitor.hda@gmail.com>
-References: <1327105292-30092-1-git-send-email-vitor.hda@gmail.com>
-Cc: Pete Wyckoff <pw@padd.com>, Luke Diamand <luke@diamand.org>,
-	Vitor Antunes <vitor.hda@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 21 01:22:19 2012
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: post-update to stash after push to non-bare current branch
+Date: Fri, 20 Jan 2012 18:35:21 -0600
+Message-ID: <4F1A0849.8050205@gmail.com>
+References: <jf70vc$kol$1@dough.gmane.org> <4F171088.4080006@gmail.com> <4F1714AD.4090706@gmail.com> <7vwr8oljq7.fsf@alter.siamese.dyndns.org> <4F1764B9.90907@gmail.com> <7vboq0ld5e.fsf@alter.siamese.dyndns.org> <4F188FA2.1000209@gmail.com> <4F1A0311.30502@gmail.com> <7vr4ytdi54.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: unlisted-recipients:;
+	"(no To-header on input) Neal Kreitzinger" <neal@rsss.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 21 01:36:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RoOin-0005vt-Vz
-	for gcvg-git-2@lo.gmane.org; Sat, 21 Jan 2012 01:22:18 +0100
+	id 1RoOwA-00036p-PA
+	for gcvg-git-2@lo.gmane.org; Sat, 21 Jan 2012 01:36:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756624Ab2AUAWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jan 2012 19:22:09 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:61679 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756582Ab2AUAWA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jan 2012 19:22:00 -0500
-Received: by mail-ww0-f44.google.com with SMTP id ed3so950759wgb.1
-        for <git@vger.kernel.org>; Fri, 20 Jan 2012 16:22:00 -0800 (PST)
+	id S1753820Ab2AUAf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jan 2012 19:35:26 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:42799 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752509Ab2AUAfZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jan 2012 19:35:25 -0500
+Received: by yhoo21 with SMTP id o21so581398yho.19
+        for <git@vger.kernel.org>; Fri, 20 Jan 2012 16:35:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=M2QFKeDDfkv8G5zcOT6Rsi5T39rK62Zw5x7LemWJF6c=;
-        b=uA/WUyGTi7Us56ggAtUHp5aPIe2qxGlmEUILlEG+ZPb4PXgtqOZcoY+zMOGedNxRvf
-         bhefn2FeidUmaHMdK9r5oqo3yvs9z3TBFT6TdjtrfFrd1bRrr0yire2lteaQIF3QJghF
-         ywOJ3ZNXSIqeuFbYyByn4f/XI0P9QefmyLr5g=
-Received: by 10.180.96.161 with SMTP id dt1mr441425wib.13.1327105320017;
-        Fri, 20 Jan 2012 16:22:00 -0800 (PST)
-Received: from localhost.localdomain (111.216.54.77.rev.vodafone.pt. [77.54.216.111])
-        by mx.google.com with ESMTPS id q7sm566234wix.5.2012.01.20.16.21.58
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=ktvqDuzHcIzlcsLueECFLbhlZ8DjMHnQ4sGvSpVEtYs=;
+        b=o4HFKUg4+RTlcJOThKLNcUSMMaYZqG2iu3b9SrG0suhYtfxKaaDIIWk+46xzfdPZT9
+         1//lgT6+Ba7TBKIBeIq3uMuPuieNhCfvhXRh/VOM58DBFijUMdVV6pxtJv19qrY9lmQd
+         xnmMuB1n0n70VmN8rOosndQrztpthydYteKd8=
+Received: by 10.236.129.138 with SMTP id h10mr11853409yhi.65.1327106124244;
+        Fri, 20 Jan 2012 16:35:24 -0800 (PST)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id 17sm12783127ang.11.2012.01.20.16.35.23
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 20 Jan 2012 16:21:59 -0800 (PST)
-X-Mailer: git-send-email 1.7.7.rc2.14.g5e044.dirty
-In-Reply-To: <1327105292-30092-1-git-send-email-vitor.hda@gmail.com>
+        Fri, 20 Jan 2012 16:35:23 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.25) Gecko/20111213 Thunderbird/3.1.17
+Newsgroups: gmane.comp.version-control.git
+Illegal-Object: Syntax error in CC: address found on vger.kernel.org:
+	CC:	unlisted-recipients:;"(no To-header on input) Neal Kreitzinger" <neal@rsss.com>
+					     ^-missing end of address
+In-Reply-To: <7vr4ytdi54.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188916>
 
-To find out which is its parent the commit of the new branch is applied
-sequentially to each blob of the parent branch from the newest to the
-oldest. The first blob which results in a zero diff is considered the
-parent commit. If none is found, then the commit is applied to the top
-of the parent branch.
+On 1/20/2012 6:16 PM, Junio C Hamano wrote:
+> Neal Kreitzinger<nkreitzinger@gmail.com>  writes:
+>
+>> To get this to work I had to learn more about shell scripting and export
+>> the GIT_WORK_TREE git environment variable.
+>>
+>> (post-update hook):
+>> export GIT_WORK_TREE=/home/neal/FSNMSTHTML
+>> git checkout -f HEAD
+>
+>
+> Hmm, I thought "cd ..&&  git checkout -f HEAD" (or "git reset --hard")
+> would have worked.
 
-A fast-import "checkpoint" call is required for each comparison because
-diff-tree is only able to work with blobs on disk. But most of these
-commits will not be part of the final imported tree, making fast-import
-fail. To avoid this, the temporary branches are tracked and then removed
-at the end of the import process.
+Ok, I just tried that for the first time and it complained "not a git 
+repository: '.'" because it looks like that caused GIT_DIR to no longer 
+point to WORKTREE/.git but instead to WORKTREE/ because GIT_DIR is set 
+to '.' in the post-update script's environment as indicated in this 
+thread: 
+http://stackoverflow.com/questions/6635018/reuse-git-work-tree-in-post-receive-hook-to-rm-a-few-files
 
-Signed-off-by: Vitor Antunes <vitor.hda@gmail.com>
----
- contrib/fast-import/git-p4 |   30 +++++++++++++++++++++++++++++-
- 1 files changed, 29 insertions(+), 1 deletions(-)
-
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 417d119..2e3b741 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -1429,6 +1429,8 @@ class P4Sync(Command, P4UserMap):
-         self.cloneExclude = []
-         self.useClientSpec = False
-         self.clientSpecDirs = None
-+        self.tempBranches = []
-+        self.tempBranchLocation = "git-p4-tmp"
- 
-         if gitConfig("git-p4.syncFromOrigin") == "false":
-             self.syncWithOrigin = False
-@@ -2012,7 +2014,27 @@ class P4Sync(Command, P4UserMap):
-                             parent = self.initialParents[branch]
-                             del self.initialParents[branch]
- 
--                        self.commit(description, filesForCommit, branch, [branchPrefix], parent)
-+                        parentFound = False
-+                        if len(parent) > 0:
-+                            tempBranch = os.path.join(self.tempBranchLocation, "%d" % (change))
-+                            if self.verbose:
-+                                print "Creating temporary branch: " + tempBranch
-+                            self.commit(description, filesForCommit, tempBranch, [branchPrefix])
-+                            self.tempBranches.append(tempBranch)
-+                            self.checkpoint()
-+                            for blob in read_pipe_lines("git rev-list --reverse --no-merges %s" % parent):
-+                                blob = blob.strip()
-+                                if len( read_pipe("git diff-tree %s %s" % (blob, tempBranch)) ) == 0:
-+                                    parentFound = True
-+                                    if self.verbose:
-+                                        print "Found parent of %s in commit %s" % (branch, blob)
-+                                    break
-+                        if parentFound:
-+                            self.commit(description, filesForCommit, branch, [branchPrefix], blob)
-+                        else:
-+                            if self.verbose:
-+                                print "Parent of %s not found. Committing into head of %s" % (branch, parent)
-+                            self.commit(description, filesForCommit, branch, [branchPrefix], parent)
-                 else:
-                     files = self.extractFilesFromCommit(description)
-                     self.commit(description, files, self.branch, self.depotPaths,
-@@ -2347,6 +2369,12 @@ class P4Sync(Command, P4UserMap):
-         self.gitOutput.close()
-         self.gitError.close()
- 
-+        # Cleanup temporary branches created during import
-+        if self.tempBranches != []:
-+            for branch in self.tempBranches:
-+                read_pipe("git update-ref -d %s" % branch)
-+            os.rmdir(os.path.join(os.environ.get("GIT_DIR", ".git"), self.tempBranchLocation))
-+
-         return True
- 
- class P4Rebase(Command):
--- 
-1.7.7.rc2.14.g5e044.dirty
+v/r,
+neal
