@@ -1,69 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [Q] Determing if a commit is reachable from the HEAD ?
-Date: Fri, 20 Jan 2012 16:04:50 -0800
-Message-ID: <7vzkdhdiot.fsf@alter.siamese.dyndns.org>
-References: <201201201433.30267.brian.foster@maxim-ic.com>
- <m2ehuu8nrt.fsf@igel.home> <20120120180620.GA8504@codeaurora.org>
- <7v7h0mfahx.fsf@alter.siamese.dyndns.org>
- <20120120233335.GA20302@codeaurora.org>
+Subject: highlights from next "What's cooking"
+Date: Fri, 20 Jan 2012 16:13:03 -0800
+Message-ID: <7vvco5dib4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Schwab <schwab@linux-m68k.org>,
-	Brian Foster <brian.foster@maxim-ic.com>,
-	git mailing list <git@vger.kernel.org>
-To: David Brown <davidb@codeaurora.org>
-X-From: git-owner@vger.kernel.org Sat Jan 21 01:04:59 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 21 01:13:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RoOS2-0007N8-IA
-	for gcvg-git-2@lo.gmane.org; Sat, 21 Jan 2012 01:04:58 +0100
+	id 1RoOa0-0002Gl-JL
+	for gcvg-git-2@lo.gmane.org; Sat, 21 Jan 2012 01:13:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756172Ab2AUAEy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jan 2012 19:04:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40425 "EHLO
+	id S1756657Ab2AUANI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jan 2012 19:13:08 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44112 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755935Ab2AUAEx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jan 2012 19:04:53 -0500
+	id S1756553Ab2AUANF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jan 2012 19:13:05 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 43BB276EF;
-	Fri, 20 Jan 2012 19:04:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OqyfXYxDxVTKvY0ZW6qwlUVaUaM=; b=gZBFtH
-	GeOvP/hWPN0dNaoS30G0p3NmFBvmpRGJgxMQ0qdjAX/B/YdumryDPrCcCT5qIDdj
-	edowIGg2qID4nIvsXwUSo+624d/PaXmid1oJtuZZT9HxCfy4K/TpTSxlT5MB+wVA
-	TYN5FXvIkPO0NGG0D4n+uqeCT0KaavHc80i94=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WzK8U5xDpORHtTlefcGl2V8kACovhh4d
-	MqkDUvkXqEp8K0tMIQY04zPqUi6WibL35mrnGAL7rhnzjGY3el2DY5vhZgH1/hlF
-	3vhDSmXtLKRlaSxqIUS0itjxkyKh/cHCWp4cw3Ju/7sqdyIdlvKcFT805IRfnjn1
-	ZhlpEERvJ0U=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1BB8D7812;
+	Fri, 20 Jan 2012 19:13:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=D
+	HJe5xQmBEEaCQPOfeSjNCL/Vv0=; b=LMKDOYf75zt29CfDBh4QLtvREflJr7I1E
+	FyrcweZBydU7/Px7rKJhRfCXNZdFvYpFjFT+RvPZs5oG+H8OLrn/3NA+KclWlkm3
+	E+r6dBtQPWwitK62DHuMlMWu5zH7pR83Qi1w+eGc7jjr1uMksx2AHS/ihhx7LHd3
+	4BQ4atPNJ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=stn
+	mpa5dlhp5Es0jM9+zvaJAaLRn5CRGBEnhw3kQBEPelT2Av3evzHFifgvnfbeQxxA
+	R7B5IEYUsyRgDu0LdzLKr0Lts0clWOhYhItAYHhNc9P61HFcBFLvfweaCSwByj8E
+	Vv+eLA7y97cTwlB2yFiGyKszoXc6vaA5QhERMZ5Q=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B62B76EE;
-	Fri, 20 Jan 2012 19:04:52 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 13E047811;
+	Fri, 20 Jan 2012 19:13:05 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C68D776ED; Fri, 20 Jan 2012
- 19:04:51 -0500 (EST)
-In-Reply-To: <20120120233335.GA20302@codeaurora.org> (David Brown's message
- of "Fri, 20 Jan 2012 15:33:35 -0800")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9C9C5780E; Fri, 20 Jan 2012
+ 19:13:04 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8A723840-43C3-11E1-940B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B0318EFE-43C4-11E1-8DC7-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188909>
 
-David Brown <davidb@codeaurora.org> writes:
+These have been merged for upcoming 1.7.9 recently:
 
-> Hmm, I thought I'd convinced myself that this was possible.  Now, I
-> can't come up with a way of doing it that doesn't involve improper
-> commits with earlier timestamps than their parents.
+ * jc/pull-signed-tag-doc (2012-01-17) 1 commit
+  + pulling signed tag: add howto document
 
-I'd actually want to see a way to do so that *does* involve timestamp
-skew.
+ * mh/maint-show-ref-doc (2012-01-13) 2 commits
+   (merged to 'next' on 2012-01-16 at 8573f09)
+  + git-show-ref doc: typeset regexp in fixed width font
+  + git-show-ref: fix escaping in asciidoc source
+
+ * nd/pathspec-recursion-cleanup (2012-01-16) 2 commits
+   (merged to 'next' on 2012-01-16 at 0189264)
+  + diff-index: enable recursive pathspec matching in unpack_trees
+  + Document limited recursion pathspec matching with wildcards
+
+ * tr/maint-word-diff-incomplete-line (2012-01-12) 1 commit
+   (merged to 'next' on 2012-01-16 at 58ddaaf)
+  + word-diff: ignore '\ No newline at eof' marker
+
+ * jk/credentials (2012-01-16) 4 commits
+   (merged to 'next' on 2012-01-16 at 2810b82)
+  + credential-cache: ignore "connection refused" errors
+   (merged to 'next' on 2012-01-16 at 1c6c94a)
+  + unix-socket: do not let close() or chdir() clobber errno during cleanup
+  + credential-cache: report more daemon connection errors
+  + unix-socket: handle long socket pathnames
+
+
+Also I updated the jc/pull-signed-tag topic that follows Linus's
+suggestion to always spawn an editor when running "git merge" in an
+interactive session.  The special-case environment variable has been
+renamed to MERGE_AUTOEDIT, and scripts can set it to "no" when they start
+to accept the autogenerated merge log message.  There is no plan to
+encourage humans to keep using the historical behaviour, hence there is no
+support for configuration variable (e.g. merge.autoedit) that can be set
+to 'no'.
