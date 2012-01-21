@@ -1,93 +1,74 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] mergetool: Suppress stderr and fix the "both added" test
-Date: Sat, 21 Jan 2012 02:26:18 -0800
-Message-ID: <1327141578-54796-1-git-send-email-davvid@gmail.com>
-Cc: jcwenger@gmail.com, git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Jan 21 11:26:33 2012
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH v2 3/3] git-p4: Add test case for complex branch import
+Date: Sat, 21 Jan 2012 10:51:15 +0000
+Message-ID: <4F1A98A3.2090607@diamand.org>
+References: <1327105292-30092-1-git-send-email-vitor.hda@gmail.com> <1327105292-30092-4-git-send-email-vitor.hda@gmail.com> <7vehutd59p.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Vitor Antunes <vitor.hda@gmail.com>, git@vger.kernel.org,
+	Pete Wyckoff <pw@padd.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 21 11:51:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RoY9Y-0002Ah-1G
-	for gcvg-git-2@lo.gmane.org; Sat, 21 Jan 2012 11:26:32 +0100
+	id 1RoYXc-0003TP-Kz
+	for gcvg-git-2@lo.gmane.org; Sat, 21 Jan 2012 11:51:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754708Ab2AUK01 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Jan 2012 05:26:27 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:47257 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754294Ab2AUK0Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jan 2012 05:26:25 -0500
-Received: by iacb35 with SMTP id b35so890488iac.19
-        for <git@vger.kernel.org>; Sat, 21 Jan 2012 02:26:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=y4eTGsVm93ymABsoy1qYa6mq3dW6SvnUwvHhUJV3MZ0=;
-        b=eEdjGmy/CEP1YMsJ8QfDz6dn91nX/vd7ujNUrr8OZT2qc456rqU8g3BIerWcovckMr
-         uEb5aDNVDFnGcVOLPYao9zFJgooITr4SJob+1CIVgkf4VHZPRBWwaatEN/oAQBYIKZlU
-         m/gM5T2icRVSD71BmYOvKgn3OvRJDFTnC9FZE=
-Received: by 10.50.189.134 with SMTP id gi6mr22598igc.18.1327141585478;
-        Sat, 21 Jan 2012 02:26:25 -0800 (PST)
-Received: from localhost.localdomain (208-106-56-2.static.dsltransport.net. [208.106.56.2])
-        by mx.google.com with ESMTPS id l35sm20612792ibj.0.2012.01.21.02.26.23
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 21 Jan 2012 02:26:24 -0800 (PST)
-X-Mailer: git-send-email 1.7.7.166.g1cd0c
+	id S1753688Ab2AUKvU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jan 2012 05:51:20 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:60142 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750918Ab2AUKvT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jan 2012 05:51:19 -0500
+Received: by werb13 with SMTP id b13so1060430wer.19
+        for <git@vger.kernel.org>; Sat, 21 Jan 2012 02:51:18 -0800 (PST)
+Received: by 10.216.144.160 with SMTP id n32mr818962wej.5.1327143078210;
+        Sat, 21 Jan 2012 02:51:18 -0800 (PST)
+Received: from [86.26.7.206] (cpc1-cmbg14-2-0-cust973.5-4.cable.virginmedia.com. [86.26.7.206])
+        by mx.google.com with ESMTPS id di5sm18628860wib.3.2012.01.21.02.51.16
+        (version=SSLv3 cipher=OTHER);
+        Sat, 21 Jan 2012 02:51:17 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+In-Reply-To: <7vehutd59p.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188922>
 
-Silence error messages when "git checkout-index" is used to
-checkout a stage that does not exist.  This can happen now that
-mergetool calls checkout_staged_file() unconditionally when
-creating the temporary $BASE, $LOCAL, and $REMOTE files.
+On 21/01/12 04:54, Junio C Hamano wrote:
+> Vitor Antunes<vitor.hda@gmail.com>  writes:
+>
+>> +		grep -q update file2&&
+>
+> Do you really need to use "-q" here?  Wouldn't it help if you wrote it
+> without it while debugging tests with "sh ./t9801-*.sh -v"?
+>
+> Also how does this series interact with the series Luke posted earlier on
+> branches and labels?
 
-Fix the test so that it checks the contents of the "both added"
-file.  The test was passing as a consequence of accidentally
-handing a bad path to "cat".
+Vitor's series applies cleanly to my changes.
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
-This applies on top of da/maint-mergetool-twoway in pu.
+However, one thing I noticed in reading through is that it will break if 
+you end up importing a P4 branch that has spaces (or other shell chars) 
+in its name. A quick test confirms this.
 
- git-mergetool.sh     |    4 +++-
- t/t7610-mergetool.sh |    5 +++--
- 2 files changed, 6 insertions(+), 3 deletions(-)
+- the code doesn't handle the names properly
+- git and p4 have different ideas about valid branch names
 
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 24bedc5..a9f23f7 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -181,7 +181,9 @@ stage_submodule () {
- }
- 
- checkout_staged_file () {
--    tmpfile=$(expr "$(git checkout-index --temp --stage="$1" "$2")" : '\([^	]*\)	')
-+    tmpfile=$(expr \
-+	    "$(git checkout-index --temp --stage="$1" "$2" 2>/dev/null)" \
-+	    : '\([^	]*\)	')
- 
-     if test $? -eq 0 -a -n "$tmpfile" ; then
- 	mv -- "$(git rev-parse --show-cdup)$tmpfile" "$3"
-diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index 2272743..3f261a3 100755
---- a/t/t7610-mergetool.sh
-+++ b/t/t7610-mergetool.sh
-@@ -465,8 +465,9 @@ test_expect_success 'directory vs modified submodule' '
- test_expect_success 'file with no base' '
-     git checkout -b test13 branch1 &&
-     test_must_fail git merge master &&
--    git mergetool --no-prompt --tool mybase -- base &&
--    test "$(cat "$MERGED")" = "" &&
-+    git mergetool --no-prompt --tool mybase -- both &&
-+    >expected &&
-+    test_cmp both expected &&
-     git reset --hard master >/dev/null 2>&1
- '
- 
--- 
-1.7.7.166.g1cd0c
+But before rejecting Vitor's changes because of that it would be worth 
+considering whether we care (much). My own opinion is that if you have 
+developers who are daft enough to put spaces or dollars in their branch 
+names then their project is already doomed anyway....
+
+Perhaps it would be enough just to issue a warning ("your project is 
+doomed; start working on your CV") and skip such branch names rather 
+than falling over with inexplicable error messages.
+
+
+>
+> Thanks.
