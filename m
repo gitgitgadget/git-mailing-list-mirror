@@ -1,87 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: highlights from next "What's cooking"
-Date: Fri, 20 Jan 2012 16:13:03 -0800
-Message-ID: <7vvco5dib4.fsf@alter.siamese.dyndns.org>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: post-update to stash after push to non-bare current branch
+Date: Fri, 20 Jan 2012 18:13:05 -0600
+Message-ID: <4F1A0311.30502@gmail.com>
+References: <jf70vc$kol$1@dough.gmane.org> <4F171088.4080006@gmail.com> <4F1714AD.4090706@gmail.com> <7vwr8oljq7.fsf@alter.siamese.dyndns.org> <4F1764B9.90907@gmail.com> <7vboq0ld5e.fsf@alter.siamese.dyndns.org> <4F188FA2.1000209@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 21 01:13:17 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Sat Jan 21 01:13:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RoOa0-0002Gl-JL
-	for gcvg-git-2@lo.gmane.org; Sat, 21 Jan 2012 01:13:12 +0100
+	id 1RoOa6-0002IN-7p
+	for gcvg-git-2@lo.gmane.org; Sat, 21 Jan 2012 01:13:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756657Ab2AUANI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jan 2012 19:13:08 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44112 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756553Ab2AUANF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jan 2012 19:13:05 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1BB8D7812;
-	Fri, 20 Jan 2012 19:13:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=D
-	HJe5xQmBEEaCQPOfeSjNCL/Vv0=; b=LMKDOYf75zt29CfDBh4QLtvREflJr7I1E
-	FyrcweZBydU7/Px7rKJhRfCXNZdFvYpFjFT+RvPZs5oG+H8OLrn/3NA+KclWlkm3
-	E+r6dBtQPWwitK62DHuMlMWu5zH7pR83Qi1w+eGc7jjr1uMksx2AHS/ihhx7LHd3
-	4BQ4atPNJ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=stn
-	mpa5dlhp5Es0jM9+zvaJAaLRn5CRGBEnhw3kQBEPelT2Av3evzHFifgvnfbeQxxA
-	R7B5IEYUsyRgDu0LdzLKr0Lts0clWOhYhItAYHhNc9P61HFcBFLvfweaCSwByj8E
-	Vv+eLA7y97cTwlB2yFiGyKszoXc6vaA5QhERMZ5Q=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 13E047811;
-	Fri, 20 Jan 2012 19:13:05 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9C9C5780E; Fri, 20 Jan 2012
- 19:13:04 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B0318EFE-43C4-11E1-8DC7-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756683Ab2AUANM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jan 2012 19:13:12 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:57424 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756553Ab2AUANJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jan 2012 19:13:09 -0500
+Received: by ghbg18 with SMTP id g18so565428ghb.19
+        for <git@vger.kernel.org>; Fri, 20 Jan 2012 16:13:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=TOw+8hqo/n3lxWWUkxNb9X72+bC8FsNiLHby2VpECSM=;
+        b=FBWgnSu9VPO5Q2J63WCHC/3BWkPklSCEY5+LyN88dIfgE8Bnh6E5+MMKp098wwL048
+         Iy/vABG1MllWYsr5nq4vg3zWr1Z6Hq4M8uW5Cgx91qmikd/B2vPVetJq8h9xNHstvrPp
+         1/EhL9ZqD6it3JUCQuZtxwVf9poEYuINZDZJw=
+Received: by 10.236.124.97 with SMTP id w61mr12861956yhh.63.1327104789192;
+        Fri, 20 Jan 2012 16:13:09 -0800 (PST)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id d7sm8047413yhn.16.2012.01.20.16.13.07
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 20 Jan 2012 16:13:08 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.25) Gecko/20111213 Thunderbird/3.1.17
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <4F188FA2.1000209@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188910>
 
-These have been merged for upcoming 1.7.9 recently:
+On 1/19/2012 3:48 PM, Neal Kreitzinger wrote:
+> On 1/18/2012 7:00 PM, Junio C Hamano wrote:
+>> Neal Kreitzinger<nkreitzinger@gmail.com> writes:
+>>
+>>>> Have you checked where in the filesystem hierarchy that script
+>>>> is run (hint: pwd)?
+>>>>
+>>> echo pwd in post-update echoes /path/WORKTREE/.git in git-push
+>>> stdout. ... 'git-checkout -f' works manually, but in post-update
+>>> hook...
+>>
+>> Stronger hint. Did you run "git checkout -f" in
+>> /path/WORKTREE/.git to back that "works manually" claim?
+>
+> (Manual behavior): If pwd is WORKTREE/ then git-checkout has correct
+> effect, ie. worktree, index, and HEAD match. If pwd is
+> WORKTREE/.git/ then git-checkout complains 'must be run in a
+> worktree' and has no effect.
+>
+> (post-update hook behavior): If pwd is WORKTREE/.git/ then git-push
+> verbage does not complain, and git-checkout exits zero status but
+> has incorrect effect, ie. index and HEAD match, but worktree matches
+> HEAD@{1}. If pwd is WORKTREE/ then git-push complains 'not a git
+> repository', and git-checkout exits non-zero status and has no
+> effect, ie. worktree and index match HEAD@{1}.
+>
+> Evidence:
+>
+> (post-update hook script): MYPWD=`pwd` echo $MYPWD pushd
+> /home/neal/FSNMSTHTML MYPWD=`pwd` echo $MYPWD git checkout -f HEAD
+> if [ $? -ne 0 ]; then echo "error on checkout!" else echo "checkout
+> HEAD to non-bare remote current branch after push" fi echo $MYPWD
+> popd MYPWD=`pwd` echo $MYPWD
+>
+> (git-push verbage): $ git push origin HEAD Counting objects: 9, done.
+> Delta compression using up to 8 threads. Compressing objects: 100%
+> (5/5), done. Writing objects: 100% (5/5), 462 bytes, done. Total 5
+> (delta 4), reused 0 (delta 0) Unpacking objects: 100% (5/5), done.
+> remote: warning: updating the current branch remote:
+> /home/neal/FSNMSTHTML/.git remote: ~/FSNMSTHTML ~/FSNMSTHTML/.git
+> remote: /home/neal/FSNMSTHTML remote: fatal: Not a git repository:
+> '.' remote: error on checkout! remote: /home/neal/FSNMSTHTML remote:
+> ~/FSNMSTHTML/.git remote: /home/neal/FSNMSTHTML/.git To
+> file:///home/neal/FSNMSTHTML cee9269..34dc5a9 HEAD -> master
+>
+To get this to work I had to learn more about shell scripting and export
+the GIT_WORK_TREE git environment variable.
 
- * jc/pull-signed-tag-doc (2012-01-17) 1 commit
-  + pulling signed tag: add howto document
+(post-update hook):
+export GIT_WORK_TREE=/home/neal/FSNMSTHTML
+git checkout -f HEAD
 
- * mh/maint-show-ref-doc (2012-01-13) 2 commits
-   (merged to 'next' on 2012-01-16 at 8573f09)
-  + git-show-ref doc: typeset regexp in fixed width font
-  + git-show-ref: fix escaping in asciidoc source
+for more info see this stackoverflow thread
+http://stackoverflow.com/questions/6635018/reuse-git-work-tree-in-post-receive-hook-to-rm-a-few-files
 
- * nd/pathspec-recursion-cleanup (2012-01-16) 2 commits
-   (merged to 'next' on 2012-01-16 at 0189264)
-  + diff-index: enable recursive pathspec matching in unpack_trees
-  + Document limited recursion pathspec matching with wildcards
-
- * tr/maint-word-diff-incomplete-line (2012-01-12) 1 commit
-   (merged to 'next' on 2012-01-16 at 58ddaaf)
-  + word-diff: ignore '\ No newline at eof' marker
-
- * jk/credentials (2012-01-16) 4 commits
-   (merged to 'next' on 2012-01-16 at 2810b82)
-  + credential-cache: ignore "connection refused" errors
-   (merged to 'next' on 2012-01-16 at 1c6c94a)
-  + unix-socket: do not let close() or chdir() clobber errno during cleanup
-  + credential-cache: report more daemon connection errors
-  + unix-socket: handle long socket pathnames
-
-
-Also I updated the jc/pull-signed-tag topic that follows Linus's
-suggestion to always spawn an editor when running "git merge" in an
-interactive session.  The special-case environment variable has been
-renamed to MERGE_AUTOEDIT, and scripts can set it to "no" when they start
-to accept the autogenerated merge log message.  There is no plan to
-encourage humans to keep using the historical behaviour, hence there is no
-support for configuration variable (e.g. merge.autoedit) that can be set
-to 'no'.
+v/r,
+neal
