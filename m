@@ -1,74 +1,85 @@
-From: Manuel Reimer <Manuel.Spam@nurfuerspam.de>
-Subject: How to restore "svn mirror generator"?
-Date: Sat, 21 Jan 2012 16:45:10 +0100
-Message-ID: <jfemrc$t1j$1@dough.gmane.org>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCH v2 3/3] git-p4: Add test case for complex branch import
+Date: Sat, 21 Jan 2012 12:11:30 -0500
+Message-ID: <20120121171130.GA6235@padd.com>
+References: <1327105292-30092-1-git-send-email-vitor.hda@gmail.com>
+ <1327105292-30092-4-git-send-email-vitor.hda@gmail.com>
+ <7vehutd59p.fsf@alter.siamese.dyndns.org>
+ <4F1A98A3.2090607@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 21 16:50:46 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Vitor Antunes <vitor.hda@gmail.com>, git@vger.kernel.org
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Sat Jan 21 18:11:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RodDI-00064y-Lz
-	for gcvg-git-2@lo.gmane.org; Sat, 21 Jan 2012 16:50:45 +0100
+	id 1RoeTb-0004Sy-Mi
+	for gcvg-git-2@lo.gmane.org; Sat, 21 Jan 2012 18:11:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752218Ab2AUPuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Jan 2012 10:50:20 -0500
-Received: from lo.gmane.org ([80.91.229.12]:33159 "EHLO lo.gmane.org"
+	id S1750820Ab2AURLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jan 2012 12:11:35 -0500
+Received: from honk.padd.com ([74.3.171.149]:39332 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751914Ab2AUPuS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Jan 2012 10:50:18 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RodCq-0005ni-RO
-	for git@vger.kernel.org; Sat, 21 Jan 2012 16:50:16 +0100
-Received: from p4fd18303.dip0.t-ipconnect.de ([79.209.131.3])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 21 Jan 2012 16:50:16 +0100
-Received: from Manuel.Spam by p4fd18303.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 21 Jan 2012 16:50:16 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: p4fd18303.dip0.t-ipconnect.de
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:9.0.1) Gecko/20111221 Firefox/9.0.1 SeaMonkey/2.6.1
+	id S1750750Ab2AURLe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jan 2012 12:11:34 -0500
+Received: from arf.padd.com (unknown [50.55.142.76])
+	by honk.padd.com (Postfix) with ESMTPSA id 724A05B40;
+	Sat, 21 Jan 2012 09:11:33 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id A950731458; Sat, 21 Jan 2012 12:11:30 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <4F1A98A3.2090607@diamand.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188924>
 
-Hello,
+luke@diamand.org wrote on Sat, 21 Jan 2012 10:51 +0000:
+> On 21/01/12 04:54, Junio C Hamano wrote:
+> >Vitor Antunes<vitor.hda@gmail.com>  writes:
+> >
+> >>+		grep -q update file2&&
+> >
+> >Do you really need to use "-q" here?  Wouldn't it help if you wrote it
+> >without it while debugging tests with "sh ./t9801-*.sh -v"?
+> >
+> >Also how does this series interact with the series Luke posted earlier on
+> >branches and labels?
+> 
+> Vitor's series applies cleanly to my changes.
+> 
+> However, one thing I noticed in reading through is that it will
+> break if you end up importing a P4 branch that has spaces (or other
+> shell chars) in its name. A quick test confirms this.
+> 
+> - the code doesn't handle the names properly
+> - git and p4 have different ideas about valid branch names
+> 
+> But before rejecting Vitor's changes because of that it would be
+> worth considering whether we care (much). My own opinion is that if
+> you have developers who are daft enough to put spaces or dollars in
+> their branch names then their project is already doomed anyway....
+> 
+> Perhaps it would be enough just to issue a warning ("your project is
+> doomed; start working on your CV") and skip such branch names rather
+> than falling over with inexplicable error messages.
 
-I want to create a GIT mirror of a SVN repository.
+This doesn't seem like a big deal.  The read_pipe and
+read_pipe_lines calls shoud be list-ified.  That gets rid
+of the problem with shell interactions.
 
-I plan to mirror a SVN server to GIT. I don't want to fetch the full history but 
-all future commits should be mirrored.
+For git branch name reserved characters, a little function
+to replace the bogus characters with "_" would avoid needing
+to go work on the resume.  Anything in bad_ref_char() and
+check_refname_component().  I agree this doesn't have to be
+perfect.
 
-I plan to do this in the following way:
+This could be a new patch unrelated to Vitor's series, which
+verifies branch names anywhere a new commit is made.
 
-git svn clone -r $REVISION_TO_START_WITH http://domain.tld/path/to/svn
-git remote add origin ssh://user@gitserver.tld/mirror.git
-git push
-
-Now, from time to time, I want to update with
-
-git svn rebase
-git push
-
-I hope, so far I'm on the right way.
-
-But what happens if, for some reason, my local repository gets lost?
-
-How to reconnect GIT and SVN so I'm able to mirror, again?
-
-Is the first step to clone the GIT repository and then, somehow, get the SVN 
-connected, again, or do I have to do it the other way around?
-
-Yours
-
-Manuel
+		-- Pete
