@@ -1,131 +1,60 @@
-From: Magnus =?iso-8859-1?Q?B=E4ck?= <magnus.back@sonyericsson.com>
-Subject: Re: Checkout tag?
-Date: Sun, 22 Jan 2012 18:33:52 +0100
-Message-ID: <20120122173352.GA1068@jpl.local>
-References: <1327226753653-7213023.post@n2.nabble.com>
- <20120122101116.GA31022@jpl.local>
- <1327227956026-7213061.post@n2.nabble.com>
- <20120122113115.GA31545@jpl.local>
- <20120122170800.GA29215@burratino>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Magnus =?iso-8859-1?Q?B=E4ck?= <magnus.back@sonyericsson.com>,
-	Abscissa <bus_nabble_git@semitwist.com>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 22 18:35:05 2012
+From: Seth Robertson <in-gitvger@baka.org>
+Subject: Re: What does "modified" in git status mean?
+Date: Sun, 22 Jan 2012 12:56:32 -0500
+Message-ID: <201201221756.q0MHuWmL003864@no.baka.org>
+References: <loom.20120122T174204-274@post.gmane.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org
+To: Mikolas <mikolas.janota@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 22 18:56:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rp1Jo-0000jP-Fz
-	for gcvg-git-2@lo.gmane.org; Sun, 22 Jan 2012 18:35:04 +0100
+	id 1Rp1f0-0003P5-Th
+	for gcvg-git-2@lo.gmane.org; Sun, 22 Jan 2012 18:56:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752138Ab2AVRek convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Jan 2012 12:34:40 -0500
-Received: from smtprelay-b12.telenor.se ([62.127.194.21]:41505 "EHLO
-	smtprelay-b12.telenor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751982Ab2AVRej (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jan 2012 12:34:39 -0500
-Received: from ipb2.telenor.se (ipb2.telenor.se [195.54.127.165])
-	by smtprelay-b12.telenor.se (Postfix) with ESMTP id 20544E9668
-	for <git@vger.kernel.org>; Sun, 22 Jan 2012 18:33:53 +0100 (CET)
-X-SMTPAUTH-B2: [b627879]
-X-SENDER-IP: [83.227.167.132]
-X-LISTENER: [smtp.bredband.net]
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AnhOAG9HHE9T46eEPGdsb2JhbABDiVCkUxkBAQEBNzKBcgEBBAEyASMjBQsLDgocEhQNCwEMChoTh3wCtyaLQ2MElRiLBIdM
-X-IronPort-AV: E=Sophos;i="4.71,552,1320620400"; 
-   d="scan'208";a="253279513"
-Received: from ua-83-227-167-132.cust.bredbandsbolaget.se (HELO elwood.jpl.local) ([83.227.167.132])
-  by ipb2.telenor.se with ESMTP; 22 Jan 2012 18:33:53 +0100
-Received: by elwood.jpl.local (Postfix, from userid 1000)
-	id 4934D42309; Sun, 22 Jan 2012 18:33:52 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20120122170800.GA29215@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752075Ab2AVR4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jan 2012 12:56:37 -0500
+Received: from tsutomu.baka.org ([66.114.72.182]:54460 "EHLO tsutomu.baka.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751976Ab2AVR4g (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jan 2012 12:56:36 -0500
+Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
+	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id q0MHuXw7029820
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 22 Jan 2012 12:56:33 -0500
+Received: from no.baka.org (localhost [127.0.0.1])
+	by no.baka.org (8.14.4/8.14.0) with ESMTP id q0MHuWmL003864;
+	Sun, 22 Jan 2012 12:56:32 -0500
+In-reply-to: <loom.20120122T174204-274@post.gmane.org>
+Comments: In reply to a message from "Mikolas <mikolas.janota@gmail.com>" dated "Sun, 22 Jan 2012 16:57:52 +0000."
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188969>
 
-On Sunday, January 22, 2012 at 18:08 CET,
-     Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-> Magnus B=E4ck wrote:
->=20
-> > Looking at an up to date Git 1.7.9-rc2 man page, it still seems
-> > slightly inconsistent with itself. The synopsis at the top says
-> >
-> >       git checkout [-p|--patch] [<tree-ish>] [--] [<paths>...]
-> >
-> > while the text in the DESCRIPTION section says
-> >
-> >       git checkout [-p|--patch] [<tree-ish>] [--] <pathspec>...
->=20
-> Hmm, my copy says:
->=20
-> 	SYNOPSIS
->=20
-> 	git checkout [-q] [-f] [-m] [<branch>]
-> 	git checkout [-q] [-f] [-m] [--detach] [<commit>]
-> 	git checkout [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_=
-point>]
-> 	git checkout [-f|--ours|--theirs|-m|--conflict=3D<style>] [<tree-ish=
->] [--] <paths>...
-> 	git checkout [-p|--patch] [<tree-ish>] [--] [<paths>...]
+In message <loom.20120122T174204-274@post.gmane.org>, Mikolas writes:
 
-Perhaps I wasn't clear -- I didn't mean that the synopsis *only* listed
-the form in my original quote above.
+    1) Is there some way how to tell status to tell me *why* the files
+    are marked as modified?
 
-> 	DESCRIPTION
->=20
-> 	... overview ...
->=20
-> 	git checkout [<branch>], git checkout -b|-B <new_branch> [<start poi=
-nt>],
-> 	git checkout [--detach] [<commit>]
->=20
-> 		This form switches branches by updating the index, working
-> 		tree, and HEAD...
->=20
-> 	git checkout [-p|--patch] [<tree-ish>] [--] <pathspec>...
->=20
-> 		When <paths> or --patch are given, git checkout does not
-> 		switch branches. It updates the named paths...
->=20
-> So in the synopsis it lists five forms, and in the description sectio=
-n
-> it lists two forms, the first of which has three variants.
->=20
-> It's not immediately obvious to me which inconsistency you are
-> pointing to as a source of confusion.  Could you elaborate,
-> preferably with suggested wording for a fix?
+Not as such.  However, I do have a script which, when run from the
+root of the working directory, manually compares the on-disk files to
+what is checked into git.  This would detect any whitespace or smudge
+related changes, or of course any normal user changes.
 
-I simply meant that
+git ls-tree --name-only -r HEAD | while read path; do if [ ! -f "$path" ]; then continue; fi; sha1=`git show "HEAD:$path" | sha1sum | awk '{print $1;}'`; sha2=`sha1sum "$path" | awk '{print $1;}'`; if [ $sha1 != $sha2 ]; then echo "<$sha1> <$sha2> $path"; fi; done
 
-   git checkout [-p|--patch] [<tree-ish>] [--] [<paths>...]
-   git checkout [-p|--patch] [<tree-ish>] [--] <pathspec>...
 
-aren't identical even though I assume they describe the exact same
-scenario. The first command synopsis makes it clear that paths are
-optional while the second indicates that at least one path must be
-specified (unless "..." means "zero, one, or more occurences").
-Also, "paths" !=3D "pathspec".
+    2) Is it normal that git status behaves differently in different directories?
 
-> If you can do so in the form of a patch, all the better. ;-)
+I would say not, but perhaps you have a .gitattributes in that
+directory? (Which would be a bug) Could you try with a more recent
+version of git?
 
-Sure, but it won't be during the coming week. Not that the patch is
-terribly difficult to prepare but because I need legal approval to
-submit it, and it's not clear I'll have time to deal with all that
-during my last week at work.
-
---=20
-Magnus B=E4ck                   Opinions are my own and do not necessar=
-ily
-SW Configuration Manager      represent the ones of my employer, etc.
-Sony Ericsson
+					-Seth Robertson
