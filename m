@@ -1,74 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Phillip Susi <psusi@ubuntu.com>
 Subject: Re: make install rewrites source files
-Date: Mon, 23 Jan 2012 12:15:07 -0800
-Message-ID: <7vhazm89bo.fsf@alter.siamese.dyndns.org>
+Date: Mon, 23 Jan 2012 15:28:39 -0500
+Message-ID: <4F1DC2F7.2070502@ubuntu.com>
 References: <hbf.20120123bz2f@bombur.uio.no>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
-X-From: git-owner@vger.kernel.org Mon Jan 23 21:15:18 2012
+X-From: git-owner@vger.kernel.org Mon Jan 23 21:28:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RpQIP-0008VI-U2
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 21:15:18 +0100
+	id 1RpQVS-0007YO-RU
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 21:28:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753699Ab2AWUPL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jan 2012 15:15:11 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34228 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751770Ab2AWUPK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jan 2012 15:15:10 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 605A152EA;
-	Mon, 23 Jan 2012 15:15:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Wq/Sb2+uCwWavaYA/bW778snbqg=; b=G1aE0X
-	eLFA0FiYpY3h11zGwIz7zpLbrqUR3C0pWl3/fta07LVAe2R1IcH9gC39MIEiO2r7
-	BdSw1KYq8wAuoyynIJDyiqDhQPqmZiBj2iUtTNnk4iUtwmMBIMnTve4vknyHy0Y8
-	nK79KsFgexa1IfsxHa7n32OhNOU+8hUFJxUj0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=p68mWxLrrDuGVySm/ng7pP3D1NxnkJGf
-	SdZPxAnhFEO6h1Y1cjRWRkRVb1+9nqf6axNA6x+ArbLA/hkwneTiXFAstreObjeo
-	jibBs6PEIJC2jJ/D/es0YYw+Y8uG6epGV87/89YHMbv3CWrkCZAbXBRDVmEohKBw
-	CLVIZOEla2Q=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5519752E9;
-	Mon, 23 Jan 2012 15:15:09 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 75F8152E6; Mon, 23 Jan 2012
- 15:15:08 -0500 (EST)
-In-Reply-To: <hbf.20120123bz2f@bombur.uio.no> (Hallvard Breien Furuseth's
- message of "Mon, 23 Jan 2012 15:18:18 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F22E14B2-45FE-11E1-9FB6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752959Ab2AWU2m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jan 2012 15:28:42 -0500
+Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:16819 "EHLO
+	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752122Ab2AWU2l (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jan 2012 15:28:41 -0500
+X-Authority-Analysis: v=2.0 cv=adPjbGUt c=1 sm=0 a=/DbS/tiKggfTkRRHPZEB4g==:17 a=seg9fo12g4kA:10 a=1jw1B5Ym_9AA:10 a=S1A5HrydsesA:10 a=8nJEP1OIZ-IA:10 a=xe8BsctaAAAA:8 a=DJ29HrvqniOuVWWjLpIA:9 a=wPNLvfGTeEIA:10 a=/DbS/tiKggfTkRRHPZEB4g==:117
+X-Cloudmark-Score: 0
+X-Originating-IP: 67.78.168.186
+Received: from [67.78.168.186] ([67.78.168.186:53251] helo=[10.1.1.230])
+	by cdptpa-oedge02.mail.rr.com (envelope-from <psusi@ubuntu.com>)
+	(ecelerity 2.2.3.46 r()) with ESMTP
+	id 0C/6B-15128-7F2CD1F4; Mon, 23 Jan 2012 20:28:40 +0000
+User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
+In-Reply-To: <hbf.20120123bz2f@bombur.uio.no>
+X-Enigmail-Version: 1.3.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189011>
 
-Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> INSTALL says we can install a profiled Git with
-> 	$ make profile-all
-> 	# make install prefix=...
-> This does not work...
+On 1/23/2012 9:18 AM, Hallvard Breien Furuseth wrote:
+> INSTALL says we can install a profiled Git with $ make profile-all 
+> # make install prefix=...
 
-We should just drop prefix=... from that line, as the "prefix=value must
-be the same while building and installing" is not only about the "profile"
-build but applies to any other build.
+prefix should be an argument to configure, not make.
 
-I however wonder why you would need a separate profile-install target,
-though.  Shouldn't 
+> This does not work: 'make install' notices that the build flags
+> has changed and rebuilds Git - presumably without using the profile
+> info. The patch below fixes this.
 
-	$ make foo-build && make install
+make install implicitly includes make all; it is supposed to rebuild
+anything that needs rebuilt.
 
-install a funky 'foo' variant of the build for any supported value of
-'foo'?
+> However, make install should not write to the source directory in
+> any case.  That fails as root if root lacks write access there, due
+> to NFS mounts that map root to nobody etc.  At least git-instaweb
+> and GIT-BUILD-OPTIONS are rewritten.  You can simulate this with su
+> nobody -s /bin/bash -c 'make -k install' after configuring with
+> prefix=<directory owned by nobody>.
+
+If you want to build locally from a read only nfs mount, then you
+should run the configure script in a local directory:
+
+mkdir /tmp/build
+cd /tmp/build
+/path/to/nfs/source/configure
+make
+make install
+
+> Index: Makefile --- Makefile~	2012-01-19 01:36:02.000000000 +0100 
+> +++ Makefile	2012-01-23 14:44:56.554980323 +0100
+
+Hrm... Makefile should itself be a generated file from Makefile.in or
+Makefile.am, but it appears that git isn't doing this.  Perhaps that
+should be fixed.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.17 (MingW32)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQEcBAEBAgAGBQJPHcL3AAoJEJrBOlT6nu759U8IANCtJDWnCizSDWrJAFWe3ISr
+FemiFgW347qjLcWlJS036nPfKnrxrJ88rF2e9+8Tj/hfPojNwCmyvN7rz+guI0uA
+qqOfk9uN38Qd/jwfW5gv/7raKP4eUyRZ9ioptX3NqQtP5Co4TFuajOfswpN8f/DL
+QiU7os62Df5HWW2U8A3XT9KiU9oWRala8dcrp5EJkEOfYDvQG2o3e1N/D91KC4el
+lAyVEnzrvoLr5NzHCnFe7dQqvAB2S3PE/NP4anZHyNRp3SDLu1iZbD9MKC21Bd3n
+BmCn9Vh7U+reC/NBMq8qaM69jLRk2Dx12brFoyY5/cjdQuaLj+n6h1nN9MqSKYI=
+=/qLy
+-----END PGP SIGNATURE-----
