@@ -1,78 +1,74 @@
-From: Phillip Susi <psusi@ubuntu.com>
-Subject: Re: What does "modified" in git status mean?
-Date: Mon, 23 Jan 2012 15:07:32 -0500
-Message-ID: <4F1DBE04.6040200@ubuntu.com>
-References: <loom.20120122T174204-274@post.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: make install rewrites source files
+Date: Mon, 23 Jan 2012 12:15:07 -0800
+Message-ID: <7vhazm89bo.fsf@alter.siamese.dyndns.org>
+References: <hbf.20120123bz2f@bombur.uio.no>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Mikolas <mikolas.janota@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 23 21:07:42 2012
+To: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
+X-From: git-owner@vger.kernel.org Mon Jan 23 21:15:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RpQB1-0004Wg-VO
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 21:07:40 +0100
+	id 1RpQIP-0008VI-U2
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 21:15:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754094Ab2AWUHf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jan 2012 15:07:35 -0500
-Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:18204 "EHLO
-	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753850Ab2AWUHe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jan 2012 15:07:34 -0500
-X-Authority-Analysis: v=2.0 cv=TqVkdUrh c=1 sm=0 a=/DbS/tiKggfTkRRHPZEB4g==:17 a=seg9fo12g4kA:10 a=nSowTIaEBBsA:10 a=S1A5HrydsesA:10 a=8nJEP1OIZ-IA:10 a=xe8BsctaAAAA:8 a=eyDZpEM8Fhr-82dOU2QA:9 a=wPNLvfGTeEIA:10 a=/DbS/tiKggfTkRRHPZEB4g==:117
-X-Cloudmark-Score: 0
-X-Originating-IP: 67.78.168.186
-Received: from [67.78.168.186] ([67.78.168.186:53175] helo=[10.1.1.230])
-	by cdptpa-oedge03.mail.rr.com (envelope-from <psusi@ubuntu.com>)
-	(ecelerity 2.2.3.46 r()) with ESMTP
-	id 31/76-20593-40EBD1F4; Mon, 23 Jan 2012 20:07:33 +0000
-User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-In-Reply-To: <loom.20120122T174204-274@post.gmane.org>
-X-Enigmail-Version: 1.3.4
+	id S1753699Ab2AWUPL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jan 2012 15:15:11 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34228 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751770Ab2AWUPK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jan 2012 15:15:10 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 605A152EA;
+	Mon, 23 Jan 2012 15:15:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Wq/Sb2+uCwWavaYA/bW778snbqg=; b=G1aE0X
+	eLFA0FiYpY3h11zGwIz7zpLbrqUR3C0pWl3/fta07LVAe2R1IcH9gC39MIEiO2r7
+	BdSw1KYq8wAuoyynIJDyiqDhQPqmZiBj2iUtTNnk4iUtwmMBIMnTve4vknyHy0Y8
+	nK79KsFgexa1IfsxHa7n32OhNOU+8hUFJxUj0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=p68mWxLrrDuGVySm/ng7pP3D1NxnkJGf
+	SdZPxAnhFEO6h1Y1cjRWRkRVb1+9nqf6axNA6x+ArbLA/hkwneTiXFAstreObjeo
+	jibBs6PEIJC2jJ/D/es0YYw+Y8uG6epGV87/89YHMbv3CWrkCZAbXBRDVmEohKBw
+	CLVIZOEla2Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5519752E9;
+	Mon, 23 Jan 2012 15:15:09 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 75F8152E6; Mon, 23 Jan 2012
+ 15:15:08 -0500 (EST)
+In-Reply-To: <hbf.20120123bz2f@bombur.uio.no> (Hallvard Breien Furuseth's
+ message of "Mon, 23 Jan 2012 15:18:18 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F22E14B2-45FE-11E1-9FB6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189010>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no> writes:
 
-On 1/22/2012 11:57 AM, Mikolas wrote:
-> I am using git version 1.7.5.1 under cygwin and I'm getting
-> behavior that I'm not understanding.
-> 
-> When I do 'git status' in the root directory of the repository, it
-> shows no difference. Once I cd to a subdirectory, it starts showing
-> modifications. However, 'git diff' shows nothing.
-> 
-> So it looks something like this: $ git status # On branch master 
-> nothing to commit (working directory clean)
-> 
-> $ cd foo $ git status # On branch master # Changes not staged for
-> commit: #   (use "git add <file>..." to update what will be
-> committed) #   (use "git checkout -- <file>..." to discard changes
-> in working directory) # #       modified:   ../foo/bar
-> 
-> $ git diff $
-> 
-> I put the following in my gitconfig but that doesn't seem to be
-> doing much. [core] trustctime = false autocrlf = input
+> INSTALL says we can install a profiled Git with
+> 	$ make profile-all
+> 	# make install prefix=...
+> This does not work...
 
-autocrlf is basically broken, don't use it.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.17 (MingW32)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+We should just drop prefix=... from that line, as the "prefix=value must
+be the same while building and installing" is not only about the "profile"
+build but applies to any other build.
 
-iQEcBAEBAgAGBQJPHb4EAAoJEJrBOlT6nu75NmsIALPYuRTdGPLigxmiAWfH4e/i
-d516AR8AgkWtJzK3TbaD2HxgnQK9dmWYysppT7WR2SetrBrpsEUvQnw0b3jUewkb
-lL97cEcDfiYbKXnkpfHRtAawUIXhrQeT/8XpOrvc7d8wPCWt4Zd7hrLo3TTuBGmN
-tQcJtUqPwxreUYWOR5dPMV3oaeclptavEoeGc+2BlTiAuti6aw89G7lRvgVZQDGr
-y0uCL4QIyOuMU9xUaeiFm/pCqY5MWSTs6Nv3mnAiw6PwK+aR1OcUkJjRw6dM6xWY
-7futPNLEph8fptltaLhzMoeSzct3vNd+Al7synmOTh8bGitJeyaiCZOR55CG/eY=
-=i8Zy
------END PGP SIGNATURE-----
+I however wonder why you would need a separate profile-install target,
+though.  Shouldn't 
+
+	$ make foo-build && make install
+
+install a funky 'foo' variant of the build for any supported value of
+'foo'?
