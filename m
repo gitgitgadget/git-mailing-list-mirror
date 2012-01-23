@@ -1,63 +1,91 @@
-From: Mathieu CLAVEL <math.clavel@gmail.com>
-Subject: Re: [BUG ?] completion of stash name with git stash
-Date: Mon, 23 Jan 2012 08:36:28 +0000 (UTC)
-Message-ID: <loom.20120123T093453-132@post.gmane.org>
-References: <loom.20120119T141601-606@post.gmane.org> <87lip3mzsz.fsf@thomas.inf.ethz.ch> <loom.20120119T172954-563@post.gmane.org> <87obtzlfuv.fsf@thomas.inf.ethz.ch>
+From: Brian Foster <brian.foster@maxim-ic.com>
+Subject: Re: [Q] Determing if a commit is reachable from the HEAD ?
+Date: Mon, 23 Jan 2012 10:20:03 +0100
+Message-ID: <201201231020.04041.brian.foster@maxim-ic.com>
+References: <201201201433.30267.brian.foster@maxim-ic.com>  <CAMK1S_gkZYpK3nrNMsnmFzi=tzjyEjVwOo_j4Z=d0hqjdF7r_w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 23 09:36:54 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sitaram Chamarty <sitaramc@gmail.com>
+To: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 23 10:20:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RpFOW-0002Wn-SW
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 09:36:53 +0100
+	id 1RpG4s-00046a-N3
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 10:20:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752081Ab2AWIgr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jan 2012 03:36:47 -0500
-Received: from lo.gmane.org ([80.91.229.12]:49549 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750695Ab2AWIgr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jan 2012 03:36:47 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RpFOO-0002TC-Jt
-	for git@vger.kernel.org; Mon, 23 Jan 2012 09:36:44 +0100
-Received: from 249-137-167-83.reverse.alphalink.fr ([83.167.137.249])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 23 Jan 2012 09:36:44 +0100
-Received: from math.clavel by 249-137-167-83.reverse.alphalink.fr with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 23 Jan 2012 09:36:44 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 83.167.137.249 (Mozilla/5.0 (Windows NT 5.1; rv:9.0.1) Gecko/20100101 Firefox/9.0.1)
+	id S1752234Ab2AWJUd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Jan 2012 04:20:33 -0500
+Received: from antispam01.maxim-ic.com ([205.153.101.182]:36750 "EHLO
+	antispam01.maxim-ic.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750893Ab2AWJUc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Jan 2012 04:20:32 -0500
+X-ASG-Debug-ID: 1327310430-02ae986ab13d08b0001-QuoKaX
+Received: from maxdalex01.maxim-ic.internal (maxdalex01.maxim-ic.internal [10.16.15.101]) by antispam01.maxim-ic.com with ESMTP id pkmsIymMXnE4gce6; Mon, 23 Jan 2012 03:20:30 -0600 (CST)
+X-Barracuda-Envelope-From: brian.foster@maxim-ic.com
+Received: from maxsvlex02.maxim-ic.internal (10.32.112.18) by
+ maxdalex01.maxim-ic.internal (10.16.15.101) with Microsoft SMTP Server (TLS)
+ id 8.3.192.1; Mon, 23 Jan 2012 03:20:29 -0600
+Received: from bfoster-57.localnet (10.201.0.19) by
+ maxsvlex02.maxim-ic.internal (10.32.112.18) with Microsoft SMTP Server (TLS)
+ id 8.3.192.1; Mon, 23 Jan 2012 01:20:28 -0800
+X-ASG-Orig-Subj: Re: [Q] Determing if a commit is reachable from the HEAD ?
+User-Agent: KMail/1.13.5 (Linux/2.6.32-37-generic; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <CAMK1S_gkZYpK3nrNMsnmFzi=tzjyEjVwOo_j4Z=d0hqjdF7r_w@mail.gmail.com>
+X-Barracuda-Connect: maxdalex01.maxim-ic.internal[10.16.15.101]
+X-Barracuda-Start-Time: 1327310430
+X-Barracuda-URL: http://AntiSpam02.maxim-ic.com:8000/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at maxim-ic.com
+X-Barracuda-Spam-Score: 0.12
+X-Barracuda-Spam-Status: No, SCORE=0.12 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=5.0 tests=CN_BODY_332
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.2.86448
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	0.12 CN_BODY_332            BODY: CN_BODY_332
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188980>
 
-Thomas Rast <trast <at> student.ethz.ch> writes:
+On Friday 20 January 2012 23:50:23 Sitaram Chamarty wrote:
+> On Fri, Jan 20, 2012 at 7:03 PM, Brian Foster <brian.foster@maxim-ic.=
+com> wrote:
+>[ ... ]
+> >                         x---Y---y---y---y  HEAD
+> >                        /
+> >  ...--o---o---C---o---S
+> >                        \
+> >                         n---n---N---*---*  other
+> >
+> >  In a script, how can I determine commit Y is reachable
+> >  from the current HEAD ?   [ ... ]
+>=20
+> I've been using 'git rev-list HEAD..Y'.  If it produces any output,
+> Y is not reachable from HEAD (there is something in Y that is not
+> in HEAD).
 
+ What's interesting about this solution, at least
+ with GIT v1.7.6.1 (I haven't tried other versions),
+ is =E2=80=98git rev-list HEAD..Y=E2=80=99 does seem to work (if
+ there is any output, then Y is not reachable from
+ HEAD), but =E2=80=98git rev-list --quiet HEAD..Y=E2=80=99 does _not_
+ work (it seems to always(?) exit status 0).
 
-> Indeed, I compiled bash 3.1 and with that (and otherwise the same bashrc
-> etc.) I can reproduce.  Ditto for 4.0-rc1, which was the newest version
-> in the repository where I found the bash source[1], so I couldn't
-> bisect.  Perhaps if you can hunt down something newer you could try to
-> find the version where it starts working.
-> 
-> [1] git://gitorious.org/bash/bash.git
-> 
+ I am probably misunderstanding =E2=80=98--quiet=E2=80=99, which the
+ man page cryptically describes as =E2=80=9C... allow the
+ caller to test the exit status to see if a range
+ of objects is fully connected (or not).=E2=80=9D  What is
+ meant here by =E2=80=9Cfully connected=E2=80=9D ?
 
-Thanks, so it's not a git issue, but a problm with the bash version.
+cheers!
+	-blf-
 
-Regards,
-
-Mathieu
+--=20
+Brian Foster
+Principal MTS, Software        |  La Ciotat, France
+Maxim Integrated Products      |  Web:  http://www.maxim-ic.com/
