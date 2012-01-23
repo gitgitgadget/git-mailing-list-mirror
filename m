@@ -1,67 +1,63 @@
-From: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
-Subject: Test t9500 fails if Time::HiRes is missing
-Date: Mon, 23 Jan 2012 06:39:21 +0100 (CET)
-Message-ID: <hbf.20120123smq1@bombur.uio.no>
-References: <hbf.20120123rqzg@bombur.uio.no>
+From: Mathieu CLAVEL <math.clavel@gmail.com>
+Subject: Re: [BUG ?] completion of stash name with git stash
+Date: Mon, 23 Jan 2012 08:36:28 +0000 (UTC)
+Message-ID: <loom.20120123T093453-132@post.gmane.org>
+References: <loom.20120119T141601-606@post.gmane.org> <87lip3mzsz.fsf@thomas.inf.ethz.ch> <loom.20120119T172954-563@post.gmane.org> <87obtzlfuv.fsf@thomas.inf.ethz.ch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 23 06:39:28 2012
+X-From: git-owner@vger.kernel.org Mon Jan 23 09:36:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RpCcp-0008UA-T2
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 06:39:28 +0100
+	id 1RpFOW-0002Wn-SW
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 09:36:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751177Ab2AWFjX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jan 2012 00:39:23 -0500
-Received: from mail-out1.uio.no ([129.240.10.57]:58575 "EHLO mail-out1.uio.no"
+	id S1752081Ab2AWIgr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jan 2012 03:36:47 -0500
+Received: from lo.gmane.org ([80.91.229.12]:49549 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750923Ab2AWFjX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jan 2012 00:39:23 -0500
-Received: from mail-mx1.uio.no ([129.240.10.29])
-	by mail-out1.uio.no with esmtp (Exim 4.75)
-	(envelope-from <hbf@ulrik.uio.no>)
-	id 1RpCck-0001mR-Cs
-	for git@vger.kernel.org; Mon, 23 Jan 2012 06:39:22 +0100
-Received: from bombur.uio.no ([129.240.6.233])
-	by mail-mx1.uio.no with esmtp  (Exim 4.76)
-	(envelope-from <hbf@ulrik.uio.no>)
-	id 1RpCck-0002YX-20
-	for git@vger.kernel.org; Mon, 23 Jan 2012 06:39:22 +0100
-Received: by bombur.uio.no (Postfix, from userid 2112)
-	id F218312C0; Mon, 23 Jan 2012 06:39:21 +0100 (CET)
-In-Reply-To: <hbf.20120123rqzg@bombur.uio.no>
-X-UiO-Ratelimit-Test: rcpts/h 1 msgs/h 1 sum rcpts/h 2 sum msgs/h 1 total rcpts 2096 max rcpts/h 17 ratelimit 0
-X-UiO-Spam-info: not spam, SpamAssassin (score=-5.0, required=5.0, autolearn=disabled, T_RP_MATCHES_RCVD=-0.01,UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
-X-UiO-Scanned: 78054384AF1A1CA55DF491C53E5A9CEA273F7873
-X-UiO-SPAM-Test: remote_host: 129.240.6.233 spam_score: -49 maxlevel 80 minaction 2 bait 0 mail/h: 1 total 922 max/h 5 blacklist 0 greylist 0 ratelimit 0
+	id S1750695Ab2AWIgr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jan 2012 03:36:47 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RpFOO-0002TC-Jt
+	for git@vger.kernel.org; Mon, 23 Jan 2012 09:36:44 +0100
+Received: from 249-137-167-83.reverse.alphalink.fr ([83.167.137.249])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 23 Jan 2012 09:36:44 +0100
+Received: from math.clavel by 249-137-167-83.reverse.alphalink.fr with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 23 Jan 2012 09:36:44 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 83.167.137.249 (Mozilla/5.0 (Windows NT 5.1; rv:9.0.1) Gecko/20100101 Firefox/9.0.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188979>
 
-I wrote:
-> Better add a comment about that, so it doesn't get re-reverted.
+Thomas Rast <trast <at> student.ethz.ch> writes:
 
-Perhaps I should follow my own advise...
 
-> Or pacify the test and expect gitweb@RHEL-users to install the RPM:
+> Indeed, I compiled bash 3.1 and with that (and otherwise the same bashrc
+> etc.) I can reproduce.  Ditto for 4.0-rc1, which was the newest version
+> in the repository where I found the bash source[1], so I couldn't
+> bisect.  Perhaps if you can hunt down something newer you could try to
+> find the version where it starts working.
+> 
+> [1] git://gitorious.org/bash/bash.git
+> 
 
---- git-1.7.9.rc2/t/gitweb-lib.sh~
-+++ git-1.7.9.rc2/t/gitweb-lib.sh
-@@ -113,4 +113,10 @@
- 	test_done
- }
- 
-+# RedHat has moved Time::HiRes out from core Perl to a separate package.
-+perl -MTime::HiRes -e 0 >/dev/null 2>&1 || {
-+	skip_all='skipping gitweb tests, Time::HiRes module not available'
-+	test_done
-+}
-+
- gitweb_init
+Thanks, so it's not a git issue, but a problm with the bash version.
 
--- 
-Hallvard
+Regards,
+
+Mathieu
