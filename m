@@ -1,91 +1,266 @@
-From: Brian Foster <brian.foster@maxim-ic.com>
-Subject: Re: [Q] Determing if a commit is reachable from the HEAD ?
-Date: Mon, 23 Jan 2012 10:20:03 +0100
-Message-ID: <201201231020.04041.brian.foster@maxim-ic.com>
-References: <201201201433.30267.brian.foster@maxim-ic.com>  <CAMK1S_gkZYpK3nrNMsnmFzi=tzjyEjVwOo_j4Z=d0hqjdF7r_w@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sitaram Chamarty <sitaramc@gmail.com>
-To: git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 23 10:20:40 2012
+From: conrad.irwin@gmail.com
+Subject: [PATCH] Don't search files with an unset "grep" attribute
+Date: Mon, 23 Jan 2012 01:37:36 -0800
+Message-ID: <4f1d2a8b.a2d8320a.50ec.576d@mx.google.com>
+References: <CACsJy8C0aXgecCWHrCK3yzNLWnWX4g81x-OzZCY0xtonbspzXw@mail.gmail.com>
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Conrad Irwin <conrad.irwin@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Dov Grobgeld <dov.grobgeld@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 23 10:38:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RpG4s-00046a-N3
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 10:20:39 +0100
+	id 1RpGM8-0003a0-1a
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 10:38:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752234Ab2AWJUd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Jan 2012 04:20:33 -0500
-Received: from antispam01.maxim-ic.com ([205.153.101.182]:36750 "EHLO
-	antispam01.maxim-ic.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750893Ab2AWJUc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Jan 2012 04:20:32 -0500
-X-ASG-Debug-ID: 1327310430-02ae986ab13d08b0001-QuoKaX
-Received: from maxdalex01.maxim-ic.internal (maxdalex01.maxim-ic.internal [10.16.15.101]) by antispam01.maxim-ic.com with ESMTP id pkmsIymMXnE4gce6; Mon, 23 Jan 2012 03:20:30 -0600 (CST)
-X-Barracuda-Envelope-From: brian.foster@maxim-ic.com
-Received: from maxsvlex02.maxim-ic.internal (10.32.112.18) by
- maxdalex01.maxim-ic.internal (10.16.15.101) with Microsoft SMTP Server (TLS)
- id 8.3.192.1; Mon, 23 Jan 2012 03:20:29 -0600
-Received: from bfoster-57.localnet (10.201.0.19) by
- maxsvlex02.maxim-ic.internal (10.32.112.18) with Microsoft SMTP Server (TLS)
- id 8.3.192.1; Mon, 23 Jan 2012 01:20:28 -0800
-X-ASG-Orig-Subj: Re: [Q] Determing if a commit is reachable from the HEAD ?
-User-Agent: KMail/1.13.5 (Linux/2.6.32-37-generic; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <CAMK1S_gkZYpK3nrNMsnmFzi=tzjyEjVwOo_j4Z=d0hqjdF7r_w@mail.gmail.com>
-X-Barracuda-Connect: maxdalex01.maxim-ic.internal[10.16.15.101]
-X-Barracuda-Start-Time: 1327310430
-X-Barracuda-URL: http://AntiSpam02.maxim-ic.com:8000/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at maxim-ic.com
-X-Barracuda-Spam-Score: 0.12
-X-Barracuda-Spam-Status: No, SCORE=0.12 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=5.0 tests=CN_BODY_332
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.2.86448
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	0.12 CN_BODY_332            BODY: CN_BODY_332
+	id S1752675Ab2AWJiX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jan 2012 04:38:23 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:42266 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750893Ab2AWJiW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jan 2012 04:38:22 -0500
+Received: by iacb35 with SMTP id b35so3487351iac.19
+        for <git@vger.kernel.org>; Mon, 23 Jan 2012 01:38:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=k1yyJVz66/4cISCYQOKv91002EVhu3xPt1Ywo+oZE/o=;
+        b=c5SHmCwHfmiGv66o5GB9wSLictQjPlrfMWw2irG8JW26dqpRJ62ILRQo7Z1NUkoRBC
+         JE+Gcw6L2Q06SvJN4PWKq2/Vho9sYbk6ki6k+PcjDCKqej0OazZ7XqHzOIEROAPAzvlI
+         Senk3Ethw9nS2rTPBEWBfQ89d3h9K3OkRZlxk=
+Received: by 10.42.151.196 with SMTP id f4mr8483774icw.29.1327311501738;
+        Mon, 23 Jan 2012 01:38:21 -0800 (PST)
+Received: from monteverdi.hsd1.ca.comcast.net. (c-69-181-44-79.hsd1.ca.comcast.net. [69.181.44.79])
+        by mx.google.com with ESMTPS id or2sm15981343igc.5.2012.01.23.01.38.18
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 23 Jan 2012 01:38:19 -0800 (PST)
+X-Mailer: git-send-email 1.7.9.rc2.1.g1fdd3
+In-Reply-To: <CACsJy8C0aXgecCWHrCK3yzNLWnWX4g81x-OzZCY0xtonbspzXw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188981>
 
-On Friday 20 January 2012 23:50:23 Sitaram Chamarty wrote:
-> On Fri, Jan 20, 2012 at 7:03 PM, Brian Foster <brian.foster@maxim-ic.=
-com> wrote:
->[ ... ]
-> >                         x---Y---y---y---y  HEAD
-> >                        /
-> >  ...--o---o---C---o---S
-> >                        \
-> >                         n---n---N---*---*  other
-> >
-> >  In a script, how can I determine commit Y is reachable
-> >  from the current HEAD ?   [ ... ]
->=20
-> I've been using 'git rev-list HEAD..Y'.  If it produces any output,
-> Y is not reachable from HEAD (there is something in Y that is not
-> in HEAD).
+From: Conrad Irwin <conrad.irwin@gmail.com>
 
- What's interesting about this solution, at least
- with GIT v1.7.6.1 (I haven't tried other versions),
- is =E2=80=98git rev-list HEAD..Y=E2=80=99 does seem to work (if
- there is any output, then Y is not reachable from
- HEAD), but =E2=80=98git rev-list --quiet HEAD..Y=E2=80=99 does _not_
- work (it seems to always(?) exit status 0).
+Nguyen Thai Ngoc Duy <pclouds <at> gmail.com> writes:
+> Definitely. But because I'm stuck at adding "seen" feature from
+> match_pathspec_depth to tree_entry_interesting, that probably won't happen
+> this year. Adding "--exclude=<pattern>" to git-grep is a more plausible
+> option.
 
- I am probably misunderstanding =E2=80=98--quiet=E2=80=99, which the
- man page cryptically describes as =E2=80=9C... allow the
- caller to test the exit status to see if a range
- of objects is fully connected (or not).=E2=80=9D  What is
- meant here by =E2=80=9Cfully connected=E2=80=9D ?
+I think the .gitattributes mechanism is a better place to configure this, as the
+files I with to exclude from grep are always the same files (test fixtures
+mainly, minified library code also). I often want to make git-diff be quieter
+about them too, so I'll be setting the -diff attribute already.
 
-cheers!
-	-blf-
+I've attached a patch, which adds the "grep" attribute, which can (for now) only
+be unset. This has the same effect for me as my original patch [1], but should
+also improve life for people with large blobs as described above.
 
---=20
-Brian Foster
-Principal MTS, Software        |  La Ciotat, France
-Maxim Integrated Products      |  Web:  http://www.maxim-ic.com/
+In future we could extend the attribute to give a meaning to set values, but I'm
+not yet sure what that would look like. We could also add an --exclude=<foo>
+flag to grep for people who want to configure grep on a per-run basis, but I
+think that is a much less common desire.
+
+The failing test attached to this patch is a symptom of a larger issue with the
+way that git-grep handles objects that are not at the root of the repository. A
+more obvious symptom can be revealed by comparing the output of:
+
+  git grep int HEAD:./builtin
+
+  cd builtin; git grep int HEAD:./
+
+The problem is that grep doesn't correctly separate the path from the revision
+part of the spec. It's currently unobvious to me how to fix this but I hope
+someone more familiar with the code (Nguyen or Junio) might be able to see a
+way.
+
+Yours,
+Conrad
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/179299
+
+---8<---
+
+
+To set -grep on an file in .gitattributes will cause that file to be
+skipped completely while grepping. This can be used to reduce the number
+of false positives when your repository contains files that are
+uninteresting to you, for example test fixtures, dlls or minified source
+code.
+
+The other approach considered was to allow an --exclude flag to grep at runtime,
+however that better serves the less common use-case of wanting to customise the
+list of files per-invocation rather than statically.
+
+Signed-off-by: Conrad Irwin <conrad.irwin@gmail.com>
+---
+ Documentation/git-grep.txt      |    7 +++++++
+ Documentation/gitattributes.txt |    9 +++++++++
+ builtin/grep.c                  |    8 ++++++++
+ grep.c                          |   21 +++++++++++++++++++++
+ grep.h                          |    1 +
+ t/t7810-grep.sh                 |   30 ++++++++++++++++++++++++++++++
+ 6 files changed, 76 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 6a8b1e3..7c74165 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -242,6 +242,13 @@ OPTIONS
+ 	If given, limit the search to paths matching at least one pattern.
+ 	Both leading paths match and glob(7) patterns are supported.
+ 
++ATTRIBUTES
++----------
++
++grep::
++	If the grep attribute is unset on a file using the linkgit:gitattributes[1]
++	mechanism, then that file will not be searched.
++
+ Examples
+ --------
+ 
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index a85b187..3ffcec7 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -869,6 +869,15 @@ If this attribute is not set or has an invalid value, the value of the
+ `gui.encoding` configuration variable is used instead
+ (See linkgit:git-config[1]).
+ 
++Configuring files to search
++~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++`grep`
++^^^^^^
++
++If the attribute `grep` is unset for a file then linkgit:git-grep[1]
++will ignore that file while searching for matches.
++
+ 
+ USING MACRO ATTRIBUTES
+ ----------------------
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 9ce064a..9f8dfc0 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -398,6 +398,10 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
+ 	struct strbuf pathbuf = STRBUF_INIT;
+ 	char *name;
+ 
++	if (!should_grep_path(opt, filename + tree_name_len)) {
++		return 0;
++	}
++
+ 	if (opt->relative && opt->prefix_length) {
+ 		quote_path_relative(filename + tree_name_len, -1, &pathbuf,
+ 				    opt->prefix);
+@@ -464,6 +468,10 @@ static int grep_file(struct grep_opt *opt, const char *filename)
+ 	struct strbuf buf = STRBUF_INIT;
+ 	char *name;
+ 
++	if (!should_grep_path(opt, filename)) {
++		return 0;
++	}
++
+ 	if (opt->relative && opt->prefix_length)
+ 		quote_path_relative(filename, -1, &buf, opt->prefix);
+ 	else
+diff --git a/grep.c b/grep.c
+index 486230b..e948576 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1,5 +1,6 @@
+ #include "cache.h"
+ #include "grep.h"
++#include "attr.h"
+ #include "userdiff.h"
+ #include "xdiff-interface.h"
+ 
+@@ -829,6 +830,26 @@ static inline void grep_attr_unlock(struct grep_opt *opt)
+ #define grep_attr_unlock(opt)
+ #endif
+ 
++static struct git_attr_check attr_check[1];
++static void setup_attr_check(void)
++{
++	if (attr_check[0].attr)
++		return; /* already done */
++	attr_check[0].attr = git_attr("grep");
++}
++int should_grep_path(struct grep_opt *opt, const char *name) {
++	int ret = 1;
++
++	grep_attr_lock(opt);
++	setup_attr_check();
++	git_check_attr(name, 1, attr_check);
++	if (ATTR_FALSE(attr_check[0].value))
++		ret = 0;
++	grep_attr_unlock(opt);
++
++	return ret;
++}
++
+ static int match_funcname(struct grep_opt *opt, const char *name, char *bol, char *eol)
+ {
+ 	xdemitconf_t *xecfg = opt->priv;
+diff --git a/grep.h b/grep.h
+index fb205f3..266002d 100644
+--- a/grep.h
++++ b/grep.h
+@@ -129,6 +129,7 @@ extern void append_header_grep_pattern(struct grep_opt *, enum grep_header_field
+ extern void compile_grep_patterns(struct grep_opt *opt);
+ extern void free_grep_patterns(struct grep_opt *opt);
+ extern int grep_buffer(struct grep_opt *opt, const char *name, char *buf, unsigned long size);
++extern int should_grep_path(struct grep_opt *opt, const char *name);
+ 
+ extern struct grep_opt *grep_opt_dup(const struct grep_opt *opt);
+ extern int grep_threads_ok(const struct grep_opt *opt);
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 7ba5b16..c991518 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -871,4 +871,34 @@ test_expect_success 'mimic ack-grep --group' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'with -grep attribute' '
++	echo "hello.c -grep" >.gitattributes &&
++	test_must_fail git grep printf &&
++	rm .gitattributes
++'
++
++test_expect_success 'with -grep attribute on specific file' '
++	echo "hello.c -grep" >.gitattributes &&
++	test_must_fail git grep printf hello.c &&
++	rm .gitattributes
++'
++
++test_expect_success 'with -grep attribute on specific revision' '
++	echo "hello.c -grep" >.gitattributes &&
++	test_must_fail git grep printf HEAD &&
++	rm .gitattributes
++'
++
++test_expect_success 'with -grep attribute on specific file/revision' '
++	echo "hello.c -grep" >.gitattributes &&
++	test_must_fail git grep printf HEAD hello.c &&
++	rm .gitattributes
++'
++
++test_expect_failure 'with -grep attribute on specific tree' '
++	echo "hello.c -grep" >.gitattributes &&
++	test_must_fail git grep printf HEAD:hello.c &&
++	rm .gitattributes
++'
++
+ test_done
+-- 
+1.7.9.rc2.1.g1fdd3
