@@ -1,133 +1,76 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH] grep: fix -l/-L interaction with decoration lines
-Date: Mon, 23 Jan 2012 18:52:44 +0100
-Message-ID: <74777e0e8633d980fee9a1a680a63535be042fdc.1327340917.git.trast@student.ethz.ch>
-References: <CALEc4zGV6Oo-WR0vPE6=oEmm=fo4dd=nyBWFuK1oU7rmF9K41A@mail.gmail.com>
+From: Marc Herbert <Marc.Herbert+news@gmail.com>
+Subject: Re: git clone, hardlinks and multiple users?
+Date: Mon, 23 Jan 2012 17:55:37 +0000
+Message-ID: <jfk6up$3dj$1@dough.gmane.org>
+References: <jfc8eh$ck5$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	<git@vger.kernel.org>
-To: Albert Yale <surfingalbert@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 23 18:52:56 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 23 18:56:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RpO4d-0005z5-2h
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 18:52:55 +0100
+	id 1RpO7d-0007sC-Gi
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 18:56:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752687Ab2AWRwu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jan 2012 12:52:50 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:26486 "EHLO edge20.ethz.ch"
+	id S1753106Ab2AWRz5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jan 2012 12:55:57 -0500
+Received: from lo.gmane.org ([80.91.229.12]:52003 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751653Ab2AWRwu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jan 2012 12:52:50 -0500
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 23 Jan
- 2012 18:52:45 +0100
-Received: from thomas.inf.ethz.ch (195.176.121.47) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 23 Jan
- 2012 18:52:47 +0100
-X-Mailer: git-send-email 1.7.9.rc2.215.gd9e83
-In-Reply-To: <CALEc4zGV6Oo-WR0vPE6=oEmm=fo4dd=nyBWFuK1oU7rmF9K41A@mail.gmail.com>
-X-Originating-IP: [195.176.121.47]
+	id S1751990Ab2AWRz4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jan 2012 12:55:56 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RpO7U-0007l0-Ga
+	for git@vger.kernel.org; Mon, 23 Jan 2012 18:55:52 +0100
+Received: from irdmzpr02-ext.ir.intel.com ([192.198.151.37])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 23 Jan 2012 18:55:52 +0100
+Received: from Marc.Herbert+news by irdmzpr02-ext.ir.intel.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 23 Jan 2012 18:55:52 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: irdmzpr02-ext.ir.intel.com
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20111105 Thunderbird/8.0
+In-Reply-To: <jfc8eh$ck5$1@dough.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189002>
 
-From: Albert Yale <surfingalbert@gmail.com>
+On 20/01/2012 17:31, Marc Herbert wrote:
+> "git clone" is using hardlinks by default, even when cloning from a
+> different user. In such a case the clone ends up with a number of files
+> owned by someone else.
+>
+> Since only immutable objects are cloned this seems to work fine. However
+> I would like to know if this "multiple users" case works by chance or by
+> specification.
 
-In threaded mode, git-grep emits file breaks (enabled with context, -W
-and --break) into the accumulation buffers even if they are not
-required.  The output collection thread then uses skip_first_line to
-skip the first such line in the output, which would otherwise be at
-the very top.
+Sorry I meant: "since only immutable objects are HARDLINKED this seems 
+to work fine".
 
-This is wrong when the user also specified -l/-L/-c, in which case
-every line is relevant.  While arguably giving these options together
-doesn't make any sense, git-grep has always quietly accepted it.  So
-do not skip anything in these cases.
+A few other clarifications following Neal's long answer:
 
-Signed-off-by: Albert Yale <surfingalbert@gmail.com>
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
+- Yes we are using Linux. But the question is about any filesystem 
+supporting hardlinks and user permissions.
 
-> Reviewed-by: Thomas Rast <trast@student.ethz.ch>
+- My question is only about hardlinks in .git/objects/. Whatever happens 
+in the checkout is irrelevant.
 
-Please don't.  I didn't actually read the patch or look at the code,
-or say so, and you're claiming I did.  I was working purely from the
-commit message.
+- I know how to clone with no hardlink and completely avoid the whole 
+issue. Unfortunately people have this strange habit of using the 
+simplest/default option, and it does hardlinks.
 
-> As for creating a test, I'm unfamiliar with the testing procedure for
-> git-core. A "how to" in the "Documentation" folder would be very
-> useful in that regard.
+I guess my rephrased question is: while there is no obvious reason for 
+git to attempt to touch files in .git/objects/, is there a promise that 
+this will never, ever happen? Because it would fail in a multi-users config.
 
-Well, there's t/README.
-
-
-Here's a patch that also does -c and has tests.  Placing them was more
-finicky than I hoped; the list of files in the repo varies wildly
-across the test set.  It also exploits knowledge that git-ls-files
-order is the same as 'git grep -l' order, which might not be
-appropriate.
-
-
- builtin/grep.c  |    6 ++++--
- t/t7810-grep.sh |   22 ++++++++++++++++++++++
- 2 files changed, 26 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 9ce064a..1120b9f 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -1034,8 +1034,10 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 
- #ifndef NO_PTHREADS
- 	if (use_threads) {
--		if (opt.pre_context || opt.post_context || opt.file_break ||
--		    opt.funcbody)
-+		if (!(opt.name_only || opt.unmatch_name_only ||
-+		      opt.count)
-+		    && (opt.pre_context || opt.post_context ||
-+			opt.file_break || opt.funcbody))
- 			skip_first_line = 1;
- 		start_threads(&opt);
- 	}
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 7ba5b16..75f4716 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -246,6 +246,28 @@ do
- done
- 
- cat >expected <<EOF
-+file
-+EOF
-+test_expect_success 'grep -l -C' '
-+	git grep -l -C1 foo >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<EOF
-+file:5
-+EOF
-+test_expect_success 'grep -l -C' '
-+	git grep -c -C1 foo >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'grep -L -C' '
-+	git ls-files >expected &&
-+	git grep -L -C1 nonexistent_string >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<EOF
- file:foo mmap bar_mmap
- EOF
- 
--- 
-1.7.9.rc2.215.gd9e83
+The "core.sharedRepository" option is good example. When set to a new 
+value will it ever try to fix existing objects? That would fail.
