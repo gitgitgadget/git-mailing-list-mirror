@@ -1,88 +1,83 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH git-remote-bzr] Adapt to new semantics of
- remote-helper "import" command
-Date: Sun, 22 Jan 2012 18:12:28 -0600
-Message-ID: <20120123001228.GA1209@burratino>
-References: <20120122054657.GA25103@burratino>
- <4F1C9D4C.6090603@samba.org>
+From: Scott Chacon <schacon@gmail.com>
+Subject: Re: [linux.conf.au] VCS Interoperability
+Date: Sun, 22 Jan 2012 16:43:47 -0800
+Message-ID: <CAP2yMaLHK2md=MHFmV--R6rmr4q3XuZxqsb2fUszMhssx3GDoA@mail.gmail.com>
+References: <CAFfmPPMH2643JMMZdVbOQJL7DB-DiRYQS8x0TqEaSbGmhMdBNw@mail.gmail.com>
+ <CALkWK0kMmDMZ4wiMSmOfwBLzd+xBEA+WKsviu9FVcvj9eZEahg@mail.gmail.com>
+ <CAFfmPPOZfDdH+GF91Dxyy5yfX8TmGDmsbpHz=CVLcBY0c-pCsQ@mail.gmail.com>
+ <CALkWK0nsO2EBLUrO_iWAdGYpULt=oug4yPDnczX9c44hzdwzqg@mail.gmail.com>
+ <alpine.DEB.2.02.1201221310540.28747@asgard.lang.hm> <3BC64515-C4C0-4D32-97B0-8FFD14BB903C@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Gabriel Filion <lelutin@gmail.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>, David Barr <davidbarr@google.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: david@lang.hm, Ramkumar Ramachandra <artagnon@gmail.com>,
+	David Michael Barr <davidbarr@google.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
 	Dmitry Ivankov <divanorama@gmail.com>
-To: Jelmer Vernooij <jelmer@samba.org>
-X-From: git-owner@vger.kernel.org Mon Jan 23 01:13:03 2012
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Mon Jan 23 01:44:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rp7Wx-00024E-9S
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 01:13:03 +0100
+	id 1Rp81G-0005eh-MX
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 01:44:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752526Ab2AWAMj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jan 2012 19:12:39 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:36358 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752481Ab2AWAMi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jan 2012 19:12:38 -0500
-Received: by ghrr11 with SMTP id r11so3394ghr.19
-        for <git@vger.kernel.org>; Sun, 22 Jan 2012 16:12:37 -0800 (PST)
+	id S1752540Ab2AWAoL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Jan 2012 19:44:11 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:50357 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752526Ab2AWAoK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jan 2012 19:44:10 -0500
+Received: by vcbgb30 with SMTP id gb30so588004vcb.19
+        for <git@vger.kernel.org>; Sun, 22 Jan 2012 16:44:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=gB3JdT80kymbzUTXiFkIKZp0LO1iYPFvGLDNZ1R4DCg=;
-        b=R+RO5DwUtqQyL/EvnPjEDIkmHerXvbYgP5sa3ZU40V6OlrEIIcFuVdWklLPTHwwpCQ
-         YVyXJgTRuqf1mSALisNNz0gWgEhSPzNqTChuD3n9bgpKpp4KlQmMRTnr+3qoi6ZGWAW3
-         sszGlqHsd0nwcwOA+TPRoxQ72g6Ca6+lxxziQ=
-Received: by 10.236.193.41 with SMTP id j29mr8364191yhn.12.1327277557713;
-        Sun, 22 Jan 2012 16:12:37 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id m2sm18979727ann.20.2012.01.22.16.12.36
-        (version=SSLv3 cipher=OTHER);
-        Sun, 22 Jan 2012 16:12:37 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4F1C9D4C.6090603@samba.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=a8//4m+uY4VMIJna8+dGsA9OlthpQKIHQ//zIiifhPE=;
+        b=Ig0IJPwr/pJQvlbfoi3y7qae737lvPTDD9Bb/4XadYZ1z/vnW0jJ5+o0FoNqWMtHk+
+         wVMgD9OMjE1/RLShuHU7DQqP7kT4qfE4HqX+AKk5Kac3RoS2hCN0X+V0+tSJCsKmRQdn
+         u5hU26wJ2e3F/SkqyUY5JZaOrGlxfpUC9AAMM=
+Received: by 10.220.153.134 with SMTP id k6mr3412062vcw.23.1327279449110; Sun,
+ 22 Jan 2012 16:44:09 -0800 (PST)
+Received: by 10.220.63.193 with HTTP; Sun, 22 Jan 2012 16:43:47 -0800 (PST)
+In-Reply-To: <3BC64515-C4C0-4D32-97B0-8FFD14BB903C@silverinsanity.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188976>
 
-Jelmer Vernooij wrote:
-> On 01/22/2012 06:46 AM, Jonathan Nieder wrote:
+Hey,
 
->> BTW, would you mind if I sent a patch to include git-remote-bzr in
->> git.git under contrib/?
+On Sun, Jan 22, 2012 at 3:33 PM, Brian Gernhardt
+<benji@silverinsanity.com> wrote:
 >
-> Please note that the bzr-git package, which provides git integration
-> for bzr and vice versa, also includes a 'git-remote-bzr' command.
+> On Jan 22, 2012, at 4:12 PM, david@lang.hm wrote:
+>
+>> On Sun, 22 Jan 2012, Ramkumar Ramachandra wrote:
+>>
+>>> 3. What are your thoughts on lib'ifying Git so that others can call
+>>> into it using an API?
+>>
+>> This is something that everyone agrees would be a good thing. There have been many people who have started projects to do so, but they have all stalled.
+>
+> I believe libgit2 is still under active development.
+>
+> http://libgit2.github.com
+>
 
-That's good to hear.  Then there should be no need for git.git to have
-its own helper.
+Yes, GitHub alone actually has 2 full time employees and 1 contractor
+who are entirely dedicated to the project. It also ships with the
+GitHub for Mac product, so it's used in production by tens of
+thousands every day. If any of you want to get involved, you can check
+out the mailing list (libgit2@librelist.org) or (probably more
+usefully) the GitHub project page:
 
-Unfortunately, when I try to clone any repo, at the last step I get
+https://github.com/libgit2/libgit2
 
- Traceback (most recent call last):map 6/7
-  File "/usr/lib/git-core/git-remote-bzr", line 220, in <module>
-    commands[argv[0]](argv, shortname, remote_dir)
-  File "/usr/lib/git-core/git-remote-bzr", line 89, in cmd_list
-    for ref, git_sha1 in refs.as_dict().iteritems():
-  File "/usr/lib/python2.7/dist-packages/dulwich/repo.py", line 196, in as_dict
-    ret[key] = self[("%s/%s" % (base, key)).strip("/")]
-  File "/usr/lib/python2.7/dist-packages/dulwich/repo.py", line 267, in __getitem__
-    _, sha = self._follow(name)
-  File "/usr/lib/python2.7/dist-packages/dulwich/repo.py", line 249, in _follow
-    contents = self.read_ref(refname)
-  File "/usr/lib/python2.7/dist-packages/dulwich/repo.py", line 225, in read_ref
-    contents = self.read_loose_ref(refname)
-  File "/usr/lib/python2.7/dist-packages/bzrlib/plugins/git/refs.py", line 129, in read_loose_ref
-    tag_name = ref_to_tag_name(ref)
-  File "/usr/lib/python2.7/dist-packages/bzrlib/plugins/git/refs.py", line 89, in ref_to_tag_name
-    raise ValueError("unable to map ref %s back to tag name" % ref)
- ValueError: unable to map ref refs/heads back to tag name
+Open tickets, contribute code, review PRs, etc.
 
-Will file a bug.
+Scott
