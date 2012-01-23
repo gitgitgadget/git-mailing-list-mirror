@@ -1,71 +1,78 @@
 From: Albert Yale <surfingalbert@gmail.com>
-Subject: [PATCH v2] Fix the result of "git grep [-l|-L] -C <num>"
-Date: Mon, 23 Jan 2012 12:06:15 -0500
-Message-ID: <1327338375-48917-1-git-send-email-surfingalbert@gmail.com>
-Cc: trast@student.ethz.ch, rene.scharfe@lsrfire.ath.cx,
-	Albert Yale <surfingalbert@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 23 18:06:34 2012
+Subject: Re: [PATCH/RFC] Fix the result of "git grep -l -C <num>"
+Date: Mon, 23 Jan 2012 12:10:39 -0500
+Message-ID: <CALEc4zGV6Oo-WR0vPE6=oEmm=fo4dd=nyBWFuK1oU7rmF9K41A@mail.gmail.com>
+References: <1327334484-35196-1-git-send-email-surfingalbert@gmail.com> <8762g2ieq0.fsf@thomas.inf.ethz.ch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, rene.scharfe@lsrfire.ath.cx
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Jan 23 18:11:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RpNLf-0005EF-0x
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 18:06:27 +0100
+	id 1RpNQU-0008DC-J1
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 18:11:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751406Ab2AWRGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jan 2012 12:06:21 -0500
-Received: from mail-qw0-f53.google.com ([209.85.216.53]:54271 "EHLO
-	mail-qw0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750831Ab2AWRGV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jan 2012 12:06:21 -0500
-Received: by qabg24 with SMTP id g24so1887761qab.19
-        for <git@vger.kernel.org>; Mon, 23 Jan 2012 09:06:20 -0800 (PST)
+	id S1753411Ab2AWRLW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Jan 2012 12:11:22 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:56594 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752878Ab2AWRLV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Jan 2012 12:11:21 -0500
+Received: by werb13 with SMTP id b13so2290715wer.19
+        for <git@vger.kernel.org>; Mon, 23 Jan 2012 09:11:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=r9IBf5lng+UyRZK2SEyeYn7BqsF2D70Bur3T90GPKUM=;
-        b=FQqeumITV94HgtAfEehfSptS66RmC1BL1fw/tFjqYD4YJx+ZJzfetNqqCeVnnhOolz
-         YaRijYP1zR1Zb5DRFXRDO6hF+RVfs2lmNnZB1oQZF82U6sL8AuEXXa4fklZ0ngX7Mhal
-         KlyhiK7wqrm41gdwHvZQCt7TmD3D6KSzyujzo=
-Received: by 10.224.194.129 with SMTP id dy1mr10274053qab.52.1327338380371;
-        Mon, 23 Jan 2012 09:06:20 -0800 (PST)
-Received: from f.uze.ca.uze.ca (modemcable104.125-21-96.mc.videotron.ca. [96.21.125.104])
-        by mx.google.com with ESMTPS id r10sm27865167qaz.7.2012.01.23.09.06.18
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 23 Jan 2012 09:06:19 -0800 (PST)
-X-Mailer: git-send-email 1.7.7.4
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=3MEjNAQVtneJlIBW2jyYXYVXJZruZLGAU9W7KobDwcI=;
+        b=QsHkzvUIMt1nHmg+4RuowUm8YuRgRFqzEhLIk+QnEpeC3e0dHzrWyHjWnSDyvHtAwL
+         Oo2BxBCgb+PCXuAShs8CoGrJSv9wiTNgUQNd1oONiOjhh1mwyRJ0BjMhed5TP/s99jTf
+         KSR8Gq6FL2fcEgiuzIpqd2ODfcMwV/J41wabA=
+Received: by 10.216.132.19 with SMTP id n19mr4080484wei.31.1327338680282; Mon,
+ 23 Jan 2012 09:11:20 -0800 (PST)
+Received: by 10.223.86.144 with HTTP; Mon, 23 Jan 2012 09:10:39 -0800 (PST)
+In-Reply-To: <8762g2ieq0.fsf@thomas.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189000>
 
-When combining "git grep [-l|-L]" with "-C <num>",
-the first result is omitted.
+You're right. This solution is incomplete. It needs to take into
+account "opt.unmatch_name_only", and possibly other states. I'm open
+for suggestions.
 
-Reviewed-by: Thomas Rast <trast@student.ethz.ch>
-Signed-off-by: Albert Yale <surfingalbert@gmail.com>
----
- builtin/grep.c |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+I've just posted Version 2 of this patch.
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 9ce064a..beebe20 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -1036,7 +1036,10 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	if (use_threads) {
- 		if (opt.pre_context || opt.post_context || opt.file_break ||
- 		    opt.funcbody)
--			skip_first_line = 1;
-+		{
-+			if( ! ( opt.name_only || opt.unmatch_name_only ) )
-+				skip_first_line = 1;
-+		}
- 		start_threads(&opt);
- 	}
- #endif
--- 
-1.7.8.3
+As for creating a test, I'm unfamiliar with the testing procedure for
+git-core. A "how to" in the "Documentation" folder would be very
+useful in that regard.
+
+Albert
+
+On Mon, Jan 23, 2012 at 11:08 AM, Thomas Rast <trast@student.ethz.ch> w=
+rote:
+> Albert Yale <surfingalbert@gmail.com> writes:
+>
+>> When combining "git grep -l" with "-C <num>",
+>> the first result is omitted.
+> [...]
+>> For example, if the following command should output a list of 3
+>> different files (a.txt, b.txt, c.txt):
+>>
+>> $ git grep -l -C 1 albert_yale
+>> b.txt
+>> c.txt
+>
+> Nice catch. =A0Can you add a test?
+>
+> Is -l the only option affected? =A0Why isn't, for example, -L?
+>
+> --
+> Thomas Rast
+> trast@{inf,student}.ethz.ch
