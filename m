@@ -1,159 +1,89 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH v2 3/3] git-p4: Add test case for complex branch import
-Date: Mon, 23 Jan 2012 17:40:12 -0500
-Message-ID: <20120123224012.GA10626@padd.com>
-References: <1327105292-30092-1-git-send-email-vitor.hda@gmail.com>
- <1327105292-30092-4-git-send-email-vitor.hda@gmail.com>
- <7vehutd59p.fsf@alter.siamese.dyndns.org>
- <4F1A98A3.2090607@diamand.org>
- <20120121171130.GA6235@padd.com>
- <CAOpHH-W1LY3Q50otrcNJTYWN67k_pCZHEOkgbKy7kPgfUbGeQw@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/2] add a Makefile switch to avoid gettext translation
+ in shell scripts
+Date: Mon, 23 Jan 2012 16:40:16 -0600
+Message-ID: <20120123224016.GH20833@burratino>
+References: <CACBZZX4TsL-tj04PmUwGNWjXO+JY-8unAv-aRKOGvgB71qdYCg@mail.gmail.com>
+ <CALxABCadHdvR02Br9e6STy0w+EPoycUKr62RiSUSP_EPF-TH3g@mail.gmail.com>
+ <CACBZZX4tB6DGV-1tiuOamq7ACPk0a-=1Pb9Vk1SgyDqAq-EFOw@mail.gmail.com>
+ <CALxABCbaBmP6k5TYrYLCYm8oiv=9cF=N7_opSTKUnbkz5b-cwg@mail.gmail.com>
+ <20120119195222.GA5011@blimp.dmz>
+ <7v1uqq84es.fsf@alter.siamese.dyndns.org>
+ <7vwr8i6prk.fsf_-_@alter.siamese.dyndns.org>
+ <7vr4yq6poy.fsf_-_@alter.siamese.dyndns.org>
+ <20120123221256.GG20833@burratino>
+ <7vehuq6ote.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Luke Diamand <luke@diamand.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Vitor Antunes <vitor.hda@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 23 23:40:25 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 23 23:40:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RpSYq-0000iy-DT
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 23:40:24 +0100
+	id 1RpSYx-0000oE-Qq
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 23:40:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754608Ab2AWWkS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Jan 2012 17:40:18 -0500
-Received: from honk.padd.com ([74.3.171.149]:39605 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754017Ab2AWWkR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jan 2012 17:40:17 -0500
-Received: from arf.padd.com (unknown [50.55.145.32])
-	by honk.padd.com (Postfix) with ESMTPSA id 0C81320D2;
-	Mon, 23 Jan 2012 14:40:16 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 3FB6031453; Mon, 23 Jan 2012 17:40:12 -0500 (EST)
+	id S1754646Ab2AWWk1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jan 2012 17:40:27 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:50494 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754017Ab2AWWk0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jan 2012 17:40:26 -0500
+Received: by ggnb1 with SMTP id b1so1667442ggn.19
+        for <git@vger.kernel.org>; Mon, 23 Jan 2012 14:40:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=PaCnchA/L2zwA2fQ1vUAtOND8VybqUZaGZoyRd26BRw=;
+        b=oEGm0aC/sqNT2KWLBdXs+KSH9zVaWh5FZ4dBVGrnZOwsIpGzk3NEkMHjXNbHazM0zO
+         klsUWo2rSikfvlzVIY4jOCs2DCETvVna/5olmdRVfhQLfpHxm2lAdiODNNTb9AhVM+PD
+         63JuABEQ6kGDKIp91IypPlzFSxRKH3bNeRImw=
+Received: by 10.101.159.4 with SMTP id l4mr4386730ano.62.1327358426209;
+        Mon, 23 Jan 2012 14:40:26 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id z3sm23712254yhd.3.2012.01.23.14.40.24
+        (version=SSLv3 cipher=OTHER);
+        Mon, 23 Jan 2012 14:40:25 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <CAOpHH-W1LY3Q50otrcNJTYWN67k_pCZHEOkgbKy7kPgfUbGeQw@mail.gmail.com>
+In-Reply-To: <7vehuq6ote.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189023>
 
-vitor.hda@gmail.com wrote on Mon, 23 Jan 2012 14:01 +0000:
-> On Sat, Jan 21, 2012 at 5:11 PM, Pete Wyckoff <pw@padd.com> wrote:
-> > luke@diamand.org wrote on Sat, 21 Jan 2012 10:51 +0000:
-> >> However, one thing I noticed in reading through is that it will
-> >> break if you end up importing a P4 branch that has spaces (or othe=
-r
-> >> shell chars) in its name. A quick test confirms this.
-> >>
-> >> - the code doesn't handle the names properly
-> >> - git and p4 have different ideas about valid branch names
-> >>
-> >> But before rejecting Vitor's changes because of that it would be
-> >> worth considering whether we care (much). My own opinion is that i=
-f
-> >> you have developers who are daft enough to put spaces or dollars i=
-n
-> >> their branch names then their project is already doomed anyway....
-> >>
-> >> Perhaps it would be enough just to issue a warning ("your project =
-is
-> >> doomed; start working on your CV") and skip such branch names rath=
-er
-> >> than falling over with inexplicable error messages.
-> >
-> > This doesn't seem like a big deal. =A0The read_pipe and
-> > read_pipe_lines calls shoud be list-ified. =A0That gets rid
-> > of the problem with shell interactions.
-> >
-> > For git branch name reserved characters, a little function
-> > to replace the bogus characters with "_" would avoid needing
-> > to go work on the resume. =A0Anything in bad_ref_char() and
-> > check_refname_component(). =A0I agree this doesn't have to be
-> > perfect.
-> >
-> > This could be a new patch unrelated to Vitor's series, which
-> > verifies branch names anywhere a new commit is made.
->=20
-> I would also prefer to include that fix on a separate patch series th=
-at
-> would include the test case Luke already prepared. In my opinion,
-> updating read_pipe and read_pipe_lines is out of scope for the curren=
-t
-> patch series.
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-How about taking what's below and just squashing it in.  It's
-incremental on your changes and would go well with Luke's series
-that fixes a bunch of scattered quoting issues similarly.
+>> Nice implementation.  I still don't understand why NO_GETTEXT=YesPlease
+>> should not imply this.
+>
+> Should be easy to do so, like this?
+>
+> diff --git a/Makefile b/Makefile
+> index a782409..c4c1066 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1521,6 +1521,7 @@ ifdef GETTEXT_POISON
+>  endif
+>  ifdef NO_GETTEXT
+>  	BASIC_CFLAGS += -DNO_GETTEXT
+> +	USE_GETTEXT_SCHEME = fallthrough
+>  endif
 
-The change to "describe %s" is unnecessary, but makes all the
-invocations look similar.  You can leave it out.
+Yep, that would make my worries about intuitive behavior evaporate. :)
+(Maybe "USE_GETTEXT_SCHEME ?= fallthrough" to make it easier to
+override in config.mak.)
 
-This may conflict if you've already factored out the big
-"if self.detectBranches" chunk into a separate function as
-Junio recommended.
+Thanks.  I also would not actually mind the behavior without that
+tweak, as long as it's explained somewhere.
 
-> BTW, and on an unrelated topic, are any test cases failing on your si=
-de?
-
-I do run the tests regularly, and your series is good.  There's
-the 'clone --use-client-spec' one that is broken until my
-2ea09b5 (git-p4: adjust test to adhere to stricter useClientSpec,
-2012-01-11) is merged.  It's on pu.
-
-		-- Pete
-
-
------------8<-------------------
-=46rom f1cfb3836f5150dca86238225da56fe0bd577df8 Mon Sep 17 00:00:00 200=
-1
-=46rom: Pete Wyckoff <pw@padd.com>
-Date: Thu, 10 Nov 2011 07:40:14 -0500
-Subject: [PATCH] git-p4: use list invoctaions to avoid shell mangling
-
-Change git and p4 command invocations to avoid going through
-the shell.  This allows branch names with spaces and wildcards
-to work.
-
-Signed-off-by: Pete Wyckoff <pw@padd.com>
----
- contrib/fast-import/git-p4 |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 2e3b741..b440966 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -1961,7 +1961,7 @@ class P4Sync(Command, P4UserMap):
-     def importChanges(self, changes):
-         cnt =3D 1
-         for change in changes:
--            description =3D p4Cmd("describe %s" % change)
-+            description =3D p4Cmd(["describe", str(change)])
-             self.updateOptionDict(description)
-=20
-             if not self.silent:
-@@ -2022,9 +2022,9 @@ class P4Sync(Command, P4UserMap):
-                             self.commit(description, filesForCommit, t=
-empBranch, [branchPrefix])
-                             self.tempBranches.append(tempBranch)
-                             self.checkpoint()
--                            for blob in read_pipe_lines("git rev-list =
---reverse --no-merges %s" % parent):
-+                            for blob in read_pipe_lines(["git", "rev-l=
-ist", "--reverse", "--no-merges", parent]):
-                                 blob =3D blob.strip()
--                                if len( read_pipe("git diff-tree %s %s=
-" % (blob, tempBranch)) ) =3D=3D 0:
-+                                if len(read_pipe(["git", "diff-tree", =
-blob, tempBranch])) =3D=3D 0:
-                                     parentFound =3D True
-                                     if self.verbose:
-                                         print "Found parent of %s in c=
-ommit %s" % (branch, blob)
---=20
-1.7.9.rc2.33.g492ae
+Ciao,
+Jonathan
