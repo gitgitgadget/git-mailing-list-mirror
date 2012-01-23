@@ -1,144 +1,90 @@
-From: Michael Nahas <mike.nahas@gmail.com>
-Subject: Re: [RFC/PATCH] git put: an alternative to add/reset/checkout
-Date: Mon, 23 Jan 2012 09:56:37 -0500
-Message-ID: <CADo4Y9j5MwKr+rWza0ncLWuthY6x+s68CQYbY2+c8-E5pAa=Sw@mail.gmail.com>
-References: <20110607200659.GA6177@sigill.intra.peff.net>
-	<CACsJy8BCGi3s8gXr4kk-u8tDWztV6ozg1Tap23Q=TxA5d9iL+g@mail.gmail.com>
-	<CADo4Y9iH+J-X-TdqTN2Y9KhQnprnCVvC4Xy6qhVHwsBRmsZUrg@mail.gmail.com>
-	<CACsJy8AB-6b_PMvyM7hRV3b=5o0Cn4CtosygUQOevTzVJhU=hg@mail.gmail.com>
-Reply-To: mike@nahas.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 23 15:56:45 2012
+From: Albert Yale <surfingalbert@gmail.com>
+Subject: [PATCH/RFC] Fix the result of "git grep -l -C <num>"
+Date: Mon, 23 Jan 2012 11:01:24 -0500
+Message-ID: <1327334484-35196-1-git-send-email-surfingalbert@gmail.com>
+Cc: trast@student.ethz.ch, rene.scharfe@lsrfire.ath.cx,
+	Albert Yale <surfingalbert@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 23 17:01:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RpLK8-0006vZ-5p
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 15:56:44 +0100
+	id 1RpML8-0000jh-9H
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 17:01:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753086Ab2AWO4j convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Jan 2012 09:56:39 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:40044 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752816Ab2AWO4i convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Jan 2012 09:56:38 -0500
-Received: by vcbgb30 with SMTP id gb30so936654vcb.19
-        for <git@vger.kernel.org>; Mon, 23 Jan 2012 06:56:37 -0800 (PST)
+	id S1753200Ab2AWQBp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jan 2012 11:01:45 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:39082 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751951Ab2AWQBo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jan 2012 11:01:44 -0500
+Received: by qadc10 with SMTP id c10so1877414qad.19
+        for <git@vger.kernel.org>; Mon, 23 Jan 2012 08:01:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        bh=Q5GjyVKKDHSXG9MiXqCm9dV+RqpNn+f2nlp5EFtxMII=;
-        b=eH96rftC4cVc7TSLuXLwy9EadHHVyg8g0apOMZLfZDx8M+sZEdMU8B2iFW2ht+7y1a
-         wyOi0blUgDyHo9P8v57Z1i2e+F92gIuC2cQ6n2RZTNubSFnSr9aWBeQaSHSUXB2+IbLz
-         lYAf5CzDBVBFAhzuF6OexG7Rk0W+ns1yitdX0=
-Received: by 10.220.108.138 with SMTP id f10mr729046vcp.16.1327330597481; Mon,
- 23 Jan 2012 06:56:37 -0800 (PST)
-Received: by 10.52.64.231 with HTTP; Mon, 23 Jan 2012 06:56:37 -0800 (PST)
-In-Reply-To: <CACsJy8AB-6b_PMvyM7hRV3b=5o0Cn4CtosygUQOevTzVJhU=hg@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=vJunJpdARVrXReZZv4U8TYnAtA9T0y9ziqSlgZqYVWM=;
+        b=n6OpRBFw2GZFgwrxuQjABAWfkApemLW2DTx3I9BlgcABIMa/iEiWEPcxVQ6os7suYm
+         IniNXm9b2pYh4ut8lRjFDTA25kecv8Bb3MLeI0VItc74iAbFUP08ceAdvslTPYKLLnik
+         FicCViLhjMLwXKCbg4Yqx6BZqrrYhH0H3isFQ=
+Received: by 10.224.207.134 with SMTP id fy6mr9284002qab.72.1327334503894;
+        Mon, 23 Jan 2012 08:01:43 -0800 (PST)
+Received: from f.uze.ca.uze.ca (modemcable104.125-21-96.mc.videotron.ca. [96.21.125.104])
+        by mx.google.com with ESMTPS id g3sm15091753qap.2.2012.01.23.08.01.42
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 23 Jan 2012 08:01:43 -0800 (PST)
+X-Mailer: git-send-email 1.7.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188995>
 
-Hi Duy,
+When combining "git grep -l" with "-C <num>",
+the first result is omitted.
 
-I've contributed no code to git. =A0I've come up with plenty of ideas,
-which seem to have gotten little traction.
+Signed-off-by: Albert Yale <surfingalbert@gmail.com>
+---
+For example, if the following command should output a list of 3
+different files (a.txt, b.txt, c.txt):
 
-Your ideas are similar to mine (and others), but the last attempt to
-get them into git did not accomplish anything.  I don't know how much
-work you have done on git, but before participating with git again, I
-suggest you look at why the last attempt failed and we ask an
-experienced person how things work.
+$ git grep -l -C 1 albert_yale
+b.txt
+c.txt
 
-It obviously isn't the design-first-then-find-a-willing-programmer of
-the project I ran. =A0I don't know if it's the IETF's "running code and
-a general consensus".=A0 The only thing I've found is that people did
-not want to discuss theory.  (I believe the feeling is that theory is
-only worthy of DARCS.)  I also got the feeling that improving the user
-interface (e.g., replacing "git checkout --" and "git reset --") was
-not a priority.
+The first result (a.txt) will be missing.
 
-So, please plan out a strategy before recruiting me to help push this
-idea forward.
+Understandably, you wouldn't normally use "-C" with "-l",
+but the output should still be correct.
 
-Mike
+My solution is to take "opt.name_only" into account before setting
+"skip_first_line" in grep.c.
 
+I've reproduced this bug with git version 1.7.8.3
+and git version 1.7.9.rc2, both under Mac OS X 10.7.2.
 
-On Mon, Jan 23, 2012 at 9:35 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.co=
-m> wrote:
->
-> On Mon, Jan 23, 2012 at 8:53 PM, Michael Nahas <mike.nahas@gmail.com>=
- wrote:
-> > "git put" is "git cp".=A0 It copies from one filesystem (or a snaps=
-hot
-> > of a filesystem) to another filesystem.
->
-> Exactly.
->
-> > Without multiple working directories, a modifiable "stash", or a
-> > (useful) name for the filesystem referred to as
-> > "index"/"cache"/"staging area", there is only one filesystem that t=
-he
-> > command can write to: the (singular) working directory.
->
-> No there are two writable "filesystems": working directory and
-> "index/cache/staging area"
->
-> > So, "git put <src filesystem> -- <path>" is fine.=A0 It will copy f=
-rom
-> > the path in the src filesystem to the path in the current working
-> > directory.=A0 I don't think the command "put" is a great name for t=
-hat.
-> > Since we already have some strange double-usage commands like "git
-> > checkout --" and "git reset --", perhaps this should be "git
-> > cherry-pick --".
->
-> The "-- <path>" thing may save you a few keystrokes when you want to
-> copy from more than one path(spec). The two below commands are
-> equivalent
->
-> git put HEAD:a/ HEAD/b/ HEAD/c/ .
-> git put HEAD: . -- a/ b/ c/
->
-> But of course if you just need to copy from one pathspec to another
-> place, "--" syntax is redundant.
->
-> > <rant>
-> > But for my money, "git cp" is clearer and I'd love to get rid of th=
-e
-> > user-confusing double-usage commands.=A0 I'd replace "git checkout =
---"
-> > with "git cp NEXT WTREE -- <path>" and replace "git reset --" with
-> > "git cp HEAD NEXT --" where NEXT is the filesystem represented by t=
-he
-> > "index"/"cache"/"staging area" and WTREE is an alias for the workin=
-g
-> > directory.
-> > </rant>
->
-> I thought of "cp" (naturally, I was driven by "scp" syntax as I said)
-> and maybe if we think this through, we may be able to enhance cp to
-> support "remote locations" (and --patch option). So "put" vs "cp" is
-> not important to me now. What I'd like to hear is whether the syntax
-> makes sense.
->
-> My "hidden" plan if this works out would be to deprecate (or
-> discourage) everything in git-checkout except branch switching. I
-> don't have anything against git-reset. It's a kind of dangerous
-> command from the start (while git-checkout is more user friendly) and
-> can stay that way. The new "git <cp, put or whatever name>" should
-> fill 90% the needs for git-reset.
-> --
-> Duy
+Albert Yale
+
+ builtin/grep.c |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 9ce064a..076de21 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -1036,7 +1036,10 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	if (use_threads) {
+ 		if (opt.pre_context || opt.post_context || opt.file_break ||
+ 		    opt.funcbody)
+-			skip_first_line = 1;
++		{
++			if( ! opt.name_only )
++				skip_first_line = 1;
++		}
+ 		start_threads(&opt);
+ 	}
+ #endif
+-- 
+1.7.8.3
