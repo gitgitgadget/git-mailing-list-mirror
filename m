@@ -1,86 +1,91 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Test t9500 fails if Time::HiRes is missing
-Date: Mon, 23 Jan 2012 10:42:02 +0100
-Message-ID: <CACBZZX4cjcY5d3mPJAV+rbSTqCEUOrF=_dd3ny_jSM++G-Bg1Q@mail.gmail.com>
-References: <hbf.20120123rqzg@bombur.uio.no>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: [BUG] incorrect error message in "git fsck" for empty loose objects
+Date: Mon, 23 Jan 2012 11:19:21 +0100
+Message-ID: <vpqfwf6en6e.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
-X-From: git-owner@vger.kernel.org Mon Jan 23 10:42:32 2012
+Content-Type: text/plain
+Cc: "Junio C. Hamano" <gitster@pobox.com>
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 23 11:19:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RpGQ1-0005Tb-OE
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 10:42:30 +0100
+	id 1RpGzs-0006IV-5i
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Jan 2012 11:19:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752713Ab2AWJmZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Jan 2012 04:42:25 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:65519 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752227Ab2AWJmY convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jan 2012 04:42:24 -0500
-Received: by lahc1 with SMTP id c1so1477276lah.19
-        for <git@vger.kernel.org>; Mon, 23 Jan 2012 01:42:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=8kMkNPIPOLTfO8Ma6lHEoRD7RdEuENEtHPmLXteiH0Q=;
-        b=Hq9hJtJ+VlzwyW8dLFlEsc6/AeiHOjH3fhoimaUSCJEgiGBbFFdtzPsxL+cRCNvEIk
-         76E0Mdjg+pY2ZHF1gRw0nibqS3pDjZcuDNPWzS0KgpwzX2L99w6z33icvt9s6PWCRiUt
-         2eRNXE6Up0RJrKGMqsttB8RvUcPNG2rbmZrj8=
-Received: by 10.152.144.133 with SMTP id sm5mr3897212lab.38.1327311743134;
- Mon, 23 Jan 2012 01:42:23 -0800 (PST)
-Received: by 10.112.48.9 with HTTP; Mon, 23 Jan 2012 01:42:02 -0800 (PST)
-In-Reply-To: <hbf.20120123rqzg@bombur.uio.no>
+	id S1752826Ab2AWKT2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jan 2012 05:19:28 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:37910 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752586Ab2AWKT1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jan 2012 05:19:27 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q0NAHHU2007348
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 23 Jan 2012 11:17:17 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1RpGzi-0007zh-6k; Mon, 23 Jan 2012 11:19:22 +0100
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 23 Jan 2012 11:17:17 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q0NAHHU2007348
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1327918637.80645@4j0pJ8QWtoC6AOScFTwR5Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/188983>
 
-On Mon, Jan 23, 2012 at 05:50, Hallvard Breien Furuseth
-<h.b.furuseth@usit.uio.no> wrote:
-> t9500-gitweb-standalone-no-errors fails: Git 1.7.9.rc2/1.7.8.4, RHEL
-> 6.2, Perl 5.10.1. =C2=A0Reverting 3962f1d756ab41c1d180e35483d1c8dffe5=
-1e0d1
-> fixes it. =C2=A0The commit expects Time::HiRes to be present, but Red=
-Hat
-> has split it out to a separate RPM perl-Time-HiRes. =C2=A0Better add =
-a
-> comment about that, so it doesn't get re-reverted.
->
-> Or pacify the test and expect gitweb@RHEL-users to install the RPM:
->
-> --- git-1.7.9.rc2/t/gitweb-lib.sh~
-> +++ git-1.7.9.rc2/t/gitweb-lib.sh
-> @@ -113,4 +113,9 @@
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0test_done
-> =C2=A0}
->
-> +perl -MTime::HiRes -e 0 >/dev/null 2>&1 || {
-> + =C2=A0 =C2=A0 =C2=A0 skip_all=3D'skipping gitweb tests, Time::HiRes=
- module not available'
-> + =C2=A0 =C2=A0 =C2=A0 test_done
-> +}
-> +
-> =C2=A0gitweb_init
+Hi,
 
-[Adding Jakub to CC]
+If a loose object is empty, "git fsck" reports it as corrupt (which is
+good), but with the following error message:
 
-This doesn't actually fix the issue, it only sweeps it under the rug
-by making the tests pass, gitweb will still fail to compile on Red
-Hat once installed.
+$ git fsck
+Checking object directories: 100% (256/256), done.
+fatal: failed to read object c1738f6288c9e5d5e58da00ced34d284ae93976c: Invalid argument
+$ cat .git/objects/c1/738f6288c9e5d5e58da00ced34d284ae93976c 
+$ ls -l .git/objects/c1/738f6288c9e5d5e58da00ced34d284ae93976c
+-r--r--r-- 1 moy synchron 0 Jan 20 16:20 .git/objects/c1/738f6288c9e5d5e58da00ced34d284ae93976c
 
-I think the right solution is to partially revert
-3962f1d756ab41c1d180e35483d1c8dffe51e0d1, but add a comment in the
-code indicating that it's to deal with RedHat's broken fork of Perl.
+"Invalid argument" is really not the error message one would expect.
+Before that, git used to say:
 
-However even if it's required in an eval it might still fail at
-runtime in the reset_timer() function, which'll need to deal with it
-too.
+   fatal: loose object c1738f6288c9e5d5e58da00ced34d284ae93976c (stored in
+   .git/objects/c1/738f6288c9e5d5e58da00ced34d28
+   4ae93976c) is corrupt
+
+Which was far better.
+
+This bisects back to 3ba7a065527a (A loose object is not corrupt if it
+cannot be read due to EMFILE), which essentially boils down to:
+
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2090,16 +2090,21 @@ void *read_sha1_file_repl(const unsigned char *sha1,
+                          const unsigned char **replacement)
+[...]
++       errno = 0;
++       data = read_object(repl, type, size);
+        if (data) {
+                if (replacement)
+                        *replacement = repl;
+                return data;
+        }
+ 
++       if (errno != ENOENT)
++               die_errno("failed to read object %s", sha1_to_hex(sha1));
++
+
+Thanks,
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
