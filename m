@@ -1,85 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: {Spam?} push pull not working
-Date: Tue, 24 Jan 2012 12:28:03 -0800
-Message-ID: <7vliow3kx8.fsf@alter.siamese.dyndns.org>
-References: <1327431631.21582.209.camel@thor>
- <20120124194153.GB19534@sigill.intra.peff.net>
- <7vty3k3lmh.fsf@alter.siamese.dyndns.org>
- <20120124201807.GA20145@sigill.intra.peff.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [BUG] Fail to add a module in a subdirectory if module is already
+ cloned
+Date: Tue, 24 Jan 2012 22:10:55 +0100
+Message-ID: <4F1F1E5F.2030509@web.de>
+References: <jfmvpp$4v7$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Rick Bragg <lists@gmnet.net>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 24 21:28:13 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jehan Bing <jehan@orb.com>
+X-From: git-owner@vger.kernel.org Tue Jan 24 22:11:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RpmyT-0002vR-4o
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Jan 2012 21:28:13 +0100
+	id 1Rpne2-0001HY-5C
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Jan 2012 22:11:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756560Ab2AXU2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jan 2012 15:28:08 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44427 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756285Ab2AXU2G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jan 2012 15:28:06 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C06D27D57;
-	Tue, 24 Jan 2012 15:28:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=70pQWz15cRaPv6EnCsFfhZVmczg=; b=c/HnmJ
-	bV63NM4umSAxp2zJa/HgOstoxQpj9IkW5CeYOnZWCdpTec1WMxBrJDC6+gTQCB+o
-	+snRbMtQTuLQwRN5vWWTWgInEQNr6PuLe/lzv2wesf77ixDf+2+DM1ztUO5oVbM/
-	NplGxAbfgEvS1M1dgKY07V6XLODFkzDBtJWVk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=O5wnmJ0xfsqJoIjizr4MCDRC1if0L4lo
-	oMPB8yNh8oudaPB5OB29CsB8G7RYysbKuPgEw9ttstPJhHlyCFDda2hGtZhtoYDT
-	FK538siO0nSsrM5cf07hUBcg4TIIMcG1Bc+1iPXyso1XLAH+fh7Ce3AH1leBF33z
-	RfxbUkmV2CY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B6A837D56;
-	Tue, 24 Jan 2012 15:28:05 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 49EBD7D54; Tue, 24 Jan 2012
- 15:28:05 -0500 (EST)
-In-Reply-To: <20120124201807.GA20145@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 24 Jan 2012 15:18:07 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EB9D21E4-46C9-11E1-8105-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757465Ab2AXVLF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jan 2012 16:11:05 -0500
+Received: from fmmailgate04.web.de ([217.72.192.242]:44250 "EHLO
+	fmmailgate04.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755844Ab2AXVLE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jan 2012 16:11:04 -0500
+Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
+	by fmmailgate04.web.de (Postfix) with ESMTP id 07635712C616
+	for <git@vger.kernel.org>; Tue, 24 Jan 2012 22:11:02 +0100 (CET)
+Received: from [192.168.178.43] ([91.3.157.14]) by smtp.web.de (mrweb001) with
+ ESMTPA (Nemesis) id 0Lw1CH-1ShdJQ2FJt-018FiJ; Tue, 24 Jan 2012 22:11:01 +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
+In-Reply-To: <jfmvpp$4v7$1@dough.gmane.org>
+X-Provags-ID: V02:K0:zUtrjWjSJAu7YifnPpqSMN93HPdf5FrekFZk2o8aZaf
+ 4HMZ+iKKb+Rvm4YkkeQoert9GW92CotZlcn7pCyW7rqSYOaUpL
+ clTn0bzWBC52RByt7iajeIcsjeLBhT9f1HD2cRqmPt5ztDZxwC
+ OGOwidWw3VMxPyE1UHu55xBgukUjyWho6KMqfZLCoADZyrJi9S
+ vUOWcraTzAtdoMFMrc1hw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189069>
 
-Jeff King <peff@peff.net> writes:
+Am 24.01.2012 20:11, schrieb Jehan Bing:
+> I'm getting an error if I try to add a module in a subdirectory and that module is already cloned.
+> Here are the steps to reproduce (git 1.7.8.3):
+> 
+> git init module
+> cd module
+> echo foo > foo
+> git add foo
+> git commit -m "init"
+> cd ..
+> git init super
+> cd super
+> echo foo > foo
+> git add foo
+> git commit -m "init"
+> git branch b1
+> git branch b2
+> git checkout b1
+> git submodule add ../module lib/module
+> git commit -m "module"
+> git checkout b2
+> rm -rf lib
+> git submodule add ../module lib/module
+> 
+> The last command returns:
+>     fatal: Not a git repository: ../.git/modules/lib/module
+>     Unable to checkout submodule 'lib/module'
+> 
+> The file lib/modules/.git contains:
+>     gitdir: ../.git/modules/lib/module
+> (missing an additional "../")
+> 
+> In branch b1, after adding the module, the file contained the full path:
+>     gitdir: /[...]/super/.git/modules/lib/module
+> Or contains the correct relative path after checking out b1 later:
+>     gitdir: ../../.git/modules/lib/module
 
-> This might have been a better example (it exhibits the problem, but is
-> not an example of a terrible thing to be doing):
->
->   1. repo1 has a "master" branch
->
->   2. clone repo1 with "git clone --bare repo1 repo2". Repo2 now has a
->      master branch.
->
->   3. create a new "foo" branch in repo and commit on it
->
->   4. "git push ../repo2" from repo1. This is a sane thing to be doing,
->      but will not push the newly-created "foo" branch, as some users
->      might expect.
+Thanks for your detailed report, I can reproduce that on current master.
 
-Yeah, that is pretty much the standard thing people would do, at least
-before GitHub era ;-), to start a project in repo1, and then to publish
-for others to fetch at repo2.
+The reason for this bug seems to be that in module_clonse() the name is
+not properly initialized for added submodules (it gets set to the path
+later), so the correct amount of leading "../"s for the git directory
+is not computed properly. The attached diff fixes that for me, I will
+send a patch as soon as I have extended a test case for this breakage.
 
-Thanks for clarification.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 3adab93..9bb2e13 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -131,6 +131,7 @@ module_clone()
+        gitdir=
+        gitdir_base=
+        name=$(module_name "$path" 2>/dev/null)
++       test -n "$name" || name="$path"
+        base_path=$(dirname "$path")
 
-P.S. Did you have chance to take a look at the "grep" thing? I thought
-"grep --textconv" would make sense, but I may be missing some large
-pitfalls.
+        gitdir=$(git rev-parse --git-dir)
