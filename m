@@ -1,81 +1,80 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v3 06/10] clone: delay cloning until after remote HEAD checking
-Date: Tue, 24 Jan 2012 14:01:59 +0700
-Message-ID: <CACsJy8C_Lzgk-W3D9ArTh4xQBgFcy41UQzTHfghYKrGg7WxHMg@mail.gmail.com>
-References: <1326023188-15559-1-git-send-email-pclouds@gmail.com>
- <1326189427-20800-7-git-send-email-pclouds@gmail.com> <7v62g26jm3.fsf@alter.siamese.dyndns.org>
- <7vzkde546x.fsf@alter.siamese.dyndns.org> <7vvco253xx.fsf@alter.siamese.dyndns.org>
+From: Brian Foster <brian.foster@maxim-ic.com>
+Subject: Re: [Q] Determing if a commit is reachable from the HEAD ?
+Date: Tue, 24 Jan 2012 09:16:15 +0100
+Message-ID: <201201240916.15630.brian.foster@maxim-ic.com>
+References: <201201201433.30267.brian.foster@maxim-ic.com> <201201231020.04041.brian.foster@maxim-ic.com> <7vk44i9z99.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+Cc: git mailing list <git@vger.kernel.org>,
+	Sitaram Chamarty <sitaramc@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 24 08:02:38 2012
+X-From: git-owner@vger.kernel.org Tue Jan 24 09:17:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RpaOq-0007bo-EI
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Jan 2012 08:02:36 +0100
+	id 1RpbZ5-00034q-52
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Jan 2012 09:17:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753934Ab2AXHCc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Jan 2012 02:02:32 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:48815 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753859Ab2AXHCb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Jan 2012 02:02:31 -0500
-Received: by bkas6 with SMTP id s6so3172527bka.19
-        for <git@vger.kernel.org>; Mon, 23 Jan 2012 23:02:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=clEWwhBbKVae+iGI3FpsQHEQcWmyjfG47SnjWYpF4iY=;
-        b=CuDF02m1taXYqXLP3jBj4I9fJZQbqsEpCha017tFpCBpJO7mddQMetHPgAtETNiZvK
-         uCLnRiIFxCGLKS/BXKv/VbXLdiCkmbIwdf2Rxc0D4IV6umjFT0bzvOZZVMR3Od6p/esx
-         gpTW0bGBF9RxmW1AgcayPSF92gs8PlwCiQmjs=
-Received: by 10.204.10.65 with SMTP id o1mr4366775bko.19.1327388550135; Mon,
- 23 Jan 2012 23:02:30 -0800 (PST)
-Received: by 10.205.123.145 with HTTP; Mon, 23 Jan 2012 23:01:59 -0800 (PST)
-In-Reply-To: <7vvco253xx.fsf@alter.siamese.dyndns.org>
+	id S1753812Ab2AXIRJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Jan 2012 03:17:09 -0500
+Received: from antispam02.maxim-ic.com ([205.153.101.183]:36372 "EHLO
+	antispam02.maxim-ic.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750883Ab2AXIRI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Jan 2012 03:17:08 -0500
+X-ASG-Debug-ID: 1327393001-02256b3e03466b70005-QuoKaX
+Received: from maxdalex01.maxim-ic.internal (maxdalex01.maxim-ic.internal [10.16.15.101]) by antispam02.maxim-ic.com with ESMTP id X8WAHxKDuszFeY6i; Tue, 24 Jan 2012 02:16:53 -0600 (CST)
+X-Barracuda-Envelope-From: brian.foster@maxim-ic.com
+Received: from maxsvlex02.maxim-ic.internal (10.32.112.18) by
+ maxdalex01.maxim-ic.internal (10.16.15.101) with Microsoft SMTP Server (TLS)
+ id 8.3.192.1; Tue, 24 Jan 2012 02:16:44 -0600
+Received: from bfoster-57.localnet (10.201.0.19) by
+ maxsvlex02.maxim-ic.internal (10.32.112.18) with Microsoft SMTP Server (TLS)
+ id 8.3.192.1; Tue, 24 Jan 2012 00:16:43 -0800
+X-ASG-Orig-Subj: Re: [Q] Determing if a commit is reachable from the HEAD ?
+User-Agent: KMail/1.13.5 (Linux/2.6.32-37-generic; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <7vk44i9z99.fsf@alter.siamese.dyndns.org>
+X-Barracuda-Connect: maxdalex01.maxim-ic.internal[10.16.15.101]
+X-Barracuda-Start-Time: 1327393013
+X-Barracuda-URL: http://192.168.10.183:8000/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at maxim-ic.com
+X-Barracuda-Spam-Score: 0.12
+X-Barracuda-Spam-Status: No, SCORE=0.12 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=5.0 tests=CN_BODY_332
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.2.86538
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	0.12 CN_BODY_332            BODY: CN_BODY_332
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189041>
 
-2012/1/24 Junio C Hamano <gitster@pobox.com>:
-> Recently, 6f48d39 (clone: delay cloning until after remote HEAD check=
-ing,
-> 2012-01-16) tried to record if a remote helper needs to be called aft=
-er
-> parsing the remote when transport_get() is called, by overwriting the
-> field meant to store the configured remote helper name in the remote
-> structure.
->
-> This is OK when a remote represents a single remote repository, but f=
-ails
-> miserably when pushing to locations with multiple URLs, like this:
->
-> =C2=A0 =C2=A0$ cat .git/config
-> =C2=A0 =C2=A0[remote "origin"]
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0url =3D https://code.google.com/p/git-html=
-docs/
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0url =3D github.com:gitster/git-htmldocs.gi=
-t
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0push =3D refs/heads/master:refs/heads/mast=
-er
+On Monday 23 January 2012 17:09:38 Junio C Hamano wrote:
+> Brian Foster <brian.foster@maxim-ic.com> writes:
+> >  I am probably misunderstanding =E2=80=98--quiet=E2=80=99, which th=
+e
+> >  man page cryptically describes as =E2=80=9C... allow the
+> >  caller to test the exit status to see if a range
+> >  of objects is fully connected (or not).=E2=80=9D  What is
+> >  meant here by =E2=80=9Cfully connected=E2=80=9D ?
+>=20
+> If the real history looks like this:
+>=20
+>  ---Y---x---HEAD
+>=20
+> i.e. the commit at HEAD says "parent x" in it, and your lacks "x"
+> for whatever reason, Y..HEAD is not fully connected.
 
-My bad. remote.*.vcs (or remote->foreign_vcs) is designed to override
-remote helper detection based on url. Once you have pushed over https,
-the following urls will be over https too. Luckily no other places
-perform an operation over multiple urls like push so we're safe with
-your bandage.
+Junio, and my _what_ lacks "x"?  Sorry, it looks like
+ you typo'ed, but I cannot decipher what you meant.
 
-We should have another way to detect whether remote helper being used
-(comparing some function pointers like transport->connect or
-transport->disconnect may help). But I need to think a bit about
-delaying cloning for http(s) too even though remote helper is used.
+cheers!
+	-blf-
 --=20
-Duy
+Brian Foster
+Principal MTS, Software        |  La Ciotat, France
+Maxim Integrated Products      |  Web:  http://www.maxim-ic.com/
