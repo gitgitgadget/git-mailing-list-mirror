@@ -1,73 +1,121 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 5/5] run-command: Error out if interpreter not found
-Date: Tue, 24 Jan 2012 17:24:21 -0600
-Message-ID: <20120124232421.GH8222@burratino>
-References: <1327444346-6243-1-git-send-email-fransklaver@gmail.com>
- <1327444346-6243-6-git-send-email-fransklaver@gmail.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: Autocompletion - commands no longer work as stand alone
+Date: Wed, 25 Jan 2012 00:26:58 +0100
+Message-ID: <20120124232658.GD2256@goldbirke>
+References: <CAPx=Vfp_HVr5W1fFic_1k+JsKr2RAKd-RK=VkfSgo7qkb5GsAw@mail.gmail.com>
+	<CAPx=Vfqj3UZuFv3Xmupy7k9arUxyZJyprm628p9QVKabdOz8cw@mail.gmail.com>
+	<7vwr8mdvo8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Junio C. Hamano" <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Frans Klaver <fransklaver@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 25 00:24:41 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nathan Bullock <nathanbullock@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 25 00:27:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RppjE-0006JM-0n
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 00:24:40 +0100
+	id 1Rpplh-0007XZ-KP
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 00:27:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753208Ab2AXXYf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jan 2012 18:24:35 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:41405 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750789Ab2AXXYe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jan 2012 18:24:34 -0500
-Received: by iacb35 with SMTP id b35so6003710iac.19
-        for <git@vger.kernel.org>; Tue, 24 Jan 2012 15:24:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Qumb//3RCIvTHIeMaPvwrszc/Ln1JXI2C9yUJbEv6LQ=;
-        b=O1FD8ZA/cbMwDp+hd1XS5yfym7sdVkkafIcfd36h+TvpEgLWbtFGgqxy6PwRvJLqWh
-         K7Gul5dhKV2T21OSNI2Ij7xj1o9lc5c66xuXZm6T3xs6mgF3n74s/A8xnCzagRUrz3+0
-         Ev6T8wn1Bc3k62Mo3m2ky9x+U2fmIihQKaL6k=
-Received: by 10.43.133.199 with SMTP id hz7mr13463507icc.35.1327447474512;
-        Tue, 24 Jan 2012 15:24:34 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id mr24sm6666100ibb.1.2012.01.24.15.24.33
-        (version=SSLv3 cipher=OTHER);
-        Tue, 24 Jan 2012 15:24:33 -0800 (PST)
+	id S1752649Ab2AXX1I convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Jan 2012 18:27:08 -0500
+Received: from moutng.kundenserver.de ([212.227.126.186]:54072 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751867Ab2AXX1G (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jan 2012 18:27:06 -0500
+Received: from localhost6.localdomain6 (p5B130119.dip0.t-ipconnect.de [91.19.1.25])
+	by mrelayeu.kundenserver.de (node=mrbap3) with ESMTP (Nemesis)
+	id 0MV5B7-1S8GN813EL-00YSnL; Wed, 25 Jan 2012 00:27:03 +0100
 Content-Disposition: inline
-In-Reply-To: <1327444346-6243-6-git-send-email-fransklaver@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <7vwr8mdvo8.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:BfssBCzE0OtK2AL7AzbAA4F/qsxTFg9R30wfcHB3SWq
+ KnDvX97gIUlsil+e72AlZVrDj+bO8Z2q/u+FKiNixaNEhQ1OUX
+ Wo8UZT/iS/PRyTMF24rLS2H6WfLo6czJPv8g1PkMyr7ad9oVra
+ FldoGBmFp9RFfUh/SurVYyreir/fQtQZkJQn9uCqStFX+IKPG7
+ aBBL4FhylWQrqhCXedPX71ngq0d2kIhyy1/3nK8D/VQPn6Fn+M
+ SVnAsxb2dIGL/5C3PdHdJxWeBUPZmZKdmFvQ3OqfT+q/i+idaL
+ EPheW4tXfOWOCESwQA4/APD3PAGRKZxd/yLmM8cwCl8CVV3xo9
+ 1+7ZCkwYdXP6faqQB6Pc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189087>
 
-Frans Klaver wrote:
+Hi,
 
-> --- a/t/t0061-run-command.sh
-> +++ b/t/t0061-run-command.sh
-> @@ -76,12 +76,12 @@ test_expect_success POSIXPERM 'run_command reports EACCES, interpreter fails' '
->  	grep "bad interpreter" err
->  '
->  
-> -test_expect_failure POSIXPERM 'run_command reports ENOENT, interpreter' '
-> +test_expect_success POSIXPERM 'run_command reports ENOENT, interpreter' '
->  	cat non-existing-interpreter >hello.sh &&
->  	chmod +x hello.sh &&
->  	test_must_fail test-run-command start-command-ENOENT ./hello.sh 2>err &&
->  
-> -	grep "error: cannot exec.*hello.sh" err &&
-> +	grep "fatal: cannot exec.*hello.sh" err &&
 
-Thanks.  I'd suggest using "test_expect_code" rather than the detailed
-wording of the message, since that is what scripts might want to rely
-on.
+> Nathan Bullock <nathanbullock@gmail.com> writes:
+>=20
+> > I have for a number of years had the following in my .bashrc
+> >
+> > alias br=3D"git branch"
+> > complete -F _git_branch br
+> >
+> > As well as similar commands for co and log.
+> >
+> > Recently though this broke, now when I type something like "br
+> > mas<command completion>" it will occasionally complain with message=
+s
+> > like:
+> > bash: [: 1: unary operator expected
+> >
+> > From digging through the source it looks like this was broken back =
+in
+> > April. (The commit is show at the bottom of this email.)
+> >
+> > So my questions are:
+> > 1. Is it reasonable for things like _git_branch to work as a
+> > standalone autocompletion function instead of having to go through
+> > _git? I certainly like it to work as a standalone function. I also =
+use
+> > it to add autocompletion to other bash scripts that I use frequentl=
+y.
+> >
+> > 2. If I add code that verifies that the variable cword exists at th=
+e
+> > start of these functions and only if not call something like
+> > _get_comp_words_by_ref -n =3D: cur words cword prev. Would that be
+> > reasonable?
 
-What happens on Windows?
+That would be too fragile, it will break if $cword is set in the
+environment from which you invoke _git_<cmd>() completion functions
+directly (i.e. not though _git()).
+
+> > I think this should address the performance concerns that
+> > caused these to be removed in the first place, but it may make the
+> > code uglier.
+
+Actually it was not a performance problem, but a cleanup in a patch
+series to fix a zsh-related bug.  Without this cleanup the bugfix
+would have been much more intrusive.
+
+  http://thread.gmane.org/gmane.comp.version-control.git/172142/focus=3D=
+172369
+
+
+> > I have already added wrapper functions in my bashrc so that this is=
+ no
+> > longer a problem for me, but there may be other people who start
+> > hitting this as well once they start using newer versions of git.
+
+This issue was reported earlier, so it seems there are people who
+would like to use it.  But getting $cur, $cword, etc. variables right
+in _git_<cmd>() completion functions is just part of the problem,
+there are other issues, as mentioned in the previous thread:
+
+  http://thread.gmane.org/gmane.comp.version-control.git/185184/focus=3D=
+185232
+
+Unfortunately, I couldn't come up with a solution yet that doesn't
+introduce too much code churn and doesn't cause yet another
+inconsistency between bash and zsh.  I also haven't looked whether
+there are other issues similar to that with _git_fetch() mentioned on
+the above link.
+
+
+Best,
+G=E1bor
