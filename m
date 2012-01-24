@@ -1,87 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH 1/5] t0061: Fix incorrect indentation
-Date: Tue, 24 Jan 2012 14:39:47 -0800
-Message-ID: <7v8vkw3eto.fsf@alter.siamese.dyndns.org>
+Date: Tue, 24 Jan 2012 16:40:00 -0600
+Message-ID: <20120124224000.GE8222@burratino>
 References: <1327444346-6243-1-git-send-email-fransklaver@gmail.com>
  <1327444346-6243-2-git-send-email-fransklaver@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+Cc: git@vger.kernel.org, "Junio C. Hamano" <gitster@pobox.com>,
 	Johannes Sixt <j6t@kdbg.org>
 To: Frans Klaver <fransklaver@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 24 23:39:55 2012
+X-From: git-owner@vger.kernel.org Tue Jan 24 23:40:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rpp1u-0000dY-NE
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Jan 2012 23:39:55 +0100
+	id 1Rpp2L-0000vV-8V
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Jan 2012 23:40:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752173Ab2AXWju (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jan 2012 17:39:50 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36734 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751870Ab2AXWjt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jan 2012 17:39:49 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20012747C;
-	Tue, 24 Jan 2012 17:39:49 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BQEfDsK1fdecbk1I5gJNCnBkPgU=; b=nImDos
-	DyGeac9W6F5eAtVHoVR/imPYSw4SpRYk5rxptYm/1OOwadPFKMFkyBt1I6SZJmFW
-	qKIbayBUPMPm9LRe7ybtmJRPjloRlidR6V/zq+S/zfmCJNBNWMgTl/ViBgUbEeGh
-	8Hq6WkheWnpskgE/Obit6cmBysE9VsP+unSY8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jQdnUjodMBujw5NeHyqZ4wiphVNhiW++
-	JtDUI8uHOxpQOPYiRg1HnpHQ4+mvV+Dx5rklGncga6nNvqn0co7RecGMBuCYPuse
-	m1L9pSeFKj7Lrh+BEkjwgybuQl8dODaR0KEMVkIGa0/TPaCqJUz7GDBai6GySnpM
-	A7vzl2pDB8g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 17BE4747B;
-	Tue, 24 Jan 2012 17:39:49 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7542D7479; Tue, 24 Jan 2012
- 17:39:48 -0500 (EST)
-In-Reply-To: <1327444346-6243-2-git-send-email-fransklaver@gmail.com> (Frans
- Klaver's message of "Tue, 24 Jan 2012 23:32:22 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 52464922-46DC-11E1-A2F3-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752244Ab2AXWkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jan 2012 17:40:15 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:51090 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751870Ab2AXWkO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jan 2012 17:40:14 -0500
+Received: by ghrr11 with SMTP id r11so1110288ghr.19
+        for <git@vger.kernel.org>; Tue, 24 Jan 2012 14:40:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=emaeseqCWwKgtnJ2btKfllHD8/wXgR7PQdYRkLpEFIM=;
+        b=a6FZfslMO1MCOm3Ud5uO4X8K9nP5nyDdFZZ3Mg3+JPDEQqLWZJpwD74OeRDq8FfjUy
+         y/clUipHvbWtd4UHBhVfazeeeREhQ/vBXBri4JAE11RTwozBxY86nBfDWgbShS09lP8Z
+         6d3273Usa66ZbQkAUi5FLW057pzWgYhmR5mp8=
+Received: by 10.236.187.67 with SMTP id x43mr21061277yhm.94.1327444813883;
+        Tue, 24 Jan 2012 14:40:13 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id o16sm48612722ank.14.2012.01.24.14.40.12
+        (version=SSLv3 cipher=OTHER);
+        Tue, 24 Jan 2012 14:40:13 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1327444346-6243-2-git-send-email-fransklaver@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189083>
 
-Frans Klaver <fransklaver@gmail.com> writes:
+Frans Klaver wrote:
 
-> The hello.sh script started with <tab>#!, which is not considered a
-> correct hash-bang line.
-
-Isn't that exactly the reason why we start the here text with "<<-EOF",
-not the usual "<<EOF"?
-
-> required for this specific test.
->
-> Signed-off-by: Frans Klaver <fransklaver@gmail.com>
-> ---
->  t/t0061-run-command.sh |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-> index 8d4938f..95e89bc 100755
-> --- a/t/t0061-run-command.sh
 > +++ b/t/t0061-run-command.sh
 > @@ -8,8 +8,8 @@ test_description='Test run command'
->  . ./test-lib.sh
->  
->  cat >hello-script <<-EOF
+> . ./test-lib.sh
+>
+> cat >hello-script <<-EOF
 > -	#!$SHELL_PATH
 > -	cat hello-script
 > +#!$SHELL_PATH
 > +cat hello-script
 >  EOF
->  >empty
+
+Looks like a no-op --- the script already started with #! and no
+leading tab for me.  Does it behave differently on your machine?
