@@ -1,63 +1,68 @@
-From: mfine <eboats@gmail.com>
-Subject: HEAD file location
-Date: Tue, 24 Jan 2012 03:42:46 +0000 (UTC)
-Message-ID: <loom.20120124T043119-263@post.gmane.org>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: HEAD file location
+Date: Tue, 24 Jan 2012 09:22:09 +0530
+Message-ID: <CAMK1S_jJUJvEz-OY0cMz1LFDSd71zuWhnSfYbg_sVi5DO-JJOQ@mail.gmail.com>
+References: <loom.20120124T043119-263@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 24 04:45:36 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: mfine <eboats@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 24 04:52:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RpXKB-0007sy-O0
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Jan 2012 04:45:36 +0100
+	id 1RpXQd-0001jZ-P2
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Jan 2012 04:52:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752877Ab2AXDpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jan 2012 22:45:07 -0500
-Received: from lo.gmane.org ([80.91.229.12]:40670 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751443Ab2AXDpF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jan 2012 22:45:05 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RpXJf-0007gN-PZ
-	for git@vger.kernel.org; Tue, 24 Jan 2012 04:45:04 +0100
-Received: from c-98-247-202-226.hsd1.wa.comcast.net ([98.247.202.226])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 24 Jan 2012 04:45:03 +0100
-Received: from eboats by c-98-247-202-226.hsd1.wa.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 24 Jan 2012 04:45:03 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 98.247.202.226 (Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.2; .NET CLR 1.1.4322; BRI/2))
+	id S1754737Ab2AXDwL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Jan 2012 22:52:11 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:63581 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753888Ab2AXDwK convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jan 2012 22:52:10 -0500
+Received: by obcva7 with SMTP id va7so3812735obc.19
+        for <git@vger.kernel.org>; Mon, 23 Jan 2012 19:52:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=qvvM3mldU0YtTbnlHvB5jllLLIiuu9/jJf/KeM9lR9Q=;
+        b=Wb7XEC4zWIgyJCF1Gt+NnpmbmmKw7+38Vt5xE3FVa8jvY2HoiSfq9naR8ADARvZ43l
+         6de8HC3vMUYiuR7le/4U1DBP0/OVUxz+3JITMccDb4BUmYp7FNO5wxvP0SZxzdOm/BE6
+         gkD570ycOJLAXqE96j/gqB4PyZZ5afCda8o0c=
+Received: by 10.182.132.105 with SMTP id ot9mr10272002obb.34.1327377129746;
+ Mon, 23 Jan 2012 19:52:09 -0800 (PST)
+Received: by 10.182.51.170 with HTTP; Mon, 23 Jan 2012 19:52:09 -0800 (PST)
+In-Reply-To: <loom.20120124T043119-263@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189037>
 
-I'm working on a Git project and had a question about HEAD.  
+On Tue, Jan 24, 2012 at 9:12 AM, mfine <eboats@gmail.com> wrote:
+> I'm working on a Git project and had a question about HEAD.
+>
+> In our remote Git repository, I see the file
+>
+> git_repo_home/HEAD
+>
+> and another file
+>
+> git_repo_home/refs/heads/HEAD
+>
+> The content of the former file is =C2=A0refs/heads/master =C2=A0which=
+ looks ok because
+> we want HEAD pointing at master.
+>
+> However, should the latter file exist? =C2=A0I had thought only branc=
+hes
+> should exist in /refs/heads and HEAD isn't a branch right? =C2=A0I'm =
+wondering
+> if we erroneously created a HEAD branch.
 
-In our remote Git repository, I see the file
-
-git_repo_home/HEAD
-
-and another file 
-
-git_repo_home/refs/heads/HEAD
-
-The content of the former file is  refs/heads/master  which looks ok because 
-we want HEAD pointing at master.
-
-However, should the latter file exist?  I had thought only branches
-should exist in /refs/heads and HEAD isn't a branch right?  I'm wondering
-if we erroneously created a HEAD branch.
-
-Thanks for any help!  
+Yes.  Someone did something like 'git push origin HEAD:HEAD'
