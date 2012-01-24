@@ -1,165 +1,473 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 2/2] add a Makefile switch to avoid gettext translation in
- shell scripts
-Date: Tue, 24 Jan 2012 01:39:26 +0100
-Message-ID: <CACBZZX66-JsS4zZXwv2squcjYUS8v+9cN0hv23t5nMHA+1k9XQ@mail.gmail.com>
-References: <CALxABCZME-g++HxMsD4Nrn1J6s27vN7M_KQSVT3PeLWBqP7qJg@mail.gmail.com>
- <CACBZZX4TsL-tj04PmUwGNWjXO+JY-8unAv-aRKOGvgB71qdYCg@mail.gmail.com>
- <CALxABCadHdvR02Br9e6STy0w+EPoycUKr62RiSUSP_EPF-TH3g@mail.gmail.com>
- <CACBZZX4tB6DGV-1tiuOamq7ACPk0a-=1Pb9Vk1SgyDqAq-EFOw@mail.gmail.com>
- <CALxABCbaBmP6k5TYrYLCYm8oiv=9cF=N7_opSTKUnbkz5b-cwg@mail.gmail.com>
- <20120119195222.GA5011@blimp.dmz> <7v1uqq84es.fsf@alter.siamese.dyndns.org>
- <7vwr8i6prk.fsf_-_@alter.siamese.dyndns.org> <7vr4yq6poy.fsf_-_@alter.siamese.dyndns.org>
- <20120123221256.GG20833@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's cooking in git.git (Jan 2012, #05; Mon, 23)
+Date: Mon, 23 Jan 2012 16:56:43 -0800
+Message-ID: <7vmx9d6hpw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 24 01:39:56 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 24 01:56:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RpUQW-00054N-C0
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Jan 2012 01:39:56 +0100
+	id 1RpUgv-0003Yp-K1
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Jan 2012 01:56:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753525Ab2AXAjv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Jan 2012 19:39:51 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:42024 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752731Ab2AXAjt convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jan 2012 19:39:49 -0500
-Received: by lahc1 with SMTP id c1so1996713lah.19
-        for <git@vger.kernel.org>; Mon, 23 Jan 2012 16:39:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=dF5Qn+vOkOhqW7Mf8CvB3MG4kn2AH3bCbgNBW4OwmyM=;
-        b=YlYmfEycJ6NnR+4I4qVFfV+2KVic9P+oZP5nleM9e5b70iDEeX7HWBex+HY23vWRgG
-         BTOYChrEEYJfGFIbUjhMF9vb6n50rwOikG0HuIbwUfTM084jvUKSnnnUBXTPBo0QhlR3
-         na4KUegQYX/T3qbC/DZsuDYAivy80kRTNZbzk=
-Received: by 10.152.144.133 with SMTP id sm5mr5387719lab.38.1327365587120;
- Mon, 23 Jan 2012 16:39:47 -0800 (PST)
-Received: by 10.112.48.9 with HTTP; Mon, 23 Jan 2012 16:39:26 -0800 (PST)
-In-Reply-To: <20120123221256.GG20833@burratino>
+	id S1754418Ab2AXA4s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Jan 2012 19:56:48 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38218 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753054Ab2AXA4r convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Jan 2012 19:56:47 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0BD976C02;
+	Mon, 23 Jan 2012 19:56:46 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=sP+Zc4CFRMHxk9fDpfxpqR0UV
+	oY=; b=YZ86ZgHLu8Vy+ioyHQXStpHJT+IPSJJCdixKKefIsuno3dyJBFcZ6y2lM
+	kAD3x//+wTL7qe8/dHbmnZbTtBTjevTTWWZmYDkRX7jqS08NSusCLjwqe0mtc4fL
+	R+E6my2p9BnAI33o8P7NFB3hLAvPW4+94mAOPoj4YrkmrGCCig=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=hxv2QVJKGjDvpRA7rGl
+	udGeXNEtWGoOnobdi3H/dP7cH/YLa2x+ubdGN7fY691VUHEvTcmUSHr+c0NgYef2
+	/8W2iy5ZjabyFGEtwWWqHxcl5/VsFGxaUq1b5xDVsrodxl1hfODeRCbxwItgqcj3
+	o5nZmk4zJdz1tt1U4a7iWvnU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F40616C01;
+	Mon, 23 Jan 2012 19:56:45 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0F5CE6BFC; Mon, 23 Jan 2012
+ 19:56:44 -0500 (EST)
+X-master-at: 69204d0ab18d28d07ee2c8c9b50bbf5bd80343ab
+X-next-at: bee31c659a45b507c95fb5bc777eb04fad181b4d
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 495369FA-4626-11E1-9B51-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189030>
 
-On Mon, Jan 23, 2012 at 23:12, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> Junio C Hamano wrote:
->
->> =C2=A0 =C2=A0 make USE_GETTEXT_SCHEME=3Dfallthrough
->>
->> This will replace the translation routines with fallthrough versions=
-,
->> that does not use gettext from the platform.
->
-> Nice implementation. =C2=A0I still don't understand why NO_GETTEXT=3D=
-YesPlease
-> should not imply this. =C2=A0Is it to ensure the GETTEXT_SCHEME=3Dgnu=
- mode
-> gets more testing?
+Here are the topics that have been cooking.  Commits prefixed with '-' =
+are
+only in 'pu' (proposed updates) while commits prefixed with '+' are in
+'next'.
 
-I was the only one with an objection to doing that. The main (and I
-admit, at least slightly irrational) reason being that I simply don't
-like using fallback functions when the system supplies us with
-perfectly good functions we can use instead.
+I had 1.7.9-rc3 planned in the Git calendar (http://tinyurl.com/gitcal)
+for today, but it turns out that we didn't have embarrassing urgent
+regression to fix so far up to -rc2, so I'd skip doing -rc3 and hopeful=
+ly
+be able to tag the final later this week.
 
-It means we're less likely to share code / fixes / eyeballs / cache
-with other programs. I.e. by using envsubst(1) instead of
-git-sh-i18n--envsubst--variables(1).
+Here are the repositories that have my integration branches:
 
-Ironically this is all my fault by naming the option for turning off
-translations NO_GETTEXT. What it should be called is
-DO_NOT_TRANSLATE_OUTPUT, but since we *need* shell functions to output
-anything it might have used a system gettext library to do that,
-NO_GETTEXT should have been "I don't have any gettext library, please
-supply some fallbacks".
+With maint, master, next, pu, todo:
 
-Which would have meant that for people who simply don't want
-translated output we'd be using the maintained by upstream envsubst(1)
-instead of the doomed to bitrot forever hack I ripped out of some old
-GPL2 version of GNU gettext.
+        git://git.kernel.org/pub/scm/git/git.git
+        git://repo.or.cz/alt-git.git
+        https://code.google.com/p/git-core/
+        https://github.com/git/git
 
-Anyway in the grand scheme of things none of this really matters,
-these patches can all go in as far as I'm concerned. I can submit
-patches to improve it once the dust has settled if I still care
-enough.
+With only maint and master:
 
-Aside from this I think not having the ability to run a pre-processor
-on the shellscripts results in some really ugly workarounds. This
-stuff would be much nicer if we could just generate git-sh-i18n.sh at
-compile time depending on some autoconf tests or Makefile options.
+        git://git.sourceforge.jp/gitroot/git-core/git.git
+        git://git-core.git.sourceforge.net/gitroot/git-core/git-core
 
-And by hacking up a pre-processor that just searches/replaces all the
-gettext/eval_gettext calls out of the shell code we could sidestep
-this whole issue and there wouldn't be any need for fallback
-functions, ever. This would also result in a real improvement on
-Windows where exec overhead is much larger.
+With all the topics and integration branches:
 
-Like this hack, which doesn't even work, but gives you some idea of
-what we could do:
+        https://github.com/gitster/git
 
-    #!/usr/bin/env perl
-    BEGIN { $^I =3D ""; }
+The preformatted documentation in HTML and man format are found in:
 
-    sub unescape {
-    	my $str =3D shift;
-    	$str =3D~ s/\\\$/\$/gs;
-    	$str;
-    }
+        git://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
+        git://repo.or.cz/git-{htmldocs,manpages}.git/
+        https://code.google.com/p/git-{htmldocs,manpages}.git/
+        https://github.com/gitster/git-{htmldocs,manpages}.git/
 
-    LINE: while (defined($_ =3D <ARGV>)) {
-    	s["\$\(gettext "([^"]+?)"\)"]["$1"]g;
-    	s["\$\(eval_gettext "([^"]+?)"\)"]['"' . unescape($1) . '"']eg;
-    	s[eval_gettextln "([^"]+?)"]['echo "' . unescape($1) . '"']eg;
-    	s[gettext "([^"]+?)"][printf "%s" "$1"]g;
-    	s[gettextln "([^"]+?)"][echo "$1"]g;
-    #	s[gettextln "([^"]+?)"][echo "$1"]g;
-    #	s/foo/bar/;
-    	print;
+--------------------------------------------------
+[Graduated to "master"]
 
-    }
+* jc/pull-signed-tag-doc (2012-01-17) 1 commit
+ + pulling signed tag: add howto document
 
+* jk/credentials (2012-01-16) 4 commits
+  (merged to 'next' on 2012-01-16 at 2810b82)
+ + credential-cache: ignore "connection refused" errors
+  (merged to 'next' on 2012-01-16 at 1c6c94a)
+ + unix-socket: do not let close() or chdir() clobber errno during clea=
+nup
+ + credential-cache: report more daemon connection errors
+ + unix-socket: handle long socket pathnames
 
-When run:
+Minor fix-ups to the new feature.
 
-    for f in $(git grep -l gettext -- *.sh); do perl replace-gettext.pl=
- $f; done
+* mh/maint-show-ref-doc (2012-01-13) 2 commits
+  (merged to 'next' on 2012-01-16 at 8573f09)
+ + git-show-ref doc: typeset regexp in fixed width font
+ + git-show-ref: fix escaping in asciidoc source
 
-Produces output like:
+* nd/pathspec-recursion-cleanup (2012-01-16) 2 commits
+  (merged to 'next' on 2012-01-16 at 0189264)
+ + diff-index: enable recursive pathspec matching in unpack_trees
+ + Document limited recursion pathspec matching with wildcards
 
-    @@ -351 +351 @@ split_patches () {
-    -                       clean_abort "$(eval_gettext "Patch format
-\$patch_format is not supported.")"
-    +                       clean_abort "Patch format $patch_format is
-not supported."
-    @@ -353 +353 @@ split_patches () {
-    -                       clean_abort "$(gettext "Patch format
-detection failed.")"
-    +                       clean_abort "Patch format detection failed.=
-"
-    @@ -403 +403 @@ do
-    -               die "$(gettext "-d option is no longer supported.
-Do not use.")"
-    +               die "-d option is no longer supported.  Do not use.=
-"
-    @@ -466 +466 @@ then
-    -       die "$(eval_gettext "previous rebase directory \$dotest
-still exists but mbox given.")"
-    +       die "previous rebase directory $dotest still exists but mbo=
-x given."
+* tr/maint-word-diff-incomplete-line (2012-01-12) 1 commit
+  (merged to 'next' on 2012-01-16 at 58ddaaf)
+ + word-diff: ignore '\ No newline at eof' marker
 
-It would be relatively easy to hack up a basic POSIX shell
-pre-processor like this that would work on our *.sh files, thus
-eliminating the need for all of this fallback business.
+--------------------------------------------------
+[New Topics]
+
+* jl/test-pause (2012-01-17) 1 commit
+  (merged to 'next' on 2012-01-20 at ee56335)
+ + test-lib: add the test_pause convenience function
+
+Looked reasonable.
+Will merge early in the next cycle.
+
+* mh/ref-clone-without-extra-refs (2012-01-17) 4 commits
+  (merged to 'next' on 2012-01-20 at 2e9645e)
+ + write_remote_refs(): create packed (rather than extra) refs
+ + add_packed_ref(): new function in the refs API.
+ + ref_array: keep track of whether references are sorted
+ + pack_refs(): remove redundant check
+
+Looked reasonable; will hopefully help making mh/ref-api-rest simpler a=
+nd
+cleaner.
+
+Will merge early in the next cycle.
+
+* mm/zsh-completion-regression-fix (2012-01-17) 1 commit
+  (merged to 'next' on 2012-01-23 at 7bc2e0a)
+ + bash-completion: don't add quoted space for ZSH (fix regression)
+
+Will merge early in the next cycle and deal with any fallout in 'master=
+'.
+
+* ar/i18n-no-gettext (2012-01-23) 3 commits
+  (merged to 'next' on 2012-01-23 at 694a94e)
+ + i18n: Make NO_GETTEXT imply fallthrough scheme in shell l10n
+ + add a Makefile switch to avoid gettext translation in shell scripts
+ + git-sh-i18n: restructure the logic to compute gettext.sh scheme
+
+Will merge early in the next cycle and deal with any fallout in 'master=
+'.
+
+* da/maint-mergetool-twoway (2012-01-23) 1 commit
+  (merged to 'next' on 2012-01-23 at f927323)
+ + mergetool: Provide an empty file when needed
+
+Caters to GUI merge backends that cannot merge two files without
+a base by giving them an empty file as a "pretend" common ancestor.
+
+Will merge early in the next cycle and deal with any fallout in 'master=
+'.
+
+* jc/maint-log-first-parent-pathspec (2012-01-19) 1 commit
+  (merged to 'next' on 2012-01-20 at fb2b35f)
+ + Making pathspec limited log play nicer with --first-parent
+
+A bugfix.
+Will merge early in the next cycle.
+
+* ld/git-p4-branches-and-labels (2012-01-20) 5 commits
+  (merged to 'next' on 2012-01-23 at 9020ec4)
+ + git-p4: label import fails with multiple labels at the same changeli=
+st
+ + git-p4: add test for p4 labels
+ + git-p4: importing labels should cope with missing owner
+ + git-p4: cope with labels with empty descriptions
+ + git-p4: handle p4 branches and labels containing shell chars
+ (this branch is used by va/git-p4-branch.)
+
+Will merge early in the next cycle.
+
+* va/git-p4-branch (2012-01-20) 3 commits
+ - git-p4: Add test case for complex branch import
+ - git-p4: Search for parent commit on branch creation
+ - git-p4: Add checkpoint() task
+ (this branch uses ld/git-p4-branches-and-labels.)
+
+A handful of review comments seen.
+Expecting a re-roll.
+
+* sp/smart-http-failure-to-push (2012-01-20) 1 commit
+  (merged to 'next' on 2012-01-20 at a892434)
+ + remote-curl: Fix push status report when all branches fail
+
+Looked reasonable.
+Will merge early in the next cycle.
+
+* ks/sort-wildcard-in-makefile (2012-01-22) 1 commit
+  (merged to 'next' on 2012-01-23 at e2e0c1d)
+ + t/Makefile: Use $(sort ...) explicitly where needed
+
+Looked reasonable.
+Will merge early in the next cycle.
+
+* tr/grep-l-with-decoration (2012-01-23) 1 commit
+  (merged to 'next' on 2012-01-23 at 42b8795)
+ + grep: fix -l/-L interaction with decoration lines
+
+Looked reasonable.
+Will merge early in the next cycle.
+
+--------------------------------------------------
+[Stalled]
+
+* jc/advise-push-default (2011-12-18) 1 commit
+ - push: hint to use push.default=3Dupstream when appropriate
+
+Peff had a good suggestion outlining an updated code structure so that
+somebody new can try to dip his or her toes in the development. Any
+takers?
+
+Waiting for a reroll.
+
+* jc/split-blob (2011-12-01) 6 commits
+ . WIP (streaming chunked)
+ - chunked-object: fallback checkout codepaths
+ - bulk-checkin: support chunked-object encoding
+ - bulk-checkin: allow the same data to be multiply hashed
+ - new representation types in the packstream
+ - varint-in-pack: refactor varint encoding/decoding
+
+Not ready.
+
+At least pack-objects and fsck need to learn the new encoding for the
+series to be usable locally, and then index-pack/unpack-objects needs t=
+o
+learn it to be used remotely.
+
+* mh/ref-api-rest (2011-12-12) 35 commits
+ . repack_without_ref(): call clear_packed_ref_cache()
+ . read_packed_refs(): keep track of the directory being worked in
+ . is_refname_available(): query only possibly-conflicting references
+ . refs: read loose references lazily
+ . read_loose_refs(): take a (ref_entry *) as argument
+ . struct ref_dir: store a reference to the enclosing ref_cache
+ . sort_ref_dir(): take (ref_entry *) instead of (ref_dir *)
+ . do_for_each_ref_in_dir*(): take (ref_entry *) instead of (ref_dir *)
+ . add_entry(): take (ref_entry *) instead of (ref_dir *)
+ . search_ref_dir(): take (ref_entry *) instead of (ref_dir *)
+ . find_containing_direntry(): use (ref_entry *) instead of (ref_dir *)
+ . add_ref(): take (ref_entry *) instead of (ref_dir *)
+ . read_packed_refs(): take (ref_entry *) instead of (ref_dir *)
+ . find_ref(): take (ref_entry *) instead of (ref_dir *)
+ . is_refname_available(): take (ref_entry *) instead of (ref_dir *)
+ . get_loose_refs(): return (ref_entry *) instead of (ref_dir *)
+ . get_packed_refs(): return (ref_entry *) instead of (ref_dir *)
+ . refs: wrap top-level ref_dirs in ref_entries
+ . get_ref_dir(): keep track of the current ref_dir
+ . do_for_each_ref(): only iterate over the subtree that was requested
+ . refs: sort ref_dirs lazily
+ . sort_ref_dir(): do not sort if already sorted
+ . refs: store references hierarchically
+ . refs.c: rename ref_array -> ref_dir
+ . struct ref_entry: nest the value part in a union
+ . check_refname_component(): return 0 for zero-length components
+ . free_ref_entry(): new function
+ . refs.c: reorder definitions more logically
+ . is_refname_available(): reimplement using do_for_each_ref_in_array()
+ . names_conflict(): simplify implementation
+ . names_conflict(): new function, extracted from is_refname_available(=
+)
+ . repack_without_ref(): reimplement using do_for_each_ref_in_array()
+ . do_for_each_ref_in_arrays(): new function
+ . do_for_each_ref_in_array(): new function
+ . do_for_each_ref(): correctly terminate while processesing extra_refs
+
+I had to remove this temporarily out of 'pu' as I didn't want to deal w=
+ith
+merge conflicts with the mh/ref-clone-without-extra-refs topic that
+removes yet another caller of add_extra_ref() that this series touches.
+
+Will defer till the next cycle.
+
+* ss/git-svn-prompt-sans-terminal (2012-01-04) 3 commits
+ - fixup! 15eaaf4
+ - git-svn, perl/Git.pm: extend Git::prompt helper for querying users
+  (merged to 'next' on 2012-01-05 at 954f125)
+ + perl/Git.pm: "prompt" helper to honor GIT_ASKPASS and SSH_ASKPASS
+
+The bottom one has been replaced with a rewrite based on comments from
+=C3=86var. The second one needs more work, both in perl/Git.pm and prom=
+pt.c, to
+give precedence to tty over SSH_ASKPASS when terminal is available.
+
+Will defer till the next cycle.
+
+* nd/commit-ignore-i-t-a (2012-01-16) 2 commits
+ - commit, write-tree: allow to ignore CE_INTENT_TO_ADD while writing t=
+rees
+ - cache-tree: update API to take abitrary flags
+
+May want to consider this as fixing an earlier UI mistake, and not as a
+feature that devides the userbase.
+
+Will defer till the next cycle.
+
+--------------------------------------------------
+[Cooking]
+
+* jc/pull-signed-tag (2012-01-23) 1 commit
+  (merged to 'next' on 2012-01-23 at 4257553)
+ + merge: use editor by default in interactive sessions
+
+Per Linus's strong suggestion, sugarcoated (aka "taking blame for the
+original UI screw-ups") so that it is easier for me to swallow and acce=
+pt
+a potentially huge backward incompatibility issue, "git merge" is made =
+to
+launch an editor to explain the merge in the merge commit by default in
+interactive sessions.
+
+I've updated the special-case environment variable to MERGE_AUTOEDIT th=
+at
+scripts can set to "no" when they start. There is no plan to encourage
+humans to keep using the historical behaviour, hence there is no suppor=
+t
+for configuration variable (e.g. merge.autoedit) that can be set to 'no=
+'.
+Oh, also I updated the documentation a bit.
+
+Will merge early in the next cycle and deal with any fallout in 'master=
+'.
+
+* nd/maint-refname-in-hierarchy-check (2012-01-11) 1 commit
+  (merged to 'next' on 2012-01-20 at acb5611)
+ + Fix incorrect ref namespace check
+
+Avoid getting confused by "ref/headxxx" and mistaking it as if it is un=
+der
+the "refs/heads/" hierarchy.
+Will merge early in the next cycle.
+
+* jc/advise-i18n (2011-12-22) 1 commit
+  (merged to 'next' on 2012-01-23 at 6447013)
+ + i18n of multi-line advice messages
+
+Allow localization of advice messages that tend to be longer and
+multi-line formatted. For now this is deliberately limited to advise()
+interface and not vreportf() in general as touching the latter has
+interactions with error() that has plumbing callers whose prefix "error=
+: "
+should never be translated.
+
+Will merge early in the next cycle.
+
+* rr/sequencer (2012-01-11) 2 commits
+  (merged to 'next' on 2012-01-23 at f349b56)
+ + sequencer: factor code out of revert builtin
+ + revert: prepare to move replay_action to header
+
+Moving large chunk of code out of cherry-pick/revert for later reuse,
+primarily to prepare for the next cycle.
+
+Will merge early in the next cycle.
+
+* tr/maint-mailinfo (2012-01-16) 2 commits
+  (merged to 'next' on 2012-01-20 at 278fae1)
+ + mailinfo: with -b, keep space after [foo]
+ + am: learn passing -b to mailinfo
+
+Looked reasonable.
+Will merge early in the next cycle.
+
+* pw/p4-view-updates (2012-01-11) 5 commits
+  (merged to 'next' on 2012-01-20 at 8ca2c7b)
+ + git-p4: add tests demonstrating spec overlay ambiguities
+ + git-p4: adjust test to adhere to stricter useClientSpec
+ + git-p4: clarify comment
+ + git-p4: fix verbose comment typo
+ + git-p4: only a single ... wildcard is supported
+
+Will merge early in the next cycle.
+
+* rs/diff-postimage-in-context (2012-01-06) 1 commit
+  (merged to 'next' on 2012-01-09 at 9635032)
+ + xdiff: print post-image for common records instead of pre-image
+
+Looked reasonable.
+Will merge early in the next cycle and deal with any fallout in 'master=
+'.
+
+* cb/push-quiet (2012-01-08) 3 commits
+  (merged to 'next' on 2012-01-20 at 4326dda)
+ + t5541: avoid TAP test miscounting
+ + fix push --quiet: add 'quiet' capability to receive-pack
+ + server_supports(): parse feature list more carefully
+
+Looked reasonable.
+Will merge early in the next cycle.
+
+* nd/clone-detached (2012-01-23) 11 commits
+  (merged to 'next' on 2012-01-23 at bee31c6)
+ + push: do not let configured foreign-vcs permanently clobbered
+  (merged to 'next' on 2012-01-23 at 9cab64e)
+ + clone: print advice on checking out detached HEAD
+ + clone: allow --branch to take a tag
+ + clone: refuse to clone if --branch points to bogus ref
+ + clone: --branch=3D<branch> always means refs/heads/<branch>
+ + clone: delay cloning until after remote HEAD checking
+ + clone: factor out remote ref writing
+ + clone: factor out HEAD update code
+ + clone: factor out checkout code
+ + clone: write detached HEAD in bare repositories
+ + t5601: add missing && cascade
+ (this branch uses nd/clone-single-branch.)
+
+Applied a band-aid to a corner-case regression.
+Will merge early in the next cycle and deal with any fallout in 'master=
+'.
+
+* nd/clone-single-branch (2012-01-08) 1 commit
+  (merged to 'next' on 2012-01-09 at 6c3c759)
+ + clone: add --single-branch to fetch only one branch
+ (this branch is used by nd/clone-detached.)
+
+Looked reasonable.
+Will merge early in the next cycle.
+
+* jn/gitweb-unspecified-action (2012-01-09) 1 commit
+  (merged to 'next' on 2012-01-20 at 2b31714)
+ + gitweb: Fix actionless dispatch for non-existent objects
+
+Looked reasonable.
+Will merge early in the next cycle.
+
+* nd/index-pack-no-recurse (2012-01-16) 3 commits
+  (merged to 'next' on 2012-01-20 at d1e964e)
+ + index-pack: eliminate unlimited recursion in get_base_data()
+ + index-pack: eliminate recursion in find_unresolved_deltas
+ + Eliminate recursion in setting/clearing marks in commit list
+
+Much better explained than the previous round.
+Will merge early in the next cycle and deal with any fallout in 'master=
+'.
+
+* cb/git-daemon-tests (2012-01-08) 5 commits
+  (merged to 'next' on 2012-01-08 at 1db8351)
+ + git-daemon tests: wait until daemon is ready
+ + git-daemon: produce output when ready
+ + git-daemon: add tests
+ + dashed externals: kill children on exit
+ + run-command: optionally kill children on exit
+
+Will merge early in the next cycle.
+
+* jk/parse-object-cached (2012-01-06) 3 commits
+  (merged to 'next' on 2012-01-08 at 8c6fa4a)
+ + upload-pack: avoid parsing tag destinations
+ + upload-pack: avoid parsing objects during ref advertisement
+ + parse_object: try internal cache before reading object db
+
+These are a bit scary changes, but I do think they are worth doing.
+Will merge early in the next cycle and deal with any fallout in 'master=
+'.
