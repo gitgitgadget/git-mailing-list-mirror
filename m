@@ -1,87 +1,69 @@
-From: Jehan Bing <jehan@orb.com>
-Subject: [BUG] Fail to add a module in a subdirectory if module is already
- cloned
-Date: Tue, 24 Jan 2012 11:11:55 -0800
-Message-ID: <jfmvpp$4v7$1@dough.gmane.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: {Spam?} push pull not working
+Date: Tue, 24 Jan 2012 14:41:54 -0500
+Message-ID: <20120124194153.GB19534@sigill.intra.peff.net>
+References: <1327431631.21582.209.camel@thor>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 24 20:12:15 2012
+Content-Type: text/plain; charset=utf-8
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Rick Bragg <lists@gmnet.net>
+X-From: git-owner@vger.kernel.org Tue Jan 24 20:42:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rplmv-0003LM-Qp
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Jan 2012 20:12:14 +0100
+	id 1RpmFn-00033S-QR
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Jan 2012 20:42:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751581Ab2AXTMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jan 2012 14:12:08 -0500
-Received: from lo.gmane.org ([80.91.229.12]:58524 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751325Ab2AXTMH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jan 2012 14:12:07 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Rplmn-0003H0-Bj
-	for git@vger.kernel.org; Tue, 24 Jan 2012 20:12:05 +0100
-Received: from 173-167-111-189-sfba.hfc.comcastbusiness.net ([173.167.111.189])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 24 Jan 2012 20:12:05 +0100
-Received: from jehan by 173-167-111-189-sfba.hfc.comcastbusiness.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 24 Jan 2012 20:12:05 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 173-167-111-189-sfba.hfc.comcastbusiness.net
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
+	id S1755322Ab2AXTl7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jan 2012 14:41:59 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43501
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751292Ab2AXTl4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jan 2012 14:41:56 -0500
+Received: (qmail 12079 invoked by uid 107); 24 Jan 2012 19:48:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 24 Jan 2012 14:48:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Jan 2012 14:41:54 -0500
+Content-Disposition: inline
+In-Reply-To: <1327431631.21582.209.camel@thor>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189059>
 
-Hi,
+On Tue, Jan 24, 2012 at 02:00:31PM -0500, Rick Bragg wrote:
 
-I'm getting an error if I try to add a module in a subdirectory and that 
-module is already cloned.
-Here are the steps to reproduce (git 1.7.8.3):
+> I cloned a repo from /home/me/repo1 to /home/me/repo2.  Then made
+> changes and a new commit on repo1, then from repo1 did "git
+> push /home/me/repo2 and it says Everything is up-to-date.  How could
+> this be?
 
-git init module
-cd module
-echo foo > foo
-git add foo
-git commit -m "init"
-cd ..
-git init super
-cd super
-echo foo > foo
-git add foo
-git commit -m "init"
-git branch b1
-git branch b2
-git checkout b1
-git submodule add ../module lib/module
-git commit -m "module"
-git checkout b2
-rm -rf lib
-git submodule add ../module lib/module
+It's hard to say, since you didn't show us the exact commands you ran.
 
-The last command returns:
-     fatal: Not a git repository: ../.git/modules/lib/module
-     Unable to checkout submodule 'lib/module'
+One possible cause is that you made your commit on a detached HEAD, not
+on a branch, and therefore pushing branches will have no effect. You can
+check this by running "git status", which will report either your
+current branch or "not currently on any branch".
 
-The file lib/modules/.git contains:
-     gitdir: ../.git/modules/lib/module
-(missing an additional "../")
+Another possible cause is that git is not trying to push the branches
+that you think it is.
 
-In branch b1, after adding the module, the file contained the full path:
-     gitdir: /[...]/super/.git/modules/lib/module
-Or contains the correct relative path after checking out b1 later:
-     gitdir: ../../.git/modules/lib/module
+For example, imagine repo1 has two branches, "master" and "foo", and the
+"master" branch is checked out. When you clone it, the resulting repo2
+will have remote-tracking branches for both "master" and "foo", but will
+only checkout the "master" branch. Now imagine you make commits on
+"foo" in repo1, and then try to push. Git's default behavior is to push
+only branches which match (by name) a branch on the destination. So we
+would attempt to push "master" (which is up to date), but not "foo".
 
+You can see which branches are being considered in the push with "git
+push -vv". If you want to push all branches, you can use "git push
+--all", or read up on refspecs in "git help push". If you want to change
+git-push's default behavior, read up on "push.default" in "git help
+config".
 
-Regards,
-	Jehan
+-Peff
