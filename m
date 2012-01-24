@@ -1,132 +1,67 @@
-From: Frans Klaver <fransklaver@gmail.com>
-Subject: [PATCH 2/5] t0061: Add tests
-Date: Tue, 24 Jan 2012 23:32:23 +0100
-Message-ID: <1327444346-6243-3-git-send-email-fransklaver@gmail.com>
-References: <1327444346-6243-1-git-send-email-fransklaver@gmail.com>
-Cc: "Junio C. Hamano" <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Frans Klaver <fransklaver@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 24 23:33:31 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] Fail to add a module in a subdirectory if module is
+ already cloned
+Date: Tue, 24 Jan 2012 14:38:05 -0800
+Message-ID: <7vd3a83ewi.fsf@alter.siamese.dyndns.org>
+References: <jfmvpp$4v7$1@dough.gmane.org> <4F1F1E5F.2030509@web.de>
+ <7vhazk3ibk.fsf@alter.siamese.dyndns.org> <4F1F2642.1070707@web.de>
+ <4F1F2D38.9050909@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Jan 24 23:38:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rpovi-0005Xu-FF
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Jan 2012 23:33:30 +0100
+	id 1Rpp0K-0008EA-A7
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Jan 2012 23:38:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752061Ab2AXWdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jan 2012 17:33:23 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:54821 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752054Ab2AXWdF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jan 2012 17:33:05 -0500
-Received: by mail-ey0-f174.google.com with SMTP id c13so1306969eaa.19
-        for <git@vger.kernel.org>; Tue, 24 Jan 2012 14:33:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=kgvGVVJfKjzXOcJQzuZWWHf2Vcm8MeafJiheFLuvsVs=;
-        b=jXe95djCN+zWWw8fdT7EgDRrubtW7jDqbRqsYwIGs8SxMB4PGpx6DJoIFsj8izBOm6
-         6NPrinRFWris+PLat/oqU+Rt3F/f4rC+cGKhurCUNroXDGhVa9QBfWhkBoYwJtLRsNG9
-         reynJiVtOypuSxEiqHFPfa7Uep/QjlIOc4ydY=
-Received: by 10.213.25.146 with SMTP id z18mr2693748ebb.65.1327444384737;
-        Tue, 24 Jan 2012 14:33:04 -0800 (PST)
-Received: from localhost.localdomain (82-136-253-149.ip.telfort.nl. [82.136.253.149])
-        by mx.google.com with ESMTPS id c37sm18739220eec.10.2012.01.24.14.33.03
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 24 Jan 2012 14:33:03 -0800 (PST)
-X-Mailer: git-send-email 1.7.8.1
-In-Reply-To: <1327444346-6243-1-git-send-email-fransklaver@gmail.com>
+	id S1752181Ab2AXWiK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jan 2012 17:38:10 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36041 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752147Ab2AXWiJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jan 2012 17:38:09 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CB49B743E;
+	Tue, 24 Jan 2012 17:38:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SUnIsZg1PbvhIymOUDwbC5Lyhk8=; b=MIakTQ
+	Zy2t3KWmgwZNrFgYsx1bdIVXLoZiZqWZJCfBsXTikajbF1Mf8zjBb9CQG3kBKzEV
+	GxFoEnmQqd4srrh/9Av2bVZcZpQ1OQZRz1t87q2cSjW8/Ku8i4QOvq5UWBrfW7Gc
+	tnmu3AAlj4XWiIqZciFl5HgYCAmDfJt0Zfov8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=P8gKCLtKvbBUwM3gd8jrPvguYZVNQY0z
+	cbulKNYoM5zAAw4xt5meuCfjbzbr/oViJ7pr7SzwW8Hx5dG3TZO5ygcDjZvlTaZ7
+	mMuMSsoit06PAsAFhOSnDdviNRNrKiJ0bB7Wrr05TCUrvtJtZbf9Bjn9VrFLyjN3
+	2no+rEITyII=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C3102743D;
+	Tue, 24 Jan 2012 17:38:07 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 596FB743C; Tue, 24 Jan 2012
+ 17:38:07 -0500 (EST)
+In-Reply-To: <4F1F2D38.9050909@web.de> (Jens Lehmann's message of "Tue, 24
+ Jan 2012 23:14:16 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 160169C4-46DC-11E1-A2A0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189081>
 
-Capture failure behavior when running into
-- EACCES caused by search path permissions
-- ENOENT caused by interpreter not found
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-Signed-off-by: Frans Klaver <fransklaver@gmail.com>
----
- t/t0061-run-command.sh |   50 +++++++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 49 insertions(+), 1 deletions(-)
+> Just for the record: I checked that and git-submodule does not set the
+> SUBDIRECTORY_OK environment variable so every time it is not run in the
+> top level directory it aborts with:
+> "You need to run this command from the toplevel of the working tree."
 
-diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index 95e89bc..31eb3c3 100755
---- a/t/t0061-run-command.sh
-+++ b/t/t0061-run-command.sh
-@@ -13,6 +13,24 @@ cat hello-script
- EOF
- >empty
- 
-+cat >someinterpreter <<-EOF
-+#!$SHELL_PATH
-+cat hello-script
-+EOF
-+>empty
-+
-+cat >incorrect-interpreter-script <<-EOF
-+#!someinterpreter
-+cat hello-script
-+EOF
-+>empty
-+
-+cat >non-existing-interpreter <<-EOF
-+#!nonexisting_interpreter
-+cat hello-script
-+EOF
-+>empty
-+
- test_expect_success 'start_command reports ENOENT' '
- 	test-run-command start-command-ENOENT ./does-not-exist
- '
-@@ -26,7 +44,7 @@ test_expect_success 'run_command can run a command' '
- 	test_cmp empty err
- '
- 
--test_expect_success POSIXPERM 'run_command reports EACCES' '
-+test_expect_success POSIXPERM 'run_command reports EACCES, file permissions' '
- 	cat hello-script >hello.sh &&
- 	chmod -x hello.sh &&
- 	test_must_fail test-run-command run-command ./hello.sh 2>err &&
-@@ -34,4 +52,34 @@ test_expect_success POSIXPERM 'run_command reports EACCES' '
- 	grep "fatal: cannot exec.*hello.sh" err
- '
- 
-+test_expect_success POSIXPERM 'run_command reports EACCES, search path perms' '
-+	mkdir -p inaccessible &&
-+	PATH=$(pwd)/inaccessible:$PATH &&
-+	export PATH &&
-+
-+	cat hello-script >inaccessible/hello.sh &&
-+	chmod 400 inaccessible &&
-+	test_must_fail test-run-command run-command hello.sh 2>err &&
-+	chmod 755 inaccessible &&
-+
-+	grep "fatal: cannot exec.*hello.sh" err
-+'
-+
-+test_expect_success POSIXPERM 'run_command reports EACCES, interpreter fails' '
-+	cat incorrect-interpreter-script >hello.sh &&
-+	chmod +x hello.sh &&
-+	chmod -x someinterpreter &&
-+	test_must_fail test-run-command run-command ./hello.sh 2>err &&
-+
-+	grep "fatal: cannot exec.*hello.sh" err
-+'
-+
-+test_expect_failure POSIXPERM 'run_command reports ENOENT, interpreter' '
-+	cat non-existing-interpreter >hello.sh &&
-+	chmod +x hello.sh &&
-+	test_must_fail test-run-command start-command-ENOENT ./hello.sh 2>err &&
-+
-+	grep "error: cannot exec.*hello.sh" err
-+'
-+
- test_done
--- 
-1.7.8.1
+Ah, Ok.
