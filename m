@@ -1,51 +1,53 @@
-From: lists@haller-berlin.de (Stefan Haller)
-Subject: Re: Most reliable method to detect a merge commit in pre-commit hook
-Date: Tue, 24 Jan 2012 16:10:48 +0100
-Message-ID: <1kedu51.n7co6x1s8qhdbM%lists@haller-berlin.de>
-References: <jfmegi$scg$1@dough.gmane.org>
-To: sschuberth@gmail.com (Sebastian Schuberth), git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 24 16:11:42 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+From: fREW Schmidt <frioux@gmail.com>
+Subject: Re: [ANNOUNCE] Git 1.7.9.rc2
+Date: Tue, 24 Jan 2012 10:16:54 -0600
+Message-ID: <CADVrmKT2RAOC-n_-h4pGJw91imj28h0-HqwGH-NOu-m3XtqiJg@mail.gmail.com>
+References: <7vpqegjxu3.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>
+X-From: linux-kernel-owner@vger.kernel.org Tue Jan 24 17:17:31 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rpi28-0007Zf-GB
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Jan 2012 16:11:40 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1Rpj3q-0004gR-Dl
+	for glk-linux-kernel-3@lo.gmane.org; Tue, 24 Jan 2012 17:17:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753576Ab2AXPL3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jan 2012 10:11:29 -0500
-Received: from server90.greatnet.de ([83.133.96.186]:60883 "EHLO
-	server90.greatnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752722Ab2AXPL2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jan 2012 10:11:28 -0500
-Received: from [192.168.0.42] (nat1.ableton.net [217.110.199.117])
-	by server90.greatnet.de (Postfix) with ESMTPA id 2E91F2A04F0;
-	Tue, 24 Jan 2012 16:08:51 +0100 (CET)
-In-Reply-To: <jfmegi$scg$1@dough.gmane.org>
-User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.7.2 (x86))
-Sender: git-owner@vger.kernel.org
+	id S1755152Ab2AXQRR (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 24 Jan 2012 11:17:17 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:59511 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754709Ab2AXQRQ (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 24 Jan 2012 11:17:16 -0500
+Received: by vcbgb30 with SMTP id gb30so1894045vcb.19
+        for <multiple recipients>; Tue, 24 Jan 2012 08:17:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=kPTbuPrJj6jbLibULohhG8m3psTAvKiANQxn9fPoXww=;
+        b=uSoZB1IQZeFK141gkT/vYERS3/p9WzUEUNdtO017nWy8YP7gcIW+CoDYwPBKJZVKPG
+         IQ2Cu0f7agGpdyUNcVZJKjKCAnNtUk3fhUxDctOXHpWkCmuHawkajRj2ww1SYtqV7zLa
+         ZrHCpYSw2ETtVEiaP2O6q2qqUlQmffodonQPM=
+Received: by 10.220.141.133 with SMTP id m5mr7446090vcu.67.1327421835658; Tue,
+ 24 Jan 2012 08:17:15 -0800 (PST)
+Received: by 10.220.0.144 with HTTP; Tue, 24 Jan 2012 08:16:54 -0800 (PST)
+In-Reply-To: <7vpqegjxu3.fsf@alter.siamese.dyndns.org>
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189048>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189049>
 
-Sebastian Schuberth <sschuberth@gmail.com> wrote:
+On Wed, Jan 18, 2012 at 7:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>  * gitk updates accumulated since early 2011.
 
-> I'd like our pre-commit hook to skip some checks if the commit that's
-> about to be made is a merge commit. What's the most reliable way to 
-> detect a merge commit from within a pre-commit hook script? Currently,
-> the only way I see is to check whether .git/MERGE_MSG exists, but I'd
-> feel safer to check whether the commit is going to have more than one
-> parent or so. Is that possible / a better detection?
-
-I haven't found a better way either, so this is the method we use too.
-The problem is that it fails when you are amending a merge commit; so
-the output of our pre-commit hook advises the user to manually do a "git
-commit --no-verify" in that case.
+Where might one go to find more detail on this one?
 
 
--- 
-Stefan Haller
-Berlin, Germany
-http://www.haller-berlin.de/
+--
+fREW Schmidt
+http://blog.afoolishmanifesto.com
