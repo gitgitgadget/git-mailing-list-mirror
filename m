@@ -1,59 +1,82 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 5/5] run-command: Error out if interpreter not found
-Date: Wed, 25 Jan 2012 19:55:36 +0100
-Message-ID: <4F205028.4060606@kdbg.org>
-References: <1327444346-6243-1-git-send-email-fransklaver@gmail.com> <1327444346-6243-6-git-send-email-fransklaver@gmail.com> <20120124232421.GH8222@burratino> <op.v8moybu10aolir@keputer>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: git version not changed after installing new version
+Date: Wed, 25 Jan 2012 19:57:21 +0100
+Message-ID: <1327517841.31804.75.camel@centaur.lab.cmartin.tk>
+References: <loom.20120125T173801-500@post.gmane.org>
+	 <loom.20120125T181639-351@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	"Junio C. Hamano" <gitster@pobox.com>
-To: Frans Klaver <fransklaver@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 25 19:56:08 2012
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
+	boundary="=-+sC1pWdOjCx10Rrmm0aU"
+Cc: git@vger.kernel.org
+To: freefly <free.fly@live.com>
+X-From: git-owner@vger.kernel.org Wed Jan 25 19:57:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rq80t-0006fL-Lh
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 19:56:07 +0100
+	id 1Rq82A-0007TG-7v
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 19:57:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751601Ab2AYS4C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jan 2012 13:56:02 -0500
-Received: from bsmtp5.bon.at ([195.3.86.187]:65264 "EHLO lbmfmo03.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751030Ab2AYS4B (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jan 2012 13:56:01 -0500
-Received: from bsmtp.bon.at (unknown [192.168.181.105])
-	by lbmfmo03.bon.at (Postfix) with ESMTP id 302AA11947C
-	for <git@vger.kernel.org>; Wed, 25 Jan 2012 19:57:06 +0100 (CET)
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 09BBE2C4007;
-	Wed, 25 Jan 2012 19:56:44 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id BD6EC19F32A;
-	Wed, 25 Jan 2012 19:55:36 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <op.v8moybu10aolir@keputer>
+	id S1751524Ab2AYS5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jan 2012 13:57:22 -0500
+Received: from kimmy.cmartin.tk ([91.121.65.165]:38830 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751084Ab2AYS5V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jan 2012 13:57:21 -0500
+Received: from [192.168.1.17] (brln-4dbc4241.pool.mediaWays.net [77.188.66.65])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 8D60246092;
+	Wed, 25 Jan 2012 19:57:17 +0100 (CET)
+In-Reply-To: <loom.20120125T181639-351@post.gmane.org>
+X-Mailer: Evolution 3.2.2-1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189118>
 
-Am 25.01.2012 08:12, schrieb Frans Klaver:
-> On Wed, 25 Jan 2012 00:24:21 +0100, Jonathan Nieder <jrnieder@gmail.com>
 
->> What happens on Windows?
-> 
-> I didn't plan anything to happen on windows. Doesn't POSIXPERM rule that
-> OS out?
+--=-+sC1pWdOjCx10Rrmm0aU
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-It does; these tests are skipped on Windows.
+On Wed, 2012-01-25 at 17:19 +0000, freefly wrote:
+> Thanks both of you for your replies, I have checked but,=20
+> it still points to the old "/usr/bin/git" not the=20
+> "/usr/local/git/bin" :(
 
-> I guess it could use similar code to this patch series to tackle
-> all this.
+What do `which git` and `type git` say? Bash remembers where it ran a
+command so if you install a binary to a new location, it might not find
+it straight away.
 
-No thanks. IMHO, this is already too much code for too little gain.
+>=20
+> when I run the update path script I get this output.
+>=20
+>=20
+> No change to PATH in ~/.MacOSX/environment.plist
+> ~ /Volumes/Git 1.7.8.3 Snow Leopard Intel Universal
+> /Volumes/Git 1.7.8.3 Snow Leopard Intel Universal
 
--- Hannes
+So the script detected that no change was needed presumably. What's your
+$PATH and is /usr/local/bin/ before /usr/bin/?
+
+   cmn
+
+--=-+sC1pWdOjCx10Rrmm0aU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAABAgAGBQJPIFCRAAoJEHKRP1jG7ZzTZZoH/2DxbdjihC4824woz0CKlco+
+vC6HUP0v63jYIwTsqXiNvL+ZHslbKDW6ZIoHoMQsS8Hz/6ARfMxsv7xqz2/BLRkf
+2y3Fzz6vBLfiH5rlWYj55QF0RFdAZRCqG536cTzJ2svBYlJZnI93GumNTg71q3IF
+UIlvSA39+s1n0S8VX74Xhm7BPE87GRfgKzFqyD48ph+Z/trx673MZL+gq/mJSHOa
+JFWAkBbDNNLxzqFXqxmATP73hQbzc8GEZELHuqyxUElQEO+lhnXW1NAgUwYg1MW+
+qBPLE9CF0zKdJWknm96WECCejisGS1I8xOZdwVhSo57Tb2t89V+Vd8hY2cC4J6U=
+=gWHe
+-----END PGP SIGNATURE-----
+
+--=-+sC1pWdOjCx10Rrmm0aU--
