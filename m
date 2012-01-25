@@ -1,100 +1,73 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] git-completion: workaround zsh COMPREPLY bug
-Date: Wed, 25 Jan 2012 03:37:02 +0200
-Message-ID: <1327455422-22340-1-git-send-email-felipe.contreras@gmail.com>
-Cc: gitster@pobox.com, Matthieu Moy <matthieu.moy@imag.fr>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 25 02:37:22 2012
+Subject: Re: [PATCH] bash-completion: don't add quoted space for ZSH (fix regression)
+Date: Wed, 25 Jan 2012 03:39:40 +0200
+Message-ID: <CAMP44s2x2kJEJsQLZCJiegZY863X=kVO5xof9QBUin35i-BzhA@mail.gmail.com>
+References: <20120114152030.GX30469@goldbirke>
+	<1326567336-2173-1-git-send-email-Matthieu.Moy@imag.fr>
+	<CAMP44s2nYMmfC36+pGaYfOZUQy3fLMYDuaSriPYjHBeApmsRVg@mail.gmail.com>
+	<CAMP44s0T15idhwb6Eae5vdMxf25KK9MhY57mBf+BFN=OSC6Lhg@mail.gmail.com>
+	<7vzkdmqebh.fsf@alter.siamese.dyndns.org>
+	<CAMP44s3GMGMD5Y9Z=Uu_e55_eZOG2zY76u8B=ORKsMx6yoXW5Q@mail.gmail.com>
+	<7v1uqxq4jm.fsf@alter.siamese.dyndns.org>
+	<vpqlip5qvcm.fsf@bauges.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jan 25 02:39:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rprnd-0003hQ-1S
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 02:37:21 +0100
+	id 1Rprq0-0004fL-SH
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 02:39:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755470Ab2AYBhM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jan 2012 20:37:12 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:52039 "EHLO
+	id S1755427Ab2AYBjm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jan 2012 20:39:42 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:57712 "EHLO
 	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751457Ab2AYBhI (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Jan 2012 20:37:08 -0500
-Received: by lagu2 with SMTP id u2so423520lag.19
-        for <git@vger.kernel.org>; Tue, 24 Jan 2012 17:37:06 -0800 (PST)
+	by vger.kernel.org with ESMTP id S1751457Ab2AYBjm (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Jan 2012 20:39:42 -0500
+Received: by lagu2 with SMTP id u2so424362lag.19
+        for <git@vger.kernel.org>; Tue, 24 Jan 2012 17:39:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=5rb2OkmW7eIgcIYbQPcW+Pyv1HvXIjDKutL5r2+moic=;
-        b=UqeTan2B0ffz4XNlLP6twgpSmTFnn8XJFn9J+h+lgl5qbrwFrH8NwCQVr0XPrFIUkQ
-         +C2xYw0ypJ1+l+MPci29dUHUQ7DRcveupwdpXa7T2XZ6UbOFC5jVC4eZjaMu1kEdIe5N
-         y+91FbFaOYqaaVJXfawxTaZGm0r4CwJf8hfRE=
-Received: by 10.112.27.162 with SMTP id u2mr3852787lbg.70.1327455426772;
-        Tue, 24 Jan 2012 17:37:06 -0800 (PST)
-Received: from localhost (a91-153-253-80.elisa-laajakaista.fi. [91.153.253.80])
-        by mx.google.com with ESMTPS id nu4sm14795985lab.4.2012.01.24.17.37.05
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 24 Jan 2012 17:37:05 -0800 (PST)
-X-Mailer: git-send-email 1.7.8.rc1.14.g248db
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=0ctKljyETl30m8jK+mvT+YOYRrDsUGq+5usQnMFuB5U=;
+        b=KRxNX8p3tz24rjMlhEpJjvLhfuDMdOnnIKob6B8A1mbPCFLn9P9f0LmPTpwDtywGbe
+         y0SPNDSD/MjsloW3oNtUcUFaabeV4poNFHHJY04BIUOiIP5/w9yAOD8EtHEjTf0Dc5QG
+         hgfEpot0LsSdLtwBPMYV8O0IyR/uatqep7Btg=
+Received: by 10.152.109.161 with SMTP id ht1mr7682463lab.33.1327455580829;
+ Tue, 24 Jan 2012 17:39:40 -0800 (PST)
+Received: by 10.112.10.169 with HTTP; Tue, 24 Jan 2012 17:39:40 -0800 (PST)
+In-Reply-To: <vpqlip5qvcm.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189090>
 
-zsh adds a backslash (foo\ ) for each item in the COMPREPLY array if IFS
-doesn't contain spaces. This issue has been reported[1], but there is no
-solution yet.
+On Wed, Jan 18, 2012 at 10:16 AM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> OK, so the issue the patch addresses may not be a regression in the
+>> upcoming v1.7.9 we want to fix quickly,
+>
+> I'm running ZSH 4.3.10 (Debian stable), and for me it is a regression.
+> It seems there is another bug elsewhere affecting more recent ZSH (I
+> don't have a recent ZSH version installed to test), but fixing the
+> regression for old ZSH is still worth it. I'm not even sur the issue
+> with recent ZSH is related.
+>
+> At worse, my patch is not intrusive and can easily be reworked later.
 
-This wasn't a problem due to another bug[2], which was fixed in zsh
-version 4.3.12. After this change, 'git checkout ma<tab>' would resolve
-to 'git checkout master\ '.
+I believe I have found a more generic and simpler fix that works for
+both the regression in v1.7.9, and users of zsh >= 4.3.12.
 
-Aditionally, the introduction of __gitcomp_nl in commit a31e626
-(completion: optimize refs completion) in git also made the problem
-apparent, as Matthieu Moy reported.
+Patch sent.
 
-The simplest and most generic solution is to hide all the changes we do
-to IFS, so that "foo \nbar " is recognized by zsh as "foo bar". This
-works on versions of git before and after the introduction of
-__gitcomp_nl (a31e626), and versions of zsh before and after 4.3.12.
-
-Once zsh is fixed, we should conditionally disable this workaround to
-have the same benefits as bash users.
-
-[1] http://www.zsh.org/mla/workers/2012/msg00053.html
-[2] http://zsh.git.sourceforge.net/git/gitweb.cgi?p=zsh/zsh;a=commitdiff;h=2e25dfb8fd38dbef0a306282ffab1d343ce3ad8d
-
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/completion/git-completion.bash |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index b0062ba..c83c734 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2631,6 +2631,10 @@ _git ()
- 		# workaround zsh's bug that leaves 'words' as a special
- 		# variable in versions < 4.3.12
- 		typeset -h words
-+
-+		# another workaround for zsh because it would quote spaces in
-+		# the COMPREPLY array if IFS doesn't contain spaces
-+		typeset -h IFS
- 	fi
- 
- 	local cur words cword prev
-@@ -2687,6 +2691,10 @@ _gitk ()
- 		# workaround zsh's bug that leaves 'words' as a special
- 		# variable in versions < 4.3.12
- 		typeset -h words
-+
-+		# another workaround for zsh because it would quote spaces in
-+		# the COMPREPLY array if IFS doesn't contain spaces
-+		typeset -h IFS
- 	fi
- 
- 	local cur words cword prev
 -- 
-1.7.8.rc1.14.g248db
+Felipe Contreras
