@@ -1,64 +1,71 @@
-From: Jehan Bing <jehan@orb.com>
-Subject: Re: [PATCH] submodule add: fix breakage when re-adding a deep submodule
-Date: Tue, 24 Jan 2012 17:48:46 -0800
-Message-ID: <4F1F5F7E.2000506@orb.com>
-References: <jfmvpp$4v7$1@dough.gmane.org> <4F1F1E5F.2030509@web.de> <4F1F2784.1020904@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: Rebase and incrementing version numbers
+Date: Tue, 24 Jan 2012 21:09:03 -0500
+Message-ID: <20120125020903.GA21535@sigill.intra.peff.net>
+References: <CADo4Y9jGYJasDL9m7_50aOTrOyoezdyg=vcsZhQ87Qk-1XfTUQ@mail.gmail.com>
+ <CADo4Y9iKvoXhKg5pEAB+cbA7Rkfa=nF4TLu0xgcS3dnkNi_n4g@mail.gmail.com>
+ <CAH3Anro8T4SJqBvw1E_7u__4kYyB6hMCYPbtHSVxkgSUYSb2+A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 25 02:49:02 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Jon Seymour <jon.seymour@gmail.com>, git@vger.kernel.org
+To: mike@nahas.com
+X-From: git-owner@vger.kernel.org Wed Jan 25 03:09:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rpryv-0007yP-VX
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 02:49:02 +0100
+	id 1RpsIU-00070j-Mz
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 03:09:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755491Ab2AYBs5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jan 2012 20:48:57 -0500
-Received: from lo.gmane.org ([80.91.229.12]:56188 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754694Ab2AYBs4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jan 2012 20:48:56 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Rpryp-0007x8-4A
-	for git@vger.kernel.org; Wed, 25 Jan 2012 02:48:55 +0100
-Received: from 173-167-111-189-sfba.hfc.comcastbusiness.net ([173.167.111.189])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 Jan 2012 02:48:55 +0100
-Received: from jehan by 173-167-111-189-sfba.hfc.comcastbusiness.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 Jan 2012 02:48:55 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 173-167-111-189-sfba.hfc.comcastbusiness.net
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-In-Reply-To: <4F1F2784.1020904@web.de>
+	id S1755940Ab2AYCJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jan 2012 21:09:08 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43632
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751868Ab2AYCJH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jan 2012 21:09:07 -0500
+Received: (qmail 14618 invoked by uid 107); 25 Jan 2012 02:16:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 24 Jan 2012 21:16:06 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Jan 2012 21:09:03 -0500
+Content-Disposition: inline
+In-Reply-To: <CAH3Anro8T4SJqBvw1E_7u__4kYyB6hMCYPbtHSVxkgSUYSb2+A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189093>
 
-On 2012-01-24 13:49, Jens Lehmann wrote:
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 3adab93..9bb2e13 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -131,6 +131,7 @@ module_clone()
->   	gitdir=
->   	gitdir_base=
->   	name=$(module_name "$path" 2>/dev/null)
-> +	test -n "$name" || name="$path"
->   	base_path=$(dirname "$path")
->
->   	gitdir=$(git rev-parse --git-dir)
+On Fri, Jan 20, 2012 at 08:33:57AM +1100, Jon Seymour wrote:
 
-That fixed my problem. Thanks Jens.
+> I wonder if you can defer your changes to the config files until after
+> you have synced with the current SVN head, so that you typically only
+> modify the latest configuration file. Then use git to work out what
+> numbers you have to update (by working out which files you changed
+> that the SVN upstream has not seen yet). Not perfect, because of race
+> conditions, and may not work with your integration testing processes,
+> but perhaps worth considering.
 
-	Jehan
+That was my thought, too (assuming this workflow, which seems slightly
+insane, is outside your power to change).
+
+In this list here:
+
+> Something like:
+> 
+> 1. pull latest SVN
+> 2. work on file
+> 3. test. skip back to 2 until done.
+> 4. ready to push to upstream
+> 5. pull latest SVN
+> 6. calculate configuration changes required
+> 7. apply configuration changes
+> 8. push work + configuration changes upstream
+
+Steps 5 and 8 are basically "git svn dcommit". I suspect you could use
+some combination of "git svn rebase" and "git filter-branch" to rewrite
+your commits with the right counters, and then dcommit the result
+(hopefully fast enough to avoid races).
+
+-Peff
