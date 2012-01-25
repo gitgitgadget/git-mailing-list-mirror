@@ -1,128 +1,148 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 3/5] run-command: Elaborate execvp error checking
-Date: Wed, 25 Jan 2012 20:03:46 +0100
-Message-ID: <4F205212.5080007@kdbg.org>
-References: <1327444346-6243-1-git-send-email-fransklaver@gmail.com> <1327444346-6243-4-git-send-email-fransklaver@gmail.com>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: Git svn migration does not work because fatal git checkout
+ updating paths is incompatible with switching branches
+Date: Wed, 25 Jan 2012 20:09:23 +0100
+Message-ID: <1327518563.31804.82.camel@centaur.lab.cmartin.tk>
+References: <4F20442A.1080005@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Junio C. Hamano" <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Frans Klaver <fransklaver@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 25 20:04:45 2012
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
+	boundary="=-wk7ydCVlRiTtSpVa6S43"
+Cc: git@vger.kernel.org
+To: Christine Bauers <c.bauers@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 25 20:09:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rq88T-0003NJ-UO
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 20:03:58 +0100
+	id 1Rq8Dp-0006we-GM
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 20:09:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752041Ab2AYTDu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jan 2012 14:03:50 -0500
-Received: from bsmtp3.bon.at ([213.33.87.17]:24792 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751366Ab2AYTDs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jan 2012 14:03:48 -0500
-X-Greylist: delayed 487 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Jan 2012 14:03:48 EST
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 011AB1001D;
-	Wed, 25 Jan 2012 20:01:41 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 8AC6E19F32A;
-	Wed, 25 Jan 2012 20:03:46 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <1327444346-6243-4-git-send-email-fransklaver@gmail.com>
+	id S1751366Ab2AYTJZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jan 2012 14:09:25 -0500
+Received: from kimmy.cmartin.tk ([91.121.65.165]:58213 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751014Ab2AYTJY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jan 2012 14:09:24 -0500
+Received: from [192.168.1.17] (brln-4dbc4241.pool.mediaWays.net [77.188.66.65])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 31F2946092;
+	Wed, 25 Jan 2012 20:09:19 +0100 (CET)
+In-Reply-To: <4F20442A.1080005@gmx.de>
+X-Mailer: Evolution 3.2.2-1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189120>
 
-Am 24.01.2012 23:32, schrieb Frans Klaver:
-> +static void inspect_failure(const char *argv0, int silent_exec_failure)
-> +{
-> +	int err = errno;
-> +	struct strbuf sb = STRBUF_INIT;
-> +
-> +	/* errors not related to path */
-> +	if (errno == E2BIG || errno == ENOMEM)
-> +		die_file_error(argv0, err);
-> +
-> +	if (strchr(argv0, '/')) {
-> +		if (file_exists(argv0)) {
-> +			strbuf_add(&sb, argv0, strlen(argv0));
-> +			inspect_file(&sb, err, argv0);
 
-Can we end up here if errno == ENOENT? If so, silent_exec_failure must
-be checked. (inspect_file does not return.)
+--=-wk7ydCVlRiTtSpVa6S43
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> +		}
-> +	} else {
-> +		char *path, *next;
-> +		path = getenv("PATH");
-> +		while (path) {
-> +			next = strchrnul(path, ':');
-> +			if (path < next)
-> +				strbuf_add(&sb, path, next - path);
-> +			else
-> +				strbuf_addch(&sb, '.');
-> +
-> +			if (!*next)
-> +				path = NULL;
-> +			else
-> +				path = next + 1;
-> +
-> +			if (!is_searchable(sb.buf)) {
-> +				strbuf_release(&sb);
-> +				continue;
-> +			}
-> +
-> +			if (sb.len && sb.buf[sb.len - 1] != '/')
-> +				strbuf_addch(&sb, '/');
-> +			strbuf_addstr(&sb, argv0);
-> +
-> +			if (file_exists(sb.buf))
-> +				inspect_file(&sb, err, argv0);
-> +
-> +			strbuf_release(&sb);
-> +		}
-> +	}
-> +
-> +	if (err == ENOENT) {
-> +		if (!silent_exec_failure)
-> +			error("cannot exec '%s': %s", argv0,
-> +					strerror(ENOENT));
-> +		exit(127);
-> +	} else {
-> +		die_file_error(argv0, err);
-> +	}
-> +}
-> +#endif
-> +
->  int start_command(struct child_process *cmd)
->  {
->  	int need_in, need_out, need_err;
-> @@ -280,14 +415,7 @@ fail_pipe:
->  		} else {
->  			execvp(cmd->argv[0], (char *const*) cmd->argv);
->  		}
-> -		if (errno == ENOENT) {
-> -			if (!cmd->silent_exec_failure)
-> -				error("cannot run %s: %s", cmd->argv[0],
-> -					strerror(ENOENT));
-> -			exit(127);
-> -		} else {
-> -			die_errno("cannot exec '%s'", cmd->argv[0]);
-> -		}
-> +		inspect_failure(cmd->argv[0], cmd->silent_exec_failure);
+On Wed, 2012-01-25 at 19:04 +0100, Christine Bauers wrote:
+> Hi there,
+>=20
+> I=C2=B4m trying to migrate a repository from svn to git which branches an=
+d=20
+> tags with the following migration script:
+>=20
+> git svn clone --no-metadata --stdlayout --A ../users.txt=20
+> svn://host/svn/project/subproject subproject
+>=20
+> cd subproject
+> git config svn.authorsfile ../../users.txt
+> git svn fetch
+>=20
+> git checkout -b branch1 remotes/branch1
+> git checkout -b branch2 remotes/branch2
+> git checkout -b branch3 remotes/branch3
+>=20
+> git checkout -b src_v1 remotes/tags/src
+> git checkout master
+> git tag src src_v1
+> git branch -D src_v1
+>=20
+> git checkout -b WebContent_v1 remotes/tags/WebContent
+> git checkout master
+> git tag WebContent WebContent_v1
+> git branch -D WebContent_v1
+>=20
+> and get the follwoing errors:
+>=20
+> W: Ignoring error from SVN, path probably does not exist: (160013):=20
+> Filesystem has no item: Datei nicht gefunden: Revision 8966, Pfad=20
+> =C3=82=C2=BBsubproject=C2=AB
+> W: Do not be alarmed at the above message git-svn is just searching=20
+> aggressively for old history.
+> This may take a while on large repositories
+> fatal: git checkout: updating paths is incompatible with switching branch=
+es.
+> Did you intend to checkout 'remotes/branch1' which can not be resolved=
+=20
+> as commit?
+> fatal: git checkout: updating paths is incompatible with switching branch=
+es.
+> Did you intend to checkout 'remotes/branch2 which can not be resolved as=
+=20
+> commit?
+> fatal: git checkout: updating paths is incompatible with switching branch=
+es.
+> Did you intend to checkout 'remotes/branch3' which can not be resolved=
+=20
+> as commit?
+> fatal: git checkout: updating paths is incompatible with switching branch=
+es.
+> Did you intend to checkout 'remotes/tags/src' which can not be resolved=
+=20
+> as commit?
+> error: pathspec 'master' did not match any file(s) known to git.
+> fatal: Failed to resolve 'src_v1' as a valid ref.
+> error: branch 'src_v1' not found.
+> fatal: git checkout: updating paths is incompatible with switching branch=
+es.
+> Did you intend to checkout 'remotes/tags/WebContent' which can not be=20
+> resolved as commit?
+> error: pathspec 'master' did not match any file(s) known to git.
+> fatal: Failed to resolve 'WebContent_v1' as a valid ref.
+> error: branch 'WebContent_v1' not found.
+>=20
+> How do I solve this problem?
 
-Isn't it important that this function calls exit(127) if we want
-silent_exec_failure and errno == ENOENT? But I don't see that this
-guaranteed by inspect_failure; see above.
+First try to figure out where the problem happens. It could be that
+git-svn isn't recognising the branches properly, or that the layout
+isn't what it expects or any number of things.
 
->  	}
->  	if (cmd->pid < 0)
->  		error("cannot fork() for %s: %s", cmd->argv[0],
+What layout does the repo have? Does it correspond to what git-svn is
+expecting? All those error messages come from the fact that you're
+telling git some starting points that it can't find. Make sure those
+exist and they have the name you're giving. What does `git branch -a`
+say? You're presumably not giving us the real names, so we can't tell if
+there are problems there.
 
--- Hannes
+If you're looking to migrate completely, something like
+svn-dump-fast-export ( https://github.com/barrbrain/svn-dump-fast-export
+) might get you there better.
+
+   cmn
+
+
+
+--=-wk7ydCVlRiTtSpVa6S43
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAABAgAGBQJPIFNjAAoJEHKRP1jG7ZzTGv4H/io7in3W+qUpxOvEkcvStJBW
+fPm7eSJ9ixaaqMQrWOzynFuukA+e6N2Tapdr7PTcHMPblSilxQgvPU/3lsZMh4Qz
+vY7ilDN3GTD4yXJ0PvaeWoFm4g9pMnlmc+S0oq10CBCYY64WvbO7qmKCF693r+42
+YX/HyYQpPt49FXnks2j6azP35/Zi0YGGFZPSnVtdhoylAzazLQQwrq3dAfXdqiEV
+ae3gUbUhnKd4UFm5rhgAzQL9y9iBpvPTgZBQUDuBGBB50EJN7JSMq4rJwl3ZNmIP
+QjHhFW3I4MTUnhiFVI+nuYpF4pFgIyNoI83ZfrO46w33fH43QSLRrYwyfP33lEI=
+=xqka
+-----END PGP SIGNATURE-----
+
+--=-wk7ydCVlRiTtSpVa6S43--
