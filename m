@@ -1,66 +1,64 @@
-From: "Frans Klaver" <fransklaver@gmail.com>
-Subject: Re: [PATCH 5/5] run-command: Error out if interpreter not found
-Date: Thu, 26 Jan 2012 00:09:32 +0100
-Message-ID: <op.v8nw96iw0aolir@keputer.lokaal>
-References: <1327444346-6243-1-git-send-email-fransklaver@gmail.com>
- <1327444346-6243-6-git-send-email-fransklaver@gmail.com>
- <20120124232421.GH8222@burratino> <op.v8moybu10aolir@keputer>
- <4F205028.4060606@kdbg.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: "Jonathan Nieder" <jrnieder@gmail.com>, git@vger.kernel.org,
-	"Junio C. Hamano" <gitster@pobox.com>
-To: "Johannes Sixt" <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Jan 26 00:09:40 2012
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: [PATCH v3 0/3] git-p4: Search for parent commit on branch creation
+Date: Wed, 25 Jan 2012 23:48:21 +0000
+Message-ID: <1327535304-11332-1-git-send-email-vitor.hda@gmail.com>
+Cc: Pete Wyckoff <pw@padd.com>, Luke Diamand <luke@diamand.org>,
+	Vitor Antunes <vitor.hda@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 26 00:48:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RqByF-0000Ew-RB
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Jan 2012 00:09:40 +0100
+	id 1RqCa7-0002NW-MH
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Jan 2012 00:48:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751842Ab2AYXJf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jan 2012 18:09:35 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:47162 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751382Ab2AYXJe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jan 2012 18:09:34 -0500
-Received: by eaac13 with SMTP id c13so1783215eaa.19
-        for <git@vger.kernel.org>; Wed, 25 Jan 2012 15:09:33 -0800 (PST)
+	id S1752312Ab2AYXsm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jan 2012 18:48:42 -0500
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:40436 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751355Ab2AYXsl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jan 2012 18:48:41 -0500
+Received: by wics10 with SMTP id s10so4225293wic.19
+        for <git@vger.kernel.org>; Wed, 25 Jan 2012 15:48:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=content-type:to:cc:subject:references:date:mime-version
-         :content-transfer-encoding:from:message-id:in-reply-to:user-agent;
-        bh=6GNU+tzxOea5CZtyUjaFQZXFzAzDw7tvayYsv6f4zdc=;
-        b=lBj2JC0wWussXEuRMg7PciXP4OETnlhLWHRwfHbLIYKRNxkDN7Kk6XfxG17eG4yNu4
-         TIhwK49cRTxhfwQuK/UT5FBryvPMsu0cU2w5/Q6V1P38Kynb+JUv3RkVRjZ6A31A7J/d
-         VIWcxBfQwD8E28/9EYAUU8xVeoBMOATDWA424=
-Received: by 10.213.35.135 with SMTP id p7mr1764ebd.134.1327532973108;
-        Wed, 25 Jan 2012 15:09:33 -0800 (PST)
-Received: from keputer.lokaal (82-136-253-149.ip.telfort.nl. [82.136.253.149])
-        by mx.google.com with ESMTPS id 40sm7540837ees.10.2012.01.25.15.09.31
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=6/G8xoS6XiDAFHhx0rxvlv/Wy0c5YQc0SiNndYo9GbI=;
+        b=bqT1rOwe+kkaxkXYOR2sLSXX8kk0ldIrI7R4WmEoSOYWPqrpEBNF2zUxQdUj7EUxSE
+         5WYkKHQ2Pz/Ow5PRbwxzxWw6jhgYlN0zOiL+DLfsyNDgZ5uX82d+O9yAK1IIaLckHpqu
+         Z48PedI51OOQNdugAL2nlp72yj84ImFogvBgw=
+Received: by 10.180.24.105 with SMTP id t9mr31553568wif.19.1327535320590;
+        Wed, 25 Jan 2012 15:48:40 -0800 (PST)
+Received: from fenix.lan (111.216.54.77.rev.vodafone.pt. [77.54.216.111])
+        by mx.google.com with ESMTPS id df2sm2551041wib.4.2012.01.25.15.48.39
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 25 Jan 2012 15:09:32 -0800 (PST)
-In-Reply-To: <4F205028.4060606@kdbg.org>
-User-Agent: Opera Mail/12.00 (Win32)
+        Wed, 25 Jan 2012 15:48:39 -0800 (PST)
+X-Mailer: git-send-email 1.7.8.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189134>
 
-On Wed, 25 Jan 2012 19:55:36 +0100, Johannes Sixt <j6t@kdbg.org> wrote:
+I think this will, hopefully, be the final version of this series of
+patches. This version includes the following changes since v2:
 
->> I guess it could use similar code to this patch series to tackle
->> all this.
->
-> No thanks. IMHO, this is already too much code for too little gain.
+ - Move search algorithm into its own function.
+ - Use lists instead of strings on shell commands.
+ - Some small (almost cosmetic) updates to test cases.
 
-That's OK. If it's not only you who feels this way, I'd better spend my  
-time on something that does add value.
+Pete Wyckoff (1):
+  git-p4: Change p4 command invocation
 
-Thanks for having a look in any case.
+Vitor Antunes (2):
+  git-p4: Search for parent commit on branch creation
+  git-p4: Add test case for complex branch import
 
-Frans
+ contrib/fast-import/git-p4 |   48 +++++++++++++++++++++-
+ t/t9801-git-p4-branch.sh   |   94 ++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 133 insertions(+), 9 deletions(-)
+
+-- 
+1.7.8.3
