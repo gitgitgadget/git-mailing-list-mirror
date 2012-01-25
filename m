@@ -1,101 +1,115 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH v2 3/3] git-p4: Add test case for complex branch import
-Date: Wed, 25 Jan 2012 07:34:25 -0500
-Message-ID: <20120125123425.GA3406@padd.com>
-References: <1327105292-30092-1-git-send-email-vitor.hda@gmail.com>
- <1327105292-30092-4-git-send-email-vitor.hda@gmail.com>
- <7vehutd59p.fsf@alter.siamese.dyndns.org>
- <4F1A98A3.2090607@diamand.org>
- <20120121171130.GA6235@padd.com>
- <CAOpHH-W1LY3Q50otrcNJTYWN67k_pCZHEOkgbKy7kPgfUbGeQw@mail.gmail.com>
- <20120123224012.GA10626@padd.com>
- <CAOpHH-V2nZ8meh7x6vCVGUQCKQqJ+sPcnGRo+8SqfNavg7F87w@mail.gmail.com>
+From: "Neal Groothuis" <ngroot@lo-cal.org>
+Subject: Re: Finding all commits which modify a file
+Date: Wed, 25 Jan 2012 11:23:02 -0500 (EST)
+Message-ID: <30433.38.96.167.131.1327508582.squirrel@mail.lo-cal.org>
+References: <46043.208.70.151.129.1327095331.squirrel@mail.lo-cal.org>
+    <4F1B4764.3010501@gmail.com>
+    <41090.38.96.167.131.1327335283.squirrel@mail.lo-cal.org>
+    <CA+gHt1DxY42W9g+gJQTFrXuXBN-Jny+Jg60gKssdftZ5wxu91A@mail.gmail.com>
+    <52932.38.96.167.131.1327422884.squirrel@mail.lo-cal.org>
+    <CA+gHt1BjqJpUke8JKjUmFyg3Zj5FmASd77LR-7P+6RrNLddD1A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Luke Diamand <luke@diamand.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Vitor Antunes <vitor.hda@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 25 13:34:37 2012
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Wed Jan 25 17:23:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rq23g-0006JP-Sa
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 13:34:37 +0100
+	id 1Rq5cs-0007ll-Ib
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 17:23:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753002Ab2AYMe3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Jan 2012 07:34:29 -0500
-Received: from honk.padd.com ([74.3.171.149]:47061 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752665Ab2AYMe2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jan 2012 07:34:28 -0500
-Received: from arf.padd.com (unknown [50.55.145.32])
-	by honk.padd.com (Postfix) with ESMTPSA id F3FFFE8E;
-	Wed, 25 Jan 2012 04:34:27 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 3F2F931453; Wed, 25 Jan 2012 07:34:25 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <CAOpHH-V2nZ8meh7x6vCVGUQCKQqJ+sPcnGRo+8SqfNavg7F87w@mail.gmail.com>
+	id S1755572Ab2AYQXF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Jan 2012 11:23:05 -0500
+Received: from dharma.lo-cal.org ([208.70.151.129]:40953 "EHLO
+	dharma.lo-cal.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755227Ab2AYQXD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jan 2012 11:23:03 -0500
+Received: from mail.lo-cal.org (localhost [127.0.0.1])
+	by dharma.lo-cal.org (Postfix) with ESMTP id 9285E12BA9C;
+	Wed, 25 Jan 2012 10:23:02 -0600 (CST)
+Received: from 38.96.167.131
+        (SquirrelMail authenticated user ngroot)
+        by mail.lo-cal.org with HTTP;
+        Wed, 25 Jan 2012 11:23:02 -0500 (EST)
+In-Reply-To: <CA+gHt1BjqJpUke8JKjUmFyg3Zj5FmASd77LR-7P+6RrNLddD1A@mail.gmail.com>
+User-Agent: SquirrelMail/1.4.13
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189111>
 
-vitor.hda@gmail.com wrote on Wed, 25 Jan 2012 01:23 +0000:
-> On Mon, Jan 23, 2012 at 10:40 PM, Pete Wyckoff <pw@padd.com> wrote:
-> > How about taking what's below and just squashing it in. =A0It's
-> > incremental on your changes and would go well with Luke's series
-> > that fixes a bunch of scattered quoting issues similarly.
-> >
-> > The change to "describe %s" is unnecessary, but makes all the
-> > invocations look similar. =A0You can leave it out.
->=20
-> I've squashed your patch, but kept the "describe %s" fix in a separat=
-e
-> commit.
->=20
-> >> BTW, and on an unrelated topic, are any test cases failing on your=
- side?
-> >
-> > I do run the tests regularly, and your series is good. =A0There's
-> > the 'clone --use-client-spec' one that is broken until my
-> > 2ea09b5 (git-p4: adjust test to adhere to stricter useClientSpec,
-> > 2012-01-11) is merged. =A0It's on pu.
->=20
-> Tests in t9809-git-p4-client-view.sh were failing for me because I'm
-> using dash instead of bash. Please check patch below for a fix.
->=20
-> Test 15 of t9800-git-p4-basic.sh is still failing and I've not been a=
-ble
-> to pinpoint the problem. I can send you the logs off-list, if you wan=
-t.
->=20
-> Thanks,
-> Vitor
->=20
->=20
->=20
-> diff --git a/t/t9809-git-p4-client-view.sh b/t/t9809-git-p4-client-vi=
-ew.sh
-> index c9471d5..5b0ad99 100755
-> --- a/t/t9809-git-p4-client-view.sh
-> +++ b/t/t9809-git-p4-client-view.sh
-> @@ -31,7 +31,7 @@ client_view() {
->  #
->  check_files_exist() {
->         ok=3D0 &&
-> -       num=3D${#@} &&
-> +       num=3D$# &&
->         for arg ; do
->                 test_path_is_file "$arg" &&
->                 ok=3D$(($ok + 1))
->=20
+> [ Do not cut the CC]
 
-Yes, thanks.  Plain old $# works fine, even if the arguments have
-spaces.  I'll hang onto this with some other work in the same
-area and submit it eventually.
+My apologies.
 
-		-- Pete
+> On Tue, Jan 24, 2012 at 5:34 PM, Neal Groothuis <ngroot@lo-cal.org> w=
+rote:
+>>> On Mon, Jan 23, 2012 at 5:14 PM, Neal Groothuis <ngroot@lo-cal.org>
+>>> wrote:
+>>>>> On 1/20/2012 3:35 PM, Neal Groothuis wrote:
+>>>>>> I'm trying to find /all/ commits that change a file in the
+>>>>>> repository...and its proving to be trickier than I thought. :-)
+>>>>
+>>>> On 1/21/2012 6:16 PM, Neal Kreitzinger wrote:
+>>>>> Does git-log --all help?
+>>>>
+>>>> I don't see how it would. =A0The commits are all reachable from HE=
+AD,
+>>>> which
+>>>> would seem to be the problem that --all would correct.
+>>>>
+>>>> What I'm trying to do is find the commits in which a file differs =
+from
+>>>> that same file in any of its parents.
+>>>
+>>> If you add parent rewriting (--parent, --graph or see it in gitk, w=
+ith
+>>> --full-history) you'll get your B2 commit as it adds commits to hav=
+e a
+>>> meaningful history. But I don't think this is what you are asking f=
+or.
+>>
+>> Correct. =A0If I add parent rewriting, I get all merges, even those =
+in
+>> which
+>> the file is not changed from either parent.
+>>
+>> Based on what's in the man page for git log about the history
+>> simplification algorithm, it seems that B2 should be included in the
+>> output when I do a git log --full-history --simplify-history foo.txt=
+, as
+>> per the steps I noted in the original post. =A0Is my understanding o=
+f the
+>> algorithm faulty?
+>>
+>
+> Following your steps in the first post, B2 is excluded in the
+> --simplify-merge phase because it is (originally) TREESAME, even if i=
+t
+> is not in the rewritten history...
+
+Thanks, I see---labeling a commit as TREESAME happens before
+simplification, rather than after.
+
+In my example, that results in a simplified history where a commit in
+which the contents of the specified paths change gets removed.  That se=
+ems
+perverse; I would think the utility of a simplified history would be to
+track down the commits in which the contents of the specified paths cha=
+nge
+without having to consider ones in which they do not.
+
+Is there a situation where checking for TREESAMEness before simplificat=
+ion
+is desirable and checking after would not be?
+
+- Neal
