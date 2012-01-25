@@ -1,50 +1,88 @@
-From: freefly <free.fly@live.com>
-Subject: Re: git version not changed after installing new version
-Date: Wed, 25 Jan 2012 20:23:54 +0000 (UTC)
-Message-ID: <loom.20120125T212203-813@post.gmane.org>
-References: <loom.20120125T173801-500@post.gmane.org>   <loom.20120125T181639-351@post.gmane.org>  <1327517841.31804.75.camel@centaur.lab.cmartin.tk>  <loom.20120125T202642-92@post.gmane.org> <1327521489.31804.85.camel@centaur.lab.cmartin.tk>
+From: fREW Schmidt <frioux@gmail.com>
+Subject: Re: [ANNOUNCE] Git 1.7.9.rc2
+Date: Wed, 25 Jan 2012 15:38:52 -0600
+Message-ID: <CADVrmKSk3N1yqYrkp5UUtWmbSYK7cECUDnex4w1FjuMMd+w4OQ@mail.gmail.com>
+References: <7vpqegjxu3.fsf@alter.siamese.dyndns.org> <CADVrmKT2RAOC-n_-h4pGJw91imj28h0-HqwGH-NOu-m3XtqiJg@mail.gmail.com>
+ <7v39b53r8w.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 25 21:25:17 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 25 22:39:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rq9PB-0007px-Dp
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 21:25:17 +0100
+	id 1RqAYq-00007x-LS
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 22:39:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751739Ab2AYUZL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jan 2012 15:25:11 -0500
-Received: from lo.gmane.org ([80.91.229.12]:36677 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751025Ab2AYUZK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jan 2012 15:25:10 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Rq9P2-0007ma-Uc
-	for git@vger.kernel.org; Wed, 25 Jan 2012 21:25:08 +0100
-Received: from 0x5da1596e.cpe.ge-0-2-0-1104.fsnqu1.customer.tele.dk ([93.161.89.110])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 Jan 2012 21:25:08 +0100
-Received: from free.fly by 0x5da1596e.cpe.ge-0-2-0-1104.fsnqu1.customer.tele.dk with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 Jan 2012 21:25:08 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 93.161.89.110 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/534.52.7 (KHTML, like Gecko) Version/5.1.2 Safari/534.52.7)
+	id S1752622Ab2AYVjP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Jan 2012 16:39:15 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:42848 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752602Ab2AYVjP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Jan 2012 16:39:15 -0500
+Received: by vbbfc26 with SMTP id fc26so2462079vbb.19
+        for <git@vger.kernel.org>; Wed, 25 Jan 2012 13:39:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=mbNMoFKglta53JlGnlxvBAhrHRcwko2nIVLQp9ewGIY=;
+        b=QHbZLHXqGzlHn+ChJODjuzWCmDN/UlZb9wlowYaP/bbV+HjQhgAzU0vGFI+hRgzxlP
+         QmFDonR1aMkf9ScP478mTMA/IadGF0xBA5T9D1NZNwpKusW/dQBJPEJ7QAYJ07YyVnix
+         wSB7D+gPSwD9xSflSP+3Q0/g4ub2mszAOFwvU=
+Received: by 10.52.94.73 with SMTP id da9mr10202103vdb.6.1327527554263; Wed,
+ 25 Jan 2012 13:39:14 -0800 (PST)
+Received: by 10.220.0.144 with HTTP; Wed, 25 Jan 2012 13:38:52 -0800 (PST)
+In-Reply-To: <7v39b53r8w.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189126>
 
+On Tue, Jan 24, 2012 at 12:11 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> fREW Schmidt <frioux@gmail.com> writes:
+>
+>> On Wed, Jan 18, 2012 at 7:16 PM, Junio C Hamano <gitster@pobox.com> =
+wrote:
+>>> =A0* gitk updates accumulated since early 2011.
+>>
+>> Where might one go to find more detail on this one?
+>
+> Hmm, http://git.kernel.org/?p=3Dgit/git.git;a=3Dshortlog, perhaps?
 
-Sorry about the last post, I had to prune some things from the message,
-because when I was trying to post it just keep telling me that 
-I have more quoted text than what I have written :(
+Ah, I actually looked there before but for some reason didn't see the
+latest merge.  If anyone else cares:
+
+ $ git log v1.7.9-rc2 ^v1.7.8 -- gitk-git/
+commit 09bb4eb4f14c0b92baa649b2b97cda2390b84b84
+Merge: 10f4eb6 811c70f
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Fri Dec 16 22:18:42 2011 -0800
+
+    Merge git://ozlabs.org/~paulus/gitk
+
+    * git://ozlabs.org/~paulus/gitk:
+      gitk: Make vi-style keybindings more vi-like
+      gitk: Make "touching paths" search support backslashes
+      gitk: Show modified files with separate work tree
+      gitk: Simplify calculation of gitdir
+      gitk: Run 'git rev-parse --git-dir' only once
+      gitk: Put temporary directory inside .git
+      gitk: Fix "External diff" with separate work tree
+      gitk: Fix "blame parent commit" with separate work tree
+      gitk: Fix "show origin of this line" with separate work tree
+      gitk: Fix file highlight when run in subdirectory
+      gitk: Update copyright
+      gitk: When a commit contains a note, mark it with a yellow box
+      gitk: Remember time zones from author and commit timestamps
+      gitk: Remove unused $cdate array
+
+--=20
+fREW Schmidt
+http://blog.afoolishmanifesto.com
