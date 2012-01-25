@@ -1,82 +1,128 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: git version not changed after installing new version
-Date: Wed, 25 Jan 2012 19:57:21 +0100
-Message-ID: <1327517841.31804.75.camel@centaur.lab.cmartin.tk>
-References: <loom.20120125T173801-500@post.gmane.org>
-	 <loom.20120125T181639-351@post.gmane.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 3/5] run-command: Elaborate execvp error checking
+Date: Wed, 25 Jan 2012 20:03:46 +0100
+Message-ID: <4F205212.5080007@kdbg.org>
+References: <1327444346-6243-1-git-send-email-fransklaver@gmail.com> <1327444346-6243-4-git-send-email-fransklaver@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-+sC1pWdOjCx10Rrmm0aU"
-Cc: git@vger.kernel.org
-To: freefly <free.fly@live.com>
-X-From: git-owner@vger.kernel.org Wed Jan 25 19:57:26 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Junio C. Hamano" <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Frans Klaver <fransklaver@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 25 20:04:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rq82A-0007TG-7v
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 19:57:26 +0100
+	id 1Rq88T-0003NJ-UO
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 20:03:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751524Ab2AYS5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jan 2012 13:57:22 -0500
-Received: from kimmy.cmartin.tk ([91.121.65.165]:38830 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751084Ab2AYS5V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jan 2012 13:57:21 -0500
-Received: from [192.168.1.17] (brln-4dbc4241.pool.mediaWays.net [77.188.66.65])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 8D60246092;
-	Wed, 25 Jan 2012 19:57:17 +0100 (CET)
-In-Reply-To: <loom.20120125T181639-351@post.gmane.org>
-X-Mailer: Evolution 3.2.2-1 
+	id S1752041Ab2AYTDu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jan 2012 14:03:50 -0500
+Received: from bsmtp3.bon.at ([213.33.87.17]:24792 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751366Ab2AYTDs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jan 2012 14:03:48 -0500
+X-Greylist: delayed 487 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Jan 2012 14:03:48 EST
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 011AB1001D;
+	Wed, 25 Jan 2012 20:01:41 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 8AC6E19F32A;
+	Wed, 25 Jan 2012 20:03:46 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <1327444346-6243-4-git-send-email-fransklaver@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189119>
 
+Am 24.01.2012 23:32, schrieb Frans Klaver:
+> +static void inspect_failure(const char *argv0, int silent_exec_failure)
+> +{
+> +	int err = errno;
+> +	struct strbuf sb = STRBUF_INIT;
+> +
+> +	/* errors not related to path */
+> +	if (errno == E2BIG || errno == ENOMEM)
+> +		die_file_error(argv0, err);
+> +
+> +	if (strchr(argv0, '/')) {
+> +		if (file_exists(argv0)) {
+> +			strbuf_add(&sb, argv0, strlen(argv0));
+> +			inspect_file(&sb, err, argv0);
 
---=-+sC1pWdOjCx10Rrmm0aU
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Can we end up here if errno == ENOENT? If so, silent_exec_failure must
+be checked. (inspect_file does not return.)
 
-On Wed, 2012-01-25 at 17:19 +0000, freefly wrote:
-> Thanks both of you for your replies, I have checked but,=20
-> it still points to the old "/usr/bin/git" not the=20
-> "/usr/local/git/bin" :(
+> +		}
+> +	} else {
+> +		char *path, *next;
+> +		path = getenv("PATH");
+> +		while (path) {
+> +			next = strchrnul(path, ':');
+> +			if (path < next)
+> +				strbuf_add(&sb, path, next - path);
+> +			else
+> +				strbuf_addch(&sb, '.');
+> +
+> +			if (!*next)
+> +				path = NULL;
+> +			else
+> +				path = next + 1;
+> +
+> +			if (!is_searchable(sb.buf)) {
+> +				strbuf_release(&sb);
+> +				continue;
+> +			}
+> +
+> +			if (sb.len && sb.buf[sb.len - 1] != '/')
+> +				strbuf_addch(&sb, '/');
+> +			strbuf_addstr(&sb, argv0);
+> +
+> +			if (file_exists(sb.buf))
+> +				inspect_file(&sb, err, argv0);
+> +
+> +			strbuf_release(&sb);
+> +		}
+> +	}
+> +
+> +	if (err == ENOENT) {
+> +		if (!silent_exec_failure)
+> +			error("cannot exec '%s': %s", argv0,
+> +					strerror(ENOENT));
+> +		exit(127);
+> +	} else {
+> +		die_file_error(argv0, err);
+> +	}
+> +}
+> +#endif
+> +
+>  int start_command(struct child_process *cmd)
+>  {
+>  	int need_in, need_out, need_err;
+> @@ -280,14 +415,7 @@ fail_pipe:
+>  		} else {
+>  			execvp(cmd->argv[0], (char *const*) cmd->argv);
+>  		}
+> -		if (errno == ENOENT) {
+> -			if (!cmd->silent_exec_failure)
+> -				error("cannot run %s: %s", cmd->argv[0],
+> -					strerror(ENOENT));
+> -			exit(127);
+> -		} else {
+> -			die_errno("cannot exec '%s'", cmd->argv[0]);
+> -		}
+> +		inspect_failure(cmd->argv[0], cmd->silent_exec_failure);
 
-What do `which git` and `type git` say? Bash remembers where it ran a
-command so if you install a binary to a new location, it might not find
-it straight away.
+Isn't it important that this function calls exit(127) if we want
+silent_exec_failure and errno == ENOENT? But I don't see that this
+guaranteed by inspect_failure; see above.
 
->=20
-> when I run the update path script I get this output.
->=20
->=20
-> No change to PATH in ~/.MacOSX/environment.plist
-> ~ /Volumes/Git 1.7.8.3 Snow Leopard Intel Universal
-> /Volumes/Git 1.7.8.3 Snow Leopard Intel Universal
+>  	}
+>  	if (cmd->pid < 0)
+>  		error("cannot fork() for %s: %s", cmd->argv[0],
 
-So the script detected that no change was needed presumably. What's your
-$PATH and is /usr/local/bin/ before /usr/bin/?
-
-   cmn
-
---=-+sC1pWdOjCx10Rrmm0aU
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAABAgAGBQJPIFCRAAoJEHKRP1jG7ZzTZZoH/2DxbdjihC4824woz0CKlco+
-vC6HUP0v63jYIwTsqXiNvL+ZHslbKDW6ZIoHoMQsS8Hz/6ARfMxsv7xqz2/BLRkf
-2y3Fzz6vBLfiH5rlWYj55QF0RFdAZRCqG536cTzJ2svBYlJZnI93GumNTg71q3IF
-UIlvSA39+s1n0S8VX74Xhm7BPE87GRfgKzFqyD48ph+Z/trx673MZL+gq/mJSHOa
-JFWAkBbDNNLxzqFXqxmATP73hQbzc8GEZELHuqyxUElQEO+lhnXW1NAgUwYg1MW+
-qBPLE9CF0zKdJWknm96WECCejisGS1I8xOZdwVhSo57Tb2t89V+Vd8hY2cC4J6U=
-=gWHe
------END PGP SIGNATURE-----
-
---=-+sC1pWdOjCx10Rrmm0aU--
+-- Hannes
