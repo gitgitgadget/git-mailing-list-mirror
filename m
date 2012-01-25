@@ -1,60 +1,56 @@
-From: Kirill Likhodedov <klikh.list@gmail.com>
+From: freefly <free.fly@live.com>
 Subject: Re: git version not changed after installing new version
-Date: Wed, 25 Jan 2012 20:57:28 +0400
-Message-ID: <52E83BE7-8D1C-4A9C-AA86-DBC58435C299@gmail.com>
+Date: Wed, 25 Jan 2012 17:19:26 +0000 (UTC)
+Message-ID: <loom.20120125T181639-351@post.gmane.org>
 References: <loom.20120125T173801-500@post.gmane.org>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=koi8-r
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: freefly <free.fly@live.com>
-X-From: git-owner@vger.kernel.org Wed Jan 25 18:04:19 2012
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 25 18:19:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rq6Gg-0006OL-6v
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 18:04:18 +0100
+	id 1Rq6Vc-0006tw-Gn
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 18:19:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756227Ab2AYREN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Jan 2012 12:04:13 -0500
-Received: from mail1.intellij.net ([46.137.178.215]:56380 "EHLO
-	mail1.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754883Ab2AYREN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Jan 2012 12:04:13 -0500
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Jan 2012 12:04:12 EST
-Received: (qmail 25820 invoked by uid 89); 25 Jan 2012 16:57:30 -0000
-Received: by simscan 1.1.0 ppid: 25775, pid: 25812, t: 0.0806s
-         scanners: regex: 1.1.0
-Received: from unknown (HELO loki.labs.intellij.net) (Kirill.Likhodedov@jetbrains.com@195.5.138.42)
-  by ip-10-48-137-145.eu-west-1.compute.internal with ESMTPA; 25 Jan 2012 16:57:30 -0000
-In-Reply-To: <loom.20120125T173801-500@post.gmane.org>
-X-Mailer: Apple Mail (2.1084)
+	id S1756438Ab2AYRTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jan 2012 12:19:39 -0500
+Received: from lo.gmane.org ([80.91.229.12]:38334 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756402Ab2AYRTj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jan 2012 12:19:39 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Rq6VW-0006s6-5x
+	for git@vger.kernel.org; Wed, 25 Jan 2012 18:19:38 +0100
+Received: from 0x5da1596e.cpe.ge-0-2-0-1104.fsnqu1.customer.tele.dk ([93.161.89.110])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 25 Jan 2012 18:19:38 +0100
+Received: from free.fly by 0x5da1596e.cpe.ge-0-2-0-1104.fsnqu1.customer.tele.dk with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 25 Jan 2012 18:19:38 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 93.161.89.110 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/534.52.7 (KHTML, like Gecko) Version/5.1.2 Safari/534.52.7)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189115>
 
-Most likely, you  didn't update the PATH well enough.
-Check what is the output of 'which git' command. It will point to the x=
-code installation. So please double check the path.
+Thanks both of you for your replies, I have checked but, 
+it still points to the old "/usr/bin/git" not the 
+"/usr/local/git/bin" :(
 
-25.01.2012, =D7 20:45, freefly:
+when I run the update path script I get this output.
 
-> Hi all,
->    I am new to Mac OS X lion and I had a previous installation of XCO=
-DE 4.2
-> on my mac mini. It has a git version 1.7.5.4. I installed a new versi=
-on 1.7.8.4.
-> and updated the Path variables by running the script comes with the=20
-> package as well. but when I type "git --version" in the terminal=20
-> I get 1.7.5.4. Can anyone tell me what is going wrong ?
->=20
-> Kind regards
->=20
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+No change to PATH in ~/.MacOSX/environment.plist
+~ /Volumes/Git 1.7.8.3 Snow Leopard Intel Universal
+/Volumes/Git 1.7.8.3 Snow Leopard Intel Universal
