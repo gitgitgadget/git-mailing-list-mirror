@@ -1,71 +1,63 @@
-From: Jeff King <peff@peff.net>
+From: John Szakmeister <john@szakmeister.net>
 Subject: Re: Rebase and incrementing version numbers
-Date: Tue, 24 Jan 2012 21:09:03 -0500
-Message-ID: <20120125020903.GA21535@sigill.intra.peff.net>
+Date: Tue, 24 Jan 2012 20:18:49 -0600
+Message-ID: <CAEBDL5XF3uiCSih4U9jJwmHMAaUqGh+9mXRFxyHNTqEn61K8PQ@mail.gmail.com>
 References: <CADo4Y9jGYJasDL9m7_50aOTrOyoezdyg=vcsZhQ87Qk-1XfTUQ@mail.gmail.com>
- <CADo4Y9iKvoXhKg5pEAB+cbA7Rkfa=nF4TLu0xgcS3dnkNi_n4g@mail.gmail.com>
- <CAH3Anro8T4SJqBvw1E_7u__4kYyB6hMCYPbtHSVxkgSUYSb2+A@mail.gmail.com>
+	<CADo4Y9iKvoXhKg5pEAB+cbA7Rkfa=nF4TLu0xgcS3dnkNi_n4g@mail.gmail.com>
+	<CANgJU+WWq=+BP1ZDbGY3weB5Xey2TtbryDJvz5=eMLFzNet3xQ@mail.gmail.com>
+	<CADo4Y9is9mBOJaU+YRTMedTz7FfDrMFoDiqiUvQpVxQpyariPQ@mail.gmail.com>
+	<CA+gHt1CPBYTLLwSSLdu-BmDfuGDzPwi9RnXAku7KZjHLYhUtjQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jon Seymour <jon.seymour@gmail.com>, git@vger.kernel.org
-To: mike@nahas.com
-X-From: git-owner@vger.kernel.org Wed Jan 25 03:09:15 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: mike@nahas.com, demerphq <demerphq@gmail.com>, git@vger.kernel.org
+To: =?UTF-8?B?U2FudGkgQsOpamFy?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Wed Jan 25 03:19:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RpsIU-00070j-Mz
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 03:09:15 +0100
+	id 1RpsRw-0001yS-N6
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 03:19:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755940Ab2AYCJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jan 2012 21:09:08 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43632
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751868Ab2AYCJH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jan 2012 21:09:07 -0500
-Received: (qmail 14618 invoked by uid 107); 25 Jan 2012 02:16:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 24 Jan 2012 21:16:06 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Jan 2012 21:09:03 -0500
-Content-Disposition: inline
-In-Reply-To: <CAH3Anro8T4SJqBvw1E_7u__4kYyB6hMCYPbtHSVxkgSUYSb2+A@mail.gmail.com>
+	id S1755828Ab2AYCSu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Jan 2012 21:18:50 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:38124 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751943Ab2AYCSt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Jan 2012 21:18:49 -0500
+Received: by iacb35 with SMTP id b35so6170745iac.19
+        for <git@vger.kernel.org>; Tue, 24 Jan 2012 18:18:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5Q4HSX8RveGUooqEFqvlKa7Sakjf3S4Z6thNO3xsQcU=;
+        b=DkDMOmG0SNF2EMw9cKYSPeU4WI3RFHdoee8CeEjzWAUs3hrLGhG5qwhx6mEw5znjJF
+         evjKNsiuYRpIMvvLpbW5Z6H/u+clr7cL9WafHTqUhPc348r8WXHeea2cuZEmtWWYM5YR
+         KjIc08VvWU/9uyedwSFCpDxb6pBo6sFHaxNg8=
+Received: by 10.50.34.202 with SMTP id b10mr5575551igj.2.1327457929421; Tue,
+ 24 Jan 2012 18:18:49 -0800 (PST)
+Received: by 10.50.57.133 with HTTP; Tue, 24 Jan 2012 18:18:49 -0800 (PST)
+In-Reply-To: <CA+gHt1CPBYTLLwSSLdu-BmDfuGDzPwi9RnXAku7KZjHLYhUtjQ@mail.gmail.com>
+X-Google-Sender-Auth: Oz0IFsXEdI1PY2leBOd-gVy04Cw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189094>
 
-On Fri, Jan 20, 2012 at 08:33:57AM +1100, Jon Seymour wrote:
+On Thu, Jan 19, 2012 at 5:31 PM, Santi B=C3=A9jar <santi@agolina.net> w=
+rote:
+[snip]
+> Yes, but you can use "git describe" output:
+>
+> $ git describe
+> v1.7.6-180-gdf3f3d8
 
-> I wonder if you can defer your changes to the config files until after
-> you have synced with the current SVN head, so that you typically only
-> modify the latest configuration file. Then use git to work out what
-> numbers you have to update (by working out which files you changed
-> that the SVN upstream has not seen yet). Not perfect, because of race
-> conditions, and may not work with your integration testing processes,
-> but perhaps worth considering.
+That doesn't work with git-svn.  In Subversion, tags are closer to
+branches, which is how git-svn treats them.
 
-That was my thought, too (assuming this workflow, which seems slightly
-insane, is outside your power to change).
-
-In this list here:
-
-> Something like:
-> 
-> 1. pull latest SVN
-> 2. work on file
-> 3. test. skip back to 2 until done.
-> 4. ready to push to upstream
-> 5. pull latest SVN
-> 6. calculate configuration changes required
-> 7. apply configuration changes
-> 8. push work + configuration changes upstream
-
-Steps 5 and 8 are basically "git svn dcommit". I suspect you could use
-some combination of "git svn rebase" and "git filter-branch" to rewrite
-your commits with the right counters, and then dcommit the result
-(hopefully fast enough to avoid races).
-
--Peff
+-John
