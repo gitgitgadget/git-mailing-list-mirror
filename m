@@ -1,59 +1,71 @@
-From: Frans Klaver <fransklaver@gmail.com>
-Subject: Re: [PATCH 1/5] t0061: Fix incorrect indentation
-Date: Wed, 25 Jan 2012 09:08:32 +0100
-Message-ID: <CAH6sp9OEcr2DO6jyHP1w=43wJLea=mcjyV9kd6DXL6AppFu5hw@mail.gmail.com>
-References: <1327444346-6243-1-git-send-email-fransklaver@gmail.com>
-	<1327444346-6243-2-git-send-email-fransklaver@gmail.com>
-	<20120124224000.GE8222@burratino>
-	<op.v8mmwftk0aolir@keputer>
+From: "Mr Faartir Ibrahim" <info@charity.com>
+Subject: Dear Beloved!
+Date: Wed, 25 Jan 2012 17:50:12 +0800
+Message-ID: <20120125095022.ZYKF25070.eastrmfepo203.cox.net@eastrmimpo306.cox.net>
+Reply-To: <mrfaartiribrahim@qatar.io>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, "Junio C. Hamano" <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 25 09:08:39 2012
+Content-Type: text/plain;
+	charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Wed Jan 25 11:28:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RpxuH-0006u3-QL
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 09:08:38 +0100
+	id 1Rq05E-0007rl-8W
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 11:28:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752627Ab2AYIId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jan 2012 03:08:33 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:49088 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750812Ab2AYIIc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jan 2012 03:08:32 -0500
-Received: by qadc10 with SMTP id c10so677796qad.19
-        for <git@vger.kernel.org>; Wed, 25 Jan 2012 00:08:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=57WUFzKMcjMwA4MlRqUo/A/jIumgYmGfY1KmAMy9wyk=;
-        b=w1Tdb3B0ISvzWY05avJx++w0hohs+ALobWxxLs+gsuoF+31YumAxXz108gJfUW4BGR
-         BR9CSDWwOR39+hlnkJMvG161E3fXJamex4aBHGJgIZhbt1dRgyqx/S7snic+0e01uoV0
-         8fygNbodQHV+K1EW9gvF401mUt/RD9ELAGF5M=
-Received: by 10.224.195.2 with SMTP id ea2mr5695827qab.84.1327478912260; Wed,
- 25 Jan 2012 00:08:32 -0800 (PST)
-Received: by 10.224.105.143 with HTTP; Wed, 25 Jan 2012 00:08:32 -0800 (PST)
-In-Reply-To: <op.v8mmwftk0aolir@keputer>
+	id S1750880Ab2AYK16 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jan 2012 05:27:58 -0500
+Received: from eastrmfepi106.cox.net ([68.230.241.202]:50044 "EHLO
+	eastrmfepi106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750755Ab2AYK15 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jan 2012 05:27:57 -0500
+X-Greylist: delayed 2253 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Jan 2012 05:27:57 EST
+Received: from eastrmimpo306.cox.net ([68.230.241.238])
+          by eastrmfepo203.cox.net
+          (InterMail vM.8.01.04.00 201-2260-137-20101110) with ESMTP
+          id <20120125095022.ZYKF25070.eastrmfepo203.cox.net@eastrmimpo306.cox.net>;
+          Wed, 25 Jan 2012 04:50:22 -0500
+Received: from User ([175.143.163.99])
+	by eastrmimpo306.cox.net with bizsmtp
+	id Rlq51i00B28zAyv02lq7cp; Wed, 25 Jan 2012 04:50:22 -0500
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A020205.4F1FD05E.0092,ss=2,re=0.000,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=1.1 cv=QFd1i8EmGWXMF/FLlwwalaY9IE87M3wXCJnHJtyYFmw=
+ c=1 sm=1 a=Dyoqhi_TatcA:10 a=JYPhUnNy9xYA:10 a=Cfj4BQAnxiAA:10
+ a=LqP0emNO2WbWEPxAF8hU1g==:17 a=69EAbJreAAAA:8 a=DgHimzchnAyp100aVSoA:9
+ a=Ft8UYL4EG9YA:10 a=uqx0mY5Sl0QA:10 a=EfJqPEOeqlMA:10
+ a=LqP0emNO2WbWEPxAF8hU1g==:117
+X-CM-Score: 0.00
+Authentication-Results: cox.net; auth=pass (LOGIN)
+ smtp.auth=donation05@cox.net
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189104>
+X-Spam-Report: 6.2 points;
+ * -0.7 BAYES_20 BODY: Bayesian spam probability is 5 to 20%
+ *      [score: 0.0872]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?175.143.163.99>]
+ *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
+ *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189105>
 
-On Wed, Jan 25, 2012 at 7:27 AM, Frans Klaver <fransklaver@gmail.com> wrote:
+Good Day Beloved,
 
-> Hurr? I'm fairly sure the script ended up being indented for me. I'll
-> recheck.
+I am a dying man with Cancer,my doctor told me today that i will not survive
+it.I have a substantial sum I would like you to help me distribute
+to the needy, orphans in society.REPLY TO: ibrahimfaartir@hotmail.com for
+details.
 
-Hm, that must have been my imagination back then. I'm sure I did this
-for a reason. Ah well, we'll drop this patch. I'll put the tabs into
-the other test scripts as well, because it does make them that much
-more readable.
-
-Thanks for catching.
+MR FAARTIR IBRAHIM
