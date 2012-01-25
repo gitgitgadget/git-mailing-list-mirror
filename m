@@ -1,63 +1,85 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Re: Rebase and incrementing version numbers
-Date: Tue, 24 Jan 2012 20:18:49 -0600
-Message-ID: <CAEBDL5XF3uiCSih4U9jJwmHMAaUqGh+9mXRFxyHNTqEn61K8PQ@mail.gmail.com>
-References: <CADo4Y9jGYJasDL9m7_50aOTrOyoezdyg=vcsZhQ87Qk-1XfTUQ@mail.gmail.com>
-	<CADo4Y9iKvoXhKg5pEAB+cbA7Rkfa=nF4TLu0xgcS3dnkNi_n4g@mail.gmail.com>
-	<CANgJU+WWq=+BP1ZDbGY3weB5Xey2TtbryDJvz5=eMLFzNet3xQ@mail.gmail.com>
-	<CADo4Y9is9mBOJaU+YRTMedTz7FfDrMFoDiqiUvQpVxQpyariPQ@mail.gmail.com>
-	<CA+gHt1CPBYTLLwSSLdu-BmDfuGDzPwi9RnXAku7KZjHLYhUtjQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/3] git-p4: Add test case for complex branch import
+Date: Tue, 24 Jan 2012 20:02:10 -0800
+Message-ID: <7vwr8g1lbx.fsf@alter.siamese.dyndns.org>
+References: <1327105292-30092-1-git-send-email-vitor.hda@gmail.com>
+ <1327105292-30092-4-git-send-email-vitor.hda@gmail.com>
+ <7vehutd59p.fsf@alter.siamese.dyndns.org>
+ <CAOpHH-Wcf3innjA4LS0TMrLzEwbQzfZmHssxSBYvv4v7UMfi1w@mail.gmail.com>
+ <CAOpHH-UxD37v7N3U9A0c_MnzSjOcF6eJCx2WdHRKf2CFoYy_tg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: mike@nahas.com, demerphq <demerphq@gmail.com>, git@vger.kernel.org
-To: =?UTF-8?B?U2FudGkgQsOpamFy?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Wed Jan 25 03:19:01 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>, Pete Wyckoff <pw@padd.com>,
+	Luke Diamand <luke@diamand.org>
+To: Vitor Antunes <vitor.hda@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 25 05:02:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RpsRw-0001yS-N6
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 03:19:01 +0100
+	id 1Rpu3x-0004aj-KA
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Jan 2012 05:02:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755828Ab2AYCSu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Jan 2012 21:18:50 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:38124 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751943Ab2AYCSt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Jan 2012 21:18:49 -0500
-Received: by iacb35 with SMTP id b35so6170745iac.19
-        for <git@vger.kernel.org>; Tue, 24 Jan 2012 18:18:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=5Q4HSX8RveGUooqEFqvlKa7Sakjf3S4Z6thNO3xsQcU=;
-        b=DkDMOmG0SNF2EMw9cKYSPeU4WI3RFHdoee8CeEjzWAUs3hrLGhG5qwhx6mEw5znjJF
-         evjKNsiuYRpIMvvLpbW5Z6H/u+clr7cL9WafHTqUhPc348r8WXHeea2cuZEmtWWYM5YR
-         KjIc08VvWU/9uyedwSFCpDxb6pBo6sFHaxNg8=
-Received: by 10.50.34.202 with SMTP id b10mr5575551igj.2.1327457929421; Tue,
- 24 Jan 2012 18:18:49 -0800 (PST)
-Received: by 10.50.57.133 with HTTP; Tue, 24 Jan 2012 18:18:49 -0800 (PST)
-In-Reply-To: <CA+gHt1CPBYTLLwSSLdu-BmDfuGDzPwi9RnXAku7KZjHLYhUtjQ@mail.gmail.com>
-X-Google-Sender-Auth: Oz0IFsXEdI1PY2leBOd-gVy04Cw
+	id S1752982Ab2AYECP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jan 2012 23:02:15 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59079 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752759Ab2AYECO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jan 2012 23:02:14 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F3F416135;
+	Tue, 24 Jan 2012 23:02:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ywadYcomDl7L8X9WBxNdqQwuMqo=; b=XxIhzI
+	fWPj0tcXa8zCP90lOpn9Zh/ACnIDn0ppPqGed0N6RTYEhGZGaATk45IQplzCrhWw
+	1aniAa/LIowpWQzdb374RkrvHF9xizEEvo2Cbm1kmR5TspwGAAFYAYIWX0IvdNcT
+	PJpOQH6GTeoCffyB3xRArFsRgQETl1+8YqglA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=P7tzSlThKqtOc+l0fvXcCeoO7PSSv1FG
+	f9WolTn81vhSSqV3fPFa5CxIXSrq6dphKF5wRz99j1AJtjogqAMEFXKu6nmH+CtO
+	KUHmvFNkrAi5LH6L5eFKX8vF5AmmZBMwG/0fF1Nl0fuiTCrK7wafx+2537bP5nnX
+	qTEPXkdYaqc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB9876134;
+	Tue, 24 Jan 2012 23:02:12 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7F9F76133; Tue, 24 Jan 2012
+ 23:02:12 -0500 (EST)
+In-Reply-To: <CAOpHH-UxD37v7N3U9A0c_MnzSjOcF6eJCx2WdHRKf2CFoYy_tg@mail.gmail.com> (Vitor
+ Antunes's message of "Wed, 25 Jan 2012 01:39:11 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5C38F7B8-4709-11E1-AE2D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189095>
 
-On Thu, Jan 19, 2012 at 5:31 PM, Santi B=C3=A9jar <santi@agolina.net> w=
-rote:
-[snip]
-> Yes, but you can use "git describe" output:
+Vitor Antunes <vitor.hda@gmail.com> writes:
+
+>>>> +             p4 submit -d "branch5"
+>>>
+>>> That's a strange quoting convention. Why are "branch4" and "branch5"
+>>> enclosed in double quotes while "integrate" and "submit" aren't?
+>>> (rhetorical: do not quote these branch names without a good reason).
+>>
+>> There is no reason that I can remember to have those enclosed in double
+>> quotes. Will double check in my local branches at home tonight. Anyway,
+>> expect a fix for this in v3.
 >
-> $ git describe
-> v1.7.6-180-gdf3f3d8
+> I now see why I added the quotes. The -d option is used to input the
+> description of the commit, which can contain spaces and other special
+> characters. Admittedly they are not required in this case, but from a
+> consistency point of view I would prefer to keep them.
 
-That doesn't work with git-svn.  In Subversion, tags are closer to
-branches, which is how git-svn treats them.
+Hmm, the argument "branch5" made it look like it is the name of the branch
+you are giving here. If it is supposed to be human-readable free-form text
+description, I would prefer to see it as such, e.g.
 
--John
+	p4 submit -d "integrate changes on branch #1 to branch #5"
+
+or something like that.
