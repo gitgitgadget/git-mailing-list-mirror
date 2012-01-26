@@ -1,56 +1,73 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: git version not changed after installing new version
-Date: Thu, 26 Jan 2012 17:52:44 +0100
-Message-ID: <4F2184DC.6070804@ira.uka.de>
-References: <loom.20120125T173801-500@post.gmane.org>    <loom.20120125T181639-351@post.gmane.org>   <1327517841.31804.75.camel@centaur.lab.cmartin.tk>   <loom.20120125T202642-92@post.gmane.org>  <1327521489.31804.85.camel@centaur.lab.cmartin.tk>  <loom.20120125T211638-609@post.gmane.org> <1327530594.31804.87.camel@centaur.lab.cmartin.tk> <loom.20120126T144828-400@post.gmane.org> <loom.20120126T161101-463@post.gmane.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/4] config: add include directive
+Date: Thu, 26 Jan 2012 11:54:56 -0500
+Message-ID: <20120126165456.GA5278@sigill.intra.peff.net>
+References: <20120126073547.GA28689@sigill.intra.peff.net>
+ <20120126073752.GA30474@sigill.intra.peff.net>
+ <4F2119E6.8010109@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: freefly <free.fly@live.com>
-X-From: git-owner@vger.kernel.org Thu Jan 26 17:52:58 2012
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Jan 26 17:55:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RqSZF-0000VJ-Fo
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Jan 2012 17:52:57 +0100
+	id 1RqSbP-0001Th-HU
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Jan 2012 17:55:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752674Ab2AZQwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jan 2012 11:52:53 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:33124 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752180Ab2AZQww (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Jan 2012 11:52:52 -0500
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1RqSZ5-0000ax-4I; Thu, 26 Jan 2012 17:52:51 +0100
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	id 1RqSZ4-00035e-W4; Thu, 26 Jan 2012 17:52:47 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <loom.20120126T161101-463@post.gmane.org>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1327596771.931208000
+	id S1753057Ab2AZQzF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jan 2012 11:55:05 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45317
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753008Ab2AZQzE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jan 2012 11:55:04 -0500
+Received: (qmail 27221 invoked by uid 107); 26 Jan 2012 17:02:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 Jan 2012 12:02:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jan 2012 11:54:56 -0500
+Content-Disposition: inline
+In-Reply-To: <4F2119E6.8010109@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189154>
 
-On 26.01.2012 16:13, freefly wrote:
-> that doesn't seem to change the path :(
->
-> which git =>  /usr/bin/git
->
-> version still points to the old one  :(
->
-> This is my current path that I changed, as you told me to do...
->
-> /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/git/bin
+On Thu, Jan 26, 2012 at 10:16:22AM +0100, Johannes Sixt wrote:
 
-Put /usr/local/git/bin in front (it is easy to overlook the "git/" in 
-there as software often uses /usr/local/bin)
+> > +test_expect_success 'recursive relative paths' '
+> > +	mkdir subdir &&
+> > +	echo "[test]three = 3" >subdir/three &&
+> > +	echo "[include]path = three" >subdir/two &&
+> > +	echo "[include]path = subdir/two" >base &&
+> > +	echo 3 >expect &&
+> > +	git config -f base test.three >actual &&
+> > +	test_cmp expect actual
+> > +'
+> 
+> Isn't it rather "chained relative paths"? Recursive would be if I write
+> 
+>   [include]path = .gitconfig
+> 
+> in my ~/.gitconfig. What happens in this case?
+
+Good point. I used "recursive" because it is recursing in the include
+function within git, but obviously from the user's perspective, it is
+not a recursion.
+
+And no, I didn't do any cycle detection. We could either do:
+
+  1. Record some canonical name for each source we look at (probably
+     realpath() for files, and the sha1 for refs), and don't descend
+     into already-seen sources.
+
+  2. Simply provide a maximum depth, and don't include beyond it.
+
+The latter is much simpler to implement, but I think the former is a
+little nicer for the user.
+
+-Peff
