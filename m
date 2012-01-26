@@ -1,64 +1,74 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: make install rewrites source files
-Date: Thu, 26 Jan 2012 23:52:31 +0100
-Message-ID: <20120126225231.GA14753@ecki>
-References: <hbf.20120123bz2f@bombur.uio.no>
- <7vhazm89bo.fsf@alter.siamese.dyndns.org>
- <hbf.20120123j61g@bombur.uio.no>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: How to reorganize git tree
+Date: Thu, 26 Jan 2012 15:27:32 -0800 (PST)
+Message-ID: <m3ehumdoxs.fsf@localhost.localdomain>
+References: <20120126133505.it34vehs0044o848@webmail.xnet.com>
+	<1327604128-sup-1697@pinkfloyd.chass.utoronto.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
-X-From: git-owner@vger.kernel.org Fri Jan 27 00:01:07 2012
+Cc: Alan Edwards <kae@xnet.com>, git <git@vger.kernel.org>
+To: Ben Walton <bwalton@artsci.utoronto.ca>
+X-From: git-owner@vger.kernel.org Fri Jan 27 00:27:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RqYJT-0003Ma-48
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 00:01:03 +0100
+	id 1RqYjE-0005ic-3A
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 00:27:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753614Ab2AZXA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jan 2012 18:00:57 -0500
-Received: from bsmtp3.bon.at ([213.33.87.17]:43227 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753449Ab2AZXA5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jan 2012 18:00:57 -0500
-Received: from localhost (p5B22C50C.dip.t-dialin.net [91.34.197.12])
-	by bsmtp.bon.at (Postfix) with ESMTP id D1CFF130044;
-	Fri, 27 Jan 2012 00:00:51 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <hbf.20120123j61g@bombur.uio.no>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751697Ab2AZX1g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jan 2012 18:27:36 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:51710 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751257Ab2AZX1f (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jan 2012 18:27:35 -0500
+Received: by eaal13 with SMTP id l13so41658eaa.19
+        for <git@vger.kernel.org>; Thu, 26 Jan 2012 15:27:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=kej40ANmFLbB0eOyLAQbrVg7UOoBIpSEaS2XnhKF3lg=;
+        b=nDZHcKubthE/ibofUgXOhN8wWWQaFGTbrEtLxZcWhNUowCw7HjZW4zidl+RYazgMs+
+         SLB/SPaN3GJdDvmnkA8fcSO05B03ddEkdNzjrCVr2JgtUaAl7+9QmLbiETbtDLpEo4ap
+         +3M6iSakpPOPpOuxekoZIgCV8EGByOyE/UCGY=
+Received: by 10.213.16.142 with SMTP id o14mr774167eba.144.1327620453842;
+        Thu, 26 Jan 2012 15:27:33 -0800 (PST)
+Received: from localhost.localdomain (abwp232.neoplus.adsl.tpnet.pl. [83.8.239.232])
+        by mx.google.com with ESMTPS id w46sm21739464eeb.0.2012.01.26.15.27.31
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 26 Jan 2012 15:27:32 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q0QNS03s015208;
+	Fri, 27 Jan 2012 00:28:01 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id q0QNRxFE015205;
+	Fri, 27 Jan 2012 00:27:59 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1327604128-sup-1697@pinkfloyd.chass.utoronto.ca>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189173>
 
-On Mon, Jan 23, 2012 at 09:57:51PM +0100, Hallvard Breien Furuseth wrote:
+Ben Walton <bwalton@artsci.utoronto.ca> writes:
+
+> Excerpts from Alan Edwards's message of Thu Jan 26 13:35:05 -0500 2012:
 > 
-> 'profile-all' makes 'all' with different CFLAGS from those in
-> Makefile.
+> Hi Alan,
+> 
+> > Any one have any suggestions?
+> 
+> I think that git filter-branch is going to be your friend here.  I
+> won't prescribe the details as you should definitely read and
+> understand the docs for this one, but things like
+> --subdirectory-filter and/or --tree-filter will be of great use to
+> you, I think.
 
-How about removing the profile-all target and making it a build option
-instead? To enable it, do the usual:
+Third-party git-subtree tool can also help here, I think.
 
- echo PROFILE_BUILD=YesPlease >> config.mak
- echo prefix=... >> config.mak
- make
- su make install
-
-In the Makefile, we would have
-
-ifdef PROFILE_BUILD
- all:
-	$(MAKE) CFLAGS=... -fprofile-generate ... all-one
-	$(MAKE) CFLAGS=... -fprofile-use ... all-one
-else
- all: all-one
-endif
-
-and each previous instance of 'all' replaced with 'all-one'.
-
-Clemens
+-- 
+Jakub Narebski
