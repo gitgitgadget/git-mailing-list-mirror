@@ -1,68 +1,85 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 4/4] config: allow including config from repository blobs
-Date: Thu, 26 Jan 2012 10:25:32 +0100
-Message-ID: <4F211C0C.7060400@viscovery.net>
-References: <20120126073547.GA28689@sigill.intra.peff.net> <20120126074208.GD30474@sigill.intra.peff.net>
+From: Stephen Bash <bash@genarts.com>
+Subject: Re: [PATCH] Don't search files with an unset "grep" attribute
+Date: Thu, 26 Jan 2012 08:51:52 -0500 (EST)
+Message-ID: <1af46e50-fdc5-47b8-af36-d070d91dd954@mail>
+References: <20120125214625.GA4666@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Cc: Conrad Irwin <conrad.irwin@gmail.com>, git@vger.kernel.org,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Dov Grobgeld <dov.grobgeld@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 26 10:25:47 2012
+X-From: git-owner@vger.kernel.org Thu Jan 26 15:01:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RqLaU-0002vw-NG
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Jan 2012 10:25:47 +0100
+	id 1RqPt4-0006rM-3e
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Jan 2012 15:01:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750957Ab2AZJZi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jan 2012 04:25:38 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:25526 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750842Ab2AZJZf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jan 2012 04:25:35 -0500
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1RqLaH-0004t4-E0; Thu, 26 Jan 2012 10:25:33 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 30F2B1660F;
-	Thu, 26 Jan 2012 10:25:33 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-In-Reply-To: <20120126074208.GD30474@sigill.intra.peff.net>
-X-Spam-Score: -1.4 (-)
+	id S1752027Ab2AZOBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jan 2012 09:01:08 -0500
+Received: from hq.genarts.com ([173.9.65.1]:34218 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751645Ab2AZOBH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jan 2012 09:01:07 -0500
+X-Greylist: delayed 538 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Jan 2012 09:00:57 EST
+Received: from localhost (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 39438BE2669;
+	Thu, 26 Jan 2012 08:51:58 -0500 (EST)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id vCZGoctEDEej; Thu, 26 Jan 2012 08:51:52 -0500 (EST)
+Received: from mail.hq.genarts.com (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 35EE7BE2969;
+	Thu, 26 Jan 2012 08:51:52 -0500 (EST)
+In-Reply-To: <20120125214625.GA4666@sigill.intra.peff.net>
+X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC16 (Mac)/7.1.3_GA_3346)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189148>
 
-Am 1/26/2012 8:42, schrieb Jeff King:
-> +static int handle_ref_include(const char *ref, void *data)
-> +{
-> +	unsigned char sha1[20];
-> +	char *buf;
-> +	unsigned long size;
-> +	enum object_type type;
-> +	int ret;
-> +
-> +	if (get_sha1(ref, sha1))
-> +		return 0;
-> +	buf = read_sha1_file(sha1, &type, &size);
-> +	if (!buf)
-> +		return error("unable to read include ref '%s'", ref);
-> +	if (type != OBJ_BLOB)
-> +		return error("include ref '%s' is not a blob", ref);
-> +
-> +	ret = git_config_from_buffer(git_config_include, data, ref, buf, size);
-> +	free(buf);
-> +	return ret;
-> +}
+----- Original Message -----
+> From: "Jeff King" <peff@peff.net>
+> Sent: Wednesday, January 25, 2012 4:46:26 PM
+> Subject: Re: [PATCH] Don't search files with an unset "grep" attribute
+>
+> ... snip ...
+> 
+> So if this was all spelled:
+> 
+>   $ cat .gitattributes
+>   *.pdf filetype=pdf
+>   $ cat .git/config
+>   [filetype "pdf"]
+>           binary = true
+>           textconv = pdf2txt
+> 
+> I think it would be a no-brainer that those type attributes should
+> apply to "git grep".
 
-What happens if a ref cannot be resolved, for example due to repository
-corruption? Does git just emit an error and then carries on, or does it
-always die? Can I run at least git-fsck in such a case?
+Looking at this purely as a user, what difference/advantage would that bring versus
 
--- Hannes
+  $ cat .gitattributes
+  *.pdf binary=true textconv=pdf2text
+
+or
+
+  $ cat .gitattributes
+  [attr]pdf binary=true textconv=pdf2text
+  *.pdf pdf
+
+(admittedly I have no clue if gitattributes actually supports anything like this)
+
+I guess my point is as a user, I've gravitated to "gitattributes is about files in my repo, gitconfig is about Git's behavior" (though this is a grey area).
+
+To partially answer my own question: one advantage of putting the filetype information in a config file is it allows system- and user-wide filetype settings.  In my personal experience I've always handled that information on a per-repository basis, but that doesn't mean everyone would want to.
+
+Thanks,
+Stephen
