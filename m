@@ -1,167 +1,228 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/4] config: support parsing config data from buffers
-Date: Thu, 26 Jan 2012 02:40:31 -0500
-Message-ID: <20120126074031.GC30474@sigill.intra.peff.net>
+Subject: [PATCH 4/4] config: allow including config from repository blobs
+Date: Thu, 26 Jan 2012 02:42:08 -0500
+Message-ID: <20120126074208.GD30474@sigill.intra.peff.net>
 References: <20120126073547.GA28689@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 26 08:40:41 2012
+X-From: git-owner@vger.kernel.org Thu Jan 26 08:42:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RqJwl-0007mh-UY
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Jan 2012 08:40:40 +0100
+	id 1RqJyL-0008P7-HN
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Jan 2012 08:42:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752011Ab2AZHkf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jan 2012 02:40:35 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45006
+	id S1751614Ab2AZHmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jan 2012 02:42:12 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45008
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751963Ab2AZHkf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jan 2012 02:40:35 -0500
-Received: (qmail 24021 invoked by uid 107); 26 Jan 2012 07:47:36 -0000
+	id S1751475Ab2AZHmM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jan 2012 02:42:12 -0500
+Received: (qmail 24049 invoked by uid 107); 26 Jan 2012 07:49:13 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 Jan 2012 02:47:36 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jan 2012 02:40:31 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 Jan 2012 02:49:13 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jan 2012 02:42:08 -0500
 Content-Disposition: inline
 In-Reply-To: <20120126073547.GA28689@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189144>
 
-The only two ways to parse config data are from a file or
-from the command-line. Because the command-line format is
-totally different from the file format, they don't share any
-code. Therefore, to add new sources of file-like config data,
-we have to refactor git_parse_file to handle reading from
-something besides stdio.
+One often-requested feature is to allow projects to ship
+suggested config to people who clone. The most obvious way
+of implementing this would be to respect .gitconfig files
+within the working tree. However, this has two problems:
 
-To fix this, our config_file structure now holds either a
-"FILE *" pointer or a memory buffer. We intercept calls to
-fgetc and ungetc and either pass them along to stdio, or
-fake them with our buffer. This leaves the main parsing code
-intact and easy to read.
+  1. Because git configuration can cause the execution of
+     arbitrary code, that creates a potential security problem.
+     While you may be comfortable running "make" on a newly
+     cloned project, you at least have the opportunity to
+     inspect the downloaded contents.  But by automatically
+     respecting downloaded git configuration, you cannot
+     even safely use git to inspect those contents!
+
+  2. Configuration options tend not to be tied to a specific
+     version of the project. So if you are using "git
+     checkout" to sight-see to an older revision, you
+     probably still want to be using the most recent version
+     of the suggested config.
+
+Instead, this patch lets you include configuration directly
+from a blob in the repository (using the usual object name
+lookup rules). This avoids (2) by pointing directly to a tag
+or branch tip. It is still possible to be dangerous as in
+(1) above, but the danger can be avoided by not pointing
+directly into remote blobs (and the documentation warns of
+this and gives a safe example).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- cache.h  |    1 +
- config.c |   58 +++++++++++++++++++++++++++++++++++++++++++++++++++++-----
- 2 files changed, 54 insertions(+), 5 deletions(-)
+ Documentation/config.txt  |   41 ++++++++++++++++++++++++++++++++++++++++-
+ config.c                  |   25 ++++++++++++++++++++++++-
+ t/t1305-config-include.sh |   38 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 102 insertions(+), 2 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 21bbb0a..a298897 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1110,6 +1110,7 @@ extern int update_server_info(int);
- typedef int (*config_fn_t)(const char *, const char *, void *);
- extern int git_default_config(const char *, const char *, void *);
- extern int git_config_from_file(config_fn_t fn, const char *, void *);
-+extern int git_config_from_buffer(config_fn_t fn, void *, const char *, char *, unsigned long );
- extern void git_config_push_parameter(const char *text);
- extern int git_config_from_parameters(config_fn_t fn, void *data);
- extern int git_config(config_fn_t fn, void *);
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index e55dae1..38e83df 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -93,7 +93,14 @@ included file is expanded immediately, as if its contents had been
+ found at the location of the include directive. If the value of the
+ `include.path` variable is a relative path, the path is considered to be
+ relative to the configuration file in which the include directive was
+-found. See below for examples.
++found.
++
++You can also include configuration from a blob stored in your repository
++by setting the special `include.ref` variable to the name of an object
++containing your configuration data (in the same format as a regular
++config file).
++
++See below for examples.
+ 
+ Example
+ ~~~~~~~
+@@ -120,6 +127,38 @@ Example
+ 	[include]
+ 		path = /path/to/foo.inc ; include by absolute path
+ 		path = foo ; expand "foo" relative to the current file
++		ref = config:.gitconfig ; look on "config" branch
++		ref = origin/master:.gitconfig ; this is unsafe! see below
++
++
++Security Considerations
++~~~~~~~~~~~~~~~~~~~~~~~
++
++Because git configuration may cause git to execute arbitrary shell
++commands, it is important to verify any configuration you receive over
++the network. In particular, it is not a good idea to point `include.ref`
++directly at a remote tracking branch like `origin/master:shared-config`.
++After a fetch, you have no way of inspecting the shared-config you have
++just received without running git (and thus respecting the downloaded
++config). Instead, you can create a local tag representing the last
++verified version of the config, and only update the tag after inspecting
++any new content.
++
++For example:
++
++	# initially, look at their suggested config
++	git show origin/master:shared-config
++
++	# if it looks good to you, point a local ref at it
++	git tag config origin/master
++	git config include.ref config:shared-config
++
++	# much later, fetch any changes and examine them
++	git fetch origin
++	git diff config origin/master -- shared-config
++
++	# If the changes look OK, update your local version
++	git tag -f config origin/master
+ 
+ Variables
+ ~~~~~~~~~
 diff --git a/config.c b/config.c
-index b82f749..49a3d1a 100644
+index 49a3d1a..c41fb3b 100644
 --- a/config.c
 +++ b/config.c
-@@ -18,6 +18,9 @@ typedef struct config_file {
- 	const char *name;
- 	int linenr;
- 	int eof;
-+	char *buf;
-+	unsigned long size;
-+	unsigned long cur;
- 	struct strbuf value;
- 	char var[MAXNAME];
- } config_file;
-@@ -101,19 +104,45 @@ int git_config_from_parameters(config_fn_t fn, void *data)
- 	return nr > 0;
- }
- 
-+static int get_one_char(void)
-+{
-+	if (cf->f)
-+		return fgetc(cf->f);
-+	else if (cf->buf) {
-+		if (cf->cur < cf->size)
-+			return cf->buf[cf->cur++];
-+		return EOF;
-+	}
-+
-+	die("BUG: attempt to read from NULL config_file");
-+}
-+
-+static int unget_one_char(int c)
-+{
-+	if (cf->f)
-+		ungetc(c, cf->f);
-+	else if (cf->buf) {
-+		if (cf->cur == 0)
-+			return EOF;
-+		cf->buf[--cf->cur] = c;
-+		return c;
-+	}
-+
-+	die("BUG: attempt to ungetc NULL config_file");
-+}
-+
- static int get_next_char(void)
- {
- 	int c;
--	FILE *f;
- 
- 	c = '\n';
--	if (cf && ((f = cf->f) != NULL)) {
--		c = fgetc(f);
-+	if (cf && (cf->f || cf->buf)) {
-+		c = get_one_char();
- 		if (c == '\r') {
- 			/* DOS like systems */
--			c = fgetc(f);
-+			c = get_one_char();
- 			if (c != '\n') {
--				ungetc(c, f);
-+				unget_one_char(c);
- 				c = '\r';
- 			}
- 		}
-@@ -833,6 +862,9 @@ static void config_file_push(config_file *top, const char *name)
- 	top->name = name;
- 	top->linenr = 1;
- 	top->eof = 0;
-+	top->buf = NULL;
-+	top->size = 0;
-+	top->cur = 0;
- 	strbuf_init(&top->value, 1024);
- 	cf = top;
- }
-@@ -863,6 +895,22 @@ int git_config_from_file(config_fn_t fn, const char *filename, void *data)
+@@ -941,7 +941,7 @@ static int handle_path_include(const char *path, void *data)
+ 	 */
+ 	if (!is_absolute_path(path)) {
+ 		char *slash;
+-		if (!cf)
++		if (!cf || !cf->f)
+ 			return error("relative config includes must come from files");
+ 		strbuf_addstr(&buf, absolute_path(cf->name));
+ 		slash = find_last_dir_sep(buf.buf);
+@@ -958,6 +958,27 @@ static int handle_path_include(const char *path, void *data)
  	return ret;
  }
  
-+int git_config_from_buffer(config_fn_t fn, void *data, const char *name,
-+			   char *buf, unsigned long size)
++static int handle_ref_include(const char *ref, void *data)
 +{
++	unsigned char sha1[20];
++	char *buf;
++	unsigned long size;
++	enum object_type type;
 +	int ret;
-+	config_file top;
 +
-+	config_file_push(&top, name);
-+	top.buf = buf;
-+	top.size = size;
++	if (get_sha1(ref, sha1))
++		return 0;
++	buf = read_sha1_file(sha1, &type, &size);
++	if (!buf)
++		return error("unable to read include ref '%s'", ref);
++	if (type != OBJ_BLOB)
++		return error("include ref '%s' is not a blob", ref);
 +
-+	ret = git_parse_file(fn, data);
-+
-+	config_file_pop(&top);
++	ret = git_config_from_buffer(git_config_include, data, ref, buf, size);
++	free(buf);
 +	return ret;
 +}
 +
- const char *git_etc_gitconfig(void)
+ int git_config_include(const char *name, const char *value, void *vdata)
  {
- 	static const char *system_wide;
+ 	const struct git_config_include_data *data = vdata;
+@@ -978,6 +999,8 @@ int git_config_include(const char *name, const char *value, void *vdata)
+ 
+ 	if (!strcmp(type, "path"))
+ 		ret = handle_path_include(value, vdata);
++	else if (!strcmp(type, "ref"))
++		ret = handle_ref_include(value, vdata);
+ 
+ 	return ret;
+ }
+diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
+index 4db3091..31d3b9b 100755
+--- a/t/t1305-config-include.sh
++++ b/t/t1305-config-include.sh
+@@ -95,4 +95,42 @@ test_expect_success 'relative includes from command line fail' '
+ 	test_must_fail git -c include.path=one config test.one
+ '
+ 
++test_expect_success 'include from ref' '
++	echo "[test]one = 1" >one &&
++	git add one &&
++	git commit -m one &&
++	rm one &&
++	echo "[include]ref = HEAD:one" >base &&
++	echo 1 >expect &&
++	git config -f base test.one >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'relative file include from ref fails' '
++	echo "[test]two = 2" >two &&
++	echo "[include]path = two" >one &&
++	git add one &&
++	git commit -m one &&
++	echo "[include]ref = HEAD:one" >base &&
++	test_must_fail git config -f base test.two
++'
++
++test_expect_success 'non-existent include refs are ignored' '
++	cat >base <<-\EOF &&
++	[include]ref = my-missing-config-branch:foo.cfg
++	[test]value = yes
++	EOF
++	echo yes >expect &&
++	git config -f base test.value >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'non-blob include refs fail' '
++	cat >base <<-\EOF &&
++	[include]ref = HEAD
++	[test]value = yes
++	EOF
++	test_must_fail git config -f base test.value
++'
++
+ test_done
 -- 
 1.7.9.rc2.293.gaae2
