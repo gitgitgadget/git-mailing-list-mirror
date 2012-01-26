@@ -1,66 +1,56 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH v3 0/3] git-p4: Search for parent commit on branch
- creation
-Date: Wed, 25 Jan 2012 23:21:49 -0500
-Message-ID: <20120126042149.GA24269@padd.com>
-References: <1327535304-11332-1-git-send-email-vitor.hda@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [RFC/PATCH 0/4] config include directives
+Date: Thu, 26 Jan 2012 02:35:47 -0500
+Message-ID: <20120126073547.GA28689@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Luke Diamand <luke@diamand.org>
-To: Vitor Antunes <vitor.hda@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 26 05:21:59 2012
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 26 08:36:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RqGqU-0006I3-0S
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Jan 2012 05:21:58 +0100
+	id 1RqJsL-00061V-2v
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Jan 2012 08:36:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751829Ab2AZEVx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jan 2012 23:21:53 -0500
-Received: from honk.padd.com ([74.3.171.149]:45644 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751682Ab2AZEVw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jan 2012 23:21:52 -0500
-Received: from arf.padd.com (unknown [50.55.145.32])
-	by honk.padd.com (Postfix) with ESMTPSA id 137B7E8B;
-	Wed, 25 Jan 2012 20:21:52 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id DCC1931453; Wed, 25 Jan 2012 23:21:49 -0500 (EST)
+	id S1751524Ab2AZHfy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jan 2012 02:35:54 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44997
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751242Ab2AZHfx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jan 2012 02:35:53 -0500
+Received: (qmail 23877 invoked by uid 107); 26 Jan 2012 07:42:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 Jan 2012 02:42:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jan 2012 02:35:47 -0500
 Content-Disposition: inline
-In-Reply-To: <1327535304-11332-1-git-send-email-vitor.hda@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189140>
 
-vitor.hda@gmail.com wrote on Wed, 25 Jan 2012 23:48 +0000:
-> I think this will, hopefully, be the final version of this series of
-> patches. This version includes the following changes since v2:
-> 
->  - Move search algorithm into its own function.
->  - Use lists instead of strings on shell commands.
->  - Some small (almost cosmetic) updates to test cases.
+This series provides a way for config files to include other config
+files in two ways:
 
-Whole series
+  1. From other files in the filesystem. This is implemented by patch 1
+     below, and is hopefully straightforward and uncontroversial.  See
+     that patch for more rationale.
 
-Acked-by: Pete Wyckoff <pw@padd.com>
+  2. From blobs in the repo. This is implemented by patch 4, with
+     patches 2 and 3 providing the necessary refactoring. This
+     is one way of implementing the often asked-for "respect shared
+     config inside the repo" feature, but attempts to mitigate some of
+     the security concerns. The interface for using it safely is a bit
+     raw, but I think it's a sane building block, and somebody could
+     write a fancier shared-config updater on top of it if they wanted
+     to.
 
-Thanks for making all the changes.
+  [1/4]: config: add include directive
+  [2/4]: config: factor out config file stack management
+  [3/4]: config: support parsing config data from buffers
+  [4/4]: config: allow including config from repository blobs
 
-> Pete Wyckoff (1):
->   git-p4: Change p4 command invocation
-> 
-> Vitor Antunes (2):
->   git-p4: Search for parent commit on branch creation
->   git-p4: Add test case for complex branch import
-> 
->  contrib/fast-import/git-p4 |   48 +++++++++++++++++++++-
->  t/t9801-git-p4-branch.sh   |   94 ++++++++++++++++++++++++++++++++++++++++---
->  2 files changed, 133 insertions(+), 9 deletions(-)
-> 
-> -- 
-> 1.7.8.3
-> 
+-Peff
