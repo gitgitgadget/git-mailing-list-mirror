@@ -1,228 +1,223 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 4/4] config: allow including config from repository blobs
-Date: Thu, 26 Jan 2012 02:42:08 -0500
-Message-ID: <20120126074208.GD30474@sigill.intra.peff.net>
-References: <20120126073547.GA28689@sigill.intra.peff.net>
+From: Christine Bauers <c.bauers@gmx.de>
+Subject: Re: Git svn migration does not work because fatal git checkout updating
+ paths is incompatible with switching branches
+Date: Thu, 26 Jan 2012 09:50:35 +0100
+Message-ID: <4F2113DB.5030401@gmx.de>
+References: <4F20442A.1080005@gmx.de> <1327518563.31804.82.camel@centaur.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 26 08:42:18 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?Q2FybG9zIE1hcnTDrW4gTmlldG8=?= <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Thu Jan 26 09:50:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RqJyL-0008P7-HN
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Jan 2012 08:42:18 +0100
+	id 1RqL2Z-0003DD-S1
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Jan 2012 09:50:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751614Ab2AZHmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jan 2012 02:42:12 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45008
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751475Ab2AZHmM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jan 2012 02:42:12 -0500
-Received: (qmail 24049 invoked by uid 107); 26 Jan 2012 07:49:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 Jan 2012 02:49:13 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jan 2012 02:42:08 -0500
-Content-Disposition: inline
-In-Reply-To: <20120126073547.GA28689@sigill.intra.peff.net>
+	id S1751553Ab2AZIui convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Jan 2012 03:50:38 -0500
+Received: from mailout-de.gmx.net ([213.165.64.22]:50456 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1751154Ab2AZIuh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jan 2012 03:50:37 -0500
+Received: (qmail invoked by alias); 26 Jan 2012 08:50:36 -0000
+Received: from p4FFE0ECE.dip.t-dialin.net (EHLO [192.168.1.39]) [79.254.14.206]
+  by mail.gmx.net (mp006) with SMTP; 26 Jan 2012 09:50:36 +0100
+X-Authenticated: #35902447
+X-Provags-ID: V01U2FsdGVkX19oXq5Ua8JolnLD821gr9bDX1gNMFb/FeTLXNcgXO
+	+7po9GBhD8C3Ui
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
+In-Reply-To: <1327518563.31804.82.camel@centaur.lab.cmartin.tk>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189145>
 
-One often-requested feature is to allow projects to ship
-suggested config to people who clone. The most obvious way
-of implementing this would be to respect .gitconfig files
-within the working tree. However, this has two problems:
+Am 25.01.2012 20:09, schrieb Carlos Mart=C3=ADn Nieto:
+> On Wed, 2012-01-25 at 19:04 +0100, Christine Bauers wrote:
+>> Hi there,
+>>
+>> I=C2=B4m trying to migrate a repository from svn to git which branch=
+es and
+>> tags with the following migration script:
+>>
+>> git svn clone --no-metadata --stdlayout --A ../users.txt
+>> svn://host/svn/project/subproject subproject
+>>
+>> cd subproject
+>> git config svn.authorsfile ../../users.txt
+>> git svn fetch
+>>
+>> git checkout -b branch1 remotes/branch1
+>> git checkout -b branch2 remotes/branch2
+>> git checkout -b branch3 remotes/branch3
+>>
+>> git checkout -b src_v1 remotes/tags/src
+>> git checkout master
+>> git tag src src_v1
+>> git branch -D src_v1
+>>
+>> git checkout -b WebContent_v1 remotes/tags/WebContent
+>> git checkout master
+>> git tag WebContent WebContent_v1
+>> git branch -D WebContent_v1
+>>
+>> and get the follwoing errors:
+>>
+>> W: Ignoring error from SVN, path probably does not exist: (160013):
+>> Filesystem has no item: Datei nicht gefunden: Revision 8966, Pfad
+>> =C3=82=C2=BBsubproject=C2=AB
+>> W: Do not be alarmed at the above message git-svn is just searching
+>> aggressively for old history.
+>> This may take a while on large repositories
+>> fatal: git checkout: updating paths is incompatible with switching b=
+ranches.
+>> Did you intend to checkout 'remotes/branch1' which can not be resolv=
+ed
+>> as commit?
+>> fatal: git checkout: updating paths is incompatible with switching b=
+ranches.
+>> Did you intend to checkout 'remotes/branch2 which can not be resolve=
+d as
+>> commit?
+>> fatal: git checkout: updating paths is incompatible with switching b=
+ranches.
+>> Did you intend to checkout 'remotes/branch3' which can not be resolv=
+ed
+>> as commit?
+>> fatal: git checkout: updating paths is incompatible with switching b=
+ranches.
+>> Did you intend to checkout 'remotes/tags/src' which can not be resol=
+ved
+>> as commit?
+>> error: pathspec 'master' did not match any file(s) known to git.
+>> fatal: Failed to resolve 'src_v1' as a valid ref.
+>> error: branch 'src_v1' not found.
+>> fatal: git checkout: updating paths is incompatible with switching b=
+ranches.
+>> Did you intend to checkout 'remotes/tags/WebContent' which can not b=
+e
+>> resolved as commit?
+>> error: pathspec 'master' did not match any file(s) known to git.
+>> fatal: Failed to resolve 'WebContent_v1' as a valid ref.
+>> error: branch 'WebContent_v1' not found.
+>>
+>> How do I solve this problem?
+> First try to figure out where the problem happens. It could be that
+> git-svn isn't recognising the branches properly, or that the layout
+> isn't what it expects or any number of things.
+>
+> What layout does the repo have? Does it correspond to what git-svn is
+> expecting? All those error messages come from the fact that you're
+> telling git some starting points that it can't find. Make sure those
+> exist and they have the name you're giving. What does `git branch -a`
+> say? You're presumably not giving us the real names, so we can't tell=
+ if
+> there are problems there.
+>
+> If you're looking to migrate completely, something like
+> svn-dump-fast-export ( https://github.com/barrbrain/svn-dump-fast-exp=
+ort
+> ) might get you there better.
+>
+>     cmn
 
-  1. Because git configuration can cause the execution of
-     arbitrary code, that creates a potential security problem.
-     While you may be comfortable running "make" on a newly
-     cloned project, you at least have the opportunity to
-     inspect the downloaded contents.  But by automatically
-     respecting downloaded git configuration, you cannot
-     even safely use git to inspect those contents!
 
-  2. Configuration options tend not to be tied to a specific
-     version of the project. So if you are using "git
-     checkout" to sight-see to an older revision, you
-     probably still want to be using the most recent version
-     of the suggested config.
+Thanks for your answer. I would say the problem happens while cloning t=
+he project, because git branch -a and git branch -r says nothing. The q=
+uestion is why aren=C2=B4t there any branches? Here is the structure of=
+ the project:
 
-Instead, this patch lets you include configuration directly
-from a blob in the repository (using the usual object name
-lookup rules). This avoids (2) by pointing directly to a tag
-or branch tip. It is still possible to be dangerous as in
-(1) above, but the danger can be avoided by not pointing
-directly into remote blobs (and the documentation warns of
-this and gives a safe example).
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/config.txt  |   41 ++++++++++++++++++++++++++++++++++++++++-
- config.c                  |   25 ++++++++++++++++++++++++-
- t/t1305-config-include.sh |   38 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 102 insertions(+), 2 deletions(-)
+marketplace
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e55dae1..38e83df 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -93,7 +93,14 @@ included file is expanded immediately, as if its contents had been
- found at the location of the include directive. If the value of the
- `include.path` variable is a relative path, the path is considered to be
- relative to the configuration file in which the include directive was
--found. See below for examples.
-+found.
-+
-+You can also include configuration from a blob stored in your repository
-+by setting the special `include.ref` variable to the name of an object
-+containing your configuration data (in the same format as a regular
-+config file).
-+
-+See below for examples.
- 
- Example
- ~~~~~~~
-@@ -120,6 +127,38 @@ Example
- 	[include]
- 		path = /path/to/foo.inc ; include by absolute path
- 		path = foo ; expand "foo" relative to the current file
-+		ref = config:.gitconfig ; look on "config" branch
-+		ref = origin/master:.gitconfig ; this is unsafe! see below
-+
-+
-+Security Considerations
-+~~~~~~~~~~~~~~~~~~~~~~~
-+
-+Because git configuration may cause git to execute arbitrary shell
-+commands, it is important to verify any configuration you receive over
-+the network. In particular, it is not a good idea to point `include.ref`
-+directly at a remote tracking branch like `origin/master:shared-config`.
-+After a fetch, you have no way of inspecting the shared-config you have
-+just received without running git (and thus respecting the downloaded
-+config). Instead, you can create a local tag representing the last
-+verified version of the config, and only update the tag after inspecting
-+any new content.
-+
-+For example:
-+
-+	# initially, look at their suggested config
-+	git show origin/master:shared-config
-+
-+	# if it looks good to you, point a local ref at it
-+	git tag config origin/master
-+	git config include.ref config:shared-config
-+
-+	# much later, fetch any changes and examine them
-+	git fetch origin
-+	git diff config origin/master -- shared-config
-+
-+	# If the changes look OK, update your local version
-+	git tag -f config origin/master
- 
- Variables
- ~~~~~~~~~
-diff --git a/config.c b/config.c
-index 49a3d1a..c41fb3b 100644
---- a/config.c
-+++ b/config.c
-@@ -941,7 +941,7 @@ static int handle_path_include(const char *path, void *data)
- 	 */
- 	if (!is_absolute_path(path)) {
- 		char *slash;
--		if (!cf)
-+		if (!cf || !cf->f)
- 			return error("relative config includes must come from files");
- 		strbuf_addstr(&buf, absolute_path(cf->name));
- 		slash = find_last_dir_sep(buf.buf);
-@@ -958,6 +958,27 @@ static int handle_path_include(const char *path, void *data)
- 	return ret;
- }
- 
-+static int handle_ref_include(const char *ref, void *data)
-+{
-+	unsigned char sha1[20];
-+	char *buf;
-+	unsigned long size;
-+	enum object_type type;
-+	int ret;
-+
-+	if (get_sha1(ref, sha1))
-+		return 0;
-+	buf = read_sha1_file(sha1, &type, &size);
-+	if (!buf)
-+		return error("unable to read include ref '%s'", ref);
-+	if (type != OBJ_BLOB)
-+		return error("include ref '%s' is not a blob", ref);
-+
-+	ret = git_config_from_buffer(git_config_include, data, ref, buf, size);
-+	free(buf);
-+	return ret;
-+}
-+
- int git_config_include(const char *name, const char *value, void *vdata)
- {
- 	const struct git_config_include_data *data = vdata;
-@@ -978,6 +999,8 @@ int git_config_include(const char *name, const char *value, void *vdata)
- 
- 	if (!strcmp(type, "path"))
- 		ret = handle_path_include(value, vdata);
-+	else if (!strcmp(type, "ref"))
-+		ret = handle_ref_include(value, vdata);
- 
- 	return ret;
- }
-diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
-index 4db3091..31d3b9b 100755
---- a/t/t1305-config-include.sh
-+++ b/t/t1305-config-include.sh
-@@ -95,4 +95,42 @@ test_expect_success 'relative includes from command line fail' '
- 	test_must_fail git -c include.path=one config test.one
- '
- 
-+test_expect_success 'include from ref' '
-+	echo "[test]one = 1" >one &&
-+	git add one &&
-+	git commit -m one &&
-+	rm one &&
-+	echo "[include]ref = HEAD:one" >base &&
-+	echo 1 >expect &&
-+	git config -f base test.one >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'relative file include from ref fails' '
-+	echo "[test]two = 2" >two &&
-+	echo "[include]path = two" >one &&
-+	git add one &&
-+	git commit -m one &&
-+	echo "[include]ref = HEAD:one" >base &&
-+	test_must_fail git config -f base test.two
-+'
-+
-+test_expect_success 'non-existent include refs are ignored' '
-+	cat >base <<-\EOF &&
-+	[include]ref = my-missing-config-branch:foo.cfg
-+	[test]value = yes
-+	EOF
-+	echo yes >expect &&
-+	git config -f base test.value >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'non-blob include refs fail' '
-+	cat >base <<-\EOF &&
-+	[include]ref = HEAD
-+	[test]value = yes
-+	EOF
-+	test_must_fail git config -f base test.value
-+'
-+
- test_done
--- 
-1.7.9.rc2.293.gaae2
+     braches
+
+         lyth_dev
+
+         meinbestand_suche
+
+         umkreis_suche
+
+     tags
+
+         src
+
+         WebContent
+
+     trunk
+
+         src
+
+         WebContent
+
+     trunk_112233
+
+         src
+
+         WebContent
+
+And here again the script:
+
+
+git svn clone --no-metadata --stdlayout --A ../users.txt svn://host/svn=
+/projects/marketplace marketplace
+
+cd marketplace
+
+git config svn.authorsfile ../../users.txt
+
+git svn fetch
+
+#Checkout Branches
+
+git checkout -b lyth_dev remotes/lyth_dev
+
+git checkout -b meinbestand_suche remotes/meinbestand_suche
+
+git checkout -b umkreis_suche remotes/umkreis_suche
+
+
+#Checkout der tags
+
+git checkout -b src_v1 remotes/tags/src
+
+git checkout master
+
+git tag src src_v1
+
+git branch -D src_v1
+
+git checkout -b WebContent_v1 remotes/tags/WebContent
+
+git checkout master
+
+git tag WebContent WebContent_v1
+
+git branch -D WebContent_v1
+
+Is there something wrong with this script? Or does the errors maybe occ=
+urs because there is a trunk_112233. The log file says the following:
+
+Initialized empty Git repository in c:/project/marketplace/.git/
+Checked through r8445
+Checked through r8545
+Checked through r8645
+Checked through r8745
+Checked through r8845
+Checked through r8945
+Checked through r8968
+Checked through r8968
+
+And that=C2=B4s all. It says nothing about references.
+
+Do you have any ideas?
+
+Thanks
