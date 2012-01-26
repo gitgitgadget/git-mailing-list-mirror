@@ -1,67 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] docs: minor grammar fixes for v1.7.9 release notes
-Date: Thu, 26 Jan 2012 14:27:21 -0500
-Message-ID: <20120126192721.GA10699@sigill.intra.peff.net>
-References: <20120125222002.GA6309@sigill.intra.peff.net>
- <7vwr8e2s3n.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/5] run-command: Error out if interpreter not found
+Date: Thu, 26 Jan 2012 11:32:42 -0800
+Message-ID: <7vr4ym2rad.fsf@alter.siamese.dyndns.org>
+References: <1327444346-6243-1-git-send-email-fransklaver@gmail.com>
+ <1327444346-6243-6-git-send-email-fransklaver@gmail.com>
+ <20120124232421.GH8222@burratino> <op.v8moybu10aolir@keputer>
+ <4F205028.4060606@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 26 20:27:32 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Frans Klaver <fransklaver@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	"Junio C. Hamano" <gitster@pobox.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Thu Jan 26 20:32:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RqUyp-0007iU-9b
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Jan 2012 20:27:31 +0100
+	id 1RqV3y-0001fl-PU
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Jan 2012 20:32:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752291Ab2AZT10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jan 2012 14:27:26 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45919
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751447Ab2AZT1Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jan 2012 14:27:25 -0500
-Received: (qmail 28867 invoked by uid 107); 26 Jan 2012 19:34:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 Jan 2012 14:34:26 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jan 2012 14:27:21 -0500
-Content-Disposition: inline
-In-Reply-To: <7vwr8e2s3n.fsf@alter.siamese.dyndns.org>
+	id S1751746Ab2AZTcq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jan 2012 14:32:46 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44424 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751382Ab2AZTcp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jan 2012 14:32:45 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BBBAC501B;
+	Thu, 26 Jan 2012 14:32:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=IShniLdyoZwL3Wmp2mL2lkRtVFk=; b=FyP3R/
+	/esjFzSbV3z7TLG1AnTDdVOsxPxGIP5cvl4uI/WTvvScL0oil7CpSQC7w/pE74lo
+	j+ztwQkGleIWKDZeanE+tBzA0YaWnAV3qwdMBFJW5KXkPWzOj8p5WHfvg22i1yiC
+	zVR3ZCsGc35+u4x45iH8+0Hv06SPlcloHn/Ko=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SUjhhqNPTp1QuTUIR7Fsa+f4TzCeKaUf
+	E8688GUoTdqbqFnkCiy4EU7dybNlqmC8htIx9xEbYtq3RYYm0ln8EnO8U01F2Wei
+	z9JoOMoIOCmylMYshj9A6A0hMTeMbMiLJ51m3kxKjS5s5k3fIbhD9jqPoNPOFFR1
+	egrwpjnnhXs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B1D39501A;
+	Thu, 26 Jan 2012 14:32:44 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2FFFD5019; Thu, 26 Jan 2012
+ 14:32:44 -0500 (EST)
+In-Reply-To: <4F205028.4060606@kdbg.org> (Johannes Sixt's message of "Wed, 25
+ Jan 2012 19:55:36 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 84E825DE-4854-11E1-8EC3-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189162>
 
-On Thu, Jan 26, 2012 at 11:15:08AM -0800, Junio C Hamano wrote:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> > ... (I notice you mostly include features and not bug-fixes, which I
-> > assume is to keep the list to a readable length).
-> 
-> Actually my intention regarding fixes are:
-> 
->  - never mention follow-up fixes to new topics merged since v1.7.8 at all;
-> 
->  - omit mentioning trivial fixes that not many people would be bitten by
->    and actually be hurt in real life (i.e. typo in an error message); and
-> 
->  - make sure as many fixes are covered in "Fixes since v1.7.8" section.
-> 
-> So "keep the list short" is only one-third of the motivation.
+> No thanks. IMHO, this is already too much code for too little gain.
 
-That makes sense.
-
-I was specifically thinking of 02f7914 (remote-curl: don't pass back
-fake refs), because "git push --mirror" failing is an often-reported bug
-for github (and the solution is to upgrade your git client). But looking
-again, I see that the fix was actually in v1.7.8.2, so it is included by
-the "...and all of the fixes in the maintenance releases" text.
-
-In general, it seems like most of our fixes go onto the maintenance
-track, so the "fixes" section of a major release ends up being empty.
-Which I think is a good thing.
-
--Peff
+Thanks for bringing a bit of sanity. You have already said it "In which
+way is git different from other tools that execvp other programs?" earlier
+(http://thread.gmane.org/gmane.comp.version-control.git/171755/focus=171848)
