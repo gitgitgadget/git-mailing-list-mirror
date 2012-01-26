@@ -1,85 +1,49 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Re: [PATCH] Don't search files with an unset "grep" attribute
-Date: Thu, 26 Jan 2012 08:51:52 -0500 (EST)
-Message-ID: <1af46e50-fdc5-47b8-af36-d070d91dd954@mail>
-References: <20120125214625.GA4666@sigill.intra.peff.net>
+From: freefly <free.fly@live.com>
+Subject: Re: git version not changed after installing new version
+Date: Thu, 26 Jan 2012 14:33:31 +0000 (UTC)
+Message-ID: <loom.20120126T144828-400@post.gmane.org>
+References: <loom.20120125T173801-500@post.gmane.org>    <loom.20120125T181639-351@post.gmane.org>   <1327517841.31804.75.camel@centaur.lab.cmartin.tk>   <loom.20120125T202642-92@post.gmane.org>  <1327521489.31804.85.camel@centaur.lab.cmartin.tk>  <loom.20120125T211638-609@post.gmane.org> <1327530594.31804.87.camel@centaur.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Conrad Irwin <conrad.irwin@gmail.com>, git@vger.kernel.org,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Dov Grobgeld <dov.grobgeld@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 26 15:01:15 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 26 15:33:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RqPt4-0006rM-3e
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Jan 2012 15:01:14 +0100
+	id 1RqQOj-0004q8-1l
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Jan 2012 15:33:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752027Ab2AZOBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jan 2012 09:01:08 -0500
-Received: from hq.genarts.com ([173.9.65.1]:34218 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751645Ab2AZOBH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jan 2012 09:01:07 -0500
-X-Greylist: delayed 538 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Jan 2012 09:00:57 EST
-Received: from localhost (localhost [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 39438BE2669;
-	Thu, 26 Jan 2012 08:51:58 -0500 (EST)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id vCZGoctEDEej; Thu, 26 Jan 2012 08:51:52 -0500 (EST)
-Received: from mail.hq.genarts.com (localhost [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 35EE7BE2969;
-	Thu, 26 Jan 2012 08:51:52 -0500 (EST)
-In-Reply-To: <20120125214625.GA4666@sigill.intra.peff.net>
-X-Mailer: Zimbra 7.1.3_GA_3346 (ZimbraWebClient - GC16 (Mac)/7.1.3_GA_3346)
+	id S1751470Ab2AZOdw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jan 2012 09:33:52 -0500
+Received: from lo.gmane.org ([80.91.229.12]:35394 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751366Ab2AZOdv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jan 2012 09:33:51 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RqQOZ-0004lK-MC
+	for git@vger.kernel.org; Thu, 26 Jan 2012 15:33:47 +0100
+Received: from 0x5da1596e.cpe.ge-0-2-0-1104.fsnqu1.customer.tele.dk ([93.161.89.110])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 26 Jan 2012 15:33:47 +0100
+Received: from free.fly by 0x5da1596e.cpe.ge-0-2-0-1104.fsnqu1.customer.tele.dk with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 26 Jan 2012 15:33:47 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 93.161.89.110 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/534.52.7 (KHTML, like Gecko) Version/5.1.2 Safari/534.52.7)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189149>
 
------ Original Message -----
-> From: "Jeff King" <peff@peff.net>
-> Sent: Wednesday, January 25, 2012 4:46:26 PM
-> Subject: Re: [PATCH] Don't search files with an unset "grep" attribute
->
-> ... snip ...
-> 
-> So if this was all spelled:
-> 
->   $ cat .gitattributes
->   *.pdf filetype=pdf
->   $ cat .git/config
->   [filetype "pdf"]
->           binary = true
->           textconv = pdf2txt
-> 
-> I think it would be a no-brainer that those type attributes should
-> apply to "git grep".
-
-Looking at this purely as a user, what difference/advantage would that bring versus
-
-  $ cat .gitattributes
-  *.pdf binary=true textconv=pdf2text
-
-or
-
-  $ cat .gitattributes
-  [attr]pdf binary=true textconv=pdf2text
-  *.pdf pdf
-
-(admittedly I have no clue if gitattributes actually supports anything like this)
-
-I guess my point is as a user, I've gravitated to "gitattributes is about files in my repo, gitconfig is about Git's behavior" (though this is a grey area).
-
-To partially answer my own question: one advantage of putting the filetype information in a config file is it allows system- and user-wide filetype settings.  In my personal experience I've always handled that information on a per-repository basis, but that doesn't mean everyone would want to.
-
-Thanks,
-Stephen
+ 
+Thanks ... 
+I really appreciate your time.  
