@@ -1,71 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: make install rewrites source files
-Date: Thu, 26 Jan 2012 16:49:44 -0800
-Message-ID: <7vobtq0y1j.fsf@alter.siamese.dyndns.org>
-References: <hbf.20120123bz2f@bombur.uio.no>
- <7vhazm89bo.fsf@alter.siamese.dyndns.org> <hbf.20120123j61g@bombur.uio.no>
- <20120126225231.GA14753@ecki>
+From: David Barr <davidbarr@google.com>
+Subject: Re: [PULL] svn-fe updates for master or next
+Date: Fri, 27 Jan 2012 12:03:58 +1100
+Message-ID: <CAFfmPPN-g+Lk2n9tzXe=CfyK8OZ7nGu4NwX0cXjtxS0W7SwPHA@mail.gmail.com>
+References: <CAFfmPPMH2643JMMZdVbOQJL7DB-DiRYQS8x0TqEaSbGmhMdBNw@mail.gmail.com>
+	<CALkWK0kMmDMZ4wiMSmOfwBLzd+xBEA+WKsviu9FVcvj9eZEahg@mail.gmail.com>
+	<CAFfmPPOZfDdH+GF91Dxyy5yfX8TmGDmsbpHz=CVLcBY0c-pCsQ@mail.gmail.com>
+	<CALkWK0nsO2EBLUrO_iWAdGYpULt=oug4yPDnczX9c44hzdwzqg@mail.gmail.com>
+	<alpine.DEB.2.02.1201221310540.28747@asgard.lang.hm>
+	<3BC64515-C4C0-4D32-97B0-8FFD14BB903C@silverinsanity.com>
+	<CAP2yMaLHK2md=MHFmV--R6rmr4q3XuZxqsb2fUszMhssx3GDoA@mail.gmail.com>
+	<CAFfmPPPvpbsYz9cjN6OspivCN3dbuPGOU7fyaVdnic3D4V855w@mail.gmail.com>
+	<20120127001041.GB6158@burratino>
+	<20120127003258.GA6946@burratino>
+	<20120127004605.GA31538@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>,
-	git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Fri Jan 27 01:49:53 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Scott Chacon <schacon@gmail.com>,
+	Brian Gernhardt <benji@silverinsanity.com>, david@lang.hm,
+	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
+	Dmitry Ivankov <divanorama@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 27 02:04:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rqa0m-0000WQ-A4
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 01:49:52 +0100
+	id 1RqaEX-0004ck-QI
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 02:04:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754510Ab2A0Ats (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jan 2012 19:49:48 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54368 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751864Ab2A0Atr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jan 2012 19:49:47 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D6729625C;
-	Thu, 26 Jan 2012 19:49:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wUxrfyKPA4UNw+m5uBbF9fTNWPg=; b=BD8AAe
-	NqF/WM3wj0lzK1mg2rW7p9nKyHxqF2W4QQ22Wep96CXRrMSPjttax0h/+73zXdRe
-	LZ2VCDcD+F4vx4IsWlpxgkup44PUHnEuBXZvE8LL5sBbukaWqfnuX4cyhcwc9QDZ
-	eot5NWwDV3zxqonny73d2CYFfEAFlJeglw9Fo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZCSzYbUKaF1rilGkFxsil+tLyS9OH56Y
-	BvXRVb2t4EH8wumRBc3Ye9iRYPqbXLrUz3dz2OaE9imCRXsKD1spQs0xWMyJ2j/d
-	32Zf7wEzlymjk5aVpXQBOwCjyuLbJLEfzn//lqM2BWGfdtkqANXtBWn2F+Ckp7/q
-	9p3An13JvJM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC911625B;
-	Thu, 26 Jan 2012 19:49:46 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 478646257; Thu, 26 Jan 2012
- 19:49:46 -0500 (EST)
-In-Reply-To: <20120126225231.GA14753@ecki> (Clemens Buchacher's message of
- "Thu, 26 Jan 2012 23:52:31 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CEF585DC-4880-11E1-B492-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752773Ab2A0BEA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Jan 2012 20:04:00 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:64964 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751377Ab2A0BD7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Jan 2012 20:03:59 -0500
+Received: by ggnb1 with SMTP id b1so593394ggn.19
+        for <git@vger.kernel.org>; Thu, 26 Jan 2012 17:03:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:x-system-of-record:content-type:content-transfer-encoding;
+        bh=eWdKeGaXjpdmm7XZYo4sf1kjLS+BE175XsL7uL4DFgI=;
+        b=wCR77ajyPq9jA1UuwbWCwPDQGtokIGuQZyebkR2YFCE2ChVsS94DGcJLJq+JqGEYxA
+         33HVCpQ5SyfNBQ9mBWQV2+EFNmdXnZbYJJZjz/kJdBSjpe3Nedpoy+OYkn+3FmG0jVLC
+         CJ/LSlh3BcMtRKpGfLYVYdmUx2ds32StE7078=
+Received: by 10.236.73.129 with SMTP id v1mr6979487yhd.129.1327626239013;
+        Thu, 26 Jan 2012 17:03:59 -0800 (PST)
+Received: by 10.236.73.129 with SMTP id v1mr6979465yhd.129.1327626238912; Thu,
+ 26 Jan 2012 17:03:58 -0800 (PST)
+Received: by 10.101.144.22 with HTTP; Thu, 26 Jan 2012 17:03:58 -0800 (PST)
+In-Reply-To: <20120127004605.GA31538@burratino>
+X-System-Of-Record: true
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189183>
 
-Clemens Buchacher <drizzd@aon.at> writes:
-
-> How about removing the profile-all target and making it a build option
-> instead? To enable it, do the usual:
+On Fri, Jan 27, 2012 at 11:46 AM, Jonathan Nieder <jrnieder@gmail.com> =
+wrote:
+> Jonathan Nieder wrote:
 >
->  echo PROFILE_BUILD=YesPlease >> config.mak
->  echo prefix=... >> config.mak
->  make
->  su make install
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =
+=A0 =A0 =A0 =A0 It simplifies svn-fe a great
+>> deal and fulfills a longstanding wish: support for dumps with deltas
+>> in them.
+>
+> Oh, and incremental imports, too. ;-)
 
-Yeah, I would prefer something like that. We could even keep "profile-all"
-target for b/c if we wanted to, no?
+Thank you, Jonathan. I forgot our prior discussion about avoiding yet
+another history rewrite. This provides a nice cut-point.
+I do think we need to gather Dmitry's work on svn-fe and propose a
+front-end for core so that it is no longer relegated to contrib.
+
+--
+David Barr.
