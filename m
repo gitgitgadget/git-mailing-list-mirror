@@ -1,83 +1,107 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 1/4] config: add include directive
-Date: Fri, 27 Jan 2012 10:33:32 +0100
-Message-ID: <CACBZZX5MH7bEY_0081zTQbofQ5FCHGR7AQBpxXXd2c9oFUo=+A@mail.gmail.com>
-References: <20120126073547.GA28689@sigill.intra.peff.net> <20120126073752.GA30474@sigill.intra.peff.net>
- <CACBZZX5_qjC6WZsZ9hKvSR5vQJPs=jgWn-R4EnWZGVq+RvjRyg@mail.gmail.com> <20120127003241.GA15165@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 5/5] run-command: Error out if interpreter not found
+Date: Fri, 27 Jan 2012 03:41:45 -0600
+Message-ID: <20120127094145.GA2611@burratino>
+References: <1327444346-6243-1-git-send-email-fransklaver@gmail.com>
+ <1327444346-6243-6-git-send-email-fransklaver@gmail.com>
+ <20120124232421.GH8222@burratino>
+ <op.v8moybu10aolir@keputer>
+ <4F205028.4060606@kdbg.org>
+ <7vr4ym2rad.fsf@alter.siamese.dyndns.org>
+ <CAH6sp9NEnkDY-BCccW9VM3waxg8sG8zV5-rVAuMUfZ9rji4-Qw@mail.gmail.com>
+ <20120127084845.GC806@burratino>
+ <CAH6sp9O7P8bmYA66fY754mn=ogp8OP1i3KQuE_hnrTY46nNAxw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 27 10:34:01 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Frans Klaver <fransklaver@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 27 10:42:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RqiC0-0000w0-S3
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 10:34:01 +0100
+	id 1RqiJo-00040j-Ta
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 10:42:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752180Ab2A0Jdz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Jan 2012 04:33:55 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:39253 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751323Ab2A0Jdx convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jan 2012 04:33:53 -0500
-Received: by lagu2 with SMTP id u2so838812lag.19
-        for <git@vger.kernel.org>; Fri, 27 Jan 2012 01:33:52 -0800 (PST)
+	id S1752239Ab2A0Jl7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jan 2012 04:41:59 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:46035 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751323Ab2A0Jlz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jan 2012 04:41:55 -0500
+Received: by iacb35 with SMTP id b35so1842137iac.19
+        for <git@vger.kernel.org>; Fri, 27 Jan 2012 01:41:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=+FLirTk1Sbdd7MlYl5AVErtTmzk8yJDEWNgX6T6hZaw=;
-        b=Gkac1Crj7N9RhesiXaU3E/Tfy5/knrqnbaWD0UzGVIJhYMlOH6jJUJn6010OI1Xptf
-         CjGO1A0byM7Vmh1IgHQCFpKCDWtyQPgC7hCOHLewQxDLhduNRbM0LsmFIZb2qenWmzg+
-         GJGyVA68NG/uHKc+TI+7AOzoyB72aCksCxkSI=
-Received: by 10.152.105.175 with SMTP id gn15mr3110766lab.23.1327656832185;
- Fri, 27 Jan 2012 01:33:52 -0800 (PST)
-Received: by 10.112.30.67 with HTTP; Fri, 27 Jan 2012 01:33:32 -0800 (PST)
-In-Reply-To: <20120127003241.GA15165@sigill.intra.peff.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=2lt8HD+EdOWOWHiMO/BuEQrNyitE8r9xNbnJYxZwF1o=;
+        b=rxqvjEUFwyE1/MTwMelL8G6Vp5yUnEfzpjUK6fgSQv6u64aQxZWpXxEmL5iMNyloIf
+         YhTXS54vNajinuX1iIgi6Z+zRdUk2b5DuaQFbwo1W3V451BsQyYOTgLFo7EPXJc9XGW4
+         YXHiKH/NdjiXQj5QQBowJ5T1GhHtDGIm4Trrw=
+Received: by 10.50.6.227 with SMTP id e3mr6320902iga.20.1327657313781;
+        Fri, 27 Jan 2012 01:41:53 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id gd2sm3429826igc.1.2012.01.27.01.41.52
+        (version=SSLv3 cipher=OTHER);
+        Fri, 27 Jan 2012 01:41:53 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CAH6sp9O7P8bmYA66fY754mn=ogp8OP1i3KQuE_hnrTY46nNAxw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189210>
 
-On Fri, Jan 27, 2012 at 01:32, Jeff King <peff@peff.net> wrote:
-> On Fri, Jan 27, 2012 at 01:02:52AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0=
- Bjarmason wrote:
->
->> On Thu, Jan 26, 2012 at 08:37, Jeff King <peff@peff.net> wrote:
->> > This patch introduces an include directive for config files.
->> > It looks like:
->> >
->> > =C2=A0[include]
->> > =C2=A0 =C2=A0path =3D /path/to/file
->>
->> Very nice, I'd been meaning to resurrect my gitconfig.d series, and
->> this series implements a lot of the structural changes needed for th=
-at
->> sort of thing.
->
-> Yeah, that seems like a reasonable thing to do. It could make life
-> easier for package managers (I think the only reason it has not come =
-up
-> much is that there simply isn't a lot of third-party git config).
->
->> What do you think of an option (e.g. include.gitconfig_d =3D true) t=
-hat
->> would cause git to look in:
->>
->> =C2=A0 =C2=A0 /etc/gitconfig.d/*
->> =C2=A0 =C2=A0 ~/.gitconfig.d/*
->> =C2=A0 =C2=A0 .git/config.d/*
->
-> Hmm. Is that really worth having an option? I.e., why not just always
-> check those directories?
+Frans Klaver wrote:
 
-You're right, always just including those directories is a much better
-option, an extra stat() doesn't cost us much.
+> Just for my understanding: before a command is executed, a pager
+> (less/more or so) is started? We want to avoid starting the pager if
+> we won't be able to execute the command?
 
-Thanks again for working on this.
+See [1] for an example of a recent patch touching the relevant
+code path.
+
+For example: if I run "git --paginate foo", foo is an alias for bar,
+and the "[pager] bar" configuration is set to point to "otherpager",
+then without this safety git launches the default pager in preparation
+for running git-foo, receives ENOENT from execvp("git-foo"), and then
+the pager has already been launched and it is too late to launch
+otherpager instead.
+
+> On Fri, Jan 27, 2012 at 9:48 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+
+>> I want to like (b), but the downside seems unacceptable.
+>
+> The downside being: having to figure out what execvp is going to do?
+> That would be tantamount to writing your own execvp.
+
+Exactly.
+
+>> I honestly
+>> don't know if something like (a) would be a good idea if well
+>> executed, so I was happy to have the opportunity to try to help
+>> massage these patches into a form that would make the answer more
+>> obvious.
+>
+> Given the above information, I'm happy to work on this
+
+I see.
+
+Well, as I said, I don't know. :)  And I don't want to give false
+hopes --- it's perfectly possible and not even unlikely that this is a
+dead end and any patch in this direction will turn out not to be a
+good idea and not applied.
+
+That's part of why I was really grateful to Hannes for the reminder to
+take a step back for a moment and consider whether it's worth it.
+Maybe there's another way or a more targetted way to take care of the
+motivational original confusing scenario that leads to execvp errors.
+(By the way, can you remind me which one that was?)
+
+Jonathan
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/179635
