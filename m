@@ -1,112 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/4] config: allow including config from repository blobs
-Date: Thu, 26 Jan 2012 19:49:02 -0500
-Message-ID: <20120127004902.GA15257@sigill.intra.peff.net>
-References: <20120126073547.GA28689@sigill.intra.peff.net>
- <20120126074208.GD30474@sigill.intra.peff.net>
- <7vbopq2mk9.fsf@alter.siamese.dyndns.org>
- <20120126230054.GC12855@sigill.intra.peff.net>
- <7vsjj20yog.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: make install rewrites source files
+Date: Thu, 26 Jan 2012 16:49:44 -0800
+Message-ID: <7vobtq0y1j.fsf@alter.siamese.dyndns.org>
+References: <hbf.20120123bz2f@bombur.uio.no>
+ <7vhazm89bo.fsf@alter.siamese.dyndns.org> <hbf.20120123j61g@bombur.uio.no>
+ <20120126225231.GA14753@ecki>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 27 01:49:13 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>,
+	git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Fri Jan 27 01:49:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rqa08-0000Mo-2G
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 01:49:12 +0100
+	id 1Rqa0m-0000WQ-A4
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 01:49:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754518Ab2A0AtH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jan 2012 19:49:07 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46113
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754507Ab2A0AtG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jan 2012 19:49:06 -0500
-Received: (qmail 32124 invoked by uid 107); 27 Jan 2012 00:56:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 Jan 2012 19:56:07 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jan 2012 19:49:02 -0500
-Content-Disposition: inline
-In-Reply-To: <7vsjj20yog.fsf@alter.siamese.dyndns.org>
+	id S1754510Ab2A0Ats (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jan 2012 19:49:48 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54368 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751864Ab2A0Atr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jan 2012 19:49:47 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D6729625C;
+	Thu, 26 Jan 2012 19:49:46 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wUxrfyKPA4UNw+m5uBbF9fTNWPg=; b=BD8AAe
+	NqF/WM3wj0lzK1mg2rW7p9nKyHxqF2W4QQ22Wep96CXRrMSPjttax0h/+73zXdRe
+	LZ2VCDcD+F4vx4IsWlpxgkup44PUHnEuBXZvE8LL5sBbukaWqfnuX4cyhcwc9QDZ
+	eot5NWwDV3zxqonny73d2CYFfEAFlJeglw9Fo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZCSzYbUKaF1rilGkFxsil+tLyS9OH56Y
+	BvXRVb2t4EH8wumRBc3Ye9iRYPqbXLrUz3dz2OaE9imCRXsKD1spQs0xWMyJ2j/d
+	32Zf7wEzlymjk5aVpXQBOwCjyuLbJLEfzn//lqM2BWGfdtkqANXtBWn2F+Ckp7/q
+	9p3An13JvJM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC911625B;
+	Thu, 26 Jan 2012 19:49:46 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 478646257; Thu, 26 Jan 2012
+ 19:49:46 -0500 (EST)
+In-Reply-To: <20120126225231.GA14753@ecki> (Clemens Buchacher's message of
+ "Thu, 26 Jan 2012 23:52:31 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CEF585DC-4880-11E1-B492-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189182>
 
-On Thu, Jan 26, 2012 at 04:35:59PM -0800, Junio C Hamano wrote:
+Clemens Buchacher <drizzd@aon.at> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > So yeah, if you are just going to copy it once, or even periodically, it
-> > is not that big an advantage. And the example I gave using "git tag" did
-> > just that. But I also wanted to allow more complex things, like this:
-> >
-> >   # clone and inspect
-> >   git clone git://example.com/project.git
-> >   cd project
-> >   git show origin:devtools/std_gitconfig
-> >
-> >   # well, that looks pretty good. But I'd like to tweak something.
-> >   git checkout -b config origin
-> >   $EDITOR devtools/std_gitconfig
-> >   git commit -a -m "drop the foo option, which I hate"
-> >
-> >   # OK, let's use it now.
-> >   git config include.ref config:devtools/std_gitconfig
-> >
-> >   # Weeks pass. Somebody else updates the std_gitconfig.
-> >   git fetch
-> >   # let's inspect the changes
-> >   git checkout config
-> >   git diff @{u} -- devtools/std_gitconfig
-> >   # looks good, let's merge (not copy!) them in
-> >   git merge @{u}
-> >
-> > This is obviously an advanced thing to be doing.
-> 
-> The "which *I* hate" in the log message makes it sound as if it is a
-> personal preference, but in fact this is more about maintaining the
-> recommended configuration among participants, no?
+> How about removing the profile-all target and making it a build option
+> instead? To enable it, do the usual:
+>
+>  echo PROFILE_BUILD=YesPlease >> config.mak
+>  echo prefix=... >> config.mak
+>  make
+>  su make install
 
-No, I meant it explicitly to be about this single user hating it. Note
-how the resulting commits are never pushed. It is purely a local
-override, but with the added bonus that history is tracked so you can
-merge in further changes from upstream.
-
-Of course, you could also share it with others, or do whatever. Once
-it's tracked by git, you can be as flexible as you like.
-
-> And if you have the source of the configuration on a branch so that
-> people can work on it among themselves, then "config.path =
-> ../devtools/std_gitconfig" should be sufficient, no?
-
-Yes, you _could_ just keep it in a branch, merge upstream's changes into
-the branch, and then periodically copy it out to your .git directory.
-But this removes that final step.
-
-It also does allow "[include]ref = origin/meta:gitconfig" if you want to
-live dangerously. I consider that a feature, because it lets the user
-make the security tradeoff they deem appropriate. Yes, I want to have
-git be secure by default, and yes I want to encourage awareness of the
-issues in the documentation for the feature. But I suspect in practice
-that many people fetch changes and run "make" without looking at them,
-which is basically the exact same hole. If a user has already accepted
-that risk, why deny them the convenience of accepting it somewhere else?
-
-> The pros-and-cons between the volume of the change to read include from
-> blobs and the benefit illustrated in the use case did not look too good to
-> me, at least from the messages in this thread so far.
-
-I didn't think the read-from-blob code was very big or complex (most of
-the refactoring was to support parsing an arbitrary buffer, but I think
-that may be a good thing to have in the long run, anyway).
-
-But I guess that is all a matter of opinion.
-
--Peff
+Yeah, I would prefer something like that. We could even keep "profile-all"
+target for b/c if we wanted to, no?
