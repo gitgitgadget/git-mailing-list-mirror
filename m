@@ -1,128 +1,103 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 1/4] config: add include directive
-Date: Fri, 27 Jan 2012 06:07:33 +0100
-Message-ID: <4F223115.3050004@alum.mit.edu>
-References: <20120126073547.GA28689@sigill.intra.peff.net> <20120126073752.GA30474@sigill.intra.peff.net>
+Date: Thu, 26 Jan 2012 21:23:59 -0800
+Message-ID: <7vk44d1zww.fsf@alter.siamese.dyndns.org>
+References: <20120126073547.GA28689@sigill.intra.peff.net>
+ <20120126073752.GA30474@sigill.intra.peff.net>
+ <7vipjy2nbi.fsf@alter.siamese.dyndns.org>
+ <20120126225140.GB12855@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 27 06:07:49 2012
+X-From: git-owner@vger.kernel.org Fri Jan 27 06:24:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rqe2N-0003vz-H2
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 06:07:48 +0100
+	id 1RqeID-00077O-KP
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 06:24:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755537Ab2A0FHn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jan 2012 00:07:43 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:45814 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754920Ab2A0FHm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jan 2012 00:07:42 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.134] (p54BEB790.dip.t-dialin.net [84.190.183.144])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q0R57XD6023010
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 27 Jan 2012 06:07:34 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.24) Gecko/20111108 Lightning/1.0b2 Thunderbird/3.1.16
-In-Reply-To: <20120126073752.GA30474@sigill.intra.peff.net>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1752733Ab2A0FYE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jan 2012 00:24:04 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38582 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752229Ab2A0FYD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jan 2012 00:24:03 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F00C14129;
+	Fri, 27 Jan 2012 00:24:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QdY9yUyr48dq5Onki6G7RJlJ0mU=; b=QLqzzn
+	irKrROZCZg8MLNkacRL1inUd1HWU6LpF0K+9hUweccNZ2wWNYcx89kbvrLn9WJlr
+	RI8/k03H26b/ThusC45+06NBF0LEnwJXD0T2pQ34QDV/3peabTvb3dy5z/z+NeOg
+	8gB0Frs2ZC4FGfGo1Vh8Go8MhTAYjnxFXZ9yM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ojs6FJyCDCNuyhwrQSaKYmi+OCVH1mMB
+	lSAZttb4KvkAZjn1LzdfxNfktguumxeQTiicuXzLdi/+e9KaWJ3rZGwsAUK12bor
+	fJoJpAXZnEmQkszjwg9qMm/nbM3jL+LxA8EJsT44+7FhXWPd9UApSJTKuMEQlM9B
+	HPa4whTX2sk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E76B14128;
+	Fri, 27 Jan 2012 00:24:01 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5E8FC4124; Fri, 27 Jan 2012
+ 00:24:01 -0500 (EST)
+In-Reply-To: <20120126225140.GB12855@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 26 Jan 2012 17:51:40 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1EF5BA72-48A7-11E1-B08F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189190>
 
-On 01/26/2012 08:37 AM, Jeff King wrote:
-> [...]
-> This patch introduces an include directive for config files.
-> It looks like:
-> 
->   [include]
->     path = /path/to/file
+Jeff King <peff@peff.net> writes:
 
-I like it.
+> And then because of 1a and 2a, most programs should Just Work without
+> any changes, but because of 1b and 2b, any special uses will have to
+> decide manually whether they would want to allow includes.
+>
+> Does that make sense?
 
-> diff --git a/cache.h b/cache.h
-> index 10afd71..21bbb0a 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -1138,6 +1138,12 @@ extern const char *get_commit_output_encoding(void);
->  
->  extern int git_config_parse_parameter(const char *, config_fn_t fn, void *data);
->  
-> +struct git_config_include_data {
-> +	config_fn_t fn;
-> +	void *data;
-> +};
-> +int git_config_include(const char *name, const char *value, void *vdata);
-> +
->  extern const char *config_exclusive_filename;
->  
->  #define MAX_GITNAME (1000)
+In short, the "git config" interface defaults to "--no-includes" when
+reading from an explicit file with "-f" and "--includes" otherwise, which
+sounds like a 100% sensible default to me.
 
-How about a short comment or two?
+> I had a similar thought while writing it, but hoped the sentence after
+> (that you snipped) would make it clear.
 
-> diff --git a/config.c b/config.c
-> index 40f9c6d..a6966c1 100644
-> --- a/config.c
-> +++ b/config.c
-> [...]
-> +int git_config_include(const char *name, const char *value, void *vdata)
-> +{
-> +	const struct git_config_include_data *data = vdata;
-> +	const char *type;
-> +	int ret;
-> +
-> +	/*
-> +	 * Pass along all values, including "include" directives; this makes it
-> +	 * possible to query information on the includes themselves.
-> +	 */
-> +	ret = data->fn(name, value, data->data);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	if (prefixcmp(name, "include."))
-> +		return ret;
-> +	type = strrchr(name, '.') + 1;
-> +
-> +	if (!strcmp(type, "path"))
-> +		ret = handle_path_include(value, vdata);
-> +
-> +	return ret;
-> +}
-> +
+I think the whole paragraph makes it reasonably clear; I was merely being
+pedantic to see if you or others can come up with a clear and simple way
+to rephrase it that can also satisfy such pedantry.
 
-Doesn't this code accept all keys of the form "include\.(.*\.)?path"
-(e.g., "include.foo.path")?  If that is your intention, then the
-documentation should be fixed.  If not, then a single strcmp(name,
-"include.path") would seem sufficient.
+> How about:
+>
+>   The included file is processed immediately, before any other
+>   directives from the surrounding file.
+>
+> What I wanted to make clear there is the ordering, which sometimes
+> matters.
 
->  int git_config_early(config_fn_t fn, void *data, const char *repo_config)
->  {
->  	int ret = 0, found = 0;
->  	const char *home = NULL;
-> +	struct git_config_include_data inc;
-> +
-> +	inc.fn = fn;
-> +	inc.data = data;
-> +	fn = git_config_include;
-> +	data = &inc;
->  
->  	/* Setting $GIT_CONFIG makes git read _only_ the given config file. */
->  	if (config_exclusive_filename)
+Hmm, I think the original is probably easier to read.
 
-The comment just after your addition should be adjusted, since now "the
-given config file and any files that it includes" are read.
+> The one use I think is to bundle a bunch of related config options, and
+> then turn them on selectively.
+> ...
+> but with this patch, you can do:
+>
+>   cat >~/.gitconfig.foo <<-\EOF
+>   [foo]
+>   one = 1
+>   two = 2
+>   EOF
+>   git -c include.path=$HOME/.gitconfig.foo blah
 
-Michael
+That is quite a sensible use case actually.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Thanks.
