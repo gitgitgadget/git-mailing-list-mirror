@@ -1,152 +1,189 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: commit/from command in git-fast-import
-Date: Fri, 27 Jan 2012 15:09:36 -0600
-Message-ID: <20120127210936.GC3124@burratino>
-References: <20120127124837.GA24084@glandium.org>
- <CAFfmPPPYc=9BdwuE+ANiHKrFk+_7aXDgnMv3fHxVmF0ttZu8bA@mail.gmail.com>
- <20120127140808.GA31535@glandium.org>
- <CAFfmPPN9BOp3tDetEeMjVmfFam3bgHzf=q5Am4OkTz0TqLWfbQ@mail.gmail.com>
- <20120127144702.GA6693@glandium.org>
- <CAFfmPPM_xqZoMd391UdqRtK5bgW5V2z9Mg=8LYLA7ZVZQGR3Mg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git 1.7.9
+Date: Fri, 27 Jan 2012 13:31:09 -0800
+Message-ID: <7vipjwzvc2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org,
-	Dmitry Ivankov <divanorama@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: David Barr <davidbarr@google.com>
-X-From: git-owner@vger.kernel.org Fri Jan 27 22:09:50 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Fri Jan 27 22:31:25 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rqt3N-0000JK-Od
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 22:09:50 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1RqtOH-0001Bd-3g
+	for glk-linux-kernel-3@lo.gmane.org; Fri, 27 Jan 2012 22:31:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753461Ab2A0VJp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Jan 2012 16:09:45 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:55711 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752278Ab2A0VJo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Jan 2012 16:09:44 -0500
-Received: by ggnb1 with SMTP id b1so1066614ggn.19
-        for <git@vger.kernel.org>; Fri, 27 Jan 2012 13:09:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=HBkW7u06PePcV5WSqxAwc1/TYC0SnTePUPj69f5aLTw=;
-        b=A4rkk7WvLPbAikYJ2RE+ZxadGjMUMwOCXyD1Cf44W+LAhHCZxPqcGXqF893dRswWyB
-         w8yxfsRXwoQ+x1XHlSLM0FWB7DeryJxugENjk1mG2/hkLX/6sOnqmJ1zKiZAwmFuhGoW
-         JCT96n7N5tF926NA8+65ANTiDyQLLAvd8gMeY=
-Received: by 10.101.144.8 with SMTP id w8mr3956447ann.14.1327698584014;
-        Fri, 27 Jan 2012 13:09:44 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id h43sm15783294yhj.2.2012.01.27.13.09.42
-        (version=SSLv3 cipher=OTHER);
-        Fri, 27 Jan 2012 13:09:43 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CAFfmPPM_xqZoMd391UdqRtK5bgW5V2z9Mg=8LYLA7ZVZQGR3Mg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: git-owner@vger.kernel.org
+	id S1753696Ab2A0VbQ (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 27 Jan 2012 16:31:16 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37541 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751936Ab2A0VbN (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 27 Jan 2012 16:31:13 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 883286D8C;
+	Fri, 27 Jan 2012 16:31:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:cc:date:message-id:mime-version:content-type; s=sasl;
+	 bh=EzjLmRynLxfZkjKjO0qG8BCTqCM=; b=WqMDuOfxTyWUodJC4DP3sqluWwZS
+	4QlY6ig3wAht98shs4QOYDUvDkgyuJ8WcKtkYF1L6e7qON0HoID3YO0HZkWwTDlb
+	5N9qTX7pZzgNG6V4LCpsVgP5w8BM9GqX/aPfyOS79rC0z0MeRrzbFb3p2oFaUFqe
+	NhUlVj4jDolnPvk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:cc:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
+	MUz1OmEoxaT9Vnhq6pFYJ6T5bQyzpyvnP+lFvlXwPMaG4ibULp+mie2JZB3O+Mkr
+	1p/+BvKGUXf5kejW6FsVRkrZMTme7V14nfzks+cbq6GjuZBEQh+aqqXC5yy1hl8V
+	yS4HLPIhxvocHzetEwMKMaX7x7blyzuRd1qIHDN8MgY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F3796D8B;
+	Fri, 27 Jan 2012 16:31:12 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 570EB6D8A; Fri, 27 Jan 2012
+ 16:31:11 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3B845752-492E-11E1-B255-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189233>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189234>
 
-David Barr wrote:
->>> On Sat, Jan 28, 2012 at 1:08 AM, Mike Hommey <mh@glandium.org> wrot=
-e:
+The latest feature release Git 1.7.9 is now available at the usual
+places.
 
->>>> This is however not what the manpage suggests in what I quoted in =
-my
->>>> message:
->>>> =C2=A0Omitting the from command on existing branches is usually de=
-sired, as
->>>> =C2=A0the current commit on that branch is automatically assumed t=
-o be the
->>>> =C2=A0first ancestor of the new commit.
-[...]
-> Looks like we have a real fast-import bug, in Debian Unstable at leas=
-t.
+The release tarballs are found at:
 
-Yep, this is a real fast-import documentation bug.  The manual says:
+    http://code.google.com/p/git-core/downloads/list
 
-	Omitting the from command in the first commit of a new branch
-	will cause fast-import to create that commit with no ancestor.
-	This tends to be desired only for the initial commit of a
-	project.
-[...]
-	The special case of restarting an incremental import from the
-	current branch value should be written as:
+and their SHA-1 checksums are:
 
-		from refs/heads/branch^0
+ed51ef5ef250daaa6e98515cf2641820cd268d4c  git-1.7.9.tar.gz
+c7b1fa20dc501beb2cb5091dd24dbfd2a0013a0c  git-htmldocs-1.7.9.tar.gz
+1ca1fc430b2814f9e9cf82ec3bf7f2eaf5209b7a  git-manpages-1.7.9.tar.gz
 
-The unfortunate term here is "existing branches", which seems to have
-been intended to refer to refs that have already been populated in
-this fast-import stream by a "commit" or "reset" command, rather than
-any old ref that already exists in the repository.
+Also the following public repositories all have a copy of the v1.7.9
+tag and the master branch that the tag points at:
 
-In other words, instead of "existing branch", the manual should say
-something along the lines of "branch already in fast-import's internal
-branch table".
+  url = git://repo.or.cz/alt-git.git
+  url = https://code.google.com/p/git-core/
+  url = git://git.sourceforge.jp/gitroot/git-core/git.git
+  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url = https://github.com/gitster/git
 
-Here's a sketch.
+Have fun.
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- Documentation/git-fast-import.txt |   14 ++++++++------
- 1 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast=
--import.txt
-index ec6ef311..28a317ff 100644
---- a/Documentation/git-fast-import.txt
-+++ b/Documentation/git-fast-import.txt
-@@ -306,9 +306,9 @@ and control the current import process.  More detai=
-led discussion
- (with examples) of each command follows later.
-=20
- `commit`::
--	Creates a new branch or updates an existing branch by
--	creating a new commit and updating the branch to point at
--	the newly created commit.
-+	Creates a new branch or updates a branch by creating a new
-+	commit and updating the branch to point at the newly created
-+	commit.
-=20
- `tag`::
- 	Creates an annotated tag object from an existing commit or
-@@ -317,7 +317,7 @@ and control the current import process.  More detai=
-led discussion
- 	in time.
-=20
- `reset`::
--	Reset an existing branch (or a new branch) to a specific
-+	Reset an existing branch or a new branch to a specific
- 	revision.  This command must be used to change a branch to
- 	a specific revision without making a commit on it.
-=20
-@@ -439,13 +439,15 @@ The `from` command is used to specify the commit =
-to initialize
- this branch from.  This revision will be the first ancestor of the
- new commit.
-=20
--Omitting the `from` command in the first commit of a new branch
-+Omitting the `from` command in the first commit of a branch that
-+has not been created previously with a `commit` or `reset` command
- will cause fast-import to create that commit with no ancestor. This
- tends to be desired only for the initial commit of a project.
- If the frontend creates all files from scratch when making a new
- branch, a `merge` command may be used instead of `from` to start
- the commit with an empty tree.
--Omitting the `from` command on existing branches is usually desired,
-+Omitting the `from` command on branches that have already been
-+initialized in the same stream is usually desired,
- as the current commit on that branch is automatically assumed to
- be the first ancestor of the new commit.
-=20
---=20
-1.7.9.rc2
+Git v1.7.9 Release Notes
+========================
+
+Updates since v1.7.8
+--------------------
+
+ * gitk updates accumulated since early 2011.
+
+ * git-gui updated to 0.16.0.
+
+ * git-p4 (in contrib/) updates.
+
+ * Git uses gettext to translate its most common interface messages
+   into the user's language if translations are available and the
+   locale is appropriately set. Distributors can drop new PO files
+   in po/ to add new translations.
+
+ * The code to handle username/password for HTTP transactions used in
+   "git push" & "git fetch" learned to talk "credential API" to
+   external programs to cache or store them, to allow integration with
+   platform native keychain mechanisms.
+
+ * The input prompts in the terminal use our own getpass() replacement
+   when possible. HTTP transactions used to ask for the username without
+   echoing back what was typed, but with this change you will see it as
+   you type.
+
+ * The internals of "revert/cherry-pick" have been tweaked to prepare
+   building more generic "sequencer" on top of the implementation that
+   drives them.
+
+ * "git rev-parse FETCH_HEAD" after "git fetch" without specifying
+   what to fetch from the command line will now show the commit that
+   would be merged if the command were "git pull".
+
+ * "git add" learned to stream large files directly into a packfile
+   instead of writing them into individual loose object files.
+
+ * "git checkout -B <current branch> <elsewhere>" is a more intuitive
+   way to spell "git reset --keep <elsewhere>".
+
+ * "git checkout" and "git merge" learned "--no-overwrite-ignore" option
+   to tell Git that untracked and ignored files are not expendable.
+
+ * "git commit --amend" learned "--no-edit" option to say that the
+   user is amending the tree being recorded, without updating the
+   commit log message.
+
+ * "git commit" and "git reset" re-learned the optimization to prime
+   the cache-tree information in the index, which makes it faster to
+   write a tree object out after the index entries are updated.
+
+ * "git commit" detects and rejects an attempt to stuff NUL byte in
+   the commit log message.
+
+ * "git commit" learned "-S" to GPG-sign the commit; this can be shown
+   with the "--show-signature" option to "git log".
+
+ * fsck and prune are relatively lengthy operations that still go
+   silent while making the end-user wait. They learned to give progress
+   output like other slow operations.
+
+ * The set of built-in function-header patterns for various languages
+   knows MATLAB.
+
+ * "git log --format='<format>'" learned new %g[nNeE] specifiers to
+   show information from the reflog entries when walking the reflog
+   (i.e. with "-g").
+
+ * "git pull" can be used to fetch and merge an annotated/signed tag,
+   instead of the tip of a topic branch. The GPG signature from the
+   signed tag is recorded in the resulting merge commit for later
+   auditing.
+
+ * "git log" learned "--show-signature" option to show the signed tag
+   that was merged that is embedded in the merge commit. It also can
+   show the signature made on the commit with "git commit -S".
+
+ * "git branch --edit-description" can be used to add descriptive text
+   to explain what a topic branch is about.
+
+ * "git fmt-merge-msg" learned to take the branch description into
+   account when preparing a merge summary that "git merge" records
+   when merging a local branch.
+
+ * "git request-pull" has been updated to convey more information
+   useful for integrators to decide if a topic is worth merging and
+   what is pulled is indeed what the requestor asked to pull,
+   including:
+
+   - the tip of the branch being requested to be merged;
+   - the branch description describing what the topic is about;
+   - the contents of the annotated tag, when requesting to pull a tag.
+
+ * "git pull" learned to notice 'pull.rebase' configuration variable,
+   which serves as a global fallback for setting 'branch.<name>.rebase'
+   configuration variable per branch.
+
+ * "git tag" learned "--cleanup" option to control how the whitespaces
+   and empty lines in tag message are cleaned up.
+
+ * "gitweb" learned to show side-by-side diff.
+
+Also contains minor documentation updates and code clean-ups.
+
+
+Fixes since v1.7.8
+------------------
+
+Unless otherwise noted, all the fixes since v1.7.8 in the maintenance
+releases are contained in this release (see release notes to them for
+details).
