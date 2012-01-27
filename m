@@ -1,105 +1,141 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Test t9500 fails if Time::HiRes is missing
-Date: Thu, 26 Jan 2012 21:48:33 -0800
-Message-ID: <7v8vkt1yry.fsf@alter.siamese.dyndns.org>
-References: <hbf.20120123rqzg@bombur.uio.no>
- <CACBZZX4cjcY5d3mPJAV+rbSTqCEUOrF=_dd3ny_jSM++G-Bg1Q@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/4] config: add include directive
+Date: Fri, 27 Jan 2012 00:54:05 -0500
+Message-ID: <20120127055405.GB23633@sigill.intra.peff.net>
+References: <20120126073547.GA28689@sigill.intra.peff.net>
+ <20120126073752.GA30474@sigill.intra.peff.net>
+ <4F223115.3050004@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>,
-	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 27 06:48:41 2012
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Jan 27 06:54:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rqefw-0004AH-S4
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 06:48:41 +0100
+	id 1RqelM-0005k8-7a
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 06:54:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754670Ab2A0Fsg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Jan 2012 00:48:36 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49162 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753457Ab2A0Fsf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Jan 2012 00:48:35 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5547146D8;
-	Fri, 27 Jan 2012 00:48:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=KGB/FtCCL861
-	JUjLcTKrE9AmWoc=; b=Dm2d2WcWgGc6PMHFuoeW16tPT7/R3z0cYfI+HJndv8wC
-	l3jeZG6Or5bfLfaGRyZElVNQalcsAQ61c6jdtWCidOPOKxkSAD/JpEmE5VKhPyg2
-	KI5aVSXMR7BgF/QTyFJWkuMuvdZWN/rW93CACzw4MX96pzP4ZiLFWSKlEjpOSJg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=cLhrsQ
-	2VvSvuQf0GYutGiFNQ8mK+TQ7UkvNAELL84i+MboQCeypXbIhS7DjgOL6hkVzmhm
-	M/9GcdReFq84jwdbmIf+Ey+9BPos8np02D/vNoKn+zkxn7TPkNqzBsucBfGWUddu
-	ikA8qyS2K/YlFfQXOm48kIW/UEWoskCyXgq0s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D1FE46D7;
-	Fri, 27 Jan 2012 00:48:35 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D323D46D6; Fri, 27 Jan 2012
- 00:48:34 -0500 (EST)
-In-Reply-To: <CACBZZX4cjcY5d3mPJAV+rbSTqCEUOrF=_dd3ny_jSM++G-Bg1Q@mail.gmail.com>
- (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 23 Jan
- 2012 10:42:02 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8D388D68-48AA-11E1-AE7A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753080Ab2A0FyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jan 2012 00:54:11 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46323
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752308Ab2A0FyJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jan 2012 00:54:09 -0500
+Received: (qmail 2299 invoked by uid 107); 27 Jan 2012 06:01:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 27 Jan 2012 01:01:11 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Jan 2012 00:54:05 -0500
+Content-Disposition: inline
+In-Reply-To: <4F223115.3050004@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189195>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Fri, Jan 27, 2012 at 06:07:33AM +0100, Michael Haggerty wrote:
 
-> This doesn't actually fix the issue, it only sweeps it under the rug
-> by making the tests pass, gitweb will still fail to compile on Red
-> Hat once installed.
+> > +struct git_config_include_data {
+> > +	config_fn_t fn;
+> > +	void *data;
+> > +};
+> > +int git_config_include(const char *name, const char *value, void *vdata);
+> > +
+> >  extern const char *config_exclusive_filename;
+> >  
+> >  #define MAX_GITNAME (1000)
+> 
+> How about a short comment or two?
 
-In the short term for 1.7.9, let's at least warn users about this issue=
-=2E
+I had originally planned to document this somewhat non-intuitive
+interface in the config API documentation. But then I noticed we didn't
+have such a document, and promptly forgot about documenting.
 
--- >8 --
-Subject: INSTALL: warn about recent Fedora breakage
+I'd rather have an API document, but I admit that the thought of
+describing the config interface frightens me. It has some nasty corners.
+But maybe starting one with the non-scary bits would be better, and then
+I could add this to it.
 
-Recent releases of Redhat/Fedora are reported to ship Perl binary packa=
-ge
-with some core modules stripped away (see http://lwn.net/Articles/47723=
-4/)
-against the upstream Perl5 people's wishes. The Time::HiRes module used=
- by
-gitweb one of them.
+> > +int git_config_include(const char *name, const char *value, void *vdata)
+> > +{
+> > +	const struct git_config_include_data *data = vdata;
+> > +	const char *type;
+> > +	int ret;
+> > +
+> > +	/*
+> > +	 * Pass along all values, including "include" directives; this makes it
+> > +	 * possible to query information on the includes themselves.
+> > +	 */
+> > +	ret = data->fn(name, value, data->data);
+> > +	if (ret < 0)
+> > +		return ret;
+> > +
+> > +	if (prefixcmp(name, "include."))
+> > +		return ret;
+> > +	type = strrchr(name, '.') + 1;
+> > +
+> > +	if (!strcmp(type, "path"))
+> > +		ret = handle_path_include(value, vdata);
+> > +
+> > +	return ret;
+> > +}
+> > +
+> 
+> Doesn't this code accept all keys of the form "include\.(.*\.)?path"
+> (e.g., "include.foo.path")?  If that is your intention, then the
+> documentation should be fixed.  If not, then a single strcmp(name,
+> "include.path") would seem sufficient.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+It does. I was considering (but haven't yet written) a patch that would
+allow for conditional inclusion, like:
 
- * Hopefully, this may resolve itself over time.
+  [include "foo"]
+          path = /some/file
 
- INSTALL |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
+where "foo" would be the condition. Specifically, I wanted to enable
+includes when certain features were available in the parsing version of
+git. For example, the pager.* variables were originally bools, but later
+learned to take arbitrary strings. So my config with arbitrary strings
+works on modern git, but causes earlier versions of git to barf. I'd
+like to be able to do something like:
 
-diff --git a/INSTALL b/INSTALL
-index 8120641..6fa83fe 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -83,7 +83,11 @@ Issues of note:
- 	- "Perl" version 5.8 or later is needed to use some of the
- 	  features (e.g. preparing a partial commit using "git add -i/-p",
- 	  interacting with svn repositories with "git svn").  If you can
--	  live without these, use NO_PERL.
-+	  live without these, use NO_PERL.  Note that recent releases of
-+	  Redhat/Fedora are reported to ship Perl binary package with some
-+	  core modules stripped away (see http://lwn.net/Articles/477234/),
-+	  so you might need to install additional packages other than Perl
-+	  itself, e.g. Time::HiRes.
-=20
- 	- "openssl" library is used by git-imap-send to use IMAP over SSL.
- 	  If you don't need it, use NO_OPENSSL.
+  [include "per-command-pager-strings"]
+          path = /path/to/my/pager.config
+
+where "per-command-pager-strings" would be a flag known internally to
+git versions that support that feature.
+
+I didn't end up implementing it right away, because of course those same
+early versions of git also don't know about "include" at all. So using
+any include effectively works as a conditional for that particular
+feature. But as new incompatible config semantics are added
+post-include, they could take advantage of a similar scheme.
+
+So I wanted to leave the code open to adding such a patch later, if and
+when it becomes useful. That being said, the code above is wrong.
+For my scheme to work, versions of git that handle includes but don't
+have the conditional-include patch (if it ever comes) would want to
+explicitly disallow includes with subsections.
+
+I'll fix it in the re-roll.
+
+> > +	struct git_config_include_data inc;
+> > +
+> > +	inc.fn = fn;
+> > +	inc.data = data;
+> > +	fn = git_config_include;
+> > +	data = &inc;
+> >  
+> >  	/* Setting $GIT_CONFIG makes git read _only_ the given config file. */
+> >  	if (config_exclusive_filename)
+> 
+> The comment just after your addition should be adjusted, since now "the
+> given config file and any files that it includes" are read.
+
+Will do.
+
+-Peff
