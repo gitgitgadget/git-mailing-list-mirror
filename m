@@ -1,107 +1,115 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 5/5] run-command: Error out if interpreter not found
-Date: Fri, 27 Jan 2012 03:41:45 -0600
-Message-ID: <20120127094145.GA2611@burratino>
-References: <1327444346-6243-1-git-send-email-fransklaver@gmail.com>
- <1327444346-6243-6-git-send-email-fransklaver@gmail.com>
- <20120124232421.GH8222@burratino>
- <op.v8moybu10aolir@keputer>
- <4F205028.4060606@kdbg.org>
- <7vr4ym2rad.fsf@alter.siamese.dyndns.org>
- <CAH6sp9NEnkDY-BCccW9VM3waxg8sG8zV5-rVAuMUfZ9rji4-Qw@mail.gmail.com>
- <20120127084845.GC806@burratino>
- <CAH6sp9O7P8bmYA66fY754mn=ogp8OP1i3KQuE_hnrTY46nNAxw@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [RFC/PATCH 0/4] config include directives
+Date: Fri, 27 Jan 2012 10:51:34 +0100
+Message-ID: <CACBZZX59sur4_61LkN_sMOvXQ4Jdnt1P8O-UOgm0SooBQpjFdQ@mail.gmail.com>
+References: <20120126073547.GA28689@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Frans Klaver <fransklaver@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 27 10:42:06 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 27 10:52:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RqiJo-00040j-Ta
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 10:42:05 +0100
+	id 1RqiTo-00089z-Oy
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 10:52:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752239Ab2A0Jl7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jan 2012 04:41:59 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:46035 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751323Ab2A0Jlz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jan 2012 04:41:55 -0500
-Received: by iacb35 with SMTP id b35so1842137iac.19
-        for <git@vger.kernel.org>; Fri, 27 Jan 2012 01:41:55 -0800 (PST)
+	id S1752275Ab2A0Jv5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Jan 2012 04:51:57 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:39619 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750924Ab2A0Jv4 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jan 2012 04:51:56 -0500
+Received: by lagu2 with SMTP id u2so846473lag.19
+        for <git@vger.kernel.org>; Fri, 27 Jan 2012 01:51:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=2lt8HD+EdOWOWHiMO/BuEQrNyitE8r9xNbnJYxZwF1o=;
-        b=rxqvjEUFwyE1/MTwMelL8G6Vp5yUnEfzpjUK6fgSQv6u64aQxZWpXxEmL5iMNyloIf
-         YhTXS54vNajinuX1iIgi6Z+zRdUk2b5DuaQFbwo1W3V451BsQyYOTgLFo7EPXJc9XGW4
-         YXHiKH/NdjiXQj5QQBowJ5T1GhHtDGIm4Trrw=
-Received: by 10.50.6.227 with SMTP id e3mr6320902iga.20.1327657313781;
-        Fri, 27 Jan 2012 01:41:53 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id gd2sm3429826igc.1.2012.01.27.01.41.52
-        (version=SSLv3 cipher=OTHER);
-        Fri, 27 Jan 2012 01:41:53 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CAH6sp9O7P8bmYA66fY754mn=ogp8OP1i3KQuE_hnrTY46nNAxw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=9d7AXU065Ih4J3qXmh7Ga/JnXhDF7UJN1IvE91C0888=;
+        b=jlA/6grXP1YkDYzEajD3VKrdVEnTdIrIUNgJkAd49Z2KxwkiZxHo5D6uC96QZHrVwf
+         BMmtEgEUNyvB8GBOFSFENp5OZ1wagU2aB84UAAvhuZf4yYfEjuwDkKAtmc1CX0o3i1FP
+         OXfF3n9PMq893cmwhtpuExnEtAjwyx6RVqNkA=
+Received: by 10.112.23.133 with SMTP id m5mr1586470lbf.10.1327657914974; Fri,
+ 27 Jan 2012 01:51:54 -0800 (PST)
+Received: by 10.112.30.67 with HTTP; Fri, 27 Jan 2012 01:51:34 -0800 (PST)
+In-Reply-To: <20120126073547.GA28689@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189211>
 
-Frans Klaver wrote:
-
-> Just for my understanding: before a command is executed, a pager
-> (less/more or so) is started? We want to avoid starting the pager if
-> we won't be able to execute the command?
-
-See [1] for an example of a recent patch touching the relevant
-code path.
-
-For example: if I run "git --paginate foo", foo is an alias for bar,
-and the "[pager] bar" configuration is set to point to "otherpager",
-then without this safety git launches the default pager in preparation
-for running git-foo, receives ENOENT from execvp("git-foo"), and then
-the pager has already been launched and it is too late to launch
-otherpager instead.
-
-> On Fri, Jan 27, 2012 at 9:48 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-
->> I want to like (b), but the downside seems unacceptable.
+On Thu, Jan 26, 2012 at 08:35, Jeff King <peff@peff.net> wrote:
+> This series provides a way for config files to include other config
+> files in two ways:
 >
-> The downside being: having to figure out what execvp is going to do?
-> That would be tantamount to writing your own execvp.
-
-Exactly.
-
->> I honestly
->> don't know if something like (a) would be a good idea if well
->> executed, so I was happy to have the opportunity to try to help
->> massage these patches into a form that would make the answer more
->> obvious.
+> =C2=A01. From other files in the filesystem. This is implemented by p=
+atch 1
+> =C2=A0 =C2=A0 below, and is hopefully straightforward and uncontrover=
+sial. =C2=A0See
+> =C2=A0 =C2=A0 that patch for more rationale.
 >
-> Given the above information, I'm happy to work on this
+> =C2=A02. From blobs in the repo. This is implemented by patch 4, with
+> =C2=A0 =C2=A0 patches 2 and 3 providing the necessary refactoring. Th=
+is
+> =C2=A0 =C2=A0 is one way of implementing the often asked-for "respect=
+ shared
+> =C2=A0 =C2=A0 config inside the repo" feature, but attempts to mitiga=
+te some of
+> =C2=A0 =C2=A0 the security concerns. The interface for using it safel=
+y is a bit
+> =C2=A0 =C2=A0 raw, but I think it's a sane building block, and somebo=
+dy could
+> =C2=A0 =C2=A0 write a fancier shared-config updater on top of it if t=
+hey wanted
+> =C2=A0 =C2=A0 to.
+>
+> =C2=A0[1/4]: config: add include directive
+> =C2=A0[2/4]: config: factor out config file stack management
+> =C2=A0[3/4]: config: support parsing config data from buffers
+> =C2=A0[4/4]: config: allow including config from repository blobs
 
-I see.
+I expect you've thought about this, but our current API is (from
+add.c):
 
-Well, as I said, I don't know. :)  And I don't want to give false
-hopes --- it's perfectly possible and not even unlikely that this is a
-dead end and any patch in this direction will turn out not to be a
-good idea and not applied.
+	git_config(add_config, NULL);
 
-That's part of why I was really grateful to Hannes for the reminder to
-take a step back for a moment and consider whether it's worth it.
-Maybe there's another way or a more targetted way to take care of the
-motivational original confusing scenario that leads to execvp errors.
-(By the way, can you remind me which one that was?)
+=46ollowed by:
 
-Jonathan
+    static int add_config(const char *var, const char *value, void *cb)
+    {
+    	if (!strcmp(var, "add.ignoreerrors") ||
+    	    !strcmp(var, "add.ignore-errors")) {
+    		ignore_add_errors =3D git_config_bool(var, value);
+    		return 0;
+    	}
+    	return git_default_config(var, value, cb);
+    }
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/179635
+I.e. that function gets called with one key at a time, and stashes it
+to a local value.
+
+If you write the function like that it means your patch series just
+works since values encountered later will override earlier ones, but
+have you checked git's code to make sure we don't have anything like:
+
+    static int ignore_add_errors_is_set =3D 0;
+    static int add_config(const char *var, const char *value, void *cb)
+    {
+    	if (!ignore_add_errors_is_set &&
+            (!strcmp(var, "add.ignoreerrors") ||
+    	     !strcmp(var, "add.ignore-errors"))) {
+    		ignore_add_errors =3D git_config_bool(var, value);
+            ignore_add_errors_is_set =3D 1;
+    		return 0;
+    	}
+    	return git_default_config(var, value, cb);
+    }
+
+Which would mean that the include config support would be silently
+ignored.
