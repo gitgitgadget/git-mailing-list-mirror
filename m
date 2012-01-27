@@ -1,73 +1,117 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 1/4] config: add include directive
-Date: Fri, 27 Jan 2012 01:02:52 +0100
-Message-ID: <CACBZZX5_qjC6WZsZ9hKvSR5vQJPs=jgWn-R4EnWZGVq+RvjRyg@mail.gmail.com>
-References: <20120126073547.GA28689@sigill.intra.peff.net> <20120126073752.GA30474@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [linux.conf.au] VCS Interoperability
+Date: Thu, 26 Jan 2012 18:10:41 -0600
+Message-ID: <20120127001041.GB6158@burratino>
+References: <CAFfmPPMH2643JMMZdVbOQJL7DB-DiRYQS8x0TqEaSbGmhMdBNw@mail.gmail.com>
+ <CALkWK0kMmDMZ4wiMSmOfwBLzd+xBEA+WKsviu9FVcvj9eZEahg@mail.gmail.com>
+ <CAFfmPPOZfDdH+GF91Dxyy5yfX8TmGDmsbpHz=CVLcBY0c-pCsQ@mail.gmail.com>
+ <CALkWK0nsO2EBLUrO_iWAdGYpULt=oug4yPDnczX9c44hzdwzqg@mail.gmail.com>
+ <alpine.DEB.2.02.1201221310540.28747@asgard.lang.hm>
+ <3BC64515-C4C0-4D32-97B0-8FFD14BB903C@silverinsanity.com>
+ <CAP2yMaLHK2md=MHFmV--R6rmr4q3XuZxqsb2fUszMhssx3GDoA@mail.gmail.com>
+ <CAFfmPPPvpbsYz9cjN6OspivCN3dbuPGOU7fyaVdnic3D4V855w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 27 01:03:20 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Scott Chacon <schacon@gmail.com>,
+	Brian Gernhardt <benji@silverinsanity.com>, david@lang.hm,
+	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Dmitry Ivankov <divanorama@gmail.com>
+To: David Barr <davidbarr@google.com>
+X-From: git-owner@vger.kernel.org Fri Jan 27 01:10:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RqZHj-0002FY-J5
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 01:03:19 +0100
+	id 1RqZP2-0004r0-5n
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 01:10:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753332Ab2A0ADP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Jan 2012 19:03:15 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:41925 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752176Ab2A0ADO convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jan 2012 19:03:14 -0500
-Received: by lagu2 with SMTP id u2so657459lag.19
-        for <git@vger.kernel.org>; Thu, 26 Jan 2012 16:03:13 -0800 (PST)
+	id S1752185Ab2A0AKr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jan 2012 19:10:47 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:64823 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751491Ab2A0AKq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jan 2012 19:10:46 -0500
+Received: by ghrr11 with SMTP id r11so557226ghr.19
+        for <git@vger.kernel.org>; Thu, 26 Jan 2012 16:10:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Q1CVCgSD2VIGLtl/w2UsK20MvSYb3mJg937WubaBoMM=;
-        b=cN9zqQkfnR4Z1CBDGl2Vz6SQpa90w23QNo66PRovc6IrdmZ8qtjTssU+cQGKT1ro5E
-         UQ2mTl2k2bZnzbweEK2y/cPpA9HXI1wjtUId37lmM34sBEUau8TO36NkPa3dy6O62uM9
-         gSAC/VwqgoLJcHjCPKmrnu7AWHwzeBTVKpVtk=
-Received: by 10.152.144.133 with SMTP id sm5mr2391183lab.38.1327622593152;
- Thu, 26 Jan 2012 16:03:13 -0800 (PST)
-Received: by 10.112.48.9 with HTTP; Thu, 26 Jan 2012 16:02:52 -0800 (PST)
-In-Reply-To: <20120126073752.GA30474@sigill.intra.peff.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=bnfwTgK8x7NlD0U+nXxg3n7oZdP3X3yuDH346dR50sQ=;
+        b=KUloRhphDBsMUCEvw/s/tYGyUxHkcKsmt4MVSqBCSi2QbJwtaWgYuDxWiqoGFx+eNV
+         ECmQDFvmDZZESlemKyk6enLFXNYjhH2I5Fs0ixkfmPUjryX+hNVbd6jJ7weNZ3kIR580
+         UewWHOq5DmLkCdlaUs1LLRaO57CjJl5IMUtgA=
+Received: by 10.236.79.202 with SMTP id i50mr6853427yhe.61.1327623046208;
+        Thu, 26 Jan 2012 16:10:46 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id i6sm15263337and.3.2012.01.26.16.10.44
+        (version=SSLv3 cipher=OTHER);
+        Thu, 26 Jan 2012 16:10:45 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CAFfmPPPvpbsYz9cjN6OspivCN3dbuPGOU7fyaVdnic3D4V855w@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189176>
 
-On Thu, Jan 26, 2012 at 08:37, Jeff King <peff@peff.net> wrote:
-> This patch introduces an include directive for config files.
-> It looks like:
+Hi,
+
+David Barr wrote:
+
+> After giving my talk, I feel compelled to reroll the historic vcs-svn series.
+> I'm pushing as I go to my GitHub account:
 >
-> =C2=A0[include]
-> =C2=A0 =C2=A0path =3D /path/to/file
+>   https://github.com/barrbrain/git/commits/svn-fe-reroll
 
-Very nice, I'd been meaning to resurrect my gitconfig.d series, and
-this series implements a lot of the structural changes needed for that
-sort of thing.
+Just some quick notes to save some time:
 
-What do you think of an option (e.g. include.gitconfig_d =3D true) that
-would cause git to look in:
+All the commits on the 
 
-    /etc/gitconfig.d/*
-    ~/.gitconfig.d/*
-    .git/config.d/*
+ git://repo.or.cz/git/jrn.git svn-fe
 
-As well as the usual:
+branch were known-good in the sense that they seemed sane enough to
+build on and I do not think they need any reorganization or other
+work.  Maybe that could help bootstrap your efforts?
 
-    /etc/gitconfig
-    ~/.gitconfig
-    .git/config
+The svn-fe-pu branch includes some other patches: some optimizations
+which are probably safe, the demo helper that allows "git clone
+svn-alpha::<url>", some transport-helper patches to support the
+latter, and so on.  They are not vetted.  If anyone sends patches from
+that branch, or any other patch for that matter, to the list and cc-s
+me, I'll be happy to review them.  Here's a shortlog for convenience:
 
-It would make including third-party config easy since you could just
-symlink it in, and it would follow the convention of a lot of other
-programs that have a foo and a foo.d directory.
+ David Barr (2):
+       fast-import: allow object_table to grow dynamically
+       fast-import: allow atom_table to grow dynamically
+ 
+ Dmitry Ivankov (2):
+       Arrange a backflow pipe from fast-importer to remote helper stdin
+       Add alpha version of remote-svn helper
+ 
+ Jonathan Nieder (12):
+       work around ISO C incompatibility between data and function pointers
+       ensure initializer elements are computable at load time
+       enums: omit trailing comma for portability
+       notes: avoid C99-style comment
+       notes merge: eliminate OUTPUT macro
+       make sure initializers are computable at load time
+       fast-import: allow branch_table to grow dynamically
+       fast-import: use DIV_ROUND_UP
+       svn-fe: add a program that generates a notes-to-svn-revs mapping
+       svn-fe: do not rely on /bin/env utility to launch remote helper
+       svn-fe: use tabs to indent in remote helper script
+       remaining warnings
+
+Test results from the svn-fe branch would be interesting.  I am
+particularly nervous about asking Junio to pull changes to
+contrib/svn-fe that might break it at the same time as making the
+interface changes needed for support of the "svnadmin dump
+--incremental" format without much testing since it would be painful
+to back them out.  But probably that's moot, since after this long
+while there still hasn't been anyone testing it.
+
+Jonathan
