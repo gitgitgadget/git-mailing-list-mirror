@@ -1,69 +1,112 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PULL] svn-fe updates for master or next
-Date: Thu, 26 Jan 2012 18:46:05 -0600
-Message-ID: <20120127004605.GA31538@burratino>
-References: <CAFfmPPMH2643JMMZdVbOQJL7DB-DiRYQS8x0TqEaSbGmhMdBNw@mail.gmail.com>
- <CALkWK0kMmDMZ4wiMSmOfwBLzd+xBEA+WKsviu9FVcvj9eZEahg@mail.gmail.com>
- <CAFfmPPOZfDdH+GF91Dxyy5yfX8TmGDmsbpHz=CVLcBY0c-pCsQ@mail.gmail.com>
- <CALkWK0nsO2EBLUrO_iWAdGYpULt=oug4yPDnczX9c44hzdwzqg@mail.gmail.com>
- <alpine.DEB.2.02.1201221310540.28747@asgard.lang.hm>
- <3BC64515-C4C0-4D32-97B0-8FFD14BB903C@silverinsanity.com>
- <CAP2yMaLHK2md=MHFmV--R6rmr4q3XuZxqsb2fUszMhssx3GDoA@mail.gmail.com>
- <CAFfmPPPvpbsYz9cjN6OspivCN3dbuPGOU7fyaVdnic3D4V855w@mail.gmail.com>
- <20120127001041.GB6158@burratino>
- <20120127003258.GA6946@burratino>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/4] config: allow including config from repository blobs
+Date: Thu, 26 Jan 2012 19:49:02 -0500
+Message-ID: <20120127004902.GA15257@sigill.intra.peff.net>
+References: <20120126073547.GA28689@sigill.intra.peff.net>
+ <20120126074208.GD30474@sigill.intra.peff.net>
+ <7vbopq2mk9.fsf@alter.siamese.dyndns.org>
+ <20120126230054.GC12855@sigill.intra.peff.net>
+ <7vsjj20yog.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Barr <davidbarr@google.com>,
-	Scott Chacon <schacon@gmail.com>,
-	Brian Gernhardt <benji@silverinsanity.com>, david@lang.hm,
-	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	Dmitry Ivankov <divanorama@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 27 01:46:19 2012
+X-From: git-owner@vger.kernel.org Fri Jan 27 01:49:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RqZxL-00081N-E1
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 01:46:19 +0100
+	id 1Rqa08-0000Mo-2G
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 01:49:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752363Ab2A0AqP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jan 2012 19:46:15 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:44838 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751941Ab2A0AqO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jan 2012 19:46:14 -0500
-Received: by yenm6 with SMTP id m6so571172yen.19
-        for <git@vger.kernel.org>; Thu, 26 Jan 2012 16:46:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ECZjCejW0P9OZaOUo49ZncPmAHzy/8zCTcGWqsbeDWk=;
-        b=PbN9SGNeTQ2I6DCwyO3kyeS3ENynubYucRnDk4BTNY+Q6sXV3egIsTdF0UlkEAT5at
-         28Ix+7JK0f41JRj7o2fZxIEWTQ/WgHsxKsFG5UA5drYt12i1SyZgJPni2ddUoSsFcplK
-         PBUX8lGRvplelx6g6jPyJqfEGuKAlUquU3npc=
-Received: by 10.236.75.163 with SMTP id z23mr6779895yhd.79.1327625173687;
-        Thu, 26 Jan 2012 16:46:13 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id o61sm9996129yhk.10.2012.01.26.16.46.12
-        (version=SSLv3 cipher=OTHER);
-        Thu, 26 Jan 2012 16:46:13 -0800 (PST)
+	id S1754518Ab2A0AtH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jan 2012 19:49:07 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46113
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754507Ab2A0AtG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jan 2012 19:49:06 -0500
+Received: (qmail 32124 invoked by uid 107); 27 Jan 2012 00:56:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 Jan 2012 19:56:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jan 2012 19:49:02 -0500
 Content-Disposition: inline
-In-Reply-To: <20120127003258.GA6946@burratino>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <7vsjj20yog.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189181>
 
-Jonathan Nieder wrote:
+On Thu, Jan 26, 2012 at 04:35:59PM -0800, Junio C Hamano wrote:
 
->                                           It simplifies svn-fe a great
-> deal and fulfills a longstanding wish: support for dumps with deltas
-> in them.
+> Jeff King <peff@peff.net> writes:
+> 
+> > So yeah, if you are just going to copy it once, or even periodically, it
+> > is not that big an advantage. And the example I gave using "git tag" did
+> > just that. But I also wanted to allow more complex things, like this:
+> >
+> >   # clone and inspect
+> >   git clone git://example.com/project.git
+> >   cd project
+> >   git show origin:devtools/std_gitconfig
+> >
+> >   # well, that looks pretty good. But I'd like to tweak something.
+> >   git checkout -b config origin
+> >   $EDITOR devtools/std_gitconfig
+> >   git commit -a -m "drop the foo option, which I hate"
+> >
+> >   # OK, let's use it now.
+> >   git config include.ref config:devtools/std_gitconfig
+> >
+> >   # Weeks pass. Somebody else updates the std_gitconfig.
+> >   git fetch
+> >   # let's inspect the changes
+> >   git checkout config
+> >   git diff @{u} -- devtools/std_gitconfig
+> >   # looks good, let's merge (not copy!) them in
+> >   git merge @{u}
+> >
+> > This is obviously an advanced thing to be doing.
+> 
+> The "which *I* hate" in the log message makes it sound as if it is a
+> personal preference, but in fact this is more about maintaining the
+> recommended configuration among participants, no?
 
-Oh, and incremental imports, too. ;-)
+No, I meant it explicitly to be about this single user hating it. Note
+how the resulting commits are never pushed. It is purely a local
+override, but with the added bonus that history is tracked so you can
+merge in further changes from upstream.
+
+Of course, you could also share it with others, or do whatever. Once
+it's tracked by git, you can be as flexible as you like.
+
+> And if you have the source of the configuration on a branch so that
+> people can work on it among themselves, then "config.path =
+> ../devtools/std_gitconfig" should be sufficient, no?
+
+Yes, you _could_ just keep it in a branch, merge upstream's changes into
+the branch, and then periodically copy it out to your .git directory.
+But this removes that final step.
+
+It also does allow "[include]ref = origin/meta:gitconfig" if you want to
+live dangerously. I consider that a feature, because it lets the user
+make the security tradeoff they deem appropriate. Yes, I want to have
+git be secure by default, and yes I want to encourage awareness of the
+issues in the documentation for the feature. But I suspect in practice
+that many people fetch changes and run "make" without looking at them,
+which is basically the exact same hole. If a user has already accepted
+that risk, why deny them the convenience of accepting it somewhere else?
+
+> The pros-and-cons between the volume of the change to read include from
+> blobs and the benefit illustrated in the use case did not look too good to
+> me, at least from the messages in this thread so far.
+
+I didn't think the read-from-blob code was very big or complex (most of
+the refactoring was to support parsing an arbitrary buffer, but I think
+that may be a good thing to have in the long run, anyway).
+
+But I guess that is all a matter of opinion.
+
+-Peff
