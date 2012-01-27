@@ -1,160 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Revert "gitweb: Time::HiRes is in core for Perl 5.8"
-Date: Fri, 27 Jan 2012 12:44:31 -0800
-Message-ID: <7vty3gzxhs.fsf@alter.siamese.dyndns.org>
-References: <hbf.20120123rqzg@bombur.uio.no>
- <CACBZZX4cjcY5d3mPJAV+rbSTqCEUOrF=_dd3ny_jSM++G-Bg1Q@mail.gmail.com>
- <201201271845.39576.jnareb@gmail.com>
+From: David Barr <davidbarr@google.com>
+Subject: Re: commit/from command in git-fast-import
+Date: Sat, 28 Jan 2012 07:56:02 +1100
+Message-ID: <CAFfmPPM_xqZoMd391UdqRtK5bgW5V2z9Mg=8LYLA7ZVZQGR3Mg@mail.gmail.com>
+References: <20120127124837.GA24084@glandium.org>
+	<CAFfmPPPYc=9BdwuE+ANiHKrFk+_7aXDgnMv3fHxVmF0ttZu8bA@mail.gmail.com>
+	<20120127140808.GA31535@glandium.org>
+	<CAFfmPPN9BOp3tDetEeMjVmfFam3bgHzf=q5Am4OkTz0TqLWfbQ@mail.gmail.com>
+	<20120127144702.GA6693@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 27 21:44:42 2012
+Cc: git@vger.kernel.org, Dmitry Ivankov <divanorama@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Fri Jan 27 21:56:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rqsf2-0005uR-EQ
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 21:44:40 +0100
+	id 1RqsqA-0002M6-CN
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 21:56:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753988Ab2A0Uof convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Jan 2012 15:44:35 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50002 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753954Ab2A0Uoe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Jan 2012 15:44:34 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 87586653B;
-	Fri, 27 Jan 2012 15:44:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=3htr5U3iczjv
-	Aew7Sal3oMCQs/0=; b=r5qChMETRqSRTMamvLCQHXpU/qoDxPZtDyxHwUkG/FY+
-	m/6bTzItV72cMe5pJwZXtKMaFdaIb6x0coJwbdcm3+Qbe2JW3KYOPXhpoW9F0QZb
-	yv2tXKlPw6oJMVM5D6lZdIh07jLoo87CPaP0EOcqv1ZYUhwE7WHOfI5CjzXBIcg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=BoUkVk
-	h8zuusqoY/HQKnSYlr/iuU+ZLsm1RqH3KlnIerFsDhw1VjEUM4vLdOlBSgiF5WWU
-	qCNmrfAzz0JV+aWP0Y6RVeslC4+yuPalglPdPzDWlh+6cvgOvWXfqeVfqoWLx+qN
-	Qk5DqQzDeByMvm3Fecy3RwONLD96LywlKK42I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7E904653A;
-	Fri, 27 Jan 2012 15:44:33 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E5AB76538; Fri, 27 Jan 2012
- 15:44:32 -0500 (EST)
-In-Reply-To: <201201271845.39576.jnareb@gmail.com> (Jakub Narebski's message
- of "Fri, 27 Jan 2012 18:45:38 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B78800E4-4927-11E1-8C9B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752882Ab2A0U4F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Jan 2012 15:56:05 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:50253 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751390Ab2A0U4E convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Jan 2012 15:56:04 -0500
+Received: by yenm6 with SMTP id m6so1020008yen.19
+        for <git@vger.kernel.org>; Fri, 27 Jan 2012 12:56:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:x-system-of-record:content-type:content-transfer-encoding;
+        bh=1sAhJRqRmzArWXpBCRRxB7T9toWxLKk9g9yGMnJ1IO0=;
+        b=USDOYDZ2/cdtqzETjbD4OuBQwPP+rQA0JHr53EzKxRr9TndILSvDyrkyhK1CVA1+f9
+         /8dZMvyfEvfGSyrpbiThnwPIogdxSrrqtyZVT/8TeI4tUc2Fiavrfzzxava6DxPoIrTP
+         6DgW15gUgoHY+T4gfWYDvZ+6C+G9FfBkhA6bk=
+Received: by 10.236.73.129 with SMTP id v1mr13464635yhd.129.1327697763124;
+        Fri, 27 Jan 2012 12:56:03 -0800 (PST)
+Received: by 10.236.73.129 with SMTP id v1mr13464618yhd.129.1327697762999;
+ Fri, 27 Jan 2012 12:56:02 -0800 (PST)
+Received: by 10.101.144.22 with HTTP; Fri, 27 Jan 2012 12:56:02 -0800 (PST)
+In-Reply-To: <20120127144702.GA6693@glandium.org>
+X-System-Of-Record: true
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189232>
 
-Jakub Narebski <jnareb@gmail.com> writes:
-
-> Though Time::HiRes is a core Perl module, it doesn't necessarily mean
-> that it is included in 'perl' package, and that it is installed if
-> Perl is installed.
-
-I do not think we have seen the end of Redhat/Fedora Perl saga.  I am
-hoping that either one of the two things to happen:
-
- (1) Redhat/Fedora distrubution reconsiders the situation and fix their
-     packages so that by default when its users ask for "Perl" they get
-     what the upstream distributes as "Perl" in full, while still allow=
-ing
-     people who know what they are doing to install a minimum subset
-     "perl-base"; or
-
- (2) Many applications that use and rely on Perl like we do are hit by
-     this issue, and Redhat/Fedora users are trained to install the
-     perl-full (or whatever it is called) package when applications wan=
-t
-     "Perl".
-
-In other words, I am hoping that "it doesn't necessarily mean" will not
-stay true for a long time.  So please hold onto this patch until the du=
-st
-settles, and resend it if (1) does not look to be happening in say 3
-months.
-
-
-> For example RedHat has split it out to a separate RPM perl-Time-HiRes=
-=2E
+On Sat, Jan 28, 2012 at 1:47 AM, Mike Hommey <mh@glandium.org> wrote:
+> On Sat, Jan 28, 2012 at 01:15:34AM +1100, David Barr wrote:
+>> On Sat, Jan 28, 2012 at 1:08 AM, Mike Hommey <mh@glandium.org> wrote=
+:
+>> > On Sat, Jan 28, 2012 at 01:00:17AM +1100, David Barr wrote:
+>> >> On Fri, Jan 27, 2012 at 11:48 PM, Mike Hommey <mh@glandium.org> w=
+rote:
+>> >> > When I do create a commit on a given branch with a stream like:
+>> >> > =A0commit refs/heads/branch
+>> >> > =A0author ...
+>> >> > =A0committer ...
+>> >> > =A0data <<EOF
+>> >> > =A0Commit message
+>> >> > =A0EOF
+>> >> > =A0deleteall
+>> >> >
+>> >> > All I get is this warning:
+>> >> > =A0warning: Not updating refs/heads/branch (new tip new_sha1
+>> >> > does not contain old_sha1)
+>> >> >
+>> >> > And the branch only has one commit, which is the one I just cre=
+ated.
+>> >> > On the other hand, if I add a "from" instruction in the above s=
+tream,
+>> >> > I have the expected branch history.
+>> >>
+>> >> This is precisely the expected behavior.
+>> >> If 'from' is omitted, the resulting commit has no preceding histo=
+ry.
+>> >> On the other hand, what you want is to specify the parent so that
+>> >> there is a continuation of history.
+>> >
+>> > This is however not what the manpage suggests in what I quoted in =
+my
+>> > message:
+>> > =A0Omitting the from command on existing branches is usually desir=
+ed, as
+>> > =A0the current commit on that branch is automatically assumed to b=
+e the
+>> > =A0first ancestor of the new commit.
+>> >
+>> > Mike
+>>
+>> Oh, right. I guess I wasn't paying enough attention, sorry.
+>> That does sound like a bug then. Is it reproducible in a new repo?
+>> eg:
+>> =A0 git init foo && cd foo && touch bar && git add -A && git commit =
+-m "baz"
+>> =A0 git fast-import < ../fast-import-regression.txt
 >
-> Noticed-by: Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>
-> Suggested-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.co=
-m>
-> Signed-off-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
-> ---
->  gitweb/gitweb.perl |   12 +++++++-----
->  1 files changed, 7 insertions(+), 5 deletions(-)
->
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index abb5a79..c86224a 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -17,10 +17,12 @@ use Encode;
->  use Fcntl ':mode';
->  use File::Find qw();
->  use File::Basename qw(basename);
-> -use Time::HiRes qw(gettimeofday tv_interval);
->  binmode STDOUT, ':utf8';
-> =20
-> -our $t0 =3D [ gettimeofday() ];
-> +our $t0;
-> +if (eval { require Time::HiRes; 1; }) {
-> +	$t0 =3D [Time::HiRes::gettimeofday()];
-> +}
->  our $number_of_git_cmds =3D 0;
+> It is.
 
-Why should these even be initialized here?  Doesn't reset_timer gets
-called at the beginning of run_request()?
-> =20
->  BEGIN {
-> @@ -1142,7 +1144,7 @@ sub dispatch {
->  }
-> =20
->  sub reset_timer {
-> -	our $t0 =3D [ gettimeofday() ]
-> +	our $t0 =3D [Time::HiRes::gettimeofday()]
->  		if defined $t0;
->  	our $number_of_git_cmds =3D 0;
-
-The statement modifier look ugly.
-
-More importantly, if you are not profiling, i.e. if we didn't initializ=
-e
-$t0 at the beginning, do you need to reset $number_of_git_cmds at all?
-
-I also think this should take gitweb_check_feature('timed') into
-account, perhaps like this:
-
-	sub reset_timer {
-        	return unless gitweb_check_feature('timed');
-                our $t0 =3D ...
-                our $number_of_git_cmds =3D 0;
-	}
-
-Then all the other
-
-	if (defined $t0 && gitweb_check_feature('timed'))
-
-can become
-
-	if (defined $t0)
-
-If you go this route, even though tee-zero, the beginning of the time, =
-is
-a good name for the variable, you may want to rename it to avoid confus=
-ing
-readers who might take it as a temporary variable #0.
+I accidentally took this thread off-list.
+Looks like we have a real fast-import bug, in Debian Unstable at least.
+--
+David Barr
