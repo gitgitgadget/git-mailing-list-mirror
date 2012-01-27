@@ -1,63 +1,73 @@
-From: Joshua Jensen <jjensen@workspacewhiz.com>
-Subject: git rebase likes to fail miserably on Mac OS X Lion
-Date: Thu, 26 Jan 2012 22:25:23 -0700
-Message-ID: <4F223543.3080903@workspacewhiz.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/4] config: allow including config from repository blobs
+Date: Fri, 27 Jan 2012 00:42:16 -0500
+Message-ID: <20120127054216.GA23633@sigill.intra.peff.net>
+References: <20120126073547.GA28689@sigill.intra.peff.net>
+ <20120126074208.GD30474@sigill.intra.peff.net>
+ <7vbopq2mk9.fsf@alter.siamese.dyndns.org>
+ <20120126230054.GC12855@sigill.intra.peff.net>
+ <7vsjj20yog.fsf@alter.siamese.dyndns.org>
+ <20120127004902.GA15257@sigill.intra.peff.net>
+ <7vd3a51zlb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 27 06:32:07 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 27 06:42:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RqePu-0000cb-Rh
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 06:32:07 +0100
+	id 1RqeZu-0002qP-10
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 06:42:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752289Ab2A0FcB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jan 2012 00:32:01 -0500
-Received: from hsmail.qwknetllc.com ([208.71.137.138]:36854 "EHLO
-	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751412Ab2A0FcA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jan 2012 00:32:00 -0500
-X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Fri, 27 Jan 2012 00:32:00 EST
-Received: (qmail 15947 invoked by uid 399); 26 Jan 2012 22:25:18 -0700
-Received: from unknown (HELO SlamDunk) (jjensen@workspacewhiz.com@67.182.221.164)
-  by hsmail.qwknetllc.com with ESMTPAM; 26 Jan 2012 22:25:18 -0700
-X-Originating-IP: 67.182.221.164
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-X-Antivirus: avast! (VPS 120126-2, 01/26/2012), Outbound message
-X-Antivirus-Status: Clean
+	id S1752965Ab2A0FmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jan 2012 00:42:21 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46313
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752842Ab2A0FmU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jan 2012 00:42:20 -0500
+Received: (qmail 2222 invoked by uid 107); 27 Jan 2012 05:49:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 27 Jan 2012 00:49:21 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Jan 2012 00:42:16 -0500
+Content-Disposition: inline
+In-Reply-To: <7vd3a51zlb.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189193>
 
-On 4 different Mac OS X Lion machines, rebasing my commits (I currently 
-have 14 of them) yields either of the following _consistently_ across 
-varied repositories:
+On Thu, Jan 26, 2012 at 09:30:56PM -0800, Junio C Hamano wrote:
 
-     fatal: Unable to create 
-'/Users/joshua/src/project/.git/index.lock': File exists.
+> While I do not think origin/meta:config is a sensible default, I actually
+> do think that:
+> 
+> 	[include]
+>         	ref = meta:gitconfig
+>         [branch "meta"]
+> 		remote = origin
+>         	merge = refs/heads/meta
+> 
+> makes some sense. The earlier example with the in-tree dev_tools/config in
+> the same line of history as the usual source material to keep track of
+> private changes ("this single user hating it") was not realistic as it
+> forbids the user from sharing the rest of the source once she decides to
+> fork the config preference.
 
-or:
+I don't think having it in-tree makes a difference. I can fork the
+regular tree into my config branch, and it contains only my config
+changes. If I want to share config changes with people, then I do so by
+sharing that branch. But it need not have any impact on the "real"
+branch I create from the regular tree. The fact that the rest of the
+source files are in the config branch are irrelevant.
 
-     error: Your local changes to the following files would be 
-overwritten by merge:
+That being said, I think it would be nicer for projects to carry meta
+information like this out-of-tree in a special ref. It's just simpler to
+work with, and it means the project's source isn't polluted with extra
+junk.
 
-^^^ There are no local changes when the rebase begins.  This is caused 
-by the rebase.
-
-I have tried both Git v1.7.5.4 and 1.7.8.4.
-
-I use msysGit for the majority of my Git usage, and I do not run into 
-this problem there.
-
-Is there anything to be done?  Right now, the only workaround I can 
-think of is to cherry pick changes one at a time as a fake rebase.  Ick.
-
-Thanks.
-
-Josh
+-Peff
