@@ -1,77 +1,62 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PULL] svn-fe updates for master or next
-Date: Fri, 27 Jan 2012 01:20:23 -0600
-Message-ID: <20120127072023.GB806@burratino>
-References: <CAFfmPPOZfDdH+GF91Dxyy5yfX8TmGDmsbpHz=CVLcBY0c-pCsQ@mail.gmail.com>
- <CALkWK0nsO2EBLUrO_iWAdGYpULt=oug4yPDnczX9c44hzdwzqg@mail.gmail.com>
- <alpine.DEB.2.02.1201221310540.28747@asgard.lang.hm>
- <3BC64515-C4C0-4D32-97B0-8FFD14BB903C@silverinsanity.com>
- <CAP2yMaLHK2md=MHFmV--R6rmr4q3XuZxqsb2fUszMhssx3GDoA@mail.gmail.com>
- <CAFfmPPPvpbsYz9cjN6OspivCN3dbuPGOU7fyaVdnic3D4V855w@mail.gmail.com>
- <20120127001041.GB6158@burratino>
- <20120127003258.GA6946@burratino>
- <20120127004605.GA31538@burratino>
- <CAFfmPPN-g+Lk2n9tzXe=CfyK8OZ7nGu4NwX0cXjtxS0W7SwPHA@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 4/4] config: allow including config from repository blobs
+Date: Fri, 27 Jan 2012 08:27:16 +0100
+Message-ID: <4F2251D4.9060005@viscovery.net>
+References: <20120126073547.GA28689@sigill.intra.peff.net> <20120126074208.GD30474@sigill.intra.peff.net> <7vbopq2mk9.fsf@alter.siamese.dyndns.org> <20120126230054.GC12855@sigill.intra.peff.net> <7vsjj20yog.fsf@alter.siamese.dyndns.org> <20120127004902.GA15257@sigill.intra.peff.net> <7vd3a51zlb.fsf@alter.siamese.dyndns.org> <20120127054216.GA23633@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Scott Chacon <schacon@gmail.com>,
-	Brian Gernhardt <benji@silverinsanity.com>, david@lang.hm,
-	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: David Barr <davidbarr@google.com>
-X-From: git-owner@vger.kernel.org Fri Jan 27 08:20:37 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 27 08:27:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rqg6t-0000hz-0F
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 08:20:35 +0100
+	id 1RqgDe-0002Wv-JS
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Jan 2012 08:27:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755958Ab2A0HUa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jan 2012 02:20:30 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:45076 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751257Ab2A0HU3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jan 2012 02:20:29 -0500
-Received: by iacb35 with SMTP id b35so1714521iac.19
-        for <git@vger.kernel.org>; Thu, 26 Jan 2012 23:20:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=rg+JKKuWsHFWeWVxaWliJ+WpvegSnwC6Bd2g9V29sEU=;
-        b=YLZuoJPVI/d7WFli2f3qAG5QUs7nKHzozET9nb6fysJo37m4bKiCQCXWEE9C8DKGCl
-         POv/BvzyJ3Kb7PoNWsSxm6yX4FE4t5nm+W8OJlZ+prqjM3nFyZqL4nydfVGC+LzDx7ji
-         biJ7dv1Bq67era0zUwcXZXsbNxZlTUQTfg//k=
-Received: by 10.50.6.138 with SMTP id b10mr5385244iga.21.1327648829054;
-        Thu, 26 Jan 2012 23:20:29 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id vg9sm3268865igb.4.2012.01.26.23.20.27
-        (version=SSLv3 cipher=OTHER);
-        Thu, 26 Jan 2012 23:20:28 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CAFfmPPN-g+Lk2n9tzXe=CfyK8OZ7nGu4NwX0cXjtxS0W7SwPHA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756069Ab2A0H1X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jan 2012 02:27:23 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:20027 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756015Ab2A0H1W (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jan 2012 02:27:22 -0500
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1RqgDN-0000VJ-8f; Fri, 27 Jan 2012 08:27:17 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 004AF1660F;
+	Fri, 27 Jan 2012 08:27:16 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
+In-Reply-To: <20120127054216.GA23633@sigill.intra.peff.net>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189202>
 
-David Barr wrote:
+Am 1/27/2012 6:42, schrieb Jeff King:
+> That being said, I think it would be nicer for projects to carry meta
+> information like this out-of-tree in a special ref. It's just simpler to
+> work with, and it means the project's source isn't polluted with extra
+> junk.
 
-> I do think we need to gather Dmitry's work on svn-fe
+Really? I doubt that carrying configuration in a special ref outside the
+normal contents will have any practical relevance:
 
-Listed at [1].  Thanks for the nice and well maintained overview,
-Dmitry.
+To manage such a config file would mean to switch to a branch with
+entirely different contents. But before you can test the new configuration
+in action, you have to commit, switch branches, which exchanges the
+worktree completely; and if the config change didn't work out, repeat the
+process (and if we are talking about source code repository, this usally
+includes a complete rebuild). Sure, you could keep the config branch in a
+separate repository, but, again, how do you test an updated configuration?
+It is not funny, and nobody will go this route.
 
->                                                      and propose a
-> front-end for core so that it is no longer relegated to contrib.
+Which raises doubts about the usefulness of the include.ref feature.
 
-Yep.  Should such a remote helper link directly to the vcs-svn lib, or
-would it make sense to start with a script that makes use of svn-fe
-(possibly with a different name once it is hoisted out of contrib)?
-
-[1] http://divanorama.github.com/gsoc11/streams.html
+-- Hannes
