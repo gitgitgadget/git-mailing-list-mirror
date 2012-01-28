@@ -1,147 +1,125 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v2 1/2] gitweb: add project_filter to limit project list to a subdirectory
-Date: Sat, 28 Jan 2012 14:45:28 -0800 (PST)
-Message-ID: <m3wr8bcuon.fsf@localhost.localdomain>
+Subject: Re: [PATCH v2 2/2] gitweb: place links to parent directories in page header
+Date: Sat, 28 Jan 2012 14:54:55 -0800 (PST)
+Message-ID: <m3sjizcu8x.fsf@localhost.localdomain>
 References: <20120128165606.GA6770@server.brlink.eu>
+	<20120128165753.GA6795@server.brlink.eu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
 To: "Bernhard R. Link" <brl+git@mail.brlink.eu>
-X-From: git-owner@vger.kernel.org Sat Jan 28 23:45:56 2012
+X-From: git-owner@vger.kernel.org Sat Jan 28 23:55:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrH1v-00006O-FC
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jan 2012 23:45:55 +0100
+	id 1RrHB8-0002xa-8X
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jan 2012 23:55:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751987Ab2A1Wpb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jan 2012 17:45:31 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:40618 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751582Ab2A1Wpa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jan 2012 17:45:30 -0500
-Received: by eaal13 with SMTP id l13so666514eaa.19
-        for <git@vger.kernel.org>; Sat, 28 Jan 2012 14:45:29 -0800 (PST)
+	id S1752182Ab2A1Wy5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jan 2012 17:54:57 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:46278 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751582Ab2A1Wy5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jan 2012 17:54:57 -0500
+Received: by eekc14 with SMTP id c14so986601eek.19
+        for <git@vger.kernel.org>; Sat, 28 Jan 2012 14:54:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=x-authentication-warning:to:cc:subject:references:from:date
          :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=gpg3OJ95TJm6dVkT6qgCE3n81Y2mqwsKKQ4NOCkWtAQ=;
-        b=QFvA8IW+nKjE/GzbkjLeKWPl2lqjZfHsaVUq1tchDRNL0VQq1MBYO1j4Tg8Mn82p3M
-         h0nKEkN+zci1WjDk9JXF+B2NpEjTOy2sF6SKpFZPTBpR6LXuE6Bddb/vyicZ8QMTmH1r
-         RZ7Z/EOusLsYXtBwjPzi3mBMzD0LLDQ6TunC0=
-Received: by 10.213.29.2 with SMTP id o2mr1903492ebc.54.1327790729029;
-        Sat, 28 Jan 2012 14:45:29 -0800 (PST)
+        bh=0m6YOEjCqDN7Gcaxh4QHrPhtWfeVT4vjyKZi4IGT5/o=;
+        b=T9obXOs3YMw3IvXpZALffTvJHBafAs0Qj7xGkzaWs7JCExSdqJ9Y6tk/DjjV3DcFEY
+         rPVzuyrnPYZq82jT8nlu3RLDzVQO9nMN89UUAz7K6mZ/pDSEtF2MNCYkAzaWNEIh+VB7
+         kZS0tMqF24V7QChJLl15T7Pmr2FsYV0FY10hg=
+Received: by 10.14.13.129 with SMTP id b1mr857019eeb.41.1327791295830;
+        Sat, 28 Jan 2012 14:54:55 -0800 (PST)
 Received: from localhost.localdomain (abvp249.neoplus.adsl.tpnet.pl. [83.8.213.249])
-        by mx.google.com with ESMTPS id x4sm49855306eeb.4.2012.01.28.14.45.27
+        by mx.google.com with ESMTPS id o49sm1328474eeb.7.2012.01.28.14.54.54
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 28 Jan 2012 14:45:28 -0800 (PST)
+        Sat, 28 Jan 2012 14:54:55 -0800 (PST)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q0SMk1mM012945;
-	Sat, 28 Jan 2012 23:46:02 +0100
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q0SMtR1c013059;
+	Sat, 28 Jan 2012 23:55:28 +0100
 Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q0SMk03v012942;
-	Sat, 28 Jan 2012 23:46:00 +0100
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id q0SMtQOY013056;
+	Sat, 28 Jan 2012 23:55:26 +0100
 X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20120128165606.GA6770@server.brlink.eu>
+In-Reply-To: <20120128165753.GA6795@server.brlink.eu>
 User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189268>
 
 "Bernhard R. Link" <brl+git@mail.brlink.eu> writes:
 
-> This commit changes the project listings (project_list, project_index
-> and opml) to limit the output to only projects in a subdirectory if the
-> new optional parameter ?pf=directory name is used.
+Description?
+
+> Signed-off-by: Bernhard R. Link <brlink@debian.org>
 > 
-"project listings" to "projects listing views", isn't it?
-
-> The change is quite minimal as git_get_projects_list already can limit
-> itself to a subdirectory (though that was previously only used for
-> 'forks').
->
-Nice description, and more clear than before.
- 
-> If strict_export is enabled and there is no projects_list, it still
-> traverses the full tree and only filters afterwards to avoid anything
-> getting visible by this. Otherwise only the subtree needs to be
-> traversed, significantly reducing load times.
->
-I still don't understand interaction between project_filter ('pf'),
-$strict_export and $projects_list being either directory or a file
-with a list of projects.
-
-Does it mean, that when $projects_list is a file with a list of projects,
-and we use project_filter, then:
-
-* if $strict_export is false, then $project_list is ignored, and the
-  filtered list of projects is created by scanning
-  "$projectroot/$project_filter"
-
-* if $strict_export is true, then $project_list file is read in full,
-  and then filtered to project with $project_filter as prefix
- 
-Is it correct?  Is it sane, stated this way?
-
-> Reusing $project instead of adding a new parameter would have been
-> nicer from a UI point-of-view (including PATH_INFO support) but
-> would complicate the $project validating code that is currently being
-> used to ensure nothing is exported that should not be viewable.
+> ---
+> This patch was not yet part of v1.
 > 
-O.K.
+> I'm not sure this if having this as seperate patch or merged into 1/2
+> makes more sense.
 
-Anyway PATH_INFO support can be added in the future, by special casing
-situation where project list action is stated using PATH_INFO... I think.
-
-
-A few nitpicks with respect to patch itself.
-
-> @@ -2827,6 +2835,7 @@ sub git_get_project_url_list {
+While adding links that lead to gitweb URLs with project_filter
+parameter set, i.e. linking new feature in, could be postponed to a
+later commit, I think some way of notifying client that project list
+is filtered would be better to have in 1/2.
+ 
+>  gitweb/gitweb.perl |   23 ++++++++++++++++++++++-
+>  1 files changed, 22 insertions(+), 1 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index a114bd4..ddce27d 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -3841,7 +3841,18 @@ sub print_nav_breadcrumbs {
 >  
->  sub git_get_projects_list {
->  	my $filter = shift || '';
-> +	my $paranoid = shift || 0;
->  	my @list;
->  
+>  	print $cgi->a({-href => esc_url($home_link)}, $home_link_str) . " / ";
+>  	if (defined $project) {
+> -		print $cgi->a({-href => href(action=>"summary")}, esc_html($project));
+> +		my @dirname = split '/', $project;
+> +		my $projectbasename = pop @dirname;
+> +		my $dirprefix = undef;
+> +		while (my $part = shift @dirname) {
+> +			$dirprefix .= "/" if defined $dirprefix;
+> +			$dirprefix .= $part;
+> +			print $cgi->a({-href => href(project => undef,
+> +			                             project_filter => $dirprefix,
+> +			                             action=>"project_list")},
+> +			              esc_html($part)) . " / ";
+> +		}
+> +		print $cgi->a({-href => href(action=>"summary")}, esc_html($projectbasename));
+>  		if (defined $action) {
+>  			my $action_print = $action ;
+>  			if (defined $opts{-action_extra}) {
 
-First, undefined value is false in Perl, so there is no need for
-" || 0" in setting $paranoid variable.
+Nice solution.
 
-Second, why not use global variable $strict_export instead of adding
-another parameter to git_get_projects_list()?
-
-> @@ -5979,7 +5994,7 @@ sub git_project_list {
->  		die_error(400, "Unknown order parameter");
->  	}
->  
-> -	my @list = git_get_projects_list();
-> +	my @list = git_get_projects_list($project_filter, $strict_export);
->  	if (!@list) {
->  		die_error(404, "No projects found");
->  	}
-
-[...]
-
-> @@ -3963,9 +3976,11 @@ sub git_footer_html {
+> @@ -3854,6 +3865,16 @@ sub print_nav_breadcrumbs {
+>  			print " / $opts{-action_extra}";
 >  		}
->  
->  	} else {
-> -		print $cgi->a({-href => href(project=>undef, action=>"opml"),
-> +		print $cgi->a({-href => href(project=>undef, action=>"opml",
-> +		                             project_filter => $project_filter),
->  		              -class => $feed_class}, "OPML") . " ";
-> -		print $cgi->a({-href => href(project=>undef, action=>"project_index"),
-> +		print $cgi->a({-href => href(project=>undef, action=>"project_index",
-> +		                             project_filter => $project_filter),
->  		              -class => $feed_class}, "TXT") . "\n";
+>  		print "\n";
+> +	} elsif (defined $project_filter) {
+> +		my @dirname = split '/', $project_filter;
+> +		my $dirprefix = undef;
+> +		while (my $part = shift @dirname) {
+> +			$dirprefix .= "/" if defined $dirprefix;
+> +			$dirprefix .= $part;
+> +			print $cgi->a({-href => href(project_filter => $dirprefix,
+> +			                             action=>"project_list")},
+> +			              esc_html($part)) . " / ";
+> +		}
 >  	}
+>  }
 
-O.K.
+Hmmm... I'd have to check how it looks like, but seems like a good
+idea... even if there is a little bit of code duplication.
 
 -- 
 Jakub Narebski
