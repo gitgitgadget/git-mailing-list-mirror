@@ -1,65 +1,72 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] git-completion: workaround zsh COMPREPLY bug
-Date: Sat, 28 Jan 2012 19:18:07 +0200
-Message-ID: <CAMP44s27i=5iX9Dr+TmOLKaAa0=TC-JwED5WuiDguBuBbfMEhQ@mail.gmail.com>
-References: <1327455422-22340-1-git-send-email-felipe.contreras@gmail.com>
-	<vpqwr8g8c03.fsf@bauges.imag.fr>
-	<CAMP44s16L0GJUh4JcQgjBXUf4ftT7yQFgPy0p6zCNMnZjZGQww@mail.gmail.com>
-	<vpqr4ynzbj7.fsf@bauges.imag.fr>
+Subject: Re: What's cooking in git.git (Jan 2012, #06; Fri, 27)
+Date: Sat, 28 Jan 2012 19:23:29 +0200
+Message-ID: <CAMP44s0FBm3_P--wykHRXROSQLFgmDeVwr2cyEgk33QBfYbdSA@mail.gmail.com>
+References: <7vipjwzvc2.fsf@alter.siamese.dyndns.org>
+	<7v7h0czur2.fsf@alter.siamese.dyndns.org>
+	<7vfwf0xu8a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sat Jan 28 18:40:28 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 28 18:40:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrCFs-0000o9-Qa
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jan 2012 18:40:01 +0100
+	id 1RrCFu-0000o9-JH
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jan 2012 18:40:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753480Ab2A1RSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jan 2012 12:18:10 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:56382 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752722Ab2A1RSJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Jan 2012 12:18:09 -0500
-Received: by lagu2 with SMTP id u2so1518099lag.19
-        for <git@vger.kernel.org>; Sat, 28 Jan 2012 09:18:07 -0800 (PST)
+	id S1752349Ab2A1Ra2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Jan 2012 12:30:28 -0500
+Received: from mail-lpp01m020-f174.google.com ([209.85.217.174]:54867 "EHLO
+	mail-lpp01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751788Ab2A1Ra1 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jan 2012 12:30:27 -0500
+X-Greylist: delayed 417 seconds by postgrey-1.27 at vger.kernel.org; Sat, 28 Jan 2012 12:30:27 EST
+Received: by lbom4 with SMTP id m4so154272lbo.19
+        for <git@vger.kernel.org>; Sat, 28 Jan 2012 09:30:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ivS6acM63oXVfenC5M//mIboSqekE+QGVY+y+D7GuFA=;
-        b=rEVvi/8yX3yuGAKNB1zaAHKlEk9yDPvNnIRvDTFh3UQx3bZJWKskIncMVgZ4JoqKT0
-         3X0KWFTriyJWtjVQZ2CGgKpsParm+R1ZB+cfQudOXRRs23S+enhYfLNl6TUBDtYmQhL4
-         LBx1R0H3lTcbEElHiH9UscakkStAWgOXrzuRA=
-Received: by 10.112.101.134 with SMTP id fg6mr2973452lbb.63.1327771087798;
- Sat, 28 Jan 2012 09:18:07 -0800 (PST)
-Received: by 10.112.10.169 with HTTP; Sat, 28 Jan 2012 09:18:07 -0800 (PST)
-In-Reply-To: <vpqr4ynzbj7.fsf@bauges.imag.fr>
+         :cc:content-type:content-transfer-encoding;
+        bh=W+Jbl9VktA7jeR8mstWMy9EYisJB8suVd42FDRHo68I=;
+        b=wXNDOaj6e+jeduEOc7Rjexlh00Xx/25e54P0BGFhr3TtfKlGkmhVZYjYrocNADnF2i
+         VkB+OXN3hzBrn683XJzz3FCY4oz7nMBV/jIU07cIN6xHPgho47GinzAXJ9Xrj37XbK3c
+         h5uRrJGZjweneZyLFtx7YJi3zQOa2on/g33ls=
+Received: by 10.112.82.226 with SMTP id l2mr2957786lby.102.1327771409641; Sat,
+ 28 Jan 2012 09:23:29 -0800 (PST)
+Received: by 10.112.10.169 with HTTP; Sat, 28 Jan 2012 09:23:29 -0800 (PST)
+In-Reply-To: <7vfwf0xu8a.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189258>
 
-On Thu, Jan 26, 2012 at 12:02 AM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> I still have a minor comment: maybe part of your commit message could go
-> to a comment in the code as well, in particular the "Once zsh is fixed"
-> part, to help future contributors to actually disable the workaround
-> when possible in the future.
+On Sat, Jan 28, 2012 at 7:37 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> * mm/zsh-completion-regression-fix (2012-01-17) 1 commit
+>> =C2=A0 (merged to 'next' on 2012-01-23 at 7bc2e0a)
+>> =C2=A0+ bash-completion: don't add quoted space for ZSH (fix regress=
+ion)
+>>
+>> Will merge early in the next cycle and deal with any fallout in 'mas=
+ter'.
+>
+> This topic has been superseded by Felipe's f15026b (git-completion:
+> workaround zsh COMPREPLY bug, 2012-01-25) to use "typeset -h IFS", so=
+ I
+> should drop this.
+>
+> Am I mistaken?
 
-FTR, I've fixed all the issues in zsh's bash completion:
+That's correct.
 
-http://thread.gmane.org/gmane.comp.shells.zsh.devel/24290
-
-Now I don't need the workaround and it works just like in bash :)
-However, zsh devs seem very quiet.
-
-Cheers.
-
--- 
-Felipe Contreras
+--=20
+=46elipe Contreras
