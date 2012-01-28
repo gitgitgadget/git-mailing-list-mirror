@@ -1,160 +1,78 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Revert "gitweb: Time::HiRes is in core for Perl 5.8"
-Date: Sat, 28 Jan 2012 18:48:48 +0100
-Message-ID: <201201281848.49483.jnareb@gmail.com>
-References: <hbf.20120123rqzg@bombur.uio.no> <201201271845.39576.jnareb@gmail.com> <7vty3gzxhs.fsf@alter.siamese.dyndns.org>
+From: walt <w41ter@gmail.com>
+Subject: Re: Bisecting through the middle of a big merge?
+Date: Sat, 28 Jan 2012 10:15:51 -0800
+Message-ID: <jg1e0t$5cs$1@dough.gmane.org>
+References: <jfve09$ih5$1@dough.gmane.org> <m239b0fbpb.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-	<avarab@gmail.com>,
-	Hallvard Breien Furuseth <h.b.furuseth@usit.uio.no>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 28 18:48:51 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 28 19:34:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrCOO-0000q6-4h
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jan 2012 18:48:48 +0100
+	id 1RrD6v-0002nK-UH
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jan 2012 19:34:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751831Ab2A1RsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jan 2012 12:48:20 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:47658 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751390Ab2A1RsT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jan 2012 12:48:19 -0500
-Received: by eekc14 with SMTP id c14so931534eek.19
-        for <git@vger.kernel.org>; Sat, 28 Jan 2012 09:48:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=dT4oSToMtSHDkQNiEkErLc5efKCWkUSkYtMoeuaZ/vw=;
-        b=PlBWzdaXg++eGKV1/QWk+dHSglYDlh8X+It4Zsxzl/TbYLDob5Fx3TWn/GaO31ys6A
-         2Gb5Bw+neHLXA4IxoMXLgTHxDvNxn2vEx7qNBBDXFyhhnzCd4d7qYLexUNZkEkCTLnx4
-         4LWDHo57Qj1gZ0qQI3TYq8ZbXEvBF4mZ65N+E=
-Received: by 10.14.40.79 with SMTP id e55mr3696144eeb.26.1327772897990;
-        Sat, 28 Jan 2012 09:48:17 -0800 (PST)
-Received: from [192.168.1.13] (abvp249.neoplus.adsl.tpnet.pl. [83.8.213.249])
-        by mx.google.com with ESMTPS id n17sm46613481eei.3.2012.01.28.09.48.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 28 Jan 2012 09:48:17 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vty3gzxhs.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751975Ab2A1Sep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jan 2012 13:34:45 -0500
+Received: from plane.gmane.org ([80.91.229.3]:50266 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751800Ab2A1Sep (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jan 2012 13:34:45 -0500
+X-Greylist: delayed 1105 seconds by postgrey-1.27 at vger.kernel.org; Sat, 28 Jan 2012 13:34:45 EST
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RrCor-0001qq-SQ
+	for git@vger.kernel.org; Sat, 28 Jan 2012 19:16:09 +0100
+Received: from adsl-69-234-196-147.dsl.irvnca.pacbell.net ([69.234.196.147])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 28 Jan 2012 19:16:09 +0100
+Received: from w41ter by adsl-69-234-196-147.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 28 Jan 2012 19:16:09 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-196-147.dsl.irvnca.pacbell.net
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:9.0) Gecko/20120106 Thunderbird/9.0
+In-Reply-To: <m239b0fbpb.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189264>
 
-On Fri, 27 Jan 2012, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
+On 01/28/2012 12:55 AM, Andreas Schwab wrote:
+> walt <w41ter@gmail.com> writes:
 > 
-> > Though Time::HiRes is a core Perl module, it doesn't necessarily mean
-> > that it is included in 'perl' package, and that it is installed if
-> > Perl is installed.
+>> There are many individual commits from Tejun Heo et al included
+>> in that one big commit from Linus.  Unfortunately for me, some of
+>> those commits cause other problems that I'm not trying to bisect;
+>> other problems that evidently get fixed by other commits in the
+>> same big merge.
+>>
+>> So I do 'git bisect skip' six or eight times until the 'false' bug
+>> goes away, and that leaves me at the end of the bisect without finding
+>> the individual commit that's causing my 'real' bug.
+>>
+>> How do you experts handle this kind of problem?
 > 
-> I do not think we have seen the end of Redhat/Fedora Perl saga.  I am
-> hoping that either one of the two things to happen:
-> 
->  (1) Redhat/Fedora distrubution reconsiders the situation and fix their
->      packages so that by default when its users ask for "Perl" they get
->      what the upstream distributes as "Perl" in full, while still allowing
->      people who know what they are doing to install a minimum subset
->      "perl-base"; or
-> 
->  (2) Many applications that use and rely on Perl like we do are hit by
->      this issue, and Redhat/Fedora users are trained to install the
->      perl-full (or whatever it is called) package when applications want
->      "Perl".
-> 
-> In other words, I am hoping that "it doesn't necessarily mean" will not
-> stay true for a long time.  So please hold onto this patch until the dust
-> settles, and resend it if (1) does not look to be happening in say 3
-> months.
- 
-So for the time being (those "3 months") you would apply instead your
-change to INSTALL (or equivalent to gitweb/INSTALL) mentioning Time::HiRes
-issue, and perhaps also original patch by Hallvard skipping gitweb tests
-if Time::HiRes is not available, isn't it?
- 
-> > For example RedHat has split it out to a separate RPM perl-Time-HiRes.
+> If you can identify the commit that fixes the unrelated problem you can
+> try to cherry-pick it during the bisect.
 
-[...]
-> > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> > index abb5a79..c86224a 100755
-> > --- a/gitweb/gitweb.perl
-> > +++ b/gitweb/gitweb.perl
-> > @@ -17,10 +17,12 @@ use Encode;
-> >  use Fcntl ':mode';
-> >  use File::Find qw();
-> >  use File::Basename qw(basename);
-> > -use Time::HiRes qw(gettimeofday tv_interval);
-> >  binmode STDOUT, ':utf8';
-> >  
-> > -our $t0 = [ gettimeofday() ];
-> > +our $t0;
-> > +if (eval { require Time::HiRes; 1; }) {
-> > +	$t0 = [Time::HiRes::gettimeofday()];
-> > +}
-> >  our $number_of_git_cmds = 0;
-> 
-> Why should these even be initialized here?  Doesn't reset_timer gets
-> called at the beginning of run_request()?
+Thanks Andreas.  With an eye to doing that, is there an easy way to
+get a list of all the commits included in Linus's merge?  (I mean a
+more accurate list than Linus casually mentions in his commit message.)
 
-I think it predates adding reset_timer() to gitweb.  Anyway $t0 has
-to be set to something defined anyway to denote that Time::HiRes is
-available... though if Time::HiRes is required unconditionally it would
-not be really needed, and we can always check $INC{'Time/HiRes.pm'}
-if it was loaded or not.
+Trying to build that mental model I mentioned:  All the commits from
+Tejun Heo are dated mid-December but Linus didn't commit them until
+mid-January.  When I'm bisecting through that merge, git builds the
+kernels with names like vmlinuz-3.2.0-rc5-foo, i.e. names a month
+older than Linus's current kernel version.  Where does git get those
+older names during the bisect?  And does my working tree exclude all
+of Linus's commits made later than 3.2.0-rc5-foo?
 
-> >  BEGIN {
-> > @@ -1142,7 +1144,7 @@ sub dispatch {
-> >  }
-> >  
-> >  sub reset_timer {
-> > -	our $t0 = [ gettimeofday() ]
-> > +	our $t0 = [Time::HiRes::gettimeofday()]
-> >  		if defined $t0;
-> >  	our $number_of_git_cmds = 0;
-> 
-> The statement modifier look ugly.
-> 
-> More importantly, if you are not profiling, i.e. if we didn't initialize
-> $t0 at the beginning, do you need to reset $number_of_git_cmds at all?
-> 
-> I also think this should take gitweb_check_feature('timed') into
-> account, perhaps like this:
-> 
-> 	sub reset_timer {
->         	return unless gitweb_check_feature('timed');
->                 our $t0 = ...
->                 our $number_of_git_cmds = 0;
-> 	}
-> 
-> Then all the other
-> 
-> 	if (defined $t0 && gitweb_check_feature('timed'))
-> 
-> can become
-> 
-> 	if (defined $t0)
-
-I think this is a good idea... though it would complicate applying revert
-a bit ;-(
-
-> If you go this route, even though tee-zero, the beginning of the time, is
-> a good name for the variable, you may want to rename it to avoid confusing
-> readers who might take it as a temporary variable #0.
-
-Good idea.  $request_start_time perhaps?  Or $time_start?
-
--- 
-Jakub Narebski
-Poland
+Many thanks.
