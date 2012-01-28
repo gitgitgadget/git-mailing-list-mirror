@@ -1,66 +1,105 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Bisecting through the middle of a big merge?
-Date: Sat, 28 Jan 2012 09:55:28 +0100
-Message-ID: <m239b0fbpb.fsf@igel.home>
-References: <jfve09$ih5$1@dough.gmane.org>
+From: "Bernhard R. Link" <brl+list+git@mail.brlink.eu>
+Subject: Re: [PATCH] gitweb: add pf= to limit project list to a subdirectory
+Date: Sat, 28 Jan 2012 16:37:50 +0100
+Message-ID: <20120128153750.GB3397@server.brlink.eu>
+References: <20120126144517.GA4229@server.brlink.eu>
+ <m31uqkepx6.fsf@localhost.localdomain>
+ <20120127235330.GA2718@server.brlink.eu>
+ <201201281553.29387.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: walt <w41ter@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 28 18:38:25 2012
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 28 18:39:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrCEB-0000o9-PX
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jan 2012 18:38:16 +0100
+	id 1RrCFU-0000o9-8V
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jan 2012 18:39:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752092Ab2A1Izd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jan 2012 03:55:33 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:47691 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752034Ab2A1Izc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jan 2012 03:55:32 -0500
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 2BC651C01A21;
-	Sat, 28 Jan 2012 09:55:29 +0100 (CET)
-X-Auth-Info: 3QauQzE38oJfRGukuAr97d/hJ7bQwT6q4RbacXx97lM=
-Received: from igel.home (ppp-88-217-122-153.dynamic.mnet-online.de [88.217.122.153])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 210801C0007F;
-	Sat, 28 Jan 2012 09:55:29 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id C3E6ECA299; Sat, 28 Jan 2012 09:55:28 +0100 (CET)
-X-Yow: The LOGARITHM of an ISOSCELES TRIANGLE is TUESDAY WELD!!
-In-Reply-To: <jfve09$ih5$1@dough.gmane.org> (walt's message of "Fri, 27 Jan
-	2012 16:03:20 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.92 (gnu/linux)
+	id S1753551Ab2A1Phi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jan 2012 10:37:38 -0500
+Received: from server.brlink.eu ([78.46.187.186]:54050 "EHLO server.brlink.eu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753289Ab2A1Phe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jan 2012 10:37:34 -0500
+Received: from mfs.mathematik.uni-freiburg.de ([132.230.30.170] helo=client.brlink.eu)
+	by server.brlink.eu with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <brl@mail.brlink.eu>)
+	id 1RrALM-00036m-Ox; Sat, 28 Jan 2012 16:37:32 +0100
+Received: from brl by client.brlink.eu with local (Exim 4.77)
+	(envelope-from <brl@mail.brlink.eu>)
+	id 1RrALe-0000w2-HO; Sat, 28 Jan 2012 16:37:50 +0100
+Content-Disposition: inline
+In-Reply-To: <201201281553.29387.jnareb@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189254>
 
-walt <w41ter@gmail.com> writes:
-
-> There are many individual commits from Tejun Heo et al included
-> in that one big commit from Linus.  Unfortunately for me, some of
-> those commits cause other problems that I'm not trying to bisect;
-> other problems that evidently get fixed by other commits in the
-> same big merge.
+* Jakub Narebski <jnareb@gmail.com> [120128 15:53]:
+> On Sat, 28 Jan 2012, Bernhard R. Link wrote:
+> > The project list takes often a very long time and searching in that list
+> > takes the same time (and would also show projects not starting with the
+> > text).
 >
-> So I do 'git bisect skip' six or eight times until the 'false' bug
-> goes away, and that leaves me at the end of the bisect without finding
-> the individual commit that's causing my 'real' bug.
+> There are at least two ways to speed up getting projects list page.
+
+There are other ways, but they are both limited and quite backward:
+Instead of showing me the information I want (what is in that
+directory), I guess to search in the larger pool of information needing
+all sort of half-working tricks causing all kinds of other problems
+working around the issue that much more information never used must be
+collected first.
+
+Subversion's ViewVC for example only shows what is in some directory
+directory and available subdirectories. (That of course has the
+disadvantage to make it harder to find a project one does not know
+the subdirectory it is in, but why shouldn't gitweb offer the best of
+both worlds?)
+
+> First is to limit number of projects shown, like e.g. http://repo.or.cz
+> which shows only search form and tag cloud, but no projects, or at least
+> paginate (divide into pages of e.g. 100 projects) list of projects.
+
+But a page showing all projects (as long as it is possible) is something
+I'd quite miss if it is gone. What I want is some way to have that and
+to also be able to look at some subset interesting to me directly in an
+effective way.
+
+> Second solution would be to finally add caching support to gitweb,
+
+But caching also means new projects or changes will take some time to
+show up. And again it would not be a solution to by original problem.
+(Showing effectively what is in some directory).
+
+> > I'd for example like to be able to place a link to all projects shown
+> > at http://anonscm.debian.org/gitweb/ which are below mirrorer/ and get
+> > a not having to wait for description information being extracted for all
+> > the other projects.
 >
-> How do you experts handle this kind of problem?
+> I would prefer instead of introducing yet another arbitrary parameter
+> extend project searching, so that you can specify that you want to
+> search project names only (IIRC I have a patch for that, or beginnings
+> of one, in my StGit stack), and use prefix search by the way of regexp
+> search.
 
-If you can identify the commit that fixes the unrelated problem you can
-try to cherry-pick it during the bisect.
+> So
+>
+>   pf=mirrorer/
+>
+> would be
+>
+>   s=^mirrorer/;sr=1;st=project_name
 
-Andreas.
+That might be a workaround, but still need to look at quite some amount
+of unecessary data (i.e. it would need to run at least as long as a
+http://anonscm.debian.org/gitweb/?a=project_index would not to load,
+wouldn't it?)
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+        Bernhard R. Link
