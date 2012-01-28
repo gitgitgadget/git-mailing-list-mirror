@@ -1,14 +1,13 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: What's cooking in git.git (Jan 2012, #06; Fri, 27)
-Date: Sat, 28 Jan 2012 19:23:29 +0200
-Message-ID: <CAMP44s0FBm3_P--wykHRXROSQLFgmDeVwr2cyEgk33QBfYbdSA@mail.gmail.com>
-References: <7vipjwzvc2.fsf@alter.siamese.dyndns.org>
-	<7v7h0czur2.fsf@alter.siamese.dyndns.org>
-	<7vfwf0xu8a.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb showing slash r at the end of line
+Date: Sat, 28 Jan 2012 18:02:43 +0100
+Message-ID: <201201281802.44339.jnareb@gmail.com>
+References: <1327673954458-7229895.post@n2.nabble.com> <m3aa58eskw.fsf@localhost.localdomain> <7vvcnwybxj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Ondra Medek <xmedeko@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
 X-From: git-owner@vger.kernel.org Sat Jan 28 18:40:34 2012
 Return-path: <git-owner@vger.kernel.org>
@@ -16,57 +15,79 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrCFu-0000o9-JH
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jan 2012 18:40:02 +0100
+	id 1RrCFp-0000o9-Qk
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jan 2012 18:39:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752349Ab2A1Ra2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Jan 2012 12:30:28 -0500
-Received: from mail-lpp01m020-f174.google.com ([209.85.217.174]:54867 "EHLO
-	mail-lpp01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751788Ab2A1Ra1 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jan 2012 12:30:27 -0500
-X-Greylist: delayed 417 seconds by postgrey-1.27 at vger.kernel.org; Sat, 28 Jan 2012 12:30:27 EST
-Received: by lbom4 with SMTP id m4so154272lbo.19
-        for <git@vger.kernel.org>; Sat, 28 Jan 2012 09:30:26 -0800 (PST)
+	id S1752750Ab2A1RCP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jan 2012 12:02:15 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:55793 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751477Ab2A1RCO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jan 2012 12:02:14 -0500
+Received: by eekc14 with SMTP id c14so921320eek.19
+        for <git@vger.kernel.org>; Sat, 28 Jan 2012 09:02:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=W+Jbl9VktA7jeR8mstWMy9EYisJB8suVd42FDRHo68I=;
-        b=wXNDOaj6e+jeduEOc7Rjexlh00Xx/25e54P0BGFhr3TtfKlGkmhVZYjYrocNADnF2i
-         VkB+OXN3hzBrn683XJzz3FCY4oz7nMBV/jIU07cIN6xHPgho47GinzAXJ9Xrj37XbK3c
-         h5uRrJGZjweneZyLFtx7YJi3zQOa2on/g33ls=
-Received: by 10.112.82.226 with SMTP id l2mr2957786lby.102.1327771409641; Sat,
- 28 Jan 2012 09:23:29 -0800 (PST)
-Received: by 10.112.10.169 with HTTP; Sat, 28 Jan 2012 09:23:29 -0800 (PST)
-In-Reply-To: <7vfwf0xu8a.fsf@alter.siamese.dyndns.org>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=WROOVw3whYTiNkdIKhrl8yzlyVDZpzBtmtu8vZV/Ets=;
+        b=mqX4p6DWWDs2g1sm5JaLrfGJXexqcW0UtmaBovtmv8FXErnGh833rJ6Umi3jmLDbGE
+         hxAaULMdo9ZaWIy2EqN4SxngLIxuSTSefJ8cddMcddGsx5HCwOuRCPs9rTDA8vvhEWla
+         ZfEIWEmaGzkRGiiQFNnrArf9N4gm2fwULvHWE=
+Received: by 10.14.11.92 with SMTP id 68mr3520558eew.54.1327770133331;
+        Sat, 28 Jan 2012 09:02:13 -0800 (PST)
+Received: from [192.168.1.13] (abvp249.neoplus.adsl.tpnet.pl. [83.8.213.249])
+        by mx.google.com with ESMTPS id e12sm46070303eea.5.2012.01.28.09.02.11
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 28 Jan 2012 09:02:12 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vvcnwybxj.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189259>
 
-On Sat, Jan 28, 2012 at 7:37 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> * mm/zsh-completion-regression-fix (2012-01-17) 1 commit
->> =C2=A0 (merged to 'next' on 2012-01-23 at 7bc2e0a)
->> =C2=A0+ bash-completion: don't add quoted space for ZSH (fix regress=
-ion)
+On Sat, 28 Jan 2012, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>> Ondra Medek <xmedeko@gmail.com> writes:
 >>
->> Will merge early in the next cycle and deal with any fallout in 'mas=
-ter'.
->
-> This topic has been superseded by Felipe's f15026b (git-completion:
-> workaround zsh COMPREPLY bug, 2012-01-25) to use "typeset -h IFS", so=
- I
-> should drop this.
->
-> Am I mistaken?
+>>> we have gitweb running on Linux box. Some files have Windows line ending
+>>> (CRLF) end we do not use core.autcrlf translation. gitweb show the last \r
+>>> in the end of each line, which is annoying.
+>>
+>> Well, this "\r" allows to recognize when file with Windows line ending
+>> (CRLF) made it into repository... which usually is discouraged.  But
+>> if you allow this, I can understand that those "\r" at the end of
+>> every line can be annoying.
+> 
+> I think the right thing to do is:
+> 
+>  * If the repository data is _supposed_ to have CRLF endings (e.g. check
+>    with core.crlf or something), strip \r and do not show them.
+> 
+>  * Otherwise, i.e. if the repository data is supposed _not_ to have CRLF
+>    endings, do show these '\r'.  Annoyance here is a *feature* to remind
+>    the viewer that the contents needs _fixing_.
+> 
+>  * No other switches.
 
-That's correct.
+I agree that it would be a bast solution if gitweb could automatically
+infer whether CRLF is allowed (whitelist) or disallowed (blacklist) in
+files in given repository.  
 
---=20
-=46elipe Contreras
+But I am not sure if it is possible and what rules there should be for
+a *BARE* repository; crlf and eol gitattributes and config variables
+are about what should appear in working area - something gitweb is not
+interested in at all.
+
+If gitweb code was structured in different way, we could check if all
+lines end in LF or all lines end in CRLF and add a note about that to
+file or diff header, showing "\r" only in case of mixed line endings...
+But that's a futile wish, for now at least.
+
+-- 
+Jakub Narebski
+Poland
