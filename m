@@ -1,73 +1,60 @@
-From: "Bernhard R. Link" <brl+git@mail.brlink.eu>
-Subject: [PATCH v4 2/2] gitweb: place links to parent directories in page
- header
-Date: Sun, 29 Jan 2012 17:13:16 +0100
-Message-ID: <20120129161316.GD13937@server.brlink.eu>
-References: <20120128165606.GA6770@server.brlink.eu>
- <m3wr8bcuon.fsf@localhost.localdomain>
- <20120129012234.GD16079@server.brlink.eu>
- <201201291354.50241.jnareb@gmail.com>
- <20120129160615.GA13937@server.brlink.eu>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH V4] git on Mac OS and precomposed unicode
+Date: Sun, 29 Jan 2012 17:26:52 +0100
+Message-ID: <CABPQNSYwuo0vXUj2ZWPHihZFpvwao+G8nWTEiBFFUm2xWdd5nQ@mail.gmail.com>
+References: <201201212036.57632.tboegi@web.de> <1327184934.31804.32.camel@centaur.lab.cmartin.tk>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 29 17:13:07 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Sun Jan 29 17:28:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrXNI-0005ju-Jd
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Jan 2012 17:13:04 +0100
+	id 1RrXbl-00049C-20
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Jan 2012 17:28:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753021Ab2A2QM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jan 2012 11:12:59 -0500
-Received: from server.brlink.eu ([78.46.187.186]:54075 "EHLO server.brlink.eu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752692Ab2A2QM6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jan 2012 11:12:58 -0500
-Received: from mfs.mathematik.uni-freiburg.de ([132.230.30.170] helo=client.brlink.eu)
-	by server.brlink.eu with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <brl@mail.brlink.eu>)
-	id 1RrXNB-0005Eq-IR; Sun, 29 Jan 2012 17:12:57 +0100
-Received: from brl by client.brlink.eu with local (Exim 4.77)
-	(envelope-from <brl@mail.brlink.eu>)
-	id 1RrXNU-0003t0-4s; Sun, 29 Jan 2012 17:13:16 +0100
-Content-Disposition: inline
-In-Reply-To: <20120129160615.GA13937@server.brlink.eu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753007Ab2A2Q1d convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Jan 2012 11:27:33 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:59002 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752692Ab2A2Q1c convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Jan 2012 11:27:32 -0500
+Received: by pbaa10 with SMTP id a10so3095303pba.19
+        for <git@vger.kernel.org>; Sun, 29 Jan 2012 08:27:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=7c0evhWfHKRhHKAAcswbX6O1cAm9AIfgNC/T266M+g4=;
+        b=LcmSlkUWMcRgaufRiv5NErurwvOSlKkNGQwm8DY1uZp52hQG8wbHG+oXwfurGH77JE
+         YJrDAy8tvtE2AE969ehTbhDM04KwgqARvKQj5iLYIcmDfWN3t9KAFZ9/IU0zqWx45Afw
+         FkHlvIpEV1CwrnpanF62iSy9sIEfJuExCXCRs=
+Received: by 10.68.73.234 with SMTP id o10mr34001358pbv.90.1327854452170; Sun,
+ 29 Jan 2012 08:27:32 -0800 (PST)
+Received: by 10.68.27.103 with HTTP; Sun, 29 Jan 2012 08:26:52 -0800 (PST)
+In-Reply-To: <1327184934.31804.32.camel@centaur.lab.cmartin.tk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189293>
 
-Change html page headers to not only link the project root and the
-currently selected project but also the directories in between using
-project_filter.
+On Sat, Jan 21, 2012 at 11:28 PM, Carlos Mart=EDn Nieto <cmn@elego.de> =
+wrote:
+> On Sat, 2012-01-21 at 20:36 +0100, Torsten B=F6gershausen wrote:
+>> * (Not all Windows versions support UTF-8 yet:
+>> =A0 =A0Msysgit needs the unicode branch, cygwin supports UTF-8 since=
+ 1.7)
+>
+> This might be overly pedantic, but Windows doesn't really deal with
+> UTF-8. To use Unicode you need to use the "wide" variant of the
+> functions, and those take UTF-16.
 
-Signed-off-by: Bernhard R. Link <brlink@debian.org>
----
- gitweb/gitweb.perl |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index f0e03d8..e2a9146 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3853,7 +3853,10 @@ sub print_nav_breadcrumbs {
- 
- 	print $cgi->a({-href => esc_url($home_link)}, $home_link_str) . " / ";
- 	if (defined $project) {
--		print $cgi->a({-href => href(action=>"summary")}, esc_html($project));
-+		my @dirname = split '/', $project;
-+		my $projectbasename = pop @dirname;
-+		print_nav_breadcrumbs_path(@dirname);
-+		print $cgi->a({-href => href(action=>"summary")}, esc_html($projectbasename));
- 		if (defined $action) {
- 			my $action_print = $action ;
- 			if (defined $opts{-action_extra}) {
--- 
-1.7.8.3
+This is exactly what the 'unicode'-branch in msysGit does, so the
+comment is not incorrect at all.
