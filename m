@@ -1,63 +1,42 @@
-From: Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: [PATCH] completion: --edit-description option for git-branch
-Date: Sun, 29 Jan 2012 13:55:33 +0100
-Message-ID: <1327841733-999-1-git-send-email-ralf.thielow@googlemail.com>
-Cc: git@vger.kernel.org, Ralf Thielow <ralf.thielow@googlemail.com>
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Sun Jan 29 13:55:54 2012
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH V4] git on Mac OS and precomposed unicode
+Date: Sun, 29 Jan 2012 13:57:35 +0100
+Message-ID: <4F25423F.7080006@web.de>
+References: <201201212036.57632.tboegi@web.de> <7vsjj8acmh.fsf@alter.siamese.dyndns.org> <CACsJy8BKQHLdoXfSKsULkWWbWjWEuZgr=bVNKmgCSArvwbf2UA@mail.gmail.com> <4F251FA1.80400@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Jan 29 13:58:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrUIN-0004at-9m
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Jan 2012 13:55:47 +0100
+	id 1RrUKf-0005R7-I1
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Jan 2012 13:58:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752239Ab2A2Mzn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jan 2012 07:55:43 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:48590 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752110Ab2A2Mzm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jan 2012 07:55:42 -0500
-Received: by eaal13 with SMTP id l13so795450eaa.19
-        for <git@vger.kernel.org>; Sun, 29 Jan 2012 04:55:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=3rTAOhHTutt1u29nDWp10+uz4qk7qQ1c9LpajTzyVak=;
-        b=JM+imgzn+E3L+i6bJu0qHMl1GqCEU682B/zoBLpBLudFUmrDNtHo66YptEYF5hCk0k
-         VAhj3NgjYvrCAnf/uC1ONoATicoaHmw707rZCuoTNl33e9ZH7+h5zFO+DSthQ+XKCMWj
-         BoV1Aob5MnnKgHosqAZ7UZwyS4Y37YVwYouWU=
-Received: by 10.213.20.131 with SMTP id f3mr2240227ebb.35.1327841741515;
-        Sun, 29 Jan 2012 04:55:41 -0800 (PST)
-Received: from ralf-ubuntu.zw.xcom.de (dslb-094-223-179-054.pools.arcor-ip.net. [94.223.179.54])
-        by mx.google.com with ESMTPS id e12sm58025644eea.5.2012.01.29.04.55.39
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 29 Jan 2012 04:55:40 -0800 (PST)
-X-Mailer: git-send-email 1.7.9
+	id S1752890Ab2A2M5y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jan 2012 07:57:54 -0500
+Received: from smtp-out11.han.skanova.net ([195.67.226.200]:48718 "EHLO
+	smtp-out11.han.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752477Ab2A2M5j (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Jan 2012 07:57:39 -0500
+Received: from birne.lan (194.22.188.61) by smtp-out11.han.skanova.net (8.5.133) (authenticated as tboegi@telia.com)
+        id 4EFC3D3500AC9A2E; Sun, 29 Jan 2012 13:57:36 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
+In-Reply-To: <4F251FA1.80400@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189288>
 
-Signed-off-by: Ralf Thielow <ralf.thielow@googlemail.com>
----
- contrib/completion/git-completion.bash |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 1496c6d..e44eefd 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1152,7 +1152,7 @@ _git_branch ()
- 		__gitcomp "
- 			--color --no-color --verbose --abbrev= --no-abbrev
- 			--track --no-track --contains --merged --no-merged
--			--set-upstream
-+			--set-upstream --edit-description
- 			"
- 		;;
- 	*)
--- 
-1.7.9.dirty
+> I tried that, and found that git-lsfiles.c doesn't use parse_options.
+Oops, I shouldn't have written that: git-lsfiles uses parse_options.
+
+Sorry for the noise.
+/torsten
