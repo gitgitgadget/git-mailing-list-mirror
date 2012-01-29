@@ -1,76 +1,64 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] git-svn: un-break "git svn rebase" when log.abbrevCommit=true
-Date: Sun, 29 Jan 2012 04:12:18 +0100
-Message-ID: <CACBZZX4_54LNqiEEA1BVvJFcLh_o=_ErHWGZMxSHTV2yTqte_Q@mail.gmail.com>
-References: <1327803073-7000-1-git-send-email-avarab@gmail.com> <20120129025914.GA5981@burratino>
+From: Jeff King <peff@peff.net>
+Subject: Re: BUG 1.7.9: git branch fails to create new branch when
+ --edit-description is used
+Date: Sat, 28 Jan 2012 22:18:44 -0500
+Message-ID: <20120129031843.GA1347@sigill.intra.peff.net>
+References: <2443.1327701165@plover.com>
+ <7vr4ykybnl.fsf@alter.siamese.dyndns.org>
+ <4F2399B6.8020507@alum.mit.edu>
+ <7vbopoxp5q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 29 04:12:48 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Mark Jason Dominus <mjd@plover.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 29 04:18:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrLC8-0002VD-LG
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Jan 2012 04:12:45 +0100
+	id 1RrLI3-0004Tk-CG
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Jan 2012 04:18:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752732Ab2A2DMk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Jan 2012 22:12:40 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:52892 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752208Ab2A2DMj convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jan 2012 22:12:39 -0500
-Received: by lagu2 with SMTP id u2so1642121lag.19
-        for <git@vger.kernel.org>; Sat, 28 Jan 2012 19:12:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=d5Zq2w4nv+C7mrdoYoqJqsak/2uS6nHeYuocY8BoWYI=;
-        b=ZhIoA1N1u+C7UJWPwosrLT63oPoDPxFchfPQV/K9KiF5ejF72/HGqB85c2yv+J3yX0
-         58tg/w6ZL8kVLnompJIasXFYUebh+70YmBftsOwihTMFoKUMz50p6hLdrtK3mITftIVc
-         l5gu6nwZ0AsqkCQUyRrE0N8aDupSdHWr4+VtQ=
-Received: by 10.152.148.228 with SMTP id tv4mr6627024lab.9.1327806758133; Sat,
- 28 Jan 2012 19:12:38 -0800 (PST)
-Received: by 10.112.30.67 with HTTP; Sat, 28 Jan 2012 19:12:18 -0800 (PST)
-In-Reply-To: <20120129025914.GA5981@burratino>
+	id S1752212Ab2A2DSr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jan 2012 22:18:47 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47803
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752079Ab2A2DSq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jan 2012 22:18:46 -0500
+Received: (qmail 7701 invoked by uid 107); 29 Jan 2012 03:25:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 28 Jan 2012 22:25:48 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 28 Jan 2012 22:18:44 -0500
+Content-Disposition: inline
+In-Reply-To: <7vbopoxp5q.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189277>
 
-On Sun, Jan 29, 2012 at 03:59, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> --- a/git-svn.perl
->> +++ b/git-svn.perl
->> @@ -1879,7 +1879,8 @@ sub cmt_sha2rev_batch {
->> =C2=A0sub working_head_info {
->> =C2=A0 =C2=A0 =C2=A0 my ($head, $refs) =3D @_;
->> =C2=A0 =C2=A0 =C2=A0 my @args =3D qw/log --no-color --no-decorate --=
-first-parent
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --p=
-retty=3Dmedium/;
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --p=
-retty=3Dmedium --no-abbrev-commit --no-decorate/;
->> +
->
-> Oh, dear. =C2=A0Wouldn't
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0my @args =3D qw/rev-list --first-parent --=
-pretty=3Dmedium/;
->
-> be simpler and more robust as a quick fix?
->
-> Of course something that takes plain rev-list --first-parent output
-> and pipes it through to cat-file --batch might be more intuitive, but
-> rev-list --pretty should at least work. ;-)
+On Fri, Jan 27, 2012 at 11:27:29PM -0800, Junio C Hamano wrote:
 
-That sounds like a better fix. I forgot that rev-list could emulate
-git-log like that.
+> > Given this design, shouldn't "git branch --edit-description" fail if the
+> > branch doesn't already exist?
+> 
+> The only use scenario in the original design was to have a way to store
+> the description given a branch name, and giving a description to a branch
+> that does not yet exist is outside the scope of the design. So it all
+> boils down to what is the most convenient and the simplest to explain.
+
+How do we define "branch exists"? That the ref exists? What about a HEAD
+that points to a branch-to-be-born?
+
+Specifically, I am wondering whether this:
+
+  $ git init
+  $ git branch --edit-description
+
+should work. Right now it edits the description for "master", even
+though you haven't yet committed to it.
+
+-Peff
