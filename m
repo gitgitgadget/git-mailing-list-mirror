@@ -1,112 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug: "git checkout -b" should be allowed in empty repo
-Date: Sat, 28 Jan 2012 23:50:19 -0800
-Message-ID: <7vsjizvtfo.fsf@alter.siamese.dyndns.org>
-References: <4F24E287.3040302@alum.mit.edu>
- <7vwr8bvvxj.fsf@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: BUG 1.7.9: git branch fails to create new branch when --edit-description
+ is used
+Date: Sun, 29 Jan 2012 11:11:28 +0100
+Message-ID: <4F251B50.5080602@alum.mit.edu>
+References: <2443.1327701165@plover.com> <7vr4ykybnl.fsf@alter.siamese.dyndns.org> <4F2399B6.8020507@alum.mit.edu> <7vbopoxp5q.fsf@alter.siamese.dyndns.org> <4F24E78A.7060502@alum.mit.edu> <7v39azxb5l.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Sun Jan 29 08:50:54 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Mark Jason Dominus <mjd@plover.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 29 11:11:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrPXH-0002fW-NO
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Jan 2012 08:50:52 +0100
+	id 1RrRjf-00042R-Ax
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Jan 2012 11:11:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751358Ab2A2HuW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jan 2012 02:50:22 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64245 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751210Ab2A2HuW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jan 2012 02:50:22 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C1207305;
-	Sun, 29 Jan 2012 02:50:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tNTFMpYmjlIY8GpSJS8cWa6iJ2w=; b=VAsxDm
-	DeLk+mLaBczcKKH7UB4eI9Q02E23kCCQq86mviTX83QrB2pIlqzc4TWz5esMtij8
-	k5cRkjjypnbjrk5ByvBKhAk899fTNwu8e9UGZMtWwmd1qerJR6nW5sbPVH4Z0/el
-	auDT755zhNtXw9IyEOFgiZt1GCiPur/xeIjVo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yW3BEYq12+mKyRqSkhmW2Yb6CMzQEv1L
-	TF04PzsO5umezxhq38KTRK8buX72FBdONwcNHS7+Td+BZgPhricrmB2QcuBevFL7
-	9wdze5DxD2WLZmOAQW2by4Qi7hiyL6s81sXxOJ34cvUvbhqW5SdjXb0aZA1lMpco
-	tN+WoUKnnUE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 43B5B7304;
-	Sun, 29 Jan 2012 02:50:21 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B7F497303; Sun, 29 Jan 2012
- 02:50:20 -0500 (EST)
-In-Reply-To: <7vwr8bvvxj.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat, 28 Jan 2012 22:56:24 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E4B22618-4A4D-11E1-BEE6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751847Ab2A2KLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jan 2012 05:11:35 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:51078 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750939Ab2A2KLe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jan 2012 05:11:34 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.69.134] (p54BEDE2E.dip.t-dialin.net [84.190.222.46])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q0TABSxo022915
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 29 Jan 2012 11:11:29 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.24) Gecko/20111108 Lightning/1.0b2 Thunderbird/3.1.16
+In-Reply-To: <7v39azxb5l.fsf@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189284>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 01/29/2012 07:42 AM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> On 01/28/2012 08:27 AM, Junio C Hamano wrote:
+>>>
+>>> We could error it out (i.e. you cannot name a thing that does not yet
+>>> exist), or we could consider it is a convenience feature that you can
+>>> prepare a description even before you create one, or we could even tweak
+>>> it more like "-t $name" that tries to work both on existing one (without
+>>> changing any base) or non-existing one, creating it while at it. The last
+>>> approach historically is the most error prone (we had numerous bugs in the
+>>> create_branch() helper after it started allowing an existing branch when
+>>> updating the "track" information) and I would rather not go that route if
+>>> we can avoid it.
+>>>
+>>> Honestly speaking, I haven't formed an opinion.
+>>
+>> I vote for an error.  Otherwise a typo in the branch name would lead to
+>> the description's apparent disappearance into Nirvana.  An error would,
+>> for example, have made it clear to the OP what was happening.
+>>
+>> A more useful option might be
+>>
+>>     git branch --with-description <branchname> [<start-point>]
+>>
+>> i.e., that a branch's description can be set at the same time as the
+>> branch is created.
+> 
+> So you are saying either option 1 or 3 is preferrable, while I was saying
+> I would rather avoid 3 if we could avoid it. Is that the short version?
 
-> ...
-> Such a behaviour indeed is *curious* and very *different* from the normal
-> case of being on an existing branch, but is that a bug?
->
-> You need to first admit that the state immediately after "git init" (or
-> for that matter, "checkout --orphan") where you are on an unborn branch
-> *is* special.  Some things that would normally make sense would not.
+Not quite.  I agree that "--add-description" should fail if the branch
+already exists.  But I was suggesting that there be a new *different*
+option that can be used when creating a branch.  "--with-description" is
+probably not a great name, but I think it is a good idea that it be
+spelled differently than "--add-description".  Perhaps even "--message",
+even though the abbreviation "-m" is precluded by the existing "-m" option.
 
-[sorry for having sent an incomplete message without conclusion]
+Michael
 
-The question then becomes this: what do you want to do about it with this
-specific case, and more importantly what do you want to do about other
-commands and options that would not make sense when HEAD knows what branch
-the user wants to put the first commit on but there is no commit yet?
-
-For some commands, we _do_ try to come up with a special case codepath so
-that a command issued in the unborn state mimics the behaviour of the
-command issued in the normal case to various different degrees. "git pull"
-into an unborn branch simply resets to the other branch, for example, and
-while technically speaking that is not merging the other branch into the
-current commit (which does not exist), we do so because it was deemed to
-be the most sensible behaviour to parallel the normal case.
-
-I am not sure "git checkout -b foo" (without explict HEAD [*1*]) should
-special case and degenerate to "symbolic-ref HEAD refs/heads/foo" when
-HEAD points to a nonexistent branch.  The mimicking does not go far enough
-to satisfy people who are pedantic enough to expect "git checkout -b foo"
-to work when you haven't even instantiated your current branch (when you
-are on an already instantiated branch, after "git checkout -b foo", "git
-branch" output will show both foo and the branch you were on, but if you
-start from an unborn branch, the behaviour will be different and a pedant
-will notice the difference).
-
-It may make sense to let
-
-    $ git branch -m trunk
-
-or even
-
-    $ git branch -m master trunk
-
-move away from an unborn "master'"after "git init", with a special case
-codepath.  When you start from an instanticated branch, after a successful
-such renaming, the original branch will not exist, and the new branch will
-exist.  This property would also hold true if you start from an unborn one,
-so it would be much better mimickery than "git checkout -b foo" case you
-brought up in this thread.
-
-
-[Footnote]
-
-*1* Given HEAD or $(git symbolic-ref HEAD) as the starting commit
-explicitly, the command should error out.
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
