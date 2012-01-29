@@ -1,254 +1,183 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH V4] git on Mac OS and precomposed unicode
-Date: Sun, 29 Jan 2012 11:29:53 +0100
-Message-ID: <4F251FA1.80400@web.de>
-References: <201201212036.57632.tboegi@web.de> <7vsjj8acmh.fsf@alter.siamese.dyndns.org> <CACsJy8BKQHLdoXfSKsULkWWbWjWEuZgr=bVNKmgCSArvwbf2UA@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v3] gitweb: add project_filter to limit project list to a subdirectory
+Date: Sun, 29 Jan 2012 13:54:49 +0100
+Message-ID: <201201291354.50241.jnareb@gmail.com>
+References: <20120128165606.GA6770@server.brlink.eu> <m3wr8bcuon.fsf@localhost.localdomain> <20120129012234.GD16079@server.brlink.eu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 29 11:30:07 2012
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Bernhard R. Link" <brl+git@mail.brlink.eu>
+X-From: git-owner@vger.kernel.org Sun Jan 29 13:54:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrS1O-0003Se-9b
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Jan 2012 11:30:06 +0100
+	id 1RrUHT-0004AS-8Z
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Jan 2012 13:54:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751826Ab2A2K37 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Jan 2012 05:29:59 -0500
-Received: from smtp-out21.han.skanova.net ([195.67.226.208]:53561 "EHLO
-	smtp-out21.han.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751482Ab2A2K36 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Jan 2012 05:29:58 -0500
-Received: from birne.lan (194.22.188.61) by smtp-out21.han.skanova.net (8.5.133) (authenticated as tboegi@telia.com)
-        id 4EC0B93A01C345F9; Sun, 29 Jan 2012 11:29:55 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-In-Reply-To: <CACsJy8BKQHLdoXfSKsULkWWbWjWEuZgr=bVNKmgCSArvwbf2UA@mail.gmail.com>
+	id S1752173Ab2A2MyW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jan 2012 07:54:22 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:57482 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752110Ab2A2MyV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jan 2012 07:54:21 -0500
+Received: by eaal13 with SMTP id l13so795159eaa.19
+        for <git@vger.kernel.org>; Sun, 29 Jan 2012 04:54:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=ejWcBu1LIkUytqD2E1D+ZEX1g51v9ZX1AyBDVwnhbOQ=;
+        b=sF4lpwwFdazupyelMdgXdrdlhTO03FMxWYgNMNRV1QrRfvdflT9I1eelHNHAGN45mB
+         pB/WrA3v0W9bAsW1eV4/QWYcdlvaub8fg7xuFmaV1lWpbcoIrRqv4FnJ5Ivk30xVkYuS
+         ie0JU8rsT/YJHQITfpNSAstIVclHrSHNHRRvw=
+Received: by 10.213.25.146 with SMTP id z18mr2274469ebb.65.1327841659384;
+        Sun, 29 Jan 2012 04:54:19 -0800 (PST)
+Received: from [192.168.1.13] (abwg78.neoplus.adsl.tpnet.pl. [83.8.230.78])
+        by mx.google.com with ESMTPS id t11sm31078800eea.10.2012.01.29.04.54.16
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 29 Jan 2012 04:54:18 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20120129012234.GD16079@server.brlink.eu>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189286>
 
-On 22.01.12 10:58, Nguyen Thai Ngoc Duy wrote:
-> On Sun, Jan 22, 2012 at 5:56 AM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->> [Pinging Nguyen who has worked rather extensively on the start-up se=
-quence
->> for ideas.]
->>
-[snip]
->=20
-> I just have a quick look, you reencode opendir, readdir, and
-> closedir() to precomposed form. But files are still in decomposed
-> form, does open(<precomposed file>) work when only <decomposed file>
-> exists?
+On Sun, 29 Jan 2012, Bernhard R. Link wrote:
 
-Yes. All function like stat(), lstat(), open(), fopen(), unlink() behav=
-e the same
-for precomped or decomposed. This is similar to the ignore case feature=
-=2E
-And because the default HFS+ is case preserving, case insenstive and un=
-icode decomposing
-all at the same time, a file name "=C3=84" could be reached under 4 dif=
-ferent names.
-Please see the output of the test script:
-(which is at the end of this email)
+> This commit changes the project listing views (project_list,
+> project_index and opml) to limit the output to only projects in a
+> subdirectory if the new optional parameter ?pf=directory name is used.
+> 
+> The change is quite minimal as git_get_projects_list already can limit
+> itself to a subdirectory (though that was previously only used for
+> 'forks').
+>
+Nice and succinct.
+ 
+> If there is a GITWEB_LIST file, the contents are just filtered like
+> with the forks action.
+> 
+O.K.
 
-tests/Darwin_i386/NFC file name created as nfc is readable as nfd
-tests/Darwin_i386/NFC readdir returns nfd but expected is nfc
-tests/Darwin_i386/NFD file name created as nfd is readable as nfc
-tests/Darwin_i386/NFCNFD 1 file found in directory, but there should be=
- 2
-tests/Darwin_i386/NFCNFD nfc is missing, nfd is present
-tests/Darwin_i386/NFCNFD nfc File content overwritten by nfd
-tests/Darwin_i386/NFDNFC 1 file found in directory, but there should be=
- 2
-tests/Darwin_i386/NFDNFC nfc is missing, nfd is present
-tests/Darwin_i386/NFDNFC nfd File content overwritten by nfc
+> Without a GITWEB_LIST file only the given subdirectory is searched
+> for projects (like with forks) unless GITWEB_STRICT_EXPORT is enabled.
+> In the later case GITWEB_PROJECTROOT is traversed normally (unlike
+> with forks) and projects not in the directory ignored.
+> (As there is no check if the filter_path would have been found in
+> the usual search as the project path is checked with forks).
+> 
+Now I understand how project_filter interacts with strict_export.
 
+Though I am not sure if this "paranoid mode" is really necessary.  I don't
+see how you could get in situation where scanning from $project_list and
+filtering with $project_filter prefix, and scanning from 
+$project_list/$project_filter would give different results.
 
->=20
->>> In order to prevent that ever a file name in decomposed unicode is
->>> entering the index, a "brute force" attempt is taken: all arguments=
- into
->>> git (argv[1]..argv[n]) are converted into precomposed unicode.  Thi=
-s is
->>> done in git.c by calling precompose_argv().  This function is actua=
-lly a
->>> #define, and it is only defined under Mac OS.  Nothing is converted=
- on
->>> any other platforms.
->=20
-> This is not entirely safe. Filenames can be taken from a file for
-> example (--stdin option or similar). Unless I'm mistaken, all file
-> names must enter git through the index, the conversion at read-cache.=
-c
-> may be a better option.
-Good point, thanks.=20
-I added some code to read-cache.c, and it works for files, but not for =
-directories.
-I looked through the code for "case-ignoring" directory names, and coul=
-dn't
-find something obvious. More work is to be done.
-=20
+I think you are overly paranoid here, but perhaps it is better to be
+overly strict, and then relax it if it turns out to be not necessary.
 
-[snip]
-> I'd rather encode at index level and read_directory() than at argv[].
->But if reencoding argv is the only feasible way, perhaps put the
->conversion in parse_options()?
+> Reusing $project instead of adding a new parameter would have been
+> nicer from a UI point-of-view (including PATH_INFO support) but
+> would complicate the $project validating code that is currently being
+> used to ensure nothing is exported that should not be viewable.
+> 
+Sidenote: support for actionless PATH_INFO URLs would make it even more
+complicated...
 
-I tried that, and found that git-lsfiles.c doesn't use parse_options.
+> Additionally change html page headers to not only link the project
+> root and the currently selected project but also the directories in
+> between using project_filter.
+> 
+Excuse me changing my mind, but I think that as far as this patch series
+is applied as whole, it would be better for maintability to keep those
+two patches split; though put the above as a [part of] commit message
+in 2/2 patch.
 
-[snip]
+> Signed-off-by: Bernhard R. Link <brlink@debian.org>
+> ---
+> 
+> changes since v2:
+>         improve description
+>         remove || 0 for boolean argument
+>         merge with patch using this feature
+>         use user-visible configuration names instead of internal ones
+> 
+> * Jakub Narebski <jnareb@gmail.com> [120128 23:45]:
+> > "Bernhard R. Link" <brl+git@mail.brlink.eu> writes:
+> > > If strict_export is enabled and there is no projects_list, it still
+> > > traverses the full tree and only filters afterwards to avoid anything
+> > > getting visible by this. Otherwise only the subtree needs to be
+> > > traversed, significantly reducing load times.
+> > >
+> > I still don't understand interaction between project_filter ('pf'),
+> > $strict_export and $projects_list being either directory or a file
+> > with a list of projects.
+> > 
+> > Does it mean, that when $projects_list is a file with a list of projects,
+> > and we use project_filter, then:
+> > 
+> > * if $strict_export is false, then $project_list is ignored, and the
+> >   filtered list of projects is created by scanning
+> >   "$projectroot/$project_filter"
+> 
+> No. If project_list is set, i.e. a file, then this is always used.
+> If it is a directory (because it is not set thus set to projectroot),
+> then with forks it still traverses that directory (as that was checked
+> before to be a reachable project with a previous call to
+> git_get_projects_list). In the case of project_filter only the directory
+> is traversed without strict_export and the whole projectroot is
+> traversed with strict_export.
+> 
+O.K., now I understand it.
 
-On the long run I want to get rid of the argv[] conversion completely,
-but I'm not there yet.
+> Is the new description better.
+> 
+Yes it is.
 
-Thanks for all comments and inspiration!
+> > A few nitpicks with respect to patch itself.
+> > 
+> > >  -2827,6 +2835,7 @@ sub git_get_project_url_list {
+> > >  
+> > >  sub git_get_projects_list {
+> > >  	my $filter = shift || '';
+> > > +	my $paranoid = shift || 0;
+> > >  	my @list;
+> > >  
+> > 
+> > First, undefined value is false in Perl, so there is no need for
+> > " || 0" in setting $paranoid variable.
+> 
+> I thought it make it clearer that the argument might not be set and
+> what the default is. But that is personal taste.
 
-(and apologies for my long response times I use to have)
-/Torsten
+First, optional parameter defaults to false in the 'my $foo = shift;'
+or equivalent form is (I think) idiomatic Perl.  Second, this way of
+writing it is used through gitweb code (CodingGuidelines: imitate existing
+coding practices). 
+ 
+> > Second, why not use global variable $strict_export instead of adding
+> > another parameter to git_get_projects_list()?
+> 
+> That would change the action=forks behaviour to traverse the whole
+> projectroot two times. This way paranoia is only activated if
+> strict_mode is set _and_ the argument was not yet checked to be
+> reachable.
 
+Thanks for explanation.
+ 
+>  gitweb/gitweb.perl |   52 ++++++++++++++++++++++++++++++++++++++++++++--------
+>  1 files changed, 44 insertions(+), 8 deletions(-)
 
+Not that large for a new feature...
 
-PS:
-Here the script.
-Mac OS writes decomposd unicode to HFS+, precomposed unicode to VFAT an=
-d SAMBA.
-In any case readdir() returns decomposed.
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-#!/bin/sh
-errorandout() {
-  echo Error: The shell can not handle nfd
-  echo try to run /bin/bash $0
-  rm -rf $DIR
-  exit 1
-}
-
-checkDirNfcOrNfd() {
-  DDNFCNFD=3D$1
-  readdirexp=3D$2
-  if test -r $DDNFCNFD/$aumlnfc; then
-    x=3D`cat $DDNFCNFD/$aumlnfc`
-    if test "$x" =3D nfd; then
-      echo $DDNFCNFD file name created as nfd is readable as nfc
-    fi
-  fi
-  if test -r $DDNFCNFD/$aumlnfd; then
-    x=3D`cat $DDNFCNFD/$aumlnfd 2>/dev/null` || {
-      echo $DDNFCNFD nfd is not readable, but readdir says that it exis=
-t
-    }
-    if test "$x" =3D nfc; then
-      echo $DDNFCNFD file name created as nfc is readable as nfd
-    fi
-  fi
-  readdirres=3D`echo $DDNFCNFD/*`
-  if test "$readdirres" !=3D "$DDNFCNFD/$readdirexp"; then
-    if test "$readdirres" =3D $DDNFCNFD/$aumlnfd; then
-      echo $DDNFCNFD readdir returns nfd but expected is nfc
-    fi
-    if test "$readdirres" =3D $DDNFCNFD/$aumlnfc; then
-      echo $DDNFCNFD readdir returns nfc but expected is nfd
-    fi
-  fi
-}
-
-checkdirnfcnfd() {
-  DDNFCNFD=3D$1
-  if test `ls -1 $DDNFCNFD | wc -l` !=3D 2; then
-    if test `ls -1 $DDNFCNFD | wc -l` =3D=3D 1; then
-      echo $DDNFCNFD 1 file found in directory, but there should be 2
-    else
-      echo $DDNFCNFD 2 files should be in directory
-    fi =20
-  fi
-
-  x=3D`echo $DDNFCNFD/*`
-  a=3D`echo $DDNFCNFD/$aumlnfd $DDNFCNFD/$aumlnfc`
-  b=3D`echo $DDNFCNFD/$aumlnfc $DDNFCNFD/$aumlnfd`
-  c=3D`echo $DDNFCNFD/$aumlnfc $DDNFCNFD/$aumlnfc`
-  d=3D`echo $DDNFCNFD/$aumlnfd $DDNFCNFD/$aumlnfd`
-  e=3D`echo $DDNFCNFD/$aumlnfc`
-  f=3D`echo $DDNFCNFD/$aumlnfd`
-  case "$x" in
-    $a)
-    ;;     =20
-    $b)
-    ;;
-    $c)
-    echo $DDNFCNFD nfd is hidden, nfc is listed twice
-    ;;
-    $d)
-    echo $DDNFCNFD nfc is hidden, nfd is listed twice
-    ;;
-    $e)
-    echo $DDNFCNFD nfd is missing, nfc is present
-    ;;     =20
-    $f)
-    echo $DDNFCNFD nfc is missing, nfd is present
-    ;;     =20
-    *)
-    echo $DDNFCNFD x`echo $x | xxd`
-    ;;
-  esac
-
-  if ! test -r $DDNFCNFD/$aumlnfc; then
-    echo $DDNFCNFD/nfc File does not exist
-  else
-    x=3D`cat $DDNFCNFD/$aumlnfc`
-    if test "$x" !=3D nfc; then
-      echo $DDNFCNFD nfc File content overwritten by $x
-    fi
-  fi
- =20
-  if ! test -r $DDNFCNFD/$aumlnfd; then
-    echo $DDNFCNFD/nfd File does not exist
-  else
-    x=3D`cat $DDNFCNFD/$aumlnfd`
-    if test "$x" !=3D nfd; then
-      echo $DDNFCNFD nfd File content overwritten by $x
-    fi
-  fi
-}
-
-
-aumlnfc=3D$(printf '\303\204')
-aumlnfd=3D$(printf '\101\314\210')
-
-DIR=3Dtests/`uname -s`_`uname -m`
-echo "DIR=3D$DIR"
-
-rm -rf $DIR/NFC &&
-rm -rf $DIR/NFD &&
-rm -rf $DIR/NFCNFD &&
-rm -rf $DIR/NFDNFC &&
-mkdir -p $DIR/NFC &&
-mkdir -p $DIR/NFD &&
-mkdir -p $DIR/NFDNFC &&
-mkdir -p $DIR/NFCNFD &&
-echo nfc > $DIR/NFC/$aumlnfc &&
-echo nfd > $DIR/NFD/$aumlnfd &&
-echo nfd > $DIR/NFDNFC/$aumlnfd &&
-echo nfc > $DIR/NFDNFC/$aumlnfc &&
-echo nfc > $DIR/NFCNFD/$aumlnfc &&
-echo nfd > $DIR/NFCNFD/$aumlnfd && {
-    # test 1: basic if the shell handles nfd
-    if ! test -r $DIR/NFD/$aumlnfd; then
-      errorandout
-    fi
-
-  for DD in tests/*; do
-    checkDirNfcOrNfd $DD/NFC  $aumlnfc
-    checkDirNfcOrNfd $DD/NFD  $aumlnfd
-
-    checkdirnfcnfd $DD/NFCNFD
-    checkdirnfcnfd $DD/NFDNFC
-  done
-} || errorandout
+-- 
+Jakub Narebski
+Poland
