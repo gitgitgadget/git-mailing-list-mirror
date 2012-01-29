@@ -1,158 +1,81 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Bug: "git checkout -b" should be allowed in empty repo
-Date: Mon, 30 Jan 2012 07:38:38 +0100
-Message-ID: <4F263AEE.4080409@alum.mit.edu>
-References: <4F24E287.3040302@alum.mit.edu> <7vwr8bvvxj.fsf@alter.siamese.dyndns.org>
+From: greened@obbligato.org (David A. Greene)
+Subject: Re: git-subtree
+Date: Sun, 29 Jan 2012 16:07:59 -0600
+Message-ID: <87aa56kvr4.fsf@smith.obbligato.org>
+References: <nngaa638nwf.fsf@transit.us.cray.com>
+	<CALkWK0nU9iO_6CCbWw8c_Fz=xodkaAW4300Jpc7M7D+kBP=QRg@mail.gmail.com>
+	<87ipkq199w.fsf@smith.obbligato.org>
+	<20120105154740.GA11475@sigill.intra.peff.net>
+	<87zke2yv27.fsf@smith.obbligato.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 30 07:38:56 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	David Greene <dag@cray.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jan 30 07:40:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrktD-0001Qk-Ie
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 07:38:55 +0100
+	id 1Rrkv8-000292-F2
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 07:40:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753168Ab2A3Git (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jan 2012 01:38:49 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:40202 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753082Ab2A3Gim (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 01:38:42 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.134] (p54BED4B1.dip.t-dialin.net [84.190.212.177])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q0U6ccC2015365
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 30 Jan 2012 07:38:39 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.24) Gecko/20111108 Lightning/1.0b2 Thunderbird/3.1.16
-In-Reply-To: <7vwr8bvvxj.fsf@alter.siamese.dyndns.org>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1752253Ab2A3Gku (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 01:40:50 -0500
+Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8]:52300 "EHLO
+	smith.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751694Ab2A3Gkt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 01:40:49 -0500
+X-Greylist: delayed 5397 seconds by postgrey-1.27 at vger.kernel.org; Mon, 30 Jan 2012 01:40:49 EST
+Received: from greened by smith.obbligato.org with local (Exim 4.77)
+	(envelope-from <greened@obbligato.org>)
+	id 1Rrcul-0005Wa-OW; Sun, 29 Jan 2012 16:07:59 -0600
+In-Reply-To: <87zke2yv27.fsf@smith.obbligato.org> (David A. Greene's message
+	of "Thu, 05 Jan 2012 10:26:40 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189325>
 
-On 01/29/2012 07:56 AM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> When starting a new repo, git seems to insist that the first commit be
->> made on a branch named "master":
->>
->>     $ git --version
->>     git version 1.7.9
->>     $ git init git-test
->>     Initialized empty Git repository in /home/mhagger/tmp/git-test/.git/
->>     $ cd git-test
->>     $ git checkout -b foo
->>     fatal: You are on a branch yet to be born
->>
->> I would call this a bug; the last command should be allowed.  The
->> plumbing allows it:
->>
->>     $ git symbolic-ref HEAD refs/heads/foo
-> 
-> Your last sentence is nonsense.  The plumbing equivalent of that command
-> is *not* what you wrote above, but is more like [*1*]:
-> 
-> 	git update-ref refs/heads/foo $(git rev-parse --verify HEAD) &&
->         git symbolic-ref HEAD refs/heads/foo
+greened@obbligato.org (David A. Greene) writes:
 
-All that I meant is that the one command is the equivalent of *what the
-user wants and expects* in the *particular* situation that I described
-[1].  I should have been clearer.
+>> I'd favor keeping the history and doing the munge-overlay thing.
+>
+> Ok, that sounds fine to me.  I'll do that in a private branch.  What
+> should I send as patches to the mailing list?  I'm assuming we don't
+> want [PATCH 235/12342], etc. sent to the list chronicling the entire
+> history.  :)
+>
+>> Although part of me wants to join the histories in a subtree so that we
+>> can use "git subtree" to do it (which would just be cool),
+>
+> Heh.  I thought about that too.  :)
 
-> And the first step will fail the same way.  While I share the sense of
-> annoyance with you, I do not think that it is a bug in "checkout -b".
-> 
-> When you are on an unborn branch, what the "symbolic-ref HEAD" command
-> reports does *not* appear in the output from the "for-each-ref refs/heads"
-> command (similarly, that branch name does not appear in the output from
-> the "git branch" command).
-> 
-> Such a behaviour indeed is *curious* and very *different* from the normal
-> case of being on an existing branch, but is that a bug?
+I actually did end up doing a subtree merge via git subtree.  It was
+more convenient to put it in contrib/ like that as almost everthing
+there is in its own subdirectory.
 
-When git behaves differently than a typical user would expect for no
-good reason, that is a bug (albeit a UI bug).  The fact that somebody
-who knows the internals of git can find an excuse for the inconsistency
-might be an explanation for how the bug arose but it doesn't make it
-less of a bug.
+I'm cleaning things up there to remove redundancy, rewrite tests (using
+earlier work), etc.  What number should I use for git-subtree tests?
+Here are some logical candidates:
 
-> You need to first admit that the state immediately after "git init" (or
-> for that matter, "checkout --orphan") where you are on an unborn branch
-> *is* special.  Some things that would normally make sense would not.
+        5 - the pull and exporting commands
+        6 - the revision tree commands (even e.g. merge-base)
+        7 - the porcelainish commands concerning the working tree
+        9 - the git tools
 
-ISTM that this state is more special than it needs to be due to an
-design flaw of git [2].  But even given the fact that this case is
-special *internal* to git, there is no reason to let that specialness
-leak out to the user more than necessary.
+git-subtree can pull and export.  It also affects revision trees (it
+merges, for example) and is a porcelainish command that affects the
+working tree.  It is also a "git tool" of a sort.
 
-> [...]
-> I am not sure "git checkout -b foo" (without explict HEAD [*1*]) should
-> special case and degenerate to "symbolic-ref HEAD refs/heads/foo" when
-> HEAD points to a nonexistent branch.  The mimicking does not go far enough
-> to satisfy people who are pedantic enough to expect "git checkout -b foo"
-> to work when you haven't even instantiated your current branch (when you
-> are on an already instantiated branch, after "git checkout -b foo", "git
-> branch" output will show both foo and the branch you were on, but if you
-> start from an unborn branch, the behaviour will be different and a pedant
-> will notice the difference).
+I originally put them under t97XX but now that is taken, as is
+everything up to and including t99XX.
 
-For me, "git checkout -b foo" means "leave the old branch in its current
-state and move to a new branch that is in the same state."  If the old
-branch was unborn, then it should remain unborn after the command, and I
-should be moved to a new unborn branch.  Since an unborn branch in git
-is not a branch, I would have no expectation that the old branch exists
-after the command [3].
+Anyone have a strong opinion?
 
-> It may make sense to let
-> 
->     $ git branch -m trunk
-> 
-> or even
-> 
->     $ git branch -m master trunk
-> 
-> move away from an unborn "master'"after "git init", with a special case
-> codepath.  When you start from an instanticated branch, after a successful
-> such renaming, the original branch will not exist, and the new branch will
-> exist.  This property would also hold true if you start from an unborn one,
-> so it would be much better mimickery than "git checkout -b foo" case you
-> brought up in this thread.
+Thanks!
 
-It makes sense that "git branch -m" can *also* be used to escape an
-unborn master, but this command won't necessarily occur to people
-accustomed to using "git checkout -b" for creating new branches.
-
-Michael
-
-[1] Of course, here "the user" means me :-) but I predict that other
-users would feel the same.
-
-[2] Namely that "orphan" commits have no parents, instead of having an
-"empty repository" commit (something like "000000*") as parent.  By
-contrast, when a new Subversion repository is created, it automatically
-gets a pseudo "r0" commit that represents the empty repository.  The r0
-commit can be used in the UI most places that a "real" commit can be
-used.  If the 0000000 commit could be used in the same way in git, it
-would remove a lot of special casing.  For example, an "unborn branch"
-could be initialized pointing at 0000000.  Even if there is some deeper
-reason why such a design wouldn't have worked, perhaps such a concept
-could be faked for the user interface.
-
-[3] If commit 0000000 were treated specially, then there would be no
-unborn branches but only branches pointing at the empty commit.  In that
-case, my expectation would change--the old branch should be left
-pointing at 0000000.  But currently git has no concept of an unborn
-branch that is not HEAD.
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+                           -Dave
