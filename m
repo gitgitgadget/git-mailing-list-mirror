@@ -1,58 +1,62 @@
-From: Ondra Medek <xmedeko@gmail.com>
-Subject: Re: gitweb showing slash r at the end of line
-Date: Sun, 29 Jan 2012 23:55:40 -0800 (PST)
-Message-ID: <1327910140526-7235866.post@n2.nabble.com>
-References: <1327673954458-7229895.post@n2.nabble.com> <m3aa58eskw.fsf@localhost.localdomain> <7vvcnwybxj.fsf@alter.siamese.dyndns.org> <201201281802.44339.jnareb@gmail.com>
+From: Jiang Xin <gotgit@163.com>
+Subject: L10n for Git in Chinese begins
+Date: Mon, 30 Jan 2012 16:21:59 +0800
+Message-ID: <4F265327.50805@163.com>
+Reply-To: worldhello.net@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=GB2312
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 30 08:55:46 2012
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 30 09:22:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rrm5Z-0007I7-Oj
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 08:55:46 +0100
+	id 1RrmV3-0000tm-S5
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 09:22:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753653Ab2A3Hzl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jan 2012 02:55:41 -0500
-Received: from sam.nabble.com ([216.139.236.26]:40661 "EHLO sam.nabble.com"
+	id S1753988Ab2A3IWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 03:22:00 -0500
+Received: from m50-134.163.com ([123.125.50.134]:60487 "EHLO m50-134.163.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751882Ab2A3Hzl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 02:55:41 -0500
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <xmedeko@gmail.com>)
-	id 1Rrm5U-0001Vg-HG
-	for git@vger.kernel.org; Sun, 29 Jan 2012 23:55:40 -0800
-In-Reply-To: <201201281802.44339.jnareb@gmail.com>
+	id S1752725Ab2A3IV7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 03:21:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Received:Message-ID:Date:From:Reply-To:User-Agent:
+	MIME-Version:To:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=0TFQIz1n+5VkGm520Sgs5e2gvWFYb+3w3y8o+gboxfs=; b=eZ/FJlLp0l6hb
+	fOqtUxiE+ZoPYm2MsXiZPmAeXUcQT4PKiVw/XP6iV4mm/Ws6KOOlvqTefjZuRkPT
+	RlSSR9/dekEbmDpnQy8OaFvgjLG++al2is8TVEdqFJssboEZNtROMe50Didz/ll8
+	L/WrMJTi88K0IcTTxZ+bG1Q8HM0zw0=
+Received: from [192.168.0.100] (unknown [123.116.229.89])
+	by smtp4 (Coremail) with SMTP id DtGowEBJ5GUjUyZPCjsgCA--.336S3;
+	Mon, 30 Jan 2012 16:21:55 +0800 (CST)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:8.0) Gecko/20111105 Thunderbird/8.0
+X-CM-TRANSID: DtGowEBJ5GUjUyZPCjsgCA--.336S3
+X-Coremail-Antispam: 1Uf129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
+	VFW2AGmfu7bjvjm3AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjxUTLZ2DUUUU
+X-CM-SenderInfo: 5jrwwxrw6rljoofrz/1tbiqwFFUkgY0lO0QwAAsb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189328>
 
-Hi Jakub,
-I have read "SubmittingPatches". I have made a path by "git format-patch -M"
-and I have though it's enough. The problem maybe was, that I had not
-included "Subject: " from the result of "git format-patch -M". Next time I
-will try to do it better.
+With the release of v1.7.9 or some earlier , Git is multilingual.
+I select some typical git commands and translated into Chinese,
+both works.
 
-I am a Git newbie, but my bare repos have "config" file and this file can
-contain the "core.autocrlf" setting. So the gitweb can read it. Or what
-about to have a special section [gitweb] in this config? For now, the gitweb
-config files are somewhat "scattered" = "descrition", "cloneurl",
-"project.list", ...
+- git status (in c)
+- git stash (in bash)
 
-Yeah, the autodetection of mixed mode line endings could be the best
-solution.
+Now I create a repo in Github hosting the po file (zh_cn.po) for git.
 
-However, from my point of view a global gitweb setting would be enough for
-now.
+- repo: https://github.com/gotgit/git-l10n-zh-cn/
+- file: https://github.com/gotgit/git-l10n-zh-cn/blob/master/zh_cn.po
+
+Any help is appreciated, and will contribute here after 100% completed.
 
 
---
-View this message in context: http://git.661346.n2.nabble.com/gitweb-showing-slash-r-at-the-end-of-line-tp7229895p7235866.html
-Sent from the git mailing list archive at Nabble.com.
+-- 
+Jiang Xin
