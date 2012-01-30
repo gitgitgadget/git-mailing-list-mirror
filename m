@@ -1,110 +1,66 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] completion: cleanup __gitcomp*
-Date: Mon, 30 Jan 2012 02:29:31 +0200
-Message-ID: <1327883371-25573-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 30 01:30:15 2012
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/3] completion: remove old code
+Date: Sun, 29 Jan 2012 20:36:42 -0600
+Message-ID: <20120130023642.GA14986@burratino>
+References: <1327880479-25275-1-git-send-email-felipe.contreras@gmail.com>
+ <1327880479-25275-3-git-send-email-felipe.contreras@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 30 03:37:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rrf8R-0007MN-9Q
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 01:30:15 +0100
+	id 1Rrh76-0007WV-NX
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 03:37:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751786Ab2A3AaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jan 2012 19:30:08 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:60065 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751526Ab2A3AaG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jan 2012 19:30:06 -0500
-Received: by werb13 with SMTP id b13so3008331wer.19
-        for <git@vger.kernel.org>; Sun, 29 Jan 2012 16:30:05 -0800 (PST)
+	id S1754008Ab2A3Cgw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jan 2012 21:36:52 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:38604 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753040Ab2A3Cgv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jan 2012 21:36:51 -0500
+Received: by ghrr11 with SMTP id r11so1556567ghr.19
+        for <git@vger.kernel.org>; Sun, 29 Jan 2012 18:36:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=0fPgPLDiznHqDdRiL/hwrldG0LInXGi5xDdQIdwYFFY=;
-        b=vASQXODxPyPDfptHePE8eOuMkIqfK6ifxaE1FlOnX/KYnNHXDiJn51wxVydE6h7vuy
-         wTKV9Wa6h3oD03P2BO8GnvJ2yVIefz/TckOTnX21Ow/jiLwCEOrYgz9Sz4dGxiwsSjeL
-         Usyz85JevNL6Box3WVIDniXfDFzW738qYfF/g=
-Received: by 10.216.135.76 with SMTP id t54mr6330781wei.14.1327883405672;
-        Sun, 29 Jan 2012 16:30:05 -0800 (PST)
-Received: from localhost (a91-153-253-80.elisa-laajakaista.fi. [91.153.253.80])
-        by mx.google.com with ESMTPS id ho4sm26737078wib.3.2012.01.29.16.30.03
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 29 Jan 2012 16:30:04 -0800 (PST)
-X-Mailer: git-send-email 1.7.8.3
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Vvcer8DJUJ0Z3evDL9sunH0iMTIQEkszkBTSWTbT+wc=;
+        b=d2wol4/nspb8Jv7tC0R0QZgzCewbhX+IgcTz0q5WcDVEg81qw5IksgN4iNr0KgXUzA
+         z/c0uELzcrXaLBXIhtXuwc3auZWUNj9Aoz9N2xgrAXiD6l+SjPoytMALQkeT1M+7Xax0
+         Zz2CvVppTow+BbF7HpVmO6kMVAbwg6trRFuAA=
+Received: by 10.236.110.110 with SMTP id t74mr10635288yhg.121.1327891010994;
+        Sun, 29 Jan 2012 18:36:50 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id a14sm42186496ana.20.2012.01.29.18.36.49
+        (version=SSLv3 cipher=OTHER);
+        Sun, 29 Jan 2012 18:36:50 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1327880479-25275-3-git-send-email-felipe.contreras@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189313>
 
-I don't know why there's so much code; these functions don't seem to be
-doing much:
+Hi,
 
- * ${1-} is the same as $1
- * no need to check $#, ${3:-$cur} is much easier
- * __gitcomp_nl doesn't seem to using the initial IFS
+Felipe Contreras wrote:
 
-This makes the code much simpler.
+> We don't need to check for GIT_DIR/remotes, right? This was removed long
+> time ago.
 
-Eventually it would be nice to wrap everything that touches compgen and
-COMPREPLY in one function for the zsh wrapper.
+I don't follow.  fetch, push, and remote still look in .git/remotes
+like they always did, last time I checked.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/completion/git-completion.bash |   24 +++++-------------------
- 1 files changed, 5 insertions(+), 19 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 1496c6d..accfce5 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -495,19 +495,15 @@ fi
- # 4: A suffix to be appended to each possible completion word (optional).
- __gitcomp ()
- {
--	local cur_="$cur"
--
--	if [ $# -gt 2 ]; then
--		cur_="$3"
--	fi
-+	local cur_="${3:-$cur}"
- 	case "$cur_" in
- 	--*=)
- 		COMPREPLY=()
- 		;;
- 	*)
- 		local IFS=$'\n'
--		COMPREPLY=($(compgen -P "${2-}" \
--			-W "$(__gitcomp_1 "${1-}" "${4-}")" \
-+		COMPREPLY=($(compgen -P "$2" \
-+			-W "$(__gitcomp_1 "$1" "$4")" \
- 			-- "$cur_"))
- 		;;
- 	esac
-@@ -524,18 +520,8 @@ __gitcomp ()
- #    appended.
- __gitcomp_nl ()
- {
--	local s=$'\n' IFS=' '$'\t'$'\n'
--	local cur_="$cur" suffix=" "
--
--	if [ $# -gt 2 ]; then
--		cur_="$3"
--		if [ $# -gt 3 ]; then
--			suffix="$4"
--		fi
--	fi
--
--	IFS=$s
--	COMPREPLY=($(compgen -P "${2-}" -S "$suffix" -W "$1" -- "$cur_"))
-+	local IFS=$'\n'
-+	COMPREPLY=($(compgen -P "$2" -S "${4:- }" -W "$1" -- "${3:-$cur}"))
- }
- 
- __git_heads ()
--- 
-1.7.8.3
+Perhaps you mean that /usr/share/git-core/templates/ no longer
+contains a remotes/ directory?  That's true but not particularly
+relevant.  A more relevant detail would be that very few people _use_
+the .git/remotes feature, though it is not obvious to me whether that
+justifies removing this code from the git-completion script that
+already works.
