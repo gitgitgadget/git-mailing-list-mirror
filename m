@@ -1,76 +1,70 @@
-From: "Bernhard R. Link" <brl+git@mail.brlink.eu>
-Subject: [PATCH 3/5] gitweb: limit links to alternate forms of project_list
- to active project_filter
-Date: Mon, 30 Jan 2012 12:47:06 +0100
-Message-ID: <20120130114706.GC9267@server.brlink.eu>
-References: <20120128165606.GA6770@server.brlink.eu>
- <m3wr8bcuon.fsf@localhost.localdomain>
- <20120129012234.GD16079@server.brlink.eu>
- <201201291354.50241.jnareb@gmail.com>
- <20120129160615.GA13937@server.brlink.eu>
- <7v7h0afcc2.fsf@alter.siamese.dyndns.org>
- <20120130095252.GA6183@server.brlink.eu>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: i18n: Avoid sentence puzzles
+Date: Mon, 30 Jan 2012 18:46:52 +0700
+Message-ID: <CACsJy8CUXSSvToPrx9aW5a76BV=g7OTrWLZ2MQ6xDTpDSLpPeA@mail.gmail.com>
+References: <201201301231.21090.schwarzerf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 30 12:46:55 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Frederik Schwarzer <schwarzerf@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 30 12:47:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrphF-00007r-1H
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 12:46:53 +0100
+	id 1Rrpho-0000UN-1y
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 12:47:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752400Ab2A3Lqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jan 2012 06:46:49 -0500
-Received: from server.brlink.eu ([78.46.187.186]:54091 "EHLO server.brlink.eu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752025Ab2A3Lqs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 06:46:48 -0500
-Received: from mfs.mathematik.uni-freiburg.de ([132.230.30.170] helo=client.brlink.eu)
-	by server.brlink.eu with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <brl@mail.brlink.eu>)
-	id 1Rrph9-0005du-Ex; Mon, 30 Jan 2012 12:46:47 +0100
-Received: from brl by client.brlink.eu with local (Exim 4.77)
-	(envelope-from <brl@mail.brlink.eu>)
-	id 1RrphS-0002Py-PR; Mon, 30 Jan 2012 12:47:06 +0100
-Content-Disposition: inline
-In-Reply-To: <20120130095252.GA6183@server.brlink.eu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752540Ab2A3LrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 06:47:24 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:61446 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752443Ab2A3LrX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 06:47:23 -0500
+Received: by bkas6 with SMTP id s6so3076604bka.19
+        for <git@vger.kernel.org>; Mon, 30 Jan 2012 03:47:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=HCbwPOA3gFDWaEs0/7mn6B2anUDQCExx1HEP7IEqZxM=;
+        b=qgSTTajf1vzU8mLfVKjz1MxD7bGgdYghDo7Wul8m//u1F5kUeuSNOa9lQbrrsICQau
+         IZJuh3rygSR4HoXTgpZG8s1K/38P27OKnxH4jq41+aS8LefC9gDI4iI7Ipnvi9jh6PI1
+         YIUYTkBIeo1+Ox2Iq4wxUJQJmJL6zKF+p2k4c=
+Received: by 10.204.157.17 with SMTP id z17mr8190567bkw.37.1327924042205; Mon,
+ 30 Jan 2012 03:47:22 -0800 (PST)
+Received: by 10.204.33.70 with HTTP; Mon, 30 Jan 2012 03:46:52 -0800 (PST)
+In-Reply-To: <201201301231.21090.schwarzerf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189351>
 
-If project_list action is given a project_filter argument, pass that to
-TXT and OPML formats.
+On Mon, Jan 30, 2012 at 6:31 PM, Frederik Schwarzer
+<schwarzerf@gmail.com> wrote:
+> Hi,
+>
+> in order to enable translators to prepare proper translations,
+> sentence puzzles have to be avoided. While it makes perfect sense for
+> English, some languages may have to separate those words to sound or
+> even be correct.
+>
+> The attached patch demonstrates a change to achive that.
+> ...
+> So my question would be: Is it considered worth it to extend the code
+> for translators' and translations' sake? If so, I would be glad to
+> help with that.
 
-Signed-off-by: Bernhard R. Link <brlink@debian.org>
----
- gitweb/gitweb.perl |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+As a translator (though not git's because my time is limited and GUI
+apps have my priority), I completely agree and support this. There are
+other places where a sentence is broken down into many short phrases.
+It's hard for a translator to find a good translation in such cases.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 36efc10..e022e11 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3976,9 +3976,11 @@ sub git_footer_html {
- 		}
- 
- 	} else {
--		print $cgi->a({-href => href(project=>undef, action=>"opml"),
-+		print $cgi->a({-href => href(project=>undef, action=>"opml",
-+		                             project_filter => $project_filter),
- 		              -class => $feed_class}, "OPML") . " ";
--		print $cgi->a({-href => href(project=>undef, action=>"project_index"),
-+		print $cgi->a({-href => href(project=>undef, action=>"project_index",
-+		                             project_filter => $project_filter),
- 		              -class => $feed_class}, "TXT") . "\n";
- 	}
- 	print "</div>\n"; # class="page_footer"
+I remember there was also a patch about "1 file vs 2 files" in diff
+summary, which was rejected because it would break scripts. I think
+grammar patches should be allowed at least for interactive use (i.e.
+either pager is on, or std{out,err} is tty).
 -- 
-1.7.8.3
+Duy
