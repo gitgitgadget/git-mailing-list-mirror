@@ -1,109 +1,251 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 1/4] completion: simplify __git_remotes
-Date: Mon, 30 Jan 2012 11:34:46 -0600
-Message-ID: <20120130173446.GF10618@burratino>
-References: <1327944197-6379-1-git-send-email-felipec@infradead.org>
- <1327944197-6379-2-git-send-email-felipec@infradead.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-To: Felipe Contreras <felipec@infradead.org>
-X-From: git-owner@vger.kernel.org Mon Jan 30 18:35:02 2012
+From: Felipe Contreras <felipec@infradead.org>
+Subject: [PATCH v2] completion: add new zsh completion
+Date: Mon, 30 Jan 2012 19:40:45 +0200
+Message-ID: <1327945245-7083-1-git-send-email-felipec@infradead.org>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 30 18:40:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rrv88-00025J-41
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 18:35:00 +0100
+	id 1RrvDt-0005By-4Q
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 18:40:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752522Ab2A3Rez convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jan 2012 12:34:55 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:55410 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752455Ab2A3Rey convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Jan 2012 12:34:54 -0500
-Received: by yenm6 with SMTP id m6so1894970yen.19
-        for <git@vger.kernel.org>; Mon, 30 Jan 2012 09:34:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=uPbOdFJynHL3tSht/1ghwh0FnJzStZXHylrelBOfmpY=;
-        b=KSydaXmWXgzpqqkWo57HddcNLh9OQwOv4Mk0ff7ZfZalZTtLoYoNBRBIAxT89Yr00D
-         yOewo11YuA37CsX8SLQdIk2IvSRkVPGRgVu+D0jQxug2lbBr1PrgmB2+uOJzJGv3atMd
-         qs1OLvgj+DZEPtq1rWY5DOiSPudj9f9GkUUkY=
-Received: by 10.236.79.37 with SMTP id h25mr27102953yhe.76.1327944893838;
-        Mon, 30 Jan 2012 09:34:53 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id r68sm32984317yhm.18.2012.01.30.09.34.52
-        (version=SSLv3 cipher=OTHER);
-        Mon, 30 Jan 2012 09:34:52 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1327944197-6379-2-git-send-email-felipec@infradead.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752325Ab2A3Rkv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 12:40:51 -0500
+Received: from merlin.infradead.org ([205.233.59.134]:38088 "EHLO
+	merlin.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751749Ab2A3Rkv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 12:40:51 -0500
+Received: from canuck.infradead.org ([2001:4978:20e::1])
+	by merlin.infradead.org with esmtps (Exim 4.76 #1 (Red Hat Linux))
+	id 1RrvDl-0000Vh-SB; Mon, 30 Jan 2012 17:40:50 +0000
+Received: from bombadil.infradead.org ([2001:4830:2446:ff00:4687:fcff:fea6:5117] helo=localhost)
+	by canuck.infradead.org with esmtpsa (Exim 4.76 #1 (Red Hat Linux))
+	id 1RrvDl-00052p-70; Mon, 30 Jan 2012 17:40:49 +0000
+X-Mailer: git-send-email 1.7.8
+X-SRS-Rewrite: SMTP reverse-path rewritten from <felipec@infradead.org> by canuck.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189381>
 
-=46elipe Contreras wrote:
+From: Felipe Contreras <felipe.contreras@gmail.com>
 
-> From: Felipe Contreras <felipe.contreras@gmail.com>
->
-> There's no need for all that complicated code that requires nullglob,
-> and the complexities related to such option.
->
-> As an advantage, this would allow us to get rid of __git_shopt, which=
- is
-> used only in this fuction to enable 'nullglob' in zsh.
+It seems there's always issues with zsh's bash completion emulation,
+after I took a deep look at the code, I found many issues[1].
 
-That is all a longwinded way to say "zsh doesn't support the same
-interface as bash for setting the nullglob option, so let's avoid
-it and use 'ls' which is simpler", right?
+So, here is a kind of wrapper that does the same, but properly :)
 
-There's a potential speed regression involved --- using "ls" involves
-an extra fork/exec.  I believe you have thought about this and done a
-little to mitigate it; could you explain this in the commit message so
-future coders know what features of your code need to be preserved?
+This would also allow us to make fixes if necessary, since the code is
+simple enough, and extend functionality.
 
-Please consider squashing this with patch 2/4.  It will make both
-patches way easier to understand on their own.
+[1] http://article.gmane.org/gmane.comp.shells.zsh.devel/24290
 
-Cc-ing G=C3=A1bor, who I imagine is more familiar with this code than I=
- am.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
 
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  contrib/completion/git-completion.bash |    7 +------
->  1 files changed, 1 insertions(+), 6 deletions(-)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/complet=
-ion/git-completion.bash
-> index 1496c6d..086e38d 100755
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -644,12 +644,7 @@ __git_refs_remotes ()
->  __git_remotes ()
->  {
->  	local i ngoff IFS=3D$'\n' d=3D"$(__gitdir)"
-> -	__git_shopt -q nullglob || ngoff=3D1
-> -	__git_shopt -s nullglob
-> -	for i in "$d/remotes"/*; do
-> -		echo ${i#$d/remotes/}
-> -	done
-> -	[ "$ngoff" ] && __git_shopt -u nullglob
-> +	test -d "$d/remotes" && ls -1 "$d/remotes"
->  	for i in $(git --git-dir=3D"$d" config --get-regexp 'remote\..*\.ur=
-l' 2>/dev/null); do
->  		i=3D"${i#remote.}"
->  		echo "${i/.url*/}"
-> --=20
-> 1.7.8
->
+v2:
+
+ * Fix completion of aliased commands
+ * Add check for wrong commands
+ * Properly set return codes
+ * Add default actiooon; for 'git foo -- <tab>'
+
+ contrib/completion/git-completion.zsh |  181 +++++++++++++++++++++++++++++++++
+ 1 files changed, 181 insertions(+), 0 deletions(-)
+ create mode 100644 contrib/completion/git-completion.zsh
+
+diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
+new file mode 100644
+index 0000000..bca08f2
+--- /dev/null
++++ b/contrib/completion/git-completion.zsh
+@@ -0,0 +1,181 @@
++#compdef git gitk
++
++# zsh completion wrapper for git
++#
++# You need git's bash completion script installed somewhere, by default on the
++# same directory as this script.
++#
++# If your script is on ~/.git-completion.sh instead, you can configure it on
++# your ~/.zshrc:
++#
++#  zstyle ':completion:*:*:git:*' script ~/.git-completion.sh
++#
++# The recommended way to install this script is to copy to
++# '~/.zsh/completion/_git', and then add the following to your ~/.zshrc file:
++#
++#  fpath=(~/.zsh/completion $fpath)
++
++compgen () {
++	local prefix suffix
++	local -a results
++	while getopts "W:P:S:" opt
++	do
++		case $opt in
++		W)
++			results=( ${(Q)~=OPTARG} )
++			;;
++		P)
++			prefix="$OPTARG"
++			;;
++		S)
++			suffix="$OPTARG"
++			;;
++		esac
++	done
++	print -l -r -- "$prefix${^results[@]}$suffix"
++}
++
++complete () {
++	# do nothing
++	return 0
++}
++
++zstyle -s ":completion:$curcontext:" script script
++test -z "$script" && script="$(dirname ${funcsourcetrace[1]%:*})"/git-completion.bash
++ZSH_VERSION='' . "$script"
++
++_get_comp_words_by_ref ()
++{
++	while [ $# -gt 0 ]; do
++		case "$1" in
++		cur)
++			cur=${_words[CURRENT]}
++			;;
++		prev)
++			cur=${_words[CURRENT-1]}
++			;;
++		words)
++			words=("${_words[@]}")
++			;;
++		cword)
++			((cword = CURRENT - 1))
++			;;
++		esac
++		shift
++	done
++}
++
++_bash_wrap ()
++{
++	local -a COMPREPLY results _words
++	_words=( $words )
++	() {
++		emulate -L sh
++		setopt KSH_TYPESET
++		setopt kshglob noshglob braceexpand nokshautoload
++		typeset -h words
++		local cur words cword prev
++		_get_comp_words_by_ref -n =: cur words cword prev
++		$1
++	} $1
++	results=( "${^COMPREPLY[@]}" )
++	if [[ -n $results ]]; then
++		local COMP_WORDBREAKS="\"'@><=;|&(:"
++		local i start
++		local cur="${words[CURRENT]}"
++		i=$(expr index "$cur" "$COMP_WORDBREAKS")
++		start="${cur:0:$i}"
++		compadd -Q -S '' -p "$start" -a results && ret=0
++	fi
++	if (( ret )); then
++		_default -S '' && ret=0
++	fi
++}
++
++_gitk ()
++{
++	__git_has_doubledash && return
++
++	local g="$(__gitdir)"
++	local merge=""
++	if [ -f "$g/MERGE_HEAD" ]; then
++		merge="--merge"
++	fi
++	case "$cur" in
++	--*)
++		__gitcomp "
++		$__git_log_common_options
++		$__git_log_gitk_options
++		$merge
++		"
++		return
++		;;
++	esac
++	__git_complete_revlist
++}
++
++_get_completion_func ()
++{
++	emulate -L sh
++	setopt KSH_TYPESET
++	local command="$1"
++
++	completion_func="_git_${command//-/_}"
++	declare -f $completion_func >/dev/null && return
++
++	local expansion=$(__git_aliased_command "$command")
++	if [ -n "$expansion" ]; then
++		completion_func="_git_${expansion//-/_}"
++		declare -f $completion_func >/dev/null && return
++	fi
++
++	completion_func=
++}
++
++_git ()
++{
++	local ret=1
++
++	if [[ $service != git ]]
++	then
++		_bash_wrap _$service
++		return ret
++	fi
++
++	local curcontext="$curcontext" state state_descr line
++	typeset -A opt_args
++
++	_arguments -C \
++		'(-p --paginate --no-pager)'{-p,--paginate}'[Pipe all output into ''less'']' \
++		'(-p --paginate)--no-pager[Do not pipe git output into a pager]' \
++		'--git-dir=-[Set the path to the repository]: :_directories' \
++		'--bare[Treat the repository as a bare repository]' \
++		'(- :)--version[Prints the git suite version]' \
++		'--exec-path=-[Path to where your core git programs are installed]:: :_directories' \
++		'--html-path[Print the path where git''s HTML documentation is installed]' \
++		'--work-tree=-[Set the path to the working tree]: :_directories' \
++		'--namespace=-[Set the git namespace]: :_directories' \
++		'(- :)--help[Prints the synopsis and a list of the most commonly used commands]' \
++		'(-): :->command' \
++		'(-)*:: :->option-or-argument' && return 0
++
++	case $state in
++	(command)
++		emulate sh -c __git_compute_porcelain_commands
++		local -a porcelain aliases
++		porcelain=( ${=__git_porcelain_commands} )
++		aliases=( $(__git_aliases) )
++		_describe -t porcelain-commands 'porcelain commands' porcelain && ret=0
++		_describe -t aliases 'aliases' aliases && ret=0
++		;;
++	(option-or-argument)
++		local completion_func
++		_get_completion_func "${words[1]}"
++		test "$completion_func" && _bash_wrap $completion_func
++		;;
++	esac
++
++	return ret
++}
++
++_git
+-- 
+1.7.8
