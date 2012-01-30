@@ -1,75 +1,104 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 4/4] completion: be nicer with zsh
-Date: Mon, 30 Jan 2012 12:25:47 -0600
-Message-ID: <20120130182547.GA22549@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/4] completion: simplify __git_remotes
+Date: Mon, 30 Jan 2012 10:27:30 -0800
+Message-ID: <7v8vkpcagd.fsf@alter.siamese.dyndns.org>
 References: <1327944197-6379-1-git-send-email-felipec@infradead.org>
- <1327944197-6379-5-git-send-email-felipec@infradead.org>
- <20120130175324.GH10618@burratino>
- <CAMP44s0ACC+AnwHGtBLe8C1S_sxWj6SbMbawDThvLQAA0pKMYQ@mail.gmail.com>
+ <1327944197-6379-2-git-send-email-felipec@infradead.org>
+ <20120130173446.GF10618@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipec@infradead.org>, git@vger.kernel.org,
-	Lee Marlow <lee.marlow@gmail.com>,
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Felipe Contreras <felipe.contreras@gmail.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 30 19:26:07 2012
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+To: Felipe Contreras <felipec@infradead.org>
+X-From: git-owner@vger.kernel.org Mon Jan 30 19:27:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrvvY-0003eO-64
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 19:26:04 +0100
+	id 1Rrvx3-0004QE-U4
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 19:27:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753361Ab2A3SZ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jan 2012 13:25:59 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:40086 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752860Ab2A3SZ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 13:25:59 -0500
-Received: by ghrr11 with SMTP id r11so1921121ghr.19
-        for <git@vger.kernel.org>; Mon, 30 Jan 2012 10:25:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=QF+JwaMTnfDRdlDLKWBLZ9f1kNoG+6R5wIUxtvIrNOE=;
-        b=CX8JOfky1Kepxjlfzf2OoKuhZ+PeUohhTjKxQ1Pjo/MHB1F+x7ynCkaJj89ssDNn2W
-         C7xON9lRdIfPX4YRTjRJpD7PXtPNlC2sTpqLkuYVt53m6fiDBwOCU85+DhD1mgHoKfDF
-         +yTt86O3PfgCKrLJq4/JQhROGvXhuSShjgeI4=
-Received: by 10.101.201.19 with SMTP id d19mr8448673anq.39.1327947958458;
-        Mon, 30 Jan 2012 10:25:58 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id o11sm27168022anl.11.2012.01.30.10.25.57
-        (version=SSLv3 cipher=OTHER);
-        Mon, 30 Jan 2012 10:25:57 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CAMP44s0ACC+AnwHGtBLe8C1S_sxWj6SbMbawDThvLQAA0pKMYQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753426Ab2A3S1d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 13:27:33 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56896 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753184Ab2A3S1c (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 13:27:32 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A1826965;
+	Mon, 30 Jan 2012 13:27:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oz2UlmL0nEPwcAXWdP06Kp2FhA0=; b=LXUibe
+	37rFHbAaN05bI0aOQVwa++hFBNd658x00qdXRm89JQ4j+JsgyS9dT4idQGVzxzdu
+	FM8CBEILp/fFom+R7ZMKBXCoT6SHwuytlqnikaePUgzXTcb6+c5/nyefKR8X5dB7
+	WByJd6bKangsi/ZugHi0JmTlSQAKQjMnFx65Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fEcI1AgrxT7YD3u1A/Zw8TyTo4VbnMb6
+	KyiEmvITfjsPihMUgxTT12vktVR4Pe5nnHHsBOLYsp+JV8bZV/o/lRactT41Cg0P
+	z3nZiXVMP6SjGXbOPUCCr1PIDdOx2zxFJKm+9wfEO1S5cCeUoJyGIKfoUiegDKj6
+	kgTnxQHAh2k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 520AF6964;
+	Mon, 30 Jan 2012 13:27:32 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 90E896961; Mon, 30 Jan 2012
+ 13:27:31 -0500 (EST)
+In-Reply-To: <20120130173446.GF10618@burratino> (Jonathan Nieder's message of
+ "Mon, 30 Jan 2012 11:34:46 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 127CC7E2-4B70-11E1-80D5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189393>
 
-Felipe Contreras wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> The commands might fail, that's why '2> /dev/null' was used before,
-> and ':' is used right now.
+> Felipe Contreras wrote:
+>
+>> From: Felipe Contreras <felipe.contreras@gmail.com>
+>>
+>> There's no need for all that complicated code that requires nullglob,
+>> and the complexities related to such option.
+>>
+>> As an advantage, this would allow us to get rid of __git_shopt, which is
+>> used only in this fuction to enable 'nullglob' in zsh.
+>
+> That is all a longwinded way to say "zsh doesn't support the same
+> interface as bash for setting the nullglob option, so let's avoid
+> it and use 'ls' which is simpler", right?
 
-Wait, what?
+;-)
 
-: is a no-op command.  It does not redirect stderr automatically or
-do any other magical thing.
+>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+>> index 1496c6d..086e38d 100755
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -644,12 +644,7 @@ __git_refs_remotes ()
+>>  __git_remotes ()
+>>  {
+>>  	local i ngoff IFS=$'\n' d="$(__gitdir)"
+>> -	__git_shopt -q nullglob || ngoff=1
+>> -	__git_shopt -s nullglob
+>> -	for i in "$d/remotes"/*; do
+>> -		echo ${i#$d/remotes/}
+>> -	done
+>> -	[ "$ngoff" ] && __git_shopt -u nullglob
+>> +	test -d "$d/remotes" && ls -1 "$d/remotes"
 
-[...]
-> And IMO harder to read. But you are correct that most of the code uses
-> [[]], which I think is a shame. But I guess people want to keep using
-> that.
+Yeah, very nice reduction of unnecessary code.
 
-[[ has simpler syntax wrt quoting and other details.  But now that I
-check, the code uses [ a lot, too (which, like "test", is a plain
-built-in command), so I suppose consistency is the only reason to
-prefer one over another.  "git log --grep='if \['" tells me the use of
-'[' instead of 'test' here is deliberate.
+The original loop might have been justifiable if it were doing something
+more meaningful inside (e.g. making sure the file really describes a
+remote), but as far as I can tell, it merely is a poor-man's emulation of
+"ls -1".
+
+You updated it to make the code say what it wanted to say in the way it
+should have said from day one ;-).
