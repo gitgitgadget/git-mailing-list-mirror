@@ -1,74 +1,77 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: i18n: Avoid sentence puzzles
-Date: Mon, 30 Jan 2012 22:12:34 +0100
-Message-ID: <CACBZZX6HiGNGEbvCF=Ba2BwUuJ09XFn56nMnF0SDt4T_7OyOhA@mail.gmail.com>
-References: <201201301231.21090.schwarzerf@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/4] completion: cleanup __gitcomp*
+Date: Mon, 30 Jan 2012 13:25:59 -0800
+Message-ID: <7vliooanmg.fsf@alter.siamese.dyndns.org>
+References: <1327944197-6379-1-git-send-email-felipec@infradead.org>
+ <1327944197-6379-4-git-send-email-felipec@infradead.org>
+ <20120130175004.GG10618@burratino> <7vpqe1au7f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Frederik Schwarzer <schwarzerf@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 30 22:19:21 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Ted Pavlic <ted@tedpavlic.com>,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Felipe Contreras <felipec@infradead.org>
+X-From: git-owner@vger.kernel.org Mon Jan 30 22:26:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrydF-000305-1F
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 22:19:21 +0100
+	id 1RrykO-0006Oi-1z
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 22:26:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753439Ab2A3VTR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jan 2012 16:19:17 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:56639 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752023Ab2A3VTQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Jan 2012 16:19:16 -0500
-Received: by lagu2 with SMTP id u2so2472056lag.19
-        for <git@vger.kernel.org>; Mon, 30 Jan 2012 13:19:15 -0800 (PST)
-Received-SPF: pass (google.com: domain of avarab@gmail.com designates 10.112.40.72 as permitted sender) client-ip=10.112.40.72;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of avarab@gmail.com designates 10.112.40.72 as permitted sender) smtp.mail=avarab@gmail.com; dkim=pass header.i=avarab@gmail.com
-Received: from mr.google.com ([10.112.40.72])
-        by 10.112.40.72 with SMTP id v8mr6094849lbk.49.1327958355052 (num_hops = 1);
-        Mon, 30 Jan 2012 13:19:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=JnWfXoxOOFI9yMZymMCvdm83B6ivLQy9QWpDXmFkE8M=;
-        b=SuHTgSu0PDGlMe7l8VXzhsnZDqklPkWPj+VUbC1KpClmycFIO68Y9B9QOQlCMM0+45
-         FTXq542L6Y1r3258g76pL0xi9H9H4KoVb4wwaOretAGPpSr2VyXeltr+qW7PrRnIkKSp
-         RY1QiPhG5DK9VrwgEbGiR/EmIqbNAN7q/gKxM=
-Received: by 10.112.40.72 with SMTP id v8mr5001672lbk.49.1327957974139; Mon,
- 30 Jan 2012 13:12:54 -0800 (PST)
-Received: by 10.112.30.67 with HTTP; Mon, 30 Jan 2012 13:12:34 -0800 (PST)
-In-Reply-To: <201201301231.21090.schwarzerf@gmail.com>
+	id S1753586Ab2A3V0T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 16:26:19 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58602 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753371Ab2A3V0C (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 16:26:02 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B2AB27BCF;
+	Mon, 30 Jan 2012 16:26:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=U0Ui9Bb5tNddbtE8Z5HjwOSgyHA=; b=T6yNdj
+	AQzH7My3bY1Ba/Ec3mEw1fnJ6F+dTf+o3fS+qdupCYtDvDhfGXx4+Hh9k7cukdba
+	U2sjg6R8pQ7lNBBsWjQDfwlToSA53drO9vAcKTdQe+8S9C2HM1yfpyUtW4XsB+Ni
+	/QFswHlDES28bKe5JkJqyU/KBLLaaLhqAmzyo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hy77KTl4Cuj1F/2ueUGCw4G7fIwxSkYg
+	XGZhioGdvBBbkSh3p9cb/uNzR98S6Hh0jBKvQFohLG4aFsn/CXt/TlFh/mP0gj7w
+	G7YmiWg2gLU0ns16H0QqcoXTDBFDpPhttXhGUZ3nFUKEVK/gci367Ie3Ga6+Y2Tc
+	JejeK4cWYw8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A55AF7BCE;
+	Mon, 30 Jan 2012 16:26:01 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 32E9D7BCD; Mon, 30 Jan 2012
+ 16:26:01 -0500 (EST)
+In-Reply-To: <7vpqe1au7f.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 30 Jan 2012 11:03:48 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 01EA5692-4B89-11E1-8304-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189429>
 
-On Mon, Jan 30, 2012 at 12:31, Frederik Schwarzer <schwarzerf@gmail.com> wrote:
-> in order to enable translators to prepare proper translations,
-> sentence puzzles have to be avoided. While it makes perfect sense for
-> English, some languages may have to separate those words to sound or
-> even be correct.
->
-> The attached patch demonstrates a change to achive that. I did not
-> test it because its purpose is only to raise awareness and start a
-> discussion about this topic. After all the question is, how important
-> translations are for a tool like Git. I have started a German
-> translation but many things are really hard to translate.
+I managed to pick up 1 & 2:
 
-I added the i18n support you're having problems with, and I completely
-agree that this is the sort of thing we need to do.
+ 1. be nicer with zsh (aka avoid default value assignment on : true
+    command);
 
-Unfortunately when I added the i18n support I didn't have time to get
-rid of all these sentence puzzles (or, to put it another way "lego"
-sentences). You should never force translators to translate partial
-sentences, you should always provide them with full sentences that
-they can translate completely, even if that means that there's some
-duplication for some languages.
+ 2. simplify __git_remotes (aka use ls -1 instead of rolling a loop to do
+    that ourselves).
 
-Problem reports like this one are exactly what we need at this point
-for i18n, we need people spotting these issues, and then we can fix
-them.
+But I do not see your patch for 3 & 4 either on gmane archive nor in my
+mailbox (via vger, not direct delivery from you to me). The threads for
+these two patches both begin with Jonathan's review for me.
+
+Care to resend 3 & 4?
+
+Thanks.
