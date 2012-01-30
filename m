@@ -1,74 +1,72 @@
-From: Nicholas Harteau <nrh@spotify.com>
-Subject: [PATCH] use 'installsitelib' even with NO_PERL_MAKEMAKER
-Date: Mon, 30 Jan 2012 11:51:44 +0100
-Message-ID: <24482D02-B773-4FE3-8FC7-92B8B4D8C0FA@spotify.com>
-Mime-Version: 1.0 (Apple Message framework v1251.1)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 30 11:51:51 2012
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] completion: add new zsh completion
+Date: Mon, 30 Jan 2012 12:59:40 +0200
+Message-ID: <CAMP44s3QeZuXrR=UE4qvDadu66Cmi-txmSps8Ow24om27URxOg@mail.gmail.com>
+References: <1327881699-25461-1-git-send-email-felipe.contreras@gmail.com>
+	<vpqwr89d1p7.fsf@bauges.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jan 30 11:59:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rropy-0000gM-LX
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 11:51:50 +0100
+	id 1Rroxj-0004SE-TD
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 11:59:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752225Ab2A3Kvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jan 2012 05:51:46 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:58169 "EHLO
+	id S1752377Ab2A3K7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 05:59:43 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:64243 "EHLO
 	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751202Ab2A3Kvp convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 05:51:45 -0500
-Received: by lagu2 with SMTP id u2so2101944lag.19
-        for <git@vger.kernel.org>; Mon, 30 Jan 2012 02:51:44 -0800 (PST)
-Received: by 10.112.24.196 with SMTP id w4mr4319340lbf.62.1327920704299;
-        Mon, 30 Jan 2012 02:51:44 -0800 (PST)
-Received: from [192.168.0.216] ([212.181.83.218])
-        by mx.google.com with ESMTPS id i9sm13851634lbz.3.2012.01.30.02.51.42
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 30 Jan 2012 02:51:43 -0800 (PST)
-X-Mailer: Apple Mail (2.1251.1)
+	by vger.kernel.org with ESMTP id S1752363Ab2A3K7m (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Jan 2012 05:59:42 -0500
+Received: by lagu2 with SMTP id u2so2106395lag.19
+        for <git@vger.kernel.org>; Mon, 30 Jan 2012 02:59:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=1nkhK1lc/t9JuClxZ3NNC+W5tctA416MmfOXjP2A458=;
+        b=fQl4QIGN31i0bx5DkY3NPeIgGbhrVOQhnSzBTkuaVaBKMg9eHXcKfFZ+rwwvTYqyxx
+         p/rLkh+hF2vW7w4fZqYeR8KkVHLgt0evz2rDO+0IFUi99I5W8wL8fZXAqY2aKeqTC9o8
+         3Zp08Of5ztXFu6hB0ItUuHvuJMxT0hUYv4X6I=
+Received: by 10.152.131.40 with SMTP id oj8mr8921512lab.24.1327921180435; Mon,
+ 30 Jan 2012 02:59:40 -0800 (PST)
+Received: by 10.112.40.202 with HTTP; Mon, 30 Jan 2012 02:59:40 -0800 (PST)
+In-Reply-To: <vpqwr89d1p7.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189341>
 
-perl/Makefile installs Git.pm into $prefix/lib when ExtUtils::MakeMaker
-is not present.  perl can't "use Git;" in that scenario, as $prefix/lib
-isn't in perl's include path.
+On Mon, Jan 30, 2012 at 10:39 AM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> +ZSH_VERSION='' . /usr/share/git/completion/git-completion.bash
+>
+> Probably stating the obvious, but this path shouldn't be hardcoded.
+>
+> Something along the lines of
+>
+> ZSH_VERSION='' . $(dirname ${funcsourcetrace[1]%:*})/git-completion.bash
+>
+> should do it (mostly untested, and written by a non-ZSH expert).
 
-This patch installs Git.pm into perl's 'installsitelib', generally
-$prefix/lib/perl5/site_perl, so that even when ExtUtils::MakeMaker isn't
-present, Git.pm gets installed in a location where 'use Git;' just
-works.
+Yes, it's hard-coded, because there's no way to know where is this
+file. In my case, it's on ~/.git-completion.sh, and this one that I am
+proposing sits in ~/.zsh/completion/_zsh, so your proposal breaks
+things completely for me.
 
-for some additional discussion, see:
-https://github.com/mxcl/homebrew/pull/8643
-https://github.com/mxcl/homebrew/issues/8620
----
- perl/Makefile |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+I will think about it, but I think for now, users of this script
+should set that manually--if for some reason they don't want to use
+the default.
 
-diff --git a/perl/Makefile b/perl/Makefile
-index b2977cd..2199eb1 100644
---- a/perl/Makefile
-+++ b/perl/Makefile
-@@ -21,7 +21,7 @@ clean:
- 	$(RM) $(makfile).old
- 
- ifdef NO_PERL_MAKEMAKER
--instdir_SQ = $(subst ','\'',$(prefix)/lib)
-+instdir_SQ = $(subst ','\'',$(subst installsitelib=,'',$(shell $(PERL_PATH_SQ) -V:installsitelib)))
- $(makfile): ../GIT-CFLAGS Makefile
- 	echo all: private-Error.pm Git.pm > $@
- 	echo '	mkdir -p blib/lib' >> $@
+Maybe we should use zstyle so they can configure it on their .zshrc?
+
 -- 
-1.7.8.3
-
---
-nicholas harteau
-nrh@spotify.com
+Felipe Contreras
