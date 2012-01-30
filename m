@@ -1,69 +1,63 @@
-From: Junio C Hamano <jch2355@gmail.com>
-Subject: Re: [PATCH 3/3] completion: remove unused code
-Date: Mon, 30 Jan 2012 00:22:12 -0800
-Message-ID: <25ea208e-353d-48f7-a849-143689fb2be6@email.android.com>
-References: <1327880479-25275-1-git-send-email-felipe.contreras@gmail.com> <1327880479-25275-4-git-send-email-felipe.contreras@gmail.com> <20120130025014.GA15944@burratino> <CAMP44s1bZeednbHfqXANZR5zVVvGwjRpuV5TFmnh212FD7E-Vg@mail.gmail.com> <871uqh3a8s.fsf@thomas.inf.ethz.ch>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] completion: add new zsh completion
+Date: Mon, 30 Jan 2012 09:39:00 +0100
+Message-ID: <vpqwr89d1p7.fsf@bauges.imag.fr>
+References: <1327881699-25461-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Thomas Rast <trast@inf.ethz.ch>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 30 09:22:29 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 30 09:39:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrmVQ-00012f-CF
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 09:22:29 +0100
+	id 1Rrmle-0008SG-3V
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 09:39:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754083Ab2A3IWY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jan 2012 03:22:24 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:38540 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752725Ab2A3IWX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 03:22:23 -0500
-Received: by iacb35 with SMTP id b35so4863391iac.19
-        for <git@vger.kernel.org>; Mon, 30 Jan 2012 00:22:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=references:user-agent:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:subject:from:date:to:cc:message-id;
-        bh=vOTgbkZ03z0XhDZL+qzhzML/2ww0rcYGzRR8mY24Kac=;
-        b=RwNhxFI+USjaCLHf7yqgLvQkO5XMqkLbSm/gKLfhD+bLSuK4/pM50khP80HvarRKSY
-         xzeccz6qM7aPc8C4xpMbImdCljxmFA70WUUZTd4ivllVqOQvYDbcBU3BvXnJUmCvkMWD
-         CeZm3ZzDPlC0drHd5DgQeo8Z0EfrFtUWi6nyk=
-Received: by 10.50.202.97 with SMTP id kh1mr16281891igc.19.1327911743279;
-        Mon, 30 Jan 2012 00:22:23 -0800 (PST)
-Received: from android-1996152855784664 (37.sub-166-250-41.myvzw.com. [166.250.41.37])
-        by mx.google.com with ESMTPS id ba5sm9005796igb.6.2012.01.30.00.22.20
-        (version=SSLv3 cipher=OTHER);
-        Mon, 30 Jan 2012 00:22:22 -0800 (PST)
-User-Agent: K-9 Mail for Android
-In-Reply-To: <871uqh3a8s.fsf@thomas.inf.ethz.ch>
+	id S1754083Ab2A3IjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 03:39:08 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:55577 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753988Ab2A3IjH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 03:39:07 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q0U8aWGr024153
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 30 Jan 2012 09:36:32 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1RrmlQ-0002fm-IY; Mon, 30 Jan 2012 09:39:00 +0100
+In-Reply-To: <1327881699-25461-1-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Mon, 30 Jan 2012 02:01:39 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 30 Jan 2012 09:36:32 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q0U8aWGr024153
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1328517396.42855@tIf1CRPyLTqwaqcpZ6vYdQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189330>
 
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
+> +ZSH_VERSION='' . /usr/share/git/completion/git-completion.bash
 
-Thomas Rast <trast@inf.ethz.ch> wrote:
+Probably stating the obvious, but this path shouldn't be hardcoded.
 
->Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> No reason. I hope they read the mailing list, otherwise I'll resend
->> and CC them. A get_maintainers script, or something like that would
->> make things easier.
->
->I simply use
->
->  git shortlog -sn --no-merges v1.7.0.. -- contrib/completion/
->
->(In many parts the revision limiter can be omitted without losing much,
->but e.g. here this drops Shawn who hasn't worked on it since 2009.)
+Something along the lines of
 
-Or "--since=1.year", which you can keep using forever without adjusting.
+ZSH_VERSION='' . $(dirname ${funcsourcetrace[1]%:*})/git-completion.bash
+
+should do it (mostly untested, and written by a non-ZSH expert).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
