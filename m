@@ -1,73 +1,141 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] completion: add new zsh completion
-Date: Mon, 30 Jan 2012 13:32:24 +0200
-Message-ID: <CAMP44s2B_WLmGryUv9Fitak67nWhp8Gpw3Ac-dApKB4KjYv1fQ@mail.gmail.com>
-References: <1327881699-25461-1-git-send-email-felipe.contreras@gmail.com>
-	<vpqwr89d1p7.fsf@bauges.imag.fr>
-	<4F267AC9.1080407@viscovery.net>
+From: "Bernhard R. Link" <brl+git@mail.brlink.eu>
+Subject: [PATCH v5 1/5] gitweb: prepare git_get_projects_list for use outside
+ 'forks'.
+Date: Mon, 30 Jan 2012 12:44:47 +0100
+Message-ID: <20120130114447.GA9267@server.brlink.eu>
+References: <20120128165606.GA6770@server.brlink.eu>
+ <m3wr8bcuon.fsf@localhost.localdomain>
+ <20120129012234.GD16079@server.brlink.eu>
+ <201201291354.50241.jnareb@gmail.com>
+ <20120129160615.GA13937@server.brlink.eu>
+ <7v7h0afcc2.fsf@alter.siamese.dyndns.org>
+ <20120130095252.GA6183@server.brlink.eu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Jan 30 12:32:30 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 30 12:44:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrpTJ-0002FM-WF
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 12:32:30 +0100
+	id 1RrpfB-0007bD-8P
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 12:44:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751973Ab2A3Lc0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jan 2012 06:32:26 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:39548 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751862Ab2A3LcZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Jan 2012 06:32:25 -0500
-Received: by lagu2 with SMTP id u2so2124891lag.19
-        for <git@vger.kernel.org>; Mon, 30 Jan 2012 03:32:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=IrkW/g5M4iPkSmU2Vp57FIrtPxYdQKZ98Jupvzg/KxQ=;
-        b=hseOZz+7EJZXZwFdZA/2UZ6jBkH1pZSRDBbEWjX8DdqBvZ9Zq0xcbznEERQ4ZaSrtY
-         8HiS05R8tUU9aC0LFbjs+f5AKzxTJ/NXKwR1/UlWHlsfXzL+BhSp9Up7jkbqEoety4b/
-         cuCWkySRO1egy0n9qyLaFa0Nxhbx6Gf4kYPcs=
-Received: by 10.152.132.104 with SMTP id ot8mr8916124lab.17.1327923144113;
- Mon, 30 Jan 2012 03:32:24 -0800 (PST)
-Received: by 10.112.40.202 with HTTP; Mon, 30 Jan 2012 03:32:24 -0800 (PST)
-In-Reply-To: <4F267AC9.1080407@viscovery.net>
+	id S1752466Ab2A3Loc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 06:44:32 -0500
+Received: from server.brlink.eu ([78.46.187.186]:54084 "EHLO server.brlink.eu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752248Ab2A3Lob (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 06:44:31 -0500
+Received: from mfs.mathematik.uni-freiburg.de ([132.230.30.170] helo=client.brlink.eu)
+	by server.brlink.eu with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <brl@mail.brlink.eu>)
+	id 1Rrpeu-0005dL-HG; Mon, 30 Jan 2012 12:44:28 +0100
+Received: from brl by client.brlink.eu with local (Exim 4.77)
+	(envelope-from <brl@mail.brlink.eu>)
+	id 1RrpfD-0002Ph-T4; Mon, 30 Jan 2012 12:44:47 +0100
+Content-Disposition: inline
+In-Reply-To: <20120130095252.GA6183@server.brlink.eu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189348>
 
-On Mon, Jan 30, 2012 at 1:11 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Am 1/30/2012 9:39, schrieb Matthieu Moy:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>
->>> +ZSH_VERSION='' . /usr/share/git/completion/git-completion.bash
->>
->> Probably stating the obvious, but this path shouldn't be hardcoded.
->>
->> Something along the lines of
->>
->> ZSH_VERSION='' . $(dirname ${funcsourcetrace[1]%:*})/git-completion.bash
->>
->> should do it (mostly untested, and written by a non-ZSH expert).
->
-> Moreover, if zsh is POSIX compliant, the value of ZSH_VERSION will be an
-> empty string after this statement. That may or (more likely) may not be
-> what you want.
+Use of the filter option of git_get_projects_list is currently
+limited to forks. It hard codes removal of ".git" suffixes from
+the filter and assumes the project belonging to the filter directory
+was already validated to be visible in the project list.
 
-It's not, only inside that script. Same in bash.
+To make it more generic move the .git suffix removal to the callers
+and add an optional argument to denote visibility verification is
+still needed.
 
-And that's exactly what I want... I wan the git-completion.bash to
-avoid any zsh hacks and workarounds.
+If there is a projects list file (GITWEB_LIST) only projects from
+this list are returned anyway, so no more checks needed.
 
-Cheers.
+If there is no projects list file and the caller requests strict
+checking (GITWEB_STRICT_EXPORT), do not jump directly to the
+given directory but instead do a normal search and filter the
+results instead.
 
+The only (hopefully non-existing) effect of GITWEB_STRICT_EXPORT
+without GITWEB_LIST is to make sure no project can be viewed without
+also be found starting from project root. git_get_projects_list without
+this patch does not enforce this but all callers only call it with
+a filter already checked this way. With this parameter a caller
+can request this check if the filter cannot be checked this way.
+
+Signed-off-by: Bernhard R. Link <brlink@debian.org>
+---
+
+Changes to v4:
+	- split patch in smaller parts
+	- move ".git" suffix removal from filters to forks specific code
+          (if you want this as patch on top of the previous series, let me know)
+	- improve the descriptions of all patches
+---
+ gitweb/gitweb.perl |   13 ++++++++-----
+ 1 files changed, 8 insertions(+), 5 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 9cf7e71..acf1bae 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2829,10 +2829,9 @@ sub git_get_project_url_list {
+ 
+ sub git_get_projects_list {
+ 	my $filter = shift || '';
++	my $paranoid = shift;
+ 	my @list;
+ 
+-	$filter =~ s/\.git$//;
+-
+ 	if (-d $projects_list) {
+ 		# search in directory
+ 		my $dir = $projects_list;
+@@ -2841,7 +2840,7 @@ sub git_get_projects_list {
+ 		my $pfxlen = length("$dir");
+ 		my $pfxdepth = ($dir =~ tr!/!!);
+ 		# when filtering, search only given subdirectory
+-		if ($filter) {
++		if ($filter and not $paranoid) {
+ 			$dir .= "/$filter";
+ 			$dir =~ s!/+$!!;
+ 		}
+@@ -2866,6 +2865,10 @@ sub git_get_projects_list {
+ 				}
+ 
+ 				my $path = substr($File::Find::name, $pfxlen + 1);
++				# paranoidly only filter here
++				if ($paranoid && $filter && $path !~ m!^\Q$filter\E/!) {
++					next;
++				}
+ 				# we check related file in $projectroot
+ 				if (check_export_ok("$projectroot/$path")) {
+ 					push @list, { path => $path };
+@@ -6007,7 +6010,7 @@ sub git_forks {
+ 		die_error(400, "Unknown order parameter");
+ 	}
+ 
+-	my @list = git_get_projects_list($project);
++	my @list = git_get_projects_list($project =~ s/\.git$//r);
+ 	if (!@list) {
+ 		die_error(404, "No forks found");
+ 	}
+@@ -6066,7 +6069,7 @@ sub git_summary {
+ 
+ 	if ($check_forks) {
+ 		# find forks of a project
+-		@forklist = git_get_projects_list($project);
++		@forklist = git_get_projects_list($project =~ s/\.git$//r);
+ 		# filter out forks of forks
+ 		@forklist = filter_forks_from_projects_list(\@forklist)
+ 			if (@forklist);
 -- 
-Felipe Contreras
+1.7.8.3
