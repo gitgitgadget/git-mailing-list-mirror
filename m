@@ -1,70 +1,59 @@
-From: =?iso-8859-1?Q?Thomas_R=F6fer?= <Thomas.Roefer@dfki.de>
-Subject: git rebase and MacOS 10.7.2 file versions
-Date: Mon, 30 Jan 2012 17:46:45 +0100
-Message-ID: <A9AB7E23-3C22-4BCC-8E25-EF2D66B57E61@dfki.de>
-Mime-Version: 1.0 (Apple Message framework v1251.1)
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 30 17:53:55 2012
+From: dag@cray.com (David A. Greene)
+Subject: Re: git-subtree
+Date: Mon, 30 Jan 2012 10:56:53 -0600
+Message-ID: <nngfwexxh62.fsf@transit.us.cray.com>
+References: <nngaa638nwf.fsf@transit.us.cray.com>
+	<CALkWK0nU9iO_6CCbWw8c_Fz=xodkaAW4300Jpc7M7D+kBP=QRg@mail.gmail.com>
+	<87ipkq199w.fsf@smith.obbligato.org>
+	<20120105154740.GA11475@sigill.intra.peff.net>
+	<87zke2yv27.fsf@smith.obbligato.org>
+	<87aa56kvr4.fsf@smith.obbligato.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>,
+	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org
+To: greened@obbligato.org (David A. Greene)
+X-From: git-owner@vger.kernel.org Mon Jan 30 17:57:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RruUK-0006RK-Ji
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 17:53:52 +0100
+	id 1RruXR-0008Ac-Qb
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 17:57:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753113Ab2A3Qxr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jan 2012 11:53:47 -0500
-Received: from sea-mail.dfki.de ([134.96.191.185]:58153 "EHLO sea-mail.dfki.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752927Ab2A3Qxr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Jan 2012 11:53:47 -0500
-X-Greylist: delayed 420 seconds by postgrey-1.27 at vger.kernel.org; Mon, 30 Jan 2012 11:53:47 EST
-Received: from sea-mail.dfki.de (localhost.localdomain [127.0.0.1])
-	by localhost (Email Security Appliance) with SMTP id 6FF15A426A_F26C976B
-	for <git@vger.kernel.org>; Mon, 30 Jan 2012 16:46:46 +0000 (GMT)
-Received: from mail.dfki.de (lnv-104.sb.dfki.de [134.96.191.146])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by sea-mail.dfki.de (Sophos Email Appliance) with ESMTP id 55A709F225_F26C976F
-	for <git@vger.kernel.org>; Mon, 30 Jan 2012 16:46:46 +0000 (GMT)
-Received: from [10.0.1.102] (pD9FD61E7.dip.t-dialin.net [217.253.97.231])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mail.dfki.de (Postfix) with ESMTPSA id 25D0131093
-	for <git@vger.kernel.org>; Mon, 30 Jan 2012 17:46:46 +0100 (CET)
-X-Mailer: Apple Mail (2.1251.1)
+	id S1753222Ab2A3Q5A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 11:57:00 -0500
+Received: from exprod6og101.obsmtp.com ([64.18.1.181]:50287 "EHLO
+	exprod6og101.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753157Ab2A3Q47 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 11:56:59 -0500
+Received: from stplmr01.us.cray.com ([136.162.34.13]) (using TLSv1) by exprod6ob101.postini.com ([64.18.5.12]) with SMTP
+	ID DSNKTybL1lyxo0b/z6uRke7hrMyxqP6D+kyQ@postini.com; Mon, 30 Jan 2012 08:56:59 PST
+Received: from transit.us.cray.com (transit.us.cray.com [172.31.17.53])
+	by stplmr01.us.cray.com (8.14.3/8.13.8/hubv2-LastChangedRevision: 12441) with ESMTP id q0UGusJS005441;
+	Mon, 30 Jan 2012 10:56:54 -0600
+Received: from transit.us.cray.com (localhost [127.0.0.1])
+	by transit.us.cray.com (8.14.3/8.13.6/client-5260) with ESMTP id q0UGusUu023249;
+	Mon, 30 Jan 2012 10:56:54 -0600
+Received: (from dag@localhost)
+	by transit.us.cray.com (8.14.3/8.12.8/Submit) id q0UGurT1023248;
+	Mon, 30 Jan 2012 10:56:53 -0600
+In-Reply-To: <87aa56kvr4.fsf@smith.obbligato.org> (David A. Greene's message
+	of "Sun, 29 Jan 2012 16:07:59 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189375>
 
-Hi,
+greened@obbligato.org (David A. Greene) writes:
 
-I get mysterious behavior during git rebase on MacOS 10.7.x. git report=
-s unresolvable conflicts, stops the rebase, but afterwards the list of =
-files that needs to be fixed is empty. git rebase --skip does not help,=
- because then the commit is actually missing.
+> I originally put them under t97XX but now that is taken, as is
+> everything up to and including t99XX.
 
-What helps is to abort the rebase, copy the conflicting files, delete t=
-he originals and move back the copies instead. The files themselves are=
- identical before deleting and after restoring and their access rights =
-are also unchanged. What is actually different is that all the conflict=
-ing files so far had older versions stored by Lion's "file versions" fe=
-ature. The restored copies do not have such a version history. Since "f=
-ile versions" cannot be deactivated, editing a file with an application=
- that supports it (e.g. TextEdit) will basically result in strange git =
-conflicts later.
+Oops, I lied.  I originally put them under t79XX and I've kept that for
+now.  Sound good?
 
-I have tested this with a number of git versions, but the behavior is a=
-lways the same.
-
-All this may simply be a bug in MacOS 10.7.x, but maybe there is a work=
-around for git to make this work again.
-
-Best regards,
-
-Thomas R=F6fer
+                             -Dave
