@@ -1,78 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] completion: be nicer with zsh
-Date: Mon, 30 Jan 2012 10:07:27 -0800
-Message-ID: <7vpqe1cbds.fsf@alter.siamese.dyndns.org>
-References: <1327880479-25275-1-git-send-email-felipe.contreras@gmail.com>
- <1327880479-25275-2-git-send-email-felipe.contreras@gmail.com>
- <7v8vkperli.fsf@alter.siamese.dyndns.org>
- <CAMP44s0rp1EwruAwMpntcUzKS=Pbe44t7Eq0OcHdH8WF7OoUhQ@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 4/4] completion: be nicer with zsh
+Date: Mon, 30 Jan 2012 20:10:01 +0200
+Message-ID: <CAMP44s0ACC+AnwHGtBLe8C1S_sxWj6SbMbawDThvLQAA0pKMYQ@mail.gmail.com>
+References: <1327944197-6379-1-git-send-email-felipec@infradead.org>
+	<1327944197-6379-5-git-send-email-felipec@infradead.org>
+	<20120130175324.GH10618@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 30 19:07:37 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Felipe Contreras <felipec@infradead.org>, git@vger.kernel.org,
+	Lee Marlow <lee.marlow@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 30 19:10:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rrvdg-0002Vd-1U
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 19:07:36 +0100
+	id 1RrvgA-0003sr-29
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 19:10:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752555Ab2A3SHb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jan 2012 13:07:31 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49105 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751784Ab2A3SHa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 13:07:30 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 87F1B6514;
-	Mon, 30 Jan 2012 13:07:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=odY7JqxTSd6bHp8V9PQTfWACSXs=; b=bKO/kP
-	fpcADcCmRdcfiqBPiL4Srb7fHrbSYpUqqID0PcNLKQGrDCh9Vx9akrer4iMjJIL0
-	Y5Al9CX9o6So518CuyiQL5lhBnYvS2GRi1hVcmzJOtA+I+E+aveRbmfhnvy/12xl
-	nMmihSxwATicdu9GSbC98t640sABXLKV5cdjc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UTZf2Ux+0h3ROFUj6wmC47gThpe8UXPx
-	eeFPaaO+oF3ndIH7YBvgvL+7yWSJZhf6Jhu2Z+E8xJfUZ9WdhIg5m1WvMbj/2RZH
-	5Mm07VUGiMk6a7FZlrBLUmdip7DI9xiPLVSIDuA48VNdU6HbgmZDkaOSq8MQqqMg
-	eyXqW8I2r7s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DF976513;
-	Mon, 30 Jan 2012 13:07:29 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 123B86512; Mon, 30 Jan 2012
- 13:07:28 -0500 (EST)
-In-Reply-To: <CAMP44s0rp1EwruAwMpntcUzKS=Pbe44t7Eq0OcHdH8WF7OoUhQ@mail.gmail.com> (Felipe
- Contreras's message of "Mon, 30 Jan 2012 12:35:31 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 45B537DC-4B6D-11E1-859C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752727Ab2A3SKE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jan 2012 13:10:04 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:40202 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752351Ab2A3SKC convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 13:10:02 -0500
+Received: by lagu2 with SMTP id u2so2370575lag.19
+        for <git@vger.kernel.org>; Mon, 30 Jan 2012 10:10:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=7RvenEUmOYTjDFG1Od7FFBhF+nWhp4NECUTWmlPyf0w=;
+        b=kwILXmnsbwUtVgjhV9IoTcogFG0z8B2V00uSf38dlVyJjwgKAkSxxJ0Z0DlQ7mtdX8
+         hFVJ1BNdZbPaRIwxqJhkvG0Yg8ZKUdXmpLvTNxV5FcBewohCODNSjppsxt4Bz/+ohWDO
+         jN9SEYNOXQZe008f4LcTa3oBaexsysaa3HP9M=
+Received: by 10.112.48.65 with SMTP id j1mr4717394lbn.76.1327947001331; Mon,
+ 30 Jan 2012 10:10:01 -0800 (PST)
+Received: by 10.112.40.202 with HTTP; Mon, 30 Jan 2012 10:10:01 -0800 (PST)
+In-Reply-To: <20120130175324.GH10618@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189385>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Mon, Jan 30, 2012 at 7:53 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Felipe Contreras wrote:
+>
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -657,7 +657,8 @@ __git_merge_strategies=3D
+>> =C2=A0# is needed.
+>> =C2=A0__git_compute_merge_strategies ()
+>> =C2=A0{
+>> - =C2=A0 =C2=A0 : ${__git_merge_strategies:=3D$(__git_list_merge_str=
+ategies)}
+>> + =C2=A0 =C2=A0 test "$__git_merge_strategies" && return
+>> + =C2=A0 =C2=A0 __git_merge_strategies=3D$(__git_list_merge_strategi=
+es 2> /dev/null)
+>
+> Why the new redirect?
 
-> In any case, there's no need for ad hominem arguments; there is a
-> problem when using zsh, that's a fact.
+It's not new, it was in the original code that your change to the ':'
+stuff (eaa4e6e) replaced.
 
-There was no ad-hominem argument at all.
+And the reason is explained right above, in the comment:
 
-Read your two lines I quoted "... the code is now actually understandable
-(at least to me), while before it looked like voodoo", which was your
-words.  What does it tell the reader?  The patch author (1) did not
-understand existing code (voodoo) and (2) the change is a good thing as a
-style/readability improvement.
+# 'git merge -s help' (and thus detection of the merge strategy
+# list) fails, unfortunately, if run outside of any git working
+# tree.  __git_merge_strategies is set to the empty string in
+# that case, and the detection will be repeated the next time it
+# is needed.
 
-I was saying that I did not want to see that in the justification, because
-(2) is not true, while (1) may be.
+The commands might fail, that's why '2> /dev/null' was used before,
+and ':' is used right now.
 
-The patch as-is is a good change that works around issues with zsh's POSIX
-emulation, and that is sufficient-enough justification. IOW, we are in
-agreement on the later half of your sentence.
+> If I add debugging output to __git_list_merge_strategies that writes =
+to stderr, I want to see it.
+
+Well, you wouldn't see it right now, so that out of scope of this patch=
+=2E
+
+> Why the 'test "$foo"' form instead of [[ -n which is more common in
+> this completion script? =C2=A0Why use "return" instead of
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0[[ -n $var ]] || var=3D$(...)
+>
+> which feels a little simpler?
+
+Because this is _huge_:
+
+[[ "$__git_merge_strategies" ]] ||
+__git_merge_strategies=3D$(__git_list_merge_strategies 2> /dev/null)
+
+And IMO harder to read. But you are correct that most of the code uses
+[[]], which I think is a shame. But I guess people want to keep using
+that.
+
+So, how about?
+
+[[ "$__git_merge_strategies" ]] && return
+__git_merge_strategies=3D$(__git_list_merge_strategies 2> /dev/null)
+
+--=20
+=46elipe Contreras
