@@ -1,90 +1,158 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] completion: be nicer with zsh
-Date: Sun, 29 Jan 2012 21:50:44 -0800
-Message-ID: <7v4nvdeo23.fsf@alter.siamese.dyndns.org>
-References: <1327880479-25275-1-git-send-email-felipe.contreras@gmail.com>
- <1327880479-25275-2-git-send-email-felipe.contreras@gmail.com>
- <7v8vkperli.fsf@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Bug: "git checkout -b" should be allowed in empty repo
+Date: Mon, 30 Jan 2012 07:38:38 +0100
+Message-ID: <4F263AEE.4080409@alum.mit.edu>
+References: <4F24E287.3040302@alum.mit.edu> <7vwr8bvvxj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 30 06:50:54 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 30 07:38:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rrk8i-00087u-NW
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 06:50:53 +0100
+	id 1RrktD-0001Qk-Ie
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 07:38:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752417Ab2A3Fus (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jan 2012 00:50:48 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33643 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751937Ab2A3Fur (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 00:50:47 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C9B278F4;
-	Mon, 30 Jan 2012 00:50:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ozLdB0cWJjCD3m+8F/CvrTyqdgM=; b=hFIess
-	WpQDZ6ffqTFZbdrlQMh4Jh3IxB+DZXJalQQpaeHVgeg/zComIntupOgwR7SPHTFa
-	RqDNbUMaNJW78HnrZkwOi67cv+5FZdhKKXoRImVlDmHehz4NFNywVQOHMdWeGmyY
-	JmbjTK0+UwnNHn6l8f6tvq09LsLU6WHfkgceo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BjOvrzrxQAIPnydI2bCwMoKUUPGbCfi5
-	UVtSmb6R95nx++7udEqoREH36C6WUrlkp/LZhb0qvwk3TVHitnldB2WjFfDY0ylZ
-	yl9WPBa6qyR4HkXZME10I4w6u7LNclUKTCk2+5pHEjM05YcjO91msYWiHYEi6XIb
-	k+ySVv5KRZI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 94BCC78F3;
-	Mon, 30 Jan 2012 00:50:46 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 295E478F2; Mon, 30 Jan 2012
- 00:50:46 -0500 (EST)
-In-Reply-To: <7v8vkperli.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 29 Jan 2012 20:34:17 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5AB9240C-4B06-11E1-9657-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753168Ab2A3Git (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 01:38:49 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:40202 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753082Ab2A3Gim (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 01:38:42 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.69.134] (p54BED4B1.dip.t-dialin.net [84.190.212.177])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q0U6ccC2015365
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 30 Jan 2012 07:38:39 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.24) Gecko/20111108 Lightning/1.0b2 Thunderbird/3.1.16
+In-Reply-To: <7vwr8bvvxj.fsf@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189324>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 01/29/2012 07:56 AM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> When starting a new repo, git seems to insist that the first commit be
+>> made on a branch named "master":
+>>
+>>     $ git --version
+>>     git version 1.7.9
+>>     $ git init git-test
+>>     Initialized empty Git repository in /home/mhagger/tmp/git-test/.git/
+>>     $ cd git-test
+>>     $ git checkout -b foo
+>>     fatal: You are on a branch yet to be born
+>>
+>> I would call this a bug; the last command should be allowed.  The
+>> plumbing allows it:
+>>
+>>     $ git symbolic-ref HEAD refs/heads/foo
+> 
+> Your last sentence is nonsense.  The plumbing equivalent of that command
+> is *not* what you wrote above, but is more like [*1*]:
+> 
+> 	git update-ref refs/heads/foo $(git rev-parse --verify HEAD) &&
+>         git symbolic-ref HEAD refs/heads/foo
 
-> Avoiding zsh's bug that cannot use conditional assignment on the no-op
-> colon command (if the bug is really that; it is somewhat hard to imagine
-> if the bug exists only for colon command, though) *is* by itself a good
-> justification for this change, even though the resulting code is harder to
-> read for people who are used to read shell scripts.
+All that I meant is that the one command is the equivalent of *what the
+user wants and expects* in the *particular* situation that I described
+[1].  I should have been clearer.
 
-Just from my curiosity, I am wondering what zsh does when given these:
+> And the first step will fail the same way.  While I share the sense of
+> annoyance with you, I do not think that it is a bug in "checkout -b".
+> 
+> When you are on an unborn branch, what the "symbolic-ref HEAD" command
+> reports does *not* appear in the output from the "for-each-ref refs/heads"
+> command (similarly, that branch name does not appear in the output from
+> the "git branch" command).
+> 
+> Such a behaviour indeed is *curious* and very *different* from the normal
+> case of being on an existing branch, but is that a bug?
 
-	bar () { echo "frotz nitfol xyzzy" }
+When git behaves differently than a typical user would expect for no
+good reason, that is a bug (albeit a UI bug).  The fact that somebody
+who knows the internals of git can find an excuse for the inconsistency
+might be an explanation for how the bug arose but it doesn't make it
+less of a bug.
 
-	unset foo; : ${foo:=$(bar)}; echo "<$?,$foo>"
-        unset foo; true ${foo:=$(bar)}; echo "<$?,$foo>"
-        unset foo; echo >/dev/null ${foo:=$(bar)}; echo "<$?,$foo>"
+> You need to first admit that the state immediately after "git init" (or
+> for that matter, "checkout --orphan") where you are on an unborn branch
+> *is* special.  Some things that would normally make sense would not.
 
-The first one is exactly your "And yet another bug in zsh[1] causes a
-mismatch; zsh seems to have problem emulating wordspliting, but only when
-the ':' command is involved.", so we already know it "seems to have
-problem emulating word-splitting" (by the way, can we replace that with
-exact description of faulty symptom? e.g. "does not split words at $IFS"
-might be what you meant but still when we are assigning the result to a
-single variable, it is unclear how that matters).
+ISTM that this state is more special than it needs to be due to an
+design flaw of git [2].  But even given the fact that this case is
+special *internal* to git, there is no reason to let that specialness
+leak out to the user more than necessary.
 
-Note that I am not suggesting to rewrite the existing ": ${var:=val}" with
-"echo ${var:val} >/dev/null" at all. Even if "echo >/dev/null" makes it
-work as expected, your rewrite to protect it with an explicit conditional
-e.g. "test -n ${foo:-} || foo=$(bar)" would be a lot better than funny
-construct like "echo >/dev/null ${foo:=$(bar)", because it is not an
-established shell idiom to use default assignment with anything but ":".
+> [...]
+> I am not sure "git checkout -b foo" (without explict HEAD [*1*]) should
+> special case and degenerate to "symbolic-ref HEAD refs/heads/foo" when
+> HEAD points to a nonexistent branch.  The mimicking does not go far enough
+> to satisfy people who are pedantic enough to expect "git checkout -b foo"
+> to work when you haven't even instantiated your current branch (when you
+> are on an already instantiated branch, after "git checkout -b foo", "git
+> branch" output will show both foo and the branch you were on, but if you
+> start from an unborn branch, the behaviour will be different and a pedant
+> will notice the difference).
 
-Thanks.
+For me, "git checkout -b foo" means "leave the old branch in its current
+state and move to a new branch that is in the same state."  If the old
+branch was unborn, then it should remain unborn after the command, and I
+should be moved to a new unborn branch.  Since an unborn branch in git
+is not a branch, I would have no expectation that the old branch exists
+after the command [3].
+
+> It may make sense to let
+> 
+>     $ git branch -m trunk
+> 
+> or even
+> 
+>     $ git branch -m master trunk
+> 
+> move away from an unborn "master'"after "git init", with a special case
+> codepath.  When you start from an instanticated branch, after a successful
+> such renaming, the original branch will not exist, and the new branch will
+> exist.  This property would also hold true if you start from an unborn one,
+> so it would be much better mimickery than "git checkout -b foo" case you
+> brought up in this thread.
+
+It makes sense that "git branch -m" can *also* be used to escape an
+unborn master, but this command won't necessarily occur to people
+accustomed to using "git checkout -b" for creating new branches.
+
+Michael
+
+[1] Of course, here "the user" means me :-) but I predict that other
+users would feel the same.
+
+[2] Namely that "orphan" commits have no parents, instead of having an
+"empty repository" commit (something like "000000*") as parent.  By
+contrast, when a new Subversion repository is created, it automatically
+gets a pseudo "r0" commit that represents the empty repository.  The r0
+commit can be used in the UI most places that a "real" commit can be
+used.  If the 0000000 commit could be used in the same way in git, it
+would remove a lot of special casing.  For example, an "unborn branch"
+could be initialized pointing at 0000000.  Even if there is some deeper
+reason why such a design wouldn't have worked, perhaps such a concept
+could be faked for the user interface.
+
+[3] If commit 0000000 were treated specially, then there would be no
+unborn branches but only branches pointing at the empty commit.  In that
+case, my expectation would change--the old branch should be left
+pointing at 0000000.  But currently git has no concept of an unborn
+branch that is not HEAD.
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
