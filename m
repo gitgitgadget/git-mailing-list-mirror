@@ -1,74 +1,90 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] merge: use editor by default in interactive sessions
-Date: Mon, 30 Jan 2012 18:06:52 +0100
-Message-ID: <87hazdazmb.fsf@thomas.inf.ethz.ch>
-References: <7vipk26p1b.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v5 5/5] gitweb: place links to parent directories in page header
+Date: Mon, 30 Jan 2012 18:10:08 +0100
+Message-ID: <201201301810.10072.jnareb@gmail.com>
+References: <20120128165606.GA6770@server.brlink.eu> <20120130095252.GA6183@server.brlink.eu> <20120130115046.GE9267@server.brlink.eu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-To: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 30 18:07:05 2012
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Bernhard R. Link" <brl+git@mail.brlink.eu>
+X-From: git-owner@vger.kernel.org Mon Jan 30 18:09:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rruh3-0005Nn-W5
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 18:07:02 +0100
+	id 1Rrujf-0006Wr-IM
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 18:09:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753134Ab2A3RG5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jan 2012 12:06:57 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:40959 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752916Ab2A3RGz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 12:06:55 -0500
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 30 Jan
- 2012 18:06:51 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 30 Jan
- 2012 18:06:52 +0100
-In-Reply-To: <7vipk26p1b.fsf@alter.siamese.dyndns.org>
-User-Agent: Notmuch/0.3.1-59-g676d251 (http://notmuchmail.org) Emacs/23.3.1 (x86_64-suse-linux-gnu)
-X-Originating-IP: [129.132.153.233]
+	id S1753215Ab2A3RJj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 12:09:39 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:37531 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752828Ab2A3RJi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 12:09:38 -0500
+Received: by eaal13 with SMTP id l13so1187437eaa.19
+        for <git@vger.kernel.org>; Mon, 30 Jan 2012 09:09:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=0owkCZi9k82MAUelbHYL8vwiQmXgZgf7ClADPEDn4Aw=;
+        b=O7+lKSXvAFIQvxRAgrMegR4DW9BTwrkAWf1z4iuVrZxglMnMATP7/sc6T4jcq/f75q
+         bUS3SCR8fT/B4WE9JLf6ofnndB5o3M05ivskR4lMNblq+O0n2BSk+eNn39pRITUFHCtW
+         8S3iPYOxD73yWaqEzk6RWuOrIqNqKL2dXEhAU=
+Received: by 10.213.3.5 with SMTP id 5mr1722132ebl.91.1327943377374;
+        Mon, 30 Jan 2012 09:09:37 -0800 (PST)
+Received: from [192.168.1.13] (abwi152.neoplus.adsl.tpnet.pl. [83.8.232.152])
+        by mx.google.com with ESMTPS id o49sm20656018eei.0.2012.01.30.09.09.35
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 30 Jan 2012 09:09:36 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20120130115046.GE9267@server.brlink.eu>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189377>
 
-On Mon, 23 Jan 2012 14:18:40 -0800, Junio C Hamano <gitster@pobox.com> wrote:
-> Traditionally, a cleanly resolved merge was committed by "git merge" using
-> the auto-generated merge commit log message with invoking the editor.
+On Mon, 30 Jan 2012, Bernhard R. Link wrote:
+
+> Change html page headers to not only link the project root and the
+> currently selected project but also the directories in between using
+> project_filter. (Allowing to jump to a list of all projects within
+> that intermediate directory directly and making the project_filter
+> feature visible to users).
+
+Nice idea, nice description.
+ 
+> Signed-off-by: Bernhard R. Link <brlink@debian.org>
+> ---
+>  gitweb/gitweb.perl |    5 ++++-
+>  1 files changed, 4 insertions(+), 1 deletions(-)
 > 
-> After 5 years of use in the field, it turns out that people perform too
-> many unjustified merges of the upstream history into their topic branches.
-> These merges are not just useless, but they are often not explained well,
-> and making the end result unreadable when it gets time for merging their
-> history back to their upstream.
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index dfc79df..b54ddb9 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -3853,7 +3853,10 @@ sub print_nav_breadcrumbs {
+>  
+>  	print $cgi->a({-href => esc_url($home_link)}, $home_link_str) . " / ";
+>  	if (defined $project) {
+> -		print $cgi->a({-href => href(action=>"summary")}, esc_html($project));
+> +		my @dirname = split '/', $project;
+> +		my $projectbasename = pop @dirname;
+> +		print_nav_breadcrumbs_path(@dirname);
+> +		print $cgi->a({-href => href(action=>"summary")}, esc_html($projectbasename));
+>  		if (defined $action) {
+>  			my $action_print = $action ;
+>  			if (defined $opts{-action_extra}) {
+> -- 
 
-Ok, so I'm late to the party and perhaps I missed the discussion about
-this, but...
-
-I think the proposed commit message should have a comment, just like for
-an ordinary commit, that explains why we are showing the user an editor.
-(I'm too lazy to check, but I suspect we *always* give a comment about
-what is going on when we fire up an editor.)
-
-I would suggest something like
-
-# Please enter the commit message for your merge commit.  Lines starting
-# with '#' will be ignored, and an empty message aborts the commit.
-
-or if you feel comfortable with educating the user in a
-workflow-specific way, even
-
-# Please enter the commit message for your merge commit.  You should
-# justify it especially if it merges an updated upstream into a topic
-# branch.
-# 
-# Lines starting with '#' will be ignored, and an empty message aborts
-# the commit.
+Nice code.
 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Jakub Narebski
+Poland
