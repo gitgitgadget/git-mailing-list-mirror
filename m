@@ -1,112 +1,74 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 4/4] completion: be nicer with zsh
-Date: Mon, 30 Jan 2012 20:10:01 +0200
-Message-ID: <CAMP44s0ACC+AnwHGtBLe8C1S_sxWj6SbMbawDThvLQAA0pKMYQ@mail.gmail.com>
-References: <1327944197-6379-1-git-send-email-felipec@infradead.org>
-	<1327944197-6379-5-git-send-email-felipec@infradead.org>
-	<20120130175324.GH10618@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Autocompletion - commands no longer work as stand alone
+Date: Mon, 30 Jan 2012 10:14:03 -0800
+Message-ID: <7vliopcb2s.fsf@alter.siamese.dyndns.org>
+References: <CAPx=Vfp_HVr5W1fFic_1k+JsKr2RAKd-RK=VkfSgo7qkb5GsAw@mail.gmail.com>
+ <CAPx=Vfqj3UZuFv3Xmupy7k9arUxyZJyprm628p9QVKabdOz8cw@mail.gmail.com>
+ <7vwr8mdvo8.fsf@alter.siamese.dyndns.org> <20120124232658.GD2256@goldbirke>
+ <CAPx=Vfo20wWKOTeeKc=WM9dOpm85enTZHJsTnBL5uh8v0r6PRQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipec@infradead.org>, git@vger.kernel.org,
-	Lee Marlow <lee.marlow@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 30 19:10:11 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	git@vger.kernel.org
+To: Nathan Bullock <nathanbullock@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 30 19:14:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrvgA-0003sr-29
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 19:10:10 +0100
+	id 1Rrvk4-0005wA-Rn
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 19:14:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752727Ab2A3SKE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jan 2012 13:10:04 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:40202 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752351Ab2A3SKC convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 13:10:02 -0500
-Received: by lagu2 with SMTP id u2so2370575lag.19
-        for <git@vger.kernel.org>; Mon, 30 Jan 2012 10:10:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=7RvenEUmOYTjDFG1Od7FFBhF+nWhp4NECUTWmlPyf0w=;
-        b=kwILXmnsbwUtVgjhV9IoTcogFG0z8B2V00uSf38dlVyJjwgKAkSxxJ0Z0DlQ7mtdX8
-         hFVJ1BNdZbPaRIwxqJhkvG0Yg8ZKUdXmpLvTNxV5FcBewohCODNSjppsxt4Bz/+ohWDO
-         jN9SEYNOXQZe008f4LcTa3oBaexsysaa3HP9M=
-Received: by 10.112.48.65 with SMTP id j1mr4717394lbn.76.1327947001331; Mon,
- 30 Jan 2012 10:10:01 -0800 (PST)
-Received: by 10.112.40.202 with HTTP; Mon, 30 Jan 2012 10:10:01 -0800 (PST)
-In-Reply-To: <20120130175324.GH10618@burratino>
+	id S1752912Ab2A3SOI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 13:14:08 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51943 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752603Ab2A3SOG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 13:14:06 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5BEE1666E;
+	Mon, 30 Jan 2012 13:14:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ICViaPBrQddxTO7pWD989gPdViE=; b=Xi8Imb
+	dMaKJYIfySDHKcij04IC2qFG30w2ZTxtXqRXD/dLFfeOl2OJNcQ6t3MrEcTFR+vP
+	9zj962wq9EjSm1ALyxbB6+SzW2KUy0UKSI+ROJUIQmVvVHRokE3ImNq08hyZEiqH
+	O/7Q+IZMp/Zv35k1FeoRVF3VoRRSg3aAvzIQs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YgQe5MWh03yRoBm7xdcoSbeGIeiC73zB
+	wUvz2HuLtU6lGU1Sx36wpdoviLr14ADSSozWG8idEKGNZ1xfzLxVZZGhJnsJOLrZ
+	NIzjXj988Msvk1r26uRX3aa1PXKaIGRqF7DF7a7v3N/8ExZMc2ixIWmDiao7cEAC
+	Rls7Dh4/OnQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5406C666D;
+	Mon, 30 Jan 2012 13:14:06 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DB13A666A; Mon, 30 Jan 2012
+ 13:14:05 -0500 (EST)
+In-Reply-To: <CAPx=Vfo20wWKOTeeKc=WM9dOpm85enTZHJsTnBL5uh8v0r6PRQ@mail.gmail.com> (Nathan
+ Bullock's message of "Mon, 30 Jan 2012 07:00:23 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 323BBA36-4B6E-11E1-BF9A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189386>
 
-On Mon, Jan 30, 2012 at 7:53 PM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Felipe Contreras wrote:
->
->> --- a/contrib/completion/git-completion.bash
->> +++ b/contrib/completion/git-completion.bash
->> @@ -657,7 +657,8 @@ __git_merge_strategies=3D
->> =C2=A0# is needed.
->> =C2=A0__git_compute_merge_strategies ()
->> =C2=A0{
->> - =C2=A0 =C2=A0 : ${__git_merge_strategies:=3D$(__git_list_merge_str=
-ategies)}
->> + =C2=A0 =C2=A0 test "$__git_merge_strategies" && return
->> + =C2=A0 =C2=A0 __git_merge_strategies=3D$(__git_list_merge_strategi=
-es 2> /dev/null)
->
-> Why the new redirect?
+Nathan Bullock <nathanbullock@gmail.com> writes:
 
-It's not new, it was in the original code that your change to the ':'
-stuff (eaa4e6e) replaced.
+> ... There was a question if those could be included
+> in the main git code base. Do you know if that is likely to happen?
 
-And the reason is explained right above, in the comment:
+It entirely is up to the author of the patch.
 
-# 'git merge -s help' (and thus detection of the merge strategy
-# list) fails, unfortunately, if run outside of any git working
-# tree.  __git_merge_strategies is set to the empty string in
-# that case, and the detection will be repeated the next time it
-# is needed.
+"I have this random code on Github so people can just copy and paste it in
+their .bashrc" may be a good starting point to give hint to people who are
+interested to come up with a good patch with a use example on a handful of
+comment lines and a readable commit log message.
 
-The commands might fail, that's why '2> /dev/null' was used before,
-and ':' is used right now.
-
-> If I add debugging output to __git_list_merge_strategies that writes =
-to stderr, I want to see it.
-
-Well, you wouldn't see it right now, so that out of scope of this patch=
-=2E
-
-> Why the 'test "$foo"' form instead of [[ -n which is more common in
-> this completion script? =C2=A0Why use "return" instead of
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0[[ -n $var ]] || var=3D$(...)
->
-> which feels a little simpler?
-
-Because this is _huge_:
-
-[[ "$__git_merge_strategies" ]] ||
-__git_merge_strategies=3D$(__git_list_merge_strategies 2> /dev/null)
-
-And IMO harder to read. But you are correct that most of the code uses
-[[]], which I think is a shame. But I guess people want to keep using
-that.
-
-So, how about?
-
-[[ "$__git_merge_strategies" ]] && return
-__git_merge_strategies=3D$(__git_list_merge_strategies 2> /dev/null)
-
---=20
-=46elipe Contreras
+I didn't see it happen in that thread, so perhaps nobody was interested
+back then.
