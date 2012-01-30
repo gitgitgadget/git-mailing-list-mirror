@@ -1,129 +1,104 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 3/3] completion: remove unused code
-Date: Mon, 30 Jan 2012 15:51:48 +0200
-Message-ID: <CAMP44s2OQY3Pym5uqxvEE_yYa0xLboT=mjv+DFCDo8_xobGO3w@mail.gmail.com>
+Subject: Re: [PATCH 2/3] completion: remove old code
+Date: Mon, 30 Jan 2012 15:59:33 +0200
+Message-ID: <CAMP44s3vXSJaXiQK4X0kNOECzfLFsTo1YeMCtVZ0NWY-CHJ++A@mail.gmail.com>
 References: <1327880479-25275-1-git-send-email-felipe.contreras@gmail.com>
-	<1327880479-25275-4-git-send-email-felipe.contreras@gmail.com>
-	<20120130025014.GA15944@burratino>
-	<CAMP44s1bZeednbHfqXANZR5zVVvGwjRpuV5TFmnh212FD7E-Vg@mail.gmail.com>
-	<871uqh3a8s.fsf@thomas.inf.ethz.ch>
-	<25ea208e-353d-48f7-a849-143689fb2be6@email.android.com>
-	<CAMP44s2ooo1uArhhtJkX3S9N=iE4MNJivMSvr3hsOkxFmJupFA@mail.gmail.com>
-	<87pqe1nx9a.fsf@thomas.inf.ethz.ch>
+	<1327880479-25275-3-git-send-email-felipe.contreras@gmail.com>
+	<20120130023642.GA14986@burratino>
+	<CAMP44s1H6Db6Xq_iZseXppaTwpBCeu14ySgPfmoQnpELfywQ-Q@mail.gmail.com>
+	<7vd3a1erwf.fsf@alter.siamese.dyndns.org>
+	<CAMP44s2j+qotu8Fb-1qq9bqHqt+ZF877YzZFXHiMo7Z_BGzTMA@mail.gmail.com>
+	<CAH6sp9Of2rT4ESMYj9kC2NPtapsN58X3A0FpHTTZO-kSqpb-2Q@mail.gmail.com>
+	<CAMP44s3a05dZqOqpDFDnWQ_C03EODgeP1eRhko-Mc8OjGXj6FQ@mail.gmail.com>
+	<CAH6sp9PfVTTNL218syf-MS465M+sP4E8eVxuVCHZC0geE3ezfg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <jch2355@gmail.com>,
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Jan 30 14:52:00 2012
+To: Frans Klaver <fransklaver@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 30 14:59:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrreJ-0001CZ-Vz
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 14:52:00 +0100
+	id 1Rrrlk-0005H1-Lp
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 14:59:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752688Ab2A3Nvv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jan 2012 08:51:51 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:37251 "EHLO
+	id S1753002Ab2A3N7g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 08:59:36 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:58550 "EHLO
 	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752541Ab2A3Nvu convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 08:51:50 -0500
-Received: by lagu2 with SMTP id u2so2200569lag.19
-        for <git@vger.kernel.org>; Mon, 30 Jan 2012 05:51:48 -0800 (PST)
+	by vger.kernel.org with ESMTP id S1752974Ab2A3N7f (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Jan 2012 08:59:35 -0500
+Received: by lagu2 with SMTP id u2so2204741lag.19
+        for <git@vger.kernel.org>; Mon, 30 Jan 2012 05:59:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=7z7PY+Lx5Ec0LJiN56RJUJoDUXUiEUBGQ7btBBcA8hI=;
-        b=qD5c8qBiEus/hQADwxlsA1MLc7GFJWnK6YOOYbjb0EMaI4j3hNv5G+WRXAOhLLgYdD
-         i28O2EUQoOIo7Xp7DlrQM0aMDLm5/Wn3LWNoCyprVyY5sfcJrtv5LgwkpiLvJYF4GzCN
-         paPkR86zXgFienj05tZ6UWfXf45mLGaHxCtxQ=
-Received: by 10.152.131.40 with SMTP id oj8mr9243365lab.24.1327931508833; Mon,
- 30 Jan 2012 05:51:48 -0800 (PST)
-Received: by 10.112.40.202 with HTTP; Mon, 30 Jan 2012 05:51:48 -0800 (PST)
-In-Reply-To: <87pqe1nx9a.fsf@thomas.inf.ethz.ch>
+         :cc:content-type;
+        bh=W09VjjvAy6VZBGPCgbakp6ZhaAd5w9kp4Tdx1rPWJwM=;
+        b=iNYJG2w4mOahMul7rSqOwBMZ2bOjo3EzL5+5i1jGsLQ8rO74D4bc5bjFdyTXb0Qvna
+         4IxIQ7Vl97UBiCV7HtrB3qGd+qsfcL5c4oj4x1kpJpPYVLI1V2RSUJ+vbG5RlpEBZXWr
+         kgg9aeGc3c0ZDWJUlQJarlF6mdcrHmsdBtqnA=
+Received: by 10.112.99.202 with SMTP id es10mr654152lbb.89.1327931973884; Mon,
+ 30 Jan 2012 05:59:33 -0800 (PST)
+Received: by 10.112.40.202 with HTTP; Mon, 30 Jan 2012 05:59:33 -0800 (PST)
+In-Reply-To: <CAH6sp9PfVTTNL218syf-MS465M+sP4E8eVxuVCHZC0geE3ezfg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189361>
 
-On Mon, Jan 30, 2012 at 3:19 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Mon, Jan 30, 2012 at 2:21 PM, Frans Klaver <fransklaver@gmail.com> wrote:
+> On Mon, Jan 30, 2012 at 12:55 PM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
 >
->> On Mon, Jan 30, 2012 at 10:22 AM, Junio C Hamano <jch2355@gmail.com>=
- wrote:
->>> Thomas Rast <trast@inf.ethz.ch> wrote:
->>>>Felipe Contreras <felipe.contreras@gmail.com> writes:
->>>>
->>>>> No reason. I hope they read the mailing list, otherwise I'll rese=
-nd
->>>>> and CC them. A get_maintainers script, or something like that wou=
-ld
->>>>> make things easier.
->>>>
->>>>I simply use
->>>>
->>>> =C2=A0git shortlog -sn --no-merges v1.7.0.. -- contrib/completion/
->>>>
->>>>(In many parts the revision limiter can be omitted without losing m=
-uch,
->>>>but e.g. here this drops Shawn who hasn't worked on it since 2009.)
->>>
->>> Or "--since=3D1.year", which you can keep using forever without adj=
-usting.
+>> We are not talking about backwards compatibility; we are talking about
+>> compatibility of remotes completion of the bash completion script of
+>> repositories more than 3 years old with remotes that haven't been
+>> migrated.
+>
+> What's not backward about that?
+
+Not all backwards compatibility issues are the same.
+
+>> This barely resembles the git-foo -> 'git foo', which truly broke
+>> backwards compatibility, and at the time I proposed many different
+>> approaches to deal with these type of problems, which seem to be
+>> followed now (although probably not because of my recommendations).
 >>
->> Perhaps something like that can be stored in a script somewhere in
->> git's codebase so that people can set sendemail.cccmd to that.
+>> But this has nothing to do with _attitude_; I am merely stating fact.
+>> I have never expressed any opinion or attitude with respect to how
+>> backwards compatibility should be handled in this thread, have I?
 >
-> Umm, that seems rather AI-complete. =C2=A0You should always compile t=
-he list
-> by hand.
+> As far as I know you haven't explicitly said anything about that.
+> There may still be a possibility that the sentence Junio quoted in his
+> reply could have implied a certain attitude.
 
-Why? Take a look at the Linux kernel; having tons of contributors,
-many still haven't learned the ropes, and looking at MAINTAIERS, plus
-the output of 'git blame', for potentially dozens of patches is too
-burdensome, which is why they have 'scripts/get_maintainer.pl' that
-does a pretty good job of figuring out who to cc so you don't have to
-think about it.
+I already asked, but I ask again; what would be that attitude? Not
+caring about backwards compatibility? Then that implication would have
+been wrong.
 
-> Ok, this got rather long-winded. =C2=A0But I think the bottom line is=
-, trying
-> to put this in sendemail.cccmd is trying to script common sense.
+If you look a few lines below, you would see a change that doesn't
+break backwards compatibility, which proves the previous implication
+wrong... Not to mention previous discussions.
 
-It's still better than nothing.
+>>> Maybe numbers for this could be generated from the next git user
+>>> survey. If numbers justify this change, maybe this or something like
+>>> it could be scheduled for a major release of git.
+>>
+>> Maybe, but I doubt this issue hardly deserves much discussion.
+>
+> I wouldn't know about that. Apparently not everybody is happy with
+> applying it without further discussion.
 
-I once wrote a much smarter script[1], but it never go into the tree.
+Jonathan Nieder is happy with the 'ls -1 "$d/remotes"' change, and I
+haven't seen anybody object it.
 
-The output I get is this:
-"Shawn O. Pearce" <spearce@spearce.org>>
-"Jonathan Nieder" <jrnieder@gmail.com>
-"Mark Lodato" <lodatom@gmail.com>
-"Junio C Hamano" <junkio@cox.net>
-"Ted Pavlic" <ted@tedpavlic.com>
+Either way. I'm not going to discuss in this thread any more. I'll
+resend the patches, feel free to comment there.
 
-Note: seems like there's a bug with git blame -P:
-% g blame -p -L 2730,+33 contrib/completion/git-completion.bash | grep
-author-mail
-
-And if this script is such a bad idea; why do you think sendmail.cccmd =
-exists?
-
-I think we should have a simple script that at least does something
-sensible, at least in contrib, but I hope we could even have a
-standard git-cccmd that all projects could use.
-
-It looks like my ruby script never had much of a chance getting
-anywhere, so would it be accepted in another format? perl? python?
-bash?
-
-Cheers.
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/130391
-
---=20
-=46elipe Contreras
+-- 
+Felipe Contreras
