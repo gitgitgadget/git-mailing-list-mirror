@@ -1,86 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/3] completion: remove unused code
-Date: Sun, 29 Jan 2012 20:50:15 -0600
-Message-ID: <20120130025014.GA15944@burratino>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 2/3] completion: remove old code
+Date: Mon, 30 Jan 2012 05:24:23 +0200
+Message-ID: <CAMP44s1H6Db6Xq_iZseXppaTwpBCeu14ySgPfmoQnpELfywQ-Q@mail.gmail.com>
 References: <1327880479-25275-1-git-send-email-felipe.contreras@gmail.com>
- <1327880479-25275-4-git-send-email-felipe.contreras@gmail.com>
+	<1327880479-25275-3-git-send-email-felipe.contreras@gmail.com>
+	<20120130023642.GA14986@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 30 03:51:55 2012
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 30 04:24:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrhLW-0003mH-0e
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 03:51:54 +0100
+	id 1Rrhr3-0006IA-52
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 04:24:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754229Ab2A3CuZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Jan 2012 21:50:25 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:62479 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754051Ab2A3CuX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Jan 2012 21:50:23 -0500
-Received: by yenm6 with SMTP id m6so1566055yen.19
-        for <git@vger.kernel.org>; Sun, 29 Jan 2012 18:50:22 -0800 (PST)
+	id S1754181Ab2A3DY1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Jan 2012 22:24:27 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:48228 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753062Ab2A3DYZ convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jan 2012 22:24:25 -0500
+Received: by lagu2 with SMTP id u2so1951708lag.19
+        for <git@vger.kernel.org>; Sun, 29 Jan 2012 19:24:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=Jk9c15te9WXCu5Oba5kJ46E8i08bkuSAlaq6rNmljEw=;
-        b=SB7Qch7bx7g1ELafPVUUycgYV0D7VaTLW3SjjZbiKhsx6zRic6OIyexcPqNYMN2/wf
-         b/XdTXwK+gtg5X7Ee0Tdg06eCHnad/ROe+dJNsxnkOa1h+BObwhiGesC0qjrviGNYKbX
-         IaFdFl0DoceBMqwV1k6r8YT9H3W24IoTwFW3w=
-Received: by 10.236.133.210 with SMTP id q58mr928569yhi.6.1327891822939;
-        Sun, 29 Jan 2012 18:50:22 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id s7sm42338702anc.4.2012.01.29.18.50.21
-        (version=SSLv3 cipher=OTHER);
-        Sun, 29 Jan 2012 18:50:22 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1327880479-25275-4-git-send-email-felipe.contreras@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=JdEOzPAxDT58pJPH6W/DU0QEbGTWk8Uh472gLr7EL4U=;
+        b=dbsJTf8/3hlSa1fFwrOyq+wAtNEDBOELdKbhxOuJP2RBdLHdR/AaTyczqXeNpTY8DU
+         M5M7rWtnNTV0tXq1/R6RaTgOV7CvGq9hJzPvOtE9i9vvuo0hHRbOviXsBnoyrsW8BPkI
+         HQRlkqjEm/0HMCw59L7+8/Ym2ybnodSKIoJLM=
+Received: by 10.152.106.227 with SMTP id gx3mr8092881lab.45.1327893863532;
+ Sun, 29 Jan 2012 19:24:23 -0800 (PST)
+Received: by 10.112.10.169 with HTTP; Sun, 29 Jan 2012 19:24:23 -0800 (PST)
+In-Reply-To: <20120130023642.GA14986@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189316>
 
-=46elipe Contreras wrote:
+On Mon, Jan 30, 2012 at 4:36 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Felipe Contreras wrote:
+>
+>> We don't need to check for GIT_DIR/remotes, right? This was removed =
+long
+>> time ago.
+>
+> I don't follow. =C2=A0fetch, push, and remote still look in .git/remo=
+tes
+> like they always did, last time I checked.
+>
+> Perhaps you mean that /usr/share/git-core/templates/ no longer
+> contains a remotes/ directory? =C2=A0That's true but not particularly
+> relevant. =C2=A0A more relevant detail would be that very few people =
+_use_
+> the .git/remotes feature, though it is not obvious to me whether that
+> justifies removing this code from the git-completion script that
+> already works.
 
-> No need for thus rather complicated piece of code :)
-[...]
->  contrib/completion/git-completion.bash |   30 ----------------------=
---------
->  1 files changed, 0 insertions(+), 30 deletions(-)
-[...]
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -2730,33 +2730,3 @@ if [ Cygwin =3D "$(uname -o 2>/dev/null)" ]; t=
-hen
-[...]
-> -if [[ -n ${ZSH_VERSION-} ]]; then
-> -	__git_shopt () {
-[...]
-> -else
-> -	__git_shopt () {
-> -		shopt "$@"
-> -	}
-> -fi
+The problem is all the 'nullglob' stuff. It's *a lot* of code for this
+feature that nobody uses.
 
-What codebase does this apply to?  My copy of git-completion.bash
-contains a number of calls to __git_shopt, which will fail after this
-change.
+OK, maybe some people use it, but most likely they are using an old
+version of git, and thus an old version of the completion script.
 
-By the way, is there any reason you did not cc this series to G=C3=A1bo=
-r or
-others who also know the completion code well?  The patches are not
-marked with RFC/ so I assume they are intended for direct application,
-which seems somewhat odd to me.
+Anyway, aren't there easier ways to get this? Perhaps first checking
+if the directory exists, to avoid wasting cycles.
 
-Thanks and hope that helps,
-Jonathan
+Something like:
+  test -d "$d/remotes" && ls -1 "$d/remotes"
+
+--=20
+=46elipe Contreras
