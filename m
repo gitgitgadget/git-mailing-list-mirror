@@ -1,87 +1,102 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH] merge: add instructions to the commit message when editing
-Date: Mon, 30 Jan 2012 21:25:30 +0100
-Message-ID: <0c9a880c7dca27520f957446c6b0e72e93609b03.1327954927.git.trast@student.ethz.ch>
-References: <7vd3a1caxb.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 2/5] gitweb: add project_filter to limit project list
+ to a subdirectory
+Date: Mon, 30 Jan 2012 12:34:08 -0800
+Message-ID: <7v39axaq0v.fsf@alter.siamese.dyndns.org>
+References: <20120128165606.GA6770@server.brlink.eu>
+ <20120130095252.GA6183@server.brlink.eu>
+ <20120130114557.GB9267@server.brlink.eu>
+ <201201301657.12944.jnareb@gmail.com>
+ <20120130200355.GA2584@server.brlink.eu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 30 21:25:39 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: "Bernhard R. Link" <brl@mail.brlink.eu>
+X-From: git-owner@vger.kernel.org Mon Jan 30 21:34:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrxnG-0003F6-IP
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 21:25:38 +0100
+	id 1Rrxvd-0007Kh-03
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 21:34:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752867Ab2A3UZe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jan 2012 15:25:34 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:52074 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752307Ab2A3UZd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 15:25:33 -0500
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 30 Jan
- 2012 21:25:30 +0100
-Received: from thomas.inf.ethz.ch (80.219.158.96) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 30 Jan
- 2012 21:25:31 +0100
-X-Mailer: git-send-email 1.7.9.350.ga960f
-In-Reply-To: <7vd3a1caxb.fsf@alter.siamese.dyndns.org>
-X-Originating-IP: [80.219.158.96]
+	id S1753218Ab2A3UeM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 15:34:12 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52167 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752490Ab2A3UeL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 15:34:11 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4193688D;
+	Mon, 30 Jan 2012 15:34:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=I65soKsYkRTptC965RvjgVOm0bY=; b=vogkO2
+	U3LoTurLEibHBbOyV9krh3KJ6WWNM3Ko1PlAOMLP2U0vAKNHaPHFxy4B2tIod/dU
+	CxypLSOYS/n6XcVSBel9/Nh9PB5u5vDwlebUaXMcJWTGoAo8CGNlQZwr39DTEe90
+	p9F2k0SUyjRIb1/dLhP87GGM54ljajtfEfrK8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gkvXbhRnu2vgaLctazo4sl+gp44mE6rm
+	fqenyScoak8/DvoAahaT2aTD25npW+NDmGkXyADikpRvIS+A2xpPZK+OFuGPuEYO
+	jGu4HYxhcpwrcn8PysL0PN4/4CNMWptnR6h5f7tYCjVLAGlSV9H0B6tPVdAA+ljS
+	nYM68WtPIs8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB24A688B;
+	Mon, 30 Jan 2012 15:34:10 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 323B0688A; Mon, 30 Jan 2012
+ 15:34:10 -0500 (EST)
+In-Reply-To: <20120130200355.GA2584@server.brlink.eu> (Bernhard R. Link's
+ message of "Mon, 30 Jan 2012 21:03:55 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C39752DE-4B81-11E1-BB96-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189418>
 
-Before f824628 (merge: use editor by default in interactive sessions,
-2012-01-10), git-merge only started an editor if the user explicitly
-asked for it with --edit.  Thus it seemed unlikely that the user would
-need extra guidance.
+"Bernhard R. Link" <brl@mail.brlink.eu> writes:
 
-After f824628 the _normal_ thing is to start an editor.  Give at least
-an indication of why we are doing it.
+> I'll resend the series as replies to this mail.
 
-The sentence about justification is one of the few things about
-standard git that are not agnostic to the workflow that the user
-chose.  However, f824628 was proposed by Linus specifically to
-discourage users from merging unrelated upstream progress into topic
-branches.  So we may as well take another step in the same direction.
+Thanks; I'll queue them in 'pu' for now (if Jakub wants to Ack the pieces,
+I'll amend them).
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
- builtin/merge.c |   11 +++++++++++
- 1 files changed, 11 insertions(+), 0 deletions(-)
+Regarding the first patch in the series, while it may be a valid perl to
+introduce a new variable, assign to it and then munge its contents with
+s///, all inside a parameter list of a function call, it is doing a bit
+too much and makes it hard to see if the variable may or may not later be
+used in the same scope (in this case, it is not).
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index bfb7547..ed628b8 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -885,11 +885,22 @@ static void abort_commit(const char *err_msg)
- 	exit(1);
- }
+I am tempted to squash the following in.
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index b764d51..f215eaa 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -6003,7 +6003,8 @@ sub git_forks {
+ 		die_error(400, "Unknown order parameter");
+ 	}
  
-+static const char merge_editor_comment[] =
-+N_("Please enter the commit message for your merge commit.  You should\n"
-+"justify it especially if it merges an updated upstream into a topic\n"
-+"branch.\n"
-+"\n"
-+"Lines starting with '#' will be ignored, and an empty message aborts\n"
-+"the commit.\n");
-+
- static void prepare_to_commit(void)
- {
- 	struct strbuf msg = STRBUF_INIT;
-+	const char *comment = _(merge_editor_comment);
- 	strbuf_addbuf(&msg, &merge_msg);
- 	strbuf_addch(&msg, '\n');
-+	if (0 < option_edit)
-+		strbuf_add_lines(&msg, "# ", comment, strlen(comment));
- 	write_merge_msg(&msg);
- 	run_hook(get_index_file(), "prepare-commit-msg",
- 		 git_path("MERGE_MSG"), "merge", NULL, NULL);
+-	my @list = git_get_projects_list((my $filter = $project) =~ s/\.git$//);
++	my ($filter = $project) =~ s/\.git$//;
++	my @list = git_get_projects_list($filter);
+ 	if (!@list) {
+ 		die_error(404, "No forks found");
+ 	}
+@@ -6062,7 +6063,8 @@ sub git_summary {
+ 
+ 	if ($check_forks) {
+ 		# find forks of a project
+-		@forklist = git_get_projects_list((my $filter = $project) =~ s/\.git$//);
++		my ($filter = $project) =~ s/\.git$//;
++		@forklist = git_get_projects_list($filter);
+ 		# filter out forks of forks
+ 		@forklist = filter_forks_from_projects_list(\@forklist)
+ 			if (@forklist);
 -- 
-1.7.9.350.ga960f
+1.7.9.154.g413bff
