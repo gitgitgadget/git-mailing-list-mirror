@@ -1,107 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb showing slash r at the end of line
-Date: Mon, 30 Jan 2012 01:23:05 -0800 (PST)
-Message-ID: <m3obtlczmu.fsf@localhost.localdomain>
-References: <1327673954458-7229895.post@n2.nabble.com>
-	<m3aa58eskw.fsf@localhost.localdomain>
-	<7vvcnwybxj.fsf@alter.siamese.dyndns.org>
-	<201201281802.44339.jnareb@gmail.com>
-	<1327910140526-7235866.post@n2.nabble.com>
+From: "Bernhard R. Link" <brl+git@mail.brlink.eu>
+Subject: Re: [PATCH v4 1/2] gitweb: add project_filter to limit project list
+ to a subdirectory
+Date: Mon, 30 Jan 2012 10:52:52 +0100
+Message-ID: <20120130095252.GA6183@server.brlink.eu>
+References: <20120128165606.GA6770@server.brlink.eu>
+ <m3wr8bcuon.fsf@localhost.localdomain>
+ <20120129012234.GD16079@server.brlink.eu>
+ <201201291354.50241.jnareb@gmail.com>
+ <20120129160615.GA13937@server.brlink.eu>
+ <7v7h0afcc2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ondra Medek <xmedeko@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 30 10:23:19 2012
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 30 10:52:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrnSI-0002aK-Do
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 10:23:18 +0100
+	id 1Rrnum-0008Bb-S8
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 10:52:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751882Ab2A3JXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jan 2012 04:23:09 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:33955 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751070Ab2A3JXI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 04:23:08 -0500
-Received: by eaal13 with SMTP id l13so1038456eaa.19
-        for <git@vger.kernel.org>; Mon, 30 Jan 2012 01:23:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=pad5sFGPg+zRqg/8H7ntYStFAn+Ch6QyvEMLsxZCLHc=;
-        b=ME9M0tCaiz9yXR6fJOiKmZq2kB8ZcTz+Bu6Dj50Hb65TOuYTxE1BA1dclaT0auyNA1
-         CFeX5cFRZLIx3EPiWBbTSWxE/JhZfoWy36lS+t9JR1jhpEL1PRzbThwj8f3Ly4m8Gj2c
-         xjKy90+mC7haG6z4a7Atd7gKTu+5BIYIHqtlw=
-Received: by 10.213.11.10 with SMTP id r10mr2679512ebr.144.1327915386839;
-        Mon, 30 Jan 2012 01:23:06 -0800 (PST)
-Received: from localhost.localdomain (abwg78.neoplus.adsl.tpnet.pl. [83.8.230.78])
-        by mx.google.com with ESMTPS id b49sm70270133eec.9.2012.01.30.01.23.04
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 30 Jan 2012 01:23:05 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q0U9Nda6014402;
-	Mon, 30 Jan 2012 10:23:39 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q0U9NcJU014399;
-	Mon, 30 Jan 2012 10:23:38 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1327910140526-7235866.post@n2.nabble.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751722Ab2A3Jwi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 04:52:38 -0500
+Received: from server.brlink.eu ([78.46.187.186]:54081 "EHLO server.brlink.eu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751202Ab2A3Jwh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 04:52:37 -0500
+Received: from mfs.mathematik.uni-freiburg.de ([132.230.30.170] helo=client.brlink.eu)
+	by server.brlink.eu with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <brl@mail.brlink.eu>)
+	id 1Rrnub-0005ZQ-Pi; Mon, 30 Jan 2012 10:52:33 +0100
+Received: from brl by client.brlink.eu with local (Exim 4.77)
+	(envelope-from <brl@mail.brlink.eu>)
+	id 1Rrnuu-0001qf-SB; Mon, 30 Jan 2012 10:52:52 +0100
+Content-Disposition: inline
+In-Reply-To: <7v7h0afcc2.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189334>
 
-Ondra Medek <xmedeko@gmail.com> writes:
+* Junio C Hamano <gitster@pobox.com> [120129 22:06]:
+> > @@ -2864,6 +2873,10 @@ sub git_get_projects_list {
+> >  				}
+> >  
+> >  				my $path = substr($File::Find::name, $pfxlen + 1);
+> > +				# paranoidly only filter here
+> > +				if ($paranoid && $filter && $path !~ m!^\Q$filter\E/!) {
+> > +					next;
+> > +				}
+>
+> When you find "foo" directory and a project_filter tells you to match
+> "foo", because $path does not match "^foo/", it will not match (even
+> though its subdirectory "foo/bar" would)?
 
-> I have read "SubmittingPatches". I have made a path by "git format-patch -M"
-> and I have though it's enough. The problem maybe was, that I had not
-> included "Subject: " from the result of "git format-patch -M". Next time I
-> will try to do it better.
+Yes, for consistency with what would be shown with a project list file.
+(And that it would only show projects which would have a link to this
+directory in their breadcrumbs (with 2/2)).
 
-The problem is that in place of proper commit message, describing
-change for posteriority as described in SubmittingPatches, you have an
-email describing why you created this commit:
+> Perhaps that is the topic of your second patch. I dunno.
 
-OM> Hi,
-OM> we have gitweb running on Linux box. Some files have Windows line ending
-OM> (CRLF) end we do not use core.autcrlf translation. gitweb show the last \r
-OM> in the end of each line, which is annoying. I have creates a simple patch to
-OM> avoid this. It adds just one line. I am not sure if the regexp should
-OM> contain 'g' switch in the end. Also, not sure if there shoul be some config
-OM> option to switch on/off this?
-OM> 
-OM> Cheers
-OM> Ondra
- 
-Take a look how other commit messages are written in git.git, and
-please remember to sign off your patches.
+Yes, that is what the second patch does.
 
-> I am a Git newbie, but my bare repos have "config" file and this file can
-> contain the "core.autocrlf" setting. So the gitweb can read it. Or what
-> about to have a special section [gitweb] in this config? For now, the gitweb
-> config files are somewhat "scattered" = "descrition", "cloneurl",
-> "project.list", ...
-
-The [gitweb] section contains stuff that can be used instead of
-individual files like 'description' ('gitweb.description' can be used
-instead if that file is not present), and also to configure
-overridable features on per-repository basis, like 'gitweb.snapshot'.
- 
-> Yeah, the autodetection of mixed mode line endings could be the best
-> solution.
-> 
-> However, from my point of view a global gitweb setting would be enough for
-> now.
-
-I think that if not using autodetection this should be made into
-proper gitweb %feature, e.g. named 'eol' - this automatically gives
-ability to override it on per-repository basis via repo config.
-
--- 
-Jakub Narebski
+        Bernhard R. Link
