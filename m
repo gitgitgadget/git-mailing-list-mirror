@@ -1,70 +1,90 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: i18n: Avoid sentence puzzles
-Date: Mon, 30 Jan 2012 18:46:52 +0700
-Message-ID: <CACsJy8CUXSSvToPrx9aW5a76BV=g7OTrWLZ2MQ6xDTpDSLpPeA@mail.gmail.com>
-References: <201201301231.21090.schwarzerf@gmail.com>
+From: "Bernhard R. Link" <brl+git@mail.brlink.eu>
+Subject: [PATCH v5 4/5] gitweb: show active project_filter in project_list
+ page header
+Date: Mon, 30 Jan 2012 12:48:52 +0100
+Message-ID: <20120130114852.GD9267@server.brlink.eu>
+References: <20120128165606.GA6770@server.brlink.eu>
+ <m3wr8bcuon.fsf@localhost.localdomain>
+ <20120129012234.GD16079@server.brlink.eu>
+ <201201291354.50241.jnareb@gmail.com>
+ <20120129160615.GA13937@server.brlink.eu>
+ <7v7h0afcc2.fsf@alter.siamese.dyndns.org>
+ <20120130095252.GA6183@server.brlink.eu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Frederik Schwarzer <schwarzerf@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 30 12:47:30 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 30 12:48:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rrpho-0000UN-1y
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 12:47:28 +0100
+	id 1Rrpj2-00010y-P3
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 12:48:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752540Ab2A3LrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jan 2012 06:47:24 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:61446 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752443Ab2A3LrX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 06:47:23 -0500
-Received: by bkas6 with SMTP id s6so3076604bka.19
-        for <git@vger.kernel.org>; Mon, 30 Jan 2012 03:47:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=HCbwPOA3gFDWaEs0/7mn6B2anUDQCExx1HEP7IEqZxM=;
-        b=qgSTTajf1vzU8mLfVKjz1MxD7bGgdYghDo7Wul8m//u1F5kUeuSNOa9lQbrrsICQau
-         IZJuh3rygSR4HoXTgpZG8s1K/38P27OKnxH4jq41+aS8LefC9gDI4iI7Ipnvi9jh6PI1
-         YIUYTkBIeo1+Ox2Iq4wxUJQJmJL6zKF+p2k4c=
-Received: by 10.204.157.17 with SMTP id z17mr8190567bkw.37.1327924042205; Mon,
- 30 Jan 2012 03:47:22 -0800 (PST)
-Received: by 10.204.33.70 with HTTP; Mon, 30 Jan 2012 03:46:52 -0800 (PST)
-In-Reply-To: <201201301231.21090.schwarzerf@gmail.com>
+	id S1752590Ab2A3Lsg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 06:48:36 -0500
+Received: from server.brlink.eu ([78.46.187.186]:54094 "EHLO server.brlink.eu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752443Ab2A3Lsf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 06:48:35 -0500
+Received: from mfs.mathematik.uni-freiburg.de ([132.230.30.170] helo=client.brlink.eu)
+	by server.brlink.eu with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <brl@mail.brlink.eu>)
+	id 1Rrpiq-0005eA-RF; Mon, 30 Jan 2012 12:48:32 +0100
+Received: from brl by client.brlink.eu with local (Exim 4.77)
+	(envelope-from <brl@mail.brlink.eu>)
+	id 1RrpjA-0002Q8-6a; Mon, 30 Jan 2012 12:48:52 +0100
+Content-Disposition: inline
+In-Reply-To: <20120130095252.GA6183@server.brlink.eu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189352>
 
-On Mon, Jan 30, 2012 at 6:31 PM, Frederik Schwarzer
-<schwarzerf@gmail.com> wrote:
-> Hi,
->
-> in order to enable translators to prepare proper translations,
-> sentence puzzles have to be avoided. While it makes perfect sense for
-> English, some languages may have to separate those words to sound or
-> even be correct.
->
-> The attached patch demonstrates a change to achive that.
-> ...
-> So my question would be: Is it considered worth it to extend the code
-> for translators' and translations' sake? If so, I would be glad to
-> help with that.
+In a project_list view show breadcrumbs with the currently active
+project_filter (and those of parent directories) in the page header.
 
-As a translator (though not git's because my time is limited and GUI
-apps have my priority), I completely agree and support this. There are
-other places where a sentence is broken down into many short phrases.
-It's hard for a translator to find a good translation in such cases.
+Signed-off-by: Bernhard R. Link <brlink@debian.org>
+---
+ gitweb/gitweb.perl |   14 ++++++++++++++
+ 1 files changed, 14 insertions(+), 0 deletions(-)
 
-I remember there was also a patch about "1 file vs 2 files" in diff
-summary, which was rejected because it would break scripts. I think
-grammar patches should be allowed at least for interactive use (i.e.
-either pager is on, or std{out,err} is tty).
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index e022e11..dfc79df 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3836,6 +3836,18 @@ sub print_header_links {
+ 	}
+ }
+ 
++sub print_nav_breadcrumbs_path {
++	my $dirprefix = undef;
++	while (my $part = shift) {
++		$dirprefix .= "/" if defined $dirprefix;
++		$dirprefix .= $part;
++		print $cgi->a({-href => href(project => undef,
++		                             project_filter => $dirprefix,
++					     action=>"project_list")},
++			      esc_html($part)) . " / ";
++	}
++}
++
+ sub print_nav_breadcrumbs {
+ 	my %opts = @_;
+ 
+@@ -3854,6 +3866,8 @@ sub print_nav_breadcrumbs {
+ 			print " / $opts{-action_extra}";
+ 		}
+ 		print "\n";
++	} elsif (defined $project_filter) {
++		print_nav_breadcrumbs_path(split '/', $project_filter);
+ 	}
+ }
+ 
 -- 
-Duy
+1.7.8.3
