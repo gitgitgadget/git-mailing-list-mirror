@@ -1,89 +1,80 @@
-From: Stephen Duncan Jr <stephen.duncan@gmail.com>
-Subject: git-svn branches with revision id's in name
-Date: Mon, 30 Jan 2012 14:42:46 -0500
-Message-ID: <CAGYrzvwzrsZdHHnSBaMv-sD9mDGVQ-qFuks+JM6d-NQ9Wz9KwQ@mail.gmail.com>
+From: "Bernhard R. Link" <brl@mail.brlink.eu>
+Subject: Re: [PATCH v5 2/5] gitweb: add project_filter to limit project list
+ to a subdirectory
+Date: Mon, 30 Jan 2012 21:03:55 +0100
+Message-ID: <20120130200355.GA2584@server.brlink.eu>
+References: <20120128165606.GA6770@server.brlink.eu>
+ <20120130095252.GA6183@server.brlink.eu>
+ <20120130114557.GB9267@server.brlink.eu>
+ <201201301657.12944.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 30 20:43:19 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 30 21:03:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rrx8D-0000Pm-Ut
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 20:43:14 +0100
+	id 1RrxS4-0001g9-4w
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 21:03:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753464Ab2A3TnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jan 2012 14:43:08 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:36289 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752350Ab2A3TnH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 14:43:07 -0500
-Received: by wics10 with SMTP id s10so3769972wic.19
-        for <git@vger.kernel.org>; Mon, 30 Jan 2012 11:43:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=k2Pf+KN9f5StBWM7oq3ELETOXYmzbO9PCpbM3q3Cxd8=;
-        b=UVXN/GJsYPMJ/tRSQFx0t53y0WfifE2bv7Uwqi3yiVyPd/VA4F1qGHtlf3o1NGPtEJ
-         Y2LJlIOJ9XKMtmHCmfnsRzJniCkI1Ghd2+yZ1pjUNsze9sRA5WSTO7Z13mARYY3RBdTp
-         ACfnOo9bGIwV3pnw0Ro6Y+Me/gt7pYCIL2KYE=
-Received: by 10.180.83.72 with SMTP id o8mr30075322wiy.22.1327952586353; Mon,
- 30 Jan 2012 11:43:06 -0800 (PST)
-Received: by 10.223.93.199 with HTTP; Mon, 30 Jan 2012 11:42:46 -0800 (PST)
+	id S1753460Ab2A3UDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 15:03:39 -0500
+Received: from server.brlink.eu ([78.46.187.186]:54103 "EHLO server.brlink.eu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752230Ab2A3UDj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 15:03:39 -0500
+Received: from mfs.mathematik.uni-freiburg.de ([132.230.30.170] helo=client.brlink.eu)
+	by server.brlink.eu with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <brl@mail.brlink.eu>)
+	id 1RrxRx-0005uy-75; Mon, 30 Jan 2012 21:03:37 +0100
+Received: from brl by client.brlink.eu with local (Exim 4.77)
+	(envelope-from <brl@mail.brlink.eu>)
+	id 1RrxSF-0001BY-W6; Mon, 30 Jan 2012 21:03:56 +0100
+Content-Disposition: inline
+In-Reply-To: <201201301657.12944.jnareb@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189409>
 
-A project I work on recently changed it's SVN structure, causing me to
-do a new git svn clone.  The new structure is like this:
+* Jakub Narebski <jnareb@gmail.com> [120130 16:56]:
+> On Mon, 30 Jan 2012, Bernhard R. Link wrote:
+> 
+> > This commit changes the project listing views (project_list,
+> > project_index and opml) to limit the output to only projects in a
+> > subdirectory if the new optional parameter ?pf=directory name is
+> > used.
+> 
+> It would be nice to have in this or in a separate commit an update
+> to get_page_title() for HTML output, and to git_opml() updating
+> <title> element in OPML output, so that it mentions that project
+> list is limitied to $project_filter subdirectory.
 
-{project}/branches/
-  /master
-  /develop
-  /qa
-  /feature
-    /feature1
-    /feature2
-  /release
-    /release1
-    /release2
-  /hotfix
-    /hotfix1
-    /hotfix2
+Indeed. I overlooked that.
 
-So I set up my svn-remote sections as follows:
+> > Reusing $project instead of adding a new parameter would have been
+> > nicer from a UI point-of-view (including PATH_INFO support) but
+> > would complicate the $project validating code that is currently
+> > being used to ensure nothing is exported that should not be viewable.
+>
+> Nb. I wonder if we should make it invalid to have both 'project' and
+> 'project_filter' parameters...
 
-[svn-remote "svn"]
-  url = {url}
-  fetch = {project}/branches/master:refs/remotes/trunk
-  fetch = {project}/branches/develop:refs/remotes/develop
-  fetch = {project}/branches/qa:refs/remotes/qa
-  branches = {project}/branches/{feature,release,hotfix}/*:refs/remotes/*/*
+$project_filter should be ignored when $project is defined which is
+enforced in all but those three actions.
 
-This seems to have worked fine, for the most part, but unlike my
-previous git-svn checkouts, it has created several branches with
-revision numbers as part of the name:
+action=project_list gets confused (shows wrong breadcrumbs) if $project
+is defined, but that is unrelated to this changes, so one might to fix
+that independently.
 
-$ git branch -a
-* master
-  remotes/develop
-  remotes/develop@29271
-  remotes/develop@32463
-  remotes/develop@34103
-  remotes/feature/xyz
-  remotes/feature/xyz@26438
-  remotes/feature/xyz@27542
-  remotes/feature/xyz@35233
+I'll resend the series as replies to this mail. What to do next? Wait
+foranother explitit Acked-By of those? Or resend it to gitster@pobox.com
+if no new issues are found?
 
-Why have these remote branches been created?  What impact does this
-have on my checkout?  Can I remove safely remove them?  How?  I was
-unable to figure out how to reference this behavior in order to search
-for information on it.
-
---
-Stephen Duncan Jr
-www.stephenduncanjr.com
+        Bernhard R. Link
