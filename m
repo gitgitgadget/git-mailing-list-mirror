@@ -1,106 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/4] completion: cleanup __gitcomp*
-Date: Mon, 30 Jan 2012 11:03:48 -0800
-Message-ID: <7vpqe1au7f.fsf@alter.siamese.dyndns.org>
-References: <1327944197-6379-1-git-send-email-felipec@infradead.org>
- <1327944197-6379-4-git-send-email-felipec@infradead.org>
- <20120130175004.GG10618@burratino>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Fwd: Gitweb error
+Date: Mon, 30 Jan 2012 20:08:48 +0100
+Message-ID: <201201302008.48421.jnareb@gmail.com>
+References: <5fa08a8b-f0a2-4796-bf0d-06a8f13bf703@b23g2000yqn.googlegroups.com> <201201290137.17556.jnareb@gmail.com> <CA+EqV8xB6vcDrqM3EY7uRfu0c7sOj6FbMXci+5w2qgi5RSWrbw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipec@infradead.org>, git@vger.kernel.org,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Ted Pavlic <ted@tedpavlic.com>,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 30 20:04:00 2012
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+To: rajesh boyapati <boyapatisrajesh@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 30 20:08:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrwWB-0007Ra-Md
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 20:03:56 +0100
+	id 1RrwaS-00010Y-8K
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 20:08:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752935Ab2A3TDv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jan 2012 14:03:51 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39775 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752690Ab2A3TDu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 14:03:50 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3205B714C;
-	Mon, 30 Jan 2012 14:03:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=apM/fydmWMrybSBvO5tbX5D2fmQ=; b=ZS/s99
-	/vRzxWBSpXvWHqEto3dnqr422eGbWzP2htQ8J3WZMtdKTbU8bkcFB8qKECmOurYE
-	9wE11o+MxMWir3r6rElr22H3B3UAmuM34nw8r19zGxgHk1MOqIzUNjsd7IWndpNP
-	t5BSgtsIBqw4PtVi9i8R+ODl5MCxvg4t7jV30=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qJiz4XO7fP8seDiAnXAoMgpMlyJ3scn9
-	R/mw2+btoDCbDFY3R6bmg+vkzbZERL80r6GUUtAEKaHV9d1VWTd2amehOWsaZo5l
-	w54hUwq9bEP+CoYn691SFbWrQ8jO0pzWkFjdlZQ7526z8a+CUhUPK5i5AMR+z/nn
-	cd7boSPNiL8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2720F714B;
-	Mon, 30 Jan 2012 14:03:50 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 95429714A; Mon, 30 Jan 2012
- 14:03:49 -0500 (EST)
-In-Reply-To: <20120130175004.GG10618@burratino> (Jonathan Nieder's message of
- "Mon, 30 Jan 2012 11:50:04 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 24B7B048-4B75-11E1-9F4D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753175Ab2A3TIP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 14:08:15 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:45648 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752150Ab2A3TIO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 14:08:14 -0500
+Received: by eekc14 with SMTP id c14so1543535eek.19
+        for <git@vger.kernel.org>; Mon, 30 Jan 2012 11:08:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:references:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :message-id;
+        bh=hFUse/rtrNnDtH69A/sKoW7Axrnz0G0SEFQFc1MNod4=;
+        b=lHNsJ+NdZgo5s8rcr17CDxT8mGa41aMzBGhYbh8I8uA0UlBTJG0+fbZvw4Ynzy9YX5
+         D6R53Y0zKAlBMV6nak8pnkKCYWnKbBnkv5szs4R05gdw8C5LdGd/KVPK0lHWzUs7YAVn
+         MySLCFoXs/26wKmGRBeMvQKd6sI62CmAZlXP0=
+Received: by 10.14.137.204 with SMTP id y52mr53261eei.60.1327950492825;
+        Mon, 30 Jan 2012 11:08:12 -0800 (PST)
+Received: from [192.168.1.13] (abwi152.neoplus.adsl.tpnet.pl. [83.8.232.152])
+        by mx.google.com with ESMTPS id b3sm24980058een.2.2012.01.30.11.08.11
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 30 Jan 2012 11:08:12 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <CA+EqV8xB6vcDrqM3EY7uRfu0c7sOj6FbMXci+5w2qgi5RSWrbw@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189400>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Mon, 30 Jan 2012, rajesh boyapati wrote:
+> 2012/1/28 Jakub Narebski <jnareb@gmail.com>
+>> On Fri, 27 Jan 2012, rajesh boyapati wrote:
 
-> I imagine it would have been enough to say something along the lines of
-> "The __gitcomp and __gitcomp_nl functions are unnecessarily verbose.
-> __gitcomp_nl sets IFS to " \t\n" unnecessarily before setting it to "\n"
-> by mistake.  Both functions use 'if' statements to read parameters
-> with defaults, where the ${parameter:-default} idiom would be just as
-> clear.  By fixing these, we can make each function almost a one-liner."
->
-> By the way, the subject ("clean up __gitcomp*") tells me almost as
-> little as something like "fix __gitcomp*".  A person reading the
-> shortlog would like to know _how_ you are fixing it, or what the
-> impact of the change will be --- e.g., something like "simplify
-> __gitcomp and __gitcomp_nl" would be clearer.
+>>>     my $alternate = 1;
+>>>     for (my $i = $from; $i <= $to; $i++) {
+>>>         my $entry = $headlist->[$i];
+>>>         my %ref = %$entry;
+>>>         my $curr = $ref{'id'} eq $head;
+>>>         if ($alternate) {
+>>>             print "<tr class=\"dark\">\n";
+>>>         } else {
+>>>             print "<tr class=\"light\">\n";
+>>>         }
+>>>         $alternate ^= 1;
+>>
+>> Hmmmm... I see that we do not check if $head is defined here before using
+>> it.  This can happen legitimately if we are on yet to be born orphan branch
+>> (so $head, which should be named $head_at, is undefined) but there exist
+>> other branches (so $headlist is not empty).
+>>
+>> But I don't think it is what happened in your case, is it?
 
-I love both of the above two paragraphs.  Thanks.
+tldr; It did happen.
+ 
+> For my git projects on gerrit, our main branch name is "base".
+> We don't have any code on "master" branch.
+> May be the $HEAD is looking for master branch(or checked out branch in git
+> project).--> In our case, "master" is an empty branch.
+> Also, In the git projects, the HEAD file is pointing to "ref:
+> refs/heads/master".
+> So, I think that's the reason for errors.
+> 
+> How can I make $HEAD to point to a branch other than "master"?.
+>   a) I can do this by pointing HEAD file in git projects to other branch
+[...]
+>   b) Is there any way, other than doing above step (a) ?.
+>      I mean I don't want to have a code on "master" branch and also I
+>      don't want to point HEAD file in git projects to some other branch.
+>      Do I need to make any modifications to "gitweb.cgi" for this?
 
-> [...]
->> --- a/contrib/completion/git-completion.bash
->> +++ b/contrib/completion/git-completion.bash
-> [...]
->> @@ -524,18 +520,8 @@ __gitcomp ()
->>  #    appended.
->>  __gitcomp_nl ()
->>  {
->> -	local s=$'\n' IFS=' '$'\t'$'\n'
->> -	local cur_="$cur" suffix=" "
->> -
->> -	if [ $# -gt 2 ]; then
->> -		cur_="$3"
->> -		if [ $# -gt 3 ]; then
->> -			suffix="$4"
->> -		fi
->> -	fi
->> -
->> -	IFS=$s
->> -	COMPREPLY=($(compgen -P "${2-}" -S "$suffix" -W "$1" -- "$cur_"))
->> +	local IFS=$'\n'
->> +	COMPREPLY=($(compgen -P "${2-}" -S "${4:- }" -W "$1" -- "${3:-$cur}"))
->
-> This loses the nice name $suffix for the -S argument.  Not a problem,
-> just noticing.
+Now that I know the source of this error, I can write test case
+for it, and fix it.  I'll try to do it soon.
 
-The patch looks good, including the localness that is kept for IFS.
+So finally what you would need for (b) is just upgrade gitweb.
+-- 
+Jakub Narebski
+Poland
