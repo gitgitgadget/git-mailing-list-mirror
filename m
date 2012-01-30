@@ -1,91 +1,65 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/4] completion: be nicer with zsh
-Date: Mon, 30 Jan 2012 11:09:47 -0800
-Message-ID: <7vliopatxg.fsf@alter.siamese.dyndns.org>
-References: <1327944197-6379-1-git-send-email-felipec@infradead.org>
- <1327944197-6379-5-git-send-email-felipec@infradead.org>
- <20120130175324.GH10618@burratino>
- <CAMP44s0ACC+AnwHGtBLe8C1S_sxWj6SbMbawDThvLQAA0pKMYQ@mail.gmail.com>
- <20120130182547.GA22549@burratino>
+Subject: Re: Why does git stash create two commits?
+Date: Mon, 30 Jan 2012 11:11:24 -0800
+Message-ID: <7vhazdatur.fsf@alter.siamese.dyndns.org>
+References: <4F26DF7B.7050109@ubuntu.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Felipe Contreras <felipec@infradead.org>, git@vger.kernel.org,
-	Lee Marlow <lee.marlow@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 30 20:09:56 2012
+Cc: git@vger.kernel.org
+To: Phillip Susi <psusi@ubuntu.com>
+X-From: git-owner@vger.kernel.org Mon Jan 30 20:11:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rrwby-0001gG-DB
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 20:09:54 +0100
+	id 1RrwdY-0002We-2C
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 20:11:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752147Ab2A3TJu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jan 2012 14:09:50 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42188 "EHLO
+	id S1752846Ab2A3TL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 14:11:27 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42837 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752026Ab2A3TJt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 14:09:49 -0500
+	id S1752583Ab2A3TL0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 14:11:26 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 105467279;
-	Mon, 30 Jan 2012 14:09:49 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DFCB572DD;
+	Mon, 30 Jan 2012 14:11:25 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=l6kG+5hQcd+pIUUHsO3nerAEtHA=; b=c8JSYJ
-	sx9G1LAEZ/1HTM1lhwfP8Jyjy/rRzESpbzRqRJUh8F1eTcuEL9yxOHvxhXYuy4hB
-	GNvctl3+peNsQpsX4KHgjpFYXubnh2Gg7zk6WnNCKhqdSoDKOSqvQ9axFjXIheWz
-	GIjpqXt1rb4DVve26//UOJeBaoecpvkJAVnOs=
+	:content-type; s=sasl; bh=O1CxXvmfdXXQIdIfRjBEXlkYq+8=; b=sZHY2Y
+	o1abXlvdbgZmKdD00XlthEQtssVbsfM7YQbzJJo14XooAdFvWtY0dcrS1gq6frkf
+	GehkzXtcx35/sII2ktzcRkn6J0VF8TIpggSQ3RDvJtf24Q/Vuf24t7Jp/QGqfvAh
+	JNZV0/ZPlltFrn50sNQYrUX4MSvyQQNHXIup0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dPJv2mS1Kwz1S7XUxxGrYD9OscniZm5m
-	9iwLQOjXzqETRR2Zzs6EY5Meu9ye7BJOZ99oVazHbKOEuMaIzB78T1jARVR2nwbv
-	MERSOTFFWfcqfvuS1zmXlz9R345WqKm4aRlXsy89Qk28jAqRF7uiwFC+pLqEuqxQ
-	8YlsCDL5GBA=
+	:content-type; q=dns; s=sasl; b=vL5JX3FDRZwrB0yA7ccs+5I+DpUvPnMr
+	t3HR6ykYiVIC22xOt57+ZINKYbUSgIZUg7B+AXEhrZjRnolVKquzqVbVUBRihoM/
+	uxnRcoBBZQduMqw/0ANBLoyzytZNOse29oDXUn+DQ+rp60TmJTT2sIonQyf+pnHi
+	v7+7YIzjXgo=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0710A7278;
-	Mon, 30 Jan 2012 14:09:49 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7E6072DC;
+	Mon, 30 Jan 2012 14:11:25 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7F5287277; Mon, 30 Jan 2012
- 14:09:48 -0500 (EST)
-In-Reply-To: <20120130182547.GA22549@burratino> (Jonathan Nieder's message of
- "Mon, 30 Jan 2012 12:25:47 -0600")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6F6A972D9; Mon, 30 Jan 2012
+ 14:11:25 -0500 (EST)
+In-Reply-To: <4F26DF7B.7050109@ubuntu.com> (Phillip Susi's message of "Mon,
+ 30 Jan 2012 13:20:43 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FA9E6512-4B75-11E1-9937-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 345E9B64-4B76-11E1-B80D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189402>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Phillip Susi <psusi@ubuntu.com> writes:
 
-> Felipe Contreras wrote:
->
->> The commands might fail, that's why '2> /dev/null' was used before,
->> and ':' is used right now.
->
-> Wait, what?
->
-> : is a no-op command.  It does not redirect stderr automatically or
-> do any other magical thing.
+> git stash makes two commits, one that has no changes from the base,
+> and one to stash your changes in.  Why?
 
-s/no-op/true/ ;-)
-
-> ..., so I suppose consistency is the only reason to
-> prefer one over another.
-
-Yes. And the script may probably use [[ very heavily.
-
-Early return after || i.e.
-
-	A || return
-        B
-
-simply looks ugly and misleading, especially when the remainder B is just
-a single line.  But I stopped caring about the styles in this particular
-script long time ago, so...
+The only reason the former is identical to the base is because you are not
+incrementally building your next commit using "git add". It represents the
+state of your index. The latter represents the state of the tracked files
+in your working tree.
