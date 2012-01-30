@@ -1,62 +1,69 @@
-From: Jiang Xin <gotgit@163.com>
-Subject: L10n for Git in Chinese begins
-Date: Mon, 30 Jan 2012 16:21:59 +0800
-Message-ID: <4F265327.50805@163.com>
-Reply-To: worldhello.net@gmail.com
+From: Junio C Hamano <jch2355@gmail.com>
+Subject: Re: [PATCH 3/3] completion: remove unused code
+Date: Mon, 30 Jan 2012 00:22:12 -0800
+Message-ID: <25ea208e-353d-48f7-a849-143689fb2be6@email.android.com>
+References: <1327880479-25275-1-git-send-email-felipe.contreras@gmail.com> <1327880479-25275-4-git-send-email-felipe.contreras@gmail.com> <20120130025014.GA15944@burratino> <CAMP44s1bZeednbHfqXANZR5zVVvGwjRpuV5TFmnh212FD7E-Vg@mail.gmail.com> <871uqh3a8s.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=GB2312
-Content-Transfer-Encoding: 7bit
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 30 09:22:06 2012
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Thomas Rast <trast@inf.ethz.ch>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 30 09:22:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrmV3-0000tm-S5
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 09:22:06 +0100
+	id 1RrmVQ-00012f-CF
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 09:22:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753988Ab2A3IWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jan 2012 03:22:00 -0500
-Received: from m50-134.163.com ([123.125.50.134]:60487 "EHLO m50-134.163.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752725Ab2A3IV7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 03:21:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Received:Message-ID:Date:From:Reply-To:User-Agent:
-	MIME-Version:To:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=0TFQIz1n+5VkGm520Sgs5e2gvWFYb+3w3y8o+gboxfs=; b=eZ/FJlLp0l6hb
-	fOqtUxiE+ZoPYm2MsXiZPmAeXUcQT4PKiVw/XP6iV4mm/Ws6KOOlvqTefjZuRkPT
-	RlSSR9/dekEbmDpnQy8OaFvgjLG++al2is8TVEdqFJssboEZNtROMe50Didz/ll8
-	L/WrMJTi88K0IcTTxZ+bG1Q8HM0zw0=
-Received: from [192.168.0.100] (unknown [123.116.229.89])
-	by smtp4 (Coremail) with SMTP id DtGowEBJ5GUjUyZPCjsgCA--.336S3;
-	Mon, 30 Jan 2012 16:21:55 +0800 (CST)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:8.0) Gecko/20111105 Thunderbird/8.0
-X-CM-TRANSID: DtGowEBJ5GUjUyZPCjsgCA--.336S3
-X-Coremail-Antispam: 1Uf129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
-	VFW2AGmfu7bjvjm3AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjxUTLZ2DUUUU
-X-CM-SenderInfo: 5jrwwxrw6rljoofrz/1tbiqwFFUkgY0lO0QwAAsb
+	id S1754083Ab2A3IWY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 03:22:24 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:38540 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752725Ab2A3IWX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 03:22:23 -0500
+Received: by iacb35 with SMTP id b35so4863391iac.19
+        for <git@vger.kernel.org>; Mon, 30 Jan 2012 00:22:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=references:user-agent:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:subject:from:date:to:cc:message-id;
+        bh=vOTgbkZ03z0XhDZL+qzhzML/2ww0rcYGzRR8mY24Kac=;
+        b=RwNhxFI+USjaCLHf7yqgLvQkO5XMqkLbSm/gKLfhD+bLSuK4/pM50khP80HvarRKSY
+         xzeccz6qM7aPc8C4xpMbImdCljxmFA70WUUZTd4ivllVqOQvYDbcBU3BvXnJUmCvkMWD
+         CeZm3ZzDPlC0drHd5DgQeo8Z0EfrFtUWi6nyk=
+Received: by 10.50.202.97 with SMTP id kh1mr16281891igc.19.1327911743279;
+        Mon, 30 Jan 2012 00:22:23 -0800 (PST)
+Received: from android-1996152855784664 (37.sub-166-250-41.myvzw.com. [166.250.41.37])
+        by mx.google.com with ESMTPS id ba5sm9005796igb.6.2012.01.30.00.22.20
+        (version=SSLv3 cipher=OTHER);
+        Mon, 30 Jan 2012 00:22:22 -0800 (PST)
+User-Agent: K-9 Mail for Android
+In-Reply-To: <871uqh3a8s.fsf@thomas.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189328>
-
-With the release of v1.7.9 or some earlier , Git is multilingual.
-I select some typical git commands and translated into Chinese,
-both works.
-
-- git status (in c)
-- git stash (in bash)
-
-Now I create a repo in Github hosting the po file (zh_cn.po) for git.
-
-- repo: https://github.com/gotgit/git-l10n-zh-cn/
-- file: https://github.com/gotgit/git-l10n-zh-cn/blob/master/zh_cn.po
-
-Any help is appreciated, and will contribute here after 100% completed.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189329>
 
 
--- 
-Jiang Xin
+
+Thomas Rast <trast@inf.ethz.ch> wrote:
+
+>Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> No reason. I hope they read the mailing list, otherwise I'll resend
+>> and CC them. A get_maintainers script, or something like that would
+>> make things easier.
+>
+>I simply use
+>
+>  git shortlog -sn --no-merges v1.7.0.. -- contrib/completion/
+>
+>(In many parts the revision limiter can be omitted without losing much,
+>but e.g. here this drops Shawn who hasn't worked on it since 2009.)
+
+Or "--since=1.year", which you can keep using forever without adjusting.
