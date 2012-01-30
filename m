@@ -1,89 +1,57 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/3] completion: be nicer with zsh
-Date: Mon, 30 Jan 2012 20:21:00 +0200
-Message-ID: <CAMP44s1q1RuHNo5O2rMDF_YHefagaXXwxg+5Lc4DCF7mZYm20w@mail.gmail.com>
-References: <1327880479-25275-1-git-send-email-felipe.contreras@gmail.com>
-	<1327880479-25275-2-git-send-email-felipe.contreras@gmail.com>
-	<7v8vkperli.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0rp1EwruAwMpntcUzKS=Pbe44t7Eq0OcHdH8WF7OoUhQ@mail.gmail.com>
-	<7vpqe1cbds.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Seth Robertson <in-gitvger@baka.org>
+Subject: Re: Why does git stash create two commits?
+Date: Mon, 30 Jan 2012 13:25:21 -0500
+Message-ID: <201201301825.q0UIPLni016760@no.baka.org>
+References: <4F26DF7B.7050109@ubuntu.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 30 19:21:09 2012
+To: Phillip Susi <psusi@ubuntu.com>
+X-From: git-owner@vger.kernel.org Mon Jan 30 19:25:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rrvqm-0000rn-7A
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 19:21:08 +0100
+	id 1Rrvv3-0003Jy-KF
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 19:25:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753133Ab2A3SVD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jan 2012 13:21:03 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:35273 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753054Ab2A3SVB convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 13:21:01 -0500
-Received: by lagu2 with SMTP id u2so2376787lag.19
-        for <git@vger.kernel.org>; Mon, 30 Jan 2012 10:21:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=KPnhUNWOT227Kz/bZe0NNtmS89Vc9CWuBZ1RsBy4YOw=;
-        b=H/qAOF0c6uBGrhkLS2yozr3IXSsXxxMt3kjj/dtG2bKYk1PxDcXCy0RAk6/3Ql8xga
-         jB0lL00E3w2vLChcI/E9rXqFpxxY47PTKzSCULSestSirvCP4u5BaBtnusdf5TU8qII5
-         Xhfi72vOj8Sl4UL4t9LTPcsBFN8ETJAVNWsZc=
-Received: by 10.152.131.40 with SMTP id oj8mr9754628lab.24.1327947660431; Mon,
- 30 Jan 2012 10:21:00 -0800 (PST)
-Received: by 10.112.40.202 with HTTP; Mon, 30 Jan 2012 10:21:00 -0800 (PST)
-In-Reply-To: <7vpqe1cbds.fsf@alter.siamese.dyndns.org>
+	id S1753419Ab2A3SZ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 13:25:27 -0500
+Received: from tsutomu.baka.org ([66.114.72.182]:43861 "EHLO tsutomu.baka.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753341Ab2A3SZZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 13:25:25 -0500
+Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
+	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id q0UIPLfQ011159
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 30 Jan 2012 13:25:22 -0500
+Received: from no.baka.org (localhost [127.0.0.1])
+	by no.baka.org (8.14.4/8.14.0) with ESMTP id q0UIPLni016760;
+	Mon, 30 Jan 2012 13:25:21 -0500
+In-reply-to: <4F26DF7B.7050109@ubuntu.com>
+Comments: In reply to a message from "Phillip Susi <psusi@ubuntu.com>" dated "Mon, 30 Jan 2012 13:20:43 -0500."
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189391>
 
-On Mon, Jan 30, 2012 at 8:07 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> In any case, there's no need for ad hominem arguments; there is a
->> problem when using zsh, that's a fact.
->
-> There was no ad-hominem argument at all.
->
-> Read your two lines I quoted "... the code is now actually understand=
-able
-> (at least to me), while before it looked like voodoo", which was your
-> words. =C2=A0What does it tell the reader? =C2=A0The patch author (1)=
- did not
-> understand existing code (voodoo) and (2) the change is a good thing =
-as a
-> style/readability improvement.
 
-I disagree. Another possibility is that the code actually looked like
-voodoo (it was obfuscated). You might disagree, but the fact that one
-of the main editors (the most used?) doesn't even recognize the syntax
-of this code I think is pretty telling.
+In message <4F26DF7B.7050109@ubuntu.com>, Phillip Susi writes:
 
-> I was saying that I did not want to see that in the justification, be=
-cause
-> (2) is not true, while (1) may be.
+    git stash makes two commits, one that has no changes from the base,
+    and one to stash your changes in.  Why?
 
-That's not true: (2) might be true; at least it's debatable.
+git-stash can make up to three commits:
 
-> The patch as-is is a good change that works around issues with zsh's =
-POSIX
-> emulation, and that is sufficient-enough justification. IOW, we are i=
-n
-> agreement on the later half of your sentence.
+working directory (of files git knows about)
+index
+working directory (of files git does not know about)
 
-So, I shall just remove that part of the explanation?
+The third commit only appears if you use --all or --include-untracked.
 
---=20
-=46elipe Contreras
+Most likely you do not use -u/-a and your index has not been touched
+yet, so you only see two commits, of which one is empty.
+
+					-Seth Robertson
