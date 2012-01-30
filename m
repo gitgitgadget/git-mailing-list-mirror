@@ -1,80 +1,64 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: What's cooking in git.git (Jan 2012, #06; Fri, 27)
-Date: Mon, 30 Jan 2012 09:47:12 +0100
-Message-ID: <vpq62ftd1bj.fsf@bauges.imag.fr>
-References: <7vipjwzvc2.fsf@alter.siamese.dyndns.org>
-	<7v7h0czur2.fsf@alter.siamese.dyndns.org>
-	<7vfwf0xu8a.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0FBm3_P--wykHRXROSQLFgmDeVwr2cyEgk33QBfYbdSA@mail.gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: L10n for Git in Chinese begins
+Date: Mon, 30 Jan 2012 16:55:11 +0800
+Message-ID: <4F265AEF.5020409@gmail.com>
+Reply-To: worldhello.net@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 30 09:47:26 2012
+Content-Type: text/plain; charset=GB2312
+Content-Transfer-Encoding: 7bit
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 30 09:55:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RrmtY-0003bA-Rq
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 09:47:25 +0100
+	id 1Rrn1F-00074k-29
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jan 2012 09:55:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753539Ab2A3IrU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jan 2012 03:47:20 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:40338 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752856Ab2A3IrU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 03:47:20 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q0U8ii5i025472
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 30 Jan 2012 09:44:44 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1RrmtM-0002xg-IM; Mon, 30 Jan 2012 09:47:12 +0100
-In-Reply-To: <CAMP44s0FBm3_P--wykHRXROSQLFgmDeVwr2cyEgk33QBfYbdSA@mail.gmail.com>
-	(Felipe Contreras's message of "Sat, 28 Jan 2012 19:23:29 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 30 Jan 2012 09:44:45 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q0U8ii5i025472
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1328517888.59825@qBhkOBv1gk/l3RlKTmT5Eg
+	id S1754021Ab2A3IzO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jan 2012 03:55:14 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:40315 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753207Ab2A3IzN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jan 2012 03:55:13 -0500
+Received: by iacb35 with SMTP id b35so4897617iac.19
+        for <git@vger.kernel.org>; Mon, 30 Jan 2012 00:55:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=ENvoumdOv+6s8C1CEl+x/HqOP8wJKf9A8l7rv4vXR04=;
+        b=p4DS3gSSj9xJNpF8wNiBWjfYrmZY9Y+YjPxw+xtTJrSwC9f6ovFRnvQFG3SCiwtJPr
+         RQF3Kc4JpC3/TnJbxI3ZQ5w+lPQ6bWYgSIjQV97cjvBiTBs5BkakfBZ7zaT5EibDb3PW
+         UK85fu51H5dSVGm/tZMI1MB6Au9htNd4mAYDM=
+Received: by 10.42.189.5 with SMTP id dc5mr13166063icb.51.1327913712779;
+        Mon, 30 Jan 2012 00:55:12 -0800 (PST)
+Received: from [192.168.0.100] ([123.116.229.89])
+        by mx.google.com with ESMTPS id v10sm2027916igv.7.2012.01.30.00.55.10
+        (version=SSLv3 cipher=OTHER);
+        Mon, 30 Jan 2012 00:55:12 -0800 (PST)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:8.0) Gecko/20111105 Thunderbird/8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189332>
 
-=46elipe Contreras <felipe.contreras@gmail.com> writes:
+With the release of v1.7.9 or some earlier , Git is multilingual.
+I select some typical git commands and translated into Chinese,
+works nice.
 
-> On Sat, Jan 28, 2012 at 7:37 AM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> * mm/zsh-completion-regression-fix (2012-01-17) 1 commit
->>> =A0 (merged to 'next' on 2012-01-23 at 7bc2e0a)
->>> =A0+ bash-completion: don't add quoted space for ZSH (fix regressio=
-n)
->>>
->>> Will merge early in the next cycle and deal with any fallout in 'ma=
-ster'.
->>
->> This topic has been superseded by Felipe's f15026b (git-completion:
->> workaround zsh COMPREPLY bug, 2012-01-25) to use "typeset -h IFS", s=
-o I
->> should drop this.
->>
->> Am I mistaken?
->
-> That's correct.
+- git status (in c)
+- git stash (in bash)
 
-Yes. You can drop my version.
+Now I create a repo in Github hosting the po file (zh_cn.po) for git.
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+- repo: https://github.com/gotgit/git-l10n-zh-cn/
+- file: https://github.com/gotgit/git-l10n-zh-cn/blob/master/zh_cn.po
+
+Any help is appreciated, and will contribute here after 100% completed.
+
+
+-- 
+Jiang Xin
