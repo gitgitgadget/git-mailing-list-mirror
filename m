@@ -1,151 +1,124 @@
-From: Paul Berry <stereotype441@gmail.com>
-Subject: Re: [BUG] git clean -X skips a directory containing only ignored files
-Date: Tue, 31 Jan 2012 09:39:02 -0800
-Message-ID: <CA+yLL65OWXMGnftKzpLLnESd_-Ogyj_UXg2m7h0FSyriuh91pw@mail.gmail.com>
-References: <CA+yLL67J-7U9z7HVvq5wTc1g4_UCtqYfEyqdt7XR5zDqvQN5NA@mail.gmail.com>
-	<4F27FF01.6040706@elegosoft.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Correct singular form in diff summary line for human
+ interaction
+Date: Tue, 31 Jan 2012 09:50:15 -0800
+Message-ID: <7vvcnr92y0.fsf@alter.siamese.dyndns.org>
+References: <1328019840-6168-1-git-send-email-pclouds@gmail.com>
+ <20120131152028.GA10717@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Michael Schubert <mschub@elegosoft.com>
-X-From: git-owner@vger.kernel.org Tue Jan 31 18:39:27 2012
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Frederik Schwarzer <schwarzerf@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>, dickey@invisible-island.net
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 31 18:50:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RsHfv-00015U-2E
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Jan 2012 18:39:23 +0100
+	id 1RsHql-0006vj-Si
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Jan 2012 18:50:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752682Ab2AaRjF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Jan 2012 12:39:05 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:65403 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752270Ab2AaRjE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2012 12:39:04 -0500
-Received: by bkcjm19 with SMTP id jm19so190131bkc.19
-        for <git@vger.kernel.org>; Tue, 31 Jan 2012 09:39:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Kg7jetEpHID6Gar/hnmKwNzilU73dAsF4dKPsxQ3UCU=;
-        b=BZ1Jr+qhIvxaURf1aTHRcpReKaoyH5fzqoi2aGGS8pgoULd+K7VGs4gc2DVPzHDlpF
-         rkm3GX2iGsGHUp6HqpDywQ3pNmcs0wP9cLeHYP3jpBc95iw+OF5LoH/Yi9z31slrDZjf
-         yPSJaHhh5bU3x06gxeojlriwXKo7K5PKf2B74=
-Received: by 10.205.127.17 with SMTP id gy17mr10902118bkc.110.1328031542144;
- Tue, 31 Jan 2012 09:39:02 -0800 (PST)
-Received: by 10.205.112.203 with HTTP; Tue, 31 Jan 2012 09:39:02 -0800 (PST)
-In-Reply-To: <4F27FF01.6040706@elegosoft.com>
+	id S1754058Ab2AaRuV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Jan 2012 12:50:21 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34012 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753372Ab2AaRuT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2012 12:50:19 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C302D6069;
+	Tue, 31 Jan 2012 12:50:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=bGM5u5ABIxZx
+	T3AVIY98Xku7wZs=; b=BRJrxUc28k9J1FrPnH+w0wTaGTEBN63GU437tAAGxQKA
+	BHxa2kTP54tLQKr/6alzRJE9riFfWOA9zIYgNzY1i/1wewRdb552lBZzGKl2MDkd
+	Ck+mShQtbcvzyrdyYk1X07UUPmvPkDE3JLhOFWgaGINZcAuLAB51t9QdAsrH5n0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ptBRme
+	/u7WMwvmZb1I8Q2JSHG2GMmeVN6XzQaM/CM7x7V87COZMVZzLlf/wOHTmSc2KgsP
+	lUhoYzGJLgVS7m9tDvCPD2Hrf9SPHgvQdeU0KFlFGrLlnP/FU0lqmbNRdgfkxQ81
+	6MYUlixI+Ur9UdM57BGOQnPM0PDHmFMQb8D5Y=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9F9A6068;
+	Tue, 31 Jan 2012 12:50:17 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BF3D76067; Tue, 31 Jan 2012
+ 12:50:16 -0500 (EST)
+In-Reply-To: <20120131152028.GA10717@burratino> (Jonathan Nieder's message of
+ "Tue, 31 Jan 2012 09:20:28 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 08D42A4A-4C34-11E1-A962-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189461>
 
-On 31 January 2012 06:47, Michael Schubert <mschub@elegosoft.com> wrote=
-:
-> On 01/31/2012 12:36 AM, Paul Berry wrote:
->> I am trying to use "git clean -X" to remove object files (which
->> are gitignored) from my source tree, but it appears to miss
->> object files that are in a subdirectory without any git-tracked
->> files:
->>
->> $ git init test
->> Initialized empty Git repository in /home/pberry/tmp/test/.git/
->> $ cd test
->> $ mkdir foo
->> $ touch foo/bar.o
->> $ echo '*.o' > .gitignore
->> $ git add .gitignore
->> $ git commit -mgitignore
->> [master (root-commit) 6b5ffcb] gitignore
->> =A01 files changed, 1 insertions(+), 0 deletions(-)
->> =A0create mode 100644 .gitignore
->> $ git status
->> # On branch master
->> nothing to commit (working directory clean)
->> $ git clean -d -X -f
->> $ ls foo
->> bar.o
->>
->> It seems to me that bar.o should have been removed, because
->> according to the git-clean docs, -X means "Remove only files
->> ignored by git", and bar.o is definitely being ignored by git.
->>
->>
->> It looks like a very similar bug was reported back in 2010, but
->> not fixed:
->> http://git.661346.n2.nabble.com/BUG-git-clean-X-behaviour-when-gitig=
-nore-has-sub-directory-entries-td5575307.html.
->> I've confirmed that the workaround mentioned by Jonathan Nieder
->> in that thread fixes my problem too (removing "dir.flags |=3D
->> DIR_SHOW_OTHER_DIRECTORIES;" from builtin/clean.c). =A0However I'm
->> guessing from Jonathan's comments that it would be better to fix
->> this bug elsewhere (somewhere in dir.c perhaps).
->
-> Removing DIR_SHOW_OTHER_DIRECTORIES just happens to not trigger
-> this particular "bug" but breaks pretty much everything else.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Yeah, I had a feeling that might be the case.
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>
+>> Convenient function interactive_use() is added for this purpose. The
+>> command thinks it's in human hands when:
+>
+> I admit I really dislike this, especially:
+>
+>>  - GIT_SCRIPTING environment variable is not set
 
->
-> As a workaround, you could explicitly add the directory to your
-> gitignore file.
->
-> Here's a test:
->
-> -- >8 --
->
-> Subject: [PATCH] t7300-clean: show known breakage with "git clean -d =
--X"
->
-> "git clean -d -X" fails for directories containing only untracked fil=
-es.
-> Example:
->
-> =A0 =A0 =A0 =A0$ ls -R .
-> =A0 =A0 =A0 =A0.:
-> =A0 =A0 =A0 =A0foo
-> =A0 =A0 =A0 =A0./foo:
-> =A0 =A0 =A0 =A0bar.o
-> =A0 =A0 =A0 =A0$ cat .gitignore
-> =A0 =A0 =A0 =A0*.o
-> =A0 =A0 =A0 =A0$ git clean -d -X -f
-> =A0 =A0 =A0 =A0$ ! test -d foo || echo fail
->
-> Reported-by: Paul Berry <stereotype441@gmail.com>
-> Signed-off-by: Michael Schubert <mschub@elegosoft.com>
-> ---
-> =A0t/t7300-clean.sh | =A0 =A07 +++++++
-> =A01 files changed, 7 insertions(+), 0 deletions(-)
->
-> diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-> index 800b536..0b6d545 100755
-> --- a/t/t7300-clean.sh
-> +++ b/t/t7300-clean.sh
-> @@ -332,6 +332,13 @@ test_expect_success 'git clean -d -X' '
->
-> =A0'
->
-> +test_expect_failure 'git clean -d -X' '
-> + =A0mkdir -p a/b &&
-> + =A0touch a/b/c.o &&
-> + =A0git clean -d -X &&
-> + =A0! test -d a
+I would have to agree that it is horrible.
 
-Thanks for the test case.  BTW, you might consider changing this last
-line to "! test -f a/b/c.o".  Reasoning: it is clear from the docs
-that c.o should be removed by "git clean -X" (since c.o is an ignored
-file).  It is less clear whether the directories a and a/b should be
-removed by "git clean -X", since those directories are not in
-themselves ignored, only their contents.
-
-> +'
-> +
-> =A0test_expect_success 'clean.requireForce defaults to true' '
+> But maybe I'm not the right person to ask, since I'd be okay with
+> removing the "s"es (with an appropriate incubation time to discover
+> whether we are introducing a regression) unconditionally.
 >
-> =A0 =A0 =A0 =A0git config --unset clean.requireForce &&
-> --
-> 1.7.9.174.g356eff6
+> If there is an environment variable to say "I don't want to see
+> variations on strings intended for humans", can it be spelled as
+> LC_ALL=3DC?
+
+I have been wondering if we should even care, for two reasons.
+
+ * We have had --numstat forever which is exactly what we added for scr=
+ipts'
+   use. "I've been parsing that output meant for humans" is not an excu=
+se.
+
+ * 'diffstat', at least the recent versions of it (it is hard to track
+   down historical versions and I gave up [*1*]), gives output like the=
+se:
+
+        1 file changed, 1 insertion(+)
+	2 files changed, 3 insertions(+), 1 deletion(-)
+	0 files changed
+
+   The first one does not have anything but a one-line addition to a fi=
+le,
+   and we do not even see "0 deletions(-)". The second one is a more
+   typical example. The third one is "diffstat </dev/null" [*2*].
+
+If we were to touch this, I would prefer to do so unconditionally witho=
+ut
+"hrm, can we reliably guess this is meant for humans?" and release it
+unceremoniously, perhaps as part of the next release that will have a m=
+uch
+bigger user-visible UI correction to 'merge'.
+
+
+[Footnote]
+
+*1* I can guess from http://invisible-island.net/diffstat/CHANGES that =
+the
+source is probably kept in RCS, but I couldn't find development histori=
+es
+beyond what is in that file.
+
+*2* We mistakenly applied a patch to make "git apply --stat </dev/null"=
+ to
+error out recently, which we might want to fix. But that is a separate
+topic.
