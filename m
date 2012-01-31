@@ -1,132 +1,80 @@
-From: Michael Schubert <mschub@elegosoft.com>
-Subject: Re: [BUG] git clean -X skips a directory containing only ignored
- files
-Date: Tue, 31 Jan 2012 15:47:29 +0100
-Message-ID: <4F27FF01.6040706@elegosoft.com>
-References: <CA+yLL67J-7U9z7HVvq5wTc1g4_UCtqYfEyqdt7XR5zDqvQN5NA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Correct singular form in diff summary line for human
+ interaction
+Date: Tue, 31 Jan 2012 09:20:28 -0600
+Message-ID: <20120131152028.GA10717@burratino>
+References: <1328019840-6168-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Paul Berry <stereotype441@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 31 15:48:52 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Frederik Schwarzer <schwarzerf@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 31 16:20:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RsF0t-0004nI-1L
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Jan 2012 15:48:51 +0100
+	id 1RsFVr-0007Gs-0u
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Jan 2012 16:20:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754663Ab2AaOsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Jan 2012 09:48:43 -0500
-Received: from mx0.elegosoft.com ([78.47.87.163]:43875 "EHLO mx0.elegosoft.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753280Ab2AaOsm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2012 09:48:42 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.elegosoft.com (Postfix) with ESMTP id 1993CDE849;
-	Tue, 31 Jan 2012 15:48:42 +0100 (CET)
-Received: from mx0.elegosoft.com ([127.0.0.1])
-	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id lXLrlRZ0AfGN; Tue, 31 Jan 2012 15:48:42 +0100 (CET)
-Received: from [10.10.10.197] (i59F7870A.versanet.de [89.247.135.10])
-	by mx0.elegosoft.com (Postfix) with ESMTPSA id C6393DE847;
-	Tue, 31 Jan 2012 15:48:41 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:9.0) Gecko/20111224 Thunderbird/9.0.1
-In-Reply-To: <CA+yLL67J-7U9z7HVvq5wTc1g4_UCtqYfEyqdt7XR5zDqvQN5NA@mail.gmail.com>
+	id S1754727Ab2AaPUp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Jan 2012 10:20:45 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:59787 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753601Ab2AaPUn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2012 10:20:43 -0500
+Received: by vbjk17 with SMTP id k17so81979vbj.19
+        for <git@vger.kernel.org>; Tue, 31 Jan 2012 07:20:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=rtzTRYU8PbWSXM1VaL0Uqr/xPf1+mrU0jSl5l55uK9Q=;
+        b=B1tUvt3C3PwAKThKJ/IfN37MSr671tnfWCK7b7TdSPvCmmHuEffi2fiiupDBD7VHaJ
+         8KYGy7Vt8CBQosh7HtqGVkXMXsFSwSERnkGBCZ4OBq+5ngxBZu8bbMiPHPYDrJTUiN8s
+         /AULhZU2TNq0VktykoBTvRgzsgia8abUbMuY4=
+Received: by 10.52.93.77 with SMTP id cs13mr10425930vdb.71.1328023243175;
+        Tue, 31 Jan 2012 07:20:43 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id a19sm19348039vdh.12.2012.01.31.07.20.41
+        (version=SSLv3 cipher=OTHER);
+        Tue, 31 Jan 2012 07:20:42 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1328019840-6168-1-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189457>
 
-On 01/31/2012 12:36 AM, Paul Berry wrote:
-> I am trying to use "git clean -X" to remove object files (which
-> are gitignored) from my source tree, but it appears to miss
-> object files that are in a subdirectory without any git-tracked
-> files:
-> 
-> $ git init test
-> Initialized empty Git repository in /home/pberry/tmp/test/.git/
-> $ cd test
-> $ mkdir foo
-> $ touch foo/bar.o
-> $ echo '*.o' > .gitignore
-> $ git add .gitignore
-> $ git commit -mgitignore
-> [master (root-commit) 6b5ffcb] gitignore
->  1 files changed, 1 insertions(+), 0 deletions(-)
->  create mode 100644 .gitignore
-> $ git status
-> # On branch master
-> nothing to commit (working directory clean)
-> $ git clean -d -X -f
-> $ ls foo
-> bar.o
-> 
-> It seems to me that bar.o should have been removed, because
-> according to the git-clean docs, -X means "Remove only files
-> ignored by git", and bar.o is definitely being ignored by git.
-> 
-> 
-> It looks like a very similar bug was reported back in 2010, but
-> not fixed:
-> http://git.661346.n2.nabble.com/BUG-git-clean-X-behaviour-when-gitignore-has-sub-directory-entries-td5575307.html.
-> I've confirmed that the workaround mentioned by Jonathan Nieder
-> in that thread fixes my problem too (removing "dir.flags |=
-> DIR_SHOW_OTHER_DIRECTORIES;" from builtin/clean.c).  However I'm
-> guessing from Jonathan's comments that it would be better to fix
-> this bug elsewhere (somewhere in dir.c perhaps).
+Hi,
 
-Removing DIR_SHOW_OTHER_DIRECTORIES just happens to not trigger
-this particular "bug" but breaks pretty much everything else.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-As a workaround, you could explicitly add the directory to your
-gitignore file.
+> Convenient function interactive_use() is added for this purpose. The
+> command thinks it's in human hands when:
 
-Here's a test:
+I admit I really dislike this, especially:
 
--- >8 --
+>  - GIT_SCRIPTING environment variable is not set
 
-Subject: [PATCH] t7300-clean: show known breakage with "git clean -d -X"
+If my GUI app was parsing diffstats to convert them into a visual
+representation, as a novice it may not be obvious to me where to find
+the menu entry file to set this envvar in.
 
-"git clean -d -X" fails for directories containing only untracked files.
-Example:
+But maybe I'm not the right person to ask, since I'd be okay with
+removing the "s"es (with an appropriate incubation time to discover
+whether we are introducing a regression) unconditionally.
 
-	$ ls -R .
-	.:
-	foo
-	./foo:
-	bar.o
-	$ cat .gitignore
-	*.o
-	$ git clean -d -X -f
-	$ ! test -d foo || echo fail
+If there is an environment variable to say "I don't want to see
+variations on strings intended for humans", can it be spelled as
+LC_ALL=3DC?
 
-Reported-by: Paul Berry <stereotype441@gmail.com>
-Signed-off-by: Michael Schubert <mschub@elegosoft.com>
----
- t/t7300-clean.sh |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
-
-diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index 800b536..0b6d545 100755
---- a/t/t7300-clean.sh
-+++ b/t/t7300-clean.sh
-@@ -332,6 +332,13 @@ test_expect_success 'git clean -d -X' '
- 
- '
- 
-+test_expect_failure 'git clean -d -X' '
-+  mkdir -p a/b &&
-+  touch a/b/c.o &&
-+  git clean -d -X &&
-+  ! test -d a
-+'
-+
- test_expect_success 'clean.requireForce defaults to true' '
- 
- 	git config --unset clean.requireForce &&
--- 
-1.7.9.174.g356eff6
+Just my two cents,
+Jonathan
