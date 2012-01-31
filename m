@@ -1,80 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Correct singular form in diff summary line for human
- interaction
-Date: Tue, 31 Jan 2012 09:20:28 -0600
-Message-ID: <20120131152028.GA10717@burratino>
-References: <1328019840-6168-1-git-send-email-pclouds@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Bug: "git checkout -b" should be allowed in empty repo
+Date: Tue, 31 Jan 2012 17:32:00 +0100
+Message-ID: <4F281780.1070804@alum.mit.edu>
+References: <4F24E287.3040302@alum.mit.edu>	<7vwr8bvvxj.fsf@alter.siamese.dyndns.org>	<4F263AEE.4080409@alum.mit.edu>	<7v39axc9gp.fsf@alter.siamese.dyndns.org>	<4F27ACED.2050709@alum.mit.edu> <m3k448che9.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Frederik Schwarzer <schwarzerf@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 31 16:20:56 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	demerphq@gmail.com
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 31 17:32:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RsFVr-0007Gs-0u
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Jan 2012 16:20:51 +0100
+	id 1RsGct-0002Rl-Pz
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Jan 2012 17:32:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754727Ab2AaPUp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Jan 2012 10:20:45 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:59787 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753601Ab2AaPUn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2012 10:20:43 -0500
-Received: by vbjk17 with SMTP id k17so81979vbj.19
-        for <git@vger.kernel.org>; Tue, 31 Jan 2012 07:20:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=rtzTRYU8PbWSXM1VaL0Uqr/xPf1+mrU0jSl5l55uK9Q=;
-        b=B1tUvt3C3PwAKThKJ/IfN37MSr671tnfWCK7b7TdSPvCmmHuEffi2fiiupDBD7VHaJ
-         8KYGy7Vt8CBQosh7HtqGVkXMXsFSwSERnkGBCZ4OBq+5ngxBZu8bbMiPHPYDrJTUiN8s
-         /AULhZU2TNq0VktykoBTvRgzsgia8abUbMuY4=
-Received: by 10.52.93.77 with SMTP id cs13mr10425930vdb.71.1328023243175;
-        Tue, 31 Jan 2012 07:20:43 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id a19sm19348039vdh.12.2012.01.31.07.20.41
-        (version=SSLv3 cipher=OTHER);
-        Tue, 31 Jan 2012 07:20:42 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1328019840-6168-1-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754002Ab2AaQcG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jan 2012 11:32:06 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:35176 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753368Ab2AaQcF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jan 2012 11:32:05 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q0VGW0Qu013315
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 31 Jan 2012 17:32:01 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.24) Gecko/20111108 Lightning/1.0b2 Thunderbird/3.1.16
+In-Reply-To: <m3k448che9.fsf@localhost.localdomain>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189458>
 
-Hi,
+On 01/31/2012 11:09 AM, Jakub Narebski wrote:
+> I don't see how this can be done in backward-compatibile way.
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+Yes, backwards compatibility would probably prevent the NULL commit idea
+from ever being implemented in a literal way.
 
-> Convenient function interactive_use() is added for this purpose. The
-> command thinks it's in human hands when:
+But it is conceivable that it could be faked with some strategic
 
-I admit I really dislike this, especially:
+    if sha1 == '0'*40:
+        treat_as_special_null_commit
+    elif len(parents) == 0:
+        parents = ['0'*40]
 
->  - GIT_SCRIPTING environment variable is not set
+In other words, include a little special case fakery in the data
+structures near root commits (an O(1) amount of work) to avoid special
+cases in all commands that can touch root commits (an O(number of
+commands) amount of work).
 
-If my GUI app was parsing diffstats to convert them into a visual
-representation, as a novice it may not be obvious to me where to find
-the menu entry file to set this envvar in.
+Alternatively, the NULL commit could be a UI construct that has no
+manifestation in the object model.  This would not save implementation
+work, but would perhaps give a more consistent way to deal with root
+commits in the UI than the current array of --orphan etc. options.
 
-But maybe I'm not the right person to ask, since I'd be okay with
-removing the "s"es (with an appropriate incubation time to discover
-whether we are introducing a regression) unconditionally.
+> Please note that in Git it is quite natural to have more than one root
+> (parentless) commit, even without presence of disconnected / orphan
+> branches.  They are result of joining originally separate projects.
+> git.git has quite a few of them (more than 6, IIRC).
 
-If there is an environment variable to say "I don't want to see
-variations on strings intended for humans", can it be spelled as
-LC_ALL=3DC?
+I don't see the problem, unless you mean that it would be difficult to
+merge repositories that don't link back to a NULL commit with
+hypothetical future repositories that do include a NULL commit.  But a
+world in which two kinds of repositories have to be supported is
+pointless anyway, because then the git code would have to include *both*
+kinds of special cases and nothing would be gained.
 
-Just my two cents,
-Jonathan
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
