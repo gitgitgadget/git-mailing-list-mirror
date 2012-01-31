@@ -1,88 +1,76 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH] find_pack_entry(): do not keep packed_git pointer locally
-Date: Mon, 30 Jan 2012 23:19:54 -0500 (EST)
-Message-ID: <alpine.LFD.2.02.1201302301150.2759@xanadu.home>
-References: <1327922750-12106-1-git-send-email-pclouds@gmail.com>
- <7v62fsai1i.fsf@alter.siamese.dyndns.org>
- <CACsJy8AS0nZOoXZZfz0OEwoWe88wp2aGR5NGqpG7xQmUvwi7TA@mail.gmail.com>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH] merge: add instructions to the commit message when editing
+Date: Tue, 31 Jan 2012 08:46:04 +0100
+Message-ID: <87k4488gcj.fsf@thomas.inf.ethz.ch>
+References: <7vd3a1caxb.fsf@alter.siamese.dyndns.org>
+	<0c9a880c7dca27520f957446c6b0e72e93609b03.1327954927.git.trast@student.ethz.ch>
+	<7vy5soaons.fsf@alter.siamese.dyndns.org>
+	<878vkoamu3.fsf@thomas.inf.ethz.ch>
+	<7vhazcamdl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_1aBQFGQnPqLsu/Tc3vfhmg)"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 31 05:20:37 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Thomas Rast <trast@student.ethz.ch>, <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 31 08:46:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rs5Cq-0007Tl-5V
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Jan 2012 05:20:32 +0100
+	id 1Rs8Pu-000744-58
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Jan 2012 08:46:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753604Ab2AaET4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jan 2012 23:19:56 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:40130 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753054Ab2AaETz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jan 2012 23:19:55 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-VM-MR004.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0LYN00LMPAIBEG70@VL-VM-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 30 Jan 2012 23:15:47 -0500 (EST)
-In-reply-to: <CACsJy8AS0nZOoXZZfz0OEwoWe88wp2aGR5NGqpG7xQmUvwi7TA@mail.gmail.com>
-User-Agent: Alpine 2.02 (LFD 1266 2009-07-14)
+	id S1753176Ab2AaHqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jan 2012 02:46:11 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:17331 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752881Ab2AaHqI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jan 2012 02:46:08 -0500
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 31 Jan
+ 2012 08:46:05 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 31 Jan
+ 2012 08:46:05 +0100
+In-Reply-To: <7vhazcamdl.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 30 Jan 2012 13:52:54 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189443>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Junio C Hamano <gitster@pobox.com> writes:
 
---Boundary_(ID_1aBQFGQnPqLsu/Tc3vfhmg)
-Content-type: TEXT/PLAIN; charset=UTF-8
-Content-transfer-encoding: 8BIT
+> Thomas Rast <trast@inf.ethz.ch> writes:
+>
+>>>   Please enter the commit message for your merge commit.  Explain
+>>>   why the merge is necessary, especially if it merges an updated
+>>>   upstream into a topic branch.
+>>>
+>>> ... because people who need to be told to "justify it" would probably be
+>>> helped by a more explicit "explain _why_ it is needed".
+>>
+>> Why not.  The "explain..." might be construed as a bit too coercive, but
+>> I cannot come up with a way to defuse it (well, except again tacking on
+>> "you should") ...
+>
+> Would "Please enter the commit message for your merge commit, to explain
+> why ..." work?
 
-On Tue, 31 Jan 2012, Nguyen Thai Ngoc Duy wrote:
+Yes, though it winds up as a rather long sentence.  I could then shorten
+it to
 
-> (Pulling Nico in for Q2 below. No snipping so he has a context)
-> 
-> 2012/1/31 Junio C Hamano <gitster@pobox.com>:
-> > Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
-> >
-> >> Commit f7c22cc (always start looking up objects in the last used pack
-> >> first - 2007-05-30) introduces a static packed_git* pointer as an
-> >> optimization.  The kept pointer however may become invalid if
-> >> free_pack_by_name() happens to free that particular pack.
+  Please enter a commit message that explains why the merge commit is
+  necessary, especially if it merges an updated upstream into a topic
+  branch.
 
-Hmmm, good point.
+though that's only _implying_ that you're completing a merge.
 
-> >> Current code base does not access packs after calling
-> >> free_pack_by_name() so it should not be a problem. Anyway, move the
-> >> pointer out so that free_pack_by_name() can reset it to avoid running
-> >> into troubles in future.
-> >>
-> >> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> >> ---
-[...]
-> >  - Could we make the magic (void *)1 value a #define'd constant? Perhaps
-> >   we could even use NULL for that purpose?
-> 
-> Q1. Sure.
+Your pick ;-)
 
-Indeed.  The idea might have been to use a non null value that cannot 
-match any pointer...
-
-> Q2. No NULL is probably not suitable. I think Nico wanted to express
-> "we tried to find but found none (i.e. NULL)" too and 1 means "no we
-> have not tried".
-
-Well, I could imagine I might have thought about something like that.  
-However, looking at the latest code in the master branch I can't see 
-any way for last_found to ever be assigned a NULL value.  So if the
-(void*)1 value might have been useful, it is certainly not anymore.
-
-
-Nicolas
-
---Boundary_(ID_1aBQFGQnPqLsu/Tc3vfhmg)--
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
