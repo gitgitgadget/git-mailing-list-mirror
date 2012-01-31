@@ -1,40 +1,93 @@
-From: Matti Linnanvuori <matti.linnanvuori@portalify.com>
-Subject: Re: gitk Wish hangs on Mac OS X 10.6.8
-Date: Tue, 31 Jan 2012 09:49:23 +0200
-Message-ID: <D63866EE-7186-4C01-8025-59C7A8375A70@portalify.com>
-References: <E423F584-55C0-4A27-B3DD-48B78EDE1C79@portalify.com>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 31 08:49:33 2012
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Bug: "git checkout -b" should be allowed in empty repo
+Date: Tue, 31 Jan 2012 09:57:17 +0100
+Message-ID: <4F27ACED.2050709@alum.mit.edu>
+References: <4F24E287.3040302@alum.mit.edu> <7vwr8bvvxj.fsf@alter.siamese.dyndns.org> <4F263AEE.4080409@alum.mit.edu> <7v39axc9gp.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 31 09:57:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rs8T7-0000FZ-2E
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Jan 2012 08:49:33 +0100
+	id 1Rs9XI-0000hp-4w
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Jan 2012 09:57:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752881Ab2AaHt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Jan 2012 02:49:28 -0500
-Received: from helsinki.portalify.com ([217.30.185.41]:57541 "EHLO
-	helsinki.portalify.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752682Ab2AaHt2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2012 02:49:28 -0500
-Received: from [127.0.0.1] (putki.portalify.com [10.192.0.11])
-	by helsinki.portalify.com (Postfix) with ESMTP id EEC2B224CEB2
-	for <git@vger.kernel.org>; Tue, 31 Jan 2012 09:49:23 +0200 (EET)
-In-Reply-To: <E423F584-55C0-4A27-B3DD-48B78EDE1C79@portalify.com>
-X-Mailer: Apple Mail (2.1084)
+	id S1753400Ab2AaI5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jan 2012 03:57:45 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:57883 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753360Ab2AaI5p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jan 2012 03:57:45 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q0V8vIga025441
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 31 Jan 2012 09:57:18 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.24) Gecko/20111108 Lightning/1.0b2 Thunderbird/3.1.16
+In-Reply-To: <7v39axc9gp.fsf@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189446>
 
-Hi!
+On 01/30/2012 07:48 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> [3] If commit 0000000 were treated specially, then there would be no
+>> unborn branches but only branches pointing at the empty commit.  In that
+>> case, my expectation would change--the old branch should be left
+>> pointing at 0000000.  But currently git has no concept of an unborn
+>> branch that is not HEAD.
+> 
+> And it probably is not a good thing to add such. Under that constraints,
+> HEAD that says refs/heads/foo where foo does not exist yet needs to be
+> special cased at places where it matters.
+> 
+> For that matter, even if we artificially created refs/heads/foo before any
+> commit is made and made it point at 0{40}, you would need to add special
+> cases to other parts of the system
 
-gitk Wish occasionally hangs on Mac OS X 10.6.8. I have to force kill it to make it disappear. git version 1.7.8.4, too, has this bug.
+No, the idea is to avoid special casing by making 0{40} into a real (but
+empty) revision.
 
-regards, Matti Linnanvuori
+> (e.g. "commit" needs to notice that the
+> result should be a root, not a child of 0{40};
+
+No, commits that were previously generated as orphans *would* now be
+generated as children of the special 0{40} commit.
+
+> "checkout other_branch"
+> needs to notice that it should refrain from running the equivalent of
+> "read-tree -m HEAD other_branch" because HEAD does not point at a real
+> tree;
+
+No, it would merge the 0{40} commit with other_branch like usual,
+resulting in the same contents as other_branch.  Indeed, if other_branch
+is also ultimately a descendant of 0{40}, this would be like a
+fast-forward merge.
+
+> etc.
+
+This "etc" might include problems.
+
+> so it does not change the fact that the unborn branch is case
+> is special.
+
+On the contrary, I believe that much special casing could be eliminated
+and the UI made more uniform by treating everything as a descendant of a
+special "NULL" commit.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
