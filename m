@@ -1,115 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: Alternates corruption issue
-Date: Tue, 31 Jan 2012 12:25:45 -0800
-Message-ID: <7v1uqf8vqu.fsf@alter.siamese.dyndns.org>
+Date: Tue, 31 Jan 2012 15:44:17 -0500
+Message-ID: <20120131204417.GA30969@sigill.intra.peff.net>
 References: <1328018729.13744.26.camel@ted>
  <20120131193922.GA31551@sigill.intra.peff.net>
+ <7v1uqf8vqu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: Richard Purdie <richard.purdie@linuxfoundation.org>,
 	GIT Mailing-list <git@vger.kernel.org>,
-	"Hart\, Darren" <darren.hart@intel.com>,
-	"Ashfield\, Bruce" <Bruce.Ashfield@windriver.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 31 21:26:01 2012
+	"Hart, Darren" <darren.hart@intel.com>,
+	"Ashfield, Bruce" <Bruce.Ashfield@windriver.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 31 21:44:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RsKH3-00023U-RH
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Jan 2012 21:25:54 +0100
+	id 1RsKYy-0001Y1-Jp
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Jan 2012 21:44:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754362Ab2AaUZs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Jan 2012 15:25:48 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37411 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753425Ab2AaUZs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2012 15:25:48 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 71CD86024;
-	Tue, 31 Jan 2012 15:25:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xDSt1gSXe08aOXVCrs5hYms7FsY=; b=csHZmh
-	rWB+GQOpblKC2XrQXd677hpM8f3sjeJ/T69Rqbjj0C7dKB2FuOMP3mcrxoOMn09t
-	yxC9pf10dZU5xHyJe5/OMoUNq+UdOB0VRxcBz6UzMYzJxniUrg1H1uXEof22ba/h
-	EZdYSvUki9b3PgCn91HIY0bOXmkyJy3Qqg68s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fnSuyq0GHNCb/THuwV1nztPZQr4u5rKD
-	v5iKvTlrA3y2FxkibU56Dk411WhnmH+kMkj1vsNMDrhdWYoWUwze2nO0pudoV9Ui
-	62PZXxAqctC2hT8xyYKFZlCqlVKYH7l3tRTg7JeY5FWvcTFx4ieqjeKnux3ak7T7
-	USXS45tKtpE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E9336023;
-	Tue, 31 Jan 2012 15:25:47 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 915706022; Tue, 31 Jan 2012
- 15:25:46 -0500 (EST)
-In-Reply-To: <20120131193922.GA31551@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 31 Jan 2012 14:39:22 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C1D456B8-4C49-11E1-87E5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754861Ab2AaUoU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jan 2012 15:44:20 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51154
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753557Ab2AaUoT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jan 2012 15:44:19 -0500
+Received: (qmail 1740 invoked by uid 107); 31 Jan 2012 20:51:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 31 Jan 2012 15:51:23 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Jan 2012 15:44:17 -0500
+Content-Disposition: inline
+In-Reply-To: <7v1uqf8vqu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189471>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Jan 31, 2012 at 12:25:45PM -0800, Junio C Hamano wrote:
 
-> I believe that would work in your case, but it seems like the most
-> correct thing would actually be:
->
->   { "", "/.git", ".git" }
->
-> That is:
->
->   1. Try the literal path the user gave as a repo
->
->   2. Otherwise, try it as the root of a working tree (containing .git)
->
->   3. Otherwise, assume they were too lazy to type ".git" and include it
+> Jeff King <peff@peff.net> writes:
+> 
+> > I believe that would work in your case, but it seems like the most
+> > correct thing would actually be:
+> >
+> >   { "", "/.git", ".git" }
+> >
+> > That is:
+> >
+> >   1. Try the literal path the user gave as a repo
+> >
+> >   2. Otherwise, try it as the root of a working tree (containing .git)
+> >
+> >   3. Otherwise, assume they were too lazy to type ".git" and include it
+> 
+> That sounds sensible, together with this, to which I agree with:
+> [...]
+> ... but ...
+> [...]
+> > -	static char *suffix[] = { "/.git", ".git", "" };
+> > +	static char *suffix[] = { "/.git", "", ".git" };
+> 
+> ... this does not match that simple and clear guideline.
+> 
+> Shouldn't this simply be { "", "/.git", ".git" }?
 
-That sounds sensible, together with this, to which I agree with:
+No, it does not match. While the sequence I outlined above makes the
+most sense to me, it does not match what setup_git_directory does, which
+prefers "foo/.git" to using "foo" as a bare repo. I think being
+consistent between all of the lookup points makes sense. The patch took
+the least-invasive approach and aligned clone and enter_repo with
+setup_git_directory.
 
-> One way of dealing with that would be to make get_repo_path a little
-> more robust by only selecting paths which actually look like git
-> directories.
+However, we could also tweak setup_git_directory to prefer bare repos
+over ".git" to keep things consistent. While it makes me feel good from
+a theoretical standpoint (because the rules above seem simple and
+intuitive to me), I'm not sure it's a good idea in practice.
 
-... but ...
+The case we would "catch" with such a change is when you have a ".git"
+directory inside a bare repo. Right now, we prefer the ".git" inside it,
+and ignore the containing bare repo. With such a change, we would prefer
+the outer bare repo. Which makes sense to me. It does break a use
+case like this:
 
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 9084feb..0fbbae9 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -108,7 +108,7 @@ static const char *argv_submodule[] = {
->  
->  static char *get_repo_path(const char *repo, int *is_bundle)
->  {
-> -	static char *suffix[] = { "/.git", ".git", "" };
-> +	static char *suffix[] = { "/.git", "", ".git" };
+  # make a new repo
+  git init
+  cd .git
+  # now track parts of the repo
+  git init
+  git add config
+  git commit -m 'tracking our repo config'
 
-... this does not match that simple and clear guideline.
+but I'm not sure if that is sane or not.
 
-Shouldn't this simply be { "", "/.git", ".git" }?
+But also consider false positives. What if you have a repository that
+looks like a git repo (i.e., has "objects", "refs", and "HEAD" in it),
+but also has ".git". Right now we say "Oh, it has .git, that must be the
+repo". But with the proposed change, we could accidentally find the
+enclosing repo.
 
-> diff --git a/path.c b/path.c
-> index b6f71d1..1ca6567 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -293,7 +293,7 @@ const char *enter_repo(const char *path, int strict)
->  
->  	if (!strict) {
->  		static const char *suffix[] = {
-> -			".git/.git", "/.git", ".git", "", NULL,
-> +			"/.git", "", ".git/.git", ".git", NULL,
->  		};
+Now, the chances of is_git_directory being wrong seem quite slim to me.
+But then, the chances of somebody actually have a repo with a ".git"
+_inside_ it seem pretty slim to me. So I think we are really dealing
+with a tiny corner case, and it is perhaps anybody's guess whether
+anyone is depending on the current behavior in the wild. I don't overly
+care either way, but when in doubt, I tend to stick with the existing
+behavior.
 
-Neither does this.
+> >  	if (!strict) {
+> >  		static const char *suffix[] = {
+> > -			".git/.git", "/.git", ".git", "", NULL,
+> > +			"/.git", "", ".git/.git", ".git", NULL,
+> >  		};
+> 
+> Neither does this.
+> 
+> Shouldn't this be { "", "/.git", ".git", ".git/.git", NULL }?
 
-Shouldn't this be { "", "/.git", ".git", ".git/.git", NULL }?
+Right, same case.
 
-I must be missing something from your description...
+> I must be missing something from your description...
+
+I mentioned the issue in my original message, but perhaps didn't
+emphasize it very well.
+
+-Peff
