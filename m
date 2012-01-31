@@ -1,112 +1,100 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] vcs-svn: Fix some compiler warnings
-Date: Tue, 31 Jan 2012 13:20:53 -0600
-Message-ID: <20120131192053.GC12443@burratino>
-References: <4F28378F.6080108@ramsay1.demon.co.uk>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH v2] find_pack_entry(): do not keep packed_git pointer
+ locally
+Date: Tue, 31 Jan 2012 14:28:50 -0500 (EST)
+Message-ID: <alpine.LFD.2.02.1201311418430.2759@xanadu.home>
+References: <1327922750-12106-1-git-send-email-pclouds@gmail.com>
+ <1328010239-29669-1-git-send-email-pclouds@gmail.com>
+ <7vr4yf92dg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Barr <davidbarr@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Tue Jan 31 20:21:14 2012
+Content-Type: multipart/mixed; boundary="Boundary_(ID_+K2S4BnI1tFpm9WswLWa1Q)"
+Cc: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 31 20:29:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RsJGT-0006Xp-HU
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Jan 2012 20:21:13 +0100
+	id 1RsJNx-0001qE-Nw
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Jan 2012 20:28:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753505Ab2AaTVI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Jan 2012 14:21:08 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:38475 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753184Ab2AaTVH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2012 14:21:07 -0500
-Received: by vbjk17 with SMTP id k17so323247vbj.19
-        for <git@vger.kernel.org>; Tue, 31 Jan 2012 11:21:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=1GpLvEOm4TnfWY37vF+8WX5jv8fLiZWtiCYhWW8aDuo=;
-        b=IjhdVpO50/v8/eUNBHgoTpl2oKuAG/6o/FZRb93CiUpxxMm5FGNohF/T6o2nzvok+6
-         WeseJk/PmndlBjGPQWeSeJi5Te2yMNMLGriNWd7caBApVpatLBX2Vbpu8Pr2LG9cjdMq
-         H7N4/IEJibl8xzJojk4SzbfCQNdBzgfYB0nds=
-Received: by 10.52.28.238 with SMTP id e14mr11233564vdh.96.1328037665577;
-        Tue, 31 Jan 2012 11:21:05 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id fw2sm2794655vdc.17.2012.01.31.11.21.03
-        (version=SSLv3 cipher=OTHER);
-        Tue, 31 Jan 2012 11:21:04 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4F28378F.6080108@ramsay1.demon.co.uk>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754951Ab2AaT2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jan 2012 14:28:52 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:34473 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753681Ab2AaT2w (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jan 2012 14:28:52 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-VM-MR003.ip.videotron.ca
+ (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
+ 2011)) with ESMTP id <0LYO00K6RGPYVA40@VL-VM-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 31 Jan 2012 14:27:34 -0500 (EST)
+In-reply-to: <7vr4yf92dg.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.02 (LFD 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189466>
 
-Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Ramsay Jones wrote:
+--Boundary_(ID_+K2S4BnI1tFpm9WswLWa1Q)
+Content-type: TEXT/PLAIN; charset=utf-8
+Content-transfer-encoding: 8BIT
 
-> In particular, some versions of gcc complains as follows:
+On Tue, 31 Jan 2012, Junio C Hamano wrote:
+
+> Nguyễn Thái Ngọc Duy <pclouds@gmail.com> writes:
 > 
->         CC vcs-svn/sliding_window.o
->     vcs-svn/sliding_window.c: In function `check_overflow':
->     vcs-svn/sliding_window.c:36: warning: comparison is always false \
->         due to limited range of data type
+> > +		/*
+> > +		 * p can be NULL from the else clause above, if initial
+> > +		 * f_p_e_last_found value (i.e. INVALID_PACK) is NULL, we may
+> > +		 * advance p again to an imaginary pack in invalid memory
+> > +		 */
 
-Yuck.  Suppressing this warning would presumably also suppress the
-optimization that notices the comparison is always false.
+Ah!  OK so that's why I initially came up with that (void*)1 value.
 
-The -Wtype-limits warning also triggers in some other perfectly
-reasonable situations: see <http://gcc.gnu.org/PR51712>.  I wonder if
-we should keep a list of unreliable warnings somewhere (e.g.,
-Meta/Make).
+> But I think the real issue is that the original loop is written in an
+> obscure way.
 
-[...]
-> Note that the "some versions of gcc" which complain includes 3.4.4 and
-> 4.1.2, whereas gcc version 4.4.0 compiles the code without complaint.
+Can't disagree with that, especially when the original author (myself) 
+doesn't see clearly through it anymore.
 
-Thanks for tracking this down.  Interesting.  -Wtype-limits was split
-out from the default set of warnings (!) in gcc 4.3 to address
-<http://gcc.gnu.org/PR12963>, among other bugs (r124875, 2007-05-20).
+> The conversion in f7c22cc (always start looking up objects in the last 
+> used pack first, 2007-05-30) wanted to turn the traversal that always 
+> went from the tip of a linked list to instead first probe the 
+> promising one, and then scan the list from the tip like it used to do, 
+> except that it did not want to probe the one it thought promising 
+> again.
 
-[...]
-> --- a/vcs-svn/fast_export.c
-> +++ b/vcs-svn/fast_export.c
-> @@ -300,7 +300,8 @@ void fast_export_blob_delta(uint32_t mode,
->  				uint32_t len, struct line_buffer *input)
->  {
->  	long postimage_len;
-> -	if (len > maximum_signed_value_of_type(off_t))
-> +	uintmax_t delta_len = (uintmax_t) len;
-> +	if (delta_len > maximum_signed_value_of_type(off_t))
->  		die("enormous delta");
->  	postimage_len = apply_delta((off_t) len, input, old_data, old_mode);
+Exact.
 
-Is there some less ugly way to write the condition "if this value is
-not representable in this type"?
+> So perhaps restructuring the loop by making the logic to probe into a
+> single pack into a helper function, e.g.
+> 
+> static int find_pack_entry(const unsigned char *sha1, struct pack_entry *e)
+> {
+> 	if (last_found) {
+> 		if (find_one(sha1, e, last_found))
+> 			return 1;
+> 	}
+>         for (p = packed_git; p; p = p->next) {
+>         	if (p == last_found || !find_one(sha1, e, p))
+> 			continue;
+> 		last_found = p;
+> 		return 1;
+> 	}
+>         return 0;
+> }
+> 
+> would make the resulting flow far easier to follow, no?
 
-I guess I could live with something like the following (please don't
-take the names too seriously):
+Indeed.
 
-	static inline off_t off_t_or_die(uintmax_t val, const char *msg_if_bad)
-	{
-		if (val > maximum_signed_value_of_type(off_t))
-			die("%s", msg_if_bad);
-		return (off_t) val;
-	}
 
-	...
+Nicolas
 
-		off_t delta_len = off_t_or_die(len, "enormous delta");
-		postimage_len = apply_delta(delta_len, input, ...);
-
-What do you think?
-
-Jonathan
+--Boundary_(ID_+K2S4BnI1tFpm9WswLWa1Q)--
