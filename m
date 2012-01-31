@@ -1,82 +1,101 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Bug: "git checkout -b" should be allowed in empty repo
-Date: Tue, 31 Jan 2012 17:32:00 +0100
-Message-ID: <4F281780.1070804@alum.mit.edu>
-References: <4F24E287.3040302@alum.mit.edu>	<7vwr8bvvxj.fsf@alter.siamese.dyndns.org>	<4F263AEE.4080409@alum.mit.edu>	<7v39axc9gp.fsf@alter.siamese.dyndns.org>	<4F27ACED.2050709@alum.mit.edu> <m3k448che9.fsf@localhost.localdomain>
+From: Andrew Wong <andrew.w@sohovfx.com>
+Subject: Re: [BUG] git clean -X skips a directory containing only ignored
+ files
+Date: Tue, 31 Jan 2012 11:20:39 -0500
+Message-ID: <4F2814D7.8030504@sohovfx.com>
+References: <CA+yLL67J-7U9z7HVvq5wTc1g4_UCtqYfEyqdt7XR5zDqvQN5NA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	demerphq@gmail.com
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 31 17:32:18 2012
+Cc: git@vger.kernel.org
+To: Paul Berry <stereotype441@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 31 17:40:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RsGct-0002Rl-Pz
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Jan 2012 17:32:12 +0100
+	id 1RsGkz-0006fn-Dd
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Jan 2012 17:40:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754002Ab2AaQcG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Jan 2012 11:32:06 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:35176 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753368Ab2AaQcF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2012 11:32:05 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q0VGW0Qu013315
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 31 Jan 2012 17:32:01 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.24) Gecko/20111108 Lightning/1.0b2 Thunderbird/3.1.16
-In-Reply-To: <m3k448che9.fsf@localhost.localdomain>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1754697Ab2AaQk1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jan 2012 11:40:27 -0500
+Received: from smtp03.beanfield.com ([76.9.193.172]:56966 "EHLO
+	smtp03.beanfield.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754627Ab2AaQk0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jan 2012 11:40:26 -0500
+X-Greylist: delayed 1180 seconds by postgrey-1.27 at vger.kernel.org; Tue, 31 Jan 2012 11:40:26 EST
+X-Spam-Status: No
+X-beanfield-mta03-MailScanner-From: andrew.w@sohovfx.com
+X-beanfield-mta03-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
+	score=-1.778, required 6, ALL_TRUSTED -1.00, BAYES_00 -1.90,
+	URI_HEX 1.12)
+X-beanfield-mta03-MailScanner: Found to be clean
+X-beanfield-mta03-MailScanner-ID: 1RsGRj-000ALR-HT
+Received: from [66.207.196.114] (helo=[192.168.1.112])
+	by mta03.beanfield.com with esmtpa (Exim 4.76)
+	(envelope-from <andrew.w@sohovfx.com>)
+	id 1RsGRj-000ALR-HT; Tue, 31 Jan 2012 11:20:39 -0500
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101026 SUSE/3.0.10 Thunderbird/3.0.10
+In-Reply-To: <CA+yLL67J-7U9z7HVvq5wTc1g4_UCtqYfEyqdt7XR5zDqvQN5NA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189459>
 
-On 01/31/2012 11:09 AM, Jakub Narebski wrote:
-> I don't see how this can be done in backward-compatibile way.
+I think there were a bit of discussions on this issues just while ago too:
+http://thread.gmane.org/gmane.comp.version-control.git/188605
 
-Yes, backwards compatibility would probably prevent the NULL commit idea
-from ever being implemented in a literal way.
 
-But it is conceivable that it could be faked with some strategic
-
-    if sha1 == '0'*40:
-        treat_as_special_null_commit
-    elif len(parents) == 0:
-        parents = ['0'*40]
-
-In other words, include a little special case fakery in the data
-structures near root commits (an O(1) amount of work) to avoid special
-cases in all commands that can touch root commits (an O(number of
-commands) amount of work).
-
-Alternatively, the NULL commit could be a UI construct that has no
-manifestation in the object model.  This would not save implementation
-work, but would perhaps give a more consistent way to deal with root
-commits in the UI than the current array of --orphan etc. options.
-
-> Please note that in Git it is quite natural to have more than one root
-> (parentless) commit, even without presence of disconnected / orphan
-> branches.  They are result of joining originally separate projects.
-> git.git has quite a few of them (more than 6, IIRC).
-
-I don't see the problem, unless you mean that it would be difficult to
-merge repositories that don't link back to a NULL commit with
-hypothetical future repositories that do include a NULL commit.  But a
-world in which two kinds of repositories have to be supported is
-pointless anyway, because then the git code would have to include *both*
-kinds of special cases and nothing would be gained.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+On 01/30/2012 06:36 PM, Paul Berry wrote:
+> I am trying to use "git clean -X" to remove object files (which
+> are gitignored) from my source tree, but it appears to miss
+> object files that are in a subdirectory without any git-tracked
+> files:
+>
+> $ git init test
+> Initialized empty Git repository in /home/pberry/tmp/test/.git/
+> $ cd test
+> $ mkdir foo
+> $ touch foo/bar.o
+> $ echo '*.o' > .gitignore
+> $ git add .gitignore
+> $ git commit -mgitignore
+> [master (root-commit) 6b5ffcb] gitignore
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>  create mode 100644 .gitignore
+> $ git status
+> # On branch master
+> nothing to commit (working directory clean)
+> $ git clean -d -X -f
+> $ ls foo
+> bar.o
+>
+> It seems to me that bar.o should have been removed, because
+> according to the git-clean docs, -X means "Remove only files
+> ignored by git", and bar.o is definitely being ignored by git.
+>
+>
+> It looks like a very similar bug was reported back in 2010, but
+> not fixed:
+> http://git.661346.n2.nabble.com/BUG-git-clean-X-behaviour-when-gitignore-has-sub-directory-entries-td5575307.html.
+> I've confirmed that the workaround mentioned by Jonathan Nieder
+> in that thread fixes my problem too (removing "dir.flags |=
+> DIR_SHOW_OTHER_DIRECTORIES;" from builtin/clean.c).  However I'm
+> guessing from Jonathan's comments that it would be better to fix
+> this bug elsewhere (somewhere in dir.c perhaps).
+>
+> Is anyone interested in following up on this old bug?
+> Alternatively, if someone could give me some guidance as to the
+> best way to go about fixing this bug, I would be glad to submit a
+> patch.
+>
+> Thanks,
+>
+> Paul
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>   
