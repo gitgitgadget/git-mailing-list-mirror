@@ -1,93 +1,89 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <carlos@cmartin.tk>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: logging disjoint sets of commits in a single command
-Date: Wed, 01 Feb 2012 01:39:29 +0100
-Message-ID: <1328056769.31804.217.camel@centaur.lab.cmartin.tk>
-References: <CB4DC442.72F%bryano@fb.com>
+Date: Tue, 31 Jan 2012 16:48:58 -0800
+Message-ID: <7vobtj5qf9.fsf@alter.siamese.dyndns.org>
+References: <CB4DC432.72D%bryano@fb.com> <CB4DC442.72F%bryano@fb.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-jlUKsRfhSvbRClPUmCUX"
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Bryan O'Sullivan <bryano@fb.com>
-X-From: git-owner@vger.kernel.org Wed Feb 01 01:39:27 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: "Bryan O'Sullivan" <bryano@fb.com>
+X-From: git-owner@vger.kernel.org Wed Feb 01 01:49:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RsOEP-0006K0-Al
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 01:39:25 +0100
+	id 1RsONn-0001V8-4K
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 01:49:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752869Ab2BAAjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Jan 2012 19:39:17 -0500
-Received: from kimmy.cmartin.tk ([91.121.65.165]:35326 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752050Ab2BAAjQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2012 19:39:16 -0500
-Received: from [192.168.1.17] (brln-4dbc7d36.pool.mediaWays.net [77.188.125.54])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 65C8A46172;
-	Wed,  1 Feb 2012 01:39:10 +0100 (CET)
-In-Reply-To: <CB4DC442.72F%bryano@fb.com>
-X-Mailer: Evolution 3.2.2-1 
+	id S1753892Ab2BAAtC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jan 2012 19:49:02 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48407 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753706Ab2BAAtA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jan 2012 19:49:00 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6CB0A6F8A;
+	Tue, 31 Jan 2012 19:49:00 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dhqlZTz/abiDoxyQJGqJL4PvPTI=; b=kply1j
+	t8BsreO8MKlqDQKukuoy+TBkuRnSr7Su14v3ip/98ENqhapfQdszgzhT55yt+5Cx
+	6492IexmJyemxWDSyaNFeQTtqZh0c3oee0ZaIT0hkqeJH3rd6/fh3NIiBYlv3wx8
+	cIBTXnHIOHt4din2eCR1PbhoA0GpitGoDNSv4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IyqR3wq10reL2mIu+ihIr9in9wmfjomD
+	yrD7SRTuP6O2ct/qIm8wyKFfeNmRX26rTL4hY0+rdZFykU0Avmv1B9KZvbwV5Epa
+	apGhr8D8sFGORpmCqyer+O6HSNUW2LjnOpGK4hFEOFp/n3l3mb1CuyVJKOEje2z8
+	5uud9QKOb6Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 640106F89;
+	Tue, 31 Jan 2012 19:49:00 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EDCF76F87; Tue, 31 Jan 2012
+ 19:48:59 -0500 (EST)
+In-Reply-To: <CB4DC442.72F%bryano@fb.com> (Bryan O'Sullivan's message of
+ "Wed, 1 Feb 2012 00:27:06 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 876A8DEC-4C6E-11E1-B917-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189488>
 
+"Bryan O'Sullivan" <bryano@fb.com> writes:
 
---=-jlUKsRfhSvbRClPUmCUX
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, 2012-02-01 at 00:27 +0000, Bryan O'Sullivan wrote:
-> On 2012-01-31 16:15 , "Bryan O'Sullivan" <bryano@fb.com> wrote:
->=20
-> >I'm trying to use "git log" to display only a handful of commits, where
-> >the commits are not necessarily linearly related to each other.
->=20
-> And I beautifully fat-fingered the "send" key. Oops.
->=20
-> What I was *going* to say was that it looks like revision.c:limit_list is
-> (whether intentionally or not) getting in the way of this.
->=20
 > Here's a sample command line against a kernel tree:
->=20
+>
 > git log 373af0c^..373af0c 590dfe2^..590dfe2
->=20
-> I want git to log those two specific commits, but in fact it looks like
-> limit_list is marking 590dfe2 as UNINTERESTING while processing 373af0c,
-> and so it gets pruned.
->=20
+
+This command line is _defined_ to be the same as this.
+
+	git log ^373af0c^ 373af0c ^590dfe2^ 590dfe2
+
+Hence,
+
 > Is there some way around this, or would a patch to fix it be acceptable?
 
-=46rom my reading of the manpage (and the way most git commands work) log
-accepts one range of commits. They all get bunched up together.
+the answer to the second question is "no, that is not a fix but is a
+breakage for the *current* Git users".
 
-You might find cat-file's --batch mode interesting.
+The answer to the first question is that you may be able to do something
+like this:
 
-    git rev-list 373af0c^..373af0c | git cat-file --batch
-    git rev-list 590dfe2^..590dfe2 | git cat-file --batch
+        (
+            git rev-list 373af0c^..373af0c
+            git rev-list 590dfe2^..590dfe2
+        ) |
+        sort -u |
+        xargs git show
 
-looks a lot like what you're looking for.
-
-   cmn
-
-
---=-jlUKsRfhSvbRClPUmCUX
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAABAgAGBQJPKInBAAoJEHKRP1jG7ZzTJ/cH/iRpwMEXFRvmmCqcruKk6+Hf
-GWowQt7yFqhcIpQObiZ8PJWV4ZZQiezppkZcdEUgNqUulXg3li0gmRHKLWFpVdXD
-ktMBYUbTiIjUYSN2866P2r9HVge1HefiReEy8DqFddRp8lsFyXkHrgLz/44AWbyi
-C8K5wfzTcHs0mEkWTgtRN5S5vNJIvBPPhHiVSc4bhccd1RmYR5jdzyuWGwX1NEMX
-UEe8C4RJxyB/1vq8fZQyy4vlN9v09hG15wWBWbY7h8xUsAbIsLMbhVbFtxEsreEr
-3tCwz5PQO7GVyY19Eob+Y4Bx887/BWJpsIlYBJPI79rS2zHnUOpbiHcl367MNSM=
-=zOpB
------END PGP SIGNATURE-----
-
---=-jlUKsRfhSvbRClPUmCUX--
+Having said all that, for users of Git 2.0, giving richer meaning to the
+explicit range notation to make your original command line work just like
+the above scripted way would be more intuitive.  While an unconditional
+change to break the current users would totally be unacceptable, we would
+want to see somebody come up with a clean migration path toward that goal
+without hurting existing users in the longer term.
