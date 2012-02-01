@@ -1,115 +1,82 @@
-From: "Harald Heigl" <Harald@heigl-online.at>
-Subject: AW: Project structure of .NET-Projects using git submodule or something different
-Date: Wed, 1 Feb 2012 22:07:26 +0100
-Message-ID: <000601cce125$808b3cb0$81a1b610$@heigl-online.at>
-References: <002401cce069$75ecc1a0$61c644e0$@heigl-online.at> <4F29A0BE.8000803@web.de>
+From: "Bryan O'Sullivan" <bryano@fb.com>
+Subject: Re: logging disjoint sets of commits in a single command
+Date: Wed, 1 Feb 2012 22:01:52 +0000
+Message-ID: <CB4EF5E8.7A0%bryano@fb.com>
+References: <20120201030300.GA9969@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 01 22:59:39 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 01 23:02:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RsiDL-0007O3-9f
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 22:59:39 +0100
+	id 1RsiFu-0000Ik-N8
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 23:02:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753327Ab2BAVHe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Feb 2012 16:07:34 -0500
-Received: from xserv02.internex.at ([85.124.51.102]:42111 "HELO
-	xserv2.internex.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1754654Ab2BAVHa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2012 16:07:30 -0500
-X-PDA-ORIGIN: xserv2.internex.at
-Received: (qmail 11819 invoked from network); 1 Feb 2012 21:07:27 -0000
-Received: by simscan 1.4.0 ppid: 11786, pid: 11807, t: 0.3960s
-         scanners: clamav: 0.97.3/m:54/d:14385
-Received: from unknown (HELO setnbheh) (Harald@heigl-online.at@84.115.25.240)
-  by xserv02.internex.at with SMTP; 1 Feb 2012 21:07:27 -0000
-In-Reply-To: <4F29A0BE.8000803@web.de>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQGEO7+ptvilZ+p+By5B5tRag0k/awHm5zMqlqqUlbA=
-Content-Language: de-at
+	id S1756969Ab2BAWCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Feb 2012 17:02:14 -0500
+Received: from mx0b-00082601.pphosted.com ([67.231.153.30]:44869 "EHLO
+	mx0a-00082601.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1755019Ab2BAWCM convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Feb 2012 17:02:12 -0500
+Received: from pps.filterd (m0004060 [127.0.0.1])
+	by mx0b-00082601.pphosted.com (8.14.4/8.14.4) with SMTP id q11LwYgm013961;
+	Wed, 1 Feb 2012 14:02:06 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=from : to : cc : subject :
+ date : message-id : in-reply-to : content-type : content-id :
+ content-transfer-encoding : mime-version; s=facebook;
+ bh=WJAVfsjhgT6T5UeNOuZT71WL3uaZOzUMJBP3c8bKIjk=;
+ b=actGHz1qJzeixV7FWJZfUym0FSmi2A4s6gNJJFfZrjtxuV+OesLJycaEpfeFDyrgnFxS
+ JL1DaTgEVKvH+bZ+rmLGOqd4Q3bWV8d0fJhL89JJdzMRzhPfueROwzpKNm6RGxls20db
+ uaQbKDEuW5g6vmwIavCrUaIuBw/lfp239jI= 
+Received: from mail.thefacebook.com (corpout1.snc1.tfbnw.net [66.220.144.38])
+	by mx0b-00082601.pphosted.com with ESMTP id 12qbm18592-1
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Wed, 01 Feb 2012 14:02:06 -0800
+Received: from SC-MBX02-4.TheFacebook.com ([fe80::e1f0:42de:c867:1385]) by
+ sc-hub04.TheFacebook.com ([192.168.18.212]) with mapi id 14.01.0355.002; Wed,
+ 1 Feb 2012 14:01:53 -0800
+Thread-Topic: logging disjoint sets of commits in a single command
+Thread-Index: AQHM4Hal0o4/+qLyk0uC5cG4lN8eDZYnLqsAgACKbYCAAAPugP//fISAgACnqICAALgVAA==
+In-Reply-To: <20120201030300.GA9969@sigill.intra.peff.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [192.168.18.252]
+Content-ID: <E3522580EE8936428C4B2A925F6EC3B7@fb.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.6.7361,1.0.260,0.0.0000
+ definitions=2012-02-01_08:2012-02-01,2012-02-01,1970-01-01 signatures=0
+X-Proofpoint-Spam-Reason: safe
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189543>
 
-Hi, thanks for your answer!
+On 2012-01-31 19:03 , "Jeff King" <peff@peff.net> wrote:
+>
+>That sounds kind of slow. Is your repository really gigantic?
 
-> -----Urspr=FCngliche Nachricht-----
-> Von: Jens Lehmann [mailto:Jens.Lehmann@web.de]
-> Gesendet: Mittwoch, 01. Februar 2012 21:30
-> An: Harald Heigl
-> Cc: git@vger.kernel.org
-> Betreff: Re: Project structure of .NET-Projects using git submodule o=
-r
-> something different
->=20
-> Am 31.01.2012 23:41, schrieb Harald Heigl:
-> > Let's assume following Project structure (Dependencies and
-> Subdependencies
-> > are submodules and submodules of the submodules)
-> > Project
-> > 	Dependency 1
-> > 		Dependency 2
-> > 		Dependency 3
-> > 	Dependency 4
-> > 	Dependency 2
-> >
-> >
-> > The problem is if I want to build them I need to build 2+3, then 1,=
- 4
-and 2
-> > again and then the project. As you may see project 2 is a submodule=
- of
-> > dependency 1 and also of project. I don't feel comfortable with thi=
-s
-setup.
-> > What do you think?
->=20
-> Hmm, we try to avoid that kind of setup as having checked out differe=
-nt
-> versions of the "Dependency 2" submodule could have rather surprising
-> effects. We get along really well with "Dependency 2" only being pres=
-ent
-> in the superproject and having "Dependency 1" reference that instead =
-of
-> having its own copy (So we have submodules which are depending on hav=
-ing
-> other submodules right next to them). Then the superproject is respon=
-sible
-> for tying it all together.
+Bigger than a kernel tree, but not as many commits. Beyond that, can't say.
 
-I think you're right, my first thoughts were that if I start a new proj=
-ect I
-just "git submodule dependency1" and get all the required dependencies =
-and
-the dependencies within the dependencies and so on ... .=20
-With your solution I "git submodule dependency1" and have to think abou=
-t the
-dependencies it depends on. On the other hand we are just a small compa=
-ny
-and the number of submodules is not too big and the missing references =
-in a
-new project would be easily identifiable, so ... .
+> Have you packed
+>everything?
 
-And if I want to checkout dependency 1 individually (for whatever reaso=
-n), I
-could still do something like this:
-SuperDependency1 (with solution-File)
-           Dependency1 (as submodule)
-           Dependency2 (dependency of dependency1 - as submodule)
-           Dependency3 (dependency of dependency1 - as submodule)
+Yep.
 
-Thanks again, I see my concept causes some trouble ...
+> I'm just curious if there's some other way to make things
+>faster.
 
-Any other thoughts or other workflows with git or with tools build arou=
-nd
-git?
+It would be nice if there was, but the fundamental problem is the lack of
+an index from filename to commit. Walking every commit is the limiting
+factor, I believe.
 
-Thanks again,
-Harald
+> Is the repository publicly available?
+
+No, sorry.
