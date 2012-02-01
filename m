@@ -1,140 +1,80 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH v3 2/2] find_pack_entry(): do not keep packed_git pointer
- locally
-Date: Wed, 01 Feb 2012 11:02:52 -0500 (EST)
-Message-ID: <alpine.LFD.2.02.1202011100010.2759@xanadu.home>
-References: <1328010239-29669-1-git-send-email-pclouds@gmail.com>
- <1328104135-475-1-git-send-email-pclouds@gmail.com>
- <1328104135-475-2-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Don't search files with an unset "grep" attribute
+Date: Wed, 01 Feb 2012 08:28:46 -0800
+Message-ID: <7vd39y4iwx.fsf@alter.siamese.dyndns.org>
+References: <7vy5sy8e0y.fsf@alter.siamese.dyndns.org>
+ <1327359555-29457-1-git-send-email-conrad.irwin@gmail.com>
+ <7vaa5d4mce.fsf@alter.siamese.dyndns.org>
+ <20120125214625.GA4666@sigill.intra.peff.net>
+ <7vhazb3rtm.fsf@alter.siamese.dyndns.org>
+ <20120201082005.GA32348@sigill.intra.peff.net>
+ <20120201091009.GA20984@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_2g62EMdDeiH2kXP0Yd35og)"
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 01 17:03:17 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Conrad Irwin <conrad.irwin@gmail.com>, git@vger.kernel.org,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Dov Grobgeld <dov.grobgeld@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 01 17:28:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RsceQ-0007Cu-S1
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 17:03:15 +0100
+	id 1Rsd3H-0005Jc-Ij
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 17:28:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932183Ab2BAQDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Feb 2012 11:03:09 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:49226 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754740Ab2BAQDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2012 11:03:08 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-VM-MR002.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0LYQ005LV1MB1S60@VL-VM-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 01 Feb 2012 10:56:36 -0500 (EST)
-In-reply-to: <1328104135-475-2-git-send-email-pclouds@gmail.com>
-User-Agent: Alpine 2.02 (LFD 1266 2009-07-14)
+	id S1756498Ab2BAQ2u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Feb 2012 11:28:50 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40774 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753797Ab2BAQ2t (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2012 11:28:49 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2A817B78;
+	Wed,  1 Feb 2012 11:28:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cwLHbJhPW/qSYG8lgBJAarf1xFE=; b=eRFNTs
+	8CzyxSLYjFRlfWJrjpG+V3dbKHTL+6xKC0b+jaiF/TnoqaXb56NdfZ/+rUdr6CbM
+	fSaeENqyY/VXLEmQZZxreK2YgSQj9UVMXiWwuPsXUY2U1zPUfM3XfrDsGoOOKx6j
+	aB7TydQGEx452yYZ1U2yOkds8bY+oxisuA9Zc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aL09i6w6sUXmlr+UJwi2hFwAS9xnqDQD
+	dH53TZzMeS5FLd+fPY1UT4elkXHKf1wLVyNsubdcYu2FgP7tT5rbDAhop2t0V2Y2
+	GPQdjYdmzRBuyfBdNyHiavFQxDbjEjDrnoRX4GWgZknqXQ8ZaCXzjBPbpyvv7y7B
+	aIPSSeLGZKA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E98B97B77;
+	Wed,  1 Feb 2012 11:28:48 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 598D37B74; Wed,  1 Feb 2012
+ 11:28:48 -0500 (EST)
+In-Reply-To: <20120201091009.GA20984@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 1 Feb 2012 04:10:09 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D184D18E-4CF1-11E1-A9D6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189521>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Jeff King <peff@peff.net> writes:
 
---Boundary_(ID_2g62EMdDeiH2kXP0Yd35og)
-Content-type: TEXT/PLAIN; charset=UTF-8
-Content-transfer-encoding: 8BIT
+> Part of the problem, I suspect, is that the attribute lookup code is
+> optimized for locality. We only unwind as much of the stack as we need,
+> so looking at "foo/bar/baz.c" after "foo/bar/bleep.c" is much cheaper
+> than looking at "some/other/directory.c". But with threaded grep, that
+> locality is likely lost, as we are mixing up attribute requests from
+> different threads.
+>
+> Given that binary lookup means we need every file's gitattribute, it
+> might be better to look them up serially at the beginning of the
+> program, and then pass the resulting userdiff driver to grep_buffer
+> along with each path.
 
-On Wed, 1 Feb 2012, Nguyễn Thái Ngọc Duy wrote:
-
-> Commit f7c22cc (always start looking up objects in the last used pack
-> first - 2007-05-30) introduce a static packed_git* pointer as an
-> optimization.  The kept pointer however may become invalid if
-> free_pack_by_name() happens to free that particular pack.
-> 
-> Current code base does not access packs after calling
-> free_pack_by_name() so it should not be a problem. Anyway, move the
-> pointer out so that free_pack_by_name() can reset it to avoid running
-> into troubles in future.
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-
-Acked-by: Nicolas Pitre <nico@fluxnic.net>
-
-
->  Since Junio's already done the hard work. It'd be silly of me not to
->  take advantage and credit for free :)
-
-Maybe a little "Thanks to Junio for code layout suggestions" in the 
-commit message would give him some credit back.
-
->  The new loop looks much better.
-
-Indeed.
-
->  sha1_file.c |   27 +++++++++++++--------------
->  1 files changed, 13 insertions(+), 14 deletions(-)
-> 
-> diff --git a/sha1_file.c b/sha1_file.c
-> index ff5bf42..ebe77b3 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -54,6 +54,8 @@ static struct cached_object empty_tree = {
->  	0
->  };
->  
-> +static struct packed_git *last_found_pack;
-> +
->  static struct cached_object *find_cached_object(const unsigned char *sha1)
->  {
->  	int i;
-> @@ -720,6 +722,8 @@ void free_pack_by_name(const char *pack_name)
->  			close_pack_index(p);
->  			free(p->bad_object_sha1);
->  			*pp = p->next;
-> +			if (last_found_pack == p)
-> +				last_found_pack = NULL;
->  			free(p);
->  			return;
->  		}
-> @@ -2044,27 +2048,22 @@ static int find_pack_entry_1(const unsigned char *sha1,
->  
->  static int find_pack_entry(const unsigned char *sha1, struct pack_entry *e)
->  {
-> -	static struct packed_git *last_found = (void *)1;
->  	struct packed_git *p;
->  
->  	prepare_packed_git();
->  	if (!packed_git)
->  		return 0;
-> -	p = (last_found == (void *)1) ? packed_git : last_found;
->  
-> -	do {
-> -		if (find_pack_entry_1(sha1, p, e)) {
-> -			last_found = p;
-> -			return 1;
-> -		}
-> +	if (last_found_pack && find_pack_entry_1(sha1, last_found_pack, e))
-> +		return 1;
->  
-> -		if (p == last_found)
-> -			p = packed_git;
-> -		else
-> -			p = p->next;
-> -		if (p == last_found)
-> -			p = p->next;
-> -	} while (p);
-> +	for (p = packed_git; p; p = p->next) {
-> +		if (p == last_found_pack || !find_pack_entry_1(sha1, p, e))
-> +			continue;
-> +
-> +		last_found_pack = p;
-> +		return 1;
-> +	}
->  	return 0;
->  }
->  
-> -- 
-> 1.7.8.36.g69ee2
-> 
-
---Boundary_(ID_2g62EMdDeiH2kXP0Yd35og)--
+Yeah, that was my impression when the performance of threaded grep was
+discussed, which was before this "let's honor binary attribute".
