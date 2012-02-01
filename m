@@ -1,79 +1,193 @@
-From: "Bryan O'Sullivan" <bryano@fb.com>
-Subject: Re: logging disjoint sets of commits in a single command
-Date: Wed, 1 Feb 2012 00:27:06 +0000
-Message-ID: <CB4DC442.72F%bryano@fb.com>
-References: <CB4DC432.72D%bryano@fb.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC v3] grep: Add the option '--exclude'
+Date: Tue, 31 Jan 2012 16:31:42 -0800
+Message-ID: <7vsjiv5r81.fsf@alter.siamese.dyndns.org>
+References: <1328021108-4662-1-git-send-email-surfingalbert@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 01 01:27:24 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Albert Yale <surfingalbert@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 01 01:31:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RsO2k-0001sD-Mh
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 01:27:23 +0100
+	id 1RsO75-0003Wz-1C
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 01:31:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755619Ab2BAA1O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Jan 2012 19:27:14 -0500
-Received: from mx0b-00082601.pphosted.com ([67.231.153.30]:37664 "EHLO
-	mx0a-00082601.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754021Ab2BAA1M convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2012 19:27:12 -0500
-Received: from pps.filterd (m0004003 [127.0.0.1])
-	by mx0b-00082601.pphosted.com (8.14.4/8.14.4) with SMTP id q110Q3ej025820
-	for <git@vger.kernel.org>; Tue, 31 Jan 2012 16:27:11 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=from : to : subject : date
- : message-id : in-reply-to : content-type : content-id :
- content-transfer-encoding : mime-version; s=facebook;
- bh=na5mA9fv9gAGOptfXXcPKcG+QO9Hrjy37IWnsgYIOg8=;
- b=SofYBRww76z5xwSPLZRXjnc+m6cbPpGQ5r06/lHp5XdmwAvufB5SKuP3zibQiXctYPhB
- DS9RCgbyw8xoH22WK1HufCqHhE+/FNu+BK8C4O7i4g6gM81T1/c9g++pvbB4+Wr2nJkI
- QdBIU7SPd8XmteoG4EX2BcfWUXGxqVI+Lrw= 
-Received: from mail.thefacebook.com (corpout1.snc1.tfbnw.net [66.220.144.38])
-	by mx0b-00082601.pphosted.com with ESMTP id 12pp7nrbwu-1
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Tue, 31 Jan 2012 16:27:11 -0800
-Received: from SC-MBX02-4.TheFacebook.com ([fe80::e1f0:42de:c867:1385]) by
- sc-hub03.TheFacebook.com ([192.168.18.198]) with mapi id 14.01.0355.002; Tue,
- 31 Jan 2012 16:27:06 -0800
-Thread-Topic: logging disjoint sets of commits in a single command
-Thread-Index: AQHM4Hal0o4/+qLyk0uC5cG4lN8eDZYnLqsA
-In-Reply-To: <CB4DC432.72D%bryano@fb.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [192.168.18.252]
-Content-ID: <7F10E9E4A1FE3046AC376758128C0F81@fb.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.6.7361,1.0.211,0.0.0000
- definitions=2012-01-31_09:2012-01-31,2012-01-31,1970-01-01 signatures=0
-X-Proofpoint-Spam-Reason: safe
+	id S1755533Ab2BAAbq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Jan 2012 19:31:46 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42322 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753197Ab2BAAbp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Jan 2012 19:31:45 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 763ED6C99;
+	Tue, 31 Jan 2012 19:31:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=IWhcZfiO4s/m
+	TxwIo7lK/FX55mM=; b=UrnXbZ6fS88mp4AZMIyPg+M5I7u5OmU4ac9ILYqV9k6n
+	0LWj6jepOgxF07yN0m/nTGR7+DhnVY4hHO2Jwg8l/sdTJs6PD9RtRbGrOnXg/ooV
+	xo10+5nfP0ejtrgo5bv4kRGd9LHT9bowWgScEi2SbteOwUEB2jJtbNTtookcca8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ncj3cx
+	wtDv21QaLPsM2puVVGhqKkhbZek+rDDU5qzbjDaaWJ4WNeUDNvKAcayAjMKL7DBZ
+	wVz7k2s8Y0hOU4Ie2OrdFV2pKCD0SMmYz+TKU2l9gDJ3/zdIfGMwD0ugIDmJtdHv
+	HUwFyc9bJSCxYhyoqd0i1QtD+ZjcGGz4PGSG8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D8066C98;
+	Tue, 31 Jan 2012 19:31:44 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BEC236C96; Tue, 31 Jan 2012
+ 19:31:43 -0500 (EST)
+In-Reply-To: <1328021108-4662-1-git-send-email-surfingalbert@gmail.com>
+ (Albert Yale's message of "Tue, 31 Jan 2012 09:45:08 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1DCC25F0-4C6C-11E1-8911-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189486>
 
-On 2012-01-31 16:15 , "Bryan O'Sullivan" <bryano@fb.com> wrote:
+Albert Yale <surfingalbert@gmail.com> writes:
 
->I'm trying to use "git log" to display only a handful of commits, where
->the commits are not necessarily linearly related to each other.
+> @@ -124,6 +125,12 @@ OPTIONS
+>  	Use fixed strings for patterns (don't interpret pattern
+>  	as a regex).
+> =20
+> +-x <pattern>::
+> +--exclude <pattern>::
+> +	In addition to those found in .gitignore (per directory) and
+> +	$GIT_DIR/info/exclude, also consider these patterns to be in the
+> +	set of the ignore rules in effect.
 
-And I beautifully fat-fingered the "send" key. Oops.
+That makes it sound as if "git grep" will not produce hits for a path t=
+hat
+was forcibly added despite it matches a pattern in .gitignore file, whi=
+ch
+is not true at all.
 
-What I was *going* to say was that it looks like revision.c:limit_list is
-(whether intentionally or not) getting in the way of this.
+>  -n::
+>  --line-number::
+>  	Prefix the line number to matching lines.
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index 9ce064a..e9e1ac1 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -528,7 +528,8 @@ static int grep_cache(struct grep_opt *opt, const=
+ struct pathspec *pathspec, int
+>  		struct cache_entry *ce =3D active_cache[nr];
+>  		if (!S_ISREG(ce->ce_mode))
+>  			continue;
+> -		if (!match_pathspec_depth(pathspec, ce->name, ce_namelen(ce), 0, N=
+ULL))
+> +		if (!match_pathspec_depth(pathspec, ce->name, ce_namelen(ce),
+> +					  0, NULL, 1))
+>  			continue;
+>  		/*
+>  		 * If CE_VALID is on, we assume worktree file and its cache entry
+> @@ -566,6 +567,11 @@ static int grep_tree(struct grep_opt *opt, const=
+ struct pathspec *pathspec,
+>  	while (tree_entry(tree, &entry)) {
+>  		int te_len =3D tree_entry_len(&entry);
+> =20
+> +		if (match_pathspec_depth(pathspec->exclude,
+> +					 entry.path, strlen(entry.path),
+> +					 0, NULL, 0))
+> +			continue;
+> +
 
-Here's a sample command line against a kernel tree:
+Why???
 
-git log 373af0c^..373af0c 590dfe2^..590dfe2
+IOW, why isn't this
 
-I want git to log those two specific commits, but in fact it looks like
-limit_list is marking 590dfe2 as UNINTERESTING while processing 373af0c,
-and so it gets pruned.
+	if (!match_pathspec_depth(pathspec, ...))
+		continue;=09
 
-Is there some way around this, or would a patch to fix it be acceptable?
+My point of the two previous review messages was that it would be nice =
+if
+we can make it so that nobody outside match_pathspec_depth() should eve=
+n
+need to know existence of pathspec->exclude. Either that was ignored, o=
+r
+perhaps you found a compelling reason why that is not a good idea, but =
+if
+so I'd like to know why.
+
+I suspect that you do not need to add the extra 0 at the end (it makes =
+the
+caller even harder to read) if you go that route. The extra parameter
+defeats the whole point of encapsulating the new "negative match" featu=
+re
+behind match_pathspec_depth() implementation.
+
+> +	if (obj->type =3D=3D OBJ_BLOB) {
+> +		const char *name_without_sha1 =3D strchr(name, ':') + 1;
+> +
+> +		if (match_pathspec_depth(pathspec->exclude,
+> +					 name_without_sha1,
+> +					 strlen(name_without_sha1),
+> +					 0, NULL, 0))
+> +			return 0;
+
+Likewise.
+
+> diff --git a/cache.h b/cache.h
+> index 9bd8c2d..683458a 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -533,9 +533,12 @@ struct pathspec {
+>  		int len;
+>  		unsigned int use_wildcard:1;
+>  	} *items;
+> +
+> +	struct pathspec *exclude; /* This is never NULL. */
+>  };
+
+"This is never NULL" is blatantly wrong, as pathspec->exclude->exclude
+will very likely be NULL.
+
+I've been assuming that the resulting structure would be more like this=
+:=20
+
+ struct pathspec_set {
+         int nr;
+         unsigned int has_wildcard:1;
+         unsigned int recursive:1;
+         struct pathspec_item {
+                 const char *match;
+                 int len;
+                 unsigned int use_wildcard:1;
+         } *items;
+ };
+
+ struct pathspec {
+         const char **raw; /* get_pathspec() result, not freed by free_=
+pathspec() */
+         int max_depth;
+         struct pathspec_set include;
+         struct pathspec_set exclude;
+ };
+=20
+I am not including "raw" in the include/exclude because its use should =
+be
+deprecated away over time.
+
+The various helpers used in match_pathspec_depth() that know _only_ abo=
+ut
+matching and not about excluding will be changed to take a pointer to
+"struct pathspec_set" (and possibly max_depth). The top-level callers
+would not have to know any of these changes if we structure the API tha=
+t
+way, no?
+
+I think something like that was more or less the structure we discussed
+when Nguy=E1=BB=85n brought up his negative pathspec work the last time=
+=2E
