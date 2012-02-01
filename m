@@ -1,234 +1,108 @@
-From: Jeff King <peff@peff.net>
+From: =?ISO-8859-1?Q?Conrad=A0Irwin?= <conrad.irwin@gmail.com>
 Subject: Re: [PATCH] Don't search files with an unset "grep" attribute
-Date: Wed, 1 Feb 2012 04:10:09 -0500
-Message-ID: <20120201091009.GA20984@sigill.intra.peff.net>
-References: <7vy5sy8e0y.fsf@alter.siamese.dyndns.org>
- <1327359555-29457-1-git-send-email-conrad.irwin@gmail.com>
- <7vaa5d4mce.fsf@alter.siamese.dyndns.org>
- <20120125214625.GA4666@sigill.intra.peff.net>
- <7vhazb3rtm.fsf@alter.siamese.dyndns.org>
- <20120201082005.GA32348@sigill.intra.peff.net>
+Date: Wed, 1 Feb 2012 01:28:47 -0800
+Message-ID: <CAOTq_ptj06aNGsQRjV0fVRxnQFBHmU2FFSXwWDUUk9MM77k2LQ@mail.gmail.com>
+References: <7vy5sy8e0y.fsf@alter.siamese.dyndns.org> <1327359555-29457-1-git-send-email-conrad.irwin@gmail.com>
+ <7vaa5d4mce.fsf@alter.siamese.dyndns.org> <20120125214625.GA4666@sigill.intra.peff.net>
+ <7vhazb3rtm.fsf@alter.siamese.dyndns.org> <20120201082005.GA32348@sigill.intra.peff.net>
+ <20120201091009.GA20984@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Conrad Irwin <conrad.irwin@gmail.com>, git@vger.kernel.org,
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Dov Grobgeld <dov.grobgeld@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 01 10:10:24 2012
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 01 10:29:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RsWCt-0001jB-57
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 10:10:23 +0100
+	id 1RsWVC-0003m2-H4
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 10:29:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755287Ab2BAJKQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Feb 2012 04:10:16 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52078
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753188Ab2BAJKL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2012 04:10:11 -0500
-Received: (qmail 7627 invoked by uid 107); 1 Feb 2012 09:17:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 01 Feb 2012 04:17:15 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Feb 2012 04:10:09 -0500
-Content-Disposition: inline
-In-Reply-To: <20120201082005.GA32348@sigill.intra.peff.net>
+	id S1754288Ab2BAJ3K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Feb 2012 04:29:10 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:54567 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752444Ab2BAJ3I convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2012 04:29:08 -0500
+Received: by pbdu11 with SMTP id u11so926085pbd.19
+        for <git@vger.kernel.org>; Wed, 01 Feb 2012 01:29:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=RIAwQQvfWCmbNKm9lPEMI1vFtwHAgkDPKDMx70+h9P4=;
+        b=cTpNY6kr5PxMhw+27SKHs5G8QX2gefiZoO1NLdqExdhBTsa9OuN/G52shUkb7OeYLl
+         LFqz4UmKaf02lf/Y7b6u6HORY3gxH8D8C2BnRL450rVzF5SiBkbutvVk/PRldOQLaw+X
+         pMo6AVM7Sv5Z730PEM/hNsaaswKJzQgQp7FEU=
+Received: by 10.68.138.199 with SMTP id qs7mr13638355pbb.16.1328088548011;
+ Wed, 01 Feb 2012 01:29:08 -0800 (PST)
+Received: by 10.142.241.5 with HTTP; Wed, 1 Feb 2012 01:28:47 -0800 (PST)
+In-Reply-To: <20120201091009.GA20984@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189504>
 
-On Wed, Feb 01, 2012 at 03:20:05AM -0500, Jeff King wrote:
+On Wed, Feb 1, 2012 at 1:10 AM, Jeff King <peff@peff.net> wrote:
+> On Wed, Feb 01, 2012 at 03:20:05AM -0500, Jeff King wrote:
+>
+> Actually, it's a little bit more complicated. I was looking at a
+> slightly old version of grep.c. Since 0579f91 (grep: enable threading
+> with -p and -W using lazy attribute lookup, 2011-12-12), the lookup
+> happens in lots of sub-functions, and locking is required.
 
-> Here's the bug-fix patch. Not quite ready for inclusion, as it obviously
-> needs tests and a commit message. Also, we can cache the result of the
-> userdiff lookup so the funcname code doesn't have to look it up again.
+Heh, you just beat me to it.
 
-Actually, it's a little bit more complicated. I was looking at a
-slightly old version of grep.c. Since 0579f91 (grep: enable threading
-with -p and -W using lazy attribute lookup, 2011-12-12), the lookup
-happens in lots of sub-functions, and locking is required.
+> But there's more. Respecting binary attributes does mean looking up
+> attributes for _every_ file. And that has a noticeable impact. My
+> best-of-five for "git grep foo" on linux-2.6 went from 0.302s to 0.39=
+2s.
+> Yuck.
 
-So this is what the patch looks like with proper locking and caching of
-the looked-up driver. It's quite messy because the cached driver pointer
-has to get passed around quite a bit. And I'm not sure it buys that much
-in practice. The cost of attribute lookup _is_ noticeable (which I'll
-discuss below), but funcname lookup only happens when we get a grep hit.
-So unless you are searching for something extremely common, you're only
-going to do a lookup very occasionally (compared to the load of actually
-searching through the files). So all of the messiness and caching may
-not be worth the effort, as I wasn't able to measure a performance gain.
+The first time I introduced this behaviour[1], I made it conditional
+on a preference =97 those who wanted "good" grep could set the
+preference, while those who wanted "fast" grep could not. I think
+that's not a good idea, though if the performance issues are
+show-stoppers, I'd suggest the opposite preference (so speed-freaks
+can disable the checks).
 
-But there's more. Respecting binary attributes does mean looking up
-attributes for _every_ file. And that has a noticeable impact. My
-best-of-five for "git grep foo" on linux-2.6 went from 0.302s to 0.392s.
-Yuck.
+Tests from [1] included below in case they're still useful (they pass
+with your change)
 
-Part of the problem, I suspect, is that the attribute lookup code is
-optimized for locality. We only unwind as much of the stack as we need,
-so looking at "foo/bar/baz.c" after "foo/bar/bleep.c" is much cheaper
-than looking at "some/other/directory.c". But with threaded grep, that
-locality is likely lost, as we are mixing up attribute requests from
-different threads.
-
-Given that binary lookup means we need every file's gitattribute, it
-might be better to look them up serially at the beginning of the
-program, and then pass the resulting userdiff driver to grep_buffer
-along with each path.
-
+[1] http://article.gmane.org/gmane.comp.version-control.git/179299/matc=
+h=3Dgrep
 ---
-diff --git a/grep.c b/grep.c
-index 486230b..3ca840a 100644
---- a/grep.c
-+++ b/grep.c
-@@ -829,15 +829,28 @@ static inline void grep_attr_unlock(struct grep_opt *opt)
- #define grep_attr_unlock(opt)
- #endif
- 
--static int match_funcname(struct grep_opt *opt, const char *name, char *bol, char *eol)
-+static struct userdiff_driver *get_cached_userdiff(struct grep_opt *opt,
-+						   const char *path,
-+						   struct userdiff_driver **drv)
- {
--	xdemitconf_t *xecfg = opt->priv;
--	if (xecfg && !xecfg->find_func) {
--		struct userdiff_driver *drv;
-+	if (!*drv) {
- 		grep_attr_lock(opt);
--		drv = userdiff_find_by_path(name);
-+		*drv = userdiff_find_by_path(path);
-+		if (!*drv)
-+			*drv = userdiff_find_by_name("default");
- 		grep_attr_unlock(opt);
--		if (drv && drv->funcname.pattern) {
-+	}
-+	return *drv;
-+}
+
+diff --git a/t/t7008-grep-binary.sh b/t/t7008-grep-binary.sh
+index 917a264..4d94461 100755
+--- a/t/t7008-grep-binary.sh
++++ b/t/t7008-grep-binary.sh
+@@ -99,4 +99,23 @@ test_expect_success 'git grep y<NUL>x a' "
+        test_must_fail git grep -f f a
+ "
+
++test_expect_success 'git -c grep.binaryFiles=3D1 grep ina a' "
++       echo 'a diff' > .gitattributes &&
++       printf 'binaryQfile' | q_to_nul >a &&
++       echo 'a:binaryQfile' | q_to_nul >expect &&
++       git -c grep.binaryFiles=3D1 grep ina a > actual &&
++       rm .gitattributes &&
++       test_cmp expect actual
++"
++test_expect_success 'git -c grep.binaryFiles=3D1 grep tex t' "
++       echo 'text' > t &&
++       git add t &&
++       echo 't -diff' > .gitattributes &&
++       echo Binary file t matches >expect &&
++       git -c grep.binaryFiles=3D1 grep tex t >actual &&
++       rm .gitattributes &&
++       test_cmp expect actual
++"
 +
-+static int match_funcname(struct grep_opt *opt, const char *name,
-+			  struct userdiff_driver **drv_p,
-+			  char *bol, char *eol)
-+{
-+	xdemitconf_t *xecfg = opt->priv;
-+	if (xecfg && !xecfg->find_func) {
-+		struct userdiff_driver *drv = get_cached_userdiff(opt, name, drv_p);
-+		if (drv->funcname.pattern) {
- 			const struct userdiff_funcname *pe = &drv->funcname;
- 			xdiff_set_find_func(xecfg, pe->pattern, pe->cflags);
- 		} else {
-@@ -859,6 +872,7 @@ static int match_funcname(struct grep_opt *opt, const char *name, char *bol, cha
- }
- 
- static void show_funcname_line(struct grep_opt *opt, const char *name,
-+			       struct userdiff_driver **drv_p,
- 			       char *buf, char *bol, unsigned lno)
- {
- 	while (bol > buf) {
-@@ -871,20 +885,21 @@ static void show_funcname_line(struct grep_opt *opt, const char *name,
- 		if (lno <= opt->last_shown)
- 			break;
- 
--		if (match_funcname(opt, name, bol, eol)) {
-+		if (match_funcname(opt, name, drv_p, bol, eol)) {
- 			show_line(opt, bol, eol, name, lno, '=');
- 			break;
- 		}
- 	}
- }
- 
--static void show_pre_context(struct grep_opt *opt, const char *name, char *buf,
--			     char *bol, char *end, unsigned lno)
-+static void show_pre_context(struct grep_opt *opt, const char *name,
-+			     struct userdiff_driver **drv_p,
-+			     char *buf, char *bol, char *end, unsigned lno)
- {
- 	unsigned cur = lno, from = 1, funcname_lno = 0;
- 	int funcname_needed = !!opt->funcname;
- 
--	if (opt->funcbody && !match_funcname(opt, name, bol, end))
-+	if (opt->funcbody && !match_funcname(opt, name, drv_p, bol, end))
- 		funcname_needed = 2;
- 
- 	if (opt->pre_context < lno)
-@@ -900,7 +915,7 @@ static void show_pre_context(struct grep_opt *opt, const char *name, char *buf,
- 		while (bol > buf && bol[-1] != '\n')
- 			bol--;
- 		cur--;
--		if (funcname_needed && match_funcname(opt, name, bol, eol)) {
-+		if (funcname_needed && match_funcname(opt, name, drv_p, bol, eol)) {
- 			funcname_lno = cur;
- 			funcname_needed = 0;
- 		}
-@@ -908,7 +923,7 @@ static void show_pre_context(struct grep_opt *opt, const char *name, char *buf,
- 
- 	/* We need to look even further back to find a function signature. */
- 	if (opt->funcname && funcname_needed)
--		show_funcname_line(opt, name, buf, bol, cur);
-+		show_funcname_line(opt, name, drv_p, buf, bol, cur);
- 
- 	/* Back forward. */
- 	while (cur < lno) {
-@@ -983,6 +998,17 @@ static void std_output(struct grep_opt *opt, const void *buf, size_t size)
- 	fwrite(buf, size, 1, stdout);
- }
- 
-+static int grep_buffer_is_binary(struct grep_opt *opt,
-+				 const char *path,
-+				 char *buf, unsigned long size,
-+				 struct userdiff_driver **drv_p)
-+{
-+	struct userdiff_driver *drv = get_cached_userdiff(opt, path, drv_p);
-+	if (drv && drv->binary != -1)
-+		return drv->binary;
-+	return buffer_is_binary(buf, size);
-+}
 +
- static int grep_buffer_1(struct grep_opt *opt, const char *name,
- 			 char *buf, unsigned long size, int collect_hits)
- {
-@@ -996,6 +1022,7 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
- 	int show_function = 0;
- 	enum grep_context ctx = GREP_CONTEXT_HEAD;
- 	xdemitconf_t xecfg;
-+	struct userdiff_driver *drv = NULL;
- 
- 	if (!opt->output)
- 		opt->output = std_output;
-@@ -1017,11 +1044,11 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
- 
- 	switch (opt->binary) {
- 	case GREP_BINARY_DEFAULT:
--		if (buffer_is_binary(buf, size))
-+		if (grep_buffer_is_binary(opt, name, buf, size, &drv))
- 			binary_match_only = 1;
- 		break;
- 	case GREP_BINARY_NOMATCH:
--		if (buffer_is_binary(buf, size))
-+		if (grep_buffer_is_binary(opt, name, buf, size, &drv))
- 			return 0; /* Assume unmatch */
- 		break;
- 	case GREP_BINARY_TEXT:
-@@ -1099,16 +1126,16 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
- 			 * pre-context lines, we would need to show them.
- 			 */
- 			if (opt->pre_context || opt->funcbody)
--				show_pre_context(opt, name, buf, bol, eol, lno);
-+				show_pre_context(opt, name, &drv, buf, bol, eol, lno);
- 			else if (opt->funcname)
--				show_funcname_line(opt, name, buf, bol, lno);
-+				show_funcname_line(opt, name, &drv, buf, bol, lno);
- 			show_line(opt, bol, eol, name, lno, ':');
- 			last_hit = lno;
- 			if (opt->funcbody)
- 				show_function = 1;
- 			goto next_line;
- 		}
--		if (show_function && match_funcname(opt, name, bol, eol))
-+		if (show_function && match_funcname(opt, name, &drv, bol, eol))
- 			show_function = 0;
- 		if (show_function ||
- 		    (last_hit && lno <= last_hit + opt->post_context)) {
+ test_done
