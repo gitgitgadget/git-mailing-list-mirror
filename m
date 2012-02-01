@@ -1,108 +1,164 @@
-From: =?ISO-8859-1?Q?Conrad=A0Irwin?= <conrad.irwin@gmail.com>
-Subject: Re: [PATCH] Don't search files with an unset "grep" attribute
-Date: Wed, 1 Feb 2012 01:28:47 -0800
-Message-ID: <CAOTq_ptj06aNGsQRjV0fVRxnQFBHmU2FFSXwWDUUk9MM77k2LQ@mail.gmail.com>
-References: <7vy5sy8e0y.fsf@alter.siamese.dyndns.org> <1327359555-29457-1-git-send-email-conrad.irwin@gmail.com>
- <7vaa5d4mce.fsf@alter.siamese.dyndns.org> <20120125214625.GA4666@sigill.intra.peff.net>
- <7vhazb3rtm.fsf@alter.siamese.dyndns.org> <20120201082005.GA32348@sigill.intra.peff.net>
- <20120201091009.GA20984@sigill.intra.peff.net>
+From: Thomas Dickey <dickey@his.com>
+Subject: Re: [PATCH] Correct singular form in diff summary line for human
+	interaction
+Date: Wed, 01 Feb 2012 04:40:06 -0500
+Message-ID: <20120201094006.GA3989@debian50-32.invisible-island.net>
+References: <1328019840-6168-1-git-send-email-pclouds@gmail.com>
+ <20120131152028.GA10717@burratino> <7vvcnr92y0.fsf@alter.siamese.dyndns.org>
+ <CACsJy8Dd4_Pnvzxww38EfZt8NgRow+qxCReohc45XoNpfJCbYg@mail.gmail.com>
+ <20120201015606.GA24482@debian50-32.invisible-island.net>
+ <7vk4475k5s.fsf@alter.siamese.dyndns.org>
+Reply-To: dickey@his.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Dov Grobgeld <dov.grobgeld@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 01 10:29:21 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary=X1bOJ3K7DJ5YkBrT
+Cc: dickey@his.com, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	Frederik Schwarzer <schwarzerf@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>, dickey@invisible-island.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 01 10:40:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RsWVC-0003m2-H4
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 10:29:18 +0100
+	id 1RsWg7-0001e1-Rv
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 10:40:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754288Ab2BAJ3K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Feb 2012 04:29:10 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:54567 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752444Ab2BAJ3I convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2012 04:29:08 -0500
-Received: by pbdu11 with SMTP id u11so926085pbd.19
-        for <git@vger.kernel.org>; Wed, 01 Feb 2012 01:29:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=RIAwQQvfWCmbNKm9lPEMI1vFtwHAgkDPKDMx70+h9P4=;
-        b=cTpNY6kr5PxMhw+27SKHs5G8QX2gefiZoO1NLdqExdhBTsa9OuN/G52shUkb7OeYLl
-         LFqz4UmKaf02lf/Y7b6u6HORY3gxH8D8C2BnRL450rVzF5SiBkbutvVk/PRldOQLaw+X
-         pMo6AVM7Sv5Z730PEM/hNsaaswKJzQgQp7FEU=
-Received: by 10.68.138.199 with SMTP id qs7mr13638355pbb.16.1328088548011;
- Wed, 01 Feb 2012 01:29:08 -0800 (PST)
-Received: by 10.142.241.5 with HTTP; Wed, 1 Feb 2012 01:28:47 -0800 (PST)
-In-Reply-To: <20120201091009.GA20984@sigill.intra.peff.net>
+	id S1756079Ab2BAJk1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Feb 2012 04:40:27 -0500
+Received: from vms173003pub.verizon.net ([206.46.173.3]:52860 "EHLO
+	vms173003pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756072Ab2BAJkV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2012 04:40:21 -0500
+Received: from par-debian50-32.invisible-island.net
+ ([unknown] [96.241.212.238]) by vms173003.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0LYP00FXRK6VM420@vms173003.mailsrvcs.net> for
+ git@vger.kernel.org; Wed, 01 Feb 2012 03:40:08 -0600 (CST)
+Received: from par-debian50-32.invisible-island.net (localhost [127.0.0.1])
+	by par-debian50-32.invisible-island.net (8.14.3/8.14.3/Debian-5+lenny1)
+ with ESMTP id q119e6PE004832
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT); Wed,
+ 01 Feb 2012 04:40:07 -0500
+Received: (from tom@localhost)	by par-debian50-32.invisible-island.net
+ (8.14.3/8.14.3/Submit) id q119e6UV004831; Wed, 01 Feb 2012 04:40:06 -0500
+Content-disposition: inline
+In-reply-to: <7vk4475k5s.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189505>
 
-On Wed, Feb 1, 2012 at 1:10 AM, Jeff King <peff@peff.net> wrote:
-> On Wed, Feb 01, 2012 at 03:20:05AM -0500, Jeff King wrote:
->
-> Actually, it's a little bit more complicated. I was looking at a
-> slightly old version of grep.c. Since 0579f91 (grep: enable threading
-> with -p and -W using lazy attribute lookup, 2011-12-12), the lookup
-> happens in lots of sub-functions, and locking is required.
 
-Heh, you just beat me to it.
+--X1bOJ3K7DJ5YkBrT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> But there's more. Respecting binary attributes does mean looking up
-> attributes for _every_ file. And that has a noticeable impact. My
-> best-of-five for "git grep foo" on linux-2.6 went from 0.302s to 0.39=
-2s.
-> Yuck.
+On Tue, Jan 31, 2012 at 07:04:15PM -0800, Junio C Hamano wrote:
+> Thomas Dickey <dickey@his.com> writes:
+>=20
+> > On Wed, Feb 01, 2012 at 08:32:43AM +0700, Nguyen Thai Ngoc Duy wrote:
+> >> On Wed, Feb 1, 2012 at 12:50 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> >> >> If there is an environment variable to say "I don't want to see
+> >> >> variations on strings intended for humans", can it be spelled as
+> >> >> LC_ALL=3DC?
+> >> >
+> >> >  ...
+> >
+> > ... diffstat (google helped find context)
+>=20
+> When we show diffstat from "git diff --stat" (or "git apply --stat"), we
+> currently do not do any singular/plural on the last line of the output
+> that summarizes the graph, ending up with:
+>=20
+> 	1 files changed, 1 insertions(+), 0 deletions(-)
+>=20
+> when there is a single line insertion to a file and nothing else.
+>=20
+> My recollection is that our behaviour originally came from our desire to
+> be as close as what "diffstat" produces, but that does not seem to be the
+> case.  I observed that the output from recent versions of "diffstat" is
+> much more human friendly.  We get these, depending on the input, from
+> "diffstat" version 1.53:
 
-The first time I introduced this behaviour[1], I made it conditional
-on a preference =97 those who wanted "good" grep could set the
-preference, while those who wanted "fast" grep could not. I think
-that's not a good idea, though if the performance issues are
-show-stoppers, I'd suggest the opposite preference (so speed-freaks
-can disable the checks).
+I added the PLURAL() macro in 1.22, in 1996/3/16, which was a few months
+before Tony Nugent commented that it was being used by other people.  Since
+I'd been sending patches with diffstat's since mid-1994, it's possible
+that there were a few copies using the form without plurals.  But it's
+been quite a while.  Also, it was in 1998/1/17 that I modified the
+copyright notice (1.26) at the request of someone in the Linux group, so
+I'd assume that they would have started using the newer version.
 
-Tests from [1] included below in case they're still useful (they pass
-with your change)
+Except for later applying PLURAL to the number of files changed (which Jean
+Delvare pointed out in 2005), the message construction has not changed since
+then.  The insert/delete/modify parts of the message were optional as you s=
+ee in
+my earliest version (1.3) from 1993/10/23:
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/179299/matc=
-h=3Dgrep
----
+	printf("%d files changed", num_files);
+	if (total_ins) printf(", %d insertions", total_ins);
+	if (total_del) printf(", %d deletions", total_del);
+	if (total_mod) printf(", %d modifications", total_mod);
+	printf("\n");
+=20
+>         1 file changed, 1 insertion(+)
+>         1 file changed, 1 deletion(-)
+> 	0 files changed
+> 	2 files changed, 3 insertions(+), 1 deletion(-)
+>=20
+> Namely, it does singular/plural correctly, and omits unnecessary "0
+> deletions(-)" and "0 insertions(+)".
+>=20
+> I was wondering if you remember what the behaviour of older versions of
+> "diffstat" was, and if it was changed to be more human friendly over
+> time. It is very possible that I am misremembering this and "diffstat" has
+> always done the singular/plural correctly and omitted useless "0 lines".
 
-diff --git a/t/t7008-grep-binary.sh b/t/t7008-grep-binary.sh
-index 917a264..4d94461 100755
---- a/t/t7008-grep-binary.sh
-+++ b/t/t7008-grep-binary.sh
-@@ -99,4 +99,23 @@ test_expect_success 'git grep y<NUL>x a' "
-        test_must_fail git grep -f f a
- "
+I have back to 1.3 in my archive. I use rcshist to look for things like thi=
+s.
+(also, for small things like this, I have a script that pulls all versions,
+with proper timestamps to make it simpler to sort the files by date).
+=20
+> Somehow it seems hard to get hold of older versions of "diffstat", and I
+> was hoping that I could get that information straight out of the current
+> maintainer.
 
-+test_expect_success 'git -c grep.binaryFiles=3D1 grep ina a' "
-+       echo 'a diff' > .gitattributes &&
-+       printf 'binaryQfile' | q_to_nul >a &&
-+       echo 'a:binaryQfile' | q_to_nul >expect &&
-+       git -c grep.binaryFiles=3D1 grep ina a > actual &&
-+       rm .gitattributes &&
-+       test_cmp expect actual
-+"
-+test_expect_success 'git -c grep.binaryFiles=3D1 grep tex t' "
-+       echo 'text' > t &&
-+       git add t &&
-+       echo 't -diff' > .gitattributes &&
-+       echo Binary file t matches >expect &&
-+       git -c grep.binaryFiles=3D1 grep tex t >actual &&
-+       rm .gitattributes &&
-+       test_cmp expect actual
-+"
-+
-+
- test_done
+I can provide the information.
+
+Actually a couple of weeks ago I was experimenting with rcs-fast-export, but
+found that would need more work to export diffstat (I use branches a lot)
+I'm using "conflict" as a test-case for the changes that I'm making to supp=
+ort
+exporting mawk.
+
+> Thanks for responding and sorry for the lack of context of the original
+> message.
+
+no problem - google was helpful ;-)
+
+--=20
+Thomas E. Dickey <dickey@invisible-island.net>
+http://invisible-island.net
+ftp://invisible-island.net
+
+--X1bOJ3K7DJ5YkBrT
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAk8pCHYACgkQcCNT4PfkjtujrwCgwjV/vJE/6EQ9C5L3em5eIk8Q
+fZ4An37MPbbTMJTmMo8nijK92EdLIcUm
+=kkEV
+-----END PGP SIGNATURE-----
+
+--X1bOJ3K7DJ5YkBrT--
