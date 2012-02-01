@@ -1,82 +1,70 @@
-From: "Bryan O'Sullivan" <bryano@fb.com>
-Subject: Re: logging disjoint sets of commits in a single command
-Date: Wed, 1 Feb 2012 22:01:52 +0000
-Message-ID: <CB4EF5E8.7A0%bryano@fb.com>
-References: <20120201030300.GA9969@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/2] Factor find_pack_entry()'s core out
+Date: Wed, 01 Feb 2012 14:03:29 -0800
+Message-ID: <7vaa522oum.fsf@alter.siamese.dyndns.org>
+References: <1328010239-29669-1-git-send-email-pclouds@gmail.com>
+ <1328104135-475-1-git-send-email-pclouds@gmail.com>
+ <alpine.LFD.2.02.1202011056140.2759@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 01 23:02:20 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Wed Feb 01 23:03:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RsiFu-0000Ik-N8
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 23:02:19 +0100
+	id 1RsiHC-0000tl-1U
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 23:03:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756969Ab2BAWCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Feb 2012 17:02:14 -0500
-Received: from mx0b-00082601.pphosted.com ([67.231.153.30]:44869 "EHLO
-	mx0a-00082601.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1755019Ab2BAWCM convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Feb 2012 17:02:12 -0500
-Received: from pps.filterd (m0004060 [127.0.0.1])
-	by mx0b-00082601.pphosted.com (8.14.4/8.14.4) with SMTP id q11LwYgm013961;
-	Wed, 1 Feb 2012 14:02:06 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=from : to : cc : subject :
- date : message-id : in-reply-to : content-type : content-id :
- content-transfer-encoding : mime-version; s=facebook;
- bh=WJAVfsjhgT6T5UeNOuZT71WL3uaZOzUMJBP3c8bKIjk=;
- b=actGHz1qJzeixV7FWJZfUym0FSmi2A4s6gNJJFfZrjtxuV+OesLJycaEpfeFDyrgnFxS
- JL1DaTgEVKvH+bZ+rmLGOqd4Q3bWV8d0fJhL89JJdzMRzhPfueROwzpKNm6RGxls20db
- uaQbKDEuW5g6vmwIavCrUaIuBw/lfp239jI= 
-Received: from mail.thefacebook.com (corpout1.snc1.tfbnw.net [66.220.144.38])
-	by mx0b-00082601.pphosted.com with ESMTP id 12qbm18592-1
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Wed, 01 Feb 2012 14:02:06 -0800
-Received: from SC-MBX02-4.TheFacebook.com ([fe80::e1f0:42de:c867:1385]) by
- sc-hub04.TheFacebook.com ([192.168.18.212]) with mapi id 14.01.0355.002; Wed,
- 1 Feb 2012 14:01:53 -0800
-Thread-Topic: logging disjoint sets of commits in a single command
-Thread-Index: AQHM4Hal0o4/+qLyk0uC5cG4lN8eDZYnLqsAgACKbYCAAAPugP//fISAgACnqICAALgVAA==
-In-Reply-To: <20120201030300.GA9969@sigill.intra.peff.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [192.168.18.252]
-Content-ID: <E3522580EE8936428C4B2A925F6EC3B7@fb.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.6.7361,1.0.260,0.0.0000
- definitions=2012-02-01_08:2012-02-01,2012-02-01,1970-01-01 signatures=0
-X-Proofpoint-Spam-Reason: safe
+	id S1757305Ab2BAWDd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Feb 2012 17:03:33 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38074 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756983Ab2BAWDc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2012 17:03:32 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B7E05633B;
+	Wed,  1 Feb 2012 17:03:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5GldAdLmSUiByRsHbN4WhNQCsjE=; b=RwSOcz
+	ylAqUiyvgOhXXZGYrxNv/cj2gTKnwqpKFSCsUrb7yTQA7Cl3dunov88vCU21Z3//
+	uPNub3f31QE1r2Tb+5ioNsQuP6n27TURiHJT1q7VrPo98GtWQY7pj+eXKw/LAcQm
+	yJMUzA71JT4ro/zI2bUNMKkXOGdVrSZIvLhXg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oz05ScDh2aGevBNWUccVjn+EUSU/8Dvr
+	6Am3N7brNoi8Dz2ghJNJbCOsPGbrkAHvr+C+s5zwMGabvHRWns9a4wWIDv1I/1Tu
+	YeUxCAgffNr9DzTlcBknpYjAvIyzmcBmJdIxtiHkuQx2Jg6J75ZV9jAQsiNWYWQ3
+	rXZW30RhHBA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AFBBE633A;
+	Wed,  1 Feb 2012 17:03:31 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4612C6339; Wed,  1 Feb 2012
+ 17:03:31 -0500 (EST)
+In-Reply-To: <alpine.LFD.2.02.1202011056140.2759@xanadu.home> (Nicolas
+ Pitre's message of "Wed, 01 Feb 2012 10:59:26 -0500 (EST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 93DF03E8-4D20-11E1-B83B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189544>
 
-On 2012-01-31 19:03 , "Jeff King" <peff@peff.net> wrote:
+Nicolas Pitre <nico@fluxnic.net> writes:
+
+>> +static int find_pack_entry_1(const unsigned char *sha1,
+>> +			     struct packed_git *p, struct pack_entry *e)
 >
->That sounds kind of slow. Is your repository really gigantic?
+> This looks all goot but the name.  Pretty please, try to find something 
+> that is more descriptive than "1".  Suggestions: 
+> "find_pack_entry_lookup", "find_pack_entry_inner", etc.
 
-Bigger than a kernel tree, but not as many commits. Beyond that, can't say.
-
-> Have you packed
->everything?
-
-Yep.
-
-> I'm just curious if there's some other way to make things
->faster.
-
-It would be nice if there was, but the fundamental problem is the lack of
-an index from filename to commit. Walking every commit is the limiting
-factor, I believe.
-
-> Is the repository publicly available?
-
-No, sorry.
+Perhaps "find_pack_entry_in_pack(sha1, e, p)"?
+That would go well with the caller "find_pack_entry(sha1, e)".
