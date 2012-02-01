@@ -1,90 +1,105 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: General support for ! in git-config values
-Date: Wed, 1 Feb 2012 22:25:31 +0100
-Message-ID: <CACBZZX5mX55Rh8b2GYv7wKbCCypCkrn5AiM9BpXydgcYxHWdQA@mail.gmail.com>
-References: <CACBZZX6U+1Fmdaz2ikbbc6zUyF=pMGQOqUGVOWCkUFBUkovCBw@mail.gmail.com>
- <20120201184020.GA29374@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Use correct grammar in diffstat summary line
+Date: Wed, 01 Feb 2012 13:26:43 -0800
+Message-ID: <7vhaza2qjw.fsf@alter.siamese.dyndns.org>
+References: <1328019840-6168-1-git-send-email-pclouds@gmail.com>
+ <1328100907-20397-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 01 22:26:12 2012
+Cc: git@vger.kernel.org, Thomas Dickey <dickey@his.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Frederik Schwarzer <schwarzerf@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>, dickey@invisible-island.net
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 01 22:26:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rshgw-0007R8-RQ
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 22:26:11 +0100
+	id 1Rshhb-0007r1-3D
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 22:26:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932827Ab2BAVZy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Feb 2012 16:25:54 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:38311 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932457Ab2BAVZw convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Feb 2012 16:25:52 -0500
-Received: by lagu2 with SMTP id u2so911917lag.19
-        for <git@vger.kernel.org>; Wed, 01 Feb 2012 13:25:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=OSkLSPcrKTjLWE//nW6bSvK+D8kNRpYZ4Nl+wbzZwos=;
-        b=CNpv5fOpWs5aZsxYBsLJQxdP0rcL5S7KHR677jwpQMyE06/Kxm00WkPgdHF5jbj1Z3
-         kyKUsZKkIK5m/FIYQvcxGHV5aL9d/eGF8J0zwDyhpiaVvacRm10TONoaTj14wtixuHW3
-         qyS23a4+AJPMg3xAVduSQ9S50UmcEfyKQgvRI=
-Received: by 10.152.129.69 with SMTP id nu5mr154824lab.9.1328131551213; Wed,
- 01 Feb 2012 13:25:51 -0800 (PST)
-Received: by 10.112.30.67 with HTTP; Wed, 1 Feb 2012 13:25:31 -0800 (PST)
-In-Reply-To: <20120201184020.GA29374@sigill.intra.peff.net>
+	id S1757418Ab2BAV0s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Feb 2012 16:26:48 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51804 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755301Ab2BAV0q convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2012 16:26:46 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C1FC5B9C;
+	Wed,  1 Feb 2012 16:26:45 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=wzUTGiN451RP
+	4bBgcaQ1S3rWwVI=; b=OanaOCAY6W6efvXnpBJWxb1GhKSJAasbJ4xSP1d8xFdK
+	TDs72iLZTplIFE6Ia6md4IL553p5vqMTKhADB8deJszFj76/X6Mp3TiJ1EHfESi9
+	39covrdiTw7spG29NqwR4KA5ak7IX63yza4jRjrxoV1L20La49t/0saOScHUFQg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Xghc+1
+	v2UBRGITF6C09SUWPEuXPbSQRqXpvg7gv5IwFbMxtpJ1+VMzIQwAeQdsJkYgFGqr
+	6mWXCyX3aNrwsz1GdfGU8vhxjOT+TyjYY4xUvSVHjXIY//erJ7gOLg7qxL54i66R
+	t9+1egjyGX63ehaVlKK9d+mIUic74absjf3oM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 619425B9B;
+	Wed,  1 Feb 2012 16:26:45 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DCBDC5B96; Wed,  1 Feb 2012
+ 16:26:44 -0500 (EST)
+In-Reply-To: <1328100907-20397-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 1 Feb
+ 2012 19:55:07 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 70C8A512-4D1B-11E1-9ED9-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189538>
 
-On Wed, Feb 1, 2012 at 19:40, Jeff King <peff@peff.net> wrote:
-> On Wed, Feb 01, 2012 at 06:33:47PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0=
- Bjarmason wrote:
->
->> For a program I'm working on (git-deploy) I'd like to have this as a
->> general facility, i.e. users can specify either:
->>
->> =C2=A0 =C2=A0 foo.bar =3D value
->>
->> Or:
->>
->> =C2=A0 =C2=A0 foo.bar =3D !cat /some/path
->>
->> I'm wondering why git-config doesn't do this already, if there's no
->> reason in particular I can just patch it in, either as a new option:
->>
->> =C2=A0 =C2=A0 git config --with-exec --get foo.bar
->
-> I'm not clear on what you want --with-exec to do. By default, config
-> values are strings. I would expect the "!" to be a special marker tha=
-t
-> the caller would recognize in the string, and then act appropriately.
->
-> So if I were implementing git aliases in the shell, the code would lo=
-ok
-> like:
->
-> =C2=A0v=3D$(git config alias.$alias)
-> =C2=A0case "$v" in
-> =C2=A0"")
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0die "no such alias: $alias" ;;
-> =C2=A0"!*)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cmd=3D"${v#!}" ;;
-> =C2=A0*)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cmd=3D"git $v" ;;
-> =C2=A0esac
-> =C2=A0eval "$cmd"
->
-> I.e., everything pertaining to "!" happens after we get the config
-> string. So what is it that you want "git config --with-exec" to do?
+Nice.  Will queue with a minor update to the log message:
 
-I agree that that's how it should work, I just suggested --with-exec
-in case anyone complained about the backwards compatibility issue of
-changing the meaning of "!" for existing configs.
+commit 3f29ab34372ee11946439da3bde307eb90ad9031
+Author: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+Date:   Wed Feb 1 19:55:07 2012 +0700
+
+    Use correct grammar in diffstat summary line
+   =20
+    "git diff --stat" and "git apply --stat" now learn to print the lin=
+e
+    "%d files changed, %d insertions(+), %d deletions(-)" in singular f=
+orm
+    whenever applicable. "0 insertions" and "0 deletions" are also omit=
+ted
+    unless they are both zero.
+   =20
+    This matches how versions of "diffstat" that are not prehistoric pr=
+oduced
+    their output, and also makes this line translatable.
+   =20
+    [jc: with help from Thomas Dickey in archaeology of "diffstat"]
+   =20
+    Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@g=
+mail.com>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+And also this bit on top:
+
+diff --git a/diff.c b/diff.c
+index 5c31b36..5f3ce97 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1329,7 +1329,7 @@ int print_stat_summary(FILE *fp, int files, int i=
+nsertions, int deletions)
+=20
+ 	if (!files) {
+ 		assert(insertions =3D=3D 0 && deletions =3D=3D 0);
+-		return fputs(_(" no changes\n"), fp);
++		return fputs(_(" 0 files changed\n"), fp);
+ 	}
+=20
+ 	strbuf_addf(&sb,
