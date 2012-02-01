@@ -1,67 +1,88 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] Correct singular form in diff summary line for human interaction
-Date: Wed, 1 Feb 2012 08:32:43 +0700
-Message-ID: <CACsJy8Dd4_Pnvzxww38EfZt8NgRow+qxCReohc45XoNpfJCbYg@mail.gmail.com>
+From: Thomas Dickey <dickey@his.com>
+Subject: Re: [PATCH] Correct singular form in diff summary line for human
+	interaction
+Date: Tue, 31 Jan 2012 20:45:15 -0500
+Message-ID: <20120201014515.GA24402@debian50-32.invisible-island.net>
 References: <1328019840-6168-1-git-send-email-pclouds@gmail.com>
  <20120131152028.GA10717@burratino> <7vvcnr92y0.fsf@alter.siamese.dyndns.org>
+ <CACsJy8Dd4_Pnvzxww38EfZt8NgRow+qxCReohc45XoNpfJCbYg@mail.gmail.com>
+Reply-To: dickey@his.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary=gBBFr7Ir9EOA20Yy
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
 	Frederik Schwarzer <schwarzerf@gmail.com>,
 	Brandon Casey <drafnel@gmail.com>, dickey@invisible-island.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 01 02:33:44 2012
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 01 02:45:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RsP4x-000200-85
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 02:33:43 +0100
+	id 1RsPGQ-0006UK-2W
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 02:45:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752420Ab2BABdQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Jan 2012 20:33:16 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:50768 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752377Ab2BABdP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2012 20:33:15 -0500
-Received: by bkcjm19 with SMTP id jm19so555824bkc.19
-        for <git@vger.kernel.org>; Tue, 31 Jan 2012 17:33:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=3ezRZSh7ixPbXDwIvOgyZTKA3PJOoxxPu6LmLvhbSe0=;
-        b=vfeRY5qd0Q5ATpq2J9IjdycifcEqMLFad+Ok33761HF3Mlh1cPf9A126jOQ0ST7sUB
-         W/nHCuRwS54jzvUQpl3gSbrg6f9uegyjgXw/F3O0ophKvZTPrKcihnaIwBppcOzRFugj
-         ej0vsZ89E2+M/QCvvdxHIiAFPyc0suCWS2eRw=
-Received: by 10.204.155.145 with SMTP id s17mr1133857bkw.19.1328059994284;
- Tue, 31 Jan 2012 17:33:14 -0800 (PST)
-Received: by 10.204.33.70 with HTTP; Tue, 31 Jan 2012 17:32:43 -0800 (PST)
-In-Reply-To: <7vvcnr92y0.fsf@alter.siamese.dyndns.org>
+	id S1754221Ab2BABp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Jan 2012 20:45:28 -0500
+Received: from vms173017pub.verizon.net ([206.46.173.17]:60238 "EHLO
+	vms173017pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752621Ab2BABp1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Jan 2012 20:45:27 -0500
+Received: from par-debian50-32.invisible-island.net
+ ([unknown] [96.241.212.238]) by vms173017.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0LYO002IAY7G83S0@vms173017.mailsrvcs.net> for
+ git@vger.kernel.org; Tue, 31 Jan 2012 19:45:21 -0600 (CST)
+Received: from par-debian50-32.invisible-island.net (localhost [127.0.0.1])
+	by par-debian50-32.invisible-island.net (8.14.3/8.14.3/Debian-5+lenny1)
+ with ESMTP id q111jF4q024417
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT); Tue,
+ 31 Jan 2012 20:45:16 -0500
+Received: (from tom@localhost)	by par-debian50-32.invisible-island.net
+ (8.14.3/8.14.3/Submit) id q111jFoP024415; Tue, 31 Jan 2012 20:45:15 -0500
+Content-disposition: inline
+In-reply-to: <CACsJy8Dd4_Pnvzxww38EfZt8NgRow+qxCReohc45XoNpfJCbYg@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189492>
 
-On Wed, Feb 1, 2012 at 12:50 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> If there is an environment variable to say "I don't want to see
->> variations on strings intended for humans", can it be spelled as
->> LC_ALL=C?
->
->  ...
->
-> If we were to touch this, I would prefer to do so unconditionally without
-> "hrm, can we reliably guess this is meant for humans?" and release it
-> unceremoniously, perhaps as part of the next release that will have a much
-> bigger user-visible UI correction to 'merge'.
 
-Unconditionally change is fine to me. There's another implication
-that's not mentioned in the commit message, this change also allows
-non-English translations. Any objections on i18n or we just keep this
-line English only? Personally if scripts do not matter any more, I see
-no reasons this line cannot be translated.
--- 
-Duy
+--gBBFr7Ir9EOA20Yy
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Feb 01, 2012 at 08:32:43AM +0700, Nguyen Thai Ngoc Duy wrote:
+> On Wed, Feb 1, 2012 at 12:50 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> >> If there is an environment variable to say "I don't want to see
+> >> variations on strings intended for humans", can it be spelled as
+> >> LC_ALL=3DC?
+
+I assume from Neider on the list that this is related to mawk, but I don't
+have the email preceding this...
+
+--=20
+Thomas E. Dickey <dickey@invisible-island.net>
+http://invisible-island.net
+ftp://invisible-island.net
+
+--gBBFr7Ir9EOA20Yy
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAk8omSsACgkQcCNT4PfkjtuJPgCePC76VbPhO0XGJIo4LdKJeMV1
+XbgAoMsLicQ8PQtcHdSl6r3rB+e3uIcV
+=ozul
+-----END PGP SIGNATURE-----
+
+--gBBFr7Ir9EOA20Yy--
