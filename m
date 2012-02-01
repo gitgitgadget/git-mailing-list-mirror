@@ -1,77 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: General support for ! in git-config values
-Date: Wed, 1 Feb 2012 13:40:20 -0500
-Message-ID: <20120201184020.GA29374@sigill.intra.peff.net>
-References: <CACBZZX6U+1Fmdaz2ikbbc6zUyF=pMGQOqUGVOWCkUFBUkovCBw@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Rebase regression in v1.7.9?
+Date: Wed, 1 Feb 2012 21:30:41 +0200
+Message-ID: <CAMP44s12Q3BdXzgr_m2Z0EpApiexngYoWgLi6NRONfCtr1zHKQ@mail.gmail.com>
+References: <CAMP44s1EAwHjQ7S2ArLvhNg5qkR05DRJ70tQmP8sXYdOP=i_zQ@mail.gmail.com>
+	<4F29761E.1030605@sohovfx.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 01 19:40:31 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Andrew Wong <andrew.w@sohovfx.com>
+X-From: git-owner@vger.kernel.org Wed Feb 01 20:30:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rsf6b-0007oD-2r
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 19:40:29 +0100
+	id 1RsftI-0007V9-EE
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 20:30:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753377Ab2BASkX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Feb 2012 13:40:23 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52307
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753353Ab2BASkW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2012 13:40:22 -0500
-Received: (qmail 11385 invoked by uid 107); 1 Feb 2012 18:47:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 01 Feb 2012 13:47:26 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Feb 2012 13:40:20 -0500
-Content-Disposition: inline
-In-Reply-To: <CACBZZX6U+1Fmdaz2ikbbc6zUyF=pMGQOqUGVOWCkUFBUkovCBw@mail.gmail.com>
+	id S1755678Ab2BATan (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Feb 2012 14:30:43 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:45773 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755551Ab2BATan (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2012 14:30:43 -0500
+Received: by lagu2 with SMTP id u2so853543lag.19
+        for <git@vger.kernel.org>; Wed, 01 Feb 2012 11:30:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=D5qah3iI+IkNPhELaeVfrKL9m3qqZAI0fpV/pft4X8k=;
+        b=tKdasrGSrNi2OX9aeVwdfEjTggjANGAkEc4g42qCny2T1vEzUOfUc9ff4JQT42trAl
+         EpBI3lZfpTrKumv4kGh/f3JBzn1OJD1DTIj+a8+Yy12+ITtVVjLHwIqK5C8UHZZ2hPUU
+         SzLJujseDca2AtA40yjez1xcuW9oI8ajvh2/4=
+Received: by 10.112.25.106 with SMTP id b10mr2162391lbg.102.1328124641687;
+ Wed, 01 Feb 2012 11:30:41 -0800 (PST)
+Received: by 10.112.40.202 with HTTP; Wed, 1 Feb 2012 11:30:41 -0800 (PST)
+In-Reply-To: <4F29761E.1030605@sohovfx.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189531>
 
-On Wed, Feb 01, 2012 at 06:33:47PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
+On Wed, Feb 1, 2012 at 7:27 PM, Andrew Wong <andrew.w@sohovfx.com> wrote:
+> On 01/31/2012 05:56 PM, Felipe Contreras wrote:
+>> The rebase will finish, but there will be a .git/CHERRY_PICK_HEAD file.
+>>
+> Ah, good catch. I can reproduce the issue. This is only happening in
+> "rebase -i" because interactive rebase relies on cherry-pick, but not
+> regular rebase. And now cherry-pick creates a state when there's a
+> conflict (since 1.7.5?), which "rebase -i" didn't expect before. We
+> probably just need to do a manual clean up before "rebase -i" continues.
+>
+> I'll try to come up with a patch for this. In the mean time, doing a
+> "git reset" will remove that dangling file. Of course, you could always
+> manually remove it. Does the dangling file cause a subsequent git
+> command to fail?
 
-> For a program I'm working on (git-deploy) I'd like to have this as a
-> general facility, i.e. users can specify either:
->=20
->     foo.bar =3D value
->=20
-> Or:
->=20
->     foo.bar =3D !cat /some/path
->=20
-> I'm wondering why git-config doesn't do this already, if there's no
-> reason in particular I can just patch it in, either as a new option:
->=20
->     git config --with-exec --get foo.bar
+No, it's just annoying with the __git_ps1 prompt stuff. Yeah, 'git
+reset' solves the problem, but it's much better to type 'git skip'
+instead... for now.
 
-I'm not clear on what you want --with-exec to do. By default, config
-values are strings. I would expect the "!" to be a special marker that
-the caller would recognize in the string, and then act appropriately.
-
-So if I were implementing git aliases in the shell, the code would look
-like:
-
-  v=3D$(git config alias.$alias)
-  case "$v" in
-  "")
-          die "no such alias: $alias" ;;
-  "!*)
-          cmd=3D"${v#!}" ;;
-  *)
-          cmd=3D"git $v" ;;
-  esac
-  eval "$cmd"
-
-I.e., everything pertaining to "!" happens after we get the config
-string. So what is it that you want "git config --with-exec" to do?
-
--Peff
+-- 
+Felipe Contreras
