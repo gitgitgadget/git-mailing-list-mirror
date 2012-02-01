@@ -1,109 +1,131 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Correct singular form in diff summary line for human
- interaction
-Date: Tue, 31 Jan 2012 19:04:15 -0800
-Message-ID: <7vk4475k5s.fsf@alter.siamese.dyndns.org>
-References: <1328019840-6168-1-git-send-email-pclouds@gmail.com>
- <20120131152028.GA10717@burratino> <7vvcnr92y0.fsf@alter.siamese.dyndns.org>
- <CACsJy8Dd4_Pnvzxww38EfZt8NgRow+qxCReohc45XoNpfJCbYg@mail.gmail.com>
- <20120201015606.GA24482@debian50-32.invisible-island.net>
+Subject: [PATCH] request-pull: explicitly ask tags/$name to be pulled
+Date: Tue, 31 Jan 2012 21:50:21 -0800
+Message-ID: <7vty3b3xwi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= 
-	<avarab@gmail.com>, Frederik Schwarzer <schwarzerf@gmail.com>,
-	Brandon Casey <drafnel@gmail.com>, dickey@invisible-island.net
-To: dickey@his.com
-X-From: git-owner@vger.kernel.org Wed Feb 01 04:04:24 2012
+Cc: Mark Brown <broonie@opensource.wolfsonmicro.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 01 06:50:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RsQUi-0002Jj-0K
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 04:04:24 +0100
+	id 1RsT5S-0002Rn-5w
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 06:50:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755764Ab2BADET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Jan 2012 22:04:19 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63824 "EHLO
+	id S1753191Ab2BAFuZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Feb 2012 00:50:25 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65326 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755752Ab2BADES (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Jan 2012 22:04:18 -0500
+	id S1752808Ab2BAFuY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2012 00:50:24 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3FEA16394;
-	Tue, 31 Jan 2012 22:04:17 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B722220C6;
+	Wed,  1 Feb 2012 00:50:23 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4UJFrbZHlag9d+Gkd6djgNYwSZU=; b=FOq6yA
-	1Zf1L6jZtJ9hBjGBYY+YSvS3jCbm9COD+k459oeFdn5bUPGtlTuCegv3rNPqxeVx
-	hggAFdNKAbkoLuDBpdjJYviN1Ive+zh3lN37ppmjk3VM0j0PmMBqZmDJtf1hG5KT
-	ImOBgN3A5WNeZ2CQ5EzfYSNOH0ughvaoCyeEg=
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=m
+	TgsEz3XjEEJQgb37on5xtNww0U=; b=g3P/9CS5NJ3STKzhpFU3WmO/tOI+k7CE/
+	0UvkkWcerTpP1lu9e03jfecxmHH3EKw9HkWZZom/iONOqivRjtPT6YApEg1dVdBX
+	LoGwLrLp4dtXGA/xJMB+Gs/0Lq4ZOZeX/EfV40miZ0yKG+ofvoub/js8d9i4spB5
+	xThfSBo4/0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GJoEjawDvj/6t+gZ0GQSF4/g1QIp4sv4
-	AxBlimlcEeDYzuVUxLdFNFMShqivBGRVpjLq/IPyoTrQHMe1UY1oOkkteSfw15aJ
-	6aJMJfsFUSAKxoodD92wpgzXwMqSdc5ztZpZQF3svwWeHecYUVOgOQ4/Q3p7MsfT
-	pcHtl614Au0=
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=hwFvGUWYLL1WnxL03p5LVJPTxe6wDRn5SKJk0Nq629vTYn5Fd1hCRYl5
+	XBfMoI9joKtxES5CMaM+ZjtD6D5Cv1R/3KiNIyaXxkwGUhkp6VCGr7mOogBSxNbM
+	lXOTRFJJmhV5NAr3KmZGdrqStiZc/vQpOQ6LY3pz7TqyoOKtgIc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 360A66393;
-	Tue, 31 Jan 2012 22:04:17 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AEF4E20C5;
+	Wed,  1 Feb 2012 00:50:23 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B67D56392; Tue, 31 Jan 2012
- 22:04:16 -0500 (EST)
-In-Reply-To: <20120201015606.GA24482@debian50-32.invisible-island.net>
- (Thomas Dickey's message of "Tue, 31 Jan 2012 20:56:06 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 251AC20C4; Wed,  1 Feb 2012
+ 00:50:23 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6D683634-4C81-11E1-BDFA-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A1D4900E-4C98-11E1-9432-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189498>
 
-Thomas Dickey <dickey@his.com> writes:
+When asking for a tag to be pulled, disambiguate by leaving tags/ prefix
+in front of the name of the tag. E.g.
 
-> On Wed, Feb 01, 2012 at 08:32:43AM +0700, Nguyen Thai Ngoc Duy wrote:
->> On Wed, Feb 1, 2012 at 12:50 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> >> If there is an environment variable to say "I don't want to see
->> >> variations on strings intended for humans", can it be spelled as
->> >> LC_ALL=C?
->> >
->> >  ...
->
-> ... diffstat (google helped find context)
+    ... in the git repository at:
 
-When we show diffstat from "git diff --stat" (or "git apply --stat"), we
-currently do not do any singular/plural on the last line of the output
-that summarizes the graph, ending up with:
+      git://example.com/git/git.git/ tags/v1.2.3
 
-	1 files changed, 1 insertions(+), 0 deletions(-)
+    for you to fetch changes up to 123456...
 
-when there is a single line insertion to a file and nothing else.
+This way, older versions of "git pull" can be used to respond to such a
+request more easily, as "git pull $URL v1.2.3" did not DWIM to fetch
+v1.2.3 tag in older versions. Also this makes it clearer for humans that
+the pull request is made for a tag and he should anticipate a signed one.
 
-My recollection is that our behaviour originally came from our desire to
-be as close as what "diffstat" produces, but that does not seem to be the
-case.  I observed that the output from recent versions of "diffstat" is
-much more human friendly.  We get these, depending on the input, from
-"diffstat" version 1.53:
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-        1 file changed, 1 insertion(+)
-        1 file changed, 1 deletion(-)
-	0 files changed
-	2 files changed, 3 insertions(+), 1 deletion(-)
+ * http://thread.gmane.org/gmane.linux.kernel/1245709/focus=1245909
+   triggered this
 
-Namely, it does singular/plural correctly, and omits unnecessary "0
-deletions(-)" and "0 insertions(+)".
+ .../howto/using-signed-tag-in-pull-request.txt     |    4 ++--
+ git-request-pull.sh                                |    2 +-
+ t/t5150-request-pull.sh                            |    6 +-----
+ 3 files changed, 4 insertions(+), 8 deletions(-)
 
-I was wondering if you remember what the behaviour of older versions of
-"diffstat" was, and if it was changed to be more human friendly over
-time. It is very possible that I am misremembering this and "diffstat" has
-always done the singular/plural correctly and omitted useless "0 lines".
-
-Somehow it seems hard to get hold of older versions of "diffstat", and I
-was hoping that I could get that information straight out of the current
-maintainer.
-
-Thanks for responding and sorry for the lack of context of the original
-message.
+diff --git a/Documentation/howto/using-signed-tag-in-pull-request.txt b/Documentation/howto/using-signed-tag-in-pull-request.txt
+index a1351c5..98c0033 100644
+--- a/Documentation/howto/using-signed-tag-in-pull-request.txt
++++ b/Documentation/howto/using-signed-tag-in-pull-request.txt
+@@ -109,7 +109,7 @@ The resulting msg.txt file begins like so:
+ 
+  are available in the git repository at:
+ 
+-   example.com:/git/froboz.git frotz-for-xyzzy
++   example.com:/git/froboz.git tags/frotz-for-xyzzy
+ 
+  for you to fetch changes up to 703f05ad5835c...:
+ 
+@@ -141,7 +141,7 @@ After receiving such a pull request message, the integrator fetches and
+ integrates the tag named in the request, with:
+ 
+ ------------
+- $ git pull example.com:/git/froboz.git/ frotz-for-xyzzy
++ $ git pull example.com:/git/froboz.git/ tags/frotz-for-xyzzy
+ ------------
+ 
+ This operation will always open an editor to allow the integrator to fine
+diff --git a/git-request-pull.sh b/git-request-pull.sh
+index 64960d6..e6438e2 100755
+--- a/git-request-pull.sh
++++ b/git-request-pull.sh
+@@ -63,7 +63,7 @@ die "fatal: No commits in common between $base and $head"
+ find_matching_ref='
+ 	sub abbr {
+ 		my $ref = shift;
+-		if ($ref =~ s|refs/heads/|| || $ref =~ s|refs/tags/||) {
++		if ($ref =~ s|^refs/heads/|| || $ref =~ s|^refs/tags/|tags/|) {
+ 			return $ref;
+ 		} else {
+ 			return $ref;
+diff --git a/t/t5150-request-pull.sh b/t/t5150-request-pull.sh
+index da25bc2..7c1dc64 100755
+--- a/t/t5150-request-pull.sh
++++ b/t/t5150-request-pull.sh
+@@ -179,11 +179,7 @@ test_expect_success 'request names an appropriate branch' '
+ 		read repository &&
+ 		read branch
+ 	} <digest &&
+-	{
+-		test "$branch" = full ||
+-		test "$branch" = master ||
+-		test "$branch" = for-upstream
+-	}
++	test "$branch" = tags/full
+ 
+ '
+ 
+-- 
+1.7.9.155.gf6ee6
