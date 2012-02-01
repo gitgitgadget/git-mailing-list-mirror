@@ -1,72 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 2/5] gitweb: add project_filter to limit project list
- to a subdirectory
-Date: Wed, 01 Feb 2012 12:55:50 -0800
-Message-ID: <7vpqdy2rzd.fsf@alter.siamese.dyndns.org>
-References: <20120128165606.GA6770@server.brlink.eu>
- <20120130095252.GA6183@server.brlink.eu>
- <20120130114557.GB9267@server.brlink.eu>
- <201201301657.12944.jnareb@gmail.com>
- <20120130200355.GA2584@server.brlink.eu>
- <7v39axaq0v.fsf@alter.siamese.dyndns.org>
- <20120201165902.GA14706@server.brlink.eu>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: General support for ! in git-config values
+Date: Wed, 1 Feb 2012 22:25:31 +0100
+Message-ID: <CACBZZX5mX55Rh8b2GYv7wKbCCypCkrn5AiM9BpXydgcYxHWdQA@mail.gmail.com>
+References: <CACBZZX6U+1Fmdaz2ikbbc6zUyF=pMGQOqUGVOWCkUFBUkovCBw@mail.gmail.com>
+ <20120201184020.GA29374@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: "Bernhard R. Link" <brl+git@mail.brlink.eu>
-X-From: git-owner@vger.kernel.org Wed Feb 01 21:56:02 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 01 22:26:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RshDi-0000TU-KL
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 21:55:59 +0100
+	id 1Rshgw-0007R8-RQ
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 22:26:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756418Ab2BAUzx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Feb 2012 15:55:53 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35656 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753992Ab2BAUzw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2012 15:55:52 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 473F554F9;
-	Wed,  1 Feb 2012 15:55:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=S77kU+gK73K6ogqw11JsEME4H0U=; b=qFfLQi
-	PWS320zFrK0t/au/4+qYOXUBsQ8SaEMe+cr+yCMdV3Nc5diDFcQmWNeB0iVOsY3L
-	s9x2pO0y9ftiUVYopHogusjCcJYx8fCJuwCvSLaZO/wC/eQtUZMh/wuS6Ab9JBNH
-	tGPfc1AmFhJq7F2FRsEAsslia3Pkl/CLzF/qQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Jrw/YHR94iKWElTTPwuKEI+Up9NiW6cO
-	JtJVbmmxZTwt3f2dDczPi/3/lT85EzpY0St7LKZutYDcByp7yhdZq7mMw/Gb1x2T
-	um0123PeFym2TsTe4rco88p4TWggJlVH4lBCCTT56WkczwEoqD3f7KiDMk0/eus7
-	AFFwki5JqBI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F19754F7;
-	Wed,  1 Feb 2012 15:55:52 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C73DE54F6; Wed,  1 Feb 2012
- 15:55:51 -0500 (EST)
-In-Reply-To: <20120201165902.GA14706@server.brlink.eu> (Bernhard R. Link's
- message of "Wed, 1 Feb 2012 17:59:02 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 203CEC74-4D17-11E1-8D2C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932827Ab2BAVZy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Feb 2012 16:25:54 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:38311 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932457Ab2BAVZw convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Feb 2012 16:25:52 -0500
+Received: by lagu2 with SMTP id u2so911917lag.19
+        for <git@vger.kernel.org>; Wed, 01 Feb 2012 13:25:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=OSkLSPcrKTjLWE//nW6bSvK+D8kNRpYZ4Nl+wbzZwos=;
+        b=CNpv5fOpWs5aZsxYBsLJQxdP0rcL5S7KHR677jwpQMyE06/Kxm00WkPgdHF5jbj1Z3
+         kyKUsZKkIK5m/FIYQvcxGHV5aL9d/eGF8J0zwDyhpiaVvacRm10TONoaTj14wtixuHW3
+         qyS23a4+AJPMg3xAVduSQ9S50UmcEfyKQgvRI=
+Received: by 10.152.129.69 with SMTP id nu5mr154824lab.9.1328131551213; Wed,
+ 01 Feb 2012 13:25:51 -0800 (PST)
+Received: by 10.112.30.67 with HTTP; Wed, 1 Feb 2012 13:25:31 -0800 (PST)
+In-Reply-To: <20120201184020.GA29374@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189537>
 
-"Bernhard R. Link" <brl+git@mail.brlink.eu> writes:
+On Wed, Feb 1, 2012 at 19:40, Jeff King <peff@peff.net> wrote:
+> On Wed, Feb 01, 2012 at 06:33:47PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0=
+ Bjarmason wrote:
+>
+>> For a program I'm working on (git-deploy) I'd like to have this as a
+>> general facility, i.e. users can specify either:
+>>
+>> =C2=A0 =C2=A0 foo.bar =3D value
+>>
+>> Or:
+>>
+>> =C2=A0 =C2=A0 foo.bar =3D !cat /some/path
+>>
+>> I'm wondering why git-config doesn't do this already, if there's no
+>> reason in particular I can just patch it in, either as a new option:
+>>
+>> =C2=A0 =C2=A0 git config --with-exec --get foo.bar
+>
+> I'm not clear on what you want --with-exec to do. By default, config
+> values are strings. I would expect the "!" to be a special marker tha=
+t
+> the caller would recognize in the string, and then act appropriately.
+>
+> So if I were implementing git aliases in the shell, the code would lo=
+ok
+> like:
+>
+> =C2=A0v=3D$(git config alias.$alias)
+> =C2=A0case "$v" in
+> =C2=A0"")
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0die "no such alias: $alias" ;;
+> =C2=A0"!*)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cmd=3D"${v#!}" ;;
+> =C2=A0*)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cmd=3D"git $v" ;;
+> =C2=A0esac
+> =C2=A0eval "$cmd"
+>
+> I.e., everything pertaining to "!" happens after we get the config
+> string. So what is it that you want "git config --with-exec" to do?
 
-> Look liks a change like that is actually needed...
-> ... So it looks for forks in a directory named '1'
-
-Yeah, that was exactly what was causing failures in 9502.  Fixed locally
-so no further action is required.
-
-Thanks.
+I agree that that's how it should work, I just suggested --with-exec
+in case anyone complained about the backwards compatibility issue of
+changing the meaning of "!" for existing configs.
