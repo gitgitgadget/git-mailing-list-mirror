@@ -1,247 +1,280 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] grep: respect diff attributes for binary-ness
-Date: Wed, 1 Feb 2012 18:21:29 -0500
-Message-ID: <20120201232129.GB2652@sigill.intra.peff.net>
-References: <20120201221437.GA19044@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2] Use correct grammar in diffstat summary line
+Date: Wed, 1 Feb 2012 17:35:15 -0600
+Message-ID: <20120201233515.GC29599@burratino>
+References: <1328019840-6168-1-git-send-email-pclouds@gmail.com>
+ <1328100907-20397-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Dov Grobgeld <dov.grobgeld@gmail.com>
-To: =?utf-8?Q?Conrad=C2=A0Irwin?= <conrad.irwin@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 00:21:44 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Frederik Schwarzer <schwarzerf@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 00:35:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RsjUl-0002L1-Kl
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 00:21:44 +0100
+	id 1RsjiD-0007mB-1y
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 00:35:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752966Ab2BAXVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Feb 2012 18:21:33 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52497
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752946Ab2BAXVc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2012 18:21:32 -0500
-Received: (qmail 14474 invoked by uid 107); 1 Feb 2012 23:28:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 01 Feb 2012 18:28:36 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Feb 2012 18:21:29 -0500
+	id S1752783Ab2BAXfc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Feb 2012 18:35:32 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:43726 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752131Ab2BAXfb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2012 18:35:31 -0500
+Received: by iacb35 with SMTP id b35so2187414iac.19
+        for <git@vger.kernel.org>; Wed, 01 Feb 2012 15:35:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=2yqzN68Aw8E8edetP37hRffeI7oan/8zG07KijiqnJQ=;
+        b=BS55tCkWw3Zck98kLNnGsx1zDfDoMR5f9KGEhvxvxe7YZqVuHB7w1Q8oUnArPCRONc
+         59U+B3bjBAUUavifSBwqaYsaswtlQaR+ozw3FbH0MCK3Jwks4CFOdUIFL9WdbINQDdCo
+         M0i//alMKyWHROIsXstfKhhZOgLfClzgxQXhs=
+Received: by 10.50.15.169 with SMTP id y9mr9710176igc.9.1328139331130;
+        Wed, 01 Feb 2012 15:35:31 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id k3sm8606835igq.1.2012.02.01.15.35.30
+        (version=SSLv3 cipher=OTHER);
+        Wed, 01 Feb 2012 15:35:30 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20120201221437.GA19044@sigill.intra.peff.net>
+In-Reply-To: <1328100907-20397-1-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189555>
 
-There is currently no way for users to tell git-grep that a
-particular path is or is not a binary file; instead, grep
-always relies on its auto-detection (or the user specifying
-"-a" to treat all binary-looking files like text).
+(dropping Thomas from cc)
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-This patch teaches git-grep to use the same attribute lookup
-that is used by git-diff. We could add a new "grep" flag,
-but that is unnecessarily complex and unlikely to be useful.
-Despite the name, the "-diff" attribute (or "diff=foo" and
-the associated diff.foo.binary config option) are really
-about describing the contents of the path. It's simply
-historical that diff was the only thing that cared about
-these attributes in the past.
+>  And this patch's diffstat looks just scary due to test suite's updat=
+es.
 
-And if this simple approach turns out to be insufficient, we
-still have a backwards-compatible path forward: we can add a
-separate "grep" attribute, and fall back to respecting
-"diff" if it is unset.
+Not about this patch, but: let's see if we can chisel away at that.
 
-There are a few things worth nothing about the
-implementation.
+Hidden below are also two minor bug reports about the patch.  See (*)
+and (**) below.
 
-One is that the attribute lookup happens outside of the
-grep.[ch] interface (i.e., outside of grep_buffer). We could
-do it at a lower level, which would be slightly more
-convenient for callers. However, this interacts badly with
-threading.  The attribute-lookup code performs best when
-lookup order matches the filesystem order (so looking up
-"a/b/c" is cheaper if we just looked up "a/b/d" than if we
-just did "x/y/z"). Because we issue many simultaneous
-requests to grep_buffer, performing the attribute lookup at
-that level will cause requests from unrelated paths to
-interleave, and we lose the locality that makes the lookup
-optimization work.
+> --- a/t/t0023-crlf-am.sh
+> +++ b/t/t0023-crlf-am.sh
+> @@ -12,7 +12,7 @@ Subject: test1
+> =20
+>  ---
+>   foo |    1 +
+> - 1 files changed, 1 insertions(+), 0 deletions(-)
+> + 1 file changed, 1 insertion(+)
+>   create mode 100644 foo
 
-Instead, in the threaded case we check the attributes as
-they are added to the work queue, meaning they are looked up
-in the optimal order (in the single threaded case, this is a
-non-issue, as we process the files serially in the optimal
-order).
+This patchfile is sample input to "git am", and this patch hunk
+changes it to match the modified format-patch output format.  But
+don't we want "git am" to work with old patches, too?  So this hunk is
+unnecessary.
 
-Here are a few numbers showing the difference. The first is
-a best-of-five time for "git grep foo" on the linux-2.6 repo
-before this patch (on a 4-core HT processor, using 8
-threads):
+[...]
+> --- a/t/t1200-tutorial.sh
+> +++ b/t/t1200-tutorial.sh
+> @@ -156,7 +156,7 @@ Updating VARIABLE..VARIABLE
+>  FASTFORWARD (no commit created; -m option ignored)
+>   example |    1 +
+>   hello   |    1 +
+> - 2 files changed, 2 insertions(+), 0 deletions(-)
+> + 2 files changed, 2 insertions(+)
+>  EOF
 
-  real    0m0.306s
-  user    0m1.512s
-  sys     0m0.412s
+Yes, this one's necessary.
 
-Now here's the time for the same operation with a trial
-implementation looking up attributes in grep_buffer,
-showing a 31% slowdown:
+(*) It's reminding us to update the gitcore-tutorial. :)
 
-  real    0m0.401s
-  user    0m1.760s
-  sys     0m0.636s
+[...]
+> --- a/t/t3300-funny-names.sh
+> +++ b/t/t3300-funny-names.sh
+> @@ -167,7 +167,7 @@ test_expect_success TABS_IN_FILENAMES 'git diff-t=
+ree delete with-funny' \
+>  test_expect_success TABS_IN_FILENAMES 'setup expect' '
+>  cat >expected <<\EOF
+>   "tabs\t,\" (dq) and spaces"
+> - 1 files changed, 0 insertions(+), 0 deletions(-)
+> + 1 file changed, 0 insertions(+), 0 deletions(-)
+>  EOF
+>  '
 
-And here's the same operation with this patch, with only an
-11% slowdown:
+I'm not sure why this and other tests in the same file use "git apply
+--stat" to check their work.  The descriptions refer to diff-tree but
+the tests themselves use diff-index | apply --stat.  Puzzling.
 
-  real    0m0.339s
-  user    0m1.444s
-  sys     0m0.584s
+[...]
+> --- a/t/t3508-cherry-pick-many-commits.sh
+> +++ b/t/t3508-cherry-pick-many-commits.sh
+> @@ -38,13 +38,13 @@ test_expect_success 'cherry-pick first..fourth wo=
+rks' '
+>  	cat <<-\EOF >expected &&
+>  	[master OBJID] second
+>  	 Author: A U Thor <author@example.com>
+> -	 1 files changed, 1 insertions(+), 0 deletions(-)
+> +	 1 file changed, 1 insertion(+)
+>  	[master OBJID] third
+>  	 Author: A U Thor <author@example.com>
+> -	 1 files changed, 1 insertions(+), 0 deletions(-)
+> +	 1 file changed, 1 insertion(+)
+>  	[master OBJID] fourth
+>  	 Author: A U Thor <author@example.com>
+> -	 1 files changed, 1 insertions(+), 0 deletions(-)
+> +	 1 file changed, 1 insertion(+)
+>  	EOF
 
-Note that while the percentages are big, the absolute
-numbers are pretty small. In particular, this is a very
-inexpensive grep to do. A more complex regex should have the
-same absolute slowdown from the attribute lookup, but it
-would be a much smaller percentage of the total processing
-time.  So doing it this way is not a huge win, but it does
-help on small greps.
+Probably should be split out as a separate test so cherry-pick's
+behavior and progress reporting can be tested separately.  Aside from
+that detail, makes sense.
 
-The second issue worth noting is that while we do a full
-attribute lookup, we pass along only the binary flag to
-grep_buffer. When the "-p" flag is given to grep, we will
-actually look up the same attributes to find funcname
-patterns of matches. We could pass along the pointer to the
-userdiff driver for reuse.
+[...]
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -444,7 +444,7 @@ test_expect_success 'stash show - stashes on stac=
+k, stash-like argument' '
+>  	git reset --hard &&
+>  	cat >expected <<-EOF &&
+>  	 file |    1 +
+> -	 1 files changed, 1 insertions(+), 0 deletions(-)
+> +	 1 file changed, 1 insertion(+)
 
-However, it's not worth doing this. It clutters the code, as
-the driver has to be passed through a large number of helper
-functions (and pollutes the grep_buffer interface with
-userdiff code). And in my tests, it didn't actually improve
-performance. Because we only have to look up the attribute
-for a grep hit, in most cases we will only do the funcname
-lookup for a small subset of files. The cost of the extra
-lookups turns out to be negligible.
+Hm.  "git stash show" defaults to --stat, but these tests are not
+really about that.  Maybe there should be one test that checks that
+the default uses --stat and others could use --numstat or similar?
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/grep.c         |   26 ++++++++++++++++++++++----
- t/t7008-grep-binary.sh |   24 ++++++++++++++++++++++++
- 2 files changed, 46 insertions(+), 4 deletions(-)
+This will be a problem with GETTEXT_POISON (except your patch bypasses
+poison so it got missed --- will send a relevant fix as a reply).
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index e328316..bb38804 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -42,6 +42,7 @@ enum work_type {WORK_SHA1, WORK_FILE};
- struct work_item {
- 	enum work_type type;
- 	char *name;
-+	int is_binary;
- 
- 	/* if type == WORK_SHA1, then 'identifier' is a SHA1,
- 	 * otherwise type == WORK_FILE, and 'identifier' is a NUL
-@@ -113,6 +114,14 @@ static pthread_cond_t cond_result;
- 
- static int skip_first_line;
- 
-+static int path_is_binary(const char *path)
-+{
-+	struct userdiff_driver *drv = userdiff_find_by_path(path);
-+	if (drv)
-+		return drv->binary;
-+	return -1;
-+}
-+
- static void add_work(enum work_type type, char *name, void *id)
- {
- 	grep_lock();
-@@ -123,6 +132,11 @@ static void add_work(enum work_type type, char *name, void *id)
- 
- 	todo[todo_end].type = type;
- 	todo[todo_end].name = name;
-+
-+	pthread_mutex_lock(&grep_attr_mutex);
-+	todo[todo_end].is_binary = path_is_binary(name);
-+	pthread_mutex_unlock(&grep_attr_mutex);
-+
- 	todo[todo_end].identifier = id;
- 	todo[todo_end].done = 0;
- 	strbuf_reset(&todo[todo_end].out);
-@@ -221,14 +235,16 @@ static void *run(void *arg)
- 			void* data = load_sha1(w->identifier, &sz, w->name);
- 
- 			if (data) {
--				hit |= grep_buffer(opt, w->name, -1, data, sz);
-+				hit |= grep_buffer(opt, w->name, w->is_binary,
-+						   data, sz);
- 				free(data);
- 			}
- 		} else if (w->type == WORK_FILE) {
- 			size_t sz;
- 			void* data = load_file(w->identifier, &sz);
- 			if (data) {
--				hit |= grep_buffer(opt, w->name, -1, data, sz);
-+				hit |= grep_buffer(opt, w->name, w->is_binary,
-+						   data, sz);
- 				free(data);
- 			}
- 		} else {
-@@ -421,7 +437,8 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
- 		if (!data)
- 			hit = 0;
- 		else
--			hit = grep_buffer(opt, name, -1, data, sz);
-+			hit = grep_buffer(opt, name, path_is_binary(name),
-+					  data, sz);
- 
- 		free(data);
- 		free(name);
-@@ -483,7 +500,8 @@ static int grep_file(struct grep_opt *opt, const char *filename)
- 		if (!data)
- 			hit = 0;
- 		else
--			hit = grep_buffer(opt, name, -1, data, sz);
-+			hit = grep_buffer(opt, name, path_is_binary(name),
-+					  data, sz);
- 
- 		free(data);
- 		free(name);
-diff --git a/t/t7008-grep-binary.sh b/t/t7008-grep-binary.sh
-index 917a264..fd6410f 100755
---- a/t/t7008-grep-binary.sh
-+++ b/t/t7008-grep-binary.sh
-@@ -99,4 +99,28 @@ test_expect_success 'git grep y<NUL>x a' "
- 	test_must_fail git grep -f f a
- "
- 
-+test_expect_success 'grep respects binary diff attribute' '
-+	echo text >t &&
-+	git add t &&
-+	echo t:text >expect &&
-+	git grep text t >actual &&
-+	test_cmp expect actual &&
-+	echo "t -diff" >.gitattributes &&
-+	echo "Binary file t matches" >expect &&
-+	git grep text t >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'grep respects not-binary diff attribute' '
-+	echo binQary | q_to_nul >b &&
-+	git add b &&
-+	echo "Binary file b matches" >expect &&
-+	git grep bin b >actual &&
-+	test_cmp expect actual &&
-+	echo "b diff" >.gitattributes &&
-+	echo "b:binQary" >expect &&
-+	git grep bin b | nul_to_q >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-1.7.9.3.gc3fce1.dirty
+[...]
+> +++ b/t/t4013/diff.diff-tree_--cc_--patch-with-stat_--summary_master
+> +++ b/t/t4013/diff.diff-tree_--cc_--patch-with-stat_--summary_side
+> +++ b/t/t4013/diff.diff-tree_--cc_--patch-with-stat_master
+> +++ b/t/t4013/diff.diff-tree_--cc_--stat_--summary_master
+[...]
+> +++ b/t/t4013/diff.format-patch_--attach_--stdout_initial..side
+> +++ b/t/t4013/diff.format-patch_--inline_--stdout_--numbered-files_in=
+itial..master
+> +++ b/t/t4013/diff.format-patch_--inline_--stdout_--subject-prefix=3D=
+TESTCASE_initial..master
+[...]
+
+Testing the --stat option.  Can't really be avoided.  (Though maybe
+some more modular tests for these combinations can be made some day.)
+
+[...]
+> --- a/t/t4014-format-patch.sh
+> +++ b/t/t4014-format-patch.sh
+> @@ -520,7 +520,7 @@ test_expect_success 'shortlog of cover-letter wra=
+ps overly-long onelines' '
+>  cat > expect << EOF
+>  ---
+>   file |   16 ++++++++++++++++
+> - 1 files changed, 16 insertions(+), 0 deletions(-)
+> + 1 file changed, 16 insertions(+)
+
+Not relevant to the detail being tested, should probably be fuzzed
+out.
+
+[...]
+> --- a/t/t4030-diff-textconv.sh
+> +++ b/t/t4030-diff-textconv.sh
+> @@ -86,7 +86,7 @@ test_expect_success 'status -v produces text' '
+> =20
+>  cat >expect.stat <<'EOF'
+>   file |  Bin 2 -> 4 bytes
+> - 1 files changed, 0 insertions(+), 0 deletions(-)
+> + 1 file changed, 0 insertions(+), 0 deletions(-)
+>  EOF
+>  test_expect_success 'diffstat does not run textconv' '
+>  	echo file diff=3Dfail >.gitattributes &&
+
+Testing diffstat.  Would be nice to have an accompanying test of
+numstat.
+
+[...]
+> --- a/t/t4045-diff-relative.sh
+> +++ b/t/t4045-diff-relative.sh
+> @@ -33,7 +33,7 @@ check_stat() {
+>  expect=3D$1; shift
+>  cat >expected <<EOF
+>   $expect |    1 +
+> - 1 files changed, 1 insertions(+), 0 deletions(-)
+> + 1 file changed, 1 insertion(+)
+>  EOF
+
+Not the detail being tested, so technically it would be nicer to
+fuzz the last line out.
+
+[...]
+> --- a/t/t4049-diff-stat-count.sh
+> +++ b/t/t4049-diff-stat-count.sh
+> @@ -16,7 +16,7 @@ test_expect_success setup '
+>  	cat >expect <<-\EOF
+>  	 a |    1 +
+>  	 b |    1 +
+> -	 2 files changed, 2 insertions(+), 0 deletions(-)
+> +	 2 files changed, 2 insertions(+)
+>  	EOF
+>  	git diff --stat --stat-count=3D2 >actual &&
+>  	test_cmp expect actual
+
+Testing diffstat.  Looks sane.
+
+[...]
+> +++ b/t/t4100/t-apply-8.expect
+> @@ -1,2 +1,2 @@
+>   t/t4100-apply-stat.sh |    2 +-
+> - 1 files changed, 1 insertions(+), 1 deletions(-)
+> + 1 file changed, 1 insertion(+), 1 deletion(-)
+[...]
+> +++ b/t/t4100/t-apply-9.expect
+> @@ -1,2 +1,2 @@
+>   t/t4100-apply-stat.sh |    2 +-
+> - 1 files changed, 1 insertions(+), 1 deletions(-)
+> + 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Testing apply --stat.  Tests of apply --numstat would be more
+interesting, but then we'd still need some tests like these to make
+sure --stat is consistent with it, so it still seems sane.
+
+> --- a/t/t5150-request-pull.sh
+> +++ b/t/t5150-request-pull.sh
+> @@ -95,7 +95,7 @@ test_expect_success 'setup: two scripts for reading=
+ pull requests' '
+>  	b
+>  	: diffstat
+>  	n
+> -	/ [0-9]* files changed/ {
+> +	/ [0-9]* files\? changed/ {
+
+Mimicking a human.
+
+(**) Should probably use "*" instead of \? --- \? is a GNU extension,
+not a BRE.
+
+[...]
+> +++ b/t/t7602-merge-octopus-many.sh
+> @@ -57,7 +57,7 @@ Merge made by the 'octopus' strategy.
+>   c2.c |    1 +
+>   c3.c |    1 +
+>   c4.c |    1 +
+> - 3 files changed, 3 insertions(+), 0 deletions(-)
+> + 3 files changed, 3 insertions(+)
+>   create mode 100644 c2.c
+>   create mode 100644 c3.c
+>   create mode 100644 c4.c
+
+Test is about the "Trying simple merge with" lines, not the final
+diffstat summary.  Should probably be fuzzed out.
+
+Thanks, that was interesting.
+
+Jonathan
