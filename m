@@ -1,65 +1,77 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] i18n: po for zh_cn
-Date: Wed, 1 Feb 2012 18:48:49 +0100
-Message-ID: <CACBZZX6mHQ8NLWiBjp5OtDpFAc1=s9XfzHY5HhQ-26pqLXQ3bg@mail.gmail.com>
-References: <1328111436-58925-1-git-send-email-worldhello.net@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: General support for ! in git-config values
+Date: Wed, 1 Feb 2012 13:40:20 -0500
+Message-ID: <20120201184020.GA29374@sigill.intra.peff.net>
+References: <CACBZZX6U+1Fmdaz2ikbbc6zUyF=pMGQOqUGVOWCkUFBUkovCBw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 01 18:49:19 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 01 19:40:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RseJ2-0007Vn-6S
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 18:49:16 +0100
+	id 1Rsf6b-0007oD-2r
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 19:40:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752522Ab2BARtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Feb 2012 12:49:11 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:46306 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751890Ab2BARtK (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2012 12:49:10 -0500
-Received: by lagu2 with SMTP id u2so798467lag.19
-        for <git@vger.kernel.org>; Wed, 01 Feb 2012 09:49:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=YxqLQ5be2SG9GfpYV77UYJseewgVjEWIRytNFk85ODk=;
-        b=GpXMopuIlFhYyLQJor5MJzGzWH8m72xuGebSC5Zrmriyk4Xm4dz+oNYzsB8aVxSTEo
-         Y56ABAQC9AiFdtEepKXA8q2d2hfCaF/xUaKgxG6qKr0W7mGgh5ShKL40BMmixbA5z+UI
-         glagvoXhU6aopvm2njwSRX2eWDW/PAgOcwFIw=
-Received: by 10.112.49.201 with SMTP id w9mr6893364lbn.23.1328118549226; Wed,
- 01 Feb 2012 09:49:09 -0800 (PST)
-Received: by 10.112.30.67 with HTTP; Wed, 1 Feb 2012 09:48:49 -0800 (PST)
-In-Reply-To: <1328111436-58925-1-git-send-email-worldhello.net@gmail.com>
+	id S1753377Ab2BASkX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Feb 2012 13:40:23 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52307
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753353Ab2BASkW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2012 13:40:22 -0500
+Received: (qmail 11385 invoked by uid 107); 1 Feb 2012 18:47:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 01 Feb 2012 13:47:26 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Feb 2012 13:40:20 -0500
+Content-Disposition: inline
+In-Reply-To: <CACBZZX6U+1Fmdaz2ikbbc6zUyF=pMGQOqUGVOWCkUFBUkovCBw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189530>
 
-On Wed, Feb 1, 2012 at 16:50, Jiang Xin <worldhello.net@gmail.com> wrote:
-> Git can speak Chinese now.
+On Wed, Feb 01, 2012 at 06:33:47PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
 
-That's very nice, and it passes the msgfmt --check test as well, so
-all looks good.
+> For a program I'm working on (git-deploy) I'd like to have this as a
+> general facility, i.e. users can specify either:
+>=20
+>     foo.bar =3D value
+>=20
+> Or:
+>=20
+>     foo.bar =3D !cat /some/path
+>=20
+> I'm wondering why git-config doesn't do this already, if there's no
+> reason in particular I can just patch it in, either as a new option:
+>=20
+>     git config --with-exec --get foo.bar
 
-As an aside doesn't the bug / workaround described in
-https://github.com/git/git/blob/master/gettext.c#L35 impact chinese
-especially badly? I'd expect any place where we use strerror() to show
-up as total gibberish.
+I'm not clear on what you want --with-exec to do. By default, config
+values are strings. I would expect the "!" to be a special marker that
+the caller would recognize in the string, and then act appropriately.
 
-Nothing to be done about that though than providing non-broken printf
-functions though, just curious.
+So if I were implementing git aliases in the shell, the code would look
+like:
 
-> +#: wt-status.c:207
-> +msgid "bug"
-> +msgstr "bug"
+  v=3D$(git config alias.$alias)
+  case "$v" in
+  "")
+          die "no such alias: $alias" ;;
+  "!*)
+          cmd=3D"${v#!}" ;;
+  *)
+          cmd=3D"git $v" ;;
+  esac
+  eval "$cmd"
 
-It also looks like we could do away with making this available for
-translation, and it should actually be something like "if you see this
-report a bug in Git" instead.
+I.e., everything pertaining to "!" happens after we get the config
+string. So what is it that you want "git config --with-exec" to do?
+
+-Peff
