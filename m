@@ -1,71 +1,87 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH] i18n: git-commit whence_s "merge/cherry-pick" message
-Date: Thu,  2 Feb 2012 01:20:30 +0800
-Message-ID: <1328116830-61290-1-git-send-email-worldhello.net@gmail.com>
+Subject: [PATCH] i18n: format_tracking_info "Your branch is behind" message
+Date: Thu,  2 Feb 2012 01:21:54 +0800
+Message-ID: <1328116914-61381-1-git-send-email-worldhello.net@gmail.com>
 Cc: Jiang Xin <worldhello.net@gmail.com>
 To: Git List <git@vger.kernel.org>, avarab@gmail.com
-X-From: git-owner@vger.kernel.org Wed Feb 01 18:21:13 2012
+X-From: git-owner@vger.kernel.org Wed Feb 01 18:22:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rsdrs-0001HX-0L
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 18:21:12 +0100
+	id 1Rsdt4-00021m-7U
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Feb 2012 18:22:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754888Ab2BARVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Feb 2012 12:21:06 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:36276 "EHLO
+	id S1753372Ab2BARWV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Feb 2012 12:22:21 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:64580 "EHLO
 	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752904Ab2BARVF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2012 12:21:05 -0500
-Received: by ghrr11 with SMTP id r11so688443ghr.19
-        for <git@vger.kernel.org>; Wed, 01 Feb 2012 09:21:04 -0800 (PST)
+	with ESMTP id S1752519Ab2BARWU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2012 12:22:20 -0500
+Received: by ghrr11 with SMTP id r11so689452ghr.19
+        for <git@vger.kernel.org>; Wed, 01 Feb 2012 09:22:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=PMtT0kZQHHUFqXQ9e5OpCOsJ5ytnfSJVQ1yhkVjV4tY=;
-        b=ClQwT/5GMz1Zw7HwCYUV0RwCWXAHlMpSxyA1jWi5242XaicoInqVPs9q4uyxrWwf07
-         SHMtgU4jBaiYQAS/CwrEVJFBjQA2XOTfhylH3hz1MKBI/POghq0pnEKlnfmh6ar/Gl00
-         HMKVRiXUqq6QtYqCm4N7HXXROGyKwTWg6L3JY=
-Received: by 10.50.51.168 with SMTP id l8mr8179724igo.5.1328116864171;
-        Wed, 01 Feb 2012 09:21:04 -0800 (PST)
+        bh=mMix4qxpYamkPn/uFkjVUZ0WGcNHvyD6XqgGt74vA+8=;
+        b=kXrP+zxH5n/hKbX2m5AJSS9l1UZgWNvb+r+aU4LP02kz128u5GMnV3IUnDIrxQZEnH
+         F5c7fKzGLsSPJAfavfFH1XvNwzo/BJhJNgPI70HexLuFq/egABFs3M6ZRuqDbSFRz7CQ
+         U5ERAtBpgnlWP+f0GZtTV6VssGmwSKahmfgAU=
+Received: by 10.50.6.138 with SMTP id b10mr27892504iga.21.1328116939831;
+        Wed, 01 Feb 2012 09:22:19 -0800 (PST)
 Received: from localhost.foo.bar ([123.116.240.29])
-        by mx.google.com with ESMTPS id r18sm27553124ibh.4.2012.02.01.09.20.47
+        by mx.google.com with ESMTPS id h9sm27515782ibh.11.2012.02.01.09.22.07
         (version=SSLv3 cipher=OTHER);
-        Wed, 01 Feb 2012 09:21:02 -0800 (PST)
+        Wed, 01 Feb 2012 09:22:16 -0800 (PST)
 X-Mailer: git-send-email 1.7.9.3.g1fbd7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189524>
 
-Mark the "merge/cherry-pick" messages in whence_s for translation.
-These messages returned from whence_s function are used as argument
-to build other messages.
+Function format_tracking_info in remote.c is called by
+wt_status_print_tracking in wt-status.c, which will print
+branch tracking message in git-status. git-checkout also
+show these messages through it's report_tracking function.
 
 Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 ---
- builtin/commit.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ remote.c |   18 +++++++++---------
+ 1 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index eba137..663e1 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -202,10 +202,10 @@ static const char *whence_s(void)
- 	case FROM_COMMIT:
- 		break;
- 	case FROM_MERGE:
--		s = "merge";
-+		s = _("merge");
- 		break;
- 	case FROM_CHERRY_PICK:
--		s = "cherry-pick";
-+		s = _("cherry-pick");
- 		break;
- 	}
- 
+diff --git a/remote.c b/remote.c
+index 73a38..51853 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1572,18 +1572,18 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+ 	base = branch->merge[0]->dst;
+ 	base = shorten_unambiguous_ref(base, 0);
+ 	if (!num_theirs)
+-		strbuf_addf(sb, "Your branch is ahead of '%s' "
+-			    "by %d commit%s.\n",
+-			    base, num_ours, (num_ours == 1) ? "" : "s");
++		strbuf_addf(sb, _("Your branch is ahead of '%s' "
++			    "by %d %s.\n"),
++			    base, num_ours, Q_("commit", "commits", num_ours));
+ 	else if (!num_ours)
+-		strbuf_addf(sb, "Your branch is behind '%s' "
+-			    "by %d commit%s, "
+-			    "and can be fast-forwarded.\n",
+-			    base, num_theirs, (num_theirs == 1) ? "" : "s");
++		strbuf_addf(sb, _("Your branch is behind '%s' "
++			    "by %d %s, "
++			    "and can be fast-forwarded.\n"),
++			    base, num_theirs, Q_("commit", "commits", num_theirs));
+ 	else
+-		strbuf_addf(sb, "Your branch and '%s' have diverged,\n"
++		strbuf_addf(sb, _("Your branch and '%s' have diverged,\n"
+ 			    "and have %d and %d different commit(s) each, "
+-			    "respectively.\n",
++			    "respectively.\n"),
+ 			    base, num_ours, num_theirs);
+ 	return 1;
+ }
 -- 
 1.7.9.3.g1fbd7
