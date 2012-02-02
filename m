@@ -1,101 +1,85 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v3] i18n: format_tracking_info "Your branch is behind" message
-Date: Thu,  2 Feb 2012 10:02:23 +0800
-Message-ID: <1328148143-88593-1-git-send-email-worldhello.net@gmail.com>
-Cc: Jiang Xin <worldhello.net@gmail.com>
-To: Git List <git@vger.kernel.org>, avarab@gmail.com,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 03:02:45 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Don't search files with an unset "grep" attribute
+Date: Wed, 01 Feb 2012 18:03:51 -0800
+Message-ID: <7vmx92yos8.fsf@alter.siamese.dyndns.org>
+References: <7vy5sy8e0y.fsf@alter.siamese.dyndns.org>
+ <1327359555-29457-1-git-send-email-conrad.irwin@gmail.com>
+ <7vaa5d4mce.fsf@alter.siamese.dyndns.org>
+ <20120125214625.GA4666@sigill.intra.peff.net>
+ <7vhazb3rtm.fsf@alter.siamese.dyndns.org>
+ <20120201082005.GA32348@sigill.intra.peff.net>
+ <20120201091009.GA20984@sigill.intra.peff.net>
+ <CAOTq_ptj06aNGsQRjV0fVRxnQFBHmU2FFSXwWDUUk9MM77k2LQ@mail.gmail.com>
+ <20120201221437.GA19044@sigill.intra.peff.net>
+ <20120201232027.GA32119@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Conrad Irwin <conrad.irwin@gmail.com>, git@vger.kernel.org,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Dov Grobgeld <dov.grobgeld@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 02 03:04:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rsm0Z-0008IE-ER
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 03:02:43 +0100
+	id 1Rsm1m-0000LZ-IR
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 03:03:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754339Ab2BBCCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Feb 2012 21:02:39 -0500
-Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:46377 "EHLO
-	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753509Ab2BBCCi (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2012 21:02:38 -0500
-Received: by obcva7 with SMTP id va7so2118990obc.19
-        for <git@vger.kernel.org>; Wed, 01 Feb 2012 18:02:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=RjHmqtIUTmPrXG2Zp24Ate4UZhqCranMm0QyjN3nYp4=;
-        b=xHb2L+HlN+4lCjM8P7RlY1KZU2XXmiEPZvVvW+IsBwV67vvhpFlAZfDtOorJTf9Nqx
-         +S+JUqQLxnHJcBViMjmb9vQcjkJ1sLTuSHaCfLsgecT5G/vQQVAGvxdLcfEX1f8via69
-         8xCAimz0OVdKTtLcJG1MZ27YtVJHxSZxrcATw=
-Received: by 10.182.41.5 with SMTP id b5mr782066obl.79.1328148157875;
-        Wed, 01 Feb 2012 18:02:37 -0800 (PST)
-Received: from localhost.localdomain (li380-141.members.linode.com. [106.187.37.141])
-        by mx.google.com with ESMTPS id q5sm10928805obl.2.2012.02.01.18.02.35
-        (version=SSLv3 cipher=OTHER);
-        Wed, 01 Feb 2012 18:02:37 -0800 (PST)
-X-Mailer: git-send-email 1.7.9.109.gd927b
+	id S1754424Ab2BBCDy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Feb 2012 21:03:54 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50887 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753509Ab2BBCDx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2012 21:03:53 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C05C6C29;
+	Wed,  1 Feb 2012 21:03:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lqXdtN+vR9MUJQrXiB0Iz1yJV50=; b=AT0l93
+	REU5vhyHizTzOAtr8lzwiCi7XqWpD0BKunxoOBUcg00yoIu22ple1fZg1/fgmexP
+	Wf4UXTP6zxWiVNFV5ZXuuRUSNlQjWgshEPKHy7axKTtGL5O3eP5276ZUFDbcWKDo
+	+TtiIpfzzg8261p4VSpqJ+pJZ+XxMqjMxjadc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ArMdJgmSWyZKhD17tBiUoBgMnIr73H9O
+	Yj4b2uDwRo+jSegFL1yZteoVomA8hddbP4XPE2nlrVk7nAttKV/eCNBiA7Wp1Fjq
+	u0x9wOvzCYbpqNiUsdWvsMsnT2q46svmKOuseXotjpvN15p8KhoaJTTbf+pCei/K
+	KPGO9YvPKK0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3362E6C28;
+	Wed,  1 Feb 2012 21:03:53 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BB4CF6C26; Wed,  1 Feb 2012
+ 21:03:52 -0500 (EST)
+In-Reply-To: <20120201232027.GA32119@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 1 Feb 2012 18:20:27 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 27BE4BDE-4D42-11E1-9552-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189576>
 
-Function format_tracking_info in remote.c is called by
-wt_status_print_tracking in wt-status.c, which will print
-branch tracking message in git-status. git-checkout also
-show these messages through it's report_tracking function.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
----
- remote.c |   32 +++++++++++++++++++++-----------
- 1 files changed, 21 insertions(+), 11 deletions(-)
+> There are a few optimizations I didn't do that you could put on top:
+>
+>   1. When "-a" is given, we can avoid the attribute lookup altogether.
 
-diff --git a/remote.c b/remote.c
-index 73a38..af597 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1572,19 +1572,29 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
- 	base = branch->merge[0]->dst;
- 	base = shorten_unambiguous_ref(base, 0);
- 	if (!num_theirs)
--		strbuf_addf(sb, "Your branch is ahead of '%s' "
--			    "by %d commit%s.\n",
--			    base, num_ours, (num_ours == 1) ? "" : "s");
-+		strbuf_addf(sb,
-+			Q_("Your branch is ahead of '%s' by %d commit.\n",
-+			   "Your branch is ahead of '%s' by %d commits.\n",
-+			   num_ours),
-+			base, num_ours);
- 	else if (!num_ours)
--		strbuf_addf(sb, "Your branch is behind '%s' "
--			    "by %d commit%s, "
--			    "and can be fast-forwarded.\n",
--			    base, num_theirs, (num_theirs == 1) ? "" : "s");
-+		strbuf_addf(sb,
-+			Q_("Your branch is behind '%s' by %d commit, "
-+			       "and can be fast-forwarded.\n",
-+			   "Your branch is behind '%s' by %d commits, "
-+			       "and can be fast-forwarded.\n",
-+			   num_theirs),
-+			base, num_theirs);
- 	else
--		strbuf_addf(sb, "Your branch and '%s' have diverged,\n"
--			    "and have %d and %d different commit(s) each, "
--			    "respectively.\n",
--			    base, num_ours, num_theirs);
-+		strbuf_addf(sb,
-+			Q_("Your branch and '%s' have diverged,\n"
-+			       "and have %d and %d different commit each, "
-+			       "respectively.\n",
-+			   "Your branch and '%s' have diverged,\n"
-+			       "and have %d and %d different commits each, "
-+			       "respectively.\n",
-+			   num_theirs),
-+			base, num_ours, num_theirs);
- 	return 1;
- }
- 
--- 
-1.7.9.109.gd927b
+Correct.
+
+>   2. When "-I" is given, we can actually check attributes _before_
+>      loading the file or blob into memory. This can help with very large
+>      binaries.
+
+Nice.
+
+> ... However, for large files, it might be nice to have a streaming grep
+> interface anyway, and (3) could be part of that.
+
+Even nicer ;-)
