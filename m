@@ -1,127 +1,111 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC (version B)] gitweb: Allow UTF-8 encoded CGI query parameters and  path_info
-Date: Thu, 2 Feb 2012 23:57:29 +0100
-Message-ID: <201202022357.29569.jnareb@gmail.com>
-References: <1328136653-20559-1-git-send-email-michal.kiedrowicz@gmail.com> <20120202214646.1b84f23e@gmail.com> <201202022207.52220.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Problem pushing to a Novell share
+Date: Thu, 02 Feb 2012 15:45:16 -0800
+Message-ID: <7vmx90vlyr.fsf@alter.siamese.dyndns.org>
+References: <CAJ4nRM0-3GWN=OYOXDdGtktU0mc8mhcoKqbo=U4Jm5AmSbPAyQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?utf-8?q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 23:56:56 2012
+To: =?utf-8?Q?R=C3=BCdiger?= Kessel <ruediger.kessel@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 03 00:45:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rt5aK-0007G3-1U
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 23:56:56 +0100
+	id 1Rt6LL-0003va-LK
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 00:45:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753646Ab2BBW4v convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Feb 2012 17:56:51 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:48438 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752612Ab2BBW4u (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 17:56:50 -0500
-Received: by eekc14 with SMTP id c14so945666eek.19
-        for <git@vger.kernel.org>; Thu, 02 Feb 2012 14:56:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=HtWbiT8vugVjm76XkugDeCvW7ibW0+HNAmW7Z4ehjdQ=;
-        b=lOSv+5g0ruRe98dtQ+1w9J1KdLuCzdubjDgKD/jXsufrl6mbGkqUAT3C3DXf+UiYmP
-         zq1wm9R05curPilUJMGTzduYpHYMTGUTIMaNn/jsa9Rr/5OhdRUTrRDs7c/0mC+Epr2r
-         GZ1H/R0SA+OeFTa9uP0VUpXk/23asmhI51t6M=
-Received: by 10.14.2.142 with SMTP id 14mr1456712eef.104.1328223407581;
-        Thu, 02 Feb 2012 14:56:47 -0800 (PST)
-Received: from [192.168.1.13] (abwd54.neoplus.adsl.tpnet.pl. [83.8.227.54])
-        by mx.google.com with ESMTPS id x4sm14517429eeb.4.2012.02.02.14.56.46
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 02 Feb 2012 14:56:47 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201202022207.52220.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1757754Ab2BBXpY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Feb 2012 18:45:24 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55672 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757735Ab2BBXpT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Feb 2012 18:45:19 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C6F77B90;
+	Thu,  2 Feb 2012 18:45:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=XJBtG6F6NUaA
+	8EPTFeGDYUZVYts=; b=T/DvwOx6eChsdjNq31OQx5BrcCZ5nktEQ61n+OkSLYjv
+	QLXh6SXdg0ZNjmuzzkT8YCZnZai7eB6CAzP3QmJoRubTy6A9bkfQDhrUrnT9JWa8
+	6G1O+g5pj6tbnQOGBlbyTym5799EgID2Ot4VE4rO8iYR3pmOTxXxB3ZPztiDMlk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Q2G/In
+	VwmD34H9T54o3Ox70UG7Jfb8INOAqpQwpmqncB+iqNiI1aZlQo9DP9yhDjIY37uR
+	W7vqcaDWfJugxCfBldVK79HO/UDi0HNlLc7qmcgz2SWoL77Gvx4qJHBMxCesarFr
+	c6+K1seqX+GLeJ/JQ73lXkZGB9XvVwaZ69yM0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 92A307B8F;
+	Thu,  2 Feb 2012 18:45:18 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0D6387B8E; Thu,  2 Feb 2012
+ 18:45:17 -0500 (EST)
+In-Reply-To: <CAJ4nRM0-3GWN=OYOXDdGtktU0mc8mhcoKqbo=U4Jm5AmSbPAyQ@mail.gmail.com>
+ (=?utf-8?Q?=22R=C3=BCdiger?= Kessel"'s message of "Thu, 2 Feb 2012 23:54:44
+ +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F63367B4-4DF7-11E1-B099-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189721>
 
-On Thu, 2 Feb 2012, Jakub Narebski wrote:
-> On Thu, 2 Feb 2012, Micha=C5=82 Kiedrowicz wrote:
-> > Jakub Narebski <jnareb@gmail.com> wrote:
-> >=20
-> > > Gitweb tries hard to properly process UTF-8 data, by marking outp=
-ut
-> > > from git commands and contents of files as UTF-8 with to_utf8()
-> > > subroutine.  This ensures that gitweb would print correctly UTF-8
-> > > e.g. in 'log' and 'commit' views.
-> > >=20
-> > > Unfortunately it misses another source of potentially Unicode inp=
-ut,
-> > > namely query parameters.  The result is that one cannot search fo=
-r a
-> > > string containing characters outside US-ASCII.  For example searc=
-hing
-> > > for "Micha=C5=82 Kiedrowicz" (containing letter '=C5=82' - LATIN =
-SMALL LETTER L
-> > > WITH STROKE, with Unicode codepoint U+0142, represented with 0xc5=
- 0x82
-> > > bytes in UTF-8 and percent-encoded as %C5%81) result in the follo=
-wing
-> > > incorrect data in search field
-> > >=20
-> > > 	Micha=C3=85=C2=82 Kiedrowicz
-> > >=20
-> > > This is caused by CGI by default treating '0xc5 0x82' bytes as tw=
-o
-> > > characters in Perl legacy encoding latin-1 (iso-8859-1), because =
-'s'
-> > > query parameter is not processed explicitly as UTF-8 encoded stri=
-ng.
-> > >=20
-> > > The solution used here follows "Using Unicode in a Perl CGI scrip=
-t"
-> > > article on http://www.lemoda.net/cgi/perl-unicode/index.html:
-> > >=20
-> > > 	use CGI;
-> > > 	use Encode 'decode_utf8;
-> > > 	my $value =3D params('input');
-> > > 	$value =3D decode_utf8($value);
-> > >=20
-> > > This is done when filling %input_params hash; this required to mo=
-ve
-> > > from explicit $cgi->param(<label>) to $input_params{<name>} in a =
-few
-> > > places.
-> >=20
-> > I'm sorry but this doesn't work for me. I would be happy to help if=
- you
-> > have some questions about it.
->=20
-> Strange.  http://www.lemoda.net/cgi/perl-unicode/index.html says that
-> those two approaches should be equivalent.  The -utf8 pragma version
-> doesn't work for me at all, while this one works in that if finds wha=
-t
-> it is supposed to, but shows garbage in search form.
+R=C3=BCdiger Kessel <ruediger.kessel@gmail.com> writes:
 
-Is it what you mean by "this doesn't work for me", i.e. working search,
-garbage in search field?
-=20
-> Will investigate.
+> A quick fix is to improve the create_tmpfile() function in sha1_file.=
+c:
+>
+> static int create_tmpfile(char *buffer, size_t bufsiz, const char *fi=
+lename)
+> {
+>     static struct stat sb;
+>     int fd, dirlen =3D directory_size(filename);
+>
+>     if (dirlen + 20 > bufsiz) {
+>         errno =3D ENAMETOOLONG;
+>         return -1;
+>     }
+>
+>     memcpy(buffer, filename, dirlen);
+>     buffer[dirlen-1] =3D 0;
+>     if (stat(buffer, &sb) !=3D 0 && errno =3D=3D ENOENT) {
+>         if (mkdir(buffer, 0777) || adjust_shared_perm(buffer))
+>             return -1;
+>     }
+>
+>     memcpy(buffer, filename, dirlen);
+>     strcpy(buffer + dirlen, "tmp_obj_XXXXXX");
+>     fd =3D git_mkstemp_mode(buffer, 0444);
+>     return fd;
+> }
+>
+> The function will create one missing directory level if it does not
+> exist prior to creating the tmp-file.
 
-Damn.  If we use $cgi->textfield(-name =3D> "s", -value =3D> $searchtex=
-t) like
-in gitweb, CGI.pm would read $cgi->param("s") by itself - without decod=
-ing.
-To skip this we need to pass -force=3D>1  or  -override=3D>1 (i.e. furt=
-her
-changes to gitweb).
+Please remove your modification above, and follow the code we have.  We
+try git_mkstemp_mode() first, because it is more common than not having
+the leading directory and we do not want to waste an extra stat() every
+tie we come here.  Only when the first attempt fails by returning error
+(i.e. fd < 0 and errno =3D=3D ENOENT), we try mkdir() and then try agai=
+n.
 
--utf8 pragma works with more modern CGI.pm, but does not with 3.10.
+If you see "missing directory", it would be because on your system the
+code somehow does not notice the failure from the first attempt.  Why?
 
---=20
-Jakub Narebski
-Poland
+The breakage you are seeing could come from either:
+
+ - git_mkstemp_mode(), more specifically, the underlying mkstemp(), not
+   returning negative when it fails for some reason; or
+
+ - when the above fails, it fails to set errno to ENOENT.
+
+and *that* is what needs to be fixed.
+
+I think pessimizing create_tmpfile() like you did is not a fix; it is
+sweeping the real problem under the rug.
