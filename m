@@ -1,139 +1,142 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v4 2/2] find_pack_entry(): do not keep packed_git pointer locally
-Date: Thu,  2 Feb 2012 20:53:51 +0700
-Message-ID: <1328190831-26580-1-git-send-email-pclouds@gmail.com>
-References: <alpine.LFD.2.02.1202011100010.2759@xanadu.home>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v2] Use correct grammar in diffstat summary line
+Date: Thu, 2 Feb 2012 21:22:55 +0700
+Message-ID: <20120202142255.GA25871@do>
+References: <1328019840-6168-1-git-send-email-pclouds@gmail.com>
+ <1328100907-20397-1-git-send-email-pclouds@gmail.com>
+ <7vhaza2qjw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 02 14:50:23 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	Frederik Schwarzer <schwarzerf@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 15:23:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rsx3L-0001Gw-Ai
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 14:50:19 +0100
+	id 1RsxZg-0000LP-TD
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 15:23:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756169Ab2BBNuH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Feb 2012 08:50:07 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:61507 "EHLO
+	id S1756330Ab2BBOXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 09:23:40 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:53443 "EHLO
 	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753201Ab2BBNuB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 08:50:01 -0500
-Received: by pbdu11 with SMTP id u11so2025206pbd.19
-        for <git@vger.kernel.org>; Thu, 02 Feb 2012 05:50:01 -0800 (PST)
+	with ESMTP id S1756168Ab2BBOXj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 09:23:39 -0500
+Received: by pbdu11 with SMTP id u11so2047854pbd.19
+        for <git@vger.kernel.org>; Thu, 02 Feb 2012 06:23:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=nA0dIW+pA8vKkoJSrwaCrwENJ3tCByv65voPalK+UAo=;
-        b=a8bWe2GcRH6OBb7QVHWLkg5YKYq4WfWUXpZzK9nAZ2oIc7ojfb65MFu61T+WZn9Enj
-         p9E4oimAX/FVzLYcu2AwUBHanD11+XwlkAyi82+pFC5DwiGWEomj1M91bhGB7+aLIdXh
-         LdPpEUHLOo7WSU4nkul7FUSPTpKOr3CDMQwPw=
-Received: by 10.68.195.73 with SMTP id ic9mr8088107pbc.72.1328190601009;
-        Thu, 02 Feb 2012 05:50:01 -0800 (PST)
-Received: from tre ([115.74.57.120])
-        by mx.google.com with ESMTPS id a5sm5834872pbh.15.2012.02.02.05.49.56
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=+IuJzJWv2qPD2l2kRCs4ULBGRtPmqO3Z7Pc/y00lG18=;
+        b=CGNuFoK3ChDyeGgcK8mVz+2XrOQeg+ubdqhFbZA7Y91PuxxbdK3So5yiQGS0agueqp
+         Q+a8pDNO8ENpwtXVKsAo/PDqN17eAj+dsdGKOR8ZP8DpEZvuZ5jSgcNOWkBKnElk+rYG
+         J3wDek4IW1Iv+8UPcDJP4Cojohh7ep5Gxx9hA=
+Received: by 10.68.73.100 with SMTP id k4mr8349708pbv.55.1328192618926;
+        Thu, 02 Feb 2012 06:23:38 -0800 (PST)
+Received: from pclouds@gmail.com ([115.74.57.120])
+        by mx.google.com with ESMTPS id li19sm6015841pbb.17.2012.02.02.06.23.32
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 02 Feb 2012 05:49:59 -0800 (PST)
-Received: by tre (sSMTP sendmail emulation); Thu, 02 Feb 2012 20:53:53 +0700
-X-Mailer: git-send-email 1.7.8.36.g69ee2
-In-Reply-To: <alpine.LFD.2.02.1202011100010.2759@xanadu.home>
+        Thu, 02 Feb 2012 06:23:37 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 02 Feb 2012 21:22:55 +0700
+Content-Disposition: inline
+In-Reply-To: <7vhaza2qjw.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189644>
 
-Commit f7c22cc (always start looking up objects in the last used pack
-first - 2007-05-30) introduce a static packed_git* pointer as an
-optimization.  The kept pointer however may become invalid if
-free_pack_by_name() happens to free that particular pack.
+On Wed, Feb 01, 2012 at 01:26:43PM -0800, Junio C Hamano wrote:
+> Nice.  Will queue
 
-Current code base does not access packs after calling
-free_pack_by_name() so it should not be a problem. Anyway, move the
-pointer out so that free_pack_by_name() can reset it to avoid running
-into troubles in future.
+Please also squash this in (resend looks ugly and it's hard to point
+out changes). It makes the code look less ugly, use Q_() for gettext
+poisoning and revert am input text back as Jonathan suggested.
 
-Thanks to Junio for code layout suggestions.
+I take it --summary is un-i18n-able, should we introduce.. umm..
+--nice-summary or something that can support i18n?
 
-Acked-by: Nicolas Pitre <nico@fluxnic.net>
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Credit where credit is due. No code changes from pu.
-
- sha1_file.c |   27 +++++++++++++--------------
- 1 files changed, 13 insertions(+), 14 deletions(-)
-
-diff --git a/sha1_file.c b/sha1_file.c
-index 61e51ed..6b1b512 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -54,6 +54,8 @@ static struct cached_object empty_tree =3D {
- 	0
- };
-=20
-+static struct packed_git *last_found_pack;
-+
- static struct cached_object *find_cached_object(const unsigned char *s=
-ha1)
+-- 8< --
+diff --git a/diff.c b/diff.c
+index 5f3ce97..07c94f2 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1325,6 +1325,7 @@ static void fill_print_name(struct diffstat_file *file)
+ int print_stat_summary(FILE *fp, int files, int insertions, int deletions)
  {
- 	int i;
-@@ -720,6 +722,8 @@ void free_pack_by_name(const char *pack_name)
- 			close_pack_index(p);
- 			free(p->bad_object_sha1);
- 			*pp =3D p->next;
-+			if (last_found_pack =3D=3D p)
-+				last_found_pack =3D NULL;
- 			free(p);
- 			return;
- 		}
-@@ -2046,27 +2050,22 @@ static int fill_pack_entry(const unsigned char =
-*sha1,
-=20
- static int find_pack_entry(const unsigned char *sha1, struct pack_entr=
-y *e)
- {
--	static struct packed_git *last_found =3D (void *)1;
- 	struct packed_git *p;
-=20
- 	prepare_packed_git();
- 	if (!packed_git)
- 		return 0;
--	p =3D (last_found =3D=3D (void *)1) ? packed_git : last_found;
-=20
--	do {
--		if (fill_pack_entry(sha1, e, p)) {
--			last_found =3D p;
--			return 1;
--		}
-+	if (last_found_pack && fill_pack_entry(sha1, e, last_found_pack))
-+		return 1;
-=20
--		if (p =3D=3D last_found)
--			p =3D packed_git;
--		else
--			p =3D p->next;
--		if (p =3D=3D last_found)
--			p =3D p->next;
--	} while (p);
-+	for (p =3D packed_git; p; p =3D p->next) {
-+		if (p =3D=3D last_found_pack || !fill_pack_entry(sha1, e, p))
-+			continue;
-+
-+		last_found_pack =3D p;
-+		return 1;
-+	}
- 	return 0;
- }
-=20
---=20
-1.7.8.36.g69ee2
+ 	struct strbuf sb = STRBUF_INIT;
++	const char *fmt;
+ 	int ret;
+ 
+ 	if (!files) {
+@@ -1332,10 +1333,8 @@ int print_stat_summary(FILE *fp, int files, int insertions, int deletions)
+ 		return fputs(_(" 0 files changed\n"), fp);
+ 	}
+ 
+-	strbuf_addf(&sb,
+-		    ngettext(" %d file changed", " %d files changed",
+-			     files),
+-		    files);
++	fmt = Q_(" %d file changed", " %d files changed", files);
++	strbuf_addf(&sb, fmt, files);
+ 
+ 	/*
+ 	 * For binary diff, the caller may want to print "x files
+@@ -1346,25 +1345,17 @@ int print_stat_summary(FILE *fp, int files, int insertions, int deletions)
+ 	 * but nothing about added/removed lines? Is this a bug in Git?").
+ 	 */
+ 	if (insertions || deletions == 0) {
+-		strbuf_addf(&sb,
+-			    /*
+-			     * TRANSLATORS: "+" in (+) is a line addition marker;
+-			     * do not translate it.
+-			     */
+-			    ngettext(", %d insertion(+)", ", %d insertions(+)",
+-				     insertions),
+-			    insertions);
++		/* TRANSLATORS: "+" in (+) is a line addition marker,
++		   do not translate it */
++		fmt = Q_(", %d insertion(+)", ", %d insertions(+)", insertions);
++		strbuf_addf(&sb, fmt, insertions);
+ 	}
+ 
+ 	if (deletions || insertions == 0) {
+-		strbuf_addf(&sb,
+-			    /*
+-			     * TRANSLATORS: "-" in (-) is a line removal marker;
+-			     * do not translate it.
+-			     */
+-			    ngettext(", %d deletion(-)", ", %d deletions(-)",
+-				     deletions),
+-			    deletions);
++		/* TRANSLATORS: "-" in (-) is a line removal marker,
++		   do not translate it */
++		fmt = Q_(", %d deletion(-)", ", %d deletions(-)", deletions);
++		strbuf_addf(&sb, fmt, deletions);
+ 	}
+ 	strbuf_addch(&sb, '\n');
+ 	ret = fputs(sb.buf, fp);
+diff --git a/t/t0023-crlf-am.sh b/t/t0023-crlf-am.sh
+index 18fe27b..12a3d78 100755
+--- a/t/t0023-crlf-am.sh
++++ b/t/t0023-crlf-am.sh
+@@ -12,7 +12,7 @@ Subject: test1
+ 
+ ---
+  foo |    1 +
+- 1 file changed, 1 insertion(+)
++ 1 files changed, 1 insertions(+)
+  create mode 100644 foo
+ 
+ diff --git a/foo b/foo
+-- 8< --
+
+-- 
+Duy
