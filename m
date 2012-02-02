@@ -1,8 +1,12 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 9/9] grep: pre-load userdiff drivers when threaded
-Date: Thu, 2 Feb 2012 03:24:28 -0500
-Message-ID: <20120202082428.GI6786@sigill.intra.peff.net>
-References: <20120202081747.GA10271@sigill.intra.peff.net>
+Subject: Re: [PATCH 0/9] respect binary attribute in grep
+Date: Thu, 2 Feb 2012 03:30:09 -0500
+Message-ID: <20120202083009.GA6933@sigill.intra.peff.net>
+References: <20120201221437.GA19044@sigill.intra.peff.net>
+ <20120201232109.GA2652@sigill.intra.peff.net>
+ <7vhaza12ol.fsf@alter.siamese.dyndns.org>
+ <20120202005209.GA6883@sigill.intra.peff.net>
+ <20120202081747.GA10271@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Thomas Rast <trast@student.ethz.ch>,
@@ -10,120 +14,51 @@ Cc: Thomas Rast <trast@student.ethz.ch>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Dov Grobgeld <dov.grobgeld@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 09:24:36 2012
+X-From: git-owner@vger.kernel.org Thu Feb 02 09:30:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rsry8-00027k-3F
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 09:24:36 +0100
+	id 1Rss3y-0004QP-Nq
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 09:30:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754754Ab2BBIYc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 03:24:32 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52901
+	id S1754522Ab2BBIaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 03:30:13 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52908
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754443Ab2BBIYb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 03:24:31 -0500
-Received: (qmail 18037 invoked by uid 107); 2 Feb 2012 08:31:36 -0000
+	id S1754061Ab2BBIaM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 03:30:12 -0500
+Received: (qmail 18094 invoked by uid 107); 2 Feb 2012 08:37:17 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 02 Feb 2012 03:31:36 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Feb 2012 03:24:28 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 02 Feb 2012 03:37:17 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Feb 2012 03:30:09 -0500
 Content-Disposition: inline
 In-Reply-To: <20120202081747.GA10271@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189602>
 
-The low-level grep_source code will automatically load the
-userdiff driver to see whether a file is binary. However,
-when we are threaded, it will load the drivers in a
-non-deterministic order, handling each one as its assigned
-thread happens to be scheduled.
+On Thu, Feb 02, 2012 at 03:17:47AM -0500, Jeff King wrote:
 
-Meanwhile, the attribute lookup code (which underlies the
-userdiff driver lookup) is optimized to handle paths in
-sequential order (because they tend to share the same
-gitattributes files). Multi-threading the lookups destroys
-the locality and makes this optimization less effective.
+> I implemented all of the other optimizations I mentioned except the
+> "only stream the first few bytes when auto-detecting binary-ness" one.
+> However, it should be easy to do on top of these changes. I need to
+> re-visit the similar change to diff_filespec_is_binary, and I'll do both
+> at the same time.
 
-We can fix this by pre-loading the userdiff driver in the
-main thread, before we hand off the file to a worker thread.
-My best-of-five for "git grep foo" on the linux-2.6
-repository went from:
+Oh, and I didn't even think about implementing streaming grep.  The
+context-finding code relies on being able to backtrack through the file
+in memory. We _could_ implement streaming only for binary files (i.e.,
+when we will just print "Binary file foo matches"). However, I suspect
+people with big binary files will want to be using "-I" anyway, so as to
+avoid even pulling the data from disk at all.
 
-  real    0m0.391s
-  user    0m1.708s
-  sys     0m0.584s
+We might eventually want to add a config-option version of "-I" for
+people who have repositories of mixed source code and large binary
+assets.
 
-to:
-
-  real    0m0.360s
-  user    0m1.576s
-  sys     0m0.572s
-
-Not a huge speedup, but it's quite easy to do. The only
-trick is that we shouldn't perform this optimization if "-a"
-was used, in which case we won't bother checking whether
-the files are binary at all.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-The speedup is especially unimpressive when you consider that it won't
-grow as the grep load grows. This is a pretty fast grep. If you used a
-real regex, the whole thing would take even longer, and you will still
-only be shaving off a few tens of milliseconds. So I wouldn't be
-heart-broken if this patch was dropped. I included it because it's easy
-to do, and maybe somebody with a slower machine would find the absolute
-time difference more noticeable.
-
- builtin/grep.c |   10 ++++++----
- 1 files changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/grep.c b/builtin/grep.c
-index bc85a20..9fc3e95 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -85,8 +85,8 @@ static pthread_cond_t cond_result;
- 
- static int skip_first_line;
- 
--static void add_work(enum grep_source_type type, const char *name,
--		     const void *id)
-+static void add_work(struct grep_opt *opt, enum grep_source_type type,
-+		     const char *name, const void *id)
- {
- 	grep_lock();
- 
-@@ -95,6 +95,8 @@ static void add_work(enum grep_source_type type, const char *name,
- 	}
- 
- 	grep_source_init(&todo[todo_end].source, type, name, id);
-+	if (opt->binary != GREP_BINARY_TEXT)
-+		grep_source_load_driver(&todo[todo_end].source);
- 	todo[todo_end].done = 0;
- 	strbuf_reset(&todo[todo_end].out);
- 	todo_end = (todo_end + 1) % ARRAY_SIZE(todo);
-@@ -333,7 +335,7 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
- 
- #ifndef NO_PTHREADS
- 	if (use_threads) {
--		add_work(GREP_SOURCE_SHA1, pathbuf.buf, sha1);
-+		add_work(opt, GREP_SOURCE_SHA1, pathbuf.buf, sha1);
- 		strbuf_release(&pathbuf);
- 		return 0;
- 	} else
-@@ -362,7 +364,7 @@ static int grep_file(struct grep_opt *opt, const char *filename)
- 
- #ifndef NO_PTHREADS
- 	if (use_threads) {
--		add_work(GREP_SOURCE_FILE, buf.buf, filename);
-+		add_work(opt, GREP_SOURCE_FILE, buf.buf, filename);
- 		strbuf_release(&buf);
- 		return 0;
- 	} else
--- 
-1.7.9.3.gc3fce1.dirty
+-Peff
