@@ -1,85 +1,90 @@
-From: David Barr <davidbarr@google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH 1/3] vcs-svn: rename check_overflow arguments for clarity
-Date: Thu, 2 Feb 2012 22:25:31 +1100
-Message-ID: <CAFfmPPOeFk871m_N+nLXgQx3Uj4wVhgR9BNFzM2ggtseop0JaA@mail.gmail.com>
+Date: Thu, 2 Feb 2012 05:27:32 -0600
+Message-ID: <20120202112732.GA15537@burratino>
 References: <4F28378F.6080108@ramsay1.demon.co.uk>
-	<20120131192053.GC12443@burratino>
-	<7vipjpzxav.fsf@alter.siamese.dyndns.org>
-	<20120202104128.GG3823@burratino>
-	<20120202105923.GJ3823@burratino>
-	<CA+gfSn9Exv3T0UCB-bFShmSvRCMgygVuWraiToR6ZjgOA_sZ8A@mail.gmail.com>
-	<20120202111628.GN3823@burratino>
+ <20120131192053.GC12443@burratino>
+ <7vipjpzxav.fsf@alter.siamese.dyndns.org>
+ <20120202104128.GG3823@burratino>
+ <20120202105923.GJ3823@burratino>
+ <CA+gfSn9Exv3T0UCB-bFShmSvRCMgygVuWraiToR6ZjgOA_sZ8A@mail.gmail.com>
+ <20120202111628.GN3823@burratino>
+ <CAFfmPPOeFk871m_N+nLXgQx3Uj4wVhgR9BNFzM2ggtseop0JaA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Dmitry Ivankov <divanorama@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
 	GIT Mailing-list <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 12:25:37 2012
+To: David Barr <davidbarr@google.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 12:27:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RsunI-0003wn-UF
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 12:25:37 +0100
+	id 1Rsupa-00053w-5f
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 12:27:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755757Ab2BBLZc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Feb 2012 06:25:32 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:37081 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755722Ab2BBLZc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Feb 2012 06:25:32 -0500
-Received: by ghrr11 with SMTP id r11so1036937ghr.19
-        for <git@vger.kernel.org>; Thu, 02 Feb 2012 03:25:31 -0800 (PST)
+	id S1755774Ab2BBL1y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 06:27:54 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:34282 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755240Ab2BBL1x (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 06:27:53 -0500
+Received: by ggnh1 with SMTP id h1so1102627ggn.19
+        for <git@vger.kernel.org>; Thu, 02 Feb 2012 03:27:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:x-system-of-record:content-type:content-transfer-encoding;
-        bh=FgIqHlAF+neRYSjRgVffEqcaMxxRhHcNfnWUAdQScNk=;
-        b=Jhvxti3f/OW+NgWJEtfRy9bnZYMNhY+h1ERMeOoQQC3MmrxLRj11+Rlx3IsNpu40CT
-         IMu7KSKNE8o96WnM232Z9R0dF1Ro37AyQdtzk1x55+C14I1jA+1EQ43xTBcr7y8TJrTv
-         IVK8esH/dE5zQl8KUxGm5Gb+iTlH3egK7vwRo=
-Received: by 10.236.191.134 with SMTP id g6mr3144109yhn.95.1328181931521;
-        Thu, 02 Feb 2012 03:25:31 -0800 (PST)
-Received: by 10.236.191.134 with SMTP id g6mr3144068yhn.95.1328181931333; Thu,
- 02 Feb 2012 03:25:31 -0800 (PST)
-Received: by 10.101.197.7 with HTTP; Thu, 2 Feb 2012 03:25:31 -0800 (PST)
-In-Reply-To: <20120202111628.GN3823@burratino>
-X-System-Of-Record: true
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=5xUTFMVSPPMhxt/Igzv/abmaI+1oMwa0nC1+BHZeVEE=;
+        b=VQRDJX5mWTzB9OXUKDOjfCS9wbtggMcbDHyhgkgqVeUyO1XT+VhrXkCM5rswdBz4eB
+         ubq+rhH3s/yTmaK8/awcrdFKupS62fBn29eawvEJAMqRSEzCyqH5bEc7oNCQpoviEVVG
+         rwb9/ybrgOaBjKBVlZtfl110kKvHisl6JB/E8=
+Received: by 10.50.170.41 with SMTP id aj9mr2839852igc.0.1328182072712;
+        Thu, 02 Feb 2012 03:27:52 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id gw1sm6748800igb.0.2012.02.02.03.27.51
+        (version=SSLv3 cipher=OTHER);
+        Thu, 02 Feb 2012 03:27:52 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CAFfmPPOeFk871m_N+nLXgQx3Uj4wVhgR9BNFzM2ggtseop0JaA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189631>
 
-On Thu, Feb 2, 2012 at 10:16 PM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Dmitry Ivankov wrote:
->> On Thu, Feb 2, 2012 at 4:59 PM, Jonathan Nieder <jrnieder@gmail.com>=
- wrote:
->
->>> From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
->>>
->>> Code using the argument names a and b just doesn't look right (not
->>> sure why!). =A0Use more explicit names "offset" and "len" to make t=
-heir
->>> type and function clearer.
->>
->> Well, it's still not clear. Given off_t a, size_t b, check that a+b
->> fits into type... which type?
->> "offset" and "length" don't imply that it's "type of offset" or mayb=
-e
->> "type of length".
->
-> Hmm... in vector arithmetic, position (i.e., file offset) + displacem=
-ent
-> (i.e., size of chunk) =3D position (i.e., new file offset). =A0Any id=
-eas
-> for making this clearer?
+David Barr wrote:
 
-Maybe rename to check_offset_overflow to make it explicit?
---
-David Barr
+> Maybe rename to check_offset_overflow to make it explicit?
+
+Ok, here's the patch I'll squash in. ;-)
+
+diff --git i/vcs-svn/sliding_window.c w/vcs-svn/sliding_window.c
+index 2f4ae60f..ec2707c9 100644
+--- i/vcs-svn/sliding_window.c
++++ w/vcs-svn/sliding_window.c
+@@ -31,7 +31,7 @@ static int read_to_fill_or_whine(struct line_buffer *file,
+ 	return 0;
+ }
+ 
+-static int check_overflow(off_t offset, uintmax_t len)
++static int check_offset_overflow(off_t offset, uintmax_t len)
+ {
+ 	if (len > maximum_signed_value_of_type(off_t))
+ 		return error("unrepresentable length in delta: "
+@@ -48,9 +48,9 @@ int move_window(struct sliding_view *view, off_t off, size_t width)
+ 	off_t file_offset;
+ 	assert(view);
+ 	assert(view->width <= view->buf.len);
+-	assert(!check_overflow(view->off, view->buf.len));
++	assert(!check_offset_overflow(view->off, view->buf.len));
+ 
+-	if (check_overflow(off, width))
++	if (check_offset_overflow(off, width))
+ 		return -1;
+ 	if (off < view->off || off + width < view->off + view->width)
+ 		return error("invalid delta: window slides left");
