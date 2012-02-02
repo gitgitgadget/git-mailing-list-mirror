@@ -1,116 +1,83 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v2] i18n: format_tracking_info "Your branch is behind" message
-Date: Thu,  2 Feb 2012 09:37:19 +0800
-Message-ID: <1328146639-87863-1-git-send-email-worldhello.net@gmail.com>
-Cc: Jiang Xin <worldhello.net@gmail.com>
-To: Git List <git@vger.kernel.org>, avarab@gmail.com
-X-From: git-owner@vger.kernel.org Thu Feb 02 02:37:41 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: General support for ! in git-config values
+Date: Wed, 01 Feb 2012 17:39:42 -0800
+Message-ID: <7v7h06109t.fsf@alter.siamese.dyndns.org>
+References: <CACBZZX6U+1Fmdaz2ikbbc6zUyF=pMGQOqUGVOWCkUFBUkovCBw@mail.gmail.com>
+ <20120201184020.GA29374@sigill.intra.peff.net>
+ <CACBZZX5mX55Rh8b2GYv7wKbCCypCkrn5AiM9BpXydgcYxHWdQA@mail.gmail.com>
+ <7v62fq2o03.fsf@alter.siamese.dyndns.org>
+ <CANgJU+X+UZmycwE6xkJ-zHfT7ai6nV9zbeR4WYnAXczL5JtqjA@mail.gmail.com>
+ <7vliom13lm.fsf@alter.siamese.dyndns.org>
+ <CANgJU+XQWdFmfmBJ4KX4GBz1a=TrVbp9BphGmhEb5Gphmzogjw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: demerphq <demerphq@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 02:39:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RslcL-0006CA-0l
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 02:37:41 +0100
+	id 1RsleQ-0006zk-K2
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 02:39:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753988Ab2BBBhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Feb 2012 20:37:36 -0500
-Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:40052 "EHLO
-	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753505Ab2BBBhf (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2012 20:37:35 -0500
-Received: by obcva7 with SMTP id va7so2093056obc.19
-        for <git@vger.kernel.org>; Wed, 01 Feb 2012 17:37:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=k1YzgIvnrMJ6n9jNFt7yx04UYGi9udQ1O4Bxd4eYwgs=;
-        b=mre7c+U1Q2Fxihp0Tm4/2xwBs3GrXaK/5dwSri+oYkF1/bTqjxzbEov8geX4ZLfevz
-         1oGnoNK2DmNp+2oToB8E5U1wu82BWfmdbgIaDy50Bpuc28PGD1AhwLTOIQSN+WYkusZd
-         j3u1M3OWt8ccRQXwHVf2yQ7XMMQF5EitGs54M=
-Received: by 10.50.219.225 with SMTP id pr1mr1066503igc.23.1328146654787;
-        Wed, 01 Feb 2012 17:37:34 -0800 (PST)
-Received: from localhost.localdomain (li380-141.members.linode.com. [106.187.37.141])
-        by mx.google.com with ESMTPS id wn6sm17003937igb.3.2012.02.01.17.37.31
-        (version=SSLv3 cipher=OTHER);
-        Wed, 01 Feb 2012 17:37:34 -0800 (PST)
-X-Mailer: git-send-email 1.7.9.109.gd927b
+	id S1754051Ab2BBBjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Feb 2012 20:39:46 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41937 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753505Ab2BBBjp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2012 20:39:45 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B20276861;
+	Wed,  1 Feb 2012 20:39:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bftuURIbfrIkdf1IlT3ELI+0X2o=; b=fgjL8M
+	UyWqHAQAyyD5aiNRdD9FwUZYhPQ084stOO2MzawzaqbGSqCWSAlak9AeI5J+6nnu
+	yh0PZDsN8fyVY5Cdpk2heLP2kg+u7RzFoRonYFweIkqOedodGwgggVd0wKOi/Hc+
+	4S48E/AuGkVK0Aj6jSf6YqQVZXOO9KZuffmro=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aJYLDSmP2k31QMST0aAi84sax9TyjWyM
+	KXUy9eY8uW5rr7LMI9F+SqMT7KSBrCtOGx18Ez5BeFwy53a2RFjKXfMJSlTLMWFo
+	7yBkzfHV3Z1R515t1j60o+7RZUdLEBqkosL87D/nZKoWh0vWy+uJEXjC6H0/APuy
+	BA6DMXNY80k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A9C296860;
+	Wed,  1 Feb 2012 20:39:44 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3AFFE685F; Wed,  1 Feb 2012
+ 20:39:44 -0500 (EST)
+In-Reply-To: <CANgJU+XQWdFmfmBJ4KX4GBz1a=TrVbp9BphGmhEb5Gphmzogjw@mail.gmail.com>
+ (demerphq@gmail.com's message of "Thu, 2 Feb 2012 02:14:26 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C85BB3D2-4D3E-11E1-B1AB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189570>
 
-Function format_tracking_info in remote.c is called by
-wt_status_print_tracking in wt-status.c, which will print
-branch tracking message in git-status. git-checkout also
-show these messages through it's report_tracking function.
+demerphq <demerphq@gmail.com> writes:
 
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
----
- remote.c |   48 +++++++++++++++++++++++++++++++++++++-----------
- 1 files changed, 37 insertions(+), 11 deletions(-)
+> On 2 February 2012 01:27, Junio C Hamano <gitster@pobox.com> wrote:
+>> demerphq <demerphq@gmail.com> writes:
+>>
+>>> user.name=!ldap_full_name
+>>> user.email=!ldap_email
+>>
+>> I didn't get the impression that that was what he was proposing, but
+>> regardless of who's suggesting it, the above does not make any sense,
+>> from the syntax point of view.
+>
+> Does that mean that from a utility point of view it does?
 
-diff --git a/remote.c b/remote.c
-index 73a38..45ac1 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1572,19 +1572,45 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
- 	base = branch->merge[0]->dst;
- 	base = shorten_unambiguous_ref(base, 0);
- 	if (!num_theirs)
--		strbuf_addf(sb, "Your branch is ahead of '%s' "
--			    "by %d commit%s.\n",
--			    base, num_ours, (num_ours == 1) ? "" : "s");
-+		strbuf_addf(sb,
-+			Q_(
-+			/* The singular version */
-+			"Your branch is ahead of '%s' by %d commit.\n",
-+			/* The plural version */
-+			"Your branch is ahead of '%s' by %d commits.\n",
-+			/* Give ngettext() the count */
-+			num_ours),
-+			base,
-+			num_ours);
- 	else if (!num_ours)
--		strbuf_addf(sb, "Your branch is behind '%s' "
--			    "by %d commit%s, "
--			    "and can be fast-forwarded.\n",
--			    base, num_theirs, (num_theirs == 1) ? "" : "s");
-+		strbuf_addf(sb,
-+			Q_(
-+			/* The singular version */
-+			"Your branch is behind '%s' by %d commit, "
-+			"and can be fast-forwarded.\n",
-+			/* The plural version */
-+			"Your branch is behind '%s' by %d commits, "
-+			"and can be fast-forwarded.\n",
-+			/* Give ngettext() the count */
-+			num_theirs),
-+			base,
-+			num_theirs);
- 	else
--		strbuf_addf(sb, "Your branch and '%s' have diverged,\n"
--			    "and have %d and %d different commit(s) each, "
--			    "respectively.\n",
--			    base, num_ours, num_theirs);
-+		strbuf_addf(sb,
-+			Q_(
-+			/* The singular version */
-+			"Your branch and '%s' have diverged,\n"
-+			"and have %d and %d different commit each, "
-+			"respectively.\n",
-+			/* The plural version */
-+			"Your branch and '%s' have diverged,\n"
-+			"and have %d and %d different commits each, "
-+			"respectively.\n",
-+			/* Give ngettext() the count */
-+			num_theirs),
-+			base,
-+			num_ours,
-+			num_theirs);
- 	return 1;
- }
- 
--- 
-1.7.9.109.gd927b
+Not really.
+
+I do not think whatever "utility" value outweighs the hassle of having to
+think through the ramifications (including but not limited to security) of
+running arbitrary user command every time a value is looked up.
