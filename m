@@ -1,72 +1,75 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: [PATCH] t0300-credentials: Word around a solaris /bin/sh bug
-Date: Thu,  2 Feb 2012 14:32:15 -0500
-Message-ID: <1328211135-25217-1-git-send-email-bwalton@artsci.utoronto.ca>
-Cc: Ben Walton <bwalton@artsci.utoronto.ca>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Feb 02 20:32:27 2012
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 6/9] grep: cache userdiff_driver in grep_source
+Date: Thu, 2 Feb 2012 14:37:56 -0500
+Message-ID: <20120202193756.GA9246@sigill.intra.peff.net>
+References: <20120202081747.GA10271@sigill.intra.peff.net>
+ <20120202082043.GF6786@sigill.intra.peff.net>
+ <7v4nv9xexs.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Conrad Irwin <conrad.irwin@gmail.com>, git@vger.kernel.org,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Dov Grobgeld <dov.grobgeld@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 20:38:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rt2OQ-0006YP-50
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 20:32:26 +0100
+	id 1Rt2U4-0000n2-HS
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 20:38:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932165Ab2BBTcV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 14:32:21 -0500
-Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:59217 "EHLO
-	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757007Ab2BBTcV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 14:32:21 -0500
-Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:49222 ident=93)
-	by garcia.cquest.utoronto.ca with esmtp (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1Rt2OJ-0003Cn-RM; Thu, 02 Feb 2012 14:32:19 -0500
-Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1Rt2OJ-0006ZE-QI; Thu, 02 Feb 2012 14:32:19 -0500
-X-Mailer: git-send-email 1.7.4.1
+	id S933227Ab2BBTiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 14:38:06 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53627
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932137Ab2BBTiA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 14:38:00 -0500
+Received: (qmail 24528 invoked by uid 107); 2 Feb 2012 19:45:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 02 Feb 2012 14:45:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Feb 2012 14:37:56 -0500
+Content-Disposition: inline
+In-Reply-To: <7v4nv9xexs.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189681>
 
-Solaris' /bin/sh was making the IFS setting permanent instead of
-temporary when using it to slurp in credentials in the generated
-'dump' script of the 'setup helper scripts' test in t0300-credentials.
+On Thu, Feb 02, 2012 at 10:34:07AM -0800, Junio C Hamano wrote:
 
-The stderr file that was being compared to expected-stderr contained the
-following stray line from the credential helper run:
+> Jeff King <peff@peff.net> writes:
+> 
+> > -		grep_attr_lock();
+> > -		drv = userdiff_find_by_path(gs->name);
+> > -		grep_attr_unlock();
+> > -		if (drv && drv->funcname.pattern) {
+> > -			const struct userdiff_funcname *pe = &drv->funcname;
+> > +		grep_source_load_driver(gs);
+> > +		if (gs->driver->funcname.pattern) {
+> > +			const struct userdiff_funcname *pe = &gs->driver->funcname;
+> 
+> When we load driver, gs->driver gets at least "default" driver, so we no
+> longer need to check for drv != NULL as we used to?  Is that the reason
+> for the slight difference here?
 
-warning: invalid credential line: username foo
+Yes, exactly.
 
-To avoid this bug, capture the original IFS and force it to be reset
-after its use is no longer required.  For now, this is lighter weight
-than altering which shell these scripts use as their shebang.
+We could just leave gs->driver NULL instead of looking up "default", and
+then use NULL to signal to the calling code that defaults should be
+used. But NULL is interpreted by grep_source_load_driver as "we did not
+look up the driver yet", so the common case of "no driver" would mean we
+accidentally do the lookup multiple times.  The diff_filespec code uses
+the same convention to solve the same problem.
 
-Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
----
- t/t0300-credentials.sh |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+Speaking of which, there was some notion in my mind that a "grep_source"
+and a "diff_filespec" were very similar objects, and that we could
+possibly unify the implementations. I decided against that route with
+this series, as it would have involved pretty heavy refactoring of the
+diff code to prevent a fairly small amount of code duplication.
 
-diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
-index 885af8f..1be3fe2 100755
---- a/t/t0300-credentials.sh
-+++ b/t/t0300-credentials.sh
-@@ -8,10 +8,12 @@ test_expect_success 'setup helper scripts' '
- 	cat >dump <<-\EOF &&
- 	whoami=`echo $0 | sed s/.*git-credential-//`
- 	echo >&2 "$whoami: $*"
-+	OIFS=$IFS
- 	while IFS== read key value; do
- 		echo >&2 "$whoami: $key=$value"
- 		eval "$key=$value"
- 	done
-+	IFS=$OIFS
- 	EOF
- 
- 	cat >git-credential-useless <<-\EOF &&
--- 
-1.7.8.3
+-Peff
