@@ -1,64 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/9] respect binary attribute in grep
-Date: Thu, 2 Feb 2012 03:30:09 -0500
-Message-ID: <20120202083009.GA6933@sigill.intra.peff.net>
-References: <20120201221437.GA19044@sigill.intra.peff.net>
- <20120201232109.GA2652@sigill.intra.peff.net>
- <7vhaza12ol.fsf@alter.siamese.dyndns.org>
- <20120202005209.GA6883@sigill.intra.peff.net>
- <20120202081747.GA10271@sigill.intra.peff.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v3 1/4] completion: be nicer with zsh
+Date: Thu, 2 Feb 2012 10:34:06 +0200
+Message-ID: <CAMP44s3FxUmnpQevoV2ARJpWK9CJ16zXDmpJRDOLHNW6RdSc5Q@mail.gmail.com>
+References: <1328145320-14071-1-git-send-email-felipe.contreras@gmail.com>
+	<1328145320-14071-2-git-send-email-felipe.contreras@gmail.com>
+	<20120202081622.GB3823@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Conrad Irwin <conrad.irwin@gmail.com>, git@vger.kernel.org,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Dov Grobgeld <dov.grobgeld@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 09:30:42 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 09:34:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rss3y-0004QP-Nq
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 09:30:39 +0100
+	id 1Rss7S-0005ye-NP
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 09:34:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754522Ab2BBIaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 03:30:13 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52908
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754061Ab2BBIaM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 03:30:12 -0500
-Received: (qmail 18094 invoked by uid 107); 2 Feb 2012 08:37:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 02 Feb 2012 03:37:17 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Feb 2012 03:30:09 -0500
-Content-Disposition: inline
-In-Reply-To: <20120202081747.GA10271@sigill.intra.peff.net>
+	id S1754858Ab2BBIeJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Feb 2012 03:34:09 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:54667 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754821Ab2BBIeI convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Feb 2012 03:34:08 -0500
+Received: by lagu2 with SMTP id u2so1140214lag.19
+        for <git@vger.kernel.org>; Thu, 02 Feb 2012 00:34:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=ZddFVGdBbr/9hBnq2zwL1KJ27SMj+OQB9QBIFlYUA00=;
+        b=E2P4exwzpXe4kBQYU1pVyQsAi7HOT9yK/Hi8TaqT5XGSf2qTxGtKuq8xeUnFAmYK8b
+         0EB05MH80B0+SuNS8hcIxmwt3VkM8eSa3B6HjYWbCUm6RMVdjpNp1CAPVDg/d6tcURoP
+         Y1Ekt1IDWT9MMDvBGF+0Ku5iuWNlE9FRKiuUs=
+Received: by 10.112.99.202 with SMTP id es10mr463722lbb.89.1328171646587; Thu,
+ 02 Feb 2012 00:34:06 -0800 (PST)
+Received: by 10.112.40.202 with HTTP; Thu, 2 Feb 2012 00:34:06 -0800 (PST)
+In-Reply-To: <20120202081622.GB3823@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189603>
 
-On Thu, Feb 02, 2012 at 03:17:47AM -0500, Jeff King wrote:
+On Thu, Feb 2, 2012 at 10:16 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Felipe Contreras wrote:
+>
+>> And yet another bug in zsh[1] causes a mismatch; zsh seems to have
+>> problem emulating wordspliting, but only on the command substitution=
+=2E
+>
+> Patches didn't hit the list again. =C2=A0Any idea why?
 
-> I implemented all of the other optimizations I mentioned except the
-> "only stream the first few bytes when auto-detecting binary-ness" one.
-> However, it should be easy to do on top of these changes. I need to
-> re-visit the similar change to diff_filespec_is_binary, and I'll do both
-> at the same time.
+No. A bug in list software?
 
-Oh, and I didn't even think about implementing streaming grep.  The
-context-finding code relies on being able to backtrack through the file
-in memory. We _could_ implement streaming only for binary files (i.e.,
-when we will just print "Binary file foo matches"). However, I suspect
-people with big binary files will want to be using "-I" anyway, so as to
-avoid even pulling the data from disk at all.
+I didn't get any warning or error.
 
-We might eventually want to add a config-option version of "-I" for
-people who have repositories of mixed source code and large binary
-assets.
-
--Peff
+--=20
+=46elipe Contreras
