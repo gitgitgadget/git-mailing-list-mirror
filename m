@@ -1,127 +1,153 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC (version B)] gitweb: Allow UTF-8 encoded CGI query parameters and  path_info
-Date: Thu, 2 Feb 2012 22:07:51 +0100
-Message-ID: <201202022207.52220.jnareb@gmail.com>
-References: <1328136653-20559-1-git-send-email-michal.kiedrowicz@gmail.com> <201202022110.07127.jnareb@gmail.com> <20120202214646.1b84f23e@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] t0300-credentials: Word around a solaris /bin/sh bug
+Date: Thu, 2 Feb 2012 15:11:46 -0600
+Message-ID: <20120202211146.GC19520@burratino>
+References: <1328211135-25217-1-git-send-email-bwalton@artsci.utoronto.ca>
+ <20120202201629.GA20200@burratino>
+ <vpq62fp3r15.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 22:07:25 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Ben Walton <bwalton@artsci.utoronto.ca>, git@vger.kernel.org,
+	gitster@pobox.com, Jeff King <peff@peff.net>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Feb 02 22:12:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rt3sI-00008N-NV
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 22:07:23 +0100
+	id 1Rt3x0-0002JR-BD
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 22:12:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756590Ab2BBVHP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Feb 2012 16:07:15 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:59605 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756031Ab2BBVHN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 16:07:13 -0500
-Received: by eaah12 with SMTP id h12so1214076eaa.19
-        for <git@vger.kernel.org>; Thu, 02 Feb 2012 13:07:12 -0800 (PST)
+	id S1757368Ab2BBVMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 16:12:09 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:38742 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756467Ab2BBVMH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 16:12:07 -0500
+Received: by ghrr11 with SMTP id r11so1406811ghr.19
+        for <git@vger.kernel.org>; Thu, 02 Feb 2012 13:12:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=CWxiOv27AoxRajfCRffYEsQqKPHrBCIWhRKmVxsZYCI=;
-        b=FS2e19kT+Cn5w5YahK5y3MbTSeKF+py0NuoD0eCqKpgPzQhjTSa0n7igZOXdk15lPu
-         ui/gqNvwkhxih33ySNUA6Cxm7Lt8M4E1N4P6PcpCoT+DdRXozyCi9jp3Kwaoad7b0lDB
-         UzlRN1j6Cyfubtv1s/IeAhx+DWIgWp4owHfGQ=
-Received: by 10.213.11.19 with SMTP id r19mr715620ebr.92.1328216830884;
-        Thu, 02 Feb 2012 13:07:10 -0800 (PST)
-Received: from [192.168.1.13] (abwd54.neoplus.adsl.tpnet.pl. [83.8.227.54])
-        by mx.google.com with ESMTPS id n17sm13506588eei.3.2012.02.02.13.07.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 02 Feb 2012 13:07:10 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20120202214646.1b84f23e@gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=vAzCA/AtrO16eDJELPDuZxkz0mVXx0/GopNMSS03W/s=;
+        b=mocb9j4Lp8QMjqtGyul2VYCArYk78xbm1ekgnDXmnGByvapRdSV3P0ESUxQlTLYx/T
+         cgVFWmL07qh47Aex/qSUEfLPKMtET7ylNqHtKf9ePdN73zCyoPK/XAiAjOT6gMx6wTO6
+         udGNRMQAHxaDWak5zwTlYhN1ezfPyYAzT+IhA=
+Received: by 10.50.189.194 with SMTP id gk2mr14171444igc.0.1328217126180;
+        Thu, 02 Feb 2012 13:12:06 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id f8sm6933755ibl.6.2012.02.02.13.12.04
+        (version=SSLv3 cipher=OTHER);
+        Thu, 02 Feb 2012 13:12:05 -0800 (PST)
 Content-Disposition: inline
+In-Reply-To: <vpq62fp3r15.fsf@bauges.imag.fr>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189709>
 
-On Thu, 2 Jan 2012, Micha=C5=82 Kiedrowicz wrote:
-> Jakub Narebski <jnareb@gmail.com> wrote:
->=20
-> > Gitweb tries hard to properly process UTF-8 data, by marking output
-> > from git commands and contents of files as UTF-8 with to_utf8()
-> > subroutine.  This ensures that gitweb would print correctly UTF-8
-> > e.g. in 'log' and 'commit' views.
-> >=20
-> > Unfortunately it misses another source of potentially Unicode input=
-,
-> > namely query parameters.  The result is that one cannot search for =
-a
-> > string containing characters outside US-ASCII.  For example searchi=
-ng
-> > for "Micha=C5=82 Kiedrowicz" (containing letter '=C5=82' - LATIN SM=
-ALL LETTER L
-> > WITH STROKE, with Unicode codepoint U+0142, represented with 0xc5 0=
-x82
-> > bytes in UTF-8 and percent-encoded as %C5%81) result in the followi=
-ng
-> > incorrect data in search field
-> >=20
-> > 	Micha=C3=85=C2=82 Kiedrowicz
-> >=20
-> > This is caused by CGI by default treating '0xc5 0x82' bytes as two
-> > characters in Perl legacy encoding latin-1 (iso-8859-1), because 's=
-'
-> > query parameter is not processed explicitly as UTF-8 encoded string=
-=2E
-> >=20
-> > The solution used here follows "Using Unicode in a Perl CGI script"
-> > article on http://www.lemoda.net/cgi/perl-unicode/index.html:
-> >=20
-> > 	use CGI;
-> > 	use Encode 'decode_utf8;
-> > 	my $value =3D params('input');
-> > 	$value =3D decode_utf8($value);
-> >=20
-> > This is done when filling %input_params hash; this required to move
-> > from explicit $cgi->param(<label>) to $input_params{<name>} in a fe=
-w
-> > places.
->=20
-> I'm sorry but this doesn't work for me. I would be happy to help if y=
-ou
-> have some questions about it.
+Matthieu Moy wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Strange.  http://www.lemoda.net/cgi/perl-unicode/index.html says that
-those two approaches should be equivalent.  The -utf8 pragma version
-doesn't work for me at all, while this one works in that if finds what
-it is supposed to, but shows garbage in search form.
-
-Will investigate.
-=20
-> > Alternate solution would be to simply use the '-utf8' pragma (via
-> > "use CGI '-utf8';"), but according to CGI.pm documentation it may
-> > cause problems with POST requests containing binary files... and
-> > it doesn't work with old CGI.pm version 3.10 from Perl v5.8.6.
-
+>> 	(
+>> 		IFS==
+>> 		while read key value
+>> 		do
+>> 			...
+>> 		done
+>> 	)
 [...]
-> > @@ -816,9 +816,9 @@ sub evaluate_query_params {
-> > =20
-> >  	while (my ($name, $symbol) =3D each %cgi_param_mapping) {
-> >  		if ($symbol eq 'opt') {
-> > -			$input_params{$name} =3D [ $cgi->param($symbol) ];
-> > +			$input_params{$name} =3D [ map { decode_utf8($_) } $cgi->param(=
-$symbol) ];
-> >  		} else {
-> > -			$input_params{$name} =3D $cgi->param($symbol);
-> > +			$input_params{$name} =3D decode_utf8($cgi->param($symbol));
-> >  		}
-> >  	}
-> >  }
---=20
-Jakub Narebski
-Poland
+> I don't think so since the "..." contains
+>
+>     eval "$key=$value"
+
+Oh, whoops.  Thanks for noticing.
+
+Here's an updated patch, for amusement value.  No functional change
+intended.  I don't think it's actually worth applying unless people
+actively working on this file find the result easier to work with.
+
+-- >8 --
+Subject: t0300 (credentials): shell scripting style cleanups
+
+As Ben noticed, the helper used by this test script assigns a
+temporary value to IFS while calling the "read" builtin, which in
+ancient shells causes the value to leak into the environment and
+affect later code in the same script.  Explicitly save and restore IFS
+to avoid rekindling old memories.
+
+While at it, put the "do" associated to a "while" statement on its own
+line to match the house style and define helper scripts in the test
+data section above all test assertions so the "setup" test itself is
+less cluttered and we can worry a little less about quoting issues.
+
+Inspired-by: Ben Walton <bwalton@artsci.utoronto.ca>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ t/t0300-credentials.sh |   36 ++++++++++++++++++++----------------
+ 1 files changed, 20 insertions(+), 16 deletions(-)
+
+diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
+index edf65478..780d5dcb 100755
+--- a/t/t0300-credentials.sh
++++ b/t/t0300-credentials.sh
+@@ -4,33 +4,37 @@ test_description='basic credential helper tests'
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-credential.sh
+ 
+-test_expect_success 'setup helper scripts' '
+-	cat >dump <<-\EOF &&
++cat >dump <<-\EOF
+ 	whoami=`echo $0 | sed s/.*git-credential-//`
+ 	echo >&2 "$whoami: $*"
+-	while IFS== read key value; do
++	save_IFS=$IFS
++	IFS==
++	while read key value
++	do
+ 		echo >&2 "$whoami: $key=$value"
+ 		eval "$key=$value"
+ 	done
+-	EOF
++	IFS=$save_IFS
++EOF
+ 
+-	cat >git-credential-useless <<-EOF &&
++cat >git-credential-useless <<-EOF
+ 	#!$SHELL_PATH
+ 	. ./dump
+ 	exit 0
+-	EOF
++EOF
++
++cat >git-credential-verbatim <<-EOF
++	#!$SHELL_PATH
++	user=\$1; shift
++	pass=\$1; shift
++	. ./dump
++	test -z "\$user" || echo username=\$user
++	test -z "\$pass" || echo password=\$pass
++EOF
++
++test_expect_success setup '
+ 	chmod +x git-credential-useless &&
+-
+-	echo "#!$SHELL_PATH" >git-credential-verbatim &&
+-	cat >>git-credential-verbatim <<-\EOF &&
+-	user=$1; shift
+-	pass=$1; shift
+-	. ./dump
+-	test -z "$user" || echo username=$user
+-	test -z "$pass" || echo password=$pass
+-	EOF
+ 	chmod +x git-credential-verbatim &&
+-
+ 	PATH="$PWD:$PATH"
+ '
+ 
+-- 
+1.7.9
