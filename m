@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 5/9] grep: drop grep_buffer's "name" parameter
-Date: Thu, 2 Feb 2012 03:20:10 -0500
-Message-ID: <20120202082010.GE6786@sigill.intra.peff.net>
+Subject: [PATCH 6/9] grep: cache userdiff_driver in grep_source
+Date: Thu, 2 Feb 2012 03:20:43 -0500
+Message-ID: <20120202082043.GF6786@sigill.intra.peff.net>
 References: <20120202081747.GA10271@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -10,102 +10,123 @@ Cc: Thomas Rast <trast@student.ethz.ch>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Dov Grobgeld <dov.grobgeld@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 09:20:25 2012
+X-From: git-owner@vger.kernel.org Thu Feb 02 09:20:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rsru0-0000Vo-Su
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 09:20:21 +0100
+	id 1RsruV-0000jK-HB
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 09:20:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754609Ab2BBIUO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 03:20:14 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52871
+	id S1754786Ab2BBIUr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 03:20:47 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52880
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754063Ab2BBIUN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 03:20:13 -0500
-Received: (qmail 17892 invoked by uid 107); 2 Feb 2012 08:27:18 -0000
+	id S1754659Ab2BBIUq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 03:20:46 -0500
+Received: (qmail 17925 invoked by uid 107); 2 Feb 2012 08:27:51 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 02 Feb 2012 03:27:18 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Feb 2012 03:20:10 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 02 Feb 2012 03:27:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Feb 2012 03:20:43 -0500
 Content-Disposition: inline
 In-Reply-To: <20120202081747.GA10271@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189598>
 
-Before the grep_source interface existed, grep_buffer was
-used by two types of callers:
+Right now, grep only uses the userdiff_driver for one thing:
+looking up funcname patterns for "-p" and "-W".  As new uses
+for userdiff drivers are added to the grep code, we want to
+minimize attribute lookups, which can be expensive.
 
-  1. Ones which pulled a file into a buffer, and then wanted
-     to supply the file's name for the output (i.e.,
-     git grep).
-
-  2. Ones which really just wanted to grep a buffer (i.e.,
-     git log --grep).
-
-Callers in set (1) should now be using grep_source. Callers
-in set (2) always pass NULL for the "name" parameter of
-grep_buffer. We can therefore get rid of this now-useless
-parameter.
+It might seem at first that this would also optimize multiple
+lookups when the funcname pattern for a file is needed
+multiple times. However, the compiled funcname pattern is
+already cached in struct grep_opt's "priv" member, so
+multiple lookups are already suppressed.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-This one isn't necessary, obviously, but I think it's a nice clean-up
-after the last two patches.
-
- grep.c     |    4 ++--
- grep.h     |    2 +-
- revision.c |    1 -
- 3 files changed, 3 insertions(+), 4 deletions(-)
+ grep.c |   22 ++++++++++++++++------
+ grep.h |    4 ++++
+ 2 files changed, 20 insertions(+), 6 deletions(-)
 
 diff --git a/grep.c b/grep.c
-index 8204ca2..2a3fe7c 100644
+index 2a3fe7c..bb18569 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -1215,12 +1215,12 @@ int grep_source(struct grep_opt *opt, struct grep_source *gs)
- 	return grep_source_1(opt, gs, 0);
- }
- 
--int grep_buffer(struct grep_opt *opt, const char *name, char *buf, unsigned long size)
-+int grep_buffer(struct grep_opt *opt, char *buf, unsigned long size)
+@@ -841,12 +841,9 @@ static int match_funcname(struct grep_opt *opt, struct grep_source *gs, char *bo
  {
- 	struct grep_source gs;
- 	int r;
+ 	xdemitconf_t *xecfg = opt->priv;
+ 	if (xecfg && !xecfg->find_func) {
+-		struct userdiff_driver *drv;
+-		grep_attr_lock();
+-		drv = userdiff_find_by_path(gs->name);
+-		grep_attr_unlock();
+-		if (drv && drv->funcname.pattern) {
+-			const struct userdiff_funcname *pe = &drv->funcname;
++		grep_source_load_driver(gs);
++		if (gs->driver->funcname.pattern) {
++			const struct userdiff_funcname *pe = &gs->driver->funcname;
+ 			xdiff_set_find_func(xecfg, pe->pattern, pe->cflags);
+ 		} else {
+ 			xecfg = opt->priv = NULL;
+@@ -1237,6 +1234,7 @@ void grep_source_init(struct grep_source *gs, enum grep_source_type type,
+ 	gs->name = name ? xstrdup(name) : NULL;
+ 	gs->buf = NULL;
+ 	gs->size = 0;
++	gs->driver = NULL;
  
--	grep_source_init(&gs, GREP_SOURCE_BUF, name, NULL);
-+	grep_source_init(&gs, GREP_SOURCE_BUF, NULL, NULL);
- 	gs.buf = buf;
- 	gs.size = size;
- 
+ 	switch (type) {
+ 	case GREP_SOURCE_FILE:
+@@ -1340,3 +1338,15 @@ int grep_source_load(struct grep_source *gs)
+ 	}
+ 	die("BUG: invalid grep_source type");
+ }
++
++void grep_source_load_driver(struct grep_source *gs)
++{
++	if (gs->driver)
++		return;
++
++	grep_attr_lock();
++	gs->driver = userdiff_find_by_path(gs->name);
++	if (!gs->driver)
++		gs->driver = userdiff_find_by_name("default");
++	grep_attr_unlock();
++}
 diff --git a/grep.h b/grep.h
-index e386ca4..8bf3001 100644
+index 8bf3001..73b28c2 100644
 --- a/grep.h
 +++ b/grep.h
-@@ -127,7 +127,7 @@ extern void append_grep_pattern(struct grep_opt *opt, const char *pat, const cha
- extern void append_header_grep_pattern(struct grep_opt *, enum grep_header_field, const char *);
- extern void compile_grep_patterns(struct grep_opt *opt);
- extern void free_grep_patterns(struct grep_opt *opt);
--extern int grep_buffer(struct grep_opt *opt, const char *name, char *buf, unsigned long size);
-+extern int grep_buffer(struct grep_opt *opt, char *buf, unsigned long size);
+@@ -9,6 +9,7 @@ typedef int pcre_extra;
+ #endif
+ #include "kwset.h"
+ #include "thread-utils.h"
++#include "userdiff.h"
  
- struct grep_source {
- 	char *name;
-diff --git a/revision.c b/revision.c
-index c97d834..819ff01 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2149,7 +2149,6 @@ static int commit_match(struct commit *commit, struct rev_info *opt)
- 	if (!opt->grep_filter.pattern_list && !opt->grep_filter.header_list)
- 		return 1;
- 	return grep_buffer(&opt->grep_filter,
--			   NULL, /* we say nothing, not even filename */
- 			   commit->buffer, strlen(commit->buffer));
- }
+ enum grep_pat_token {
+ 	GREP_PATTERN,
+@@ -141,6 +142,8 @@ struct grep_source {
+ 
+ 	char *buf;
+ 	unsigned long size;
++
++	struct userdiff_driver *driver;
+ };
+ 
+ void grep_source_init(struct grep_source *gs, enum grep_source_type type,
+@@ -148,6 +151,7 @@ void grep_source_init(struct grep_source *gs, enum grep_source_type type,
+ int grep_source_load(struct grep_source *gs);
+ void grep_source_clear_data(struct grep_source *gs);
+ void grep_source_clear(struct grep_source *gs);
++void grep_source_load_driver(struct grep_source *gs);
+ 
+ int grep_source(struct grep_opt *opt, struct grep_source *gs);
  
 -- 
 1.7.9.3.gc3fce1.dirty
