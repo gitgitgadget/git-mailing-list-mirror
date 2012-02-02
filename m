@@ -1,75 +1,95 @@
-From: David Howells <dhowells@redhat.com>
-Subject: How best to handle multiple-authorship commits in GIT?
-Date: Thu, 02 Feb 2012 12:25:09 +0000
-Organization: Red Hat UK Ltd. Registered Address: Red Hat UK Ltd, Amberley
-	Place, 107-111 Peascod Street, Windsor, Berkshire, SI4 1TE, United
-	Kingdom.
-	Registered in England and Wales under Company Registration No. 3798903
-Message-ID: <21056.1328185509@redhat.com>
-Cc: dhowells@redhat.com, valerie.aurora@gmail.com
+From: "Tom G. Christensen" <tgc@statsbiblioteket.dk>
+Subject: I18N.pm is incompatible with perl < 5.8.3
+Date: Thu, 2 Feb 2012 14:11:20 +0100
+Message-ID: <4F2A8B78.6090902@statsbiblioteket.dk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 02 13:25:31 2012
+X-From: git-owner@vger.kernel.org Thu Feb 02 14:21:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rsvj9-0002Sf-C9
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 13:25:23 +0100
+	id 1RswbX-0004ug-1T
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 14:21:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756009Ab2BBMZP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 07:25:15 -0500
-Received: from mx1.redhat.com ([209.132.183.28]:56695 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755904Ab2BBMZO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 07:25:14 -0500
-Received: from int-mx12.intmail.prod.int.phx2.redhat.com (int-mx12.intmail.prod.int.phx2.redhat.com [10.5.11.25])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id q12CPC1V019970
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Thu, 2 Feb 2012 07:25:13 -0500
-Received: from redhat.com ([10.3.112.8])
-	by int-mx12.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id q12CP9Yh008136;
-	Thu, 2 Feb 2012 07:25:11 -0500
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.25
+	id S1755965Ab2BBNV2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 08:21:28 -0500
+Received: from sbexch03.sb.statsbiblioteket.dk ([130.225.24.68]:27051 "EHLO
+	sbexch03.sb.statsbiblioteket.dk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753745Ab2BBNVZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Feb 2012 08:21:25 -0500
+X-Greylist: delayed 603 seconds by postgrey-1.27 at vger.kernel.org; Thu, 02 Feb 2012 08:21:25 EST
+Received: from [130.225.25.159] (130.225.25.159) by
+ sbexch03.sb.statsbiblioteket.dk (130.225.24.68) with Microsoft SMTP Server id
+ 8.3.213.0; Thu, 2 Feb 2012 14:11:20 +0100
+User-Agent: Thunderbird 2.0.0.24 (X11/20111118)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189640>
 
+Hello,
 
-Hi,
+While running the git 1.7.9 testsuite on RHEL 3 with perl 5.8.0 and 
+gettext 0.11.4 I got this error in t0202-gettext-perl.sh:
+# test_external test Perl Git::I18N API failed: /usr/bin/perl 
+/builddir/build/BUILD/git-1.7.9/t/t0202/test.pl
+# test_external_without_stderr test no stderr: Perl Git::I18N API 
+failed: /usr/bin/perl /builddir/build/BUILD/git-1.7.9/t/t0202/test.pl:
 
-I've been assigned a stack of patches to maintain and try and get upstream by
-my employer.  Most of the patches currently have the authorship set to Val,
-but since I'll be maintaining them if they go in upstream and I've changed
-them a lot, I feel I should reassign the author field to myself so people
-pester me rather than Val with questions about them.  However, I don't want to
-deny Val or any other contributor credit for their work on the patches.
+A verbose run gave me this:
+# test_external test Perl Git::I18N API failed: /usr/bin/perl 
+/builddir/build/BUILD/git-1.7.9/t/t0202/test.pl
+# expecting no stderr from previous command
+# test_external_without_stderr test no stderr: Perl Git::I18N API 
+failed: /usr/bin/perl /builddir/build/BUILD/git-1.7.9/t/t0202/test.pl:
+# Stderr is:
+"import" is not exported by the Exporter module
+Can't continue after import errors at 
+/builddir/build/BUILD/git-1.7.9/t/../perl/blib/lib/Git/I18N.pm line 5
+BEGIN failed--compilation aborted at 
+/builddir/build/BUILD/git-1.7.9/t/../perl/blib/lib/Git/I18N.pm line 5.
+Compilation failed in require at 
+/builddir/build/BUILD/git-1.7.9/t/t0202/test.pl line 8.
+BEGIN failed--compilation aborted at 
+/builddir/build/BUILD/git-1.7.9/t/t0202/test.pl line 8.
+# Looks like your test died before it could output anything.
 
-I can see a number of ways of doing this, and am wondering which will be best:
+I found the cause and the solution here:
+http://www.nntp.perl.org/group/perl.module.build/2008/02/msg1214.html
 
- (1) Ascribe multiple authorship directly in the commit.  I suspect this would
-     require a change to GIT and its associated tools.  That way I could put my
-     name in the priority pestering spot, but doing a search on authorship
-     would still credit Val and others.
+I've changed
+  use Exporter 'import'
+to
+  BEGIN {
+   require Exporter;
+   *{import} = \&Exporter::import;
+   }
+in I18N.pm.
 
- (2) Add an extra tag 'Originally-authored-by' (or maybe 'Coauthored-by' as I
-     saw someone recommend) in amongst the 'Signed-off-by' list.  But that
-     doesn't give them credit in a gitweb search without changing gitweb.
+The test now passes (GETTEXT_LOCALE=1):
+# lib-gettext: No is_IS UTF-8 locale available
+# lib-gettext: No is_IS ISO-8859-1 locale available
+# run 1: Perl Git::I18N API (/usr/bin/perl 
+/builddir/build/BUILD/git-1.7.9/t/t0202/test.pl)
+1..8
+ok 1 - Testing Git::I18N with NO Perl gettext library
+ok 2 - Git::I18N is located at 
+/builddir/build/BUILD/git-1.7.9/t/../perl/blib/lib/Git/I18N.pm
+ok 3 - sanity: Git::I18N has 1 export(s)
+ok 4 - sanity: Git::I18N exports everything by default
+ok 5 - sanity: __ has a $ prototype
+ok 6 - Passing a string through __() in the C locale works
+ok 7 - Without a gettext library + <C> locale <TEST: A Perl test string> 
+turns into <TEST: A Perl test string>
+ok 8 - Without a gettext library + <is> locale <TEST: A Perl test 
+string> turns into <TEST: A Perl test string>
+# test_external test Perl Git::I18N API was ok
+# expecting no stderr from previous command
+# test_external_without_stderr test no stderr: Perl Git::I18N API was ok
 
- (3) Don't actually modify Val's commits to bring them up to date, but rather
-     create a historical GIT tree with Val's commits committed as-are and then
-     add my changes to the top in a number of large merge commits (there have
-     been multiple major breakages due to different merge windows).
-
-     I dislike this approach because it doesn't produce a nice set of patches I
-     can give to someone to review (which is a must).  Plus, for the most part,
-     it's actually easier to port Val's patches individually.
-
-Can GIT be modified to do (1)?  Gitweb's display need only show one of the
-authors in the single-row-per-patch list mode, but should find a patch by any
-of the authors in an author search and should display all the authors in the
-commit display.
-
-David
+-tgc
