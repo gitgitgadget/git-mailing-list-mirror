@@ -1,83 +1,49 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/9] grep: cache userdiff_driver in grep_source
-Date: Thu, 02 Feb 2012 10:34:07 -0800
-Message-ID: <7v4nv9xexs.fsf@alter.siamese.dyndns.org>
-References: <20120202081747.GA10271@sigill.intra.peff.net>
- <20120202082043.GF6786@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Conrad Irwin <conrad.irwin@gmail.com>, git@vger.kernel.org,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Dov Grobgeld <dov.grobgeld@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 02 19:34:17 2012
+From: David Howells <dhowells@redhat.com>
+Subject: Re: How best to handle multiple-authorship commits in GIT?
+Date: Thu, 02 Feb 2012 18:36:29 +0000
+Organization: Red Hat UK Ltd. Registered Address: Red Hat UK Ltd, Amberley
+	Place, 107-111 Peascod Street, Windsor, Berkshire, SI4 1TE, United
+	Kingdom.
+	Registered in England and Wales under Company Registration No. 3798903
+Message-ID: <15281.1328207789@redhat.com>
+References: <9B990DDC-858D-43BA-BF9E-E0C3435354AF@gmail.com> <21056.1328185509@redhat.com>
+Cc: dhowells@redhat.com, "git@vger.kernel.org" <git@vger.kernel.org>
+To: Valerie Aurora <valerie.aurora@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 19:36:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rt1U7-0001DB-Vc
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 19:34:16 +0100
+	id 1Rt1WR-0002US-TD
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 19:36:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933236Ab2BBSeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 13:34:11 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43461 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932695Ab2BBSeJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 13:34:09 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6102C5C35;
-	Thu,  2 Feb 2012 13:34:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2Bl46szxWvZWfaS75kE3TsgkbNo=; b=k2WBlz
-	ZnLuvD30Cm2GfjdRHQA3zo3X+iQuD5qbNZ/wL1aL8CpoPcjXGVX5gaGrnnKAdaNG
-	uwpKN12Wse58sCndXCjSVEsk78638fzYfU5h6sPugTTFB66mZATbYNrsegWgnlwA
-	j9WNgw3j3mmRZx2ipdrDlvKfUlDEQ45H6ARBM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iQM8s5rPg/BCw+u1WIWXorlmQGC7/Ijr
-	7kP12AAg0OvBxOVqWkJvWt6UYFuMQTq2wtv2KMftP3TifyfvchIw4E5Jq+yMlzcK
-	E58vCCdRBPG6ikIVxFfSxUEPSMiRCgaxVpRbGEAWeWurgMBrroVs8lxvOTXBhTfq
-	uiKuTfF/ics=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 533B75C34;
-	Thu,  2 Feb 2012 13:34:09 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D423C5C32; Thu,  2 Feb 2012
- 13:34:08 -0500 (EST)
-In-Reply-To: <20120202082043.GF6786@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 2 Feb 2012 03:20:43 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7E800374-4DCC-11E1-9BAA-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757073Ab2BBSgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 13:36:35 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:62152 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755590Ab2BBSgf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 13:36:35 -0500
+Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id q12IaXEw021734
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Thu, 2 Feb 2012 13:36:33 -0500
+Received: from redhat.com ([10.3.112.8])
+	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id q12IaUx1009686;
+	Thu, 2 Feb 2012 13:36:31 -0500
+In-Reply-To: <9B990DDC-858D-43BA-BF9E-E0C3435354AF@gmail.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189664>
 
-Jeff King <peff@peff.net> writes:
+Valerie Aurora <valerie.aurora@gmail.com> wrote:
 
-> -		grep_attr_lock();
-> -		drv = userdiff_find_by_path(gs->name);
-> -		grep_attr_unlock();
-> -		if (drv && drv->funcname.pattern) {
-> -			const struct userdiff_funcname *pe = &drv->funcname;
-> +		grep_source_load_driver(gs);
-> +		if (gs->driver->funcname.pattern) {
-> +			const struct userdiff_funcname *pe = &gs->driver->funcname;
+> There is a line in the kernel doc saying how this should be handled,
+> suggested by Rusty, but it's not being followed.
 
-When we load driver, gs->driver gets at least "default" driver, so we no
-longer need to check for drv != NULL as we used to?  Is that the reason
-for the slight difference here?
+Do you know where?
 
-> @@ -1237,6 +1234,7 @@ void grep_source_init(struct grep_source *gs, enum grep_source_type type,
->  	gs->name = name ? xstrdup(name) : NULL;
->  	gs->buf = NULL;
->  	gs->size = 0;
-> +	gs->driver = NULL;
->  
->  	switch (type) {
->  	case GREP_SOURCE_FILE:
+David
