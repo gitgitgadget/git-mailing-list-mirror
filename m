@@ -1,87 +1,98 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC (version A)] gitweb: use CGI with -utf8 to process Unicode query  parameters correctly
-Date: Thu, 2 Feb 2012 21:11:02 +0100
-Message-ID: <201202022111.03336.jnareb@gmail.com>
-References: <1328136653-20559-1-git-send-email-michal.kiedrowicz@gmail.com> <m37h05c8c1.fsf@localhost.localdomain> <201202022108.51353.jnareb@gmail.com>
+From: Ted Ts'o <tytso@mit.edu>
+Subject: Re: [PATCH, RFC] Fix build problems related to profile-directed
+ optimization
+Date: Thu, 2 Feb 2012 15:12:26 -0500
+Message-ID: <20120202201226.GA1032@thunk.org>
+References: <1328209417-8206-1-git-send-email-tytso@mit.edu>
+ <7vvcnpuhpo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: =?utf-8?q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 21:10:28 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Andi Kleen <ak@linux.intel.com>,
+	Clemens Buchacher <drizzd@aon.at>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 21:12:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rt2zD-0007p9-1O
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 21:10:27 +0100
+	id 1Rt31H-0000NI-IJ
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 21:12:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755309Ab2BBUKW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 15:10:22 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:51556 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754781Ab2BBUKW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 15:10:22 -0500
-Received: by eekc14 with SMTP id c14so900777eek.19
-        for <git@vger.kernel.org>; Thu, 02 Feb 2012 12:10:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=ZzgF0Rjen5VjaTL8TzB1rB8Ap6MjB00zaN4gmrne/rQ=;
-        b=f67cjatn/qgzciRlKiqklRGxvc0K2+nPB59T5GUJN/S5KzlT7kGN+esG8/5Aqz5i5T
-         QMqRcomO1nrAxpTaYAyvpZU5N32HXK2q5woFxcQB3acdcKnoPLpEVwMGgi3BMsixABcs
-         KTck1eb9215vMPc3FWE2+yIpnZUw4v8g1EmX4=
-Received: by 10.14.53.74 with SMTP id f50mr1394042eec.5.1328213421187;
-        Thu, 02 Feb 2012 12:10:21 -0800 (PST)
-Received: from [192.168.1.13] (abwd54.neoplus.adsl.tpnet.pl. [83.8.227.54])
-        by mx.google.com with ESMTPS id y12sm12848627eeb.11.2012.02.02.12.10.20
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 02 Feb 2012 12:10:20 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201202022108.51353.jnareb@gmail.com>
+	id S1755383Ab2BBUMb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 15:12:31 -0500
+Received: from li9-11.members.linode.com ([67.18.176.11]:42449 "EHLO
+	test.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754870Ab2BBUMa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 15:12:30 -0500
+Received: from root (helo=tytso-glaptop.cam.corp.google.com)
+	by test.thunk.org with local-esmtp (Exim 4.69)
+	(envelope-from <tytso@thunk.org>)
+	id 1Rt319-00014b-QR; Thu, 02 Feb 2012 20:12:27 +0000
+Received: from tytso by tytso-glaptop.cam.corp.google.com with local (Exim 4.71)
+	(envelope-from <tytso@thunk.org>)
+	id 1Rt318-0008BB-E2; Thu, 02 Feb 2012 15:12:26 -0500
 Content-Disposition: inline
+In-Reply-To: <7vvcnpuhpo.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on test.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189695>
 
-> According to "Using Unicode in a Perl CGI script" article on
-> http://www.lemoda.net/cgi/perl-unicode/index.html the simplest
-> solution is to just import '-utf8' pragma for CGI module:
+On Thu, Feb 02, 2012 at 12:02:27PM -0800, Junio C Hamano wrote:
 > 
-> 	use CGI '-utf8';
-> 	my $value = params('input');
-[...]
-> ---
+> Thanks for a patch.  How does this compare with what was discussed in the
+> other thread?
+> 
+>   http://thread.gmane.org/gmane.comp.version-control.git/188992/focus=189172
 
-Except it doesn't work for me...
+I wasn't aware of this other approach when I created this patch (I
+must have missed the e-mail thread, sorry).
 
->  gitweb/gitweb.perl |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 9cf7e71..a7441ef 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -10,7 +10,7 @@
->  use 5.008;
->  use strict;
->  use warnings;
-> -use CGI qw(:standard :escapeHTML -nosticky);
-> +use CGI qw(:standard :escapeHTML -nosticky -utf8);
->  use CGI::Util qw(unescape);
->  use CGI::Carp qw(fatalsToBrowser set_message);
->  use Encode;
-> -- 
-> 1.7.6
-> 
-> 
+One of the reasons why I did it this way was for more flexibility.  I
+wanted to be able to do:
 
--- 
-Jakub Narebski
-Poland
+$ make PROFILE_GEN=YesPlease PROFILE_DIR=/var/cache/FDO all
+# make PROFILE_GEN=YesPlease PROFILE_DIR=/var/cache/FDO install
+
+run a bunch of git commands on various git repositories to get
+real-life usage...
+
+Then do...
+
+$ make PROFILE_USE=YesPlease PROFILE_DIR=/var/cache/FDO all
+# make PROFILE_GEN=YesPlease PROFILE_DIR=/var/cache/FDO install
+
+But for many people they would probably be satisfied with something
+that builds git using a single magic recipe, even if they give up some
+fractional performance improvement (keep in mind that the feedback
+directed optimization seems to buy you only a single digit percentage
+improvement according according to Andi's original experiment; I just
+got interested in this more for amusement value than any thought that
+it would save me serious amounts of time).
+
+> I would wish a solution ideally would support
+> 
+> 	make PROFILE_BUILD=YesPlease
+>         make PROFILE_BUILD=YesPlease install
+
+At least in theory, it should be possible to have something which
+supports both PROFILE_GEN/PROFILE_USE as well as a combined
+PROFILE_BUILD.
+
+The hard part is that PROFILE_BUILD requires a multi-pass process; you
+need to build with one set of CFLAGS, then run the sample workload to
+get the data for your feedback directed optimizations, and then re-run
+the build with another set of CFLAGS.  I think what we could to check
+for PROFILE_BUILD, and if it is set, do the first PROFILE_GEN / make
+test commands as part of the top-level Makefile's all: rule, and then
+do the normal build after that.
+
+It's a little kludgy, but does that sound acceptable to you?
+
+       	      	      	       	    	  - Ted
