@@ -1,86 +1,127 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [ANNOUNCE] Git 1.7.9
-Date: Thu, 02 Feb 2012 12:50:14 -0800 (PST)
-Message-ID: <m3y5slark1.fsf@localhost.localdomain>
-References: <7vipjwzvc2.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH/RFC (version B)] gitweb: Allow UTF-8 encoded CGI query parameters and  path_info
+Date: Thu, 2 Feb 2012 22:07:51 +0100
+Message-ID: <201202022207.52220.jnareb@gmail.com>
+References: <1328136653-20559-1-git-send-email-michal.kiedrowicz@gmail.com> <201202022110.07127.jnareb@gmail.com> <20120202214646.1b84f23e@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: linux-kernel-owner@vger.kernel.org Thu Feb 02 21:50:30 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 22:07:25 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Rt3bv-0000Oe-P6
-	for glk-linux-kernel-3@plane.gmane.org; Thu, 02 Feb 2012 21:50:28 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Rt3sI-00008N-NV
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 22:07:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757164Ab2BBUuS (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Thu, 2 Feb 2012 15:50:18 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:48621 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755448Ab2BBUuQ (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 2 Feb 2012 15:50:16 -0500
-Received: by eekc14 with SMTP id c14so913651eek.19
-        for <multiple recipients>; Thu, 02 Feb 2012 12:50:15 -0800 (PST)
+	id S1756590Ab2BBVHP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Feb 2012 16:07:15 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:59605 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756031Ab2BBVHN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 16:07:13 -0500
+Received: by eaah12 with SMTP id h12so1214076eaa.19
+        for <git@vger.kernel.org>; Thu, 02 Feb 2012 13:07:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=eLUiuWdTy5CkSk1XB0dKKZ49G+d4v8fX2G3C9AZgeVI=;
-        b=bDQFrtsrVvvUldetULbEyvgE2gtgkG06ibd58QVcPengi3Jwf8LVUhC+b+aj6zD+3K
-         FRxGXkyqEjN6GjRi29z9o6HzWukRIVOGwCzeY8sZIvV+o/OZ9b5e+R3s1/o9Ft9UBmnI
-         uOXWZedfST0wcISNsxqJMaNvYYkpUeGD1GPSw=
-Received: by 10.14.119.202 with SMTP id n50mr1388378eeh.120.1328215814885;
-        Thu, 02 Feb 2012 12:50:14 -0800 (PST)
-Received: from localhost.localdomain (abwd54.neoplus.adsl.tpnet.pl. [83.8.227.54])
-        by mx.google.com with ESMTPS id c16sm13364344eei.1.2012.02.02.12.50.13
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=CWxiOv27AoxRajfCRffYEsQqKPHrBCIWhRKmVxsZYCI=;
+        b=FS2e19kT+Cn5w5YahK5y3MbTSeKF+py0NuoD0eCqKpgPzQhjTSa0n7igZOXdk15lPu
+         ui/gqNvwkhxih33ySNUA6Cxm7Lt8M4E1N4P6PcpCoT+DdRXozyCi9jp3Kwaoad7b0lDB
+         UzlRN1j6Cyfubtv1s/IeAhx+DWIgWp4owHfGQ=
+Received: by 10.213.11.19 with SMTP id r19mr715620ebr.92.1328216830884;
+        Thu, 02 Feb 2012 13:07:10 -0800 (PST)
+Received: from [192.168.1.13] (abwd54.neoplus.adsl.tpnet.pl. [83.8.227.54])
+        by mx.google.com with ESMTPS id n17sm13506588eei.3.2012.02.02.13.07.09
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 02 Feb 2012 12:50:14 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q12KoNE3029160;
-	Thu, 2 Feb 2012 21:50:34 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q12Ko6fV029150;
-	Thu, 2 Feb 2012 21:50:06 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7vipjwzvc2.fsf@alter.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
-Sender: linux-kernel-owner@vger.kernel.org
+        Thu, 02 Feb 2012 13:07:10 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20120202214646.1b84f23e@gmail.com>
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189707>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189708>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, 2 Jan 2012, Micha=C5=82 Kiedrowicz wrote:
+> Jakub Narebski <jnareb@gmail.com> wrote:
+>=20
+> > Gitweb tries hard to properly process UTF-8 data, by marking output
+> > from git commands and contents of files as UTF-8 with to_utf8()
+> > subroutine.  This ensures that gitweb would print correctly UTF-8
+> > e.g. in 'log' and 'commit' views.
+> >=20
+> > Unfortunately it misses another source of potentially Unicode input=
+,
+> > namely query parameters.  The result is that one cannot search for =
+a
+> > string containing characters outside US-ASCII.  For example searchi=
+ng
+> > for "Micha=C5=82 Kiedrowicz" (containing letter '=C5=82' - LATIN SM=
+ALL LETTER L
+> > WITH STROKE, with Unicode codepoint U+0142, represented with 0xc5 0=
+x82
+> > bytes in UTF-8 and percent-encoded as %C5%81) result in the followi=
+ng
+> > incorrect data in search field
+> >=20
+> > 	Micha=C3=85=C2=82 Kiedrowicz
+> >=20
+> > This is caused by CGI by default treating '0xc5 0x82' bytes as two
+> > characters in Perl legacy encoding latin-1 (iso-8859-1), because 's=
+'
+> > query parameter is not processed explicitly as UTF-8 encoded string=
+=2E
+> >=20
+> > The solution used here follows "Using Unicode in a Perl CGI script"
+> > article on http://www.lemoda.net/cgi/perl-unicode/index.html:
+> >=20
+> > 	use CGI;
+> > 	use Encode 'decode_utf8;
+> > 	my $value =3D params('input');
+> > 	$value =3D decode_utf8($value);
+> >=20
+> > This is done when filling %input_params hash; this required to move
+> > from explicit $cgi->param(<label>) to $input_params{<name>} in a fe=
+w
+> > places.
+>=20
+> I'm sorry but this doesn't work for me. I would be happy to help if y=
+ou
+> have some questions about it.
 
-> The latest feature release Git 1.7.9 is now available at the usual
-> places.
-> 
-> The release tarballs are found at:
-> 
->     http://code.google.com/p/git-core/downloads/list
-> 
-> and their SHA-1 checksums are:
-> 
-> ed51ef5ef250daaa6e98515cf2641820cd268d4c  git-1.7.9.tar.gz
-> c7b1fa20dc501beb2cb5091dd24dbfd2a0013a0c  git-htmldocs-1.7.9.tar.gz
-> 1ca1fc430b2814f9e9cf82ec3bf7f2eaf5209b7a  git-manpages-1.7.9.tar.gz
+Strange.  http://www.lemoda.net/cgi/perl-unicode/index.html says that
+those two approaches should be equivalent.  The -utf8 pragma version
+doesn't work for me at all, while this one works in that if finds what
+it is supposed to, but shows garbage in search form.
 
-When trying to rebuild RPM out of tarball with
+Will investigate.
+=20
+> > Alternate solution would be to simply use the '-utf8' pragma (via
+> > "use CGI '-utf8';"), but according to CGI.pm documentation it may
+> > cause problems with POST requests containing binary files... and
+> > it doesn't work with old CGI.pm version 3.10 from Perl v5.8.6.
 
-  $ rpmbuild -tb git-1.7.9.tar.gz
-
-I get the following error at the end of build phase:
-
- RPM build errors:
-     Installed (but unpackaged) file(s) found:
-    /usr/share/locale/is/LC_MESSAGES/git.mo
-
-Shouldn't this file be put in git package, or in separate 
-git-i18n-is / git-i18n-Icelandic RPM package?
-
--- 
+[...]
+> > @@ -816,9 +816,9 @@ sub evaluate_query_params {
+> > =20
+> >  	while (my ($name, $symbol) =3D each %cgi_param_mapping) {
+> >  		if ($symbol eq 'opt') {
+> > -			$input_params{$name} =3D [ $cgi->param($symbol) ];
+> > +			$input_params{$name} =3D [ map { decode_utf8($_) } $cgi->param(=
+$symbol) ];
+> >  		} else {
+> > -			$input_params{$name} =3D $cgi->param($symbol);
+> > +			$input_params{$name} =3D decode_utf8($cgi->param($symbol));
+> >  		}
+> >  	}
+> >  }
+--=20
 Jakub Narebski
+Poland
