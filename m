@@ -1,69 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to find and analyze bad merges?
-Date: Thu, 02 Feb 2012 00:16:42 -0800
-Message-ID: <7vd39xy7it.fsf@alter.siamese.dyndns.org>
-References: <jgdgcv$h8n$1@dough.gmane.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/9] respect binary attribute in grep
+Date: Thu, 2 Feb 2012 03:17:47 -0500
+Message-ID: <20120202081747.GA10271@sigill.intra.peff.net>
+References: <20120201221437.GA19044@sigill.intra.peff.net>
+ <20120201232109.GA2652@sigill.intra.peff.net>
+ <7vhaza12ol.fsf@alter.siamese.dyndns.org>
+ <20120202005209.GA6883@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "norbert.nemec" <norbert.nemec@native-instruments.de>
-X-From: git-owner@vger.kernel.org Thu Feb 02 09:16:53 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Conrad Irwin <conrad.irwin@gmail.com>, git@vger.kernel.org,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Dov Grobgeld <dov.grobgeld@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 09:17:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rsrqc-0007a2-72
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 09:16:50 +0100
+	id 1Rsrrg-00080p-AX
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 09:17:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754522Ab2BBIQp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 03:16:45 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51092 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754301Ab2BBIQo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 03:16:44 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 460707F4A;
-	Thu,  2 Feb 2012 03:16:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5r04HZ19fI4HBkgj6VP4SGQeg/w=; b=M3Hi0N
-	Sg8IllvzkAfjntusr2G/WToCr/bWHm6jvfLaMOrhAgQzF4APFl3OsN+aIN+XkRwo
-	EX6eqGj17jEttOpvNWQ/wTuKMYdsUihKDmKQQ721hUrULpD5QJ8oCd9irulvI3mG
-	EqcIZqxw4pY2+9zkvo4yikDBek7E5qWHnsFkM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RAEVrTvoTtKSbluXAVAwASWgdW7GeRnA
-	zHxIWCYwdX5Fql3uugCgy/Y1bdKyvxb3R49SYPxFUMP21SJf1i9PkrbshJ5A4bYB
-	2E3JXmWJLvFyCmQF9hAQiUnJYJAIium+su1I1qujmzRbTxMqtm/PYzIk6oB69FkW
-	r/CpRGj2VZU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D1CD7F49;
-	Thu,  2 Feb 2012 03:16:44 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C38BE7F47; Thu,  2 Feb 2012
- 03:16:43 -0500 (EST)
-In-Reply-To: <jgdgcv$h8n$1@dough.gmane.org> (norbert nemec's message of "Thu,
- 02 Feb 2012 09:10:06 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3DEAE8A2-4D76-11E1-91FD-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754702Ab2BBIRv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 03:17:51 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52833
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754576Ab2BBIRu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 03:17:50 -0500
+Received: (qmail 17707 invoked by uid 107); 2 Feb 2012 08:24:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 02 Feb 2012 03:24:55 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Feb 2012 03:17:47 -0500
+Content-Disposition: inline
+In-Reply-To: <20120202005209.GA6883@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189592>
 
-"norbert.nemec" <norbert.nemec@native-instruments.de> writes:
+[+cc Thomas, as I am mangling some of his recent work with my
+     refactoring]
 
-> a colleague of mine happened to produce a bad merge by unintenionally
-> picking the version of the remote branch ("R") for all conflicting
-> files. Effectively, he eliminated a whole bunch of bugfixes that were
-> already on his local branch ("L").
->
-> Obviously this was a mistake on his side, but hey: everyone makes
-> mistakes. The real problem is to find this problem afterwards,
-> possibly weeks later, when you suddenly realize that a bug that you
-> had fixed suddenly reappears.
+On Wed, Feb 01, 2012 at 07:52:09PM -0500, Jeff King wrote:
 
-Bisect?
+> > Hrm, I would have expected a patch that turns "const char *name" into a
+> > structure that has name and drv as its members, so that later we can tell
+> > the function more about the nature of the contents. Or a separate pointer
+> > to drv in place of your "binary" flag word.
+> [...]
+> I'll take a look at re-working it that way.
+
+Thanks for a dose of sanity. The result turned out much easier to read
+(and explain in the commit messages, as it was simple to break into
+smaller commits). In particular, the "don't read binary-marked files at
+all with -I" optimization became very natural.
+
+I implemented all of the other optimizations I mentioned except the
+"only stream the first few bytes when auto-detecting binary-ness" one.
+However, it should be easy to do on top of these changes. I need to
+re-visit the similar change to diff_filespec_is_binary, and I'll do both
+at the same time.
+
+The patches are:
+
+  [1/9]: grep: make locking flag global
+  [2/9]: grep: move sha1-reading mutex into low-level code
+  [3/9]: grep: refactor the concept of "grep source" into an object
+  [4/9]: convert git-grep to use grep_source interface
+  [5/9]: grep: drop grep_buffer's "name" parameter
+  [6/9]: grep: cache userdiff_driver in grep_source
+
+    These are all refactoring that should have no behavior change.
+
+  [7/9]: grep: respect diff attributes for binary-ness
+
+    This is the point of the series. :)
+
+  [8/9]: grep: load file data after checking binary-ness
+  [9/9]: grep: pre-load userdiff drivers when threaded
+
+    And these two are simple optimizations.
+
+-Peff
