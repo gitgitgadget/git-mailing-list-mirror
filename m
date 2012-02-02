@@ -1,81 +1,75 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] t0300-credentials: Word around a solaris /bin/sh bug
-Date: Thu, 2 Feb 2012 14:16:29 -0600
-Message-ID: <20120202201629.GA20200@burratino>
-References: <1328211135-25217-1-git-send-email-bwalton@artsci.utoronto.ca>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, Jeff King <peff@peff.net>
-To: Ben Walton <bwalton@artsci.utoronto.ca>
-X-From: git-owner@vger.kernel.org Thu Feb 02 21:17:04 2012
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v4 0/4] completion: couple of cleanups
+Date: Thu,  2 Feb 2012 22:30:21 +0200
+Message-ID: <1328214625-3576-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 02 21:31:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rt35W-0002DV-Ot
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 21:16:59 +0100
+	id 1Rt3JM-0000Cr-Be
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 21:31:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755590Ab2BBUQz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 15:16:55 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:52212 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753173Ab2BBUQw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 15:16:52 -0500
-Received: by ghrr11 with SMTP id r11so1376301ghr.19
-        for <git@vger.kernel.org>; Thu, 02 Feb 2012 12:16:51 -0800 (PST)
+	id S1754808Ab2BBUbL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 15:31:11 -0500
+Received: from mail-lpp01m020-f174.google.com ([209.85.217.174]:37881 "EHLO
+	mail-lpp01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751766Ab2BBUbK (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Feb 2012 15:31:10 -0500
+Received: by lbom4 with SMTP id m4so436917lbo.19
+        for <git@vger.kernel.org>; Thu, 02 Feb 2012 12:31:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=4aYnSxjbLUdBYvDRf/Jt/uvQGsn6zykDQMbqPlsTeMY=;
-        b=NuI9ZYFVtyyYvjLhom9uV02MudLdGFxHpB+XYdGxyFaj1E2KZXSO8eGh9obxBNNbGP
-         HSs50NEJuzsq4FS7j1v+fZfQlj5LjAceKyvsWpvmH7hkE6TDSAdNM5GzCdSOfqFbT/1T
-         D9u9YtASsDNuhk8/0CIAuaYyIIxsQWDqQIY0U=
-Received: by 10.50.140.105 with SMTP id rf9mr9695451igb.24.1328213811759;
-        Thu, 02 Feb 2012 12:16:51 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id ng9sm5278110igc.3.2012.02.02.12.16.50
-        (version=SSLv3 cipher=OTHER);
-        Thu, 02 Feb 2012 12:16:51 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1328211135-25217-1-git-send-email-bwalton@artsci.utoronto.ca>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=IeF6WbfObfJNcly0HFrk/AiQxI1LTRUzVX8bgHNq6wA=;
+        b=CbdOMMI1/jmeB4fLEc7fJasA1b7dTqiE7xgjESIV65BDwztuQOyQW5er4H7lXKcZVJ
+         lldCdt7bfSNPenmKDgYzwnaIi0kzX2LLXqCvMlAp6th1PfwrWt2UlixIAPcMMHbp7BMj
+         suE2LM3uH3qTbyVz8EzGMtw1iZd56fVdySoDg=
+Received: by 10.112.98.103 with SMTP id eh7mr1111300lbb.81.1328214668422;
+        Thu, 02 Feb 2012 12:31:08 -0800 (PST)
+Received: from localhost (a91-153-253-80.elisa-laajakaista.fi. [91.153.253.80])
+        by mx.google.com with ESMTPS id d6sm2886401lbj.2.2012.02.02.12.31.07
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 02 Feb 2012 12:31:07 -0800 (PST)
+X-Mailer: git-send-email 1.7.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189699>
 
-Ben Walton wrote:
+And an improvement for zsh.
 
-> --- a/t/t0300-credentials.sh
-> +++ b/t/t0300-credentials.sh
-> @@ -8,10 +8,12 @@ test_expect_success 'setup helper scripts' '
->  	cat >dump <<-\EOF &&
->  	whoami=`echo $0 | sed s/.*git-credential-//`
->  	echo >&2 "$whoami: $*"
-> +	OIFS=$IFS
->  	while IFS== read key value; do
->  		echo >&2 "$whoami: $key=$value"
->  		eval "$key=$value"
->  	done
-> +	IFS=$OIFS
+v4:
 
-Oh, good catch.  Technically "read" is not a special builtin so POSIX shells
-are not supposed to do this (and Jeff's patch definitely looks right), but in
-any case temporary variable settings while running a builtin are close
-enough to the assignment-during-special-builtin-or-function case to
-make me shiver a little. ;-)
+Same as v3, but with an improved commit message with input from Thomas Rast and sending directly to Junio.
 
-Would something like
+v3:
 
-	(
-		IFS==
-		while read key value
-		do
-			...
-		done
-	)
+Junio: I see you already picked most of them for 'pu', but I've made further changes based on the feedback:
 
-make sense?
+ * completion: be nicer with zsh
+       Improved the code-style
+
+ * completion: simplify __gitcomp*
+       Fix
+       Improved commit message
+
+Felipe Contreras (4):
+  completion: work around zsh option propagation bug
+  completion: simplify __git_remotes
+  completion: remove unused code
+  completion: simplify __gitcomp*
+
+ contrib/completion/git-completion.bash |   66 +++++---------------------------
+ 1 files changed, 10 insertions(+), 56 deletions(-)
+
+-- 
+1.7.9
