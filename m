@@ -1,80 +1,88 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: rebase -i reword runs pre-commit hook with curious results
-Date: Thu, 02 Feb 2012 10:39:55 -0600
-Message-ID: <4F2ABC5B.2030608@gmail.com>
-References: <jgcc3q$mvl$1@dough.gmane.org> <4F2A2286.3090808@sohovfx.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] i18n: po for zh_cn
+Date: Thu, 2 Feb 2012 17:42:00 +0100
+Message-ID: <CACBZZX5AceH+pc-teFm=PE9u14PM88GLtLnNg5ENOpNni0Tsig@mail.gmail.com>
+References: <1328111436-58925-1-git-send-email-worldhello.net@gmail.com>
+ <7vr4ye15kr.fsf@alter.siamese.dyndns.org> <CACsJy8BPTuS+u8Grx0ojhdX-5+Vn6=DuojSWO0or7fJE1dbAEQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
-To: Andrew Wong <andrew.w@sohovfx.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 17:40:39 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 17:42:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rszi8-0004ML-N7
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 17:40:37 +0100
+	id 1Rszjw-0005Gc-27
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 17:42:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752558Ab2BBQkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 11:40:00 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:56153 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751593Ab2BBQj7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 11:39:59 -0500
-Received: by ggnh1 with SMTP id h1so1309175ggn.19
-        for <git@vger.kernel.org>; Thu, 02 Feb 2012 08:39:59 -0800 (PST)
+	id S1754848Ab2BBQmX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Feb 2012 11:42:23 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:37325 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754712Ab2BBQmX convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Feb 2012 11:42:23 -0500
+Received: by lagu2 with SMTP id u2so1380308lag.19
+        for <git@vger.kernel.org>; Thu, 02 Feb 2012 08:42:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=H4MJ7gsOPRk6n3z2X9GkxW+A0nRoAD9okMTSwxH43ds=;
-        b=E8wLug7vg3Q71D7y/aqA5xPEH+73bcPMtYd21tR2vznCdr4OT22uaEv1dXvM5OkpAC
-         0GRgGD/Bvmau58XsdPbcSLLGHtOn2DTxMsZSijo6At/54+5oAIbBA3mbtt8/ZGNW4bk5
-         TxSgqPMJyjJpIPPy+Oi1pq14QzEl6OQg0e5MM=
-Received: by 10.182.159.70 with SMTP id xa6mr3273327obb.1.1328200799252;
-        Thu, 02 Feb 2012 08:39:59 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id p3sm235700obm.9.2012.02.02.08.39.58
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 02 Feb 2012 08:39:58 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.26) Gecko/20120129 Thunderbird/3.1.18
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <4F2A2286.3090808@sohovfx.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=2o7MOn0AKWO18WWAb9vE1KtjqGqXEW42RDTnu7LTYfk=;
+        b=BT6AhgWeIvi4+3N2T7y2ghw2FYcptd5lVHEnZVAQ7jKesoySUI8JN1lUvk7XiKf1D5
+         ssHNOoSMfHj1a5WWBOefzwmxAgi8X1L+yS0JOo8IZ2zTDysfby83gnpLXJmP92HOMsK5
+         nwEZ+0n8HiJPAJxhsaO/5i0JfvC0x29fwCasg=
+Received: by 10.152.104.202 with SMTP id gg10mr1884161lab.2.1328200941138;
+ Thu, 02 Feb 2012 08:42:21 -0800 (PST)
+Received: by 10.112.30.67 with HTTP; Thu, 2 Feb 2012 08:42:00 -0800 (PST)
+In-Reply-To: <CACsJy8BPTuS+u8Grx0ojhdX-5+Vn6=DuojSWO0or7fJE1dbAEQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189656>
 
-On 2/1/2012 11:43 PM, Andrew Wong wrote:
-> On 12-02-01 4:50 PM, Neal Kreitzinger wrote:
->> I'm confused on why and/or how interactive rebase runs the pre-commit
->> hook
->> when doing the reword command for commit (a).
-> When you do a "reword" in "rebase -i", it basically does a "cherry-pick"
-> of that commit first, then it does a "commit --amend". And your
-> pre-commit hook should've been run during the amend.
->> IOW, the pre-commit hook does not get the same results as if I were
->> doing a
->> commandline git-commit of a modified index.
-> Does your pre-commit hook work when doing a "commit --amend"? I'm not
-> sure if you can actually modify the author (or committer) date from
-> inside a pre-commit hook.
-(We have a comment on "line 1" in our source with $User:$ $Date:$ 
-keywords that the pre-commit hooks expands to insert "whoami" and "date" 
-values to effect a user-datestamp at commit time.  We do this to enforce 
-conflicts on same-file edits.)  Now that I understand that the 
-cherry-pick takes place first to effect the transfer of the tree content 
-and then a subsequent git-commit --amend of "no changes" takes place to 
-effect the reword opportunity, the behavior makes sense now.  (We use 
-git-commit --amend to reword commit messages also.)  The pre-commit hook 
-runs prior to commit message editor just like commandline git-commit 
---amend (and plain git-commit).
+On Thu, Feb 2, 2012 at 14:29, Nguyen Thai Ngoc Duy <pclouds@gmail.com> =
+wrote:
+> On Thu, Feb 2, 2012 at 6:45 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+>> Jiang Xin <worldhello.net@gmail.com> writes:
+>>
+>>> Git can speak Chinese now.
+>>>
+>>> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+>>> ---
+>>> =C2=A0po/zh_cn.po | 3568 ++++++++++++++++++++++++++++++++++++++++++=
++++++++++++++++++
+>>> =C2=A01 =E4=B8=AA=E6=96=87=E4=BB=B6=E8=A2=AB=E4=BF=AE=E6=94=B9, 356=
+8 =E5=A4=84=E6=B7=BB=E5=8A=A0(+), 0 =E5=A4=84=E5=88=A0=E9=99=A4(-)
+>>> =C2=A0create mode 100644 po/zh_cn.po
+>>
+>> I do not mind Chinese in the patch text (i.e. below), but I would ha=
+ve
+>> preferred the above not to be in Chinese, which I do not read---I ca=
+n
+>> guess what =E6=96=87=E4=BB=B6, =E6=B7=BB=E5=8A=A0 and =E5=88=A0=E9=99=
+=A4 are, and I can also guess that =E4=B8=AA and =E5=A4=84
+>> are units of counting, but nevertheless...
+>
+> Such a stat line would be wonderful in an all-Chinese environment
+> though. I'm thinking perhaps it's a good idea to support
+> core.officialLocale (or workingLanguage). Commands that produce stuff
+> for outside like format-patch would prefer core.exchangeLanguage over
+> $LANG. Commands in blurred zone can learn --official option to ignore
+> $LANG.
+>
+> We can then have a shared config with core.officialLocale =3D
+> en_US.UTF-8 somewhere in git.git. Developers of multi-nation companie=
+s
+> would be pleased, I think.
 
-thanks!
-
-v/r,
-neal
+=46or now we can also avoid this whole issue and just declare that
+anything that's used for interchange or permanently stored
+(git-format-patch output, reflogs, merge commit messages etc.) will be
+in English.
