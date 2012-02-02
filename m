@@ -1,118 +1,76 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Re: General support for ! in git-config values
-Date: Thu, 2 Feb 2012 11:21:54 +0100
-Message-ID: <CANgJU+XoZd6x6jdSHszigZaPgi+6H3Nbf4OG7p0y1_=7m+qntA@mail.gmail.com>
-References: <20120201184020.GA29374@sigill.intra.peff.net>
-	<CACBZZX5mX55Rh8b2GYv7wKbCCypCkrn5AiM9BpXydgcYxHWdQA@mail.gmail.com>
-	<7v62fq2o03.fsf@alter.siamese.dyndns.org>
-	<CANgJU+X+UZmycwE6xkJ-zHfT7ai6nV9zbeR4WYnAXczL5JtqjA@mail.gmail.com>
-	<7vliom13lm.fsf@alter.siamese.dyndns.org>
-	<CANgJU+XQWdFmfmBJ4KX4GBz1a=TrVbp9BphGmhEb5Gphmzogjw@mail.gmail.com>
-	<7v7h06109t.fsf@alter.siamese.dyndns.org>
-	<CANgJU+WCdsF+igCWoueYcChYBvNyj5je_kvWorCBOgh5D7Bb9g@mail.gmail.com>
-	<20120202023857.GA11745@sigill.intra.peff.net>
-	<CANgJU+X2dRP__PFAywGEisDS3xyF7fSszSQG6BO61j2TMKL3Qg@mail.gmail.com>
-	<20120202095432.GA19356@sigill.intra.peff.net>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH v3 1/4] completion: be nicer with zsh
+Date: Thu, 2 Feb 2012 11:35:05 +0100
+Message-ID: <8739at8qw6.fsf@thomas.inf.ethz.ch>
+References: <1328145320-14071-1-git-send-email-felipe.contreras@gmail.com>
+	<20120202084859.GC3823@burratino>
+	<CAMP44s0w1eXWWaMT3WAfLxFHPQvc9dp33cyJ=T2im6g7rsrKhw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 02 11:22:01 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Jonathan Nieder <jrnieder@gmail.com>, <git@vger.kernel.org>,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 11:35:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rstnl-0006gU-9l
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 11:22:01 +0100
+	id 1Rsu1A-0005Um-Bw
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 11:35:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754811Ab2BBKV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 05:21:56 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:53452 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754650Ab2BBKVz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 05:21:55 -0500
-Received: by ggnh1 with SMTP id h1so1080399ggn.19
-        for <git@vger.kernel.org>; Thu, 02 Feb 2012 02:21:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=d9zcA9TNjSBmPeFBWm0RoMLI2FEXyTdNSscUhH+BVxg=;
-        b=Qpk9gOxKE8JezBofg4HUcki3vPpZhk42juMSaV78H+KdqIv7ucme+AsYxVEzIayiL/
-         sfYCS97/5qliBfzL7mRF05XKpWVoT9VEy0vIiAxVgiChGE8PbIxw3vlMHLX/JI58YTzy
-         Lxt8R7w9q/p++8i76RRjHP6gFxXKJu+VQQvzg=
-Received: by 10.101.51.12 with SMTP id d12mr835863ank.69.1328178114724; Thu,
- 02 Feb 2012 02:21:54 -0800 (PST)
-Received: by 10.236.63.2 with HTTP; Thu, 2 Feb 2012 02:21:54 -0800 (PST)
-In-Reply-To: <20120202095432.GA19356@sigill.intra.peff.net>
+	id S1755512Ab2BBKfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 05:35:21 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:13428 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755224Ab2BBKfI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 05:35:08 -0500
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 2 Feb
+ 2012 11:35:03 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 2 Feb
+ 2012 11:35:05 +0100
+In-Reply-To: <CAMP44s0w1eXWWaMT3WAfLxFHPQvc9dp33cyJ=T2im6g7rsrKhw@mail.gmail.com>
+	(Felipe Contreras's message of "Thu, 2 Feb 2012 12:12:35 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189617>
 
-On 2 February 2012 10:54, Jeff King <peff@peff.net> wrote:
-> On Thu, Feb 02, 2012 at 10:44:05AM +0100, demerphq wrote:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+> On Thu, Feb 2, 2012 at 10:48 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 >
->> The general design of git seems to me to be based around providing
->> building blocks that people can use to build new and interesting tools
->> on top of, and so it seems counter to that philosophy to reject an
->> feature based on speculative security issues that really can't be
->> decided in advance but must instead be decided on a case by case
->> basis.
+> Exactly, and "completion: avoid default value assignment on : true
+> command" tells *nothing* to most people. Why is this patch needed? Do
+> I care about it?
 >
-> I can't speak for Junio, but I am certainly not rejecting it. Only
-> saying that it needs to be thought through, and the utility weighed
-> against the costs.
+> OTOH "completion: be nicer with zsh" explains the purpose of the patch
+> and people that don't care about zsh can happily ignore it if they
+> want, and the ones that care about zsh might want to back port it, or
+> whatever.
 
-Of course. I totally understand. I have written mails saying stuff
-like this myself. :-)
+Perhaps you could compromise on
 
-> So far I haven't seen an actual patch to comment on
-> (or even a proposed syntax beyond starting a string with "!", which I
-> think is a non-starter due to conflicting with existing uses),
+  completion: work around zsh word splitting bug in : ${foo:=$(bar)}
 
-I understand. I think we will probably use backtick quoting in git-deploy. So
+?
 
-deploy.prefix=`cat /etc/SERVER_ROLE`
 
-will execute cat /etc/SERVER_ROLE and use the results as the value of
-the config option.
+> | tl;dr: $__git_porcelain_commands = $__git_all_commands
+>
+> Wrapping it up, to make clear what happens.
 
-> nor have
-> I seen a concrete use case (you mentioned pulling the name/email from
-> ldap, but you also mentioned that there are lots of other ways of
-> solving that particular problem, so it's not especially compelling).
-
-One place that it would be useful for us in git-deploy would be to
-detect the tag prefix for the rollout we are doing. Every staging
-server already has a file that contains this value. We would like to
-make it easy for people to configure the tool to either use the value
-provided, or to use something like  `cat /etc/SERVER_ROLE` instead.
-Anyway, from that POV I could totally understand "so do that in
-git-deploy". Since the tool is written in perl we have to wrap
-git-config anyway, so it easy to add a special case for ourselves.
-
-But I still think the general idea is pretty useful, the ldap example
-is IMO a cleaner solution than the alternatives, and a variant that I
-think is much harder to do currently come to mind right away: setting
-the user.email automatically depending on where in your tree a git
-repo was located, so that when I work on repo underneath  /CPAN/ it
-uses my CPAN address, and when I work in my /work/ tree it uses my
-$work address, etc, without me having to configure it repo by repo.
-(This has bitten more than once in the past)
-
-> I'd be happy to hear a more concrete proposal.
-
-I will be mostly afk the next week so I will leave that to Avar if he
-wants to pursue it.
-
-cheers,
-Yves
-
+I think this is not good style for a commit message.  Apart from the
+very trendy use of tl;dr, it doesn't even properly summarize the cause
+*or* the user-visible symptom.  It just states how the confusion
+propagates somewhere in the middle of the code.
 
 -- 
-perl -Mre=debug -e "/just|another|perl|hacker/"
+Thomas Rast
+trast@{inf,student}.ethz.ch
