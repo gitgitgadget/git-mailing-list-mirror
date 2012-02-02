@@ -1,144 +1,65 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v3 1/4] completion: be nicer with zsh
-Date: Thu, 2 Feb 2012 02:48:59 -0600
-Message-ID: <20120202084859.GC3823@burratino>
-References: <1328145320-14071-1-git-send-email-felipe.contreras@gmail.com>
+From: "norbert.nemec" <norbert.nemec@native-instruments.de>
+Subject: Re: How to find and analyze bad merges?
+Date: Thu, 02 Feb 2012 10:01:18 +0100
+Message-ID: <jgdjd1$5mn$1@dough.gmane.org>
+References: <jgdgcv$h8n$1@dough.gmane.org> <7vd39xy7it.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 09:49:24 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 02 10:01:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RssM6-0003bz-Lc
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 09:49:24 +0100
+	id 1RssY9-00009u-01
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 10:01:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753930Ab2BBItS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 03:49:18 -0500
-Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:35043 "EHLO
-	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753755Ab2BBItR (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Feb 2012 03:49:17 -0500
-Received: by obcva7 with SMTP id va7so2470600obc.19
-        for <git@vger.kernel.org>; Thu, 02 Feb 2012 00:49:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=SJcocwNYk4hKMSDgtLnqN7BG3vWoZeIJCjk8IBIerCY=;
-        b=N/vTyIg3pYddI76Jh5wWs0Avm1KN7+tB9+jyf+8HX5Wb3EB3/m5XaJgd11eS1BX6H9
-         3ANpC0ma3yS9drUWzuXG5DdlFznJAvdqwFHZj85dw15iMCRXqwef35LykR3NIQZdEMQN
-         P0FIGxpFN54rhZTOibxfLrH4MNBJi8SgDBEbk=
-Received: by 10.50.159.161 with SMTP id xd1mr11130257igb.15.1328172556801;
-        Thu, 02 Feb 2012 00:49:16 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id uy10sm3023777igc.1.2012.02.02.00.49.15
-        (version=SSLv3 cipher=OTHER);
-        Thu, 02 Feb 2012 00:49:16 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1328145320-14071-1-git-send-email-felipe.contreras@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752214Ab2BBJBe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 04:01:34 -0500
+Received: from plane.gmane.org ([80.91.229.3]:37021 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751130Ab2BBJBe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 04:01:34 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RssXt-0008V0-5h
+	for git@vger.kernel.org; Thu, 02 Feb 2012 10:01:33 +0100
+Received: from 46.231.181.199 ([46.231.181.199])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 02 Feb 2012 10:01:33 +0100
+Received: from norbert.nemec by 46.231.181.199 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 02 Feb 2012 10:01:33 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 46.231.181.199
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
+In-Reply-To: <7vd39xy7it.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189605>
 
-Hi,
+Am 02.02.12 09:16, schrieb Junio C Hamano:
+> "norbert.nemec"<norbert.nemec@native-instruments.de>  writes:
+>
+>> a colleague of mine happened to produce a bad merge by unintenionally
+>> picking the version of the remote branch ("R") for all conflicting
+>> files. Effectively, he eliminated a whole bunch of bugfixes that were
+>> already on his local branch ("L").
+>>
+>> Obviously this was a mistake on his side, but hey: everyone makes
+>> mistakes. The real problem is to find this problem afterwards,
+>> possibly weeks later, when you suddenly realize that a bug that you
+>> had fixed suddenly reappears.
+>
+> Bisect?
 
-Felipe Contreras wrote:
-
-> Felipe Contreras (4):
->   completion: be nicer with zsh
-
-Since I can't find this patch in the mail archive, I'll reply here.
-Luckily the most important bit is above already.
-
-I think I mentioned before that this subject line is what will appear
-in the shortlog and the shortlog is all that some people will see of
-the changelog, so it should include a self-contained description of
-the impact of the patch.
-
-However, clearly I did not say it clearly enough. :)  I guess it's
-better to take a cue from storytellers and show rather than tell.
-(Please don't take this as a precedent --- I will not always be doing
-the style fixes myself, and sometimes will consider a patch to scratch
-someone else's itch not worth the trouble and work on something else.)
-
--- >8 --
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Date: Thu, 2 Feb 2012 03:15:17 +0200
-Subject: completion: avoid default value assignment on : true command
-
-zsh versions from 4.3.0 to present (4.3.15) do not correctly propagate
-the SH_WORD_SPLIT option into the subshell in ${foo:=$(bar)}
-expressions.  For example, after running
-
-	emulate sh
-	fn () {
-		var='one two'
-		printf '%s\n' $var
-	}
-	x=$(fn)
-	: ${y=$(fn)}
-
-printing "$x" results in two lines as expected, but printing "$y"
-results in a single line because $var is expanded as a single word
-when evaluating fn to compute y.
-
-So avoid the construct, and use an explicit 'test -n "$foo" ||
-foo=$(bar)' instead.  This fixes a bug tht caused all commands to be
-treated as porcelain and show up in "git <TAB><TAB>" completion,
-because the list of all commands was treated as a single word in
-__git_list_porcelain_commands and did not match any of the patterns
-that would usually cause plumbing to be excluded.
-
-[jn: clarified commit message, indentation style fix]
-
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- contrib/completion/git-completion.bash |    9 ++++++---
- 1 files changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 78be1958..d7965daf 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -676,7 +676,8 @@ __git_merge_strategies=
- # is needed.
- __git_compute_merge_strategies ()
- {
--	: ${__git_merge_strategies:=$(__git_list_merge_strategies)}
-+	[ -n "$__git_merge_strategies" ] ||
-+	__git_merge_strategies=$(__git_list_merge_strategies)
- }
- 
- __git_complete_revlist_file ()
-@@ -854,7 +855,8 @@ __git_list_all_commands ()
- __git_all_commands=
- __git_compute_all_commands ()
- {
--	: ${__git_all_commands:=$(__git_list_all_commands)}
-+	[ -n "$__git_all_commands" ] ||
-+	__git_all_commands=$(__git_list_all_commands)
- }
- 
- __git_list_porcelain_commands ()
-@@ -947,7 +949,8 @@ __git_porcelain_commands=
- __git_compute_porcelain_commands ()
- {
- 	__git_compute_all_commands
--	: ${__git_porcelain_commands:=$(__git_list_porcelain_commands)}
-+	[ -n "$__git_porcelain_commands" ] ||
-+	__git_porcelain_commands=$(__git_list_porcelain_commands)
- }
- 
- __git_pretty_aliases ()
--- 
-1.7.9
+This is not the point: My colleague knew exactly which commit contained 
+the bugfix. The trouble was finding out why this bugfix disappeared even 
+though everything indicated that it was cleanly merged into the current 
+branch.
