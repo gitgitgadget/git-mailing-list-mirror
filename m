@@ -1,75 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: how to determine oldest supported version of git
-Date: Thu, 2 Feb 2012 14:49:37 -0500
-Message-ID: <20120202194937.GB9246@sigill.intra.peff.net>
-References: <jgeekn$of2$1@dough.gmane.org>
- <20120202192124.GA19873@burratino>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: How best to handle multiple-authorship commits in GIT?
+Date: Thu, 02 Feb 2012 11:57:18 -0800 (PST)
+Message-ID: <m3bophc8je.fsf@localhost.localdomain>
+References: <21056.1328185509@redhat.com>
+	<9B990DDC-858D-43BA-BF9E-E0C3435354AF@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 20:50:01 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: David Howells <dhowells@redhat.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Valerie Aurora <valerie.aurora@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 20:57:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rt2fQ-0006co-K8
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 20:50:01 +0100
+	id 1Rt2md-0001uQ-Un
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 20:57:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757382Ab2BBTtw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 14:49:52 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53640
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755987Ab2BBTtl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 14:49:41 -0500
-Received: (qmail 24659 invoked by uid 107); 2 Feb 2012 19:56:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 02 Feb 2012 14:56:46 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Feb 2012 14:49:37 -0500
-Content-Disposition: inline
-In-Reply-To: <20120202192124.GA19873@burratino>
+	id S933529Ab2BBT5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 14:57:22 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:44039 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933526Ab2BBT5V (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 14:57:21 -0500
+Received: by eekc14 with SMTP id c14so896721eek.19
+        for <git@vger.kernel.org>; Thu, 02 Feb 2012 11:57:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=PJDsDt/911+brf/L0hjbMgNrA3HfEXgBobkCinirIRk=;
+        b=wS+SSi1tzvFgOWa8q4ArfQcAlle5BGgKZGzXLcwpKCS8aiECDl/x6xq0E378C9Gu73
+         1xTtfHfmqCfUb3FKtb+UxKRcgRhw7sgUCUqzpPZun718XmFI8lD6FZy7Dxzy2QhKCCDB
+         3bgDSqk0xR8FKygNitSmBDgAkKcTKMvH9iePY=
+Received: by 10.14.185.144 with SMTP id u16mr1335232eem.112.1328212640568;
+        Thu, 02 Feb 2012 11:57:20 -0800 (PST)
+Received: from localhost.localdomain (abwd54.neoplus.adsl.tpnet.pl. [83.8.227.54])
+        by mx.google.com with ESMTPS id t11sm12728342eea.10.2012.02.02.11.57.16
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 02 Feb 2012 11:57:18 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q12JvwSp017295;
+	Thu, 2 Feb 2012 20:57:59 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id q12Jvvrj017292;
+	Thu, 2 Feb 2012 20:57:57 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <9B990DDC-858D-43BA-BF9E-E0C3435354AF@gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189686>
 
-On Thu, Feb 02, 2012 at 01:23:40PM -0600, Jonathan Nieder wrote:
+Valerie Aurora <valerie.aurora@gmail.com> writes:
 
-> However, in my experience people interested in product lifetimes more
-> often mean "versions the vendor will respond to bug reports about"
-> rather than "versions getting updates".  If you have discovered a bug
-> in an old version of git, even if it is only a couple of major
-> releases ago, a good debugging strategy is almost always to try with
-> the newest release and see if it still exhibits the bug.  If you don't
-> try that, people on this list might just try it themselves.  If it
-> doesn't affect recent releases, I would not be surprised if people on
-> this list do not necessarily care much.  One can more easily interest
-> me at least by pointing out which regression is making it hard to
-> upgrade instead.
+> [...]  I had the same trouble with my set: while I entirely
+> rewrote some patches, I still felt Jan Blunck deserved primary
+> credit.  I don't recall my solution, but I'm fine with mentioning my
+> name in the commit message (and I think Jan should get credit too).
 
-Agreed. It is very annoying to have somebody report a bug, I (or another
-dev) spends time trying to reproduce, and then we find out that it was
-actually fixed a year ago.
+That's what various *-by headers are for.  Signed-off-by is for
+provenance.
 
-However, I am much happier if a submitter does that leg-work themselves,
-and posts to the list something like:
+Nb. you can search the whole commit message in gitweb, not only author
+or committer.
+ 
+> In general, this is a big problem for motivating contributors in
+> other cases.  Some maintainers have a habit of trivially rewriting
+> patches so that, technically, no line is the same, then taking
+> authorship and giving the actual author an ambiguous Signed-off-by.
 
-  I am using version a.b.c. It has bug $FOO, which was fixed by $COMMIT
-  and released in d.e.f [or even "I tried d.e.f and it does not exhibit
-  the bug"]. This bug fix should get cherry-picked back to a.b.c,
-  because {it is more important than usual for reason X, upgrading past
-  a.b.c is not feasible for reason Y, etc}.
+Maybe it was cause by tools accidentally stealing authorship?  With
+"git commit --amend --author=..." it is now easy to add authorship
+back.
 
-Nobody wastes time tracking down the already-fixed bug, and it's
-relatively easy to decide whether the cherry-pick is worth the effort
-based on the reasoning given.
+> David hasn't done this here, of course - these are major rewrites -
+> but when someone does all the hard work of finding and fixing a
+> problem, the credit shouldn't go to the person who prettied it up.
+> There is a line in the kernel doc saying how this should be handled,
+> suggested by Rusty, but it's not being followed.
 
-I know not everybody is capable of complex bisection or writing a
-succinct test case. But they can at least try to reproduce with the
-latest version and convert "there's a bug in git" to "there's a bug in
-this old version of git".
+Link?
+ 
+> First class support for multiple authorship would be a big way to
+> motivate contributors.
 
--Peff
+Well, multi-line commit headers were only recently added to git (when
+adding signed pull / singed commit stuff), but I think in many places
+git assumes single authorship, and it would be hard to change...
+
+There was some workaround that people doing pair programming invented,
+IIRC...
+
+-- 
+Jakub Narebski
