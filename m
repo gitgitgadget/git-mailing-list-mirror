@@ -1,108 +1,90 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC PATCH] gitweb: use CGI with -utf8
-Date: Thu, 02 Feb 2012 12:01:41 -0800 (PST)
-Message-ID: <m37h05c8c1.fsf@localhost.localdomain>
-References: <1328136653-20559-1-git-send-email-michal.kiedrowicz@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH, RFC] Fix build problems related to profile-directed
+ optimization
+Date: Thu, 02 Feb 2012 12:02:27 -0800
+Message-ID: <7vvcnpuhpo.fsf@alter.siamese.dyndns.org>
+References: <1328209417-8206-1-git-send-email-tytso@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: =?utf-8?b?TWljaGHFgiBLaWVkcm93aQ==?= =?utf-8?b?Y3o=?= 
-	<michal.kiedrowicz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 21:01:58 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Andi Kleen <ak@linux.intel.com>,
+	Clemens Buchacher <drizzd@aon.at>
+To: Theodore Ts'o <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Thu Feb 02 21:02:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rt2r0-0003vK-7S
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 21:01:58 +0100
+	id 1Rt2ri-0004JT-LW
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 21:02:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933617Ab2BBUBp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Feb 2012 15:01:45 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:61417 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933608Ab2BBUBn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Feb 2012 15:01:43 -0500
-Received: by eekc14 with SMTP id c14so898073eek.19
-        for <git@vger.kernel.org>; Thu, 02 Feb 2012 12:01:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=Yl8yfIqxl6HHR9H8OvFOOADl0gKPcBp/EmDT8gEIGuc=;
-        b=xANNDN2bIdGWuuldGlrIGeYNY0aHaxe9Hy3DAuUoEtW00oVDu0M7FaL/lwJAlO2kDZ
-         YUn9YL36X0t6CLv6jr+Isel7lJauSAu3S5VZu1NxhJvtIlsrjzpCaN6JvjW84EeFyyxC
-         63M/K6hQ9khTbFrX30NXso7ceeVA79qACDyn0=
-Received: by 10.14.28.134 with SMTP id g6mr1375880eea.15.1328212901604;
-        Thu, 02 Feb 2012 12:01:41 -0800 (PST)
-Received: from localhost.localdomain (abwd54.neoplus.adsl.tpnet.pl. [83.8.227.54])
-        by mx.google.com with ESMTPS id n17sm12856338eei.3.2012.02.02.12.01.40
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 02 Feb 2012 12:01:41 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q12K2NgH017878;
-	Thu, 2 Feb 2012 21:02:23 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q12K2MNa017875;
-	Thu, 2 Feb 2012 21:02:22 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1328136653-20559-1-git-send-email-michal.kiedrowicz@gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S933177Ab2BBUCd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 15:02:33 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52076 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932119Ab2BBUCa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 15:02:30 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 98CB27092;
+	Thu,  2 Feb 2012 15:02:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YjcL3nfzuXYo8XJT779uCFvdPXs=; b=n4riY4
+	h420zwfinFbzfRr8mugAf40+q5DLZzGAujxfiGfiou14ej4PqOyuOM+m5z8lc5oo
+	jxlHydFDs9XIYW/cePEIt15l/MjQ1LXyxCEktHqtBkwB568Cn+1K4ieQZUFRA6ZG
+	Q9RS8HdL1Xxcrea0KKUy7A57wc/zRM5gwv6JE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xDWmDt0NyjSqV+5Tjvgq4+UdFWqDO+wg
+	2MAuDPgvHmVtzPHCMz1rSgwDygZxvHB5RYYo6DVfOIJVHgHhxtbo5WleVqw4Y6W4
+	tAyqnBUChKxk1HXLNP0TODW8C2S0fMEJFHE52HZ3TO+Az31bXdqxkK6QITmLmxSl
+	CwVam9Qy0/c=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8DBD57091;
+	Thu,  2 Feb 2012 15:02:29 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 117E17090; Thu,  2 Feb 2012
+ 15:02:28 -0500 (EST)
+In-Reply-To: <1328209417-8206-1-git-send-email-tytso@mit.edu> (Theodore
+ Ts'o's message of "Thu, 2 Feb 2012 14:03:37 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D5AAB0CA-4DD8-11E1-B09C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189688>
 
-Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> writes:
+Theodore Ts'o <tytso@mit.edu> writes:
 
-> I noticed that gitweb tries a lot to properly process UTF-8 data, for
-> example it prints my name correctly in log and commit information, bu=
-t
-> it echos junk in the search field. It looks like:
->=20
-> 	Micha=C3=85=C2=82 Kiedrowicz
->=20
-> I don't know CGI well and I never touched gitewb code, but I found th=
-is
-> on http://www.lemoda.net/cgi/perl-unicode/index.html:
->=20
-> 	use CGI '-utf8';
-> 	my $value =3D params ('input');
->=20
-> I tried it and that fixed my problem. I'm not sure about the
-> consequences, maybe someone more experienced in CGI might help?
+> diff --git a/INSTALL b/INSTALL
+> index 6fa83fe..978ed09 100644
+> --- a/INSTALL
+> +++ b/INSTALL
+> @@ -28,8 +28,8 @@ set up install paths (via config.mak.autogen), so you can write instead
+>  If you're willing to trade off (much) longer build time for a later
+>  faster git you can also do a profile feedback build with
+>  
+> -	$ make profile-all
+> -	# make prefix=... install
+> +	$ make prefix=... profile-all
+> +	# make prefix=... PROFILE_USE=t install
 
-I have reworded this to form a proper commit message (see
-Documentation/SubmittingPatches) and I'll resend this as a reply to
-this email.
+Thanks for a patch.  How does this compare with what was discussed in the
+other thread?
 
-> ---
->  gitweb/gitweb.perl |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->=20
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index abb5a79..74d45b1 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -10,7 +10,7 @@
->  use 5.008;
->  use strict;
->  use warnings;
-> -use CGI qw(:standard :escapeHTML -nosticky);
-> +use CGI qw(:standard :escapeHTML -nosticky -utf8);
->  use CGI::Util qw(unescape);
->  use CGI::Carp qw(fatalsToBrowser set_message);
->  use Encode;
-> --=20
+  http://thread.gmane.org/gmane.comp.version-control.git/188992/focus=189172
 
-Does this actually work for you?  Because it doesn't work for me
-(perhaps I have too old CGI module: what CGI.pm and what Perl version
-do you use?).
+I would wish a solution ideally would support
 
-See other solution to this in other reply to this email.
+	make PROFILE_BUILD=YesPlease
+        make PROFILE_BUILD=YesPlease install
 
---=20
-Jakub Narebski
+or even
+
+	echo >>config.mak PROFILE_BUILD
+        make
+        su make install
+
+and I think your patch takes us in the right direction.
