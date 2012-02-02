@@ -1,101 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Breakage in master?
-Date: Thu, 2 Feb 2012 12:46:01 -0500
-Message-ID: <20120202174601.GB30857@sigill.intra.peff.net>
-References: <CABPQNSbWu0r_gKGvCHk567pUtQiyDOCO8vFfrzPMFW1eUaj1nw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 18:46:23 2012
+From: Valerie Aurora <valerie.aurora@gmail.com>
+Subject: Re: How best to handle multiple-authorship commits in GIT?
+Date: Thu, 2 Feb 2012 10:00:02 -0800
+Message-ID: <9B990DDC-858D-43BA-BF9E-E0C3435354AF@gmail.com>
+References: <21056.1328185509@redhat.com>
+Mime-Version: 1.0 (1.0)
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"dhowells@redhat.com" <dhowells@redhat.com>
+To: David Howells <dhowells@redhat.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 19:00:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rt0jh-0001xM-8W
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 18:46:17 +0100
+	id 1Rt0xF-0000Mm-9k
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 19:00:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756887Ab2BBRqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 12:46:10 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53536
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755989Ab2BBRqH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 12:46:07 -0500
-Received: (qmail 23455 invoked by uid 107); 2 Feb 2012 17:53:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 02 Feb 2012 12:53:09 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Feb 2012 12:46:01 -0500
-Content-Disposition: inline
-In-Reply-To: <CABPQNSbWu0r_gKGvCHk567pUtQiyDOCO8vFfrzPMFW1eUaj1nw@mail.gmail.com>
+	id S1756885Ab2BBSAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 13:00:11 -0500
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:53993 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754309Ab2BBSAJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Feb 2012 13:00:09 -0500
+Received: by dadp15 with SMTP id p15so2034920dad.19
+        for <git@vger.kernel.org>; Thu, 02 Feb 2012 10:00:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=references:in-reply-to:mime-version:content-transfer-encoding
+         :content-type:message-id:cc:x-mailer:from:subject:date:to;
+        bh=YdcV+62STxG8B/euSXrtkqgQ9/zAiQ8d4lWgBZbOaD4=;
+        b=TGyvjAEALI2oaa12GG6J2SGkgFzL5ZJHFnttOWo3hPV7tCS+JUxatuRZPootHcNuSN
+         a97hvZqgkOoJoB/Ad6pOh949CsVsoTtMZABm+B/1dKIsXkl57afjER4Dg/1LL3YoX5bh
+         1MtfGfy4pVpBa3us8rhQeYpzBMPTjbo3VoK3g=
+Received: by 10.68.224.9 with SMTP id qy9mr9530726pbc.102.1328205609509;
+        Thu, 02 Feb 2012 10:00:09 -0800 (PST)
+Received: from [10.242.196.113] (68.sub-174-253-224.myvzw.com. [174.253.224.68])
+        by mx.google.com with ESMTPS id x8sm7128547pbr.11.2012.02.02.10.00.06
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 02 Feb 2012 10:00:08 -0800 (PST)
+In-Reply-To: <21056.1328185509@redhat.com>
+X-Mailer: iPhone Mail (9A405)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189661>
 
-On Thu, Feb 02, 2012 at 01:14:19PM +0100, Erik Faye-Lund wrote:
+On Feb 2, 2012, at 4:25, David Howells <dhowells@redhat.com> wrote:
 
-> But here's the REALLY puzzling part: If I add a simple, unused
-> function to diff-lib.c, like this:
-> [...]
-> "git status" starts to error out with that same vsnprintf complaint!
 > 
-> ---8<---
-> $ git status
-> # On branch master
-> # Changes not staged for commit:
-> #   (use "git add <file>..." to update what will be committed)
-> fatal: BUG: your vsnprintf is broken (returned -1)
-> ---8<---
+> Hi,
+> 
+> I've been assigned a stack of patches to maintain and try and get upstream by
+> my employer.  Most of the patches currently have the authorship set to Val,
+> but since I'll be maintaining them if they go in upstream and I've changed
+> them a lot, I feel I should reassign the author field to myself so people
+> pester me rather than Val with questions about them.  However, I don't want to
+> deny Val or any other contributor credit for their work on the patches.
+> 
+> I can see a number of ways of doing this, and am wondering which will be best:
+> 
+> (1) Ascribe multiple authorship directly in the commit.  I suspect this would
+>     require a change to GIT and its associated tools.  That way I could put my
+>     name in the priority pestering spot, but doing a search on authorship
+>     would still credit Val and others.
+> 
+> (2) Add an extra tag 'Originally-authored-by' (or maybe 'Coauthored-by' as I
+>     saw someone recommend) in amongst the 'Signed-off-by' list.  But that
+>     doesn't give them credit in a gitweb search without changing gitweb.
+> 
+> (3) Don't actually modify Val's commits to bring them up to date, but rather
+>     create a historical GIT tree with Val's commits committed as-are and then
+>     add my changes to the top in a number of large merge commits (there have
+>     been multiple major breakages due to different merge windows).
+> 
+>     I dislike this approach because it doesn't produce a nice set of patches I
+>     can give to someone to review (which is a must).  Plus, for the most part,
+>     it's actually easier to port Val's patches individually.
+> 
+> Can GIT be modified to do (1)?  Gitweb's display need only show one of the
+> authors in the single-row-per-patch list mode, but should find a patch by any
+> of the authors in an author search and should display all the authors in the
+> commit display.
+> 
+> David
 
-OK, that's definitely odd.
+Thanks, David!  I had the same trouble with my set: while I entirely rewrote some patches, I still felt Jan Blunck deserved primary credit.  I don't recall my solution, but I'm fine with mentioning my name in the commit message (and I think Jan should get credit too).
 
-At the moment of the die() in strbuf_vaddf, what does errno say?
-vsnprintf should generally never be returning -1 (it should return the
-number of characters that would have been written). Since you're on
-Windows, I assume you're using the replacement version in
-compat/snprintf.c.
+In general, this is a big problem for motivating contributors in other cases.  Some maintainers have a habit of trivially rewriting patches so that, technically, no line is the same, then taking authorship and giving the actual author an ambiguous Signed-off-by.  David hasn't done this here, of course - these are major rewrites - but when someone does all the hard work of finding and fixing a problem, the credit shouldn't go to the person who prettied it up.  There is a line in the kernel doc saying how this should be handled, suggested by Rusty, but it's not being followed.
 
-That one will return -1 if realloc fails. So I'm curious if that is what
-is happening (you might also instrument the call to realloc in
-snprintf.c to see if it is failing, and if so, at what maxsize). And/or
-check errno in git_vsnprintf after calling the native vsnprintf and
-getting -1.
+First class support for multiple authorship would be a big way to motivate contributors.
 
-Here's one possible sequence of events that seems plausible to me (and
-remember that this is a wild guess):
-
-  1. gettext somehow munges the format string in a way that Windows
-     vsnprintf doesn't like, and it returns -1.
-
-  2. Our git_vsnprintf wrapper interprets this -1 as "you didn't give me
-     enough space to store the result", and we grow our test-buffer to
-     try again
-
-  3. Eventually the test buffer gets unreasonably large, and realloc
-     fails. We have no choice but to return -1 from our wrapper.
-
-  4. strbuf_vaddf sees the -1 and thinks you are using a broken
-     vsnprintf.
-
-All of that would make sense to me, _except_ for your weird "if I add a
-random function, the problem is more reproducible" bit. Which does seem
-like something is invoking undefined behavior (of course, it could be
-that undefined behavior or stack-smashing that is causing vsnprintf to
-report an error). Lacking any better leads, it might be worth pursuing.
-
-> I've bisected the issues down to 5e9637c (i18n: add infrastructure for
-> translating Git with gettext). Trying to apply my unused-function
-> patch on top of this commit starts giving the same "fatal: BUG: your
-> vsnprintf is broken (returned -1)" error. It's ancestor, bc1bbe0(Git
-> 1.7.8-rc2), does not yield any of the issues.
-
-I've looked at 5e9637c, and it really doesn't do anything that looks
-bad. I wonder if your gettext library is buggy. Does compiling with
-NO_GETTEXT help?
-
--Peff
+-VAL
