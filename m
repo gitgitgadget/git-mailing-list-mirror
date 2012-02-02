@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: General support for ! in git-config values
-Date: Wed, 01 Feb 2012 17:39:42 -0800
-Message-ID: <7v7h06109t.fsf@alter.siamese.dyndns.org>
+Date: Wed, 01 Feb 2012 17:41:20 -0800
+Message-ID: <7v39au1073.fsf@alter.siamese.dyndns.org>
 References: <CACBZZX6U+1Fmdaz2ikbbc6zUyF=pMGQOqUGVOWCkUFBUkovCBw@mail.gmail.com>
  <20120201184020.GA29374@sigill.intra.peff.net>
  <CACBZZX5mX55Rh8b2GYv7wKbCCypCkrn5AiM9BpXydgcYxHWdQA@mail.gmail.com>
@@ -15,69 +15,64 @@ Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
 	Jeff King <peff@peff.net>,
 	Git Mailing List <git@vger.kernel.org>
 To: demerphq <demerphq@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 02:39:52 2012
+X-From: git-owner@vger.kernel.org Thu Feb 02 02:41:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RsleQ-0006zk-K2
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 02:39:51 +0100
+	id 1Rslfz-0007dI-T9
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 02:41:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754051Ab2BBBjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Feb 2012 20:39:46 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41937 "EHLO
+	id S1754074Ab2BBBlX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Feb 2012 20:41:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42389 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753505Ab2BBBjp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Feb 2012 20:39:45 -0500
+	id S1754053Ab2BBBlW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Feb 2012 20:41:22 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B20276861;
-	Wed,  1 Feb 2012 20:39:44 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 451A06880;
+	Wed,  1 Feb 2012 20:41:22 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bftuURIbfrIkdf1IlT3ELI+0X2o=; b=fgjL8M
-	UyWqHAQAyyD5aiNRdD9FwUZYhPQ084stOO2MzawzaqbGSqCWSAlak9AeI5J+6nnu
-	yh0PZDsN8fyVY5Cdpk2heLP2kg+u7RzFoRonYFweIkqOedodGwgggVd0wKOi/Hc+
-	4S48E/AuGkVK0Aj6jSf6YqQVZXOO9KZuffmro=
+	:content-type; s=sasl; bh=AnF5IAEGHyFS78v+7cklvouc+X8=; b=hi/7Rl
+	4qWpDla1voZeoJbievG32asiOE93Ryq1kwxcGDdS8UkK3AVHZhao1BqTgWBk1xcR
+	nwcnG7b3YT9uwG4edQlC9MBe4x4J0MmBbCDdDP64GOKB01BCddI3ZjovLhC00tT+
+	PBxx9Np4iEg2xQOzyiuCdIMimLmLLykS5w98w=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aJYLDSmP2k31QMST0aAi84sax9TyjWyM
-	KXUy9eY8uW5rr7LMI9F+SqMT7KSBrCtOGx18Ez5BeFwy53a2RFjKXfMJSlTLMWFo
-	7yBkzfHV3Z1R515t1j60o+7RZUdLEBqkosL87D/nZKoWh0vWy+uJEXjC6H0/APuy
-	BA6DMXNY80k=
+	:content-type; q=dns; s=sasl; b=Bw73WXSo2aIfTEuSlx3pH1Hn+DLzNUjQ
+	M4jA+pqaPx/RS+mpknay9UbmCAskEpKSnwXpPH8Zf50OuLwLOjOg8TjGj84qygZw
+	w7/ahog8wSFEMl+Hr98AAAIsMtpxtAG4owK2N21nBr8NIyaLveTPyi9Y9gURzXGj
+	el4b1U9WXp4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A9C296860;
-	Wed,  1 Feb 2012 20:39:44 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C839687F;
+	Wed,  1 Feb 2012 20:41:22 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3AFFE685F; Wed,  1 Feb 2012
- 20:39:44 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C4C84687E; Wed,  1 Feb 2012
+ 20:41:21 -0500 (EST)
 In-Reply-To: <CANgJU+XQWdFmfmBJ4KX4GBz1a=TrVbp9BphGmhEb5Gphmzogjw@mail.gmail.com>
  (demerphq@gmail.com's message of "Thu, 2 Feb 2012 02:14:26 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C85BB3D2-4D3E-11E1-B1AB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0281DD98-4D3F-11E1-86CF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189571>
 
 demerphq <demerphq@gmail.com> writes:
 
-> On 2 February 2012 01:27, Junio C Hamano <gitster@pobox.com> wrote:
->> demerphq <demerphq@gmail.com> writes:
->>
->>> user.name=!ldap_full_name
->>> user.email=!ldap_email
->>
->> I didn't get the impression that that was what he was proposing, but
->> regardless of who's suggesting it, the above does not make any sense,
->> from the syntax point of view.
+>> When you say "alias.co = !git checkout --foo-bar", you are not saying
+>> "instead of usual aliases like 'alias.co = checkout' that defines what
+>> string replaces the 'co' alias, please run !whatever command, capture
+>> its output, and that is the _value_ of alias.co variable, i.e. the command
+>> line that is going to be run".
 >
-> Does that mean that from a utility point of view it does?
+> I think I see your point. Using the same "!" notation for "execute
+> this command and exit" and "execute this command and use its result as
+> the config value" might be confusing.
 
-Not really.
-
-I do not think whatever "utility" value outweighs the hassle of having to
-think through the ramifications (including but not limited to security) of
-running arbitrary user command every time a value is looked up.
+I am afraid that you are not seeing it.  In "alias.co = !whatever", bang
+does *NOT* mean "execute this command and exit".
