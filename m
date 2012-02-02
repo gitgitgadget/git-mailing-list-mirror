@@ -1,75 +1,86 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v4 0/4] completion: couple of cleanups
-Date: Thu,  2 Feb 2012 22:30:21 +0200
-Message-ID: <1328214625-3576-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 02 21:31:21 2012
+From: David Howells <dhowells@redhat.com>
+Subject: Re: How best to handle multiple-authorship commits in GIT?
+Date: Thu, 02 Feb 2012 20:33:31 +0000
+Organization: Red Hat UK Ltd. Registered Address: Red Hat UK Ltd, Amberley
+	Place, 107-111 Peascod Street, Windsor, Berkshire, SI4 1TE, United
+	Kingdom.
+	Registered in England and Wales under Company Registration No. 3798903
+Message-ID: <17890.1328214811@redhat.com>
+References: <CAH6sp9P8ehXoC075dcK9ni5rJBV9iCZmLHTBr-UR+-jbD3c6Ww@mail.gmail.com> <21056.1328185509@redhat.com>
+Cc: dhowells@redhat.com, git@vger.kernel.org, valerie.aurora@gmail.com
+To: Frans Klaver <fransklaver@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 21:33:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rt3JM-0000Cr-Be
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 21:31:17 +0100
+	id 1Rt3Li-0001F5-PY
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 21:33:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754808Ab2BBUbL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 15:31:11 -0500
-Received: from mail-lpp01m020-f174.google.com ([209.85.217.174]:37881 "EHLO
-	mail-lpp01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751766Ab2BBUbK (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Feb 2012 15:31:10 -0500
-Received: by lbom4 with SMTP id m4so436917lbo.19
-        for <git@vger.kernel.org>; Thu, 02 Feb 2012 12:31:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=IeF6WbfObfJNcly0HFrk/AiQxI1LTRUzVX8bgHNq6wA=;
-        b=CbdOMMI1/jmeB4fLEc7fJasA1b7dTqiE7xgjESIV65BDwztuQOyQW5er4H7lXKcZVJ
-         lldCdt7bfSNPenmKDgYzwnaIi0kzX2LLXqCvMlAp6th1PfwrWt2UlixIAPcMMHbp7BMj
-         suE2LM3uH3qTbyVz8EzGMtw1iZd56fVdySoDg=
-Received: by 10.112.98.103 with SMTP id eh7mr1111300lbb.81.1328214668422;
-        Thu, 02 Feb 2012 12:31:08 -0800 (PST)
-Received: from localhost (a91-153-253-80.elisa-laajakaista.fi. [91.153.253.80])
-        by mx.google.com with ESMTPS id d6sm2886401lbj.2.2012.02.02.12.31.07
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 02 Feb 2012 12:31:07 -0800 (PST)
-X-Mailer: git-send-email 1.7.9
+	id S1755053Ab2BBUdi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 15:33:38 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:20773 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754968Ab2BBUdh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 15:33:37 -0500
+Received: from int-mx12.intmail.prod.int.phx2.redhat.com (int-mx12.intmail.prod.int.phx2.redhat.com [10.5.11.25])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id q12KXaCJ017500
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Thu, 2 Feb 2012 15:33:36 -0500
+Received: from redhat.com ([10.3.112.8])
+	by int-mx12.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id q12KXWaf030969;
+	Thu, 2 Feb 2012 15:33:34 -0500
+In-Reply-To: <CAH6sp9P8ehXoC075dcK9ni5rJBV9iCZmLHTBr-UR+-jbD3c6Ww@mail.gmail.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189700>
 
-And an improvement for zsh.
+Frans Klaver <fransklaver@gmail.com> wrote:
 
-v4:
+> I always thought of the author field as being an indication of who is
+> ultimately responsible for its implementation (the one in the
+> pestering spot).
 
-Same as v3, but with an improved commit message with input from Thomas Rast and sending directly to Junio.
+Define 'ultimate responsibility for an implementation'.  I'm further developing
+patches that Val has (at least partially) implemented.  By Val's admission some
+of the patches she further developed beyond what Jan Blunck had implemented.
+The chain may extend further.  To that end all three of us are authors of some
+of the patches.
 
-v3:
+However, if you meant 'maintenance' rather than 'implementation', then, yes,
+that would be me (for the moment at least).  But if that's the case, then
+shouldn't it be 'Maintainer' and not 'Author'?  And, besides, that's what the
+MAINTAINERS file is for.
 
-Junio: I see you already picked most of them for 'pu', but I've made further changes based on the feedback:
+> (1) may seem desirous, but doesn't (2) seem like a cleaner and more
+> maintainable solution?
 
- * completion: be nicer with zsh
-       Improved the code-style
+No.  I would say that properly supporting multiple authors in the commit object
+is the cleaner solution.  It's not the *easier* solution, however, and would
+require an upgrade to the version of GIT used to parse these commits.  That
+I'll grant you.
 
- * completion: simplify __gitcomp*
-       Fix
-       Improved commit message
+> Gitweb will show the entire log message if people are interested in the
+> exact change, right?
 
-Felipe Contreras (4):
-  completion: work around zsh option propagation bug
-  completion: simplify __git_remotes
-  completion: remove unused code
-  completion: simplify __gitcomp*
+But if I say to Gitweb "show me the patches authored by Val" it will *not* turn
+up these patches, and in that way will deny Val credit.  Yes, you can see that
+Val altered that patch if you look at that patch directly - but you have to
+know where to go and look, in which case you already know or suspect that Val
+is credited with patches in that area.
 
- contrib/completion/git-completion.bash |   66 +++++---------------------------
- 1 files changed, 10 insertions(+), 56 deletions(-)
+So to make (2) work, Gitweb needs to search for the additional authoring fields
+when asked to credit people with the patches they've worked on.
 
--- 
-1.7.9
+Similarly gitk and possibly other tools would need to do the same.
+
+*That* would be fine by me, I suppose.  I don't think it's the correct way to
+do it, but it might be the logical way since this wasn't build in from the
+beginning - and the main thing would be to turn up the prior or joint
+authorship to author-based searches.
+
+David
