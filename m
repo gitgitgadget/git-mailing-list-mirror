@@ -1,69 +1,116 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 0/4] completion: couple of cleanups
-Date: Thu,  2 Feb 2012 03:15:16 +0200
-Message-ID: <1328145320-14071-1-git-send-email-felipe.contreras@gmail.com>
-Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 02 02:17:19 2012
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH v2] i18n: format_tracking_info "Your branch is behind" message
+Date: Thu,  2 Feb 2012 09:37:19 +0800
+Message-ID: <1328146639-87863-1-git-send-email-worldhello.net@gmail.com>
+Cc: Jiang Xin <worldhello.net@gmail.com>
+To: Git List <git@vger.kernel.org>, avarab@gmail.com
+X-From: git-owner@vger.kernel.org Thu Feb 02 02:37:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RslIb-0006nq-T4
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 02:17:18 +0100
+	id 1RslcL-0006CA-0l
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 02:37:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752881Ab2BBBRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Feb 2012 20:17:13 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:61764 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752482Ab2BBBRM (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2012 20:17:12 -0500
-Received: by lagu2 with SMTP id u2so1000086lag.19
-        for <git@vger.kernel.org>; Wed, 01 Feb 2012 17:17:11 -0800 (PST)
+	id S1753988Ab2BBBhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Feb 2012 20:37:36 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:40052 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753505Ab2BBBhf (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Feb 2012 20:37:35 -0500
+Received: by obcva7 with SMTP id va7so2093056obc.19
+        for <git@vger.kernel.org>; Wed, 01 Feb 2012 17:37:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=ow8VyOlStSJjBuU4L8pzDcVGkqgj7+qhYDZ9PCjToFs=;
-        b=nW899CzhjiDBFbYS9+7Cn8uOcZWAmcT8Mh5OHOzVV3PULKV5jFoQh2WM8lTe6W+JQx
-         oTD6v2CVVakvVz2pAQeTnh4eDJxACGxss7LLyP37NTDN95L7LE49WexU0+YLAt/wS8J/
-         968qbG9IZWvb5fgcOfHxO5TTF0hv4iQ1uad5g=
-Received: by 10.152.145.101 with SMTP id st5mr471399lab.1.1328145362550;
-        Wed, 01 Feb 2012 17:16:02 -0800 (PST)
-Received: from localhost (a91-153-253-80.elisa-laajakaista.fi. [91.153.253.80])
-        by mx.google.com with ESMTPS id z2sm627749lbk.7.2012.02.01.17.16.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 01 Feb 2012 17:16:02 -0800 (PST)
-X-Mailer: git-send-email 1.7.9
+        bh=k1YzgIvnrMJ6n9jNFt7yx04UYGi9udQ1O4Bxd4eYwgs=;
+        b=mre7c+U1Q2Fxihp0Tm4/2xwBs3GrXaK/5dwSri+oYkF1/bTqjxzbEov8geX4ZLfevz
+         1oGnoNK2DmNp+2oToB8E5U1wu82BWfmdbgIaDy50Bpuc28PGD1AhwLTOIQSN+WYkusZd
+         j3u1M3OWt8ccRQXwHVf2yQ7XMMQF5EitGs54M=
+Received: by 10.50.219.225 with SMTP id pr1mr1066503igc.23.1328146654787;
+        Wed, 01 Feb 2012 17:37:34 -0800 (PST)
+Received: from localhost.localdomain (li380-141.members.linode.com. [106.187.37.141])
+        by mx.google.com with ESMTPS id wn6sm17003937igb.3.2012.02.01.17.37.31
+        (version=SSLv3 cipher=OTHER);
+        Wed, 01 Feb 2012 17:37:34 -0800 (PST)
+X-Mailer: git-send-email 1.7.9.109.gd927b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189568>
 
-And an improvement for zsh.
+Function format_tracking_info in remote.c is called by
+wt_status_print_tracking in wt-status.c, which will print
+branch tracking message in git-status. git-checkout also
+show these messages through it's report_tracking function.
 
-Junio: I see you already picked most of them for 'pu', but I've made further changes based on the feedback:
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+---
+ remote.c |   48 +++++++++++++++++++++++++++++++++++++-----------
+ 1 files changed, 37 insertions(+), 11 deletions(-)
 
- * completion: be nicer with zsh
-	Improved the code-style
-
-  * completion: simplify __gitcomp*
-	Fix
-	Improved commit message
-
-Cheers.
-
-Felipe Contreras (4):
-  completion: be nicer with zsh
-  completion: simplify __git_remotes
-  completion: remove unused code
-  completion: simplify __gitcomp*
-
- contrib/completion/git-completion.bash |   66 +++++---------------------------
- 1 files changed, 10 insertions(+), 56 deletions(-)
-
+diff --git a/remote.c b/remote.c
+index 73a38..45ac1 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1572,19 +1572,45 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+ 	base = branch->merge[0]->dst;
+ 	base = shorten_unambiguous_ref(base, 0);
+ 	if (!num_theirs)
+-		strbuf_addf(sb, "Your branch is ahead of '%s' "
+-			    "by %d commit%s.\n",
+-			    base, num_ours, (num_ours == 1) ? "" : "s");
++		strbuf_addf(sb,
++			Q_(
++			/* The singular version */
++			"Your branch is ahead of '%s' by %d commit.\n",
++			/* The plural version */
++			"Your branch is ahead of '%s' by %d commits.\n",
++			/* Give ngettext() the count */
++			num_ours),
++			base,
++			num_ours);
+ 	else if (!num_ours)
+-		strbuf_addf(sb, "Your branch is behind '%s' "
+-			    "by %d commit%s, "
+-			    "and can be fast-forwarded.\n",
+-			    base, num_theirs, (num_theirs == 1) ? "" : "s");
++		strbuf_addf(sb,
++			Q_(
++			/* The singular version */
++			"Your branch is behind '%s' by %d commit, "
++			"and can be fast-forwarded.\n",
++			/* The plural version */
++			"Your branch is behind '%s' by %d commits, "
++			"and can be fast-forwarded.\n",
++			/* Give ngettext() the count */
++			num_theirs),
++			base,
++			num_theirs);
+ 	else
+-		strbuf_addf(sb, "Your branch and '%s' have diverged,\n"
+-			    "and have %d and %d different commit(s) each, "
+-			    "respectively.\n",
+-			    base, num_ours, num_theirs);
++		strbuf_addf(sb,
++			Q_(
++			/* The singular version */
++			"Your branch and '%s' have diverged,\n"
++			"and have %d and %d different commit each, "
++			"respectively.\n",
++			/* The plural version */
++			"Your branch and '%s' have diverged,\n"
++			"and have %d and %d different commits each, "
++			"respectively.\n",
++			/* Give ngettext() the count */
++			num_theirs),
++			base,
++			num_ours,
++			num_theirs);
+ 	return 1;
+ }
+ 
 -- 
-1.7.9
+1.7.9.109.gd927b
