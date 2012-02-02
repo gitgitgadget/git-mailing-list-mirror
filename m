@@ -1,156 +1,306 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [RFC/PATCH 2/2] parse_date(): '@' prefix forces git-timestamp
-Date: Thu,  2 Feb 2012 13:41:43 -0800
-Message-ID: <1328218903-5681-3-git-send-email-gitster@pobox.com>
-References: <1328218903-5681-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 02 22:42:15 2012
+From: Jeff King <peff@peff.net>
+Subject: Re: Alternates corruption issue
+Date: Thu, 2 Feb 2012 16:59:13 -0500
+Message-ID: <20120202215913.GA26727@sigill.intra.peff.net>
+References: <1328018729.13744.26.camel@ted>
+ <20120131193922.GA31551@sigill.intra.peff.net>
+ <7v1uqf8vqu.fsf@alter.siamese.dyndns.org>
+ <20120131204417.GA30969@sigill.intra.peff.net>
+ <20120131214047.GA13547@burratino>
+ <20120131214740.GA2465@sigill.intra.peff.net>
+ <20120131215501.GF13252@burratino>
+ <20120131220510.GA3253@sigill.intra.peff.net>
+ <20120131222258.GG13252@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Richard Purdie <richard.purdie@linuxfoundation.org>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	"Hart, Darren" <darren.hart@intel.com>,
+	"Ashfield, Bruce" <Bruce.Ashfield@windriver.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 22:59:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rt4Q0-0007OE-Ts
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 22:42:13 +0100
+	id 1Rt4gj-0006vd-L7
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 22:59:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932462Ab2BBVlx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 16:41:53 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65386 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757098Ab2BBVlv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 16:41:51 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9FA916479;
-	Thu,  2 Feb 2012 16:41:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=gHPX
-	zU8utL/85Ans81lmW/cPvK8=; b=X01zm5F0cmABWpOZq6jtCsnmYL37cGKhmE5k
-	ASwp+BzenYPqUlejUCQ+2qQCm85kb0SsJRF70hIXXX0ijBSipF3f/O+01zdX24WY
-	hH9bM7FiKxtwToUwRr3bhgQ+qoF1rTkURVLa02r/MZISire0IvCb8HPNtL6YnEhU
-	u0XOypc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=QuEJp8
-	GBzelm+rLb8v9iaUKO8xPT0lG26ditXslYZGUL4NSK7gUe1uXt5Uwrxk1ICjvBuU
-	sK9vjqxxpXRtxJTTBonjSi7Ng15bMpLifcvfBUqhjmyAB/qJW2XQamuRGHJ9FAkK
-	zqpaddVn+TgHW9KyuRsJCCqTgSOfQeJJdESik=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96E056478;
-	Thu,  2 Feb 2012 16:41:50 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6D78E6476; Thu,  2 Feb 2012
- 16:41:49 -0500 (EST)
-X-Mailer: git-send-email 1.7.9.172.ge26ae
-In-Reply-To: <1328218903-5681-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: B653C76C-4DE6-11E1-B473-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757488Ab2BBV7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 16:59:19 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53743
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756660Ab2BBV7R (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 16:59:17 -0500
+Received: (qmail 26421 invoked by uid 107); 2 Feb 2012 22:06:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 02 Feb 2012 17:06:22 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Feb 2012 16:59:13 -0500
+Content-Disposition: inline
+In-Reply-To: <20120131222258.GG13252@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189714>
 
-The only place that the issue this series addresses was observed
-where we read "cat-file commit" output and put it in GIT_AUTHOR_DATE
-in order to replay a commit with an ancient timestamp.
+On Tue, Jan 31, 2012 at 04:22:58PM -0600, Jonathan Nieder wrote:
 
-With the previous patch alone, "git commit --date='20100917 +0900'"
-can be misinterpreted to mean an ancient timestamp, not September in
-year 2010.  Guard this codepath by requring an extra '@' in front of
-the raw git timestamp on the parsing side. This of course needs to
-be compensated by updating get_author_ident_from_commit and the code
-for "git commit --amend" to prepend '@' to the string read from the
-existing commit in the GIT_AUTHOR_DATE environment variable.
+> Anyway, thanks for explaining.  Hopefully I can get to this soon and
+> factor out a common function for get_repo_path and enter_repo to call
+> so playing with the ordering becomes a little less scary. ;-)
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+So here's what I think we should apply to fix the particular issue that
+Richard mentioned at the start of this thread.
+
+Besides tweaking the ordering, the main contribution is a set of tests
+that actually check some of these ambiguous cases (especially checking
+the fact that both code paths behave identically!). I didn't factor the
+logic into a common function, but doing so should be a little safer on
+top of these tests, if you're still interested.
+
+-- >8 --
+Subject: standardize and improve lookup rules for external local repos
+
+When you specify a local repository on the command line of
+clone, ls-remote, upload-pack, receive-pack, or upload-archive,
+or in a request to git-daemon, we perform a little bit of
+lookup magic, doing things like looking in working trees for
+.git directories and appending ".git" for bare repos.
+
+For clone, this magic happens in get_repo_path. For
+everything else, it happens in enter_repo. In both cases,
+there are some ambiguous or confusing cases that aren't
+handled well, and there is one case that is not handled the
+same by both methods.
+
+This patch tries to provide (and test!) standard, sensible
+lookup rules for both code paths. The intended changes are:
+
+  1. When looking up "foo", we have always preferred
+     a working tree "foo" (containing "foo/.git" over the
+     bare "foo.git". But we did not prefer a bare "foo" over
+     "foo.git". With this patch, we do so.
+
+  2. We would select directories that existed but didn't
+     actually look like git repositories. With this patch,
+     we make sure a selected directory looks like a git
+     repo. Not only is this more sensible in general, but it
+     will help anybody who is negatively affected by change
+     (1) negatively (e.g., if they had "foo.git" next to its
+     separate work tree "foo", and expect to keep finding
+     "foo.git" when they reference "foo").
+
+  3. The enter_repo code path would, given "foo", look for
+     "foo.git/.git" (i.e., do the ".git" append magic even
+     for a repo with working tree). The clone code path did
+     not; with this patch, they now behave the same.
+
+In the unlikely case of a working tree overlaying a bare
+repo (i.e., a ".git" directory _inside_ a bare repo), we
+continue to treat it as a working tree (prefering the
+"inner" .git over the bare repo). This is mainly because the
+combination seems nonsensical, and I'd rather stick with
+existing behavior on the off chance that somebody is relying
+on it.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/commit.c  |    6 ++++++
- date.c            |    3 ++-
- git-sh-setup.sh   |    2 +-
- t/t3400-rebase.sh |   23 +++++++++++++++++++++++
- 4 files changed, 32 insertions(+), 2 deletions(-)
+I could go either way with the "prefer foo to foo/.git" thing we've been
+discussing. I left it as-is here out of a sense of being conservative.
+But I have no objection at all to you doing a patch on top that
+justifies the change. You'll just need to tweak the "check" line of the
+final test.
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index cbc9613..bcb0db2 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -534,6 +534,7 @@ static void determine_author_info(struct strbuf *author_ident)
+ builtin/clone.c           |    4 +-
+ cache.h                   |    1 +
+ path.c                    |    7 ++-
+ setup.c                   |    2 +-
+ t/t5900-repo-selection.sh |  100 +++++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 109 insertions(+), 5 deletions(-)
+ create mode 100755 t/t5900-repo-selection.sh
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index c62d4b5..637611a 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -107,7 +107,7 @@ static const char *argv_submodule[] = {
  
- 	if (author_message) {
- 		const char *a, *lb, *rb, *eol;
-+		size_t len;
+ static char *get_repo_path(const char *repo, int *is_bundle)
+ {
+-	static char *suffix[] = { "/.git", ".git", "" };
++	static char *suffix[] = { "/.git", "", ".git/.git", ".git" };
+ 	static char *bundle_suffix[] = { ".bundle", "" };
+ 	struct stat st;
+ 	int i;
+@@ -117,7 +117,7 @@ static char *get_repo_path(const char *repo, int *is_bundle)
+ 		path = mkpath("%s%s", repo, suffix[i]);
+ 		if (stat(path, &st))
+ 			continue;
+-		if (S_ISDIR(st.st_mode)) {
++		if (S_ISDIR(st.st_mode) && is_git_directory(path)) {
+ 			*is_bundle = 0;
+ 			return xstrdup(absolute_path(path));
+ 		} else if (S_ISREG(st.st_mode) && st.st_size > 8) {
+diff --git a/cache.h b/cache.h
+index 9bd8c2d..ae0396b 100644
+--- a/cache.h
++++ b/cache.h
+@@ -432,6 +432,7 @@ extern char *git_work_tree_cfg;
+ extern int is_inside_work_tree(void);
+ extern int have_git_dir(void);
+ extern const char *get_git_dir(void);
++extern int is_git_directory(const char *path);
+ extern char *get_object_directory(void);
+ extern char *get_index_file(void);
+ extern char *get_graft_file(void);
+diff --git a/path.c b/path.c
+index b6f71d1..6f2aa69 100644
+--- a/path.c
++++ b/path.c
+@@ -293,7 +293,7 @@ const char *enter_repo(const char *path, int strict)
  
- 		a = strstr(author_message_buffer, "\nauthor ");
- 		if (!a)
-@@ -554,6 +555,11 @@ static void determine_author_info(struct strbuf *author_ident)
- 					 (a + strlen("\nauthor "))));
- 		email = xmemdupz(lb + strlen("<"), rb - (lb + strlen("<")));
- 		date = xmemdupz(rb + strlen("> "), eol - (rb + strlen("> ")));
-+		len = eol - (rb + strlen("> "));
-+		date = xmalloc(len + 2);
-+		*date = '@';
-+		memcpy(date + 1, rb + strlen("> "), len);
-+		date[len + 1] = '\0';
- 	}
- 
- 	if (force_author) {
-diff --git a/date.c b/date.c
-index c212946..ca60767 100644
---- a/date.c
-+++ b/date.c
-@@ -637,7 +637,8 @@ int parse_date_basic(const char *date, unsigned long *timestamp, int *offset)
- 	*offset = -1;
- 	tm_gmt = 0;
- 
--	if (!match_object_header_date(date, timestamp, offset))
-+	if (*date == '@' &&
-+	    !match_object_header_date(date + 1, timestamp, offset))
- 		return 0; /* success */
- 	for (;;) {
- 		int match = 0;
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index 8e427da..015fe6e 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -200,7 +200,7 @@ get_author_ident_from_commit () {
- 		s/.*/GIT_AUTHOR_EMAIL='\''&'\''/p
- 
- 		g
--		s/^author [^<]* <[^>]*> \(.*\)$/\1/
-+		s/^author [^<]* <[^>]*> \(.*\)$/@\1/
- 		s/.*/GIT_AUTHOR_DATE='\''&'\''/p
- 
- 		q
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index 6eaecec..e26e14d 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -218,4 +218,27 @@ test_expect_success 'rebase -m can copy notes' '
- 	test "a note" = "$(git notes show HEAD)"
- '
- 
-+test_expect_success 'rebase commit with an ancient timestamp' '
-+	git reset --hard &&
+ 	if (!strict) {
+ 		static const char *suffix[] = {
+-			".git/.git", "/.git", ".git", "", NULL,
++			"/.git", "", ".git/.git", ".git", NULL,
+ 		};
+ 		const char *gitfile;
+ 		int len = strlen(path);
+@@ -324,8 +324,11 @@ const char *enter_repo(const char *path, int strict)
+ 			return NULL;
+ 		len = strlen(used_path);
+ 		for (i = 0; suffix[i]; i++) {
++			struct stat st;
+ 			strcpy(used_path + len, suffix[i]);
+-			if (!access(used_path, F_OK)) {
++			if (!stat(used_path, &st) &&
++			    (S_ISREG(st.st_mode) ||
++			    (S_ISDIR(st.st_mode) && is_git_directory(used_path)))) {
+ 				strcat(validated_path, suffix[i]);
+ 				break;
+ 			}
+diff --git a/setup.c b/setup.c
+index 61c22e6..7a3618f 100644
+--- a/setup.c
++++ b/setup.c
+@@ -247,7 +247,7 @@ const char **get_pathspec(const char *prefix, const char **pathspec)
+  *    a proper "ref:", or a regular file HEAD that has a properly
+  *    formatted sha1 object name.
+  */
+-static int is_git_directory(const char *suspect)
++int is_git_directory(const char *suspect)
+ {
+ 	char path[PATH_MAX];
+ 	size_t len = strlen(suspect);
+diff --git a/t/t5900-repo-selection.sh b/t/t5900-repo-selection.sh
+new file mode 100755
+index 0000000..3d5b418
+--- /dev/null
++++ b/t/t5900-repo-selection.sh
+@@ -0,0 +1,100 @@
++#!/bin/sh
 +
-+	>old.one && git add old.one && test_tick &&
-+	git commit --date="@12345 +0400" -m "Old one" &&
-+	>old.two && git add old.two && test_tick &&
-+	git commit --date="@23456 +0500" -m "Old two" &&
-+	>old.three && git add old.three && test_tick &&
-+	git commit --date="@34567 +0600" -m "Old three" &&
++test_description='selecting remote repo in ambiguous cases'
++. ./test-lib.sh
 +
-+	git cat-file commit HEAD^^ >actual &&
-+	grep "author .* 12345 +0400$" actual &&
-+	git cat-file commit HEAD^ >actual &&
-+	grep "author .* 23456 +0500$" actual &&
-+	git cat-file commit HEAD >actual &&
-+	grep "author .* 34567 +0600$" actual &&
++reset() {
++	rm -rf foo foo.git fetch clone
++}
 +
-+	git rebase --onto HEAD^^ HEAD^ &&
++make_tree() {
++	git init "$1" &&
++	(cd "$1" && test_commit "$1")
++}
 +
-+	git cat-file commit HEAD >actual &&
-+	grep "author .* 34567 +0600$" actual
++make_bare() {
++	git init --bare "$1" &&
++	(cd "$1" &&
++	 tree=`git hash-object -w -t tree /dev/null` &&
++	 commit=$(echo "$1" | git commit-tree $tree) &&
++	 git update-ref HEAD $commit
++	)
++}
++
++get() {
++	git init --bare fetch &&
++	(cd fetch && git fetch "../$1") &&
++	git clone "$1" clone
++}
++
++check() {
++	echo "$1" >expect &&
++	(cd fetch && git log -1 --format=%s FETCH_HEAD) >actual.fetch &&
++	(cd clone && git log -1 --format=%s HEAD) >actual.clone &&
++	test_cmp expect actual.fetch &&
++	test_cmp expect actual.clone
++}
++
++test_expect_success 'find .git dir in worktree' '
++	reset &&
++	make_tree foo &&
++	get foo &&
++	check foo
 +'
 +
- test_done
++test_expect_success 'automagically add .git suffix' '
++	reset &&
++	make_bare foo.git &&
++	get foo &&
++	check foo.git
++'
++
++test_expect_success 'automagically add .git suffix to worktree' '
++	reset &&
++	make_tree foo.git &&
++	get foo &&
++	check foo.git
++'
++
++test_expect_success 'prefer worktree foo over bare foo.git' '
++	reset &&
++	make_tree foo &&
++	make_bare foo.git &&
++	get foo &&
++	check foo
++'
++
++test_expect_success 'prefer bare foo over bare foo.git' '
++	reset &&
++	make_bare foo &&
++	make_bare foo.git &&
++	get foo &&
++	check foo
++'
++
++test_expect_success 'disambiguate with full foo.git' '
++	reset &&
++	make_bare foo &&
++	make_bare foo.git &&
++	get foo.git &&
++	check foo.git
++'
++
++test_expect_success 'we are not fooled by non-git foo directory' '
++	reset &&
++	make_bare foo.git &&
++	mkdir foo &&
++	get foo &&
++	check foo.git
++'
++
++test_expect_success 'prefer inner .git over outer bare' '
++	reset &&
++	make_tree foo &&
++	make_bare foo.git &&
++	mv foo/.git foo.git &&
++	get foo.git &&
++	check foo
++'
++
++test_done
 -- 
-1.7.9.172.ge26ae
+1.7.9.rc1.28.gf4be5
