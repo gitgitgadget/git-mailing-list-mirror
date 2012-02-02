@@ -1,57 +1,66 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH 3/3] vcs-svn: suppress a -Wtype-limits warning
-Date: Thu, 02 Feb 2012 22:18:58 +0000
-Message-ID: <4F2B0BD2.2030801@ramsay1.demon.co.uk>
-References: <4F28378F.6080108@ramsay1.demon.co.uk> <20120131192053.GC12443@burratino> <7vipjpzxav.fsf@alter.siamese.dyndns.org> <20120202104128.GG3823@burratino> <20120202110601.GL3823@burratino>
+From: Jeff King <peff@peff.net>
+Subject: Re: BUG 1.7.9: git-update-ref strange behavior with ref with
+ trailing newline
+Date: Thu, 2 Feb 2012 17:32:50 -0500
+Message-ID: <20120202223250.GA28618@sigill.intra.peff.net>
+References: <15093.1328220568@plover.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	David Barr <davidbarr@google.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 23:21:39 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Mark Jason Dominus <mjd@plover.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 23:33:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rt523-0000WC-5X
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 23:21:31 +0100
+	id 1Rt5D7-0005EA-IH
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 23:32:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932791Ab2BBWV0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 17:21:26 -0500
-Received: from lon1-post-2.mail.demon.net ([195.173.77.149]:41604 "EHLO
-	lon1-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753133Ab2BBWVZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Feb 2012 17:21:25 -0500
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by lon1-post-2.mail.demon.net with esmtp (Exim 4.69)
-	id 1Rt51w-0003bs-ab; Thu, 02 Feb 2012 22:21:24 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <20120202110601.GL3823@burratino>
+	id S1756676Ab2BBWcx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 17:32:53 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53771
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751176Ab2BBWcw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 17:32:52 -0500
+Received: (qmail 26874 invoked by uid 107); 2 Feb 2012 22:39:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 02 Feb 2012 17:39:57 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Feb 2012 17:32:50 -0500
+Content-Disposition: inline
+In-Reply-To: <15093.1328220568@plover.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189718>
 
-Jonathan Nieder wrote:
-> ---
-> That's the end of the series.  I hope it was entertaining.
+On Thu, Feb 02, 2012 at 05:09:28PM -0500, Mark Jason Dominus wrote:
+
+> Here I use git symbolic-ref to update HEAD with a ref whose name
+> contains trailing newlines:
 > 
-> Thoughts of all kinds welcome, as usual.
+>         $ git symbolic-ref -m "this message does not appear" HEAD 'refs/heads/master
+>         >
+>         >
+>         > '
+> 
+> The newlines are inserted into .git/HEAD, but are innocuous, because
+> other git commands ignore them.  The bug is that the -m option is
+> completely ignored:
+> 
+>         $ git reflog HEAD | grep 'message does not appear'
 
-Yes, this is a much better approach! Thanks!
+Is it trailing newlines, or is simply pointing to a ref that does not
+exist? Because I believe we do not create a HEAD reflog entry in that
+case, as we would have nothing to write in the "new sha1" field. I guess
+we could write an entry that it went to "0{40}", though I'm not sure how
+things like "git reflog show" would handle that. The logic is at the
+very end of refs.c:create_symref if you want to experiment.
 
-I've only compile tested (on cygwin and mingw) so far, but
-I don't expect any problems ...
+As far as the newlines go, I'm surprised we don't reject that. We should
+probably run check_refname_format on the proposed contents of the
+symbolic-ref.
 
-So, please disregard my earlier v2 patch. [If it's not already
-obvious, I often don't read the list every day and I missed
-all of the discussion which resulted in this series (while, at
-the same time, writing testing and sending the v2 patch!).]
-
-ATB,
-Ramsay Jones
+-Peff
