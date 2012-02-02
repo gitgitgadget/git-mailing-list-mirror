@@ -1,97 +1,73 @@
-From: Valerie Aurora <valerie.aurora@gmail.com>
-Subject: Re: How best to handle multiple-authorship commits in GIT?
-Date: Thu, 2 Feb 2012 10:00:02 -0800
-Message-ID: <9B990DDC-858D-43BA-BF9E-E0C3435354AF@gmail.com>
-References: <21056.1328185509@redhat.com>
-Mime-Version: 1.0 (1.0)
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"dhowells@redhat.com" <dhowells@redhat.com>
-To: David Howells <dhowells@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 19:00:20 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Use correct grammar in diffstat summary line
+Date: Thu, 02 Feb 2012 10:24:19 -0800
+Message-ID: <7v8vklxfe4.fsf@alter.siamese.dyndns.org>
+References: <1328019840-6168-1-git-send-email-pclouds@gmail.com>
+ <1328100907-20397-1-git-send-email-pclouds@gmail.com>
+ <7vhaza2qjw.fsf@alter.siamese.dyndns.org> <20120202142255.GA25871@do>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Frederik Schwarzer <schwarzerf@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 19:24:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rt0xF-0000Mm-9k
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 19:00:17 +0100
+	id 1Rt1Ke-0004ij-Fz
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 19:24:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756885Ab2BBSAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 13:00:11 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:53993 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754309Ab2BBSAJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Feb 2012 13:00:09 -0500
-Received: by dadp15 with SMTP id p15so2034920dad.19
-        for <git@vger.kernel.org>; Thu, 02 Feb 2012 10:00:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=references:in-reply-to:mime-version:content-transfer-encoding
-         :content-type:message-id:cc:x-mailer:from:subject:date:to;
-        bh=YdcV+62STxG8B/euSXrtkqgQ9/zAiQ8d4lWgBZbOaD4=;
-        b=TGyvjAEALI2oaa12GG6J2SGkgFzL5ZJHFnttOWo3hPV7tCS+JUxatuRZPootHcNuSN
-         a97hvZqgkOoJoB/Ad6pOh949CsVsoTtMZABm+B/1dKIsXkl57afjER4Dg/1LL3YoX5bh
-         1MtfGfy4pVpBa3us8rhQeYpzBMPTjbo3VoK3g=
-Received: by 10.68.224.9 with SMTP id qy9mr9530726pbc.102.1328205609509;
-        Thu, 02 Feb 2012 10:00:09 -0800 (PST)
-Received: from [10.242.196.113] (68.sub-174-253-224.myvzw.com. [174.253.224.68])
-        by mx.google.com with ESMTPS id x8sm7128547pbr.11.2012.02.02.10.00.06
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 02 Feb 2012 10:00:08 -0800 (PST)
-In-Reply-To: <21056.1328185509@redhat.com>
-X-Mailer: iPhone Mail (9A405)
+	id S1756069Ab2BBSYX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 13:24:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38546 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754314Ab2BBSYX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 13:24:23 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F59659A8;
+	Thu,  2 Feb 2012 13:24:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qCYDYXvvtVqtCJMiu2e9vioVC7w=; b=G9kIgu
+	AiXB3bRy+Bp6S44cIFFfj5F7Cop1iqPUnmOOu+EoneurNYQ6Z3IjDiDlsY5hnYJN
+	ilNamu/GHyf9K4qx8/xQSR88tlhj23y3t81fpjbGrPs+p7dzMYDxPO1c8EPjfAvm
+	5AoDDRrv8RnBigirU5Z4lx+BMhVlhW5QI3y0k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=teJemN9sCCq2KQ1JwtDXTkFNHcXZGV3o
+	0MdU/eO5UMdLXex60jOQvWs+fGUi+i3J1CtR5Jf0xft8iYAZh/aCRPaKRXGZy15Z
+	N5tHvIeOc3hMeKOGpRa7y1dtmgVk53fBVcOwu4z/JBWiQN1lJiTi+3LcBXlW3fJ+
+	k3EzTsYz9Lk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 069F559A7;
+	Thu,  2 Feb 2012 13:24:22 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8ADD359A6; Thu,  2 Feb 2012
+ 13:24:21 -0500 (EST)
+In-Reply-To: <20120202142255.GA25871@do> (Nguyen Thai Ngoc Duy's message of
+ "Thu, 2 Feb 2012 21:22:55 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 20758002-4DCB-11E1-A69A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189662>
 
-On Feb 2, 2012, at 4:25, David Howells <dhowells@redhat.com> wrote:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> 
-> Hi,
-> 
-> I've been assigned a stack of patches to maintain and try and get upstream by
-> my employer.  Most of the patches currently have the authorship set to Val,
-> but since I'll be maintaining them if they go in upstream and I've changed
-> them a lot, I feel I should reassign the author field to myself so people
-> pester me rather than Val with questions about them.  However, I don't want to
-> deny Val or any other contributor credit for their work on the patches.
-> 
-> I can see a number of ways of doing this, and am wondering which will be best:
-> 
-> (1) Ascribe multiple authorship directly in the commit.  I suspect this would
->     require a change to GIT and its associated tools.  That way I could put my
->     name in the priority pestering spot, but doing a search on authorship
->     would still credit Val and others.
-> 
-> (2) Add an extra tag 'Originally-authored-by' (or maybe 'Coauthored-by' as I
->     saw someone recommend) in amongst the 'Signed-off-by' list.  But that
->     doesn't give them credit in a gitweb search without changing gitweb.
-> 
-> (3) Don't actually modify Val's commits to bring them up to date, but rather
->     create a historical GIT tree with Val's commits committed as-are and then
->     add my changes to the top in a number of large merge commits (there have
->     been multiple major breakages due to different merge windows).
-> 
->     I dislike this approach because it doesn't produce a nice set of patches I
->     can give to someone to review (which is a must).  Plus, for the most part,
->     it's actually easier to port Val's patches individually.
-> 
-> Can GIT be modified to do (1)?  Gitweb's display need only show one of the
-> authors in the single-row-per-patch list mode, but should find a patch by any
-> of the authors in an author search and should display all the authors in the
-> commit display.
-> 
-> David
+> On Wed, Feb 01, 2012 at 01:26:43PM -0800, Junio C Hamano wrote:
+>> Nice.  Will queue
+>
+> Please also squash this in (resend looks ugly and it's hard to point
+> out changes). It makes the code look less ugly, use Q_() for gettext
+> poisoning and revert am input text back as Jonathan suggested.
+>
+> I take it --summary is un-i18n-able,...
 
-Thanks, David!  I had the same trouble with my set: while I entirely rewrote some patches, I still felt Jan Blunck deserved primary credit.  I don't recall my solution, but I'm fine with mentioning my name in the commit message (and I think Jan should get credit too).
-
-In general, this is a big problem for motivating contributors in other cases.  Some maintainers have a habit of trivially rewriting patches so that, technically, no line is the same, then taking authorship and giving the actual author an ambiguous Signed-off-by.  David hasn't done this here, of course - these are major rewrites - but when someone does all the hard work of finding and fixing a problem, the credit shouldn't go to the person who prettied it up.  There is a line in the kernel doc saying how this should be handled, suggested by Rusty, but it's not being followed.
-
-First class support for multiple authorship would be a big way to motivate contributors.
-
--VAL
+... because?
