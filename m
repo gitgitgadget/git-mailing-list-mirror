@@ -1,47 +1,72 @@
-From: Tom Michaud <tom.michaud@gmail.com>
-Subject: Workflow for git dev
-Date: Thu, 2 Feb 2012 07:59:53 -0700
-Message-ID: <CALDO3MKFdZ85w5uJEcZ6dkC7SNXxKi7BAb7r78ciFzmNdjo7eg@mail.gmail.com>
+From: "Neal Groothuis" <ngroot@lo-cal.org>
+Subject: Re: How to find and analyze bad merges?
+Date: Thu, 2 Feb 2012 10:09:36 -0500 (EST)
+Message-ID: <8489.38.96.167.131.1328195376.squirrel@mail.lo-cal.org>
+References: <jgdgcv$h8n$1@dough.gmane.org> <jgdn5j$v4g$1@dough.gmane.org>
+    <87haz97c2k.fsf@thomas.inf.ethz.ch>
+    <4F2A70DA.6020107@native-instruments.de>
+    <CAFfmPPMc1V97OPHyrZp+p4YUek1c6fCncyj0s1YU9xjxQBCsDA@mail.gmail.com>
+    <20120202120340.GA25190@burratino> <jgduqg$p9f$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 02 16:00:23 2012
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: "norbert.nemec" <norbert.nemec@native-instruments.de>
+X-From: git-owner@vger.kernel.org Thu Feb 02 16:09:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rsy97-0000w2-5y
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 16:00:21 +0100
+	id 1RsyI9-0005Av-3v
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 16:09:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932432Ab2BBPAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 10:00:15 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:63503 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932099Ab2BBPAO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 10:00:14 -0500
-Received: by eekc14 with SMTP id c14so799322eek.19
-        for <git@vger.kernel.org>; Thu, 02 Feb 2012 07:00:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=a2ZcJ3/Yw6wZvcOeKeTPHu0t58pr/b6JRiVpJFdFlCI=;
-        b=H6Hlto+aVPPa9/wFsIENBOMQz3CILLD7e3i3Ti4wHPgA0XGEp+xFl2Gq/drSUBk0H2
-         c/8neXTLoKkPXPs3J3QvKnZZ66fPuXfecqNaDc0dyb4jzBPgRLPp71HTlaSHuEz/166g
-         VDeCZ/+0bqRc/oaBdUm54tCqyjV5Z/8jj5lM4=
-Received: by 10.14.131.13 with SMTP id l13mr1013990eei.45.1328194813195; Thu,
- 02 Feb 2012 07:00:13 -0800 (PST)
-Received: by 10.213.22.80 with HTTP; Thu, 2 Feb 2012 06:59:53 -0800 (PST)
+	id S1756176Ab2BBPJg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 10:09:36 -0500
+Received: from dharma.lo-cal.org ([208.70.151.129]:50518 "EHLO
+	dharma.lo-cal.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752668Ab2BBPJg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 10:09:36 -0500
+Received: from mail.lo-cal.org (localhost [127.0.0.1])
+	by dharma.lo-cal.org (Postfix) with ESMTP id 54BE32AEA83;
+	Thu,  2 Feb 2012 09:09:36 -0600 (CST)
+Received: from 38.96.167.131
+        (SquirrelMail authenticated user ngroot)
+        by mail.lo-cal.org with HTTP;
+        Thu, 2 Feb 2012 10:09:36 -0500 (EST)
+In-Reply-To: <jgduqg$p9f$1@dough.gmane.org>
+User-Agent: SquirrelMail/1.4.13
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189651>
 
-Hi all,
+>> See the thread [1] for a few relevant side-notes.
+>  >
+>  > [1] http://thread.gmane.org/gmane.comp.version-control.git/188904
+>
+> As I understand this thread, the user only requested all commits that
+> "modify a file". Our merge-commit strictly speaking did not modify the
+> file but simply kept one of the versions, completely swamping all
+> modifications from one branch. Exactly the case that is still not
+> covered by --full-history.
 
-Would someone kindly point me to a document that describes the
-workflow Junio et al use to develop git?
+The thread was prompted by the difficulty I had in figuring out where a
+co-worker had accidentally squashed changes in a branch that was being
+merged in; I think that's the same issue that you have described.
 
-Much appreciated,
-Tom
+Re: the merge: it kept one of the versions, but not the other; I would
+consider that a change.  This is particularly problematic if you do a "git
+log --full-history --simplify-merges".  The simplified history that is
+presented will not show the merge, even though in the simplified history
+the merge turns into a regular commit that differs from its parent.  It
+seems that the history is being simplified to the point of being
+inaccurate.
+
+I believe that this is a result checking for TREESAME-ness before the
+history simplification occurs, rather than after.  I would love to see
+this behavior changed, or at the least, an option added to allow the user
+to control it.
