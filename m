@@ -1,73 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [msysGit] Breakage in master?
-Date: Thu, 2 Feb 2012 19:57:39 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1202021956370.1249@s15462909.onlinehome-server.info>
-References: <CABPQNSbWu0r_gKGvCHk567pUtQiyDOCO8vFfrzPMFW1eUaj1nw@mail.gmail.com>
+From: Jehan Bing <jehan@orb.com>
+Subject: Re: git-svn branches with revision id's in name
+Date: Thu, 02 Feb 2012 11:03:21 -0800
+Message-ID: <4F2ADDF9.9090507@orb.com>
+References: <CAGYrzvwzrsZdHHnSBaMv-sD9mDGVQ-qFuks+JM6d-NQ9Wz9KwQ@mail.gmail.com> <4F2A807B.9050206@T-Online.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>,
-	=?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 19:57:47 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Stephen Duncan Jr <stephen.duncan@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 02 20:03:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rt1qr-0005mF-W3
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 19:57:46 +0100
+	id 1Rt1wc-0000Mz-Dk
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 20:03:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753291Ab2BBS5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 13:57:41 -0500
-Received: from mailout-de.gmx.net ([213.165.64.23]:47817 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752900Ab2BBS5l (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 13:57:41 -0500
-Received: (qmail invoked by alias); 02 Feb 2012 18:57:39 -0000
-Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
-  by mail.gmx.net (mp069) with SMTP; 02 Feb 2012 19:57:39 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/wQblYHtvwVRyMirjQHREOySHt2bMC7dXRtkVyHr
-	E1bHW8URmrbGJE
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <CABPQNSbWu0r_gKGvCHk567pUtQiyDOCO8vFfrzPMFW1eUaj1nw@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S932096Ab2BBTDi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 14:03:38 -0500
+Received: from plane.gmane.org ([80.91.229.3]:37628 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757002Ab2BBTDh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 14:03:37 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Rt1wT-0000ID-D9
+	for git@vger.kernel.org; Thu, 02 Feb 2012 20:03:33 +0100
+Received: from 173-167-111-189-sfba.hfc.comcastbusiness.net ([173.167.111.189])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 02 Feb 2012 20:03:33 +0100
+Received: from jehan by 173-167-111-189-sfba.hfc.comcastbusiness.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 02 Feb 2012 20:03:33 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 173-167-111-189-sfba.hfc.comcastbusiness.net
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0) Gecko/20120129 Thunderbird/10.0
+In-Reply-To: <4F2A807B.9050206@T-Online.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189673>
 
-Hi Erik,
-
-On Thu, 2 Feb 2012, Erik Faye-Lund wrote:
-
-> Something strange is going on in Junio's current 'master' branch
-> (f3fb075). "git show" has started to error out on Windows with a
-> complaint about our vsnprintf:
-> ---8<---
-> 
-> $ git show
-> commit f3fb07509c2e0b21b12a598fcd0a19a92fc38a9d
-> Author: Junio C Hamano <gitster@pobox.com>
-> Date:   Tue Jan 31 22:31:35 2012 -0800
-> 
->     Update draft release notes to 1.7.10
-> 
->     Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> 
-> fatal: BUG: your vsnprintf is broken (returned -1)
-> ---8<---
+On 2012-02-02 04:24, Carsten Fuchs wrote:
+> Hi all,
 >
-> [...]
+> Am 2012-01-30 20:42, schrieb Stephen Duncan Jr:
+>> [...]
+>> $ git branch -a
+>> * master
+>> remotes/develop
+>> remotes/develop@29271
+>> remotes/develop@32463
+>> remotes/develop@34103
+>> remotes/feature/xyz
+>> remotes/feature/xyz@26438
+>> remotes/feature/xyz@27542
+>> remotes/feature/xyz@35233
+>>
+>> Why have these remote branches been created? What impact does this
+>> have on my checkout? Can I remove safely remove them? How? I was
+>> unable to figure out how to reference this behavior in order to search
+>> for information on it.
 >
-> I'm at a loss here. Does anyone have a hunch about what's going on?
+> Same questions here.
+> (I know how to remove them, but I'd love to learn and understand why
+> they have been created.)
 
-It very much reminds me of 6ef404095bc1162031fc3cb43430b512e975bc6a...
+Those are branches that have been deleted and then recreated later.
+In svn, you can always get a deleted branch back by checking out an old 
+revision. But in git, branches are not part of the history, so when you 
+delete a branch, it's completely gone, as if it never existed, taking 
+with it any commit that has not been merged elsewhere.
+To prevent that loss, git-svn doesn't delete branches. But if the branch 
+was re-created later in svn, you would get a conflict in git. So 
+instead, git-svn rename the old branch by adding the revision number 
+where the branch last existed, i.e. the revision before it was deleted.
 
-Is it possible that NO_GETTEXT is either not set, or ignored?
-
-Ciao,
-Dscho
+So in the OP case, the branch "develop" was deleted at least 3 times, at 
+r34104, r32464 and r29272. The last one may also have been deleted too 
+but then it was not re-created so git-svn didn't rename yet.
