@@ -1,80 +1,115 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] i18n: po for zh_cn
-Date: Thu, 2 Feb 2012 20:29:09 +0700
-Message-ID: <CACsJy8BPTuS+u8Grx0ojhdX-5+Vn6=DuojSWO0or7fJE1dbAEQ@mail.gmail.com>
-References: <1328111436-58925-1-git-send-email-worldhello.net@gmail.com> <7vr4ye15kr.fsf@alter.siamese.dyndns.org>
+From: Frans Klaver <fransklaver@gmail.com>
+Subject: Re: How best to handle multiple-authorship commits in GIT?
+Date: Thu, 2 Feb 2012 14:41:09 +0100
+Message-ID: <CAH6sp9P8ehXoC075dcK9ni5rJBV9iCZmLHTBr-UR+-jbD3c6Ww@mail.gmail.com>
+References: <21056.1328185509@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 14:29:50 2012
+Cc: git@vger.kernel.org, valerie.aurora@gmail.com
+To: David Howells <dhowells@redhat.com>
+X-From: git-owner@vger.kernel.org Thu Feb 02 14:41:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RswjR-0008NM-P6
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 14:29:46 +0100
+	id 1Rswua-0005VH-32
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 14:41:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755914Ab2BBN3l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Feb 2012 08:29:41 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:48319 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754776Ab2BBN3k convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Feb 2012 08:29:40 -0500
-Received: by bkcjm19 with SMTP id jm19so2090378bkc.19
-        for <git@vger.kernel.org>; Thu, 02 Feb 2012 05:29:39 -0800 (PST)
+	id S1753944Ab2BBNlL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Feb 2012 08:41:11 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:58048 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752968Ab2BBNlK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Feb 2012 08:41:10 -0500
+Received: by qcqw6 with SMTP id w6so1377168qcq.19
+        for <git@vger.kernel.org>; Thu, 02 Feb 2012 05:41:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=mWVgPEXzcvj6Yehu6ENqRhCVR0hyMDJtNs+60JDB754=;
-        b=q/ReaFEbqGTCPYY5RbDdWupZbyKQG78xSNLRjVtaSlYnZr4inbBc792yQov/Lf8OZH
-         /3A1D4CjIOrNXqIK4gX5FThfySjvJDduz/1ccp4e6CBURZ3PXs5/HMhcAGxVH/djFMUn
-         bIE16g9+fzo1jekcNyqQ5NbaAcAvkJHXFqRR4=
-Received: by 10.204.152.75 with SMTP id f11mr1319835bkw.127.1328189379205;
- Thu, 02 Feb 2012 05:29:39 -0800 (PST)
-Received: by 10.204.33.70 with HTTP; Thu, 2 Feb 2012 05:29:09 -0800 (PST)
-In-Reply-To: <7vr4ye15kr.fsf@alter.siamese.dyndns.org>
+        bh=HqPOJ7DSFctQa1YkqkaINtwAma6O+Y+zlyV46Uq5SAg=;
+        b=iifN8yh8gsfOzENMO4bB+KOXObt9srV5p/iu2eGC/jKMujeE5RZFd3RV2Znu8Px7kP
+         53tDLX7fb5WBZLqE7VAfqGQqS5awjuIdnc/6+HvQMZwgQG8hp+tIk7z5Yxp0yIJASWNt
+         8iJ2MDTriZPjV7hm567cz2V1DRN0/xeD2aW6Y=
+Received: by 10.224.117.15 with SMTP id o15mr3655150qaq.97.1328190069362; Thu,
+ 02 Feb 2012 05:41:09 -0800 (PST)
+Received: by 10.224.204.74 with HTTP; Thu, 2 Feb 2012 05:41:09 -0800 (PST)
+In-Reply-To: <21056.1328185509@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189642>
 
-On Thu, Feb 2, 2012 at 6:45 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Jiang Xin <worldhello.net@gmail.com> writes:
+Hi,
+
+On Thu, Feb 2, 2012 at 1:25 PM, David Howells <dhowells@redhat.com> wro=
+te:
 >
->> Git can speak Chinese now.
->>
->> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
->> ---
->> =C2=A0po/zh_cn.po | 3568 +++++++++++++++++++++++++++++++++++++++++++=
-++++++++++++++++
->> =C2=A01 =E4=B8=AA=E6=96=87=E4=BB=B6=E8=A2=AB=E4=BF=AE=E6=94=B9, 3568=
- =E5=A4=84=E6=B7=BB=E5=8A=A0(+), 0 =E5=A4=84=E5=88=A0=E9=99=A4(-)
->> =C2=A0create mode 100644 po/zh_cn.po
+> Hi,
 >
-> I do not mind Chinese in the patch text (i.e. below), but I would hav=
-e
-> preferred the above not to be in Chinese, which I do not read---I can
-> guess what =E6=96=87=E4=BB=B6, =E6=B7=BB=E5=8A=A0 and =E5=88=A0=E9=99=
-=A4 are, and I can also guess that =E4=B8=AA and =E5=A4=84
-> are units of counting, but nevertheless...
+> I've been assigned a stack of patches to maintain and try and get ups=
+tream by
+> my employer. =C2=A0Most of the patches currently have the authorship =
+set to Val,
+> but since I'll be maintaining them if they go in upstream and I've ch=
+anged
+> them a lot, I feel I should reassign the author field to myself so pe=
+ople
+> pester me rather than Val with questions about them. =C2=A0However, I=
+ don't want to
+> deny Val or any other contributor credit for their work on the patche=
+s.
+>
+> I can see a number of ways of doing this, and am wondering which will=
+ be best:
+>
+> =C2=A0(1) Ascribe multiple authorship directly in the commit. =C2=A0I=
+ suspect this would
+> =C2=A0 =C2=A0 require a change to GIT and its associated tools. =C2=A0=
+That way I could put my
+> =C2=A0 =C2=A0 name in the priority pestering spot, but doing a search=
+ on authorship
+> =C2=A0 =C2=A0 would still credit Val and others.
+>
+> =C2=A0(2) Add an extra tag 'Originally-authored-by' (or maybe 'Coauth=
+ored-by' as I
+> =C2=A0 =C2=A0 saw someone recommend) in amongst the 'Signed-off-by' l=
+ist. =C2=A0But that
+> =C2=A0 =C2=A0 doesn't give them credit in a gitweb search without cha=
+nging gitweb.
+>
+> =C2=A0(3) Don't actually modify Val's commits to bring them up to dat=
+e, but rather
+> =C2=A0 =C2=A0 create a historical GIT tree with Val's commits committ=
+ed as-are and then
+> =C2=A0 =C2=A0 add my changes to the top in a number of large merge co=
+mmits (there have
+> =C2=A0 =C2=A0 been multiple major breakages due to different merge wi=
+ndows).
+>
+> =C2=A0 =C2=A0 I dislike this approach because it doesn't produce a ni=
+ce set of patches I
+> =C2=A0 =C2=A0 can give to someone to review (which is a must). =C2=A0=
+Plus, for the most part,
+> =C2=A0 =C2=A0 it's actually easier to port Val's patches individually=
+=2E
+>
+> Can GIT be modified to do (1)? =C2=A0Gitweb's display need only show =
+one of the
+> authors in the single-row-per-patch list mode, but should find a patc=
+h by any
+> of the authors in an author search and should display all the authors=
+ in the
+> commit display.
 
-Such a stat line would be wonderful in an all-Chinese environment
-though. I'm thinking perhaps it's a good idea to support
-core.officialLocale (or workingLanguage). Commands that produce stuff
-for outside like format-patch would prefer core.exchangeLanguage over
-$LANG. Commands in blurred zone can learn --official option to ignore
-$LANG.
+I always thought of the author field as being an indication of who is
+ultimately responsible for its implementation (the one in the
+pestering spot). (1) may seem desirous, but doesn't (2) seem like a
+cleaner and more maintainable solution? Gitweb will show the entire
+log message if people are interested in the exact change, right?
 
-We can then have a shared config with core.officialLocale =3D
-en_US.UTF-8 somewhere in git.git. Developers of multi-nation companies
-would be pleased, I think.
---=20
-Duy
+Cheers,
+=46rans
