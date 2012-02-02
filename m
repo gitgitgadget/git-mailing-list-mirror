@@ -1,60 +1,77 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: how to tell when git release changes porcelain stdout/stderr
-Date: Thu, 2 Feb 2012 13:11:00 -0600
-Message-ID: <20120202191100.GA19859@burratino>
-References: <jgeert$qeg$1@dough.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Finding all commits which modify a file
+Date: Thu, 02 Feb 2012 11:13:32 -0800
+Message-ID: <7vk445vyjn.fsf@alter.siamese.dyndns.org>
+References: <5456.38.96.167.131.1328194547.squirrel@mail.lo-cal.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Neal Kreitzinger <neal@rsss.com>
-X-From: git-owner@vger.kernel.org Thu Feb 02 20:11:33 2012
+To: "Neal Groothuis" <ngroot@lo-cal.org>
+X-From: git-owner@vger.kernel.org Thu Feb 02 20:13:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rt248-0004QI-KA
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 20:11:28 +0100
+	id 1Rt26G-0005Rx-N5
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Feb 2012 20:13:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933208Ab2BBTLY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 14:11:24 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:42845 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933175Ab2BBTLX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 14:11:23 -0500
-Received: by iacb35 with SMTP id b35so3516473iac.19
-        for <git@vger.kernel.org>; Thu, 02 Feb 2012 11:11:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=yfa88cXa2i+U3rBD3EAjdqKn9yHyrlMXCAVrhhYNSCM=;
-        b=nb1x+FUhH3aRxRp0s+Rm4ixE/MQF9EDgIJLmp/pagBqwvqSbqNCUUDcXFlRyp8mlA0
-         aQwPXqzOu7Z+iDBtgBzTvJ3J2qTE9IGgFReZu9SDkdFYi1DiJz80jXV8dcdIz0hRDrmk
-         7H0Hm8Wer7mSILimahgLrqhQQUAuwgM1etIMo=
-Received: by 10.43.47.135 with SMTP id us7mr3750885icb.31.1328209882813;
-        Thu, 02 Feb 2012 11:11:22 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id bj3sm1064226igb.4.2012.02.02.11.11.21
-        (version=SSLv3 cipher=OTHER);
-        Thu, 02 Feb 2012 11:11:22 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <jgeert$qeg$1@dough.gmane.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932580Ab2BBTNf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 14:13:35 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61054 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754290Ab2BBTNe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 14:13:34 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 372F46660;
+	Thu,  2 Feb 2012 14:13:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sFnNVhqJHsDwKR8Zjvnvfi4TwGs=; b=ruYxJ3
+	H2NtY5lLYLstwZaENGYwg5iWNmbwHR+ZeI+X38RNEP6p7WD8uygD2l4ZIFtKN/jH
+	4Q59+AC87z/5y/l3vxFZaNG7YnUst7L1mXt4o4MQvTqmrlKB2hT1NzK3k+/4Wj8p
+	JuJLNDDnBzLtEfqzeP4MQcfSolfP5yAu7UC4k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=t94bbCjjWplyDEG1nP6ocKpDLn5JXpl7
+	6XST6eTctBLNZlhUD1DnAglgRDiJsaStckBGVePOToY+antzewmSrPAZdsJVKQ0p
+	qbrWxXTGgwdBNu4mDJWX+EHQOwxUTWFd5PW0w/QZnD8HzwgKy6GDhLueacwK1d00
+	zCe2oXArVLk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2EFBE665F;
+	Thu,  2 Feb 2012 14:13:34 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BC295665E; Thu,  2 Feb 2012
+ 14:13:33 -0500 (EST)
+In-Reply-To: <5456.38.96.167.131.1328194547.squirrel@mail.lo-cal.org> (Neal
+ Groothuis's message of "Thu, 2 Feb 2012 09:55:47 -0500 (EST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0017234A-4DD2-11E1-81DC-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189676>
 
-Hi Neal,
+"Neal Groothuis" <ngroot@lo-cal.org> writes:
 
-Neal Kreitzinger wrote:
+>> "Neal Groothuis" <ngroot@lo-cal.org> writes:
+>>
+>>> Is there a situation where checking for TREESAMEness before
+>>> simplification
+>>> is desirable and checking after would not be?
+>>
+>> When you do not want to see a side branch that does not contribute to
+> the end result at all, obviously ;-). Outside that situation, before or
+> after should not make a difference, I would think.
+>
+> In that case, you wouldn't be using the --full-history flag at all, yeah?
 
-> What is the best way for me (a git user) to tell when a new git release 
-> changes the stdout/stderr formatting of a porcelain command?
+Yes. In case my tongue-in-cheek comment was too obscure, I was saying that
+I do not think the change to TREESAME-ness check you were alluding to would
+break any use case I would think of off the top of my head.
 
-They almost always do.  Maybe that will be happening less often as
-messages get translated, but if you really need reproducible output,
-your life will be much easier if you just use plumbing instead (and
-please report problems when they arise).
+We of course might discover undesired consequences in unexpected corners
+after we try your change, but I do not think we can discuss such corner
+cases further without seeing a patch.
