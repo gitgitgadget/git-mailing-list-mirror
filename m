@@ -1,103 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t0300-credentials: Word around a solaris /bin/sh bug
-Date: Fri, 03 Feb 2012 12:32:15 -0800
-Message-ID: <7v7h03odyo.fsf@alter.siamese.dyndns.org>
-References: <1328211135-25217-1-git-send-email-bwalton@artsci.utoronto.ca>
- <20120202200240.GC9246@sigill.intra.peff.net>
- <7vr4ycu3ty.fsf@alter.siamese.dyndns.org>
- <20120203120657.GB31441@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [ANNOUNCE] Git 1.7.9
+Date: Fri, 3 Feb 2012 21:55:25 +0100
+Message-ID: <201202032155.26532.jnareb@gmail.com>
+References: <7vipjwzvc2.fsf@alter.siamese.dyndns.org> <201202031352.10279.jnareb@gmail.com> <7vehubpuv7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ben Walton <bwalton@artsci.utoronto.ca>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 03 21:32:30 2012
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 03 21:56:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtPo0-0005te-1b
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 21:32:24 +0100
+	id 1RtQAs-0001lR-75
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 21:56:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756808Ab2BCUcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Feb 2012 15:32:19 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45920 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756754Ab2BCUcS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Feb 2012 15:32:18 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 88DD4700A;
-	Fri,  3 Feb 2012 15:32:17 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kkDXCD22RnI9pdfzY0p7WuTZVQI=; b=rIP1oC
-	TdrW2z5izRLtYkSiGFSkq6KFIJroHlUlv/GDPV9LYYHl2PYNKSsy5Uwip6gaCfr8
-	kFfPORLAMFTrOs9f8rPMoCCq82Go07ZkKS/hhJ4G0j/in4Z81LHC/znMVtx6Y53z
-	pFJXOGx7+M7WDupDSWUX01P5odcuMiyjnaAVU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FRloHUQ0/eUKyc6gYZsHXyhv/R0HkLJe
-	4bj8/oW+Tfv4VDM6V1xfotDPlQkTwJbI/IdbeenpCd3dIrKm3mXpdneCJI2DhoM0
-	a2IF3LujBEXH2fqTn+XSVtgYE7aS+/xbGVYOSmngmFs3VFqv6LMTXNorQltmVPlu
-	ymnZv9vzUHE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EE717009;
-	Fri,  3 Feb 2012 15:32:17 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0EC9D6FFD; Fri,  3 Feb 2012
- 15:32:16 -0500 (EST)
-In-Reply-To: <20120203120657.GB31441@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 3 Feb 2012 07:06:57 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 29CDFD06-4EA6-11E1-8F36-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757727Ab2BCUze (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Feb 2012 15:55:34 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:65097 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757605Ab2BCUzb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Feb 2012 15:55:31 -0500
+Received: by eaah12 with SMTP id h12so1581045eaa.19
+        for <git@vger.kernel.org>; Fri, 03 Feb 2012 12:55:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=hWsZtXxFI47rygj9tcwSPkj74zigdDUTVMLXttbRAKg=;
+        b=DvB99GF8wqOb3QVsPnIv5CSlpAVR1qNbBEdUoQzNnlm6cgW9RL/nDyhn2tRaRlJbQK
+         CYphXS7svANFJuSH4k3bp02Yn2RmW/RGtIM4cIeSG62t11eQEHM881lvPjtRFq11wJqi
+         SH4WoSPyRLM6yGj2VeW1dWaHtNOluX4xxmS5A=
+Received: by 10.213.29.11 with SMTP id o11mr2766134ebc.57.1328302529979;
+        Fri, 03 Feb 2012 12:55:29 -0800 (PST)
+Received: from [192.168.1.13] (abwn75.neoplus.adsl.tpnet.pl. [83.8.237.75])
+        by mx.google.com with ESMTPS id y12sm26028160eeb.11.2012.02.03.12.55.27
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 03 Feb 2012 12:55:29 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vehubpuv7.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189801>
 
-Jeff King <peff@peff.net> writes:
+On Fri, 3 Feb 2012, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
 
->   cat >foo.sh <<\EOF
->   #!/bin/sh
->   echo my arguments are "$@"
->   EOF
->
-> cannot have the mechanical replace you mentioned above. It would need:
->
->   cat >foo.sh <<EOF
->   #!$SHELL_PATH
->   echo my arguments are "\$@"
->   EOF
->
-> or:
->
->   {
->     echo "#!$SHELL_PATH" &&
->     cat <<EOF
->     echo my arguments are "$@"
->     EOF
->   } >foo.sh
->
-> When I have hard-coded "#!/bin/sh", my thinking is usually "this is less
-> cumbersome to type and to read, and this script-let is so small that
-> even Solaris will get it right".
+>>>>  RPM build errors:
+>>>>     Installed (but unpackaged) file(s) found:
+>>>>    /usr/share/locale/is/LC_MESSAGES/git.mo
+>>>>
+>>> 
+>>> I think it should be simply ignored at least for now.  I stopped touching
+>>> the rpm spec since August last year (the only reason I was running rpmbuild
+>>> was to install them on k.org), so I didn't notice.
+>>
+>> So for the time being something like that would be an acceptable fix?
+> 
+> Except that the patch probably wants to go to git.spec.in, removing that
+> installation target would be a good local workaround for now.
 
-I am toying with the pros-and-cons of
+O.K., will do.
 
-	write_script () {
-		echo "#!$1"
-		shift
-                cat
-	}
+Anyway this change makes rpmbuild process complete.
+ 
+> I said "local workaround", meaning that I am not all that interested in
+> applying such a patch myself.  Somebody who wants to do RPM needs to
+> decide what subpackage(s) it should go before we start accepting more po/
+> files, and at that time the workaround needs to be reverted.
+> 
+> And hopefully that should happen soonish ;-)
 
-so that the above can become
+The git-i18n-Icelandic proposal for /usr/share/locale/is/LC_MESSAGES/git.mo
+follow the KDE pattern (e.g. kde-i18n-Polish).  This might be a place for
+translated manpages and other documentation, if there is any.
 
-	write_script "$SHELL_PATH" >foo.sh <<-EOF
-        echo my arguments are "\$@"
-	EOF
+On the other hand all translations for gitk are in gitk package
+(as /usr/share/gitk/lib/msgs/*.msg, not /usr/share/locale/*/LC_MESSAGES/git.mo)
+Same for git-gui.
 
-without requiring the brain-cycle to waste on the "Is this simple enough
-for even Solaris to grok?" guess game.  This should also be reusable for
-other stuff like $PERL_PATH, I would think.
+-- 
+Jakub Narebski
+Poland
