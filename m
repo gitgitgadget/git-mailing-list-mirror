@@ -1,88 +1,85 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH, RFC] Fix build problems related to profile-directed
- optimization
-Date: Thu, 02 Feb 2012 22:00:37 -0800
-Message-ID: <7vr4ycsbga.fsf@alter.siamese.dyndns.org>
-References: <1328209417-8206-1-git-send-email-tytso@mit.edu>
- <7vvcnpuhpo.fsf@alter.siamese.dyndns.org> <20120202201226.GA1032@thunk.org>
- <7vvcnou40u.fsf@alter.siamese.dyndns.org> <20120203020743.GE1032@thunk.org>
+Subject: Re: General support for ! in git-config values
+Date: Thu, 02 Feb 2012 22:11:27 -0800
+Message-ID: <7vmx90say8.fsf@alter.siamese.dyndns.org>
+References: <20120201184020.GA29374@sigill.intra.peff.net>
+ <CACBZZX5mX55Rh8b2GYv7wKbCCypCkrn5AiM9BpXydgcYxHWdQA@mail.gmail.com>
+ <7v62fq2o03.fsf@alter.siamese.dyndns.org>
+ <CANgJU+X+UZmycwE6xkJ-zHfT7ai6nV9zbeR4WYnAXczL5JtqjA@mail.gmail.com>
+ <7vliom13lm.fsf@alter.siamese.dyndns.org>
+ <CANgJU+XQWdFmfmBJ4KX4GBz1a=TrVbp9BphGmhEb5Gphmzogjw@mail.gmail.com>
+ <7v7h06109t.fsf@alter.siamese.dyndns.org>
+ <CANgJU+WCdsF+igCWoueYcChYBvNyj5je_kvWorCBOgh5D7Bb9g@mail.gmail.com>
+ <20120202023857.GA11745@sigill.intra.peff.net>
+ <CANgJU+X2dRP__PFAywGEisDS3xyF7fSszSQG6BO61j2TMKL3Qg@mail.gmail.com>
+ <20120202095432.GA19356@sigill.intra.peff.net>
+ <CANgJU+XoZd6x6jdSHszigZaPgi+6H3Nbf4OG7p0y1_=7m+qntA@mail.gmail.com>
+ <CAGZ=bq++R+X+2r2_zQ4UZ6JvDC9W9_4nF23MQ6+612_Qe2RS4Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Andi Kleen <ak@linux.intel.com>,
-	Clemens Buchacher <drizzd@aon.at>
-To: Ted Ts'o <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Fri Feb 03 07:00:47 2012
+Cc: demerphq <demerphq@gmail.com>, Jeff King <peff@peff.net>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Kyle Moffett <kyle@moffetthome.net>
+X-From: git-owner@vger.kernel.org Fri Feb 03 07:12:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtCCV-0008If-C7
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 07:00:47 +0100
+	id 1RtCNL-0004IL-JB
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 07:11:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753464Ab2BCGAm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Feb 2012 01:00:42 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64911 "EHLO
+	id S1753561Ab2BCGLb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Feb 2012 01:11:31 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35467 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753316Ab2BCGAl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Feb 2012 01:00:41 -0500
+	id S1753474Ab2BCGL3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Feb 2012 01:11:29 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6AD277E1;
-	Fri,  3 Feb 2012 01:00:40 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 592B27917;
+	Fri,  3 Feb 2012 01:11:29 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=f9Qv19Ov3jLaDtKkiPaO9nWCwoc=; b=tA4gUr
-	nnbCbVqy17W26m/jqAWpX3R33Y+MMvc8jbQ63qNGdjqvHCFnS6MT56vn0HZTrk/N
-	fA4xGU6FnyFXzc7xKYguJKmbFTyGCG9k9g5ehehGlOK9K9wHJf/4/kVWccOf1Q0/
-	9x2yJzbOE+cxEWQuxsTx6BGWK1NIb8s8eeCSs=
+	:content-type; s=sasl; bh=5HblV2qM+VjidnaTmSkBTdcVORA=; b=the5T2
+	S8t1IAT0LwATXtfrKPXfNQ98O4SRUn/GZnvdGvIrN1ZZMd5WzFIdkrRPlMK/88jm
+	rzmRIURoZHdCw1WM8MPFMguU1OV96CP/nWWXg4fRDxDDwcyKeZyH72TWL/BArX69
+	96tgEF7UpK8IMPFeBpp+6PkwDzdsedJ14DbNE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WVD2e+AiHtfIiS13aHcWnYUpLgze4zzr
-	XqEgJDmU30Ps0fcxsT5xHIisl88YY+zYsK8SeT5C+d/CaH657LGbBiTY5wmetGZD
-	sRdexTKSZ9SaaG8rVNmSYENoNUWrT+UZN2Dmokd3x7j/jj8BovxVGPfpB+2c8Z2C
-	7wmrzbNvHEA=
+	:content-type; q=dns; s=sasl; b=a179WShgUYCcjIT6eA0oByR9UscYceTz
+	AM0Q12jHDOFaMCKXdRw3K8HwTcLT+kuLbfxDHObZ0siSw1JegKL4TVafPhi0RtBn
+	0PFdmR8qwGewrAJ4AIo3jd7bIwCwZ3eColFVW+pAeX580d+/DuGAZW4YmpWMX0iw
+	KoFFmtECvPc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DEF2C77E0;
-	Fri,  3 Feb 2012 01:00:40 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E2FB7916;
+	Fri,  3 Feb 2012 01:11:29 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6B23677DF; Fri,  3 Feb 2012
- 01:00:39 -0500 (EST)
-In-Reply-To: <20120203020743.GE1032@thunk.org> (Ted Ts'o's message of "Thu, 2
- Feb 2012 21:07:43 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D3C987915; Fri,  3 Feb 2012
+ 01:11:28 -0500 (EST)
+In-Reply-To: <CAGZ=bq++R+X+2r2_zQ4UZ6JvDC9W9_4nF23MQ6+612_Qe2RS4Q@mail.gmail.com> (Kyle
+ Moffett's message of "Thu, 2 Feb 2012 21:08:46 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 65FE0106-4E2C-11E1-BA3C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: E915267C-4E2D-11E1-BDC6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189740>
 
-Ted Ts'o <tytso@mit.edu> writes:
+Kyle Moffett <kyle@moffetthome.net> writes:
 
-> What do you think of this?  I'm still running a test build --- "make
-> PROFILE=BUILD all" takes quite a long time, so this is still an RFC; I
-> figure there will still be some places where people will point out
-> more nits to be polished.  :-)
+> Alternatively, you could extend the recent proposal for GIT config
+> "include" statements so that something like this works:
 >
-> (In particular, I just noticed I left the V=1 for debugging purposes
-> in this version....)
+> [include]
+>     exec = echo "deploy.prefix = `cat /etc/SERVER_ROLE`"
+>     exec = /usr/local/bin/git-config-for-ldap-user
 
-Thanks.
+Erh...
 
-Three comments:
-
- * I am happy that this version handles this well:
-
-   $ make PROFILE=BUILD install
-
-   even though you did not advertise as such in INSTALL ;-).
-
- * However, I think "clean" target should remove *.gcda unconditionally.
-
-   $ make PROFILE=BUILD install ; make clean ; git clean -n -x | grep gcda
-
- * Running "make PROFILE=BUILD install" immediately after another one,
-   without "make clean" in between, resulted in full rebuild and test
-   before the second "install", which somewhat surprised me.  I however do
-   not think this is a big show-stopper problem.
+Running known stuff from your own .git/config may be justifiable as "at
+your own risk", but if we consider sources that are not under your direct
+control, such as /etc/gitconfig and whatever your project encourages you
+to include from your .git/config,... eek.
