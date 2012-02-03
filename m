@@ -1,70 +1,58 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v2] Use correct grammar in diffstat summary line
-Date: Fri, 3 Feb 2012 08:11:23 +0700
-Message-ID: <CACsJy8CcBB9OF=8a1hQEpDFzqsrkbpFKnVAcU65h_5Cnym90SQ@mail.gmail.com>
-References: <1328019840-6168-1-git-send-email-pclouds@gmail.com>
- <1328100907-20397-1-git-send-email-pclouds@gmail.com> <7vhaza2qjw.fsf@alter.siamese.dyndns.org>
- <20120202142255.GA25871@do> <7v8vklxfe4.fsf@alter.siamese.dyndns.org>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH] i18n: diff/apply statistics
+Date: Fri, 3 Feb 2012 09:15:11 +0800
+Message-ID: <CANYiYbFBDtK5SiYZV41vWxjjQw3GT4+9kcESpV69sNDWgZ26QQ@mail.gmail.com>
+References: <1328116977-61458-1-git-send-email-worldhello.net@gmail.com>
+	<CACsJy8DrNHwLGJjj4nJHDm-NEsr6c=QW-kgxmTbsRxq057keWQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Frederik Schwarzer <schwarzerf@gmail.com>,
-	Brandon Casey <drafnel@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 03 02:12:31 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>, avarab@gmail.com
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 03 02:15:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rt7hR-0006TJ-Ge
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 02:12:25 +0100
+	id 1Rt7kG-0007VN-1p
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 02:15:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755382Ab2BCBLz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Feb 2012 20:11:55 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:54244 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754172Ab2BCBLy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Feb 2012 20:11:54 -0500
-Received: by bkcjm19 with SMTP id jm19so2676900bkc.19
-        for <git@vger.kernel.org>; Thu, 02 Feb 2012 17:11:53 -0800 (PST)
+	id S1755511Ab2BCBPN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 20:15:13 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:64880 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754620Ab2BCBPM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 20:15:12 -0500
+Received: by ggnh1 with SMTP id h1so1608088ggn.19
+        for <git@vger.kernel.org>; Thu, 02 Feb 2012 17:15:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=rvRvxQ85KfZFPmA5T4N54t6AHw3BnX06H7Gap0+pZyI=;
-        b=Jy2JUNxvJ+JxYN0DQZULaSc9xbzlp6sWP51Q79cu8+CI8ksb7krM4IytY6zOwVvrab
-         3s8XHYBR4WTjyAxSqH/Wf5LcobVB2BjKvyBlrOBPAe4WeXvoc5hju78KJr48lb47vEkv
-         sBqf6lJLIhdn3u7ezgIPg84zsikPJSaHs2SMw=
-Received: by 10.204.130.150 with SMTP id t22mr2450145bks.1.1328231513207; Thu,
- 02 Feb 2012 17:11:53 -0800 (PST)
-Received: by 10.204.33.70 with HTTP; Thu, 2 Feb 2012 17:11:23 -0800 (PST)
-In-Reply-To: <7v8vklxfe4.fsf@alter.siamese.dyndns.org>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ZrLuKM5N4MMnYV7fY80sMs8Z8iwoLX96uZJ/+HTpdZg=;
+        b=EyBjlAw1ffLRluyPVDai0ln9LHN/IqVvRYGXPTSKC2J2sDIKHw0YhIuRdBmmALePLQ
+         BqO4OYFCnDRiobINqJsNvnFw0wWrJ6ShNBW9bDzh1AfR/0j58KbxPTcL5sC0oqowHtdF
+         cGiC9k8okeBp/44gleKXlexG6SGNBRcL9lWuI=
+Received: by 10.236.182.232 with SMTP id o68mr7953529yhm.58.1328231711659;
+ Thu, 02 Feb 2012 17:15:11 -0800 (PST)
+Received: by 10.236.153.195 with HTTP; Thu, 2 Feb 2012 17:15:11 -0800 (PST)
+In-Reply-To: <CACsJy8DrNHwLGJjj4nJHDm-NEsr6c=QW-kgxmTbsRxq057keWQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189728>
 
-On Fri, Feb 3, 2012 at 1:24 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+2012/2/2 Nguyen Thai Ngoc Duy <pclouds@gmail.com>:
+> On Thu, Feb 2, 2012 at 12:22 AM, Jiang Xin <worldhello.net@gmail.com> wrote:
+>> translate oneline statistics of diff/apply.
 >
->> On Wed, Feb 01, 2012 at 01:26:43PM -0800, Junio C Hamano wrote:
->>> Nice. =C2=A0Will queue
->>
->> Please also squash this in (resend looks ugly and it's hard to point
->> out changes). It makes the code look less ugly, use Q_() for gettext
->> poisoning and revert am input text back as Jonathan suggested.
->>
->> I take it --summary is un-i18n-able,...
+> There's another patch with similar goal:
 >
-> ... because?
+> http://thread.gmane.org/gmane.comp.version-control.git/189453/focus=189509
 
-=2E. of scripts? We have --numstat for scripts, but I see no alternativ=
-e
-to --summary. Does anybody parse --summary output?
---=20
-Duy
+It's cool, especially the call of interactive_use, so that
+translations for the statistics line is only for human, not for scripts/pipe...
+
+--
+Jiang Xin
