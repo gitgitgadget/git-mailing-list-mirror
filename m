@@ -1,84 +1,86 @@
-From: Matt Graham <mdg149@gmail.com>
-Subject: Re: Git performance results on a large repository
-Date: Fri, 3 Feb 2012 23:05:40 +0000
-Message-ID: <CALts4TT49VAWPZ6XO9qahDTu=2E425QcRvXx5-75Jv8n4yp8RA@mail.gmail.com>
-References: <CACBZZX4BsFZxB6A-Hg-k37FBavgTV8SDiQTK_sVh9Mb9iskiEw@mail.gmail.com>
-	<CB5179E9.3B751%joshua.redstone@fb.com>
+From: Bart Trojanowski <bart@jukie.ca>
+Subject: [1.7.9] usage regression when merging annotated tag objects
+Date: Fri, 3 Feb 2012 18:08:06 -0500
+Message-ID: <CADeLxZTsq1M5oEb1u5Oqfxq3dYXL6E_uN9bXaTqaOZiA0fgdJQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Joshua Redstone <joshua.redstone@fb.com>
-X-From: git-owner@vger.kernel.org Sat Feb 04 00:05:49 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 04 00:08:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtSCR-0005X1-V8
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 00:05:48 +0100
+	id 1RtSEn-0006i6-7l
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 00:08:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754513Ab2BCXFm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Feb 2012 18:05:42 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:34184 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754395Ab2BCXFl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Feb 2012 18:05:41 -0500
-Received: by yenm8 with SMTP id m8so1858718yen.19
-        for <git@vger.kernel.org>; Fri, 03 Feb 2012 15:05:41 -0800 (PST)
+	id S1754650Ab2BCXII convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Feb 2012 18:08:08 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:49457 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754475Ab2BCXIH convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Feb 2012 18:08:07 -0500
+Received: by obcva7 with SMTP id va7so4858051obc.19
+        for <git@vger.kernel.org>; Fri, 03 Feb 2012 15:08:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=10BT2xAmcIV/ojSBvHOAZYJ304Nc1Q/trbgUqAEdjJA=;
-        b=pOwoQjSNBts81P3a7dexPO5fJFdk+HtqCYINUnueCVLTYW0tx83ysJ/XshVr8yY54q
-         P7wrzsTB/IgzMuqFZ24I+bDntBffJVbWM80unOU6r/UHH0GEcVNdD6EHzZZUV8hRY92a
-         cbNcVFtDo91B17lK21l0SxtBXXTM2Gz2C5t6U=
-Received: by 10.236.126.168 with SMTP id b28mr12815492yhi.88.1328310341021;
- Fri, 03 Feb 2012 15:05:41 -0800 (PST)
-Received: by 10.146.157.21 with HTTP; Fri, 3 Feb 2012 15:05:40 -0800 (PST)
-In-Reply-To: <CB5179E9.3B751%joshua.redstone@fb.com>
+        d=jukie.ca; s=google;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=LSvyM4yqLTNWWvMqLbsfvZtWsGprvtGCa5V2S0ZJrDk=;
+        b=DnwDitoTycxKWAzlET2FshWgCcACrd6S3Q6KzCB7728ZYgm0tVHYg1rN61/XqY/un+
+         9pwq4SJKnuUENFysUsXssSdSizRzYmZ4KIhGDL7z8ArT1EJFgj/mh93Nrodi9nL37EG4
+         /RJdj3Mxy6h/WNHtj5pzJimElgcSX6K4VP+eQ=
+Received: by 10.182.47.41 with SMTP id a9mr8311412obn.43.1328310486732; Fri,
+ 03 Feb 2012 15:08:06 -0800 (PST)
+Received: by 10.60.4.4 with HTTP; Fri, 3 Feb 2012 15:08:06 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189825>
 
-Hi Josh,
+I recently started using git 1.7.9. =A0Earlier today GregKH released a =
+stable
+kernel update and I tried my tried and true procedure using 'git merge
+--ff-only v3.2.3'. =A0I was a bit surprised with the results.
 
-On Fri, Feb 3, 2012 at 17:00, Joshua Redstone <joshua.redstone@fb.com> =
-wrote:
-> Thanks for the comments. =C2=A0I've included a bunch more info on the=
- test repo
-> below. =C2=A0It is based on a growth model of two of our current repo=
-sitories
-> (I.e., it's not a perforce import). We already have some of the easil=
-y
-> separable projects in separate repositories, like HPHP. =C2=A0 If we =
-could
-> split our largest repos into multiple ones, that would help the scali=
-ng
-> issue. =C2=A0However, the code in those repos is rather interdependen=
-t and we
-> believe it'd hurt more than help to split it up, at least for the
-> medium-term future. =C2=A0We derive a fair amount of benefit from the=
- code
-> sharing and keeping things together in a single repo, so it's not cle=
-ar
-> when it'd make sense to get more aggressive splitting things up.
->
-> Some more information on the test repository: =C2=A0 The working dire=
-ctory is
-> 9.5 GB, the median file size is 2 KB. =C2=A0The average depth of a di=
-rectory
-> (counting the number of '/'s) is 3.6 levels and the average depth of =
-a
-> file is 4.6. =C2=A0More detailed histograms of the repository composi=
-tion is
-> below:
+There are two tags I am toying with...
 
-Do you have a histogram of the types of files in the repo?
-And as suggested earlier, is svn working for you now because it allows
-sparse checkout?  I imagine the stats for svn on the full repo would
-be comparable or worse to what you measured with git?
+69bade0 is v3.2.3
+3499d64 is v3.2.2
+
+And here is where we start...
+
+$ git describe
+v3.2.2
+
+$ git merge-base v3.2.2 v3.2.3 | xargs git describe
+v3.2.2
+
+(it is thus eligible for a fast-forward)
+
+=46inally, the strangeness...
+
+$ git merge --ff-only v3.2.3
+fatal: Not possible to fast-forward, aborting.
+
+$ git merge --ff-only v3.2.3~
+Updating 3499d64..7b171c5
+=46ast-forward
+=2E..
+
+$ git merge --ff-only v3.2.3
+fatal: Not possible to fast-forward, aborting.
+
+After talking to Junio, he pointed out that "merging tag objects gained=
+ new
+meanings in 1.7.9".
+
+I am not sure if my confusion will be shared by others and if --ff-only
+needs a clarification. =A0Perhaps --ff-only should just continue to wor=
+k as
+it did before, and fast-forward from tag to tag.
+
+Cheers,
+-Bart
