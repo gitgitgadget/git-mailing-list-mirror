@@ -1,67 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t0300-credentials: Word around a solaris /bin/sh bug
-Date: Thu, 02 Feb 2012 17:02:17 -0800
-Message-ID: <7vr4ycu3ty.fsf@alter.siamese.dyndns.org>
-References: <1328211135-25217-1-git-send-email-bwalton@artsci.utoronto.ca>
- <20120202200240.GC9246@sigill.intra.peff.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v2] Use correct grammar in diffstat summary line
+Date: Fri, 3 Feb 2012 08:11:23 +0700
+Message-ID: <CACsJy8CcBB9OF=8a1hQEpDFzqsrkbpFKnVAcU65h_5Cnym90SQ@mail.gmail.com>
+References: <1328019840-6168-1-git-send-email-pclouds@gmail.com>
+ <1328100907-20397-1-git-send-email-pclouds@gmail.com> <7vhaza2qjw.fsf@alter.siamese.dyndns.org>
+ <20120202142255.GA25871@do> <7v8vklxfe4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ben Walton <bwalton@artsci.utoronto.ca>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 03 02:02:26 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Frederik Schwarzer <schwarzerf@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 03 02:12:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rt7Xl-0002rY-Kq
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 02:02:25 +0100
+	id 1Rt7hR-0006TJ-Ge
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 02:12:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755039Ab2BCBCU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 20:02:20 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52503 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753831Ab2BCBCT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Feb 2012 20:02:19 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E46D6806;
-	Thu,  2 Feb 2012 20:02:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xWviZjm0oX0e5+dz0xCCiaa4AD4=; b=IIt6Tc
-	I6PA5WQEVOXGbOvWAScyrYLc8HwTfCghsjka/wxrViBYkypYdE96cNk/dxtPB84s
-	wxrz5anDex3TUKKSJcfY8j+vgUrPufi90krGwfcLpYiqT31BDHteVipTp6x9BrcY
-	9jkjpQLDTWSsf1921fpPp8NLzZuJLhytIs8c0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=udPVgwp+wyTka2h0W/6OtYDLc2nkLI+x
-	VOszZG4Ml9uswlDQHhl+gumEWbt4SmQDJxlAeqzH9O915vRNyI20bcNHUstme0zY
-	to5cvFe+7bH2qB6FE+bfl+b6FhuGfSftxoZ6eXrRBUbFKOoRHcMoldAD9R8aeJ0e
-	JZjiF/nPcR8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85D3D6805;
-	Thu,  2 Feb 2012 20:02:19 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1A90A6804; Thu,  2 Feb 2012
- 20:02:19 -0500 (EST)
-In-Reply-To: <20120202200240.GC9246@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 2 Feb 2012 15:02:40 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B8904B10-4E02-11E1-859F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755382Ab2BCBLz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Feb 2012 20:11:55 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:54244 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754172Ab2BCBLy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Feb 2012 20:11:54 -0500
+Received: by bkcjm19 with SMTP id jm19so2676900bkc.19
+        for <git@vger.kernel.org>; Thu, 02 Feb 2012 17:11:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=rvRvxQ85KfZFPmA5T4N54t6AHw3BnX06H7Gap0+pZyI=;
+        b=Jy2JUNxvJ+JxYN0DQZULaSc9xbzlp6sWP51Q79cu8+CI8ksb7krM4IytY6zOwVvrab
+         3s8XHYBR4WTjyAxSqH/Wf5LcobVB2BjKvyBlrOBPAe4WeXvoc5hju78KJr48lb47vEkv
+         sBqf6lJLIhdn3u7ezgIPg84zsikPJSaHs2SMw=
+Received: by 10.204.130.150 with SMTP id t22mr2450145bks.1.1328231513207; Thu,
+ 02 Feb 2012 17:11:53 -0800 (PST)
+Received: by 10.204.33.70 with HTTP; Thu, 2 Feb 2012 17:11:23 -0800 (PST)
+In-Reply-To: <7v8vklxfe4.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189727>
 
-Jeff King <peff@peff.net> writes:
+On Fri, Feb 3, 2012 at 1:24 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+>
+>> On Wed, Feb 01, 2012 at 01:26:43PM -0800, Junio C Hamano wrote:
+>>> Nice. =C2=A0Will queue
+>>
+>> Please also squash this in (resend looks ugly and it's hard to point
+>> out changes). It makes the code look less ugly, use Q_() for gettext
+>> poisoning and revert am input text back as Jonathan suggested.
+>>
+>> I take it --summary is un-i18n-able,...
+>
+> ... because?
 
-> I wonder if a better solution is to use a known-good shell instead of
-> trying to work around problems in a bogus shell.
-
-Yeah, I think that is a better approach.
-
-What prevents us from doing 's|^#! */bin/sh|$#$SHELL_PATH|' on everything
-in t/ directory (I am not suggesting to do this. I just want to know if
-there is a reason we want hardcoded "#!/bin/sh" for some instances).
+=2E. of scripts? We have --numstat for scripts, but I see no alternativ=
+e
+to --summary. Does anybody parse --summary output?
+--=20
+Duy
