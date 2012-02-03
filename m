@@ -1,79 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH, RFC] Fix build problems related to profile-directed
- optimization
-Date: Fri, 03 Feb 2012 11:58:52 -0800
-Message-ID: <7vaa4zpu2r.fsf@alter.siamese.dyndns.org>
-References: <1328209417-8206-1-git-send-email-tytso@mit.edu>
- <7vvcnpuhpo.fsf@alter.siamese.dyndns.org> <20120202201226.GA1032@thunk.org>
- <7vvcnou40u.fsf@alter.siamese.dyndns.org> <20120203020743.GE1032@thunk.org>
- <7vr4ycsbga.fsf@alter.siamese.dyndns.org>
- <BEE56B27-1C86-4C26-A584-3FF179B7A3D6@mit.edu>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: how to determine oldest supported version of git
+Date: Fri, 03 Feb 2012 14:19:41 -0600
+Message-ID: <4F2C415D.4000309@gmail.com>
+References: <jgeekn$of2$1@dough.gmane.org> <7v8vkktt6y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Andi Kleen <ak@linux.intel.com>,
-	Clemens Buchacher <drizzd@aon.at>
-To: Theodore Tso <tytso@MIT.EDU>
-X-From: git-owner@vger.kernel.org Fri Feb 03 20:59:01 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 03 21:20:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtPHg-0004xt-Kb
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 20:59:00 +0100
+	id 1RtPbu-0007gc-Lz
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 21:19:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754319Ab2BCT64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Feb 2012 14:58:56 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64240 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753309Ab2BCT6y (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Feb 2012 14:58:54 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EBF267CA;
-	Fri,  3 Feb 2012 14:58:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6BwBaMGGknAv6Do9+E+wWS31GKU=; b=X56w18
-	kqZVUjDWMRITsS7VV0F5GhQ7+GC080h4mV6K+yFax5nhzLfkOXB9U1ju2Gc0Yyn5
-	Hdn7lUhGDNUs5LL8UW3A479k+VMlDK/HPI8mtbD7csa3KHcCOZ15y1rt4QqD7uS1
-	bs89Tlg3d0Oh5++Vh3CqLDBhZ41ci9U7Ggfpw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AF1ytiIYll8151VI0j/BuUD7CD8qQi/W
-	UoI0Q4FCDpQJh3EJT5a9m/o6fzLIc38ceZa2XBVY6Lxu7bgV60zMx3xeTS8w9Z8a
-	Rt2S7L1FDy6YVHPM8H/3EBwxAkzT8euVvbwqgyjHRBC6sHDUgM5SgTl4HIpDNjMf
-	nBlbczoGxyM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 55EA967C8;
-	Fri,  3 Feb 2012 14:58:54 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E268C67C7; Fri,  3 Feb 2012
- 14:58:53 -0500 (EST)
-In-Reply-To: <BEE56B27-1C86-4C26-A584-3FF179B7A3D6@mit.edu> (Theodore Tso's
- message of "Fri, 3 Feb 2012 13:19:34 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7FD7F954-4EA1-11E1-8EA8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756673Ab2BCUTq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Feb 2012 15:19:46 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:37369 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756176Ab2BCUTp (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Feb 2012 15:19:45 -0500
+Received: by obcva7 with SMTP id va7so4680005obc.19
+        for <git@vger.kernel.org>; Fri, 03 Feb 2012 12:19:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=U3Dod3JcLoLRaP+YnD1XlWtout6WDNHC7eFGleFzl/o=;
+        b=Cj29YL2qbSt8AqVpgSqBRfcO5f0X2txeuwlV850u+leE+Dqw8pvrRpwT+LTx5tWPpo
+         3EhG+CbymERjQ3AQNFiTO/nlhSvPa5TS5YHCzhVIKGilP5BOIEAoRs8+u6C0UWoNpO3d
+         TtYon9TiqBRTZzCPLY+Ziuk8VBWgB6Kl5ij5E=
+Received: by 10.182.47.37 with SMTP id a5mr1512249obn.41.1328300384557;
+        Fri, 03 Feb 2012 12:19:44 -0800 (PST)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id q9sm8244179obk.4.2012.02.03.12.19.43
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 03 Feb 2012 12:19:44 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.26) Gecko/20120129 Thunderbird/3.1.18
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <7v8vkktt6y.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189796>
 
-Theodore Tso <tytso@MIT.EDU> writes:
+On 2/2/2012 10:52 PM, Junio C Hamano wrote:
+> As other people mentioned, if you are on a (probably paid) support plan
+> from a(n enterprise) distro, asking them would be the best way, and if you
+> are running Git supplied as part of a distro, the distro would dictate the
+> version it supplies to you, so asking here would not help very much.
+We compile our git from you (and your cohort).  (Our paid distro does 
+not keep up.)  Your replies have been *very* helpful.
 
-> On Feb 3, 2012, at 1:00 AM, Junio C Hamano wrote:
->
->> 
->> * I am happy that this version handles this well:
->> 
->>   $ make PROFILE=BUILD install
->> 
->>   even though you did not advertise as such in INSTALL ;-).
->
-> I can mention it, although it will mean adding more verbiage about
-> profile-directed optimization into the INSTALL.
+thanks!
 
-Oh, sorry, I didn't mean it that way.  Please read it as: "Something that
-is a natural thing for people to expect after reading what is in INSTALL
-works correctly. Yay! Thanks."
+v/r,
+neal
