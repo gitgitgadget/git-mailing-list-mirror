@@ -1,123 +1,60 @@
-From: Gabriel Filion <lelutin@gmail.com>
-Subject: Re: [RFC/PATCH git-remote-bzr] Adapt to new semantics of remote-helper
- "import" command
-Date: Fri, 03 Feb 2012 04:43:35 -0500
-Message-ID: <4F2BAC47.6090502@gmail.com>
-References: <20120122054657.GA25103@burratino>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Convert isatty() calls to git_isatty()
+Date: Fri, 03 Feb 2012 10:48:59 +0100
+Message-ID: <4F2BAD8B.1080403@viscovery.net>
+References: <1328258101-10636-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Simon Poirier <spoirier@rlnx.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>, David Barr <davidbarr@google.com>,
-	Dmitry Ivankov <divanorama@gmail.com>,
-	Jelmer Vernooij <jelmer@samba.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 03 10:43:48 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 03 10:49:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtFgI-00020X-AO
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 10:43:46 +0100
+	id 1RtFlb-0004XF-7b
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 10:49:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755464Ab2BCJnj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Feb 2012 04:43:39 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:64137 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755486Ab2BCJna (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Feb 2012 04:43:30 -0500
-Received: by qadc10 with SMTP id c10so607631qad.19
-        for <git@vger.kernel.org>; Fri, 03 Feb 2012 01:43:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        bh=P1U5SknEtbs+3iiNjVu2CCqtacEcvge/GvlOtZGkqZc=;
-        b=XXBtguT2PkkFrhmyJKxkcen6PBYjKDybOnfyWAYBsqcCMn/2UWHz3jAOHFOFUy9bCe
-         4qyoaINlSKfqMN0FRjkBA2JwPdGZHy/fueq4saGE/l5rBBssL02+KkuC26TkvWv12bQ1
-         kt8z5Qhbcjb0K7Wnk5qQ7kDw/Lh1velxXYk9k=
-Received: by 10.224.214.194 with SMTP id hb2mr8264043qab.96.1328262209195;
-        Fri, 03 Feb 2012 01:43:29 -0800 (PST)
-Received: from [192.168.2.201] (dsl-156-155.aei.ca. [66.36.156.155])
-        by mx.google.com with ESMTPS id dm8sm11736503qab.18.2012.02.03.01.43.27
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 03 Feb 2012 01:43:28 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:9.0) Gecko/20111220 Thunderbird/9.0
-In-Reply-To: <20120122054657.GA25103@burratino>
-X-Enigmail-Version: 1.3.4
+	id S1755581Ab2BCJtH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Feb 2012 04:49:07 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:13872 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755553Ab2BCJtE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Feb 2012 04:49:04 -0500
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1RtFlM-0000aR-Js; Fri, 03 Feb 2012 10:49:00 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 28D2A1660F;
+	Fri,  3 Feb 2012 10:49:00 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
+In-Reply-To: <1328258101-10636-1-git-send-email-pclouds@gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189745>
 
-Hello,
+Am 2/3/2012 9:35, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy:
+> isatty() is used to check for interactive use cases. However if pager=
+ is
+> set up, standard file handles may be redirected and istty() calls lat=
+er
+> on no longer reflect the original state.
 
-On 12-01-22 12:46 AM, Jonathan Nieder wrote:
-> Hi Simon and Gabriel,
-> 
-> Here's a rough patch against git://github.com/lelutin/git-remote-bzr.git
-> master.
+So what? What's wrong with this behavior?
 
-great! thanks for your help.
+You converted many cases involving progress indicators. Wouldn't the ne=
+w
+code pipe progress output to the pager where earlier it was not shown i=
+f a
+pager was present? That is plainly wrong: Progress output is destined o=
+nly
+for the terminal, not for the pager.
 
-I must admit that this project never got to completion and is now
-getting quite the low priority for my part. I'm no longer working for
-the company that was using mainly Bazaar as their VCS, and I've been a
-happy git-only user for some time now.
-So, I don't have the same incentive to complete the project as I had before.
-
-But I'd be happy to see this get to a point where it's working fine.
-
-> Without this patch, whenever I try to use "git clone bzr::<something>",
-> after doing all the work it removes the resulting repo and exits with
-> status 141 (SIGPIPE).  Maybe the transport-helper should mask SIGPIPE
-> when writing the final newline to avoid that.
-> 
-> I'd have prefered to write a patch for remote-bzr that works with
-> older versions of git fast-import, too, but it wasn't obvious how.
-> Hints welcome.
-
-hmm.. I can wait some time to see if some ideas come out around this,
-and commit your patch as-is if there are no comments/reworks.
-
-> BTW, would you mind if I sent a patch to include git-remote-bzr in
-> git.git under contrib/?
-
-absolutely not, that'd be great actually :)
-
-I didn't do that up to now, though, since I bumped into so much bugs
-that I couldn't work out -- some very bad performance issues, and
-problems with handling mark files with bzr-fastimport.
-
-> Thanks for git remote-bzr!  I'd be happy for any thoughts you have.
-
-The idea behind git-remote-bzr was to be able to interact with Bazaar
-from within your git repository, i.e. to expose remote branches that you
-can pull from and push to using the default git commands, without having
-to learn to use yet another tool since the remote-helper would be
-interfacing with the tool for you.
-
-I have dived for a short period of time into bzrlib, the python library
-behind Bazaar, to see how much work it would take to put together a
-simplified fast-import client.. and .... wechrk!
-It was a huge maze of version-dependant code (the API undergoes big
-changes frequently, and backwards compatibility is maintained pretty
-far) mixed with a 40-foot-deep class hierarchy. So I quickly gave up on
-that idea..
-
-IIRC, at the time I started work on this, Simon and I used
-bzr-fastimport[1] because we were able to get farther with this tool. I
-haven't used bzr-git[2] that much, though, so I can't comment too
-extensively on it. But I would guess that it is maintained more
-frequently than bzr-fastimport is, so it could be a better choice for
-the backend fast-import client.
-
-I would guess that Jelmer would be happy to help out with interfacing
-with bzr-git.
-
--- 
-Gabriel Filion
+-- Hannes
