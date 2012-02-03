@@ -1,153 +1,105 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] prompt: fall back to terminal if askpass fails
-Date: Fri, 3 Feb 2012 17:16:02 -0500
-Message-ID: <20120203221602.GB8065@sigill.intra.peff.net>
-References: <20120203213654.GD1890@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t0300-credentials: Word around a solaris /bin/sh bug
+Date: Fri, 03 Feb 2012 14:45:25 -0800
+Message-ID: <7vipjnmt8a.fsf@alter.siamese.dyndns.org>
+References: <1328211135-25217-1-git-send-email-bwalton@artsci.utoronto.ca>
+ <20120202200240.GC9246@sigill.intra.peff.net>
+ <7vr4ycu3ty.fsf@alter.siamese.dyndns.org>
+ <20120203120657.GB31441@sigill.intra.peff.net>
+ <7v7h03odyo.fsf@alter.siamese.dyndns.org>
+ <20120203212604.GA1890@sigill.intra.peff.net>
+ <7vr4ybmvrq.fsf@alter.siamese.dyndns.org>
+ <20120203215507.GB3472@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Feanil Patel <feanil@gmail.com>, git@vger.kernel.org
-To: Neal Groothuis <ngroot@lo-cal.org>
-X-From: git-owner@vger.kernel.org Fri Feb 03 23:16:14 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Ben Walton <bwalton@artsci.utoronto.ca>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 03 23:45:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtRQQ-0007p6-Sm
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 23:16:11 +0100
+	id 1RtRsw-0004el-F2
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 23:45:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755874Ab2BCWQG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Feb 2012 17:16:06 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56060
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754078Ab2BCWQF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Feb 2012 17:16:05 -0500
-Received: (qmail 2909 invoked by uid 107); 3 Feb 2012 22:23:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 03 Feb 2012 17:23:10 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Feb 2012 17:16:02 -0500
-Content-Disposition: inline
-In-Reply-To: <20120203213654.GD1890@sigill.intra.peff.net>
+	id S1752277Ab2BCWp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Feb 2012 17:45:29 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33158 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751153Ab2BCWp2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Feb 2012 17:45:28 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5197A6817;
+	Fri,  3 Feb 2012 17:45:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+P6ZwhHjy0QB2m/VrghQYV/8dTA=; b=Y7ypik
+	3HGxUSSDqNWCr50GheANu2V8LwoHSyd0WRfyYv5JixI1ddy2gxBFgfGExhI6WB7A
+	Ys8uxM6mgvyLME8KQUZ9LqOE13IdB+XVYoS3DhNB0HwblmwZcaYTeHqtUI+pKgKl
+	ToUU6F7VsIbYgdieeJJxWM+/PJ86Ivy3Nz/WM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OYFcMXr9p2TurTiOrerzv4nyNLnzrmmf
+	ykCC82xJv4NOMwAS5Bjrnk5280AtFjQcaIVml6x7hzL3/Quz/EbPaKPctbGnZPBF
+	162uYfz54S3hkqYf9RGWG2OWd1YvRsxhR/RD9lCVwDW+mB2R9oKIPovg4scLWAE1
+	NqB96PjYIfc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 493EB6816;
+	Fri,  3 Feb 2012 17:45:27 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C6CDA6814; Fri,  3 Feb 2012
+ 17:45:26 -0500 (EST)
+In-Reply-To: <20120203215507.GB3472@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 3 Feb 2012 16:55:07 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C41177BE-4EB8-11E1-BDEB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189817>
 
-The current askpass code simply dies if calling an askpass
-helper fails. Worse, in some failure modes it doesn't even
-print an error (if start_command fails, then it prints its
-own error; if reading fails, we print an error; but if the
-command exits non-zero, finish_command fails and we print
-nothing!).
+Jeff King <peff@peff.net> writes:
 
-Let's be more kind to the user by printing an error message
-when askpass doesn't work out, and then falling back to the
-terminal (which also may fail, of course, but we die already
-there with a nice message).
+>>                 2)	echo "#!$2" ;;
+>> 		*)	BUG ;;
+>>                 esac >"$1" &&
+>>                 cat >>"$1" &&
+>>                 chmod +x "$1"
+>> 	}
+>> 
+>
+> Nice. I was going to suggest a wrapper like "write_sh_script" so you
+> didn't have to spell out $SHELL_PATH, but I think the auto-detection
+> makes sense (and falling back to shell makes even more sense, as that
+> covers 99% of the cases anyway).
 
-While we're at it, let's clean up the existing error
-messages a bit.  Now that our prompts are very long and
-contain quotes and colons themselves, our error messages are
-hard to read.
+Let's not over-engineer this and stick to the simple-stupid-sufficient.
 
-So the new failure modes look like:
+Something like this?
 
-  [before, with a terminal]
-  $ GIT_ASKPASS=false git push
-  $ echo $?
-  128
+ t/test-lib.sh |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
 
-  [before, with no terminal, and we must give up]
-  $ setsid git push
-  fatal: could not read 'Password for 'https://peff@github.com': ': No such device or address
-
-  [after, with a terminal]
-  $ GIT_ASKPASS=false git push
-  error: unable to read askpass response from 'false'
-  Password for 'https://peff@github.com':
-
-  [after, with no terminal, and we must give up]
-  $ GIT_ASKPASS=false setsid git push
-  error: unable to read askpass response from 'false'
-  fatal: could not read Password for 'https://peff@github.com': No such device or address
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-Arguably, the terminal-failure error message shouldn't even bother
-reporting errno. I can't imagine it failing for any reason other than
-ENODEV, and the message would probably be less confusing as:
-
-  fatal: could not prompt on terminal for Password for...
-
- prompt.c |   24 +++++++++++++++++-------
- 1 files changed, 17 insertions(+), 7 deletions(-)
-
-diff --git a/prompt.c b/prompt.c
-index 64f817b..d851807 100644
---- a/prompt.c
-+++ b/prompt.c
-@@ -9,6 +9,7 @@ static char *do_askpass(const char *cmd, const char *prompt)
- 	struct child_process pass;
- 	const char *args[3];
- 	static struct strbuf buffer = STRBUF_INIT;
-+	int err = 0;
- 
- 	args[0] = cmd;
- 	args[1]	= prompt;
-@@ -19,15 +20,21 @@ static char *do_askpass(const char *cmd, const char *prompt)
- 	pass.out = -1;
- 
- 	if (start_command(&pass))
--		exit(1);
-+		return NULL;
- 
- 	if (strbuf_read(&buffer, pass.out, 20) < 0)
--		die("failed to get '%s' from %s\n", prompt, cmd);
-+		err = 1;
- 
- 	close(pass.out);
- 
- 	if (finish_command(&pass))
--		exit(1);
-+		err = 1;
-+
-+	if (err) {
-+		error("unable to read askpass response from '%s'", cmd);
-+		strbuf_release(&buffer);
-+		return NULL;
-+	}
- 
- 	strbuf_setlen(&buffer, strcspn(buffer.buf, "\r\n"));
- 
-@@ -36,7 +43,7 @@ static char *do_askpass(const char *cmd, const char *prompt)
- 
- char *git_prompt(const char *prompt, int flags)
- {
--	char *r;
-+	char *r = NULL;
- 
- 	if (flags & PROMPT_ASKPASS) {
- 		const char *askpass;
-@@ -47,12 +54,15 @@ char *git_prompt(const char *prompt, int flags)
- 		if (!askpass)
- 			askpass = getenv("SSH_ASKPASS");
- 		if (askpass && *askpass)
--			return do_askpass(askpass, prompt);
-+			r = do_askpass(askpass, prompt);
- 	}
- 
--	r = git_terminal_prompt(prompt, flags & PROMPT_ECHO);
- 	if (!r)
--		die_errno("could not read '%s'", prompt);
-+		r = git_terminal_prompt(prompt, flags & PROMPT_ECHO);
-+	if (!r) {
-+		/* prompts already contain ": " at the end */
-+		die("could not read %s%s", prompt, strerror(errno));
-+	}
- 	return r;
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index bdd9513..1b9c461 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -379,6 +379,15 @@ test_config () {
+ 	git config "$@"
  }
  
--- 
-1.7.9.rc1.28.gf4be5
++# Prepare a script to be used in the test
++write_script () {
++	{
++		echo "#!${2-"$SHELL_PATH"}"
++		cat
++	} >"$1" &&
++	chmod +x "$1"
++}
++
+ # Use test_set_prereq to tell that a particular prerequisite is available.
+ # The prerequisite can later be checked for in two ways:
+ #
