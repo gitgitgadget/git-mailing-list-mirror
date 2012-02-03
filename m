@@ -1,140 +1,94 @@
-From: =?UTF-8?B?TWljaGHFgg==?= Kiedrowicz <michal.kiedrowicz@gmail.com>
-Subject: Re: [PATCH/RFCv2 (version B)] gitweb: Allow UTF-8 encoded CGI query
- parameters and  path_info
-Date: Fri, 3 Feb 2012 18:45:57 +0100
-Message-ID: <20120203184557.59042dec@gmail.com>
-References: <1328136653-20559-1-git-send-email-michal.kiedrowicz@gmail.com>
-	<201202022357.29569.jnareb@gmail.com>
-	<20120203083935.5d9d4b18@mkiedrowicz.ivo.pl>
-	<201202031344.55750.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 0/2] Commits with ancient timestamps
+Date: Fri, 03 Feb 2012 10:01:24 -0800
+Message-ID: <7v1uqbssnf.fsf@alter.siamese.dyndns.org>
+References: <1328218903-5681-1-git-send-email-gitster@pobox.com>
+ <87mx90yz5y.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 03 18:46:11 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, Han-Wen Nienhuys <hanwen@google.com>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Feb 03 19:01:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtND7-0004cM-Sc
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 18:46:10 +0100
+	id 1RtNS3-0005nS-Fa
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 19:01:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757022Ab2BCRqE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Feb 2012 12:46:04 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:62957 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756293Ab2BCRqD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Feb 2012 12:46:03 -0500
-Received: by eekc14 with SMTP id c14so1229920eek.19
-        for <git@vger.kernel.org>; Fri, 03 Feb 2012 09:46:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        bh=6iTxvA+83X6iKOJQdqAIXeuYoBpeLPUEPboVu5JeGHM=;
-        b=v1L2KYPfAYMeudS1Dxc9vPJGKxZeUZdDzq89b5nw9xTxfzhiOJ89GkJgsRHiK/FD8Q
-         FqsjVSGQ0tyLtQTKb8eQp/kxvpQbQ1FV9Fpjy/tXKzu6phlXNIonC2M/ZWFiQ/9EBbKj
-         nHqvzT3FGrOp26mUH0soLSsIw1Mkkj79t3ucw=
-Received: by 10.14.47.68 with SMTP id s44mr2565161eeb.11.1328291160671;
-        Fri, 03 Feb 2012 09:46:00 -0800 (PST)
-Received: from localhost (77-177-78-94.net.stream.pl. [94.78.177.77])
-        by mx.google.com with ESMTPS id e12sm24231964eea.5.2012.02.03.09.45.59
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 03 Feb 2012 09:46:00 -0800 (PST)
-In-Reply-To: <201202031344.55750.jnareb@gmail.com>
-X-Mailer: Claws Mail 3.7.10 (GTK+ 2.24.8; x86_64-pc-linux-gnu)
+	id S1757359Ab2BCSBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Feb 2012 13:01:30 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38218 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757181Ab2BCSB3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Feb 2012 13:01:29 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1460039CC;
+	Fri,  3 Feb 2012 13:01:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uLsTQXb7F2A+sQKB2yMvSaTa2Co=; b=upYecF
+	MK71JYeE5VjeJOzdtqIqATplncaJN7F01JcAp8dZcpH4NkMVXbpm7ihk5urCitEL
+	E55M/COQlx+T9pvcg3vmlqRbofJUCU75PLztfS42W3Z275Jd5UrE1f07FdZ1fd8g
+	Hc3S+jXmuieK8Fce7gasxRqyym5yVZR2BC+XY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ea2i/U5kK9p9ZmBWBR/pQ+Df6fNkyuR2
+	K3Kq2DZ8G+F3Iy+I7IS5XXFtCSSTtW80ef4aJqTX9PtitKYUQmWjOgVEGICGhCIl
+	9kAB6XAt1scDM+1ruUibUpg2Wv8nXJbdk/DnH8luK0hWk9IkpQP5P6SkQ1B7V2E7
+	xoiGjprsdAA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C15A39CB;
+	Fri,  3 Feb 2012 13:01:29 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 90A3D39CA; Fri,  3 Feb 2012
+ 13:01:28 -0500 (EST)
+In-Reply-To: <87mx90yz5y.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Fri, 3 Feb 2012 11:44:09 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 187F1EE6-4E91-11E1-9601-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189788>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-> Gitweb tries hard to properly process UTF-8 data, by marking output
-> from git commands and contents of files as UTF-8 with to_utf8()
-> subroutine.  This ensures that gitweb would print correctly UTF-8
-> e.g. in 'log' and 'commit' views.
->=20
-> Unfortunately it misses another source of potentially Unicode input,
-> namely query parameters.  The result is that one cannot search for a
-> string containing characters outside US-ASCII.  For example searching
-> for "Micha=C5=82 Kiedrowicz" (containing letter '=C5=82' - LATIN SMAL=
-L LETTER L
-> WITH STROKE, with Unicode codepoint U+0142, represented with 0xc5 0x8=
-2
-> bytes in UTF-8 and percent-encoded as %C5%81) result in the following
-> incorrect data in search field
->=20
-> 	Micha=C3=85=C2=82 Kiedrowicz
->=20
-> This is caused by CGI by default treating '0xc5 0x82' bytes as two
-> characters in Perl legacy encoding latin-1 (iso-8859-1), because 's'
-> query parameter is not processed explicitly as UTF-8 encoded string.
->=20
-> The solution used here follows "Using Unicode in a Perl CGI script"
-> article on http://www.lemoda.net/cgi/perl-unicode/index.html:
->=20
-> 	use CGI;
-> 	use Encode 'decode_utf8;
-> 	my $value =3D params('input');
-> 	$value =3D decode_utf8($value);
->=20
-> Decoding UTF-8 is done when filling %input_params hash and $path_info
-> variable; the former required to move from explicit $cgi->param(<labe=
-l>)
-> to $input_params{<name>} in a few places, which is a good idea anyway=
-=2E
->=20
-> Another required change was to add -override=3D>1 parameter to
-> $cgi->textfield() invocation (in search form).  Otherwise CGI would
-> use values from query string if it is present, filling value from
-> $cgi->param... without decode_utf8().  As we are using value of
-> appropriate parameter anyway, -override=3D>1 doesn't change the
-> situation but makes gitweb fill search field correctly.
->=20
-> Alternate solution would be to simply use the '-utf8' pragma (via
-> "use CGI '-utf8';"), but according to CGI.pm documentation it may
-> cause problems with POST requests containing binary files... and
-> it requires CGI 3.31 (I think), released with perl v5.8.9.
->=20
-> Noticed-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
-> Signed-off-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
-> ---
-> On Fri, 3 Feb 2012, Michal Kiedrowicz wrote:
-> > Jakub Narebski <jnareb@gmail.com> wrote:
->=20
-> > > Is it what you mean by "this doesn't work for me", i.e. working
-> > > search, garbage in search field?
-> >=20
-> > I mean "garbage in search field". Search works even without the pat=
-ch
-> > (at least on Debian with git-1.7.7.3, perl-5.10.1 and CGI-3.43; I
-> > don't have my notebook nearby at the moment to check).
-> [...]
->=20
-> > > Damn.  If we use $cgi->textfield(-name =3D> "s", -value =3D> $sea=
-rchtext)
-> > > like in gitweb, CGI.pm would read $cgi->param("s") by itself -
-> > > without decoding.=20
-> >=20
-> > Makes sense. When I tried calling to_utf8() in the line that define=
-s
-> > textfield (this was my first approach to this problem), it haven't
-> > changed anything.
->=20
-> Yes, and it doesn't makes sense in gitweb case - we use value of=20
-> $cgi->param("s") as default value of text field anyway, but in
-> Unicode-aware way.
-> =20
-> > > To skip this we need to pass -force=3D>1  or
-> > > -override=3D>1 (i.e. further changes to gitweb).
->=20
-> This patch does this. =20
->=20
-> Does it make work for you?
->=20
+> Doing this just makes me wonder how important exactly the 1970-1975
+> range is.  Is there a notable software history from that era that can be
+> recovered?
 
-Yes, it works for me. Search form properly displays "=C5=82". Thanks!
+That is not really a valid question. People who wrote private stuff in
+that era deserve to be users of Git, too.
+
+> (Your [1/2] does not seem to parse negative offsets from the unix epoch,
+> so anything before 1970 is still out.)
+
+Yes, pre-epoch timestamps are also useful for projects like US
+Constitution.
+
+  http://thread.gmane.org/gmane.comp.version-control.git/152433/focus=152725
+
+For that, we would need to use and pass around time_t (or intmax_t if we
+follow the reason why originally Linus chose to avoid time_t) throughout
+the codebase.  If you actually write commit objects that record pre-epoch
+timestamps, however, they will become unreadable by the current versions
+of Git (as they would not understand such a negative raw timestamp).
+
+In any case, that is a goal for a much longer term.
+
+But even after such a change happens, you still need a way for Git to
+replay a raw timestamp stored in commit objects without regressing the
+parse_date() interface too much. These two patches show one way to do so
+with minimum disruption.
+
+As an added bonus, with the second patch, the way to spell a raw timestamp
+happens to become compatible with how GNU date accepts one, i.e.
+
+        $ date -d @1000000000
+
+even though we do not have to encourage the use of this notation by humans,
+tools and script writers may find it useful.
