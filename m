@@ -1,74 +1,72 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t0300-credentials: Word around a solaris /bin/sh bug
-Date: Fri, 3 Feb 2012 16:26:04 -0500
-Message-ID: <20120203212604.GA1890@sigill.intra.peff.net>
-References: <1328211135-25217-1-git-send-email-bwalton@artsci.utoronto.ca>
- <20120202200240.GC9246@sigill.intra.peff.net>
- <7vr4ycu3ty.fsf@alter.siamese.dyndns.org>
- <20120203120657.GB31441@sigill.intra.peff.net>
- <7v7h03odyo.fsf@alter.siamese.dyndns.org>
+Subject: Re: Alternates corruption issue
+Date: Fri, 3 Feb 2012 16:29:06 -0500
+Message-ID: <20120203212906.GB1890@sigill.intra.peff.net>
+References: <20120131204417.GA30969@sigill.intra.peff.net>
+ <20120131214047.GA13547@burratino>
+ <20120131214740.GA2465@sigill.intra.peff.net>
+ <20120131215501.GF13252@burratino>
+ <20120131220510.GA3253@sigill.intra.peff.net>
+ <20120131222258.GG13252@burratino>
+ <20120202215913.GA26727@sigill.intra.peff.net>
+ <7vzkd0u4ik.fsf@alter.siamese.dyndns.org>
+ <20120203120215.GA31441@sigill.intra.peff.net>
+ <7v8vkjstq2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Ben Walton <bwalton@artsci.utoronto.ca>, git@vger.kernel.org
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Richard Purdie <richard.purdie@linuxfoundation.org>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	"Hart, Darren" <darren.hart@intel.com>,
+	"Ashfield, Bruce" <Bruce.Ashfield@windriver.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 03 22:26:15 2012
+X-From: git-owner@vger.kernel.org Fri Feb 03 22:29:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtQe5-0000Aq-0C
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 22:26:14 +0100
+	id 1RtQh0-0001W9-Ic
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 22:29:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756376Ab2BCV0H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Feb 2012 16:26:07 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56007
+	id S1754800Ab2BCV3J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Feb 2012 16:29:09 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56012
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753620Ab2BCV0G (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Feb 2012 16:26:06 -0500
-Received: (qmail 2162 invoked by uid 107); 3 Feb 2012 21:33:12 -0000
+	id S1752943Ab2BCV3I (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Feb 2012 16:29:08 -0500
+Received: (qmail 2198 invoked by uid 107); 3 Feb 2012 21:36:13 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 03 Feb 2012 16:33:12 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Feb 2012 16:26:04 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 03 Feb 2012 16:36:13 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Feb 2012 16:29:06 -0500
 Content-Disposition: inline
-In-Reply-To: <7v7h03odyo.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7v8vkjstq2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189804>
 
-On Fri, Feb 03, 2012 at 12:32:15PM -0800, Junio C Hamano wrote:
+On Fri, Feb 03, 2012 at 09:38:13AM -0800, Junio C Hamano wrote:
 
-> I am toying with the pros-and-cons of
+> Jeff King <peff@peff.net> writes:
 > 
-> 	write_script () {
-> 		echo "#!$1"
-> 		shift
->                 cat
-> 	}
+> > However, with the ordering change, there is a technically a regression
+> > in one case: a random file "foo" next to a repo "foo.git". Saying "git
+> > ls-remote foo" used to prefer "foo.git", and will now select the file
+> > "foo" only to fail.
 > 
-> so that the above can become
+> Yeah, very true X-<.
 > 
-> 	write_script "$SHELL_PATH" >foo.sh <<-EOF
->         echo my arguments are "\$@"
-> 	EOF
+> > Thanks for noticing. I saw this issue when I was writing the original
+> > version of the patch, and meant to revisit it and at least document it
+> > in the commit message, but I ended up forgetting.
 > 
-> without requiring the brain-cycle to waste on the "Is this simple enough
-> for even Solaris to grok?" guess game.  This should also be reusable for
-> other stuff like $PERL_PATH, I would think.
+> No, thanks for working on this.
 
-I like it. Even better would be:
-
-  write_script() {
-        echo "#!$2" >"$1" &&
-        cat >>"$1" &&
-        chmod +x "$1"
-  }
-
-  write_script foo.sh "$SHELL_PATH" <<-\EOF
-    echo my arguments are "$@"
-  EOF
+What do you want to do with it, then? Take my patch and ignore the
+gitfile issue, or have me refactor it more heavily? I could go either
+way.
 
 -Peff
