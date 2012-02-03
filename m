@@ -1,138 +1,57 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3 1/4] completion: be nicer with zsh
-Date: Fri, 3 Feb 2012 12:38:55 +0200
-Message-ID: <CAMP44s0Fq_BGwcmDM5E1kWNiyoJw6e6Hr=8XaNF6tmQAcdnUmw@mail.gmail.com>
-References: <1328145320-14071-1-git-send-email-felipe.contreras@gmail.com>
-	<20120202084859.GC3823@burratino>
-	<7v8vklvxwh.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1gWNG+jJ6M7OnLS-1VA5YPa07LJfnrvdbsQb0MOJB7PA@mail.gmail.com>
-	<7vhaz8vkhd.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [RFC/PATCH 0/2] Commits with ancient timestamps
+Date: Fri, 3 Feb 2012 11:44:09 +0100
+Message-ID: <87mx90yz5y.fsf@thomas.inf.ethz.ch>
+References: <1328218903-5681-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+Content-Type: text/plain; charset="us-ascii"
+Cc: <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 03 11:39:09 2012
+X-From: git-owner@vger.kernel.org Fri Feb 03 11:44:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtGXs-0003Pd-RJ
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 11:39:09 +0100
+	id 1RtGcr-0006Ju-HU
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 11:44:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755780Ab2BCKi6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Feb 2012 05:38:58 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:32925 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755451Ab2BCKi4 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Feb 2012 05:38:56 -0500
-Received: by lagu2 with SMTP id u2so1777530lag.19
-        for <git@vger.kernel.org>; Fri, 03 Feb 2012 02:38:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=4cPK1JQV3FXu0AquFlyGCRjgatPrKsMzf1Y7ZhqDVvo=;
-        b=jtL1U+krupi8lZaiyapLBA0Tk/d6FfVBaLZcj0GpF0AXIIveBxIwktszsTxItuaXKS
-         qhDmoBZTQBO/D57D5II0gEANn1GjHC1P8kcOUuxmeetSpfcm2j7iZm7+1jmKXc3bnP+J
-         2q4B47CcZ4Au9CbwgsMYbzKXsZ1rEUuLfA25Q=
-Received: by 10.152.102.237 with SMTP id fr13mr3474113lab.10.1328265535400;
- Fri, 03 Feb 2012 02:38:55 -0800 (PST)
-Received: by 10.112.40.202 with HTTP; Fri, 3 Feb 2012 02:38:55 -0800 (PST)
-In-Reply-To: <7vhaz8vkhd.fsf@alter.siamese.dyndns.org>
+	id S1755914Ab2BCKoN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Feb 2012 05:44:13 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:35740 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755906Ab2BCKoM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Feb 2012 05:44:12 -0500
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 3 Feb
+ 2012 11:44:07 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 3 Feb
+ 2012 11:44:09 +0100
+In-Reply-To: <1328218903-5681-1-git-send-email-gitster@pobox.com> (Junio
+	C. Hamano's message of "Thu, 2 Feb 2012 13:41:41 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189748>
 
-On Fri, Feb 3, 2012 at 2:17 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> avoid misinterpreting human-written timestamp in other formats, and
+> timestamps before 1975 do not have enough number of digits in them.
 >
->> On Thu, Feb 2, 2012 at 9:27 PM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->>> Jonathan Nieder <jrnieder@gmail.com> writes:
->>>> However, clearly I did not say it clearly enough. :) I guess it's
->>>> better to take a cue from storytellers and show rather than tell.
->>>
->>> Very big thanks for this ;-)
->>
->> Not a single comment regarding what I said?
->
-> What entitles you to force me to refraining from commenting at all un=
-til I
-> read everything in my mailbox and after waiting for a while to make s=
-ure
-> there is no more to come to the thread?
+> Here is a two-patch series that may improve the situation.
 
-=46air enough. Just wondering.
+Doing this just makes me wonder how important exactly the 1970-1975
+range is.  Is there a notable software history from that era that can be
+recovered?
 
-> In any case, "be nicer with zsh" conveys no more meaningful informati=
-on
-> than "this is some patch about zsh".
+(Your [1/2] does not seem to parse negative offsets from the unix epoch,
+so anything before 1970 is still out.)
 
-And that already tells you a lot more than other alternatives.
-
-> Let's try to avoid warm and fuzzy
-> words that imply "goodness", e.g. "improve" and "be nicer with" becau=
-se
-> nobody sends a patch to purposefully make Git worse and expects it to=
- be
-> applied.
-
-True. Which why I listened to the suggestion from Thomas Rast and
-didn't use that, but "completion: work around zsh option propagation
-bug" instead.
-
-> I found Jonathan's alternative "avoid default value assignment on : t=
-rue
-> command" at least a bit better for the purpose of jogging the short-t=
-erm
-> memory in the "'git shortlog v1.7.9.. contrib/completion/' tells us t=
-hat
-> we have applied several patches, and I remember that : ${var=3Dword} =
-one!"
-> sense. =C2=A0It is not super-useful for the longer term, though.
->
-> Here is what I ended up in preparation for queuing the series. =C2=A0=
-I still
-> haven't seen any version of 4/4, but please check $gmane/189683 and s=
-ee if
-> that matches what you intended. =C2=A0Also I am assuming $gmane/18960=
-6 relayed
-> by Jonathan is a squash between your 2 and 3 (which didn't reach me),=
- so
-> please advise if that does not match what you want to have.
-
-This is getting ridiculous, now I sent the patches directly to you, is
-your pobox.com server also silently dropping them for no reason? I
-think this is totally counter-productive. I haven't received any reply
-from the vger postmaster, but I guess you should be able to find out
-why your host is dropping mails. Am I the only one that has such
-issues?
-
-Anyway. I have uploaded all the mails to here:
-
-http://people.freedesktop.org/~felipec/git-patches/
-
-As for $gmane/189683, the changes seem to be correct, but I still
-prefer my commit message[1]--which I have written and rewritten many
-times now to improve it.
-
-Regarding $gmane/189606, I still prefer my commit message[2], because
-it starts with the *purpose* of the patch. As for the changes, they
-are correct, and I don't mind squashing them, but they are *two*
-logically independent changes; imagine in the future somebody
-wants/need to re-enable __git_shopt, well, all they have to do is
-revert the second patch. But that's up to you.
-
-Cheers.
-
-[1] http://people.freedesktop.org/~felipec/git-patches/4
-[2] http://people.freedesktop.org/~felipec/git-patches/2
-
---=20
-=46elipe Contreras
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
