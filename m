@@ -1,84 +1,140 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Alternates corruption issue
-Date: Fri, 03 Feb 2012 09:38:13 -0800
-Message-ID: <7v8vkjstq2.fsf@alter.siamese.dyndns.org>
-References: <20120131193922.GA31551@sigill.intra.peff.net>
- <7v1uqf8vqu.fsf@alter.siamese.dyndns.org>
- <20120131204417.GA30969@sigill.intra.peff.net>
- <20120131214047.GA13547@burratino>
- <20120131214740.GA2465@sigill.intra.peff.net>
- <20120131215501.GF13252@burratino>
- <20120131220510.GA3253@sigill.intra.peff.net>
- <20120131222258.GG13252@burratino>
- <20120202215913.GA26727@sigill.intra.peff.net>
- <7vzkd0u4ik.fsf@alter.siamese.dyndns.org>
- <20120203120215.GA31441@sigill.intra.peff.net>
+From: =?UTF-8?B?TWljaGHFgg==?= Kiedrowicz <michal.kiedrowicz@gmail.com>
+Subject: Re: [PATCH/RFCv2 (version B)] gitweb: Allow UTF-8 encoded CGI query
+ parameters and  path_info
+Date: Fri, 3 Feb 2012 18:45:57 +0100
+Message-ID: <20120203184557.59042dec@gmail.com>
+References: <1328136653-20559-1-git-send-email-michal.kiedrowicz@gmail.com>
+	<201202022357.29569.jnareb@gmail.com>
+	<20120203083935.5d9d4b18@mkiedrowicz.ivo.pl>
+	<201202031344.55750.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Richard Purdie <richard.purdie@linuxfoundation.org>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	"Hart\, Darren" <darren.hart@intel.com>,
-	"Ashfield\, Bruce" <Bruce.Ashfield@windriver.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 03 18:38:23 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 03 18:46:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtN5a-0008Jm-2U
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 18:38:22 +0100
+	id 1RtND7-0004cM-Sc
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 18:46:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757328Ab2BCRiR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Feb 2012 12:38:17 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60803 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753592Ab2BCRiQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Feb 2012 12:38:16 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ECD2D3435;
-	Fri,  3 Feb 2012 12:38:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=W7Rz1PMgF3CSmfiCEtXq8Du8xZo=; b=i6m5Ff
-	Evb6OmGv1D+OqWnQEI8Xg9WrjW6fMoWj1yJUksFvhpuCyB+q4HhEsV8TP+Xzru8T
-	fBX6qu1ZFJT07Vpi0z6Zs6d+VgfMXRDk5HcFA0dAX/nrE0ccja+MtKj1iS2jE59N
-	6mq9t96uUn+4/ajG3rqBtqcFw1KKdM/nzFHLw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=av2nHISqKfQyuyNKOSDZwzDOMziwwQSE
-	5oNeJIEwWNlEcwNd4M4H4s8X7dwDznTPfnFLBnlm5ZprkJy7EisOwbKIa4LgO/UL
-	H43u1SLj3CFMZTRNht469n4jofryv9OacY/9rNAp0ebb4KFX7azdzPhGs6LDbQvQ
-	MuMkvY4JF5I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E41AA3434;
-	Fri,  3 Feb 2012 12:38:15 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 797BE3433; Fri,  3 Feb 2012
- 12:38:15 -0500 (EST)
-In-Reply-To: <20120203120215.GA31441@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 3 Feb 2012 07:02:15 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DA25FBCC-4E8D-11E1-8B28-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757022Ab2BCRqE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Feb 2012 12:46:04 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:62957 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756293Ab2BCRqD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Feb 2012 12:46:03 -0500
+Received: by eekc14 with SMTP id c14so1229920eek.19
+        for <git@vger.kernel.org>; Fri, 03 Feb 2012 09:46:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        bh=6iTxvA+83X6iKOJQdqAIXeuYoBpeLPUEPboVu5JeGHM=;
+        b=v1L2KYPfAYMeudS1Dxc9vPJGKxZeUZdDzq89b5nw9xTxfzhiOJ89GkJgsRHiK/FD8Q
+         FqsjVSGQ0tyLtQTKb8eQp/kxvpQbQ1FV9Fpjy/tXKzu6phlXNIonC2M/ZWFiQ/9EBbKj
+         nHqvzT3FGrOp26mUH0soLSsIw1Mkkj79t3ucw=
+Received: by 10.14.47.68 with SMTP id s44mr2565161eeb.11.1328291160671;
+        Fri, 03 Feb 2012 09:46:00 -0800 (PST)
+Received: from localhost (77-177-78-94.net.stream.pl. [94.78.177.77])
+        by mx.google.com with ESMTPS id e12sm24231964eea.5.2012.02.03.09.45.59
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 03 Feb 2012 09:46:00 -0800 (PST)
+In-Reply-To: <201202031344.55750.jnareb@gmail.com>
+X-Mailer: Claws Mail 3.7.10 (GTK+ 2.24.8; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189787>
 
-Jeff King <peff@peff.net> writes:
+Jakub Narebski <jnareb@gmail.com> wrote:
 
-> However, with the ordering change, there is a technically a regression
-> in one case: a random file "foo" next to a repo "foo.git". Saying "git
-> ls-remote foo" used to prefer "foo.git", and will now select the file
-> "foo" only to fail.
+> Gitweb tries hard to properly process UTF-8 data, by marking output
+> from git commands and contents of files as UTF-8 with to_utf8()
+> subroutine.  This ensures that gitweb would print correctly UTF-8
+> e.g. in 'log' and 'commit' views.
+>=20
+> Unfortunately it misses another source of potentially Unicode input,
+> namely query parameters.  The result is that one cannot search for a
+> string containing characters outside US-ASCII.  For example searching
+> for "Micha=C5=82 Kiedrowicz" (containing letter '=C5=82' - LATIN SMAL=
+L LETTER L
+> WITH STROKE, with Unicode codepoint U+0142, represented with 0xc5 0x8=
+2
+> bytes in UTF-8 and percent-encoded as %C5%81) result in the following
+> incorrect data in search field
+>=20
+> 	Micha=C3=85=C2=82 Kiedrowicz
+>=20
+> This is caused by CGI by default treating '0xc5 0x82' bytes as two
+> characters in Perl legacy encoding latin-1 (iso-8859-1), because 's'
+> query parameter is not processed explicitly as UTF-8 encoded string.
+>=20
+> The solution used here follows "Using Unicode in a Perl CGI script"
+> article on http://www.lemoda.net/cgi/perl-unicode/index.html:
+>=20
+> 	use CGI;
+> 	use Encode 'decode_utf8;
+> 	my $value =3D params('input');
+> 	$value =3D decode_utf8($value);
+>=20
+> Decoding UTF-8 is done when filling %input_params hash and $path_info
+> variable; the former required to move from explicit $cgi->param(<labe=
+l>)
+> to $input_params{<name>} in a few places, which is a good idea anyway=
+=2E
+>=20
+> Another required change was to add -override=3D>1 parameter to
+> $cgi->textfield() invocation (in search form).  Otherwise CGI would
+> use values from query string if it is present, filling value from
+> $cgi->param... without decode_utf8().  As we are using value of
+> appropriate parameter anyway, -override=3D>1 doesn't change the
+> situation but makes gitweb fill search field correctly.
+>=20
+> Alternate solution would be to simply use the '-utf8' pragma (via
+> "use CGI '-utf8';"), but according to CGI.pm documentation it may
+> cause problems with POST requests containing binary files... and
+> it requires CGI 3.31 (I think), released with perl v5.8.9.
+>=20
+> Noticed-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
+> Signed-off-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
+> ---
+> On Fri, 3 Feb 2012, Michal Kiedrowicz wrote:
+> > Jakub Narebski <jnareb@gmail.com> wrote:
+>=20
+> > > Is it what you mean by "this doesn't work for me", i.e. working
+> > > search, garbage in search field?
+> >=20
+> > I mean "garbage in search field". Search works even without the pat=
+ch
+> > (at least on Debian with git-1.7.7.3, perl-5.10.1 and CGI-3.43; I
+> > don't have my notebook nearby at the moment to check).
+> [...]
+>=20
+> > > Damn.  If we use $cgi->textfield(-name =3D> "s", -value =3D> $sea=
+rchtext)
+> > > like in gitweb, CGI.pm would read $cgi->param("s") by itself -
+> > > without decoding.=20
+> >=20
+> > Makes sense. When I tried calling to_utf8() in the line that define=
+s
+> > textfield (this was my first approach to this problem), it haven't
+> > changed anything.
+>=20
+> Yes, and it doesn't makes sense in gitweb case - we use value of=20
+> $cgi->param("s") as default value of text field anyway, but in
+> Unicode-aware way.
+> =20
+> > > To skip this we need to pass -force=3D>1  or
+> > > -override=3D>1 (i.e. further changes to gitweb).
+>=20
+> This patch does this. =20
+>=20
+> Does it make work for you?
+>=20
 
-Yeah, very true X-<.
-
-> Thanks for noticing. I saw this issue when I was writing the original
-> version of the patch, and meant to revisit it and at least document it
-> in the commit message, but I ended up forgetting.
-
-No, thanks for working on this.
+Yes, it works for me. Search form properly displays "=C5=82". Thanks!
