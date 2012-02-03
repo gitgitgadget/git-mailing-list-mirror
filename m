@@ -1,91 +1,92 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [ANNOUNCE] Git 1.7.9
-Date: Fri, 3 Feb 2012 21:55:25 +0100
-Message-ID: <201202032155.26532.jnareb@gmail.com>
-References: <7vipjwzvc2.fsf@alter.siamese.dyndns.org> <201202031352.10279.jnareb@gmail.com> <7vehubpuv7.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFCv2 (version B)] gitweb: Allow UTF-8 encoded CGI query
+ parameters and  path_info
+Date: Fri, 03 Feb 2012 13:09:12 -0800
+Message-ID: <7vzkczmxon.fsf@alter.siamese.dyndns.org>
+References: <1328136653-20559-1-git-send-email-michal.kiedrowicz@gmail.com>
+ <201202022357.29569.jnareb@gmail.com>
+ <20120203083935.5d9d4b18@mkiedrowicz.ivo.pl>
+ <201202031344.55750.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 03 21:56:05 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michal Kiedrowicz <michal.kiedrowicz@gmail.com>,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 03 22:09:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtQAs-0001lR-75
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 21:56:03 +0100
+	id 1RtQNj-0000EJ-Uc
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 22:09:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757727Ab2BCUze (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Feb 2012 15:55:34 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:65097 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757605Ab2BCUzb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Feb 2012 15:55:31 -0500
-Received: by eaah12 with SMTP id h12so1581045eaa.19
-        for <git@vger.kernel.org>; Fri, 03 Feb 2012 12:55:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=hWsZtXxFI47rygj9tcwSPkj74zigdDUTVMLXttbRAKg=;
-        b=DvB99GF8wqOb3QVsPnIv5CSlpAVR1qNbBEdUoQzNnlm6cgW9RL/nDyhn2tRaRlJbQK
-         CYphXS7svANFJuSH4k3bp02Yn2RmW/RGtIM4cIeSG62t11eQEHM881lvPjtRFq11wJqi
-         SH4WoSPyRLM6yGj2VeW1dWaHtNOluX4xxmS5A=
-Received: by 10.213.29.11 with SMTP id o11mr2766134ebc.57.1328302529979;
-        Fri, 03 Feb 2012 12:55:29 -0800 (PST)
-Received: from [192.168.1.13] (abwn75.neoplus.adsl.tpnet.pl. [83.8.237.75])
-        by mx.google.com with ESMTPS id y12sm26028160eeb.11.2012.02.03.12.55.27
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 03 Feb 2012 12:55:29 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vehubpuv7.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752892Ab2BCVJP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Feb 2012 16:09:15 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60820 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751979Ab2BCVJP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Feb 2012 16:09:15 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B40D768D;
+	Fri,  3 Feb 2012 16:09:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=BTozGAJH3B7l
+	fQxCRI9keBjU+js=; b=treCFASNtuFsV4NjfSjdd+Sug83FIfLh1s2DHJJh+KHr
+	6r1XFgk8Z66hSTBrxdUlSt1PtKpVvYTEZQ30skCTMdo0Kp89Do9WoDKbFCzYUlWe
+	vIP2axUBMPGgvESBkWWCciN5SOTuOuyqcQnMyFcBmJQNLg7hSjpucuncX9S/vzU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=vzQbdI
+	M1cBEEh4LkE7UlMWMbTAO8dC6hfwjpz/siw2Gh0DZC+7WXktaZVjE0jmLQjp9CpH
+	P01H64Iv6bkNnDEaODUrPg9vBGSIBiSUPhEGUkbBIqeM9qicoAIurukcfQg5YZPz
+	UeL1wQpG5xp9oPk7D8zYChsY40Nwi7q7LGQzw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 22AD5768C;
+	Fri,  3 Feb 2012 16:09:14 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC6C8768B; Fri,  3 Feb 2012
+ 16:09:13 -0500 (EST)
+In-Reply-To: <201202031344.55750.jnareb@gmail.com> (Jakub Narebski's message
+ of "Fri, 3 Feb 2012 13:44:54 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 53071798-4EAB-11E1-AD22-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189802>
 
-On Fri, 3 Feb 2012, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
->>>>  RPM build errors:
->>>>     Installed (but unpackaged) file(s) found:
->>>>    /usr/share/locale/is/LC_MESSAGES/git.mo
->>>>
->>> 
->>> I think it should be simply ignored at least for now.  I stopped touching
->>> the rpm spec since August last year (the only reason I was running rpmbuild
->>> was to install them on k.org), so I didn't notice.
->>
->> So for the time being something like that would be an acceptable fix?
-> 
-> Except that the patch probably wants to go to git.spec.in, removing that
-> installation target would be a good local workaround for now.
+> Gitweb tries hard to properly process UTF-8 data, by marking output
+> from git commands and contents of files as UTF-8 with to_utf8()
+> subroutine.  This ensures that gitweb would print correctly UTF-8
+> e.g. in 'log' and 'commit' views.
+>
+> Unfortunately it misses another source of potentially Unicode input,
+> namely query parameters.  The result is that one cannot search for a
 
-O.K., will do.
+I think two lines should suffice instead of the above two paragraphs.
 
-Anyway this change makes rpmbuild process complete.
- 
-> I said "local workaround", meaning that I am not all that interested in
-> applying such a patch myself.  Somebody who wants to do RPM needs to
-> decide what subpackage(s) it should go before we start accepting more po/
-> files, and at that time the workaround needs to be reverted.
-> 
-> And hopefully that should happen soonish ;-)
+        Gitweb forgot to turn query parameters into UTF-8. This results=
+ in
+        a bug that one cannot search for a
 
-The git-i18n-Icelandic proposal for /usr/share/locale/is/LC_MESSAGES/git.mo
-follow the KDE pattern (e.g. kde-i18n-Polish).  This might be a place for
-translated manpages and other documentation, if there is any.
+> string containing characters outside US-ASCII.  For example searching
+> ...
 
-On the other hand all translations for gitk are in gitk package
-(as /usr/share/gitk/lib/msgs/*.msg, not /usr/share/locale/*/LC_MESSAGES/git.mo)
-Same for git-gui.
+The remainder explains the problem and the solution very well modulo mi=
+nor
+typos.
 
--- 
-Jakub Narebski
-Poland
+> Noticed-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
+> Signed-off-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
+> ---
+
+We can add "Tested-by:" to this now.  Will queue.
+
+Thanks.
