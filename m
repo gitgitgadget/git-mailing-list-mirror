@@ -1,56 +1,65 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: Re: [PATCH] t0300-credentials: Word around a solaris /bin/sh bug
-Date: Fri, 03 Feb 2012 08:45:07 -0500
-Message-ID: <1328276601-sup-5887@pinkfloyd.chass.utoronto.ca>
-References: <1328211135-25217-1-git-send-email-bwalton@artsci.utoronto.ca> <20120202200240.GC9246@sigill.intra.peff.net> <7vr4ycu3ty.fsf@alter.siamese.dyndns.org> <20120203120657.GB31441@sigill.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 03 14:45:17 2012
+From: David Howells <dhowells@redhat.com>
+Subject: Re: How best to handle multiple-authorship commits in GIT?
+Date: Fri, 03 Feb 2012 13:47:00 +0000
+Organization: Red Hat UK Ltd. Registered Address: Red Hat UK Ltd, Amberley
+	Place, 107-111 Peascod Street, Windsor, Berkshire, SI4 1TE, United
+	Kingdom.
+	Registered in England and Wales under Company Registration No. 3798903
+Message-ID: <4681.1328276820@redhat.com>
+References: <CAD-XujkVK=tOtmVS90U0KAutFZ55jxsHMKuuMppXOi-H6ZY=RQ@mail.gmail.com> <21056.1328185509@redhat.com> <9B990DDC-858D-43BA-BF9E-E0C3435354AF@gmail.com> <15281.1328207789@redhat.com>
+Cc: dhowells@redhat.com, "git@vger.kernel.org" <git@vger.kernel.org>,
+	Rusty Russell <rusty@rustcorp.com.au>
+To: Valerie Aurora <valerie.aurora@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 03 14:47:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtJS0-0006B8-32
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 14:45:16 +0100
+	id 1RtJTv-000793-HW
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 14:47:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756367Ab2BCNpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Feb 2012 08:45:10 -0500
-Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:42380 "EHLO
-	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756200Ab2BCNpJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Feb 2012 08:45:09 -0500
-Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:49714 ident=93)
-	by garcia.cquest.utoronto.ca with esmtp (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1RtJRr-0002bi-UR; Fri, 03 Feb 2012 08:45:07 -0500
-Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1RtJRr-0004Q6-LZ; Fri, 03 Feb 2012 08:45:07 -0500
-In-reply-to: <20120203120657.GB31441@sigill.intra.peff.net>
-User-Agent: Sup/git
+	id S1756447Ab2BCNrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Feb 2012 08:47:11 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:36685 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756168Ab2BCNrJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Feb 2012 08:47:09 -0500
+Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id q13Dl4JO008170
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Fri, 3 Feb 2012 08:47:05 -0500
+Received: from redhat.com ([10.3.112.8])
+	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id q13Dl1Gh016427;
+	Fri, 3 Feb 2012 08:47:02 -0500
+In-Reply-To: <CAD-XujkVK=tOtmVS90U0KAutFZ55jxsHMKuuMppXOi-H6ZY=RQ@mail.gmail.com>
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189773>
 
-Excerpts from Jeff King's message of Fri Feb 03 07:06:57 -0500 2012:
+Valerie Aurora <valerie.aurora@gmail.com> wrote:
 
-> When I have hard-coded "#!/bin/sh", my thinking is usually "this is
-> less cumbersome to type and to read, and this script-let is so small
-> that even Solaris will get it right".
+> And for a complete (meaningful) rewrite such as David has done, he
+> changes the commit authorship and adds a Signed-off-by for the
+> original author.
 
-This is why I opted to stick with /bin/sh and just avoid the damage.
-Overall, using a sane shell is a better option...It is harder to read
-though.
+Val[*] hasn't signed off all her patches, and indeed I've merged together some
+patches that she has signed off and some she hasn't.  I can't simply add
+Signed-off-by her without her permission.  However, if she's willing for me to
+add such lines, then I can do so.
 
-Thanks
--Ben
---
-Ben Walton
-Systems Programmer - CHASS
-University of Toronto
-C:416.407.5610 | W:416.978.4302
+> Signed-off-by: Some Upstream Author
+> Signed-off-by: Maintainer or Merger (rewrote error handling)
+
+And if the changes are more than can be put in what's left of the line?  I
+would've thought it would make more sense to do something like:
+
+  Signed-off-by: Valerie Aurora <valerie.aurora@gmail.com> (Original author)
+  Signed-off-by: David Howells <dhowells@redhat.com> (Further development)
+
+David
+
+[*] Apologies for talking about/to you in the third person, Val.
