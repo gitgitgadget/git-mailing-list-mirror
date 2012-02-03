@@ -1,77 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 11/13] status: add --column
-Date: Fri, 03 Feb 2012 15:19:54 -0800
-Message-ID: <7vobtfld2d.fsf@alter.siamese.dyndns.org>
-References: <1328276078-27955-1-git-send-email-pclouds@gmail.com>
- <1328276078-27955-12-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t0300-credentials: Word around a solaris /bin/sh bug
+Date: Fri, 3 Feb 2012 18:27:55 -0500
+Message-ID: <20120203232755.GA11953@sigill.intra.peff.net>
+References: <1328211135-25217-1-git-send-email-bwalton@artsci.utoronto.ca>
+ <20120202200240.GC9246@sigill.intra.peff.net>
+ <7vr4ycu3ty.fsf@alter.siamese.dyndns.org>
+ <20120203120657.GB31441@sigill.intra.peff.net>
+ <7v7h03odyo.fsf@alter.siamese.dyndns.org>
+ <20120203212604.GA1890@sigill.intra.peff.net>
+ <7vr4ybmvrq.fsf@alter.siamese.dyndns.org>
+ <20120203215507.GB3472@sigill.intra.peff.net>
+ <7vipjnmt8a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 04 00:20:06 2012
+Cc: Ben Walton <bwalton@artsci.utoronto.ca>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 04 00:28:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtSQD-0004Cp-89
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 00:20:02 +0100
+	id 1RtSY6-0008AB-3g
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 00:28:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755459Ab2BCXT5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Feb 2012 18:19:57 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46278 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755142Ab2BCXT4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Feb 2012 18:19:56 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0B9E46DC6;
-	Fri,  3 Feb 2012 18:19:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=VDjiQKiSqEas
-	qHH6CZGxeowlQTQ=; b=lMKlslwdxkYqKP3HG3ogKzCNQrRsB4i7VIDlMYkwdUnX
-	yoYFcHVxQOsmG7eYSx0JaMewAMN8LOruPCdgE5A+JOpNnINgHYiJ0NJuaiIN/hhC
-	4sSRGkzRfvYPkqJ1IvfMTRgK7hiJOIgIB2WT+xGIAvmzCvoJBNA59m1iJPu/Y8Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Zy5Txr
-	ty/KdeVsY/i9wouk1wJ8dbYTyAohC1KA307RreXvhAWuk6dUpl1g1ruq6zDRpU6U
-	ceROx5aDwV1S0C0PdVHUmnXbZTgRkgnhgcQaSjzPU8bi4VniZBdyCwxcFShu31Ft
-	fgk4fh4X687TjykA2xgEqjbF7WMb4q6zqpsks=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 042806DC5;
-	Fri,  3 Feb 2012 18:19:56 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 72DFD6DC3; Fri,  3 Feb 2012
- 18:19:55 -0500 (EST)
-In-Reply-To: <1328276078-27955-12-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 3 Feb
- 2012 20:34:36 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 95154936-4EBD-11E1-B677-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753630Ab2BCX16 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Feb 2012 18:27:58 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56086
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752502Ab2BCX15 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Feb 2012 18:27:57 -0500
+Received: (qmail 3641 invoked by uid 107); 3 Feb 2012 23:35:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 03 Feb 2012 18:35:02 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Feb 2012 18:27:55 -0500
+Content-Disposition: inline
+In-Reply-To: <7vipjnmt8a.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189829>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Fri, Feb 03, 2012 at 02:45:25PM -0800, Junio C Hamano wrote:
 
-> @@ -1251,7 +1260,7 @@ int cmd_status(int argc, const char **argv, con=
-st char *prefix)
->  	case STATUS_FORMAT_LONG:
->  		s.verbose =3D verbose;
->  		s.ignore_submodule_arg =3D ignore_submodule_arg;
-> -		wt_status_print(&s);
-> +		wt_status_print(&s, colopts);
->  		break;
->  	}
+> Let's not over-engineer this and stick to the simple-stupid-sufficient.
 
-Do you really need to pass colopts around as a separate parameter all t=
-he
-way through the callchain?
+Fair enough.
 
-Why isn't it a new member of wt_status that sits next to existing
-use_color, verbose, etc. that define _how_ the status is shown?
+> Something like this?
+> [...]
+> +# Prepare a script to be used in the test
+> +write_script () {
+> +	{
+> +		echo "#!${2-"$SHELL_PATH"}"
+> +		cat
+> +	} >"$1" &&
+> +	chmod +x "$1"
+> +}
+
+Looks good to me (it probably doesn't matter, but you may want to
+connect the echo and cat via &&).
+
+-Peff
