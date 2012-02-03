@@ -1,83 +1,106 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] git.spec: Workaround localized messages not put in any RPM
-Date: Fri, 3 Feb 2012 22:49:07 +0100
-Message-ID: <201202032249.07594.jnareb@gmail.com>
-References: <7vipjwzvc2.fsf@alter.siamese.dyndns.org> <7vehubpuv7.fsf@alter.siamese.dyndns.org> <201202032155.26532.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t0300-credentials: Word around a solaris /bin/sh bug
+Date: Fri, 03 Feb 2012 13:50:33 -0800
+Message-ID: <7vr4ybmvrq.fsf@alter.siamese.dyndns.org>
+References: <1328211135-25217-1-git-send-email-bwalton@artsci.utoronto.ca>
+ <20120202200240.GC9246@sigill.intra.peff.net>
+ <7vr4ycu3ty.fsf@alter.siamese.dyndns.org>
+ <20120203120657.GB31441@sigill.intra.peff.net>
+ <7v7h03odyo.fsf@alter.siamese.dyndns.org>
+ <20120203212604.GA1890@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 03 22:49:18 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Ben Walton <bwalton@artsci.utoronto.ca>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 03 22:50:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtR0P-0002vA-2W
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 22:49:17 +0100
+	id 1RtR1l-0003Yk-Km
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 22:50:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757791Ab2BCVtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Feb 2012 16:49:11 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:60283 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753314Ab2BCVtK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Feb 2012 16:49:10 -0500
-Received: by eekc14 with SMTP id c14so1302964eek.19
-        for <git@vger.kernel.org>; Fri, 03 Feb 2012 13:49:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=bV5i0zzvI4Ml/RxZxwUd0CeYHTPH1QSZyza1Mvgrj2U=;
-        b=cFW+c30ElMbewKwbnzZB1x0tygh0LwtMq3m5/cPrxdRqhbOQ5IV+PM+bW3eL3ngXve
-         MBDnPk8oxxKHXgoOvzEiWRb/cCnOVomPmA2CXjJpE6gf9ASqLmV/mUhhZ4Cm1py/JOol
-         bGbKGQIK9JTjko70IG0CiqKW4J+xD8ujGmeMg=
-Received: by 10.14.124.69 with SMTP id w45mr2813925eeh.6.1328305749045;
-        Fri, 03 Feb 2012 13:49:09 -0800 (PST)
-Received: from [192.168.1.13] (abwn75.neoplus.adsl.tpnet.pl. [83.8.237.75])
-        by mx.google.com with ESMTPS id y12sm26545548eeb.11.2012.02.03.13.49.08
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 03 Feb 2012 13:49:08 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201202032155.26532.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1757949Ab2BCVuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Feb 2012 16:50:37 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44155 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753314Ab2BCVug (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Feb 2012 16:50:36 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A95127DF8;
+	Fri,  3 Feb 2012 16:50:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=f80qNISrXlxjqSAm6hDqrm6BkNs=; b=ASUV7K
+	jqyR8J8HuIzayo8RGJ7NpB3Gpof7DikFG4okcneDE9y0488IfX14gyW89LBTWIil
+	lzSqnKGc6+XyLzCFKjy95ISAkoSI873Y3Nx+mqUjvvytKaSspzzVH2GhQ8pqyRM7
+	imkO1Qw9XpAxvm4fnMTJEKw2FrSW/b0fKByH0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QmcOI1qDE3KNspfR48TD3jdR1Ak51uHo
+	mZLIh7j9aQZEuYKn2gmRn5NOFW8gOFO36bLJxvTm8B++OwDnjelpPNwVnUWdpRHM
+	VYlJY02b+atmuq1RHHfzhUmdPRgJ+RG6sKbcSItIjIGUkd7+3r66PwlLF+CpBILj
+	IDM9kVOI/Jw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A18717DF7;
+	Fri,  3 Feb 2012 16:50:35 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 272357DF6; Fri,  3 Feb 2012
+ 16:50:35 -0500 (EST)
+In-Reply-To: <20120203212604.GA1890@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 3 Feb 2012 16:26:04 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1A1703F2-4EB1-11E1-AC68-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189809>
 
-Currently building git RPM from tarball results in the following
-error:
+Jeff King <peff@peff.net> writes:
 
-  RPM build errors:
-     Installed (but unpackaged) file(s) found:
-     /usr/share/locale/is/LC_MESSAGES/git.mo
+>> without requiring the brain-cycle to waste on the "Is this simple enough
+>> for even Solaris to grok?" guess game.  This should also be reusable for
+>> other stuff like $PERL_PATH, I would think.
+>
+> I like it. Even better would be:
+>
+>   write_script() {
+>         echo "#!$2" >"$1" &&
+>         cat >>"$1" &&
+>         chmod +x "$1"
+>   }
+>
+>   write_script foo.sh "$SHELL_PATH" <<-\EOF
+>     echo my arguments are "$@"
+>   EOF
 
-This is caused by the fact that localized messages do not have their
-place in some RPM package.  Let's postpone decision where they should
-be put (be it git-i18n-Icelandic, or git-i18n, or git package itself)
-for later by removing locale files at the end of install phase.
+I first thought that the order of parameters were unusual, but with that
+order, you could even go something fancier like:
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- git.spec.in |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+	write_script () {
+		case "$#" in
+		1)	case "$1" in
+			*.perl | *.pl) echo "#!$PERL_PATH" ;;
+			*) echo "#!$SHELL_PATH" ;;
+			esac
+                2)	echo "#!$2" ;;
+		*)	BUG ;;
+                esac >"$1" &&
+                cat >>"$1" &&
+                chmod +x "$1"
+	}
 
-diff --git a/git.spec.in b/git.spec.in
-index c562c62..b93df10 100644
---- a/git.spec.in
-+++ b/git.spec.in
-@@ -134,6 +134,7 @@ find $RPM_BUILD_ROOT -type f -name perllocal.pod -exec rm -f {} ';'
- %else
- rm -rf $RPM_BUILD_ROOT%{_mandir}
- %endif
-+rm -rf $RPM_BUILD_ROOT%{_datadir}/locale
- 
- mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d
- install -m 644 -T contrib/completion/git-completion.bash $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d/git
--- 
-1.7.9
+	write_script foo.sh
+        write_script bar.perl
+        write_script pre-receive /no/frobnication/today
+
+The tongue-in-cheek comment aside, I think ${2-"$SHELL_PATH"} or some form
+of fallback would be a good idea in any case, as 99% of the time what we
+write in the test scripts is a shell script.
+
+Also "chmod +x" is a very good idea.
+
+        
