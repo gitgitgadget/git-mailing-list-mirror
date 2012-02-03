@@ -1,65 +1,141 @@
-From: Feanil Patel <feanil@gmail.com>
-Subject: Re: Push from an SSH Terminal
-Date: Fri, 3 Feb 2012 11:40:42 -0500
-Message-ID: <CAG94OYxbOYCjd5qNBh8EF2gyezHWMqX1-R2MYgk8gkFYcrMjuQ@mail.gmail.com>
-References: <CAG94OYxX5foffvaFLQv7=wXguGC2TLgccdDFrC+ERzv_gXZ=ug@mail.gmail.com>
- <21607.38.96.167.131.1328286083.squirrel@mail.lo-cal.org>
+From: Joshua Redstone <joshua.redstone@fb.com>
+Subject: Re: Git performance results on a large repository
+Date: Fri, 3 Feb 2012 17:00:02 +0000
+Message-ID: <CB5179E9.3B751%joshua.redstone@fb.com>
+References: <CACBZZX4BsFZxB6A-Hg-k37FBavgTV8SDiQTK_sVh9Mb9iskiEw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Neal Groothuis <ngroot@lo-cal.org>
-X-From: git-owner@vger.kernel.org Fri Feb 03 17:41:15 2012
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 03 18:00:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtMCE-0006Tm-7n
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 17:41:10 +0100
+	id 1RtMUm-0001eR-Oe
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 18:00:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756865Ab2BCQlF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Feb 2012 11:41:05 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:58494 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754193Ab2BCQlD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Feb 2012 11:41:03 -0500
-Received: by wics10 with SMTP id s10so2750916wic.19
-        for <git@vger.kernel.org>; Fri, 03 Feb 2012 08:41:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=t88r5VSWgFwY+IWJil6n6mCA8XgpEzf/tRjyYhg1Knk=;
-        b=QZ/ADcuvmbODRkj+01yAnqGOCuzMhhXc5XeNrZDZBRcO1i1fzQSPpu33qyLWwwF3nw
-         G/tvixQezqfqmwfnCObZGI9e5mlxfvDZRRDT3s+NfJ1OgMe6Xcbx32ODtcIcHZSHX6Kn
-         aH8tMzxd5P/uHZPzta6SjCYZqcfmOl7SnYqUE=
-Received: by 10.180.86.105 with SMTP id o9mr12801173wiz.4.1328287262153; Fri,
- 03 Feb 2012 08:41:02 -0800 (PST)
-Received: by 10.216.20.201 with HTTP; Fri, 3 Feb 2012 08:40:42 -0800 (PST)
-In-Reply-To: <21607.38.96.167.131.1328286083.squirrel@mail.lo-cal.org>
+	id S1756975Ab2BCRAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Feb 2012 12:00:13 -0500
+Received: from mx0b-00082601.pphosted.com ([67.231.153.30]:51286 "EHLO
+	mx0a-00082601.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754539Ab2BCRAM (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Feb 2012 12:00:12 -0500
+Received: from pps.filterd (m0004077 [127.0.0.1])
+	by mx0b-00082601.pphosted.com (8.14.4/8.14.4) with SMTP id q13GwtIG029756;
+	Fri, 3 Feb 2012 09:00:10 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=from : to : cc : subject :
+ date : message-id : in-reply-to : content-type : content-id :
+ content-transfer-encoding : mime-version; s=facebook;
+ bh=jLeci95U8PeekOq1xSv6U1HL4FI7BEMfJoP8h8NgiFY=;
+ b=Vl53sRTuSc3MnNX6hxynO8PIkPxKV0G7+DAiZndUJmFJvfZ93wU0T6HW5TsWISlys3be
+ qj7uHWhfeTVqbZcfqGyJWOIRtS4f1NvDZ39/aN2Os1SSxWVDwzFtRdgca10vRUx+r2jB
+ DOn6XVM4PQpfdQiR3w+T5MsZLYgIeH10nGo= 
+Received: from mail.thefacebook.com (corpout1.snc1.tfbnw.net [66.220.144.38])
+	by mx0b-00082601.pphosted.com with ESMTP id 12rjhcg39p-1
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Fri, 03 Feb 2012 09:00:10 -0800
+Received: from SC-MBX02-5.TheFacebook.com ([fe80::9dc2:cfe6:2745:44cc]) by
+ sc-hub04.TheFacebook.com ([192.168.18.212]) with mapi id 14.01.0355.002; Fri,
+ 3 Feb 2012 09:00:04 -0800
+Thread-Topic: Git performance results on a large repository
+Thread-Index: AQHM4n7tcAztB0vzgUq1FZmN2PdUJJYrySqA///OxgA=
+In-Reply-To: <CACBZZX4BsFZxB6A-Hg-k37FBavgTV8SDiQTK_sVh9Mb9iskiEw@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Microsoft-MacOutlook/14.14.0.111121
+x-originating-ip: [192.168.18.252]
+Content-ID: <00CC648D9F50D7478700132BC7562345@fb.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.6.7361,1.0.260,0.0.0000
+ definitions=2012-02-03_05:2012-02-02,2012-02-03,1970-01-01 signatures=0
+X-Proofpoint-Spam-Reason: safe
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189784>
 
-On Fri, Feb 3, 2012 at 11:21 AM, Neal Groothuis <ngroot@lo-cal.org> wro=
-te:
->> The
->> repository is password protected so if I'm physically at Comp B, I g=
-et
->> a gui prompt for my username and password. However Comp A does not
->> have X Forwarding setup to Comp B so I can't get the gui interface f=
-or
->> the username and password when I try to do the push. =C2=A0Is there =
-an
->> alternative way to provide my credentials when doing a git push that
->> does not require a gui?
->
-> What protocol are you using to access the repository on Comp C?
->
-> - Neal
->
-
-I'm pulling and pushing over HTTP from Comp C.
+SGkgw4Z2YXIsDQoNCg0KVGhhbmtzIGZvciB0aGUgY29tbWVudHMuICBJJ3ZlIGluY2x1ZGVkIGEg
+YnVuY2ggbW9yZSBpbmZvIG9uIHRoZSB0ZXN0IHJlcG8NCmJlbG93LiAgSXQgaXMgYmFzZWQgb24g
+YSBncm93dGggbW9kZWwgb2YgdHdvIG9mIG91ciBjdXJyZW50IHJlcG9zaXRvcmllcw0KKEkuZS4s
+IGl0J3Mgbm90IGEgcGVyZm9yY2UgaW1wb3J0KS4gV2UgYWxyZWFkeSBoYXZlIHNvbWUgb2YgdGhl
+IGVhc2lseQ0Kc2VwYXJhYmxlIHByb2plY3RzIGluIHNlcGFyYXRlIHJlcG9zaXRvcmllcywgbGlr
+ZSBIUEhQLiAgIElmIHdlIGNvdWxkDQpzcGxpdCBvdXIgbGFyZ2VzdCByZXBvcyBpbnRvIG11bHRp
+cGxlIG9uZXMsIHRoYXQgd291bGQgaGVscCB0aGUgc2NhbGluZw0KaXNzdWUuICBIb3dldmVyLCB0
+aGUgY29kZSBpbiB0aG9zZSByZXBvcyBpcyByYXRoZXIgaW50ZXJkZXBlbmRlbnQgYW5kIHdlDQpi
+ZWxpZXZlIGl0J2QgaHVydCBtb3JlIHRoYW4gaGVscCB0byBzcGxpdCBpdCB1cCwgYXQgbGVhc3Qg
+Zm9yIHRoZQ0KbWVkaXVtLXRlcm0gZnV0dXJlLiAgV2UgZGVyaXZlIGEgZmFpciBhbW91bnQgb2Yg
+YmVuZWZpdCBmcm9tIHRoZSBjb2RlDQpzaGFyaW5nIGFuZCBrZWVwaW5nIHRoaW5ncyB0b2dldGhl
+ciBpbiBhIHNpbmdsZSByZXBvLCBzbyBpdCdzIG5vdCBjbGVhcg0Kd2hlbiBpdCdkIG1ha2Ugc2Vu
+c2UgdG8gZ2V0IG1vcmUgYWdncmVzc2l2ZSBzcGxpdHRpbmcgdGhpbmdzIHVwLg0KDQpTb21lIG1v
+cmUgaW5mb3JtYXRpb24gb24gdGhlIHRlc3QgcmVwb3NpdG9yeTogICBUaGUgd29ya2luZyBkaXJl
+Y3RvcnkgaXMNCjkuNSBHQiwgdGhlIG1lZGlhbiBmaWxlIHNpemUgaXMgMiBLQi4gIFRoZSBhdmVy
+YWdlIGRlcHRoIG9mIGEgZGlyZWN0b3J5DQooY291bnRpbmcgdGhlIG51bWJlciBvZiAnLydzKSBp
+cyAzLjYgbGV2ZWxzIGFuZCB0aGUgYXZlcmFnZSBkZXB0aCBvZiBhDQpmaWxlIGlzIDQuNi4gIE1v
+cmUgZGV0YWlsZWQgaGlzdG9ncmFtcyBvZiB0aGUgcmVwb3NpdG9yeSBjb21wb3NpdGlvbiBpcw0K
+YmVsb3c6DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQpIaXN0b2dyYW0gb2YgZGVwdGgg
+b2YgZXZlcnkgZGlyZWN0b3J5IGluIHRoZSByZXBvIChkaXJzPWBmaW5kIC4gLXR5cGUgZGAgOw0K
+KGZvciBkaXIgaW4gJGRpcnM7IGRvIHQ9JHtkaXIvL1teXC9dL307IGVjaG8gJHsjdH0gOyBkb25l
+KSB8DQp+L3RtcC9oaXN0by5weSkNCiogVGhlIC5naXQgZGlyZWN0b3J5IGl0c2VsZiBoYXMgb25s
+eSAxNjEgZmlsZXMsIHNvIGFsdGhvdWdoIGluY2x1ZGVkLA0KZG9lc24ndCBhZmZlY3QgdGhlIG51
+bWJlcnMgc2lnbmlmaWNhbnRseSkNCg0KWzAuMCAtIDEuMyk6IDI3MQ0KWzEuMyAtIDIuNik6IDk5
+NjYNClsyLjYgLSAzLjkpOiA1NjU5NQ0KWzMuOSAtIDUuMik6IDIzMDIzOQ0KWzUuMiAtIDYuNSk6
+IDY3Mzk0DQpbNi41IC0gNy44KTogMjI4NjgNCls3LjggLSA5LjEpOiA2NTY4DQpbOS4xIC0gMTAu
+NCk6IDQyMA0KWzEwLjQgLSAxMS43KTogNDUNClsxMS43IC0gMTMuMF06IDIxDQpuPTM5NDM4NyBt
+ZWFuPTQuNjcxODMwLCBtZWRpYW49NS4wMDAwMDAsIHN0ZGRldj0xLjI3MjY1OA0KDQoNCkhpc3Rv
+Z3JhbSBvZiBkZXB0aCBvZiBldmVyeSBmaWxlIGluIHRoZSByZXBvIChmaWxlcz1gZ2l0IGxzLWZp
+bGVzYCA7IChmb3INCmZpbGUgaW4gJGZpbGVzOyBkbyB0PSR7ZmlsZS8vW15cL10vfTsgZWNobyAk
+eyN0fSA7IGRvbmUpIHwgfi90bXAvaGlzdG8ucHkpDQoqICdnaXQgbHMtZmlsZXMnIGRvZXMgbm90
+IHByZWZpeCBlbnRyaWVzIHdpdGggLi8sIGxpa2UgdGhlICdmaW5kJyBjb21tYW5kDQphYm92ZSwg
+ZG9lcywgaGVuY2Ugd2h5IHRoZSBhdmVyYWdlIGFwcGVhcnMgdG8gYmUgdGhlIHNhbWUgYXMgdGhl
+IGRpcmVjdG9yeQ0Kc3RhdHMNCg0KWzAuMCAtIDEuM106IDEyNzQNClsxLjMgLSAyLjZdOiAzNTM1
+Mw0KWzIuNiAtIDMuOV06IDE5Njc0Nw0KWzMuOSAtIDUuMl06IDc4NjY0Nw0KWzUuMiAtIDYuNV06
+IDIyNTkxMw0KWzYuNSAtIDcuOF06IDc3NjY3DQpbNy44IC0gOS4xXTogMjIxMzANCls5LjEgLSAx
+MC40XTogMTU5OQ0KWzEwLjQgLSAxMS43XTogMTY0DQpbMTEuNyAtIDEzLjBdOiAxMTgNCm49MTM0
+NzYxMiBtZWFuPTQuNjU1NzUwLCBtZWRpYW49NS4wMDAwMDAsIHN0ZGRldj0xLjI3ODM5OQ0KDQoN
+Ckhpc3RvZ3JhbSBvZiBmaWxlIHNpemVzIChmb3IgZmlyc3QgNTBrIGZpbGVzIC0gdGhpcyBjb21t
+YW5kIHRha2VzIGENCndoaWxlKTogIGZpbGVzPWBnaXQgbHMtZmlsZXNgIDsgKGZvciBmaWxlIGlu
+ICRmaWxlczsgZG8gc3RhdCAtYyVzICRmaWxlIDsNCmRvbmUpIHwgfi90bXAvaGlzdG8ucHkNCg0K
+WyAwLjAgLSA0LjcpOiAwDQpbIDQuNyAtIDIyLjUpOiAyDQpbIDIyLjUgLSAxMDYuOCk6IDANClsg
+MTA2LjggLSA1MDYuOCk6IDANClsgNTA2LjggLSAyNDA0LjcpOiAzMTE0Mg0KWyAyNDA0LjcgLSAx
+MTQwOS45KTogMTc4MzcNClsgMTE0MDkuOSAtIDU0MTM3LjEpOiA5NDINClsgNTQxMzcuMSAtIDI1
+Njg2Ni45KTogNTMNClsgMjU2ODY2LjkgLSAxMjE4NzY5LjcpOiAxOA0KWyAxMjE4NzY5LjcgLSA1
+NzgyNzYwLjBdOiA1DQpuPTQ5OTk5IG1lYW49MzU5MC45NTMyMzksIG1lZGlhbj0xNzcyLjAwMDAw
+MCwgc3RkZGV2PTQyODM1LjMzMDI1OQ0KDQpDaGVlcnMsDQpKb3NoDQoNCg0KDQoNCg0KDQpPbiAy
+LzMvMTIgOTo1NiBBTSwgIsOGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29uIiA8YXZhcmFiQGdtYWls
+LmNvbT4gd3JvdGU6DQoNCj5PbiBGcmksIEZlYiAzLCAyMDEyIGF0IDE1OjIwLCBKb3NodWEgUmVk
+c3RvbmUgPGpvc2h1YS5yZWRzdG9uZUBmYi5jb20+DQo+d3JvdGU6DQo+DQo+PiBXZSAoRmFjZWJv
+b2spIGhhdmUgYmVlbiBpbnZlc3RpZ2F0aW5nIHNvdXJjZSBjb250cm9sIHN5c3RlbXMgdG8gbWVl
+dCBvdXINCj4+IGdyb3dpbmcgbmVlZHMuICBXZSBhbHJlYWR5IHVzZSBnaXQgZmFpcmx5IHdpZGVs
+eSwgYnV0IGhhdmUgbm90aWNlZCBpdA0KPj4gZ2V0dGluZyBzbG93ZXIgYXMgd2UgZ3JvdywgYW5k
+IHdlIHdhbnQgdG8gbWFrZSBzdXJlIHdlIGhhdmUgYSBnb29kIHN0b3J5DQo+PiBnb2luZyBmb3J3
+YXJkLiAgV2UncmUgZGViYXRpbmcgaG93IHRvIHByb2NlZWQgYW5kIHdvdWxkIGxpa2UgdG8gc29s
+aWNpdA0KPj4gcGVvcGxlJ3MgdGhvdWdodHMuDQo+DQo+V2hlcmUgSSB3b3JrIHdlIGFsc28gaGF2
+ZSBhIHJlbGF0aXZlbHkgbGFyZ2UgR2l0IHJlcG9zaXRvcnkuIEFyb3VuZA0KPjMwayBmaWxlcywg
+YSBjb3VwbGUgb2YgaHVuZHJlZCB0aG91c2FuZCBjb21taXRzLCBjbG9uZSBzaXplIGFyb3VuZA0K
+PmhhbGYgYSBHQi4NCj4NCj5Zb3UgaGF2ZW4ndCBzdXBwbGllZCBiYWNrZ3JvdW5kIGluZm8gb24g
+dGhpcyBidXQgaXQgcmVhbGx5IHNlZW1zIHRvIG1lDQo+bGlrZSB5b3VyIHRlc3RjYXNlIGlzIGNv
+bnZlcnRpbmcgc29tZXRoaW5nIGxpa2UgYSBodW1vbmdvdXMgUGVyZm9yY2UNCj5yZXBvc2l0b3J5
+IGRpcmVjdGx5IHRvIEdpdC4NCj4NCj5XaGlsZSB5b3UgL2Nhbi8gZG8gdGhpcyBpdCdzIG5vdCBh
+IGdvb2QgaWRlYSwgeW91IHNob3VsZCBzcGxpdCB1cA0KPnJlcG9zaXRvcmllcyBhdCB0aGUgYm91
+bmRhcmllcyBjb2RlIG9yIGRhdGEgZG9lc24ndCBkaXJlY3RseSBjcm9zcw0KPm92ZXIsIGUuZy4g
+dGhlcmUncyBubyByZWFzb24gd2h5IHlvdSBuZWVkIEhpcEhvcCBQSFAgaW4gdGhlIHNhbWUNCj5y
+ZXBvc2l0b3J5IGFzIENhc3NhbmRyYSBvciB0aGUgRmFjZWJvb2sgY2hhdCBzeXN0ZW0sIGlzIHRo
+ZXJlPw0KPg0KPldoaWxlIEdpdCBjb3VsZCBiZXR0ZXIgd2l0aCBsYXJnZSByZXBvc2l0b3JpZXMg
+KGluIHBhcnRpY3VsYXIgYXBwbHlpbmcNCj5jb21taXRzIGluIGludGVyYWN0aXZlIHJlYmFzZSBz
+ZWVtcyB0byBiZSB0byBzbG93IGRvd24gb24gYmlnZ2VyDQo+cmVwb3NpdG9yaWVzKSB0aGVyZSdz
+IG9ubHkgc28gbXVjaCB5b3UgY2FuIGRvIGFib3V0IHN0YXQtaW5nIDEuMw0KPm1pbGxpb24gZmls
+ZXMuDQo+DQo+QSBzdHJ1Y3R1cmUgdGhhdCB3b3VsZCBtYWtlIG1vcmUgc2Vuc2Ugd291bGQgYmUg
+dG8gc3BsaXQgdXAgdGhhdCBnaWFudA0KPnJlcG9zaXRvcnkgaW50byBhIGxvdCBvZiBvdGhlciBy
+ZXBvc2l0b3JpZXMsIG1vc3Qgb2YgdGhlbSBwcm9iYWJseQ0KPmhhdmUgbm8gZGlyZWN0IGRlcGVu
+ZGVuY2llcyBvbiBvdGhlciBjb21wb25lbnRzLCBidXQgZXZlbiB0aG9zZSB0aGF0DQo+ZG8gY2Fu
+IHNvbWV0aW1lcyBqdXN0IHVzZSBzb21lIG90aGVyIHJlcG9zaXRvcnkgYXMgYSBzdWJtb2R1bGUu
+DQo+DQo+RXZlbiBpZiB5b3UgaGF2ZSB0aGUgcmVxdWlyZW1lbnQgdGhhdCB5b3UnZCBsaWtlIHRv
+IHJvbGwgb3V0DQo+KmV2ZXJ5dGhpbmcqIGF0IGEgY2VydGFpbiBwb2ludCBpbiB0aW1lIHlvdSBj
+YW4gc3RpbGwgc29sdmUgdGhhdCB3aXRoDQo+YSBzdXBlci1yZXBvc2l0b3J5IHRoYXQgaGFzIGFs
+bCB0aGUgb3RoZXIgb25lcyBhcyBzdWJtb2R1bGVzLCBhbmQNCj5jcmVhdGVzIGEgdGFnIGZvciBl
+dmVyeSByb2xsb3V0IG9yIHNvbWV0aGluZyBsaWtlIHRoYXQuDQoNCg==
