@@ -1,146 +1,223 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: Breakage in master?
-Date: Fri, 3 Feb 2012 13:28:29 +0100
-Message-ID: <CABPQNSZfKCTsuusPpHa2djEOeGVN9z5s_Fr+S3EaHiv7Q4Re9w@mail.gmail.com>
-References: <CABPQNSbWu0r_gKGvCHk567pUtQiyDOCO8vFfrzPMFW1eUaj1nw@mail.gmail.com>
- <20120202174601.GB30857@sigill.intra.peff.net>
-Reply-To: kusmabite@gmail.com
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH/RFCv2 (version B)] gitweb: Allow UTF-8 encoded CGI query parameters and  path_info
+Date: Fri, 3 Feb 2012 13:44:54 +0100
+Message-ID: <201202031344.55750.jnareb@gmail.com>
+References: <1328136653-20559-1-git-send-email-michal.kiedrowicz@gmail.com> <201202022357.29569.jnareb@gmail.com> <20120203083935.5d9d4b18@mkiedrowicz.ivo.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 03 13:29:17 2012
+Cc: git@vger.kernel.org
+To: Michal Kiedrowicz <michal.kiedrowicz@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 03 13:44:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtIGR-0001s2-LN
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 13:29:15 +0100
+	id 1RtIVR-0001Bf-KB
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 13:44:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752676Ab2BCM3L convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Feb 2012 07:29:11 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:33835 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751058Ab2BCM3J convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Feb 2012 07:29:09 -0500
-Received: by dadp15 with SMTP id p15so2699308dad.19
-        for <git@vger.kernel.org>; Fri, 03 Feb 2012 04:29:09 -0800 (PST)
+	id S1753505Ab2BCMoR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Feb 2012 07:44:17 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:50686 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752640Ab2BCMoQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Feb 2012 07:44:16 -0500
+Received: by eekc14 with SMTP id c14so1128297eek.19
+        for <git@vger.kernel.org>; Fri, 03 Feb 2012 04:44:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=Yp7R+1kcr/jQmv9dokQWLmmhHU02wCSS4rgK/Ji3mv0=;
-        b=NBIMTpvxBTmcMg5jesXiJ6aUjRdYRH6Ef2cv6GWFIq9v3PNNrh3VH7kQSCj1nOva3l
-         aBtdLQy0bLKpKd68rOiziKJVDfcj57pDWOGnSw31QDWVjXccTF635uzLHnHOHV0TCIUv
-         Iz4pWRxRYm1BLf+26c1NWwgzYbB9t5px/NHHM=
-Received: by 10.68.73.196 with SMTP id n4mr17322366pbv.33.1328272149233; Fri,
- 03 Feb 2012 04:29:09 -0800 (PST)
-Received: by 10.68.222.165 with HTTP; Fri, 3 Feb 2012 04:28:29 -0800 (PST)
-In-Reply-To: <20120202174601.GB30857@sigill.intra.peff.net>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=vyb773AlkQKMtD4D0s8gM/FuVlPITbzAEpQrWyutKvY=;
+        b=deeH6GXmBNJW/KE076LT4fonC5XM7xOSUZPGT+cy/fqDn8OFRAFIQK2myIE5y24akp
+         U4m24CyfpT04h/cuVXkMLK14YiRFbQein5R+ehR9VRonepe0OeyJUHRnTrjuOgBXZX3A
+         NX0O4i7QPWnBHd6uAvxAyDtgGyenxCLbVkuYQ=
+Received: by 10.14.135.140 with SMTP id u12mr2213936eei.73.1328273054489;
+        Fri, 03 Feb 2012 04:44:14 -0800 (PST)
+Received: from [192.168.1.13] (abvn4.neoplus.adsl.tpnet.pl. [83.8.211.4])
+        by mx.google.com with ESMTPS id o49sm21501175eeb.7.2012.02.03.04.44.12
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 03 Feb 2012 04:44:13 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20120203083935.5d9d4b18@mkiedrowicz.ivo.pl>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189755>
 
-On Thu, Feb 2, 2012 at 6:46 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Feb 02, 2012 at 01:14:19PM +0100, Erik Faye-Lund wrote:
->
->> But here's the REALLY puzzling part: If I add a simple, unused
->> function to diff-lib.c, like this:
->> [...]
->> "git status" starts to error out with that same vsnprintf complaint!
->>
->> ---8<---
->> $ git status
->> # On branch master
->> # Changes not staged for commit:
->> # =A0 (use "git add <file>..." to update what will be committed)
->> fatal: BUG: your vsnprintf is broken (returned -1)
->> ---8<---
->
-> OK, that's definitely odd.
->
-> At the moment of the die() in strbuf_vaddf, what does errno say?
+Gitweb tries hard to properly process UTF-8 data, by marking output
+from git commands and contents of files as UTF-8 with to_utf8()
+subroutine.  This ensures that gitweb would print correctly UTF-8
+e.g. in 'log' and 'commit' views.
 
-If I apply this patch:
----8<---
-diff --git a/strbuf.c b/strbuf.c
-index ff0b96b..52dfdd6 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -218,7 +218,7 @@ void strbuf_vaddf(struct strbuf *sb, const char
-*fmt, va_list ap)
- 	len =3D vsnprintf(sb->buf + sb->len, sb->alloc - sb->len, fmt, cp);
- 	va_end(cp);
- 	if (len < 0)
--		die("BUG: your vsnprintf is broken (returned %d)", len);
-+		die_errno("BUG: your vsnprintf is broken (returned %d)", len);
- 	if (len > strbuf_avail(sb)) {
- 		strbuf_grow(sb, len);
- 		len =3D vsnprintf(sb->buf + sb->len, sb->alloc - sb->len, fmt, ap);
----8<---
+Unfortunately it misses another source of potentially Unicode input,
+namely query parameters.  The result is that one cannot search for a
+string containing characters outside US-ASCII.  For example searching
+for "Micha=C5=82 Kiedrowicz" (containing letter '=C5=82' - LATIN SMALL =
+LETTER L
+WITH STROKE, with Unicode codepoint U+0142, represented with 0xc5 0x82
+bytes in UTF-8 and percent-encoded as %C5%81) result in the following
+incorrect data in search field
 
-Then I get "fatal: BUG: your vsnprintf is broken (returned -1): Result
-too large". This goes both for both failure cases I described. I
-assume this means errno=3DERANGE.
+	Micha=C3=85=C2=82 Kiedrowicz
 
-> vsnprintf should generally never be returning -1 (it should return th=
-e
-> number of characters that would have been written). Since you're on
-> Windows, I assume you're using the replacement version in
-> compat/snprintf.c.
+This is caused by CGI by default treating '0xc5 0x82' bytes as two
+characters in Perl legacy encoding latin-1 (iso-8859-1), because 's'
+query parameter is not processed explicitly as UTF-8 encoded string.
 
-No. SNPRINTF_RETURNS_BOGUS is only set for the MSVC target, not for
-the MinGW target. I'm assuming that means MinGW-runtime has a sane
-vsnprintf implementation. But even if I enable SNPRINTF_RETURNS_BOGUS,
-the problem occurs. And it's still "Result too large".
+The solution used here follows "Using Unicode in a Perl CGI script"
+article on http://www.lemoda.net/cgi/perl-unicode/index.html:
 
-So I decided to do a bit of stepping, and it seems libintl takes over
-vsnprintf, directing us to libintl_vsnprintf instead. I guess this is
-so it can ensure we support reordering the parameters with $1 etc...
-And aparently this vsnprintf implementation calls the system vnsprintf
-if the format string does not contain '$', and it's using _vsnprintf
-rather than vsnprintf on Windows. _vsnprintf is the MSVCRT-version,
-and not the MinGW-runtime, which needs SNPRINTF_RETURNS_BOGUS.
+	use CGI;
+	use Encode 'decode_utf8;
+	my $value =3D params('input');
+	$value =3D decode_utf8($value);
 
-So I guess I can patch libintl to call vsnprintf from MinGW-runtime ins=
-tead.
+Decoding UTF-8 is done when filling %input_params hash and $path_info
+variable; the former required to move from explicit $cgi->param(<label>=
+)
+to $input_params{<name>} in a few places, which is a good idea anyway.
 
-> All of that would make sense to me, _except_ for your weird "if I add=
- a
-> random function, the problem is more reproducible" bit. Which does se=
-em
-> like something is invoking undefined behavior (of course, it could be
-> that undefined behavior or stack-smashing that is causing vsnprintf t=
-o
-> report an error). Lacking any better leads, it might be worth pursuin=
-g.
+Another required change was to add -override=3D>1 parameter to
+$cgi->textfield() invocation (in search form).  Otherwise CGI would
+use values from query string if it is present, filling value from
+$cgi->param... without decode_utf8().  As we are using value of
+appropriate parameter anyway, -override=3D>1 doesn't change the
+situation but makes gitweb fill search field correctly.
 
-Well, now at least I have some better leads, but I'm still not able to
-explain the "if I add a random function, the problem is more
-reproducible" bit. :(
+Alternate solution would be to simply use the '-utf8' pragma (via
+"use CGI '-utf8';"), but according to CGI.pm documentation it may
+cause problems with POST requests containing binary files... and
+it requires CGI 3.31 (I think), released with perl v5.8.9.
 
->> I've bisected the issues down to 5e9637c (i18n: add infrastructure f=
-or
->> translating Git with gettext). Trying to apply my unused-function
->> patch on top of this commit starts giving the same "fatal: BUG: your
->> vsnprintf is broken (returned -1)" error. It's ancestor, bc1bbe0(Git
->> 1.7.8-rc2), does not yield any of the issues.
->
-> I've looked at 5e9637c, and it really doesn't do anything that looks
-> bad. I wonder if your gettext library is buggy. Does compiling with
-> NO_GETTEXT help?
+Noticed-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
+Signed-off-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
+---
+On Fri, 3 Feb 2012, Michal Kiedrowicz wrote:
+> Jakub Narebski <jnareb@gmail.com> wrote:
 
-Compiling with NO_GETTEXT does make the symptoms go away, but that's
-not curing the problem ;)
+> > Is it what you mean by "this doesn't work for me", i.e. working
+> > search, garbage in search field?
+>=20
+> I mean "garbage in search field". Search works even without the patch
+> (at least on Debian with git-1.7.7.3, perl-5.10.1 and CGI-3.43; I
+> don't have my notebook nearby at the moment to check).
+[...]
 
-But, I have a lead now. I'll see if I can find out *why* libintl calls
-_vsnprintf on MinGW. I expect it's so the MSVC and the MinGW versions
-behave similarly, MSVC doesn't have a sane vsnprintf. Perhaps I should
-back-port SNPRINTF_RETURNS_BOGUS-workaround to libintl, so our MSVC
-builds doesn't break also?
+> > Damn.  If we use $cgi->textfield(-name =3D> "s", -value =3D> $searc=
+htext)
+> > like in gitweb, CGI.pm would read $cgi->param("s") by itself -
+> > without decoding.=20
+>=20
+> Makes sense. When I tried calling to_utf8() in the line that defines
+> textfield (this was my first approach to this problem), it haven't
+> changed anything.
+
+Yes, and it doesn't makes sense in gitweb case - we use value of=20
+$cgi->param("s") as default value of text field anyway, but in
+Unicode-aware way.
+=20
+> > To skip this we need to pass -force=3D>1  or
+> > -override=3D>1 (i.e. further changes to gitweb).
+
+This patch does this. =20
+
+Does it make work for you?
+
+> > -utf8 pragma works with more modern CGI.pm, but does not with 3.10.
+
+-utf8 pragma was added in CVS revision 1.238 of CGI.pm, which I think
+is present in CGI 3.31, released with perl v5.8.9.  Theoretically gitwe=
+b
+maintains backward compatibility with perl v5.8.3 or something=20
+("use 5.008;" but IIRC 5.8.3 is needed for correct Unicde handling anyw=
+ay).
+
+ gitweb/gitweb.perl |   16 ++++++++--------
+ 1 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 9cf7e71..bd5fff9 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -52,7 +52,7 @@ sub evaluate_uri {
+ 	# as base URL.
+ 	# Therefore, if we needed to strip PATH_INFO, then we know that we ha=
+ve
+ 	# to build the base URL ourselves:
+-	our $path_info =3D $ENV{"PATH_INFO"};
++	our $path_info =3D decode_utf8($ENV{"PATH_INFO"});
+ 	if ($path_info) {
+ 		if ($my_url =3D~ s,\Q$path_info\E$,, &&
+ 		    $my_uri =3D~ s,\Q$path_info\E$,, &&
+@@ -816,9 +816,9 @@ sub evaluate_query_params {
+=20
+ 	while (my ($name, $symbol) =3D each %cgi_param_mapping) {
+ 		if ($symbol eq 'opt') {
+-			$input_params{$name} =3D [ $cgi->param($symbol) ];
++			$input_params{$name} =3D [ map { decode_utf8($_) } $cgi->param($sym=
+bol) ];
+ 		} else {
+-			$input_params{$name} =3D $cgi->param($symbol);
++			$input_params{$name} =3D decode_utf8($cgi->param($symbol));
+ 		}
+ 	}
+ }
+@@ -2767,7 +2767,7 @@ sub git_populate_project_tagcloud {
+ 	}
+=20
+ 	my $cloud;
+-	my $matched =3D $cgi->param('by_tag');
++	my $matched =3D $input_params{'ctag'};
+ 	if (eval { require HTML::TagCloud; 1; }) {
+ 		$cloud =3D HTML::TagCloud->new;
+ 		foreach my $ctag (sort keys %ctags_lc) {
+@@ -3873,7 +3873,7 @@ sub print_search_form {
+ 	                       -values =3D> ['commit', 'grep', 'author', 'com=
+mitter', 'pickaxe']) .
+ 	      $cgi->sup($cgi->a({-href =3D> href(action=3D>"search_help")}, "=
+?")) .
+ 	      " search:\n",
+-	      $cgi->textfield(-name =3D> "s", -value =3D> $searchtext) . "\n"=
+ .
++	      $cgi->textfield(-name =3D> "s", -value =3D> $searchtext, -overr=
+ide =3D> 1) . "\n" .
+ 	      "<span title=3D\"Extended regular expression\">" .
+ 	      $cgi->checkbox(-name =3D> 'sr', -value =3D> 1, -label =3D> 're'=
+,
+ 	                     -checked =3D> $search_use_regexp) .
+@@ -5282,7 +5282,7 @@ sub git_project_list_body {
+=20
+ 	my $check_forks =3D gitweb_check_feature('forks');
+ 	my $show_ctags  =3D gitweb_check_feature('ctags');
+-	my $tagfilter =3D $show_ctags ? $cgi->param('by_tag') : undef;
++	my $tagfilter =3D $show_ctags ? $input_params{'ctag'} : undef;
+ 	$check_forks =3D undef
+ 		if ($tagfilter || $searchtext);
+=20
+@@ -5994,7 +5994,7 @@ sub git_project_list {
+ 	}
+ 	print $cgi->startform(-method =3D> "get") .
+ 	      "<p class=3D\"projsearch\">Search:\n" .
+-	      $cgi->textfield(-name =3D> "s", -value =3D> $searchtext) . "\n"=
+ .
++	      $cgi->textfield(-name =3D> "s", -value =3D> $searchtext, -overr=
+ide =3D> 1) . "\n" .
+ 	      "</p>" .
+ 	      $cgi->end_form() . "\n";
+ 	git_project_list_body(\@list, $order);
+@@ -6197,7 +6197,7 @@ sub git_tag {
+=20
+ sub git_blame_common {
+ 	my $format =3D shift || 'porcelain';
+-	if ($format eq 'porcelain' && $cgi->param('js')) {
++	if ($format eq 'porcelain' && $input_params{'javascript'}) {
+ 		$format =3D 'incremental';
+ 		$action =3D 'blame_incremental'; # for page title etc
+ 	}
+--=20
+1.7.6
