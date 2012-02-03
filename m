@@ -1,65 +1,72 @@
-From: David Howells <dhowells@redhat.com>
-Subject: Re: How best to handle multiple-authorship commits in GIT?
-Date: Fri, 03 Feb 2012 13:47:00 +0000
-Organization: Red Hat UK Ltd. Registered Address: Red Hat UK Ltd, Amberley
-	Place, 107-111 Peascod Street, Windsor, Berkshire, SI4 1TE, United
-	Kingdom.
-	Registered in England and Wales under Company Registration No. 3798903
-Message-ID: <4681.1328276820@redhat.com>
-References: <CAD-XujkVK=tOtmVS90U0KAutFZ55jxsHMKuuMppXOi-H6ZY=RQ@mail.gmail.com> <21056.1328185509@redhat.com> <9B990DDC-858D-43BA-BF9E-E0C3435354AF@gmail.com> <15281.1328207789@redhat.com>
-Cc: dhowells@redhat.com, "git@vger.kernel.org" <git@vger.kernel.org>,
-	Rusty Russell <rusty@rustcorp.com.au>
-To: Valerie Aurora <valerie.aurora@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 03 14:47:16 2012
+From: "Joel C. Salomon" <joelcsalomon@gmail.com>
+Subject: Re: Breakage in master?
+Date: Fri, 03 Feb 2012 08:55:37 -0500
+Message-ID: <4F2BE759.4000902@gmail.com>
+References: <CABPQNSbWu0r_gKGvCHk567pUtQiyDOCO8vFfrzPMFW1eUaj1nw@mail.gmail.com> <20120202174601.GB30857@sigill.intra.peff.net> <CABPQNSZfKCTsuusPpHa2djEOeGVN9z5s_Fr+S3EaHiv7Q4Re9w@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Fri Feb 03 14:55:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtJTv-000793-HW
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 14:47:15 +0100
+	id 1RtJcB-00034l-EH
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 14:55:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756447Ab2BCNrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Feb 2012 08:47:11 -0500
-Received: from mx1.redhat.com ([209.132.183.28]:36685 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756168Ab2BCNrJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Feb 2012 08:47:09 -0500
-Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id q13Dl4JO008170
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Fri, 3 Feb 2012 08:47:05 -0500
-Received: from redhat.com ([10.3.112.8])
-	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id q13Dl1Gh016427;
-	Fri, 3 Feb 2012 08:47:02 -0500
-In-Reply-To: <CAD-XujkVK=tOtmVS90U0KAutFZ55jxsHMKuuMppXOi-H6ZY=RQ@mail.gmail.com>
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
+	id S1755428Ab2BCNzn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Feb 2012 08:55:43 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:53095 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754578Ab2BCNzm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Feb 2012 08:55:42 -0500
+Received: by qcqw6 with SMTP id w6so2081939qcq.19
+        for <git@vger.kernel.org>; Fri, 03 Feb 2012 05:55:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=G6Mtm043hTnPiDe8XEVSSdkI4f+ho4HdHP6RgEFV3e0=;
+        b=T4gyY2ANvbf7EEh3Xxt9TcbINwFkmK2YnQk+FsNjIPBC4aa4fjVPoGaOT53KU/wKcv
+         JeFX4VdnMX8qUGs1Ape9TUGjWiLkHBz5kuk4UF35K9Br6bjHkR9zq9es8rNn7XPp6Olw
+         ABmRqThrHsZYqDdhOAQwySB12OaS3iYBdIVoM=
+Received: by 10.229.105.88 with SMTP id s24mr2789945qco.53.1328277341629;
+        Fri, 03 Feb 2012 05:55:41 -0800 (PST)
+Received: from [192.168.1.47] (pool-173-77-102-10.nycmny.east.verizon.net. [173.77.102.10])
+        by mx.google.com with ESMTPS id de9sm12974901qab.9.2012.02.03.05.55.38
+        (version=SSLv3 cipher=OTHER);
+        Fri, 03 Feb 2012 05:55:39 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:9.0) Gecko/20111229 Thunderbird/9.0
+In-Reply-To: <CABPQNSZfKCTsuusPpHa2djEOeGVN9z5s_Fr+S3EaHiv7Q4Re9w@mail.gmail.com>
+X-Enigmail-Version: 1.3.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189774>
 
-Valerie Aurora <valerie.aurora@gmail.com> wrote:
+On 02/03/2012 07:28 AM, Erik Faye-Lund wrote:
+> On Thu, Feb 2, 2012 at 6:46 PM, Jeff King <peff@peff.net> wrote:
+>> vsnprintf should generally never be returning -1 (it should return the
+>> number of characters that would have been written). Since you're on
+>> Windows, I assume you're using the replacement version in
+>> compat/snprintf.c.
+> 
+> No. SNPRINTF_RETURNS_BOGUS is only set for the MSVC target, not for
+> the MinGW target. I'm assuming that means MinGW-runtime has a sane
+> vsnprintf implementation.
 
-> And for a complete (meaningful) rewrite such as David has done, he
-> changes the commit authorship and adds a Signed-off-by for the
-> original author.
+That doesn't sound right; MinGW defaults to linking to a fairly old
+version of the Windows C library (MSVCRT.dll from Visual Studio 6,
+IIRC).  According to <http://mingw.org/wiki/C99> there exists libmingwex
+with some functions (especially those from <stdio.h>) replaced for
+Standard compatibility, but it's "far from complete".  (Is msysGit using
+it anyway?)
 
-Val[*] hasn't signed off all her patches, and indeed I've merged together some
-patches that she has signed off and some she hasn't.  I can't simply add
-Signed-off-by her without her permission.  However, if she's willing for me to
-add such lines, then I can do so.
-
-> Signed-off-by: Some Upstream Author
-> Signed-off-by: Maintainer or Merger (rewrote error handling)
-
-And if the changes are more than can be put in what's left of the line?  I
-would've thought it would make more sense to do something like:
-
-  Signed-off-by: Valerie Aurora <valerie.aurora@gmail.com> (Original author)
-  Signed-off-by: David Howells <dhowells@redhat.com> (Further development)
-
-David
-
-[*] Apologies for talking about/to you in the third person, Val.
+--Joel
