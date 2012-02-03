@@ -1,96 +1,87 @@
-From: Valerie Aurora <valerie.aurora@gmail.com>
-Subject: Re: How best to handle multiple-authorship commits in GIT?
-Date: Thu, 2 Feb 2012 18:18:50 -0800
-Message-ID: <CAD-XujkVK=tOtmVS90U0KAutFZ55jxsHMKuuMppXOi-H6ZY=RQ@mail.gmail.com>
-References: <21056.1328185509@redhat.com>
-	<9B990DDC-858D-43BA-BF9E-E0C3435354AF@gmail.com>
-	<15281.1328207789@redhat.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: how to determine oldest supported version of git
+Date: Thu, 02 Feb 2012 20:52:05 -0800
+Message-ID: <7v8vkktt6y.fsf@alter.siamese.dyndns.org>
+References: <jgeekn$of2$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Rusty Russell <rusty@rustcorp.com.au>
-To: David Howells <dhowells@redhat.com>
-X-From: git-owner@vger.kernel.org Fri Feb 03 03:18:58 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Neal Kreitzinger" <neal@rsss.com>
+X-From: git-owner@vger.kernel.org Fri Feb 03 05:52:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rt8jp-0006YB-VW
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 03:18:58 +0100
+	id 1RtB8B-0006VO-3N
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Feb 2012 05:52:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755071Ab2BCCSw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Feb 2012 21:18:52 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:64193 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753210Ab2BCCSw (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Feb 2012 21:18:52 -0500
-Received: by lagu2 with SMTP id u2so1635494lag.19
-        for <git@vger.kernel.org>; Thu, 02 Feb 2012 18:18:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=n84t+lBvtKFgg8qQJWfSZdVh4V8L8YW8pTFGfaLyBUk=;
-        b=Rlw5otjBnInsNlskguXOCMg7C9kHgoCqnaeZCtWs6VwrOQp/2q9FLzqyzbLHW1J2QL
-         Mq2LNVeJZ3Pz2XOf87L7sDSt9RWK9s0Bf39blrVdnCLlaGCTq/6FHXMlcSLguBqrsWyG
-         ISp2lgEhn7jhok52TOkZaCrjcKiOexeVmkpAs=
-Received: by 10.152.132.104 with SMTP id ot8mr2821793lab.17.1328235530321;
- Thu, 02 Feb 2012 18:18:50 -0800 (PST)
-Received: by 10.112.98.102 with HTTP; Thu, 2 Feb 2012 18:18:50 -0800 (PST)
-In-Reply-To: <15281.1328207789@redhat.com>
+	id S1754768Ab2BCEwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Feb 2012 23:52:09 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40573 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754427Ab2BCEwI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Feb 2012 23:52:08 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 254736E1D;
+	Thu,  2 Feb 2012 23:52:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GxhLqZBzB9wWzAIa76Zq3o7+PDY=; b=njdoBI
+	bUno5AvXIXyoUSShLWFsAHW50N7rcN4YjdAd8zqM+//ZtVS4kkvTEUfNj+fRN1Ig
+	Mr33Q2WQFVzO6Vyja/0Hc75P0TJb7Dstho5fdeWv7Kyt82A5l13cZXdUJPYG9oKE
+	km9BHq69tGSQuWZSOHC8bxH6JPUNLIRsgLeR4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tuzuHw6ZoFwTYRX/d159u87McMtQ0ojI
+	wYEgqhf4WDjow7DrUZXgxSJ9RmeuMNTGh4gnaje47TgudsYeB5r2wCjlyxOOeLou
+	Mma9fQT4xk7Wb7WO4lT8lv2DvUg/t+woTN+GSQ8h2hRN7WLFX6DObSC/PsJEdaQn
+	E/nHMOhCJ5A=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 067AA6E1C;
+	Thu,  2 Feb 2012 23:52:07 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 843A86E1B; Thu,  2 Feb 2012
+ 23:52:06 -0500 (EST)
+In-Reply-To: <jgeekn$of2$1@dough.gmane.org> (Neal Kreitzinger's message of
+ "Thu, 2 Feb 2012 10:46:11 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D283B366-4E22-11E1-B1C4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189736>
 
-On Thu, Feb 2, 2012 at 10:36 AM, David Howells <dhowells@redhat.com> wrote:
-> Valerie Aurora <valerie.aurora@gmail.com> wrote:
->
->> There is a line in the kernel doc saying how this should be handled,
->> suggested by Rusty, but it's not being followed.
->
-> Do you know where?
+"Neal Kreitzinger" <neal@rsss.com> writes:
 
-A fault in my memory - I asked Rusty for advice on a related problem
-and he gave me additional advice, he didn't suggest (so far as I know)
-the changes to the kernel docs.  Here's what SubmittingPatches has to
-say:
+> What is the best way for me (a git user) to determine what is currently
+> the oldest supported version of git (the oldest version still getting
+> bugfixes)?  IOW, when can I tell that my version of git is no longer
+> supported?
 
-"If you are a subsystem or branch maintainer, sometimes you need to slightly
-modify patches you receive in order to merge them, because the code is not
-exactly the same in your tree and the submitters'. If you stick strictly to
-rule (c), you should ask the submitter to rediff, but this is a totally
-counter-productive waste of time and energy. Rule (b) allows you to adjust
-the code, but then it is very impolite to change one submitter's code and
-make him endorse your bugs. To solve this problem, it is recommended that
-you add a line between the last Signed-off-by header and yours, indicating
-the nature of your changes. While there is nothing mandatory about this, it
-seems like prepending the description with your mail and/or name, all
-enclosed in square brackets, is noticeable enough to make it obvious that
-you are responsible for last-minute changes. Example :
+"A note from the maintainer" only promises that the latest major release
+(as of this writing, 1.7.9) gets regular maintenance releases until the
+next major release happens.
 
-	Signed-off-by: Random J Developer <random@developer.example.org>
-	[lucky@maintainer.example.org: struct foo moved from foo.c to foo.h]
-	Signed-off-by: Lucky K Maintainer <lucky@maintainer.example.org>
+When queuing a fix to an old bug, however, I try to build a topic branch
+for that fix from as old an release as practical, in order to make sure
+that older maintenance tracks could benefit, and I do give updates for
+older maintenance tracks when able (but no promises).
 
-This practise is particularly helpful if you maintain a stable branch and
-want at the same time to credit the author, track changes, merge the fix,
-and protect the submitter from complaints. Note that under no circumstances
-can you change the author's identity (the From header), as it is the one
-which appears in the changelog."
+For example, during the last cycle leading to 1.7.9, in other words, back
+when 1.7.8 was the latest major release, in addition to the maintenance
+releases 1.7.8.1, 1.7.8.2, 1.7.8.3 and 1.7.8.4, maintenance releases for
+older version of Git were tagged (1.7.6.5, 1.7.7.5, and 1.7.7.6).  Note
+that 1.7.6 was originally released on June 26th, 2011.
 
-And Rusty's practice as of a year or two ago is for "minor mods" to a
-patch, to leave the authorship the same, and add a Signed-off-by:
+One cycle of major release development is expected to last between 8 to 10
+weeks, so keeping two stale maintenance tracks in addition to the latest
+maintenance track alive would roughly translate to 6 months shelf life for
+an ancient release.
 
-Signed-off-by: Some Upstream Author
-Signed-off-by: Maintainer or Merger (rewrote error handling)
-
-And for a complete (meaningful) rewrite such as David has done, he
-changes the commit authorship and adds a Signed-off-by for the
-original author.
-
-That's existing guidelines and practice.
-
--VAL
+As other people mentioned, if you are on a (probably paid) support plan
+from a(n enterprise) distro, asking them would be the best way, and if you
+are running Git supplied as part of a distro, the distro would dictate the
+version it supplies to you, so asking here would not help very much.
