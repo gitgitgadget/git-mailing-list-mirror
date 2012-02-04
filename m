@@ -1,85 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 03/13] parseopt: make OPT_INTEGER support hexadecimal
- as well
-Date: Fri, 03 Feb 2012 21:32:14 -0800
-Message-ID: <7vobtfjh9d.fsf@alter.siamese.dyndns.org>
-References: <1328276078-27955-1-git-send-email-pclouds@gmail.com>
- <1328276078-27955-4-git-send-email-pclouds@gmail.com>
- <7vaa4zmsku.fsf@alter.siamese.dyndns.org>
- <CACsJy8Ba2qxyT4XqeRmUv63Z3rT1-FmBkZ3tB6YMh6qrXjLP1Q@mail.gmail.com>
+From: Tom Grennan <tmgrennan@gmail.com>
+Subject: Re: [RFC/PATCH] verify-tag: check sig of all tags to given object
+Date: Fri, 3 Feb 2012 21:56:56 -0800
+Message-ID: <20120204055656.GC2477@tgrennan-laptop>
+References: <7v8vkjl24d.fsf@alter.siamese.dyndns.org>
+ <D140688E-B86C-4A67-9AD6-56160C26884D@ericsson.com>
+ <20120204050818.GA2477@tgrennan-laptop>
+ <7vsjirjhp7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 04 06:32:47 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jasampler@gmail.com, tom.grennan@ericsson.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 04 06:57:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtYEw-0005Of-Hc
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 06:32:46 +0100
+	id 1RtYcy-0007NK-I6
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 06:57:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751212Ab2BDFcR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Feb 2012 00:32:17 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64324 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751128Ab2BDFcR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Feb 2012 00:32:17 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 860B127B3;
-	Sat,  4 Feb 2012 00:32:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=eYeawfqBi6UN
-	Yee91V/moCPWCCE=; b=NhU2ugh0trPWVInUY1T/elLHbKamJudfLk/G7eqo7HrK
-	nYW6IJuF4C9bHrgvgDoqk6NVY4BQ6aDd93mjb3BiEzTUfuBneoma6KVf6m36pc2o
-	94tIDbp8gTZxAl+ikXo7VVPQBzH92tZhCyFuU6FcF9wASLpMMUOk+Z7cvReZXLo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Gw8BF1
-	mpJmkwqBRm7sRUM/UhObyzT40Fgr9YeFmLGvBJjCWny4uia3CYjiOwGHYnrNtZXO
-	UBl9iLZ6rA2gLfvpH68yfqPn3tnheRH8yM6SYx5vVONZ8orcuOeb70e4ViJKJo/k
-	IizXbgnr6Ml0UiRXSHaPCZFy4dOqMf727HpVI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DB9727B2;
-	Sat,  4 Feb 2012 00:32:16 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1271F27B1; Sat,  4 Feb 2012
- 00:32:15 -0500 (EST)
-In-Reply-To: <CACsJy8Ba2qxyT4XqeRmUv63Z3rT1-FmBkZ3tB6YMh6qrXjLP1Q@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Sat, 4 Feb 2012 11:55:30 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 991F3012-4EF1-11E1-B2E5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751255Ab2BDF5D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Feb 2012 00:57:03 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:40426 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751213Ab2BDF5B (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Feb 2012 00:57:01 -0500
+Received: by vbjk17 with SMTP id k17so3011649vbj.19
+        for <git@vger.kernel.org>; Fri, 03 Feb 2012 21:57:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=akcLSP7MWFpVxaZ0PmziogmdNZuWTLgXWuv8OpgD3SI=;
+        b=lz8b9fq9l4gxjgNL5ukeY/rmToUfAvvJkGgk+pvcKb7LHQ1g+UGChDQLjn9iojcHii
+         1oUhpUlA8khwPEa2vpanIW1F7SsCDDkuea4Oe1yRwhPwZ+tA6XqmZGe8s35iYnaJCyv/
+         cjonJbL4aNNxWyhdTncq3iASn4Tk2WNx/6YTI=
+Received: by 10.52.67.35 with SMTP id k3mr4700425vdt.38.1328335020895;
+        Fri, 03 Feb 2012 21:57:00 -0800 (PST)
+Received: from localhost (c-98-207-169-74.hsd1.ca.comcast.net. [98.207.169.74])
+        by mx.google.com with ESMTPS id ei6sm5256475vdc.6.2012.02.03.21.56.58
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 03 Feb 2012 21:56:59 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vsjirjhp7.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189846>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
-
-> 2012/2/4 Junio C Hamano <gitster@pobox.com>:
->> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> =
-writes:
->>
->>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *(int *)opt->value =3D =
-strtol(arg, (char **)&s, 10);
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!prefixcmp(arg, "0x=
-") || !prefixcmp(arg, "0X"))
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 *(int *)opt->value =3D strtol(arg + 2, (char **)&s, 16);
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 else
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 *(int *)opt->value =3D strtol(arg, (char **)&s, 10);
->>
->> Can't you just do "strtol(arg, (char **)&s, 0)" instead?
+On Fri, Feb 03, 2012 at 09:22:44PM -0800, Junio C Hamano wrote:
+>Tom Grennan <tmgrennan@gmail.com> writes:
 >
-> I could but that means "01234" is now in base 8 and that's currently
-> accepted as base 10.
+>> Wouldn't you want Shawn and Jeff to tag the object (commit, tree, or
+>> blob) that you had tagged?
+>
+>No.
+>
+>We _designed_ our tag objects so that they are capable of pointing at
+>another tag, not the object that is pointed at that other tag.  And that
+>is the example usage I gave you.
+>
+>The statement by Shawn and Jeff, "This tag is Gitster's" is exactly that.
+>It was not about asserting the authenticity of the commit. It was about
+>the tag object I created.
 
-Yes, but I wonder if that is a problem in practice. Who in the right mi=
-nd
-would give 00001000 to tell git that they want one thousand?
+Hmm, how about "git verify-tag [[-v] [--to]] <tag|object>"?
+With "--to", all tags to the given tag (or object) are verified.
+Without "--to" just the given <tag> is verified.
+
+>>    gitster$ git verify-tag --pointed v1.7.10
+>>    tag v1.7.10: OK
+>
+>Just saying "$name: OK" will *never* be acceptable. "A signature made by
+>any key in my keychain is fine" is not the usual use case. At least the
+>output needs to be "Good signature from X".
+
+OK, I'll have to play with the gpg --verify-options.
+
+-- 
+TomG
