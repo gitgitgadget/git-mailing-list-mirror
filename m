@@ -1,72 +1,126 @@
-From: Andrew Keller <andrew@kellerfarm.com>
-Subject: Installing git-svn on Linux without root
-Date: Fri, 3 Feb 2012 21:10:32 -0500
-Message-ID: <35EF289A-1408-4B70-A25F-8194A8884A4D@kellerfarm.com>
-Mime-Version: 1.0 (Apple Message framework v1084)
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] verify-tag: check sig of all tags to given object
+Date: Fri, 03 Feb 2012 19:16:18 -0800
+Message-ID: <7v8vkjl24d.fsf@alter.siamese.dyndns.org>
+References: <1328318751-4470-1-git-send-email-tom.grennan@ericsson.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Feb 04 03:56:40 2012
+Cc: git@vger.kernel.org, jasampler@gmail.com
+To: Tom Grennan <tom.grennan@ericsson.com>
+X-From: git-owner@vger.kernel.org Sat Feb 04 04:16:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtVnr-0008GP-1H
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 03:56:39 +0100
+	id 1RtW71-0007nG-59
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 04:16:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752636Ab2BDC40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Feb 2012 21:56:26 -0500
-Received: from sanjose.tchmachines.com ([208.76.86.38]:59872 "EHLO
-	leia.tchmachines.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750830Ab2BDC4Z convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Feb 2012 21:56:25 -0500
-X-Greylist: delayed 2726 seconds by postgrey-1.27 at vger.kernel.org; Fri, 03 Feb 2012 21:56:25 EST
-Received: from c-208-53-113-112.customer.broadstripe.net ([208.53.113.112] helo=[192.168.0.197])
-	by leia.tchmachines.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.69)
-	(envelope-from <andrew@kellerfarm.com>)
-	id 1RtV5W-0004e0-SJ
-	for git@vger.kernel.org; Fri, 03 Feb 2012 21:10:51 -0500
-X-Mailer: Apple Mail (2.1084)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - leia.tchmachines.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - kellerfarm.com
+	id S1753972Ab2BDDQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Feb 2012 22:16:22 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47419 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753727Ab2BDDQV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Feb 2012 22:16:21 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 75CF57222;
+	Fri,  3 Feb 2012 22:16:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4fUxau9Eofb1dCGHqtzPOoEqTjE=; b=Z7yD02
+	Y1RuuArQqz8kxhzVrq0z9tZoVreFx1h0LQXW2laL8jAL0cCZYBce38o40Odi90B+
+	2vYMGreB0eA7UrgQCxfre8sFfnG5/VpMlSmdr2lj4j83MA4ZCJkjewguhXMNnJJ/
+	QQJnJ1Ghv7SaslCqN2rZ6C4vhaBqciDsij6tA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yQJHp3JYXmQXiFaYUQFVPXP/FKCxAEvt
+	XMb2ldlSVi3Bfw3dwBs1ns9pg+sjgMMVLTr6F5wOElL2dbYePEY+2qp+t5PAVxzz
+	cJOW1/+OZLqsyu3lK4hkvgOwd8kirPd4KnFB1bC6/CPGII9tx1GjOIvI1o374fnd
+	WRRu4kIEvZA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6CF1E7221;
+	Fri,  3 Feb 2012 22:16:20 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DB9307220; Fri,  3 Feb 2012
+ 22:16:19 -0500 (EST)
+In-Reply-To: <1328318751-4470-1-git-send-email-tom.grennan@ericsson.com> (Tom
+ Grennan's message of "Fri, 3 Feb 2012 17:25:51 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9BA992E0-4EDE-11E1-8003-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189838>
 
-I am attempting to install git, including the ability to access subversion repositories on a Linux machine.  I do not have root access on the machine, so I prepended my PATH with a folder in my home directory.
+Tom Grennan <tom.grennan@ericsson.com> writes:
 
-Installing Git worked just fine, but when I try to clone a subversion repository, I get:
+> If the command argument is a non-tag object, scan and verify all tags to
+> the given object; for example:
+>
+> john$ git tag -s -m "I approve" john-README master:README
+> ...
+> john$ git tag -s -m "I recommend" john-HEAD HEAD
+> ...
+> john$ git push <url> tag john-README
+> john$ git push <url> tag john-HEAD
+>
+> jane$ git fetch --tags <url>
+> jane$ git tag -s -m "I also approve" jane-README master:README
+> ...
+> jane$ git push <url> tag jane-README
+>
+> jeff$ git fetch --tags <url>
+> jeff$ git verify-tag master:README
+> tag john-README: OK
+> tag jane-README: OK
+> jeff$ git verify-tag HEAD
+> tag john-HEAD: OK
+>
+> Signed-off-by: Tom Grennan <tom.grennan@ericsson.com>
 
-$ git svn clone file:///svn --prefix=svn/ --no-metadata --trunk=dba/trunk --branches=dba/branches --tags=dba/tags dba
-Initialized empty Git repository in /home/kelleran/Documents/togit/converted/dba/.git/
-Can't locate SVN/Core.pm in @INC (@INC contains: /homedirs/kelleran/local/lib/perl5/site_perl/5.8.8 /usr/lib64/perl5/site_perl/5.8.8/x86_64-linux-thread-multi /usr/lib/perl5/site_perl/5.8.8 /usr/lib/perl5/site_perl /usr/lib64/perl5/vendor_perl/5.8.8/x86_64-linux-thread-multi /usr/lib/perl5/vendor_perl/5.8.8 /usr/lib/perl5/vendor_perl /usr/lib64/perl5/5.8.8/x86_64-linux-thread-multi /usr/lib/perl5/5.8.8 .) at /homedirs/kelleran/local/libexec/git-core/git-svn line 41.
+You did not describe what problem you are trying to solve, but the above
+tells me that the design of this feature has a lot of room to be improved
+to be useful for even a single trivial use scenario I can think of off the
+top of my head.
 
-Google suggested that the above error could be due to missing perl bindings.  So, I installed swig, and followed the instructions for installing the perl bindings: http://svn.apache.org/repos/asf/subversion/trunk/subversion/bindings/swig/INSTALL (I used the alternate build steps, since I had to set the prefix).
+Let's say after tagging v1.7.10, for some reason (as I do not know what
+problem you are trying to solve), I decided to ask my back-up maintainers,
+let's call them Shawn and Jeff, to sign that tag.  Shawn is expected to do
+this:
 
-Unfortunately, I still get exactly the same error.  So, I looked to see whether or not the missing library was installed:
+    spearce$ git fetch tag v1.7.10
+    spearce$ git tag -s -m "This tag is Gitster's" v1.7.10-spearce v1.7.10
+    spearce$ git push http://example.com/spearce/git tags/v1.7.10-spearce
 
-$ find ~/local -iname Core.pm
-/homedirs/kelleran/local/lib64/perl5/site_perl/5.8.8/x86_64-linux-thread-multi/SVN/Core.pm
+Jeff will do the same, and I'll fetch v1.7.10-spearce and v1.7.10-peff
+tags from them.
 
-So, the module does exist, but not in a location included by @INC.  This sounds like a simple misconfiguration during the installation on my part, but after reading the manuals and searching the web, I was unable to find a parameter that gets git to be able to see the perl bindings.
+It is natural for me to be able to ask "I want to verify all tags that
+point at the object I asked to be signed, namely, v1.7.10" from this
+feature.
 
-I'm guessing I need either more sleep or a fresh point of view.  Any thoughts?
+But
 
-The machine is running Linux 2.6.32 64-bit, and has perl 5.8.8.  Of the software I installed, I am using:
-  libpcre 8.21
-  swig 2.8.4
-  neon 0.29.6
-  apr 1.3.x
-  apr-util 1.3.x
-  subversion 1.7.2
-  git 1.7.9
+    gitster$ git verify-tag v1.7.10
 
-Thanks,
-Andrew Keller
+would not be a way to do so, as that would check my signature in v1.7.10
+tag itself.
+
+It gets even worse.  Suppose Jeff does this instead by mistake:
+
+    peff$ git fetch v1.7.10
+    peff$ git tag v1.7.10-peff v1.7.10
+    peff$ git push http://example.com/peff/git tags/v1.7.10-peff
+
+Even if you added "git verify-tag --pointed v1.7.10" to disambiguate the
+request to use the new feature, the result is unusable, as I would see:
+
+    gitster$ git verify-tag --pointed v1.7.10
+    v1.7.10-spearce: OK
+    v1.7.10-peff: OK
+
+v1.7.10-spearce and v1.7.10-peff both resolve to my v1.7.10, and they both
+are signed by known key, but v1.7.10-peff is a lightweight tag that points
+directly at my v1.7.10 and I would be seeing a signature of my own as "OK".
