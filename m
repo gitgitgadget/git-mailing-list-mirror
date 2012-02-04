@@ -1,78 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [bug] blame duplicates trailing ">" in mailmapped emails
-Date: Sat, 4 Feb 2012 18:20:15 -0500
-Message-ID: <20120204232015.GB1170@sigill.intra.peff.net>
-References: <1328145320-14071-1-git-send-email-felipe.contreras@gmail.com>
- <20120202084859.GC3823@burratino>
- <7v8vklvxwh.fsf@alter.siamese.dyndns.org>
- <CAMP44s1gWNG+jJ6M7OnLS-1VA5YPa07LJfnrvdbsQb0MOJB7PA@mail.gmail.com>
- <7vhaz8vkhd.fsf@alter.siamese.dyndns.org>
- <CAMP44s0Fq_BGwcmDM5E1kWNiyoJw6e6Hr=8XaNF6tmQAcdnUmw@mail.gmail.com>
- <7vehuboe5g.fsf@alter.siamese.dyndns.org>
- <CAMP44s2QdJ4+qgg4fF5-DOWHx3Btd0pTivTT9s_E=qqxg16YLQ@mail.gmail.com>
- <20120204182611.GA31091@sigill.intra.peff.net>
- <CAMP44s2r-fcnfpdT4u5U7TwF1z6Abp+J1U7oqfsSrYMuD6weOQ@mail.gmail.com>
+From: Beat Bolli <ig@drbeat.li>
+Subject: Re: Git-gui: crashes on OS X when entering combining ("dead") keys
+Date: Sun, 05 Feb 2012 00:29:37 +0100
+Message-ID: <4F2DBF61.1090308@drbeat.li>
+References: <4F2B085C.2000508@drbeat.li> <871uqafba4.fsf@fox.patthoyts.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 05 00:20:40 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Sun Feb 05 00:29:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtouG-0006AT-PV
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Feb 2012 00:20:33 +0100
+	id 1Rtp3C-00023d-GP
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Feb 2012 00:29:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754508Ab2BDXUT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Feb 2012 18:20:19 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57863
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754484Ab2BDXUS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Feb 2012 18:20:18 -0500
-Received: (qmail 13242 invoked by uid 107); 4 Feb 2012 23:27:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 04 Feb 2012 18:27:24 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 04 Feb 2012 18:20:15 -0500
-Content-Disposition: inline
-In-Reply-To: <CAMP44s2r-fcnfpdT4u5U7TwF1z6Abp+J1U7oqfsSrYMuD6weOQ@mail.gmail.com>
+	id S1754203Ab2BDX3l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Feb 2012 18:29:41 -0500
+Received: from mx1.2b3w.ch ([92.42.186.250]:37749 "EHLO mx1.2b3w.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754035Ab2BDX3k (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Feb 2012 18:29:40 -0500
+Received: from mx1.2b3w.ch (localhost [127.0.0.1])
+	by mx1.2b3w.ch (Postfix) with ESMTP id B61FFC34C6;
+	Sun,  5 Feb 2012 00:29:37 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on dilbert.2b3w.ch
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00,
+	NORMAL_HTTP_TO_IP autolearn=ham version=3.3.2
+Received: from mcmini.bolli (6-45-60-212-pool.cable.fcom.ch [212.60.45.6])
+	by mx1.2b3w.ch (Postfix) with ESMTPSA id 6CC77C34C3;
+	Sun,  5 Feb 2012 00:29:37 +0100 (CET)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
+In-Reply-To: <871uqafba4.fsf@fox.patthoyts.tk>
+X-Enigmail-Version: 1.3.5
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189921>
 
-On Sat, Feb 04, 2012 at 09:30:42PM +0200, Felipe Contreras wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> > but it feels like the fix should go into map_user. =C2=A0I tried a =
-few things,
-> > like "git log -1 --format=3D%aE", and couldn't find other code path=
-s with
-> > this problem. So presumably they are all feeding email addresses wi=
-thout
-> > the closing ">" (so one option is to just say "map_user needs to ge=
-t
-> > NUL-terminated strings).
->=20
-> Perhaps, but I though the idea was to make it efficient. I think the
-> above fix should be ok.
+On 05.02.12 00:07, Pat Thoyts wrote:
+> Beat Bolli <ig@drbeat.li> writes:
+> 
+>> Hi
+>> 
+>> I've just had git-gui crash on me when I tried to enter the ~
+>> (tilde) character on my Mac mini under OS X 10.6.8:
+>> 
+> 
+> This doesn't look git-gui specific so you will likely get more
+> results posting to the comp.lang.tcl newsgroup about this - or
+> there is a mac-specific tcl/tk list someplace.
 
-Because of the calling convention of map_user, the buffer with the inpu=
-t
-must also be writable (since it holds the result). So there should be n=
-o
-loss of efficiency to convert the ">" into a "\0" (and in fact, the
-simplest fix is probably to just have map_user "tie off" any ">" it
-detects).
+OK, I'll try to find the appropriate group.
 
-> We should have tests for this though, to make sure it doesn't get
-> broken again. I'm on that.
+Thanks,
+Beat
+- -- 
+mail: echo '<bNbolOli@ewaSPnetAM.ch>' | tr -d '[A-S]'
+pgp: 0x506A903A; 49D5 794A EA77 F907 764F  D89E 304B 93CF 506A 903A
+gsm: 4.7.7.6.0.7.7.9.7.1.4.e164.arpa
+icbm: 47.0452 N, 7.2715 E
 
-Definitely. Thanks for working on it.
+"It takes love over gold, and mind over matter" -- Dire Straits
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (Darwin)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
--Peff
+iEYEARECAAYFAk8tv2AACgkQMEuTz1BqkDqWAgCeOvSzdtYqzAsIZ3VFxd7HbNmY
+HxYAoMpAdrYx8QoxlSX7blBj/y66wMQP
+=WvyW
+-----END PGP SIGNATURE-----
