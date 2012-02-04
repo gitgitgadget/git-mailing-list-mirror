@@ -1,93 +1,172 @@
-From: Joey Hess <joey@kitenet.net>
-Subject: Re: Git performance results on a large repository
-Date: Sat, 4 Feb 2012 01:07:12 -0400
-Message-ID: <20120204050712.GA2460@gnu.kitenet.net>
-References: <CB5074CF.3AD7A%joshua.redstone@fb.com>
+From: Tom Grennan <tmgrennan@gmail.com>
+Subject: Re: [RFC/PATCH] verify-tag: check sig of all tags to given object
+Date: Fri, 3 Feb 2012 21:08:18 -0800
+Message-ID: <20120204050818.GA2477@tgrennan-laptop>
+References: <7v8vkjl24d.fsf@alter.siamese.dyndns.org>
+ <D140688E-B86C-4A67-9AD6-56160C26884D@ericsson.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="4Ckj6UjgE2iN1+kY"
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Joshua Redstone <joshua.redstone@fb.com>
-X-From: git-owner@vger.kernel.org Sat Feb 04 06:08:17 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jasampler@gmail.com, tomg.grennan@ericsson.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 04 06:08:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtXrE-0002z5-VI
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 06:08:17 +0100
+	id 1RtXrT-00035R-Lx
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 06:08:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750777Ab2BDFHr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Feb 2012 00:07:47 -0500
-Received: from wren.kitenet.net ([80.68.85.49]:55442 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750714Ab2BDFHr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Feb 2012 00:07:47 -0500
-Received: from gnu.kitenet.net (dialup-4.153.81.96.Dial1.Atlanta1.Level3.net [4.153.81.96])
-	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id 4B65411805F;
-	Sat,  4 Feb 2012 00:07:43 -0500 (EST)
-Received: by gnu.kitenet.net (Postfix, from userid 1000)
-	id 18EDA49C66; Sat,  4 Feb 2012 00:07:12 -0500 (EST)
+	id S1750849Ab2BDFI1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Feb 2012 00:08:27 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:36343 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750714Ab2BDFI0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Feb 2012 00:08:26 -0500
+Received: by vcge1 with SMTP id e1so3046480vcg.19
+        for <git@vger.kernel.org>; Fri, 03 Feb 2012 21:08:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=NcrTF3iHBm5lFGwHXZaQbOcAkgkg5CXfcbr9+upwXnU=;
+        b=aPRZ/iCHrzF1dQGzkqLpMUv1P7wxMwIP2FpWjGpDRudNBsmOogTZUQg/bWi0d0FAAF
+         4/uC9eFaVynz6w6RSgDrWsy7xhlmxLGgMArMVqGp4sCoFTF9pJotcAkmnDKEUQxSHwaC
+         RzSGOwRz/TLGAh7uF71aN7M46cbEXkokf4fNk=
+Received: by 10.52.176.130 with SMTP id ci2mr4715936vdc.33.1328332104270;
+        Fri, 03 Feb 2012 21:08:24 -0800 (PST)
+Received: from localhost (c-98-207-169-74.hsd1.ca.comcast.net. [98.207.169.74])
+        by mx.google.com with ESMTPS id bj13sm5170874vdc.15.2012.02.03.21.08.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 03 Feb 2012 21:08:23 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <CB5074CF.3AD7A%joshua.redstone@fb.com>
+In-Reply-To: <D140688E-B86C-4A67-9AD6-56160C26884D@ericsson.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189842>
 
+Junio C Hamano <gitster@pobox.com<mailto:gitster@pobox.com>> writes:
+>Tom Grennan <tom.grennan@ericsson.com<mailto:tom.grennan@ericsson.com>> writes:
+>>
+>>If the command argument is a non-tag object, scan and verify all tags to
+>>the given object; for example:
+>>
+>>john$ git tag -s -m "I approve" john-README master:README
+>>...
+>>john$ git tag -s -m "I recommend" john-HEAD HEAD
+>>...
+>>john$ git push <url> tag john-README
+>>john$ git push <url> tag john-HEAD
+>>
+>>jane$ git fetch --tags <url>
+>>jane$ git tag -s -m "I also approve" jane-README master:README
+>>...
+>>jane$ git push <url> tag jane-README
+>>
+>>jeff$ git fetch --tags <url>
+>>jeff$ git verify-tag master:README
+>>tag john-README: OK
+>>tag jane-README: OK
+>>jeff$ git verify-tag HEAD
+>>tag john-HEAD: OK
+>>
+>>Signed-off-by: Tom Grennan <tom.grennan@ericsson.com<mailto:tom.grennan@ericsson.com>>
+>
+>You did not describe what problem you are trying to solve, but the above
+>tells me that the design of this feature has a lot of room to be improved
+>to be useful for even a single trivial use scenario I can think of off the
+>top of my head.
+>
+>Let's say after tagging v1.7.10, for some reason (as I do not know what
+>problem you are trying to solve), I decided to ask my back-up maintainers,
+>let's call them Shawn and Jeff, to sign that tag.  Shawn is expected to do
+>this:
+>
+>   spearce$ git fetch tag v1.7.10
+>   spearce$ git tag -s -m "This tag is Gitster's" v1.7.10-spearce v1.7.10
+>   spearce$ git push http://example.com/spearce/git tags/v1.7.10-spearce
+>
+>Jeff will do the same, and I'll fetch v1.7.10-spearce and v1.7.10-peff
+>tags from them.
+>
+>It is natural for me to be able to ask "I want to verify all tags that
+>point at the object I asked to be signed, namely, v1.7.10" from this
+>feature.
+>
+>But
+>
+>   gitster$ git verify-tag v1.7.10
+>
+>would not be a way to do so, as that would check my signature in v1.7.10
+>tag itself.
+>
+>It gets even worse.  Suppose Jeff does this instead by mistake:
+>
+>   peff$ git fetch v1.7.10
+>   peff$ git tag v1.7.10-peff v1.7.10
+>   peff$ git push http://example.com/peff/git tags/v1.7.10-peff
+>
+>Even if you added "git verify-tag --pointed v1.7.10" to disambiguate the
+>request to use the new feature, the result is unusable, as I would see:
+>
+>   gitster$ git verify-tag --pointed v1.7.10
+>   v1.7.10-spearce: OK
+>   v1.7.10-peff: OK
+>
+>v1.7.10-spearce and v1.7.10-peff both resolve to my v1.7.10, and they both
+>are signed by known key, but v1.7.10-peff is a lightweight tag that points
+>directly at my v1.7.10 and I would be seeing a signature of my own as "OK".
 
---4Ckj6UjgE2iN1+kY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Sorry for messing up this thread. I had remote access trouble with work.
 
-Joshua Redstone wrote:
-> The test repo has 4 million commits, linear history and about 1.3 million
-> files.
+Wouldn't you want Shawn and Jeff to tag the object (commit, tree, or
+blob) that you had tagged?
 
-Have you tried separating these two factors, to see how badly each is
-affecting performance?
+   spearce$ git fetch tag v1.7.10
+   spearce$ eval $(git verify-tag -v v1.7.10 | sed -n '1s/ /=/p')
+   spearce$ git tag -s -m "This tag is Gitster's" v1.7.10-spearce $object
+   spearce$ git push http://example.com/spearce/git tags/v1.7.10-spearce
 
-If the number of commits is the problem (seems likely for git blame at
-least), a shallow clone would avoid that overhead.
+Or,
 
-I think that git often writes .git/index inneficiently when staging
-files (though your `git add` is pretty fast) and committing. It rewrites
-the whole file to .git/index.lck and the renames it over .git/index at
-the end. I have code that keeps a journal of changes to avoid rewriting
-the index repeatedly, but it's application specific. Fixing git to write
-the index more intelligently is something I'd like to see.
+   spearce$ git fetch tag v1.7.10
+   spearce$ git tag -s -m "This tag is Gitster's" v1.7.10-spearce --pointed v1.7.10
+   spearce$ git push http://example.com/spearce/git tags/v1.7.10-spearce
 
-Hint for git status: `git status .` in a smaller subdirectory will be much
-faster than the default that stats everything.
+Then,
 
---=20
-see shy jo
+   gitster$ git verify-tag $object
+   tag v1.7.10: OK
+   tag v1.7.10-spearce: OK
 
---4Ckj6UjgE2iN1+kY
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+Or,
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+   gitster$ git verify-tag --pointed v1.7.10
+   tag v1.7.10: OK
+   tag v1.7.10-spearce: OK
 
-iQIVAwUBTyy8/8kQ2SIlEuPHAQi4NBAAn2gVGzMXymR4UaUbm9tPvCLciY7Ujhca
-aYGtukz4TTdQTg/b1U36EXGJK1SU13gonyPDYNxmHPZOvsHy15Zhy9bEheu6/xAu
-E1xMufdAdXyLPitCE+X98YjbcPTB8ZIIXG6Fw2+mFgHy+Vq9A0RzuaM0Sh5ZpgEs
-ZHbrAKEWOrF2anjmpBJGyVFGfISuxrhJBhSyFbJxVtC4xgL0HBp5ZbNhhR1JXjeI
-k0qHh4b3UQbh2tU7EqGPcrgum0ceUvNeJsTsrtM1grqdBv4qQLXl4yiFXEf98NyF
-JvzPes2ko+8+4H28k17HL01ApVJ7yLoj3g+RufPCb6ytc2qngZ1nIoMVY4uJjW0p
-qpSQQSwh6j9OSwyl12E5VcnIRsF1hWLvRPcwSFGiEDVnrPk7qAbBld9V7CI4Rj9Y
-K2EhhXg/v8Z8mc29NuIZBcX9+wS7Q6m+B8MXodoCk23vCDoDLS1vz05HGU8Ljm/Q
-s0GZtV1g5C94Cg8Lwt5x4QenfeT9/fZT65QDhOhvfOk8WsRnw1UJSbNdgCbFzrRc
-l/M12088mYLDQMBw+vh2ZWzhkK8JDpxSyH46e8zPjBkp0ggeTCrzkAkmei6zt0T8
-YPD0Q87SkHU0P/Cjij2XitsVx9axWhwcm1knhYhuw4KwL32e2BXKVTG4XQwJ884V
-Y0gKIy/SCk8=
-=1imm
------END PGP SIGNATURE-----
+I hadn't thought of tagging a tag.  As you indicate, this would be
+tricky to disambiguate.
 
---4Ckj6UjgE2iN1+kY--
+So, I intended this to verify all tags of the non-tag object that one
+asked to be signed; no sign, no record.
+
+BTW, it may also be convenient to use auto-generated tag names for the
+secondary sign-offs, perhaps using the tag SHA as it's refs/tags/SHA.
+
+   spearce$ git tag -s -m "This is Gitster's v1.7.10" -- --pointed v1.7.10
+
+   peff$ git tag -s -m "This is Gitster's v1.7.10" -- --pointed v1.7.10
+
+   gitster$ git verify-tag --pointed v1.7.10
+   tag v1.7.10: OK
+   tag XXX....XXX: OK
+   tag YYY....YYY: OK
+
+`git tag -l` could then ignore refs/tags/SHA with content SHA.
+
+-- 
+TomG
