@@ -1,81 +1,96 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v4 03/13] parseopt: make OPT_INTEGER support hexadecimal
- as well
-Date: Sat, 4 Feb 2012 13:15:56 +0700
-Message-ID: <CACsJy8Db44OVC7+BEbp7hdbO8+3ZysCKPkwoTJyhLFvcLaF90g@mail.gmail.com>
-References: <1328276078-27955-1-git-send-email-pclouds@gmail.com>
- <1328276078-27955-4-git-send-email-pclouds@gmail.com> <7vaa4zmsku.fsf@alter.siamese.dyndns.org>
- <CACsJy8Ba2qxyT4XqeRmUv63Z3rT1-FmBkZ3tB6YMh6qrXjLP1Q@mail.gmail.com> <7vobtfjh9d.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] verify-tag: check sig of all tags to given object
+Date: Fri, 03 Feb 2012 22:20:14 -0800
+Message-ID: <7vhaz7jf1d.fsf@alter.siamese.dyndns.org>
+References: <7v8vkjl24d.fsf@alter.siamese.dyndns.org>
+ <D140688E-B86C-4A67-9AD6-56160C26884D@ericsson.com>
+ <20120204050818.GA2477@tgrennan-laptop>
+ <7vsjirjhp7.fsf@alter.siamese.dyndns.org>
+ <20120204055656.GC2477@tgrennan-laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 04 07:16:59 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jasampler@gmail.com, tom.grennan@ericsson.com
+To: Tom Grennan <tmgrennan@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 04 07:20:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtYvg-0007Hb-2g
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 07:16:56 +0100
+	id 1RtYz2-0000Fd-OD
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 07:20:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751261Ab2BDGQ2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Feb 2012 01:16:28 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:60516 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751013Ab2BDGQ1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Feb 2012 01:16:27 -0500
-Received: by bkcjm19 with SMTP id jm19so3607014bkc.19
-        for <git@vger.kernel.org>; Fri, 03 Feb 2012 22:16:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=XCubEoNxF+ftQMPIPsnQJ0JVWb4ODFsr2E7BDKSw0fY=;
-        b=dzwoIzU5FwuD3GDvb/TyFfFbRdBDZNyr71p1CirdVCIxYxP1ARFeWH2kqbKeFP+5wJ
-         49r9lu3ny9CZB7KPNabIYwp9B8Ogxkltr7NutOHMwiRnpc7i7pgjsHOP5852POz9EgUe
-         F5PIGUdsapQAhaEKXW6ErJRzEX/XS1NqE6WbY=
-Received: by 10.204.129.203 with SMTP id p11mr4690698bks.109.1328336186422;
- Fri, 03 Feb 2012 22:16:26 -0800 (PST)
-Received: by 10.204.33.70 with HTTP; Fri, 3 Feb 2012 22:15:56 -0800 (PST)
-In-Reply-To: <7vobtfjh9d.fsf@alter.siamese.dyndns.org>
+	id S1751289Ab2BDGUS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Feb 2012 01:20:18 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47102 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751013Ab2BDGUR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Feb 2012 01:20:17 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E0512F75;
+	Sat,  4 Feb 2012 01:20:16 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jnPI+6w4lIE2m96SjkdjfkwTnMc=; b=aNKHg6
+	8JF2lC2mkw5RCKBj3ozZb+6Vt8Ju8pt5N6NkJMEHAeWz9AY28fUO8xOOC7e6iNKZ
+	zkhJwl+3CNKN+ou4m45eoGCJe7BZnUFDC9KF364Z/rmVOuln5s58e4Wjr33EFqfz
+	WJUMcVWlspihrfWtFfpWnbgD1P+CA8PP8xaGE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hJlVg/UvhoaN4kJ3p2HEFgifC6RM2fnL
+	Glm0oEElkVA6vw/tAXsQycwgyyCnEBS+uCiFl9wq9GdbFhqQJIe19PK0zUsC/myc
+	bZNORMOfDuhAzMVcmvGHc2RB0DgY3nqSEsIa3U77qw1Cb67QUnaio8vQvHx839RI
+	Sk3mAuMuk90=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 44B202F74;
+	Sat,  4 Feb 2012 01:20:16 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CF55F2F72; Sat,  4 Feb 2012
+ 01:20:15 -0500 (EST)
+In-Reply-To: <20120204055656.GC2477@tgrennan-laptop> (Tom Grennan's message
+ of "Fri, 3 Feb 2012 21:56:56 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4D99CD12-4EF8-11E1-AE11-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189848>
 
-On Sat, Feb 4, 2012 at 12:32 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->
->> 2012/2/4 Junio C Hamano <gitster@pobox.com>:
->>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com>=
- writes:
->>>
->>>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *(int *)opt->value =3D=
- strtol(arg, (char **)&s, 10);
->>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!prefixcmp(arg, "0=
-x") || !prefixcmp(arg, "0X"))
->>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 *(int *)opt->value =3D strtol(arg + 2, (char **)&s, 16);
->>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 else
->>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 *(int *)opt->value =3D strtol(arg, (char **)&s, 10);
->>>
->>> Can't you just do "strtol(arg, (char **)&s, 0)" instead?
+Tom Grennan <tmgrennan@gmail.com> writes:
+
+> On Fri, Feb 03, 2012 at 09:22:44PM -0800, Junio C Hamano wrote:
+>>Tom Grennan <tmgrennan@gmail.com> writes:
 >>
->> I could but that means "01234" is now in base 8 and that's currently
->> accepted as base 10.
+>>> Wouldn't you want Shawn and Jeff to tag the object (commit, tree, or
+>>> blob) that you had tagged?
+>>
+>>No.
+>>
+>>We _designed_ our tag objects so that they are capable of pointing at
+>>another tag, not the object that is pointed at that other tag.  And that
+>>is the example usage I gave you.
+>>
+>>The statement by Shawn and Jeff, "This tag is Gitster's" is exactly that.
+>>It was not about asserting the authenticity of the commit. It was about
+>>the tag object I created.
 >
-> Yes, but I wonder if that is a problem in practice. Who in the right =
-mind
-> would give 00001000 to tell git that they want one thousand?
+> Hmm, how about "git verify-tag [[-v] [--to]] <tag|object>"?
+> With "--to", all tags to the given tag (or object) are verified.
+> Without "--to" just the given <tag> is verified.
+>
+>>>    gitster$ git verify-tag --pointed v1.7.10
+>>>    tag v1.7.10: OK
+>>
+>>Just saying "$name: OK" will *never* be acceptable. "A signature made by
+>>any key in my keychain is fine" is not the usual use case. At least the
+>>output needs to be "Good signature from X".
+>
+> OK, I'll have to play with the gpg --verify-options.
 
-That could come from a script, extracting info from a source (maybe a
-log file) and not stripping leading zeros. If we go this route, I
-think we should have one release that rejects such numbers first. If
-nobody complains, then we proceed and allow octal in the next release.
---=20
-Duy
+If it wasn't clear enough from my other message, I would rather not to see
+any change to --verify codepath as the first step.  Don't you think that
+the simplest and cleanest first step is to add --points-at to the list
+mode, so that with help from "| xargs git tag -v" you can bulk-verify
+without any other change?
