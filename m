@@ -1,86 +1,78 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/9] respect binary attribute in grep
-Date: Sat, 4 Feb 2012 18:18:25 -0500
-Message-ID: <20120204231825.GA1170@sigill.intra.peff.net>
-References: <20120201221437.GA19044@sigill.intra.peff.net>
- <20120201232109.GA2652@sigill.intra.peff.net>
- <7vhaza12ol.fsf@alter.siamese.dyndns.org>
- <20120202005209.GA6883@sigill.intra.peff.net>
- <20120202081747.GA10271@sigill.intra.peff.net>
- <20120204192252.GA15319@padd.com>
+Subject: Re: [bug] blame duplicates trailing ">" in mailmapped emails
+Date: Sat, 4 Feb 2012 18:20:15 -0500
+Message-ID: <20120204232015.GB1170@sigill.intra.peff.net>
+References: <1328145320-14071-1-git-send-email-felipe.contreras@gmail.com>
+ <20120202084859.GC3823@burratino>
+ <7v8vklvxwh.fsf@alter.siamese.dyndns.org>
+ <CAMP44s1gWNG+jJ6M7OnLS-1VA5YPa07LJfnrvdbsQb0MOJB7PA@mail.gmail.com>
+ <7vhaz8vkhd.fsf@alter.siamese.dyndns.org>
+ <CAMP44s0Fq_BGwcmDM5E1kWNiyoJw6e6Hr=8XaNF6tmQAcdnUmw@mail.gmail.com>
+ <7vehuboe5g.fsf@alter.siamese.dyndns.org>
+ <CAMP44s2QdJ4+qgg4fF5-DOWHx3Btd0pTivTT9s_E=qqxg16YLQ@mail.gmail.com>
+ <20120204182611.GA31091@sigill.intra.peff.net>
+ <CAMP44s2r-fcnfpdT4u5U7TwF1z6Abp+J1U7oqfsSrYMuD6weOQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Conrad Irwin <conrad.irwin@gmail.com>, git@vger.kernel.org,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Dov Grobgeld <dov.grobgeld@gmail.com>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Sun Feb 05 00:18:37 2012
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 05 00:20:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtosL-0005ER-4Z
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Feb 2012 00:18:33 +0100
+	id 1RtouG-0006AT-PV
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Feb 2012 00:20:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753509Ab2BDXS2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Feb 2012 18:18:28 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57849
+	id S1754508Ab2BDXUT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Feb 2012 18:20:19 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57863
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750815Ab2BDXS2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Feb 2012 18:18:28 -0500
-Received: (qmail 13206 invoked by uid 107); 4 Feb 2012 23:25:34 -0000
+	id S1754484Ab2BDXUS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Feb 2012 18:20:18 -0500
+Received: (qmail 13242 invoked by uid 107); 4 Feb 2012 23:27:24 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 04 Feb 2012 18:25:34 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 04 Feb 2012 18:18:25 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 04 Feb 2012 18:27:24 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 04 Feb 2012 18:20:15 -0500
 Content-Disposition: inline
-In-Reply-To: <20120204192252.GA15319@padd.com>
+In-Reply-To: <CAMP44s2r-fcnfpdT4u5U7TwF1z6Abp+J1U7oqfsSrYMuD6weOQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189920>
 
-On Sat, Feb 04, 2012 at 02:22:52PM -0500, Pete Wyckoff wrote:
+On Sat, Feb 04, 2012 at 09:30:42PM +0200, Felipe Contreras wrote:
 
-> I took a look at this series.  It's nice.  My worry was that the
-> extra open() of non-existent .gitattributes files in all the
-> directories would cause performance problems across networked
-> filesystems like NFS.
+> > but it feels like the fix should go into map_user. =C2=A0I tried a =
+few things,
+> > like "git log -1 --format=3D%aE", and couldn't find other code path=
+s with
+> > this problem. So presumably they are all feeding email addresses wi=
+thout
+> > the closing ">" (so one option is to just say "map_user needs to ge=
+t
+> > NUL-terminated strings).
+>=20
+> Perhaps, but I though the idea was to make it efficient. I think the
+> above fix should be ok.
 
-Yeah, I was able to measure a small slow-down on a quick grep even with
-a warm cache. So it does take some extra effort, but I think the
-correctness is worth it (and note that the slow down is in the tens of
-milliseconds if you have a reasonable stat()).
+Because of the calling convention of map_user, the buffer with the inpu=
+t
+must also be writable (since it holds the result). So there should be n=
+o
+loss of efficiency to convert the ">" into a "\0" (and in fact, the
+simplest fix is probably to just have map_user "tie off" any ">" it
+detects).
 
-If people have big trees on NFS (or some other slow-stat system) where
-these lookups are actually a problem, I'd rather see a global option to
-disable .gitattributes lookups for both diff and grep (i.e., a "trust
-me, I'm not using gitattributes, and don't bother with stat" flag). In
-practice, though, I think such a thing is not necessary because the
-stat() is local to the file being examined (e.g., for "foo/bar/baz", we
-look only at "foo/bar/.gitattributes", "foo/.gitattributes", and
-".gitattributes", without having to touch other parts of the tree).
+> We should have tests for this though, to make sure it doesn't get
+> broken again. I'm on that.
 
-Anyway, thanks for doing some performance testing. More data is always
-good.
-
-> It could be plausible that deep directory structures with few
-> grep-able files will suffer with this change.  For example, many
-> big binary blobs in deep directory hierarchies, but also some
-> useful files here and there.
->
-> One could argue that with the use of .gitattributes to specify
-> which blobs should not be searched, this series makes this faster
-> by not having to to read the binary blobs at all.  And I'd be
-> okay with that.
-
-Yes, exactly. I think this will end up being a big win for such cases,
-because the cost of loading even one large binary file from disk will
-dwarf all of the stats. But it does depend on people marking their
-binaries and using "-I".
+Definitely. Thanks for working on it.
 
 -Peff
