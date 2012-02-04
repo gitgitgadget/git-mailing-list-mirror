@@ -1,7 +1,7 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 3/5] gitweb: Highlight matched part of project name when searching projects
-Date: Sat,  4 Feb 2012 13:47:26 +0100
-Message-ID: <1328359648-29511-4-git-send-email-jnareb@gmail.com>
+Subject: [PATCH 2/5] gitweb: Faster project search
+Date: Sat,  4 Feb 2012 13:47:25 +0100
+Message-ID: <1328359648-29511-3-git-send-email-jnareb@gmail.com>
 References: <1328359648-29511-1-git-send-email-jnareb@gmail.com>
 Cc: Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
@@ -11,99 +11,91 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rtf2B-0003kS-41
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 13:48:03 +0100
+	id 1Rtf2B-0003kS-Lc
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 13:48:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754207Ab2BDMrl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Feb 2012 07:47:41 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:52260 "EHLO
+	id S1754216Ab2BDMrm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Feb 2012 07:47:42 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:38040 "EHLO
 	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754022Ab2BDMrk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Feb 2012 07:47:40 -0500
-Received: by eekc14 with SMTP id c14so1494821eek.19
-        for <git@vger.kernel.org>; Sat, 04 Feb 2012 04:47:39 -0800 (PST)
+	with ESMTP id S1754175Ab2BDMrj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Feb 2012 07:47:39 -0500
+Received: by eekc14 with SMTP id c14so1494818eek.19
+        for <git@vger.kernel.org>; Sat, 04 Feb 2012 04:47:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=go4Cuee/a6Wx5immWLk+xnEASMbrMJHfe8ABKNiiTCM=;
-        b=uT8ErfgRi0NR7vJp9jYtF2glyhsnyeKArpMwAJuxVtUzw27sYj9h+P08rbFMw/zbWW
-         Fq4gVxHp/8zxedGxk34JJTvxKZwViMWZaf56WHGm/pGRkQTZHdS0wTShvI9JKQvR2/ul
-         ajvJzNLGpHoQyYrH26dHnSxnWu39FCLizNDW8=
-Received: by 10.14.127.5 with SMTP id c5mr3578298eei.17.1328359659291;
-        Sat, 04 Feb 2012 04:47:39 -0800 (PST)
+        bh=Ny9fHFdDh1NeWLZ4rXRQ/XOExKRG8n2yLvBOzMuDcAo=;
+        b=XRkPgAk8tuLHWfWbQG7ZdKffaqH6uCNY4s37hPG+Utn7+H8d+7wsQdX9O+0nUbU6ku
+         CEycA/7SQsMhwlEesK1/VhCVZI6Bw9vS24eVQozHamSkJHFGwFls3FmtQ+o/oJAu/D0E
+         jWyBxjTIVITXifYWS1CiWdkG8vRfLMydT/lVE=
+Received: by 10.14.98.135 with SMTP id v7mr3570476eef.27.1328359657926;
+        Sat, 04 Feb 2012 04:47:37 -0800 (PST)
 Received: from localhost.localdomain (abwn75.neoplus.adsl.tpnet.pl. [83.8.237.75])
-        by mx.google.com with ESMTPS id z47sm26890568eeh.9.2012.02.04.04.47.38
+        by mx.google.com with ESMTPS id z47sm26890568eeh.9.2012.02.04.04.47.36
         (version=SSLv3 cipher=OTHER);
-        Sat, 04 Feb 2012 04:47:38 -0800 (PST)
+        Sat, 04 Feb 2012 04:47:37 -0800 (PST)
 X-Mailer: git-send-email 1.7.9
 In-Reply-To: <1328359648-29511-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189868>
 
-Use newly introduced esc_html_match_hl() to escape HTML and mark match
-with span element with 'match' class.  Currently only 'path' part
-(i.e. project name) is highlighted; match might be on the project
-description.
+Before searching by some field the information we search for must be
+filled in.  For this fill_project_list_info() was enhanced in previous
+commit to take additional parameters which part of projects info to
+fill.  This way we can limit doing expensive calculations (like
+running git-for-each-ref to get 'age' / "Last changed" info) only to
+projects which we will show as search results.
 
-The code makes use of the fact that defined $search_regexp means that
-there was search going on.
+With this commit the number of git commands used to generate search
+results is 2*<matched projects> + 1, and depends on number of matched
+projects rather than number of all projects (all repositories).
+
+Note: this is 'git for-each-ref' to find last activity, and 'git config'
+for each project, and 'git --version' once.
 
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-Introducing esc_html_match_hl() could have been split into a separate
-commit, but it would be subroutine without any use.
+search_projects_list() now pre-fills required parts of project info by
+itself, so running fill_project_list_info() before calling it is no
+longer necessary and actually you should not do it.
 
- gitweb/gitweb.perl |   28 +++++++++++++++++++++++++++-
- 1 files changed, 27 insertions(+), 1 deletions(-)
+ gitweb/gitweb.perl |    9 +++++++--
+ 1 files changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 95ca00f..aef15c8 100755
+index b7a3752..95ca00f 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -1715,6 +1715,30 @@ sub chop_and_escape_str {
- 	}
- }
+@@ -2989,6 +2989,10 @@ sub search_projects_list {
+ 	return @$projlist
+ 		unless ($tagfilter || $searchtext);
  
-+# highlight match (if any), and escape HTML
-+sub esc_html_match_hl {
-+	my ($str, $regexp) = @_;
-+	return esc_html($str) unless defined $regexp;
-+
-+	my @matches;
-+	while ($str =~ /$regexp/g) {
-+		push @matches, [$-[0], $+[0]];
-+	}
-+	return esc_html($str) unless @matches;
-+
-+	my $out = '';
-+	my $pos = 0;
-+	for my $m (@matches) {
-+		$out .= esc_html(substr $str, $pos, $m->[0] - $pos);
-+		$out .= $cgi->span({-class => 'match'},
-+		                   esc_html(substr $str, $m->[0], $m->[1] - $m->[0]));
-+		$pos = $m->[1];
-+	}
-+	$out .= esc_html(substr $str, $pos);
-+
-+	return $out;
-+}
-+
- ## ----------------------------------------------------------------------
- ## functions returning short strings
++	# searching projects require filling to be run before it;
++	fill_project_list_info($projlist,
++	                       $tagfilter  ? 'ctags' : (),
++	                       $searchtext ? ('path', 'descr') : ());
+ 	my @projects;
+  PROJECT:
+ 	foreach my $pr (@$projlist) {
+@@ -5370,12 +5374,13 @@ sub git_project_list_body {
+ 	# filtering out forks before filling info allows to do less work
+ 	@projects = filter_forks_from_projects_list(\@projects)
+ 		if ($check_forks);
+-	@projects = fill_project_list_info(\@projects);
+-	# searching projects require filling to be run before it
++	# search_projects_list pre-fills required info
+ 	@projects = search_projects_list(\@projects,
+ 	                                 'searchtext' => $searchtext,
+ 	                                 'tagfilter'  => $tagfilter)
+ 		if ($tagfilter || $searchtext);
++	# fill the rest
++	@projects = fill_project_list_info(\@projects);
  
-@@ -5342,7 +5366,9 @@ sub git_project_list_rows {
- 			print "</td>\n";
- 		}
- 		print "<td>" . $cgi->a({-href => href(project=>$pr->{'path'}, action=>"summary"),
--		                        -class => "list"}, esc_html($pr->{'path'})) . "</td>\n" .
-+		                        -class => "list"},
-+		                       esc_html_match_hl($pr->{'path'}, $search_regexp)) .
-+		      "</td>\n" .
- 		      "<td>" . $cgi->a({-href => href(project=>$pr->{'path'}, action=>"summary"),
- 		                        -class => "list", -title => $pr->{'descr_long'}},
- 		                        esc_html($pr->{'descr'})) . "</td>\n" .
+ 	$order ||= $default_projects_order;
+ 	$from = 0 unless defined $from;
 -- 
 1.7.9
