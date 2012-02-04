@@ -1,135 +1,114 @@
-From: "Frans Klaver" <fransklaver@gmail.com>
-Subject: Re: [PATCH 5/5] run-command: Error out if interpreter not found
-Date: Sat, 04 Feb 2012 22:31:27 +0100
-Message-ID: <op.v86bepmh0aolir@keputer>
-References: <1327444346-6243-1-git-send-email-fransklaver@gmail.com>
- <1327444346-6243-6-git-send-email-fransklaver@gmail.com>
- <20120124232421.GH8222@burratino> <op.v8moybu10aolir@keputer>
- <4F205028.4060606@kdbg.org> <7vr4ym2rad.fsf@alter.siamese.dyndns.org>
- <CAH6sp9NEnkDY-BCccW9VM3waxg8sG8zV5-rVAuMUfZ9rji4-Qw@mail.gmail.com>
- <20120127084845.GC806@burratino>
- <CAH6sp9O7P8bmYA66fY754mn=ogp8OP1i3KQuE_hnrTY46nNAxw@mail.gmail.com>
- <20120127094145.GA2611@burratino>
+From: Greg Troxel <gdt@ir.bbn.com>
+Subject: Re: Git performance results on a large repository
+Date: Sat, 04 Feb 2012 16:42:11 -0500
+Message-ID: <rmivcnm2s3w.fsf@fnord.ir.bbn.com>
+References: <CB5074CF.3AD7A%joshua.redstone@fb.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Sixt" <j6t@kdbg.org>, git@vger.kernel.org,
-	"Jeff King" <peff@peff.net>
-To: "Jonathan Nieder" <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 04 22:31:44 2012
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Joshua Redstone <joshua.redstone@fb.com>
+X-From: git-owner@vger.kernel.org Sat Feb 04 22:51:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtnCr-0008Pt-Vl
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 22:31:41 +0100
+	id 1RtnWQ-0000bD-Sy
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 22:51:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754262Ab2BDVbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Feb 2012 16:31:33 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:40990 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753973Ab2BDVbc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Feb 2012 16:31:32 -0500
-Received: by eaah12 with SMTP id h12so1960661eaa.19
-        for <git@vger.kernel.org>; Sat, 04 Feb 2012 13:31:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=content-type:to:cc:subject:references:date:mime-version
-         :content-transfer-encoding:from:message-id:in-reply-to:user-agent;
-        bh=m9zIDiPlBD5u6DNpSF3C2jivqA/W+hYfLFNnbwqTFCk=;
-        b=PgeGNy62yXNKv1BZ192Q8SkDNsBi7oeop89QkWQ1tiXMbrK9I5ewbqYmMj+7sLSsgS
-         gE/Fq4KhTe+eYbqH/DNJbyQmg4FfkF6RKskQj0/BpwPq00VoBKDztaM1Jk8HEhjAK4xG
-         uD+6WU+bMJgSJHqb0dL4b4BTCsjOpP4/rePEA=
-Received: by 10.213.15.16 with SMTP id i16mr489467eba.87.1328391090286;
-        Sat, 04 Feb 2012 13:31:30 -0800 (PST)
-Received: from keputer (82-136-253-149.ip.telfort.nl. [82.136.253.149])
-        by mx.google.com with ESMTPS id y12sm39636464eeb.11.2012.02.04.13.31.29
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 04 Feb 2012 13:31:29 -0800 (PST)
-In-Reply-To: <20120127094145.GA2611@burratino>
-User-Agent: Opera Mail/12.00 (Linux)
+	id S1754399Ab2BDVvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Feb 2012 16:51:46 -0500
+Received: from fnord.ir.bbn.com ([192.1.100.210]:64127 "EHLO fnord.ir.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753741Ab2BDVvp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Feb 2012 16:51:45 -0500
+X-Greylist: delayed 566 seconds by postgrey-1.27 at vger.kernel.org; Sat, 04 Feb 2012 16:51:45 EST
+Received: by fnord.ir.bbn.com (Postfix, from userid 10853)
+	id D246352F8; Sat,  4 Feb 2012 16:42:18 -0500 (EST)
+OpenPGP: id=32611E25
+X-Hashcash: 1:20:120204:git@vger.kernel.org::GKZK/cskngIb3jxz:0000000000000000000000000000000000000000001BTV
+X-Hashcash: 1:20:120204:joshua.redstone@fb.com::VyG8WzyjmHmeVD3e:0000000000000000000000000000000000000001p0N
+In-Reply-To: <CB5074CF.3AD7A%joshua.redstone@fb.com> (Joshua Redstone's
+	message of "Fri, 3 Feb 2012 14:20:06 +0000")
+User-Agent: Gnus/5.130002 (Ma Gnus v0.2) Emacs/23.3 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189914>
 
-On Fri, 27 Jan 2012 10:41:45 +0100, Jonathan Nieder <jrnieder@gmail.com>  
-wrote:
+--=-=-=
+Content-Type: text/plain
 
-> Frans Klaver wrote:
+
+Joshua Redstone <joshua.redstone@fb.com> writes:
+
+> The test repo has 4 million commits, linear history and about 1.3 million
+> files.  The size of the .git directory is about 15GB, and has been
+> repacked with 'git repack -a -d -f --max-pack-size=10g --depth=100
+> --window=250'.  This repack took about 2 days on a beefy machine (I.e.,
+> lots of ram and flash).  The size of the index file is 191 MB. I can share
+> the script that generated it if people are interested - It basically picks
+> 2-5 files, modifies a line or two and adds a few lines at the end
+> consisting of random dictionary words, occasionally creates a new file,
+> commits all the modifications and repeats.
+
+I have a repository with about 500K files, 3.3G checkout, 1.5G .git, and
+about 10K commits.  (This is a real repository, not a test case.)  So
+not as many commits by a lot, but the size seems not so far off.
+
+> I timed a few common operations with both a warm OS file cache and a cold
+> cache.  i.e., I did a 'echo 3 | tee /proc/sys/vm/drop_caches' and then did
+> the operation in question a few times (first timing is the cold timing,
+> the next few are the warm timings).  The following results are on a server
+> with average hard drive (I.e., not flash)  and > 10GB of ram.
 >
->> Just for my understanding: before a command is executed, a pager
->> (less/more or so) is started? We want to avoid starting the pager if
->> we won't be able to execute the command?
+> 'git status' :   39 minutes cold, and 24 seconds warm.
+
+Both of these numbers surprise me.  I'm using NetBSD, whose stat
+implementation isn't as optimized as Linux (you didn't say, but
+assuming).   On a years-old desktop, git status seems to be about a
+minute semi-cold and 5s warm (once I set the vnode cache big over 500K,
+vs 350K default for a 2G ram machine).
+
+So on the warm status, I wonder how big your vnode cache is, and if
+you've exceeded it, and I don't follow the cold time at all.  Probably
+some sort of profiling within git status would be illuminating.
+
+> 'git blame':   44 minutes cold, 11 minutes warm.
 >
-> See [1] for an example of a recent patch touching the relevant
-> code path.
+> 'git add' (appending a few chars to the end of a file and adding it):   7
+> seconds cold and 5 seconds warm.
 >
-> For example: if I run "git --paginate foo", foo is an alias for bar,
-> and the "[pager] bar" configuration is set to point to "otherpager",
-> then without this safety git launches the default pager in preparation
-> for running git-foo, receives ENOENT from execvp("git-foo"), and then
-> the pager has already been launched and it is too late to launch
-> otherpager instead.
+> 'git commit -m "foo bar3" --no-verify --untracked-files=no --quiet
+> --no-status':  41 minutes cold, 20 seconds warm.  I also hacked a version
+> of git to remove the three or four places where 'git commit' stats every
+> file in the repo, and this dropped the times to 30 minutes cold and 8
+> seconds warm.
 
-Took me a while to catch your drift, but if I understand correctly, you're  
-thinking using some of the code to find out if starting the pager is a  
-good idea or not. If I factor out the part that finds a command in PATH,  
-there's the helper that with a fair amount of certainty, will predict  
-whether 'git foo' will fail with ENOENT or not. It would fix a possible  
-problem that is currently there. Obviously the only case we can catch, is  
-the command not actually existing. Although it is just one of the cases  
-ENOENT can be returned for, I think it is the only one git actually cares  
-about when checking for it.
+So without the stat, I wonder what it's doing that takes 30 minutes.
 
+> One way to get there is to do some deep code modifications to git
+> internals, to, for example, create some abstractions and interfaces that
+> allow plugging in the specialized servers.  Another way is to leave git
+> internals as they are and develop a layer of wrapper scripts around all
+> the git commands that do the necessary interfacing.  The wrapper scripts
+> seem perhaps easier in the short-term, but may lead to increasing
+> divergence from how git behaves natively and also a layer of complexity.
 
->> On Fri, Jan 27, 2012 at 9:48 AM, Jonathan Nieder <jrnieder@gmail.com>  
->> wrote:
->
->>> I want to like (b), but the downside seems unacceptable.
->>
->> The downside being: having to figure out what execvp is going to do?
->> That would be tantamount to writing your own execvp.
->
-> Exactly.
+Having hooks for a blame server cache, etc. sounds sensible.  Having a
+way to call blames sort of like with --since and then keep updating it
+(eg. in emacs) to earlier times sounds useful.
 
-So as it seems, there are a few cases where we can fairly reliably predict  
-whether a command is or isn't going to be found. Unless I'm mistaken,  
-dashed externals are never shell built-ins and so we don't have to be able  
-to check for their existence. Then assuming that silent_exec_failure  
-really only cares about commands actually not existing, we can be fairly  
-naive about it. See if we can find it somewhere in PATH and if we can't  
-bail out. If we can, start the pager and everything execvp then returns  
-will be regarded a fatal error. In this case it would be a choice between  
-spawning the wrong pager, or having a quick browse through the file system.
+--=-=-=
+Content-Type: application/pgp-signature
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (NetBSD)
 
-> That's part of why I was really grateful to Hannes for the reminder to
-> take a step back for a moment and consider whether it's worth it.
-
-It may be a sensible reminder. I didn't understand that comment as such.  
-Maybe it's Hannes' style, I don't know.
-
-
-> Maybe there's another way or a more targetted way to take care of the
-> motivational original confusing scenario that leads to execvp errors.
-> (By the way, can you remind me which one that was?)
-
-Been thinking about it and I doubt it. To find out whether EACCES is  
-returned due to a PATH issue, you have to go through all of those PATH  
-entries. So while you're at it, there's a lot more you can check and most  
-of those checks are fairly trivial to do.
-
-I think I've worked through all your review comments. I'll address Hannes'  
-comments, create an RFC series and see where we end up.
-
-Junio, care to be CC'd in that?
-
-Thanks,
-Frans
-
-
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/179635
+iEYEARECAAYFAk8tpjMACgkQ+vesoDJhHiVtNQCeP1A3/Yy84s931pgXwVVcGYrC
+4GgAoJWgWXKar3cUeddCdIKAerOKVpYk
+=1rnz
+-----END PGP SIGNATURE-----
+--=-=-=--
