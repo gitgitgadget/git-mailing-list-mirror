@@ -1,84 +1,113 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Git performance results on a large repository
-Date: Sat, 4 Feb 2012 13:53:47 +0700
-Message-ID: <CACsJy8DkLCK0ZUKNz_PJazsxjsRbWVVZwjAU5n2EAjJfCYtpoQ@mail.gmail.com>
-References: <CB5074CF.3AD7A%joshua.redstone@fb.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] t0300: use write_script helper
+Date: Fri, 03 Feb 2012 22:58:06 -0800
+Message-ID: <7vd39vjda9.fsf@alter.siamese.dyndns.org>
+References: <20120204062712.GA20076@sigill.intra.peff.net>
+ <20120204063018.GB21559@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Joshua Redstone <joshua.redstone@fb.com>
-X-From: git-owner@vger.kernel.org Sat Feb 04 07:54:26 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Ben Walton <bwalton@artsci.utoronto.ca>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Feb 04 07:58:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtZVw-0005zx-CQ
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 07:54:24 +0100
+	id 1RtZZf-0007UT-9h
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 07:58:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751504Ab2BDGyT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Feb 2012 01:54:19 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:53165 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751423Ab2BDGyS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Feb 2012 01:54:18 -0500
-Received: by bkcjm19 with SMTP id jm19so3616834bkc.19
-        for <git@vger.kernel.org>; Fri, 03 Feb 2012 22:54:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=RoQeh8kS39JdcituwzbArJzS934iNk2zV0MsKHb28tg=;
-        b=HDKq9nHje+Hdyo6ZH+t5nB0hOMymGqUcCSHp1NBdsTHBAbB6IhSS1sOPsTMyX6ROnq
-         wjpZ7HziUZEC9Om01hw7K+plIldZFgI8u0Gg6qMLta+hiZ1GDHVES6QHDm6QRB2FUvQW
-         D36OHU01dLZ8wFXXD+6gljNsJHCQTmpvsHHgE=
-Received: by 10.204.129.71 with SMTP id n7mr4741484bks.91.1328338457253; Fri,
- 03 Feb 2012 22:54:17 -0800 (PST)
-Received: by 10.204.33.70 with HTTP; Fri, 3 Feb 2012 22:53:47 -0800 (PST)
-In-Reply-To: <CB5074CF.3AD7A%joshua.redstone@fb.com>
+	id S1751709Ab2BDG6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Feb 2012 01:58:10 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59169 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751550Ab2BDG6J (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Feb 2012 01:58:09 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 28274351D;
+	Sat,  4 Feb 2012 01:58:08 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VufRCOmDNaulzDNG3mcc9JV0kFw=; b=ZIw6RC
+	0P9ylhzmsT6IN4YxakFB+NvbhDXAkucykCB7Zoo0bBH+yTFx++Yf+07OzbZIWJ2M
+	qSssj2TMup8hNHFtHZcK2UdgeKLNF5GcA7Bivm+Q1uJKmosi7TNAlglj8D42EEcD
+	tXyWsLsuvo67IcS3lqqV5G7cInWRi1OS1AWd0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JfRBvWvq00C11we8xoWiqa2Sd6Lezl1/
+	TMh7z5yjT4JB8hTsBYcYUmp+e3afjR2yxh1Lk8pDL3ciu9W3BDSdluT53V4Pus+X
+	G9JJHTMH1ueHjpH0xTE6lAXrzci6IMO9EjDOaG5JTar/0hg4KPuguKxRZyKKSiU9
+	YSlhI6HLwoM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C9C2351C;
+	Sat,  4 Feb 2012 01:58:08 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 971563518; Sat,  4 Feb 2012
+ 01:58:07 -0500 (EST)
+In-Reply-To: <20120204063018.GB21559@sigill.intra.peff.net> (Jeff King's
+ message of "Sat, 4 Feb 2012 01:30:18 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 97AE7524-4EFD-11E1-909C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189854>
 
-On Fri, Feb 3, 2012 at 9:20 PM, Joshua Redstone <joshua.redstone@fb.com=
-> wrote:
-> I timed a few common operations with both a warm OS file cache and a =
-cold
-> cache. =C2=A0i.e., I did a 'echo 3 | tee /proc/sys/vm/drop_caches' an=
-d then did
-> the operation in question a few times (first timing is the cold timin=
-g,
-> the next few are the warm timings). =C2=A0The following results are o=
-n a server
-> with average hard drive (I.e., not flash) =C2=A0and > 10GB of ram.
->
-> 'git status' : =C2=A0 39 minutes cold, and 24 seconds warm.
->
-> 'git blame': =C2=A0 44 minutes cold, 11 minutes warm.
->
-> 'git add' (appending a few chars to the end of a file and adding it):=
- =C2=A0 7
-> seconds cold and 5 seconds warm.
->
-> 'git commit -m "foo bar3" --no-verify --untracked-files=3Dno --quiet
-> --no-status': =C2=A041 minutes cold, 20 seconds warm. =C2=A0I also ha=
-cked a version
-> of git to remove the three or four places where 'git commit' stats ev=
-ery
-> file in the repo, and this dropped the times to 30 minutes cold and 8
-> seconds warm.
+Jeff King <peff@peff.net> writes:
 
-Have you tried "git update-index --assume-unchaged"? That should
-reduce mass lstat() and hopefully improve the above numbers. The
-interface is not exactly easy-to-use, but if it has significant gain,
-then we can try to improve UI.
+> t0300 creates some helper shell scripts, and marks them with
+> "!/bin/sh". Even though the scripts are fairly simple, they
+> can fail on broken shells (specifically, Solaris /bin/sh
+> will persist a temporary assignment to IFS in a "read"
+> command).
+>
+> Rather than work around the problem for Solaris /bin/sh,
+> using write_script will make sure we point to a known-good
+> shell that the user has given us.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> This works fine on my Linux box, but just to sanity check that I didn't
+> screw anything up in the whopping 5 lines of changes, can you confirm
+> this fixes the issue for you, Ben?
+>
+>  t/t0300-credentials.sh |    6 ++----
+>  1 files changed, 2 insertions(+), 4 deletions(-)
+>
+> diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
+> index 885af8f..0b46248 100755
+> --- a/t/t0300-credentials.sh
+> +++ b/t/t0300-credentials.sh
+> @@ -14,14 +14,13 @@ test_expect_success 'setup helper scripts' '
+>  	done
+>  	EOF
+>  
+> -	cat >git-credential-useless <<-\EOF &&
+> +	write_script git-credential-useless <<-\EOF &&
+>  	#!/bin/sh
 
-On the index size issue, ideally we should make minimum writes to
-index instead of rewriting 191 MB index. An improvement we could do
-now is to compress it, reduce disk footprint, thus disk I/O. If you
-compress the index with gzip, how big is it?
---=20
-Duy
+An innocuous facepalm I'd be glad to remove myself ;-)
+
+>  	. ./dump
+>  	exit 0
+>  	EOF
+> -	chmod +x git-credential-useless &&
+>  
+> -	cat >git-credential-verbatim <<-\EOF &&
+> +	write_script git-credential-verbatim <<-\EOF &&
+>  	#!/bin/sh
+
+But other than that, looks good.
+
+>  	user=$1; shift
+>  	pass=$1; shift
+> @@ -29,7 +28,6 @@ test_expect_success 'setup helper scripts' '
+>  	test -z "$user" || echo username=$user
+>  	test -z "$pass" || echo password=$pass
+>  	EOF
+> -	chmod +x git-credential-verbatim &&
+>  
+>  	PATH="$PWD:$PATH"
+>  '
