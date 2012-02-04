@@ -1,100 +1,136 @@
-From: Jeff King <peff@peff.net>
-Subject: [bug] blame duplicates trailing ">" in mailmapped emails
-Date: Sat, 4 Feb 2012 13:26:11 -0500
-Message-ID: <20120204182611.GA31091@sigill.intra.peff.net>
-References: <1328145320-14071-1-git-send-email-felipe.contreras@gmail.com>
- <20120202084859.GC3823@burratino>
- <7v8vklvxwh.fsf@alter.siamese.dyndns.org>
- <CAMP44s1gWNG+jJ6M7OnLS-1VA5YPa07LJfnrvdbsQb0MOJB7PA@mail.gmail.com>
- <7vhaz8vkhd.fsf@alter.siamese.dyndns.org>
- <CAMP44s0Fq_BGwcmDM5E1kWNiyoJw6e6Hr=8XaNF6tmQAcdnUmw@mail.gmail.com>
- <7vehuboe5g.fsf@alter.siamese.dyndns.org>
- <CAMP44s2QdJ4+qgg4fF5-DOWHx3Btd0pTivTT9s_E=qqxg16YLQ@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH/RFCv2 5/5] gitweb: Highlight matched part of shortened project description
+Date: Sat, 4 Feb 2012 19:56:35 +0100
+Message-ID: <201202041956.36309.jnareb@gmail.com>
+References: <1328359648-29511-1-git-send-email-jnareb@gmail.com> <1328359648-29511-6-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 04 19:26:24 2012
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 04 19:56:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtkJb-0000tq-Li
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 19:26:24 +0100
+	id 1Rtkn2-00069J-Nq
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 19:56:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754305Ab2BDS0S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Feb 2012 13:26:18 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57693
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754169Ab2BDS0R (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Feb 2012 13:26:17 -0500
-Received: (qmail 11093 invoked by uid 107); 4 Feb 2012 18:33:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 04 Feb 2012 13:33:23 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 04 Feb 2012 13:26:11 -0500
+	id S1753639Ab2BDS4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Feb 2012 13:56:44 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:51066 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753381Ab2BDS4n (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Feb 2012 13:56:43 -0500
+Received: by mail-ee0-f46.google.com with SMTP id c14so1616566eek.19
+        for <git@vger.kernel.org>; Sat, 04 Feb 2012 10:56:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:references:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :message-id;
+        bh=ahIFxhVXpGEiK1cKgjXtIEqaN98q49+eaC10/1umTME=;
+        b=atuP4F7S4aRF2Lv+gGl9BNZO/r4+QhgWaQvPS3y9IlmpxFbgqI2ssnsxcnkK0Snnrl
+         XIUkw2EiC7+RgpB0dhEeO8DGSIbL/f/ZPidEVb6WBR7AqXOPfzsyI6AEA4l44da7sw7K
+         8fZs8kfPbRLkGbWSd+fl0H3WgSUDPxpt4a6Ds=
+Received: by 10.14.49.144 with SMTP id x16mr3758975eeb.25.1328381802735;
+        Sat, 04 Feb 2012 10:56:42 -0800 (PST)
+Received: from [192.168.1.13] (abwp204.neoplus.adsl.tpnet.pl. [83.8.239.204])
+        by mx.google.com with ESMTPS id y12sm38135202eeb.11.2012.02.04.10.56.40
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 04 Feb 2012 10:56:41 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1328359648-29511-6-git-send-email-jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <CAMP44s2QdJ4+qgg4fF5-DOWHx3Btd0pTivTT9s_E=qqxg16YLQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189892>
 
-On Sat, Feb 04, 2012 at 05:46:05PM +0200, Felipe Contreras wrote:
+Previous commit make gitweb use esc_html_match_hl() to mark match in
+the _whole_ description of a project when searching projects.
 
-> In any case, the one to blame for the header corruption is git:
-> [...]
-> f2bb9f88 (<spearce@spearce.org>> 2006-11-27 03:41:01 -0500 952)
-> 
-> Notice the mail is wrong.
+This commit makes gitweb highlight match in _shortened_ description,
+based on match in whole description, using esc_html_match_hl_chopped()
+subroutine.
 
-Ugh. The fault lies in this code:
+If match is in removed (chopped) part, even partially, then trailing
+"... " is highlighted.
 
-  $ sed -n 1405,1414p builtin/blame.c 
-          if (map_user(&mailmap, mail+1, mail_len-1, person, tmp-person-1)) {
-                  /* Add a trailing '>' to email, since map_user returns plain emails
-                     Note: It already has '<', since we replace from mail+1 */
-                  mailpos = memchr(mail, '\0', mail_len);
-                  if (mailpos && mailpos-mail < mail_len - 1) {
-                          *mailpos = '>';
-                          *(mailpos+1) = '\0';
-                  }
-          }
-  }
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+This version removes code duplication from v1.
 
-But that comment is wrong. If there's no email mapping needed, map_user
-will leave the "mail" buffer intact, in which case it will have the
-trailing ">" (because we feed the address with enclosing angle
-brackets).  So while map_user tries to accept either "foo@example.com\0"
-and "foo@example.com>", it is up to the contents of the mailmap whether
-you get back something with the closing angle bracket or not. Which is a
-pretty error-prone interface.
+It is still marked as RFC, because I am not sure if it is right way
+to highlight match in shortened string, or if we better use full string,
+or full string if match is in chopped part.
 
-You can fix it with this:
+ gitweb/gitweb.perl |   40 ++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 38 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 5a67c20..9b886fa 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -1406,7 +1406,8 @@ static void get_ac_line(const char *inbuf, const char *what,
- 		/* Add a trailing '>' to email, since map_user returns plain emails
- 		   Note: It already has '<', since we replace from mail+1 */
- 		mailpos = memchr(mail, '\0', mail_len);
--		if (mailpos && mailpos-mail < mail_len - 1) {
-+		if (mailpos && mailpos-mail < mail_len - 1 &&
-+		    mailpos > mail && *(mailpos-1) != '>') {
- 			*mailpos = '>';
- 			*(mailpos+1) = '\0';
- 		}
-
-but it feels like the fix should go into map_user.  I tried a few things,
-like "git log -1 --format=%aE", and couldn't find other code paths with
-this problem. So presumably they are all feeding email addresses without
-the closing ">" (so one option is to just say "map_user needs to get
-NUL-terminated strings).
-
--Peff
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index c650268..f71afe0 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1720,11 +1720,46 @@ sub esc_html_match_hl {
+ 	my ($str, $regexp) = @_;
+ 	return esc_html($str) unless defined $regexp;
+ 
++	return esc_html_match_hl_chopped($str, undef, $regexp);
++}
++
++
++# highlight match (if any) of shortened string, and escape HTML
++sub esc_html_match_hl_chopped {
++	my ($str, $chopped, $regexp) = @_;
++	return esc_html($chopped) unless defined $regexp;
++
+ 	my @matches;
+ 	while ($str =~ /$regexp/g) {
+ 		push @matches, [$-[0], $+[0]];
+ 	}
+-	return esc_html($str) unless @matches;
++	return esc_html(defined $chopped ? $chopped : $str) unless @matches;
++
++	# filter matches so that we mark chopped string, if it is present
++	if (defined $chopped) {
++		my $tail = "... "; # see chop_str
++		unless ($chopped =~ s/\Q$tail\E$//) {
++			$tail = '';
++		}
++		my $chop_len = length($chopped);
++		my $tail_len = length($tail);
++		my @filtered;
++
++		for my $m (@matches) {
++			if ($m->[0] > $chop_len) {
++				push @filtered, [ $chop_len, $chop_len + $tail_len ] if ($tail_len > 0);
++				last;
++			} elsif ($m->[1] > $chop_len) {
++				push @filtered, [ $m->[0], $chop_len + $tail_len ];
++				last;
++			}
++			push @filtered, $m;
++		}
++
++		# further operations are on chopped string
++		$str = $chopped . $tail;
++		@matches = @filtered;
++	}
+ 
+ 	my $out = '';
+ 	my $pos = 0;
+@@ -5372,7 +5407,8 @@ sub git_project_list_rows {
+ 		      "<td>" . $cgi->a({-href => href(project=>$pr->{'path'}, action=>"summary"),
+ 		                        -class => "list", -title => $pr->{'descr_long'}},
+ 		                        $search_regexp
+-		                        ? esc_html_match_hl($pr->{'descr_long'}, $search_regexp)
++		                        ? esc_html_match_hl_chopped($pr->{'descr_long'},
++		                                                    $pr->{'descr'}, $search_regexp)
+ 		                        : esc_html($pr->{'descr'})) .
+ 		      "</td>\n" .
+ 		      "<td><i>" . chop_and_escape_str($pr->{'owner'}, 15) . "</i></td>\n";
+-- 
+1.7.9
