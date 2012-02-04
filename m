@@ -1,126 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] verify-tag: check sig of all tags to given object
-Date: Fri, 03 Feb 2012 19:16:18 -0800
-Message-ID: <7v8vkjl24d.fsf@alter.siamese.dyndns.org>
-References: <1328318751-4470-1-git-send-email-tom.grennan@ericsson.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v4 03/13] parseopt: make OPT_INTEGER support hexadecimal
+ as well
+Date: Sat, 4 Feb 2012 11:55:30 +0700
+Message-ID: <CACsJy8Ba2qxyT4XqeRmUv63Z3rT1-FmBkZ3tB6YMh6qrXjLP1Q@mail.gmail.com>
+References: <1328276078-27955-1-git-send-email-pclouds@gmail.com>
+ <1328276078-27955-4-git-send-email-pclouds@gmail.com> <7vaa4zmsku.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jasampler@gmail.com
-To: Tom Grennan <tom.grennan@ericsson.com>
-X-From: git-owner@vger.kernel.org Sat Feb 04 04:16:31 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 04 05:56:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtW71-0007nG-59
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 04:16:27 +0100
+	id 1RtXfU-0006JA-Ag
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 05:56:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753972Ab2BDDQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Feb 2012 22:16:22 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47419 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753727Ab2BDDQV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Feb 2012 22:16:21 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 75CF57222;
-	Fri,  3 Feb 2012 22:16:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4fUxau9Eofb1dCGHqtzPOoEqTjE=; b=Z7yD02
-	Y1RuuArQqz8kxhzVrq0z9tZoVreFx1h0LQXW2laL8jAL0cCZYBce38o40Odi90B+
-	2vYMGreB0eA7UrgQCxfre8sFfnG5/VpMlSmdr2lj4j83MA4ZCJkjewguhXMNnJJ/
-	QQJnJ1Ghv7SaslCqN2rZ6C4vhaBqciDsij6tA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yQJHp3JYXmQXiFaYUQFVPXP/FKCxAEvt
-	XMb2ldlSVi3Bfw3dwBs1ns9pg+sjgMMVLTr6F5wOElL2dbYePEY+2qp+t5PAVxzz
-	cJOW1/+OZLqsyu3lK4hkvgOwd8kirPd4KnFB1bC6/CPGII9tx1GjOIvI1o374fnd
-	WRRu4kIEvZA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6CF1E7221;
-	Fri,  3 Feb 2012 22:16:20 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DB9307220; Fri,  3 Feb 2012
- 22:16:19 -0500 (EST)
-In-Reply-To: <1328318751-4470-1-git-send-email-tom.grennan@ericsson.com> (Tom
- Grennan's message of "Fri, 3 Feb 2012 17:25:51 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9BA992E0-4EDE-11E1-8003-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754508Ab2BDE4D convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Feb 2012 23:56:03 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:42247 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754390Ab2BDE4B convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Feb 2012 23:56:01 -0500
+Received: by bkcjm19 with SMTP id jm19so3583290bkc.19
+        for <git@vger.kernel.org>; Fri, 03 Feb 2012 20:56:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=3PJTtLoI+QENZUm5fJjXafME0H1G107ymVB7KIUbcI4=;
+        b=L+3I6jmow1IRNKJTYFJ/CxerLEkmYTAgk13FaqYkJ9qHSFrL2JVMS8t1SCE4ngvJNc
+         T9vqLQYHUj+Pjx+v7kNa3wwuUSRf67D5wrjuQ9SIMtDPXfFBid8+0DPCmJlRCPUhZFSn
+         sGRKsJMKpTOxmM73J4DTOnjrmn/h1XxbnnBqU=
+Received: by 10.204.130.150 with SMTP id t22mr4679551bks.1.1328331360182; Fri,
+ 03 Feb 2012 20:56:00 -0800 (PST)
+Received: by 10.204.33.70 with HTTP; Fri, 3 Feb 2012 20:55:30 -0800 (PST)
+In-Reply-To: <7vaa4zmsku.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189839>
 
-Tom Grennan <tom.grennan@ericsson.com> writes:
-
-> If the command argument is a non-tag object, scan and verify all tags to
-> the given object; for example:
+2012/2/4 Junio C Hamano <gitster@pobox.com>:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> w=
+rites:
 >
-> john$ git tag -s -m "I approve" john-README master:README
-> ...
-> john$ git tag -s -m "I recommend" john-HEAD HEAD
-> ...
-> john$ git push <url> tag john-README
-> john$ git push <url> tag john-HEAD
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *(int *)opt->value =3D s=
+trtol(arg, (char **)&s, 10);
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!prefixcmp(arg, "0x"=
+) || !prefixcmp(arg, "0X"))
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 *(int *)opt->value =3D strtol(arg + 2, (char **)&s, 16);
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 else
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 *(int *)opt->value =3D strtol(arg, (char **)&s, 10);
 >
-> jane$ git fetch --tags <url>
-> jane$ git tag -s -m "I also approve" jane-README master:README
-> ...
-> jane$ git push <url> tag jane-README
->
-> jeff$ git fetch --tags <url>
-> jeff$ git verify-tag master:README
-> tag john-README: OK
-> tag jane-README: OK
-> jeff$ git verify-tag HEAD
-> tag john-HEAD: OK
->
-> Signed-off-by: Tom Grennan <tom.grennan@ericsson.com>
+> Can't you just do "strtol(arg, (char **)&s, 0)" instead?
 
-You did not describe what problem you are trying to solve, but the above
-tells me that the design of this feature has a lot of room to be improved
-to be useful for even a single trivial use scenario I can think of off the
-top of my head.
-
-Let's say after tagging v1.7.10, for some reason (as I do not know what
-problem you are trying to solve), I decided to ask my back-up maintainers,
-let's call them Shawn and Jeff, to sign that tag.  Shawn is expected to do
-this:
-
-    spearce$ git fetch tag v1.7.10
-    spearce$ git tag -s -m "This tag is Gitster's" v1.7.10-spearce v1.7.10
-    spearce$ git push http://example.com/spearce/git tags/v1.7.10-spearce
-
-Jeff will do the same, and I'll fetch v1.7.10-spearce and v1.7.10-peff
-tags from them.
-
-It is natural for me to be able to ask "I want to verify all tags that
-point at the object I asked to be signed, namely, v1.7.10" from this
-feature.
-
-But
-
-    gitster$ git verify-tag v1.7.10
-
-would not be a way to do so, as that would check my signature in v1.7.10
-tag itself.
-
-It gets even worse.  Suppose Jeff does this instead by mistake:
-
-    peff$ git fetch v1.7.10
-    peff$ git tag v1.7.10-peff v1.7.10
-    peff$ git push http://example.com/peff/git tags/v1.7.10-peff
-
-Even if you added "git verify-tag --pointed v1.7.10" to disambiguate the
-request to use the new feature, the result is unusable, as I would see:
-
-    gitster$ git verify-tag --pointed v1.7.10
-    v1.7.10-spearce: OK
-    v1.7.10-peff: OK
-
-v1.7.10-spearce and v1.7.10-peff both resolve to my v1.7.10, and they both
-are signed by known key, but v1.7.10-peff is a lightweight tag that points
-directly at my v1.7.10 and I would be seeing a signature of my own as "OK".
+I could but that means "01234" is now in base 8 and that's currently
+accepted as base 10. 0x1234 does not have this problem because current
+git rejects it.
+--=20
+Duy
