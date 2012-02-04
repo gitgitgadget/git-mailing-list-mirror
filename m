@@ -1,114 +1,145 @@
-From: Greg Troxel <gdt@ir.bbn.com>
-Subject: Re: Git performance results on a large repository
-Date: Sat, 04 Feb 2012 16:42:11 -0500
-Message-ID: <rmivcnm2s3w.fsf@fnord.ir.bbn.com>
-References: <CB5074CF.3AD7A%joshua.redstone@fb.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: Breakage in master?
+Date: Sat, 4 Feb 2012 22:55:16 +0100
+Message-ID: <CABPQNSbj8QKqkdY49Y7tpAOQd53t+z6Gc5U-CS0-TZWyNz1WfQ@mail.gmail.com>
+References: <CABPQNSbWu0r_gKGvCHk567pUtQiyDOCO8vFfrzPMFW1eUaj1nw@mail.gmail.com>
+ <20120202174601.GB30857@sigill.intra.peff.net> <CABPQNSZfKCTsuusPpHa2djEOeGVN9z5s_Fr+S3EaHiv7Q4Re9w@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Joshua Redstone <joshua.redstone@fb.com>
-X-From: git-owner@vger.kernel.org Sat Feb 04 22:51:52 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Feb 04 22:56:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtnWQ-0000bD-Sy
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 22:51:51 +0100
+	id 1RtnaU-0002OH-1A
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 22:56:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754399Ab2BDVvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Feb 2012 16:51:46 -0500
-Received: from fnord.ir.bbn.com ([192.1.100.210]:64127 "EHLO fnord.ir.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753741Ab2BDVvp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Feb 2012 16:51:45 -0500
-X-Greylist: delayed 566 seconds by postgrey-1.27 at vger.kernel.org; Sat, 04 Feb 2012 16:51:45 EST
-Received: by fnord.ir.bbn.com (Postfix, from userid 10853)
-	id D246352F8; Sat,  4 Feb 2012 16:42:18 -0500 (EST)
-OpenPGP: id=32611E25
-X-Hashcash: 1:20:120204:git@vger.kernel.org::GKZK/cskngIb3jxz:0000000000000000000000000000000000000000001BTV
-X-Hashcash: 1:20:120204:joshua.redstone@fb.com::VyG8WzyjmHmeVD3e:0000000000000000000000000000000000000001p0N
-In-Reply-To: <CB5074CF.3AD7A%joshua.redstone@fb.com> (Joshua Redstone's
-	message of "Fri, 3 Feb 2012 14:20:06 +0000")
-User-Agent: Gnus/5.130002 (Ma Gnus v0.2) Emacs/23.3 (berkeley-unix)
+	id S1754513Ab2BDVz5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Feb 2012 16:55:57 -0500
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:58321 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754426Ab2BDVz4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 4 Feb 2012 16:55:56 -0500
+Received: by dadp15 with SMTP id p15so3704908dad.19
+        for <git@vger.kernel.org>; Sat, 04 Feb 2012 13:55:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=h8DNmqY8F2wZkac3gnGl6u90cmUPa5T8v+e0BpuSm6A=;
+        b=yBqu96c3AFbZqDthefGWHjT6DUtErkpVkKrrPLe3/+b3ax7GMDis7nAyHEQXIydjgU
+         qQypyt7Vh6JMbQrAIGR7Lc6qspZdZWUIKJNkTBtDdGwo53GowEBj/lR4y2IbJRPrZfgn
+         5hBA8sGAEzdEx8/bSyxwtKaGxLnk7KlfYwBfY=
+Received: by 10.68.218.5 with SMTP id pc5mr31251572pbc.101.1328392556139; Sat,
+ 04 Feb 2012 13:55:56 -0800 (PST)
+Received: by 10.68.222.165 with HTTP; Sat, 4 Feb 2012 13:55:16 -0800 (PST)
+In-Reply-To: <CABPQNSZfKCTsuusPpHa2djEOeGVN9z5s_Fr+S3EaHiv7Q4Re9w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189915>
 
---=-=-=
-Content-Type: text/plain
-
-
-Joshua Redstone <joshua.redstone@fb.com> writes:
-
-> The test repo has 4 million commits, linear history and about 1.3 million
-> files.  The size of the .git directory is about 15GB, and has been
-> repacked with 'git repack -a -d -f --max-pack-size=10g --depth=100
-> --window=250'.  This repack took about 2 days on a beefy machine (I.e.,
-> lots of ram and flash).  The size of the index file is 191 MB. I can share
-> the script that generated it if people are interested - It basically picks
-> 2-5 files, modifies a line or two and adds a few lines at the end
-> consisting of random dictionary words, occasionally creates a new file,
-> commits all the modifications and repeats.
-
-I have a repository with about 500K files, 3.3G checkout, 1.5G .git, and
-about 10K commits.  (This is a real repository, not a test case.)  So
-not as many commits by a lot, but the size seems not so far off.
-
-> I timed a few common operations with both a warm OS file cache and a cold
-> cache.  i.e., I did a 'echo 3 | tee /proc/sys/vm/drop_caches' and then did
-> the operation in question a few times (first timing is the cold timing,
-> the next few are the warm timings).  The following results are on a server
-> with average hard drive (I.e., not flash)  and > 10GB of ram.
+On Fri, Feb 3, 2012 at 1:28 PM, Erik Faye-Lund <kusmabite@gmail.com> wr=
+ote:
+> On Thu, Feb 2, 2012 at 6:46 PM, Jeff King <peff@peff.net> wrote:
+>> On Thu, Feb 02, 2012 at 01:14:19PM +0100, Erik Faye-Lund wrote:
+>>
+>>> But here's the REALLY puzzling part: If I add a simple, unused
+>>> function to diff-lib.c, like this:
+>>> [...]
+>>> "git status" starts to error out with that same vsnprintf complaint=
+!
+>>>
+>>> ---8<---
+>>> $ git status
+>>> # On branch master
+>>> # Changes not staged for commit:
+>>> # =A0 (use "git add <file>..." to update what will be committed)
+>>> fatal: BUG: your vsnprintf is broken (returned -1)
+>>> ---8<---
+>>
+>> OK, that's definitely odd.
+>>
+>> At the moment of the die() in strbuf_vaddf, what does errno say?
 >
-> 'git status' :   39 minutes cold, and 24 seconds warm.
-
-Both of these numbers surprise me.  I'm using NetBSD, whose stat
-implementation isn't as optimized as Linux (you didn't say, but
-assuming).   On a years-old desktop, git status seems to be about a
-minute semi-cold and 5s warm (once I set the vnode cache big over 500K,
-vs 350K default for a 2G ram machine).
-
-So on the warm status, I wonder how big your vnode cache is, and if
-you've exceeded it, and I don't follow the cold time at all.  Probably
-some sort of profiling within git status would be illuminating.
-
-> 'git blame':   44 minutes cold, 11 minutes warm.
+> If I apply this patch:
+> ---8<---
+> diff --git a/strbuf.c b/strbuf.c
+> index ff0b96b..52dfdd6 100644
+> --- a/strbuf.c
+> +++ b/strbuf.c
+> @@ -218,7 +218,7 @@ void strbuf_vaddf(struct strbuf *sb, const char
+> *fmt, va_list ap)
+> =A0 =A0 =A0 =A0len =3D vsnprintf(sb->buf + sb->len, sb->alloc - sb->l=
+en, fmt, cp);
+> =A0 =A0 =A0 =A0va_end(cp);
+> =A0 =A0 =A0 =A0if (len < 0)
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 die("BUG: your vsnprintf is broken (ret=
+urned %d)", len);
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 die_errno("BUG: your vsnprintf is broke=
+n (returned %d)", len);
+> =A0 =A0 =A0 =A0if (len > strbuf_avail(sb)) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0strbuf_grow(sb, len);
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0len =3D vsnprintf(sb->buf + sb->len, s=
+b->alloc - sb->len, fmt, ap);
+> ---8<---
 >
-> 'git add' (appending a few chars to the end of a file and adding it):   7
-> seconds cold and 5 seconds warm.
+> Then I get "fatal: BUG: your vsnprintf is broken (returned -1): Resul=
+t
+> too large". This goes both for both failure cases I described. I
+> assume this means errno=3DERANGE.
 >
-> 'git commit -m "foo bar3" --no-verify --untracked-files=no --quiet
-> --no-status':  41 minutes cold, 20 seconds warm.  I also hacked a version
-> of git to remove the three or four places where 'git commit' stats every
-> file in the repo, and this dropped the times to 30 minutes cold and 8
-> seconds warm.
+>> vsnprintf should generally never be returning -1 (it should return t=
+he
+>> number of characters that would have been written). Since you're on
+>> Windows, I assume you're using the replacement version in
+>> compat/snprintf.c.
+>
+> No. SNPRINTF_RETURNS_BOGUS is only set for the MSVC target, not for
+> the MinGW target. I'm assuming that means MinGW-runtime has a sane
+> vsnprintf implementation. But even if I enable SNPRINTF_RETURNS_BOGUS=
+,
+> the problem occurs. And it's still "Result too large".
+>
+> So I decided to do a bit of stepping, and it seems libintl takes over
+> vsnprintf, directing us to libintl_vsnprintf instead. I guess this is
+> so it can ensure we support reordering the parameters with $1 etc...
+> And aparently this vsnprintf implementation calls the system vnsprint=
+f
+> if the format string does not contain '$', and it's using _vsnprintf
+> rather than vsnprintf on Windows. _vsnprintf is the MSVCRT-version,
+> and not the MinGW-runtime, which needs SNPRINTF_RETURNS_BOGUS.
+>
+> So I guess I can patch libintl to call vsnprintf from MinGW-runtime i=
+nstead.
+>
 
-So without the stat, I wonder what it's doing that takes 30 minutes.
+Indeed, I just got around to testing this, and doing this on top of
+gettext seems to fix the problem for me. For the MSVC, a more
+elaborate fix is needed, as it doesn't have a sane vsnprintf.
 
-> One way to get there is to do some deep code modifications to git
-> internals, to, for example, create some abstractions and interfaces that
-> allow plugging in the specialized servers.  Another way is to leave git
-> internals as they are and develop a layer of wrapper scripts around all
-> the git commands that do the necessary interfacing.  The wrapper scripts
-> seem perhaps easier in the short-term, but may lead to increasing
-> divergence from how git behaves natively and also a layer of complexity.
+---
 
-Having hooks for a blame server cache, etc. sounds sensible.  Having a
-way to call blames sort of like with --since and then keep updating it
-(eg. in emacs) to earlier times sounds useful.
+diff --git a/gettext-runtime/intl/printf.c b/gettext-runtime/intl/print=
+f.c
+index b7cdc5d..f55023e 100644
+--- a/gettext-runtime/intl/printf.c
++++ b/gettext-runtime/intl/printf.c
+@@ -192,7 +192,7 @@ libintl_sprintf (char *resultbuf, const char *forma=
+t, ...)
 
---=-=-=
-Content-Type: application/pgp-signature
+ #if HAVE_SNPRINTF
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (NetBSD)
-
-iEYEARECAAYFAk8tpjMACgkQ+vesoDJhHiVtNQCeP1A3/Yy84s931pgXwVVcGYrC
-4GgAoJWgWXKar3cUeddCdIKAerOKVpYk
-=1rnz
------END PGP SIGNATURE-----
---=-=-=--
+-# if HAVE_DECL__SNPRINTF
++# if HAVE_DECL__SNPRINTF && !defined(__MINGW32__)
+    /* Windows.  */
+ #  define system_vsnprintf _vsnprintf
+ # else
