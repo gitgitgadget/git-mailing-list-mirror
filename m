@@ -1,87 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] t0300: use write_script helper
-Date: Sat, 4 Feb 2012 01:30:18 -0500
-Message-ID: <20120204063018.GB21559@sigill.intra.peff.net>
-References: <20120204062712.GA20076@sigill.intra.peff.net>
+From: Tom Grennan <tmgrennan@gmail.com>
+Subject: Re: [RFC/PATCH] verify-tag: check sig of all tags to given object
+Date: Fri, 3 Feb 2012 22:49:42 -0800
+Message-ID: <20120204064942.GD2477@tgrennan-laptop>
+References: <7v8vkjl24d.fsf@alter.siamese.dyndns.org>
+ <D140688E-B86C-4A67-9AD6-56160C26884D@ericsson.com>
+ <20120204050818.GA2477@tgrennan-laptop>
+ <7vsjirjhp7.fsf@alter.siamese.dyndns.org>
+ <20120204055656.GC2477@tgrennan-laptop>
+ <7vhaz7jf1d.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ben Walton <bwalton@artsci.utoronto.ca>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jasampler@gmail.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 04 07:30:30 2012
+X-From: git-owner@vger.kernel.org Sat Feb 04 07:49:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtZ8k-0004Au-Aa
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 07:30:26 +0100
+	id 1RtZRb-00047v-QY
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 07:49:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751348Ab2BDGaV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Feb 2012 01:30:21 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57310
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751152Ab2BDGaU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Feb 2012 01:30:20 -0500
-Received: (qmail 6371 invoked by uid 107); 4 Feb 2012 06:37:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 04 Feb 2012 01:37:26 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 04 Feb 2012 01:30:18 -0500
+	id S1751479Ab2BDGts (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Feb 2012 01:49:48 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:60879 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751435Ab2BDGtr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Feb 2012 01:49:47 -0500
+Received: by vcge1 with SMTP id e1so3068318vcg.19
+        for <git@vger.kernel.org>; Fri, 03 Feb 2012 22:49:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=jLyP8hoc+bKrUG+5g9gceFzZmSpvR5s/KbDk1I/TEJY=;
+        b=MOt8hyLlvS0vc9lD1Dmi2X1WQhT2h6hOPIPt4zPEc8inDIUH0XSQJF35pCQS8OL3Ln
+         wP4JCsOy/z7DHiXcobHm6J1EZGHcKnDGbj4WdnUmWxDiywLOdvbxr9afw7qcDWR7RgPc
+         DHA+fT3jJJzCb6HTQ7acS3fi/fN+pK7SxMucU=
+Received: by 10.220.156.199 with SMTP id y7mr6175049vcw.2.1328338186802;
+        Fri, 03 Feb 2012 22:49:46 -0800 (PST)
+Received: from localhost (c-98-207-169-74.hsd1.ca.comcast.net. [98.207.169.74])
+        by mx.google.com with ESMTPS id h2sm5323867vdi.18.2012.02.03.22.49.44
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 03 Feb 2012 22:49:45 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20120204062712.GA20076@sigill.intra.peff.net>
+In-Reply-To: <7vhaz7jf1d.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189852>
 
-t0300 creates some helper shell scripts, and marks them with
-"!/bin/sh". Even though the scripts are fairly simple, they
-can fail on broken shells (specifically, Solaris /bin/sh
-will persist a temporary assignment to IFS in a "read"
-command).
+On Fri, Feb 03, 2012 at 10:20:14PM -0800, Junio C Hamano wrote:
+>Tom Grennan <tmgrennan@gmail.com> writes:
+>
+>> On Fri, Feb 03, 2012 at 09:22:44PM -0800, Junio C Hamano wrote:
+>>>Tom Grennan <tmgrennan@gmail.com> writes:
+>>>
+>>>> Wouldn't you want Shawn and Jeff to tag the object (commit, tree, or
+>>>> blob) that you had tagged?
+>>>
+>>>No.
+>>>
+>>>We _designed_ our tag objects so that they are capable of pointing at
+>>>another tag, not the object that is pointed at that other tag.  And that
+>>>is the example usage I gave you.
+>>>
+>>>The statement by Shawn and Jeff, "This tag is Gitster's" is exactly that.
+>>>It was not about asserting the authenticity of the commit. It was about
+>>>the tag object I created.
+>>
+>> Hmm, how about "git verify-tag [[-v] [--to]] <tag|object>"?
+>> With "--to", all tags to the given tag (or object) are verified.
+>> Without "--to" just the given <tag> is verified.
+>>
+>>>>    gitster$ git verify-tag --pointed v1.7.10
+>>>>    tag v1.7.10: OK
+>>>
+>>>Just saying "$name: OK" will *never* be acceptable. "A signature made by
+>>>any key in my keychain is fine" is not the usual use case. At least the
+>>>output needs to be "Good signature from X".
+>>
+>> OK, I'll have to play with the gpg --verify-options.
+>
+>If it wasn't clear enough from my other message, I would rather not to see
+>any change to --verify codepath as the first step.  Don't you think that
+>the simplest and cleanest first step is to add --points-at to the list
+>mode, so that with help from "| xargs git tag -v" you can bulk-verify
+>without any other change?
 
-Rather than work around the problem for Solaris /bin/sh,
-using write_script will make sure we point to a known-good
-shell that the user has given us.
+No, I missed that. So you're suggesting,
+git tag [-n[<num>]] -l [--contains <commit>] [--points-at <object>] [<pattern>...]
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This works fine on my Linux box, but just to sanity check that I didn't
-screw anything up in the whopping 5 lines of changes, can you confirm
-this fixes the issue for you, Ben?
+If so, I'll look into it tomorrow.
 
- t/t0300-credentials.sh |    6 ++----
- 1 files changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
-index 885af8f..0b46248 100755
---- a/t/t0300-credentials.sh
-+++ b/t/t0300-credentials.sh
-@@ -14,14 +14,13 @@ test_expect_success 'setup helper scripts' '
- 	done
- 	EOF
- 
--	cat >git-credential-useless <<-\EOF &&
-+	write_script git-credential-useless <<-\EOF &&
- 	#!/bin/sh
- 	. ./dump
- 	exit 0
- 	EOF
--	chmod +x git-credential-useless &&
- 
--	cat >git-credential-verbatim <<-\EOF &&
-+	write_script git-credential-verbatim <<-\EOF &&
- 	#!/bin/sh
- 	user=$1; shift
- 	pass=$1; shift
-@@ -29,7 +28,6 @@ test_expect_success 'setup helper scripts' '
- 	test -z "$user" || echo username=$user
- 	test -z "$pass" || echo password=$pass
- 	EOF
--	chmod +x git-credential-verbatim &&
- 
- 	PATH="$PWD:$PATH"
- '
--- 
-1.7.9.rc1.28.gf4be5
+thanks,
+TomG
