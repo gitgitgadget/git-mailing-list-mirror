@@ -1,117 +1,72 @@
-From: Evgeny Sazhin <euguess@gmail.com>
-Subject: Re: Git performance results on a large repository
-Date: Fri, 3 Feb 2012 20:25:59 -0500
-Message-ID: <6E708713-3DEF-40A2-9585-690707166BDF@gmail.com>
-References: <CB5074CF.3AD7A%joshua.redstone@fb.com> <CACBZZX4BsFZxB6A-Hg-k37FBavgTV8SDiQTK_sVh9Mb9iskiEw@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1251.1)
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Joshua Redstone <joshua.redstone@fb.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 04 02:26:31 2012
+From: Andrew Keller <andrew@kellerfarm.com>
+Subject: Installing git-svn on Linux without root
+Date: Fri, 3 Feb 2012 21:10:32 -0500
+Message-ID: <35EF289A-1408-4B70-A25F-8194A8884A4D@kellerfarm.com>
+Mime-Version: 1.0 (Apple Message framework v1084)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Feb 04 03:56:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtUOb-00086C-So
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 02:26:30 +0100
+	id 1RtVnr-0008GP-1H
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 03:56:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752149Ab2BDB0F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Feb 2012 20:26:05 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:37954 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752300Ab2BDB0D convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Feb 2012 20:26:03 -0500
-Received: by qadc10 with SMTP id c10so1119318qad.19
-        for <git@vger.kernel.org>; Fri, 03 Feb 2012 17:26:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=Y72Tx2C5vSqb3joNtH0w9LCOmy0AcR3UR3HVEhz43oc=;
-        b=s/QB/e+8beywr/QjGGBz3rspNTjNT6cQnxRmHPMwlMq+vqK5r2du/nDu5S31F1RYZh
-         OpWpfDtp4YHmxIfdkLO565QWWaJA35E3YPRKr0nVxDQDkyiBidOgss994MIoywk7/t/W
-         ZspKxlEL9/WOfgipZJc2wdRWu0s+zO59oeSkM=
-Received: by 10.224.183.81 with SMTP id cf17mr11664749qab.48.1328318762732;
-        Fri, 03 Feb 2012 17:26:02 -0800 (PST)
-Received: from 192.168.1.20 (ool-44c70b0d.dyn.optonline.net. [68.199.11.13])
-        by mx.google.com with ESMTPS id g13sm15254300qah.0.2012.02.03.17.26.00
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 03 Feb 2012 17:26:00 -0800 (PST)
-In-Reply-To: <CACBZZX4BsFZxB6A-Hg-k37FBavgTV8SDiQTK_sVh9Mb9iskiEw@mail.gmail.com>
-X-Mailer: Apple Mail (2.1251.1)
+	id S1752636Ab2BDC40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Feb 2012 21:56:26 -0500
+Received: from sanjose.tchmachines.com ([208.76.86.38]:59872 "EHLO
+	leia.tchmachines.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750830Ab2BDC4Z convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Feb 2012 21:56:25 -0500
+X-Greylist: delayed 2726 seconds by postgrey-1.27 at vger.kernel.org; Fri, 03 Feb 2012 21:56:25 EST
+Received: from c-208-53-113-112.customer.broadstripe.net ([208.53.113.112] helo=[192.168.0.197])
+	by leia.tchmachines.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.69)
+	(envelope-from <andrew@kellerfarm.com>)
+	id 1RtV5W-0004e0-SJ
+	for git@vger.kernel.org; Fri, 03 Feb 2012 21:10:51 -0500
+X-Mailer: Apple Mail (2.1084)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - leia.tchmachines.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - kellerfarm.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189837>
 
-=20
+I am attempting to install git, including the ability to access subversion repositories on a Linux machine.  I do not have root access on the machine, so I prepended my PATH with a folder in my home directory.
 
-On Feb 3, 2012, at 9:56 AM, =C6var Arnfj=F6r=F0 Bjarmason wrote:
+Installing Git worked just fine, but when I try to clone a subversion repository, I get:
 
-> On Fri, Feb 3, 2012 at 15:20, Joshua Redstone <joshua.redstone@fb.com=
-> wrote:
->=20
->> We (Facebook) have been investigating source control systems to meet=
- our
->> growing needs.  We already use git fairly widely, but have noticed i=
-t
->> getting slower as we grow, and we want to make sure we have a good s=
-tory
->> going forward.  We're debating how to proceed and would like to soli=
-cit
->> people's thoughts.
->=20
-> Where I work we also have a relatively large Git repository. Around
-> 30k files, a couple of hundred thousand commits, clone size around
-> half a GB.
->=20
-> You haven't supplied background info on this but it really seems to m=
-e
-> like your testcase is converting something like a humongous Perforce
-> repository directly to Git.
->=20
-> While you /can/ do this it's not a good idea, you should split up
-> repositories at the boundaries code or data doesn't directly cross
-> over, e.g. there's no reason why you need HipHop PHP in the same
-> repository as Cassandra or the Facebook chat system, is there?
->=20
-> While Git could better with large repositories (in particular applyin=
-g
-> commits in interactive rebase seems to be to slow down on bigger
-> repositories) there's only so much you can do about stat-ing 1.3
-> million files.
->=20
-> A structure that would make more sense would be to split up that gian=
-t
-> repository into a lot of other repositories, most of them probably
-> have no direct dependencies on other components, but even those that
-> do can sometimes just use some other repository as a submodule.
->=20
-> Even if you have the requirement that you'd like to roll out
-> *everything* at a certain point in time you can still solve that with
-> a super-repository that has all the other ones as submodules, and
-> creates a tag for every rollout or something like that.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+$ git svn clone file:///svn --prefix=svn/ --no-metadata --trunk=dba/trunk --branches=dba/branches --tags=dba/tags dba
+Initialized empty Git repository in /home/kelleran/Documents/togit/converted/dba/.git/
+Can't locate SVN/Core.pm in @INC (@INC contains: /homedirs/kelleran/local/lib/perl5/site_perl/5.8.8 /usr/lib64/perl5/site_perl/5.8.8/x86_64-linux-thread-multi /usr/lib/perl5/site_perl/5.8.8 /usr/lib/perl5/site_perl /usr/lib64/perl5/vendor_perl/5.8.8/x86_64-linux-thread-multi /usr/lib/perl5/vendor_perl/5.8.8 /usr/lib/perl5/vendor_perl /usr/lib64/perl5/5.8.8/x86_64-linux-thread-multi /usr/lib/perl5/5.8.8 .) at /homedirs/kelleran/local/libexec/git-core/git-svn line 41.
 
+Google suggested that the above error could be due to missing perl bindings.  So, I installed swig, and followed the instructions for installing the perl bindings: http://svn.apache.org/repos/asf/subversion/trunk/subversion/bindings/swig/INSTALL (I used the alternate build steps, since I had to set the prefix).
 
+Unfortunately, I still get exactly the same error.  So, I looked to see whether or not the missing library was installed:
 
-I concur. I'm working in the company with many years of development his=
-tory with several huge CVS repos and we are slowly but surely migrating=
- the codebase from CVS to Git.=20
-Split the things up. This will allow you to reorganize things better an=
-d there is IMHO no downsides.=20
-As for rollout - i think this job should be given to build/release syst=
-em that will have an ability to gather necessary code from different re=
-pos and tag it properly.
+$ find ~/local -iname Core.pm
+/homedirs/kelleran/local/lib64/perl5/site_perl/5.8.8/x86_64-linux-thread-multi/SVN/Core.pm
 
-just my 2 cents
+So, the module does exist, but not in a location included by @INC.  This sounds like a simple misconfiguration during the installation on my part, but after reading the manuals and searching the web, I was unable to find a parameter that gets git to be able to see the perl bindings.
+
+I'm guessing I need either more sleep or a fresh point of view.  Any thoughts?
+
+The machine is running Linux 2.6.32 64-bit, and has perl 5.8.8.  Of the software I installed, I am using:
+  libpcre 8.21
+  swig 2.8.4
+  neon 0.29.6
+  apr 1.3.x
+  apr-util 1.3.x
+  subversion 1.7.2
+  git 1.7.9
 
 Thanks,
-Eugene
+Andrew Keller
