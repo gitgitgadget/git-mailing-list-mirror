@@ -1,60 +1,62 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/3] t: mailmap: add simple name translation test
-Date: Sat, 4 Feb 2012 14:12:18 -0600
-Message-ID: <20120204201218.GF22928@burratino>
-References: <1328385024-6955-1-git-send-email-felipe.contreras@gmail.com>
- <1328385024-6955-4-git-send-email-felipe.contreras@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 0/5] gitweb: Faster and imrpoved project search
+Date: Sat, 4 Feb 2012 21:59:00 +0100
+Message-ID: <201202042159.00950.jnareb@gmail.com>
+References: <1328359648-29511-1-git-send-email-jnareb@gmail.com> <CAMP44s2gLvXXCTTpAV78=DeJA9dSV793+bx=yJmns7vCwegagQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Marius Storm-Olsen <marius@trolltech.com>,
-	Jim Meyering <jim@meyering.net>
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 04 21:12:53 2012
+X-From: git-owner@vger.kernel.org Sat Feb 04 21:59:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rtlyc-0006D3-NH
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 21:12:51 +0100
+	id 1RtmhQ-000290-Ma
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 21:59:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754606Ab2BDUMq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Feb 2012 15:12:46 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:62696 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754175Ab2BDUMq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Feb 2012 15:12:46 -0500
-Received: by iacb35 with SMTP id b35so6446440iac.19
-        for <git@vger.kernel.org>; Sat, 04 Feb 2012 12:12:45 -0800 (PST)
+	id S1752555Ab2BDU7D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Feb 2012 15:59:03 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:56775 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751972Ab2BDU7B (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Feb 2012 15:59:01 -0500
+Received: by eaah12 with SMTP id h12so1954073eaa.19
+        for <git@vger.kernel.org>; Sat, 04 Feb 2012 12:59:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=5jSicIYJgKsLtPErHy6wEVc92SlHwO4MhwtRUeosExE=;
-        b=jNvsZxgOUmP9BUXrPLpRLeY8x4jWp/4kVzZIPu/Wpwp7D2yM/YPgc3bcgeW8g7tkc0
-         PsDH7Pyt9v5FogG8SYk3ixdNpzu6VAc94OggNaWvNn8tqtKq4jdOqTaC/LpLlfrcueR6
-         345JnIyyMm76xLkGTM7oVYW43g8lXb8U/DKUg=
-Received: by 10.43.51.66 with SMTP id vh2mr11322671icb.39.1328386365819;
-        Sat, 04 Feb 2012 12:12:45 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id f26sm7741196ibc.9.2012.02.04.12.12.44
-        (version=SSLv3 cipher=OTHER);
-        Sat, 04 Feb 2012 12:12:45 -0800 (PST)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=/7h3Fy5cWvQcCZkkvsXMgtnz0fBWvvR+8+Wz3T41CUA=;
+        b=mpFwxtJCx2yi57XNnrW5KSEU7PHjSfK33hkvacSHv+vbJLDzR/Vr1wkKWkLIZ63wSA
+         ubNZbhfggrLuh8v86oPGmebzaP0NHwE6dPTgnKqbYNu66xTVC5GUjX7AEgPEmztTL8/h
+         yWUA8Qh9QWnOg5wlXDp/YT+v+YGZOnL6hxhmk=
+Received: by 10.213.28.5 with SMTP id k5mr489361ebc.35.1328389140379;
+        Sat, 04 Feb 2012 12:59:00 -0800 (PST)
+Received: from [192.168.1.13] (abwp204.neoplus.adsl.tpnet.pl. [83.8.239.204])
+        by mx.google.com with ESMTPS id o49sm39451504eei.0.2012.02.04.12.58.58
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 04 Feb 2012 12:58:59 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <CAMP44s2gLvXXCTTpAV78=DeJA9dSV793+bx=yJmns7vCwegagQ@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <1328385024-6955-4-git-send-email-felipe.contreras@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189907>
 
-Felipe Contreras wrote:
+On Sat, 4 Feb 2012, Felipe Contreras wrote:
+> 
+> Typo: improved
 
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+Yeah, I have noticed this just as I have send it, but because it is in 
+_cover letter_ rather than in commit message...
 
-Similar comments to the last patch apply here.  This time the patch
-is even more mysterious, since it seems to touch a number of test
-assertions, even while I assume not all of them relate to whatever
-this is supposed to check for.
+-- 
+Jakub Narebski
+Poland
