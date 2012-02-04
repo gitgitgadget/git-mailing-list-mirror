@@ -1,105 +1,138 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Installing git-svn on Linux without root
-Date: Sat, 04 Feb 2012 03:32:18 -0800 (PST)
-Message-ID: <m3mx8yltq9.fsf@localhost.localdomain>
-References: <35EF289A-1408-4B70-A25F-8194A8884A4D@kellerfarm.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Andrew Keller <andrew@kellerfarm.com>
-X-From: git-owner@vger.kernel.org Sat Feb 04 12:32:33 2012
+Subject: [PATCH 1/5] gitweb: Option for filling only specified info in fill_project_list_info
+Date: Sat,  4 Feb 2012 13:47:24 +0100
+Message-ID: <1328359648-29511-2-git-send-email-jnareb@gmail.com>
+References: <1328359648-29511-1-git-send-email-jnareb@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 04 13:47:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rtdr5-0002eN-Qp
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 12:32:32 +0100
+	id 1Rtf1t-0003Yi-77
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 13:47:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752513Ab2BDLcX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Feb 2012 06:32:23 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:58884 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751612Ab2BDLcU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Feb 2012 06:32:20 -0500
-Received: by eekc14 with SMTP id c14so1477597eek.19
-        for <git@vger.kernel.org>; Sat, 04 Feb 2012 03:32:18 -0800 (PST)
+	id S1754046Ab2BDMri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Feb 2012 07:47:38 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:45531 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754175Ab2BDMrg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Feb 2012 07:47:36 -0500
+Received: by mail-ey0-f174.google.com with SMTP id h12so1791879eaa.19
+        for <git@vger.kernel.org>; Sat, 04 Feb 2012 04:47:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=cCDyHVh+eJpXHr4ujsv3MhDzIwD6g2OgBg8AUE140Sg=;
-        b=X0yKOb4i0YZ/U+udfDuKfAmqA71LPiu1USnuKsRkeHWLLTktb/pyF9VU5L7m0xAHfv
-         gEr3k+/MuL+7abZSmRJXZOeLgUDknNYPpUW1eKa9DgytNhekYMop1/Nj42gnrgY+apLv
-         VEw8KnotpfaHPpyhnZNqDvS5iQYxH0w7excS8=
-Received: by 10.14.50.206 with SMTP id z54mr3327800eeb.127.1328355138802;
-        Sat, 04 Feb 2012 03:32:18 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=Pdlp4+lFc7U+sot9xktHbI0LbBTWxTOUheovMJ5L0l8=;
+        b=cH8g4C9BIWuQKWA2bkMvJeHm6ukStlP2aBBDs9lyytOQVddC/FcleSs0EzwlMsGUgr
+         X7F64k8AA4K4kL19Aym9jCG2sidSxbocXvi+R10LTHnADU8gu0d5kNhdB2xizB45obff
+         a77J46UvdUqns64Z9V1pXPc9uVOT2SrZZrB38=
+Received: by 10.213.15.70 with SMTP id j6mr307139eba.52.1328359656250;
+        Sat, 04 Feb 2012 04:47:36 -0800 (PST)
 Received: from localhost.localdomain (abwn75.neoplus.adsl.tpnet.pl. [83.8.237.75])
-        by mx.google.com with ESMTPS id b3sm33816996een.2.2012.02.04.03.32.17
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 04 Feb 2012 03:32:18 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q14BWG4E028563;
-	Sat, 4 Feb 2012 12:32:16 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q14BWFYg028560;
-	Sat, 4 Feb 2012 12:32:15 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <35EF289A-1408-4B70-A25F-8194A8884A4D@kellerfarm.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        by mx.google.com with ESMTPS id z47sm26890568eeh.9.2012.02.04.04.47.34
+        (version=SSLv3 cipher=OTHER);
+        Sat, 04 Feb 2012 04:47:35 -0800 (PST)
+X-Mailer: git-send-email 1.7.9
+In-Reply-To: <1328359648-29511-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189863>
 
-Andrew Keller <andrew@kellerfarm.com> writes:
+Introduce project_info_needs_filling($pr, $key[, @fill_only]), which
+is now used in place of simple 'defined $pr->{$key}' to check if
+specific slot in project needs to be filled.
 
-> I am attempting to install git, including the ability to access
-> subversion repositories on a Linux machine.  I do not have root
-> access on the machine, so I prepended my PATH with a folder in my
-> home directory.
-> 
-> Installing Git worked just fine, but when I try to clone a
-> subversion repository, I get:
-> 
-> $ git svn clone file:///svn --prefix=svn/ --no-metadata --trunk=dba/trunk --branches=dba/branches --tags=dba/tags dba
-> Initialized empty Git repository in /home/kelleran/Documents/togit/converted/dba/.git/
-> Can't locate SVN/Core.pm in @INC (@INC contains: /homedirs/kelleran/local/lib/perl5/site_perl/5.8.8 /usr/lib64/perl5/site_perl/5.8.8/x86_64-linux-thread-multi /usr/lib/perl5/site_perl/5.8.8 /usr/lib/perl5/site_perl /usr/lib64/perl5/vendor_perl/5.8.8/x86_64-linux-thread-multi /usr/lib/perl5/vendor_perl/5.8.8 /usr/lib/perl5/vendor_perl /usr/lib64/perl5/5.8.8/x86_64-linux-thread-multi /usr/lib/perl5/5.8.8 .) at /homedirs/kelleran/local/libexec/git-core/git-svn line 41.
-> 
-> Google suggested that the above error could be due to missing perl
-> bindings.  So, I installed swig, and followed the instructions for
-> installing the perl bindings:
-> http://svn.apache.org/repos/asf/subversion/trunk/subversion/bindings/swig/INSTALL
-> (I used the alternate build steps, since I had to set the prefix).
-> 
-> Unfortunately, I still get exactly the same error.  So, I looked to
-> see whether or not the missing library was installed:
-> 
-> $ find ~/local -iname Core.pm
-> /homedirs/kelleran/local/lib64/perl5/site_perl/5.8.8/x86_64-linux-thread-multi/SVN/Core.pm
-> 
-> So, the module does exist, but not in a location included by @INC.
+This is in preparation of future lazy filling of project info in
+project search and pagination of sorted list of projects.  The only
+functional change is that fill_project_list_info() now checks if 'age'
+is already filled before running git_get_last_activity().
 
->From the above error message it looks like
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+This could have been squashed with the next commit, but this way it is
+pure refactoring that shouldn't change gitweb behavior.
 
-  /homedirs/kelleran/local/lib/perl5/site_perl/5.8.8
+Adding project_info_needs_filling() subroutine could have been split
+into separate commit, but it would be subroutine without use...
 
-is in @INC, but
+ gitweb/gitweb.perl |   41 +++++++++++++++++++++++++++++++----------
+ 1 files changed, 31 insertions(+), 10 deletions(-)
 
-  /homedirs/kelleran/local/lib64/perl5/site_perl/5.8.8/x86_64-linux-thread-multi/
-
-is not.  Strange.
-
-Do you use local::lib?
-
-> This sounds like a simple misconfiguration during the installation
-> on my part, but after reading the manuals and searching the web, I
-> was unable to find a parameter that gets git to be able to see the
-> perl bindings.
-
-Add missing directory to PATH-like PERL5LIB environment variable
-before running git-svn.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 913a463..b7a3752 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -5185,35 +5185,56 @@ sub git_project_search_form {
+ 	print "</div>\n";
+ }
  
++# entry for given $key doesn't need filling if either $key already exists
++# in $project_info hash, or we are interested only in subset of keys
++# and given key is not among @fill_only.
++sub project_info_needs_filling {
++	my ($project_info, $key, @fill_only) = @_;
++
++	if (!@fill_only ||            # we are interested in everything
++	    grep { $key eq $_ } @fill_only) { # or key is in @fill_only
++		# check if key is already filled
++		return !exists $project_info->{$key};
++	}
++	# uninteresting key, outside @fill_only
++	return 0;
++}
++
+ # fills project list info (age, description, owner, category, forks)
+ # for each project in the list, removing invalid projects from
+-# returned list
++# returned list, or fill only specified info (removing invalid projects
++# only when filling 'age').
++#
+ # NOTE: modifies $projlist, but does not remove entries from it
+ sub fill_project_list_info {
+-	my $projlist = shift;
++	my ($projlist, @fill_only) = @_;
+ 	my @projects;
+ 
+ 	my $show_ctags = gitweb_check_feature('ctags');
+  PROJECT:
+ 	foreach my $pr (@$projlist) {
+-		my (@activity) = git_get_last_activity($pr->{'path'});
+-		unless (@activity) {
+-			next PROJECT;
++		if (project_info_needs_filling($pr, 'age', @fill_only)) {
++			my (@activity) = git_get_last_activity($pr->{'path'});
++			unless (@activity) {
++				next PROJECT;
++			}
++			($pr->{'age'}, $pr->{'age_string'}) = @activity;
+ 		}
+-		($pr->{'age'}, $pr->{'age_string'}) = @activity;
+-		if (!defined $pr->{'descr'}) {
++		if (project_info_needs_filling($pr, 'descr', @fill_only)) {
+ 			my $descr = git_get_project_description($pr->{'path'}) || "";
+ 			$descr = to_utf8($descr);
+ 			$pr->{'descr_long'} = $descr;
+ 			$pr->{'descr'} = chop_str($descr, $projects_list_description_width, 5);
+ 		}
+-		if (!defined $pr->{'owner'}) {
++		if (project_info_needs_filling($pr, 'owner', @fill_only)) {
+ 			$pr->{'owner'} = git_get_project_owner("$pr->{'path'}") || "";
+ 		}
+-		if ($show_ctags) {
++		if ($show_ctags &&
++		    project_info_needs_filling($pr, 'ctags', @fill_only)) {
+ 			$pr->{'ctags'} = git_get_project_ctags($pr->{'path'});
+ 		}
+-		if ($projects_list_group_categories && !defined $pr->{'category'}) {
++		if ($projects_list_group_categories &&
++		    project_info_needs_filling($pr, 'category', @fill_only)) {
+ 			my $cat = git_get_project_category($pr->{'path'}) ||
+ 			                                   $project_list_default_category;
+ 			$pr->{'category'} = to_utf8($cat);
 -- 
-Jakub Narebski
+1.7.9
