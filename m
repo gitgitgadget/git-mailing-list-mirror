@@ -1,59 +1,93 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v4 10/13] branch: add --column
-Date: Sat, 4 Feb 2012 12:01:18 +0700
-Message-ID: <CACsJy8AdSh_XH4o29yfEG8AxUK-=+zdeLanZA7C81qExiJQceQ@mail.gmail.com>
-References: <1328276078-27955-1-git-send-email-pclouds@gmail.com>
- <1328276078-27955-11-git-send-email-pclouds@gmail.com> <7vwr83ldfz.fsf@alter.siamese.dyndns.org>
+From: Joey Hess <joey@kitenet.net>
+Subject: Re: Git performance results on a large repository
+Date: Sat, 4 Feb 2012 01:07:12 -0400
+Message-ID: <20120204050712.GA2460@gnu.kitenet.net>
+References: <CB5074CF.3AD7A%joshua.redstone@fb.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 04 06:02:24 2012
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="4Ckj6UjgE2iN1+kY"
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Joshua Redstone <joshua.redstone@fb.com>
+X-From: git-owner@vger.kernel.org Sat Feb 04 06:08:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtXlP-0000EC-GC
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 06:02:15 +0100
+	id 1RtXrE-0002z5-VI
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Feb 2012 06:08:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750748Ab2BDFBu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Feb 2012 00:01:50 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:52784 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750714Ab2BDFBt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Feb 2012 00:01:49 -0500
-Received: by bkcjm19 with SMTP id jm19so3584757bkc.19
-        for <git@vger.kernel.org>; Fri, 03 Feb 2012 21:01:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=OdawxaYsEa2dnylheNeNTLLbex1fn0x9UHewj8AD5bg=;
-        b=Xz10fFA3GDsmq4uqemPwTvnVdQuZcuW7BnTfiLC1ADD5PzKMKszrdSyL8WBCFBDOtU
-         sVmlBv9XpGTonG6DgK11XyNLeuNxJ7sVmFgoKv7CmU0WFP+BbB5jANRP52xAXuOfT3jb
-         y8Xys4Vq42VNvAL8eMbi/tq6aF+xNS93fvLqM=
-Received: by 10.204.157.17 with SMTP id z17mr4659091bkw.37.1328331708366; Fri,
- 03 Feb 2012 21:01:48 -0800 (PST)
-Received: by 10.204.33.70 with HTTP; Fri, 3 Feb 2012 21:01:18 -0800 (PST)
-In-Reply-To: <7vwr83ldfz.fsf@alter.siamese.dyndns.org>
+	id S1750777Ab2BDFHr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Feb 2012 00:07:47 -0500
+Received: from wren.kitenet.net ([80.68.85.49]:55442 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750714Ab2BDFHr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Feb 2012 00:07:47 -0500
+Received: from gnu.kitenet.net (dialup-4.153.81.96.Dial1.Atlanta1.Level3.net [4.153.81.96])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id 4B65411805F;
+	Sat,  4 Feb 2012 00:07:43 -0500 (EST)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id 18EDA49C66; Sat,  4 Feb 2012 00:07:12 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <CB5074CF.3AD7A%joshua.redstone@fb.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189841>
 
-2012/2/4 Junio C Hamano <gitster@pobox.com>:
-> I am not sure about the utility of columnar output for "git branch" i=
-n the
-> short form. =C2=A0You no longer can just scan the leftmost column to =
-scan for
-> '*' to see the current branch.
 
-I rely on color for that. Without color you may need to scan more
-columns for '*'. Though I would really like to see "git branch
---current" added to show just current branch if I'm on colorless
-terminal.
+--4Ckj6UjgE2iN1+kY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Joshua Redstone wrote:
+> The test repo has 4 million commits, linear history and about 1.3 million
+> files.
+
+Have you tried separating these two factors, to see how badly each is
+affecting performance?
+
+If the number of commits is the problem (seems likely for git blame at
+least), a shallow clone would avoid that overhead.
+
+I think that git often writes .git/index inneficiently when staging
+files (though your `git add` is pretty fast) and committing. It rewrites
+the whole file to .git/index.lck and the renames it over .git/index at
+the end. I have code that keeps a journal of changes to avoid rewriting
+the index repeatedly, but it's application specific. Fixing git to write
+the index more intelligently is something I'd like to see.
+
+Hint for git status: `git status .` in a smaller subdirectory will be much
+faster than the default that stats everything.
+
 --=20
-Duy
+see shy jo
+
+--4Ckj6UjgE2iN1+kY
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIVAwUBTyy8/8kQ2SIlEuPHAQi4NBAAn2gVGzMXymR4UaUbm9tPvCLciY7Ujhca
+aYGtukz4TTdQTg/b1U36EXGJK1SU13gonyPDYNxmHPZOvsHy15Zhy9bEheu6/xAu
+E1xMufdAdXyLPitCE+X98YjbcPTB8ZIIXG6Fw2+mFgHy+Vq9A0RzuaM0Sh5ZpgEs
+ZHbrAKEWOrF2anjmpBJGyVFGfISuxrhJBhSyFbJxVtC4xgL0HBp5ZbNhhR1JXjeI
+k0qHh4b3UQbh2tU7EqGPcrgum0ceUvNeJsTsrtM1grqdBv4qQLXl4yiFXEf98NyF
+JvzPes2ko+8+4H28k17HL01ApVJ7yLoj3g+RufPCb6ytc2qngZ1nIoMVY4uJjW0p
+qpSQQSwh6j9OSwyl12E5VcnIRsF1hWLvRPcwSFGiEDVnrPk7qAbBld9V7CI4Rj9Y
+K2EhhXg/v8Z8mc29NuIZBcX9+wS7Q6m+B8MXodoCk23vCDoDLS1vz05HGU8Ljm/Q
+s0GZtV1g5C94Cg8Lwt5x4QenfeT9/fZT65QDhOhvfOk8WsRnw1UJSbNdgCbFzrRc
+l/M12088mYLDQMBw+vh2ZWzhkK8JDpxSyH46e8zPjBkp0ggeTCrzkAkmei6zt0T8
+YPD0Q87SkHU0P/Cjij2XitsVx9axWhwcm1knhYhuw4KwL32e2BXKVTG4XQwJ884V
+Y0gKIy/SCk8=
+=1imm
+-----END PGP SIGNATURE-----
+
+--4Ckj6UjgE2iN1+kY--
