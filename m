@@ -1,81 +1,116 @@
-From: Tomas Carnecky <tom@dbservice.com>
-Subject: Re: Git performance results on a large repository
-Date: Sun, 05 Feb 2012 16:01:22 +0100
-Message-ID: <4F2E99C2.7090609@dbservice.com>
-References: <CB5074CF.3AD7A%joshua.redstone@fb.com> <CACsJy8DkLCK0ZUKNz_PJazsxjsRbWVVZwjAU5n2EAjJfCYtpoQ@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFD] Rewriting safety - warn before/when rewriting published history
+Date: Sun, 5 Feb 2012 17:15:38 +0100
+Message-ID: <201202051715.38896.jnareb@gmail.com>
+References: <201202042045.54114.jnareb@gmail.com> <CAFA910035B74E56A52A96097E76AC39@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: Joshua Redstone <joshua.redstone@fb.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 05 16:35:09 2012
+Cc: git@vger.kernel.org
+To: "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Sun Feb 05 17:15:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ru47P-0007UC-F3
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Feb 2012 16:35:07 +0100
+	id 1Ru4kp-0008Pg-2E
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Feb 2012 17:15:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752130Ab2BEPe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Feb 2012 10:34:57 -0500
-Received: from static.133.192.47.78.clients.your-server.de ([78.47.192.133]:53643
-	"EHLO office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752994Ab2BEPe5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Feb 2012 10:34:57 -0500
-X-Greylist: delayed 2005 seconds by postgrey-1.27 at vger.kernel.org; Sun, 05 Feb 2012 10:34:56 EST
-X-Spam-Status: No, hits=0.0 required=5.0
-	tests=AWL: 0.053,BAYES_00: -1.665,TOTAL_SCORE: -1.612,autolearn=ham
-X-Spam-Level: 
-X-Footer: ZGJzZXJ2aWNlLmNvbQ==
-Received: from calvin.local ([62.65.141.13])
-	(authenticated user tom@dbservice.com)
-	by office.neopsis.com
-	(using TLSv1/SSLv3 with cipher AES256-SHA (256 bits));
-	Sun, 5 Feb 2012 16:01:22 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:10.0) Gecko/20120124 Thunderbird/10.0
-In-Reply-To: <CACsJy8DkLCK0ZUKNz_PJazsxjsRbWVVZwjAU5n2EAjJfCYtpoQ@mail.gmail.com>
+	id S1752719Ab2BEQPq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Feb 2012 11:15:46 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:56611 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751799Ab2BEQPq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Feb 2012 11:15:46 -0500
+Received: by eaah12 with SMTP id h12so2170146eaa.19
+        for <git@vger.kernel.org>; Sun, 05 Feb 2012 08:15:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=Hz8ywplwMQD+Vy0eyBPTAU6R/c6C8UVkTgN8KI/ybuU=;
+        b=J7ufwQ4D943n/cgjKoGWDoTcD18Ykw1K5B5rBY0njquGm5s+E/Vj115oFvpxmnBHw7
+         KK7t2SF+OJiM3meOSVSkvTesr7+XcfOIWduS/NOkjYM+Ia/94zN7KtIt4Mdc39fUERGL
+         RpnKcuIRkauTwMvCtGL163MIRXrZi02+NqY44=
+Received: by 10.213.8.75 with SMTP id g11mr849903ebg.77.1328458543475;
+        Sun, 05 Feb 2012 08:15:43 -0800 (PST)
+Received: from [192.168.1.13] (abvp235.neoplus.adsl.tpnet.pl. [83.8.213.235])
+        by mx.google.com with ESMTPS id n56sm49867970eeh.6.2012.02.05.08.15.41
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 05 Feb 2012 08:15:42 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <CAFA910035B74E56A52A96097E76AC39@PhilipOakley>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189946>
 
-On 2/4/12 7:53 AM, Nguyen Thai Ngoc Duy wrote:
-> On Fri, Feb 3, 2012 at 9:20 PM, Joshua Redstone<joshua.redstone@fb.com>  wrote:
->> I timed a few common operations with both a warm OS file cache and a cold
->> cache.  i.e., I did a 'echo 3 | tee /proc/sys/vm/drop_caches' and then did
->> the operation in question a few times (first timing is the cold timing,
->> the next few are the warm timings).  The following results are on a server
->> with average hard drive (I.e., not flash)  and>  10GB of ram.
->>
->> 'git status' :   39 minutes cold, and 24 seconds warm.
->>
->> 'git blame':   44 minutes cold, 11 minutes warm.
->>
->> 'git add' (appending a few chars to the end of a file and adding it):   7
->> seconds cold and 5 seconds warm.
->>
->> 'git commit -m "foo bar3" --no-verify --untracked-files=no --quiet
->> --no-status':  41 minutes cold, 20 seconds warm.  I also hacked a version
->> of git to remove the three or four places where 'git commit' stats every
->> file in the repo, and this dropped the times to 30 minutes cold and 8
->> seconds warm.
-> Have you tried "git update-index --assume-unchaged"? That should
-> reduce mass lstat() and hopefully improve the above numbers. The
-> interface is not exactly easy-to-use, but if it has significant gain,
-> then we can try to improve UI.
->
-> On the index size issue, ideally we should make minimum writes to
-> index instead of rewriting 191 MB index. An improvement we could do
-> now is to compress it, reduce disk footprint, thus disk I/O. If you
-> compress the index with gzip, how big is it?
-If you're not afraid to add filesystem-specific code to git, you could 
-leverage the btrfs find-new command (or use the ioctl directly) to 
-quickly find changed files since a certain point in time. Other CoW 
-filesystems may have similar mechanisms. You could for example store the 
-last generation id in an index extension, that's what those extensions 
-are for, right?
+Please don't remove git mailing list from Cc... Oh, I see that you
+forgot to send to list, but resend your email there.
 
-tom
+On Sun, 5 Feb 2012, Philip Oakley wrote:
+> From: "Jakub Narebski" <jnareb@gmail.com>
+> Sent: Saturday, February 04, 2012 7:45 PM
+
+> > Git includes protection against rewriting published history on the
+> > receive side with fast-forward check by default (which can be
+> > overridden) and various receive.deny* configuration variables,
+> > including receive.denyNonFastForwards.
+> >
+> > Nevertheless git users requested (among others in Git User's Survey)
+> > more help on creation side, namely preventing rewriting parts of
+> > history which was already made public (or at least warning that one is
+> > about to rewrite published history).  The "warn before/when rewriting
+> > published history" answer in "17. Which of the following features would
+> > you like to see implemented in git?" multiple-choice question in latest
+> > Git User's Survey 2011[1] got 24% (1525) responses.
+> >
+> > [1]: https://www.survs.com/results/Q5CA9SKQ/P7DE07F0PL
+> >
+> > So people would like for git to warn them about rewriting history before
+> > they attempt a push and it turns out to not fast-forward.
+> 
+> Another area that is implicitly related is that of (lack of) publication of 
+> sub-module updates. A mechanisms that, in the super project, knows the 
+> status of the (local) submodules, such as where they would be sourced from, 
+> i.e. what was last pushed & where, could help in such instances.
+
+"Better support for submodules" had almost the same number of requests
+in the latest Git User's Survey 2011 (25% which means 1582 responses).
+ 
+Remembering when to do recursive push and where would be a very nice thing.
+
+[...]
+> Recording where they were pushed to would be useful for synchronising 
+> sub-modules and their super projects. That is, giving remote users a clue as 
+> to where they might find mising sub-modules.
+
+Is it a matter of correctly writing configuration with current git?
+I don't use submodules myself, so I cannot say.
+
+> > Mercurial documentation talks about phase of a commit, which might
+> > be a good UI, ut also about commits in 'public' phase being "immutable".
+> > As commits in Git are immutable, and rewriting history is in fact
+> > re-doing commits, this description should probably be changed.
+> >
+> > While default "push matching" behavior makes it possible to have
+> > "secret" commits, being able to explicitly mark commits as not for
+> > publishing might be a good idea also for Git.
+> >
+> 
+> Being able to mark temporary, out of sequence or other hacks as Secret could 
+> be useful, as would recording where Public commits had been sent.
+
+Marking as 'secret' must I think be explicit, but I think 'public' phase
+should be inferred from remote-tracking branches.  The idea of phases is
+to allow UI to ask about status of commits: can we amend / rebase it or
+not, can we push it or not.
+
+-- 
+Jakub Narebski
+Poland
