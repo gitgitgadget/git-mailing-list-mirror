@@ -1,119 +1,85 @@
-From: Thomas Rast <trast@inf.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] send-email: add extra safetly in address sanitazion
-Date: Sun, 5 Feb 2012 22:51:32 +0100
-Message-ID: <877h01rlsr.fsf@thomas.inf.ethz.ch>
+Date: Sun, 05 Feb 2012 13:52:21 -0800
+Message-ID: <7vbopdeyne.fsf@alter.siamese.dyndns.org>
 References: <1328373162-25188-1-git-send-email-felipe.contreras@gmail.com>
-	<87sjipxe5u.fsf@thomas.inf.ethz.ch>
-	<CAMP44s1wqmT4mavsXrEhB-OquOtQrYnnoSoX9G7X4wzFoMD29A@mail.gmail.com>
+ <87sjipxe5u.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>, Brandon Casey <drafnel@gmail.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	<git@vger.kernel.org>, Brandon Casey <drafnel@gmail.com>,
 	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
 	<ukleinek@informatik.uni-freiburg.de>,
 	Brian Gernhardt <brian@gernhardtsoftware.com>,
 	"Robin H. Johnson" <robbat2@gentoo.org>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 05 22:51:47 2012
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Sun Feb 05 22:52:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ru9zr-0001DN-Ds
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Feb 2012 22:51:45 +0100
+	id 1RuA0a-0001Za-M9
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Feb 2012 22:52:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752685Ab2BEVvh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Feb 2012 16:51:37 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:36755 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752189Ab2BEVvh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Feb 2012 16:51:37 -0500
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Sun, 5 Feb
- 2012 22:51:33 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (84.73.49.17) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Sun, 5 Feb
- 2012 22:51:33 +0100
-In-Reply-To: <CAMP44s1wqmT4mavsXrEhB-OquOtQrYnnoSoX9G7X4wzFoMD29A@mail.gmail.com>
-	(Felipe Contreras's message of "Sun, 5 Feb 2012 22:51:46 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [84.73.49.17]
+	id S1753103Ab2BEVwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Feb 2012 16:52:24 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52418 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753020Ab2BEVwX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Feb 2012 16:52:23 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 305D35EDE;
+	Sun,  5 Feb 2012 16:52:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4eRjyP04tsxib1G1t2YNCiEOd/A=; b=bREHee
+	JG+PxyjazN7bXVLdR3Ngc8DNAW9wVZ6NVPosDCtCHTmDdxGhtFsbJAfrJtQCZ6YU
+	nJSa7DLfn5HKKX7iNTvydE0f22sMjQ+3kFoPn1OlkCVy5F32/pnlcXpOINzeDA90
+	PzcU2YqKX5dvxJjSLhx4AXHziNNucCrKGcTkA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UaCTxDm1yG08dS9eLONfj1pEeTRmQXgS
+	AT1mkDCgmJmEVI0c5VUaGwic4ozHU6Fg3KlAJGuLwlzYq0djAwhM+kkzQVwOTR62
+	kuNebg1Ur0DfCHfNeG1OTC5RaINO6MjUIc5tecohzuM3Q+A9c/IC9lPc3IbJeRlz
+	+oOM2dW4wcc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2770E5EDD;
+	Sun,  5 Feb 2012 16:52:23 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A71A95EDC; Sun,  5 Feb 2012
+ 16:52:22 -0500 (EST)
+In-Reply-To: <87sjipxe5u.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Sun, 5 Feb 2012 20:39:57 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AF052762-5043-11E1-9032-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189971>
 
-=46elipe Contreras <felipe.contreras@gmail.com> writes:
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-> 2012/2/5 Thomas Rast <trast@inf.ethz.ch>:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>>
->>> =C2=A0 'Foo Bar <foo@bar.com>' -> 'Foo Bar <foo@bar.com>'
->>> =C2=A0 '"Foo Bar" <foo@bar.com>' -> '"Foo Bar" <foo@bar.com>'
->>> =C2=A0 'foo@bar.com' -> 'foo@bar.com'
->>> =C2=A0 '<foo@bar.com>' -> 'foo@bar.com'
->>> =C2=A0 'Foo Bar' -> 'Foo Bar'
->>
->> Am I the only one who stared at this for ten seconds, only to then
->> realize that there is no sanitizing whatsoever going on here?
+> Am I the only one who stared at this for ten seconds, only to then
+> realize that there is no sanitizing whatsoever going on here?
 >
-> There is: '<foo@bar.com>' -> 'foo@bar.com'
-
-Indeed.
-
-I still feel cheated as a reader though, you showed me four examples of
-no change but let me figure that on my own.
-
->>> =C2=A0 'Foo Bar <foo@bar.com>>' -> 'Foo Bar <foo@bar.com>'
->>> =C2=A0 '"Foo Bar" <foo@bar.com>>' -> '"Foo Bar" <foo@bar.com>'
->>> =C2=A0 '<foo@bar.com>>' -> 'foo@bar.com'
->>
->> All of these are the same underlying issue. =C2=A0Does your patch fi=
-x any
->> other malformed addresses, or just this particular type?
+>>   'Foo Bar <foo@bar.com>>' -> 'Foo Bar <foo@bar.com>'
+>>   '"Foo Bar" <foo@bar.com>>' -> '"Foo Bar" <foo@bar.com>'
+>>   '<foo@bar.com>>' -> 'foo@bar.com'
 >
-> See above.
+> All of these are the same underlying issue.  Does your patch fix any
+> other malformed addresses, or just this particular type?
 
-Ok, I see I am falling into the same communication trap as Jonathan, so
-let's be more explicit.
+Just this particular type, as long as the code handles it correctly, would
+be better than nothing.
 
-Your commit message first tells me you are going to sanitize something,
-but starts out with examples of leaving the string unchanged.  Then it
-continues with only the '>>' examples.
+On the recieving end in mailinfo, I think we also support
 
-Today, and being someone who on average reads about half the mail that
-comes through here, I know that this relates to the blame -e '>>' bug.
-So today, I am wondering from the commit message why you narrowly focus
-on that bug.  But you don't!  It's just that the commit message
-insinuates it.
+	gitster@pobox.com (Junio C Hamano)
 
-In a year, your reader (and bear in mind that this may very well be
-yourself, at least if your memory is as good as mine) will wonder what
-was so damn special about that '>>' string that it needs a specific fix
-to send-email.
-
-I see that you wrote in another thread:
-
-> I have to write a peer-reviewed essay with an introduction for the
-> people that are not familiar with the code in each of the patches
-
-I'm not sure you meant it that literally, but the whole *point* is that
-the message is for people who are not familiar with the code.  After
-all, if I knew that your code did the right thing in the right way, I
-would not be bothering with reading the message.  Today, I would just
-send an Acked-by instead.  In a year, I'd scroll down for another
-potential culprit for the bug I'm hunting.
-
-What's especially striking me about your proposed messages of late: the=
-y
-leave me with more open questions than I started with.  I tried to show
-this above.  I'm not sure whether other contributors are better at
-answering questions, or just better at not touching any topics that
-might raise them.
-
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+although it does not seem to be used by many people these days (the only
+one I can remember seeing on this list was merlyn), so we may want to be a
+bit more consistent between sending and receiving end, though.
