@@ -1,88 +1,85 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [bug] blame duplicates trailing ">" in mailmapped emails
-Date: Sun, 5 Feb 2012 23:11:20 +0200
-Message-ID: <CAMP44s0xmvjxsE6AYrA5qTZuDfWq8vPDPOo69hiRS+xWbsbS7g@mail.gmail.com>
-References: <1328145320-14071-1-git-send-email-felipe.contreras@gmail.com>
-	<20120202084859.GC3823@burratino>
-	<7v8vklvxwh.fsf@alter.siamese.dyndns.org>
-	<CAMP44s1gWNG+jJ6M7OnLS-1VA5YPa07LJfnrvdbsQb0MOJB7PA@mail.gmail.com>
-	<7vhaz8vkhd.fsf@alter.siamese.dyndns.org>
-	<CAMP44s0Fq_BGwcmDM5E1kWNiyoJw6e6Hr=8XaNF6tmQAcdnUmw@mail.gmail.com>
-	<7vehuboe5g.fsf@alter.siamese.dyndns.org>
-	<CAMP44s2QdJ4+qgg4fF5-DOWHx3Btd0pTivTT9s_E=qqxg16YLQ@mail.gmail.com>
-	<20120204182611.GA31091@sigill.intra.peff.net>
-	<CAMP44s2r-fcnfpdT4u5U7TwF1z6Abp+J1U7oqfsSrYMuD6weOQ@mail.gmail.com>
-	<20120204232015.GB1170@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] send-email: add extra safetly in address sanitazion
+Date: Sun, 05 Feb 2012 13:12:16 -0800
+Message-ID: <7v4nv5gf2n.fsf@alter.siamese.dyndns.org>
+References: <1328368255-10591-1-git-send-email-felipe.contreras@gmail.com>
+ <CAMP44s0xfbxLs_r81ppO9hYf3ML_gaYCaW3TKpLM=BjfaM8vHg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Feb 05 22:11:27 2012
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 05 22:12:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ru9Mt-00011M-2h
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Feb 2012 22:11:27 +0100
+	id 1Ru9No-0001S8-09
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Feb 2012 22:12:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752388Ab2BEVLW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Feb 2012 16:11:22 -0500
-Received: from mail-lpp01m020-f174.google.com ([209.85.217.174]:48475 "EHLO
-	mail-lpp01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751654Ab2BEVLW convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Feb 2012 16:11:22 -0500
-Received: by lbom4 with SMTP id m4so873469lbo.19
-        for <git@vger.kernel.org>; Sun, 05 Feb 2012 13:11:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=qolou3Cc+qzDsbnWG8CZu25aAEjlzeaRpVGQQcNBNhk=;
-        b=GRzGstK3R4Tslh1fShs8Bxpa88W9ZU6q/0ZuuZPShgftQevmn9r/L+WlJSoebayRQh
-         2hO20YPiXl9HHjVE027rnv0rbs9gXpiTlSkF3GR7DnUJXQ2BsQW6HUpO5cmcSO5S+nzB
-         O+IRcNHiC14FhjIemEU0+uvoOfiw36x0+lR+4=
-Received: by 10.112.101.34 with SMTP id fd2mr4024448lbb.16.1328476280681; Sun,
- 05 Feb 2012 13:11:20 -0800 (PST)
-Received: by 10.112.41.73 with HTTP; Sun, 5 Feb 2012 13:11:20 -0800 (PST)
-In-Reply-To: <20120204232015.GB1170@sigill.intra.peff.net>
+	id S1752819Ab2BEVMU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Feb 2012 16:12:20 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38848 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752670Ab2BEVMT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Feb 2012 16:12:19 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CE0F57F8;
+	Sun,  5 Feb 2012 16:12:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=adMzqsfGgJef
+	Q+IcLH60AkVb7uw=; b=T2hwqQVcw/He1S6pfFRF/1we61/0RQKZ/dn4mcFgBUub
+	cTwPecNnLSkJMPG+0OJpSeOXx4aeqH1Y2IMRuYYNTsVO7sGDcGYI/Yre5UQxVQw7
+	mlTumR/YV39sLlF7WzPgJLXGFujWklvx7qdOdWScuhC0BmYjrAF+ffuULl+7cQQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=I6kSuQ
+	WWbTodywsFJ755IAfoiDq2VciDkthGD91iSxfJdxh5JvWaIQhXKu/+6OecYYwqry
+	CdCy3iw/oHMx77hllJlHs+M4cx4lT4yPcqgiZ7mKuEtIQNU2PVTiW8YNyi2RYqLk
+	US3abtouGhCc7L8jMeTdIIJMdIXS+JniXH5pc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9354657F7;
+	Sun,  5 Feb 2012 16:12:18 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1FD9557F6; Sun,  5 Feb 2012
+ 16:12:18 -0500 (EST)
+In-Reply-To: <CAMP44s0xfbxLs_r81ppO9hYf3ML_gaYCaW3TKpLM=BjfaM8vHg@mail.gmail.com> (Felipe
+ Contreras's message of "Sat, 4 Feb 2012 17:26:01 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 15C77B5E-503E-11E1-8F49-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189963>
 
-On Sun, Feb 5, 2012 at 1:20 AM, Jeff King <peff@peff.net> wrote:
-> On Sat, Feb 04, 2012 at 09:30:42PM +0200, Felipe Contreras wrote:
->
->> > but it feels like the fix should go into map_user. =C2=A0I tried a=
- few things,
->> > like "git log -1 --format=3D%aE", and couldn't find other code pat=
-hs with
->> > this problem. So presumably they are all feeding email addresses w=
-ithout
->> > the closing ">" (so one option is to just say "map_user needs to g=
-et
->> > NUL-terminated strings).
+=46elipe Contreras <felipe.contreras@gmail.com> writes:
+
+> On Sat, Feb 4, 2012 at 5:10 PM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> Otherwise, 'git send-email' would be happy to do:
 >>
->> Perhaps, but I though the idea was to make it efficient. I think the
->> above fix should be ok.
+>> =C2=A0% git send-email --to '<foo@bar.com>>'
+>>
+>> And use '<foo@bar.com>>' in the headers.
 >
-> Because of the calling convention of map_user, the buffer with the in=
-put
-> must also be writable (since it holds the result). So there should be=
- no
-> loss of efficiency to convert the ">" into a "\0" (and in fact, the
-> simplest fix is probably to just have map_user "tie off" any ">" it
-> detects).
+> Er, actually that's not correct: '<foo@bar.com>>' will remain the
+> same, but 'Foo <foo@bar.com>>' will be sanitized.
 
-Yes, but then the caller (git blame) would need to _always_ do that
-conversion before (">" -> "\0"), and after ("\0" -> ">"), as opposed
-to now, that it does the conversion only when map_user succeeds (or
-checks if it has to do it).
+I suspect that this "Er" is merely a sympotom of a larger issue in the
+approach taken by this patch.  The code takes a potentially malformed
+input, and applies a rewrite logic without telling the user what it is
+doing.  If the rewrite logic is perfect, that may be OK, but if not, th=
+e
+logic to rewrite may or may not trigger, or when it triggers it may or =
+may
+not produce a correct result, and it all depends on the nature of break=
+age
+in the input.
 
---=20
-=46elipe Contreras
+Wouldn't a better approach to detect problem on the input side and reje=
+ct
+a wrong one by erroring out, so that the user has a chance to fix?
