@@ -1,95 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Explicitly set X to avoid potential build breakage
-Date: Sun, 05 Feb 2012 14:14:27 -0800
-Message-ID: <7v39apexmk.fsf@alter.siamese.dyndns.org>
-References: <9854382.GTBzd7D6AT@telegraph>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: Specifying revisions in the future
+Date: Sun, 05 Feb 2012 23:15:40 +0100
+Message-ID: <m2wr81vsdv.fsf@igel.home>
+References: <jgjkk0$qrg$1@dough.gmane.org> <vpqipjlf309.fsf@bauges.imag.fr>
+	<m21uq9x8q2.fsf@igel.home> <m3ehu9kknw.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael <kensington@astralcloak.net>
-X-From: git-owner@vger.kernel.org Sun Feb 05 23:14:38 2012
+Content-Type: text/plain
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, jpaugh@gmx.us,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 05 23:15:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuALz-0002by-Iq
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Feb 2012 23:14:37 +0100
+	id 1RuANB-00034t-MJ
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Feb 2012 23:15:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753071Ab2BEWOb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Feb 2012 17:14:31 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60824 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751654Ab2BEWOa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Feb 2012 17:14:30 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D10FA62E6;
-	Sun,  5 Feb 2012 17:14:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+Qzkof7cqTeSyQsT6ttRBA+Hqxk=; b=XjkxQo
-	naBiV7i2pdmjxW9+Wmkf3Bw3SToFwoVBrJuACOBAcRqAF9Q2djKaqHsPJAJI0Vc/
-	F66FB279MxvVPIR8zLf0V9KXDDtJHJW3QMsI6rAdQ4//yTAUU8uzfHUE6JbQrILB
-	GwWsidnqSkv/Ajt/f6VHAdsH6XbqXXW1cYwOI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hJlRpkZ479I+uP+x77/ZF2ihvsip/eLO
-	tzwMxB07m6Ec8AQ91CtRGREyoljl52n0hYqfMgjdN8eOI+xr2ZPtKfaN3qoJ8Mpu
-	VI+dbldRlSGtoMWEn7ZnGTXFo4riw/PzFP3Zpl5ZKa3OpcHhCaGRtHCAUp8ZQbLR
-	eqgPZ9XTL1c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C79D962E5;
-	Sun,  5 Feb 2012 17:14:29 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5CCB462E4; Sun,  5 Feb 2012
- 17:14:29 -0500 (EST)
-In-Reply-To: <9854382.GTBzd7D6AT@telegraph> (Michael's message of "Sun, 05
- Feb 2012 21:41:11 +1100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C5C6E190-5046-11E1-91EF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753199Ab2BEWPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Feb 2012 17:15:43 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:49847 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752003Ab2BEWPm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Feb 2012 17:15:42 -0500
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id DDF9A1C1D9FE;
+	Sun,  5 Feb 2012 23:15:41 +0100 (CET)
+X-Auth-Info: l/JuCCiheaajihK90OlBQICCzOL4RGXJrPKLl1SV7Do=
+Received: from igel.home (ppp-88-217-114-0.dynamic.mnet-online.de [88.217.114.0])
+	by mail.mnet-online.de (Postfix) with ESMTPA id D098D1C000AD;
+	Sun,  5 Feb 2012 23:15:41 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id AB452CA29F; Sun,  5 Feb 2012 23:15:40 +0100 (CET)
+X-Yow: I don't think you fellows would do so much RAPING and PILLAGING if you
+ played more PINBALL and watched CABLE TELEVISION!!
+In-Reply-To: <m3ehu9kknw.fsf@localhost.localdomain> (Jakub Narebski's message
+	of "Sun, 05 Feb 2012 13:57:55 -0800 (PST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189976>
 
-Michael <kensington@astralcloak.net> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> $X is appended to binary names for Windows builds (ie. git.exe).
-> Pollution from the environment can inadvertently trigger this behaviour,
-> resulting in 'git' turning into 'gitwhatever' without warning.
+> Andreas Schwab <schwab@linux-m68k.org> writes:
+>> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>> 
+>> > "the successor of <commit>", OTOH, is not well defined, since there can
+>> > be several successors, and one can't order them reliably (you can't
+>> > really know the set of successors, because they can exist in different
+>> > repositories).
+>> 
+>> Yet it would be nice to have a concise notation for "the nth successor
+>> of <commit> towards <commit>" (using --first-parent ordering when
+>> ambiguous).
 >
-> Signed-off-by: Michael <kensington@astralcloak.net>
+> First, "the nth successor"... from which refs?
 
-Unless there is a compelling reason not to, could we have your name here,
-not just half a name, please?  
+>From the first given commit towards the other given commit (the latter
+defaulting to HEAD).
 
-It is not particularly a good reason to say "I go by 'Michael' among my
-friends". The output from "git shortlog -s --author=Michael" shows more
-than 20 Michaels already, and it would be nice for us if we can easily
-differenciate you among this group of people you are now joining with this
-patch.
-
-> ---
->  Makefile |    3 +++
->  1 files changed, 3 insertions(+), 0 deletions(-)
+> Second, `--first-parent' won't help here.  Take for example the
+> following situation:
 >
-> diff --git a/Makefile b/Makefile
-> index c457c34..380d96f 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -388,6 +388,9 @@ SCRIPT_SH =
->  SCRIPT_LIB =
->  TEST_PROGRAMS_NEED_X =
->  
-> +# Binary suffix used for Windows builds
-> +X =
-> +
+>    ---X<---*<---.<---A
+>             \
+>              \--.<---B
+>
+> X+3 is A or B?
 
-The patch looks good to me, although it might make sense to move it down
-before this line
+If "towards A" then it is A, if "towards B", it is B.  In other words,
+to get the "nth successor of C1 towards C2" take the leftmost possible
+parent when walking from C2 to C1, then walk back n commits along this
+path.  This way you should have an unambigous definition.
 
-	PROGRAMS += $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
+Andreas.
 
-where it matters most as the documentation of what $X is being used for.
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
