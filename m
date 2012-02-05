@@ -1,83 +1,89 @@
-From: jpaugh@gmx.us
-Subject: Specifying revisions in the future
-Date: Sat, 04 Feb 2012 10:58:55 -0500
-Message-ID: <jgjkk0$qrg$1@dough.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 05 01:05:16 2012
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: [PATCH] Change include order in two compat/ files to avoid compiler warning
+Date: Sat,  4 Feb 2012 20:08:27 -0500
+Message-ID: <1328404107-15757-1-git-send-email-bwalton@artsci.utoronto.ca>
+Cc: Ben Walton <bwalton@artsci.utoronto.ca>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Feb 05 02:08:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RtpbW-0000q0-Lb
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Feb 2012 01:05:15 +0100
+	id 1Rtqb3-0002Kf-Kt
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Feb 2012 02:08:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754568Ab2BEAFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Feb 2012 19:05:08 -0500
-Received: from plane.gmane.org ([80.91.229.3]:35191 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754509Ab2BEAFH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Feb 2012 19:05:07 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RtpbK-0000m1-UG
-	for git@vger.kernel.org; Sun, 05 Feb 2012 01:05:02 +0100
-Received: from 74-46-161-231.dr02.blfd.wv.frontiernet.net ([74.46.161.231])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 05 Feb 2012 01:05:02 +0100
-Received: from jpaugh by 74-46-161-231.dr02.blfd.wv.frontiernet.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 05 Feb 2012 01:05:02 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 74-46-161-231.dr02.blfd.wv.frontiernet.net
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:9.0) Gecko/20111229 Thunderbird/9.0
+	id S1753048Ab2BEBIb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Feb 2012 20:08:31 -0500
+Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:37209 "EHLO
+	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752616Ab2BEBIa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Feb 2012 20:08:30 -0500
+Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:50788 ident=93)
+	by garcia.cquest.utoronto.ca with esmtp (Exim 4.63)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1Rtqaj-0001nO-Lt; Sat, 04 Feb 2012 20:08:29 -0500
+Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1Rtqaj-00046g-Kp; Sat, 04 Feb 2012 20:08:29 -0500
+X-Mailer: git-send-email 1.7.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189925>
 
-Hello.
+The inet_ntop and inet_pton compatibility wrapper source files
+included system headers before git-compat-utils.h.  This was causing a
+warning on Solaris as _FILE_OFFSET_BITS was being redefined in
+git-compat-utils.h.  Including git-compat-utils.h first avoids the
+warnings.
 
-Is it possible to specify revisions in the future? The gitrevisions man
-page implies otherwise. Alternatively, is there a way to find out the
-number of commits between two revs---assuming one is an ancestor of the
-other?
+Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+---
 
-I want to do a certain arbitrary operation for each revision between
-where I am now and the tip of the branch.
+I verified that this re-ordering doesn't affect either the build or the 
+test suite completion on both i386 and sparc.  I think the ordering is
+simply the result of placing the git-compat-utils.h include where some
+others were removed in da523cc597b1.
 
-          v1.0-a     master
-            \          \
-o---o---o---o---o---o---o
-            |
-           I am here
+ compat/inet_ntop.c |    4 +---
+ compat/inet_pton.c |    4 +---
+ 2 files changed, 2 insertions(+), 6 deletions(-)
 
-I've been using the following to do what I want:
-
-ref=master; \
-for i in {5..1}; do \
-  echo; \
-  git log --stat $ref~$i^\!; \
-  read -p 'Full diff? '; \
-  echo; \
-  if [[ $REPLY == 'y' ]]; then \
-    git diff $ref~$i^\!; \
-  fi; \
-done;
-
-which lists the log and diffstat for last 5 commits between master and
-where I am (e.g. an older tag/branch) with an optional full diff. I know
-implementing revision specifiers to the future is nontrivial. (I
-realized that when I considered non-linear histories.) In this case,
-I've distilled it to the point that all I need is the number of commits
-between two revs. Can this be had without manually inspecting git log?
-Or, is there a better way to get detailed diffs like this?
-
-Thanks.
-Jonathan Paugh
+diff --git a/compat/inet_ntop.c b/compat/inet_ntop.c
+index 60b5a1d..f1bf81c 100644
+--- a/compat/inet_ntop.c
++++ b/compat/inet_ntop.c
+@@ -15,11 +15,9 @@
+  * SOFTWARE.
+  */
+ 
++#include "../git-compat-util.h"
+ #include <errno.h>
+ #include <sys/types.h>
+-
+-#include "../git-compat-util.h"
+-
+ #include <stdio.h>
+ #include <string.h>
+ 
+diff --git a/compat/inet_pton.c b/compat/inet_pton.c
+index 2ec995e..1d44a5d 100644
+--- a/compat/inet_pton.c
++++ b/compat/inet_pton.c
+@@ -15,11 +15,9 @@
+  * WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+  */
+ 
++#include "../git-compat-util.h"
+ #include <errno.h>
+ #include <sys/types.h>
+-
+-#include "../git-compat-util.h"
+-
+ #include <stdio.h>
+ #include <string.h>
+ 
+-- 
+1.7.8.3
