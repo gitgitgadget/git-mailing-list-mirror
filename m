@@ -1,85 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] send-email: add extra safetly in address sanitazion
-Date: Sun, 05 Feb 2012 13:52:21 -0800
-Message-ID: <7vbopdeyne.fsf@alter.siamese.dyndns.org>
-References: <1328373162-25188-1-git-send-email-felipe.contreras@gmail.com>
- <87sjipxe5u.fsf@thomas.inf.ethz.ch>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Specifying revisions in the future
+Date: Sun, 05 Feb 2012 13:57:55 -0800 (PST)
+Message-ID: <m3ehu9kknw.fsf@localhost.localdomain>
+References: <jgjkk0$qrg$1@dough.gmane.org> <vpqipjlf309.fsf@bauges.imag.fr>
+	<m21uq9x8q2.fsf@igel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	<git@vger.kernel.org>, Brandon Casey <drafnel@gmail.com>,
-	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>,
-	Brian Gernhardt <brian@gernhardtsoftware.com>,
-	"Robin H. Johnson" <robbat2@gentoo.org>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Feb 05 22:52:30 2012
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, jpaugh@gmx.us,
+	git@vger.kernel.org
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Sun Feb 05 22:58:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuA0a-0001Za-M9
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Feb 2012 22:52:29 +0100
+	id 1RuA5y-000469-Aj
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Feb 2012 22:58:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753103Ab2BEVwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Feb 2012 16:52:24 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52418 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753020Ab2BEVwX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Feb 2012 16:52:23 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 305D35EDE;
-	Sun,  5 Feb 2012 16:52:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4eRjyP04tsxib1G1t2YNCiEOd/A=; b=bREHee
-	JG+PxyjazN7bXVLdR3Ngc8DNAW9wVZ6NVPosDCtCHTmDdxGhtFsbJAfrJtQCZ6YU
-	nJSa7DLfn5HKKX7iNTvydE0f22sMjQ+3kFoPn1OlkCVy5F32/pnlcXpOINzeDA90
-	PzcU2YqKX5dvxJjSLhx4AXHziNNucCrKGcTkA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UaCTxDm1yG08dS9eLONfj1pEeTRmQXgS
-	AT1mkDCgmJmEVI0c5VUaGwic4ozHU6Fg3KlAJGuLwlzYq0djAwhM+kkzQVwOTR62
-	kuNebg1Ur0DfCHfNeG1OTC5RaINO6MjUIc5tecohzuM3Q+A9c/IC9lPc3IbJeRlz
-	+oOM2dW4wcc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2770E5EDD;
-	Sun,  5 Feb 2012 16:52:23 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A71A95EDC; Sun,  5 Feb 2012
- 16:52:22 -0500 (EST)
-In-Reply-To: <87sjipxe5u.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
- "Sun, 5 Feb 2012 20:39:57 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AF052762-5043-11E1-9032-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752251Ab2BEV56 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Feb 2012 16:57:58 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:46648 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751654Ab2BEV55 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Feb 2012 16:57:57 -0500
+Received: by eekc14 with SMTP id c14so1962172eek.19
+        for <git@vger.kernel.org>; Sun, 05 Feb 2012 13:57:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=zXEKthok16z0quRKXzuA+nUA56v6kSM5U2wKrefhUHU=;
+        b=GXN3vEuTRWoKzheOrhEGgp2QpUrd30O37dUp8rWIWjKpSHSoJbCl5Z/EDtkUCmY7mE
+         q8tPLvOzR189NZM2bJjXDeVBLFQofub/ErUYle4iyDrvJmhNvish67HP/fKckBl4Ks4p
+         3fdoNdmwD6FxoUc/ju9SshK3yAVq0/fnNkP8Q=
+Received: by 10.14.0.76 with SMTP id 52mr3787661eea.23.1328479076173;
+        Sun, 05 Feb 2012 13:57:56 -0800 (PST)
+Received: from localhost.localdomain (abvp235.neoplus.adsl.tpnet.pl. [83.8.213.235])
+        by mx.google.com with ESMTPS id a58sm53238264eeb.8.2012.02.05.13.57.54
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 05 Feb 2012 13:57:55 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q15LvwYC005627;
+	Sun, 5 Feb 2012 22:57:58 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id q15LvuW7005624;
+	Sun, 5 Feb 2012 22:57:56 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <m21uq9x8q2.fsf@igel.home>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189972>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+Andreas Schwab <schwab@linux-m68k.org> writes:
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> 
+> > "the successor of <commit>", OTOH, is not well defined, since there can
+> > be several successors, and one can't order them reliably (you can't
+> > really know the set of successors, because they can exist in different
+> > repositories).
+> 
+> Yet it would be nice to have a concise notation for "the nth successor
+> of <commit> towards <commit>" (using --first-parent ordering when
+> ambiguous).
 
-> Am I the only one who stared at this for ten seconds, only to then
-> realize that there is no sanitizing whatsoever going on here?
->
->>   'Foo Bar <foo@bar.com>>' -> 'Foo Bar <foo@bar.com>'
->>   '"Foo Bar" <foo@bar.com>>' -> '"Foo Bar" <foo@bar.com>'
->>   '<foo@bar.com>>' -> 'foo@bar.com'
->
-> All of these are the same underlying issue.  Does your patch fix any
-> other malformed addresses, or just this particular type?
+First, "the nth successor"... from which refs?  Commit objects have
+pointers in one direction only, from commit to its ancestors (earlier
+commits).
 
-Just this particular type, as long as the code handles it correctly, would
-be better than nothing.
+Second, `--first-parent' won't help here.  Take for example the
+following situation:
 
-On the recieving end in mailinfo, I think we also support
+   ---X<---*<---.<---A
+            \
+             \--.<---B
 
-	gitster@pobox.com (Junio C Hamano)
+X+3 is A or B?  Note that pointers point _to_ '*' commit, so there is
+not first or second here - no natural ordering like in the case of
+commit parents.
 
-although it does not seem to be used by many people these days (the only
-one I can remember seeing on this list was merlyn), so we may want to be a
-bit more consistent between sending and receiving end, though.
+-- 
+Jakub Narebski
