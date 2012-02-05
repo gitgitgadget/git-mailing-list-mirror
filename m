@@ -1,85 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/4] completion: be nicer with zsh
-Date: Sun, 05 Feb 2012 12:49:32 -0800
-Message-ID: <7vipjlgg4j.fsf@alter.siamese.dyndns.org>
-References: <1328145320-14071-1-git-send-email-felipe.contreras@gmail.com>
- <20120202084859.GC3823@burratino> <7v8vklvxwh.fsf@alter.siamese.dyndns.org>
- <CAMP44s1gWNG+jJ6M7OnLS-1VA5YPa07LJfnrvdbsQb0MOJB7PA@mail.gmail.com>
- <7vhaz8vkhd.fsf@alter.siamese.dyndns.org>
- <CAMP44s0Fq_BGwcmDM5E1kWNiyoJw6e6Hr=8XaNF6tmQAcdnUmw@mail.gmail.com>
- <7vehuboe5g.fsf@alter.siamese.dyndns.org>
- <CAMP44s2QdJ4+qgg4fF5-DOWHx3Btd0pTivTT9s_E=qqxg16YLQ@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] send-email: add extra safetly in address sanitazion
+Date: Sun, 5 Feb 2012 22:51:46 +0200
+Message-ID: <CAMP44s1wqmT4mavsXrEhB-OquOtQrYnnoSoX9G7X4wzFoMD29A@mail.gmail.com>
+References: <1328373162-25188-1-git-send-email-felipe.contreras@gmail.com>
+	<87sjipxe5u.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 05 21:49:41 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>,
+	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>,
+	Brian Gernhardt <brian@gernhardtsoftware.com>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Sun Feb 05 21:51:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ru91o-0000HM-Iv
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Feb 2012 21:49:40 +0100
+	id 1Ru93w-0001IL-Ne
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Feb 2012 21:51:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751330Ab2BEUtg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Feb 2012 15:49:36 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64010 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750763Ab2BEUtf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Feb 2012 15:49:35 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AE65A53C3;
-	Sun,  5 Feb 2012 15:49:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=w15BxUTtuVDyWbTqZTnwWiM8Xoc=; b=HlS7hp
-	lnlUbpNVvO8gWisl0DYqwIOtDpVSUIMnhSsxz/iX3wkkL8Am2ZnxgmMmrkg5pO5D
-	xvYCNGBezrLEvB/CwN2u34FfvtpoKg+d7U8ft6yZ6PzyLmIiKLCFY2nKc9+6aTBM
-	lgXArTlHnC9dzqFiG5CuHkC4KUDN9THCb5wy4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DUcakJnXxDa3H9oImdRV9R3byjgBRL5j
-	moeIhT6pjU17+xLF/TH47FXR347oDkDS+4NHm6YX2KUc1IoHotPmfGZd4Qr78qCm
-	PYL85LrGLC/t1HrsTzUIesg/J+VPIOxANFRiPAUBzj746u6eZFJHu2s1Fg1kbGsg
-	qXC55CBDZrQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A570153C2;
-	Sun,  5 Feb 2012 15:49:34 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3A27F53C1; Sun,  5 Feb 2012
- 15:49:34 -0500 (EST)
-In-Reply-To: <CAMP44s2QdJ4+qgg4fF5-DOWHx3Btd0pTivTT9s_E=qqxg16YLQ@mail.gmail.com> (Felipe
- Contreras's message of "Sat, 4 Feb 2012 17:46:05 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E8D62332-503A-11E1-9D34-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752184Ab2BEUvs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Feb 2012 15:51:48 -0500
+Received: from mail-lpp01m020-f174.google.com ([209.85.217.174]:47026 "EHLO
+	mail-lpp01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751704Ab2BEUvs convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Feb 2012 15:51:48 -0500
+Received: by lbom4 with SMTP id m4so871435lbo.19
+        for <git@vger.kernel.org>; Sun, 05 Feb 2012 12:51:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Vw/DVO/OJpZ0RwGbk3iFTTlU2TNIr0oya5vsZEPjtDU=;
+        b=jrO30RNdry6ocab5v0NE7lXIzeSWMGKBneJE7VgjDmdjH4JtcMnPQkkGnsFsQf7yIa
+         7tEaoBSMCQo5s4/Sq5d1CjTFTDWj/V6Ek9tEjK0DNqtOpGOX/EFwFyPJYk/9CMP/T59k
+         y7n10iLsW4Ek2VJs6xGNzZEzWw/ZairMktFKA=
+Received: by 10.112.32.1 with SMTP id e1mr4151911lbi.3.1328475106662; Sun, 05
+ Feb 2012 12:51:46 -0800 (PST)
+Received: by 10.112.41.73 with HTTP; Sun, 5 Feb 2012 12:51:46 -0800 (PST)
+In-Reply-To: <87sjipxe5u.fsf@thomas.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189959>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-
->> Do not blame pobox.com; they have nothing to do with the corruption of
->> your headers.
+2012/2/5 Thomas Rast <trast@inf.ethz.ch>:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-> No, but they have everything to do with *silently* dropping it. Why
-> couldn't they _at least_ return an error saying that the headers are
-> wrong? Note that other servers didn't even complain, they processed
-> the mail happily.
+>> Currently bad addresses like 'Foo Bar <foo@bar.com>>' will just be s=
+ent
+>> verbatim -- that's not good; we should either error out, or sanitize
+>> them.
+>>
+>> The following patch adds extra sanitazion so the following
+>> transformations are performed:
+>>
+>> =C2=A0 'Foo Bar <foo@bar.com>' -> 'Foo Bar <foo@bar.com>'
+>> =C2=A0 '"Foo Bar" <foo@bar.com>' -> '"Foo Bar" <foo@bar.com>'
+>> =C2=A0 'foo@bar.com' -> 'foo@bar.com'
+>> =C2=A0 '<foo@bar.com>' -> 'foo@bar.com'
+>> =C2=A0 'Foo Bar' -> 'Foo Bar'
+>
+> Am I the only one who stared at this for ten seconds, only to then
+> realize that there is no sanitizing whatsoever going on here?
 
-Again, please do not blame pobox.com; they fall into your "other servers"
-category.  You are probably talking about vger.kernel.org that is extra
-picky and wants to avoid wasting their outgoing bandwidth because they get
-so much spams.
+There is: '<foo@bar.com>' -> 'foo@bar.com'
 
-> % git blame -e -L 947,+7 contrib/completion/git-completion.bash v1.7.9
-> ...
-> f2bb9f88 (<spearce@spearce.org>> 2006-11-27 03:41:01 -0500 952)
+>> =C2=A0 'Foo Bar <foo@bar.com>>' -> 'Foo Bar <foo@bar.com>'
+>> =C2=A0 '"Foo Bar" <foo@bar.com>>' -> '"Foo Bar" <foo@bar.com>'
+>> =C2=A0 '<foo@bar.com>>' -> 'foo@bar.com'
+>
+> All of these are the same underlying issue. =C2=A0Does your patch fix=
+ any
+> other malformed addresses, or just this particular type?
 
-I am glad to see that something useful came out from your digging, and a
-fix is being worked on it, while I was away from my machines.  Thanks for
-getting the ball rolling.
+See above.
+
+--=20
+=46elipe Contreras
