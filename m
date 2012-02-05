@@ -1,76 +1,59 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH 0/3] On compresing large index
-Date: Sun, 5 Feb 2012 22:22:49 +0100
-Message-ID: <87ehu9ug9i.fsf@thomas.inf.ethz.ch>
-References: <1328430605-4566-1-git-send-email-pclouds@gmail.com>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: git-svn: t9155 fails against subversion 1.7.0
+Date: Sun, 5 Feb 2012 21:25:21 +0000
+Message-ID: <robbat2-20120205T212444-523294742Z@orbis-terrarum.net>
+References: <op.v4neh4q20aolir@keputer>
+ <op.v4pu1zcq0aolir@keputer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>, Joshua Redstone <joshua.redstone@fb.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 05 22:23:00 2012
+Content-Type: text/plain; charset=us-ascii
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Feb 05 22:25:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ru9Y2-0006ES-1d
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Feb 2012 22:22:58 +0100
+	id 1Ru9aQ-0007MJ-UQ
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Feb 2012 22:25:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752129Ab2BEVWx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Feb 2012 16:22:53 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:27721 "EHLO edge20.ethz.ch"
+	id S1752855Ab2BEVZW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Feb 2012 16:25:22 -0500
+Received: from smtp.gentoo.org ([140.211.166.183]:53294 "EHLO smtp.gentoo.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751851Ab2BEVWx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Feb 2012 16:22:53 -0500
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Sun, 5 Feb
- 2012 22:22:50 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (84.73.49.17) by CAS22.d.ethz.ch
- (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.355.2; Sun, 5 Feb
- 2012 22:22:50 +0100
-In-Reply-To: <1328430605-4566-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sun, 5 Feb
- 2012 15:30:02 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [84.73.49.17]
+	id S1751851Ab2BEVZW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Feb 2012 16:25:22 -0500
+Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.gentoo.org (Postfix) with ESMTPS id C3ACB1B4010
+	for <git@vger.kernel.org>; Sun,  5 Feb 2012 21:25:21 +0000 (UTC)
+Received: (qmail 22914 invoked by uid 10000); 5 Feb 2012 21:25:21 -0000
+Content-Disposition: inline
+In-Reply-To: <op.v4pu1zcq0aolir@keputer>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189967>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+On Thu, Nov 10, 2011 at 07:02:13AM +0100,  Frans Klaver wrote:
+> I missed $gmane/184644 in my search for this issue.
+Did you make any progress in fixing this?
 
-> $ time ~/w/git/git ls-files | head >/dev/null
-> real    0m4.635s
-> user    0m4.258s
-> sys     0m0.329s
->
-> $ time ~/w/git/git update-index level-0-0000/foo
-> real    0m4.593s
-> user    0m4.264s
-> sys     0m0.323s
-[...]
-> We need to figure out what git uses 4s user time for.
+> On Tue, 08 Nov 2011 23:09:30 +0100, Frans Klaver <fransklaver@gmail.com>  
+> wrote:
+> 
+> > For kicks I decided to run the tests and noticed that on master  
+> > t9155-git-svn-fetch-deleted-tag fails against svn 1.7.0. We hit an  
+> > assertion in subversion's dirent_uri.c, stating that we don't provide a  
+> > canonical url. I haven't tested against other subversion versions. I  
+> > dare assume that this issue doesn't arise on earlier versions. It  
+> > probably won't affect a lot of users right now, but it will in the  
+> > future.
 
-When I worked on the cache-tree stuff, my observation (based on
-profiling, so I had actual data :-) was that computing SHA1s absolutely
-dominates everything in such operations.  It does that when writing the
-index to write the trailing checksum, and also when loading it to verif=
-y
-that the index is valid.
-
-ls-files shouldn't be so slow though.  A quick run with callgrind in a
-linux-2.6.git tells me it spends about 45% of its time on SHA1s and a
-whopping 25% in quote_c_style().  I wonder what's so hard about
-quoting...
-
-> This series may be useful on OSes that do not cache heavily. Though
-> I'm not sure if there is any out there nowadays.
-
-I think you could make a case that they should not be called "OS" ;-)
-
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+-- 
+Robin Hugh Johnson
+Gentoo Linux: Developer, Trustee & Infrastructure Lead
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11ACBA4F 4778E3F6 E4EDF38E B27B944E 34884E85
