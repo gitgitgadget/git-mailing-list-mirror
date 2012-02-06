@@ -1,97 +1,117 @@
-From: Joey Hess <joey@kitenet.net>
-Subject: Re: Git performance results on a large repository
-Date: Mon, 6 Feb 2012 11:40:43 -0400
-Message-ID: <20120206154043.GA14632@gnu.kitenet.net>
-References: <CB5074CF.3AD7A%joshua.redstone@fb.com>
- <CACsJy8DkLCK0ZUKNz_PJazsxjsRbWVVZwjAU5n2EAjJfCYtpoQ@mail.gmail.com>
- <243C23AF01622E49BEA3F28617DBF0AD5912CA85@SC-MBX02-5.TheFacebook.com>
- <CACsJy8Bf95JMp1qOiruR7+Tdi7JN42KNeMqGLud+z3O26DREnw@mail.gmail.com>
+From: Joshua Redstone <joshua.redstone@fb.com>
+Subject: Re: [PATCH 0/3] On compresing large index
+Date: Mon, 6 Feb 2012 15:54:39 +0000
+Message-ID: <CB555FF2.40859%joshua.redstone@fb.com>
+References: <CACsJy8AnGg11PeCGFs_BxOM3wAjwzs2tOCWJV31_2_KMFTxhDA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="YiEDa0DAkWCtVeE4"
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 06 16:41:07 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Feb 06 16:55:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuQgh-0003Ih-U7
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 16:41:04 +0100
+	id 1RuQuC-0003Pe-SP
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 16:55:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755384Ab2BFPkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Feb 2012 10:40:47 -0500
-Received: from wren.kitenet.net ([80.68.85.49]:41319 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755356Ab2BFPkq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Feb 2012 10:40:46 -0500
-Received: from gnu.kitenet.net (fttu-216-41-255-233.btes.tv [216.41.255.233])
-	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id 17A9E11805F
-	for <git@vger.kernel.org>; Mon,  6 Feb 2012 10:40:45 -0500 (EST)
-Received: by gnu.kitenet.net (Postfix, from userid 1000)
-	id BA05D49C3E; Mon,  6 Feb 2012 10:40:43 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <CACsJy8Bf95JMp1qOiruR7+Tdi7JN42KNeMqGLud+z3O26DREnw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755420Ab2BFPy4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Feb 2012 10:54:56 -0500
+Received: from mx0b-00082601.pphosted.com ([67.231.153.30]:48870 "EHLO
+	mx0a-00082601.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1755298Ab2BFPyz convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Feb 2012 10:54:55 -0500
+Received: from pps.filterd (m0004077 [127.0.0.1])
+	by mx0b-00082601.pphosted.com (8.14.4/8.14.4) with SMTP id q16Fsjtu032733;
+	Mon, 6 Feb 2012 07:54:49 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=from : to : cc : subject :
+ date : message-id : in-reply-to : content-type : content-id :
+ content-transfer-encoding : mime-version; s=facebook;
+ bh=1015QI3LErEAUpXW4a8mcmkE01JDzeM0CjUmW+/c5/g=;
+ b=A7ieUUjs8cq8rosINTSjvxPd36O5NL99UytmsxY0qLQM/D/dZNgZv72y0hJU9KakSq6Q
+ sWQs5MZaB/4xDZDsrEHzj6O2rgU3H5rGymNBMNtZ8cr6I9ikEiqOGQUVAa1ug5Q4zNSM
+ 7p5E3ALbKlIrg5pVhCbsX2rKXIolYpVuUGc= 
+Received: from mail.thefacebook.com (corpout1.snc1.tfbnw.net [66.220.144.38])
+	by mx0b-00082601.pphosted.com with ESMTP id 12tfex85qx-10
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Mon, 06 Feb 2012 07:54:49 -0800
+Received: from SC-MBX02-5.TheFacebook.com ([fe80::9dc2:cfe6:2745:44cc]) by
+ sc-hub04.TheFacebook.com ([192.168.18.212]) with mapi id 14.01.0355.002; Mon,
+ 6 Feb 2012 07:54:39 -0800
+Thread-Topic: [PATCH 0/3] On compresing large index
+Thread-Index: AQHM4+B8xXWKchb0XkmT+As50QBOVpYu1LJjgADI4ICAAJxVgA==
+In-Reply-To: <CACsJy8AnGg11PeCGFs_BxOM3wAjwzs2tOCWJV31_2_KMFTxhDA@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Microsoft-MacOutlook/14.14.0.111121
+x-originating-ip: [192.168.18.252]
+Content-ID: <91E5695F14BAFD408B88BB89BBA4324C@fb.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.6.7361,1.0.260,0.0.0000
+ definitions=2012-02-06_03:2012-02-06,2012-02-06,1970-01-01 signatures=0
+X-Proofpoint-Spam-Reason: safe
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190074>
+
+Fwiw, specifically related to 'git ls-files', since it is a relatively
+rare operation, it's probably ok if it's a bit slow.  I know you chose it
+as a good benchmark of index reading performance.  I just mention it
+because, in some hypothetical wild-and-crazy world in which we had a
+git-aware file system layer, one could imagine doing away with most of the
+index file and querying the file system for info on what's changed, SHA1
+of subtrees, etc.
+
+Do you have a sense of which operations on the index are high-value pain
+points for large repositories?  I can imagine things like 'git-add' and
+'git-commit', but I'm not super familiar with other common operations it
+has a role in.
+
+Josh
 
 
---YiEDa0DAkWCtVeE4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 2/5/12 8:35 PM, "Nguyen Thai Ngoc Duy" <pclouds@gmail.com> wrote:
 
-Nguyen Thai Ngoc Duy wrote:
-> The "interface to report which files have changed" is exactly "git
-> update-index --[no-]assume-unchanged" is for. Have a look at the man
-> page. Basically you can mark every file "unchanged" in the beginning
-> and git won't bother lstat() them. What files you change, you have to
-> explicitly run "git update-index --no-assume-unchanged" to tell git.
->=20
-> Someone on HN suggested making assume-unchanged files read-only to
-> avoid 90% accidentally changing a file without telling git. When
-> assume-unchanged bit is cleared, the file is made read-write again.
-
-That made me think about using assume-unchanged with git-annex since it
-already has read-only files.=20
-
-But, here's what seems a misfeature... If an assume-unstaged file has
-modifications and I git add it, nothing happens. To stage a change, I
-have to explicitly git update-index --no-assume-unchanged and only then
-git add, and then I need to remember to reset the assume-unstaged bit
-when I'm done working on that file for now. Compare with running git mv
-on the same file, which does stage the move despite assume-unstaged. (So
-does git rm.)
-
---=20
-see shy jo
-
---YiEDa0DAkWCtVeE4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQIVAwUBTy/0eMkQ2SIlEuPHAQj7kw/9G/WFwSXd9fJ/rm03xA8FT3UDsGSuzAcZ
-lR6okNWq2VwP8/imWEP2gIE7LZ95G+IfKPIWOWT3TIWzJepBPsn/oveF4BGdVVNN
-++jESPbSAF95cbeDbrS+9jaDr1WwgeHVIirX95E9LR4371lyzZSaPbjyfGjSJL2O
-oV9uQo8KnCevPBvitCl9mwmZ74WM5bC8/mXwT9GR3LemDYbalAeD12XL+0lHxuOn
-RSWYgBtqKeRAsM9SD8MI828jFsF1muJ11i8YBULV6T2TwvuTgH2ZUoFFIuDWnCmP
-cL8NSK1cKQ7OuiXhXpczAxfS+QPPe7tg58mTCXx1nfTiDjxubl7a9eOHYW286DDM
-L5Yi94usIt5Akvh7G4nTc+EYUetFf15KQD7Li/9n/aspjLsynW/ZvQEfcNoXPm5f
-O5gMicBxNpkS9R6I/mn1PRTI9Rhu4bs4oDRNcJgzZ20gnCZiaoKOp5a410qx7lCa
-mfYL7Fma/JgrOjI5I3kJlAFRsW9wQGO2HXbUJJrNLhR83n1QUtVmjSr+gGB32JNl
-JeBgEPkgYBeQhxYakZ6w8cZqERf9TiMBT365BWRg4iFPJpMeA+iuv9hZBKJqQV8s
-Ewx0peNkvc6Q0+do9AHlvYryBIM0Qj8mSKd4GhQOvVPu4dAuSQCzc0QucHvV2L6n
-j+4X7Y2y+ik=
-=zRTY
------END PGP SIGNATURE-----
-
---YiEDa0DAkWCtVeE4--
+>2012/2/6 Thomas Rast <trast@inf.ethz.ch>:
+>>> We need to figure out what git uses 4s user time for.
+>>
+>> When I worked on the cache-tree stuff, my observation (based on
+>> profiling, so I had actual data :-) was that computing SHA1s absolutely
+>> dominates everything in such operations.  It does that when writing the
+>> index to write the trailing checksum, and also when loading it to verify
+>> that the index is valid.
+>
+>You're right. This is on another machine but with same index (2M
+>files), without SHA1 checksum:
+>
+>$ time ~/w/git/git ls-files --stage|head > /dev/null
+>real    0m1.533s
+>user    0m1.228s
+>sys     0m0.306s
+>
+>and with SHA-1 checksum:
+>
+>$ time git ls-files --stage|head > /dev/null
+>real     0m7.525s
+>user    0m7.257s
+>sys     0m0.268s
+>
+>I guess we could fall back to cheaper digests for such a large index.
+>Still more than one second for doing nothing but reading index is too
+>slow to me.
+>
+>> ls-files shouldn't be so slow though.  A quick run with callgrind in a
+>> linux-2.6.git tells me it spends about 45% of its time on SHA1s and a
+>> whopping 25% in quote_c_style().  I wonder what's so hard about
+>> quoting...
+>
+>That's why I put "| head" there, to cut output processing overhead
+>(hopefully).
+>-- 
+>Duy
