@@ -1,100 +1,142 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Bug: "git checkout -b" should be allowed in empty repo
-Date: Mon, 6 Feb 2012 00:45:58 -0500
-Message-ID: <20120206054558.GA7883@sigill.intra.peff.net>
-References: <7vwr8bvvxj.fsf@alter.siamese.dyndns.org>
- <4F263AEE.4080409@alum.mit.edu>
- <7v39axc9gp.fsf@alter.siamese.dyndns.org>
- <7vaa55ar4v.fsf@alter.siamese.dyndns.org>
- <20120130215043.GB16149@sigill.intra.peff.net>
- <7vobtcbtqa.fsf@alter.siamese.dyndns.org>
- <20120206043012.GD29365@sigill.intra.peff.net>
- <7vty34a6fd.fsf@alter.siamese.dyndns.org>
- <20120206051834.GA5062@sigill.intra.peff.net>
- <7vk440a5qw.fsf@alter.siamese.dyndns.org>
+From: Tom Grennan <tmgrennan@gmail.com>
+Subject: Re: [RFC/PATCH] tag: add --points-at list option
+Date: Sun, 5 Feb 2012 21:48:20 -0800
+Message-ID: <20120206054819.GB10489@tgrennan-laptop>
+References: <1328480887-27463-1-git-send-email-tmgrennan@gmail.com>
+ <7vvcnkeu2i.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jasampler@gmail.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 06 06:46:07 2012
+X-From: git-owner@vger.kernel.org Mon Feb 06 06:48:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuHOw-0003OI-Qn
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 06:46:07 +0100
+	id 1RuHRG-000450-6C
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 06:48:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752183Ab2BFFqB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Feb 2012 00:46:01 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58581
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751930Ab2BFFqB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Feb 2012 00:46:01 -0500
-Received: (qmail 23569 invoked by uid 107); 6 Feb 2012 05:53:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 06 Feb 2012 00:53:07 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Feb 2012 00:45:58 -0500
+	id S1752427Ab2BFFs0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Feb 2012 00:48:26 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:43337 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752036Ab2BFFsZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Feb 2012 00:48:25 -0500
+Received: by vcge1 with SMTP id e1so3685092vcg.19
+        for <git@vger.kernel.org>; Sun, 05 Feb 2012 21:48:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Rs56Y+uOCT06Hj4wsNPWogwio6GROS0wfh8OsZAFVik=;
+        b=QDkHUVRCg80NGt/XCLdINPxgic1DcK1hErGKGtCGngOR5n498Tvp/Q7AVCx+fo5XrA
+         ii5g5ZlRg3b2kJD4sN4AUc67QWZ2HS/IzJJfA/8A76mswuJiy/qseqlEZNGZxLUM9X9F
+         aJz55yddLcfMtEcvojT/qftguNvZxvDizn58c=
+Received: by 10.220.152.146 with SMTP id g18mr9344751vcw.30.1328507305008;
+        Sun, 05 Feb 2012 21:48:25 -0800 (PST)
+Received: from localhost (c-98-207-169-74.hsd1.ca.comcast.net. [98.207.169.74])
+        by mx.google.com with ESMTPS id hm8sm9674775vdb.3.2012.02.05.21.48.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 05 Feb 2012 21:48:23 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <7vk440a5qw.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vvcnkeu2i.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190023>
 
-On Sun, Feb 05, 2012 at 09:30:15PM -0800, Junio C Hamano wrote:
+On Sun, Feb 05, 2012 at 03:31:17PM -0800, Junio C Hamano wrote:
+>Tom Grennan <tmgrennan@gmail.com> writes:
+>
+>> @@ -105,16 +107,28 @@ static int show_reference(const char *refname, const unsigned char *sha1,
+>>  				return 0;
+>>  		}
+>>  
+>> +		buf = read_sha1_file(sha1, &type, &size);
+>> +		if (!buf || !size)
+>> +			return 0;
+>> +
+>> +		if (filter->points_at) {
+>> +			unsigned char tagged_sha1[20];
+>> +			if (memcmp("object ", buf, 7) \
+>> +			    || buf[47] != '\n' \
+>> +			    || get_sha1_hex(buf + 7, tagged_sha1) \
+>> +			    || memcmp(filter->points_at, tagged_sha1, 20)) {
+>
+>Do we need these backslashes at the end of these lines?
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Sure, that's one way to do it. But I don't see any point in not allowing
-> > "git checkout -b" to be another way of doing it. Is there some other use
-> > case for "git checkout -b" from an unborn branch? Or is there some
-> > harmful outcome that can come from doing so that we need to be
-> > protecting against? Am I missing something?
-> 
-> Mostly because it is wrong at the conceptual level to do so.
-> 
-> 	git checkout -b foo
-> 
-> is a short-hand for
-> 
-> 	git checkout -b foo HEAD
-> 
-> which is a short-hand for
-> 
-> 	git branch foo HEAD &&
->         git checkout foo
-> 
-> But the last one has no chance of working if you think about it, because
-> "git branch foo $start" is a way to start a branch at $start and you need
-> to have something to point at with refs/heads/foo.
-> 
-> So we are breaking the equivalence between these three only when HEAD
-> points at an unborn branch.
+No, just an old habit. Thanks.
 
-I think it is only wrong at the conceptual level because you have
-specified the concepts in such a way that it is so. That is how git does
-it _now_, but the whole point of this is to change git's behavior to
-handle a potentially useful special case. I could also say this: "git
-checkout -b foo HEAD" does two things:
+>> @@ -143,16 +157,20 @@ static int show_reference(const char *refname, const unsigned char *sha1,
+>>  }
+>>  
+>>  static int list_tags(const char **patterns, int lines,
+>> -			struct commit_list *with_commit)
+>> +			struct commit_list *with_commit,
+>> +			unsigned char *points_at)
+>>  {
+>
+>It strikes me somewhat odd that you can give a list of commits to filter
+>when using "--contains" (e.g. "--contains v1.7.9 --contains 1.7.8.4"), but
+>you can only ask for a single object with "--points-at" from the UI point
+>of view.
+>
+>> @@ -375,12 +393,28 @@ static int strbuf_check_tag_ref(struct strbuf *sb, const char *name)
+>>  	return check_refname_format(sb->buf, 0);
+>>  }
+>>  
+>> +int parse_opt_points_at(const struct option *opt, const char *arg, int unset)
+>> +{
+>> +	unsigned char *sha1;
+>> +
+>> +	if (!arg)
+>> +		return -1;
+>> +	sha1 = xmalloc(20);
+>> +	if (get_sha1(arg, sha1)) {
+>> +		free(sha1);
+>> +		return error("malformed object name %s", arg);
+>> +	}
+>> +	*(unsigned char **)opt->value = sha1;
+>> +	return 0;
+>> +}
+>
+>We are ignoring earlier --points-at argument without telling the user that
+>we do not support more than one.
+>
+>Would it become too much unnecessary addition of new code if you supported
+>multiple --points-at on the command line for the sake of consistency?
 
-  1. create a new branch "foo" pointing to the current sha1 of HEAD
+OK, I'll implement multiple args to be consistent with contains and patterns.
 
-  2. point the HEAD symref at refs/heads/foo
+>> @@ -417,6 +451,12 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+>>  			PARSE_OPT_LASTARG_DEFAULT,
+>>  			parse_opt_with_commit, (intptr_t)"HEAD",
+>>  		},
+>> +		{
+>> +			OPTION_CALLBACK, 0, "points-at", &points_at, "object",
+>> +			"print only annotated|signed tags of the object",
+>> +			PARSE_OPT_LASTARG_DEFAULT,
+>> +			parse_opt_points_at, (intptr_t)"HEAD",
+>> +		},
+>
+>I wonder if defaulting to HEAD even makes sense for --points-at. When you
+>are chasing a bug and checked out an old version that originally had
+>problem, "git tag --contains" that defaults to HEAD does have a value. It
+>tells us what releases are potentially contaminated with the buggy commit.
+>
+>But does a similar use case support points-at that defaults to HEAD?
 
-And then the proposed behavior might amend the first point to say:
+Yes, the usage, "--points-at <object>..." implies that there is no
+default. So, I suppose that NULL more appropriate than "HEAD".
 
-  1. if HEAD points to an existing ref, then create a new branch...
+Should I make the "contains" usage indicate that "commit" is optional
+like this?
+	"[--contains [<commit>...]] [--points-at <object>..]"
 
-which is perfectly consistent and simple. It does violate your "X is a
-short-hand for Y" above, but why is that a bad thing? It seems you are
-arguing against a special case _because_ it is a special case, not
-because it is not a reasonable thing to do or expect.
+>Other than that, thanks for a pleasant read.
 
-Anyway. I am still not convinced that this is even a useful thing to
-want to do, so I am certainly not volunteering to write such a patch. So
-perhaps there is no point arguing about it.
-
--Peff
+Thanks,
+TomG
