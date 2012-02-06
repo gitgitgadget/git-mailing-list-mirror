@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 5/6] Allow to use crc32 as a lighter checksum on index
-Date: Mon,  6 Feb 2012 12:48:38 +0700
-Message-ID: <1328507319-24687-5-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 6/6] Automatically switch to crc32 checksum for index when it's too large
+Date: Mon,  6 Feb 2012 12:48:39 +0700
+Message-ID: <1328507319-24687-6-git-send-email-pclouds@gmail.com>
 References: <1328507319-24687-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -12,231 +12,172 @@ Cc: Thomas Rast <trast@inf.ethz.ch>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 06 06:44:35 2012
+X-From: git-owner@vger.kernel.org Mon Feb 06 06:44:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuHNS-0002wA-2V
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 06:44:34 +0100
+	id 1RuHNa-0002zb-3e
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 06:44:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751740Ab2BFFoa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Feb 2012 00:44:30 -0500
+	id S1751830Ab2BFFoh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Feb 2012 00:44:37 -0500
 Received: from mail-pz0-f46.google.com ([209.85.210.46]:61644 "EHLO
 	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751545Ab2BFFo3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Feb 2012 00:44:29 -0500
-Received: by daed14 with SMTP id d14so164111dae.19
-        for <git@vger.kernel.org>; Sun, 05 Feb 2012 21:44:28 -0800 (PST)
+	with ESMTP id S1751367Ab2BFFog (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Feb 2012 00:44:36 -0500
+Received: by mail-pz0-f46.google.com with SMTP id d14so164111dae.19
+        for <git@vger.kernel.org>; Sun, 05 Feb 2012 21:44:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=qBY+wLwSVSGM7GqRcKB8AgIXU6nKcpJy7ySeN7QwsLk=;
-        b=M8wDI/lzYa91JhhtwY481F+bGvQlh+w4LjfiZ5UQWoplQswJbmXioY1IdLB3eIxT00
-         HsZyPeiQxw6/dwN4lnzRVIwiDavJwfTxXMdcO5l/rV7TmTqaxl/1P/RI5lgsFBQanj9B
-         zYs8KZbEOxxx3Q5MeQCE6m8F1UmdWfyziLvk4=
-Received: by 10.68.233.135 with SMTP id tw7mr34701414pbc.67.1328507068613;
-        Sun, 05 Feb 2012 21:44:28 -0800 (PST)
+        bh=fMf65eDpoCFpqw/eGnKXCSgfduNrMuSplnahiLxP2uo=;
+        b=nK3ylbtHMr+2zp6NnbhcDX2cbsIufdO6S6jMiJQB7A5CrIZ2ZaQdi4wVJPoiPa+9+c
+         XVHLIJW8WfsgB3072e8Rf3FnKJePYBpG3tb/YiOrsLp1XmNDLWagsg/uC30l+2wrGCaH
+         REpCbQMtCJHyRE/1V403xwvqL0fL+FsfcNaoY=
+Received: by 10.68.204.7 with SMTP id ku7mr32346708pbc.45.1328507076663;
+        Sun, 05 Feb 2012 21:44:36 -0800 (PST)
 Received: from tre ([115.74.57.120])
-        by mx.google.com with ESMTPS id d1sm19772343pbg.13.2012.02.05.21.44.23
+        by mx.google.com with ESMTPS id y9sm369010pbi.3.2012.02.05.21.44.32
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 05 Feb 2012 21:44:27 -0800 (PST)
-Received: by tre (sSMTP sendmail emulation); Mon, 06 Feb 2012 12:49:18 +0700
+        Sun, 05 Feb 2012 21:44:35 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Mon, 06 Feb 2012 12:49:27 +0700
 X-Mailer: git-send-email 1.7.8.36.g69ee2
 In-Reply-To: <1328507319-24687-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190021>
 
+An experiment with -O3 is done on Intel D510@1.66GHz. At around 250k
+entries, index reading time exceeds 0.5s. Switching to crc32 brings it
+back lower than 0.2s.
+
+On 4M files index, reading time with SHA-1 takes ~8.4, crc32 2.8s.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/git-update-index.txt |   12 +++++++-
- builtin/update-index.c             |   11 +++++++
- cache.h                            |    2 +
- read-cache.c                       |   54 ++++++++++++++++++++++++++++=
---------
- 4 files changed, 66 insertions(+), 13 deletions(-)
+ I know no real repositories this size though. gentoo-x86 is "only"
+ 120k. Haven't checked libreoffice repo yet.
 
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-upd=
-ate-index.txt
-index a3081f4..2574a4e 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 	     [--add] [--remove | --force-remove] [--replace]
- 	     [--refresh] [-q] [--unmerged] [--ignore-missing]
- 	     [(--cacheinfo <mode> <object> <file>)...]
--	     [--chmod=3D(+|-)x]
-+	     [--chmod=3D(+|-)x] [--[no-]crc32]
- 	     [--assume-unchanged | --no-assume-unchanged]
- 	     [--skip-worktree | --no-skip-worktree]
- 	     [--ignore-submodules]
-@@ -109,6 +109,16 @@ you will need to handle the situation manually.
- 	set and unset the "skip-worktree" bit for the paths. See
- 	section "Skip-worktree bit" below for more information.
+ On 2M files index, allocating one big block (i.e. reverting debed2a
+ (read-cache.c: allocate index entries individually - 2011-10-24)
+ saves about 0.3s. Maybe we can allocate one big block, then malloc
+ separately when the block is fully used.
+
+ Writing time is still high. "git update-index --crc32" on crc32 250k i=
+ndex
+ takes 0.9s (so writing time is about 0.5s)
+
+ A better solution may be narrow clone (or just the narrow checkout
+ part), where index only contains entries from checked out
+ subdirectories.
+
+ Documentation/config.txt |    7 +++++++
+ builtin/update-index.c   |    1 +
+ cache.h                  |    1 +
+ config.c                 |    5 +++++
+ environment.c            |    1 +
+ read-cache.c             |    8 ++++++++
+ 6 files changed, 23 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index abeb82b..55b7596 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -540,6 +540,13 @@ relatively high IO latencies.  With this set to 't=
+rue', git will do the
+ index comparison to the filesystem data in parallel, allowing
+ overlapping IO's.
 =20
-+--crc32::
-+--no-crc32::
-+	Normally SHA-1 is used to check for index integrity. When the
-+	index is large, SHA-1 computation cost can be significant.
-+	--crc32 will convert current index to use (cheaper) crc32
-+	instead. Note that later writes to index by other commands can
-+	convert the index back to SHA-1. Older git versions may not
-+	understand crc32 index, --no-crc32 can be used to convert it
-+	back to SHA-1.
++core.crc32IndexThreshold::
++	Usually SHA-1 is used to check for index integerity. When the
++	number of entries in index exceeds this threshold, crc32 will
++	be used instead. Zero means SHA-1 always be used. Negative
++	value disables this threshold (i.e. crc32 or SHA-1 is decided
++	by other means).
 +
- -g::
- --again::
- 	Runs 'git update-index' itself on the paths whose index
+ core.createObject::
+ 	You can set this to 'link', in which case a hardlink followed by
+ 	a delete of the source are used to make sure that object creation
 diff --git a/builtin/update-index.c b/builtin/update-index.c
-index a6a23fa..6913226 100644
+index 6913226..5cb51c7 100644
 --- a/builtin/update-index.c
 +++ b/builtin/update-index.c
-@@ -707,6 +707,7 @@ int cmd_update_index(int argc, const char **argv, c=
+@@ -856,6 +856,7 @@ int cmd_update_index(int argc, const char **argv, c=
 onst char *prefix)
- {
- 	int newfd, entries, has_errors =3D 0, line_termination =3D '\n';
- 	int read_from_stdin =3D 0;
-+	int do_crc =3D -1;
- 	int prefix_length =3D prefix ? strlen(prefix) : 0;
- 	char set_executable_bit =3D 0;
- 	struct refresh_params refresh_args =3D {0, &has_errors};
-@@ -791,6 +792,8 @@ int cmd_update_index(int argc, const char **argv, c=
-onst char *prefix)
- 			"(for porcelains) forget saved unresolved conflicts",
- 			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
- 			resolve_undo_clear_callback},
-+		OPT_BOOL(0, "crc32", &do_crc,
-+			 "use crc32 as checksum instead of sha1"),
- 		OPT_END()
- 	};
-=20
-@@ -852,6 +855,14 @@ int cmd_update_index(int argc, const char **argv, =
-const char *prefix)
- 	}
  	argc =3D parse_options_end(&ctx);
 =20
-+	if (do_crc !=3D -1) {
-+		if (do_crc)
-+			the_index.hdr_flags |=3D CACHE_F_CRC;
-+		else
-+			the_index.hdr_flags &=3D ~CACHE_F_CRC;
-+		active_cache_changed =3D 1;
-+	}
-+
- 	if (read_from_stdin) {
- 		struct strbuf buf =3D STRBUF_INIT, nbuf =3D STRBUF_INIT;
-=20
+ 	if (do_crc !=3D -1) {
++		core_crc32_index_threshold =3D -1;
+ 		if (do_crc)
+ 			the_index.hdr_flags |=3D CACHE_F_CRC;
+ 		else
 diff --git a/cache.h b/cache.h
-index c2e884a..7352402 100644
+index 7352402..d05856b 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -105,6 +105,8 @@ struct cache_header {
- 	unsigned int hdr_entries;
- };
+@@ -610,6 +610,7 @@ extern unsigned long pack_size_limit_cfg;
+ extern int read_replace_refs;
+ extern int fsync_object_files;
+ extern int core_preload_index;
++extern int core_crc32_index_threshold;
+ extern int core_apply_sparse_checkout;
 =20
-+#define CACHE_F_CRC	1	/* use crc32 instead of sha1 for index checksum =
-*/
+ enum branch_track {
+diff --git a/config.c b/config.c
+index 40f9c6d..905e071 100644
+--- a/config.c
++++ b/config.c
+@@ -671,6 +671,11 @@ static int git_default_core_config(const char *var=
+, const char *value)
+ 		return 0;
+ 	}
+=20
++	if (!strcmp(var, "core.crc32indexthreshold")) {
++		core_crc32_index_threshold =3D git_config_int(var, value);
++		return 0;
++	}
 +
- struct ext_cache_header {
- 	struct cache_header h;
- 	unsigned int hdr_flags;
+ 	if (!strcmp(var, "core.createobject")) {
+ 		if (!strcmp(value, "rename"))
+ 			object_creation_mode =3D OBJECT_CREATION_USES_RENAMES;
+diff --git a/environment.c b/environment.c
+index c93b8f4..9d9dfc2 100644
+--- a/environment.c
++++ b/environment.c
+@@ -66,6 +66,7 @@ unsigned long pack_size_limit_cfg;
+=20
+ /* Parallel index stat data preload? */
+ int core_preload_index =3D 0;
++int core_crc32_index_threshold =3D 250000;
+=20
+ /* This is set by setup_git_dir_gently() and/or git_default_config() *=
+/
+ char *git_work_tree_cfg;
 diff --git a/read-cache.c b/read-cache.c
-index fd21af6..a34878e 100644
+index a34878e..fd032d8 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -1185,20 +1185,33 @@ static struct cache_entry *refresh_cache_entry(=
-struct cache_entry *ce, int reall
-=20
- static int verify_hdr(struct cache_header *hdr, unsigned long size)
- {
-+	int do_crc;
- 	git_SHA_CTX c;
- 	unsigned char sha1[20];
-=20
- 	if (hdr->hdr_signature !=3D htonl(CACHE_SIGNATURE))
- 		return error("bad signature");
--	if (hdr->hdr_version !=3D htonl(2) &&
--	    hdr->hdr_version !=3D htonl(3) &&
--	    hdr->hdr_version !=3D htonl(4))
-+	if (hdr->hdr_version =3D=3D htonl(2) ||
-+	    hdr->hdr_version =3D=3D htonl(3))
-+		do_crc =3D 0;
-+	else if (hdr->hdr_version =3D=3D htonl(4)) {
-+		struct ext_cache_header *ehdr =3D (struct ext_cache_header *)hdr;
-+		do_crc =3D ntohl(ehdr->hdr_flags) & CACHE_F_CRC;
-+	}
-+	else
- 		return error("bad index version");
--	git_SHA1_Init(&c);
--	git_SHA1_Update(&c, hdr, size - 20);
--	git_SHA1_Final(sha1, &c);
--	if (hashcmp(sha1, (unsigned char *)hdr + size - 20))
--		return error("bad index file sha1 signature");
-+	if (do_crc) {
-+		uint32_t crc =3D crc32(0, NULL, 0);
-+		crc =3D crc32(crc,(void *) hdr, size - sizeof(uint32_t));
-+		if (crc !=3D *(uint32_t*)((unsigned char *)hdr + size - sizeof(uint3=
-2_t)))
-+			return error("bad index file crc32 signature");
-+	} else {
-+		git_SHA1_Init(&c);
-+		git_SHA1_Update(&c, hdr, size - 20);
-+		git_SHA1_Final(sha1, &c);
-+		if (hashcmp(sha1, (unsigned char *)hdr + size - 20))
-+			return error("bad index file sha1 signature");
-+	}
- 	return 0;
- }
-=20
-@@ -1421,11 +1434,24 @@ static int write_index_ext_header(struct sha1fi=
-le *f,
- static int ce_flush(struct sha1file *f)
- {
- 	unsigned char sha1[20];
--	int fd =3D sha1close(f, sha1, 0);
-+	int fd;
-=20
--	if (fd < 0)
--		return -1;
--	return (write_in_full(fd, sha1, 20) !=3D 20) ? -1 : 0;
-+	if (f->do_crc) {
-+		uint32_t crc;
-+
-+		assert(f->do_sha1 =3D=3D 0);
-+		sha1flush(f);
-+		crc =3D crc32_end(f);
-+		fd =3D sha1close(f, sha1, 0);
-+		if (fd < 0)
-+			return -1;
-+		return (write_in_full(fd, &crc, sizeof(crc)) !=3D sizeof(crc)) ? -1 =
-: 0;
-+	} else {
-+		fd =3D sha1close(f, sha1, 0);
-+		if (fd < 0)
-+			return -1;
-+		return (write_in_full(fd, sha1, 20) !=3D 20) ? -1 : 0;
-+	}
- }
-=20
- static void ce_smudge_racily_clean_entry(struct cache_entry *ce)
-@@ -1568,6 +1594,10 @@ int write_index(struct index_state *istate, int =
+@@ -1582,6 +1582,14 @@ int write_index(struct index_state *istate, int =
 newfd)
- 	hdr.h.hdr_entries =3D htonl(entries - removed);
+ 		}
+ 	}
 =20
- 	f =3D sha1fd(newfd, NULL);
-+	if (istate->hdr_flags & CACHE_F_CRC) {
-+		crc32_begin(f);
-+		f->do_sha1 =3D 0;
++	if (core_crc32_index_threshold >=3D 0) {
++		if (core_crc32_index_threshold > 0 &&
++		    istate->cache_nr >=3D core_crc32_index_threshold)
++			istate->hdr_flags |=3D CACHE_F_CRC;
++		else
++			istate->hdr_flags &=3D ~CACHE_F_CRC;
 +	}
- 	if (ce_write(f, &hdr, hdr_size) < 0)
- 		return -1;
-=20
++
+ 	hdr.h.hdr_signature =3D htonl(CACHE_SIGNATURE);
+ 	if (istate->hdr_flags) {
+ 		hdr.h.hdr_version =3D htonl(4);
 --=20
 1.7.8.36.g69ee2
