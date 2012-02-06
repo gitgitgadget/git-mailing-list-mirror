@@ -1,195 +1,142 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFD] Rewriting safety - warn before/when rewriting published history
-Date: Mon, 6 Feb 2012 15:44:11 +0100
-Message-ID: <201202061544.14417.jnareb@gmail.com>
-References: <201202042045.54114.jnareb@gmail.com> <201202052146.56458.jnareb@gmail.com> <CALKQrgcAsPXziQCTReZkCKnnXTX=rwPFrzp0wJ3ZYwn0b_M5Tw@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH/RFC v4] grep: Add the option '--exclude'
+Date: Mon, 6 Feb 2012 22:16:59 +0700
+Message-ID: <CACsJy8DhtjG6AhPkb0SEm4g6zhtmuRb5x+4+P3A6eS0+_7OQNw@mail.gmail.com>
+References: <1328192753-29162-1-git-send-email-surfingalbert@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Philip Oakley <philipoakley@iee.org>, git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Feb 06 15:44:20 2012
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Albert Yale <surfingalbert@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 06 16:17:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuPnn-0001cH-8R
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 15:44:19 +0100
+	id 1RuQK2-0005Wf-JW
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 16:17:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754884Ab2BFOoO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Feb 2012 09:44:14 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:60457 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753992Ab2BFOoN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Feb 2012 09:44:13 -0500
-Received: by eaah12 with SMTP id h12so2481635eaa.19
-        for <git@vger.kernel.org>; Mon, 06 Feb 2012 06:44:12 -0800 (PST)
+	id S1755318Ab2BFPRd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Feb 2012 10:17:33 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:59174 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755077Ab2BFPRc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Feb 2012 10:17:32 -0500
+Received: by wgbdt10 with SMTP id dt10so6325909wgb.1
+        for <git@vger.kernel.org>; Mon, 06 Feb 2012 07:17:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=Qy5gj/5Ii75BJ5NkA5zMzxbJMqi2eYKV/j2gtK6Yl6Y=;
-        b=qeYYv2c5pd0rZWqXmfzDbWKYncHViX7F72R1E1jYSCUpYWmGdcX3n3HL7ZN57z1QNC
-         Yi+HEEGh6tvE5yfi0/zOAjcOiqjs1cobaR7tNk7jP6oOlP6NYPTqiel7YNjx3kFCNePJ
-         GAliv4ahhMUzkCnybkGgj1o0Trp46xTYLalco=
-Received: by 10.213.13.209 with SMTP id d17mr2302384eba.20.1328539452275;
-        Mon, 06 Feb 2012 06:44:12 -0800 (PST)
-Received: from [192.168.1.13] (abvv240.neoplus.adsl.tpnet.pl. [83.8.219.240])
-        by mx.google.com with ESMTPS id a58sm61664337eeb.8.2012.02.06.06.44.10
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 06 Feb 2012 06:44:11 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <CALKQrgcAsPXziQCTReZkCKnnXTX=rwPFrzp0wJ3ZYwn0b_M5Tw@mail.gmail.com>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=3jADfQjs92YRagI9WDbK7TK5YHvSGcAQKaecArzOw4g=;
+        b=Nz5VmUvRdYEC+SDjng5vgSL9SN8m5wxypNS7RS69YmV7g2iau82egnAV+5f6gXoO2S
+         EV2bGRqxi+GCFJxIwstkB0UwbYkP+2tRC9lQBi5x2HimcKepZMTk6WHZWvkcyv845KkV
+         UKFkh8wEBCldy/vdiCL9y3nMnfNO/18vLnAp0=
+Received: by 10.180.86.9 with SMTP id l9mr28090552wiz.15.1328541450235; Mon,
+ 06 Feb 2012 07:17:30 -0800 (PST)
+Received: by 10.223.2.139 with HTTP; Mon, 6 Feb 2012 07:16:59 -0800 (PST)
+In-Reply-To: <1328192753-29162-1-git-send-email-surfingalbert@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190072>
 
-On Sun, 5 Feb 2012, Johan Herland wrote:
-> On Sun, Feb 5, 2012 at 21:46, Jakub Narebski <jnareb@gmail.com> wrote=
-:
->> On Sun, 5 Feb 2012, Johan Herland wrote:
->>> 2012/2/5 Jakub Narebski <jnareb@gmail.com>:
+On Thu, Feb 2, 2012 at 9:25 PM, Albert Yale <surfingalbert@gmail.com> w=
+rote:
+> I added a "struct pathspec_set" as you suggested
+> in your previous review. It had the side effect
+> of forcing me to update a few more files than was
+> previously necessary.
 
-[...]
->>> I agree that the 'public' state should (by default) be automaticall=
-y
->>> inferred from remote-tracking branches. As it stands, we can do thi=
-s
->>> with current git, by writing a pre-rebase hook that checks if any o=
-f
->>> the commits to-be-rebased are reachable from any remote-tracking
->>> branch.
->>
->> It is nice that we can achieve a large part of this feature with exi=
-sting
->> infrastructure. =C2=A0It would be nice if we ship such pre-rebase ho=
-ok with
->> git, so people can just enable it if they want to use this functiona=
-lity,
->> like the default pre-commit hook that checks for whitespace errors.
->=20
-> Yeah. As it is, the pre-rebase hook shipped with v1.7.9 (when
-> activated) does something similar (i.e. prevent rewriting 'public'
-> commits). However, it's highly workflow-specific, since it determines
-> whether the branch being rebased has been merged into "next" or
-> "master". IMHO, a hook that tested for reachability from
-> remote-tracking refs would be more generally useful. Obviously, the
-> two can be combined, and even further combinations may be desirable
-> (e.g. also checking for reachability from commits annotated in
-> refs/notes/public).
+Please make it a separate patch, it's hard to follow an all-in-one
+patch. Although those changes might be unnecessary (see below).
 
-Relying on (default) hooks to implement this feature has the disadvanta=
-ge
-that it wouldn't be turned on by default... while this feature would be
-most helpful for users new to git (scared by refuse to push).
-=20
-I am not sure either if everything (wrt. safety net) can be implemented
-via hooks.  One thing that I forgot about is preventing rewinding of
-branch past the published commit using e.g. "git reset --hard <commit>"=
-=2E
-Unless `pre-rewrite` hook could be used for that safety too...
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -566,6 +566,10 @@ static int grep_tree(struct grep_opt *opt, const=
+ struct pathspec *pathspec,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0while (tree_entry(tree, &entry)) {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0int te_len =3D=
+ tree_entry_len(&entry);
+>
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!match_pathspe=
+c_depth(pathspec,
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+entry.path, strlen(entry.path),
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+0, NULL))
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 continue;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (match !=3D=
+ all_entries_interesting) {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0match =3D tree_entry_interesting(&entry, base, tn_len, pa=
+thspec);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0if (match =3D=3D all_entries_not_interesting)
 
-[...]
->> Note however that the safety net, i.e. refusing or warning against a=
-ttempted
->> rewrite of published history is only part of issue. =C2=A0Another im=
-portant part
->> is querying and showing "phase" of a commit. =C2=A0What I'd like to =
-see is
->> ability to show among others in "git log" and "git show" output if c=
-ommit
->> was already published or not (and if it is marked 'secret').
->=20
-> Today, you can use --decorate to display remote-tracking refs in the
-> log/show output. However, only the tip commits are decorated, so if
-> the commits shown are not at the tip, you're out of luck. I believe
-> teaching log/show to decorate _all_ commits that are reachable from
-> some given ref(s) should be fairly straightforward.
+tree_entry_interesting() is equivalent to match_pathspec_depth(). The
+only difference is that the former is designed to match on trees why
+the latter a list. And tree_entry_interesting() is more efficient than
+match_pathspec_depth(). As you can see there's
+tree_entry_interesting() call above already. You should make the
+tree_entry_interesting() understand exclude pathspec instead of adding
+match_pathspec_depth() in.
 
-That would be nice.
-=20
-> If you use 'git notes' to annotate 'public' and 'secret' states, then
-> you can also use the --show-notes=3D<ref> option to let show/log disp=
-lay
-> the annotations on 'public'/'secret' commits.
+> @@ -295,6 +298,25 @@ int match_pathspec_depth(const struct pathspec *=
+ps,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0return retval;
+> =C2=A0}
+>
+> +int match_pathspec_depth(const struct pathspec *ps,
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0const char *name, int namelen,
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0int prefix, char *seen)
+> +{
+> + =C2=A0 =C2=A0 =C2=A0 int retval =3D match_pathspec_set_depth(&ps->i=
+nclude,
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 ps->recursive, ps->max_depth,
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 name, namelen, prefix, seen);
+> +
+> + =C2=A0 =C2=A0 =C2=A0 if (retval && ps->exclude.nr)
+> + =C2=A0 =C2=A0 =C2=A0 {
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (match_pathspec=
+_set_depth(&ps->exclude,
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0ps->recursive, ps->max_depth,
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0name, namelen, prefix, seen))
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 return 0;
+> + =C2=A0 =C2=A0 =C2=A0 }
+> +
+> + =C2=A0 =C2=A0 =C2=A0 return retval;
+> +}
+> +
+> =C2=A0static int no_wildcard(const char *string)
+> =C2=A0{
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0return string[strcspn(string, "*?[{\\")] =3D=
+=3D '\0';
 
-=46irst, in my opinion annotating _all_ commits with their phase is I t=
-hink
-out of question, especially annotating 'public' commits.  I don't think
-git-notes mechanism would scale well to annotating every commit; but
-perhaps this was tested to work, and I am mistaken.=20
-=20
-Second, I have doubts if "phase" is really state of an individual commi=
-t,
-and not the feature of revision walking.
+It makes me wonder, why not add match_pathspec_with_exclusion(const
+struct pathspec *include_ps, const struct pathspec *exclude_ps,...),
+use the new function in grep.c and revert struct pathspec back to
+original? The same can be applied to tree_entry_interesting() (i.e.
+add a new one that takes two pathspec sets, which supports exclusion)
 
-Take for example the situation where given commit is reference by=20
-remote-tracking branch 'public/foo', and also by two local branches:
-'foo' with upstream 'public/foo', and local branch 'bar' with no upstre=
-am.
-
-Now it is quite obvious that this feature should prevent rewriting 'foo=
-'
-branch, for which commits are published upstream.  But what about branc=
-h
-'bar'?  Should we prevent rewriting (e.g. rebase) here too?  What about
-rewinding 'bar' to point somewhere else.  What if 'bar' is really detac=
-hed
-HEAD?=20
-
-These questions need to be answered...
-
-[...]
->>> Also, if you want to record where 'public' commits have been sent
->>> (other than what can be inferred from the remote-tracking branches)=
-,
->>> you could write this into the refs/notes/public annotation.
->>
->> I wonder if this too can be done by hook...
->=20
-> You're looking for someting like a post-push hook that runs on the
-> _client_ after a successful push. AFAIK, that doesn't exist yet. (Not
-> to be confused with the receive/update hooks that run on the
-> _server_.)
-
-And such hook could react to what was successfully pushed.  Without
-such hook we would have to write wrapper around git-push and parse
-its output...
-=20
-Nb. such hook could create "fake" remote-tracking branches if given
-push-only remote doesn't have them set up.
-
->>> As for 'secret' commits, you could annotate these on a
->>> refs/notes/secret notes ref, and then teach 'git push' (or whatever
->>> other method for publishing commits you use) to refuse to publish
->>> commits annotated on this notes ref. Possibly we would want to add =
-a
->>> "pre-push" or "pre-publish" hook.
->>
->> Well, addition of pre-push / pre-publish was resisted on the grounds
->> that all it does is something that can be as easy done by hand befor=
-e
->> push. =C2=A0Perhaps this new use case would help bring it forward, d=
-on't
->> you think?
->=20
-> Maybe. I didn't follow the original discussion. From my POV, you coul=
-d
-> argue that instead of another hook, you could always write a script
-> that does the 'secret' check before invoking 'git push', and then
-> you'd use that script instead of 'git push'. But you could argue the
-> same point for pretty much all of the other existing hooks (e.g.
-> instead of a pre-commit hook you could have your own commit wrapper
-> script). So I don't think that's a sufficient argument to refuse the
-> existence of a pre-push/publish hook.
-
-Right, This would be for this feature very much like pre-commit hook.
-
+I think you may make less changes that way. I'm bad at naming. It's up
+to you to rename match_pathspec_with_exclusion to something meaningful
+and short enough.
 --=20
-Jakub Narebski
-Poland
+Duy
