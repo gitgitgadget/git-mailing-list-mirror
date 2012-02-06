@@ -1,81 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] tag: add --points-at list option
-Date: Mon, 6 Feb 2012 02:13:02 -0500
-Message-ID: <20120206071302.GA10447@sigill.intra.peff.net>
-References: <1328480887-27463-1-git-send-email-tmgrennan@gmail.com>
- <20120206000420.GC28735@sigill.intra.peff.net>
- <20120206063213.GC10489@tgrennan-laptop>
- <20120206070424.GC9931@sigill.intra.peff.net>
+From: David Mohs <dgma@mohsinc.com>
+Subject: Re: Git performance results on a large repository
+Date: Mon, 6 Feb 2012 07:10:13 +0000 (UTC)
+Message-ID: <loom.20120206T054853-321@post.gmane.org>
+References: <CB5074CF.3AD7A%joshua.redstone@fb.com>,<CACsJy8DkLCK0ZUKNz_PJazsxjsRbWVVZwjAU5n2EAjJfCYtpoQ@mail.gmail.com> <243C23AF01622E49BEA3F28617DBF0AD5912CA85@SC-MBX02-5.TheFacebook.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com, jasampler@gmail.com
-To: Tom Grennan <tmgrennan@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 06 08:13:11 2012
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 06 08:15:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuIlC-0008HI-PD
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 08:13:11 +0100
+	id 1RuInD-0000XD-3t
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 08:15:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752036Ab2BFHNG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Feb 2012 02:13:06 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58621
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751341Ab2BFHNF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Feb 2012 02:13:05 -0500
-Received: (qmail 24515 invoked by uid 107); 6 Feb 2012 07:20:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 06 Feb 2012 02:20:11 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Feb 2012 02:13:02 -0500
-Content-Disposition: inline
-In-Reply-To: <20120206070424.GC9931@sigill.intra.peff.net>
+	id S1752129Ab2BFHPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Feb 2012 02:15:08 -0500
+Received: from plane.gmane.org ([80.91.229.3]:59286 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751341Ab2BFHPI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Feb 2012 02:15:08 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RuIn1-0000Tl-MV
+	for git@vger.kernel.org; Mon, 06 Feb 2012 08:15:03 +0100
+Received: from c-50-137-76-249.hsd1.ma.comcast.net ([50.137.76.249])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 06 Feb 2012 08:15:03 +0100
+Received: from dgma by c-50-137-76-249.hsd1.ma.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 06 Feb 2012 08:15:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 50.137.76.249 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.52.7 (KHTML, like Gecko) Version/5.1.2 Safari/534.52.7)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190036>
 
-On Mon, Feb 06, 2012 at 02:04:24AM -0500, Jeff King wrote:
+Joshua Redstone <joshua.redstone <at> fb.com> writes:
 
-> > >Before your patch, a tag whose sha1 could not be read would get its name
-> > >printed, and then we would later return without printing anything more.
-> > >Now it won't get even the first bit printed.
-> > >
-> > >However, I'm not sure the old behavior wasn't buggy; it would print part
-> > >of the line, but never actually print the newline.
-> > 
-> > If you prefer, I can restore the old behavior just moving the
-> > condition/return back below the refname print; then add "buf" qualifier
-> > to the following fragment and at each intermediate free.
-> 
-> Thinking on it more, your behavior is at least as good as the old. And
-> it only comes up in a broken repo, anyway, so trying to come up with
-> some kind of useful outcome is pointless.
+> To get a bit abstract for a moment, in an ideal world, it doesn't seem like
+> performance constraints of a source-control-system should dictate how we
+> choose to structure our code. Ideally, seems like we should be able to choose
+> to structure our code in whatever way we feel maximizes developer
+> productivity. If development and code/release management seem easier in a
+> single repo, than why not make an SCM that can handle it? This is one reason
+> I've been leaning towards figuring out an SCM approach that can work well with
+> our current practices rather than changing them as a prerequisite for good SCM
+> performance.
 
-Sorry to reverse myself, but I just peeked at the show_reference
-function one more time. Unconditionally moving the buffer-reading up
-above the "if (!filter->lines)" conditional is not a good idea.
+I certainly agree with this perspective---that our tools should support our
+use cases and not the other way around. However, I'd like you to consider that
+the size of this hypothetical repository might be giving you some useful
+information on the health of the code it contains. You might consider creating
+separate repositories simply to promote good modularization. It would involve
+some up-front effort and certainly some pain, but this work itself might be
+beneficial to your codebase without even considering the improved performance
+of the version control system.
 
-If I do "git tag -l", right now git doesn't have to actually read and
-parse each object that has been tagged (lightweight or not). If I use
-"git tag -n10", then obviously we do need to read it (and we do). And if
-we use your new "--points-at", we also do. But if neither of those
-options are in use, it would be nice to avoid the object lookup (it may
-not seem like much, but if you have a repo with an insane number of
-tags, it can add up).
+My concern here is that it may be extremely difficult to make a single piece
+of software scale for a project that can grow arbitrarily large. You may add
+some great performance improvements to git to then find that your bottleneck
+is the filesystem. That would enlarge the scope of your work and would likely
+make the project more difficult to manage.
 
-> BTW, writing that helped me notice two bugs in your patch:
-> 
->   1. You read up to 47 bytes into the buffer without ever checking
->      whether size >= 47.
-> 
->   2. You never check whether the object you read from read_sha1_file is
->      actually a tag.
+If you are able to prove me wrong, the entire software community will benefit
+from this work. However, before you embark upon a technical solution to your
+problem, I would urge you to consider the possible benefits of a non-technical
+solution, specifically restructuring your code and/or teams into more
+independent modules. You might find benefits from this approach that extend
+beyond source code control, which could make it the solution with the least
+amount of overall risk.
 
-Hmm, the "filter->lines" code for "git tag -n" makes a similar error. It
-should probably print nothing for objects that are not tags.
+Thanks for starting this valuable discussion.
 
--Peff
+-David
