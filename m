@@ -1,208 +1,118 @@
-From: Theodore Ts'o <tytso@mit.edu>
-Subject: [PATCH] Fix build problems related to profile-directed optimization
-Date: Sun,  5 Feb 2012 19:44:50 -0500
-Message-ID: <1328489090-14178-1-git-send-email-tytso@mit.edu>
-References: <7vaa4zpu2r.fsf@alter.siamese.dyndns.org>
-Cc: Theodore Ts'o <tytso@mit.edu>, Andi Kleen <ak@linux.intel.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 06 01:44:59 2012
+From: Steven Michalske <smichalske@gmail.com>
+Subject: Re: [RFD] Rewriting safety - warn before/when rewriting published history
+Date: Sun, 5 Feb 2012 16:57:21 -0800
+Message-ID: <EAF9D593-4E0C-4C95-A048-3F6AC8ADD866@gmail.com>
+References: <201202042045.54114.jnareb@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1251.1)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 06 01:57:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuChV-0005Gf-3h
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 01:44:57 +0100
+	id 1RuCtf-0002oQ-8O
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 01:57:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754524Ab2BFAov (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Feb 2012 19:44:51 -0500
-Received: from li9-11.members.linode.com ([67.18.176.11]:55976 "EHLO
-	test.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754325Ab2BFAov (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Feb 2012 19:44:51 -0500
-Received: from root (helo=tytso-glaptop.cam.corp.google.com)
-	by test.thunk.org with local-esmtp (Exim 4.69)
-	(envelope-from <tytso@thunk.org>)
-	id 1RuChO-0005nU-1N; Mon, 06 Feb 2012 00:44:50 +0000
-Received: from tytso by tytso-glaptop.cam.corp.google.com with local (Exim 4.71)
-	(envelope-from <tytso@thunk.org>)
-	id 1RuChO-0003hF-VD; Sun, 05 Feb 2012 19:44:50 -0500
-X-Mailer: git-send-email 1.7.9.107.g8e04a
-In-Reply-To: <7vaa4zpu2r.fsf@alter.siamese.dyndns.org>
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on test.thunk.org); SAEximRunCond expanded to false
+	id S1754639Ab2BFA50 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Feb 2012 19:57:26 -0500
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:39420 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753995Ab2BFA5Z convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Feb 2012 19:57:25 -0500
+Received: by daed14 with SMTP id d14so14139dae.19
+        for <git@vger.kernel.org>; Sun, 05 Feb 2012 16:57:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        bh=23uttk8PSn/rreQft4P5e1Bm+w+WM8qPfjXYKdnEuOA=;
+        b=bzD5KXZOAROQVoiz+/Z1J8+3m4MU7CmAtEvqeUumW07BLcID+s9I3a3XIro1g1p9/V
+         vThelIR3HIBxrPiCBLAb6IsNdkkKBXAyEeP/L2JkvUyUf/zPvtGmqLFfJbiwyTNB/uL+
+         WQ1CAoTG0Vb1YpY+UxtQ2cHe2fkX5qctSodog=
+Received: by 10.68.74.132 with SMTP id t4mr42880853pbv.22.1328489844885;
+        Sun, 05 Feb 2012 16:57:24 -0800 (PST)
+Received: from [192.168.1.114] (c-67-161-24-30.hsd1.ca.comcast.net. [67.161.24.30])
+        by mx.google.com with ESMTPS id x4sm35318246pbx.16.2012.02.05.16.57.22
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 05 Feb 2012 16:57:23 -0800 (PST)
+In-Reply-To: <201202042045.54114.jnareb@gmail.com>
+X-Mailer: Apple Mail (2.1251.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189992>
 
-There was a number of problems I ran into when trying the
-profile-directed optimizations added by Andi Kleen in git commit
-7ddc2710b9.  (This was using gcc 4.4 found on many enterprise
-distros.)
+See inlined responses below.
 
-1) The -fprofile-generate and -fprofile-use commands are incompatible
-with ccache; the code ends up looking in the wrong place for the gcda
-files based on the ccache object names.
+On Feb 4, 2012, at 11:45 AM, Jakub Narebski wrote:
 
-2) If the makefile notices that CFLAGS are different, it will rebuild
-all of the binaries.  Hence the recipe originally specified by the
-INSTALL file ("make profile-all" followed by "make install") doesn't
-work.  It will appear to work, but the binaries will end up getting
-built with no optimization.
+> So people would like for git to warn them about rewriting history before 
+> they attempt a push and it turns out to not fast-forward.
+> 
 
-This patch fixes this by using an explicit set of options passed via
-the PROFILE variable then using this to directly manipulate CFLAGS and
-EXTLIBS.
+I like this idea and I encounter this issue with my co-workers new to git.
+It scares them thinking they broke the repository.
 
-The developer can run "make PROFILE=BUILD all ; sudo make
-PROFILE=BUILD install" automatically run a two-pass build with the
-test suite run in between as the sample workload for the purpose of
-recording profiling information to do the profile-directed
-optimization.
+> In Mercurial 2.1 there are three available phases: 'public' for
+> published commits, 'draft' for local un-published commits and
+> 'secret' for local un-published commits which are not meant to
+> be published.
+> 
+> The phase of a changeset is always equal to or higher than the phase
+> of it's descendants, according to the following order:
+> 
+>      public < draft < secret
 
-Alternatively, the profiling version of binaries can be built using:
+Let's not limit ourselves to just three levels.  They are a great start but I propose the following.
 
-	make PROFILE=GEN PROFILE_DIR=/var/cache/profile all
-	make PROFILE=GEN install
+published - The commits that are on a public repository that if are rewritten will invoke uprisings.
+	general rule here would be to revert or patch, no rewrites.
+based - The commits that the core developers have work based upon. (not just the commits in their repo.)
+	general rule is notify your fellow developers before a rewrite.
+shared - The commits that are known to your fellow core developers.
+	These commits are known, but have not had work based off of them.  Minimal risk to rewrite.
+local - The commits that are local only, no one else has a copy.
+	Commits your willing to share, but have not been yet shared, either from actions of you, or a fetch from others.
+restricted or private - The commits that you do not want shared.
+	Manually added, think of a branch tip marked as restricted automatically promotes commits to the branch as restricted.
 
-and then after git has been used for a while, the optimized version of
-the binary can be built as follows:
+Maybe make these like nice levels, but as two components, publicity 0-100 and rewritability 0-100
+	Published is publicity 100 and rewritability 0
+	Restricted is publicity 0 and rewritability 100
+	Based publicity 75 and rewritability 25
+	Shared publicity 50 and rewritability 50
+	Local publicity 25 and rewritability 75
+	Restricted publicity 0 and rewritability 100
 
-	make PROFILE=USE PROFILE_DIR=/var/cache/profile all
-	make PROFILE=USE install
+Other option are flags stating if the commit is published, based, shared, or restricted.
+You could have a published and based commit that is more opposed to rewrite than a public commit.
 
-Signed-off-by: "Theodore Ts'o" <tytso@mit.edu>
-Cc: Andi Kleen <ak@linux.intel.com>
----
- INSTALL  |   17 +++++++++++++----
- Makefile |   53 +++++++++++++++++++++++++++++++++++------------------
- 2 files changed, 48 insertions(+), 22 deletions(-)
+Call security on a published restricted commit ;-)
 
-diff --git a/INSTALL b/INSTALL
-index 6fa83fe..5b7eec1 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -28,16 +28,25 @@ set up install paths (via config.mak.autogen), so you can write instead
- If you're willing to trade off (much) longer build time for a later
- faster git you can also do a profile feedback build with
- 
--	$ make profile-all
--	# make prefix=... install
-+	$ make --prefix=/usr PROFILE=BUILD all
-+	# make --prefix=/usr PROFILE=BUILD install
- 
- This will run the complete test suite as training workload and then
- rebuild git with the generated profile feedback. This results in a git
- which is a few percent faster on CPU intensive workloads.  This
- may be a good tradeoff for distribution packagers.
- 
--Note that the profile feedback build stage currently generates
--a lot of additional compiler warnings.
-+Or if you just want to install a profile-optimized version of git into
-+your home directory, you could run:
-+
-+	$ make PROFILE=BUILD install
-+
-+As a caveat: a profile-optimized build takes a *lot* longer since it
-+is the sources have to be built twice, and in order for the profiling
-+measurements to work properly, ccache must be disabled and the test
-+suite has to be run using only a single CPU.  In addition, the profile
-+feedback build stage currently generates a lot of additional compiler
-+warnings.
- 
- Issues of note:
- 
-diff --git a/Makefile b/Makefile
-index c457c34..8cea247 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1772,6 +1772,24 @@ ifdef ASCIIDOC7
- 	export ASCIIDOC7
- endif
- 
-+### profile feedback build
-+#
-+
-+# Can adjust this to be a global directory if you want to do extended
-+# data gathering
-+PROFILE_DIR := $(CURDIR)
-+
-+ifeq "$(PROFILE)" "GEN"
-+	CFLAGS += -fprofile-generate=$(PROFILE_DIR) -DNO_NORETURN=1
-+	EXTLIBS += -lgcov
-+	export CCACHE_DISABLE=t
-+	V=1
-+else ifneq "$PROFILE" ""
-+	CFLAGS += -fprofile-use=$(PROFILE_DIR) -fprofile-correction -DNO_NORETURN=1
-+	export CCACHE_DISABLE=t
-+	V=1
-+endif
-+
- # Shell quote (do not use $(call) to accommodate ancient setups);
- 
- SHA1_HEADER_SQ = $(subst ','\'',$(SHA1_HEADER))
-@@ -1828,7 +1846,17 @@ export DIFF TAR INSTALL DESTDIR SHELL_PATH
- 
- SHELL = $(SHELL_PATH)
- 
--all:: shell_compatibility_test $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS) GIT-BUILD-OPTIONS
-+all:: shell_compatibility_test
-+
-+ifeq "$(PROFILE)" "BUILD"
-+ifeq ($(filter all,$(MAKECMDGOALS)),all)
-+all:: profile-clean
-+	$(MAKE) PROFILE=GEN all
-+	$(MAKE) PROFILE=GEN -j1 test
-+endif
-+endif
-+
-+all:: $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS) GIT-BUILD-OPTIONS
- ifneq (,$X)
- 	$(QUIET_BUILT_IN)$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) $(BUILT_INS) git$X)), test -d '$p' -o '$p' -ef '$p$X' || $(RM) '$p';)
- endif
-@@ -2557,7 +2585,11 @@ distclean: clean
- 	$(RM) configure
- 	$(RM) po/git.pot
- 
--clean:
-+profile-clean:
-+	$(RM) $(addsuffix *.gcda,$(addprefix $(PROFILE_DIR)/, $(object_dirs)))
-+	$(RM) $(addsuffix *.gcno,$(addprefix $(PROFILE_DIR)/, $(object_dirs)))
-+
-+clean: profile-clean
- 	$(RM) *.o block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o vcs-svn/*.o \
- 		builtin/*.o $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
- 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
-@@ -2587,7 +2619,7 @@ ifndef NO_TCLTK
- endif
- 	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-LDFLAGS GIT-GUI-VARS GIT-BUILD-OPTIONS
- 
--.PHONY: all install clean strip
-+.PHONY: all install profile-clean clean strip
- .PHONY: shell_compatibility_test please_set_SHELL_PATH_to_a_more_modern_shell
- .PHONY: FORCE cscope
- 
-@@ -2697,18 +2729,3 @@ cover_db: coverage-report
- cover_db_html: cover_db
- 	cover -report html -outputdir cover_db_html cover_db
- 
--### profile feedback build
--#
--.PHONY: profile-all profile-clean
--
--PROFILE_GEN_CFLAGS := $(CFLAGS) -fprofile-generate -DNO_NORETURN=1
--PROFILE_USE_CFLAGS := $(CFLAGS) -fprofile-use -fprofile-correction -DNO_NORETURN=1
--
--profile-clean:
--	$(RM) $(addsuffix *.gcda,$(object_dirs))
--	$(RM) $(addsuffix *.gcno,$(object_dirs))
--
--profile-all: profile-clean
--	$(MAKE) CFLAGS="$(PROFILE_GEN_CFLAGS)" all
--	$(MAKE) CFLAGS="$(PROFILE_GEN_CFLAGS)" -j1 test
--	$(MAKE) CFLAGS="$(PROFILE_USE_CFLAGS)" all
--- 
-1.7.9.107.g8e04a
+Commits are by default local.
+
+Commits are published when they are pushed or fetched and merged to a publishing branch of a repository.
+	On fetch/merge a post merge hook should send back a note to the remote repository that the commits were published.
+
+Restricted commits/branches/tags should not be made public, error out and require clearing of the attribute or a --force-restricted option that automatically removes the restricted attribute.  They are at least promoted to shared, if not published.
+
+Based is only used in situations where you have developers sharing amongst their repositories, and you want a rule that is less restrictive than no rewrites.
+
+Shared is what we have now when a commit is in a remote repository without the no rewrite options. e.g. receive.denyNonFastForwards.
+
+As it stands now we can infer local and shared,  we need metadata to know when a commit is made based, published, or restricted.
+
+
+Using the nomenclature from Mercurial 
+>      public < draft < secret
+
+public -> publicity 100, rewritability 0
+draft -> publicity ?, rewritability 50
+secret -> publicity 0, rewritability 100
+
+Steve
