@@ -1,84 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] commit: introduce a config key to allow as-is commit
- with i-t-a entries
-Date: Mon, 06 Feb 2012 13:48:46 -0800
-Message-ID: <7vpqdr63b5.fsf@alter.siamese.dyndns.org>
-References: <1328525855-2547-1-git-send-email-pclouds@gmail.com>
- <1328525855-2547-3-git-send-email-pclouds@gmail.com>
- <7vwr7z653f.fsf@alter.siamese.dyndns.org> <20120206211321.GA2949@burratino>
+From: Adam Mercer <ramercer@gmail.com>
+Subject: git describe relative to a given tag pattern
+Date: Mon, 6 Feb 2012 16:03:32 -0600
+Message-ID: <CA+mfgz0VB9qMHHtoT76zCOiUaH=8egdMDrneQVRBug2waQsGAg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 06 22:48:56 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 06 23:04:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuWQh-0008WN-EH
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 22:48:55 +0100
+	id 1RuWff-00016K-C1
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 23:04:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754692Ab2BFVsu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Feb 2012 16:48:50 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37023 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752872Ab2BFVst (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Feb 2012 16:48:49 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BE68D64E3;
-	Mon,  6 Feb 2012 16:48:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=v65jncxGga6WzCPo4gKOFz8ybZQ=; b=kUkYnT
-	bEWVfs+2tVBZaKrqVv8ZRePiV1HoST4lL1uuVbyM0u9Iusv0P0nMWShRYY00Abx4
-	jFQvsbRvNuwiQ4sgMOd5wH4gxaFXphoFsCNbHG8ZmQ4bnxs7cwrvy9CwA3O+22qm
-	miezOVW6SrZqrrCaPgpzZkoxwOhpFn0MCB0MQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Yw0hgnDyv5MlCAnRSkVefz0j69hjowUr
-	n6jts/mblWqaCBfMkoG+20NMaasTlrPNSTMidSm6lOafM42+Pn60o3aPD6K86Ke6
-	101EPABFGVXnCkKNE/om9pkLvLQZ2ZEskTuUanFo5gnq2fYKtv8avMCkN4WnWs4z
-	+BFD9jS3llo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B524664E2;
-	Mon,  6 Feb 2012 16:48:48 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4895864E1; Mon,  6 Feb 2012
- 16:48:48 -0500 (EST)
-In-Reply-To: <20120206211321.GA2949@burratino> (Jonathan Nieder's message of
- "Mon, 6 Feb 2012 15:13:21 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 59A22D8C-510C-11E1-B503-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755881Ab2BFWEP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Feb 2012 17:04:15 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:52168 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755869Ab2BFWEM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Feb 2012 17:04:12 -0500
+Received: by pbdu11 with SMTP id u11so5332429pbd.19
+        for <git@vger.kernel.org>; Mon, 06 Feb 2012 14:04:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=KbaIAxGG7J2h+Q2bg2ndGAejxFV83xBhzURLJ5sTZeY=;
+        b=n+DWgPEGxUr/aA0i+uSopF3g19iwr4h5gndFAD6X7YH+jwK8CG3z7bqgk/jZq2vQVq
+         +EL6KS8qWgYhfpPV10xfKREQwK5aD+5PWM3SynV2SNI4Gyp/iW+gYlmsJvChiCEawUPJ
+         PBoYOPcBSVX2wwL9caSXDDzazwnCIHeNs2SVY=
+Received: by 10.68.74.170 with SMTP id u10mr50704645pbv.99.1328565852337; Mon,
+ 06 Feb 2012 14:04:12 -0800 (PST)
+Received: by 10.68.232.170 with HTTP; Mon, 6 Feb 2012 14:03:32 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190111>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Hi
 
-> Junio C Hamano wrote:
->
->> IIRC, the original motivation of intent-to-add "add -N" was in response to
->> users who curse Git because they often forget to add new files before
->> committing, and they wanted to say "Here I have a new file, it is not
->> complete yet, but I do not want it left out of the commit. While my memory
->> is fresh, let me tell Git to keep an eye on it, so that it can remind me
->> if I forget to add the final contents."
->
-> I agree with everything up to here.  But I believe these people were
-> _already_ paying attention to "git status" output from the commandline
-> and in the editor window when they run "git commit", to notice other
-> changes they forgot to add, too.  I don't think this series would
-> inconvenience them.
+I'm trying to use git describe to describe the current status of my
+tree with respect a given tag, or more specifically the latest tag
+matching a specific pattern.
 
-That means that you are willing to declare that nobody will ever need
-"please remind me lest I forget".  Not just the original requestor of the
-"add -N" feature, but absolutely nobody else.
+My repository has the following tags:
 
-Then the deprecation sequence presented in this series is fine.  The
-wording to sell that "removal of misfeature" to the end user community
-needs to be well thought out, though.
+$ git tag -l lal-v*
+lal-v6.6.0
+lal-v6.6.0rc1
+lal-v6.6.0rc2
+lal-v6.6.1
+lal-v6.6.2
+$
+
+And I want git describe to use the latest of these tags, so looking at
+the git describe man page it seems that the --match option can allow
+me to specify a pattern. This, however, doesn't seem to work:
+
+$ git describe --match=lal-v* HEAD
+fatal: No tags can describe 'cee13cbb25d0fa38f6e3bc6622bc751ebf35d2f0'.
+Try --always, or create some tags.
+$
+
+quoting the pattern has no effect, what am I doing wrong here?
+
+Cheers
+
+Adam
+
+PS: I'm using git-1.7.9
