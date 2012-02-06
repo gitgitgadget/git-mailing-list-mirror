@@ -1,86 +1,101 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Bug: "git checkout -b" should be allowed in empty repo
-Date: Mon, 06 Feb 2012 09:59:13 +0100
-Message-ID: <4F2F9661.2020606@alum.mit.edu>
-References: <4F24E287.3040302@alum.mit.edu> <7vwr8bvvxj.fsf@alter.siamese.dyndns.org> <4F263AEE.4080409@alum.mit.edu> <7v39axc9gp.fsf@alter.siamese.dyndns.org> <7vaa55ar4v.fsf@alter.siamese.dyndns.org> <20120130215043.GB16149@sigill.intra.peff.net> <7vobtcbtqa.fsf@alter.siamese.dyndns.org> <20120206043012.GD29365@sigill.intra.peff.net> <7vty34a6fd.fsf@alter.siamese.dyndns.org> <20120206051834.GA5062@sigill.intra.peff.net> <7vk440a5qw.fsf@alter.siamese.dyndns.org>
+From: Dave Zarzycki <zarzycki@apple.com>
+Subject: Re: [PATCH 6/6] Automatically switch to crc32 checksum for index when
+ it's too large
+Date: Mon, 06 Feb 2012 01:07:26 -0800
+Message-ID: <8A80E303-311E-4B87-A4B4-4F39AA932956@apple.com>
+References: <1328507319-24687-1-git-send-email-pclouds@gmail.com>
+ <1328507319-24687-6-git-send-email-pclouds@gmail.com>
+ <E799595D-61B3-4978-BCE1-BA6A33034B55@apple.com>
+ <CACsJy8Dv9fUzL3COZKVw_KR6aF20kHaw8M4CdBXJDA9H3fbxLw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 06 09:59:32 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Thomas Rast <trast@inf.ethz.ch>,
+	Joshua Redstone <joshua.redstone@fb.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 06 10:08:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuKQ1-0002Xa-G8
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 09:59:25 +0100
+	id 1RuKZ8-0006Nh-1P
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 10:08:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754489Ab2BFI7W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Feb 2012 03:59:22 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:50290 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754468Ab2BFI7U (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Feb 2012 03:59:20 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q168xD40024339
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 6 Feb 2012 09:59:14 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.24) Gecko/20111108 Lightning/1.0b2 Thunderbird/3.1.16
-In-Reply-To: <7vk440a5qw.fsf@alter.siamese.dyndns.org>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1754237Ab2BFJIo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Feb 2012 04:08:44 -0500
+Received: from crispin.apple.com ([17.151.62.50]:40651 "EHLO
+	mail-out.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753991Ab2BFJIm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Feb 2012 04:08:42 -0500
+X-Greylist: delayed 1094 seconds by postgrey-1.27 at vger.kernel.org; Mon, 06 Feb 2012 04:08:42 EST
+Received: from relay11.apple.com ([17.128.113.48])
+ by mail-out.apple.com (Oracle Communications Messaging Server 7u4-23.01
+ (7.0.4.23.0) 64bit (built Aug 10 2011))
+ with ESMTPS id <0LYY006LNRZ8VLJ0@mail-out.apple.com> for git@vger.kernel.org;
+ Mon, 06 Feb 2012 01:07:27 -0800 (PST)
+X-AuditID: 11807130-b7ba9ae0000003b1-6e-4f2f984f7f88
+Received: from kencur (kencur.apple.com [17.151.62.38])
+	(using TLS with cipher RC4-MD5 (RC4-MD5/128 bits))
+	(Client did not present a certificate)	by relay11.apple.com (Apple SCV relay)
+ with SMTP id 4E.3D.00945.F489F2F4; Mon, 06 Feb 2012 01:07:27 -0800 (PST)
+Received: from [10.0.1.254]
+ (adsl-70-231-241-90.dsl.snfc21.sbcglobal.net [70.231.241.90])
+ by kencur.apple.com
+ (Oracle Communications Messaging Server 7u4-23.01(7.0.4.23.0) 64bit (built Aug
+ 10 2011)) with ESMTPSA id <0LYY00M5SS0EXQ10@kencur.apple.com> for
+ git@vger.kernel.org; Mon, 06 Feb 2012 01:07:27 -0800 (PST)
+In-reply-to: <CACsJy8Dv9fUzL3COZKVw_KR6aF20kHaw8M4CdBXJDA9H3fbxLw@mail.gmail.com>
+X-Mailer: Apple Mail (2.1426)
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrCLMWRmVeSWpSXmKPExsUiON1OTdd/hr6/QetTYYuuK91MDowenzfJ
+	BTBGcdmkpOZklqUW6dslcGUsvXeCteApR8WV6f9ZGhh72LsYOTkkBEwk1nVMZYKwxSQu3FvP
+	1sXIxSEk0M4kcenbS0YI5zCTRN+htyxdjBwczALqElOm5II08AroSZzbNxdskLBAvMT8X9vZ
+	QGw2AQ2JT6fuMoPYnALBEvNaLjOC2CwCqhLPtxxkhxiTIrF4pxRImFlAW+LJuwusECNtJF68
+	mQp1w2dGiU8LlrGAJEQEdCRO3rnCCHGorMShGSsZJzAKzEK4aBaSi2YhGbuAkXkVo2BRak5i
+	paGhXmJBQU6qXnJ+7iZGUNg1FBrsYFz7k/8QowAHoxIPr6Suvr8Qa2JZcWXuIUYJDmYlEV61
+	SUAh3pTEyqrUovz4otKc1OJDjNIcLErivJutlf2FBNITS1KzU1MLUotgskwcnFINjA53XmXu
+	+3lx4i/JB8yLuzTCRXhfR//xuhqeInrptDHDswqHCe+ObdfPmCJY78HqsGxpUru8WqePiz53
+	ohjjwvPVvDdmLTqgJOjnbMHMl7y0sX91wl3GsJ5a8YRjBs96woM8ao4nbuxvfbz3Gn/A6uJ6
+	xUduhd/1u56FbF63IVr5213vP7Z9SizFGYmGWsxFxYkA3lQf3jcCAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190054>
 
-On 02/06/2012 06:30 AM, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
->> Sure, that's one way to do it. But I don't see any point in not allowing
->> "git checkout -b" to be another way of doing it. Is there some other use
->> case for "git checkout -b" from an unborn branch? Or is there some
->> harmful outcome that can come from doing so that we need to be
->> protecting against? Am I missing something?
-> 
-> Mostly because it is wrong at the conceptual level to do so.
-> 
-> 	git checkout -b foo
-> 
-> is a short-hand for
-> 
-> 	git checkout -b foo HEAD
-> 
-> which is a short-hand for
-> 
-> 	git branch foo HEAD &&
->         git checkout foo
-> 
-> But the last one has no chance of working if you think about it, because
-> "git branch foo $start" is a way to start a branch at $start and you need
-> to have something to point at with refs/heads/foo.
-> 
-> So we are breaking the equivalence between these three only when HEAD
-> points at an unborn branch.
 
-You are thinking too much like a developer and not like a user.  For a user,
+On Feb 6, 2012, at 12:54 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> w=
+rote:
 
-    git checkout -b foo
+> 2012/2/6 Dave Zarzycki <zarzycki@apple.com>:
+>> Which crc32 polynomial is being used? crc32c (a.k.a. Castagnoli)? It=
+ would be great if this were the same polynomial that Intel implements =
+in hardware via SSE4.2.
+>=20
+> It's zlib's crc32.
 
-is a short-hand for
+That's too bad. Zlib uses crc32, not crc32c. The Intel instruction is c=
+rc32c and is 2-3 times faster than the best software based implementati=
+on.
 
-    "create and check out a branch at my current state"
+http://www.strchr.com/crc32_popcnt
 
-and the interpretation of what that means when I am on an unborn branch
-seems unambiguous.
 
-Michael
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+>=20
+>> On Feb 5, 2012, at 9:48 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
+y <pclouds@gmail.com> wrote:
+>>=20
+>>> An experiment with -O3 is done on Intel D510@1.66GHz. At around 250=
+k
+>>> entries, index reading time exceeds 0.5s. Switching to crc32 brings=
+ it
+>>> back lower than 0.2s.
+>>>=20
+>>> On 4M files index, reading time with SHA-1 takes ~8.4, crc32 2.8s.
+> --=20
+> Duy
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
