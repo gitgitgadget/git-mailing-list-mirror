@@ -1,118 +1,192 @@
-From: Steven Michalske <smichalske@gmail.com>
-Subject: Re: [RFD] Rewriting safety - warn before/when rewriting published history
-Date: Sun, 5 Feb 2012 16:57:21 -0800
-Message-ID: <EAF9D593-4E0C-4C95-A048-3F6AC8ADD866@gmail.com>
-References: <201202042045.54114.jnareb@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1251.1)
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 06 01:57:32 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] branch --edit-description: protect against mistyped branch
+ name
+Date: Sun, 05 Feb 2012 17:26:31 -0800
+Message-ID: <7vaa4wda60.fsf_-_@alter.siamese.dyndns.org>
+References: <4F24E287.3040302@alum.mit.edu>
+ <7vwr8bvvxj.fsf@alter.siamese.dyndns.org> <4F263AEE.4080409@alum.mit.edu>
+ <7v39axc9gp.fsf@alter.siamese.dyndns.org>
+ <20120130214842.GA16149@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 06 02:26:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuCtf-0002oQ-8O
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 01:57:31 +0100
+	id 1RuDLs-0005az-PY
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 02:26:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754639Ab2BFA50 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Feb 2012 19:57:26 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:39420 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753995Ab2BFA5Z convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Feb 2012 19:57:25 -0500
-Received: by daed14 with SMTP id d14so14139dae.19
-        for <git@vger.kernel.org>; Sun, 05 Feb 2012 16:57:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=23uttk8PSn/rreQft4P5e1Bm+w+WM8qPfjXYKdnEuOA=;
-        b=bzD5KXZOAROQVoiz+/Z1J8+3m4MU7CmAtEvqeUumW07BLcID+s9I3a3XIro1g1p9/V
-         vThelIR3HIBxrPiCBLAb6IsNdkkKBXAyEeP/L2JkvUyUf/zPvtGmqLFfJbiwyTNB/uL+
-         WQ1CAoTG0Vb1YpY+UxtQ2cHe2fkX5qctSodog=
-Received: by 10.68.74.132 with SMTP id t4mr42880853pbv.22.1328489844885;
-        Sun, 05 Feb 2012 16:57:24 -0800 (PST)
-Received: from [192.168.1.114] (c-67-161-24-30.hsd1.ca.comcast.net. [67.161.24.30])
-        by mx.google.com with ESMTPS id x4sm35318246pbx.16.2012.02.05.16.57.22
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 05 Feb 2012 16:57:23 -0800 (PST)
-In-Reply-To: <201202042045.54114.jnareb@gmail.com>
-X-Mailer: Apple Mail (2.1251.1)
+	id S1754781Ab2BFB0g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Feb 2012 20:26:36 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53345 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754716Ab2BFB0e (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Feb 2012 20:26:34 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1643B7B98;
+	Sun,  5 Feb 2012 20:26:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eNzeT4sduBkMse+UVDFe96bO/cQ=; b=pTq3ik
+	erfuGUDn/ujSyDL7Imlr+bk1KTNU0JgCYagZIiQUfAmytUKXg2gDDimaZIduZ+Or
+	6KzlCj68+voIWsuHHPtL9ykyK4k3iUFR62APGAGaIjOdcP8GVSSYCJcqLn7V3tdu
+	4jabpIQZVN5kRR8dstQGtJyJeJKT4+p/Kg3as=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MQDCqrb15aGEE7TOlyM9mg8773vOfGgn
+	xma3rdulaMsytWhULwueh/zOV4F4CaAJ6eZYWcCi1weqcihwZa0FsYmNrVgX47fX
+	hkJqoIQLd58RGc0nxOmpaDjknXivfMLlOpNFhzvJ7sFIniFuvgz7a9kBmeXU6cRu
+	XbUHHdf7Ztc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D7B97B97;
+	Sun,  5 Feb 2012 20:26:34 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 500077B96; Sun,  5 Feb 2012
+ 20:26:33 -0500 (EST)
+In-Reply-To: <20120130214842.GA16149@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 30 Jan 2012 16:48:43 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9A95D8C6-5061-11E1-A578-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189993>
 
-See inlined responses below.
+It is very easy to mistype the branch name when editing its description,
+e.g.
 
-On Feb 4, 2012, at 11:45 AM, Jakub Narebski wrote:
+	$ git checkout -b my-topic master
+	: work work work
+	: now we are at a good point to switch working something else
+	$ git checkout master
+	: ah, let's write it down before we forget what we were doing
+	$ git branch --edit-description my-tpoic
 
-> So people would like for git to warn them about rewriting history before 
-> they attempt a push and it turns out to not fast-forward.
-> 
+The command does not notice that branch 'my-tpoic' does not exist.  It is
+not lost (it becomes description of an unborn my-tpoic branch), but is not
+very useful.  So detect such a case and error out to reduce the grief
+factor from this common mistake.
 
-I like this idea and I encounter this issue with my co-workers new to git.
-It scares them thinking they broke the repository.
+This incidentally also errors out --edit-description when the HEAD points
+at an unborn branch (immediately after "init", or "checkout --orphan"),
+because at that point, you do not even have any commit that is part of
+your history and there is no point in describing how this particular
+branch is different from the branch it forked off of, which is the useful
+bit of information the branch description is designed to capture.
 
-> In Mercurial 2.1 there are three available phases: 'public' for
-> published commits, 'draft' for local un-published commits and
-> 'secret' for local un-published commits which are not meant to
-> be published.
-> 
-> The phase of a changeset is always equal to or higher than the phase
-> of it's descendants, according to the following order:
-> 
->      public < draft < secret
+We may want to special case the unborn case later, but that is outside the
+scope of this patch to prevent more common mistakes before 1.7.9 series
+gains too much widespread use.
 
-Let's not limit ourselves to just three levels.  They are a great start but I propose the following.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-published - The commits that are on a public repository that if are rewritten will invoke uprisings.
-	general rule here would be to revert or patch, no rewrites.
-based - The commits that the core developers have work based upon. (not just the commits in their repo.)
-	general rule is notify your fellow developers before a rewrite.
-shared - The commits that are known to your fellow core developers.
-	These commits are known, but have not had work based off of them.  Minimal risk to rewrite.
-local - The commits that are local only, no one else has a copy.
-	Commits your willing to share, but have not been yet shared, either from actions of you, or a fetch from others.
-restricted or private - The commits that you do not want shared.
-	Manually added, think of a branch tip marked as restricted automatically promotes commits to the branch as restricted.
+  Jeff King <peff@peff.net> writes:
 
-Maybe make these like nice levels, but as two components, publicity 0-100 and rewritability 0-100
-	Published is publicity 100 and rewritability 0
-	Restricted is publicity 0 and rewritability 100
-	Based publicity 75 and rewritability 25
-	Shared publicity 50 and rewritability 50
-	Local publicity 25 and rewritability 75
-	Restricted publicity 0 and rewritability 100
+  > IOW, the problem with the current code is that it allows typos and other
+  > arbitrary bogus names to be silently described, even though doing so is
+  > probably an error...
 
-Other option are flags stating if the commit is published, based, shared, or restricted.
-You could have a published and based commit that is more opposed to rewrite than a public commit.
+ builtin/branch.c  |   15 +++++++++++++++
+ t/t3200-branch.sh |   41 +++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 52 insertions(+), 4 deletions(-)
 
-Call security on a published restricted commit ;-)
-
-Commits are by default local.
-
-Commits are published when they are pushed or fetched and merged to a publishing branch of a repository.
-	On fetch/merge a post merge hook should send back a note to the remote repository that the commits were published.
-
-Restricted commits/branches/tags should not be made public, error out and require clearing of the attribute or a --force-restricted option that automatically removes the restricted attribute.  They are at least promoted to shared, if not published.
-
-Based is only used in situations where you have developers sharing amongst their repositories, and you want a rule that is less restrictive than no rewrites.
-
-Shared is what we have now when a commit is in a remote repository without the no rewrite options. e.g. receive.denyNonFastForwards.
-
-As it stands now we can infer local and shared,  we need metadata to know when a commit is made based, published, or restricted.
-
-
-Using the nomenclature from Mercurial 
->      public < draft < secret
-
-public -> publicity 100, rewritability 0
-draft -> publicity ?, rewritability 50
-secret -> publicity 0, rewritability 100
-
-Steve
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 7095718..0c1784f 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -768,6 +768,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 				      with_commit, argv);
+ 	else if (edit_description) {
+ 		const char *branch_name;
++		struct strbuf branch_ref = STRBUF_INIT;
++
+ 		if (detached)
+ 			die("Cannot give description to detached HEAD");
+ 		if (!argc)
+@@ -776,6 +778,19 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 			branch_name = argv[0];
+ 		else
+ 			usage_with_options(builtin_branch_usage, options);
++
++		strbuf_addf(&branch_ref, "refs/heads/%s", branch_name);
++		if (!ref_exists(branch_ref.buf)) {
++			strbuf_reset(&branch_ref);
++
++			if (!argc)
++				return error("No commit on branch '%s' yet.",
++					     branch_name);
++			else
++				return error("No such branch '%s'.", branch_name);
++		}
++		strbuf_reset(&branch_ref);
++
+ 		if (edit_branch_description(branch_name))
+ 			return 1;
+ 	} else if (rename) {
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index ea82424..dd1aceb 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -3,11 +3,8 @@
+ # Copyright (c) 2005 Amos Waterland
+ #
+ 
+-test_description='git branch --foo should not create bogus branch
++test_description='git branch assorted tests'
+ 
+-This test runs git branch --help and checks that the argument is properly
+-handled.  Specifically, that a bogus branch is not created.
+-'
+ . ./test-lib.sh
+ 
+ test_expect_success \
+@@ -620,4 +617,40 @@ test_expect_success 'use set-upstream on the current branch' '
+ 
+ '
+ 
++test_expect_success 'use --edit-description' '
++	write_script editor <<-\EOF &&
++		echo "New contents" >"$1"
++	EOF
++	EDITOR=./editor git branch --edit-description &&
++		write_script editor <<-\EOF &&
++		git stripspace -s <"$1" >"EDITOR_OUTPUT"
++	EOF
++	EDITOR=./editor git branch --edit-description &&
++	echo "New contents" >expect &&
++	test_cmp EDITOR_OUTPUT expect
++'
++
++test_expect_success 'detect typo in branch name when using --edit-description' '
++	write_script editor <<-\EOF &&
++		echo "New contents" >"$1"
++	EOF
++	(
++		EDITOR=./editor &&
++		export EDITOR &&
++		test_must_fail git branch --edit-description no-such-branch
++	)
++'
++
++test_expect_success 'refuse --edit-description on unborn branch for now' '
++	write_script editor <<-\EOF &&
++		echo "New contents" >"$1"
++	EOF
++	git checkout --orphan unborn &&
++	(
++		EDITOR=./editor &&
++		export EDITOR &&
++		test_must_fail git branch --edit-description
++	)
++'
++
+ test_done
+-- 
+1.7.9.172.ge26ae
