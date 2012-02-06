@@ -1,146 +1,83 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: merge: do not create a signed tag merge under --ff-only option
-Date: Sun, 05 Feb 2012 16:22:12 -0800
-Message-ID: <7vmx8wdd57.fsf@alter.siamese.dyndns.org>
-References: <CADeLxZTsq1M5oEb1u5Oqfxq3dYXL6E_uN9bXaTqaOZiA0fgdJQ@mail.gmail.com>
- <7vd39vlbgj.fsf@alter.siamese.dyndns.org>
+Subject: Re: [bug] blame duplicates trailing ">" in mailmapped emails
+Date: Sun, 05 Feb 2012 16:39:35 -0800
+Message-ID: <7vehu8dcc8.fsf@alter.siamese.dyndns.org>
+References: <20120202084859.GC3823@burratino>
+ <7v8vklvxwh.fsf@alter.siamese.dyndns.org>
+ <CAMP44s1gWNG+jJ6M7OnLS-1VA5YPa07LJfnrvdbsQb0MOJB7PA@mail.gmail.com>
+ <7vhaz8vkhd.fsf@alter.siamese.dyndns.org>
+ <CAMP44s0Fq_BGwcmDM5E1kWNiyoJw6e6Hr=8XaNF6tmQAcdnUmw@mail.gmail.com>
+ <7vehuboe5g.fsf@alter.siamese.dyndns.org>
+ <CAMP44s2QdJ4+qgg4fF5-DOWHx3Btd0pTivTT9s_E=qqxg16YLQ@mail.gmail.com>
+ <20120204182611.GA31091@sigill.intra.peff.net>
+ <7v39aphw85.fsf@alter.siamese.dyndns.org>
+ <7vipjlezas.fsf@alter.siamese.dyndns.org>
+ <20120205234750.GA28735@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Bart Trojanowski <bart@jukie.ca>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 06 01:22:51 2012
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 06 01:40:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuCM2-00046G-S3
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 01:22:47 +0100
+	id 1RuCco-0002tb-NY
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 01:40:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754119Ab2BFAWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Feb 2012 19:22:16 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33872 "EHLO
+	id S1754472Ab2BFAji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Feb 2012 19:39:38 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39269 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753905Ab2BFAWP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Feb 2012 19:22:15 -0500
+	id S1754244Ab2BFAjh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Feb 2012 19:39:37 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8718873CE;
-	Sun,  5 Feb 2012 19:22:14 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 293A475A7;
+	Sun,  5 Feb 2012 19:39:37 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=WbAS2CFPYyj+XeKYfK7UM2rL7f4=; b=CACfStajzh/T9+U0DVhk
-	k28bgfx9iQuZvGcKttkqdVdLoyrgL0RMvB4Z3qbJN3eNcE7PM2nGMLYVL3P6Ls9U
-	AwsWCr//odk2RtUYNbs9cloTm8r7wOqXUwSg/gscT7L3ychtoorW70vPELjIJWCZ
-	IjVz2YWHpzWQhWKd/wAP5x4=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2FA3te4yalIH7Fcn3MPBFw/oTPo=; b=TJersr
+	YaxDp00jiLRnuwhkGi44wCROlNPPONZhTlIfEaol5haDwFFFk2aJFX3OPcox7zMI
+	erPfkPjIlrkVoLh3zXxKEs3wO+A/MsooSSY7s07dZpWr9yLLvPrsBDaTMAHHoYsD
+	e5z7SL3JEuv/OKKCXAZ1Fo2kAhWGdo5IRbXLI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=OPxb/cJXVm/h9xtROYeBDYfpX/IIHL1ddo1ru+Blu3Hx1S
-	zLzOxL3JF7zmGoQcpzPM1ykOoCg/bPOph9N5o2t86Z2w6fZad4bTQDPZmaERN1c1
-	Cunw7nT2gsaXCilbWO1VFWzCMO64oIsJyCrg0yr21BcOcPw85EWRhMQOq+CnY=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=B0U0rlc72FGuRBMS6+yyi4lti4LngoNZ
+	PxF+5Gl1/LFHGKgxWZtgxE8UVjGHcE+KwoQaL/yhx5C8LhLExlKoUBjpAkOk4RSN
+	eQCtx+/Lm4VSWaOGEAlJI/LCKIg5tCNBr1WqpL+ccYWlMMt719ufvX23ImGpr6xt
+	IeE6RCr+0O4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DC3573CC;
-	Sun,  5 Feb 2012 19:22:14 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1BE8A75A6;
+	Sun,  5 Feb 2012 19:39:37 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DBB0D73CB; Sun,  5 Feb 2012
- 19:22:13 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A629775A5; Sun,  5 Feb 2012
+ 19:39:36 -0500 (EST)
+In-Reply-To: <20120205234750.GA28735@sigill.intra.peff.net> (Jeff King's
+ message of "Sun, 5 Feb 2012 18:47:50 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9E2FC446-5058-11E1-B1DD-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0BBBB270-505B-11E1-8516-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189990>
 
-Starting at release v1.7.9, if you ask to merge a signed tag, "git merge"
-always creates a merge commit, even when the tag points at a commit that
-happens to be a descendant of your current commit.
+Jeff King <peff@peff.net> writes:
 
-Unfortunately, this interacts rather badly for people who use --ff-only to
-make sure that their branch is free of local developments. It used to be
-possible to say:
+> We could also go as far as saying that map_user would _always_ terminate
+> in this way (i.e., the caller gets a munged result, whether we found
+> anything or not). Then internally, map_user could be simplified to stop
+> worrying about making a temporary copy in mailbuf. And callers could
+> simply call map_user without worrying about branching on whether it
+> found anything or not.
 
-	$ git checkout -b frotz v1.7.9~30
-        $ git merge --ff-only v1.7.9
+I thought about it, but such a change needs to audit all the call sites
+that assumes the promise original map_user() used to make before it was
+broken. If we return 0 to the caller, the caller does not have to worry
+about map_user() munging the buffer it lent to it.
 
-and expect that the resulting tip of frotz branch matches v1.7.9^0 (aka
-the commit tagged as v1.7.9), but this fails with the updated Git with:
-
-	fatal: Not possible to fast-forward, aborting.
-
-because a merge that merges v1.7.9 tag to v1.7.9~30 cannot be created by
-fast forwarding.
-
-We could teach users that now they have to do
-
-	$ git merge --ff-only v1.7.9^0
-
-but it is far more pleasant for users if we DWIMmed this ourselves.
-
-When an integrator pulls in a topic from a lieutenant via a signed tag,
-even when the work done by the lieutenant happens to fast-forward, the
-integrator wants to have a merge record, so the integrator will not be
-asking for --ff-only when running "git pull" in such a case. Therefore,
-this change should not regress the support for the use case v1.7.9 wanted
-to add.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
-  Junio C Hamano <gitster@pobox.com> writes:
-
-    We could solve this in one of two ways. We could tell them to merge
-    v3.2.3^0 instead. Or we could just go ahead and do that for them
-    automatically ourselves.  I am inclined to say that we should unwrap
-    the tag given from the command line when --ff-only was given, i.e. we
-    do the latter.
-
-  And it turns out that it is just a single-liner patch.
-
- builtin/merge.c  |    3 ++-
- t/t7600-merge.sh |   13 +++++++++++++
- 2 files changed, 15 insertions(+), 1 deletions(-)
-
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 3a45172..b4fbc60 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1283,7 +1283,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 			    sha1_to_hex(commit->object.sha1));
- 		setenv(buf.buf, argv[i], 1);
- 		strbuf_reset(&buf);
--		if (merge_remote_util(commit) &&
-+		if (!fast_forward_only &&
-+		    merge_remote_util(commit) &&
- 		    merge_remote_util(commit)->obj &&
- 		    merge_remote_util(commit)->obj->type == OBJ_TAG) {
- 			option_edit = 1;
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 5d8c428..a598dfa 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -27,6 +27,7 @@ Testing basic merge operations/option parsing.
- '
- 
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-gpg.sh
- 
- printf '%s\n' 1 2 3 4 5 6 7 8 9 >file
- printf '%s\n' '1 X' 2 3 4 5 6 7 8 9 >file.1
-@@ -670,4 +671,16 @@ test_expect_success 'merge --no-ff --edit' '
- 	test_cmp actual expected
- '
- 
-+test_expect_success GPG 'merge --ff-only tag' '
-+	git reset --hard c0 &&
-+	git commit --allow-empty -m "A newer commit" &&
-+	git tag -s -m "A newer commit" signed &&
-+	git reset --hard c0 &&
-+
-+	git merge --ff-only signed &&
-+	git rev-parse signed^0 >expect &&
-+	git rev-parse HEAD >actual &&
-+	test_cmp actual expect
-+'
-+
- test_done
+It might be a worthwhile thing to do. I dunno; I didn't look into it.
