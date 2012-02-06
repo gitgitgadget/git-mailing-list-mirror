@@ -1,83 +1,208 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [bug] blame duplicates trailing ">" in mailmapped emails
-Date: Sun, 05 Feb 2012 16:39:35 -0800
-Message-ID: <7vehu8dcc8.fsf@alter.siamese.dyndns.org>
-References: <20120202084859.GC3823@burratino>
- <7v8vklvxwh.fsf@alter.siamese.dyndns.org>
- <CAMP44s1gWNG+jJ6M7OnLS-1VA5YPa07LJfnrvdbsQb0MOJB7PA@mail.gmail.com>
- <7vhaz8vkhd.fsf@alter.siamese.dyndns.org>
- <CAMP44s0Fq_BGwcmDM5E1kWNiyoJw6e6Hr=8XaNF6tmQAcdnUmw@mail.gmail.com>
- <7vehuboe5g.fsf@alter.siamese.dyndns.org>
- <CAMP44s2QdJ4+qgg4fF5-DOWHx3Btd0pTivTT9s_E=qqxg16YLQ@mail.gmail.com>
- <20120204182611.GA31091@sigill.intra.peff.net>
- <7v39aphw85.fsf@alter.siamese.dyndns.org>
- <7vipjlezas.fsf@alter.siamese.dyndns.org>
- <20120205234750.GA28735@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 06 01:40:12 2012
+From: Theodore Ts'o <tytso@mit.edu>
+Subject: [PATCH] Fix build problems related to profile-directed optimization
+Date: Sun,  5 Feb 2012 19:44:50 -0500
+Message-ID: <1328489090-14178-1-git-send-email-tytso@mit.edu>
+References: <7vaa4zpu2r.fsf@alter.siamese.dyndns.org>
+Cc: Theodore Ts'o <tytso@mit.edu>, Andi Kleen <ak@linux.intel.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 06 01:44:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuCco-0002tb-NY
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 01:40:07 +0100
+	id 1RuChV-0005Gf-3h
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 01:44:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754472Ab2BFAji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Feb 2012 19:39:38 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39269 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754244Ab2BFAjh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Feb 2012 19:39:37 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 293A475A7;
-	Sun,  5 Feb 2012 19:39:37 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2FA3te4yalIH7Fcn3MPBFw/oTPo=; b=TJersr
-	YaxDp00jiLRnuwhkGi44wCROlNPPONZhTlIfEaol5haDwFFFk2aJFX3OPcox7zMI
-	erPfkPjIlrkVoLh3zXxKEs3wO+A/MsooSSY7s07dZpWr9yLLvPrsBDaTMAHHoYsD
-	e5z7SL3JEuv/OKKCXAZ1Fo2kAhWGdo5IRbXLI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=B0U0rlc72FGuRBMS6+yyi4lti4LngoNZ
-	PxF+5Gl1/LFHGKgxWZtgxE8UVjGHcE+KwoQaL/yhx5C8LhLExlKoUBjpAkOk4RSN
-	eQCtx+/Lm4VSWaOGEAlJI/LCKIg5tCNBr1WqpL+ccYWlMMt719ufvX23ImGpr6xt
-	IeE6RCr+0O4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1BE8A75A6;
-	Sun,  5 Feb 2012 19:39:37 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A629775A5; Sun,  5 Feb 2012
- 19:39:36 -0500 (EST)
-In-Reply-To: <20120205234750.GA28735@sigill.intra.peff.net> (Jeff King's
- message of "Sun, 5 Feb 2012 18:47:50 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0BBBB270-505B-11E1-8516-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754524Ab2BFAov (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Feb 2012 19:44:51 -0500
+Received: from li9-11.members.linode.com ([67.18.176.11]:55976 "EHLO
+	test.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754325Ab2BFAov (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Feb 2012 19:44:51 -0500
+Received: from root (helo=tytso-glaptop.cam.corp.google.com)
+	by test.thunk.org with local-esmtp (Exim 4.69)
+	(envelope-from <tytso@thunk.org>)
+	id 1RuChO-0005nU-1N; Mon, 06 Feb 2012 00:44:50 +0000
+Received: from tytso by tytso-glaptop.cam.corp.google.com with local (Exim 4.71)
+	(envelope-from <tytso@thunk.org>)
+	id 1RuChO-0003hF-VD; Sun, 05 Feb 2012 19:44:50 -0500
+X-Mailer: git-send-email 1.7.9.107.g8e04a
+In-Reply-To: <7vaa4zpu2r.fsf@alter.siamese.dyndns.org>
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on test.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189991>
 
-Jeff King <peff@peff.net> writes:
+There was a number of problems I ran into when trying the
+profile-directed optimizations added by Andi Kleen in git commit
+7ddc2710b9.  (This was using gcc 4.4 found on many enterprise
+distros.)
 
-> We could also go as far as saying that map_user would _always_ terminate
-> in this way (i.e., the caller gets a munged result, whether we found
-> anything or not). Then internally, map_user could be simplified to stop
-> worrying about making a temporary copy in mailbuf. And callers could
-> simply call map_user without worrying about branching on whether it
-> found anything or not.
+1) The -fprofile-generate and -fprofile-use commands are incompatible
+with ccache; the code ends up looking in the wrong place for the gcda
+files based on the ccache object names.
 
-I thought about it, but such a change needs to audit all the call sites
-that assumes the promise original map_user() used to make before it was
-broken. If we return 0 to the caller, the caller does not have to worry
-about map_user() munging the buffer it lent to it.
+2) If the makefile notices that CFLAGS are different, it will rebuild
+all of the binaries.  Hence the recipe originally specified by the
+INSTALL file ("make profile-all" followed by "make install") doesn't
+work.  It will appear to work, but the binaries will end up getting
+built with no optimization.
 
-It might be a worthwhile thing to do. I dunno; I didn't look into it.
+This patch fixes this by using an explicit set of options passed via
+the PROFILE variable then using this to directly manipulate CFLAGS and
+EXTLIBS.
+
+The developer can run "make PROFILE=BUILD all ; sudo make
+PROFILE=BUILD install" automatically run a two-pass build with the
+test suite run in between as the sample workload for the purpose of
+recording profiling information to do the profile-directed
+optimization.
+
+Alternatively, the profiling version of binaries can be built using:
+
+	make PROFILE=GEN PROFILE_DIR=/var/cache/profile all
+	make PROFILE=GEN install
+
+and then after git has been used for a while, the optimized version of
+the binary can be built as follows:
+
+	make PROFILE=USE PROFILE_DIR=/var/cache/profile all
+	make PROFILE=USE install
+
+Signed-off-by: "Theodore Ts'o" <tytso@mit.edu>
+Cc: Andi Kleen <ak@linux.intel.com>
+---
+ INSTALL  |   17 +++++++++++++----
+ Makefile |   53 +++++++++++++++++++++++++++++++++++------------------
+ 2 files changed, 48 insertions(+), 22 deletions(-)
+
+diff --git a/INSTALL b/INSTALL
+index 6fa83fe..5b7eec1 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -28,16 +28,25 @@ set up install paths (via config.mak.autogen), so you can write instead
+ If you're willing to trade off (much) longer build time for a later
+ faster git you can also do a profile feedback build with
+ 
+-	$ make profile-all
+-	# make prefix=... install
++	$ make --prefix=/usr PROFILE=BUILD all
++	# make --prefix=/usr PROFILE=BUILD install
+ 
+ This will run the complete test suite as training workload and then
+ rebuild git with the generated profile feedback. This results in a git
+ which is a few percent faster on CPU intensive workloads.  This
+ may be a good tradeoff for distribution packagers.
+ 
+-Note that the profile feedback build stage currently generates
+-a lot of additional compiler warnings.
++Or if you just want to install a profile-optimized version of git into
++your home directory, you could run:
++
++	$ make PROFILE=BUILD install
++
++As a caveat: a profile-optimized build takes a *lot* longer since it
++is the sources have to be built twice, and in order for the profiling
++measurements to work properly, ccache must be disabled and the test
++suite has to be run using only a single CPU.  In addition, the profile
++feedback build stage currently generates a lot of additional compiler
++warnings.
+ 
+ Issues of note:
+ 
+diff --git a/Makefile b/Makefile
+index c457c34..8cea247 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1772,6 +1772,24 @@ ifdef ASCIIDOC7
+ 	export ASCIIDOC7
+ endif
+ 
++### profile feedback build
++#
++
++# Can adjust this to be a global directory if you want to do extended
++# data gathering
++PROFILE_DIR := $(CURDIR)
++
++ifeq "$(PROFILE)" "GEN"
++	CFLAGS += -fprofile-generate=$(PROFILE_DIR) -DNO_NORETURN=1
++	EXTLIBS += -lgcov
++	export CCACHE_DISABLE=t
++	V=1
++else ifneq "$PROFILE" ""
++	CFLAGS += -fprofile-use=$(PROFILE_DIR) -fprofile-correction -DNO_NORETURN=1
++	export CCACHE_DISABLE=t
++	V=1
++endif
++
+ # Shell quote (do not use $(call) to accommodate ancient setups);
+ 
+ SHA1_HEADER_SQ = $(subst ','\'',$(SHA1_HEADER))
+@@ -1828,7 +1846,17 @@ export DIFF TAR INSTALL DESTDIR SHELL_PATH
+ 
+ SHELL = $(SHELL_PATH)
+ 
+-all:: shell_compatibility_test $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS) GIT-BUILD-OPTIONS
++all:: shell_compatibility_test
++
++ifeq "$(PROFILE)" "BUILD"
++ifeq ($(filter all,$(MAKECMDGOALS)),all)
++all:: profile-clean
++	$(MAKE) PROFILE=GEN all
++	$(MAKE) PROFILE=GEN -j1 test
++endif
++endif
++
++all:: $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS) GIT-BUILD-OPTIONS
+ ifneq (,$X)
+ 	$(QUIET_BUILT_IN)$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) $(BUILT_INS) git$X)), test -d '$p' -o '$p' -ef '$p$X' || $(RM) '$p';)
+ endif
+@@ -2557,7 +2585,11 @@ distclean: clean
+ 	$(RM) configure
+ 	$(RM) po/git.pot
+ 
+-clean:
++profile-clean:
++	$(RM) $(addsuffix *.gcda,$(addprefix $(PROFILE_DIR)/, $(object_dirs)))
++	$(RM) $(addsuffix *.gcno,$(addprefix $(PROFILE_DIR)/, $(object_dirs)))
++
++clean: profile-clean
+ 	$(RM) *.o block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o vcs-svn/*.o \
+ 		builtin/*.o $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
+ 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
+@@ -2587,7 +2619,7 @@ ifndef NO_TCLTK
+ endif
+ 	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-LDFLAGS GIT-GUI-VARS GIT-BUILD-OPTIONS
+ 
+-.PHONY: all install clean strip
++.PHONY: all install profile-clean clean strip
+ .PHONY: shell_compatibility_test please_set_SHELL_PATH_to_a_more_modern_shell
+ .PHONY: FORCE cscope
+ 
+@@ -2697,18 +2729,3 @@ cover_db: coverage-report
+ cover_db_html: cover_db
+ 	cover -report html -outputdir cover_db_html cover_db
+ 
+-### profile feedback build
+-#
+-.PHONY: profile-all profile-clean
+-
+-PROFILE_GEN_CFLAGS := $(CFLAGS) -fprofile-generate -DNO_NORETURN=1
+-PROFILE_USE_CFLAGS := $(CFLAGS) -fprofile-use -fprofile-correction -DNO_NORETURN=1
+-
+-profile-clean:
+-	$(RM) $(addsuffix *.gcda,$(object_dirs))
+-	$(RM) $(addsuffix *.gcno,$(object_dirs))
+-
+-profile-all: profile-clean
+-	$(MAKE) CFLAGS="$(PROFILE_GEN_CFLAGS)" all
+-	$(MAKE) CFLAGS="$(PROFILE_GEN_CFLAGS)" -j1 test
+-	$(MAKE) CFLAGS="$(PROFILE_USE_CFLAGS)" all
+-- 
+1.7.9.107.g8e04a
