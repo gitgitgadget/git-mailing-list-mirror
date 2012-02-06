@@ -1,111 +1,84 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 3/3] t: mailmap: add simple name translation test
-Date: Mon, 6 Feb 2012 23:32:56 +0200
-Message-ID: <CAMP44s356usz+Zxf1ooV=FEVxrFa2jRG0dWX5beLCvBTs-OMug@mail.gmail.com>
-References: <1328385024-6955-1-git-send-email-felipe.contreras@gmail.com>
-	<1328385024-6955-4-git-send-email-felipe.contreras@gmail.com>
-	<20120204201218.GF22928@burratino>
-	<CAMP44s1ZPQJzHzYj7e4Kj3Cu+qq0Q3uKrwsE=xS7BmmSqd3gSw@mail.gmail.com>
-	<20120204211544.GC3278@burratino>
-	<CAMP44s0Z=k6VBfv0HOGHyMBLRcPauK7K5RNvuRDbfq5=5aKVpg@mail.gmail.com>
-	<20120204234237.GB1366@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] commit: introduce a config key to allow as-is commit
+ with i-t-a entries
+Date: Mon, 06 Feb 2012 13:48:46 -0800
+Message-ID: <7vpqdr63b5.fsf@alter.siamese.dyndns.org>
+References: <1328525855-2547-1-git-send-email-pclouds@gmail.com>
+ <1328525855-2547-3-git-send-email-pclouds@gmail.com>
+ <7vwr7z653f.fsf@alter.siamese.dyndns.org> <20120206211321.GA2949@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Marius Storm-Olsen <marius@trolltech.com>,
-	Jim Meyering <jim@meyering.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 06 22:33:04 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 06 22:48:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuWBK-0007bE-EN
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 22:33:02 +0100
+	id 1RuWQh-0008WN-EH
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 22:48:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755435Ab2BFVc6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Feb 2012 16:32:58 -0500
-Received: from mail-lpp01m020-f174.google.com ([209.85.217.174]:50521 "EHLO
-	mail-lpp01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754692Ab2BFVc5 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Feb 2012 16:32:57 -0500
-Received: by lbom4 with SMTP id m4so1253292lbo.19
-        for <git@vger.kernel.org>; Mon, 06 Feb 2012 13:32:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=61L+DQWZkTUDfz+R+sX3CZnPC4FUGiYZf5Z2wMc8UDM=;
-        b=Mw+lN1FbJQJ1lubjmqMufnch9F0WRLgcZ05WcvzJeH8OcC5sHuGSQBSHsU86MssAov
-         IUmuV+Hkmd1YNmPke+vhy9m2Ds+gj5PYjBi52mmbTaRR+EvVj0HMDhM6oc+Fsw8eGEhX
-         K5+tbZ6mr4OwaYUEgEm7mzk7e2hndiV0Q40Q4=
-Received: by 10.112.86.67 with SMTP id n3mr5346592lbz.29.1328563976249; Mon,
- 06 Feb 2012 13:32:56 -0800 (PST)
-Received: by 10.112.41.73 with HTTP; Mon, 6 Feb 2012 13:32:56 -0800 (PST)
-In-Reply-To: <20120204234237.GB1366@sigill.intra.peff.net>
+	id S1754692Ab2BFVsu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Feb 2012 16:48:50 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37023 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752872Ab2BFVst (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Feb 2012 16:48:49 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BE68D64E3;
+	Mon,  6 Feb 2012 16:48:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=v65jncxGga6WzCPo4gKOFz8ybZQ=; b=kUkYnT
+	bEWVfs+2tVBZaKrqVv8ZRePiV1HoST4lL1uuVbyM0u9Iusv0P0nMWShRYY00Abx4
+	jFQvsbRvNuwiQ4sgMOd5wH4gxaFXphoFsCNbHG8ZmQ4bnxs7cwrvy9CwA3O+22qm
+	miezOVW6SrZqrrCaPgpzZkoxwOhpFn0MCB0MQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Yw0hgnDyv5MlCAnRSkVefz0j69hjowUr
+	n6jts/mblWqaCBfMkoG+20NMaasTlrPNSTMidSm6lOafM42+Pn60o3aPD6K86Ke6
+	101EPABFGVXnCkKNE/om9pkLvLQZ2ZEskTuUanFo5gnq2fYKtv8avMCkN4WnWs4z
+	+BFD9jS3llo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B524664E2;
+	Mon,  6 Feb 2012 16:48:48 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4895864E1; Mon,  6 Feb 2012
+ 16:48:48 -0500 (EST)
+In-Reply-To: <20120206211321.GA2949@burratino> (Jonathan Nieder's message of
+ "Mon, 6 Feb 2012 15:13:21 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 59A22D8C-510C-11E1-B503-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190110>
 
-On Sun, Feb 5, 2012 at 1:42 AM, Jeff King <peff@peff.net> wrote:
-> On Sun, Feb 05, 2012 at 12:19:53AM +0200, Felipe Contreras wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
+
+> Junio C Hamano wrote:
 >
->> > Thanks. =C2=A0I guess you think I'm stupid. =C2=A0I have no idea h=
-ow I can
->> > correct that assumption and help you to actually work with me to m=
-ake
->> > the code better. :/
->>
->> You mean the commit message, you haven't made any comment about the =
-code.
->>
->> If you want to know why I had to modify those test assertions, you
->> really need to look at the code. In essence; all of them use the sam=
-e
->> repo, and obviously adding a new commit message changes the output o=
-f
->> the commands.
+>> IIRC, the original motivation of intent-to-add "add -N" was in response to
+>> users who curse Git because they often forget to add new files before
+>> committing, and they wanted to say "Here I have a new file, it is not
+>> complete yet, but I do not want it left out of the commit. While my memory
+>> is fresh, let me tell Git to keep an eye on it, so that it can remind me
+>> if I forget to add the final contents."
 >
-> Then say that in the commit message.
+> I agree with everything up to here.  But I believe these people were
+> _already_ paying attention to "git status" output from the commandline
+> and in the editor window when they run "git commit", to notice other
+> changes they forgot to add, too.  I don't think this series would
+> inconvenience them.
 
-I believe that's overkill. If somebody needs an explanation, it's
-because they are not familiar with the code being modified, and
-introducing people to some code in each and every patch that modifies
-it definitely seems like overkill to me. There is not even such
-introduction in the code itself for this test, and in most of git's
-code, presumably because we are following the principle of having
-self-documented code.
+That means that you are willing to declare that nobody will ever need
+"please remind me lest I forget".  Not just the original requestor of the
+"add -N" feature, but absolutely nobody else.
 
-If you look at the code, it would become obvious why so many hunks are
-introduced, in fact, if you look closely at the patch you can see it
-as well: look for strings related to CTO <cto@company.xx>.
-
-> Looking at this series, I wonder if the tests should simply be squash=
-ed
-> into the bugfix patch, which might make what is going on more obvious=
-=2E
-
-Because it's a logically independent change?
-
-There's _nothing_ that prevents this patch from being applied to
-master *right now*. Of course, it would conflict, because it depends
-on the 'git blame -e' tests, but if you solve that conflict by just
-removing that hunk, it would apply and run just fine, and it would
-detect regressions orthogonal from my other proposed patches.
-
-> Keep in mind that as reviewers now, we read the whole series. But in =
-a
-> year, as "git log" users, we may see the commits in isolation.
-
-Sure, and this patch by itself is good; it's adding a missing test
-(even if you ignore the 'git blame -e' part).
-
-Cheers.
-
---=20
-=46elipe Contreras
+Then the deprecation sequence presented in this series is fine.  The
+wording to sell that "removal of misfeature" to the end user community
+needs to be well thought out, though.
