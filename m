@@ -1,77 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] tag: die when listing missing or corrupt objects
-Date: Mon, 06 Feb 2012 00:36:05 -0800
-Message-ID: <7vfweo8ikq.fsf@alter.siamese.dyndns.org>
-References: <20120206081119.GA3939@sigill.intra.peff.net>
- <20120206081342.GB3966@sigill.intra.peff.net>
- <7vk4408ir6.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 1/6] read-cache: use sha1file for sha1 calculation
+Date: Mon, 6 Feb 2012 15:36:27 +0700
+Message-ID: <CACsJy8DR2rPtC_2PDp=ZEm-3B-mzh+AxaDmXxxzJ_VY5M-0oVw@mail.gmail.com>
+References: <1328507319-24687-1-git-send-email-pclouds@gmail.com> <7vsjio8leo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tom Grennan <tmgrennan@gmail.com>, git@vger.kernel.org,
-	jasampler@gmail.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 06 09:36:17 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 06 09:37:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuK3Z-0000tn-Vf
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 09:36:14 +0100
+	id 1RuK4N-0001FC-8y
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 09:37:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754157Ab2BFIgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Feb 2012 03:36:09 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61437 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750928Ab2BFIgH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Feb 2012 03:36:07 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 390645563;
-	Mon,  6 Feb 2012 03:36:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PHBnd6P/PfYaGGwZizNUpt2GRDE=; b=u20maC
-	R4FMg2uBI4bl5FTCURnYYCjwbGQWMaLD1MU5QSZuM5UhVYN5HmiTvOytxPVikaHx
-	zLCm+tk61aXB8mWNVC/SVq+hSy5PpEoeB+V2DMSG9v80W6KiTS6pmUhp3icBobWo
-	gGFFdOW0xkpCHF6eOtZ4E+TVaaAYOAnJITMoQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rcRH3q1yE5gYq56C+CVixOKUcS3iUea0
-	vOCKb4GLyl4ZtVHpHKu3xZcSpKxVB+leQXFtlCHDxSu7AqhElj2DFSphp+/jbl7d
-	gpIf4Rps0vF6SMSflM8xoV1b/CgEenARH1vXaLDFMgARSYi66BhE29/kTq/2p+vu
-	piZt46aFhNA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F61A5562;
-	Mon,  6 Feb 2012 03:36:07 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BBEC45560; Mon,  6 Feb 2012
- 03:36:06 -0500 (EST)
-In-Reply-To: <7vk4408ir6.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 06 Feb 2012 00:32:13 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9CC106B6-509D-11E1-942E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754272Ab2BFIg6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Feb 2012 03:36:58 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:34211 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750928Ab2BFIg6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Feb 2012 03:36:58 -0500
+Received: by werb13 with SMTP id b13so4081216wer.19
+        for <git@vger.kernel.org>; Mon, 06 Feb 2012 00:36:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=5XSj1hYAJhNrI3Z7OY2Ro/IXWh+I2An449MWvfRqYrg=;
+        b=orKHecriLBxUduXfGosEQ5vp+B7/nUgc4R115LKdMrwxE0tfrIut8oHnNtVEDeLR3G
+         7DUUPUfeq9sT0jLUhyw0vmbg3mc3ux7Gq3LAMXMvJ6Badsy2CNkFoB4Szh+iPfoWO1oQ
+         UCbadApI5W/iUQ/zVVyrXCrQZim3071MKb47s=
+Received: by 10.216.52.198 with SMTP id e48mr2965526wec.18.1328517417236; Mon,
+ 06 Feb 2012 00:36:57 -0800 (PST)
+Received: by 10.223.2.139 with HTTP; Mon, 6 Feb 2012 00:36:27 -0800 (PST)
+In-Reply-To: <7vsjio8leo.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190048>
 
-Junio C Hamano <gitster@pobox.com> writes:
+2012/2/6 Junio C Hamano <gitster@pobox.com>:
+> This is open source, and I wouldn't stop you from spending time on an=
+ything
+> that interests you.
 
-> Hmm, a pedant in me says a tag object cannot have zero length, so the
-> second case is also an indication of a corrupt repository, unless the tag
-> happens to be a lightweight one that refers directly to a blob object that
-> is empty.
+Well fun stuff is more interesting to do.. but I guess that's about
+it. More time cut down requires bigger changes that does not fit in a
+few hours of work.
+
+> But having said that, if you have extra Git time, I would still rathe=
+r see
+> you spend it first on tying up loose ends of your topics in flight an=
+d
+> on helping others that touch parts that are related to areas that you=
+ have
+> already thought about, namely:
 >
-> For that matter, shouldn't we make sure that the type is OBJ_TAG? It might
-> make sense to allow OBJ_COMMIT (i.e. lightweight tag to a commit) as well,
-> because the definition of "first N lines" is compatible between tag and
-> commit for the purpose of the -n option.
+> =C2=A0(1) nd/commit-ignore-i-t-a, which I think should be marketted a=
+s fixing
+> =C2=A0 =C2=A0 an earlier UI mistake and presented with a clean migrat=
+ion path to
+> =C2=A0 =C2=A0 make the updated behaviour the default in the future; a=
+nd
 
-Ahh, Ok, your 3/3 addresses this exact issue.
+Yeah, I was avoiding the deprecation procedure (plus providing a
+convincing argument to push it forward). Need to look up old emails..
 
-I do not object to silently return when the object is not OBJ_TAG (even
-though I slightly prefer showing the first N lines of commit log contents
-for OBJ_COMMIT lightweight tag), but I still think it should be warned
-just like a corruption when we see (type == OBJ_TAG && !size).
+> =C2=A0(2) the negative pathspec thing that resurfaced in disguise as =
+Albert
+> =C2=A0 =C2=A0 Yale's "grep --exclude" series.
+
+This is pure headache. Can't avoid it forever, I guess.
+
+> *1* A possible approach might be to stuff unmodified trees in the ind=
+ex
+> without exploding them into its components, and as entries are modifi=
+ed,
+> lazily expand these "tree" entries, while ensuring the "unmodified" p=
+arts
+> remain unmodified by turning the files in the working tree read-only =
+and
+> requiring the user to say "git edit" or "git open" or something befor=
+e
+> starting to edit. =C2=A0But as I said, I consider this not an ultra-u=
+rgent
+> issue, so I haven't thought things through yet.
+
+A sparse index is something that may be achieved with narrow clone (or
+narrow checkout in full clone) because by nature we can't have full
+index in narrow clone. That may be the right way to go.
+--=20
+Duy
