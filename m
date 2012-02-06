@@ -1,183 +1,100 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 6/6] Automatically switch to crc32 checksum for index when it's too large
-Date: Mon,  6 Feb 2012 12:48:39 +0700
-Message-ID: <1328507319-24687-6-git-send-email-pclouds@gmail.com>
-References: <1328507319-24687-1-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Bug: "git checkout -b" should be allowed in empty repo
+Date: Mon, 6 Feb 2012 00:45:58 -0500
+Message-ID: <20120206054558.GA7883@sigill.intra.peff.net>
+References: <7vwr8bvvxj.fsf@alter.siamese.dyndns.org>
+ <4F263AEE.4080409@alum.mit.edu>
+ <7v39axc9gp.fsf@alter.siamese.dyndns.org>
+ <7vaa55ar4v.fsf@alter.siamese.dyndns.org>
+ <20120130215043.GB16149@sigill.intra.peff.net>
+ <7vobtcbtqa.fsf@alter.siamese.dyndns.org>
+ <20120206043012.GD29365@sigill.intra.peff.net>
+ <7vty34a6fd.fsf@alter.siamese.dyndns.org>
+ <20120206051834.GA5062@sigill.intra.peff.net>
+ <7vk440a5qw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@inf.ethz.ch>,
-	Joshua Redstone <joshua.redstone@fb.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 06 06:44:45 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 06 06:46:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuHNa-0002zb-3e
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 06:44:42 +0100
+	id 1RuHOw-0003OI-Qn
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 06:46:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751830Ab2BFFoh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Feb 2012 00:44:37 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:61644 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751367Ab2BFFog (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Feb 2012 00:44:36 -0500
-Received: by mail-pz0-f46.google.com with SMTP id d14so164111dae.19
-        for <git@vger.kernel.org>; Sun, 05 Feb 2012 21:44:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=fMf65eDpoCFpqw/eGnKXCSgfduNrMuSplnahiLxP2uo=;
-        b=nK3ylbtHMr+2zp6NnbhcDX2cbsIufdO6S6jMiJQB7A5CrIZ2ZaQdi4wVJPoiPa+9+c
-         XVHLIJW8WfsgB3072e8Rf3FnKJePYBpG3tb/YiOrsLp1XmNDLWagsg/uC30l+2wrGCaH
-         REpCbQMtCJHyRE/1V403xwvqL0fL+FsfcNaoY=
-Received: by 10.68.204.7 with SMTP id ku7mr32346708pbc.45.1328507076663;
-        Sun, 05 Feb 2012 21:44:36 -0800 (PST)
-Received: from tre ([115.74.57.120])
-        by mx.google.com with ESMTPS id y9sm369010pbi.3.2012.02.05.21.44.32
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 05 Feb 2012 21:44:35 -0800 (PST)
-Received: by tre (sSMTP sendmail emulation); Mon, 06 Feb 2012 12:49:27 +0700
-X-Mailer: git-send-email 1.7.8.36.g69ee2
-In-Reply-To: <1328507319-24687-1-git-send-email-pclouds@gmail.com>
+	id S1752183Ab2BFFqB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Feb 2012 00:46:01 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58581
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751930Ab2BFFqB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Feb 2012 00:46:01 -0500
+Received: (qmail 23569 invoked by uid 107); 6 Feb 2012 05:53:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 06 Feb 2012 00:53:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Feb 2012 00:45:58 -0500
+Content-Disposition: inline
+In-Reply-To: <7vk440a5qw.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190022>
 
-An experiment with -O3 is done on Intel D510@1.66GHz. At around 250k
-entries, index reading time exceeds 0.5s. Switching to crc32 brings it
-back lower than 0.2s.
+On Sun, Feb 05, 2012 at 09:30:15PM -0800, Junio C Hamano wrote:
 
-On 4M files index, reading time with SHA-1 takes ~8.4, crc32 2.8s.
+> Jeff King <peff@peff.net> writes:
+> 
+> > Sure, that's one way to do it. But I don't see any point in not allowing
+> > "git checkout -b" to be another way of doing it. Is there some other use
+> > case for "git checkout -b" from an unborn branch? Or is there some
+> > harmful outcome that can come from doing so that we need to be
+> > protecting against? Am I missing something?
+> 
+> Mostly because it is wrong at the conceptual level to do so.
+> 
+> 	git checkout -b foo
+> 
+> is a short-hand for
+> 
+> 	git checkout -b foo HEAD
+> 
+> which is a short-hand for
+> 
+> 	git branch foo HEAD &&
+>         git checkout foo
+> 
+> But the last one has no chance of working if you think about it, because
+> "git branch foo $start" is a way to start a branch at $start and you need
+> to have something to point at with refs/heads/foo.
+> 
+> So we are breaking the equivalence between these three only when HEAD
+> points at an unborn branch.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- I know no real repositories this size though. gentoo-x86 is "only"
- 120k. Haven't checked libreoffice repo yet.
+I think it is only wrong at the conceptual level because you have
+specified the concepts in such a way that it is so. That is how git does
+it _now_, but the whole point of this is to change git's behavior to
+handle a potentially useful special case. I could also say this: "git
+checkout -b foo HEAD" does two things:
 
- On 2M files index, allocating one big block (i.e. reverting debed2a
- (read-cache.c: allocate index entries individually - 2011-10-24)
- saves about 0.3s. Maybe we can allocate one big block, then malloc
- separately when the block is fully used.
+  1. create a new branch "foo" pointing to the current sha1 of HEAD
 
- Writing time is still high. "git update-index --crc32" on crc32 250k i=
-ndex
- takes 0.9s (so writing time is about 0.5s)
+  2. point the HEAD symref at refs/heads/foo
 
- A better solution may be narrow clone (or just the narrow checkout
- part), where index only contains entries from checked out
- subdirectories.
+And then the proposed behavior might amend the first point to say:
 
- Documentation/config.txt |    7 +++++++
- builtin/update-index.c   |    1 +
- cache.h                  |    1 +
- config.c                 |    5 +++++
- environment.c            |    1 +
- read-cache.c             |    8 ++++++++
- 6 files changed, 23 insertions(+), 0 deletions(-)
+  1. if HEAD points to an existing ref, then create a new branch...
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index abeb82b..55b7596 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -540,6 +540,13 @@ relatively high IO latencies.  With this set to 't=
-rue', git will do the
- index comparison to the filesystem data in parallel, allowing
- overlapping IO's.
-=20
-+core.crc32IndexThreshold::
-+	Usually SHA-1 is used to check for index integerity. When the
-+	number of entries in index exceeds this threshold, crc32 will
-+	be used instead. Zero means SHA-1 always be used. Negative
-+	value disables this threshold (i.e. crc32 or SHA-1 is decided
-+	by other means).
-+
- core.createObject::
- 	You can set this to 'link', in which case a hardlink followed by
- 	a delete of the source are used to make sure that object creation
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 6913226..5cb51c7 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -856,6 +856,7 @@ int cmd_update_index(int argc, const char **argv, c=
-onst char *prefix)
- 	argc =3D parse_options_end(&ctx);
-=20
- 	if (do_crc !=3D -1) {
-+		core_crc32_index_threshold =3D -1;
- 		if (do_crc)
- 			the_index.hdr_flags |=3D CACHE_F_CRC;
- 		else
-diff --git a/cache.h b/cache.h
-index 7352402..d05856b 100644
---- a/cache.h
-+++ b/cache.h
-@@ -610,6 +610,7 @@ extern unsigned long pack_size_limit_cfg;
- extern int read_replace_refs;
- extern int fsync_object_files;
- extern int core_preload_index;
-+extern int core_crc32_index_threshold;
- extern int core_apply_sparse_checkout;
-=20
- enum branch_track {
-diff --git a/config.c b/config.c
-index 40f9c6d..905e071 100644
---- a/config.c
-+++ b/config.c
-@@ -671,6 +671,11 @@ static int git_default_core_config(const char *var=
-, const char *value)
- 		return 0;
- 	}
-=20
-+	if (!strcmp(var, "core.crc32indexthreshold")) {
-+		core_crc32_index_threshold =3D git_config_int(var, value);
-+		return 0;
-+	}
-+
- 	if (!strcmp(var, "core.createobject")) {
- 		if (!strcmp(value, "rename"))
- 			object_creation_mode =3D OBJECT_CREATION_USES_RENAMES;
-diff --git a/environment.c b/environment.c
-index c93b8f4..9d9dfc2 100644
---- a/environment.c
-+++ b/environment.c
-@@ -66,6 +66,7 @@ unsigned long pack_size_limit_cfg;
-=20
- /* Parallel index stat data preload? */
- int core_preload_index =3D 0;
-+int core_crc32_index_threshold =3D 250000;
-=20
- /* This is set by setup_git_dir_gently() and/or git_default_config() *=
-/
- char *git_work_tree_cfg;
-diff --git a/read-cache.c b/read-cache.c
-index a34878e..fd032d8 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1582,6 +1582,14 @@ int write_index(struct index_state *istate, int =
-newfd)
- 		}
- 	}
-=20
-+	if (core_crc32_index_threshold >=3D 0) {
-+		if (core_crc32_index_threshold > 0 &&
-+		    istate->cache_nr >=3D core_crc32_index_threshold)
-+			istate->hdr_flags |=3D CACHE_F_CRC;
-+		else
-+			istate->hdr_flags &=3D ~CACHE_F_CRC;
-+	}
-+
- 	hdr.h.hdr_signature =3D htonl(CACHE_SIGNATURE);
- 	if (istate->hdr_flags) {
- 		hdr.h.hdr_version =3D htonl(4);
---=20
-1.7.8.36.g69ee2
+which is perfectly consistent and simple. It does violate your "X is a
+short-hand for Y" above, but why is that a bad thing? It seems you are
+arguing against a special case _because_ it is a special case, not
+because it is not a reasonable thing to do or expect.
+
+Anyway. I am still not convinced that this is even a useful thing to
+want to do, so I am certainly not volunteering to write such a patch. So
+perhaps there is no point arguing about it.
+
+-Peff
