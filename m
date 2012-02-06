@@ -1,116 +1,96 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Git performance results on a large repository
-Date: Mon, 06 Feb 2012 13:17:15 -0800
-Message-ID: <4F30435B.5070709@vilain.net>
-References: <CB5074CF.3AD7A%joshua.redstone@fb.com>,<CACsJy8DkLCK0ZUKNz_PJazsxjsRbWVVZwjAU5n2EAjJfCYtpoQ@mail.gmail.com> <243C23AF01622E49BEA3F28617DBF0AD5912CA85@SC-MBX02-5.TheFacebook.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 3/3] t: mailmap: add simple name translation test
+Date: Mon, 6 Feb 2012 23:18:00 +0200
+Message-ID: <CAMP44s1tgQEO0MMAHshpdNWbJ_ZrfFAJFsWh1b-2yXmuOkJxAA@mail.gmail.com>
+References: <1328385024-6955-1-git-send-email-felipe.contreras@gmail.com>
+	<1328385024-6955-4-git-send-email-felipe.contreras@gmail.com>
+	<20120204201218.GF22928@burratino>
+	<CAMP44s1ZPQJzHzYj7e4Kj3Cu+qq0Q3uKrwsE=xS7BmmSqd3gSw@mail.gmail.com>
+	<20120204211544.GC3278@burratino>
+	<CAMP44s0Z=k6VBfv0HOGHyMBLRcPauK7K5RNvuRDbfq5=5aKVpg@mail.gmail.com>
+	<20120205061738.GB1870@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Joshua Redstone <joshua.redstone@fb.com>
-X-From: git-owner@vger.kernel.org Mon Feb 06 22:17:31 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Marius Storm-Olsen <marius@trolltech.com>,
+	Jim Meyering <jim@meyering.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 06 22:18:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuVwH-0005w7-E2
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 22:17:29 +0100
+	id 1RuVww-0006Nn-MU
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 22:18:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755707Ab2BFVRU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Feb 2012 16:17:20 -0500
-Received: from uk.vilain.net ([92.48.122.123]:48359 "EHLO uk.vilain.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753979Ab2BFVRS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Feb 2012 16:17:18 -0500
-Received: by uk.vilain.net (Postfix, from userid 1001)
-	id C3C538275; Mon,  6 Feb 2012 21:17:17 +0000 (GMT)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on uk.vilain.net
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=unavailable version=3.3.1
-Received: from [IPv6:::1] (localhost [127.0.0.1])
-	by uk.vilain.net (Postfix) with ESMTP id D18F08075;
-	Mon,  6 Feb 2012 21:17:15 +0000 (GMT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-In-Reply-To: <243C23AF01622E49BEA3F28617DBF0AD5912CA85@SC-MBX02-5.TheFacebook.com>
+	id S1754319Ab2BFVSE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Feb 2012 16:18:04 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:52704 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751935Ab2BFVSD convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Feb 2012 16:18:03 -0500
+Received: by lagu2 with SMTP id u2so3467098lag.19
+        for <git@vger.kernel.org>; Mon, 06 Feb 2012 13:18:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=eGXCBBoA3qnMr0ejSbS6GnAddehSWIyAYDskNE4/MZw=;
+        b=dbwrU4gjgrWvwuiDu2SNqk9xJF+MNzbOx7ScpDWDby3eGdBBtj2AUt4pWZoy1Mh17U
+         xPSL5A1z9+/Xc2NyrhBSfnpZ9b43njiLSM6FDPXMnHDhrULRUjM+bGSlRzV1rS68cdYa
+         eyfv+fI48u+EPWm0yBDDRWVDyMP5aCsBFg7iY=
+Received: by 10.152.114.169 with SMTP id jh9mr10590291lab.20.1328563080944;
+ Mon, 06 Feb 2012 13:18:00 -0800 (PST)
+Received: by 10.112.41.73 with HTTP; Mon, 6 Feb 2012 13:18:00 -0800 (PST)
+In-Reply-To: <20120205061738.GB1870@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190107>
 
- > Sam Vilain: Thanks for the pointer, i didn't realize that
- > fast-import was bi-directional.  I used it for generating the
- > synthetic repo.  Will look into using it the other way around.
- > Though that still won't speed up things like git-blame,
- > presumably?
+On Sun, Feb 5, 2012 at 8:17 AM, Jonathan Nieder <jrnieder@gmail.com> wr=
+ote:
+> Felipe Contreras wrote:
+>
+>> You mean the commit message, you haven't made any comment about the =
+code.
+>
+> No, for this patch, more important than the absence of any explanatio=
+n
+> in the commit message (which is also important) is the code change
+> that seems unnecessarily invasive.
 
-It could, because blame is an operation which primarily works on
-the source history with little reference to the working copy.  Of
-course this will depend on the quality of the implementation
-server-side.  Blame should suit distribution over a cluster, as
-it is mostly involved with scanning candidate revisions for
-string matches which is the compute intensive part.  Coming up
-with candidate revisions has its own cost and can probably also
-be distributed, but just working on the lowest loop level might
-be a good place to start.
+It only seems that way if you are not familiar with the code, and you
+assume the worst.
 
-What it doesn't help with is local filesystem operations.  For
-this I think a different approach is required, if you can tie
-into fam or a similar inode change notification system, then you
-should be able to avoid the entire recursive stat on 'git
-status'.  I'm not sure --assume-unchanged on its own is a good
-idea, you could easily miss things.  Those stat's are useful.
+=46eel free propose an alternative change. You would find there's no
+better way to simplify those changes.
 
-Making the index able to hold just changes to the checked-out
-tree, as others have mentioned, would also save the massive reads
-and writes you've identified.  Perhaps a more high performance
-back-end could be developed.
+Here's a tip: look at the previous change "CTO <cto@company.xx>", and
+see how it's right next to each an every of the hunks introduced in
+this patch.
 
- > The sparse-checkout issue you mention is a good one.
+> You've already demonstrated that I do not have the right communicatio=
+n
+> style to explain such things to you and work towards a fix that
+> addresses both our concerns. =C2=A0So I give up.
 
-It's actually been on the table since at least GitTogether 2008;
-there's been some design discussion on it and I think it's just
-one of those features which doesn't have enough demand yet for it
-to be built.  It keeps coming up but not from anyone with the
-inclination or resources to make it happen.  There is a protocol
-issue, but this should be able to fit into the current extension
-system.
+You are assuming your concerns are valid without actually looking at th=
+e code.
 
- > There is a good question of how to support quick checkout,
- > branch switching, clone, push and so forth.
+> I'll just give my
+> feedback on patches that concern code I care about and an explanation
+> for the sake of others on the list that are better able to interact
+> with you. =C2=A0I am willing to work with or answer questions from an=
+yone
+> including you, though.
 
-Sure.  It will be much more network intensive as you are
-replacing the part which normally has a very fast link through
-the buffercache to pack files etc.  A hybrid approach is also
-possible, where objects are fetched individually via fast-import
-and cached in a local .git repo.  And I have a hunch that LZOP
-compression of the stream may also be a win, but as with all of
-these ideas, it would be after profiling identifies it as a choke point 
-than just because it sounds good.
+Your feedback is most certainly welcome, but you shouldn't assume you
+are always right. There's nothing wrong with disagreeing, and in this
+case I most definitely disagree, and there's nothing wrong with that.
 
- > I'll look into the approaches you suggest.  One consideration
- > is coming up with a high-leverage approach - i.e. not doing
- > heavy dev work if we can avoid it.
-
-Right.  You don't actually need to port the whole of git to Hadoop 
-initially, to begin with it can just pass through all commands to a 
-server-side git fast-import process.  When you find specific operations 
-which are slow then these specific operations can be implemented using a 
-Hadoop back-end, and the rest backed to the standard git.  If done using 
-a useful plug-in system, these systems could be accepted by the core 
-project as an enterprise scaling option.
-
-This could let you get going with the knowledge that the scaling option 
-is there should it come out.
-
- > On the other hand, it would be nice if we (including the entire
- > community:) ) improve git in areas that others that share
- > similar issues benefit from as well.
-
-Like I say, a lot of people have run into this already...
-
-HTH,
-Sam
+--=20
+=46elipe Contreras
