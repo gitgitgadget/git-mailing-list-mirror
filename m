@@ -1,503 +1,90 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] config: add include directive
-Date: Mon, 6 Feb 2012 04:54:04 -0500
-Message-ID: <20120206095404.GB4300@sigill.intra.peff.net>
-References: <20120206095306.GA2404@sigill.intra.peff.net>
+Subject: Re: [PATCH 0/2] config includes, take 2
+Date: Mon, 6 Feb 2012 05:06:22 -0500
+Message-ID: <20120206100622.GC4300@sigill.intra.peff.net>
+References: <20120206062713.GA9699@sigill.intra.peff.net>
+ <4F2FA330.7020803@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 06 10:54:28 2012
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Feb 06 11:06:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuLHH-0002Uw-DH
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 10:54:28 +0100
+	id 1RuLTG-00005H-FS
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 11:06:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754680Ab2BFJyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Feb 2012 04:54:11 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58734
+	id S1754468Ab2BFKGZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Feb 2012 05:06:25 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58737
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754516Ab2BFJyH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Feb 2012 04:54:07 -0500
-Received: (qmail 26351 invoked by uid 107); 6 Feb 2012 10:01:13 -0000
+	id S1754215Ab2BFKGZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Feb 2012 05:06:25 -0500
+Received: (qmail 26409 invoked by uid 107); 6 Feb 2012 10:13:31 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 06 Feb 2012 05:01:13 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Feb 2012 04:54:04 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 06 Feb 2012 05:13:31 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Feb 2012 05:06:22 -0500
 Content-Disposition: inline
-In-Reply-To: <20120206095306.GA2404@sigill.intra.peff.net>
+In-Reply-To: <4F2FA330.7020803@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190060>
 
-It can be useful to split your ~/.gitconfig across multiple
-files. For example, you might have a "main" file which is
-used on many machines, but a small set of per-machine
-tweaks. Or you may want to make some of your config public
-(e.g., clever aliases) while keeping other data back (e.g.,
-your name or other identifying information). Or you may want
-to include a number of config options in some subset of your
-repos without copying and pasting (e.g., you want to
-reference them from the .git/config of participating repos).
+On Mon, Feb 06, 2012 at 10:53:52AM +0100, Michael Haggerty wrote:
 
-This patch introduces an include directive for config files.
-It looks like:
+> ISTM that the main goal was to prevent infinite recursion, not avoid a
+> little bit of redundant reading.
 
-  [include]
-    path = /path/to/file
+It was both, actually. There was a sense that we should not end up with
+duplicate entries by reading the same file twice. However, entries which
+actually create lists (and could therefore create duplicates) are by far
+the minority compared to entries which overwrite. And it is the
+overwrite-style entries which are harmed by suppressing duplicates.
 
-This is syntactically backwards-compatible with existing git
-config parsers (i.e., they will see it as another config
-entry and ignore it unless you are looking up include.path).
+> If that is the goal, all you have to record is the "include stack"
+> context that caused the currently-being-included file to be read and
+> make sure that the currently-being-included file didn't appear earlier
+> on the stack.  The fact that the same file was included earlier (but
+> not as part of the same include chain) needn't be considered an error.
 
-The implementation provides a "git_config_include" callback
-which wraps regular config callbacks. Callers can pass it to
-git_config_from_file, and it will transparently follow any
-include directives, passing all of the discovered options to
-the real callback.
+I considered this, but decided the complexity wasn't worth it,
+especially because getting it accurate means cooperation from
+git_config_from_file, which otherwise doesn't know or care about this
+mechanism. Instead I keep a simple depth counter and barf at a
+reasonable maximum, printing the "from" and "to" files. Yes, it's not
+nearly as elegant as keeping the whole stack, but I really don't expect
+people to have complex super-deep includes, nor for it to be difficult
+to hunt down the cause of a cycle.
 
-Include directives are turned on automatically for "regular"
-git config parsing. This includes calls to git_config, as
-well as calls to the "git config" program that do not
-specify a single file (e.g., using "-f", "--global", etc).
-They are not turned on in other cases, including:
+Maybe that is short-sighted or lazy of me, but I'd just really be
+surprised if people ever went more than 1 or 2 layers deep, or if they
+actually ended up with a cycle at all.
 
-  1. Parsing of other config-like files, like .gitmodules.
-     There isn't a real need, and I'd rather be conservative
-     and avoid unnecessary incompatibility or confusion.
+There is a stack kept already by git_config_from_file, but it doesn't
+respect the call-chain (so if I start a new git_config() call from
+inside a callback, it is still part of the same stack).
 
-  2. Reading single files via "git config". This is for two
-     reasons:
+We could possibly put a marker in the stack for that situation, and then
+it would be usable for include cycle-detection.
 
-       a. backwards compatibility with scripts looking at
-          config-like files.
+> However, one could even imagine a command like
+> 
+>     $ git config --where-defined user.email
+>     user.email defined by /home/me/myfile2 line 75
+>         which was included from /home/me/myfile1 line 13
+>         which was included from /home/me/.gitconfig line 22
+>     user.email redefined by /home/me/project/.git/companyconfig line 8
+>         which was included from /home/me/project/.git/config line 20
 
-       b. inspection of a specific file probably means you
-	  care about just what's in that file, not a general
-          lookup for "do we have this value anywhere at
-	  all". If that is not the case, the caller can
-	  always specify "--includes".
+You can already implement this with the existing stack by providing a
+suitable callback (since its your callback, you'd know that there was no
+recursion of git_config, and therefore the stack refers only to a single
+set of includes).
 
-  3. Writing files via "git config"; we want to treat
-     include.* variables as literal items to be copied (or
-     modified), and not expand them. So "git config
-     --unset-all foo.bar" would operate _only_ on
-     .git/config, not any of its included files (just as it
-     also does not operate on ~/.gitconfig).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/config.txt               |   15 ++++
- Documentation/git-config.txt           |    5 +
- Documentation/technical/api-config.txt |   22 ++++++
- builtin/config.c                       |   31 ++++++--
- cache.h                                |    8 ++
- config.c                               |   69 +++++++++++++++++-
- t/t1305-config-include.sh              |  126 ++++++++++++++++++++++++++++++++
- 7 files changed, 268 insertions(+), 8 deletions(-)
- create mode 100755 t/t1305-config-include.sh
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index abeb82b..e55dae1 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -84,6 +84,17 @@ customary UNIX fashion.
- 
- Some variables may require a special value format.
- 
-+Includes
-+~~~~~~~~
-+
-+You can include one config file from another by setting the special
-+`include.path` variable to the name of the file to be included. The
-+included file is expanded immediately, as if its contents had been
-+found at the location of the include directive. If the value of the
-+`include.path` variable is a relative path, the path is considered to be
-+relative to the configuration file in which the include directive was
-+found. See below for examples.
-+
- Example
- ~~~~~~~
- 
-@@ -106,6 +117,10 @@ Example
- 		gitProxy="ssh" for "kernel.org"
- 		gitProxy=default-proxy ; for the rest
- 
-+	[include]
-+		path = /path/to/foo.inc ; include by absolute path
-+		path = foo ; expand "foo" relative to the current file
-+
- Variables
- ~~~~~~~~~
- 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index e7ecf5d..aa8303b 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -178,6 +178,11 @@ See also <<FILES>>.
- 	Opens an editor to modify the specified config file; either
- 	'--system', '--global', or repository (default).
- 
-+--includes::
-+--no-includes::
-+	Respect `include.*` directives in config files when looking up
-+	values. Defaults to on.
-+
- [[FILES]]
- FILES
- -----
-diff --git a/Documentation/technical/api-config.txt b/Documentation/technical/api-config.txt
-index f428c5c..c60b6b3 100644
---- a/Documentation/technical/api-config.txt
-+++ b/Documentation/technical/api-config.txt
-@@ -95,6 +95,28 @@ string is given, prints an error message and returns -1.
- Similar to `git_config_string`, but expands `~` or `~user` into the
- user's home directory when found at the beginning of the path.
- 
-+Include Directives
-+------------------
-+
-+By default, the config parser does not respect include directives.
-+However, a caller can use the special `git_config_include` wrapper
-+callback to support them. To do so, you simply wrap your "real" callback
-+function and data pointer in a `struct config_include_data`, and pass
-+the wrapper to the regular config-reading functions. For example:
-+
-+-------------------------------------------
-+int read_file_with_include(const char *file, config_fn_t fn, void *data)
-+{
-+	struct config_include_data inc = CONFIG_INCLUDE_INIT;
-+	inc.fn = fn;
-+	inc.data = data;
-+	return git_config_from_file(git_config_include, file, &inc);
-+}
-+-------------------------------------------
-+
-+`git_config` respects includes automatically. The lower-level
-+`git_config_from_file` does not.
-+
- Writing Config Files
- --------------------
- 
-diff --git a/builtin/config.c b/builtin/config.c
-index d35c06a..09bf778 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -25,6 +25,7 @@ static const char *given_config_file;
- static int actions, types;
- static const char *get_color_slot, *get_colorbool_slot;
- static int end_null;
-+static int respect_includes = -1;
- 
- #define ACTION_GET (1<<0)
- #define ACTION_GET_ALL (1<<1)
-@@ -74,6 +75,7 @@ static struct option builtin_config_options[] = {
- 	OPT_BIT(0, "path", &types, "value is a path (file or directory name)", TYPE_PATH),
- 	OPT_GROUP("Other"),
- 	OPT_BOOLEAN('z', "null", &end_null, "terminate values with NUL byte"),
-+	OPT_BOOL(0, "includes", &respect_includes, "respect include directives on lookup"),
- 	OPT_END(),
- };
- 
-@@ -161,6 +163,9 @@ static int get_value(const char *key_, const char *regex_)
- 	int ret = -1;
- 	char *global = NULL, *repo_config = NULL;
- 	const char *system_wide = NULL, *local;
-+	struct config_include_data inc = CONFIG_INCLUDE_INIT;
-+	config_fn_t fn;
-+	void *data;
- 
- 	local = config_exclusive_filename;
- 	if (!local) {
-@@ -213,19 +218,28 @@ static int get_value(const char *key_, const char *regex_)
- 		}
- 	}
- 
-+	fn = show_config;
-+	data = NULL;
-+	if (respect_includes) {
-+		inc.fn = fn;
-+		inc.data = data;
-+		fn = git_config_include;
-+		data = &inc;
-+	}
-+
- 	if (do_all && system_wide)
--		git_config_from_file(show_config, system_wide, NULL);
-+		git_config_from_file(fn, system_wide, data);
- 	if (do_all && global)
--		git_config_from_file(show_config, global, NULL);
-+		git_config_from_file(fn, global, data);
- 	if (do_all)
--		git_config_from_file(show_config, local, NULL);
--	git_config_from_parameters(show_config, NULL);
-+		git_config_from_file(fn, local, data);
-+	git_config_from_parameters(fn, data);
- 	if (!do_all && !seen)
--		git_config_from_file(show_config, local, NULL);
-+		git_config_from_file(fn, local, data);
- 	if (!do_all && !seen && global)
--		git_config_from_file(show_config, global, NULL);
-+		git_config_from_file(fn, global, data);
- 	if (!do_all && !seen && system_wide)
--		git_config_from_file(show_config, system_wide, NULL);
-+		git_config_from_file(fn, system_wide, data);
- 
- 	free(key);
- 	if (regexp) {
-@@ -384,6 +398,9 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 			config_exclusive_filename = given_config_file;
- 	}
- 
-+	if (respect_includes == -1)
-+		respect_includes = !config_exclusive_filename;
-+
- 	if (end_null) {
- 		term = '\0';
- 		delim = '\n';
-diff --git a/cache.h b/cache.h
-index 9bd8c2d..7cf6dc1 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1139,6 +1139,14 @@ extern const char *get_commit_output_encoding(void);
- 
- extern int git_config_parse_parameter(const char *, config_fn_t fn, void *data);
- 
-+struct config_include_data {
-+	int depth;
-+	config_fn_t fn;
-+	void *data;
-+};
-+#define CONFIG_INCLUDE_INIT { 0 }
-+extern int git_config_include(const char *name, const char *value, void *data);
-+
- extern const char *config_exclusive_filename;
- 
- #define MAX_GITNAME (1000)
-diff --git a/config.c b/config.c
-index 40f9c6d..e3fcf75 100644
---- a/config.c
-+++ b/config.c
-@@ -28,6 +28,69 @@ static int zlib_compression_seen;
- 
- const char *config_exclusive_filename = NULL;
- 
-+#define MAX_INCLUDE_DEPTH 10
-+static const char include_depth_advice[] =
-+"exceeded maximum include depth (%d) while including\n"
-+"	%s\n"
-+"from\n"
-+"	%s\n"
-+"Do you have circular includes?";
-+static int handle_path_include(const char *path, struct config_include_data *inc)
-+{
-+	int ret = 0;
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	/*
-+	 * Use an absolute path as-is, but interpret relative paths
-+	 * based on the including config file.
-+	 */
-+	if (!is_absolute_path(path)) {
-+		char *slash;
-+
-+		if (!cf || !cf->name)
-+			return error("relative config includes must come from files");
-+
-+		slash = find_last_dir_sep(cf->name);
-+		if (slash)
-+			strbuf_add(&buf, cf->name, slash - cf->name + 1);
-+		strbuf_addstr(&buf, path);
-+		path = buf.buf;
-+	}
-+
-+	if (!access(path, R_OK)) {
-+		if (++inc->depth > MAX_INCLUDE_DEPTH)
-+			die(include_depth_advice, MAX_INCLUDE_DEPTH, path,
-+			    cf && cf->name ? cf->name : "the command line");
-+		ret = git_config_from_file(git_config_include, path, inc);
-+		inc->depth--;
-+	}
-+	strbuf_release(&buf);
-+	return ret;
-+}
-+
-+int git_config_include(const char *var, const char *value, void *data)
-+{
-+	struct config_include_data *inc = data;
-+	const char *type;
-+	int ret;
-+
-+	/*
-+	 * Pass along all values, including "include" directives; this makes it
-+	 * possible to query information on the includes themselves.
-+	 */
-+	ret = inc->fn(var, value, inc->data);
-+	if (ret < 0)
-+		return ret;
-+
-+	type = skip_prefix(var, "include.");
-+	if (!type)
-+		return ret;
-+
-+	if (!strcmp(type, "path"))
-+		ret = handle_path_include(value, inc);
-+	return ret;
-+}
-+
- static void lowercase(char *p)
- {
- 	for (; *p; p++)
-@@ -921,9 +984,13 @@ int git_config(config_fn_t fn, void *data)
- {
- 	char *repo_config = NULL;
- 	int ret;
-+	struct config_include_data inc = CONFIG_INCLUDE_INIT;
-+
-+	inc.fn = fn;
-+	inc.data = data;
- 
- 	repo_config = git_pathdup("config");
--	ret = git_config_early(fn, data, repo_config);
-+	ret = git_config_early(git_config_include, &inc, repo_config);
- 	if (repo_config)
- 		free(repo_config);
- 	return ret;
-diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
-new file mode 100755
-index 0000000..0a27ec4
---- /dev/null
-+++ b/t/t1305-config-include.sh
-@@ -0,0 +1,126 @@
-+#!/bin/sh
-+
-+test_description='test config file include directives'
-+. ./test-lib.sh
-+
-+test_expect_success 'include file by absolute path' '
-+	echo "[test]one = 1" >one &&
-+	echo "[include]path = \"$PWD/one\"" >.gitconfig &&
-+	echo 1 >expect &&
-+	git config test.one >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'include file by relative path' '
-+	echo "[test]one = 1" >one &&
-+	echo "[include]path = one" >.gitconfig &&
-+	echo 1 >expect &&
-+	git config test.one >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'chained relative paths' '
-+	mkdir subdir &&
-+	echo "[test]three = 3" >subdir/three &&
-+	echo "[include]path = three" >subdir/two &&
-+	echo "[include]path = subdir/two" >.gitconfig &&
-+	echo 3 >expect &&
-+	git config test.three >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'include options can still be examined' '
-+	echo "[test]one = 1" >one &&
-+	echo "[include]path = one" >.gitconfig &&
-+	echo one >expect &&
-+	git config include.path >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'listing includes option and expansion' '
-+	echo "[test]one = 1" >one &&
-+	echo "[include]path = one" >.gitconfig &&
-+	cat >expect <<-\EOF &&
-+	include.path=one
-+	test.one=1
-+	EOF
-+	git config --list >actual.full &&
-+	grep -v ^core actual.full >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'single file lookup does not expand includes by default' '
-+	echo "[test]one = 1" >one &&
-+	echo "[include]path = one" >.gitconfig &&
-+	test_must_fail git config -f .gitconfig test.one &&
-+	test_must_fail git config --global test.one &&
-+	echo 1 >expect &&
-+	git config --includes -f .gitconfig test.one >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'writing config file does not expand includes' '
-+	echo "[test]one = 1" >one &&
-+	echo "[include]path = one" >.gitconfig &&
-+	git config test.two 2 &&
-+	echo 2 >expect &&
-+	git config --no-includes test.two >actual &&
-+	test_cmp expect actual &&
-+	test_must_fail git config --no-includes test.one
-+'
-+
-+test_expect_success 'config modification does not affect includes' '
-+	echo "[test]one = 1" >one &&
-+	echo "[include]path = one" >.gitconfig &&
-+	git config test.one 2 &&
-+	echo 1 >expect &&
-+	git config -f one test.one >actual &&
-+	test_cmp expect actual &&
-+	cat >expect <<-\EOF &&
-+	1
-+	2
-+	EOF
-+	git config --get-all test.one >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'missing include files are ignored' '
-+	cat >.gitconfig <<-\EOF &&
-+	[include]path = foo
-+	[test]value = yes
-+	EOF
-+	echo yes >expect &&
-+	git config test.value >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'absolute includes from command line work' '
-+	echo "[test]one = 1" >one &&
-+	echo 1 >expect &&
-+	git -c include.path="$PWD/one" config test.one >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'relative includes from command line fail' '
-+	echo "[test]one = 1" >one &&
-+	test_must_fail git -c include.path=one config test.one
-+'
-+
-+test_expect_success 'include cycles are detected' '
-+	cat >.gitconfig <<-\EOF &&
-+	[test]value = gitconfig
-+	[include]path = cycle
-+	EOF
-+	cat >cycle <<-\EOF &&
-+	[test]value = cycle
-+	[include]path = .gitconfig
-+	EOF
-+	cat >expect <<-\EOF &&
-+	gitconfig
-+	cycle
-+	EOF
-+	test_must_fail git config --get-all test.value 2>stderr &&
-+	grep "exceeded maximum include depth" stderr
-+'
-+
-+test_done
--- 
-1.7.9.rc1.29.g43677
+-Peff
