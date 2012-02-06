@@ -1,86 +1,73 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 0/3] On compresing large index
-Date: Mon, 6 Feb 2012 08:35:29 +0700
-Message-ID: <CACsJy8AnGg11PeCGFs_BxOM3wAjwzs2tOCWJV31_2_KMFTxhDA@mail.gmail.com>
-References: <1328430605-4566-1-git-send-email-pclouds@gmail.com> <87ehu9ug9i.fsf@thomas.inf.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] send-email: add extra safetly in address sanitazion
+Date: Sun, 05 Feb 2012 17:48:50 -0800
+Message-ID: <7vy5sgbukd.fsf@alter.siamese.dyndns.org>
+References: <1328373162-25188-1-git-send-email-felipe.contreras@gmail.com>
+ <87sjipxe5u.fsf@thomas.inf.ethz.ch>
+ <CAMP44s1wqmT4mavsXrEhB-OquOtQrYnnoSoX9G7X4wzFoMD29A@mail.gmail.com>
+ <877h01rlsr.fsf@thomas.inf.ethz.ch>
+ <CAMP44s30VmJasMLJxs-JFwksvPEPpG1LB3Gr_pA2+hpE1AnwXg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Joshua Redstone <joshua.redstone@fb.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Feb 06 02:36:10 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
+	Brandon Casey <drafnel@gmail.com>,
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>,
+	Brian Gernhardt <brian@gernhardtsoftware.com>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 06 02:49:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuDV3-00018T-Vp
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 02:36:10 +0100
+	id 1RuDht-000618-60
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 02:49:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754326Ab2BFBgD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Feb 2012 20:36:03 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:44515 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754237Ab2BFBgA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Feb 2012 20:36:00 -0500
-Received: by wics10 with SMTP id s10so3844232wic.19
-        for <git@vger.kernel.org>; Sun, 05 Feb 2012 17:35:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ceS3Wdnq9qX+f5gaQ9o97a1Atpq7D68O2KIwSsARH8Y=;
-        b=aJAFQnFA7sd+XQ+wZ69s6dZUA3GZjyrWyujAExKmrhJpxYBUoS5IJ2e6/GWutznNqi
-         wbMFeHLDFGR4tOP5yQKqjMcnrqAaOHtdL7PZTrNO0J9FZg3WSIBCN+P+C06TmZlVK7Xr
-         byTHf2mSN4cHX+da3FmUQZdNv+hLMCjwWwWxA=
-Received: by 10.181.13.113 with SMTP id ex17mr24459476wid.15.1328492159203;
- Sun, 05 Feb 2012 17:35:59 -0800 (PST)
-Received: by 10.223.2.139 with HTTP; Sun, 5 Feb 2012 17:35:29 -0800 (PST)
-In-Reply-To: <87ehu9ug9i.fsf@thomas.inf.ethz.ch>
+	id S1754145Ab2BFBsx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Feb 2012 20:48:53 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60399 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753436Ab2BFBsw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Feb 2012 20:48:52 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 56BF97F0A;
+	Sun,  5 Feb 2012 20:48:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NKWEPZNgY3iCLkYiRJ2vKKJfEPA=; b=Zt0f3d
+	U7pfBWa+Z3NdAaq9udAuCRd5bHNqmNr1SZkwfTbN7md7oz+r1cKWQ45gSJM1ES6a
+	0J2PQt31KfOOOx/GnFqd7YkBANmPN2TDEQg/iXvuPTCkQgrX9UeNarJio93GddHe
+	2ia1I2th6z57JxU8/2qQ3muQkRPd2WsiiGzI8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dRK07/ZYf6njn4skbDaAur2Qf8KErsh5
+	qmDcoNfmaIVvh4OZDplTtNELyZQX01bg34Fw0sZvvUb6nhCQUEr74Y0tlpCtGfUA
+	AQhr+pgIVDg9QZT19+qtgX8qNd3esofflY6d7toVE0n3aJoF085hNUmFIHtr0Yf/
+	7dgvPLWFDS4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C8D87F09;
+	Sun,  5 Feb 2012 20:48:52 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C129C7F06; Sun,  5 Feb 2012
+ 20:48:51 -0500 (EST)
+In-Reply-To: <CAMP44s30VmJasMLJxs-JFwksvPEPpG1LB3Gr_pA2+hpE1AnwXg@mail.gmail.com> (Felipe
+ Contreras's message of "Mon, 6 Feb 2012 03:27:50 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B867264A-5064-11E1-B6EB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/189997>
 
-2012/2/6 Thomas Rast <trast@inf.ethz.ch>:
->> We need to figure out what git uses 4s user time for.
->
-> When I worked on the cache-tree stuff, my observation (based on
-> profiling, so I had actual data :-) was that computing SHA1s absolute=
-ly
-> dominates everything in such operations. =C2=A0It does that when writ=
-ing the
-> index to write the trailing checksum, and also when loading it to ver=
-ify
-> that the index is valid.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-You're right. This is on another machine but with same index (2M
-files), without SHA1 checksum:
+> Anyway, it seems people don't care if 'git send-email' attempts to
+> send random garbage regardless, so I'm not going to pursue this patch.
 
-$ time ~/w/git/git ls-files --stage|head > /dev/null
-real    0m1.533s
-user    0m1.228s
-sys     0m0.306s
-
-and with SHA-1 checksum:
-
-$ time git ls-files --stage|head > /dev/null
-real     0m7.525s
-user    0m7.257s
-sys     0m0.268s
-
-I guess we could fall back to cheaper digests for such a large index.
-Still more than one second for doing nothing but reading index is too
-slow to me.
-
-> ls-files shouldn't be so slow though. =C2=A0A quick run with callgrin=
-d in a
-> linux-2.6.git tells me it spends about 45% of its time on SHA1s and a
-> whopping 25% in quote_c_style(). =C2=A0I wonder what's so hard about
-> quoting...
-
-That's why I put "| head" there, to cut output processing overhead (hop=
-efully).
---=20
-Duy
+I actually think people _do_ care, and that is the _only_ reason you are
+getting review comments.
