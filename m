@@ -1,89 +1,76 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] fsck: give accurate error message on empty loose object files
-Date: Mon,  6 Feb 2012 17:24:52 +0100
-Message-ID: <1328545492-13429-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <vpqfwf6en6e.fsf@bauges.imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Feb 06 17:25:21 2012
+From: lists@haller-berlin.de (Stefan Haller)
+Subject: Re: git-gui Ctrl-U (unstage) broken
+Date: Mon, 6 Feb 2012 17:48:51 +0100
+Message-ID: <1kf1ynj.18kgomh1crpruyM%lists@haller-berlin.de>
+References: <877h0at7ua.fsf@fox.patthoyts.tk>
+Cc: git@vger.kernel.org
+To: patthoyts@users.sourceforge.net (Pat Thoyts),
+	victor.engmark@gmail.com (Victor Engmark)
+X-From: git-owner@vger.kernel.org Mon Feb 06 17:48:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuRNX-0006Wc-I8
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 17:25:19 +0100
+	id 1RuRjo-00066o-UT
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 17:48:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754473Ab2BFQZL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Feb 2012 11:25:11 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:48476 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753003Ab2BFQZK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Feb 2012 11:25:10 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q16GM3u5020201
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 6 Feb 2012 17:22:03 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1RuRNA-0005Ml-Ca; Mon, 06 Feb 2012 17:24:56 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1RuRNA-0003VE-9c; Mon, 06 Feb 2012 17:24:56 +0100
-X-Mailer: git-send-email 1.7.9.111.gf3fb0.dirty
-In-Reply-To: <vpqfwf6en6e.fsf@bauges.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 06 Feb 2012 17:22:04 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q16GM3u5020201
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1329150128.84895@L6NJg2MLm3PRYVWVvSzHyA
+	id S1755271Ab2BFQsQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Feb 2012 11:48:16 -0500
+Received: from server90.greatnet.de ([83.133.96.186]:46883 "EHLO
+	server90.greatnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752764Ab2BFQsP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Feb 2012 11:48:15 -0500
+Received: from [192.168.0.42] (nat1.ableton.net [217.110.199.117])
+	by server90.greatnet.de (Postfix) with ESMTPA id 439642A04AD;
+	Mon,  6 Feb 2012 17:46:11 +0100 (CET)
+In-Reply-To: <877h0at7ua.fsf@fox.patthoyts.tk>
+User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.7.2 (x86))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190078>
 
-Since 3ba7a065527a (A loose object is not corrupt if it
-cannot be read due to EMFILE), "git fsck" on a repository with an empty
-loose object file complains with the error message
+Pat Thoyts <patthoyts@users.sourceforge.net> wrote:
 
-  fatal: failed to read object <sha1>: Invalid argument
+> Victor Engmark <victor.engmark@gmail.com> writes:
+> 
+> >Using the git-gui available with the default Ubuntu 10.10 repos, I'm
+> >not able to unstage files with the default keyboard shortcut. To
+> >reproduce:
+> >1. Change a file in the repository
+> >2. Run `git gui`
+> >3. Stage the changed file
+> >4. Select the changed file in the "Staged Changes (Will Commit)" list
+> >5. Click Ctrl-U
+> >
+> >Expected outcome: The selected file should be unstaged.
+> >
+> >Actual outcome: Nothing at all changes in the GUI.
+> 
+> I checked this with the current version (gitgui-0.16.0) and it works ok
+> for me (on windows) - ie: ctrl-u unstaged a selected file.
 
-This comes from a failure of mmap on this empty file, which sets errno to
-EINVAL. Instead of calling xmmap on empty file, we display a clean error
-message ourselves, and return a NULL pointer. The new message is
+Pat, it depends on where the focus is when you press ctrl-u.  If you
+click in the diff pane, and then select the file to unstage, and then
+press ctrl-u, then nothing happens. If you click in the commit message
+field, then ctrl-u works fine.
 
-  error: object file .git/objects/09/<rest-of-sha1> is empty
-  fatal: loose object <sha1> (stored in .git/objects/09/<rest-of-sha1>) is corrupt
+The same problem exists with ctrl-j for "Revert Changes". In that case
+it is caused by the vi bindings that were introduced by 60aa065f69. It
+seems that a binding for <Key-j> is also triggered by ctrl-j (if you
+have a long diff you can see the diff pane scroll down by one line).
 
-The second line was already there before the regression in 3ba7a065527a,
-and the first is an additional message, that should help diagnosing the
-problem for the user.
+I'm not sure how to explain why ctrl-u doesn't work though, as I can't
+see any binding for <Key-u>, but maybe this gives a clue to someone who
+knows more about TCL than I do.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- sha1_file.c |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+(It's not Windows-specific, btw: the same problem exists on Mac with
+Command-U and Command-J.)
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 88f2151..fafc187 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1202,6 +1202,11 @@ void *map_sha1_file(const unsigned char *sha1, unsigned long *size)
- 
- 		if (!fstat(fd, &st)) {
- 			*size = xsize_t(st.st_size);
-+			if (*size == 0) {
-+				/* mmap() is forbidden on empty files */
-+				error("object file %s is empty", sha1_file_name(sha1));
-+				return NULL;
-+			}
- 			map = xmmap(NULL, *size, PROT_READ, MAP_PRIVATE, fd, 0);
- 		}
- 		close(fd);
+
 -- 
-1.7.9.111.gf3fb0.dirty
+Stefan Haller
+Berlin, Germany
+http://www.haller-berlin.de/
