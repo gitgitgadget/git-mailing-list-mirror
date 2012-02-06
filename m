@@ -1,78 +1,170 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] config: add include directive
-Date: Mon, 06 Feb 2012 14:39:41 -0800
-Message-ID: <7v62fj60ya.fsf@alter.siamese.dyndns.org>
-References: <20120206095306.GA2404@sigill.intra.peff.net>
- <20120206095404.GB4300@sigill.intra.peff.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v4 1/4] completion: work around zsh option propagation bug
+Date: Tue, 7 Feb 2012 00:59:34 +0200
+Message-ID: <CAMP44s3SruBpM74BjWuTLfS=_66p7r6rkjJ+ObLr4bLq0nERNA@mail.gmail.com>
+References: <1328214625-3576-1-git-send-email-felipe.contreras@gmail.com>
+	<1328214625-3576-2-git-send-email-felipe.contreras@gmail.com>
+	<7v1uqbpsyh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 06 23:39:53 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 07 00:00:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuXDw-000515-J8
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 23:39:48 +0100
+	id 1RuXXS-0008TF-N9
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Feb 2012 23:59:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755399Ab2BFWjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Feb 2012 17:39:44 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60064 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753869Ab2BFWjn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Feb 2012 17:39:43 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2DB39728A;
-	Mon,  6 Feb 2012 17:39:43 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=O9SnS5XG1wc1itYIiWRpIP+wyHQ=; b=eRltAf
-	fT2dPU1Wqh1w5Iej1ci8p/k4zLuV/UbtJTKTbcp0SgobyIetKmwLiBMh+UyoMst2
-	ndIE8QQsn0BGsag1ldbN7RIoZgwmD4n7FzkISF8MVpilGuEN8qrwKrYeifBBCwPA
-	ACPN/X1USDIpW/6axC81oUzrpYHr5anA9cMoI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cq0bxuPDqD4fNkz3ZX2ryHPvPHX9BuZD
-	1Ry+7ptYUC0Mi6e7NcdW831o595blk+1Fq1g3AKNIMCc09MdbgstCzszy/1CE5xu
-	tVevh/RU+sMtB8bmbBOUoo/kqZ+UkNJ1ah2WtogLGhHiEvn8pWf5152H58S3Epa0
-	Zuwd/O2fnPo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2428B7289;
-	Mon,  6 Feb 2012 17:39:43 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AD77C7288; Mon,  6 Feb 2012
- 17:39:42 -0500 (EST)
-In-Reply-To: <20120206095404.GB4300@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 6 Feb 2012 04:54:04 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 76348FA6-5113-11E1-8455-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756464Ab2BFW7i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Feb 2012 17:59:38 -0500
+Received: from mail-lpp01m020-f174.google.com ([209.85.217.174]:55378 "EHLO
+	mail-lpp01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756454Ab2BFW7g convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Feb 2012 17:59:36 -0500
+Received: by lbom4 with SMTP id m4so1283013lbo.19
+        for <git@vger.kernel.org>; Mon, 06 Feb 2012 14:59:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=fsTRbG+43ydrWnozyWfTY8BbGXttB2wqUoFiiD+TVOo=;
+        b=YE5f1zbCxj23jv1/Lp1w7YujO703akn4B3/fi6WiRhJvMvm1YSptyA3pfSHKUp/5/H
+         ThHHL3hGx2K0VR2RdT+ijC8x9OUI6fyeU1J59ZmJI9AV1ZsImThUkzpbYCNJtT/zFGZb
+         9hlM5VmXx0tBBAoWwhvQ/QEiIF1Hq/TKKxae8=
+Received: by 10.112.28.169 with SMTP id c9mr5419499lbh.42.1328569174057; Mon,
+ 06 Feb 2012 14:59:34 -0800 (PST)
+Received: by 10.112.41.73 with HTTP; Mon, 6 Feb 2012 14:59:34 -0800 (PST)
+In-Reply-To: <7v1uqbpsyh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190117>
 
-Jeff King <peff@peff.net> writes:
+On Fri, Feb 3, 2012 at 10:23 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> Right now when listing commands in zsh (git <TAB><TAB>), all of them
+>> will show up, instead of only porcelain ones.
+>
+> Jonathan's rewrite goes straight to the root cause instead, which is
+> another way to describe the problem.
+>
+> Explaining user-visible symptoms at the beginning like you did is a g=
+ood
+> strategy that I would want to see more contributors follow, though.
+>
+>> Basically, in zsh, this:
+>>
+>> =C2=A0for i in $__git_all_commands
+>>
+>> Should be:
+>>
+>> =C2=A0for i in ${=3D__git_all_commands}
+>>
+>> Otherwise there's no word-splitting expansion (unless SH_WORD_SPLIT =
+is
+>> set). sh emulation should take care of that, but the subshell is mes=
+sing
+>> up with that. So __git_list_porcelain_commands does not do any
+>> filtering.
+>
+> Let me step back a bit and see if we are on the same page wrt the roo=
+t
+> cause of the problem and for whom we are explaining the change.
+>
+> The adaptation of the bash completion script to zsh is done by asking=
+ zsh
+> to obey POSIXy word splitting rules to honor $IFS that is in effect w=
+hen
+> the words are split. =C2=A0However zsh does not do a good job at it i=
+n some
+> cases, and your patch works it around by avoiding a construct known t=
+o be
+> troublesome to zsh.
 
-> +Includes
-> +~~~~~~~~
-> +
-> +You can include one config file from another by setting the special
-> +`include.path` variable to the name of the file to be included. The
-> +included file is expanded immediately, as if its contents had been
-> +found at the location of the include directive. If the value of the
-> +`include.path` variable is a relative path, the path is considered to be
-> +relative to the configuration file in which the include directive was
-> +found. See below for examples.
+Troublesome to zsh emulation, yeah.
 
-If the file referenced by this directive does not exist, what should
-happen?  Should it be signalled as an error?  Should it stop the whole
-calling process with die()?
+> Am I correct so far? =C2=A0If so, especially if the first sentence of=
+ the above
+> paragraph is correct, then how would it help others to teach "this is=
+ the
+> right way to do a word-split if we were writing in native zsh" when w=
+e are
+> not?
 
-I think "die() when we are honoring the include, ignore when we are not"
-would be a good way to handle this, as it allows us to catch mistakes
-while allowing the user to fix broken configuration files using "git
-config --unset include.path", but I may be overlooking something.
+Because without that explanation it's quite difficult to know what
+part of the code would behave differently in zsh, and how. Most people
+are not familiar with shell features, and would have no idea what
+"word splitting" means in a practical context.
+
+> While it probably is a good description to have in a bug report given=
+ to
+> zsh folks, it is useless for people who read the history of Git.
+
+Of course it's not. It tells you that there is indeed an issue in zsh,
+and not in the way we are using it, as it has been acknowledged by zsh
+developers.
+
+> The readers need to read the solution described in order to understan=
+d why
+> the updated construct is written in an unnatural (to people who write=
+ to
+> POSIXy shells) way, or to avoid reintroducing a similar problem elsew=
+here
+> in the future.
+
+Doesn't this explain that?
+
+---
+sh emulation should take care of that, but the subshell is messing
+up with that.
+---
+
+Granted, for people not familiar with shell features "subshell" should
+be accompanied with $(foo).
+
+> I find that what Jonathan gave you helps them much better:
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0...
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0fn () {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0var=3D'one two=
+'
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0printf '%s\n' =
+$var
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0x=3D$(fn)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0: ${y=3D$(fn)}
+>
+> =C2=A0 =C2=A0printing "$x" results in two lines as expected, but prin=
+ting "$y" results
+> =C2=A0 =C2=A0in a single line because $var is expanded as a single wo=
+rd when evaluating
+> =C2=A0 =C2=A0fn to compute y.
+>
+> =C2=A0 =C2=A0So avoid the construct, and use an explicit 'test -n "$f=
+oo" || foo=3D$(bar)'
+> =C2=A0 =C2=A0instead.
+>
+> So I'll take the first two lines of the message (good bits), and simp=
+lify
+> the "This fixes a bug tht caused..." from the last paragraph (or perh=
+aps
+> even drop it).
+
+I'm not sure about it, because this relies on knowledge of how printf
+works, and it's not used that often; an example with 'for' would be
+much more clear IMO.
+
+Cheers.
+
+--=20
+=46elipe Contreras
