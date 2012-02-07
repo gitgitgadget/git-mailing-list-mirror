@@ -1,53 +1,70 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] add -e: ignore dirty submodules
-Date: Tue, 07 Feb 2012 21:43:33 +0100
-Message-ID: <4F318CF5.6050302@web.de>
-References: <alpine.DEB.1.00.1202070504340.24259@s15462909.onlinehome-server.info> <7vaa4v42fi.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.1202070124020.4897@bonsai2> <7vk43z2gwc.fsf@alter.siamese.dyndns.org>
+From: Jonathan Paugh <jpaugh@gmx.us>
+Subject: Re: Specifying revisions in the future
+Date: Tue, 07 Feb 2012 16:25:32 -0500
+Message-ID: <4F3196CC.9020406@gmx.us>
+References: <jgjkk0$qrg$1@dough.gmane.org> <m3ehu9kknw.fsf@localhost.localdomain> <m2wr81vsdv.fsf@igel.home> <201202052324.59941.jnareb@gmail.com> <178AA8FDB02246D9AA9416C0D54E51A8@PhilipOakley> <m2obtcx4i2.fsf@igel.home> <buosjiozity.fsf@dhlpc061.dev.necel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	Philip Oakley <philipoakley@iee.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 07 21:43:47 2012
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Feb 07 22:26:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RurtC-0002OA-7f
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 21:43:47 +0100
+	id 1RusY8-0005kr-8Q
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 22:26:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756506Ab2BGUnl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Feb 2012 15:43:41 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:60305 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756379Ab2BGUnk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Feb 2012 15:43:40 -0500
-Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 4AFF51A9F3B62
-	for <git@vger.kernel.org>; Tue,  7 Feb 2012 21:43:39 +0100 (CET)
-Received: from [192.168.178.20] ([91.3.189.70]) by smtp.web.de (mrweb001) with
- ESMTPA (Nemesis) id 0MS1tK-1S6VuK0fus-00TOHB; Tue, 07 Feb 2012 21:43:38 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0) Gecko/20120129 Thunderbird/10.0
-In-Reply-To: <7vk43z2gwc.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:qa2/EWKUyo0qs/GxHKeCUmvaqfVWztGB9g9eoI6cmW8
- x1sb9lU+x+iqP67nYLePvMNAROTc6Mg7tBv0pylpM6R74hMR9/
- 6uM94vJgr42Xy5TvNVuKJw7ccBKYRImF17iPdX0T26Ns8xNarP
- H/s5kWStkSRR8kMihzuKUe7JDo3JVe7DrHTNPweiP/0M5hZcNn
- m74JVKL2RrLAw4cbk6z+A==
+	id S1756902Ab2BGVZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Feb 2012 16:25:46 -0500
+Received: from mailout-us.gmx.com ([74.208.5.67]:55996 "HELO
+	mailout-us.mail.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1756533Ab2BGVZp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Feb 2012 16:25:45 -0500
+Received: (qmail invoked by alias); 07 Feb 2012 21:25:42 -0000
+Received: from 74-46-161-231.dr02.blfd.wv.frontiernet.net (EHLO [192.168.1.33]) [74.46.161.231]
+  by mail.gmx.com (mp-us007) with SMTP; 07 Feb 2012 16:25:42 -0500
+X-Authenticated: #49663077
+X-Provags-ID: V01U2FsdGVkX19Wbm05LfVWthXDpNdo044vW7juqIuxVpTFocALjo
+	PY1QjtbMNb30pJ
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:9.0) Gecko/20111229 Thunderbird/9.0
+In-Reply-To: <buosjiozity.fsf@dhlpc061.dev.necel.com>
+X-Enigmail-Version: 1.3.5
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190212>
 
-Am 07.02.2012 09:21, schrieb Junio C Hamano:
-> So after all, this is a noise reduction patch, and I think that it is a
-> good change.
+On 02/05/2012 11:28 PM, Miles Bader wrote:
+> Andreas Schwab <schwab@linux-m68k.org> writes:
+>> The rule should be to follow the leftmost parent as far as possible.
+>> That means that X+2->D is B.
+> 
+> It might also be reasonable (and safer -- the user may not actually
+> realize when there's an ambiguating branch-point) to simply have it
+> abort with an error ("ambiguous future-ref specification") when
+> there's any doubt...  I suspect most uses would be very simple "+1"
+> etc., and not crossing branch points.
+> 
+> -miles
+> 
 
-I agree. While my first thought was that it might make sense to honor
-the diff.ignoreSubmodules setting here too to produce the same
-information "git status" gives (so you notice you might have forgotten
-to commit something in the submodule), I now agree that doesn't make
-sense in the context of add -e.
+Perhaps default to --linear or --no-cross or such. Whenever there's
+ambiguity, it will likely be harder for the user to think about than for
+git to resolve it in some defined-as-sane way, at least for many users.
+
+At any rate, I got the answer I needed for my use case (sorry for not
+cc-ing the list, and thanks Jakub for that:
+http://article.gmane.org/gmane.comp.version-control.git/189926/match=specify+revisions+future).
+
+Still, forward-refs would still be really cool.
+
+Jonathan
