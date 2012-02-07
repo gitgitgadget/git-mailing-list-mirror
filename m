@@ -1,110 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/2] config includes, take 2
-Date: Tue, 7 Feb 2012 00:17:19 -0500
-Message-ID: <20120207051719.GA11598@sigill.intra.peff.net>
-References: <20120206062713.GA9699@sigill.intra.peff.net>
- <CAJDDKr6A2UvB3D-Dapw7WCEzWfzLoLd0E8MSDjT0RtdxFeWZAQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/6] Stop producing index version 2
+Date: Mon, 06 Feb 2012 21:21:46 -0800
+Message-ID: <7vehu743rp.fsf@alter.siamese.dyndns.org>
+References: <1328507319-24687-1-git-send-email-pclouds@gmail.com>
+ <1328507319-24687-3-git-send-email-pclouds@gmail.com>
+ <7v4nv4a131.fsf@alter.siamese.dyndns.org>
+ <CAJo=hJvtRnmvALcn3vKpYTr3j6ada8iboPjWN3cQnwwKzRvrDA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 07 06:17:30 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+	git@vger.kernel.org, Thomas Rast <trast@inf.ethz.ch>,
+	Joshua Redstone <joshua.redstone@fb.com>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Feb 07 06:21:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RudQk-0005MP-Tl
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 06:17:27 +0100
+	id 1RudV3-00078h-Vg
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 06:21:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751591Ab2BGFRW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Feb 2012 00:17:22 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59118
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751187Ab2BGFRV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Feb 2012 00:17:21 -0500
-Received: (qmail 4049 invoked by uid 107); 7 Feb 2012 05:24:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Feb 2012 00:24:28 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Feb 2012 00:17:19 -0500
-Content-Disposition: inline
-In-Reply-To: <CAJDDKr6A2UvB3D-Dapw7WCEzWfzLoLd0E8MSDjT0RtdxFeWZAQ@mail.gmail.com>
+	id S1752072Ab2BGFVt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Feb 2012 00:21:49 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58235 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750724Ab2BGFVt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Feb 2012 00:21:49 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 38DE56970;
+	Tue,  7 Feb 2012 00:21:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PM97uB7YGLMvkOXUvhAevTAl1cg=; b=c5CqH5
+	Se29WnRlvqG4J0Hnul9PvVKbOrmdmC00RE6HmbCfqaPG6oX5g3MjSWoGEZB+XRxn
+	kWKOxETMPi8VtIaNCZ5d74xj6NVDKRUA8cd9gu4YoUwRPqLzLzTFiQ7xldFdbgbQ
+	LhJMFg4wxLprtLkutDviD7+4LLzbrZaF1mL2E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wj7V0OuSsVFKnp2nKckkjVowE2ugDZ4y
+	bFStZ4V4mBue0yNTWIVhkcfqf6YaPTjBB49JCbR4jZQcwbs5JQ6eFxfGeX1k3yGN
+	5eQweZRkzRmT7d1JcXLpXRgW42TUzzeDomdmnKahd6E1CNDNGrU0Rq3ct3uLY+MS
+	Kepv9ltdT4M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 303E5696F;
+	Tue,  7 Feb 2012 00:21:48 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BAE73696C; Tue,  7 Feb 2012
+ 00:21:47 -0500 (EST)
+In-Reply-To: <CAJo=hJvtRnmvALcn3vKpYTr3j6ada8iboPjWN3cQnwwKzRvrDA@mail.gmail.com> (Shawn
+ Pearce's message of "Mon, 6 Feb 2012 19:09:15 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A1DC0DB8-514B-11E1-B5C5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190141>
 
-On Mon, Feb 06, 2012 at 09:01:21PM -0800, David Aguilar wrote:
+Shawn Pearce <spearce@spearce.org> writes:
 
-> I have a questions about this.  Let's say I have ~/foo1.gitconfig:
-> 
-> [foo]
->     bar = 1
-> 
-> ...and ~/.gitconfig (I forgot the syntax):
-> 
-> [foo]
->     bar = 0
-> 
-> #include "~/foo1.gitconfig"
-> 
-> 
-> Does that mean that:
-> 
->     $ git config -f ~/.gitconfig foo.bar
-> 
-> ...prints 0 and not 1?
+> <thinking type="wishful" probability="never-happen"
+> probably-inflating-flame-from="linus">
+>
+> I have long wanted to scrap the current index format. I unfortunately
+> don't have the time to do it myself. But I suspect there may be a lot
+> of gains by making the index format match the canonical tree format
+> better by keeping the tree structure within a single file stream,
+> nesting entries below their parent directory, and keeping tree SHA-1
+> data along with the directory entry.
 
-Yes, though the syntax is:
+I suspect that is not so "never-happen wishful thinking".
 
-  [include]
-    path = foo1.gitconfig
+In an earlier message, I alluded to a data structure that starts with a
+single top-level tree entry that is lazily expanded as the index entries
+are updated. The above shows that at least two of us share the same (day)
+dream, and I suspect there are others that share the same "gut feeling"
+that such a tree-based structure would be the way to do large index right.
 
-(it doesn't respect tilde-expansion, but it probably should). Note that
-the syntax was specifically selected for backwards compatibility, and to
-allow manipulation with existing tools.
+It would be a large and possibly painful change, but the good thing is
+that the index is a local matter and we won't have to worry too much about
+a flag day event.
 
-> I can see cases where this would be undesirable behavior.
-> 
-> For example, an application that uses "git config -z --list -f
-> ~/.gitconfig" might expect that the result encompasses all of the
-> user-specific config bits.
-
-The problem is that an application might also expect it _not_ to happen
-(e.g., if the application is really interested in knowing what's in
-~/.gitconfig). Because includes aren't respected now, the safe default
-seems to be not to have includes (i.e., don't change behavior for this
-case).
-
-A bigger question for me is: if you are interested in getting an answer
-from anywhere, why are you restricting with "-f"? IOW, is this a
-real-world problem, or a hypothetical one? And if real-world, what is
-the actual use case?
-
-> Following this to its natural conclusion means "git config" might
-> learn some kind of --no-include flag for use with e.g. "git config
-> --no-include -f ~/.gitconfig".  That said, I don't know where I would
-> ever actually use such a flag.
-
-It already learned it as part of my series (and --includes, as well).
-
-> I do know where I would use an `--include` flag (if following includes
-> were not the default behavior when using '-f'), though, and that's why
-> I'm asking.  The problem with not having it be the default means we
-> have to use a flag.  This makes it harder to support multiple versions
-> of git.
-
-Yes, that's a general problem of adding new command-line options to turn
-features off or on. We could add an environment variable to control this
-feature. But I'd really like to hear the compelling use case first
-(i.e., both why it cannot simply be spelled "git config -z --list", and
-why not following includes is not OK).
-
-> Maybe I'm mis-interpreting what you mean by, 'do not use includes for
-> "git config" in single-file mode', though.
-
-No, I think you understand the described behavior.
-
--Peff
+</thinking>
