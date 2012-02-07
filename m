@@ -1,119 +1,92 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add -e: ignore dirty submodules
-Date: Mon, 06 Feb 2012 21:50:41 -0800
-Message-ID: <7vaa4v42fi.fsf@alter.siamese.dyndns.org>
-References: <alpine.DEB.1.00.1202070504340.24259@s15462909.onlinehome-server.info>
+Subject: Re: [PATCH 2/4] commit: introduce a config key to allow as-is commit
+ with i-t-a entries
+Date: Mon, 06 Feb 2012 22:10:22 -0800
+Message-ID: <7v1uq741ip.fsf@alter.siamese.dyndns.org>
+References: <1328525855-2547-1-git-send-email-pclouds@gmail.com>
+ <1328525855-2547-3-git-send-email-pclouds@gmail.com>
+ <7vwr7z653f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 07 06:50:51 2012
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 07 07:10:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rudx4-0008EM-4a
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 06:50:50 +0100
+	id 1RueGR-0007lp-2o
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 07:10:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752207Ab2BGFup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Feb 2012 00:50:45 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35954 "EHLO
+	id S1755041Ab2BGGKm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Feb 2012 01:10:42 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45253 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750860Ab2BGFuo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Feb 2012 00:50:44 -0500
+	id S1754829Ab2BGGKZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Feb 2012 01:10:25 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C62A36E69;
-	Tue,  7 Feb 2012 00:50:43 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DC387247;
+	Tue,  7 Feb 2012 01:10:24 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VHAlgeQD8fFa37V7gmWkHoLzWxg=; b=q1BCsJ
-	gCD0PGdERVtYTi32yO9GnRJZ5+5antoNs2FsBjAcINMPEqPiTpSDD65UoWEhx9cB
-	jx8oXLMJ1WyE+B2Bua+/S5WP6NPWDuwDoEA7OuUBBBzIb6tN1c6keIjHf5C90BoJ
-	T2PQ3HU0CEeEFqJDL7i9ez8tVtYoGNUmG2oGA=
+	:content-type; s=sasl; bh=zTP1XtkIHvvUJU/0JyKb7M9/Vqw=; b=tpFFtf
+	uSuwd6vOcLEBKoFokOYkJphlrqRAhOrEHFqXL698PDtoc4mg+jObI4tQSdhOTLKI
+	JVhsqL+DfRwkr4SzbrP33vxuibx2qprg2JQ7gLjl3ajLldU5x5rjWL+EifN3tEFS
+	DtgNKk3pf7xxSN9EdQ4O4NE85tODgFsp+zkT8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qWkTzQRhx+nEPWuhaRp2kufIJHShHlZx
-	XnkTFt1pNZy35bPBT3yyFiVR4fRI3mBH8kOtBM4sqwfI4lk5fCzIUkERCo1i/yCG
-	CG4nmOMoRAdqvC0b/u0oifJT/QkhtJ8TSaDuIJm14Tmjks6PJIcohK74einZxVBw
-	EUO5Umn02ug=
+	:content-type; q=dns; s=sasl; b=DX0O88HpU9q80ojlslE1z2x0cUtYIoYB
+	EHY2zN0Q2bePQvpT8qSuPaYDCDPTnEk6mS28KyAaP4Y2XoSATVTRqdxlYCW+J6h+
+	DjXyvqZr9ly+QIP4KoItqQYzKmHBxK1slED95/gPir9V2FFaWZfrxUtfvpheyV4t
+	y0HzXRv4cz8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC5F86E68;
-	Tue,  7 Feb 2012 00:50:43 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 73C1C7246;
+	Tue,  7 Feb 2012 01:10:24 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1DC936E67; Tue,  7 Feb 2012
- 00:50:43 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.1202070504340.24259@s15462909.onlinehome-server.info>
- (Johannes Schindelin's message of "Tue, 7 Feb 2012 05:05:48 +0100 (CET)")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D53A37244; Tue,  7 Feb 2012
+ 01:10:23 -0500 (EST)
+In-Reply-To: <7vwr7z653f.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 06 Feb 2012 13:10:12 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AC364BE4-514F-11E1-980D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6BFED458-5152-11E1-9438-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190143>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> We cannot add untracked/modified files in submodules anyway.
+> It still is not clear to me how best to sell this change to the end-user
+> community.
 
-I can see the updated code would not break "git apply" that will be run on
-this output, but the above cannot be the whole story. It is unclear to me
-what it is trying to achieve (in other words, "this patch does not break
-the system" is not the whole purpose of the patch).
+OK, sorry for wavering.
 
-When a submodule is updated and is dirty, we would get:
+Unless you are doing "commit -a" or "commit pathspec", you are responsible
+for adding all contents you want to have in the commit before you run the
+"git commit" command (and for the purpose of this statement, "add -N" to
+tell Git to keey an eye on a path does _not_ add contents). A change to
+the file in the working tree that is left unadded is what you decided to
+deliberately leave out of the commit, be it a change to a path already in
+HEAD, or a path marked with "add -N".  Forgetting to add modified file and
+forgetting to add a file you earlier used "add -N" amount to the same kind
+of risk, and "git status" is the way to make sure your partial commit has
+exactly what you want (if you are not worried about partial commit, you
+would be doing "commit -a", so the "safety" is a moot point).
 
-    diff --git a/submodule b/submodule
-    @@ -1,+1 @@
-    -Subproject commit XXXX...
-    +Subproject commit YYYY...-dirty
+I was worried too much about backward compatibility and was blind to the
+above, and was mistakenly defending a false "safety" that did not exist at
+all.  Sorry for wasting everybody's time.
 
-and leaving this diff in the edited patch adds YYYY... for submodule, even
-though "-dirty" suffix is there.  So it is not fixing "the user tries to
-update but fails because we do not filter dirty submodules" bug, or somesuch.
-Besides, showing -dirty may be a good reminder that submodule has further
-changes on top of what is going to be committed in this case.
+So let's bite the bullet and admit in the Release Notes that the current
+behaviour was a UI mistake based on the misguided assumption that we can
+give some kind of "safety" by committing when there are "add -N" entries
+in the index, which is untrue, and we are fixing it in the new release.
+We do not need configuration nor command line options.
 
-When a submodule is only dirty, we would see:
+Let me try to reroll your patch tomorrow (unless you beat me to it) and
+see if I can come up with an easy-to-understand explanation to it.
 
-    diff --git a/submodule b/submodule
-    @@ -1,+1 @@
-    -Subproject commit XXXX...
-    +Subproject commit XXXX...-dirty
-
-and leaving this diff in the edited patch keeps the submodule at XXXX...,
-again without failing, so it is not fixing "the user gets unnecessary
-error message" bug, or somesuch.  In this case, leaving this diff will be
-a no-op so it is wasteful and distracting to the user who edits the patch.
-
-Is that what this patch is about?  "For a submodule that is unchanged but
-is dirty, submodule diff whose difference is only the '-dirty' suffix is
-given but the user cannot update the index with such a diff anyway, so it
-is a waste of space", or something like that?
-
-That is the best guess I arrived at, but I suspect that it cannot be it,
-as that discards the "-dirty" clue from the output when the submodule path
-does have difference, as we saw in the earlier example. So there must be
-something I am missing.
-
-So I am out of ideas guessing what this patch is trying to achieve.  The
-commit log shouldn't force the readers of the history to _guess_ like the
-above.
-
->  builtin/add.c |    1 +
->  1 files changed, 1 insertions(+), 0 deletions(-)
->
-> diff --git a/builtin/add.c b/builtin/add.c
-> index 1c42900..b79336d 100644
-> --- a/builtin/add.c
-> +++ b/builtin/add.c
-> @@ -280,6 +280,7 @@ static int edit_patch(int argc, const char **argv, const char *prefix)
->  
->  	argc = setup_revisions(argc, argv, &rev, NULL);
->  	rev.diffopt.output_format = DIFF_FORMAT_PATCH;
-> +	DIFF_OPT_SET(&rev.diffopt, IGNORE_DIRTY_SUBMODULES);
->  	out = open(file, O_CREAT | O_WRONLY, 0644);
->  	if (out < 0)
->  		die (_("Could not open '%s' for writing."), file);
+Thanks.
