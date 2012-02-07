@@ -1,96 +1,167 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] config includes, take 2
-Date: Tue, 07 Feb 2012 10:03:26 -0800
-Message-ID: <7vpqdq1pxt.fsf@alter.siamese.dyndns.org>
-References: <20120206062713.GA9699@sigill.intra.peff.net>
- <CAJDDKr6A2UvB3D-Dapw7WCEzWfzLoLd0E8MSDjT0RtdxFeWZAQ@mail.gmail.com>
- <20120207051719.GA11598@sigill.intra.peff.net>
- <CAJDDKr5yiKvNnpVV29jFK1Z1yuUnA-=dn0yMB8iW9y53vRGDHQ@mail.gmail.com>
- <20120207173025.GA22225@sigill.intra.peff.net>
+From: Tom Grennan <tmgrennan@gmail.com>
+Subject: Re: [PATCHv2] tag: add --points-at list option
+Date: Tue, 7 Feb 2012 10:05:22 -0800
+Message-ID: <20120207180522.GA6264@tgrennan-laptop>
+References: <1328598076-7773-1-git-send-email-tmgrennan@gmail.com>
+ <1328598076-7773-2-git-send-email-tmgrennan@gmail.com>
+ <7vd39r2g8o.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 07 19:03:37 2012
+Cc: git@vger.kernel.org, peff@peff.net, jasampler@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 07 19:05:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RupOC-0001Yw-9X
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 19:03:37 +0100
+	id 1RupQ5-0002h1-33
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 19:05:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756137Ab2BGSD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Feb 2012 13:03:29 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40085 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754724Ab2BGSD3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Feb 2012 13:03:29 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7FCEC6777;
-	Tue,  7 Feb 2012 13:03:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6hq1Tc8Ux6yPnQUvZhYb9dP68Qs=; b=s5qRx5
-	pGkryaEHaNIYAa9+yMeWj+36HiATXmYcinrFdo7iCPZ7s3rQ1OYwYuuHCw8E54bo
-	reC9dqNwpvClpmIZHjZY2MiinQ9QDV1gWEKETbdJpDYs0G926nieBKaNc4fg6Aqx
-	jrmywW3WqKwgOh12n0RYCqQF3rd8MmG3hL84w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JAjmO1JRk375PVkDqnptYcZXHF9DqGS8
-	NczNWNyrM5N9ztGq+YWd/8ahtITyTGmzQWflB+Qf0omFFPek/hGTHvp2lROJo5JW
-	neK6Oeb8nWldESo+P/haLuZpNNkr9GoKMM8fH6yFkZOsmGP/XiEACz7OFMVktzt2
-	a1z3Z+Jt/k0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 760FF6776;
-	Tue,  7 Feb 2012 13:03:28 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F2C4A6773; Tue,  7 Feb 2012
- 13:03:27 -0500 (EST)
-In-Reply-To: <20120207173025.GA22225@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 7 Feb 2012 12:30:25 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 095164D8-51B6-11E1-A8E6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755288Ab2BGSF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Feb 2012 13:05:29 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:49970 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753428Ab2BGSF2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Feb 2012 13:05:28 -0500
+Received: by ggnh1 with SMTP id h1so3599960ggn.19
+        for <git@vger.kernel.org>; Tue, 07 Feb 2012 10:05:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=qi+Nx1HxLaVpt0FLpGFpt8cHIFp6fEF9lCNIdwpDBmE=;
+        b=H57RHgjdVvwRcFenmtVngisYAtJBZrYB+CB9FUDCUl4s4JxgcQ0BHbNGhbxqqi4RCB
+         gXAxtmxSwTg89BZIcLfrvQq2KiAWuS63XGW0Ua0vARX8+UaJ6SSAXvPfOQzuoQqqEjnF
+         nWNyeF/J51Vb0wkdsTQawSfRiTpirDlWQTiUc=
+Received: by 10.182.11.6 with SMTP id m6mr22024607obb.74.1328637927502;
+        Tue, 07 Feb 2012 10:05:27 -0800 (PST)
+Received: from localhost ([129.192.185.163])
+        by mx.google.com with ESMTPS id s2sm13934410obx.1.2012.02.07.10.05.24
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 07 Feb 2012 10:05:25 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vd39r2g8o.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190191>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Feb 07, 2012 at 12:35:19AM -0800, Junio C Hamano wrote:
+>Tom Grennan <tmgrennan@gmail.com> writes:
+>
+>> +struct points_at {
+>> +	struct points_at *next;
+>> +	unsigned char *sha1;
+>> +};
+>
+>struct points_at {
+>	struct points_at *next;
+>        unsigned char sha1[20];
+>};
+>
+>would save you from having to allocate and free always in pairs, no?
 
-> So fundamentally, includes make the idea of "overwrite this value" much
-> more complex.
+Yep
 
-I do not think it is anything new that include.path brings.  To give the
-user a complete view of "what customization applies when working in this
-repository?", and to allow the user to edit variables in the right file
-among usual three places, the tool already needs to be aware of possible
-places and give users a way to tell where the edit needs to go anyway.
-include.path only adds one more thing for the tool to be aware of.
+>> +static void free_points_at (struct points_at *points_at)
+>
+>Please lose the SP before (.
 
-With your example, the editor can show
+Oops
 
-	git config -f .git/config --list
+>> +	if (type != OBJ_TAG
+>> +	    || (tag = lookup_tag(sha1), !tag)
+>> +	    || parse_tag_buffer(tag, buf, size) < 0) {
+>
+>Even though I personally prefer to cascade a long expression like this, so
+>that you see a parse tree when you tilt your head 90-degrees to the left,
+>I think the prevalent style in Git codebase is
+>
+>	if (A-long-long-expression ||
+>            B-long-long-expression ||
+>            C-long-long-expression) {
+>
+>Also we try to avoid assignment in the conditional.
 
-with "include.path=~/.gitident" listed as one of the key=value pairs
-without showing key=value pairs included from that file.  Or it can show
-user.name in effect is this value from .git/config, and optionally also
-show that there are other definitions of user.name in ~/.gitconfig (which
-we use as if we have "include.path=~/.gitconfig" at the top of .git/config
-file) or ~/.gitident specified with include.path.
+I like to compact multiple conditions to a common exit but also appreciate
+the fear and loathing of comma's.
 
-The tool needs to make it easy to jump to ~/.gitident; it needs to know
-what include.path means.  The user can edit the value in ~/.gitident, or
-after looking at ~/.gitident, choose to come back to .git/config and add
-an overriding entry there.
+While rearranging this I finally understand how to include lightweight tags.
 
-> But isn't "git cola" a git-config editing program?
+	struct points_at *pa;
+	const unsigned char *tagged_sha1 = (const unsigned char *)"";
 
-Yes, that is really the right "rhetorical" question to ask.  It needs to
-know what it is editing, so it at least needs to be _aware_ of the
-inclusion, where each item comes from, and how to edit contents of _one_
-particular file.
+	/* First look for lightweight tags - those with matching sha's
+	 * but different names */
+	for (pa = points_at; pa; pa = pa->next)
+		if (!hashcmp(pa->sha1, sha1) && strcmp(pa->refname, refname))
+			return pa;
+	buf = read_sha1_file(sha1, &type, &size);
+	if (buf) {
+		if (type == OBJ_TAG) {
+			tag = lookup_tag(sha1);
+			if (parse_tag_buffer(tag, buf, size) >= 0)
+				tagged_sha1 = tag->tagged->sha1;
+		}
+		free(buf);
+	}
+	while (points_at && hashcmp(points_at->sha1, tagged_sha1))
+		points_at = points_at->next;
+	return points_at;
 
-And that issue is not something new that was introduced by include.path.
+For example,
+$ ./git-tag tomg-lw-v1.7.9 v1.7.9
+$ ./git-tag -a tomg-lw-v1.7.9 v1.7.9
+$ ./git-tag -s tomg-lw-v1.7.9 v1.7.9
+$ ./git-tag -s tomg-README HEAD:README
+$ ./git-tag -l --points-at v1.7.9 --points-at HEAD:README
+tomg-README
+tomg-annotate-v1.7.9
+tomg-lw-v1.7.9
+tomg-signed-v1.7.9
+$ ./git-tag -l --points-at v1.7.9 --points-at HEAD:README \*v1.7.9
+tomg-annotate-v1.7.9
+tomg-lw-v1.7.9
+tomg-signed-v1.7.9
+
+>> @@ -432,6 +500,12 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+>>  			PARSE_OPT_LASTARG_DEFAULT,
+>>  			parse_opt_with_commit, (intptr_t)"HEAD",
+>>  		},
+>> +		{
+>> +			OPTION_CALLBACK, 0, "points-at", &points_at, "object",
+>> +			"print only annotated|signed tags of the object",
+>> +			PARSE_OPT_LASTARG_DEFAULT,
+>> +			parse_opt_points_at, (intptr_t)NULL,
+>> +		},
+>
+>If you are going to reject NULL anyway, do you still need to mark this as
+>lastarg-default?
+>
+>Looking for example in parse-options.h, I found this:
+>
+>        #define OPT_STRING_LIST(s, l, v, a, h) \
+>                    { OPTION_CALLBACK, (s), (l), (v), (a), \
+>                      (h), 0, &parse_opt_string_list }
+>
+>which is used by "git clone" to mark its -c option.
+>
+>Running "git clone -c" gives me
+>
+>	error: switch 'c' requires a value
+>
+>without any extra code in the caller of parse_options().
+
+Cool
+
+>Other than that, looks cleanly done.
+>
+>Thanks. I'll take another look after I wake up in the morning.
+
+Thanks, I'll send v3 later today.
+
+-- 
+TomG
