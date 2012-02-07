@@ -1,130 +1,96 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] add -e: ignore dirty submodules
-Date: Tue, 7 Feb 2012 01:45:36 -0600 (CST)
-Message-ID: <alpine.DEB.1.00.1202070124020.4897@bonsai2>
-References: <alpine.DEB.1.00.1202070504340.24259@s15462909.onlinehome-server.info> <7vaa4v42fi.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] commit: introduce a config key to allow as-is commit
+ with i-t-a entries
+Date: Mon, 06 Feb 2012 23:57:43 -0800
+Message-ID: <7vwr7z2hzc.fsf@alter.siamese.dyndns.org>
+References: <1328525855-2547-1-git-send-email-pclouds@gmail.com>
+ <1328525855-2547-3-git-send-email-pclouds@gmail.com>
+ <7vwr7z653f.fsf@alter.siamese.dyndns.org>
+ <7v1uq741ip.fsf@alter.siamese.dyndns.org>
+ <CACsJy8CaFhyzgh6N4ov49Tf0mA8qV5uQESFP2u8U7AduOd59PA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 07 08:46:14 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 07 08:57:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rufkh-0007j7-V3
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 08:46:12 +0100
+	id 1Rufw0-0003sY-Ab
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 08:57:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751718Ab2BGHpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Feb 2012 02:45:44 -0500
-Received: from mailout-de.gmx.net ([213.165.64.23]:47102 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1750753Ab2BGHpn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Feb 2012 02:45:43 -0500
-Received: (qmail invoked by alias); 07 Feb 2012 07:45:41 -0000
-Received: from 68-185-171-245.dhcp.mdsn.wi.charter.com (EHLO bonsai2.local) [68.185.171.245]
-  by mail.gmx.net (mp039) with SMTP; 07 Feb 2012 08:45:41 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1++tPkciBa+0E05SeqSgLBCfgNy24ZZj5AeiRm2YH
-	bFRsMboEOaW0Iy
-X-X-Sender: gene099@bonsai2
-In-Reply-To: <7vaa4v42fi.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755092Ab2BGH5r convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Feb 2012 02:57:47 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51963 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751349Ab2BGH5q convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Feb 2012 02:57:46 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C46692641;
+	Tue,  7 Feb 2012 02:57:45 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=7XI06dbGbbV+
+	6wfzTj80+O96M0g=; b=SSPJdLmQjXMZCAXawyS8YU6hCWWKBPjS3XOzjmFPWXLW
+	CgHuZJBeI/ZeBzQ8eFp00SQQhBoSZkdERxjCMNDrOo5tJ0pX57ie7f+m+WdIYx8P
+	KFYMlgna26YPsbkscxvzAeTFoDuPweoQFXHcCD8XS8LGU6vfzh0cN1uKuForFNY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=R9vrmp
+	Wz6pPV8t9sVmcPHw+lrhoje5w7SdxdxJlByPXnSLVf12czojAlmOQuPdPlVsvAm6
+	uxP91D0ZHucKodqV6tU1Hb1QLXncAT58UkN/ZRVJIVpXNIpMFpGE2CDSpLGw+LmA
+	qZfnLIoPGJVPVpsKVr+uadP5KifVJ7RVUv/v4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC8992640;
+	Tue,  7 Feb 2012 02:57:45 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 50020263E; Tue,  7 Feb 2012
+ 02:57:45 -0500 (EST)
+In-Reply-To: <CACsJy8CaFhyzgh6N4ov49Tf0mA8qV5uQESFP2u8U7AduOd59PA@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Tue, 7 Feb 2012 13:26:50 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6B669B84-5161-11E1-AF1A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190151>
 
-Dear Junio C Hamano,
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-On Mon, 6 Feb 2012, Junio C Hamano wrote:
+> 2012/2/7 Junio C Hamano <gitster@pobox.com>:
+>> Unless you are doing "commit -a" or "commit pathspec", you are respo=
+nsible
+>> for adding all contents you want to have in the commit before you ru=
+n the
+>> "git commit" command (and for the purpose of this statement, "add -N=
+" to
+>> tell Git to keey an eye on a path does _not_ add contents). A change=
+ to
+>> the file in the working tree that is left unadded is what you decide=
+d to
+>> deliberately leave out of the commit, be it a change to a path alrea=
+dy in
+>> HEAD, or a path marked with "add -N". =C2=A0Forgetting to add modifi=
+ed file and
+>> forgetting to add a file you earlier used "add -N" amount to the sam=
+e kind
+>> of risk, and "git status" is the way to make sure your partial commi=
+t has
+>> exactly what you want (if you are not worried about partial commit, =
+you
+>> would be doing "commit -a", so the "safety" is a moot point).
+>
+> We need something in the commit message so that 5 years from now, whe=
+n
+> someone raises the issue again, (s)he does not have to search the mai=
+l
+> archive. May I steal the above paragraph, maybe rephrase a little bit=
+,
+> for commit message?
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > We cannot add untracked/modified files in submodules anyway.
-
-The purpose of "add -e" is to stage changes. It does so by presenting a
-diff which the user can edit (and applying it after recounting the numbers
-in the hunk headers).
-
-If the diff does not apply, it does not make sense to present it to the
-user.
-
-Offering to add changes represented by a diff like
-
-diff --git <blub>
-<header>
--deadbeef...
-+deadbeef...-dirty
-
-does not make sense.
-
-Even a diff like
-
-diff --git <blah>
-<header>
--deadbeef...
--coffeebabe...-dirty
-
-would be refused by git-apply.
-
-Indeed, due to the design of the submodules, it is impossible to stage
-dirty files in a submodule and a supercommit at the same time. Oh, and this
-discussion is not the place to wish for a feature like that, just in case
-you want to ask me to implement that in order to be allowed to have my puny
-little patch applied. (I guess this is the reason why I waited so long
-before I dared to submit the patch to the mailing list.)
-
-Now, due to these concerns, even stripping out the -dirty part can lead to
-a comically non-sensical diff like
-
-diff --git <blergh>
-<header>
--deadbeef...
-+deadbeef...
-
-So keeping the diff generation as-is but preparing the patch by munching
-away the -dirty suffix would not fix the problem.
-
-Also, it would be wrong to assume that the user asked to get a status
-update. git add -e != git status. If the user wanted to know what changes
-are in the worktree, including the worktrees of the submodules, but only
-those that have been checked out, git status would be the command to call
-(even if it was touted as a git commit --dry-run once upon a time, which
-is kind of wrong, see above, you cannot commit the untracked or dirty
-files in a submodule, yet git status shows them).
-
-So: showing the fact that a submodule has untracked or dirty files in the
-patch that the user wants to edit with git add -e is wrong, wrong, wrong.
-
-The only submodule-related thing we should ever present to the user who
-called git add -e is a diff like
-
-diff --git <narf>
-<header>
--deadcad...
-+beda551ed...
-
-because that is a stageable change.
-
-Alas, salvation is nigh! Yes, just a little line which asks for the level
-"dirty" (which implies "untracked", as detailed by diff-options.txt, uhm,
-sorry, I was asked to be precise, Documentation/diff-options.txt) fixes
-that!
-
-With this flag, there are no more "-dirty" lines in the submodule diffs.
-None! Only diffs between different submodule commits are shown, and even
-if the worktree of the submodule is dirty, or has untracked files, the
--dirty suffix is omitted. Just what you need for git-apply to work! Yay!
-
-As a plus, it makes the diff generation faster because what cannot be
-staged anyway is not even discovered! Super-yay!
-
-I actually enjoyed writing this text so much, may I respectfully ask to
-include it verbatim in the commit message?
-
-Thank you very much,
-Johannes Schindelin
+Surely, and thanks.
