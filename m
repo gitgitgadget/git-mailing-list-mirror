@@ -1,92 +1,218 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/4] Deprecate "not allow as-is commit with i-t-a
- entries"
-Date: Tue, 07 Feb 2012 08:41:58 -0800
-Message-ID: <7v8vke38a1.fsf@alter.siamese.dyndns.org>
-References: <1328618804-31796-1-git-send-email-pclouds@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Deal with HEAD pointing to unborn branch in "heads" view
+Date: Tue, 7 Feb 2012 17:53:11 +0100
+Message-ID: <201202071753.12436.jnareb@gmail.com>
+References: <5fa08a8b-f0a2-4796-bf0d-06a8f13bf703@b23g2000yqn.googlegroups.com> <201202032233.05324.jnareb@gmail.com> <CA+EqV8w6k2VrEtMydhGKZHbQdXHxCE3WA_0rtS-AY4cmQvii=A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 07 17:42:20 2012
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: rajesh boyapati <boyapatisrajesh@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 07 17:53:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ruo7M-00020h-Hj
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 17:42:12 +0100
+	id 1RuoIJ-00086o-Hd
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 17:53:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754407Ab2BGQmD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Feb 2012 11:42:03 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34969 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753791Ab2BGQmB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Feb 2012 11:42:01 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C69DF7DDF;
-	Tue,  7 Feb 2012 11:42:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Ch7qpWICz7u+
-	PqgZ+zwCO0EGeXY=; b=cXWkoqHkiGd2RCKe6fmcJqi/AlwqeAAU89sHMRYlB8ze
-	BOwSaBz86ozek85BqhSWCXXHy8EnZ82DFv0+wDigVvx9JGKa7tiUo7EOpPHaBAXf
-	pBCuEPOptJBhEhUmC8PFzEUYfNov0cD0PXhy0T8YfDBv/tzvfKTjoEFwAWGYXOk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=uAEu6c
-	Ws1eB5Heh+HyiFgESmDVjTQUcGOG2fa6acccQrFA+u59N9PuN/wxOwEkyUQnANE0
-	EOD9cuDbTH704kwn+OUO11Ldi77km2pcM70WwDwofLB8GYg25Kq4uCpxdPxYsXgr
-	q0fUEwjk3j6GtBJPZPWQAtvs/ovPFpHgBS0Jk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC1807DDE;
-	Tue,  7 Feb 2012 11:42:00 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 251BE7DDD; Tue,  7 Feb 2012
- 11:42:00 -0500 (EST)
-In-Reply-To: <1328618804-31796-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 7 Feb
- 2012 19:46:40 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A7EFE3C8-51AA-11E1-9519-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755300Ab2BGQxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Feb 2012 11:53:17 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:36306 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753969Ab2BGQxQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Feb 2012 11:53:16 -0500
+Received: by eaah12 with SMTP id h12so2889378eaa.19
+        for <git@vger.kernel.org>; Tue, 07 Feb 2012 08:53:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=Ov935Emx7tsw80S4OBQ3cw0k6jfQ4IWUOTS2GpPdGkk=;
+        b=XirBnauG0zPOucWCUkepPq7NUAyQP2m5pX0rSVCcxB2N19Bl95eriIacybvrRMwHii
+         ZUJn1CUgzJuL193FIURHIDXOKtYL12GL86wUlHHidIRLPf/huBUaSyMeAEGLgynXmlyY
+         7ia4+Au6Ptp0aUj49vdkpqknCi29ufJeR9U+A=
+Received: by 10.213.21.6 with SMTP id h6mr2164666ebb.131.1328633595121;
+        Tue, 07 Feb 2012 08:53:15 -0800 (PST)
+Received: from [192.168.1.13] (abwl246.neoplus.adsl.tpnet.pl. [83.8.235.246])
+        by mx.google.com with ESMTPS id v51sm11837385eef.2.2012.02.07.08.53.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 07 Feb 2012 08:53:14 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <CA+EqV8w6k2VrEtMydhGKZHbQdXHxCE3WA_0rtS-AY4cmQvii=A@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190183>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Mon, 6 Feb 2012, rajesh boyapati wrote:
+> 
+> Thanks for your work.
 
->  - git-add.txt changes are removed. In the end all kinds of commit
->    behave the same way, not worth putting more explanation during the
->    transition.
->
->  - reword config text and warning text (or more precisely copy/paste
->    from Junio/Jonathan's words)
->
->  - Hard coded release numbers are removed. Now it's simply "in future=
-".
->
->  - Step 2 may be too annoying. Users are warned on every commit if
->    commit.ignoreIntentToAdd is set. I think it's good because it keep=
-s
->    config file clean, but people may think otherwise.
+I'm sorry I was able to find a fix only for the part of issue.
 
-Ahh, thanks.
+>>>>>>>>> [2012-01-25 18:50:35,658] ERROR
+>>>>>>>>> com.google.gerrit.httpd.gitweb.GitWebServlet : CGI: [Wed Jan 25
+>>>>>>>>> 18:50:35 2012] gitweb.cgi: Use of uninitialized value $commit_id
+>>>>>>>>> in open at /usr/lib/cgi-bin/gitweb.cgi line 2817.
+>>>>>>>
+>>>>>>> sub parse_commits {
+>>>>>>>     my ($commit_id, $maxcount, $skip, $filename, @args) = @_;
+>>>>>>>     my @cos;
+>>>>>>>
+>>>>>>>     $maxcount ||= 1;
+>>>>>>>     $skip ||= 0;
+>>>>>>>
+>>>>>>>     local $/ = "\0";
+>>>>>>>
+>>>>>>>     open my $fd, "-|", git_cmd(), "rev-list",
+>>>>>>>         "--header",
+>>>>>>>         @args,
+>>>>>>>         ("--max-count=" . $maxcount),
+>>>>>>>         ("--skip=" . $skip),
+>>>>>>>         @extra_options,
+>>>>>>>         $commit_id,
+>>>>>>>         "--",
+>>>>>>>         ($filename ? ($filename) : ())
+>>>>>>>         or die_error(500, "Open git-rev-list failed");
+>>
+>> But I was not able to fix this, at least not currently.  I wrote a failing
+>> test case for "commit" and similar views on unborn HEAD... but they fail
+>> _without_ error message like the one quoted.
+>>
+>> I'd have to go slower route of examining gitweb code in how it deals with
+>> "invalid" HEAD (i.e. HEAD not pointing to commit, being on unborn branch).
 
-But when I said "let's admit that this is just fixing an UI mistake, no
-configuration, no options", I really meant it.  Without the backward
-compatiblity "For now please do not fix this bug for me and keep being
-buggy until I get used to the non-buggy behaviour" fuss, which we never=
- do
-to any bugfix.
+[...]
+>> And here is the patch:
+>> -->8 ------------>8 ---
+>> From: Jakub Narebski <jnareb@gmail.com>
+>> Subject: [PATCH] gitweb: Deal with HEAD pointing to unborn branch in
+>>   "heads"  view
+[...]
+>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+>> index 9cf7e71..1f0ec12 100755
+>> --- a/gitweb/gitweb.perl
+>> +++ b/gitweb/gitweb.perl
+>> @@ -5570,7 +5570,7 @@ sub git_tags_body {
+>>
+>>  sub git_heads_body {
+>>        # uses global variable $project
+>> -       my ($headlist, $head, $from, $to, $extra) = @_;
+>> +       my ($headlist, $head_at, $from, $to, $extra) = @_;
+>>        $from = 0 unless defined $from;
+>>        $to = $#{$headlist} if (!defined $to || $#{$headlist} < $to);
+>>
+> 
+> I didn't see a file called "gitweb.perl" in /usr/share/gitweb/
 
-That is how we are planning to handle "git merge" update to spawn edito=
-r
-in interactive session in the next release. There is no "Please keep th=
-e
-buggy behaviour" option; only an environment variable to help when we
-mistake a scripted use as interactive, whose support is not going away
-because it is not about "until I get used to the new behaviour".
+The file "gitweb.perl", or rather "gitweb/gitweb.perl" is the name
+of the script in git.git repository.  From it "make gitweb" would
+generate "gitweb.cgi" file...
+
+> I applied this patch to file "index.cgi" in /usr/share/gitweb/index.cgi at
+> line 4711.
+[...]
+> 
+> I applied this patch to file "index.cgi" in /usr/share/gitweb/index.cgi at
+> line 4720.
+
+
+...and I guess Gerrit build process generates "index.cgi" from that.
+
+> Had I applied the patch to the correct file "index.cgi", which is a link to
+> file "gitweb.cgi" in /usr/lib/cgi-bin/gitweb.cgi ?
+
+Ah, right.
+
+> Then, I restarted gerrit server to take changes.
+> Now the error log of gerrit shows:
+
+> [2012-02-06 11:21:46,726] ERROR
+> com.google.gerrit.httpd.gitweb.GitWebServlet : CGI: fatal: bad revision
+> 'HEAD'
+> [2012-02-06 11:21:49,167] ERROR
+> com.google.gerrit.httpd.gitweb.GitWebServlet : CGI: [Mon Feb  6 11:21:49
+> 2012] gitweb.cgi: Use of uninitialized value $commit_id in open at
+> /usr/lib/cgi-bin/gitweb.cgi line 2817.
+> [2012-02-06 11:21:49,169] ERROR
+> com.google.gerrit.httpd.gitweb.GitWebServlet : CGI: fatal: bad revision ''
+[the same errors repeated few times]
+
+> <<<<<<<<<<<<<<<<
+> Previously, there is a error showing at line 4720. Now, with this patch,
+> that error has gone.
+
+As I said I was able to find a fix only for part of the issue.  
+Unfortunately I was not able to reproduce this error in this form.
+Note that the error location doesn't help much, because it is more
+interesting for find which callers of parse_commits() pass undefined
+$commit_id.
+
+I can try to harden parse_commits() against bogus parameters; maybe
+this would help.
+ 
+> I tried to upgrade gitweb with the command "sudo apt-get install gitweb",
+> but, it didn't find any upgrade.
+> Am I doing in a right way?
+
+There is no new version of gitweb yet; it haven't even been accepted
+by Junio Hamano, maintainer of git of which gitweb is part, into git
+repository (I might have to resend this patch for better visibility).
+
+> Is there any place like "Github" (where we can place git projects) for
+> gitweb ?
+
+Gitweb is for quite some time developed within git repository.  From
+it the 'gitweb' package is created.
+
+Clones of canonical, official git repository can be found in a few places:
+
+        git://git.kernel.org/pub/scm/git/git.git
+        git://repo.or.cz/alt-git.git
+        https://code.google.com/p/git-core/
+        https://github.com/git/git
+
+My own clone of git, with my work, can be found at:
+
+       git://repo.or.cz/git/jnareb-git.git
+       https://github.com/jnareb/git
+
+>> diff --git a/t/t9500-gitweb-standalone-no-errors.sh
+>> b/t/t9500-gitweb-standalone-no-errors.sh
+>> index 0f771c6..81246a6 100755
+>> --- a/t/t9500-gitweb-standalone-no-errors.sh
+>> +++ b/t/t9500-gitweb-standalone-no-errors.sh
+>> @@ -739,4 +739,13 @@ test_expect_success \
+>>        'echo "\$projects_list_group_categories = 1;">>gitweb_config.perl
+>> &&
+>>         gitweb_run'
+>>
+>> +# ----------------------------------------------------------------------
+>> +# unborn branches
+>> +
+>> +test_expect_success \
+>> +       'unborn HEAD: "summary" page (with "heads" subview)' \
+>> +       'git checkout orphan_branch || git checkout --orphan orphan_branch
+>> &&
+>> +        test_when_finished "git checkout master" &&
+>> +        gitweb_run "p=.git;a=summary"'
+>> +
+>>  test_done
+>>
+> 
+> I didn't find a file where to apply this patch.
+> Is this file to test your patch for you?
+
+Yes, this is to test that my patch fixes the issue correctly, and to
+ensure that further changes don't re-break it.  It is not usually
+installed with git or gitweb, so don't worry about it.
+
+-- 
+Jakub Narebski
+Poland
