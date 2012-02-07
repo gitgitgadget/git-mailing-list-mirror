@@ -1,76 +1,64 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 3/6] Stop producing index version 2
-Date: Tue, 7 Feb 2012 15:51:54 +0700
-Message-ID: <CACsJy8DBenQGrF4-X-rsUmJQUhx6MMQg+8Yrspjuxx6W6L48AQ@mail.gmail.com>
-References: <1328507319-24687-1-git-send-email-pclouds@gmail.com>
- <1328507319-24687-3-git-send-email-pclouds@gmail.com> <7v4nv4a131.fsf@alter.siamese.dyndns.org>
- <CAJo=hJvtRnmvALcn3vKpYTr3j6ada8iboPjWN3cQnwwKzRvrDA@mail.gmail.com> <CACsJy8Ayqea75xeFKJNm6iT7GSUGDEfvZD17uEv7ihr4SS2LMg@mail.gmail.com>
+From: Emanuele Zattin <emanuelez@gmail.com>
+Subject: Re: Git performance results on a large repository
+Date: Tue, 7 Feb 2012 08:58:02 +0000 (UTC)
+Message-ID: <loom.20120207T095317-899@post.gmane.org>
+References: <CB5074CF.3AD7A%joshua.redstone@fb.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Joshua Redstone <joshua.redstone@fb.com>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Feb 07 09:52:32 2012
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 07 10:00:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rugmt-0000NY-Jl
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 09:52:31 +0100
+	id 1RuguP-00034t-PI
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 10:00:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756700Ab2BGIw1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Feb 2012 03:52:27 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:42561 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756659Ab2BGIw0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Feb 2012 03:52:26 -0500
-Received: by werb13 with SMTP id b13so4847040wer.19
-        for <git@vger.kernel.org>; Tue, 07 Feb 2012 00:52:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=OPZj3s866fomNsjnwMd8HQ7qpJqzXSOKlWtFqJz35ME=;
-        b=WnKsDxburHBZuRGqfy4Nr0zduxqlQwnoeWSCDUA7s3cIUxbI/0ZvbE+02POxPpg7ae
-         kTHX8o5Y4kOvrINeCV42F/WDyT8RKECK7m+fXpNYK5VC8UU1szpw6kQsuOf4jGRO13ID
-         yTHlytkFT3o5hv74U66XAjknqQhOaZ5H9bgR4=
-Received: by 10.216.52.198 with SMTP id e48mr4702591wec.18.1328604745227; Tue,
- 07 Feb 2012 00:52:25 -0800 (PST)
-Received: by 10.223.2.139 with HTTP; Tue, 7 Feb 2012 00:51:54 -0800 (PST)
-In-Reply-To: <CACsJy8Ayqea75xeFKJNm6iT7GSUGDEfvZD17uEv7ihr4SS2LMg@mail.gmail.com>
+	id S1756716Ab2BGJAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Feb 2012 04:00:11 -0500
+Received: from plane.gmane.org ([80.91.229.3]:56064 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756665Ab2BGJAK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Feb 2012 04:00:10 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RuguB-0002zm-SI
+	for git@vger.kernel.org; Tue, 07 Feb 2012 10:00:04 +0100
+Received: from espcolo-webproxy01.nokia.com ([192.100.120.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Feb 2012 10:00:03 +0100
+Received: from emanuelez by espcolo-webproxy01.nokia.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Feb 2012 10:00:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 192.100.120.41 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.77 Safari/535.7)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190156>
 
-On Tue, Feb 7, 2012 at 11:50 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
->> Version 3 was a mistake because of the variable length record sizes.
->> Saving 2 bytes on some records that don't use the extended flags makes
->> the index file *MUCH* harder to parse. So much so that we should take
->> version 3 and kill it, not encourage it as the default!
->
-> Probably too late for that, but it's good to know there are strong
-> user base for v2.
+Joshua Redstone <joshua.redstone <at> fb.com> writes:
 
-OK probably not too late. We cannot kill it, but we could deprecate
-it. We can introduce a mandatory extension to store extra flags. The
-extension is basically an array of
+> 
+> Hi Git folks,
+> 
 
-struct ce_extended_flags {
-    int ce_index; /* points to istate->cache[ce_index] */
-    unsigned long flags;
-};
+Hello everybody! 
 
-On reading the extension, extra flags is applied back in mem, the
-extension is created again when new index is written. There are only
-two users of index v3: skip-worktree and intent-to-add bits, which are
-not used often, I think. Still want to kill it?
+I would just like to contribute a small set of blog posts 
+about this issue and a possible solution. 
+Sorry for the tone in which I wrote those posts, 
+but I think there are some valid points in there.
 
-Switching from sha-1 to crc32 could be done the same way (i.e. new
-mandatory extension _at the end_ that contains crc32 checksum and skip
-sha-1 check on reading if it's all zero) if we agree to move to crc32.
--- 
-Duy
+https://gist.github.com/1758346
+
+BR,
+
+Emanuele Zattin
