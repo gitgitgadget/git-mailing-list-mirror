@@ -1,167 +1,119 @@
-From: Tom Grennan <tmgrennan@gmail.com>
-Subject: Re: [PATCHv2] tag: add --points-at list option
-Date: Tue, 7 Feb 2012 10:05:22 -0800
-Message-ID: <20120207180522.GA6264@tgrennan-laptop>
-References: <1328598076-7773-1-git-send-email-tmgrennan@gmail.com>
- <1328598076-7773-2-git-send-email-tmgrennan@gmail.com>
- <7vd39r2g8o.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] docs: add a basic description of the config API
+Date: Tue, 7 Feb 2012 13:06:25 -0500
+Message-ID: <20120207180625.GA27189@sigill.intra.peff.net>
+References: <20120206095306.GA2404@sigill.intra.peff.net>
+ <20120206095346.GA4300@sigill.intra.peff.net>
+ <7vbopb61cd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, peff@peff.net, jasampler@gmail.com
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 07 19:05:34 2012
+X-From: git-owner@vger.kernel.org Tue Feb 07 19:06:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RupQ5-0002h1-33
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 19:05:33 +0100
+	id 1RupR6-0003Cp-SQ
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 19:06:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755288Ab2BGSF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Feb 2012 13:05:29 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:49970 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753428Ab2BGSF2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Feb 2012 13:05:28 -0500
-Received: by ggnh1 with SMTP id h1so3599960ggn.19
-        for <git@vger.kernel.org>; Tue, 07 Feb 2012 10:05:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=qi+Nx1HxLaVpt0FLpGFpt8cHIFp6fEF9lCNIdwpDBmE=;
-        b=H57RHgjdVvwRcFenmtVngisYAtJBZrYB+CB9FUDCUl4s4JxgcQ0BHbNGhbxqqi4RCB
-         gXAxtmxSwTg89BZIcLfrvQq2KiAWuS63XGW0Ua0vARX8+UaJ6SSAXvPfOQzuoQqqEjnF
-         nWNyeF/J51Vb0wkdsTQawSfRiTpirDlWQTiUc=
-Received: by 10.182.11.6 with SMTP id m6mr22024607obb.74.1328637927502;
-        Tue, 07 Feb 2012 10:05:27 -0800 (PST)
-Received: from localhost ([129.192.185.163])
-        by mx.google.com with ESMTPS id s2sm13934410obx.1.2012.02.07.10.05.24
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 07 Feb 2012 10:05:25 -0800 (PST)
+	id S1756267Ab2BGSG2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Feb 2012 13:06:28 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59335
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753969Ab2BGSG1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Feb 2012 13:06:27 -0500
+Received: (qmail 9578 invoked by uid 107); 7 Feb 2012 18:13:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Feb 2012 13:13:34 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Feb 2012 13:06:25 -0500
 Content-Disposition: inline
-In-Reply-To: <7vd39r2g8o.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <7vbopb61cd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190192>
 
-On Tue, Feb 07, 2012 at 12:35:19AM -0800, Junio C Hamano wrote:
->Tom Grennan <tmgrennan@gmail.com> writes:
->
->> +struct points_at {
->> +	struct points_at *next;
->> +	unsigned char *sha1;
->> +};
->
->struct points_at {
->	struct points_at *next;
->        unsigned char sha1[20];
->};
->
->would save you from having to allocate and free always in pairs, no?
+On Mon, Feb 06, 2012 at 02:31:14PM -0800, Junio C Hamano wrote:
 
-Yep
+> > +Config files are parsed linearly, and each variable found is passed to a
+> > +caller-provided callback function. The callback function is responsible
+> > +for any actions to be taken on the config option, and is free to ignore
+> > +some options (it is not uncommon for the configuration to be parsed
+> > +several times during the run of a git program, with different callbacks
+> > +picking out different variables useful to themselves).
+> 
+> It woud be easeier to read if you stopped the sentence after "some
+> options" and made the "It is not uncommon..." a first-class sentence
+> outside the parentheses.
 
->> +static void free_points_at (struct points_at *points_at)
->
->Please lose the SP before (.
+Thanks. Putting in too many parenthetical phrases is a bad habit of
+mine.  Usually I notice around the time I try nesting a parenthetical
+phrase instead of existing parentheses, and go back and at least promote
+the outer one to a real sentence. :)
 
-Oops
+Will fix for the re-roll.
 
->> +	if (type != OBJ_TAG
->> +	    || (tag = lookup_tag(sha1), !tag)
->> +	    || parse_tag_buffer(tag, buf, size) < 0) {
->
->Even though I personally prefer to cascade a long expression like this, so
->that you see a parse tree when you tilt your head 90-degrees to the left,
->I think the prevalent style in Git codebase is
->
->	if (A-long-long-expression ||
->            B-long-long-expression ||
->            C-long-long-expression) {
->
->Also we try to avoid assignment in the conditional.
+> > +A config callback should return 0 for success, or -1 if the variable
+> > +could not be parsed properly.
+> 
+> This matches what I have always thought, but I think I recently saw a
+> series that adds callbacks that return 1 to mean "I have understood this
+> variable, so callers should not look at it any more".  It felt wrong, but
+> I did not find anything in the config.c API framework to prvent such a
+> local calling convention.
 
-I like to compact multiple conditions to a common exit but also appreciate
-the fear and loathing of comma's.
+The return value is propagated from git_parse_file. I assume the
+original intent was that you could actually use it to return an integer
+from your callback. In practice, though, callbacks either modify global
+data (for older instances), or modify a pointer passed through the void
+data pointer.
 
-While rearranging this I finally understand how to include lightweight tags.
+The "1 means I understood this" convention is used by userdiff_config. I
+don't like that it is unlike every other config callback, but I think
+it's necessary to deal with the ambiguity of "diff.color.*", which could
+be either a userdiff entry or a diff color. E.g., if we see
+"diff.color.binary", we know that it is the "binary" variable of the
+"color" diff driver, not the color spec for the "binary" slot.
 
-	struct points_at *pa;
-	const unsigned char *tagged_sha1 = (const unsigned char *)"";
+Looking at the code again, though, it seems that there is no overlap
+between the userdiff slots and the color slots, and that the
+color-parsing code will silently ignore any unknown slots. So it would
+be safe to further investigate diff.color.binary as a color, as we would
+silently ignore it.
 
-	/* First look for lightweight tags - those with matching sha's
-	 * but different names */
-	for (pa = points_at; pa; pa = pa->next)
-		if (!hashcmp(pa->sha1, sha1) && strcmp(pa->refname, refname))
-			return pa;
-	buf = read_sha1_file(sha1, &type, &size);
-	if (buf) {
-		if (type == OBJ_TAG) {
-			tag = lookup_tag(sha1);
-			if (parse_tag_buffer(tag, buf, size) >= 0)
-				tagged_sha1 = tag->tagged->sha1;
-		}
-		free(buf);
-	}
-	while (points_at && hashcmp(points_at->sha1, tagged_sha1))
-		points_at = points_at->next;
-	return points_at;
+Hmm. Yeah. The userdiff calling convention dates back to late 2008. At
+that time, parse_diff_color_slot would die() if it did not understand
+the slot, making the "I understood this" flag required. Then later, in
+8b8e862 (ignore unknown color configuration, 2009-12-12), it was
+relaxed.
 
-For example,
-$ ./git-tag tomg-lw-v1.7.9 v1.7.9
-$ ./git-tag -a tomg-lw-v1.7.9 v1.7.9
-$ ./git-tag -s tomg-lw-v1.7.9 v1.7.9
-$ ./git-tag -s tomg-README HEAD:README
-$ ./git-tag -l --points-at v1.7.9 --points-at HEAD:README
-tomg-README
-tomg-annotate-v1.7.9
-tomg-lw-v1.7.9
-tomg-signed-v1.7.9
-$ ./git-tag -l --points-at v1.7.9 --points-at HEAD:README \*v1.7.9
-tomg-annotate-v1.7.9
-tomg-lw-v1.7.9
-tomg-signed-v1.7.9
+So I think we could go back and simplify the userdiff_config code now.
 
->> @@ -432,6 +500,12 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
->>  			PARSE_OPT_LASTARG_DEFAULT,
->>  			parse_opt_with_commit, (intptr_t)"HEAD",
->>  		},
->> +		{
->> +			OPTION_CALLBACK, 0, "points-at", &points_at, "object",
->> +			"print only annotated|signed tags of the object",
->> +			PARSE_OPT_LASTARG_DEFAULT,
->> +			parse_opt_points_at, (intptr_t)NULL,
->> +		},
->
->If you are going to reject NULL anyway, do you still need to mark this as
->lastarg-default?
->
->Looking for example in parse-options.h, I found this:
->
->        #define OPT_STRING_LIST(s, l, v, a, h) \
->                    { OPTION_CALLBACK, (s), (l), (v), (a), \
->                      (h), 0, &parse_opt_string_list }
->
->which is used by "git clone" to mark its -c option.
->
->Running "git clone -c" gives me
->
->	error: switch 'c' requires a value
->
->without any extra code in the caller of parse_options().
+> > +There is a special version of `git_config` called `git_config_early`
+> > +that takes an additional parameter to specify the repository config.
+> > +This should be used early in a git program when the repository location
+> > +has not yet been determined (and calling the usual lazy-evaluation
+> > +lookup rules would yield an incorrect location).
+> 
+> Do you want to say somethink like "Ordinary programs should not have to
+> worry about git_config_early()"?  Differently put, if you are learning the
+> config API by reading this document and cannot tell which one you should
+> be calling, you are way too inexperienced to call git_config_early() and
+> you would always want to call git_config()?
 
-Cool
+Yes, I think that would be sensible.
 
->Other than that, looks cleanly done.
->
->Thanks. I'll take another look after I wake up in the morning.
+Though having looked a lot at the config code recently, I wonder if
+git_config_early is really necessary. The only caller (besides
+git_config) is check_repository_format_early, which just wants to see if
+core.repositoryformatversion in a directory is sane.
 
-Thanks, I'll send v3 later today.
+But why in the world would it want to do the full config lookup?
+Shouldn't it be checking git_config_from_file directly on the config
+file in the proposed repo?
 
--- 
-TomG
+-Peff
