@@ -1,61 +1,81 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+From: david@lang.hm
 Subject: Re: Git performance results on a large repository
-Date: Tue, 7 Feb 2012 08:19:47 +0700
-Message-ID: <CACsJy8D_yT3wzX1+Yfnwn7mtPiXz1smDGXxCtW62gHcCnTt0mw@mail.gmail.com>
-References: <CB5179E9.3B751%joshua.redstone@fb.com> <4F2C6276.1070100@vilain.net>
+Date: Mon, 6 Feb 2012 17:28:06 -0800 (PST)
+Message-ID: <alpine.DEB.2.02.1202061722310.1107@asgard.lang.hm>
+References: <CB55A6A4.40AFD%joshua.redstone@fb.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Joshua Redstone <joshua.redstone@fb.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Joey Hess <joey@kitenet.net>,
+	"dgma@mohsinc.com" <dgma@mohsinc.com>,
+	Matt Graham <mdg149@gmail.com>,
+	Tomas Carnecky <tom@dbservice.com>,
+	Greg Troxel <gdt@ir.bbn.com>,
+	David Barr <davidbarr@google.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Tue Feb 07 02:20:47 2012
+To: Joshua Redstone <joshua.redstone@fb.com>
+X-From: git-owner@vger.kernel.org Tue Feb 07 02:31:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuZje-0000Ih-5X
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 02:20:42 +0100
+	id 1RuZte-0004lr-0S
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 02:31:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756179Ab2BGBUT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Feb 2012 20:20:19 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:64427 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753820Ab2BGBUS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Feb 2012 20:20:18 -0500
-Received: by wics10 with SMTP id s10so4579919wic.19
-        for <git@vger.kernel.org>; Mon, 06 Feb 2012 17:20:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=gCi0/plPioz9CXAkM8nze2eugIdyich8Vc+2Bcl+3JM=;
-        b=xOyvf1zNLwHEL4LNhYK+2yG7obXrXK8i8JNUGMl2CPTJ6DAGgf11vK+7Uu/UpU/b1s
-         Bo2ZlYHh9iFLdpP6g4UQvz5YzIzL/0brzbfvsgzH2Tc+WJX3zzxiPR5D2DCHCaqla1Np
-         qgH42k20nlJOznLY2YIT08GRhkLNT/ZxSxnF4=
-Received: by 10.181.13.113 with SMTP id ex17mr30931882wid.15.1328577617270;
- Mon, 06 Feb 2012 17:20:17 -0800 (PST)
-Received: by 10.223.2.139 with HTTP; Mon, 6 Feb 2012 17:19:47 -0800 (PST)
-In-Reply-To: <4F2C6276.1070100@vilain.net>
+	id S1756595Ab2BGBa4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Feb 2012 20:30:56 -0500
+Received: from mail.lang.hm ([64.81.33.126]:58871 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756051Ab2BGBaz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Feb 2012 20:30:55 -0500
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id q171S65A008412;
+	Mon, 6 Feb 2012 17:28:06 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <CB55A6A4.40AFD%joshua.redstone@fb.com>
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190131>
 
-On Sat, Feb 4, 2012 at 5:40 AM, Sam Vilain <sam@vilain.net> wrote:
-> There have also been designs at various times for sparse check=E2=80=93=
-outs; ie
-> check=E2=80=93outs where you don't check out the root of the reposito=
-ry but a
-> sub=E2=80=93tree.
+On Mon, 6 Feb 2012, Joshua Redstone wrote:
 
-There is a sparse checkout feature in git (hopefully from one of the
-designs you mentioned) and it can checkout subtrees. The only problem
-in this case is it maintains full index. So it only solves half of the
-problem (stat calls), reading/writing large index just slows
-everything down.
---=20
-Duy
+> David Lang and David Barr, I generated the pack files by doing a repack:
+> "git repack -a -d -f --max-pack-size=10g --depth=100 --window=250"  after
+> generating the repo.
+
+how many pack files does this end up creating?
+
+I think that doing a full repack the way you did will group all revisions 
+of a given file into a pack.
+
+while what I'm saying is that if you create the packs based on time, 
+rather than space efficiency of the resulting pack files, you may end up 
+not having to go through as much date when doing things like a git blame.
+
+what you did was
+
+initialize repo
+4M commits
+repack
+
+what I'm saying is
+
+initialize repo
+loop
+    500K commits
+    repack (and set pack to .keep so it doesn't get overwritten)
+
+so you will end up with ~8 sets of pack files, but time based so that when 
+you only need recent information you only look at the most recent pack 
+file. If you need to go back through all time, the multiple pack files 
+will be a little more expensive to process.
+
+this has the added advantage that the 8 small repacks should be cheaper 
+than the one large repack as it isn't trying to cover all commits each 
+time.
+
+David Lang
