@@ -1,67 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: cloning a tree which has detached branch checked out
-Date: Tue, 7 Feb 2012 12:16:04 -0500
-Message-ID: <20120207171604.GA26614@sigill.intra.peff.net>
-References: <20120207070628.GA24698@redhat.com>
- <m362fjklb7.fsf@localhost.localdomain>
- <20120207104100.GA24828@redhat.com>
- <CACsJy8DtmQLX+Lfng-QRzVg9sfo8gQMXB-xTtPYpt+R2gModTg@mail.gmail.com>
- <20120207153225.GA14773@sigill.intra.peff.net>
- <7v4nv236xn.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH 3/6] Stop producing index version 2
+Date: Tue, 7 Feb 2012 18:25:43 +0100
+Message-ID: <874nv2o8rs.fsf@thomas.inf.ethz.ch>
+References: <1328507319-24687-1-git-send-email-pclouds@gmail.com>
+	<1328507319-24687-3-git-send-email-pclouds@gmail.com>
+	<7v4nv4a131.fsf@alter.siamese.dyndns.org>
+	<CAJo=hJvtRnmvALcn3vKpYTr3j6ada8iboPjWN3cQnwwKzRvrDA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 07 18:16:18 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkg?= =?utf-8?B?Tmfhu41j?= 
+	<pclouds@gmail.com>, <git@vger.kernel.org>,
+	Joshua Redstone <joshua.redstone@fb.com>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Feb 07 18:25:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuoeL-0003ZE-RP
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 18:16:14 +0100
+	id 1Ruong-0008RP-DF
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 18:25:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755544Ab2BGRQI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Feb 2012 12:16:08 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59314
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754178Ab2BGRQH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Feb 2012 12:16:07 -0500
-Received: (qmail 9003 invoked by uid 107); 7 Feb 2012 17:23:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Feb 2012 12:23:14 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Feb 2012 12:16:04 -0500
-Content-Disposition: inline
-In-Reply-To: <7v4nv236xn.fsf@alter.siamese.dyndns.org>
+	id S1755922Ab2BGRZr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Feb 2012 12:25:47 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:40999 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755661Ab2BGRZr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Feb 2012 12:25:47 -0500
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 7 Feb
+ 2012 18:25:43 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (84.73.49.17) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 7 Feb
+ 2012 18:25:43 +0100
+In-Reply-To: <CAJo=hJvtRnmvALcn3vKpYTr3j6ada8iboPjWN3cQnwwKzRvrDA@mail.gmail.com>
+	(Shawn Pearce's message of "Mon, 6 Feb 2012 19:09:15 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [84.73.49.17]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190186>
 
-On Tue, Feb 07, 2012 at 09:11:00AM -0800, Junio C Hamano wrote:
+Shawn Pearce <spearce@spearce.org> writes:
 
-> > This particular bug should have been fixed before that, even, with my
-> > c1921c1 (clone: always fetch remote HEAD, 2011-06-07). And it is tested
-> > explicitly in t5707,...
-> [...]
-> What is funny is "error: Trying to write ref HEAD with nonexistant object".
-> "git grep -e nonexistant f3fb0" does not register any hit.
+> I have long wanted to scrap the current index format. I unfortunately
+> don't have the time to do it myself. But I suspect there may be a lot
+> of gains by making the index format match the canonical tree format
+> better by keeping the tree structure within a single file stream,
+> nesting entries below their parent directory, and keeping tree SHA-1
+> data along with the directory entry.
 
-That misspelling of "nonexistent" was fixed by 7be8b3b (Fix typo:
-existant->existent, 2011-06-16), around the same time as my clone patch.
-Which really makes me wonder if the OP is accidentally running an old
-version of git during the tests.
+If I may add to this: the one thing that I would like to see fixed about
+the index is that it's flat out impossible to change a single thing in
+it without re"writing" it from scratch.
 
-> >> On Tue, Feb 7, 2012 at 5:41 PM, Michael S. Tsirkin <mst@redhat.com> wrote:
-> >> >> > #git clone -n lab:/home/mst/scm/linux
-> [...]
-> Could it be that mysterious "lab:" protocol handler that is misbehaving?
+I'm saying "writing" because it is possible to change a few things
+around, but recomputing the trailing SHA1 swamps that by a large margin
+unless you are writing to a floppy disk, so it doesn't matter.  I'm sure
+using a CRC32 helps here, but if we're going to make an incompatible
+change, why not go all the way?
 
-I think you are misreading. It would be "lab::" in that case, no? The
-command above should do ssh transport to the machine "lab".
+A tree layout can fix that if it is properly arranged so that if you
+'git add path/to/file', it only updates the SHA1s for path/to/file,
+path/to and path.  For this to work, the checks would have to correspond
+to the trees, perhaps even directly use the actual tree SHA1.  This
+would at least be natural in some sense; getting to actual log(n)
+complexity for hilariously large directories would require dynamically
+splitting directories where appropriate.
 
--Peff
+Along the same lines the format should allow for changing the extension
+data for a single extension while only rehashing the new data.
+
+
+When I worked on cache-tree, I considered making a change to the latter
+effect, but thought the impact too great for a little gain.  Now from
+this thread, I'm getting the impression that such a change would be ok,
+even if users would have to scrap the index if they downgrade.  Is that
+right?
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
