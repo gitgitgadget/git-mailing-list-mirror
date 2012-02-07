@@ -1,101 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] commit: introduce a config key to allow as-is commit
- with i-t-a entries
-Date: Mon, 06 Feb 2012 17:13:32 -0800
-Message-ID: <7vmx8v4f9f.fsf@alter.siamese.dyndns.org>
-References: <1328525855-2547-1-git-send-email-pclouds@gmail.com>
- <1328525855-2547-3-git-send-email-pclouds@gmail.com>
- <7vwr7z653f.fsf@alter.siamese.dyndns.org>
- <CACsJy8C5=JKHsjyaSFsxxyScb1CCQZmh4gXSAgsyJ8DFkjfQ0g@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Git performance results on a large repository
+Date: Tue, 7 Feb 2012 08:19:47 +0700
+Message-ID: <CACsJy8D_yT3wzX1+Yfnwn7mtPiXz1smDGXxCtW62gHcCnTt0mw@mail.gmail.com>
+References: <CB5179E9.3B751%joshua.redstone@fb.com> <4F2C6276.1070100@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 07 02:13:42 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Joshua Redstone <joshua.redstone@fb.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Tue Feb 07 02:20:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RuZcq-0005mR-VD
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 02:13:41 +0100
+	id 1RuZje-0000Ih-5X
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Feb 2012 02:20:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756564Ab2BGBNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Feb 2012 20:13:36 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54349 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756548Ab2BGBNf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Feb 2012 20:13:35 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC504753A;
-	Mon,  6 Feb 2012 20:13:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KHM5If+tIdR2OrBEGPlXOxiOEvU=; b=s+n7Z5
-	zQ53mUyLCFLa1tG0K9YLvnkhJkbP1hLO8AcOotoBnlWRPRoTV9ip5uXXMtUsFY5W
-	Jmb2FHRCMu2talndTKAFynwhFpS7x+MDqF+FE+LpJUEd+iqe+zXDG0YsaqeYRGEw
-	zU5CwNng6Dk+rzsINvSgyR1v3Un25CUzPUGzw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vmsd2o0zhx1AXzQcb5rvlzD+LSzA3yJQ
-	0fsmZstcwIY8ubjVMMErPbMCTbkg8L3jM83kZ7QjWWlRbG+eMe6LJZINN0Kb9G9L
-	8ObbrncWnzSmRvO81dE3t8xXJq2MwiKtCSLzgj/Hge8pZmi8tlqpFxPAsWfCHQoS
-	y24v82SEo88=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C37AB7539;
-	Mon,  6 Feb 2012 20:13:34 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 45DA37537; Mon,  6 Feb 2012
- 20:13:34 -0500 (EST)
-In-Reply-To: <CACsJy8C5=JKHsjyaSFsxxyScb1CCQZmh4gXSAgsyJ8DFkjfQ0g@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Tue, 7 Feb 2012 07:58:12 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F4A73F9A-5128-11E1-83DB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756179Ab2BGBUT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Feb 2012 20:20:19 -0500
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:64427 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753820Ab2BGBUS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Feb 2012 20:20:18 -0500
+Received: by wics10 with SMTP id s10so4579919wic.19
+        for <git@vger.kernel.org>; Mon, 06 Feb 2012 17:20:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=gCi0/plPioz9CXAkM8nze2eugIdyich8Vc+2Bcl+3JM=;
+        b=xOyvf1zNLwHEL4LNhYK+2yG7obXrXK8i8JNUGMl2CPTJ6DAGgf11vK+7Uu/UpU/b1s
+         Bo2ZlYHh9iFLdpP6g4UQvz5YzIzL/0brzbfvsgzH2Tc+WJX3zzxiPR5D2DCHCaqla1Np
+         qgH42k20nlJOznLY2YIT08GRhkLNT/ZxSxnF4=
+Received: by 10.181.13.113 with SMTP id ex17mr30931882wid.15.1328577617270;
+ Mon, 06 Feb 2012 17:20:17 -0800 (PST)
+Received: by 10.223.2.139 with HTTP; Mon, 6 Feb 2012 17:19:47 -0800 (PST)
+In-Reply-To: <4F2C6276.1070100@vilain.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190130>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+On Sat, Feb 4, 2012 at 5:40 AM, Sam Vilain <sam@vilain.net> wrote:
+> There have also been designs at various times for sparse check=E2=80=93=
+outs; ie
+> check=E2=80=93outs where you don't check out the root of the reposito=
+ry but a
+> sub=E2=80=93tree.
 
-> 2012/2/7 Junio C Hamano <gitster@pobox.com>:
->
->> I suspect that some among 1 million Git users would want the "please
->> remind me", so a solution with configuration variable without command line
->> override is not ideal (command line without any configurability is fine as
->> long as we have a good default).
->
-> Which is why I prefer adding a new configuration variable (and
-> optionally a command line option) instead of deprecating current
-> behavior, because (being lazy) I never be able to find "some among 1
-> million" so I'm fine with assuming there are some among 1 million that
-> favors safety over convenience.
-
-If there is one thing I want to absolutely avoid, it is to split the
-userbase into many pieces by giving sticky configuration variables, so
-the above argument is not a good starting point.
-
->> The third one is a bit funny, as it is a way to bring back safety when the
->> ....  And having to add a funny
->> option just for the sake of completeness is often an indication that there
->> is something fundamentally wrong in the system that the option tries to
->> express an interface into it.
->
-> Well, that --honor-intent-to-add could be renamed as
-> --no-ignore-intent-to-add.
-
-I wasn't talking about the name at all.  What is _funny_ is the semantics.
-
-A "by default unsafe" configuration introduces a need for an option to be
-extra careful only when matters, but "an option" to be extra careful by
-definition is easy to forget, so it is no longer a safety at all, iow,
-people who want "by default unsafe" will get "always unsafe".  And it
-probably is perfectly fine because to them, forgetting to add 'add -N'
-entries is not a mistake at all, but always is a deliberate act.
-
-Another thing I am somewhat worried about is if there are existing scripts
-that create commits and relies on the current "we cannot commit because
-the final contents is not known yet".  I didn't check but for example how
-well does "git stash" work when the default is flipped to "just ignore"?
+There is a sparse checkout feature in git (hopefully from one of the
+designs you mentioned) and it can checkout subtrees. The only problem
+in this case is it maintains full index. So it only solves half of the
+problem (stat calls), reading/writing large index just slows
+everything down.
+--=20
+Duy
