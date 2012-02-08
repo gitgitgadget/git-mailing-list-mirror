@@ -1,68 +1,61 @@
-From: Eric Scouten <eric@scouten.com>
-Subject: git p4 submit bugs (submit fails due to keyword expansion mismatch
- and gives bad instructions for how to proceed)
-Date: Wed, 8 Feb 2012 13:49:50 -0800
-Message-ID: <CAEe=O8o-BG0xNGQEweezPu8cj+Brt1Km_anhEJBg0W7Q=rLbkw@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH 0/2] submodules: Use relative paths to gitdir and work tree
+Date: Wed, 08 Feb 2012 23:08:18 +0100
+Message-ID: <4F32F252.7050105@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 08 22:49:57 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Antony Male <antony.male@gmail.com>,
+	Phil Hord <phil.hord@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 08 23:08:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvFOm-0000F5-Cq
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Feb 2012 22:49:57 +0100
+	id 1RvFgh-0007si-5M
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Feb 2012 23:08:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755434Ab2BHVtw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Feb 2012 16:49:52 -0500
-Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:42826 "EHLO
-	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754781Ab2BHVtv (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Feb 2012 16:49:51 -0500
-Received: by obcva7 with SMTP id va7so1349643obc.19
-        for <git@vger.kernel.org>; Wed, 08 Feb 2012 13:49:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        bh=eSCTpo2StgHV6ET6dFIqjhF+Kll8VYsdTRHwOIGBo8Q=;
-        b=h8EnIb1ke3f0SD8MkkfbI9vsKyXVA9pBOz4UePLs/ADRF+fJmCZVyGWoNQZBpKKRuM
-         vnR7mPKJuu4c75ksdWaT7z+sSDtGVuGpNgT+OJio0Yh3mrkHgkJMHVK6UnLfWFHD6keE
-         AW1BS2uWc9XfBzcO67hAQ0mni8gtSK9gFKDnQ=
-Received: by 10.182.222.74 with SMTP id qk10mr27558721obc.75.1328737790498;
- Wed, 08 Feb 2012 13:49:50 -0800 (PST)
-Received: by 10.182.97.168 with HTTP; Wed, 8 Feb 2012 13:49:50 -0800 (PST)
-X-Google-Sender-Auth: dkJA4Pwtz3heuA5bIPBXVMWGptc
+	id S1756004Ab2BHWIW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Feb 2012 17:08:22 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:38297 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755711Ab2BHWIV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Feb 2012 17:08:21 -0500
+Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 964AC1C0B4CFA
+	for <git@vger.kernel.org>; Wed,  8 Feb 2012 23:08:20 +0100 (CET)
+Received: from [192.168.178.20] ([91.3.188.62]) by smtp.web.de (mrweb001) with
+ ESMTPA (Nemesis) id 0McneT-1SD3eU1bRh-00I5H3; Wed, 08 Feb 2012 23:08:19 +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0) Gecko/20120129 Thunderbird/10.0
+X-Provags-ID: V02:K0:Zgi/GLwZucpYd8EI8iSahaoZwIaOVcXPoYRuLNOlO4c
+ a78BUbZPvaEyzCFIAjuAkjMIAHL76RurCCMsnRkdW0vKwhg0Ex
+ FuvzdzecJBD0/nVmucGLYZ8F4VDsQGsj+KVFjjB7tgRBed7GMg
+ h+ubVfnCB07iTGJ2b6WhVIx0D3bjBWNOIiQkizKeN+vOTTKPCV
+ h+VvtcQ5DgeOLI3Rr6/wQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190258>
 
-I've been experimenting with git-p4 as a front-end to Perforce as
-described in http://www.perforce.com/blog/120113/git-perforce-client,
-but two bugs are causing me major headaches:
+This patch series replaces all absolute paths pointing from submodule work
+trees to its gitdir and back with relative paths as discussed in $gmane/187785.
 
-(1) git-p4 doesn't work with P4 keyword expansion. (I gather there's a
-fork of git-p4 that makes it work, but the current official distro
-doesn't.) This can lead to some ugly failed submits down the road.
-Which leads me to ...
+The motivation is to make superprojects movable again. They lost this ability
+with the move of the git directory of submodules into the .git/modules directory
+of the superproject. While fixing that a bug which would hit when moving the
+submodule inside the superproject was also fixed.
 
-(2) When a git p4 submit fails, the error message for how to resolve
-it is bogus. The instructions say "Please resolve and submit the
-conflict manually and continue afterwards with git-p4 submit
---continue", but when I do that, I get:
+Jens Lehmann (2):
+  submodules: always use a relative path to gitdir
+  submodules: always use a relative path from gitdir to work tree
 
-$ git p4 submit --continue
-Usage: git-p4 submit [options] [name of git branch to submit into
-perforce depot]
-git-p4: error: no such option: --continue
+ git-submodule.sh           |   23 ++++++++++++++++-------
+ t/t7400-submodule-basic.sh |   22 ++++++++++++++++++++++
+ 2 files changed, 38 insertions(+), 7 deletions(-)
 
-Ugh.
-
-(P.S. If there's a better place to post bug reports, etc., please
-inform. Thanks.)
-
--Eric
+-- 
+1.7.9.190.gb17a42.dirty
