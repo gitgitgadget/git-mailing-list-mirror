@@ -1,146 +1,129 @@
-From: Tom Grennan <tmgrennan@gmail.com>
-Subject: Re: [PATCHv4] tag: add --points-at list option
-Date: Wed, 8 Feb 2012 14:15:31 -0800
-Message-ID: <20120208221531.GI6264@tgrennan-laptop>
-References: <20120208185750.GA22220@sigill.intra.peff.net>
- <1328731972-13137-2-git-send-email-tmgrennan@gmail.com>
- <20120208205857.GA22479@sigill.intra.peff.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH 2/2] submodules: always use a relative path from gitdir to
+ work tree
+Date: Wed, 08 Feb 2012 23:17:09 +0100
+Message-ID: <4F32F465.7090401@web.de>
+References: <4F32F252.7050105@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, jasampler@gmail.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 08 23:15:43 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Antony Male <antony.male@gmail.com>,
+	Phil Hord <phil.hord@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 08 23:17:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvFnh-00021l-Ay
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Feb 2012 23:15:42 +0100
+	id 1RvFpF-0002ai-Os
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Feb 2012 23:17:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751309Ab2BHWPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Feb 2012 17:15:37 -0500
-Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:51424 "EHLO
-	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750764Ab2BHWPg (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Feb 2012 17:15:36 -0500
-Received: by obcva7 with SMTP id va7so1377418obc.19
-        for <git@vger.kernel.org>; Wed, 08 Feb 2012 14:15:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=DcA4IZHGodz6ZbspRCA3Qy+6Dxh+nLKu6KLVtzsgf3I=;
-        b=JqLXNFK9mP8Arb4x8tjbZ9uZqwU9qUB3z9lJLIOOIE3ZmTjHtx/fgxEe0zqNxLAztf
-         xtjbzOC6Kiymeem+fu1KckC0LC50iuA4t3Co/4wA7Q508wzu9zTwqgwAyFl3JUi1vRXz
-         Nblr4R/JgBTtgRFOeT3Rk8TkD+MwHyy6qZOe0=
-Received: by 10.182.109.106 with SMTP id hr10mr27758104obb.27.1328739335502;
-        Wed, 08 Feb 2012 14:15:35 -0800 (PST)
-Received: from localhost ([129.192.185.163])
-        by mx.google.com with ESMTPS id q9sm563405obk.4.2012.02.08.14.15.33
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 08 Feb 2012 14:15:34 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20120208205857.GA22479@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753916Ab2BHWRM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Feb 2012 17:17:12 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:49560 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753238Ab2BHWRL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Feb 2012 17:17:11 -0500
+Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 55FF31B0B578F
+	for <git@vger.kernel.org>; Wed,  8 Feb 2012 23:17:10 +0100 (CET)
+Received: from [192.168.178.20] ([91.3.188.62]) by smtp.web.de (mrweb001) with
+ ESMTPA (Nemesis) id 0M1Wxd-1SoKU83CZt-00tLEG; Wed, 08 Feb 2012 23:17:09 +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0) Gecko/20120129 Thunderbird/10.0
+In-Reply-To: <4F32F252.7050105@web.de>
+X-Provags-ID: V02:K0:i6MmV2ce+ANFZIM1yhUPi9l5bDFxBIy/jbL+bAzAXp0
+ zgRrqExZYPdTD74MkxObOnV1v762e8+3WdhZGIsRzlCMLxXiz/
+ xuRSKIe8zQZOl4BODNAc3KL6ACgIKjvWAqEm41dw+NUWW88aiI
+ SkZcP1I0svFFSYVuAHmDSDP5Rqw9EOdPTjyv5k6PE+4XqiWDcQ
+ zC5nVdLjYZk8HNHHlNX0w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190261>
 
-On Wed, Feb 08, 2012 at 03:58:57PM -0500, Jeff King wrote:
->On Wed, Feb 08, 2012 at 12:12:52PM -0800, Tom Grennan wrote:
->
->> This filters the list for tags of the given object.
->> Example,
->> 
->>    john$ git tag v1.0-john v1.0
->>    john$ git tag -l --points-at v1.0
->>    v1.0-john
->
->And probably "v1.0", as well, in this iteration. :)
+Since recently a submodule with name <name> has its git directory in the
+.git/modules/<name> directory of the superproject while the work tree
+contains a gitfile pointing there. To make that work the git directory has
+the core.worktree configuration set in its config file to point back to
+the work tree.
 
-Yep.
+That core.worktree is an absolute path set by the initial clone of the
+submodule. A relative path is preferable here because it allows the
+superproject to be moved around without invalidating that setting, so
+compute and set that relative path after cloning or reactivating the
+submodule.
 
->The patch content itself looks good to me, except:
->
->> --- a/Documentation/git-tag.txt
->> +++ b/Documentation/git-tag.txt
->> @@ -12,7 +12,7 @@ SYNOPSIS
->>  'git tag' [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]
->>  	<tagname> [<commit> | <object>]
->>  'git tag' -d <tagname>...
->> -'git tag' [-n[<num>]] -l [--contains <commit>]
->> +'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
->>  	[--column[=<options>] | --no-column] [<pattern>...]
->
->What's this "column" stuff doing here? The nd/columns topic is still in
->"next", isn't it? Did you base this on "next" or "pu"?
->
->Usually topics should be based on master, so they can graduate
->independently of each other. In this case, it might make sense to build
->on top of jk/maint-tag-show-fixes (d0548a3), but I don't think that is
->even necessary here (my fixes ended up not being too closely related, I
->think).
+This also fixes a bug when moving a submodule around inside the
+superproject, as the current code forgot to update the setting to the new
+submodule work tree location.
 
-Yes, it's no longer related to jk/maint-tag-show-fixes.
-I've prepared a rebase patch to master and will add these tests.
+Enhance t7400 to ensure that future versions won't re-add absolute paths
+by accident and that moving a superproject won't break submodules.
 
-Thanks,
-TomG
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
+ git-submodule.sh           |    9 +++++++++
+ t/t7400-submodule-basic.sh |   20 ++++++++++++++++++++
+ 2 files changed, 29 insertions(+), 0 deletions(-)
 
->Other than that, I think the patch is fine. There are no tests, so
->perhaps these should be squashed in:
->
->diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
->index e93ac73..f61e398 100755
->--- a/t/t7004-tag.sh
->+++ b/t/t7004-tag.sh
->@@ -1269,4 +1269,43 @@ test_expect_success 'mixing incompatibles modes and options is forbidden' '
-> 	test_must_fail git tag -v -s
-> '
-> 
->+# check points-at
->+
->+test_expect_success '--points-at cannot be used in non-list mode' '
->+	test_must_fail git tag --points-at=v4.0 foo
->+'
->+
->+test_expect_success '--points-at finds lightweight tags' '
->+	echo v4.0 >expect &&
->+	git tag --points-at v4.0 >actual &&
->+	test_cmp expect actual
->+'
->+
->+test_expect_success '--points-at finds annotated tags of commits' '
->+	git tag -m "v4.0, annotated" annotated-v4.0 v4.0 &&
->+	echo annotated-v4.0 >expect &&
->+	git tag -l --points-at v4.0 "annotated*" >actual &&
->+	test_cmp expect actual
->+'
->+
->+test_expect_success '--points-at finds annotated tags of tags' '
->+	git tag -m "describing the v4.0 tag object" \
->+		annotated-again-v4.0 annotated-v4.0 &&
->+	cat >expect <<-\EOF &&
->+	annotated-again-v4.0
->+	annotated-v4.0
->+	EOF
->+	git tag --points-at=annotated-v4.0 >actual &&
->+	test_cmp expect actual
->+'
->+
->+test_expect_success 'multiple --points-at are OR-ed together' '
->+	cat >expect <<-\EOF &&
->+	v2.0
->+	v3.0
->+	EOF
->+	git tag --points-at=v2.0 --points-at=v3.0 >actual &&
->+	test_cmp expect actual
->+'
->+
-> test_done
->-- 
->1.7.9.rc2.14.g3da2b
->
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 2a93c61..3463d6d 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -169,6 +169,15 @@ module_clone()
+     fi
+ 
+     echo "gitdir: $rel_gitdir" >"$path/.git"
++
++    a=$(cd "$gitdir" && pwd)
++    b=$(cd "$path" && pwd)
++    while [ "$b" ] && [ "${a%%/*}" = "${b%%/*}" ]
++    do
++        a=${a#*/} b=${b#*/};
++    done
++    rel=$(echo $a | sed -e 's|[^/]*|..|g')
++    (clear_local_git_env; cd "$path" && git config core.worktree "$rel/$b")
+ }
+ 
+ #
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 2b70b22..b377a7a 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -81,6 +81,13 @@ test_expect_success 'submodule add' '
+         test ! -s actual &&
+         echo "gitdir: ../.git/modules/submod" >expect &&
+         test_cmp expect submod/.git &&
++        (
++            cd submod &&
++            git config core.worktree >actual &&
++            echo "../../../submod" >expect &&
++            test_cmp expect actual &&
++            rm -f actual expect
++        ) &&
+         git submodule init
+     ) &&
+ 
+@@ -500,4 +507,17 @@ test_expect_success 'relative path works with user@host:path' '
+     )
+ '
+ 
++test_expect_success 'moving the superproject does not break submodules' '
++    (
++        cd addtest &&
++        git submodule status >expect
++    )
++    mv addtest addtest2 &&
++    (
++        cd addtest2 &&
++        git submodule status >actual &&
++        test_cmp expect actual
++    )
++'
++
+ test_done
+-- 
+1.7.9.190.gf8e73.dirty
