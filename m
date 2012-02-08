@@ -1,111 +1,148 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] docs: add a basic description of the config API
-Date: Wed, 8 Feb 2012 10:59:50 -0500
-Message-ID: <20120208155950.GD8773@sigill.intra.peff.net>
-References: <20120206095306.GA2404@sigill.intra.peff.net>
- <20120206095346.GA4300@sigill.intra.peff.net>
- <7vbopb61cd.fsf@alter.siamese.dyndns.org>
- <20120207180625.GA27189@sigill.intra.peff.net>
- <7vlioe1o1g.fsf@alter.siamese.dyndns.org>
- <CACsJy8AU3ZA1=Q3vahhP6Nr=FZNKd7oRJ04mtKVs+uvNqJeVaw@mail.gmail.com>
- <7vmx8tzv3l.fsf@alter.siamese.dyndns.org>
- <CACsJy8B1cMBbrUznOp95u8YmfLf5bbzox8g9cuQUwgf-vY1XrQ@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [StGit PATCH] Parse commit object header correctly
+Date: Wed, 08 Feb 2012 17:17:24 +0100
+Message-ID: <4F32A014.1000608@alum.mit.edu>
+References: <4F3120D4.1050604@warmcat.com>	<7vvcni1r5u.fsf@alter.siamese.dyndns.org>	<7vd39pzsmq.fsf_-_@alter.siamese.dyndns.org>	<4F3247CA.1020904@alum.mit.edu> <CAH6sp9P=vNjLycgzoWzRbeEsW-kQ5e4HgGYf2jP1+u9rtWV4dg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 08 17:00:04 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?S2FybCBIYXNzZWxzdHLDtm0=?= <kha@treskal.com>,
+	Catalin Marinas <catalin.marinas@gmail.com>,
+	=?UTF-8?B?IkFuZHkgR3JlZW4gKOael+WuieW7uCki?= <andy@warmcat.com>,
+	git@vger.kernel.org
+To: Frans Klaver <fransklaver@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 08 17:18:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rv9w5-0002XT-Md
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Feb 2012 16:59:58 +0100
+	id 1RvADb-0001Z4-Sg
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Feb 2012 17:18:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757254Ab2BHP7y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Feb 2012 10:59:54 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59631
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755755Ab2BHP7w (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Feb 2012 10:59:52 -0500
-Received: (qmail 16946 invoked by uid 107); 8 Feb 2012 16:07:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 08 Feb 2012 11:07:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Feb 2012 10:59:50 -0500
-Content-Disposition: inline
-In-Reply-To: <CACsJy8B1cMBbrUznOp95u8YmfLf5bbzox8g9cuQUwgf-vY1XrQ@mail.gmail.com>
+	id S1757291Ab2BHQR4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Feb 2012 11:17:56 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:50101 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753535Ab2BHQRz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Feb 2012 11:17:55 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q18GHPBv026139
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 8 Feb 2012 17:17:25 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.24) Gecko/20111108 Lightning/1.0b2 Thunderbird/3.1.16
+In-Reply-To: <CAH6sp9P=vNjLycgzoWzRbeEsW-kQ5e4HgGYf2jP1+u9rtWV4dg@mail.gmail.com>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190243>
 
-On Wed, Feb 08, 2012 at 01:55:30PM +0700, Nguyen Thai Ngoc Duy wrote:
-
-> Or allow multiple callbacks from git_config(). The problem with is it
-> adds another common set of config vars. Now it's common to chain var
-> sets by doing
+On 02/08/2012 11:43 AM, Frans Klaver wrote:
+> On Wed, Feb 8, 2012 at 11:00 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> On 02/08/2012 08:33 AM, Junio C Hamano wrote:
+>>> +            line = lines[i].rstrip('\n')
+>>> +            ix = line.find(' ')
+>>> +            if 0 <= ix:
+>>> +                key, value = line[0:ix], line[ix+1:]
+>>
+>> The above five lines can be written
+>>
+>>           for line in lines:
+>>               if ' ' in line:
+>>                   key, value = line.rstrip('\n').split(' ', 1)
+>>
+>> or (if the lack of a space should be treated more like an exception)
+>>
+>>           for line in lines:
+>>               try:
+>>                   key, value = line.rstrip('\n').split(' ', 1)
+>>               except ValueError:
+>>                   continue
 > 
-> int config_callback(...)
-> {
->     ....
->     return yet_another_callback(...);
-> }
+> This is generally considered more pythonic: "It's easier to ask for
+> forgiveness than to get permission".
+
+Given that Junio explicitly wanted to allow lines with no spaces, I
+assume that lack of a space is not an error but rather a conceivable
+future extension.  If my assumption is correct, then it is misleading
+(and inefficient) to handle it via an exception.
+
+>>> +                if key == 'tree':
+>>> +                    cd = cd.set_tree(repository.get_tree(value))
+>>> +                elif key == 'parent':
+>>> +                    cd = cd.add_parent(repository.get_commit(value))
+>>> +                elif key == 'author':
+>>> +                    cd = cd.set_author(Person.parse(value))
+>>> +                elif key == 'committer':
+>>> +                    cd = cd.set_committer(Person.parse(value))
+>>
+>> All in all, I would recommend something like (untested):
+>>
+>>        @return: A new L{CommitData} object
+>>        @rtype: L{CommitData}"""
+>>        cd = cls(parents = [])
+>>        lines = []
+>>        raw_lines = s.split('\n')
+>>        # Collapse multi-line header lines
+>>        for i, line in enumerate(raw_lines):
+>>            if not line:
+>>                cd.set_message('\n'.join(raw_lines[i+1:]))
+>>                break
+>>            if line.startswith(' '):
+>>                # continuation line
+>>                lines[-1] += '\n' + line[1:]
+>>            else:
+>>                lines.append(line)
+>>
+>>        for line in lines:
+>>            if ' ' in line:
+>>                key, value = line.split(' ', 1)
+>>                if key == 'tree':
+>>                    cd = cd.set_tree(repository.get_tree(value))
+>>                elif key == 'parent':
+>>                    cd = cd.add_parent(repository.get_commit(value))
+>>                elif key == 'author':
+>>                    cd = cd.set_author(Person.parse(value))
+>>                elif key == 'committer':
+>>                    cd = cd.set_committer(Person.parse(value))
+>>        return cd
 > 
-> int main()
-> {
->    git_config(config_callback, ...)
->    ...
+> One could also take the recommended python approach for
+> switch/case-like if/elif/else statements:
+>
+> updater = { 'tree': lambda cd, value: cd.set_tree(repository.get_tree(value),
+>                  'parent': lambda cd, value:
+> cd.add_parent(repository.get_commit(value)),
+>                  'author': lambda cd, value: cd.set_author(Person.parse(value)),
+>                  'committer': lambda cd, value:
+> cd.set_committer(Person.parse(value))
+>               }
+> for line in lines:
+>     try:
+>         key, value = line.split(' ', 1)
+>         cd = updater[key](cd, value)
+>     except ValueError:
+>         continue
+>     except KeyError:
+>         continue
 > 
-> where yet_another_callback() hard codes another callback (usually
-> git_default_config). This is inflexible. If we allow multiple
-> callbacks, git_column_config() could be changed to return just 0 or -1
-> (i.e. 1 remains unsuccessful error code).
+> It documents about the same, but adds checking on double 'case'
+> statements. The resulting for loop is rather cleaner and the exception
+> approach becomes even more logical. I rather like the result, but I
+> guess it's mostly a matter of taste.
 
-I don't think we need multiple callbacks. You could convert any such
-call of:
+I know this approach and use it frequently, but when one has to resort
+to lambdas and there are only four cases, it becomes IMHO less readable
+than the if..else version.
 
-  git_config_multiple(cb1, cb2, cb3, NULL, NULL);
+Michael
 
-into:
-
-  int combining_callback(const char *var, const char *value, void *data)
-  {
-          if (cb1(var, value, data) < 0)
-                  return -1;
-          if (cb2(var, value, data) < 0)
-                  return -1;
-          if (cb3(var, value, data) < 0)
-                  return -1;
-          return 0;
-  }
-
-But note that you get the same "data" pointer in each case. If you
-wanted different data pointers, you would need more support from the
-config machinery. However, I'd rather that be spelled:
-
-  git_config(cb1, data1);
-  git_config(cb2, data2);
-  git_config(cb3, data3);
-
-and if the efficiency isn't acceptable, then looking into caching the
-key/value pairs.
-
-> On second thought, I think calling git_config() multiple times, each
-> time with one callback, may work too. We may want to cache config
-> content to avoid accessing files too many times though.
-
-Exactly. I would do that first, and then worry about efficiency later if
-it comes up. The first time I saw that we cached config multiple times
-in a program run (several years ago), I had the same thought. But I
-don't think the performance impact for reading the config 2 or 3 times
-instead of 1 was even measurable, so I stopped looking into it.
-
-If were to adopt something like the "automatically run this program to
-get the config value" proposal that has been floating around (and I am
-not saying we should), _then_ I think it might make sense to cache the
-values, because the sub-program might be expensive to run.
-
--Peff
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
