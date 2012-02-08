@@ -1,118 +1,55 @@
-From: Frans Klaver <fransklaver@gmail.com>
-Subject: Re: [StGit PATCH] Parse commit object header correctly
-Date: Wed, 8 Feb 2012 11:43:59 +0100
-Message-ID: <CAH6sp9P=vNjLycgzoWzRbeEsW-kQ5e4HgGYf2jP1+u9rtWV4dg@mail.gmail.com>
-References: <4F3120D4.1050604@warmcat.com>
-	<7vvcni1r5u.fsf@alter.siamese.dyndns.org>
-	<7vd39pzsmq.fsf_-_@alter.siamese.dyndns.org>
-	<4F3247CA.1020904@alum.mit.edu>
+From: Michael <kensington@astralcloak.net>
+Subject: [PATCH v2] Explicitly set X to avoid potential build breakage
+Date: Wed, 08 Feb 2012 21:59:04 +1100
+Message-ID: <1974397.vopy2n9Vpb@telegraph>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Karl_Hasselstr=C3=B6m?= <kha@treskal.com>,
-	Catalin Marinas <catalin.marinas@gmail.com>,
-	=?UTF-8?B?IkFuZHkgR3JlZW4gKOael+WuieW7uCki?= <andy@warmcat.com>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Feb 08 11:44:11 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 08 11:59:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rv50R-0002eV-AR
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Feb 2012 11:44:07 +0100
+	id 1Rv5F4-0000O6-Q8
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Feb 2012 11:59:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756161Ab2BHKoB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Feb 2012 05:44:01 -0500
-Received: from mail-qw0-f53.google.com ([209.85.216.53]:38287 "EHLO
-	mail-qw0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756013Ab2BHKoA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Feb 2012 05:44:00 -0500
-Received: by qafk1 with SMTP id k1so266604qaf.19
-        for <git@vger.kernel.org>; Wed, 08 Feb 2012 02:43:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=zmkKyvibQMPiQcI11qJoMRSFu6WWIFnsZDGFbR1C4Rc=;
-        b=qSV4a3lT6/WLDAEQik7JwVLZSyk/OHx7kD211+emCugjgfHyQZtRAYZcZKQiD+ZWak
-         fnqAuyKWjtp6GZL5Cjd9t4kFXLVKKNqjETVfkPpHBpg6uAh2G0viDjqyQDjIMIdSHXzZ
-         bWZqFEuVcPBiiQY4IwM+EmLQ4num/YcROTPNE=
-Received: by 10.224.179.13 with SMTP id bo13mr26137434qab.58.1328697839778;
- Wed, 08 Feb 2012 02:43:59 -0800 (PST)
-Received: by 10.224.204.74 with HTTP; Wed, 8 Feb 2012 02:43:59 -0800 (PST)
-In-Reply-To: <4F3247CA.1020904@alum.mit.edu>
+	id S1756639Ab2BHK7J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Feb 2012 05:59:09 -0500
+Received: from astralcloak.net ([66.246.75.167]:45723 "EHLO
+	mail.astralcloak.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755470Ab2BHK7I (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Feb 2012 05:59:08 -0500
+Received: from mail.astralcloak.net (mail.astralcloak.net [127.0.0.1]) by mail.astralcloak.net (Postfix) with ESMTPSA id B611E1FE029
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190231>
 
-T24gV2VkLCBGZWIgOCwgMjAxMiBhdCAxMTowMCBBTSwgTWljaGFlbCBIYWdnZXJ0eSA8bWhhZ2dl
-ckBhbHVtLm1pdC5lZHU+IHdyb3RlOgo+IE9uIDAyLzA4LzIwMTIgMDg6MzMgQU0sIEp1bmlvIEMg
-SGFtYW5vIHdyb3RlOgo+Cj4+IMKgKDEpIGRldGVjdHMgZW5kIG9mIHRoZSBoZWRhZXIgY29ycmVj
-dGx5IGJ5IHRyZWF0aW5nIG9ubHkgYW4gZW1wdHkgbGluZSBhcwo+PiDCoCDCoCDCoHN1Y2g7Cgpz
-L2hlZGFlci9oZWFkZXIvOwoKCj4+ICsgwqAgwqAgwqAgwqAgwqAgwqBsaW5lID0gbGluZXNbaV0u
-cnN0cmlwKCdcbicpCj4+ICsgwqAgwqAgwqAgwqAgwqAgwqBpeCA9IGxpbmUuZmluZCgnICcpCj4+
-ICsgwqAgwqAgwqAgwqAgwqAgwqBpZiAwIDw9IGl4Ogo+PiArIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKga2V5LCB2YWx1ZSA9IGxpbmVbMDppeF0sIGxpbmVbaXgrMTpdCj4KPiBUaGUgYWJvdmUgZml2
-ZSBsaW5lcyBjYW4gYmUgd3JpdHRlbgo+Cj4gwqAgwqAgwqAgwqAgwqAgZm9yIGxpbmUgaW4gbGlu
-ZXM6Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgJyAnIGluIGxpbmU6Cj4gwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAga2V5LCB2YWx1ZSA9IGxpbmUucnN0cmlwKCdcbicpLnNwbGl0KCcgJywg
-MSkKPgo+IG9yIChpZiB0aGUgbGFjayBvZiBhIHNwYWNlIHNob3VsZCBiZSB0cmVhdGVkIG1vcmUg
-bGlrZSBhbiBleGNlcHRpb24pCj4KPiDCoCDCoCDCoCDCoCDCoCBmb3IgbGluZSBpbiBsaW5lczoK
-PiDCoCDCoCDCoCDCoCDCoCDCoCDCoCB0cnk6Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-a2V5LCB2YWx1ZSA9IGxpbmUucnN0cmlwKCdcbicpLnNwbGl0KCcgJywgMSkKPiDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCBleGNlcHQgVmFsdWVFcnJvcjoKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCBjb250aW51ZQoKVGhpcyBpcyBnZW5lcmFsbHkgY29uc2lkZXJlZCBtb3JlIHB5dGhvbmljOiAi
-SXQncyBlYXNpZXIgdG8gYXNrIGZvcgpmb3JnaXZlbmVzcyB0aGFuIHRvIGdldCBwZXJtaXNzaW9u
-Ii4KCgo+Cj4+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBpZiBrZXkgPT0gJ3RyZWUnOgo+PiAr
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgY2QgPSBjZC5zZXRfdHJlZShyZXBvc2l0b3J5
-LmdldF90cmVlKHZhbHVlKSkKPj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGVsaWYga2V5ID09
-ICdwYXJlbnQnOgo+PiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgY2QgPSBjZC5hZGRf
-cGFyZW50KHJlcG9zaXRvcnkuZ2V0X2NvbW1pdCh2YWx1ZSkpCj4+ICsgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqBlbGlmIGtleSA9PSAnYXV0aG9yJzoKPj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoGNkID0gY2Quc2V0X2F1dGhvcihQZXJzb24ucGFyc2UodmFsdWUpKQo+PiArIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgZWxpZiBrZXkgPT0gJ2NvbW1pdHRlcic6Cj4+ICsgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqBjZCA9IGNkLnNldF9jb21taXR0ZXIoUGVyc29uLnBhcnNlKHZh
-bHVlKSkKPgo+IEFsbCBpbiBhbGwsIEkgd291bGQgcmVjb21tZW5kIHNvbWV0aGluZyBsaWtlICh1
-bnRlc3RlZCk6Cj4KPiDCoCDCoCDCoCDCoEByZXR1cm46IEEgbmV3IEx7Q29tbWl0RGF0YX0gb2Jq
-ZWN0Cj4gwqAgwqAgwqAgwqBAcnR5cGU6IEx7Q29tbWl0RGF0YX0iIiIKPiDCoCDCoCDCoCDCoGNk
-ID0gY2xzKHBhcmVudHMgPSBbXSkKPiDCoCDCoCDCoCDCoGxpbmVzID0gW10KPiDCoCDCoCDCoCDC
-oHJhd19saW5lcyA9IHMuc3BsaXQoJ1xuJykKPiDCoCDCoCDCoCDCoCMgQ29sbGFwc2UgbXVsdGkt
-bGluZSBoZWFkZXIgbGluZXMKPiDCoCDCoCDCoCDCoGZvciBpLCBsaW5lIGluIGVudW1lcmF0ZShy
-YXdfbGluZXMpOgo+IMKgIMKgIMKgIMKgIMKgIMKgaWYgbm90IGxpbmU6Cj4gwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqBjZC5zZXRfbWVzc2FnZSgnXG4nLmpvaW4ocmF3X2xpbmVzW2krMTpdKSkKPiDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoGJyZWFrCj4gwqAgwqAgwqAgwqAgwqAgwqBpZiBsaW5lLnN0
-YXJ0c3dpdGgoJyAnKToKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCMgY29udGludWF0aW9uIGxp
-bmUKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGxpbmVzWy0xXSArPSAnXG4nICsgbGluZVsxOl0K
-PiDCoCDCoCDCoCDCoCDCoCDCoGVsc2U6Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBsaW5lcy5h
-cHBlbmQobGluZSkKPgo+IMKgIMKgIMKgIMKgZm9yIGxpbmUgaW4gbGluZXM6Cj4gwqAgwqAgwqAg
-wqAgwqAgwqBpZiAnICcgaW4gbGluZToKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGtleSwgdmFs
-dWUgPSBsaW5lLnNwbGl0KCcgJywgMSkKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGlmIGtleSA9
-PSAndHJlZSc6Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBjZCA9IGNkLnNldF90cmVl
-KHJlcG9zaXRvcnkuZ2V0X3RyZWUodmFsdWUpKQo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgZWxp
-ZiBrZXkgPT0gJ3BhcmVudCc6Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBjZCA9IGNk
-LmFkZF9wYXJlbnQocmVwb3NpdG9yeS5nZXRfY29tbWl0KHZhbHVlKSkKPiDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoGVsaWYga2V5ID09ICdhdXRob3InOgo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgY2QgPSBjZC5zZXRfYXV0aG9yKFBlcnNvbi5wYXJzZSh2YWx1ZSkpCj4gwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqBlbGlmIGtleSA9PSAnY29tbWl0dGVyJzoKPiDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoGNkID0gY2Quc2V0X2NvbW1pdHRlcihQZXJzb24ucGFyc2UodmFsdWUpKQo+
-IMKgIMKgIMKgIMKgcmV0dXJuIGNkCgpPbmUgY291bGQgYWxzbyB0YWtlIHRoZSByZWNvbW1lbmRl
-ZCBweXRob24gYXBwcm9hY2ggZm9yCnN3aXRjaC9jYXNlLWxpa2UgaWYvZWxpZi9lbHNlIHN0YXRl
-bWVudHM6Cgp1cGRhdGVyID0geyAndHJlZSc6IGxhbWJkYSBjZCwgdmFsdWU6IGNkLnNldF90cmVl
-KHJlcG9zaXRvcnkuZ2V0X3RyZWUodmFsdWUpLAogICAgICAgICAgICAgICAgICdwYXJlbnQnOiBs
-YW1iZGEgY2QsIHZhbHVlOgpjZC5hZGRfcGFyZW50KHJlcG9zaXRvcnkuZ2V0X2NvbW1pdCh2YWx1
-ZSkpLAogICAgICAgICAgICAgICAgICdhdXRob3InOiBsYW1iZGEgY2QsIHZhbHVlOiBjZC5zZXRf
-YXV0aG9yKFBlcnNvbi5wYXJzZSh2YWx1ZSkpLAogICAgICAgICAgICAgICAgICdjb21taXR0ZXIn
-OiBsYW1iZGEgY2QsIHZhbHVlOgpjZC5zZXRfY29tbWl0dGVyKFBlcnNvbi5wYXJzZSh2YWx1ZSkp
-CiAgICAgICAgICAgICAgfQpmb3IgbGluZSBpbiBsaW5lczoKICAgIHRyeToKICAgICAgICBrZXks
-IHZhbHVlID0gbGluZS5zcGxpdCgnICcsIDEpCiAgICAgICAgY2QgPSB1cGRhdGVyW2tleV0oY2Qs
-IHZhbHVlKQogICAgZXhjZXB0IFZhbHVlRXJyb3I6CiAgICAgICAgY29udGludWUKICAgIGV4Y2Vw
-dCBLZXlFcnJvcjoKICAgICAgICBjb250aW51ZQoKSXQgZG9jdW1lbnRzIGFib3V0IHRoZSBzYW1l
-LCBidXQgYWRkcyBjaGVja2luZyBvbiBkb3VibGUgJ2Nhc2UnCnN0YXRlbWVudHMuIFRoZSByZXN1
-bHRpbmcgZm9yIGxvb3AgaXMgcmF0aGVyIGNsZWFuZXIgYW5kIHRoZSBleGNlcHRpb24KYXBwcm9h
-Y2ggYmVjb21lcyBldmVuIG1vcmUgbG9naWNhbC4gSSByYXRoZXIgbGlrZSB0aGUgcmVzdWx0LCBi
-dXQgSQpndWVzcyBpdCdzIG1vc3RseSBhIG1hdHRlciBvZiB0YXN0ZS4KCkNoZWVycywKRnJhbnMK
+$X is appended to binary names for Windows builds (ie. git.exe).
+Pollution from the environment can inadvertently trigger this behaviour,
+resulting in 'git' turning into 'gitwhatever' without warning.
+
+Signed-off-by: Michael Palimaka <kensington@astralcloak.net>
+---
+ Makefile |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 87fb30a..b21d40c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -460,6 +460,9 @@ PROGRAM_OBJS += http-backend.o
+ PROGRAM_OBJS += sh-i18n--envsubst.o
+ PROGRAM_OBJS += credential-store.o
+ 
++# Binary suffix used for Windows builds
++X =
++
+ PROGRAMS += $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
+ 
+ TEST_PROGRAMS_NEED_X += test-chmtime
+-- 
+1.7.8.4
