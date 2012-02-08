@@ -1,85 +1,68 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv3] tag: add --points-at list option
-Date: Wed, 8 Feb 2012 10:44:42 -0500
-Message-ID: <20120208154442.GB8773@sigill.intra.peff.net>
-References: <20120208002554.GA6035@sigill.intra.peff.net>
- <1328682076-23380-2-git-send-email-tmgrennan@gmail.com>
+Subject: Re: [PATCH 1/2] docs: add a basic description of the config API
+Date: Wed, 8 Feb 2012 10:48:55 -0500
+Message-ID: <20120208154855.GC8773@sigill.intra.peff.net>
+References: <20120206095306.GA2404@sigill.intra.peff.net>
+ <20120206095346.GA4300@sigill.intra.peff.net>
+ <7vbopb61cd.fsf@alter.siamese.dyndns.org>
+ <20120207180625.GA27189@sigill.intra.peff.net>
+ <7vlioe1o1g.fsf@alter.siamese.dyndns.org>
+ <CACsJy8AU3ZA1=Q3vahhP6Nr=FZNKd7oRJ04mtKVs+uvNqJeVaw@mail.gmail.com>
+ <7vmx8tzv3l.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com, jasampler@gmail.com
-To: Tom Grennan <tmgrennan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 08 16:44:52 2012
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 08 16:49:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rv9hR-0004Tr-PW
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Feb 2012 16:44:50 +0100
+	id 1Rv9lW-0006Km-Tj
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Feb 2012 16:49:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756639Ab2BHPop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Feb 2012 10:44:45 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59619
+	id S1756902Ab2BHPs6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Feb 2012 10:48:58 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59625
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756246Ab2BHPoo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Feb 2012 10:44:44 -0500
-Received: (qmail 16830 invoked by uid 107); 8 Feb 2012 15:51:52 -0000
+	id S1756689Ab2BHPs5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Feb 2012 10:48:57 -0500
+Received: (qmail 16867 invoked by uid 107); 8 Feb 2012 15:56:05 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 08 Feb 2012 10:51:52 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Feb 2012 10:44:42 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 08 Feb 2012 10:56:05 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Feb 2012 10:48:55 -0500
 Content-Disposition: inline
-In-Reply-To: <1328682076-23380-2-git-send-email-tmgrennan@gmail.com>
+In-Reply-To: <7vmx8tzv3l.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190241>
 
-On Tue, Feb 07, 2012 at 10:21:16PM -0800, Tom Grennan wrote:
+On Tue, Feb 07, 2012 at 10:40:14PM -0800, Junio C Hamano wrote:
 
-> +static const unsigned char *match_points_at(const unsigned char *sha1)
-> +{
-> +	int i;
-> +	const unsigned char *tagged_sha1 = (unsigned char*)"";
-> +	struct object *obj = parse_object(sha1);
-> +
-> +	if (obj && obj->type == OBJ_TAG)
-> +		tagged_sha1 = ((struct tag *)obj)->tagged->sha1;
+> What I was getting at is that we probably should officially declare that
+> returning 1 to signal success is perfectly acceptable (and it probably
+> should mean the caller who called the callback function as a sub callback
+> should return immediately, taking it as a signal that the key has already
+> been handled), as the primary purpose of this thread to discuss Peff's
+> patch is to write these rules down.
+> 
+> Of course, all that relies on the audit of the git_config() machinery. I
+> think it is written to accept non-negative as success, and that is why I
+> said "I too think this should be acceptable" in the first place.
 
-This is not safe. A sha1 is not NUL-terminated, but is rather _always_
-20 bytes. So when the object is not a tag, you do the hashcmp against
-your single-byte string literal above, and we end up comparing whatever
-garbage is in the data segment after the string literal.
+I looked through it the other day when this came up, and I believe that
+is the case. There is another related rule that should be considered,
+though: should the return value from callbacks be propagated via
+git_config to its caller?
 
-What you want instead is the all-zeros sha1, like:
-
-  const unsigned char null_sha1[20] = { 0 };
-
-Though we provide a null_sha1 global already. So doing:
-
-  const unsigned char *tagged_sha1 = null_sha1;
-
-would be sufficient.
-
-That being said, I don't know why you want to do both lookups in the
-same loop of the points_at. If it's a lightweight tag and the tag
-matches, you can get away with not parsing the object at all (although
-to be fair, that is the minority case, so it is unlikely to matter).
-
-Also, should we be producing an error if !obj? It would indicate a tag
-that points to a bogus object.
-
-> +	for (i = 0; i < points_at.nr; i++)
-> +		if (!hashcmp(points_at.sha1[i], sha1))
-> +			return sha1;
-> +		else if (!hashcmp(points_at.sha1[i], tagged_sha1))
-> +			return tagged_sha1;
-> +	return NULL;
-
-Why write your own linear search? sha1_array_lookup will do a binary
-search for you.
-
-Other than that, the patch looks OK to me.
+It is the case already for config files that are read, but not for
+config options parsed from the command line. It would not be too hard to
+change, but I do not think any current callers care (as I mentioned
+earlier, these days with the "void *" data pointer, sane callers will
+simply pass in a pointer to a modifiable data area).
 
 -Peff
