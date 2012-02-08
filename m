@@ -1,71 +1,118 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: cloning a tree which has detached branch checked out
-Date: Wed, 8 Feb 2012 12:17:30 +0200
-Message-ID: <20120208101729.GA26551@redhat.com>
-References: <20120207070628.GA24698@redhat.com>
- <m362fjklb7.fsf@localhost.localdomain>
- <20120207104100.GA24828@redhat.com>
- <CACsJy8DtmQLX+Lfng-QRzVg9sfo8gQMXB-xTtPYpt+R2gModTg@mail.gmail.com>
- <20120207153225.GA14773@sigill.intra.peff.net>
- <7v4nv236xn.fsf@alter.siamese.dyndns.org>
- <20120207171604.GA26614@sigill.intra.peff.net>
+From: Frans Klaver <fransklaver@gmail.com>
+Subject: Re: [StGit PATCH] Parse commit object header correctly
+Date: Wed, 8 Feb 2012 11:43:59 +0100
+Message-ID: <CAH6sp9P=vNjLycgzoWzRbeEsW-kQ5e4HgGYf2jP1+u9rtWV4dg@mail.gmail.com>
+References: <4F3120D4.1050604@warmcat.com>
+	<7vvcni1r5u.fsf@alter.siamese.dyndns.org>
+	<7vd39pzsmq.fsf_-_@alter.siamese.dyndns.org>
+	<4F3247CA.1020904@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 08 11:17:42 2012
+	=?UTF-8?Q?Karl_Hasselstr=C3=B6m?= <kha@treskal.com>,
+	Catalin Marinas <catalin.marinas@gmail.com>,
+	=?UTF-8?B?IkFuZHkgR3JlZW4gKOael+WuieW7uCki?= <andy@warmcat.com>,
+	git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Feb 08 11:44:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rv4ar-0001Tr-Ah
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Feb 2012 11:17:41 +0100
+	id 1Rv50R-0002eV-AR
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Feb 2012 11:44:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755394Ab2BHKRh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Feb 2012 05:17:37 -0500
-Received: from mx1.redhat.com ([209.132.183.28]:52647 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753428Ab2BHKRg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Feb 2012 05:17:36 -0500
-Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id q18AHTE5013300
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Wed, 8 Feb 2012 05:17:29 -0500
-Received: from redhat.com (vpn-203-194.tlv.redhat.com [10.35.203.194])
-	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id q18AHQul005198;
-	Wed, 8 Feb 2012 05:17:27 -0500
-Content-Disposition: inline
-In-Reply-To: <20120207171604.GA26614@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+	id S1756161Ab2BHKoB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Feb 2012 05:44:01 -0500
+Received: from mail-qw0-f53.google.com ([209.85.216.53]:38287 "EHLO
+	mail-qw0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756013Ab2BHKoA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Feb 2012 05:44:00 -0500
+Received: by qafk1 with SMTP id k1so266604qaf.19
+        for <git@vger.kernel.org>; Wed, 08 Feb 2012 02:43:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=zmkKyvibQMPiQcI11qJoMRSFu6WWIFnsZDGFbR1C4Rc=;
+        b=qSV4a3lT6/WLDAEQik7JwVLZSyk/OHx7kD211+emCugjgfHyQZtRAYZcZKQiD+ZWak
+         fnqAuyKWjtp6GZL5Cjd9t4kFXLVKKNqjETVfkPpHBpg6uAh2G0viDjqyQDjIMIdSHXzZ
+         bWZqFEuVcPBiiQY4IwM+EmLQ4num/YcROTPNE=
+Received: by 10.224.179.13 with SMTP id bo13mr26137434qab.58.1328697839778;
+ Wed, 08 Feb 2012 02:43:59 -0800 (PST)
+Received: by 10.224.204.74 with HTTP; Wed, 8 Feb 2012 02:43:59 -0800 (PST)
+In-Reply-To: <4F3247CA.1020904@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190230>
 
-On Tue, Feb 07, 2012 at 12:16:04PM -0500, Jeff King wrote:
-> On Tue, Feb 07, 2012 at 09:11:00AM -0800, Junio C Hamano wrote:
-> 
-> > > This particular bug should have been fixed before that, even, with my
-> > > c1921c1 (clone: always fetch remote HEAD, 2011-06-07). And it is tested
-> > > explicitly in t5707,...
-> > [...]
-> > What is funny is "error: Trying to write ref HEAD with nonexistant object".
-> > "git grep -e nonexistant f3fb0" does not register any hit.
-> 
-> That misspelling of "nonexistent" was fixed by 7be8b3b (Fix typo:
-> existant->existent, 2011-06-16), around the same time as my clone patch.
-> Which really makes me wonder if the OP is accidentally running an old
-> version of git during the tests.
-
-Double checked and you are right: the box actually runs git 1.7.1.
-Rechecked with 1.7.9.GIT and it behaves correctly.
-
-My mistake, sorry about the noise.
-
--- 
-MST
+T24gV2VkLCBGZWIgOCwgMjAxMiBhdCAxMTowMCBBTSwgTWljaGFlbCBIYWdnZXJ0eSA8bWhhZ2dl
+ckBhbHVtLm1pdC5lZHU+IHdyb3RlOgo+IE9uIDAyLzA4LzIwMTIgMDg6MzMgQU0sIEp1bmlvIEMg
+SGFtYW5vIHdyb3RlOgo+Cj4+IMKgKDEpIGRldGVjdHMgZW5kIG9mIHRoZSBoZWRhZXIgY29ycmVj
+dGx5IGJ5IHRyZWF0aW5nIG9ubHkgYW4gZW1wdHkgbGluZSBhcwo+PiDCoCDCoCDCoHN1Y2g7Cgpz
+L2hlZGFlci9oZWFkZXIvOwoKCj4+ICsgwqAgwqAgwqAgwqAgwqAgwqBsaW5lID0gbGluZXNbaV0u
+cnN0cmlwKCdcbicpCj4+ICsgwqAgwqAgwqAgwqAgwqAgwqBpeCA9IGxpbmUuZmluZCgnICcpCj4+
+ICsgwqAgwqAgwqAgwqAgwqAgwqBpZiAwIDw9IGl4Ogo+PiArIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKga2V5LCB2YWx1ZSA9IGxpbmVbMDppeF0sIGxpbmVbaXgrMTpdCj4KPiBUaGUgYWJvdmUgZml2
+ZSBsaW5lcyBjYW4gYmUgd3JpdHRlbgo+Cj4gwqAgwqAgwqAgwqAgwqAgZm9yIGxpbmUgaW4gbGlu
+ZXM6Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgJyAnIGluIGxpbmU6Cj4gwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAga2V5LCB2YWx1ZSA9IGxpbmUucnN0cmlwKCdcbicpLnNwbGl0KCcgJywg
+MSkKPgo+IG9yIChpZiB0aGUgbGFjayBvZiBhIHNwYWNlIHNob3VsZCBiZSB0cmVhdGVkIG1vcmUg
+bGlrZSBhbiBleGNlcHRpb24pCj4KPiDCoCDCoCDCoCDCoCDCoCBmb3IgbGluZSBpbiBsaW5lczoK
+PiDCoCDCoCDCoCDCoCDCoCDCoCDCoCB0cnk6Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+a2V5LCB2YWx1ZSA9IGxpbmUucnN0cmlwKCdcbicpLnNwbGl0KCcgJywgMSkKPiDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCBleGNlcHQgVmFsdWVFcnJvcjoKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCBjb250aW51ZQoKVGhpcyBpcyBnZW5lcmFsbHkgY29uc2lkZXJlZCBtb3JlIHB5dGhvbmljOiAi
+SXQncyBlYXNpZXIgdG8gYXNrIGZvcgpmb3JnaXZlbmVzcyB0aGFuIHRvIGdldCBwZXJtaXNzaW9u
+Ii4KCgo+Cj4+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBpZiBrZXkgPT0gJ3RyZWUnOgo+PiAr
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgY2QgPSBjZC5zZXRfdHJlZShyZXBvc2l0b3J5
+LmdldF90cmVlKHZhbHVlKSkKPj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGVsaWYga2V5ID09
+ICdwYXJlbnQnOgo+PiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgY2QgPSBjZC5hZGRf
+cGFyZW50KHJlcG9zaXRvcnkuZ2V0X2NvbW1pdCh2YWx1ZSkpCj4+ICsgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqBlbGlmIGtleSA9PSAnYXV0aG9yJzoKPj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoGNkID0gY2Quc2V0X2F1dGhvcihQZXJzb24ucGFyc2UodmFsdWUpKQo+PiArIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgZWxpZiBrZXkgPT0gJ2NvbW1pdHRlcic6Cj4+ICsgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqBjZCA9IGNkLnNldF9jb21taXR0ZXIoUGVyc29uLnBhcnNlKHZh
+bHVlKSkKPgo+IEFsbCBpbiBhbGwsIEkgd291bGQgcmVjb21tZW5kIHNvbWV0aGluZyBsaWtlICh1
+bnRlc3RlZCk6Cj4KPiDCoCDCoCDCoCDCoEByZXR1cm46IEEgbmV3IEx7Q29tbWl0RGF0YX0gb2Jq
+ZWN0Cj4gwqAgwqAgwqAgwqBAcnR5cGU6IEx7Q29tbWl0RGF0YX0iIiIKPiDCoCDCoCDCoCDCoGNk
+ID0gY2xzKHBhcmVudHMgPSBbXSkKPiDCoCDCoCDCoCDCoGxpbmVzID0gW10KPiDCoCDCoCDCoCDC
+oHJhd19saW5lcyA9IHMuc3BsaXQoJ1xuJykKPiDCoCDCoCDCoCDCoCMgQ29sbGFwc2UgbXVsdGkt
+bGluZSBoZWFkZXIgbGluZXMKPiDCoCDCoCDCoCDCoGZvciBpLCBsaW5lIGluIGVudW1lcmF0ZShy
+YXdfbGluZXMpOgo+IMKgIMKgIMKgIMKgIMKgIMKgaWYgbm90IGxpbmU6Cj4gwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqBjZC5zZXRfbWVzc2FnZSgnXG4nLmpvaW4ocmF3X2xpbmVzW2krMTpdKSkKPiDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoGJyZWFrCj4gwqAgwqAgwqAgwqAgwqAgwqBpZiBsaW5lLnN0
+YXJ0c3dpdGgoJyAnKToKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCMgY29udGludWF0aW9uIGxp
+bmUKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGxpbmVzWy0xXSArPSAnXG4nICsgbGluZVsxOl0K
+PiDCoCDCoCDCoCDCoCDCoCDCoGVsc2U6Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBsaW5lcy5h
+cHBlbmQobGluZSkKPgo+IMKgIMKgIMKgIMKgZm9yIGxpbmUgaW4gbGluZXM6Cj4gwqAgwqAgwqAg
+wqAgwqAgwqBpZiAnICcgaW4gbGluZToKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGtleSwgdmFs
+dWUgPSBsaW5lLnNwbGl0KCcgJywgMSkKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGlmIGtleSA9
+PSAndHJlZSc6Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBjZCA9IGNkLnNldF90cmVl
+KHJlcG9zaXRvcnkuZ2V0X3RyZWUodmFsdWUpKQo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgZWxp
+ZiBrZXkgPT0gJ3BhcmVudCc6Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBjZCA9IGNk
+LmFkZF9wYXJlbnQocmVwb3NpdG9yeS5nZXRfY29tbWl0KHZhbHVlKSkKPiDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoGVsaWYga2V5ID09ICdhdXRob3InOgo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgY2QgPSBjZC5zZXRfYXV0aG9yKFBlcnNvbi5wYXJzZSh2YWx1ZSkpCj4gwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqBlbGlmIGtleSA9PSAnY29tbWl0dGVyJzoKPiDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoGNkID0gY2Quc2V0X2NvbW1pdHRlcihQZXJzb24ucGFyc2UodmFsdWUpKQo+
+IMKgIMKgIMKgIMKgcmV0dXJuIGNkCgpPbmUgY291bGQgYWxzbyB0YWtlIHRoZSByZWNvbW1lbmRl
+ZCBweXRob24gYXBwcm9hY2ggZm9yCnN3aXRjaC9jYXNlLWxpa2UgaWYvZWxpZi9lbHNlIHN0YXRl
+bWVudHM6Cgp1cGRhdGVyID0geyAndHJlZSc6IGxhbWJkYSBjZCwgdmFsdWU6IGNkLnNldF90cmVl
+KHJlcG9zaXRvcnkuZ2V0X3RyZWUodmFsdWUpLAogICAgICAgICAgICAgICAgICdwYXJlbnQnOiBs
+YW1iZGEgY2QsIHZhbHVlOgpjZC5hZGRfcGFyZW50KHJlcG9zaXRvcnkuZ2V0X2NvbW1pdCh2YWx1
+ZSkpLAogICAgICAgICAgICAgICAgICdhdXRob3InOiBsYW1iZGEgY2QsIHZhbHVlOiBjZC5zZXRf
+YXV0aG9yKFBlcnNvbi5wYXJzZSh2YWx1ZSkpLAogICAgICAgICAgICAgICAgICdjb21taXR0ZXIn
+OiBsYW1iZGEgY2QsIHZhbHVlOgpjZC5zZXRfY29tbWl0dGVyKFBlcnNvbi5wYXJzZSh2YWx1ZSkp
+CiAgICAgICAgICAgICAgfQpmb3IgbGluZSBpbiBsaW5lczoKICAgIHRyeToKICAgICAgICBrZXks
+IHZhbHVlID0gbGluZS5zcGxpdCgnICcsIDEpCiAgICAgICAgY2QgPSB1cGRhdGVyW2tleV0oY2Qs
+IHZhbHVlKQogICAgZXhjZXB0IFZhbHVlRXJyb3I6CiAgICAgICAgY29udGludWUKICAgIGV4Y2Vw
+dCBLZXlFcnJvcjoKICAgICAgICBjb250aW51ZQoKSXQgZG9jdW1lbnRzIGFib3V0IHRoZSBzYW1l
+LCBidXQgYWRkcyBjaGVja2luZyBvbiBkb3VibGUgJ2Nhc2UnCnN0YXRlbWVudHMuIFRoZSByZXN1
+bHRpbmcgZm9yIGxvb3AgaXMgcmF0aGVyIGNsZWFuZXIgYW5kIHRoZSBleGNlcHRpb24KYXBwcm9h
+Y2ggYmVjb21lcyBldmVuIG1vcmUgbG9naWNhbC4gSSByYXRoZXIgbGlrZSB0aGUgcmVzdWx0LCBi
+dXQgSQpndWVzcyBpdCdzIG1vc3RseSBhIG1hdHRlciBvZiB0YXN0ZS4KCkNoZWVycywKRnJhbnMK
