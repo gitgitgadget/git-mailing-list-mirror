@@ -1,54 +1,68 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: Git documentation at kernel.org
-Date: Wed, 8 Feb 2012 22:34:10 +0100
-Message-ID: <20120208213410.GA5768@ecki>
-References: <CAPyqok3USqMxm0gNf_T9vnCoicp9XSwpWUCYJ8jh79h=V_UuOA@mail.gmail.com>
+From: Eric Scouten <eric@scouten.com>
+Subject: git p4 submit bugs (submit fails due to keyword expansion mismatch
+ and gives bad instructions for how to proceed)
+Date: Wed, 8 Feb 2012 13:49:50 -0800
+Message-ID: <CAEe=O8o-BG0xNGQEweezPu8cj+Brt1Km_anhEJBg0W7Q=rLbkw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Onderka <gsvick@gmail.com>, git@vger.kernel.org
-To: ftpadmin@kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 08 22:42:58 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 08 22:49:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvFHy-00064D-Q8
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Feb 2012 22:42:55 +0100
+	id 1RvFOm-0000F5-Cq
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Feb 2012 22:49:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757498Ab2BHVmv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Feb 2012 16:42:51 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:57616 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756850Ab2BHVmf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Feb 2012 16:42:35 -0500
-Received: from localhost (p5B22EFA4.dip.t-dialin.net [91.34.239.164])
-	by bsmtp.bon.at (Postfix) with ESMTP id 34D5A130054;
-	Wed,  8 Feb 2012 22:42:31 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <CAPyqok3USqMxm0gNf_T9vnCoicp9XSwpWUCYJ8jh79h=V_UuOA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755434Ab2BHVtw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Feb 2012 16:49:52 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:42826 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754781Ab2BHVtv (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Feb 2012 16:49:51 -0500
+Received: by obcva7 with SMTP id va7so1349643obc.19
+        for <git@vger.kernel.org>; Wed, 08 Feb 2012 13:49:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        bh=eSCTpo2StgHV6ET6dFIqjhF+Kll8VYsdTRHwOIGBo8Q=;
+        b=h8EnIb1ke3f0SD8MkkfbI9vsKyXVA9pBOz4UePLs/ADRF+fJmCZVyGWoNQZBpKKRuM
+         vnR7mPKJuu4c75ksdWaT7z+sSDtGVuGpNgT+OJio0Yh3mrkHgkJMHVK6UnLfWFHD6keE
+         AW1BS2uWc9XfBzcO67hAQ0mni8gtSK9gFKDnQ=
+Received: by 10.182.222.74 with SMTP id qk10mr27558721obc.75.1328737790498;
+ Wed, 08 Feb 2012 13:49:50 -0800 (PST)
+Received: by 10.182.97.168 with HTTP; Wed, 8 Feb 2012 13:49:50 -0800 (PST)
+X-Google-Sender-Auth: dkJA4Pwtz3heuA5bIPBXVMWGptc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190257>
 
-Hi,
+I've been experimenting with git-p4 as a front-end to Perforce as
+described in http://www.perforce.com/blog/120113/git-perforce-client,
+but two bugs are causing me major headaches:
 
-Please restore access to the following files when possible. Some sites
-are referencing those, including kernel.org itself:
+(1) git-p4 doesn't work with P4 keyword expansion. (I gather there's a
+fork of git-p4 that makes it work, but the current official distro
+doesn't.) This can lead to some ugly failed submits down the road.
+Which leads me to ...
 
- http://www.kernel.org/pub/software/scm/git/docs/git.html
- and references therein
+(2) When a git p4 submit fails, the error message for how to resolve
+it is bogus. The instructions say "Please resolve and submit the
+conflict manually and continue afterwards with git-p4 submit
+--continue", but when I do that, I get:
 
- http://www.kernel.org/pub/software/scm/git/docs/howto/using-merge-subtree.html
- referenced by
- https://git.wiki.kernel.org/articles/g/i/t/GitFaq_ebc3.html#How_do_I_clone_a_subdirectory.3F
+$ git p4 submit --continue
+Usage: git-p4 submit [options] [name of git branch to submit into
+perforce depot]
+git-p4: error: no such option: --continue
 
-Also, it would be great if the git wiki could be made editable again.
+Ugh.
 
-Thank you for your consideration.
+(P.S. If there's a better place to post bug reports, etc., please
+inform. Thanks.)
 
-Regards,
-Clemens
+-Eric
