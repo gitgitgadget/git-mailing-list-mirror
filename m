@@ -1,151 +1,121 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: [RFC/PATCHv2 2/2] git-p4: initial demonstration of possible RCS keyword fixup
-Date: Thu,  9 Feb 2012 23:17:22 +0000
-Message-ID: <1328829442-12550-3-git-send-email-luke@diamand.org>
-References: <1328829442-12550-1-git-send-email-luke@diamand.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] gitweb: Option for filling only specified info in
+ fill_project_list_info
+Date: Thu, 09 Feb 2012 15:18:16 -0800
+Message-ID: <7v4nuzvbnr.fsf@alter.siamese.dyndns.org>
+References: <1328359648-29511-1-git-send-email-jnareb@gmail.com>
+ <1328359648-29511-2-git-send-email-jnareb@gmail.com>
+ <7vhayzvf38.fsf@alter.siamese.dyndns.org>
+ <201202092336.48772.jnareb@gmail.com>
 Mime-Version: 1.0
-Cc: Pete Wyckoff <pw@padd.com>, Eric Scouten <eric@scouten.com>,
-	Luke Diamand <luke@diamand.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 10 00:17:38 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 10 00:18:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvdFB-0003pp-N2
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 00:17:38 +0100
+	id 1RvdFx-0004HX-F0
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 00:18:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758628Ab2BIXR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Feb 2012 18:17:29 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:35209 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758526Ab2BIXR2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2012 18:17:28 -0500
-Received: by wgbdt10 with SMTP id dt10so2203633wgb.1
-        for <git@vger.kernel.org>; Thu, 09 Feb 2012 15:17:27 -0800 (PST)
-Received: by 10.180.83.70 with SMTP id o6mr24503760wiy.19.1328829447599;
-        Thu, 09 Feb 2012 15:17:27 -0800 (PST)
-Received: from ethel.cable.virginmedia.net (cpc19-cmbg14-2-0-cust6.5-4.cable.virginmedia.com. [86.6.30.7])
-        by mx.google.com with ESMTPS id q7sm9809903wix.5.2012.02.09.15.17.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 09 Feb 2012 15:17:26 -0800 (PST)
-X-Mailer: git-send-email 1.7.9.rc2.128.gfce41.dirty
-In-Reply-To: <1328829442-12550-1-git-send-email-luke@diamand.org>
-X-Gm-Message-State: ALoCoQk6U6YhrN9uoNpFdS9R4cwX0ReN06ieFUSVzv3v1nmwCbWJg2jz28T8R242zX2hC2X95oaI
+	id S1758668Ab2BIXSU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Feb 2012 18:18:20 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47298 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758658Ab2BIXST convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Feb 2012 18:18:19 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C621A6A3B;
+	Thu,  9 Feb 2012 18:18:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=XX7CHuR6jtDI
+	WJmsiiBv4P7GjFA=; b=TtbefkxrK2NOX4UDehCpyU17vWd7oTWk4J0EbKtrWc2z
+	nLN+k/O0zefAn+1suW7rMkWlh5aa9OERwK268KU0nDIgxeKrYik/b82Mm621lMEb
+	mx+Mv+o4Lc8GhS58RUDd970WzZiqkSgVNr6pEvNOk1H9MIXMMZ/9WQ8JpNADQMg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=umSb0o
+	QA7+zmZcRPn7YbE8w8m/y/txgCjJ3Qnsi1aCy3EymRhwDeeHInyBhKcapmNaiXoY
+	2e/k23RzARcSq9jtn81mAXGxlvYTss/9wCtuoV1+/bFnvP1Gya+8GObrERR5zWc6
+	XfUGIywc/6Cea//7biIqDZwovZ5xAwZq6IAMY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BDC1C6A3A;
+	Thu,  9 Feb 2012 18:18:18 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4B5716A39; Thu,  9 Feb 2012
+ 18:18:18 -0500 (EST)
+In-Reply-To: <201202092336.48772.jnareb@gmail.com> (Jakub Narebski's message
+ of "Thu, 9 Feb 2012 23:36:48 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 59A60EBA-5374-11E1-BF1F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190340>
 
-This change has a go at showing a possible way to fixup RCS
-keyword handling in git-p4.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-It does not cope with deleted files.
-It does not have good test coverage.
-It does not solve the problem of the incorrect error messages.
-But it does at least work after a fashion, and could provide
-a starting point.
+>> The lack of any real use of @fill_only in this patch also makes it h=
+ard to
+>> judge if the new API gives a useful semantics.  I would, without loo=
+king
+>> at the real usage in 2/5 patch, na=C3=AFvely expect that such a lazy=
+ filling
+>> scheme would say "I am going to use A, B and C; I want to know if an=
+y of
+>> them is missing, because I need values for all of them and I am goin=
+g to
+>> call a helper function to fill them if any of them is missing. Havin=
+g A
+>> and B is not enough for the purpose of this query, because I still n=
+eed to
+>> know C and I would call the helper function that computes all of the=
+m in
+>> such a case. Even though it might be wasteful to recompute A and B,
+>> computing all three at once is the only helper function available to=
+ me".
+>>=20
+>> So for a person who does not have access to the real usage of the ne=
+w API,
+>> being able to give only a single $key *appears* make no sense at all=
+, and
+>> also the meaning of the @fill_only parameter is unclear, especially =
+the
+>> part that checks if that single $key appears in @fill_only.
+>
+> ...
+> information that is not already present.  If @fill_only is nonempty, =
+it
+> fills only selected information, again only if it is not already pres=
+ent.
+> @fill_only empty means no restrictions... which probably is not very =
+obvious,
+> but is documented.
+>
+> project_info_needs_filling() returns true if $key is not filled and i=
+s
+> interesting.
 
-Signed-off-by: Luke Diamand <luke@diamand.org>
----
- contrib/fast-import/git-p4 |   43 +++++++++++++++++++++++++++++++++++++++++--
- t/t9810-git-p4-rcs.sh      |    1 +
- 2 files changed, 42 insertions(+), 2 deletions(-)
+That still does not answer the fundamental issues I had with the presen=
+ted
+API: why does it take only a single $key (please re-read my "A, B and C=
+"
+example), and what does that single $key intersecting with @fill_only h=
+ave
+anything to do with "needs-filling"?
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index a78d9c5..205fefd 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -753,6 +753,23 @@ class P4Submit(Command, P4UserMap):
- 
-         return result
- 
-+    def patchRCSKeywords(self, file):
-+        # Attempt to zap the RCS keywords in a p4 controlled file
-+        p4_edit(file)
-+        (handle, outFileName) = tempfile.mkstemp()
-+        outFile = os.fdopen(handle, "w+")
-+        inFile = open(file, "r")
-+        for line in inFile.readlines():
-+            line = re.sub(r'\$(Id|Header|Author|Date|DateTime|Change|File|Revision)[^$]*\$',
-+                   r'$\1$', line)
-+            outFile.write(line)
-+        inFile.close()
-+        outFile.close()
-+        # Forcibly overwrite the original file
-+        system("cat %s" % outFileName)
-+        system(["mv", "-f", outFileName, file])
-+        print "Patched up RCS keywords in %s" % file
-+
-     def p4UserForCommit(self,id):
-         # Return the tuple (perforce user,git email) for a given git commit id
-         self.getUserMapFromPerforceServer()
-@@ -918,6 +935,7 @@ class P4Submit(Command, P4UserMap):
-         filesToDelete = set()
-         editedFiles = set()
-         filesToChangeExecBit = {}
-+
-         for line in diff:
-             diff = parseDiffTreeEntry(line)
-             modifier = diff['status']
-@@ -964,9 +982,30 @@ class P4Submit(Command, P4UserMap):
-         patchcmd = diffcmd + " | git apply "
-         tryPatchCmd = patchcmd + "--check -"
-         applyPatchCmd = patchcmd + "--check --apply -"
-+        patch_succeeded = True
- 
-         if os.system(tryPatchCmd) != 0:
-+            fixed_rcs_keywords = False
-+            patch_succeeded = False
-             print "Unfortunately applying the change failed!"
-+
-+            # Patch failed, maybe it's just RCS keyword woes. Look through
-+            # the patch to see if that's possible.
-+            if gitConfig("git-p4.attemptRCSCleanup","--bool") == "true":
-+                file = None
-+                for line in read_pipe_lines(diffcmd):
-+                    m = re.match(r'^diff --git a/(.*)\s+b/(.*)', line)
-+                    if m:
-+                        file = m.group(1)
-+                    if re.match(r'.*\$(Id|Header|Author|Date|DateTime|Change|File|Revision)[^$]*\$', line):
-+                        self.patchRCSKeywords(file)
-+                        fixed_rcs_keywords = True
-+            if fixed_rcs_keywords:
-+                print "Retrying the patch with RCS keywords cleaned up"
-+                if os.system(tryPatchCmd) == 0:
-+                    patch_succeeded = True
-+
-+        if not patch_succeeded:
-             print "What do you want to do?"
-             response = "x"
-             while response != "s" and response != "a" and response != "w":
-@@ -1588,11 +1627,11 @@ class P4Sync(Command, P4UserMap):
-         if type_base in ("text", "unicode", "binary"):
-             if "ko" in type_mods:
-                 text = ''.join(contents)
--                text = re.sub(r'\$(Id|Header):[^$]*\$', r'$\1$', text)
-+                text = re.sub(r'\$(Id|Header)[^$]*\$', r'$\1$', text)
-                 contents = [ text ]
-             elif "k" in type_mods:
-                 text = ''.join(contents)
--                text = re.sub(r'\$(Id|Header|Author|Date|DateTime|Change|File|Revision):[^$]*\$', r'$\1$', text)
-+                text = re.sub(r'\$(Id|Header|Author|Date|DateTime|Change|File|Revision)[^$]*\$', r'$\1$', text)
-                 contents = [ text ]
- 
-         self.gitStream.write("M %s inline %s\n" % (git_mode, relPath))
-diff --git a/t/t9810-git-p4-rcs.sh b/t/t9810-git-p4-rcs.sh
-index c09f83d..efe172c 100755
---- a/t/t9810-git-p4-rcs.sh
-+++ b/t/t9810-git-p4-rcs.sh
-@@ -49,6 +49,7 @@ test_expect_failure 'cope with rcs keyword expansion damage' '
- 	(
- 		cd "$git" &&
- 		git config git-p4.skipSubmitEdit true &&
-+		git config git-p4.attemptRCSCleanup true &&
- 		(cd ../cli && p4_append_to_file kwfile1.c) &&
- 		perl -n -i -e "print unless m/Revision:/" kwfile1.c &&
- 		git add kwfile1.c &&
--- 
-1.7.9.rc2.128.gfce41.dirty
+After all, that 'age' check actually wants to fill 'age' and 'age_strin=
+g'
+in the project. Even if some other codepath starts filling 'age' in the
+project with a later change, the current callers of fill_project_list_i=
+nfo
+expects _both_ to be filled. So "I know the current implementation fill=
+s
+both at the same time, so checking 'age' alone is sufficient" is not an
+answer that shows good taste in the API design.
