@@ -1,66 +1,85 @@
-From: Jeff Epler <jepler@unpythonic.net>
-Subject: A note on modern git plus ancient meld ("wrong number of
- arguments")
-Date: Thu, 9 Feb 2012 13:17:43 -0600
-Message-ID: <20120209191742.GA20703@unpythonic.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/2] config includes, take 2
+Date: Thu, 9 Feb 2012 14:33:14 -0500
+Message-ID: <20120209193314.GA19690@sigill.intra.peff.net>
+References: <20120206062713.GA9699@sigill.intra.peff.net>
+ <m31uq63143.fsf@localhost.localdomain>
+ <20120209033059.GA4347@sigill.intra.peff.net>
+ <201202092024.43381.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 09 20:25:54 2012
+Content-Type: text/plain; charset=utf-8
+Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 09 20:33:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvZcu-0004nt-MC
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Feb 2012 20:25:53 +0100
+	id 1RvZkA-0000ZY-8X
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Feb 2012 20:33:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758349Ab2BITZs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Feb 2012 14:25:48 -0500
-Received: from dsl.unpythonic.net ([206.222.212.217]:53216 "EHLO
-	unpythonic.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758272Ab2BITZs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2012 14:25:48 -0500
-X-Greylist: delayed 481 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Feb 2012 14:25:47 EST
-Received: by unpythonic.net (Postfix, from userid 1000)
-	id D5C73114972; Thu,  9 Feb 2012 13:17:43 -0600 (CST)
+	id S1758454Ab2BITdR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Feb 2012 14:33:17 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60141
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757903Ab2BITdQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2012 14:33:16 -0500
+Received: (qmail 29367 invoked by uid 107); 9 Feb 2012 19:40:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 09 Feb 2012 14:40:24 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Feb 2012 14:33:14 -0500
 Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <201202092024.43381.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190310>
 
-I note this just in case it helps someone else track down a similar
-problem, not because I think any change needs to be made to git, as a
-version of meld new enough to not be affected by this problem is 5 years
-old.
+On Thu, Feb 09, 2012 at 08:24:42PM +0100, Jakub Narebski wrote:
 
-At $DAYJOB, I recently encountered a problem after upgrading from (don't
-laugh) git 1.7.1 to 1.7.8.3: one developer stated that meld failed to
-run, instead displaying the error 'Wrong number of arguments (Got 5)'. 
+> > So the patch would look something like this. However, is the actual
+> > filename really what callers want? It seems like in David's case, an
+> > annotation of "repo", "global", or "system" (possibly in addition to the
+> > filename) would be the most useful (because in the git-cola UI, it is
+> > still nice to list things as "repo" or "global" instead of spewing the
+> > whole filename at the user -- but you would still want the individual
+> > filename for handling updates of includes).
+> 
+> I'm not sure if "system" / "global" / "local" or "repo" would be a good
+> idea.
+> 
+> First, in the case of includes you would have to provide pathnames of
+> included files.  This would introduce inconsistency.  Is "system"
+> the '/etc/gitconfig' file, or 'system' file in '.git' directory?
 
-We determined that this user was running a very old version of meld
-(1.1.1) from his home directory, as opposed to the also very old system
-version of meld (1.1.5).  It turns out that the check added in 
-    f61bd9c mergetools/meld: Use '--output' when available
-fails on meld 1.1.1, leading git to incorrectly believe the --output
-flag is supporrted:
-    $ meld-1.1.1 --output /dev/null --help >/dev/null 2>&1; echo $?
-    0   # i.e., detected as supported
-The test as written gives the correct ("not supported") result with meld
-1.1.5:
-    $ meld-1.1.5 --output /dev/null --help >/dev/null 2>&1; echo $?
-    2   # i.e., detected as supported
+Yeah, it would have to be syntactically unambiguous with the filename.
+I was thinking something of just including both, like this:
 
-so if you encounter the message 'Wrong number of arguments (Got 5)' from
-meld, then check whether you have an ancient version of meld.  If for
-some reason you can't upgrade to at least 1.1.5, maybe you'd find the
-following configuration flags useful:
-    [merge]
-        tool = ancientmeld
-    [mergetool "ancientmeld"]
-        cmd = meld-1.1.1 \"$LOCAL\" \"$MERGED\" \"$REMOTE\"
+  global:/home/peff/.gitconfig<TAB>include.path=other-file
+  global:/home/peff/other-file<TAB>some.key=value
 
-Jeff
+That is, give a "context" (repo, global, system) to each lookup, and
+then mention the individual file as well (either because it is the root
+of that context, or because it was included). So a config editor could
+present the context to the user as a purely decorative thing (i.e., tell
+the user "these options affect all of your repos"), but use the filename
+to actually update the values (i.e., "git config -f
+/home/peff/other-file some.key newvalue").
+
+> Second, people can have different build configuration, e.g. the prefix
+> might differ, so that "system" is not always '/etc/gitconfig'.  If you
+> want to edit config you would want to know which file to edit... and though
+> there is "git config --system --edit" it depends on having editor
+> configured correctly.
+
+Without includes, something like git-cola could possibly get away with:
+
+  git config --system some.key value
+
+but that doesn't work for included files; for those, you'd want to have
+the actual filename.
+
+-Peff
