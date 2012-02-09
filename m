@@ -1,105 +1,71 @@
-From: Tom Grennan <tmgrennan@gmail.com>
-Subject: [RFC/PATCH] tag: make list exclude !<pattern>
-Date: Thu,  9 Feb 2012 11:43:36 -0800
-Message-ID: <1328816616-18124-2-git-send-email-tmgrennan@gmail.com>
-References: <1328816616-18124-1-git-send-email-tmgrennan@gmail.com>
-Cc: gitster@pobox.com, peff@peff.net
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 09 20:43:59 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/2] submodules: always use a relative path to gitdir
+Date: Thu, 09 Feb 2012 11:52:46 -0800
+Message-ID: <7v8vkbwzqp.fsf@alter.siamese.dyndns.org>
+References: <4F32F252.7050105@web.de> <4F32F2F6.6040006@web.de>
+ <4F33814E.7050404@web.de> <7vd39nx0br.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Antony Male <antony.male@gmail.com>,
+	Phil Hord <phil.hord@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 09 20:52:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvZuO-0006Ep-5B
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Feb 2012 20:43:56 +0100
+	id 1Rva33-0002yj-Sl
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Feb 2012 20:52:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758400Ab2BITnw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Feb 2012 14:43:52 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:37867 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754479Ab2BITnv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2012 14:43:51 -0500
-Received: by qadc10 with SMTP id c10so4542443qad.19
-        for <git@vger.kernel.org>; Thu, 09 Feb 2012 11:43:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=NOKxKTPXu+fdTi9s67fdXYyO62oJVj3hUmEmzhtdsDI=;
-        b=b8kW97GpJsT/UsZTnlNGwHv8ztEXnfPSa/NWNBxNgX1Cbb8peI5YWiKIj1z2fetGhd
-         xAKyX7qpdq5oCqcJHeQLRfV5n0MMk6UaIo7YFWHOUxUnfkOyKlXXW/UESUGczq9DY/ap
-         L4UvMovbeyBrOej3CKMYypWGzs+Xp/72/CT4I=
-Received: by 10.229.106.221 with SMTP id y29mr2012043qco.88.1328816630667;
-        Thu, 09 Feb 2012 11:43:50 -0800 (PST)
-Received: from tgrennan-laptop.lab.redback.com ([129.192.185.163])
-        by mx.google.com with ESMTPS id c2sm7648970qao.15.2012.02.09.11.43.48
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 09 Feb 2012 11:43:50 -0800 (PST)
-X-Mailer: git-send-email 1.7.8
-In-Reply-To: <1328816616-18124-1-git-send-email-tmgrennan@gmail.com>
+	id S1758503Ab2BITwt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Feb 2012 14:52:49 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61747 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757903Ab2BITws (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2012 14:52:48 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 37F6E6606;
+	Thu,  9 Feb 2012 14:52:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZXGt0C1UpThah0xyTtoxNLYO664=; b=BsWFLE
+	Av3ZY2YkcZRYRizEGCfpzEEFxaOWAy+vjJEAhHT4xdOkHuJG9zw+jDObZ3I6Mkdl
+	9HK9/+XbZhTwCf1Vtbhjm6bD4B/j9nCnBa5okhRXkW3QHgOjrZaWhlTK81o0pQ18
+	3NojjODDDrAqERQe2K1+i/wV9PHJ+wVLo0hEM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=t0vvh5YdsQZDx2f4ODi+iip6BoDKmhKf
+	jgXLl3PPYxwH7+YDGsj+OHQOyYAC07WpVX3Z0LicIqm1dqXjzcqXOGeTGF2Wq1sW
+	8NHO320vjLrtTlemY2YtTUr26VYy8upJw4lQ0SC6Gffqz/W+7JRK2wveOIe+yoxL
+	dJnMtVVgCmc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F6786604;
+	Thu,  9 Feb 2012 14:52:48 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B50D06603; Thu,  9 Feb 2012
+ 14:52:47 -0500 (EST)
+In-Reply-To: <7vd39nx0br.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 09 Feb 2012 11:40:08 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A40F3D54-5357-11E1-ACF5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190314>
 
-Use the "!" prefix to ignore tags of the given pattern.
-This has precedence over other matching patterns.
-For example,
+Junio C Hamano <gitster@pobox.com> writes:
 
-  $ git tag -l \!*-rc? v1.7.8*
-  v1.7.8
-  v1.7.8.1
-  v1.7.8.2
-  v1.7.8.3
-  v1.7.8.4
-  $ git tag -l v1.7.8* \!*-rc?
-  v1.7.8
-  v1.7.8.1
-  v1.7.8.2
-  v1.7.8.3
-  v1.7.8.4
+> When applied to v1.7.8.x maintenance track, this failed the first step in
+> t5526, but with the earlier jl/submodule-re-add topic everything seems to
+> pass just fine.
 
-This is equivalent to,
+What I meant to say is that "this and the other topic need to be merged to
+that maintenance track together"; I didn't mean to say there is any
+breakage in this patch.
 
-  $ git tag -l v1.7.8* | grep -v '\-rc.'
-  v1.7.8
-  v1.7.8.1
-  v1.7.8.2
-  v1.7.8.3
-  v1.7.8.4
-
-Signed-off-by: Tom Grennan <tmgrennan@gmail.com>
----
- builtin/tag.c |   13 +++++++++----
- 1 files changed, 9 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 31f02e8..b9ef718 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -32,13 +32,18 @@ struct tag_filter {
- 
- static int match_pattern(const char **patterns, const char *ref)
- {
-+	int ret;
-+
- 	/* no pattern means match everything */
- 	if (!*patterns)
- 		return 1;
--	for (; *patterns; patterns++)
--		if (!fnmatch(*patterns, ref, 0))
--			return 1;
--	return 0;
-+	for (ret = 0; *patterns; patterns++)
-+		if (**patterns == '!') {
-+		    if (!fnmatch(*patterns+1, ref, 0))
-+			    return 0;
-+		} else if (!fnmatch(*patterns, ref, 0))
-+			ret = 1;
-+	return ret;
- }
- 
- static int in_commit_list(const struct commit_list *want, struct commit *c)
--- 
-1.7.8
+Sorry for a potentially confusing statement.
