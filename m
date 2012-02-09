@@ -1,73 +1,60 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git-subtree Ready for Inspection
-Date: Thu, 09 Feb 2012 02:07:57 -0800 (PST)
-Message-ID: <m3bop8uxoi.fsf@localhost.localdomain>
-References: <87liocoayz.fsf@smith.obbligato.org>
+From: Luke Diamand <luke@diamand.org>
+Subject: [RFC/PATCHv1 0/2] git-p4: possible RCS keyword fixes
+Date: Thu,  9 Feb 2012 11:03:27 +0000
+Message-ID: <1328785409-30936-1-git-send-email-luke@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jan <jk@jk.gs>, git@vger.kernel.org
-To: greened@obbligato.org (David A. Greene)
-X-From: git-owner@vger.kernel.org Thu Feb 09 11:08:08 2012
+Cc: Pete Wyckoff <pw@padd.com>, Eric Scouten <eric@scouten.com>,
+	Luke Diamand <luke@diamand.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 09 12:03:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvQv9-0002zJ-3j
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Feb 2012 11:08:07 +0100
+	id 1RvRmo-0004rO-Pv
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Feb 2012 12:03:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757599Ab2BIKIB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Feb 2012 05:08:01 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:41817 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752268Ab2BIKIA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2012 05:08:00 -0500
-Received: by eekc14 with SMTP id c14so520859eek.19
-        for <git@vger.kernel.org>; Thu, 09 Feb 2012 02:07:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=pOQmB1W0HiGb1srtVOoBLDCYODQ4wnT/TD6+YYO/AQU=;
-        b=rJixQr0K0eHRXslUeUvwAJLSM2HkBRKHl63qmMJbRGysLLEE8nuOhhs4AO/toJpUpk
-         /QGsnxGA3IhYKwEFPPLd6fzIkJEGnlNZ104wJAnJ+4xuCTzfX0VtMLhgAlRtxKd4Inti
-         /rPVTeUSKg19gwgoNOBj3ZTOOTEdoldLlk2Vk=
-Received: by 10.213.33.145 with SMTP id h17mr272940ebd.89.1328782079172;
-        Thu, 09 Feb 2012 02:07:59 -0800 (PST)
-Received: from localhost.localdomain (abvr119.neoplus.adsl.tpnet.pl. [83.8.215.119])
-        by mx.google.com with ESMTPS id y12sm7974690eeb.11.2012.02.09.02.07.57
+	id S1752069Ab2BILD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Feb 2012 06:03:29 -0500
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:53160 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750863Ab2BILD2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2012 06:03:28 -0500
+Received: by wics10 with SMTP id s10so1114565wic.19
+        for <git@vger.kernel.org>; Thu, 09 Feb 2012 03:03:27 -0800 (PST)
+Received: by 10.181.11.231 with SMTP id el7mr37337924wid.0.1328785407527;
+        Thu, 09 Feb 2012 03:03:27 -0800 (PST)
+Received: from ethel.cable.virginmedia.net (cpc19-cmbg14-2-0-cust6.5-4.cable.virginmedia.com. [86.6.30.7])
+        by mx.google.com with ESMTPS id er8sm4432794wib.9.2012.02.09.03.03.26
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 09 Feb 2012 02:07:57 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q19A7xVh008192;
-	Thu, 9 Feb 2012 11:07:59 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q19A7wZ1008189;
-	Thu, 9 Feb 2012 11:07:58 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <87liocoayz.fsf@smith.obbligato.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Thu, 09 Feb 2012 03:03:26 -0800 (PST)
+X-Mailer: git-send-email 1.7.9.rc2.128.gfce41.dirty
+X-Gm-Message-State: ALoCoQlklAd0bb1Rb1kFX0KBgR7DoP9iu3WK4bRc4ecwdxxTlMfk4yiYhQN04xPARc1MgZBtCqPt
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190285>
 
-greened@obbligato.org (David A. Greene) writes:
-> Jan <jk@jk.gs> writes:
->> On 02/08/2012 04:49 AM, David A. Greene wrote:
->>>
->>> I've put up a branch containing git-subtree at:
->>>
->>> gitolite@sources.obbligato.org:git.git
->>
->> A publicly accessible URL would be much more helpful. :-)
-> 
-> Do you mean running gitweb?  Are you not able to access the above
-> repository?
+This contains a possible way to fixup RCS keyword woes in git-p4.
 
-Nope, the git:// URL or http:// URL -- anonymous unathenticated access.
-SSH needs authorization (password or public-key based authenthication).
+The first patch adds a test case to demonstrate the problem. It would
+be useful to get this into git proper.
+
+The second patch shows a possible way to solve the problem, by
+patching up the RCS keywords in the p4 checked-out tree. This
+patch does not cover all cases and is poorly tested. I'd like to
+see if this seems like a plausible approach.
+
+Luke Diamand (2):
+  git-p4: add test case for RCS keywords
+  git-p4: initial demonstration of possible RCS keyword fixup
+
+ contrib/fast-import/git-p4 |   43 ++++++++++++++++++++++-
+ t/t9810-git-p4-rcs.sh      |   82 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 123 insertions(+), 2 deletions(-)
+ create mode 100755 t/t9810-git-p4-rcs.sh
 
 -- 
-Jakub Narebski
+1.7.9.rc2.128.gfce41.dirty
