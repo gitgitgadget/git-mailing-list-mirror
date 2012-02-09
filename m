@@ -1,135 +1,68 @@
-From: Joshua Redstone <joshua.redstone@fb.com>
-Subject: Re: Git performance results on a large repository
-Date: Thu, 9 Feb 2012 21:06:21 +0000
-Message-ID: <CB599BA0.42A6B%joshua.redstone@fb.com>
-References: <CACsJy8AxOZQ7S42V1g-b0vdBxPpjhFZe6qDkGaALnxQ6LiUssw@mail.gmail.com>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Silly Question About Timing
+Date: Thu, 9 Feb 2012 13:10:58 -0800
+Message-ID: <CAE1pOi1+FQNoPZ_P-fmFx-YhnUYzMQT=6zh3s-OyT71vcDm=wQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 09 22:06:44 2012
+Content-Type: text/plain; charset=UTF-8
+To: Git Users <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Feb 09 22:11:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvbCP-0006PN-UC
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Feb 2012 22:06:38 +0100
+	id 1RvbGj-00081G-7k
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Feb 2012 22:11:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758030Ab2BIVGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Feb 2012 16:06:32 -0500
-Received: from mx0a-00082601.pphosted.com ([67.231.145.42]:39390 "EHLO
-	mx0a-00082601.pphosted.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753825Ab2BIVGb convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Feb 2012 16:06:31 -0500
-Received: from pps.filterd (m0004347 [127.0.0.1])
-	by m0004347.ppops.net (8.14.4/8.14.4) with SMTP id q19L3rfJ002164;
-	Thu, 9 Feb 2012 13:06:27 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=from : to : cc : subject :
- date : message-id : in-reply-to : content-type : content-id :
- content-transfer-encoding : mime-version; s=facebook;
- bh=RtWC56nh1lCX+f0SXlJtwKum+lLxDl0TXNBaQ6v85MQ=;
- b=qSXbmcaGm8zPtnM8azxe2xpXYBLbJH8jWXEJJAXlnGcJ2YPVxCLbW4Jg8d9H4C1ym1G5
- u9Fidml1BvIfMP42HspK2MM5YkOTDNc6UThY/lKBxlGpp0IrOFJZX4VjMNi3Q2eDRtPS
- X0odNgkHNLOSBZjFQ4Rq1+JQVGr4W8GGgTA= 
-Received: from mail.thefacebook.com (corpout1.snc1.tfbnw.net [66.220.144.38])
-	by m0004347.ppops.net with ESMTP id 12vhmygby6-4
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Thu, 09 Feb 2012 13:06:27 -0800
-Received: from SC-MBX02-5.TheFacebook.com ([fe80::9dc2:cfe6:2745:44cc]) by
- sc-hub04.TheFacebook.com ([192.168.18.212]) with mapi id 14.01.0355.002; Thu,
- 9 Feb 2012 13:06:22 -0800
-Thread-Topic: Git performance results on a large repository
-Thread-Index: AQHM4n7tcAztB0vzgUq1FZmN2PdUJJYs1JqA///3O7GAAWcKgIACWZ6AgAFxrQCAA0x6AA==
-In-Reply-To: <CACsJy8AxOZQ7S42V1g-b0vdBxPpjhFZe6qDkGaALnxQ6LiUssw@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Microsoft-MacOutlook/14.14.0.111121
-x-originating-ip: [192.168.18.252]
-Content-ID: <3A64C8B648F25C44ABC8364B870C9082@fb.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.6.7361,1.0.260,0.0.0000
- definitions=2012-02-09_04:2012-02-09,2012-02-09,1970-01-01 signatures=0
-X-Proofpoint-Spam-Reason: safe
+	id S1757979Ab2BIVLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Feb 2012 16:11:00 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:58815 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753825Ab2BIVK7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2012 16:10:59 -0500
+Received: by ggnh1 with SMTP id h1so1166158ggn.19
+        for <git@vger.kernel.org>; Thu, 09 Feb 2012 13:10:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=biqHJwFfdv5RIv75IMBrLoCt4dt9UkWTncACCBb/nlk=;
+        b=D/7rkG/7oHWL/rd35u+OUqI/PtB7YrGLBcUBqbAV6qhrTdL3BWFLbA0jnU68KoFrle
+         yWC+qDOEju6uEIE+vRBWBYimrPHK1qkk99UKwAQ/tz+t56QMazrV0h1ae9FARqUHnz19
+         bEyg8VqYwPHcRperdjcPPRjRQSioNsvLTnwr8=
+Received: by 10.101.143.14 with SMTP id v14mr1581404ann.1.1328821858903; Thu,
+ 09 Feb 2012 13:10:58 -0800 (PST)
+Received: by 10.236.73.130 with HTTP; Thu, 9 Feb 2012 13:10:58 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190323>
 
-Hi Nguyen,
-I like the notion of using --assume-unchanged to cut down the set of
-things that git considers may have changed.
-It seems to me that there may still be situations that require operations
-on the order of the # of files in the repo and hence may still be slow.
-Following is a list of potential candidates that occur to me.
+Hi all,
 
-1. Switching branches, especially if you switch to an old branch.
-Sometimes I've seen branch switching taking a long time for what I thought
-was close to where HEAD was.
+This is a bit silly but I'm trying to time how long it takes to enter
+a Git controlled directory. I guess this is more of a GNU/Linux
+question then anything else.
 
-2. Interactive rebase in which you reorder a few commits close to the tip
-of the branch (I observed this taking a long time, but haven't profiled it
-yet).  I include here other types of cherry-picking of commits.
+I've noticed that entering a Git controlled project directory takes
+quite some time so I wanted to measure exactly how much (it's the
+prompt I'm using that's taking the time, I suspect). I first tried (a
+bit naive, I admit :-) )
 
-3. Any working directory operations that fail part-way through and make
-you want to do a 'git reset --hard' or at least a full 'git-status'.  That
-is, when you have reason to believe that files with 'assume-unchange' may
-have accidentally changed.
+time cd my-project
 
-4. Operations that require rewriting the index - I think git-add is one?
+This doesn't work of course. Obviously, writing a script doesn't work
+either because then the prompt isn't calculated. Next I tried
 
-If the working-tree representation is the full set of all files
-materialized on disk and it's the same as the representation of files
-changed, then I'm not sure how to avoid some of these without playing file
-system games or using wrapper scripts.
+date +%H:%M:%S.%N ; cd my-project-abc ; date +%H:%M:%S.%N
 
-What do you (or others) think?
+but, surprisingly (to me), that doesn't work either. It simply prints
+the two timestamps and *then* does the cd (or, at least, that's how it
+seems to behave).
 
+So how would one do this? :-)
 
-Josh
+Cheers,
+Hilco
 
-
-On 2/7/12 8:43 AM, "Nguyen Thai Ngoc Duy" <pclouds@gmail.com> wrote:
-
->On Mon, Feb 6, 2012 at 10:40 PM, Joey Hess <joey@kitenet.net> wrote:
->>> Someone on HN suggested making assume-unchanged files read-only to
->>> avoid 90% accidentally changing a file without telling git. When
->>> assume-unchanged bit is cleared, the file is made read-write again.
->>
->> That made me think about using assume-unchanged with git-annex since it
->> already has read-only files.
->>
->> But, here's what seems a misfeature...
->
->because, well.. assume-unchanged was designed to avoid stat() and
->nothing else. We are basing a new feature on top of it.
->
->> If an assume-unstaged file has
->> modifications and I git add it, nothing happens. To stage a change, I
->> have to explicitly git update-index --no-assume-unchanged and only then
->> git add, and then I need to remember to reset the assume-unstaged bit
->> when I'm done working on that file for now. Compare with running git mv
->> on the same file, which does stage the move despite assume-unstaged. (So
->> does git rm.)
->
->This is normal in the lock-based "checkout/edit/checkin" model. mv/rm
->operates on directory content, which is not "locked - no edit allowed"
->(in our case --assume-unchanged) in git. But lock-based model does not
->map really well to git anyway. It does not have the index (which may
->make things more complicated). Also at index level, git does not
->really understand directories.
->
->I think we could add a protection layer to index, where any changes
->(including removal) to an index entry are only allowed if the entry is
->"unlocked" (i.e no assume-unchanged bit). Locked entries are read-only
->and have assume-unchanged bit set. "git (un)lock" are introduced as
->new UI. Does that make assume-unchanged friendlier?
->-- 
->Duy
->--
->To unsubscribe from this list: send the line "unsubscribe git" in
->the body of a message to majordomo@vger.kernel.org
->More majordomo info at  http://vger.kernel.org/majordomo-info.html
+P.S. This slow cd is only the first time, afterwards things have been cached.
