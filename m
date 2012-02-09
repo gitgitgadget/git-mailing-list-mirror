@@ -1,59 +1,64 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: Git, Builds, and Filesystem Type
-Date: Thu, 9 Feb 2012 14:53:38 -0700
-Organization: CAF
-Message-ID: <201202091453.38564.mfick@codeaurora.org>
-References: <CAE1pOi1of-hj+87M7RqhFUWA8an14bPG88dAOwhNogmfFvJ=tA@mail.gmail.com>
+From: "Frans Klaver" <fransklaver@gmail.com>
+Subject: Re: Silly Question About Timing
+Date: Thu, 09 Feb 2012 22:54:32 +0100
+Message-ID: <op.v9fls6op0aolir@keputer.lokaal>
+References: <CAE1pOi1+FQNoPZ_P-fmFx-YhnUYzMQT=6zh3s-OyT71vcDm=wQ@mail.gmail.com> <201202092116.q19LGnTY024797@no.baka.org> <CAE1pOi14LW6ayNiRd2KogKZn2zLMbRsTS1kkMFgFBtx5J=yFNA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: Git Users <git@vger.kernel.org>
-To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 09 22:53:48 2012
+Cc: "Git Users" <git@vger.kernel.org>
+To: "Seth Robertson" <in-gitvger@baka.org>,
+	"Hilco Wijbenga" <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 09 22:54:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rvbw0-0003eJ-CB
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Feb 2012 22:53:45 +0100
+	id 1Rvbwv-000438-Kj
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Feb 2012 22:54:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754271Ab2BIVxk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Feb 2012 16:53:40 -0500
-Received: from wolverine02.qualcomm.com ([199.106.114.251]:44747 "EHLO
-	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753093Ab2BIVxj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2012 16:53:39 -0500
-X-IronPort-AV: E=McAfee;i="5400,1158,6615"; a="159647562"
-Received: from pdmz-css-vrrp.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
-  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 09 Feb 2012 13:53:39 -0800
-Received: from mfick-lnx.localnet (pdmz-snip-v218.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 40CB310004D1;
-	Thu,  9 Feb 2012 13:53:39 -0800 (PST)
-User-Agent: KMail/1.13.5 (Linux/2.6.32-37-generic; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <CAE1pOi1of-hj+87M7RqhFUWA8an14bPG88dAOwhNogmfFvJ=tA@mail.gmail.com>
+	id S1754540Ab2BIVyh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Feb 2012 16:54:37 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:59196 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752391Ab2BIVyh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2012 16:54:37 -0500
+Received: by eekc14 with SMTP id c14so744115eek.19
+        for <git@vger.kernel.org>; Thu, 09 Feb 2012 13:54:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=content-type:to:cc:subject:references:date:mime-version
+         :content-transfer-encoding:from:message-id:in-reply-to:user-agent;
+        bh=bkMWsdahqzCQrzjdUSKezESbUEBYJRCNn/VIr89UhI4=;
+        b=srjxjQaDgzAWgeLCLK0iJeEWLt4Gh8KOTNUE1nlVJRKC9IhD3D0Z9OHhRzMZ2QQ6Ng
+         TzM14aNC4eieHzOxODdVrsaKl7W62ut4PTa8i0N4yJigO9kwJIAkwBW94E7V+T6GA+K0
+         RFAPAznLbzIEhbqjkVUJVveMbif4F2QdhQUTg=
+Received: by 10.213.17.203 with SMTP id t11mr622561eba.127.1328824475641;
+        Thu, 09 Feb 2012 13:54:35 -0800 (PST)
+Received: from keputer.lokaal (82-136-253-149.ip.telfort.nl. [82.136.253.149])
+        by mx.google.com with ESMTPS id e12sm14228946eea.5.2012.02.09.13.54.33
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 09 Feb 2012 13:54:34 -0800 (PST)
+In-Reply-To: <CAE1pOi14LW6ayNiRd2KogKZn2zLMbRsTS1kkMFgFBtx5J=yFNA@mail.gmail.com>
+User-Agent: Opera Mail/12.00 (Win32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190331>
 
-On Thursday, February 09, 2012 02:23:18 pm Hilco Wijbenga 
-wrote:
-> For the record, our (Java) project is quite small. It's
-> 43MB (source and images) and the entire directory tree
-> after building is about 1.6GB (this includes all JARs
-> downloaded by Maven). So we're not talking TBs of data.
-> 
-> Any thoughts on which FSs to include in my tests? Or
-> simply which FS might be more appropriate?
+On Thu, 09 Feb 2012 22:48:25 +0100, Hilco Wijbenga  
+<hilco.wijbenga@gmail.com> wrote:
 
-tmpfs is probably fastest hands down if you can use it (even 
-if you have to back it by swap).
+> ... and I have been unable to get the __git_ps1 part to do anything.
 
--Martin
+I get the following on msysgit:
 
--- 
-Employee of Qualcomm Innovation Center, Inc. which is a 
-member of Code Aurora Forum
+/c/msysgit (devel) $ time __git_ps1
+(devel)
+real    0m0.406s
+user    0m0.136s
+sys     0m0.107s
+
+Would be odd if that doesn't work on Linux.
