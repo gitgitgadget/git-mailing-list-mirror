@@ -1,121 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] gitweb: Option for filling only specified info in
- fill_project_list_info
-Date: Thu, 09 Feb 2012 15:18:16 -0800
-Message-ID: <7v4nuzvbnr.fsf@alter.siamese.dyndns.org>
-References: <1328359648-29511-1-git-send-email-jnareb@gmail.com>
- <1328359648-29511-2-git-send-email-jnareb@gmail.com>
- <7vhayzvf38.fsf@alter.siamese.dyndns.org>
- <201202092336.48772.jnareb@gmail.com>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Re: Git, Builds, and Filesystem Type
+Date: Thu, 9 Feb 2012 15:24:47 -0800
+Message-ID: <CAE1pOi387-bimYEG4bjFOjaCwhPeDyLRj7wOJgyuKSCrZ9kBFg@mail.gmail.com>
+References: <CAE1pOi1of-hj+87M7RqhFUWA8an14bPG88dAOwhNogmfFvJ=tA@mail.gmail.com>
+	<201202091453.38564.mfick@codeaurora.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 10 00:18:26 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Users <git@vger.kernel.org>
+To: Martin Fick <mfick@codeaurora.org>
+X-From: git-owner@vger.kernel.org Fri Feb 10 00:24:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvdFx-0004HX-F0
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 00:18:26 +0100
+	id 1RvdMD-0007hs-CQ
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 00:24:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758668Ab2BIXSU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Feb 2012 18:18:20 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47298 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758658Ab2BIXST convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Feb 2012 18:18:19 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C621A6A3B;
-	Thu,  9 Feb 2012 18:18:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=XX7CHuR6jtDI
-	WJmsiiBv4P7GjFA=; b=TtbefkxrK2NOX4UDehCpyU17vWd7oTWk4J0EbKtrWc2z
-	nLN+k/O0zefAn+1suW7rMkWlh5aa9OERwK268KU0nDIgxeKrYik/b82Mm621lMEb
-	mx+Mv+o4Lc8GhS58RUDd970WzZiqkSgVNr6pEvNOk1H9MIXMMZ/9WQ8JpNADQMg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=umSb0o
-	QA7+zmZcRPn7YbE8w8m/y/txgCjJ3Qnsi1aCy3EymRhwDeeHInyBhKcapmNaiXoY
-	2e/k23RzARcSq9jtn81mAXGxlvYTss/9wCtuoV1+/bFnvP1Gya+8GObrERR5zWc6
-	XfUGIywc/6Cea//7biIqDZwovZ5xAwZq6IAMY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BDC1C6A3A;
-	Thu,  9 Feb 2012 18:18:18 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4B5716A39; Thu,  9 Feb 2012
- 18:18:18 -0500 (EST)
-In-Reply-To: <201202092336.48772.jnareb@gmail.com> (Jakub Narebski's message
- of "Thu, 9 Feb 2012 23:36:48 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 59A60EBA-5374-11E1-BF1F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758274Ab2BIXYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Feb 2012 18:24:49 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:52711 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754395Ab2BIXYs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2012 18:24:48 -0500
+Received: by ggnh1 with SMTP id h1so1231357ggn.19
+        for <git@vger.kernel.org>; Thu, 09 Feb 2012 15:24:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=3OXD9hrhCKxPfiAq2iHmwY8ZPdpqSBka0eywnmdYLYw=;
+        b=CyrBag0Tzdbcv9RhS793pypCnMbezFTYMvXJwNSzTH3ddx86xXvlGoezC/s7rFnHGT
+         WCJxPh+7g+G7tmRidqfArHGjG4qjn0YgeQQ70xXJNh/jCQuoFEPIbrpOl/LA0PxTLa6w
+         0eFXmOglXUEzuSf5n6YsORZLfT8wQCbSl/CZI=
+Received: by 10.236.189.105 with SMTP id b69mr5822981yhn.90.1328829888023;
+ Thu, 09 Feb 2012 15:24:48 -0800 (PST)
+Received: by 10.236.73.130 with HTTP; Thu, 9 Feb 2012 15:24:47 -0800 (PST)
+In-Reply-To: <201202091453.38564.mfick@codeaurora.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190341>
 
-Jakub Narebski <jnareb@gmail.com> writes:
-
->> The lack of any real use of @fill_only in this patch also makes it h=
-ard to
->> judge if the new API gives a useful semantics.  I would, without loo=
-king
->> at the real usage in 2/5 patch, na=C3=AFvely expect that such a lazy=
- filling
->> scheme would say "I am going to use A, B and C; I want to know if an=
-y of
->> them is missing, because I need values for all of them and I am goin=
-g to
->> call a helper function to fill them if any of them is missing. Havin=
-g A
->> and B is not enough for the purpose of this query, because I still n=
-eed to
->> know C and I would call the helper function that computes all of the=
-m in
->> such a case. Even though it might be wasteful to recompute A and B,
->> computing all three at once is the only helper function available to=
- me".
->>=20
->> So for a person who does not have access to the real usage of the ne=
-w API,
->> being able to give only a single $key *appears* make no sense at all=
-, and
->> also the meaning of the @fill_only parameter is unclear, especially =
-the
->> part that checks if that single $key appears in @fill_only.
+On 9 February 2012 13:53, Martin Fick <mfick@codeaurora.org> wrote:
+> On Thursday, February 09, 2012 02:23:18 pm Hilco Wijbenga
+> wrote:
+>> For the record, our (Java) project is quite small. It's
+>> 43MB (source and images) and the entire directory tree
+>> after building is about 1.6GB (this includes all JARs
+>> downloaded by Maven). So we're not talking TBs of data.
+>>
+>> Any thoughts on which FSs to include in my tests? Or
+>> simply which FS might be more appropriate?
 >
-> ...
-> information that is not already present.  If @fill_only is nonempty, =
-it
-> fills only selected information, again only if it is not already pres=
-ent.
-> @fill_only empty means no restrictions... which probably is not very =
-obvious,
-> but is documented.
->
-> project_info_needs_filling() returns true if $key is not filled and i=
-s
-> interesting.
+> tmpfs is probably fastest hands down if you can use it (even
+> if you have to back it by swap).
 
-That still does not answer the fundamental issues I had with the presen=
-ted
-API: why does it take only a single $key (please re-read my "A, B and C=
-"
-example), and what does that single $key intersecting with @fill_only h=
-ave
-anything to do with "needs-filling"?
-
-After all, that 'age' check actually wants to fill 'age' and 'age_strin=
-g'
-in the project. Even if some other codepath starts filling 'age' in the
-project with a later change, the current callers of fill_project_list_i=
-nfo
-expects _both_ to be filled. So "I know the current implementation fill=
-s
-both at the same time, so checking 'age' alone is sufficient" is not an
-answer that shows good taste in the API design.
+I don't have quite that much RAM. :-)
