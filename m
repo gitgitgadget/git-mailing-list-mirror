@@ -1,88 +1,144 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git documentation at kernel.org
-Date: Thu, 09 Feb 2012 16:23:01 -0800
-Message-ID: <7vmx8rtu3e.fsf@alter.siamese.dyndns.org>
-References: <CAPyqok3USqMxm0gNf_T9vnCoicp9XSwpWUCYJ8jh79h=V_UuOA@mail.gmail.com>
- <20120208213410.GA5768@ecki>
+From: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+Subject: [PATCH 2/4] help.c: make term_columns() cached and export it
+Date: Fri, 10 Feb 2012 00:58:39 +0100
+Message-ID: <1328831921-27272-3-git-send-email-zbyszek@in.waw.pl>
+References: <1328831921-27272-1-git-send-email-zbyszek@in.waw.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: ftpadmin@kernel.org, Petr Onderka <gsvick@gmail.com>,
-	git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Fri Feb 10 01:23:13 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, Michael J Gruber <git@drmicha.warpmail.net>,
+	=?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 10 01:24:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RveGe-0003li-GQ
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 01:23:13 +0100
+	id 1RveIE-0004cD-Cx
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 01:24:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758351Ab2BJAXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Feb 2012 19:23:07 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45738 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756580Ab2BJAXE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2012 19:23:04 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1FCA27C5D;
-	Thu,  9 Feb 2012 19:23:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Lct3KnlcdXSyqmcWrGQpGoMUjjM=; b=rdbuos
-	PkQ+/uHaaXr+MOaHkdBkdL+9By4lI1jHFRB8WABEq5QKavc085IzfMQ2kOUYopLu
-	tzX/O2eNq4YluXBYoxfqubwhv9A9dcOvsuljyzllkKKgOKbBXN/fq/dVxDXlJSze
-	E9T01howCNXDyTfAFwNbc8ebKrqa5B8JEv9z8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QtkxILIwrDIL+ZUO8hBNlL40x5xs1FbY
-	Z6XBCZp3KxBHvQE/k+gdJS3eBEQhgWWDa2HMSp6wi/3710804rDfveUmxatUzwLe
-	bgmNY/MtWOZ77YPkX+H6VC1mGXSQTyS/4LugWK9GUV7gEfQ1J51Ddgynf3aH3FvU
-	9VWRBRdnTQQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 147497C5C;
-	Thu,  9 Feb 2012 19:23:04 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 88EF37C5A; Thu,  9 Feb 2012
- 19:23:02 -0500 (EST)
-In-Reply-To: <20120208213410.GA5768@ecki> (Clemens Buchacher's message of
- "Wed, 8 Feb 2012 22:34:10 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6570C4F2-537D-11E1-8D29-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754811Ab2BJAYo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Feb 2012 19:24:44 -0500
+Received: from kawka.in.waw.pl ([178.63.212.103]:52317 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752767Ab2BJAYn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2012 19:24:43 -0500
+Received: from 89-78-221-60.dynamic.chello.pl ([89.78.221.60] helo=localhost.localdomain)
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1RvdtY-0001gR-ES; Fri, 10 Feb 2012 00:59:20 +0100
+X-Mailer: git-send-email 1.7.9.rc2.127.gcb239
+In-Reply-To: <1328831921-27272-1-git-send-email-zbyszek@in.waw.pl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190349>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+Since term_columns() will usually fail, when a pager is installed,
+the cache is primed before the pager is installed. If a pager is not
+installed, then the cache will be set on first use.
 
-> Please restore access to the following files when possible. Some sites
-> are referencing those, including kernel.org itself:
->
->  http://www.kernel.org/pub/software/scm/git/docs/git.html
+Conforms to The Single UNIX Specification, Version 2
+(http://pubs.opengroup.org/onlinepubs/7908799/xbd/envvar.html#tag_002_0=
+03).
 
-The pages reachable from this used to be living documents in that every
-time the 'master' branch was updated at k.org, automatically a server side
-hook script generated a new set of HTML pages and updated them.
+Signed-off-by: Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl>
+---
+ help.c  |   31 +++++++++++++++++++++++--------
+ help.h  |    2 ++
+ pager.c |    5 +++++
+ 3 files changed, 30 insertions(+), 8 deletions(-)
 
-My understanding is that we do not want to run such random server side
-hooks at k.org, so it no longer can be a living document anymore.
-
-It might be a workable short term workaround to redirect
-
-    http://www.kernel.org/pub/software/scm/git/docs/$anything
-
-to
-
-    http://schacon.github.com/git/$anything
-
-although that would not give you an access to the list of documentations
-for older releases, e.g.
-
-    http://www.kernel.org/pub/software/scm/git/docs/v1.6.0/git.html
-
-> Also, it would be great if the git wiki could be made editable again.
-
-Amen.
+diff --git a/help.c b/help.c
+index bc15066..75b8d4b 100644
+--- a/help.c
++++ b/help.c
+@@ -5,26 +5,41 @@
+ #include "help.h"
+ #include "common-cmds.h"
+=20
+-/* most GUI terminals set COLUMNS (although some don't export it) */
+-static int term_columns(void)
++/* cache for term_columns() value. Set on first use or when
++ * installing a pager and replacing stdout.
++ */
++static int term_columns_cache;
++
++/* Return cached value (iff set) or $COLUMNS (iff set and positive) or
++ * ioctl(1, TIOCGWINSZ).ws_col (if positive) or 80.
++ *
++ * $COLUMNS even if set, is usually not exported, so
++ * the variable can be used to override autodection.
++ */
++int term_columns(void)
+ {
+-	char *col_string =3D getenv("COLUMNS");
+-	int n_cols;
++	if (term_columns_cache)
++		return term_columns_cache;
+=20
+-	if (col_string && (n_cols =3D atoi(col_string)) > 0)
+-		return n_cols;
++	{
++		char *col_string =3D getenv("COLUMNS");
++		int n_cols;
++
++		if (col_string && (n_cols =3D atoi(col_string)) > 0)
++			return (term_columns_cache =3D n_cols);
++	}
+=20
+ #ifdef TIOCGWINSZ
+ 	{
+ 		struct winsize ws;
+ 		if (!ioctl(1, TIOCGWINSZ, &ws)) {
+ 			if (ws.ws_col)
+-				return ws.ws_col;
++				return (term_columns_cache =3D ws.ws_col);
+ 		}
+ 	}
+ #endif
+=20
+-	return 80;
++	return (term_columns_cache =3D 80);
+ }
+=20
+ void add_cmdname(struct cmdnames *cmds, const char *name, int len)
+diff --git a/help.h b/help.h
+index b6b12d5..880a4b4 100644
+--- a/help.h
++++ b/help.h
+@@ -29,4 +29,6 @@ extern void list_commands(const char *title,
+ 			  struct cmdnames *main_cmds,
+ 			  struct cmdnames *other_cmds);
+=20
++extern int term_columns(void);
++
+ #endif /* HELP_H */
+diff --git a/pager.c b/pager.c
+index 975955b..e7032de 100644
+--- a/pager.c
++++ b/pager.c
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "run-command.h"
+ #include "sigchain.h"
++#include "help.h"
+=20
+ #ifndef DEFAULT_PAGER
+ #define DEFAULT_PAGER "less"
+@@ -76,6 +77,10 @@ void setup_pager(void)
+ 	if (!pager)
+ 		return;
+=20
++	/* prime the term_columns() cache before it is too
++	 * late and stdout is replaced */
++	(void) term_columns();
++
+ 	setenv("GIT_PAGER_IN_USE", "true", 1);
+=20
+ 	/* spawn the pager */
+--=20
+1.7.9.rc2.127.gcb239
