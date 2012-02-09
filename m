@@ -1,87 +1,135 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH 1/2] git-svn.perl: perform deletions before anything else
-Date: Thu, 9 Feb 2012 21:55:46 +0100
-Message-ID: <87bop7rajx.fsf@thomas.inf.ethz.ch>
-References: <1328813725-16638-1-git-send-email-stevenrwalter@gmail.com>
-	<87mx8rrf5i.fsf@thomas.inf.ethz.ch>
-	<CAK8d-aJ3wi0e_NPunow-aBnhs1=o5K25r3e-Ha0m1U0ujTv7OA@mail.gmail.com>
+From: Joshua Redstone <joshua.redstone@fb.com>
+Subject: Re: Git performance results on a large repository
+Date: Thu, 9 Feb 2012 21:06:21 +0000
+Message-ID: <CB599BA0.42A6B%joshua.redstone@fb.com>
+References: <CACsJy8AxOZQ7S42V1g-b0vdBxPpjhFZe6qDkGaALnxQ6LiUssw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <normalperson@yhbt.net>, <git@vger.kernel.org>
-To: Steven Walter <stevenrwalter@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 09 21:55:56 2012
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 09 22:06:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rvb23-0001Dz-1V
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Feb 2012 21:55:56 +0100
+	id 1RvbCP-0006PN-UC
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Feb 2012 22:06:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757212Ab2BIUzt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Feb 2012 15:55:49 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:41959 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753093Ab2BIUzt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Feb 2012 15:55:49 -0500
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 9 Feb
- 2012 21:55:43 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (84.73.49.17) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 9 Feb
- 2012 21:55:45 +0100
-In-Reply-To: <CAK8d-aJ3wi0e_NPunow-aBnhs1=o5K25r3e-Ha0m1U0ujTv7OA@mail.gmail.com>
-	(Steven Walter's message of "Thu, 9 Feb 2012 15:45:24 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [84.73.49.17]
+	id S1758030Ab2BIVGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Feb 2012 16:06:32 -0500
+Received: from mx0a-00082601.pphosted.com ([67.231.145.42]:39390 "EHLO
+	mx0a-00082601.pphosted.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753825Ab2BIVGb convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Feb 2012 16:06:31 -0500
+Received: from pps.filterd (m0004347 [127.0.0.1])
+	by m0004347.ppops.net (8.14.4/8.14.4) with SMTP id q19L3rfJ002164;
+	Thu, 9 Feb 2012 13:06:27 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=from : to : cc : subject :
+ date : message-id : in-reply-to : content-type : content-id :
+ content-transfer-encoding : mime-version; s=facebook;
+ bh=RtWC56nh1lCX+f0SXlJtwKum+lLxDl0TXNBaQ6v85MQ=;
+ b=qSXbmcaGm8zPtnM8azxe2xpXYBLbJH8jWXEJJAXlnGcJ2YPVxCLbW4Jg8d9H4C1ym1G5
+ u9Fidml1BvIfMP42HspK2MM5YkOTDNc6UThY/lKBxlGpp0IrOFJZX4VjMNi3Q2eDRtPS
+ X0odNgkHNLOSBZjFQ4Rq1+JQVGr4W8GGgTA= 
+Received: from mail.thefacebook.com (corpout1.snc1.tfbnw.net [66.220.144.38])
+	by m0004347.ppops.net with ESMTP id 12vhmygby6-4
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Thu, 09 Feb 2012 13:06:27 -0800
+Received: from SC-MBX02-5.TheFacebook.com ([fe80::9dc2:cfe6:2745:44cc]) by
+ sc-hub04.TheFacebook.com ([192.168.18.212]) with mapi id 14.01.0355.002; Thu,
+ 9 Feb 2012 13:06:22 -0800
+Thread-Topic: Git performance results on a large repository
+Thread-Index: AQHM4n7tcAztB0vzgUq1FZmN2PdUJJYs1JqA///3O7GAAWcKgIACWZ6AgAFxrQCAA0x6AA==
+In-Reply-To: <CACsJy8AxOZQ7S42V1g-b0vdBxPpjhFZe6qDkGaALnxQ6LiUssw@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Microsoft-MacOutlook/14.14.0.111121
+x-originating-ip: [192.168.18.252]
+Content-ID: <3A64C8B648F25C44ABC8364B870C9082@fb.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.6.7361,1.0.260,0.0.0000
+ definitions=2012-02-09_04:2012-02-09,2012-02-09,1970-01-01 signatures=0
+X-Proofpoint-Spam-Reason: safe
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190322>
 
-Oops, as Steven noticed I accidentally hit the wrong reply button.  So
-here's my earlier reply and his answer.
+Hi Nguyen,
+I like the notion of using --assume-unchanged to cut down the set of
+things that git considers may have changed.
+It seems to me that there may still be situations that require operations
+on the order of the # of files in the repo and hence may still be slow.
+Following is a list of potential candidates that occur to me.
 
-Steven Walter <stevenrwalter@gmail.com> writes:
+1. Switching branches, especially if you switch to an old branch.
+Sometimes I've seen branch switching taking a long time for what I thought
+was close to where HEAD was.
 
-> On Thu, Feb 9, 2012 at 2:16 PM, Thomas Rast <trast@inf.ethz.ch> wrote=
-:
->> Steven Walter <stevenrwalter@gmail.com> writes:
+2. Interactive rebase in which you reorder a few commits close to the tip
+of the branch (I observed this taking a long time, but haven't profiled it
+yet).  I include here other types of cherry-picking of commits.
+
+3. Any working directory operations that fail part-way through and make
+you want to do a 'git reset --hard' or at least a full 'git-status'.  That
+is, when you have reason to believe that files with 'assume-unchange' may
+have accidentally changed.
+
+4. Operations that require rewriting the index - I think git-add is one?
+
+If the working-tree representation is the full set of all files
+materialized on disk and it's the same as the representation of files
+changed, then I'm not sure how to avoid some of these without playing file
+system games or using wrapper scripts.
+
+What do you (or others) think?
+
+
+Josh
+
+
+On 2/7/12 8:43 AM, "Nguyen Thai Ngoc Duy" <pclouds@gmail.com> wrote:
+
+>On Mon, Feb 6, 2012 at 10:40 PM, Joey Hess <joey@kitenet.net> wrote:
+>>> Someone on HN suggested making assume-unchanged files read-only to
+>>> avoid 90% accidentally changing a file without telling git. When
+>>> assume-unchanged bit is cleared, the file is made read-write again.
 >>
->>> If we delete a file and recreate it as a directory in a single comm=
-it,
->>> we have to tell the server about the deletion first or else we'll g=
-et
->>> "RA layer request failed: Server sent unexpected return value (405
->>> Method Not Allowed) in response to MKCOL request"
->> [...]
->>> - =C2=A0 =C2=A0 my %o =3D ( D =3D> 1, R =3D> 0, C =3D> -1, A =3D> 3=
-, M =3D> 3, T =3D> 3 );
->>> + =C2=A0 =C2=A0 my %o =3D ( D =3D> -2, R =3D> 0, C =3D> -1, A =3D> =
-3, M =3D> 3, T =3D> 3 );
+>> That made me think about using assume-unchanged with git-annex since it
+>> already has read-only files.
 >>
->> You are making it delete first, but the original code seems to quite
->> deliberately put deletion after R (rename?). =C2=A0Are you sure you'=
-re not
->> breaking anything else?
+>> But, here's what seems a misfeature...
 >
-> No, I'm not 100% sure of that.
+>because, well.. assume-unchanged was designed to avoid stat() and
+>nothing else. We are basing a new feature on top of it.
 >
-> In fact, looking at cf52b8f063 where this code seems to have started,
-> it lists my case explicitly as one that subversion does not support:
+>> If an assume-unstaged file has
+>> modifications and I git add it, nothing happens. To stage a change, I
+>> have to explicitly git update-index --no-assume-unchanged and only then
+>> git add, and then I need to remember to reset the assume-unstaged bit
+>> when I'm done working on that file for now. Compare with running git mv
+>> on the same file, which does stage the move despite assume-unstaged. (So
+>> does git rm.)
 >
-> "a file is removed and a directory of the same name of the removed
-> file is created."
+>This is normal in the lock-based "checkout/edit/checkin" model. mv/rm
+>operates on directory content, which is not "locked - no edit allowed"
+>(in our case --assume-unchanged) in git. But lock-based model does not
+>map really well to git anyway. It does not have the index (which may
+>make things more complicated). Also at index level, git does not
+>really understand directories.
 >
-> One thing that might make a difference is that the "file" that remove=
-d
-> was actually a symlink.  So either svn treats symlinks as a special
-> case to that rule, or else the limitation the commit was meant to
-> address is not present on recent versions of svn.  I can run some
-> checks to see if that is the case.
-
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+>I think we could add a protection layer to index, where any changes
+>(including removal) to an index entry are only allowed if the entry is
+>"unlocked" (i.e no assume-unchanged bit). Locked entries are read-only
+>and have assume-unchanged bit set. "git (un)lock" are introduced as
+>new UI. Does that make assume-unchanged friendlier?
+>-- 
+>Duy
+>--
+>To unsubscribe from this list: send the line "unsubscribe git" in
+>the body of a message to majordomo@vger.kernel.org
+>More majordomo info at  http://vger.kernel.org/majordomo-info.html
