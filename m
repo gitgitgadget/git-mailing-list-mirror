@@ -1,67 +1,86 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Merging tags does not fast-forward with git 1.7.9
-Date: Thu, 09 Feb 2012 17:30:21 +0100
-Message-ID: <m2aa4synoi.fsf@igel.home>
-References: <20120209095415.GA19230@glitch>
-	<CAPBPrntqaFk7YNf7Rz5aVNOMQVTAFaQcJoPFtsOn6rk8n2Q_sg@mail.gmail.com>
-	<20120209160419.GA28718@glitch>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [StGit PATCH] Parse commit object header correctly
+Date: Thu, 9 Feb 2012 11:51:58 -0600
+Message-ID: <20120209175158.GA7384@burratino>
+References: <4F3120D4.1050604@warmcat.com>
+ <7vvcni1r5u.fsf@alter.siamese.dyndns.org>
+ <7vd39pzsmq.fsf_-_@alter.siamese.dyndns.org>
+ <CAHkRjk6dr=5wxm+iSC2_CSB-q3k2WG_Um+X7dwsy-H8tL508EA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Dan Johnson <computerdruid@gmail.com>, git@vger.kernel.org
-To: Domenico Andreoli <cavokz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 09 17:30:38 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>,
+	Andy Green =?utf-8?B?KOael+WuieW7uCk=?= <andy@warmcat.com>,
+	git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 09 18:52:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvWtC-0001dq-Q0
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Feb 2012 17:30:31 +0100
+	id 1RvYAH-0005eC-Qg
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Feb 2012 18:52:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754045Ab2BIQa0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Feb 2012 11:30:26 -0500
-Received: from mail-out.m-online.net ([212.18.0.10]:38792 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753158Ab2BIQaZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2012 11:30:25 -0500
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3755B18000CC;
-	Thu,  9 Feb 2012 17:30:22 +0100 (CET)
-X-Auth-Info: J8MTJXV8nRjTJ/CGoNZLBYSXA1p/1fYGuREk7BvgnV4=
-Received: from igel.home (ppp-88-217-114-208.dynamic.mnet-online.de [88.217.114.208])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 7FADF1C000BE;
-	Thu,  9 Feb 2012 17:30:22 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id C550FCA299; Thu,  9 Feb 2012 17:30:21 +0100 (CET)
-X-Yow: It's the land of DONNY AND MARIE as promised in TV GUIDE!
-In-Reply-To: <20120209160419.GA28718@glitch> (Domenico Andreoli's message of
-	"Thu, 9 Feb 2012 17:04:19 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+	id S1756957Ab2BIRwI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Feb 2012 12:52:08 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:46586 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753427Ab2BIRwH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2012 12:52:07 -0500
+Received: by iacb35 with SMTP id b35so2845484iac.19
+        for <git@vger.kernel.org>; Thu, 09 Feb 2012 09:52:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=wQXeS3t4UsD5QgpT5ANX6MoSLax2xb90CWi8boVZP3E=;
+        b=KKpPpDDseo0J5cSFnxwgg7ZT960YcneRDtBjJtTy//DWi65bvOrJofQdIDWZRRKrhb
+         bwzS3uRVhIjOXMSDs5jvNWlAQInrSb/HIq/bt0EEUSIkVoSh4QCsmkyTVk22V2/WBJt9
+         LIfyX+UcZw3eGXXxO8On9UwEfAKGThS/UP0tU=
+Received: by 10.42.136.69 with SMTP id s5mr4038912ict.20.1328809927335;
+        Thu, 09 Feb 2012 09:52:07 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id ch2sm5076675igb.4.2012.02.09.09.52.05
+        (version=SSLv3 cipher=OTHER);
+        Thu, 09 Feb 2012 09:52:06 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CAHkRjk6dr=5wxm+iSC2_CSB-q3k2WG_Um+X7dwsy-H8tL508EA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190299>
 
-Domenico Andreoli <cavokz@gmail.com> writes:
+Hi Catalin,
 
-> This is Debian unstable, out-of-the-box git package 1.7.9-1.
->
-> $ git reset --hard v3.3-rc2
-> HEAD is now at 62aa2b5 Linux 3.3-rc2
-> $ git merge --ff-only v3.3-rc3
-> fatal: Not possible to fast-forward, aborting.
-> $ 
+Catalin Marinas wrote:
 
-Workaround:
+> Thanks for looking into this. Is this the same as an email header? If
+> yes, we could just use the python's email.Header.decode_header()
+> function (I haven't tried yet).
 
-$ git merge v3.3-rc3^{}
-Updating 62aa2b5..d65b4e9
-Fast-forward
+They look like this:
 
-Andreas.
+	encoding ISO8859-1
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+> BTW, does Git allow custom headers to be inserted by tools like StGit?
+
+No.  There is one list of supported headers, and this list is the
+standards body that maintains it[*].  So if you end up needing an
+extension to the commit object format, that can be done, but it needs
+to be accepted here (and ideally checked by "git fsck", though it's
+lagging a bit in that respect lately).
+
+By the way, headers have a standard order to avoid spurious changes in
+commit names from reordering.  Additions so far have always happened
+at the end, which is what makes checks by "git fsck" possible --- it
+can't rule out an unrecognized header line being a standard field from
+a future version of git, but it would be allowed to complain about
+unrecognized fields before 'encoding', for example.
+
+Thanks,
+Jonathan
+
+[*] http://thread.gmane.org/gmane.comp.version-control.git/138848/focus=138892
