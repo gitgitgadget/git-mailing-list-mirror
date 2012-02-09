@@ -1,61 +1,60 @@
-From: greened@obbligato.org (David A. Greene)
+From: Nazri Ramliy <ayiehere@gmail.com>
 Subject: Re: git-subtree Ready for Inspection
-Date: Wed, 08 Feb 2012 23:02:44 -0600
-Message-ID: <87liocoayz.fsf@smith.obbligato.org>
+Date: Thu, 9 Feb 2012 13:17:18 +0800
+Message-ID: <CAEY4ZpPs_3Ym=3gsVzwwXFAmk1DbgvvcdnK3p0WUaCOWg9TpMQ@mail.gmail.com>
+References: <87liocoayz.fsf@smith.obbligato.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jan <jk@jk.gs>
-X-From: git-owner@vger.kernel.org Thu Feb 09 06:05:51 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jan <jk@jk.gs>, git@vger.kernel.org
+To: "David A. Greene" <greened@obbligato.org>
+X-From: git-owner@vger.kernel.org Thu Feb 09 06:17:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvMCZ-0000ZW-9E
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Feb 2012 06:05:47 +0100
+	id 1RvMNo-00058I-0C
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Feb 2012 06:17:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751713Ab2BIFFQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Feb 2012 00:05:16 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:49176 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751627Ab2BIFFF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2012 00:05:05 -0500
-Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=smith.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.77)
-	(envelope-from <greened@obbligato.org>)
-	id 1RvMEm-0003Cs-12; Wed, 08 Feb 2012 23:08:04 -0600
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
- identified this incoming email as possible spam.  The original message
- has been attached to this so you can view it (if it isn't spam) or label
- similar future email.  If you have any questions, see
- @@CONTACT_ADDRESS@@ for details.
- Content preview:  Jan <jk@jk.gs> writes: > On 02/08/2012 04:49 AM, David A.
-   Greene wrote: >> I've put up a branch containing git-subtree at: >> >> gitolite@sources.obbligato.org:git.git
-    > > A publicly accessible URL would be much more helpful. :-) [...] 
- Content analysis details:   (-1.0 points, 5.0 required)
-  pts rule name              description
- ---- ---------------------- --------------------------------------------------
- -1.0 ALL_TRUSTED            Passed through trusted hosts only via SMTP
+	id S1750949Ab2BIFRT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Feb 2012 00:17:19 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:39692 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750838Ab2BIFRT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Feb 2012 00:17:19 -0500
+Received: by vcge1 with SMTP id e1so862296vcg.19
+        for <git@vger.kernel.org>; Wed, 08 Feb 2012 21:17:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Oa0L9GZHtztxYmGgl+S9UI6xe4SYXw5eojcHrV/mDas=;
+        b=ZOOtx2vAO3DYVxn85mosZRr/Z7jY3ZRoHWdTKnzkijW3Qh2j3cQTtTyhiYgUNYoVPs
+         WBqe0HkJn8I3HbNMon+Xe54h8OEwQDzcJjzbyczMQ1OeuAS5X0uStxnrNaw/D2VYX0wg
+         P7GTs5oNLQ1YQR8QVa9t+/BkQ4qTKLK2NFAO8=
+Received: by 10.220.108.202 with SMTP id g10mr139607vcp.24.1328764638590; Wed,
+ 08 Feb 2012 21:17:18 -0800 (PST)
+Received: by 10.220.156.79 with HTTP; Wed, 8 Feb 2012 21:17:18 -0800 (PST)
+In-Reply-To: <87liocoayz.fsf@smith.obbligato.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190274>
 
-Jan <jk@jk.gs> writes:
+On Thu, Feb 9, 2012 at 1:02 PM, David A. Greene <greened@obbligato.org>=
+ wrote:
+> Do you mean running gitweb? =A0Are you not able to access the above
+> repository? =A0I can do that if it makes things easier but it will ta=
+ke a
+> bit of time.
 
-> On 02/08/2012 04:49 AM, David A. Greene wrote:
->> I've put up a branch containing git-subtree at:
->>
->> gitolite@sources.obbligato.org:git.git
->
-> A publicly accessible URL would be much more helpful. :-)
+It asks for password:
 
-Do you mean running gitweb?  Are you not able to access the above
-repository?  I can do that if it makes things easier but it will take a
-bit of time.
+$ git clone  gitolite@sources.obbligato.org:git.git
+Cloning into 'git'...
+gitolite@sources.obbligato.org's password:
 
-                          -Dave
+
+nazri
