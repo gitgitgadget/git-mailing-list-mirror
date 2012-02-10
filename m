@@ -1,84 +1,84 @@
-From: Namhyung Kim <namhyung.kim@lge.com>
-Subject: [PATCH 2/2] ctype: implement islower/isupper macro
-Date: Fri, 10 Feb 2012 11:13:31 +0900
-Message-ID: <1328840011-19028-2-git-send-email-namhyung.kim@lge.com>
-References: <1328840011-19028-1-git-send-email-namhyung.kim@lge.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: 1.7.9, libcharset missing from EXTLIBS
+Date: Thu, 09 Feb 2012 18:13:49 -0800
+Message-ID: <7v1uq3toyq.fsf@alter.siamese.dyndns.org>
+References: <4F3472F4.4060605@aegee.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-2022-jp
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 10 03:13:31 2012
+To: =?iso-2022-jp?B?GyRCJyUnWiddJ3EnXxsoQiAbJEInMSdRJ10nUSdlJ1knYCdTGyhC?= 
+	<dilyan.palauzov@aegee.org>
+X-From: git-owner@vger.kernel.org Fri Feb 10 03:14:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvfzN-0001jT-HA
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 03:13:29 +0100
+	id 1Rvfzp-00026P-1I
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 03:13:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757893Ab2BJCNZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Feb 2012 21:13:25 -0500
-Received: from LGEMRELSE6Q.lge.com ([156.147.1.121]:50856 "EHLO
-	LGEMRELSE6Q.lge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754005Ab2BJCNZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2012 21:13:25 -0500
-X-AuditID: 9c930179-b7cf1ae000000e40-72-4f3479aefd20
-Received: from MultiCore.156.147.1.1 ( [165.186.175.80])
-	by LGEMRELSE6Q.lge.com (Symantec Brightmail Gateway) with SMTP id CE.1C.03648.EA9743F4; Fri, 10 Feb 2012 10:58:06 +0900 (KST)
-X-Mailer: git-send-email 1.7.9
-In-Reply-To: <1328840011-19028-1-git-send-email-namhyung.kim@lge.com>
-X-Brightmail-Tracker: AAAAAA==
+	id S1758016Ab2BJCNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Feb 2012 21:13:53 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61518 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754005Ab2BJCNw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2012 21:13:52 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EE9177E5;
+	Thu,  9 Feb 2012 21:13:51 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mK3CLvizpwZUaq1DNiDT4mlymME=; b=jXC7b3
+	SANtaRZfv2UU6/t7kfxyNSG/hwa8h3PxY6NCs5brVX9ilbjqXV4p7j0nPTGjGOjf
+	h93iYv9sFqgZVYPhSDrrfFYfuTUf+62sAKu9o/zIoUAB7OV0j9398fdcvFXuQJgp
+	WqpPGYxCokgA5mbfuZ20ydxLacbBRlDJvOp6c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uk0sev3QsAIx9OTLRLXG/YCykbpXJ4mq
+	jGxyjS9w2nZph+0VAJuaBa/Cnd2I4zZGZwL/1ABcFkz9VoKSvOKpuGNCvOeFUDlF
+	x+/GgdqRsMyVk74nlJoP85ApHGnvAERR3Cf3cAEH83Lk1zI10tsAI2KFTkBK8cE2
+	LsOZyXBDRPk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5748577E4;
+	Thu,  9 Feb 2012 21:13:51 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B5FE677E3; Thu,  9 Feb 2012
+ 21:13:50 -0500 (EST)
+In-Reply-To: <4F3472F4.4060605@aegee.org> (=?iso-2022-jp?B?IhskQiclGyhC?=
+ =?iso-2022-jp?B?GyRCJ1onXSdxJ18bKEIgGyRCJzEnUSddJ1EnZSdZJ2AnUxsoQiIncw==?=
+ message of "Fri, 10 Feb 2012 02:29:24 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DF786426-538C-11E1-9FEB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190367>
 
-The git-compat-util.h provides various ctype macros but lacks those two
-(along with others). Add them.
+Дилян Палаузов  <dilyan.palauzov@aegee.org> writes:
 
-Signed-off-by: Namhyung Kim <namhyung.kim@lge.com>
----
- git-compat-util.h |   15 +++++++++++++++
- 1 files changed, 15 insertions(+), 0 deletions(-)
+> Hello,
+>
+> git 1.7.9 makes use of libcharset and /Makefile contains:
+>
+> ifdef HAVE_LIBCHARSET_H
+>         BASIC_CFLAGS += -DHAVE_LIBCHARSET_H
+> endif
+> ...
+> and the problem is, that libcharset is not used when linking.  To
+> solve this, please replace the above extract from /Makefile with
+>
+> ifdef HAVE_LIBCHARSET_H
+>         BASIC_CFLAGS += -DHAVE_LIBCHARSET_H
+> 	EXTLIBS += -lcharset
+> endif
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 8f3972c..d3f8f17 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -463,6 +463,8 @@ static inline int has_extension(const char *filename, const char *ext)
- #undef isdigit
- #undef isalpha
- #undef isalnum
-+#undef islower
-+#undef isupper
- #undef tolower
- #undef toupper
- extern unsigned char sane_ctype[256];
-@@ -478,6 +480,8 @@ extern unsigned char sane_ctype[256];
- #define isdigit(x) sane_istest(x,GIT_DIGIT)
- #define isalpha(x) sane_istest(x,GIT_ALPHA)
- #define isalnum(x) sane_istest(x,GIT_ALPHA | GIT_DIGIT)
-+#define islower(x) sane_iscase(x, 1)
-+#define isupper(x) sane_iscase(x, 0)
- #define is_glob_special(x) sane_istest(x,GIT_GLOB_SPECIAL)
- #define is_regex_special(x) sane_istest(x,GIT_GLOB_SPECIAL | GIT_REGEX_SPECIAL)
- #define tolower(x) sane_case((unsigned char)(x), 0x20)
-@@ -491,6 +495,17 @@ static inline int sane_case(int x, int high)
- 	return x;
- }
- 
-+static inline int sane_iscase(int x, int lower)
-+{
-+	if (!sane_istest(x, GIT_ALPHA))
-+		return 0;
-+
-+	if (lower)
-+		return (x & 0x20) != 0;
-+	else
-+		return (x & 0x20) == 0;
-+}
-+
- static inline int strtoul_ui(char const *s, int base, unsigned int *result)
- {
- 	unsigned long ul;
--- 
-1.7.9
+Thanks.
+
+What platform is this?  Is there a guarantee that any and all system that
+use "#include <libcharset.h>" has to link with "-lcharset"?
+
+What I am wondering is there are systems that need to include the header,
+but locale_charset() does not live in /lib/libcharset.a, in which case we
+cannot make HAVE_LIBCHARSET_H imply use of -lcharset.
