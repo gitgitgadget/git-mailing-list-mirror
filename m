@@ -1,156 +1,115 @@
-From: "Harald Heigl" <Harald@heigl-online.at>
-Subject: AW: Project structure of .NET-Projects using git submodule or something different
-Date: Fri, 10 Feb 2012 18:03:08 +0100
-Message-ID: <003401cce815$dd907190$98b154b0$@heigl-online.at>
-References: <002401cce069$75ecc1a0$61c644e0$@heigl-online.at> <4F29A0BE.8000803@web.de>
+From: =?UTF-8?B?TWljaGHFgg==?= Kiedrowicz <michal.kiedrowicz@gmail.com>
+Subject: Re: [PATCH 6/8] gitweb: Highlight interesting parts of diff
+Date: Fri, 10 Feb 2012 18:33:19 +0100
+Message-ID: <20120210183319.2f56ff88@gmail.com>
+References: <1328865494-24415-1-git-send-email-michal.kiedrowicz@gmail.com>
+	<m339aivn4z.fsf@localhost.localdomain>
+	<20120210151528.56145e0c@gmail.com>
+	<201202101555.20163.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>
-To: <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Fri Feb 10 18:03:26 2012
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 10 18:33:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvtsZ-0007Lx-Hq
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 18:03:23 +0100
+	id 1RvuM6-0004AS-S4
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 18:33:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756876Ab2BJRDT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Feb 2012 12:03:19 -0500
-Received: from xserv02.internex.at ([85.124.51.102]:57226 "HELO
-	xserv2.internex.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1754722Ab2BJRDS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2012 12:03:18 -0500
-X-PDA-ORIGIN: xserv2.internex.at
-Received: (qmail 23890 invoked from network); 10 Feb 2012 17:03:08 -0000
-Received: by simscan 1.4.0 ppid: 23873, pid: 23885, t: 0.1079s
-         scanners: clamav: 0.97.3/m:54/d:14427
-Received: from unknown (HELO setnbheh) (Harald@heigl-online.at@84.115.25.240)
-  by xserv02.internex.at with SMTP; 10 Feb 2012 17:03:08 -0000
-In-Reply-To: 
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQGEO7+ptvilZ+p+By5B5tRag0k/awHm5zMqlqqUlbCADeH0cA==
-Content-Language: de-at
+	id S1759690Ab2BJRd0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Feb 2012 12:33:26 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:53510 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759597Ab2BJRdZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2012 12:33:25 -0500
+Received: by eekc14 with SMTP id c14so1038214eek.19
+        for <git@vger.kernel.org>; Fri, 10 Feb 2012 09:33:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        bh=UP7MHpLVJyysBbZXnpiQ+400/9RJOAZIlqco6LdZARs=;
+        b=D7At/laCzo9xyxdSz03dW+lc5EhEGiZBk7OyVgt3dZYuu8ChzE2z1+cR7Rl/MZQqsu
+         WA4MPB1WHEobiU4uYeapV2+C/3Y0uP68EUCx3l+G9mMiv9eJ9AqUxq2BTjuFz1gB2O1F
+         O7miOWZcgs0RccG53IQYpilxGQHfIrn+QSD+Q=
+Received: by 10.213.16.142 with SMTP id o14mr504871eba.144.1328895203609;
+        Fri, 10 Feb 2012 09:33:23 -0800 (PST)
+Received: from localhost (77-177-78-94.net.stream.pl. [94.78.177.77])
+        by mx.google.com with ESMTPS id o49sm24403386eei.0.2012.02.10.09.33.22
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 10 Feb 2012 09:33:23 -0800 (PST)
+In-Reply-To: <201202101555.20163.jnareb@gmail.com>
+X-Mailer: Claws Mail 3.7.10 (GTK+ 2.24.8; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190424>
 
-Hi,
+Jakub Narebski <jnareb@gmail.com> wrote:
 
-Just another question: What if your dependency is used in many projects=
-?
-=46or example if you use it in 10 projects it will be checked out 10 ti=
-mes.
-Well you could always do a push (and a pull in all other 9 projects to =
-not
-forget them).
-Ok 10 projects is quite much, but I sometimes have 2-4 projects in para=
-llel
-which sometimes use the same dependencies. (And change them in the proj=
-ects
-on demand)
-I've thought about checking out the dependency only once and do hardlin=
-king,
-I've also read about the "git clone --shared", but with both methods I =
-would
-loose the advantage of using submodule and on the other side I don't kn=
-ow
-exactly which problems could arise.
+> On Fri, 10 Feb 2012, Micha=C5=82 Kiedrowicz wrote:
+> > Jakub Narebski <jnareb@gmail.com> wrote:
+> > > Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> writes:
+> > >=20
+> > > > The code that comares lines is based on
+> > > > contrib/diff-highlight/diff-highlight, except that it works wit=
+h
+> > > > multiline changes too.  It also won't highlight lines that are
+> > > > completely different because that would only make the output un=
+readable.
+> > > > Combined diffs are not supported but a following commit will ch=
+ange it.
+> > >=20
+> > > I was thinking that if gitweb were to support "diff refinement
+> > > highlighting", it would either use one of *Diff* packages from CP=
+AN,
+> > > or "git diff --word-diff" output.
+> >=20
+> > I think highlighting inline and side-by-side diff outputs is
+> > something different from "git diff --word-diff". I find it useful f=
+or
+> > people who are used to these diff formats (i.e. me :).
+>=20
+> I was thinking about *using* "git diff --word-diff" for diff refineme=
+nt
+> highlighting of inline (unified) and side-by-side diff...=20
+>=20
 
-Could I just say that submodules would be checked out to a central loca=
-tion
-or are there better possibilities?
-I don't mind the disk space, I just wonder how to keep track if you hav=
-e
-some projects all using the same dependencies.
+Then I must have misunderstood you. =20
 
-Thanks,
-Harald
+> though having an option of showing word-diff would be I think a good
+> idea in some cases, like e.g. documentation changes.
+>=20
+> > OTOH I'm not against using a dedicated package from CPAN. But I thi=
+nk
+> > my approach is proven to work (I use contrib/diff-highlight as a
+> > filter) and more lightweight (doesn't add another dependency to
+> > gitweb). Moreover, adding support for some Diff package may be done
+> > later, at any moment. It's just a matter of replacing one function
+> > (format_rem_add_line()) with the one that uses Diff.=20
+>=20
+> O.K., if it is tested code, then all is good. =20
 
-> -----Urspr=FCngliche Nachricht-----
-> Von: Harald Heigl [mailto:Harald@heigl-online.at]
-> Gesendet: Mittwoch, 01. Februar 2012 22:07
-> An: 'git@vger.kernel.org'
-> Betreff: AW: Project structure of .NET-Projects using git submodule o=
-r
-> something different
+As I wrote, I haven't taken the code as-is (for example, original
+code only works for oneline changes). But the general approach is the
+same.
+
+> Well, except the fact
+> that I'm rather wary about adding more code to gitweb when it is stil=
+l
+> single monolithic script, rather than split into packages.
 >=20
-> Hi, thanks for your answer!
->=20
-> > -----Urspr=FCngliche Nachricht-----
-> > Von: Jens Lehmann [mailto:Jens.Lehmann@web.de]
-> > Gesendet: Mittwoch, 01. Februar 2012 21:30
-> > An: Harald Heigl
-> > Cc: git@vger.kernel.org
-> > Betreff: Re: Project structure of .NET-Projects using git submodule=
- or
-> > something different
-> >
-> > Am 31.01.2012 23:41, schrieb Harald Heigl:
-> > > Let's assume following Project structure (Dependencies and
-> > Subdependencies
-> > > are submodules and submodules of the submodules)
-> > > Project
-> > > 	Dependency 1
-> > > 		Dependency 2
-> > > 		Dependency 3
-> > > 	Dependency 4
-> > > 	Dependency 2
-> > >
-> > >
-> > > The problem is if I want to build them I need to build 2+3, then =
-1, 4
-and 2
-> > > again and then the project. As you may see project 2 is a submodu=
-le of
-> > > dependency 1 and also of project. I don't feel comfortable with t=
-his
-> setup.
-> > > What do you think?
-> >
-> > Hmm, we try to avoid that kind of setup as having checked out diffe=
-rent
-> > versions of the "Dependency 2" submodule could have rather surprisi=
-ng
-> > effects. We get along really well with "Dependency 2" only being pr=
-esent
-> > in the superproject and having "Dependency 1" reference that instea=
-d of
-> > having its own copy (So we have submodules which are depending on
-> having
-> > other submodules right next to them). Then the superproject is
-> responsible
-> > for tying it all together.
->=20
-> I think you're right, my first thoughts were that if I start a new pr=
-oject
-I just
-> "git submodule dependency1" and get all the required dependencies and
-> the dependencies within the dependencies and so on ... .
-> With your solution I "git submodule dependency1" and have to think ab=
-out
-> the dependencies it depends on. On the other hand we are just a small
-> company and the number of submodules is not too big and the missing
-> references in a new project would be easily identifiable, so ... .
->=20
-> And if I want to checkout dependency 1 individually (for whatever rea=
-son),
-I
-> could still do something like this:
-> SuperDependency1 (with solution-File)
->            Dependency1 (as submodule)
->            Dependency2 (dependency of dependency1 - as submodule)
->            Dependency3 (dependency of dependency1 - as submodule)
->=20
-> Thanks again, I see my concept causes some trouble ...
->=20
-> Any other thoughts or other workflows with git or with tools build ar=
-ound
-> git?
->=20
-> Thanks again,
-> Harald
+
+Yeah, jumping between 2k'th and 5k'th line isn't a great fun. Do you
+have any roadmap how to split gitweb?
+
+> Anyway, I'll try to review those patches soon.  I like the refactorin=
+g
+> work (that is from what I had chance to examine).
+
+Thanks.
