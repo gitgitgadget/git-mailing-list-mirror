@@ -1,82 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Remove empty ref directories while reading loose refs
-Date: Fri, 10 Feb 2012 11:09:37 -0800
-Message-ID: <7v39aiqzda.fsf@alter.siamese.dyndns.org>
-References: <1328891127-17150-1-git-send-email-pclouds@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFD] Rewriting safety - warn before/when rewriting published history
+Date: Fri, 10 Feb 2012 20:38:54 +0100
+Message-ID: <201202102038.55710.jnareb@gmail.com>
+References: <201202042045.54114.jnareb@gmail.com> <201202071531.08385.jnareb@gmail.com> <CALKQrge821x7OoSekkWw7vUjP642jhbE0D9oWPcCxuuTXOqQHA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 10 20:09:47 2012
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Philip Oakley <philipoakley@iee.org>, git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Fri Feb 10 20:39:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rvvqr-0005qq-N1
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 20:09:46 +0100
+	id 1RvwJF-0007DN-Na
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 20:39:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759908Ab2BJTJl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Feb 2012 14:09:41 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34357 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759903Ab2BJTJk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2012 14:09:40 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EEA3C77CD;
-	Fri, 10 Feb 2012 14:09:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=FnNofeKvvcuo
-	rqa6kBqqTmkeYjU=; b=XQXb361x28D8sYbqGvobsnY/FpwT5c0a0N3dHO6p2g//
-	ulJsGGjRQoBpc1KIIDXZf34MYzWT06iagyNxjM85mAVKtVlhVUfiQ//8WP81OGpg
-	I9wavZ7aR6HaLXssq537ptvapblsq1V3XAJ4cTg83Btw7m0aY6J2Cm9amdFCtg0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Otskon
-	IuBCbNamQ5qoH7mmXvTppoW+/W8ml6hLZifJgcHD/942SYbbdSEqULnLvOrVBq60
-	stgrdVHcbG1ipckgY9seHGu7ZHu1Hzgh8UQ3SL5JBgTlfRVnJsDroPWr9uExJ7R8
-	te+xUmH/WvmA9iMSVb+calFivES9C3b2M0JM0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E51D077CC;
-	Fri, 10 Feb 2012 14:09:39 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5C75277CB; Fri, 10 Feb 2012
- 14:09:39 -0500 (EST)
-In-Reply-To: <1328891127-17150-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 10 Feb
- 2012 23:25:27 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C7AFDB6A-541A-11E1-87A9-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932143Ab2BJTi7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Feb 2012 14:38:59 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:45445 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751753Ab2BJTi7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2012 14:38:59 -0500
+Received: by eaah12 with SMTP id h12so1037262eaa.19
+        for <git@vger.kernel.org>; Fri, 10 Feb 2012 11:38:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=CfooOORBolXbA1S9Dza8sqWImkg95rKVBcr715WLlV8=;
+        b=n8pWWe5+DEOMy1kBhNKKcwJXqLlRR2mbEk9p+mKPOcerSt2W5N964TG6Al79QzfPJ1
+         N4dsxj7q1dEQRxdTaJDoZQ7vBMhNiFUfu7Q8ceDAh2mVWRmbuALWMsaScp5W1C9F4R+Y
+         /zoGx6/RC/judXgURuJ9rc4HLGh7Evja8bteo=
+Received: by 10.213.23.20 with SMTP id p20mr547282ebb.68.1328902737770;
+        Fri, 10 Feb 2012 11:38:57 -0800 (PST)
+Received: from [192.168.1.13] (abwh187.neoplus.adsl.tpnet.pl. [83.8.231.187])
+        by mx.google.com with ESMTPS id z47sm25547754eeh.9.2012.02.10.11.38.55
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 10 Feb 2012 11:38:56 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <CALKQrge821x7OoSekkWw7vUjP642jhbE0D9oWPcCxuuTXOqQHA@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190438>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+On Tue, 7 Feb 2012, Johan Herland wrote:
 
->  I don't think the a few extra rmdir()s from time to time at startup
->  are going to cause any problems. Making delete_ref() delete empty
->  directories takes more effort and probably not worth it.
+> (we are pretty much in violent agreement, so I will only comment where
+> I find it necessary)
 
-That reads as a very poorly phrased excuse for not solving the problem =
-at
-the right location.  Compared to all the codepaths that want to resolve
-ref, delete_ref() is run much less often, and it is where the problem y=
-ou
-are solving (i.e. directories that have just become unnecessary are not
-removed) originates, no?
+So now comes the hard part: actually implementing (well, designing and
+implementing) prototypes for 'secret' trait and 'public' trait...
+ 
+> On Tue, Feb 7, 2012 at 15:31, Jakub Narebski <jnareb@gmail.com> wrote:
 
-Wouldn't it be just the matter of replacing two unlink_or_warn() calls =
-in
-delete_ref(), one for cleaning refs/ hierarchy and the other for cleani=
-ng
-logs/ hierarcy, with a new helper that calls unlink_or_warn() and then
-tries rmdir going upwards until it hits the limit, perhaps using a help=
-er
-function that refactors dir.c::remove_path() that takes an extra parame=
-ter
-telling it where to stop?
+> > Also, when thinking about different scenarios of why one would like to
+> > mark commit as 'secret', we might want to be able to mark commit as
+> > secret / unpublishable with respect to _subset_ of remotes, so e.g.
+> > I am prevented from accidentally publishing commits marked as 'secret'
+> > to public repository, or to CI/QA repository, but I can push (perhaps
+> > with warning) to group repository, together with 'secret'-ness state
+> > of said commit...
+> >
+> > ... though it wouldn't be as much 'secret' as 'confidential' ;-)
+> 
+> Another way to achieve this would be to have a config flag to control
+> whether Git checks for the 'secret' flag before pushing. This config
+> flag could be set at the system/user level (to enable/disable the
+> feature as a whole), at the repo level (to enable/disable it in a
+> given repo), at the remote level (to enable/disable it on a given
+> repo), and finally at the branch level (to enable-disable it for a
+> given branch (and its upstream)). Thus you could have a .git/config
+> that looked like this:
+> 
+>   [core]
+>   refusePushSecret = true
+> 
+>   [remote "foo"]
+>   refusePushSecret = false
+>   url = ...
+>   fetch = ...
+> 
+>   [branch "baz"]
+>   remote = foo
+>   merge = refs/heads/baz
+>   refusePushSecret = true
+> 
+> This config would:
+> 
+>  - refuse to push 'secret' commits from branch 'baz'
+> (branch.baz.refusePushSecret == true)
+> 
+>  - but allow to push other branches with 'secret' commits to remote
+> 'foo' (remote.foo.refusePushSecret == false)
+> 
+>  - but refuse to push 'secret' commits to other remotes
+> (core.refusePushSecret == true)
+> 
+> (The order of precedence would be: branch config > remote config >
+> repo config > user config > system config > default when unset)
+
+You read my mind.
+
+> I am unsure whether the 'secret'-ness of a commit should follow across
+> the push, but if you do (assuming we store the 'secret' flag using
+> git-notes) this is simply a matter of synchronizing the
+> refs/notes/secret to the same remote.
+
+I think it should, so that 'secret' commit would not escape by accident
+via a group secret repository.
+
+What makes it hard (I think) is that we would prefer to transfer 
+'secret'-ness only for pushed commits.  That might be problem for notes
+based implementation of 'secret' annotation and 'secret'-ness transfer...
+though I guess knowing that there exist 'secret' commit with given SHA1
+which we do not have and should not have is not much breach of
+confidentiality.  Still...
+
+-- 
+Jakub Narebski
+Poland
