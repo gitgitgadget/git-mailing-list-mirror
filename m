@@ -1,59 +1,77 @@
-From: =?UTF-8?B?6rmA64Ko7ZiV?= <namhyung.kim@lge.com>
-Subject: Re: [PATCH 2/2] ctype: implement islower/isupper macro
-Date: Fri, 10 Feb 2012 11:32:45 +0900
-Message-ID: <4F3481CD.5010303@lge.com>
-References: <1328840011-19028-1-git-send-email-namhyung.kim@lge.com> <1328840011-19028-2-git-send-email-namhyung.kim@lge.com> <7vwr7vsa8j.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 10 03:32:55 2012
+From: "Neal Kreitzinger" <neal@rsss.com>
+Subject: nested git repos (not submodules)
+Date: Thu, 9 Feb 2012 20:34:42 -0600
+Message-ID: <jh1vo3$7af$1@dough.gmane.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 10 03:35:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvgI8-0001TM-WC
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 03:32:53 +0100
+	id 1RvgKF-0003iC-M8
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 03:35:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758193Ab2BJCcs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Feb 2012 21:32:48 -0500
-Received: from LGEMRELSE6Q.lge.com ([156.147.1.121]:59470 "EHLO
-	LGEMRELSE6Q.lge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758134Ab2BJCcr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2012 21:32:47 -0500
-X-AuditID: 9c930179-b7cf1ae000000e40-b9-4f3481cd6e3a
-Received: from [192.168.0.5] ( [10.177.201.156])
-	by LGEMRELSE6Q.lge.com (Symantec Brightmail Gateway) with SMTP id 1F.87.03648.DC1843F4; Fri, 10 Feb 2012 11:32:45 +0900 (KST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-In-Reply-To: <7vwr7vsa8j.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: AAAAAA==
+	id S1758783Ab2BJCe7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Feb 2012 21:34:59 -0500
+Received: from plane.gmane.org ([80.91.229.3]:53156 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758089Ab2BJCe6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2012 21:34:58 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1RvgK5-0003SG-IW
+	for git@vger.kernel.org; Fri, 10 Feb 2012 03:34:53 +0100
+Received: from 67.63.162.200 ([67.63.162.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 10 Feb 2012 03:34:53 +0100
+Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 10 Feb 2012 03:34:53 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 67.63.162.200
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-RFC2646: Format=Flowed; Original
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190372>
 
-Hello,
+In the worktree of a particular git repo, the user has made a subdir 
+(worktree/subdir) of the worktree (worktree/.git) its own repo 
+(worktree/subdir/.git).  Is there a danger of worktree/.git and 
+worktree/subdir/.git crossing wires?  Are literally nested git repos (whose 
+worktrees are in turn tracked as subdirs by upper-level git repo(s)) a 
+supported/valid model in regards to git.git (NOT git-addons)?
 
-2012-02-10 11:17 AM, Junio C Hamano wrote:
-> Namhyung Kim <namhyung.kim@lge.com> writes:
->
->> The git-compat-util.h provides various ctype macros but lacks those two
->> (along with others). Add them.
->
-> Isn't that because we do not use them ourselves? Uses in compat/ do not
-> count, and judging from the way it is used in compat/fnmatch/fnmatch.c,
-> the implementation of sane_iscase() might be overly protective.
->
-> What problem are you trying to solve?
->
+Symptomatically, I have observed the following so far:
+(1) worktree/.git is "ignoring" (or unaware of) worktree/subdir/.git because 
+it is treating subdir/ as if subdir/.git wasn't there and is not listing 
+subdir/.git as untracked.  I'm not sure if this is an unintended side-effect 
+of git ignoring .git(s) automatically, or if having subdir/.git's (w/out 
+having them defined as submodules) is an expected 
+(reasonable/sane/recommended) model for git.git users.
+(2) running git commands with pwd=worktree/subdir/ acts upon 
+worktree/subdir/.git (subdir/ is regarded as the toplevel of subdir/.git as 
+opposed to a subdir of worktree/.git) and is seemingly oblivious to 
+worktree.git.
 
-There's no problem. In fact, these patches come from perf as it uses a copy of 
-git code in this part. So I didn't check it's really needed for git too, but 
-just hoped it'd be helpful someday. If you don't think it's worth applying I'm 
-fine with dropping it.
+I suspect submodules is the "correct" way to implement the effect of nested 
+git repos.  That being said, this literal nested git repo is a temporary 
+band-aid and I don't expect it to be propogated, but I do have to deal 
+(react) with it in the meantime.  I'm thinking I can manage that and deal 
+with annoyances as they arise, unless there are any unseen landmines I'm not 
+aware of.  Please advise.
 
-Thanks,
-Namhyung
+(I also wouldn't be surprised to hear that this is exactly how submodules 
+really first started in theory or practice.)
+
+Thanks in advance for any feedback.
+
+v/r,
+neal 
