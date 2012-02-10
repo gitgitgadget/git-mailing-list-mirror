@@ -1,86 +1,90 @@
 From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
 Subject: Re: Git, Builds, and Filesystem Type
-Date: Thu, 9 Feb 2012 17:11:12 -0800
-Message-ID: <CAE1pOi0=Sf7K=FaHW--z6AHSTKsmBWe-f75gXcdZivW_4T6g4Q@mail.gmail.com>
+Date: Thu, 9 Feb 2012 17:25:59 -0800
+Message-ID: <CAE1pOi1O10XeROv+sQRwAAVQ0PneMZTOaEfny-Oz2Sp+=z+aiA@mail.gmail.com>
 References: <CAE1pOi1of-hj+87M7RqhFUWA8an14bPG88dAOwhNogmfFvJ=tA@mail.gmail.com>
-	<CAE5ih7_NkyJ6vGbyoKvQy65LFK3-zkXi79Xd6+3Si8DyUi47JQ@mail.gmail.com>
+	<201202091453.38564.mfick@codeaurora.org>
+	<CAE1pOi387-bimYEG4bjFOjaCwhPeDyLRj7wOJgyuKSCrZ9kBFg@mail.gmail.com>
+	<201202091634.36563.mfick@codeaurora.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git Users <git@vger.kernel.org>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Fri Feb 10 02:11:19 2012
+To: Martin Fick <mfick@codeaurora.org>
+X-From: git-owner@vger.kernel.org Fri Feb 10 02:26:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rvf1C-0003hw-Un
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 02:11:19 +0100
+	id 1RvfFW-0002x2-Er
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 02:26:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758324Ab2BJBLO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Feb 2012 20:11:14 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:44185 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757729Ab2BJBLN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2012 20:11:13 -0500
-Received: by ghrr11 with SMTP id r11so1257496ghr.19
-        for <git@vger.kernel.org>; Thu, 09 Feb 2012 17:11:12 -0800 (PST)
+	id S1758700Ab2BJB0B convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Feb 2012 20:26:01 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:58682 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757510Ab2BJB0A convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Feb 2012 20:26:00 -0500
+Received: by yhoo21 with SMTP id o21so1257275yho.19
+        for <git@vger.kernel.org>; Thu, 09 Feb 2012 17:26:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=4tcWI/L282c6qm5tyw23zO5dxCU0mVm7vfgBnSrMLgU=;
-        b=KilOnI/nnCy9YC0tqklyMmjc9mFuW9dLfg7yggb/WMyiJnsL+eFX4eBcAFnkH+1bZ0
-         TCdx3oq/+WY8yTZVH50FFKNuG3MW6gfw5cSYJilrv+u+EDQcv2ghgaMQ54tngAD/HFsH
-         DDTKHTf0UJOHMuOSb5Ptk5nQB6I+6emmHDu4Y=
-Received: by 10.236.156.67 with SMTP id l43mr6058166yhk.73.1328836272691; Thu,
- 09 Feb 2012 17:11:12 -0800 (PST)
-Received: by 10.236.73.130 with HTTP; Thu, 9 Feb 2012 17:11:12 -0800 (PST)
-In-Reply-To: <CAE5ih7_NkyJ6vGbyoKvQy65LFK3-zkXi79Xd6+3Si8DyUi47JQ@mail.gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        bh=EARJ4XfbaDPpdiVOdiXpWz8wF+c08q6UeOKIswvScw4=;
+        b=gXgzTjocXDQJNon4VqlIHkK8+sPIOr+4Njbw9H9bqqCIjiROsV8DZ93RXSfIgg6J5s
+         V/TjunTCCkl+oaWI9pYmegJf4YfGxRXeHjsPfumALGV5qLz9KhPc9Aj8OBIri3UUFlPx
+         8uGxexpn4q3viKGWFC0E3Bp/1vqyqQqOfDyNc=
+Received: by 10.101.143.14 with SMTP id v14mr1877452ann.1.1328837160015; Thu,
+ 09 Feb 2012 17:26:00 -0800 (PST)
+Received: by 10.236.73.130 with HTTP; Thu, 9 Feb 2012 17:25:59 -0800 (PST)
+In-Reply-To: <201202091634.36563.mfick@codeaurora.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190362>
 
-On 9 February 2012 15:24, Luke Diamand <luke@diamand.org> wrote:
-> On Thu, Feb 9, 2012 at 9:23 PM, Hilco Wijbenga <hilco.wijbenga@gmail.com>
+On 9 February 2012 15:34, Martin Fick <mfick@codeaurora.org> wrote:
+> On Thursday, February 09, 2012 04:24:47 pm Hilco Wijbenga
 > wrote:
+>> On 9 February 2012 13:53, Martin Fick
+> <mfick@codeaurora.org> wrote:
+>> > On Thursday, February 09, 2012 02:23:18 pm Hilco
+>> > Wijbenga
+>> >
+>> > wrote:
+>> >> For the record, our (Java) project is quite small.
+>> >> It's 43MB (source and images) and the entire
+>> >> directory tree after building is about 1.6GB (this
+>> >> includes all JARs downloaded by Maven). So we're not
+>> >> talking TBs of data.
+>> >>
+>> >> Any thoughts on which FSs to include in my tests? Or
+>> >> simply which FS might be more appropriate?
+>> >
+>> > tmpfs is probably fastest hands down if you can use it
+>> > (even if you have to back it by swap).
 >>
->> Hi all,
->>
->> I'm thinking about trying out different filesystems over the weekend
->> to see if, say, BTRFS or XFS is faster when using Git and running our
->> build.
->>
->> Currently, I'm using ReiserFS and it's not like it's not working. I'm
->> very pleased with ReiserFS but after seeing talks about BTRFS and XFS
->> I'm curious if another (newer) FS is better suited to our specific
->> environment. Anything to make the build a little faster. :-)
->>
->> For the record, our (Java) project is quite small. It's 43MB (source
->> and images) and the entire directory tree after building is about
->> 1.6GB (this includes all JARs downloaded by Maven). So we're not
->> talking TBs of data.
->>
->> Any thoughts on which FSs to include in my tests? Or simply which FS
->> might be more appropriate?
+>> I don't have quite that much RAM. :-)
 >
->
-> Do people still use reiserfs? I thought development on that pretty much
-> stopped years ago. And reiser4 never made it into the kernel. Read the wiki
-> page for why.
+> But I am sure that you have that much disk space which you
+> can allocate to swap, if not you already couldn't build it.
+> And tmpfs swapping is still likely faster than a persistent
+> FS (it will not need to block on syncs). =C2=A0If you are
+> benchmarking, it is likely worth you effort since that will
+> probably mark the upper performance bound,
 
-As I said, reiserfs works fine so I see no need to replace it. I'm not
-a big fan of ext3 (I've run out of inodes too many times) and I simply
-haven't tried ext4. Apparently, it has some architectural problems but
-I'm no expert.
+I found [1]. Is that sort of what you had in mind? That would be quite
+tricky. I have a group of some 60 projects, each with their own
+"target" directory which would have to be mounted on tmpfs. And the
+"target" directory is created by Maven, not by me. Not to mention that
+I shut down my computer at the end of the day. :-)
 
-> ext4, FTW!
->
-> But whatever you use, you might find that the core.preloadindex config
-> option helps. It certainly does for NFS.
+I think I would prefer a somewhat more persistent solution. I
+certainly have enough space for a very big swap partition. So the
+whole of ~/my-project would fit on tmpfs. I'm just not sure about
+making it persistent at the end of the day.
 
-I would like to think that my local hard drive has no latency issues?
-Would this really be worthwhile even if I do not use some sort of
-distributed FS?
+[1] http://code.google.com/p/chromium/wiki/LinuxFasterBuilds
