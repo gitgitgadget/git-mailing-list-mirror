@@ -1,85 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Remove empty ref directories while reading loose refs
-Date: Fri, 10 Feb 2012 15:53:30 -0500
-Message-ID: <20120210205330.GE5504@sigill.intra.peff.net>
-References: <1328891127-17150-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 28/51] refs.c: rename ref_array -> ref_dir
+Date: Fri, 10 Feb 2012 13:17:11 -0800
+Message-ID: <7v62fepew8.fsf@alter.siamese.dyndns.org>
+References: <1323668338-1764-1-git-send-email-mhagger@alum.mit.edu>
+ <1323668338-1764-29-git-send-email-mhagger@alum.mit.edu>
+ <7v7h21xps9.fsf@alter.siamese.dyndns.org> <4EE6E61F.8080405@alum.mit.edu>
+ <7vk461vuy9.fsf@alter.siamese.dyndns.org> <4EE7A387.3070400@alum.mit.edu>
+ <4EE7CDF2.3040408@alum.mit.edu> <7vzkewt5qu.fsf@alter.siamese.dyndns.org>
+ <4F158E99.2020906@alum.mit.edu> <4F352F03.2030104@alum.mit.edu>
+ <20120210204457.GD5504@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 10 21:53:41 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Drew Northup <drew.northup@maine.edu>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 10 22:17:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvxTP-0001kk-Cn
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 21:53:40 +0100
+	id 1RvxqK-0006gI-TI
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 22:17:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932488Ab2BJUxc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Feb 2012 15:53:32 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33546
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932214Ab2BJUxc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2012 15:53:32 -0500
-Received: (qmail 7655 invoked by uid 107); 10 Feb 2012 21:00:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 10 Feb 2012 16:00:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Feb 2012 15:53:30 -0500
-Content-Disposition: inline
-In-Reply-To: <1328891127-17150-1-git-send-email-pclouds@gmail.com>
+	id S1759160Ab2BJVRQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Feb 2012 16:17:16 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65376 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752994Ab2BJVRP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2012 16:17:15 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E7E07C4F;
+	Fri, 10 Feb 2012 16:17:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=As0QulF8xXbtPVYowKaF4mfvriY=; b=Ocqt+u
+	IgybAS7g1t3nkTKD8s6I07LHCQI5BL2sLpwJAXeuBK5yxgdTee/QPPJc55AE6Yd/
+	hh5anGoI4GKD3LUgk6qiW2h/3yIpfzRSx3nxw+GVm6VKS+DZhaVl3U7fxphoUIfD
+	1HKcOiw08HoWs2M3miOQVUeTVZAL9UmhyP67U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=A2wtOuBcliHjsoxrCTXjyGErecz23lka
+	fUCzhF7+qEyvU0MN4AzlsI1RJzZlqSjxeLY44iHY8lUwDCHegn4rm2VDNdJjO56O
+	AvGrmnYPsJVtUq6NrhZRgooIygqu+WJTmsQmJ1ixT5bVC2KbUc1AYi0sSPsVaghe
+	PmKsY9oNYEY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 659977C4E;
+	Fri, 10 Feb 2012 16:17:13 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C12617C49; Fri, 10 Feb 2012
+ 16:17:12 -0500 (EST)
+In-Reply-To: <20120210204457.GD5504@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 10 Feb 2012 15:44:57 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 997D869A-542C-11E1-A568-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190454>
 
-On Fri, Feb 10, 2012 at 11:25:27PM +0700, Nguyen Thai Ngoc Duy wrote:
+Jeff King <peff@peff.net> writes:
 
-> Empty directories in $GIT_DIR/refs increases overhead at startup.
-> Removing a ref does not remove its parent directories even if it's the
-> only file left so empty directories will be hanging around.
-> [...]
-> This patch removes empty directories as we see while traversing
-> $GIT_DIR/refs and reverts be7c6d4 because it's no longer needed.
+>> If everything_local() is trying to check that the references are in the
+>> local repository plus alternates, then it is incorrect that
+>> everything_local() doesn't consider alternate references in its
+>> determination.  My guess is that this is the case, and that something
+>> like the following might be the fix:
+>
+> Junio could answer more authoritatively than I, but I am pretty sure it
+> is the latter. The point is to skip the expensive find_common
+> negotiation if we know that there are no objects to fetch. Thus the
+> "local" here is "do we have them on this side of the git-protocol
+> connection", not "do we have them in our non-alternates repository".
 
-It feels wrong to me to be writing to the repository during what would
-otherwise be a read-only operation. Especially without locking. Doesn't
-this create a race condition with:
+Correct.  The function is about "do we need to get any object from the
+other side?" optimization.
 
-  git update-ref refs/foo/bar $sha1 &      (a)
-  git for-each-ref                         (b)
+I originally thought to go through the rest of your message, but I
+realized I can just say "everything you said is correct and I have nothing
+more to add."
 
-if you have this sequence of events:
-
-  1. (a) wants to create the ref, so it must first mkdir
-     ".git/refs/foo".
-
-  2. (b) is reading refs and notices the empty "foo" directory. It
-     rmdirs it.
-
-  3. (a) now attempts to create "bar" inside the newly created "foo"
-     directory. This fails, because the directory does not exist.
-
-A similar race already can happen with:
-
-  git update-ref refs/foo/bar $sha1 &
-  git update-ref refs/foo $sha1
-
-since the latter will remove a stale "foo" directory before it can
-create the new ref file.  But that race is OK, I think. Those are both
-write operations, and one of them _must_ fail, because they are in
-conflict (and I think even with the race they fail gracefully, with the
-latter one "winning").
-
-> pack-refs was taught of cleaning up empty directories in be7c6d4
-> (pack-refs: remove newly empty directories - 2010-07-06), but it only
-> checks parent directories of packed refs only. Already empty dirs are
-> left untouched.
-
-I'd much rather have pack-refs simply learn to remove all stale
-directories. We at least know that "gc" is a slightly riskier operation.
-
--Peff
+Thanks.
