@@ -1,128 +1,128 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFD] Rewriting safety - warn before/when rewriting published history
-Date: Fri, 10 Feb 2012 20:38:54 +0100
-Message-ID: <201202102038.55710.jnareb@gmail.com>
-References: <201202042045.54114.jnareb@gmail.com> <201202071531.08385.jnareb@gmail.com> <CALKQrge821x7OoSekkWw7vUjP642jhbE0D9oWPcCxuuTXOqQHA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: how to determine oldest supported version of git
+Date: Fri, 10 Feb 2012 11:42:45 -0800
+Message-ID: <7vwr7upj9m.fsf@alter.siamese.dyndns.org>
+References: <jgeekn$of2$1@dough.gmane.org>
+ <7v8vkktt6y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Philip Oakley <philipoakley@iee.org>, git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Feb 10 20:39:10 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "Neal Kreitzinger" <neal@rsss.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 10 20:43:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvwJF-0007DN-Na
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 20:39:06 +0100
+	id 1RvwNM-0001H6-UR
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 20:43:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932143Ab2BJTi7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Feb 2012 14:38:59 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:45445 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751753Ab2BJTi7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2012 14:38:59 -0500
-Received: by eaah12 with SMTP id h12so1037262eaa.19
-        for <git@vger.kernel.org>; Fri, 10 Feb 2012 11:38:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=CfooOORBolXbA1S9Dza8sqWImkg95rKVBcr715WLlV8=;
-        b=n8pWWe5+DEOMy1kBhNKKcwJXqLlRR2mbEk9p+mKPOcerSt2W5N964TG6Al79QzfPJ1
-         N4dsxj7q1dEQRxdTaJDoZQ7vBMhNiFUfu7Q8ceDAh2mVWRmbuALWMsaScp5W1C9F4R+Y
-         /zoGx6/RC/judXgURuJ9rc4HLGh7Evja8bteo=
-Received: by 10.213.23.20 with SMTP id p20mr547282ebb.68.1328902737770;
-        Fri, 10 Feb 2012 11:38:57 -0800 (PST)
-Received: from [192.168.1.13] (abwh187.neoplus.adsl.tpnet.pl. [83.8.231.187])
-        by mx.google.com with ESMTPS id z47sm25547754eeh.9.2012.02.10.11.38.55
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 10 Feb 2012 11:38:56 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <CALKQrge821x7OoSekkWw7vUjP642jhbE0D9oWPcCxuuTXOqQHA@mail.gmail.com>
-Content-Disposition: inline
+	id S932506Ab2BJTmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Feb 2012 14:42:50 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51216 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932481Ab2BJTms (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2012 14:42:48 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B8071618B;
+	Fri, 10 Feb 2012 14:42:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=umaI7JWuz4Ocuy96QKLLt8LVqrg=; b=hmX/Ip
+	S9t49xmFEvf9ld20Yx59HVR6ja3zq5qvY2XdRLwySIn/vlPUFmHN6wQpAun8nJnn
+	nb7PT9sZOpIEMPt//KObmY9RzcFnJ65uOSs9XrAgDlkA8SmjtjY/ltsJQ7wKF5Ym
+	lfb0xF6Al/JGioyVPO+Esg0qNtdPp+trjWzsU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PYYr6wcl4wnq/volFqL18m7uy3aqyKzp
+	6kuunj9JkoLpJpWcfrSpO0HB11D+FKh0S6YNuUNUAdgGfQDF6sA7gcbYO1OFXuXq
+	p3bYwAbwxyMDx5Erngl/TsxiHQmRvLL6JpLFw1drCTm7L0kiE1//uah468Cx1Avt
+	XDXSVEks5X4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0833618A;
+	Fri, 10 Feb 2012 14:42:47 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1C8FF6189; Fri, 10 Feb 2012
+ 14:42:47 -0500 (EST)
+In-Reply-To: <7v8vkktt6y.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 02 Feb 2012 20:52:05 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 68788DAE-541F-11E1-9879-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190439>
 
-On Tue, 7 Feb 2012, Johan Herland wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> (we are pretty much in violent agreement, so I will only comment where
-> I find it necessary)
+> "Neal Kreitzinger" <neal@rsss.com> writes:
+>
+>> What is the best way for me (a git user) to determine what is currently
+>> the oldest supported version of git (the oldest version still getting
+>> bugfixes)?  IOW, when can I tell that my version of git is no longer
+>> supported?
+>
+> "A note from the maintainer" only promises that the latest major release
+> (as of this writing, 1.7.9) gets regular maintenance releases until the
+> next major release happens.
+>
+> When queuing a fix to an old bug, however, I try to build a topic branch
+> for that fix from as old an release as practical, in order to make sure
+> that older maintenance tracks could benefit, and I do give updates for
+> older maintenance tracks when able (but no promises).
+> ...
+> One cycle of major release development is expected to last between 8 to 10
+> weeks, so keeping two stale maintenance tracks in addition to the latest
+> maintenance track alive would roughly translate to 6 months shelf life for
+> an ancient release.
 
-So now comes the hard part: actually implementing (well, designing and
-implementing) prototypes for 'secret' trait and 'public' trait...
- 
-> On Tue, Feb 7, 2012 at 15:31, Jakub Narebski <jnareb@gmail.com> wrote:
+Having said all that, I am starting to doubt what the point of all
+this is.
 
-> > Also, when thinking about different scenarios of why one would like to
-> > mark commit as 'secret', we might want to be able to mark commit as
-> > secret / unpublishable with respect to _subset_ of remotes, so e.g.
-> > I am prevented from accidentally publishing commits marked as 'secret'
-> > to public repository, or to CI/QA repository, but I can push (perhaps
-> > with warning) to group repository, together with 'secret'-ness state
-> > of said commit...
-> >
-> > ... though it wouldn't be as much 'secret' as 'confidential' ;-)
-> 
-> Another way to achieve this would be to have a config flag to control
-> whether Git checks for the 'secret' flag before pushing. This config
-> flag could be set at the system/user level (to enable/disable the
-> feature as a whole), at the repo level (to enable/disable it in a
-> given repo), at the remote level (to enable/disable it on a given
-> repo), and finally at the branch level (to enable-disable it for a
-> given branch (and its upstream)). Thus you could have a .git/config
-> that looked like this:
-> 
->   [core]
->   refusePushSecret = true
-> 
->   [remote "foo"]
->   refusePushSecret = false
->   url = ...
->   fetch = ...
-> 
->   [branch "baz"]
->   remote = foo
->   merge = refs/heads/baz
->   refusePushSecret = true
-> 
-> This config would:
-> 
->  - refuse to push 'secret' commits from branch 'baz'
-> (branch.baz.refusePushSecret == true)
-> 
->  - but allow to push other branches with 'secret' commits to remote
-> 'foo' (remote.foo.refusePushSecret == false)
-> 
->  - but refuse to push 'secret' commits to other remotes
-> (core.refusePushSecret == true)
-> 
-> (The order of precedence would be: branch config > remote config >
-> repo config > user config > system config > default when unset)
+Maybe I am being slow to come to this realization after having done this
+for all these years, but Git is not like the Linux kernel, where hundreds
+of companies maintain their own internal forks, e.g. out of tree drivers,
+filesystem tweaks or scheduler tweaks, all tied to a specific version of
+the internal API that is a rapidly moving target and cannot afford to
+adjust to the bleeding edge.  Also our strict no regression policy means
+that it is not like an option --foo in one version of Git changes its
+meaning from X to Y across version boundaries, and even if on rare
+occasions we need to introduce incompatibilities to improve the system, we
+give enough advance warning and execute careful migration plans to ensure
+that third-parties can keep up, and the "fix at the oldest branch and
+merge upwards" policy means fixes to important bugs will be in all the
+maintenance tracks, including the 'master' version.
 
-You read my mind.
+So in practical terms, once 1.7.9 is out, there is *no* practical reason
+for anybody to use 1.7.8.x or anything older. The only two things people
+are gaining by sticking to an older version are that (1) they do not have
+a way to use new features, and that (2) they get fixes that are less
+rigorously tested, because the testing happens mostly in the context of
+the 'next' branch and then subsequently in the 'master' branch, and fixes
+cooked in these two contexts may have unintended consequences that will
+never be discovered until they are merged down to the older maintenance
+tracks.
 
-> I am unsure whether the 'secret'-ness of a commit should follow across
-> the push, but if you do (assuming we store the 'secret' flag using
-> git-notes) this is simply a matter of synchronizing the
-> refs/notes/secret to the same remote.
+If we only released the feature releases without _any_ maintenance
+releases, distros no longer have an excuse to stick to older maintenance
+tracks ("For the upcoming Zesty Zebra LTS, Git will stay at 1.7.7.x and
+never updated to any newer major version.")  This in turn removes the need
+for the third-party tools that support wider Git ecosystem to worry about
+their users who are kept on very stale versions of Git by distros, because
+any reasonably maintained distro will not pin their users to an ancient
+version of Git.  If we can change the distro's idea of what constitutes a
+release of Git that is on a single maintenance track from the current
+"1.7.7.3 and newer, but not anything that does not begin with 1.7.7."  to
+"1.7.9 and newer, but not anything that does not begin with 1.7.", that
+would be a major win, I would imagine.
 
-I think it should, so that 'secret' commit would not escape by accident
-via a group secret repository.
+And dropping the maintenance tracks for older major releases may be a good
+first step in that right direction.
 
-What makes it hard (I think) is that we would prefer to transfer 
-'secret'-ness only for pushed commits.  That might be problem for notes
-based implementation of 'secret' annotation and 'secret'-ness transfer...
-though I guess knowing that there exist 'secret' commit with given SHA1
-which we do not have and should not have is not much breach of
-confidentiality.  Still...
+With that in mind, the real answer to the original question in this thread
+may be "the oldest supported version is the current one. stay at the
+latest major release, in other words, do not even ask that question".
 
--- 
-Jakub Narebski
-Poland
+Thoughts?
