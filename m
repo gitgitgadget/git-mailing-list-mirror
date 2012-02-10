@@ -1,96 +1,66 @@
-From: =?UTF-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= 
-	<dilyan.palauzov@aegee.org>
-Subject: 1.7.9, libcharset missing from EXTLIBS
-Date: Fri, 10 Feb 2012 02:29:24 +0100
-Message-ID: <4F3472F4.4060605@aegee.org>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: Git, Builds, and Filesystem Type
+Date: Thu, 09 Feb 2012 19:08:45 -0700
+Message-ID: <14de0389-6497-4e74-baa5-129b0c1560a3@email.android.com>
+References: <CAE1pOi1of-hj+87M7RqhFUWA8an14bPG88dAOwhNogmfFvJ=tA@mail.gmail.com> <201202091453.38564.mfick@codeaurora.org> <CAE1pOi387-bimYEG4bjFOjaCwhPeDyLRj7wOJgyuKSCrZ9kBFg@mail.gmail.com> <201202091634.36563.mfick@codeaurora.org> <CAE1pOi1O10XeROv+sQRwAAVQ0PneMZTOaEfny-Oz2Sp+=z+aiA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------080405070202070702050906"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 10 02:50:44 2012
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Git Users <git@vger.kernel.org>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 10 03:11:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvfdJ-0007Cf-6J
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 02:50:41 +0100
+	id 1Rvfxc-0000l0-BB
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 03:11:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758103Ab2BJBue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Feb 2012 20:50:34 -0500
-Received: from mailout-aegee.scc.kit.edu ([129.13.185.235]:42636 "EHLO
-	mailout-aegee.scc.kit.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754601Ab2BJBue (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2012 20:50:34 -0500
-X-Greylist: delayed 1259 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Feb 2012 20:50:34 EST
-Received: from smtp.aegee.org (aegeeserv.aegee.uni-karlsruhe.de [129.13.131.80])
-	by scc-mailout-02.scc.kit.edu with esmtp (Exim 4.72 #1)
-	id 1RvfIp-0003nF-Px; Fri, 10 Feb 2012 02:29:31 +0100
-Authentication-Results: aegeeserv.aegee.org; auth=pass (PLAIN) smtp.auth=didopalauzov
-Received: from [192.168.2.104] (p4FDCFE97.dip.t-dialin.net [79.220.254.151])
-	(authenticated bits=0)
-	by smtp.aegee.org (8.14.5/8.14.5) with ESMTP id q1A1TWvA030147
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Fri, 10 Feb 2012 01:29:33 GMT
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0) Gecko/20120129 Thunderbird/10.0
-X-Virus-Scanned: clamav-milter 0.97.3 at aegeeserv
-X-Virus-Status: Clean
+	id S1757365Ab2BJCLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Feb 2012 21:11:12 -0500
+Received: from wolverine02.qualcomm.com ([199.106.114.251]:11465 "EHLO
+	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754410Ab2BJCLM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2012 21:11:12 -0500
+X-IronPort-AV: E=McAfee;i="5400,1158,6615"; a="159707476"
+Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
+  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 09 Feb 2012 18:11:11 -0800
+Received: from [192.168.1.160] (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 42BD410004D1;
+	Thu,  9 Feb 2012 18:11:11 -0800 (PST)
+User-Agent: K-9 Mail for Android
+In-Reply-To: <CAE1pOi1O10XeROv+sQRwAAVQ0PneMZTOaEfny-Oz2Sp+=z+aiA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190363>
-
-This is a multi-part message in MIME format.
---------------080405070202070702050906
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-
-Hello,
-
-git 1.7.9 makes use of libcharset and /Makefile contains:
-
-ifdef HAVE_LIBCHARSET_H
-         BASIC_CFLAGS += -DHAVE_LIBCHARSET_H
-endif
-
-when building git-daemon., the compiler reports
-make V=1
-cc  -I. -DUSE_LIBPCRE -pthread -DHAVE_PATHS_H -DHAVE_LIBCHARSET_H 
--DHAVE_DEV_TTY -DSHA1_HEADER='<openssl/sha.h>'  -DNO_STRLCPY -o 
-git-daemon -L/usr/lib64 -L/lib64  daemon.o libgit.a xdiff/lib.a  -lpcre 
--lz  -liconv  -lcrypto -pthread
-/tmp/ccvPEthi.ltrans0.ltrans.o: In function `main':
-ccvPEthi.ltrans0.o:(.text.startup+0x59): undefined reference to 
-`locale_charset'
-collect2: ld returned 1 exit status
-make: *** [git-daemon] Error 1
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190364>
 
 
-and the problem is, that libcharset is not used when linking.  To solve 
-this, please replace the above extract from /Makefile with
 
-ifdef HAVE_LIBCHARSET_H
-         BASIC_CFLAGS += -DHAVE_LIBCHARSET_H
-	EXTLIBS += -lcharset
-endif
+>I found [1]. Is that sort of what you had in mind
 
-Със здраве
-   Дилян
+yes
 
---------------080405070202070702050906
-Content-Type: text/x-vcard; charset=utf-8;
- name="dilyan_palauzov.vcf"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename="dilyan_palauzov.vcf"
+>That would be quite
+>tricky. I have a group of some 60 projects, each with their own
+>"target" directory which would have to be mounted on tmpfs. And the
+>"target" directory is created by Maven, not by me. Not to mention that
+>I shut down my computer at the end of the day. :-)
 
-YmVnaW46dmNhcmQNCmZuO3F1b3RlZC1wcmludGFibGU6PUQwPTk0PUQwPUI4PUQwPUJCPUQx
-PThGPUQwPUJEID1EMD05Rj1EMD1CMD1EMD1CQj1EMD1CMD1EMT04Mz1EMD1CNz1EMD1CRT0N
-Cgk9RDA9QjINCm47cXVvdGVkLXByaW50YWJsZTtxdW90ZWQtcHJpbnRhYmxlOj1EMD05Rj1E
-MD1CMD1EMD1CQj1EMD1CMD1EMT04Mz1EMD1CNz1EMD1CRT1EMD1CMjs9RDA9OTQ9RDA9Qjg9
-RDA9QkI9RDE9OEY9RDA9QkQNCmVtYWlsO2ludGVybmV0OmRpbHlhbi5wYWxhdXpvdkBhZWdl
-ZS5vcmcNCnRlbDtob21lOis0OS03MjEtOTQxOTMyNzANCnRlbDtjZWxsOis0OS0xNjItNDA5
-MTE3Mg0Kbm90ZTpzaXA6ODM3MkBhZWdlZS5vcmcNCnZlcnNpb246Mi4xDQplbmQ6dmNhcmQN
-Cg0K
---------------080405070202070702050906--
+Sounds like a laptop?  Hibernate?
+
+>I think I would prefer a somewhat more persistent solution. I
+>certainly have enough space for a very big swap partition. So the
+>whole of ~/my-project would fit on tmpfs. I'm just not sure about
+>making it persistent at the end of the day.
+
+
+Link your .git dir to a persistent location. 
+
+Benchmark it first so you know how much hassle it may be worth.  If it isn't worth it, xfs or brtfs will likely not be worth it either,
+
+-Martin
+Employee of Qualcomm Innovation Center,Inc. which is a member of Code Aurora Forum
