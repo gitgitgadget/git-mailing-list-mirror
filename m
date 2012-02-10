@@ -1,132 +1,109 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: A note on modern git plus ancient meld ("wrong number of
- arguments")
-Date: Fri, 10 Feb 2012 02:23:49 -0600
-Message-ID: <20120210082106.GA7871@burratino>
-References: <20120209191742.GA20703@unpythonic.net>
- <CAJDDKr58LV9EDJZP+3S0YfyTOXFgJWD6nm=AiA19MkyBF-wb_g@mail.gmail.com>
+From: =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+Subject: [PATCH 3/8] gitweb: Move HTML-formatting diff line back to process_diff_line()
+Date: Fri, 10 Feb 2012 10:18:09 +0100
+Message-ID: <1328865494-24415-4-git-send-email-michal.kiedrowicz@gmail.com>
+References: <1328865494-24415-1-git-send-email-michal.kiedrowicz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff Epler <jepler@unpythonic.net>, git@vger.kernel.org,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Charles Bailey <charles@hashpling.org>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 10 09:24:27 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 10 10:18:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvlmI-0007M3-71
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 09:24:22 +0100
+	id 1Rvmcj-0005Sy-GT
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 10:18:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753140Ab2BJIYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Feb 2012 03:24:12 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:34238 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755197Ab2BJIYL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2012 03:24:11 -0500
-Received: by ghrr11 with SMTP id r11so1332862ghr.19
-        for <git@vger.kernel.org>; Fri, 10 Feb 2012 00:24:10 -0800 (PST)
+	id S1758737Ab2BJJS0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Feb 2012 04:18:26 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:42215 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754302Ab2BJJSY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2012 04:18:24 -0500
+Received: by mail-ee0-f46.google.com with SMTP id c14so882729eek.19
+        for <git@vger.kernel.org>; Fri, 10 Feb 2012 01:18:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=yIs2gvBJD0osnsujpAmdSKP7zmooXFnbnYG2NMHxdkQ=;
-        b=ItcNo4Wqdu4TKYsQQvi4qs6Appqyipf4ccJBIOBhtb2Kc2gi9V6VyAObrRToRmoyqB
-         vTNYdlTI2Ld8mFwLBK+THyW+sEPQFQCxnHPjizNDTk+TzuG8ozYCvuSSmIgeIXlI4Sya
-         vKOZwsFzhU7sPSDaQTzI53IPgDvwTV/8l0eZo=
-Received: by 10.101.5.17 with SMTP id h17mr2272450ani.15.1328862250373;
-        Fri, 10 Feb 2012 00:24:10 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id wn7sm1762327igc.0.2012.02.10.00.24.09
-        (version=SSLv3 cipher=OTHER);
-        Fri, 10 Feb 2012 00:24:09 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CAJDDKr58LV9EDJZP+3S0YfyTOXFgJWD6nm=AiA19MkyBF-wb_g@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=9kBgv9qHF91/TBcD2xUtCbqSnXl7sJw7SlT/xeOmhnM=;
+        b=f5P+vnOdj3OEbdOCRQSPjjzUt6oe4Fm2/L6nlXIEHPfN0RvY72gT+8gUDzzBbVp3/3
+         Xy6Q2Tc0REi4OQBOvCR+plqWnEZY61O9BEm3c3rnNcSc22inwnAk8Bx6liira3hVD4M0
+         edq8qzw2wD8+8r99cluK5RaN2YFZtuKaUHkXk=
+Received: by 10.14.39.207 with SMTP id d55mr1787895eeb.36.1328865503896;
+        Fri, 10 Feb 2012 01:18:23 -0800 (PST)
+Received: from localhost (77-177-78-94.net.stream.pl. [94.78.177.77])
+        by mx.google.com with ESMTPS id o49sm19959969eeb.7.2012.02.10.01.18.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 10 Feb 2012 01:18:23 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.4
+In-Reply-To: <1328865494-24415-1-git-send-email-michal.kiedrowicz@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190387>
 
-David Aguilar wrote:
-> On Thu, Feb 9, 2012 at 11:17 AM, Jeff Epler <jepler@unpythonic.net> wrote:
+Commit 6ba1eb51b (gitweb: Add a feature to show side-by-side diff,
+2011-10-31) for no special reason moved wrapping diff line in <div> out
+of format_diff_line(). Bring back old behavior.
 
->> At $DAYJOB, I recently encountered a problem after upgrading from (don't
->> laugh) git 1.7.1 to 1.7.8.3: one developer stated that meld failed to
->> run, instead displaying the error 'Wrong number of arguments (Got 5)'.
->>
->> We determined that this user was running a very old version of meld
->> (1.1.1) from his home directory, as opposed to the also very old system
->> version of meld (1.1.5).
-[...]
-> We originally used the --output test so that we wouldn't have to check
-> for a specific version.
+This simplifies code in git_patchset_body() and keeps formatting of a
+diff line in one place.
 
-My bad.  How about something like this patch (untested)?
+The more long-term purpose of this patch is to move formatting diff
+lines down to print_diff_chunk(), to allow processing lines without
+HTML-formatting.
 
--- >8 --
-Subject: mergetools/meld: Use version number to detect '--output' support
+This is just a refactoring patch. It's not meant to change gitweb
+output.
 
-In v1.7.7-rc0~3^2 (2011-08-19), git mergetool's "meld" support learned
-to use the --output option when calling versions of meld (1.5.0 and
-later) that support it.
-
-Alas, it misdetects old versions (before 1.1.5, 2006-06-11) of meld as
-supporting the option, so on systems with such meld, instead of
-getting a nice merge helper, the operator gets a dialog box with the
-text "Wrong number of arguments (Got 5)".  (Version 1.1.5 is when meld
-switched to using optparse.  One consequence of that change was that
-errors in usage are detected and signalled through the exit status
-even when --help was passed.)
-
-Just parse version numbers instead.  We can detect the version number
-by running "meld --version" and postprocessing it.  As a
-futureproofing measure, we are careful to handle all three --version
-output formats encountered so far.  When confused, the mergetool falls
-back to assuming the --output option is not usable.
-
- - [0.1, 0.8.5): "GNOME Meld 0.1".
- - [0.8.5, 0.9.4.1):
-   "Meld 0.8.5
-    Written by Stephen Kennedy <steve9000@users.sf.net>"
- - [0.9.4.1, 1.1.3): "GNOME Meld 0.9.4.1" again.
- - [1.1.3, 1.1.5): back to the two-line form.
- - [1.1.5, present): "$0 1.1.5".  ($0 is typically "meld".)
-
-Reported-by: Jeff Epler <jepler@unpythonic.net>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
 ---
- mergetools/meld |   17 +++++++++++------
- 1 files changed, 11 insertions(+), 6 deletions(-)
+ gitweb/gitweb.perl |   15 ++++++++-------
+ 1 files changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/mergetools/meld b/mergetools/meld
-index eaa115cc..3de29629 100644
---- a/mergetools/meld
-+++ b/mergetools/meld
-@@ -23,10 +23,15 @@ check_meld_for_output_version () {
- 	meld_path="$(git config mergetool.meld.path)"
- 	meld_path="${meld_path:-meld}"
- 
--	if "$meld_path" --output /dev/null --help >/dev/null 2>&1
--	then
--		meld_has_output_option=true
--	else
--		meld_has_output_option=false
--	fi
-+	# "GNOME Meld 0.8.4" -> "0.8.4"
-+	meld_version=$("$meld_path" --version 2>/dev/null)
-+	meld_version=${meld_version#GNOME }
-+	meld_version=${meld_version#* }
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index ed63261..d2f75c4 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2332,14 +2332,18 @@ sub process_diff_line {
+=20
+ 	if ($from && $to && $line =3D~ m/^\@{2} /) {
+ 		$line =3D format_unidiff_chunk_header($line, $from, $to);
+-		return $diff_class, $line;
+=20
+ 	} elsif ($from && $to && $line =3D~ m/^\@{3}/) {
+ 		$line =3D format_cc_diff_chunk_header($line, $from, $to);
+-		return $diff_class, $line;
+-
++	} else {
++		$line =3D esc_html($line, -nbsp=3D>1);
+ 	}
+-	return $diff_class, esc_html($line, -nbsp=3D>1);
 +
-+	case $meld_version in
-+	[2-9].* | [1-9][0-9]* | 1.[5-9]* | 1.[1-9][0-9]*)	# >= 1.5.0
-+		meld_has_output_option=true ;;
-+	*)
-+		meld_has_output_option=false ;;
-+	esac
++	my $diff_classes =3D "diff";
++	$diff_classes .=3D " $diff_class" if ($diff_class);
++	$line =3D "<div class=3D\"$diff_classes\">$line</div>\n";
++
++	return $diff_class, $line;
  }
--- 
-1.7.9
+=20
+ # Generates undef or something like "_snapshot_" or "snapshot (_tbz2_ =
+_zip_)",
+@@ -5104,9 +5108,6 @@ sub git_patchset_body {
+ 			next PATCH if ($patch_line =3D~ m/^diff /);
+=20
+ 			my ($class, $line) =3D process_diff_line($patch_line, \%from, \%to)=
+;
+-			my $diff_classes =3D "diff";
+-			$diff_classes .=3D " $class" if ($class);
+-			$line =3D "<div class=3D\"$diff_classes\">$line</div>\n";
+=20
+ 			if ($class eq 'chunk_header') {
+ 				print_diff_chunk($diff_style, $is_combined, @chunk);
+--=20
+1.7.3.4
