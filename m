@@ -1,119 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] gitweb: Option for filling only specified info in
- fill_project_list_info
-Date: Thu, 09 Feb 2012 15:56:46 -0800
-Message-ID: <7vvcnftvb5.fsf@alter.siamese.dyndns.org>
-References: <1328359648-29511-1-git-send-email-jnareb@gmail.com>
- <201202092336.48772.jnareb@gmail.com>
- <7v4nuzvbnr.fsf@alter.siamese.dyndns.org>
- <201202100052.26399.jnareb@gmail.com>
+From: Tom Grennan <tmgrennan@gmail.com>
+Subject: Re: [RFC/PATCH] tag: make list exclude !<pattern>
+Date: Thu, 9 Feb 2012 16:00:20 -0800
+Message-ID: <20120210000020.GA21092@tgrennan-laptop>
+References: <1328816616-18124-1-git-send-email-tmgrennan@gmail.com>
+ <1328816616-18124-2-git-send-email-tmgrennan@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 10 00:56:54 2012
+Cc: gitster@pobox.com, peff@peff.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 10 01:00:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvdrC-0007Dr-7d
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 00:56:54 +0100
+	id 1Rvdug-0000bK-3l
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 01:00:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758321Ab2BIX4t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Feb 2012 18:56:49 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33059 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752265Ab2BIX4s (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2012 18:56:48 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 34B2B74AB;
-	Thu,  9 Feb 2012 18:56:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Q9kX2EHzF1JYzMhMI9YrMN2hf5U=; b=gTSNX+
-	ghuc3rwNuBEFceoVStG6xj5IK/6vHStrXkphvtQed2B3MIdS6djjwBLamUOtXz0o
-	Q7wzXv6WZacL9Ktqa2ljE7ZHVJGpB4IgM08nxn1Gxf6f/Iq7RpiyNWsYgzi3YMBo
-	gS2eurfOYhgBr0YlAOD1buWzqgTr/zWWwJimw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=M94fF54PU4DZaxZbAmQf3Czg+QeXCCVA
-	NaWPs++s+SZaQ5FiCRBRGT5QUbsmSuX+/TwkBcBQhjcxrXIbssdByI21a5p8+vy3
-	bYHOFXTw3MSbw8wc4hNkTPphsLxwuxq0nIaxtDvd28kIolf9lCy9BcrkUFB2c82i
-	7onXwV1libA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2BC3174AA;
-	Thu,  9 Feb 2012 18:56:48 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A255E74A9; Thu,  9 Feb 2012
- 18:56:47 -0500 (EST)
-In-Reply-To: <201202100052.26399.jnareb@gmail.com> (Jakub Narebski's message
- of "Fri, 10 Feb 2012 00:52:26 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BA21D92C-5379-11E1-9EB2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758499Ab2BJAAZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Feb 2012 19:00:25 -0500
+Received: from mail-qw0-f53.google.com ([209.85.216.53]:34834 "EHLO
+	mail-qw0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754479Ab2BJAAZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2012 19:00:25 -0500
+Received: by qafk1 with SMTP id k1so1561251qaf.19
+        for <git@vger.kernel.org>; Thu, 09 Feb 2012 16:00:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=lcXoa1Zv4M7BIIifdb+SO8ixcBZ4T71woMiybTDgFe4=;
+        b=GRV/1OWrzQA/VTckrl8tGmKSnPIaLMG/5wsStt3Cya1fE9Im/vKwIco3m64nyngykN
+         wQ1+TRDDXJrnuYHx9e0wRPa0H30C28cpvtfLF0nJNfXWoWQxEKlZAXkq2f6g/MnEEe5B
+         o/1qSZ3spOLeA9EP6pZxLLl00Gu86gJa/5260=
+Received: by 10.229.135.130 with SMTP id n2mr2520754qct.127.1328832024406;
+        Thu, 09 Feb 2012 16:00:24 -0800 (PST)
+Received: from localhost ([129.192.185.163])
+        by mx.google.com with ESMTPS id j17sm9015323qaj.9.2012.02.09.16.00.22
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 09 Feb 2012 16:00:23 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1328816616-18124-2-git-send-email-tmgrennan@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190346>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Thu, Feb 09, 2012 at 11:43:36AM -0800, Tom Grennan wrote:
+>Use the "!" prefix to ignore tags of the given pattern.
+>This has precedence over other matching patterns.
+>For example,
+...
 
-> On Fri, 10 Feb 2012, Junio C Hamano wrote:
-> ...
->> That still does not answer the fundamental issues I had with the presented
->> API: why does it take only a single $key (please re-read my "A, B and C"
->> example), and what does that single $key intersecting with @fill_only have
->> anything to do with "needs-filling"?
->
-> project_info_needs_filling() in absence of @fill_only is just a thin
-> wrapper around "!defined $pr->{$key}", it checks for each key if it needs
-> to be filled.
->
-> It is used like this
->
->   if (project_info_needs_filled("A", "A, B, C")) {
->      fill A
->   }
->   if (project_info_needs_filled("B", "A, B, C")) {
->      fill B
->   }
->   ...
->  
->> After all, that 'age' check actually wants to fill 'age' and 'age_string'
->> in the project. Even if some other codepath starts filling 'age' in the
->> project with a later change, the current callers of fill_project_list_info
->> expects _both_ to be filled. So "I know the current implementation fills
->> both at the same time, so checking 'age' alone is sufficient" is not an
->> answer that shows good taste in the API design.
->
-> It is not as much matter of API, as the use of checks in loop in 
-> fill_project_list_info().
->
-> What is now
->
->   my (@activity) = git_get_last_activity($pr->{'path'});
->   unless (@activity) {
->   	next PROJECT;
->   }
->   ($pr->{'age'}, $pr->{'age_string'}) = @activity;
->
-> should be
->
->   if (!defined $pr->{'age'} ||
->       !defined $pr->{'age_string'}) {
->   	my (@activity) = git_get_last_activity($pr->{'path'});
->   	unless (@activity) {
->   		next PROJECT;
->   	}
->   	($pr->{'age'}, $pr->{'age_string'}) = @activity;
->   }
+> static int match_pattern(const char **patterns, const char *ref)
+> {
+>+	int ret;
+>+
+> 	/* no pattern means match everything */
+> 	if (!*patterns)
+> 		return 1;
+>-	for (; *patterns; patterns++)
+>-		if (!fnmatch(*patterns, ref, 0))
+>-			return 1;
+>-	return 0;
+>+	for (ret = 0; *patterns; patterns++)
+>+		if (**patterns == '!') {
+>+		    if (!fnmatch(*patterns+1, ref, 0))
+>+			    return 0;
+>+		} else if (!fnmatch(*patterns, ref, 0))
+>+			ret = 1;
+>+	return ret;
+> }
 
-Huh?  Compare that with what you wrote above "It is used like this".  This
-is *NOT* using the API like that.  The caller knows it wants both age and
-age-string, and if even one of them is missing, do the work to fill both.
+Correction, match_pattern() needs to be as follows to support all these cases,
+  $ git tag -l
+  $ git tag -l \!*-rc?
+  $ git tag -l \!*-rc? v1.7.8*
+  $ git tag -l v1.7.8* \!*-rc?
+  $ git tag -l v1.7.8*
 
-So why isn't the info-needs-filled API not checking _both_ with a single
-call?  It is only because you designed the API to accept only a single $key
-instead of list of "here are what I care about".
+-- 
+TomG
+
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 31f02e8..e99be5c 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -32,13 +32,16 @@ struct tag_filter {
+ 
+ static int match_pattern(const char **patterns, const char *ref)
+ {
+-	/* no pattern means match everything */
+-	if (!*patterns)
+-		return 1;
++	int had_match_pattern = 0, had_match = 0;
++
+ 	for (; *patterns; patterns++)
+-		if (!fnmatch(*patterns, ref, 0))
+-			return 1;
+-	return 0;
++		if (**patterns != '!') {
++			had_match_pattern = 1;
++			if (!fnmatch(*patterns, ref, 0))
++				had_match = 1;
++		} else if (!fnmatch(*patterns+1, ref, 0))
++			return 0;
++	return had_match_pattern ? had_match : 1;
+ }
+ 
+ static int in_commit_list(const struct commit_list *want, struct commit *c)
