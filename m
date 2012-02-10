@@ -1,107 +1,119 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: nested git repos (not submodules)
-Date: Fri, 10 Feb 2012 16:07:36 -0600
-Message-ID: <4F359528.1060603@gmail.com>
-References: <jh1vo3$7af$1@dough.gmane.org> <CAH5451mU5G-_FaPkpuhKrHAt4_5wiECj=-j9wkA_Ctb=27ncQg@mail.gmail.com>
+From: Jeff Epler <jepler@unpythonic.net>
+Subject: Re: [PATCH] mergetools/meld: Use --help output to detect --output
+ support
+Date: Fri, 10 Feb 2012 16:23:12 -0600
+Message-ID: <20120210222311.GB20703@unpythonic.net>
+References: <20120209191742.GA20703@unpythonic.net>
+ <CAJDDKr58LV9EDJZP+3S0YfyTOXFgJWD6nm=AiA19MkyBF-wb_g@mail.gmail.com>
+ <20120210082106.GA7871@burratino>
+ <7vwr7unzs8.fsf@alter.siamese.dyndns.org>
+ <20120210215755.GL19216@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
-To: Andrew Ardill <andrew.ardill@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 10 23:07:49 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Charles Bailey <charles@hashpling.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 10 23:23:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvydA-0001uA-C6
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 23:07:48 +0100
+	id 1RvysE-0002hT-D3
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 23:23:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760280Ab2BJWHn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Feb 2012 17:07:43 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:61158 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760277Ab2BJWHn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2012 17:07:43 -0500
-Received: by ggnh1 with SMTP id h1so1763027ggn.19
-        for <git@vger.kernel.org>; Fri, 10 Feb 2012 14:07:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=lvjyynVSb6QOctG7iMG0511M6X6So8PNGQDtr22M2zQ=;
-        b=CPy8F6fhcUGHE1GSBsfQ5M0GOOTA2S60duOuoP6CngWnUzHXTmnrEaY7HD7tdFXcKh
-         gTBaeZxPwAkmrDqNfSrstgORIYsDHDNUdL1559814orUVVsOxKl/sGUK36krmGppSNdC
-         8wufW7iRe/2FXTxcYzGoq/FPAKQRJjVofbRg8=
-Received: by 10.236.9.106 with SMTP id 70mr11316060yhs.118.1328911662612;
-        Fri, 10 Feb 2012 14:07:42 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id g49sm11682661yhk.20.2012.02.10.14.07.41
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 10 Feb 2012 14:07:42 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.26) Gecko/20120129 Thunderbird/3.1.18
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <CAH5451mU5G-_FaPkpuhKrHAt4_5wiECj=-j9wkA_Ctb=27ncQg@mail.gmail.com>
+	id S1760296Ab2BJWXQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Feb 2012 17:23:16 -0500
+Received: from dsl.unpythonic.net ([206.222.212.217]:32783 "EHLO
+	unpythonic.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753187Ab2BJWXP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2012 17:23:15 -0500
+Received: by unpythonic.net (Postfix, from userid 1000)
+	id 7117420000F; Fri, 10 Feb 2012 16:23:12 -0600 (CST)
+Content-Disposition: inline
+In-Reply-To: <20120210215755.GL19216@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190469>
 
-On 2/9/2012 9:47 PM, Andrew Ardill wrote:
+I appreciate the interest you've all taken in my report, but I really
+don't think there's any need to do anything about this "problem" besides
+let people find this thread, in which they can learn to try upgrading
+their meld to one that's only 5 1/2 years old.
 
-> My understanding was that such a configuration is essentially
-> tracking the same set of files in two different git repositories. The
-> location of the .git is not important, I could just as easily set the
-> working directory of any git repository to be a folder tracked by
-> another repository.
->
-> My concerns would be based primarily on the different repositories
-> trying to act on the same files at the same time. Ignoring the
-> sub-folder completely within the encompassing repository would avoid
-> that, however you might have use cases that prohibit that.
->
-WORKTREE/SUBDIR/ was already tracked by WORKTREE/.git because the files 
-in WORKTREE/SUBDIR/ directly correlate to WORKTREE/ files (ie., 
-WORKTREE/., WORKTREE/SUBDIR2/., WORKTREE/SUBDIR3/.).  This is the 
-published model.
+That said, another possibility is to test whether
+    meld --commandline-option-that-cannot-possibly-exist --help
+exits with status 0; if it does, then exit-status based probing of
+meld's capabilities won't work.  In this case, assume --output is not
+available.
 
-> Out of interest, what itch are you scratching by using this model?
->
-(I can only speculate) I think it was intended to ensure that he would 
-only be modifying the WORKTREE/SUBDIR/ files of WORKTREE/.git.  He did 
-some sequence of commands with the end result of:
+Jeff
 
-(a) bare repo HISPATH/SUBDIR.git
-
-and
-
-(b1)
-WORKTREE/.git
-WORKTREE/SUBDIR/
-
-is now
-
-(b2)
-WORKTREE/.git
-WORKTREE/SUBDIR/.git
-
-which means that the files of WORKTREE/SUBDIR are now tracked by 
-WORKTREE/.git and WORKTREE/SUBDIR/.git, as you stated.
-
-Due to a drop-dead short-term deadline, I am being compelled to "just 
-deal with it" (work around the annoyances) unless there is a dire reason 
-it will blow up in our faces.  At this point, (b2) is more-or-less an 
-intermediate "integration repo" between (a) and (b1-canonical), and I'm 
-assuming I can just jump thru some hoops to accomplish the integration 
-when the time comes (unless I hear of or step on any landmines).
-
-Now that the newsgroup has confirmed that having "a repo that tracks the 
-worktree of a nested repo" is not a sound model, I can advise against it 
-on a go-forward basis without being concerned that I'm not open to new 
-ideas.
-
-
-v/r,
-neal
+On Fri, Feb 10, 2012 at 03:57:55PM -0600, Jonathan Nieder wrote:
+> In v1.7.7-rc0~3^2 (2011-08-19), git mergetool's "meld" support learned
+> to use the --output option when calling versions of meld that are
+> detected to support it (1.5.0 and newer, hopefully).
+> 
+> Alas, it misdetects old versions (before 1.1.5, 2006-06-11) of meld as
+> supporting the option, so on systems with such meld, instead of
+> getting a nice merge helper, the operator gets a dialog box with the
+> text "Wrong number of arguments (Got 5)".  (Version 1.1.5 is when meld
+> switched to using optparse.  One consequence of that change was that
+> errors in usage are detected and signalled through the exit status
+> even when --help was passed.)
+> 
+> Luckily there is a simpler check that is more reliable: the usage
+> string printed by "meld --help" reliably reflects whether --output is
+> supported in a given version.  Use it.
+> 
+> Reported-by: Jeff Epler <jepler@unpythonic.net>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+> Junio C Hamano wrote:
+> 
+> > When an older meld fails when given --output for real (not with the dry
+> > run current code tries with --help), can we sanely detect that particular
+> > failure?
+> 
+> Unfortunately it just pops up a GUI with a modal dialog box like this:
+> 	 ___________________________________
+> 	|                                   |
+> 	| Wrong number of arguments (Got 5) |
+> 	|                                   |
+> 	|                     [Quit] [OK]   |
+> 	|___________________________________|
+> 
+> If I choose "Quit", the exit status is 0.
+> 
+> But how about this?  "meld --help | grep -e --output" seems to detect
+> support for the option reliably.  With 2>&1 on the upstream of the
+> pipe, this even seems futureproof. ;-)
+> 
+>  mergetools/meld |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/mergetools/meld b/mergetools/meld
+> index eaa115cc..cb672a55 100644
+> --- a/mergetools/meld
+> +++ b/mergetools/meld
+> @@ -23,7 +23,7 @@ check_meld_for_output_version () {
+>  	meld_path="$(git config mergetool.meld.path)"
+>  	meld_path="${meld_path:-meld}"
+>  
+> -	if "$meld_path" --output /dev/null --help >/dev/null 2>&1
+> +	if "$meld_path" --help 2>&1 | grep -e --output >/dev/null
+>  	then
+>  		meld_has_output_option=true
+>  	else
+> -- 
+> 1.7.9
+> 
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
