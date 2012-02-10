@@ -1,69 +1,73 @@
-From: supadhyay <supadhyay@imany.com>
-Subject: Re: User authentication in GIT
-Date: Fri, 10 Feb 2012 08:57:36 -0800 (PST)
-Message-ID: <1328893056653-7273350.post@n2.nabble.com>
-References: <1328595129258-7261349.post@n2.nabble.com> <1328615262741-7262113.post@n2.nabble.com> <CALKQrgdvOhfhTPg+g+LqCb6XOQczcz-nYC61B9x4W5dB4Up5oA@mail.gmail.com> <1328632848471-7262934.post@n2.nabble.com> <CAMK1S_i=QUxf1CPDwdDn0+2-7fL5xxMZ67rHvR63a-vU1uq39Q@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Git documentation at kernel.org
+Date: Fri, 10 Feb 2012 17:59:25 +0100
+Message-ID: <vpqbop6tyj6.fsf@bauges.imag.fr>
+References: <CAPyqok3USqMxm0gNf_T9vnCoicp9XSwpWUCYJ8jh79h=V_UuOA@mail.gmail.com>
+	<20120208213410.GA5768@ecki> <7vmx8rtu3e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 10 17:57:45 2012
+Content-Type: text/plain
+Cc: Clemens Buchacher <drizzd@aon.at>, ftpadmin@kernel.org,
+	Petr Onderka <gsvick@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 10 18:01:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rvtn4-00036L-It
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 17:57:42 +0100
+	id 1Rvtqr-00060V-Ge
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 18:01:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758240Ab2BJQ5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Feb 2012 11:57:38 -0500
-Received: from sam.nabble.com ([216.139.236.26]:56158 "EHLO sam.nabble.com"
+	id S1755087Ab2BJRBd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Feb 2012 12:01:33 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:44447 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754076Ab2BJQ5h (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2012 11:57:37 -0500
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <supadhyay@imany.com>)
-	id 1Rvtmy-0001Tc-LT
-	for git@vger.kernel.org; Fri, 10 Feb 2012 08:57:36 -0800
-In-Reply-To: <CAMK1S_i=QUxf1CPDwdDn0+2-7fL5xxMZ67rHvR63a-vU1uq39Q@mail.gmail.com>
+	id S1751529Ab2BJRBc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2012 12:01:32 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q1AGuJdh023663
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 10 Feb 2012 17:56:19 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Rvtoj-000301-IM; Fri, 10 Feb 2012 17:59:25 +0100
+In-Reply-To: <7vmx8rtu3e.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 09 Feb 2012 16:23:01 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 10 Feb 2012 17:56:20 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q1AGuJdh023663
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1329497781.7283@9gzSUwb8Z+Z627o2h+aYlg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190421>
 
-Hi Sitaram,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks for helping me by providing such a good link. Now, I am able to
-understand how to manage the user in efficient way.
+> Clemens Buchacher <drizzd@aon.at> writes:
+>
+>> Please restore access to the following files when possible. Some sites
+>> are referencing those, including kernel.org itself:
+>>
+>>  http://www.kernel.org/pub/software/scm/git/docs/git.html
+>
+> The pages reachable from this used to be living documents in that every
+> time the 'master' branch was updated at k.org, automatically a server side
+> hook script generated a new set of HTML pages and updated them.
 
-With that I have one question is-  in my GIT server we already migrated our
-source code (pilot testing) from CVS to GIT. We used user "GITAdmin" for
-migration and though its for pilot testing only we use the home directory
-for source code repository is /home/GITAdmin/migration/VVD.git.
+Is it possible to have the static HTML uploaded from another machine,
+not necessarily for each push, but e.g. for every release?
 
-now the question is, I install gitolie using the same user "GITAdmin" and on
-the same path i.e. /home/GITAdmin. And when add repository from my
-workstation (git add conf/glitolite.conf) , this added repositories
-directory on the GIT server path /home/GITAdmin/repositories/MRB.git
+I don't think anyone cares about having the very latest documentation
+there, but it would still be great to have an official place to point to
+when writing documentation on the web about such or such command.
 
-Now my confusion is my existing source code repository directory path during
-migration /home/GITAdmin/migration/<repository.git> and now through gitolite
-I want to manage both users and repositories  but through gitolite it add
-repository in different path /home/GITAdmin/repositories/<repository.git>.
-
-
-Can you please help how through gitolite I can add new repository on to the
-same my exisitng migrated repository directory?
-
-
-
-
-Thanks,
-Suchi
-
---
-View this message in context: http://git.661346.n2.nabble.com/User-authentication-in-GIT-tp7261349p7273350.html
-Sent from the git mailing list archive at Nabble.com.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
