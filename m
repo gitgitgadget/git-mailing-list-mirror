@@ -1,66 +1,56 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: Git, Builds, and Filesystem Type
-Date: Thu, 09 Feb 2012 19:08:45 -0700
-Message-ID: <14de0389-6497-4e74-baa5-129b0c1560a3@email.android.com>
-References: <CAE1pOi1of-hj+87M7RqhFUWA8an14bPG88dAOwhNogmfFvJ=tA@mail.gmail.com> <201202091453.38564.mfick@codeaurora.org> <CAE1pOi387-bimYEG4bjFOjaCwhPeDyLRj7wOJgyuKSCrZ9kBFg@mail.gmail.com> <201202091634.36563.mfick@codeaurora.org> <CAE1pOi1O10XeROv+sQRwAAVQ0PneMZTOaEfny-Oz2Sp+=z+aiA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Git Users <git@vger.kernel.org>
-To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 10 03:11:42 2012
+From: Namhyung Kim <namhyung.kim@lge.com>
+Subject: [PATCH 1/2] ctype.c only wants git-compat-util.h
+Date: Fri, 10 Feb 2012 11:13:30 +0900
+Message-ID: <1328840011-19028-1-git-send-email-namhyung.kim@lge.com>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 10 03:13:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rvfxc-0000l0-BB
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 03:11:40 +0100
+	id 1RvfzA-0001cE-5F
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 03:13:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757365Ab2BJCLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Feb 2012 21:11:12 -0500
-Received: from wolverine02.qualcomm.com ([199.106.114.251]:11465 "EHLO
-	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754410Ab2BJCLM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2012 21:11:12 -0500
-X-IronPort-AV: E=McAfee;i="5400,1158,6615"; a="159707476"
-Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
-  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 09 Feb 2012 18:11:11 -0800
-Received: from [192.168.1.160] (pdmz-snip-v218.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 42BD410004D1;
-	Thu,  9 Feb 2012 18:11:11 -0800 (PST)
-User-Agent: K-9 Mail for Android
-In-Reply-To: <CAE1pOi1O10XeROv+sQRwAAVQ0PneMZTOaEfny-Oz2Sp+=z+aiA@mail.gmail.com>
+	id S1757864Ab2BJCNL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Feb 2012 21:13:11 -0500
+Received: from LGEMRELSE6Q.lge.com ([156.147.1.121]:57395 "EHLO
+	LGEMRELSE6Q.lge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754683Ab2BJCNL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2012 21:13:11 -0500
+X-Greylist: delayed 902 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Feb 2012 21:13:10 EST
+X-AuditID: 9c930179-b7cf1ae000000e40-6f-4f3479ad7b5f
+Received: from MultiCore.156.147.1.1 ( [165.186.175.80])
+	by LGEMRELSE6Q.lge.com (Symantec Brightmail Gateway) with SMTP id 8E.1C.03648.EA9743F4; Fri, 10 Feb 2012 10:58:06 +0900 (KST)
+X-Mailer: git-send-email 1.7.9
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190365>
 
+The implementation of sane ctype macros only depends on symbols in
+git-compat-util.h not cache.h
 
+Signed-off-by: Namhyung Kim <namhyung.kim@lge.com>
+---
+ ctype.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
->I found [1]. Is that sort of what you had in mind
-
-yes
-
->That would be quite
->tricky. I have a group of some 60 projects, each with their own
->"target" directory which would have to be mounted on tmpfs. And the
->"target" directory is created by Maven, not by me. Not to mention that
->I shut down my computer at the end of the day. :-)
-
-Sounds like a laptop?  Hibernate?
-
->I think I would prefer a somewhat more persistent solution. I
->certainly have enough space for a very big swap partition. So the
->whole of ~/my-project would fit on tmpfs. I'm just not sure about
->making it persistent at the end of the day.
-
-
-Link your .git dir to a persistent location. 
-
-Benchmark it first so you know how much hassle it may be worth.  If it isn't worth it, xfs or brtfs will likely not be worth it either,
-
--Martin
-Employee of Qualcomm Innovation Center,Inc. which is a member of Code Aurora Forum
+diff --git a/ctype.c b/ctype.c
+index b5d856f..af722f9 100644
+--- a/ctype.c
++++ b/ctype.c
+@@ -3,7 +3,7 @@
+  *
+  * No surprises, and works with signed and unsigned chars.
+  */
+-#include "cache.h"
++#include "git-compat-util.h"
+ 
+ enum {
+ 	S = GIT_SPACE,
+-- 
+1.7.9
