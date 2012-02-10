@@ -1,87 +1,82 @@
-From: Tom Grennan <tmgrennan@gmail.com>
-Subject: Re: [RFC/PATCH] tag: make list exclude !<pattern>
-Date: Fri, 10 Feb 2012 10:55:16 -0800
-Message-ID: <20120210185516.GA4903@tgrennan-laptop>
-References: <1328816616-18124-1-git-send-email-tmgrennan@gmail.com>
- <CACsJy8DVXCLb50Vd0fTU+yNP2q7Gkcr88muHuzxq1jhfJW5Q9w@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Remove empty ref directories while reading loose refs
+Date: Fri, 10 Feb 2012 11:09:37 -0800
+Message-ID: <7v39aiqzda.fsf@alter.siamese.dyndns.org>
+References: <1328891127-17150-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com, peff@peff.net
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 10 20:01:29 2012
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 10 20:09:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rvviq-0000en-IL
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 20:01:28 +0100
+	id 1Rvvqr-0005qq-N1
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 20:09:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759910Ab2BJTBX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Feb 2012 14:01:23 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:62756 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759332Ab2BJTBW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2012 14:01:22 -0500
-Received: by qadc10 with SMTP id c10so486437qad.19
-        for <git@vger.kernel.org>; Fri, 10 Feb 2012 11:01:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=Qi2OqDilQRs3p41XxI+8zGw+eD7CkqKvhYrJkFYaY/E=;
-        b=iR3pScVGTyOO9FQbDCbett3j2qfz7vK0Y+vcFRf199UfHWnPjjG6pQtxluUzrMK1Q+
-         OlOncIbjW2aosAPhXUYV4RSsYB80kGhDN+/IfzWn7dqLtmDzpEOmpV92fGgengZOjycn
-         CAcSVDaDpo46rYGFXKk7l3eMQksyj3wCFbz18=
-Received: by 10.229.77.72 with SMTP id f8mr4925670qck.34.1328900121471;
-        Fri, 10 Feb 2012 10:55:21 -0800 (PST)
-Received: from localhost ([129.192.185.163])
-        by mx.google.com with ESMTPS id gd3sm14549244qab.6.2012.02.10.10.55.18
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 10 Feb 2012 10:55:19 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CACsJy8DVXCLb50Vd0fTU+yNP2q7Gkcr88muHuzxq1jhfJW5Q9w@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1759908Ab2BJTJl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Feb 2012 14:09:41 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34357 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759903Ab2BJTJk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2012 14:09:40 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EEA3C77CD;
+	Fri, 10 Feb 2012 14:09:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=FnNofeKvvcuo
+	rqa6kBqqTmkeYjU=; b=XQXb361x28D8sYbqGvobsnY/FpwT5c0a0N3dHO6p2g//
+	ulJsGGjRQoBpc1KIIDXZf34MYzWT06iagyNxjM85mAVKtVlhVUfiQ//8WP81OGpg
+	I9wavZ7aR6HaLXssq537ptvapblsq1V3XAJ4cTg83Btw7m0aY6J2Cm9amdFCtg0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Otskon
+	IuBCbNamQ5qoH7mmXvTppoW+/W8ml6hLZifJgcHD/942SYbbdSEqULnLvOrVBq60
+	stgrdVHcbG1ipckgY9seHGu7ZHu1Hzgh8UQ3SL5JBgTlfRVnJsDroPWr9uExJ7R8
+	te+xUmH/WvmA9iMSVb+calFivES9C3b2M0JM0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E51D077CC;
+	Fri, 10 Feb 2012 14:09:39 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5C75277CB; Fri, 10 Feb 2012
+ 14:09:39 -0500 (EST)
+In-Reply-To: <1328891127-17150-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 10 Feb
+ 2012 23:25:27 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C7AFDB6A-541A-11E1-87A9-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190437>
 
-On Fri, Feb 10, 2012 at 01:34:26PM +0700, Nguyen Thai Ngoc Duy wrote:
->On Fri, Feb 10, 2012 at 2:43 AM, Tom Grennan <tmgrennan@gmail.com> wro=
-te:
->> Please see the following patch which filters the tag list of "!" pre=
-faced
->> patterns. =A0If this is deemed desirable and correct, I'll resubmit =
-with updated
->> documentation and unit tests.
->
->git-branch, git-tag and git-for-each-ref are in the same family. I
->think it's good to that all three commands share things, like this
->pattern matching.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-Yes, git-branch and git-tag could now use a common match_patterns() but
-git-for-each-ref needs some rearranging; as will: git-describe,
-git-replace, git-ls-remote, git-name-rev, and git-show-branch.
+>  I don't think the a few extra rmdir()s from time to time at startup
+>  are going to cause any problems. Making delete_ref() delete empty
+>  directories takes more effort and probably not worth it.
 
-If we pursue this, it may be best to first add match_patterns() to ./re=
-fs.[ch]
-then incrementally modify these builtin commands to use it.
- =20
->About the '!' for exclusion, maybe it's better to move from fnmatch()
->as matching machinery to pathspec. Then when git learns negative
->pathspec [1], we have this feature for free.
->
->[1] http://thread.gmane.org/gmane.comp.version-control.git/189645/focu=
-s=3D190072
+That reads as a very poorly phrased excuse for not solving the problem =
+at
+the right location.  Compared to all the codepaths that want to resolve
+ref, delete_ref() is run much less often, and it is where the problem y=
+ou
+are solving (i.e. directories that have just become unnecessary are not
+removed) originates, no?
 
-I have to study this more. I'm not sure that --exclude has precedence
-over matches. It also looks like this would require a lot more change t=
-o
-the above.
-
-Thanks,
-TomG
+Wouldn't it be just the matter of replacing two unlink_or_warn() calls =
+in
+delete_ref(), one for cleaning refs/ hierarchy and the other for cleani=
+ng
+logs/ hierarcy, with a new helper that calls unlink_or_warn() and then
+tries rmdir going upwards until it hits the limit, perhaps using a help=
+er
+function that refactors dir.c::remove_path() that takes an extra parame=
+ter
+telling it where to stop?
