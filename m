@@ -1,95 +1,106 @@
-From: =?UTF-8?B?TWljaGHFgg==?= Kiedrowicz <michal.kiedrowicz@gmail.com>
-Subject: Re: [PATCH 6/8] gitweb: Highlight interesting parts of diff
-Date: Fri, 10 Feb 2012 22:29:16 +0100
-Message-ID: <20120210222916.2721e9e6@gmail.com>
-References: <1328865494-24415-1-git-send-email-michal.kiedrowicz@gmail.com>
-	<1328865494-24415-7-git-send-email-michal.kiedrowicz@gmail.com>
-	<20120210202008.GA5874@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/5] gitweb: Option for filling only specified info in fill_project_list_info
+Date: Fri, 10 Feb 2012 22:30:12 +0100
+Message-ID: <201202102230.13193.jnareb@gmail.com>
+References: <1328359648-29511-1-git-send-email-jnareb@gmail.com> <201202101917.52908.jnareb@gmail.com> <7vsjiipiyu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 10 22:29:32 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 10 22:30:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rvy22-0005CQ-MR
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 22:29:28 +0100
+	id 1Rvy2v-0005hH-Fv
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 22:30:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760227Ab2BJV3W convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Feb 2012 16:29:22 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:36968 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753599Ab2BJV3V convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2012 16:29:21 -0500
-Received: by eaah12 with SMTP id h12so1061972eaa.19
-        for <git@vger.kernel.org>; Fri, 10 Feb 2012 13:29:20 -0800 (PST)
+	id S1758548Ab2BJVaP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Feb 2012 16:30:15 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:64061 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751236Ab2BJVaO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2012 16:30:14 -0500
+Received: by eekc14 with SMTP id c14so1098511eek.19
+        for <git@vger.kernel.org>; Fri, 10 Feb 2012 13:30:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        bh=f0ZqGZLxK0IOsvCRR2VjfEGATR2RWlpFQiIDeqEClPw=;
-        b=NKBWnSZo5eq78fqoCHlsuCxFrBfnuCSvPtsDbjXRTQHY4eKu1z+FsqsRNNtNxucSNJ
-         w0p0rT+muOcD6ZR6OdDPpDHm/5BcMMzYj2kzjxeF7eeBEiOTz/3fqIR5pVU9pKuxD4Iv
-         SrxAl0pVKCG6YdLZ8sUAAMsYrMxruzvDIuSWY=
-Received: by 10.14.125.195 with SMTP id z43mr2621474eeh.3.1328909360544;
-        Fri, 10 Feb 2012 13:29:20 -0800 (PST)
-Received: from localhost (77-177-78-94.net.stream.pl. [94.78.177.77])
-        by mx.google.com with ESMTPS id v51sm26720427eef.2.2012.02.10.13.29.19
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=wHNw41OPYqdXsb2G7tU3TbycAuM5SOSlitxrfYUROlo=;
+        b=PK1/PbCTXJVZqz2GDD3OKxBDVdUXtSep6rhKarE+hIP2qVq8XQTC7wX/UimmT+KCg3
+         5FjTFhczhEDygPs/WED2HyKaNyTb/6/0peUzAykiTco/fbhEnm4rVrQtXMwGI5G/eZNU
+         9FrHbHYBbyM88Kgp+oFAJ24hUB4pBN3A2wwJI=
+Received: by 10.14.48.66 with SMTP id u42mr2542720eeb.59.1328909413164;
+        Fri, 10 Feb 2012 13:30:13 -0800 (PST)
+Received: from [192.168.1.13] (abwh187.neoplus.adsl.tpnet.pl. [83.8.231.187])
+        by mx.google.com with ESMTPS id o49sm26676836eeb.7.2012.02.10.13.30.12
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 10 Feb 2012 13:29:20 -0800 (PST)
-In-Reply-To: <20120210202008.GA5874@sigill.intra.peff.net>
-X-Mailer: Claws Mail 3.7.10 (GTK+ 2.24.8; x86_64-pc-linux-gnu)
+        Fri, 10 Feb 2012 13:30:12 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vsjiipiyu.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190459>
 
-Jeff King <peff@peff.net> wrote:
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > If @fill_only is empty, it means for fill_project_list_info to fill
+> > all the data, if it is not empty it means that those fields needs to
+> > be filled.
+> 
+> That is exactly what I am questioning.  Do you need "I need all these
+> fields to be present" and "I will fill these other fields" (which is what
+> @fill_only is about, no?) that is different from the former?
 
-> On Fri, Feb 10, 2012 at 10:18:12AM +0100, Micha=C5=82 Kiedrowicz wrot=
-e:
->=20
-> > The code that comares lines is based on
-> > contrib/diff-highlight/diff-highlight, except that it works with
-> > multiline changes too.  It also won't highlight lines that are
-> > completely different because that would only make the output unread=
-able.
-> > Combined diffs are not supported but a following commit will change=
- it.
->=20
-> Have you considered contributing back the enhancements to
-> contrib/diff-highlight?=20
+"I need all these fields" is a property of callsite.  fill_project_list_info()
+will be called more than one time in 2/5 to incrementally complete project
+info, see below.
+ 
+"I will fill those fields" is a property of piece of code protected by
+a conditional inside fill_project_list_info().
 
-Yeah, I did. In fact, at work I have a hacked version of your
-diff-highlight that supports multiline changes and I use it every day.
-But I just couldn't make myself fix your long README and send a
-patch :).
+> > The code of fill_project_list_info goes like this
+> >
+> >   if (do we need to fill 'age' or 'age_string'?) {
+> >     fill 'age' and 'age_string'
+> >   }
+> >   if (do we need to fill 'desc_long' or 'descr'?) {
+> >     fill 'descr_long' and 'descr'
+> >   }
+> >   if (we are interested in 'ctags' &&
+> >       do we need to fill 'ctags'?) {
+> >     fill 'ctags'
+> >   }
+> >   ...
+> 
+> Exactly.  Why do you need @fill_only at all?  If you are interested in
+> ctags and you want to make sure ctags is available, the question you want
+> to ask the helper function is "Does the project structure already have
+> ctags field?".  Why does the helper function needs to know anything else?
 
-Maybe I'll cook something in my spare time.
+It is to support incremental filling of project info.  The code is to
+go like this:
 
-> I took a look at handling multi-line changes
-> when I originally wrote it, but I was worried too much about failing =
-to
-> match up lines properly, and ending up with too much noise in the dif=
-f.
-> Maybe your "don't highlight lines that are completely different" rule
-> helps that, though.
+  create
+  filter
+  fill part
+  filter
+  fill rest
 
-I must say that it works great for me. Most often it's very helping.
-Like every heuristics it sometimes goes the wrong way, but it's so rare
-that I don't find it disturbing.
+We need @fill_only for the "fill part".  As filling project info is
+potentially expensive (especially the 'age' field), doing it on narrowed
+(filtered) list of project is a performance win.  That is what 2/5 is
+about.
 
->=20
-> Do you have any examples handy? (I was hoping not to need to get a
-> running gitweb installation in order to see the output).
->=20
-> -Peff
-
-Nope. Except for comparing diffs in various commits in gitweb-1.7.9 and
-from my branch, I just created a dummy commit with different kinds of
-changes to check if they are properly colorized.=20
+-- 
+Jakub Narebski
+Poland
