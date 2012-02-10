@@ -1,89 +1,80 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: fatal: Unable to find remote helper for 'https'
-Date: Fri, 10 Feb 2012 08:25:01 +0800
-Message-ID: <CALUzUxq=5iJJNcXH-Xg1htZzGFVT4f5WQS=dy4k7Y_mRemXMSw@mail.gmail.com>
-References: <loom.20120209T224147-400@post.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] Move git_version_string to help.c in preparation for
+ diff changes
+Date: Thu, 09 Feb 2012 16:46:33 -0800
+Message-ID: <7vipjftt06.fsf@alter.siamese.dyndns.org>
+References: <1328831921-27272-1-git-send-email-zbyszek@in.waw.pl>
+ <1328831921-27272-2-git-send-email-zbyszek@in.waw.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Nickolai Leschov <nleschov@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 10 01:25:15 2012
+Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
+To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+X-From: git-owner@vger.kernel.org Fri Feb 10 01:46:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RveIY-0004sT-DA
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 01:25:10 +0100
+	id 1RvedN-0007K6-9j
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 01:46:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758682Ab2BJAZE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Feb 2012 19:25:04 -0500
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:40184 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758658Ab2BJAZD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Feb 2012 19:25:03 -0500
-Received: by wgbgn7 with SMTP id gn7so6826997wgb.1
-        for <git@vger.kernel.org>; Thu, 09 Feb 2012 16:25:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=GmQf425WNgzMb7N8xEq9TW6Z7fej689s+TcPgE/2pXo=;
-        b=rtck9oXK95N2OdhwpRQobKNWOEPWrBEbXWwNdf92wHr/nqcwXrhlnCWqfQemzSBI+M
-         VUFFDpImwP4S4L2TnUe2LkW1sH8sPhAp8E5+d0CrRAOEQLcYPvaXklqmCUuTipM1eUmx
-         x7qYNsLU5afRbV0bwez5tzfwDAzItfsSv+rV0=
-Received: by 10.181.13.113 with SMTP id ex17mr5964588wid.15.1328833501610;
- Thu, 09 Feb 2012 16:25:01 -0800 (PST)
-Received: by 10.223.108.11 with HTTP; Thu, 9 Feb 2012 16:25:01 -0800 (PST)
-In-Reply-To: <loom.20120209T224147-400@post.gmane.org>
+	id S1758718Ab2BJAqh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Feb 2012 19:46:37 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56095 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758658Ab2BJAqg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Feb 2012 19:46:36 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6502261EA;
+	Thu,  9 Feb 2012 19:46:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=+rPpd8Wfld97
+	HgPWBvD5CqkezKk=; b=n5dHdZAm8UsULu4lwqnnMDZEDGO6QVBJwO3DOLi8zuyC
+	FdBxKHdXPVv+8QFrNl6xqXcHoMumNKnXoEUmEMReVKLG66lT61tLI96yiVFbi1I3
+	1R3RaV/nCejKSWGAPLHV/o1PBRgnpgBW6k0EAv4eQYov1i6rG+UoaPeugLhADAc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=kmQ/8Y
+	SuCk5S/uXsF1ioPt5X2zgjJet8gE41I4KWZ2Vl24d3fUWobR73GFdkbMieCWy60F
+	3BnxRB3qIbVOyt/Uq18MnWHVrDqa+Dri+M3yYEFRjsA/33GuEwVn/00Dr/4DuZGt
+	H9VoQD7ADbeZmXcjfAzCA7I6NyqajZCVB2sjg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C0AB61E9;
+	Thu,  9 Feb 2012 19:46:35 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E816361E8; Thu,  9 Feb 2012
+ 19:46:34 -0500 (EST)
+In-Reply-To: <1328831921-27272-2-git-send-email-zbyszek@in.waw.pl> ("Zbigniew
+ =?utf-8?Q?J=C4=99drzejewski-Szmek=22's?= message of "Fri, 10 Feb 2012
+ 00:58:38 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AEB18A5E-5380-11E1-A515-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190355>
 
-Have you installed libcurl4-(gnutls|openssl)-dev? You'll need to
-choose between gnutls and openssl for the underlying ssl
-implementation.
+Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
 
---=20
-Cheers,
-Ray Chuan
+> git_version_string is declared in builtins.h, but lived in git.c.
+>
+> When diff.c starts to use functions from help.c, linking against
+> libgit.a will fail,  unless git.o containing git_version_string is
+> linked too.
 
+Sorry, it is unclear what you mean by the above, nor why you need this
+change in the first place. The resulting diff.o will certainly linked t=
+o
+git.o as it does not have its own "main()" at all.  And builtins.h is a
+perfect place to declare things that are for the use of built-in comman=
+ds
+like implementations of diff family of commands, as they all are linked
+into git.o (namely the commands[] array in handle_internal_command()) t=
+o
+be usable.
 
-On Fri, Feb 10, 2012 at 5:51 AM, Nickolai Leschov <nleschov@gmail.com> =
-wrote:
-> Hello,
->
-> I have compiled git 1.7.9 from source on Ubuntu 9.04 and I get the fo=
-llowing
-> message when cloning a git repo:
->
-> fatal: Unable to find remote helper for 'https'
->
-> I get this message when I try to use https; or similar one for http. =
-Only
-> cloning via git:// protocol works. My system is Ubuntu 9.04 i386. git=
- 1.7.9 and
-> two previous versions I tried all exhibit this problem. I have uninst=
-alled the
-> git that comes in Ubuntu repositories and build from source instead b=
-ecause I
-> need a newer version.
->
-> How can I make git work on that system?
->
-> I have another system with Ubuntu 11.04 i386 and it there git 1.7.4.1=
- (from
-> repositories) doesn't exhibit such problem.
->
-> Best regards,
->
-> Nickolai Leschov
->
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+What am I missing from between the lines of your log message?
