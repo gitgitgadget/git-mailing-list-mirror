@@ -1,67 +1,106 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: Merging only a subdirectory from one branch to the other
-Date: Thu, 09 Feb 2012 18:51:45 -0600
-Message-ID: <4F346A21.2080008@gmail.com>
-References: <CAHVO_90MQamw7oB8ry5YBEWSnRnxDZvQ4ApVuuv4AYR6VRuXSw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] diff --stat: use the real terminal width
+Date: Thu, 09 Feb 2012 16:54:54 -0800
+Message-ID: <7vaa4rtsm9.fsf@alter.siamese.dyndns.org>
+References: <1328831921-27272-1-git-send-email-zbyszek@in.waw.pl>
+ <1328831921-27272-4-git-send-email-zbyszek@in.waw.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Howard Miller <howard@e-learndesign.co.uk>
-X-From: git-owner@vger.kernel.org Fri Feb 10 01:52:03 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+X-From: git-owner@vger.kernel.org Fri Feb 10 01:55:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RveiX-0001vM-N5
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 01:52:02 +0100
+	id 1RvelS-0003Z5-N9
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 01:55:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758806Ab2BJAvw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Feb 2012 19:51:52 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:46129 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752843Ab2BJAvu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2012 19:51:50 -0500
-Received: by yenm8 with SMTP id m8so1248958yen.19
-        for <git@vger.kernel.org>; Thu, 09 Feb 2012 16:51:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=Je5m158xQ5XMHlgFHsi/cqwwnR2s0eMNna5FzoYY6fc=;
-        b=buEi9Deh/gS7pzX//Y/mlu+bwF8RN1Uu/DSdaSczJBE/fZF1vFENAIhF9pJFbXi3AC
-         zS2awRERaJdNzyo8GacaI6Sl0ye7HNvdnngFnWla7deuNtOUp8y5ZPNoS0tqOGgluyC4
-         mn7tcLqkPJs7Rl7//AfUbGf4jxfqR51uMgfGs=
-Received: by 10.236.184.129 with SMTP id s1mr6118163yhm.21.1328835109447;
-        Thu, 09 Feb 2012 16:51:49 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id a47sm7037247yhj.12.2012.02.09.16.51.48
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 09 Feb 2012 16:51:48 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.26) Gecko/20120129 Thunderbird/3.1.18
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <CAHVO_90MQamw7oB8ry5YBEWSnRnxDZvQ4ApVuuv4AYR6VRuXSw@mail.gmail.com>
+	id S1754722Ab2BJAy5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Feb 2012 19:54:57 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60014 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752843Ab2BJAy5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Feb 2012 19:54:57 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 99F3C63EB;
+	Thu,  9 Feb 2012 19:54:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=JprLreXa5t13
+	CySnMIf+ApAxjrA=; b=xzSnHmHNRFE+2FjZftLeA7x3dhoTPy9sYpaW2YjC7gfJ
+	MsrCmUKkCH+uEv1WtCzDLCvdaEbJyB7J9oEjmS6SpkxOIJfB+R0um33zvOySTiTn
+	rppUniO+hW+qrZMf0gi2KTB80S5euWKQzK+SWMolRkj8i3h2tWHhjWdqGjct/tc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Z4JnR3
+	FN6+LQH1KGCdjarUkUQLboYTgCotY1lPHpjAAHjOO+0iR25qTPAvZAM81bmg7FSR
+	xF5JXStE2Tus0LNVqqfRPS0vzvKzHFFnRO54G1LGjLmkOM9Xqke9DNAwTYbKn/sf
+	p4cHXIikfFoh2pjsiYF28nMmiZmbqW1sOAadM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 90C7763EA;
+	Thu,  9 Feb 2012 19:54:56 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 246B963E9; Thu,  9 Feb 2012
+ 19:54:56 -0500 (EST)
+In-Reply-To: <1328831921-27272-4-git-send-email-zbyszek@in.waw.pl> ("Zbigniew
+ =?utf-8?Q?J=C4=99drzejewski-Szmek=22's?= message of "Fri, 10 Feb 2012
+ 00:58:40 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D96E5AAA-5381-11E1-BB3E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190358>
 
-On 2/7/2012 3:38 AM, Howard Miller wrote:
+Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
 
-> I have a branch with a particular subdirectory tree. The tree has a
-> lot of history. However, all the history for that subdirectory is
-> exclusive to it (no commits changed anything outside it). I now need
-> to merge that subdirectory into a completely different branch without
-> loosing any history. I think git-read-tree might have something to do
-> with it but I don't understand the help file at all. Any help
-> appreciated.
+> Some projects (especially in Java), have long filename paths, with
+> nested directories or long individual filenames. When files are
+> renamed, the stat output can be almost useless. If the middle part
+> between { and } is long (because the file was moved to a completely
+> different directory), then most of the path would be truncated.
 >
-Does the 'subtree merge' described in this link do what you want: 
-http://progit.org/book/ch6-7.html
-(I can't say I've actually tried it myself, yet.)
+> It makes sense to use the full terminal width.
+>
+> The output is still not optimal, because too many columns are devoted
+> to +- output, and not enough to filenames, but this is a policy
+> question, changed in next commit.
+>
+> Signed-off-by: Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl>
+> ---
+>  diff.c |    3 ++-
+>  1 files changed, 2 insertions(+), 1 deletions(-)
+>
+> diff --git a/diff.c b/diff.c
+> index 7e15426..8406a0d 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -7,6 +7,7 @@
+>  #include "diffcore.h"
+>  #include "delta.h"
+>  #include "xdiff-interface.h"
+> +#include "help.h"
+>  #include "color.h"
+>  #include "attr.h"
+>  #include "run-command.h"
+> @@ -1341,7 +1342,7 @@ static void show_stats(struct diffstat_t *data,=
+ struct diff_options *options)
+>  		line_prefix =3D msg->buf;
+>  	}
+> =20
+> -	width =3D options->stat_width ? options->stat_width : 80;
+> +	width =3D options->stat_width ? options->stat_width : term_columns(=
+);
 
-v/r,
-neal
+The output from "git format-patch" shouldn't be affected at all by the
+width of the terminal the patch sender happened to have used when the
+command was run when the user did not explicitly ask a custom width by
+giving a --stat-width command line option.
+
+How do you prevent regression to the command in this series?
