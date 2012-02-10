@@ -1,88 +1,127 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 1.7.9, libcharset missing from EXTLIBS
-Date: Fri, 10 Feb 2012 10:35:12 -0800
-Message-ID: <7vipjer0yn.fsf@alter.siamese.dyndns.org>
-References: <4F3472F4.4060605@aegee.org>
- <7v1uq3toyq.fsf@alter.siamese.dyndns.org>
- <CACBZZX45=mr=FMqFF+Pw4KPaDAtvs-ePLbFATpyFA93vSfZatw@mail.gmail.com>
- <4F34EF9D.8030509@aegee.org>
+From: Konstantin Ryabitsev <icon@mricon.com>
+Subject: Re: Git documentation at kernel.org
+Date: Fri, 10 Feb 2012 13:55:54 -0500
+Organization: Linux Foundation/Kernel.org
+Message-ID: <1328900154.3171.27.camel@i5.mricon.com>
+References: <CAPyqok3USqMxm0gNf_T9vnCoicp9XSwpWUCYJ8jh79h=V_UuOA@mail.gmail.com>
+	 <20120208213410.GA5768@ecki> <7vmx8rtu3e.fsf@alter.siamese.dyndns.org>
+	 <vpqbop6tyj6.fsf@bauges.imag.fr>
+	 <FC56A942-EE70-48B7-A2D3-CF53A189A55E@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org
-To: =?iso-2022-jp?B?GyRCJyUnWiddJ3EnXxsoQiAbJEInMSdRJ10nUSdlJ1knYCdTGyhC?= 
-	<dilyan.palauzov@aegee.org>
-X-From: git-owner@vger.kernel.org Fri Feb 10 19:35:23 2012
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-7zMISncPscnBZJMR427l"
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	Clemens Buchacher <drizzd@aon.at>, ftpadmin@kernel.org,
+	Petr Onderka <gsvick@gmail.com>, git@vger.kernel.org
+To: Theodore Tso <tytso@MIT.EDU>
+X-From: git-owner@vger.kernel.org Fri Feb 10 19:56:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvvJa-0001R0-D5
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 19:35:22 +0100
+	id 1Rvvdf-0005pl-0c
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 19:56:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759678Ab2BJSfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Feb 2012 13:35:16 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47439 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759332Ab2BJSfO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2012 13:35:14 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6006F6D1C;
-	Fri, 10 Feb 2012 13:35:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=D08YsPNvHa2FwCFrVZtSIf8O7I8=; b=in64L8
-	cjB3q18g/8GUeLxTXcVmfQdGWhKNmu5Gad99L3G+EZ44m9lHS3IoRTwLibSQ7EJA
-	8BC1NOmLjzXxYh8zPJa1JPutnYX3Wo2PzO4wfSGg3pKDBXez1cvTnMVSNy1JDrqg
-	5pIE4HGSYHvhGbU4/J0BEO6z5K+fsalvswzIk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DE4F42n+AHBtjiANhzVjdjKnEcyjc1KI
-	8MiHfWpXiF/iy7E6cxzQH2SrbZWCDz995hV02F2XYdSbh6+esfgJ7/CSSqHpDoNo
-	89zA5IzdwO5mSN0I074U6tVeKLiIXFWbTWdijFpP4bbjgdrya8MNft6ARcHlluoR
-	Ff4wn/wHi1U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 555B96D1B;
-	Fri, 10 Feb 2012 13:35:14 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DA2F46D1A; Fri, 10 Feb 2012
- 13:35:13 -0500 (EST)
-In-Reply-To: <4F34EF9D.8030509@aegee.org> (=?iso-2022-jp?B?IhskQiclGyhC?=
- =?iso-2022-jp?B?GyRCJ1onXSdxJ18bKEIgGyRCJzEnUSddJ1EnZSdZJ2AnUxsoQiIncw==?=
- message of "Fri, 10 Feb 2012 11:21:17 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F88FD618-5415-11E1-9477-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759800Ab2BJS4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Feb 2012 13:56:01 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:46222 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755130Ab2BJS4A (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2012 13:56:00 -0500
+Received: by ghrr11 with SMTP id r11so1664759ghr.19
+        for <git@vger.kernel.org>; Fri, 10 Feb 2012 10:55:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:content-type:x-mailer:mime-version;
+        bh=7C+wXq9Cj0O8PblguIeIChaqOn01UfKz6k1hmrmcukM=;
+        b=BhHfBtvbfvHyLXb339d9PmMLAP/rznYIH92bqxIu8vn2UMHXYhVFTpYNw+QihbYYc4
+         OBC4m39FJBQz072y4/G3KdbdVFUtFoiB5E6YQa6u35chjY3LLg60Q7os94BNaY/CINFz
+         5UaYCdBymiBUIXR6woXJrD8GzU4OMAo25Rguc=
+Received: by 10.50.170.73 with SMTP id ak9mr13421580igc.3.1328900159581;
+        Fri, 10 Feb 2012 10:55:59 -0800 (PST)
+Received: from [69.165.198.147] ([69.165.198.147])
+        by mx.google.com with ESMTPS id ut1sm10382905igc.2.2012.02.10.10.55.57
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 10 Feb 2012 10:55:58 -0800 (PST)
+In-Reply-To: <FC56A942-EE70-48B7-A2D3-CF53A189A55E@mit.edu>
+X-Mailer: Evolution 3.2.3 (3.2.3-1.fc16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190435>
 
-Дилян Палаузов <dilyan.palauzov@aegee.org> writes:
 
->>> What I am wondering is there are systems that need to include the header,
->>> but locale_charset() does not live in /lib/libcharset.a, in which case we
->>> cannot make HAVE_LIBCHARSET_H imply use of -lcharset.
->
-> I do not understand this.  If you want to use a function from
-> libcharset, you have to use both #include <libcharset.h> and
-> -lcharset.
+--=-7zMISncPscnBZJMR427l
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-You are mistaken.
+On Fri, 2012-02-10 at 13:00 -0500, Theodore Tso wrote:
+> This would satisfy the security concerns, and it wouldn't be hard, but it=
+ would
+> require some implementation work.   Anyone have some perl hacking time to
+> take a look at:=20
+>=20
+>       git://git.kernel.org/pub/scm/utils/kup/kup.git
+>=20
+> =E2=80=A6 and add a "UNPACK pathanme" to the kup-server file, and work wi=
+th the
+> sysadmins at kernel.org to get it reviewed and accepted?
 
-The only constraint is that you have to "#include <libcharset.h>" and need
-to link with the library that has locale_charset() defined.  Does everybody
-has that function in -lcharset, or a system you do not know have it in some
-other library?
+I have a few comments off the top of my head:
 
-For example, Msysgit part defines HAVE_LIBCHARSET_H but it apparently does
-not need -lcharset. It could be that the port is incomplete, but another
-possibility is that perhaps the function is in part of libc and does not
-even need -lcharset passed to the linker.
+     1. "kup rm" will need to be modified, as it currently only allows
+        deleting things that have a matching signature. The alternative
+        is for UNPACK to create a foo.tar.manifest file that will be
+        consulted upon "kup rm" to clean up any unpacked contents upon
+        the deletion of the source archive. Note, that there are many,
+        many gotchas with this solution -- e.g. .manifest should
+        probably contain checksums, too, as there are bound to be
+        conditions when two tarballs reference the same files, and you
+        want to make sure that you delete files matching the contents of
+        the old tarball, not the newer one, etc.
+     2. I would suggest that UNPACK ignores any directory structure in
+        the archive, and only copies over files matching a restricted
+        set of extensions (.html, .txt, .jpg, .png) into the same dir as
+        the original tarball. Basically, untar into a temporary
+        directory, then find any files matching the above set of
+        extensions, copy them into another temporary location, force
+        permissions to 0644, and then move them into the final "live"
+        location in the same dir with the tarball (with the
+        corresponding .manifest, if that solution used). There should be
+        logic to make sure that we never overwrite any files that have a
+        matching .sign file.
+     3. There should be some support to ensure that the unpack process
+        is terminated if unpacked content size reaches a certain limit,
+        or if it is taking too long to complete.
 
-If you look at our Makefile, you see "On this platform foo() can be
-obtained by linking with -lfoo, but on this other platform you need to
-link with -lbar" gotchas around some libraries (e.g. ssl/crypto), and I am
-wondering if this function has a similar issue.
+Best regards,
+--=20
+Konstantin Ryabitsev
+Systems Administrator, Kernel.org
+Montr=C3=A9al, Qu=C3=A9bec
+
+--=-7zMISncPscnBZJMR427l
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQGcBAABCAAGBQJPNWg6AAoJEI6WedmufEletSsL/2RU3sP3vofMWCUxYwctlnku
+hirUA1d2xKtOOKo3/wqT1LAbLnGxhuBBUyB0QvoKLk1f7pfANIHO9/OcLSLWKDYo
+cifm/pz+fzAJtjmuwezrCoDhySzovPmXXnYKqoLX9S+BQDejRXJ3C94TcBkGdBm7
+hsIcmL+5OLGaGAFvrDHlrTnMyPk66Sm5u0bMB845D86rTJbqGzHnAihG3WNTHORa
+jzaXo5SNd62CcfZd3LYdIK4aSGTsf6+IGUVeS9tkzrgqolB9BNZv+5DhjDTOVZks
+0r7j104E6Z/xcMcXLV2u0xu5QOSfzHlCXqETUSRQBumPjAWLIrKrVvS3rjFDtUUP
+wcUIm7NBG10YIuCfq2U+IjVJkluXI5x1aU0qTFiOViRUj0k7bZ6AMuRvfOe14V6j
+TQ5LZg6NUkYVvOEVRgyBKDNoj8LG8NDZ/g/Ixuw/MgAKIZZDfBtwqONdYEUmh0/H
+VLPNsK8w3dTW/5ZrWRpJNUA7KdlWSfKYcogKA38KvQ==
+=K9/8
+-----END PGP SIGNATURE-----
+
+--=-7zMISncPscnBZJMR427l--
