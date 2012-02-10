@@ -1,67 +1,96 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: git svn problem
-Date: Fri, 10 Feb 2012 13:21:23 -0800
-Message-ID: <4F358A53.8010409@vilain.net>
-References: <CAPqC6xRtZXwv+U6AKRUXDz=m-G4AjgWksbwqeMD_qzS8YC=DoQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: A note on modern git plus ancient meld ("wrong number of
+ arguments")
+Date: Fri, 10 Feb 2012 13:28:55 -0800
+Message-ID: <7vwr7unzs8.fsf@alter.siamese.dyndns.org>
+References: <20120209191742.GA20703@unpythonic.net>
+ <CAJDDKr58LV9EDJZP+3S0YfyTOXFgJWD6nm=AiA19MkyBF-wb_g@mail.gmail.com>
+ <20120210082106.GA7871@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Serhat Sevki Dincer <jfcgauss@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 10 22:21:32 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: David Aguilar <davvid@gmail.com>,
+	Jeff Epler <jepler@unpythonic.net>, git@vger.kernel.org,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Charles Bailey <charles@hashpling.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 10 22:29:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvxuK-0000iE-MQ
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 22:21:29 +0100
+	id 1Rvy1f-0004wt-OK
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 22:29:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760193Ab2BJVVY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Feb 2012 16:21:24 -0500
-Received: from uk.vilain.net ([92.48.122.123]:36376 "EHLO uk.vilain.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759174Ab2BJVVY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2012 16:21:24 -0500
-Received: by uk.vilain.net (Postfix, from userid 1001)
-	id 63FDB8274; Fri, 10 Feb 2012 21:21:23 +0000 (GMT)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on uk.vilain.net
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=unavailable version=3.3.1
-Received: from [IPv6:::1] (localhost [127.0.0.1])
-	by uk.vilain.net (Postfix) with ESMTP id 59205822F;
-	Fri, 10 Feb 2012 21:21:21 +0000 (GMT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-In-Reply-To: <CAPqC6xRtZXwv+U6AKRUXDz=m-G4AjgWksbwqeMD_qzS8YC=DoQ@mail.gmail.com>
+	id S1758923Ab2BJV27 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Feb 2012 16:28:59 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37575 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751236Ab2BJV26 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2012 16:28:58 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CFA127F09;
+	Fri, 10 Feb 2012 16:28:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ALgrAcbNmebiXNpNLSDmijxA16o=; b=IeQiHa
+	qarOqGV33+Ms0rr56tp8Y2/f9Y1irs3JJlYDgX/i3PRDVPPUcTiX8fPLvKARIM0n
+	TE/x5P4UomrDJLy7wV6cvWda5DC8YaZ8JoZqpFTNRq4TYOrcySI8CkWYtheAwkjy
+	sj7sg/XdmVKTigBmx/cN/JCXn0oxgkv8kuRF4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=peZBVMIBPl/laAWxwsojrC0llvOEVoKa
+	phMat2yFITofP89N6t7R23CXxBYiEO1ipVvXpWvj2R6irVkb4tkeycRp1H4+6dD5
+	1u7bFNkf9BikcIgj/dWTpdtZbG7w6DaPC69nAnZJLhmtTV1fl3kNoS9CuTKrD1I2
+	1fQAMDI82rQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C67B27F08;
+	Fri, 10 Feb 2012 16:28:57 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4D9277F07; Fri, 10 Feb 2012
+ 16:28:57 -0500 (EST)
+In-Reply-To: <20120210082106.GA7871@burratino> (Jonathan Nieder's message of
+ "Fri, 10 Feb 2012 02:23:49 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3D684C76-542E-11E1-9087-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190457>
 
-On 2/10/12 10:15 AM, Serhat Sevki Dincer wrote:
-> Hi,
->
-> I am using git-svn (1.7.4.1-3 on ubuntu) to get a project. It has two
-> svn repositories, apparently disjoint. First half is at
-> http://svn.plone.org/svn/plone/plone.app.locales, and the continuatio=
-n
-> at http://svn.plone.org/svn/collective/plone.app.locales
-> How can i get a nice linear git-svn repository? the second one is the
-> new location of the project. I am only interested in the trunks btw.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Import them separately to different git-svn remotes, and once they are=20
-in the same repository you can graft them together using=20
-=2Egit/info/grafts (see man gitrepository-layout).  Once it looks right=
-=20
-(check using 'gitk' etc), make it permanent using git filter-branch.=20
-You'll also want to remove the .git/svn directory, and re=E2=80=93run '=
-git svn=20
-fetch' so that git svn's revision database is recomputed.  Don't forget=
-=20
-the -A option to 'git svn fetch'!
+> Just parse version numbers instead.  We can detect the version number
+> by running "meld --version" and postprocessing it.
 
-Good luck,
-Sam
+Hmm. I am debating myself if it may be more efficient, less error prone
+and simpler for the users if we gave them "mergetool.meld.useOutput"
+configuration option to tweak.
+
+When an older meld fails when given --output for real (not with the dry
+run current code tries with --help), can we sanely detect that particular
+failure?  If we can do so, another possibility may be to do something like
+this:
+
+merge_cmd () {
+	meld_has_output_option=$(git config --bool mergetool.meld.useOutput)
+	case "$meld_has_output_option" in
+        false)
+		... do the non-output thing ...
+		;;
+	true)
+		"$merge_tool_path" --output "$MERGED" "$LOCAL" "$BASE" "$REMOTE"
+		;;
+	*)
+		"$merge_tool_path" --output "$MERGED" "$LOCAL" "$BASE" "$REMOTE"
+		if it failed due to missing --output support?
+		then
+			meld_has_output_option=no
+                        git config mergetool.meld.useOutput false
+			merge_cmd
+		fi
+                ;;
+	esac
+}
