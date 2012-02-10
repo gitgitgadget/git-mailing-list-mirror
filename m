@@ -1,92 +1,89 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: git status: small difference between stating whole repository and
- small subdirectory
-Date: Fri, 10 Feb 2012 10:42:22 +0100
-Message-ID: <CAA01Csr8FbvQ8uFvxX8_6i-hysin6JuaifVVC-yoLyoT0N5F4Q@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: 1.7.9, libcharset missing from EXTLIBS
+Date: Fri, 10 Feb 2012 11:06:43 +0100
+Message-ID: <CACBZZX45=mr=FMqFF+Pw4KPaDAtvs-ePLbFATpyFA93vSfZatw@mail.gmail.com>
+References: <4F3472F4.4060605@aegee.org> <7v1uq3toyq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 10 10:42:33 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= 
+	<dilyan.palauzov@aegee.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 10 11:07:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rvmzt-0001VI-18
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 10:42:29 +0100
+	id 1RvnNw-0007Nl-5P
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 11:07:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753754Ab2BJJmY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Feb 2012 04:42:24 -0500
-Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:48536 "EHLO
-	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752948Ab2BJJmX (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2012 04:42:23 -0500
-Received: by obcva7 with SMTP id va7so3538887obc.19
-        for <git@vger.kernel.org>; Fri, 10 Feb 2012 01:42:23 -0800 (PST)
+	id S1759141Ab2BJKHG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Feb 2012 05:07:06 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:37196 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759136Ab2BJKHE convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2012 05:07:04 -0500
+Received: by lagu2 with SMTP id u2so2223582lag.19
+        for <git@vger.kernel.org>; Fri, 10 Feb 2012 02:07:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=PyED9NExNUpylBtVn1nwK7RE98qsc3iAemnXB0Pa8xA=;
-        b=T7K8zKOMiqy5K3dwfwK1K/nL8EtNvY/bHAy6f4EWHdTy1IafJJucTPNoH2GnEUDc+Y
-         21WjeYKPr2wFwuUr3iHLhEbM+WrtSK1zneeGluSMMhdX5vylIxzUVWo92W73T5m8ubpK
-         gcGjW/sL/ZxfEcHayvjWWZSQDYDui9wPViQ5E=
-Received: by 10.50.45.195 with SMTP id p3mr1975843igm.2.1328866942715; Fri, 10
- Feb 2012 01:42:22 -0800 (PST)
-Received: by 10.50.46.33 with HTTP; Fri, 10 Feb 2012 01:42:22 -0800 (PST)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=1Jqkx7HdC/H24urUlVrVBwl8mPW5gDHrGkZ0+bp33q4=;
+        b=oyoIfFKwbWQaOWLb2OOehANBNfhntj5cba/BeTKSv7g4jlKkobatrTKdPLbO1SBMo7
+         fYjmX3UHV8TeeTpgkaQBPXw+of1/fQOVEAG/EJwzVLtNyVmsk+/eZTjIAuLaiGc0uRsp
+         9LmEx5xPwg8++jC52pYAYtPmFvTKd84sajRbk=
+Received: by 10.152.102.237 with SMTP id fr13mr3767881lab.10.1328868423140;
+ Fri, 10 Feb 2012 02:07:03 -0800 (PST)
+Received: by 10.112.1.230 with HTTP; Fri, 10 Feb 2012 02:06:43 -0800 (PST)
+In-Reply-To: <7v1uq3toyq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190398>
 
-Hi,
+2012/2/10 Junio C Hamano <gitster@pobox.com>:
+> =D0=94=D0=B8=D0=BB=D1=8F=D0=BD =D0=9F=D0=B0=D0=BB=D0=B0=D1=83=D0=B7=D0=
+=BE=D0=B2 =C2=A0<dilyan.palauzov@aegee.org> writes:
+>
+>> Hello,
+>>
+>> git 1.7.9 makes use of libcharset and /Makefile contains:
+>>
+>> ifdef HAVE_LIBCHARSET_H
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 BASIC_CFLAGS +=3D -DHAVE_LIBCHARSET_H
+>> endif
+>> ...
+>> and the problem is, that libcharset is not used when linking. =C2=A0=
+To
+>> solve this, please replace the above extract from /Makefile with
+>>
+>> ifdef HAVE_LIBCHARSET_H
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 BASIC_CFLAGS +=3D -DHAVE_LIBCHARSET_H
+>> =C2=A0 =C2=A0 =C2=A0 EXTLIBS +=3D -lcharset
+>> endif
+>
+> Thanks.
+>
+> What platform is this? =C2=A0Is there a guarantee that any and all sy=
+stem that
+> use "#include <libcharset.h>" has to link with "-lcharset"?
+>
+> What I am wondering is there are systems that need to include the hea=
+der,
+> but locale_charset() does not live in /lib/libcharset.a, in which cas=
+e we
+> cannot make HAVE_LIBCHARSET_H imply use of -lcharset.
 
-I compared stating whole tree vs one small subdirectory, and I
-expected that for the subdirectory status will be very very fast.
-After all, it has only few files to stat. But it's not fast. Why?
+I've had some similar (privately sent) bug reports about the i18n
+stuff from someone who built his own Linux distro.
 
+Basically we make assumptions that certain stuff will be in the C
+library on certain platforms, certain headers go with certain
+libraries etc.
 
-With cold cache (echo 3 | sudo tee /proc/sys/vm/drop_caches):
-
-$ time git status    > /dev/null
-real	0m41.670s
-user	0m0.980s
-sys	0m2.908s
-
-$ time git status -- src/.../somedir   > /dev/null
-real	0m17.380s
-user	0m0.748s
-sys	0m0.328s
-
-
-With warm cache:
-
-$ time git status    > /dev/null
-real	0m0.792s
-user	0m0.404s
-sys	0m0.384s
-
-$ time git status -- src/.../somedir   > /dev/null
-real	0m0.335s
-user	0m0.288s
-sys	0m0.048s
-
-
-Repository/dir stats:
-
-$ find * -type f | wc -l
-127189
-$ du -shc * | grep total
-2.2G	total
-
-$ find src/.../somedir -type f | wc -l
-55
-$ du -shc src/.../somedir | grep total
-224K	total
-
-
-$ git --version
-git version 1.7.9.rc0.10.gbeecc
-
--- 
-Piotr Krukowiecki
+Evidently none of this can really be relied upon and we'd have to
+probe for each one if we wanted to make it reliable.
