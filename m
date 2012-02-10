@@ -1,95 +1,107 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 6/8] gitweb: Highlight interesting parts of diff
-Date: Fri, 10 Feb 2012 15:55:19 +0100
-Message-ID: <201202101555.20163.jnareb@gmail.com>
-References: <1328865494-24415-1-git-send-email-michal.kiedrowicz@gmail.com> <m339aivn4z.fsf@localhost.localdomain> <20120210151528.56145e0c@gmail.com>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: git status: small difference between stating whole repository and
+ small subdirectory
+Date: Fri, 10 Feb 2012 17:18:55 +0100
+Message-ID: <CAA01Csp6_9fP2rg4104UWUXwOxZmUVdQNDAaBe6fRou6agBz6g@mail.gmail.com>
+References: <CAA01Csr8FbvQ8uFvxX8_6i-hysin6JuaifVVC-yoLyoT0N5F4Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 10 15:55:39 2012
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Feb 10 17:19:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rvrsp-0000wo-Su
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 15:55:32 +0100
+	id 1RvtBd-0003Js-NQ
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 17:19:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759445Ab2BJOz0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Feb 2012 09:55:26 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:38015 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755085Ab2BJOzX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2012 09:55:23 -0500
-Received: by eekc14 with SMTP id c14so981398eek.19
-        for <git@vger.kernel.org>; Fri, 10 Feb 2012 06:55:21 -0800 (PST)
+	id S1756911Ab2BJQS4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Feb 2012 11:18:56 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:50514 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754568Ab2BJQSz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2012 11:18:55 -0500
+Received: by iacb35 with SMTP id b35so459666iac.19
+        for <git@vger.kernel.org>; Fri, 10 Feb 2012 08:18:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=0eOsrJsKeEbolMMl6/DC9HirWejvKdEjAaXOAMjhp+s=;
-        b=eqoKYCBiMDNTUu/BeM0hLHXwpbI+tpOBrfrHJc4y4+eMrtYfE9suelV7HP98LarSQJ
-         x2uKmw2KD0K7LR+5QcfGAwp/pg30qyfYYII9mR3VNAwTMX8tFaO4Fglt+DOg3Guaie5L
-         WoOj/NlmiQFN3Bm5oIRyCqekw7HX3RRxMcDqI=
-Received: by 10.213.113.203 with SMTP id b11mr404523ebq.64.1328885721718;
-        Fri, 10 Feb 2012 06:55:21 -0800 (PST)
-Received: from [192.168.1.13] (abwh187.neoplus.adsl.tpnet.pl. [83.8.231.187])
-        by mx.google.com with ESMTPS id z47sm22888113eeh.9.2012.02.10.06.55.20
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 10 Feb 2012 06:55:21 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20120210151528.56145e0c@gmail.com>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=sR9XDOznwJs6ICydqUqE3MHVEKaMCvGwrIW+SqOvjD8=;
+        b=q7vhDNapNaJyGiq3OVmBwB7OVaflcYbfueF1Yuy4t9w+63V4HC8L2q9yvCHCAbUNpT
+         ZNZTzlKowAvRg1as5y7PVd84qksaG4//XVjM5EGRubLRidE0j6w4Hci72WGh6yNMTgbO
+         FGEWHH3rnryIZ50hAoorYPIcyELh5YiBuczt4=
+Received: by 10.42.145.131 with SMTP id f3mr11622941icv.8.1328890735377; Fri,
+ 10 Feb 2012 08:18:55 -0800 (PST)
+Received: by 10.50.46.33 with HTTP; Fri, 10 Feb 2012 08:18:55 -0800 (PST)
+In-Reply-To: <CAA01Csr8FbvQ8uFvxX8_6i-hysin6JuaifVVC-yoLyoT0N5F4Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190414>
 
-On Fri, 10 Feb 2012, Micha=C5=82 Kiedrowicz wrote:
-> Jakub Narebski <jnareb@gmail.com> wrote:
-> > Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> writes:
-> >=20
-> > > The code that comares lines is based on
-> > > contrib/diff-highlight/diff-highlight, except that it works with
-> > > multiline changes too.  It also won't highlight lines that are
-> > > completely different because that would only make the output unre=
-adable.
-> > > Combined diffs are not supported but a following commit will chan=
-ge it.
-> >=20
-> > I was thinking that if gitweb were to support "diff refinement
-> > highlighting", it would either use one of *Diff* packages from CPAN=
-,
-> > or "git diff --word-diff" output.
->=20
-> I think highlighting inline and side-by-side diff outputs is
-> something different from "git diff --word-diff". I find it useful for
-> people who are used to these diff formats (i.e. me :).
+On Fri, Feb 10, 2012 at 10:42 AM, Piotr Krukowiecki
+<piotr.krukowiecki@gmail.com> wrote:
+> Hi,
+>
+> I compared stating whole tree vs one small subdirectory, and I
+> expected that for the subdirectory status will be very very fast.
+> After all, it has only few files to stat. But it's not fast. Why?
+>
+>
+> With cold cache (echo 3 | sudo tee /proc/sys/vm/drop_caches):
+>
+> $ time git status =A0 =A0> /dev/null
+> real =A0 =A00m41.670s
+> user =A0 =A00m0.980s
+> sys =A0 =A0 0m2.908s
+>
+> $ time git status -- src/.../somedir =A0 > /dev/null
+> real =A0 =A00m17.380s
+> user =A0 =A00m0.748s
+> sys =A0 =A0 0m0.328s
+>
+>
+> With warm cache:
+>
+> $ time git status =A0 =A0> /dev/null
+> real =A0 =A00m0.792s
+> user =A0 =A00m0.404s
+> sys =A0 =A0 0m0.384s
+>
+> $ time git status -- src/.../somedir =A0 > /dev/null
+> real =A0 =A00m0.335s
+> user =A0 =A00m0.288s
+> sys =A0 =A0 0m0.048s
+>
+>
+> Repository/dir stats:
+>
+> $ find * -type f | wc -l
+> 127189
+> $ du -shc * | grep total
+> 2.2G =A0 =A0total
+>
+> $ find src/.../somedir -type f | wc -l
+> 55
+> $ du -shc src/.../somedir | grep total
+> 224K =A0 =A0total
+>
+>
+> $ git --version
+> git version 1.7.9.rc0.10.gbeecc
 
-I was thinking about *using* "git diff --word-diff" for diff refinement
-highlighting of inline (unified) and side-by-side diff...=20
+I can't reproduce this behavior at the moment. 'status' on the
+directory takes about 1.5s instead of 17s. status on whole repository
+takes 27s.
+This is my work repository, so it was changed today.
 
-though having an option of showing word-diff would be I think a good
-idea in some cases, like e.g. documentation changes.
+I'll get back to you when I can reproduce the problem again...
 
-> OTOH I'm not against using a dedicated package from CPAN. But I think
-> my approach is proven to work (I use contrib/diff-highlight as a
-> filter) and more lightweight (doesn't add another dependency to
-> gitweb). Moreover, adding support for some Diff package may be done
-> later, at any moment. It's just a matter of replacing one function
-> (format_rem_add_line()) with the one that uses Diff.=20
-
-O.K., if it is tested code, then all is good.  Well, except the fact
-that I'm rather wary about adding more code to gitweb when it is still
-single monolithic script, rather than split into packages.
-
-Anyway, I'll try to review those patches soon.  I like the refactoring
-work (that is from what I had chance to examine).
 
 --=20
-Jakub Narebski
-Poland
+Piotr Krukowiecki
