@@ -1,127 +1,87 @@
-From: Konstantin Ryabitsev <icon@mricon.com>
-Subject: Re: Git documentation at kernel.org
-Date: Fri, 10 Feb 2012 13:55:54 -0500
-Organization: Linux Foundation/Kernel.org
-Message-ID: <1328900154.3171.27.camel@i5.mricon.com>
-References: <CAPyqok3USqMxm0gNf_T9vnCoicp9XSwpWUCYJ8jh79h=V_UuOA@mail.gmail.com>
-	 <20120208213410.GA5768@ecki> <7vmx8rtu3e.fsf@alter.siamese.dyndns.org>
-	 <vpqbop6tyj6.fsf@bauges.imag.fr>
-	 <FC56A942-EE70-48B7-A2D3-CF53A189A55E@mit.edu>
+From: Tom Grennan <tmgrennan@gmail.com>
+Subject: Re: [RFC/PATCH] tag: make list exclude !<pattern>
+Date: Fri, 10 Feb 2012 10:55:16 -0800
+Message-ID: <20120210185516.GA4903@tgrennan-laptop>
+References: <1328816616-18124-1-git-send-email-tmgrennan@gmail.com>
+ <CACsJy8DVXCLb50Vd0fTU+yNP2q7Gkcr88muHuzxq1jhfJW5Q9w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-7zMISncPscnBZJMR427l"
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	Clemens Buchacher <drizzd@aon.at>, ftpadmin@kernel.org,
-	Petr Onderka <gsvick@gmail.com>, git@vger.kernel.org
-To: Theodore Tso <tytso@MIT.EDU>
-X-From: git-owner@vger.kernel.org Fri Feb 10 19:56:07 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com, peff@peff.net
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 10 20:01:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rvvdf-0005pl-0c
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 19:56:07 +0100
+	id 1Rvviq-0000en-IL
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 20:01:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759800Ab2BJS4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Feb 2012 13:56:01 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:46222 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755130Ab2BJS4A (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2012 13:56:00 -0500
-Received: by ghrr11 with SMTP id r11so1664759ghr.19
-        for <git@vger.kernel.org>; Fri, 10 Feb 2012 10:55:59 -0800 (PST)
+	id S1759910Ab2BJTBX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Feb 2012 14:01:23 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:62756 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759332Ab2BJTBW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2012 14:01:22 -0500
+Received: by qadc10 with SMTP id c10so486437qad.19
+        for <git@vger.kernel.org>; Fri, 10 Feb 2012 11:01:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=sender:message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:content-type:x-mailer:mime-version;
-        bh=7C+wXq9Cj0O8PblguIeIChaqOn01UfKz6k1hmrmcukM=;
-        b=BhHfBtvbfvHyLXb339d9PmMLAP/rznYIH92bqxIu8vn2UMHXYhVFTpYNw+QihbYYc4
-         OBC4m39FJBQz072y4/G3KdbdVFUtFoiB5E6YQa6u35chjY3LLg60Q7os94BNaY/CINFz
-         5UaYCdBymiBUIXR6woXJrD8GzU4OMAo25Rguc=
-Received: by 10.50.170.73 with SMTP id ak9mr13421580igc.3.1328900159581;
-        Fri, 10 Feb 2012 10:55:59 -0800 (PST)
-Received: from [69.165.198.147] ([69.165.198.147])
-        by mx.google.com with ESMTPS id ut1sm10382905igc.2.2012.02.10.10.55.57
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Qi2OqDilQRs3p41XxI+8zGw+eD7CkqKvhYrJkFYaY/E=;
+        b=iR3pScVGTyOO9FQbDCbett3j2qfz7vK0Y+vcFRf199UfHWnPjjG6pQtxluUzrMK1Q+
+         OlOncIbjW2aosAPhXUYV4RSsYB80kGhDN+/IfzWn7dqLtmDzpEOmpV92fGgengZOjycn
+         CAcSVDaDpo46rYGFXKk7l3eMQksyj3wCFbz18=
+Received: by 10.229.77.72 with SMTP id f8mr4925670qck.34.1328900121471;
+        Fri, 10 Feb 2012 10:55:21 -0800 (PST)
+Received: from localhost ([129.192.185.163])
+        by mx.google.com with ESMTPS id gd3sm14549244qab.6.2012.02.10.10.55.18
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 10 Feb 2012 10:55:58 -0800 (PST)
-In-Reply-To: <FC56A942-EE70-48B7-A2D3-CF53A189A55E@mit.edu>
-X-Mailer: Evolution 3.2.3 (3.2.3-1.fc16)
+        Fri, 10 Feb 2012 10:55:19 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CACsJy8DVXCLb50Vd0fTU+yNP2q7Gkcr88muHuzxq1jhfJW5Q9w@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190436>
 
+On Fri, Feb 10, 2012 at 01:34:26PM +0700, Nguyen Thai Ngoc Duy wrote:
+>On Fri, Feb 10, 2012 at 2:43 AM, Tom Grennan <tmgrennan@gmail.com> wro=
+te:
+>> Please see the following patch which filters the tag list of "!" pre=
+faced
+>> patterns. =A0If this is deemed desirable and correct, I'll resubmit =
+with updated
+>> documentation and unit tests.
+>
+>git-branch, git-tag and git-for-each-ref are in the same family. I
+>think it's good to that all three commands share things, like this
+>pattern matching.
 
---=-7zMISncPscnBZJMR427l
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Yes, git-branch and git-tag could now use a common match_patterns() but
+git-for-each-ref needs some rearranging; as will: git-describe,
+git-replace, git-ls-remote, git-name-rev, and git-show-branch.
 
-On Fri, 2012-02-10 at 13:00 -0500, Theodore Tso wrote:
-> This would satisfy the security concerns, and it wouldn't be hard, but it=
- would
-> require some implementation work.   Anyone have some perl hacking time to
-> take a look at:=20
->=20
->       git://git.kernel.org/pub/scm/utils/kup/kup.git
->=20
-> =E2=80=A6 and add a "UNPACK pathanme" to the kup-server file, and work wi=
-th the
-> sysadmins at kernel.org to get it reviewed and accepted?
+If we pursue this, it may be best to first add match_patterns() to ./re=
+fs.[ch]
+then incrementally modify these builtin commands to use it.
+ =20
+>About the '!' for exclusion, maybe it's better to move from fnmatch()
+>as matching machinery to pathspec. Then when git learns negative
+>pathspec [1], we have this feature for free.
+>
+>[1] http://thread.gmane.org/gmane.comp.version-control.git/189645/focu=
+s=3D190072
 
-I have a few comments off the top of my head:
+I have to study this more. I'm not sure that --exclude has precedence
+over matches. It also looks like this would require a lot more change t=
+o
+the above.
 
-     1. "kup rm" will need to be modified, as it currently only allows
-        deleting things that have a matching signature. The alternative
-        is for UNPACK to create a foo.tar.manifest file that will be
-        consulted upon "kup rm" to clean up any unpacked contents upon
-        the deletion of the source archive. Note, that there are many,
-        many gotchas with this solution -- e.g. .manifest should
-        probably contain checksums, too, as there are bound to be
-        conditions when two tarballs reference the same files, and you
-        want to make sure that you delete files matching the contents of
-        the old tarball, not the newer one, etc.
-     2. I would suggest that UNPACK ignores any directory structure in
-        the archive, and only copies over files matching a restricted
-        set of extensions (.html, .txt, .jpg, .png) into the same dir as
-        the original tarball. Basically, untar into a temporary
-        directory, then find any files matching the above set of
-        extensions, copy them into another temporary location, force
-        permissions to 0644, and then move them into the final "live"
-        location in the same dir with the tarball (with the
-        corresponding .manifest, if that solution used). There should be
-        logic to make sure that we never overwrite any files that have a
-        matching .sign file.
-     3. There should be some support to ensure that the unpack process
-        is terminated if unpacked content size reaches a certain limit,
-        or if it is taking too long to complete.
-
-Best regards,
---=20
-Konstantin Ryabitsev
-Systems Administrator, Kernel.org
-Montr=C3=A9al, Qu=C3=A9bec
-
---=-7zMISncPscnBZJMR427l
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQGcBAABCAAGBQJPNWg6AAoJEI6WedmufEletSsL/2RU3sP3vofMWCUxYwctlnku
-hirUA1d2xKtOOKo3/wqT1LAbLnGxhuBBUyB0QvoKLk1f7pfANIHO9/OcLSLWKDYo
-cifm/pz+fzAJtjmuwezrCoDhySzovPmXXnYKqoLX9S+BQDejRXJ3C94TcBkGdBm7
-hsIcmL+5OLGaGAFvrDHlrTnMyPk66Sm5u0bMB845D86rTJbqGzHnAihG3WNTHORa
-jzaXo5SNd62CcfZd3LYdIK4aSGTsf6+IGUVeS9tkzrgqolB9BNZv+5DhjDTOVZks
-0r7j104E6Z/xcMcXLV2u0xu5QOSfzHlCXqETUSRQBumPjAWLIrKrVvS3rjFDtUUP
-wcUIm7NBG10YIuCfq2U+IjVJkluXI5x1aU0qTFiOViRUj0k7bZ6AMuRvfOe14V6j
-TQ5LZg6NUkYVvOEVRgyBKDNoj8LG8NDZ/g/Ixuw/MgAKIZZDfBtwqONdYEUmh0/H
-VLPNsK8w3dTW/5ZrWRpJNUA7KdlWSfKYcogKA38KvQ==
-=K9/8
------END PGP SIGNATURE-----
-
---=-7zMISncPscnBZJMR427l--
+Thanks,
+TomG
