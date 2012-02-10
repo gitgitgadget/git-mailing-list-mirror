@@ -1,90 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 28/51] refs.c: rename ref_array -> ref_dir
-Date: Fri, 10 Feb 2012 13:17:11 -0800
-Message-ID: <7v62fepew8.fsf@alter.siamese.dyndns.org>
-References: <1323668338-1764-1-git-send-email-mhagger@alum.mit.edu>
- <1323668338-1764-29-git-send-email-mhagger@alum.mit.edu>
- <7v7h21xps9.fsf@alter.siamese.dyndns.org> <4EE6E61F.8080405@alum.mit.edu>
- <7vk461vuy9.fsf@alter.siamese.dyndns.org> <4EE7A387.3070400@alum.mit.edu>
- <4EE7CDF2.3040408@alum.mit.edu> <7vzkewt5qu.fsf@alter.siamese.dyndns.org>
- <4F158E99.2020906@alum.mit.edu> <4F352F03.2030104@alum.mit.edu>
- <20120210204457.GD5504@sigill.intra.peff.net>
+From: Ted Ts'o <tytso@mit.edu>
+Subject: Re: Git documentation at kernel.org
+Date: Fri, 10 Feb 2012 16:20:30 -0500
+Message-ID: <20120210212030.GD5381@thunk.org>
+References: <CAPyqok3USqMxm0gNf_T9vnCoicp9XSwpWUCYJ8jh79h=V_UuOA@mail.gmail.com>
+ <20120208213410.GA5768@ecki>
+ <7vmx8rtu3e.fsf@alter.siamese.dyndns.org>
+ <vpqbop6tyj6.fsf@bauges.imag.fr>
+ <FC56A942-EE70-48B7-A2D3-CF53A189A55E@mit.edu>
+ <1328900154.3171.27.camel@i5.mricon.com>
+ <20120210195736.GA5381@thunk.org>
+ <7vhayyphlw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Drew Northup <drew.northup@maine.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johan Herland <johan@herland.net>,
-	Julian Phillips <julian@quantumfyre.co.uk>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 10 22:17:22 2012
+Cc: Konstantin Ryabitsev <icon@mricon.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Clemens Buchacher <drizzd@aon.at>, ftpadmin@kernel.org,
+	Petr Onderka <gsvick@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 10 22:20:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvxqK-0006gI-TI
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 22:17:21 +0100
+	id 1Rvxtb-0000F9-Tf
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 22:20:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759160Ab2BJVRQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Feb 2012 16:17:16 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65376 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752994Ab2BJVRP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2012 16:17:15 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E7E07C4F;
-	Fri, 10 Feb 2012 16:17:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=As0QulF8xXbtPVYowKaF4mfvriY=; b=Ocqt+u
-	IgybAS7g1t3nkTKD8s6I07LHCQI5BL2sLpwJAXeuBK5yxgdTee/QPPJc55AE6Yd/
-	hh5anGoI4GKD3LUgk6qiW2h/3yIpfzRSx3nxw+GVm6VKS+DZhaVl3U7fxphoUIfD
-	1HKcOiw08HoWs2M3miOQVUeTVZAL9UmhyP67U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=A2wtOuBcliHjsoxrCTXjyGErecz23lka
-	fUCzhF7+qEyvU0MN4AzlsI1RJzZlqSjxeLY44iHY8lUwDCHegn4rm2VDNdJjO56O
-	AvGrmnYPsJVtUq6NrhZRgooIygqu+WJTmsQmJ1ixT5bVC2KbUc1AYi0sSPsVaghe
-	PmKsY9oNYEY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 659977C4E;
-	Fri, 10 Feb 2012 16:17:13 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C12617C49; Fri, 10 Feb 2012
- 16:17:12 -0500 (EST)
-In-Reply-To: <20120210204457.GD5504@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 10 Feb 2012 15:44:57 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 997D869A-542C-11E1-A568-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932438Ab2BJVUj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Feb 2012 16:20:39 -0500
+Received: from li9-11.members.linode.com ([67.18.176.11]:35652 "EHLO
+	test.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758959Ab2BJVUi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2012 16:20:38 -0500
+Received: from root (helo=tytso-glaptop.cam.corp.google.com)
+	by test.thunk.org with local-esmtp (Exim 4.69)
+	(envelope-from <tytso@thunk.org>)
+	id 1RvxtQ-000161-Mz; Fri, 10 Feb 2012 21:20:32 +0000
+Received: from tytso by tytso-glaptop.cam.corp.google.com with local (Exim 4.71)
+	(envelope-from <tytso@thunk.org>)
+	id 1RvxtO-0001be-47; Fri, 10 Feb 2012 16:20:30 -0500
+Content-Disposition: inline
+In-Reply-To: <7vhayyphlw.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on test.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190455>
 
-Jeff King <peff@peff.net> writes:
+On Fri, Feb 10, 2012 at 12:18:35PM -0800, Junio C Hamano wrote:
+> That would not work very well without changing the historical directory
+> structure (which I think was the point of this discussion "please keep
+> these stale links alive").
+> 
+> The toplevel index.html in the pub/software/scm/git/docs/ directory and
+> its pointees were the set of docs for the latest version, and older
+> versions were rooted at pub/software/scm/git/docs/vX.Y.Z/.  Links that
+> point at software/scm/git/docs/git-cat-file.html still need to work, and
+> the path needs to be updatable without having to include the preformatted
+> documentation for all the historical versions in the same tarball.
 
->> If everything_local() is trying to check that the references are in the
->> local repository plus alternates, then it is incorrect that
->> everything_local() doesn't consider alternate references in its
->> determination.  My guess is that this is the case, and that something
->> like the following might be the fix:
->
-> Junio could answer more authoritatively than I, but I am pretty sure it
-> is the latter. The point is to skip the expensive find_common
-> negotiation if we know that there are no objects to fetch. Thus the
-> "local" here is "do we have them on this side of the git-protocol
-> connection", not "do we have them in our non-alternates repository".
+Hmm... good point.  That does make it hard.  I could imagine making it
+work by having separate hierarchies, and then using apache rewrite
+rules so that anything that doesn't begin with vX.Y.Z in the top level
+of software/scm/git/docs/* gets redirected to LATEST/*, where LATEST is
+a symlink that is managed via kup.
 
-Correct.  The function is about "do we need to get any object from the
-other side?" optimization.
+I don't know if the k.org folks would consider that acceptable, though.
 
-I originally thought to go through the rest of your message, but I
-realized I can just say "everything you said is correct and I have nothing
-more to add."
-
-Thanks.
+  	     	    	  	      	   - Ted
