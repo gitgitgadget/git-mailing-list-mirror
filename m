@@ -1,77 +1,99 @@
-From: "Neal Kreitzinger" <neal@rsss.com>
-Subject: nested git repos (not submodules)
-Date: Thu, 9 Feb 2012 20:34:42 -0600
-Message-ID: <jh1vo3$7af$1@dough.gmane.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 10 03:35:10 2012
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: A note on modern git plus ancient meld ("wrong number of arguments")
+Date: Thu, 9 Feb 2012 18:42:51 -0800
+Message-ID: <CAJDDKr58LV9EDJZP+3S0YfyTOXFgJWD6nm=AiA19MkyBF-wb_g@mail.gmail.com>
+References: <20120209191742.GA20703@unpythonic.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jeff Epler <jepler@unpythonic.net>
+X-From: git-owner@vger.kernel.org Fri Feb 10 03:43:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvgKF-0003iC-M8
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 03:35:04 +0100
+	id 1RvgS3-0001CD-4k
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 03:43:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758783Ab2BJCe7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Feb 2012 21:34:59 -0500
-Received: from plane.gmane.org ([80.91.229.3]:53156 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758089Ab2BJCe6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Feb 2012 21:34:58 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RvgK5-0003SG-IW
-	for git@vger.kernel.org; Fri, 10 Feb 2012 03:34:53 +0100
-Received: from 67.63.162.200 ([67.63.162.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 10 Feb 2012 03:34:53 +0100
-Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 10 Feb 2012 03:34:53 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 67.63.162.200
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-RFC2646: Format=Flowed; Original
+	id S932331Ab2BJCmw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Feb 2012 21:42:52 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:44420 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758134Ab2BJCmv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Feb 2012 21:42:51 -0500
+Received: by yhoo21 with SMTP id o21so1274562yho.19
+        for <git@vger.kernel.org>; Thu, 09 Feb 2012 18:42:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=s0X8cvUaZqgv1hud7H7DF2xL7x4qcYNPYxpz1VUOM8E=;
+        b=CxNP9eY4zhTtJ6xZFZqOGUghZ4jIV3fvMRxA88HiHNtfoVf4JKHDTI9Z7eL5XNeETM
+         bco2++4cv5Uj9z9daPPHrnq5Td5gZaQpcqri1O8aVvbM6EahN6GkPe6xFyEcwtAhxzki
+         KNq6KJBEh+JRkxjZQ8ukZvgZAqkc9gLZQF2bM=
+Received: by 10.236.173.202 with SMTP id v50mr6269863yhl.102.1328841771241;
+ Thu, 09 Feb 2012 18:42:51 -0800 (PST)
+Received: by 10.146.249.16 with HTTP; Thu, 9 Feb 2012 18:42:51 -0800 (PST)
+In-Reply-To: <20120209191742.GA20703@unpythonic.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190373>
 
-In the worktree of a particular git repo, the user has made a subdir 
-(worktree/subdir) of the worktree (worktree/.git) its own repo 
-(worktree/subdir/.git).  Is there a danger of worktree/.git and 
-worktree/subdir/.git crossing wires?  Are literally nested git repos (whose 
-worktrees are in turn tracked as subdirs by upper-level git repo(s)) a 
-supported/valid model in regards to git.git (NOT git-addons)?
+On Thu, Feb 9, 2012 at 11:17 AM, Jeff Epler <jepler@unpythonic.net> wro=
+te:
+> I note this just in case it helps someone else track down a similar
+> problem, not because I think any change needs to be made to git, as a
+> version of meld new enough to not be affected by this problem is 5 ye=
+ars
+> old.
+>
+> At $DAYJOB, I recently encountered a problem after upgrading from (do=
+n't
+> laugh) git 1.7.1 to 1.7.8.3: one developer stated that meld failed to
+> run, instead displaying the error 'Wrong number of arguments (Got 5)'=
+=2E
+>
+> We determined that this user was running a very old version of meld
+> (1.1.1) from his home directory, as opposed to the also very old syst=
+em
+> version of meld (1.1.5). =C2=A0It turns out that the check added in
+> =C2=A0 =C2=A0f61bd9c mergetools/meld: Use '--output' when available
+> fails on meld 1.1.1, leading git to incorrectly believe the --output
+> flag is supporrted:
+> =C2=A0 =C2=A0$ meld-1.1.1 --output /dev/null --help >/dev/null 2>&1; =
+echo $?
+> =C2=A0 =C2=A00 =C2=A0 # i.e., detected as supported
+> The test as written gives the correct ("not supported") result with m=
+eld
+> 1.1.5:
+> =C2=A0 =C2=A0$ meld-1.1.5 --output /dev/null --help >/dev/null 2>&1; =
+echo $?
+> =C2=A0 =C2=A02 =C2=A0 # i.e., detected as supported
+>
+> so if you encounter the message 'Wrong number of arguments (Got 5)' f=
+rom
+> meld, then check whether you have an ancient version of meld. =C2=A0I=
+f for
+> some reason you can't upgrade to at least 1.1.5, maybe you'd find the
+> following configuration flags useful:
+> =C2=A0 =C2=A0[merge]
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0tool =3D ancientmeld
+> =C2=A0 =C2=A0[mergetool "ancientmeld"]
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0cmd =3D meld-1.1.1 \"$LOCAL\" \"$MERGED\" =
+\"$REMOTE\"
 
-Symptomatically, I have observed the following so far:
-(1) worktree/.git is "ignoring" (or unaware of) worktree/subdir/.git because 
-it is treating subdir/ as if subdir/.git wasn't there and is not listing 
-subdir/.git as untracked.  I'm not sure if this is an unintended side-effect 
-of git ignoring .git(s) automatically, or if having subdir/.git's (w/out 
-having them defined as submodules) is an expected 
-(reasonable/sane/recommended) model for git.git users.
-(2) running git commands with pwd=worktree/subdir/ acts upon 
-worktree/subdir/.git (subdir/ is regarded as the toplevel of subdir/.git as 
-opposed to a subdir of worktree/.git) and is seemingly oblivious to 
-worktree.git.
+We originally used the --output test so that we wouldn't have to check
+for a specific version.  Does your meld support `meld --version`, and
+what does it output?
 
-I suspect submodules is the "correct" way to implement the effect of nested 
-git repos.  That being said, this literal nested git repo is a temporary 
-band-aid and I don't expect it to be propogated, but I do have to deal 
-(react) with it in the meantime.  I'm thinking I can manage that and deal 
-with annoyances as they arise, unless there are any unseen landmines I'm not 
-aware of.  Please advise.
+I'm thinking that maybe we should just try and parse the version
+number since it seems like we cannot depend on ancient meld's return
+code.
 
-(I also wouldn't be surprised to hear that this is exactly how submodules 
-really first started in theory or practice.)
-
-Thanks in advance for any feedback.
-
-v/r,
-neal 
+Thanks Jeff.  I'll see what we can do about it.
+--=20
+David
