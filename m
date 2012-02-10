@@ -1,7 +1,7 @@
-From: Ted Ts'o <tytso@mit.edu>
+From: Jeff King <peff@peff.net>
 Subject: Re: Git documentation at kernel.org
-Date: Fri, 10 Feb 2012 14:57:36 -0500
-Message-ID: <20120210195736.GA5381@thunk.org>
+Date: Fri, 10 Feb 2012 15:01:00 -0500
+Message-ID: <20120210200100.GA5504@sigill.intra.peff.net>
 References: <CAPyqok3USqMxm0gNf_T9vnCoicp9XSwpWUCYJ8jh79h=V_UuOA@mail.gmail.com>
  <20120208213410.GA5768@ecki>
  <7vmx8rtu3e.fsf@alter.siamese.dyndns.org>
@@ -9,58 +9,74 @@ References: <CAPyqok3USqMxm0gNf_T9vnCoicp9XSwpWUCYJ8jh79h=V_UuOA@mail.gmail.com>
  <FC56A942-EE70-48B7-A2D3-CF53A189A55E@mit.edu>
  <1328900154.3171.27.camel@i5.mricon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+Content-Type: text/plain; charset=utf-8
+Cc: Theodore Tso <tytso@MIT.EDU>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Junio C Hamano <gitster@pobox.com>,
 	Clemens Buchacher <drizzd@aon.at>, ftpadmin@kernel.org,
 	Petr Onderka <gsvick@gmail.com>, git@vger.kernel.org
 To: Konstantin Ryabitsev <icon@mricon.com>
-X-From: git-owner@vger.kernel.org Fri Feb 10 20:57:52 2012
+X-From: git-owner@vger.kernel.org Fri Feb 10 21:01:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvwbO-0000z9-SU
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 20:57:51 +0100
+	id 1Rvweb-0002vj-C1
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 21:01:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759965Ab2BJT5q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Feb 2012 14:57:46 -0500
-Received: from li9-11.members.linode.com ([67.18.176.11]:51587 "EHLO
-	test.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758542Ab2BJT5p (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2012 14:57:45 -0500
-Received: from root (helo=tytso-glaptop.cam.corp.google.com)
-	by test.thunk.org with local-esmtp (Exim 4.69)
-	(envelope-from <tytso@thunk.org>)
-	id 1RvwbC-0000pe-Cq; Fri, 10 Feb 2012 19:57:38 +0000
-Received: from tytso by tytso-glaptop.cam.corp.google.com with local (Exim 4.71)
-	(envelope-from <tytso@thunk.org>)
-	id 1RvwbA-0001Ww-VC; Fri, 10 Feb 2012 14:57:36 -0500
+	id S1759982Ab2BJUBD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Feb 2012 15:01:03 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33499
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754167Ab2BJUBC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2012 15:01:02 -0500
+Received: (qmail 7083 invoked by uid 107); 10 Feb 2012 20:08:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 10 Feb 2012 15:08:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Feb 2012 15:01:00 -0500
 Content-Disposition: inline
 In-Reply-To: <1328900154.3171.27.camel@i5.mricon.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on test.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190444>
 
-How about this as something *way* simpler?  Define a way of marking
-the top of a particular directory hierarchy as a tree.  Then the
-*only* way of updating that tree is all or nothing.  That is, someone
-submits a signed tarball; then after the signed tarball has its
-signature checked, it gets unpacked into a dir.new, and then we rename
-dir to dir.old, rename dir.new to dir, and then dir.old gets removed.
+On Fri, Feb 10, 2012 at 01:55:54PM -0500, Konstantin Ryabitsev wrote:
 
-That way there's no conflicts between directories that are managed via
-the kup-servers PUT and DELETE commands, and those where they get
-uploaded as a single tarball to create or replace a specific directory
-hierarcy, or which can be deleted only as a entire directory hierarcy.
+> I have a few comments off the top of my head:
+> 
+>      1. "kup rm" will need to be modified, as it currently only allows
+>         deleting things that have a matching signature. The alternative
+>         is for UNPACK to create a foo.tar.manifest file that will be
+>         consulted upon "kup rm" to clean up any unpacked contents upon
+>         the deletion of the source archive. Note, that there are many,
+>         many gotchas with this solution -- e.g. .manifest should
+>         probably contain checksums, too, as there are bound to be
+>         conditions when two tarballs reference the same files, and you
+>         want to make sure that you delete files matching the contents of
+>         the old tarball, not the newer one, etc.
 
-What do you think?
+For this particular use case, I don't know if that would be necessary.
+According to Junio, previously:
 
-						- Ted
+  The k.org site kept these files under /pub/software/scm/git/docs/. The
+  in-development "master" version of pages were placed directly
+  underneath that directory, and the documentation pages for older
+  versions were kept in vX.Y.Z subdirectory of that directory.
+
+If we tweak that slightly to "all versions are kept in vX.Y.Z
+subdirectory, and the root version is simply a symlink or redirect to
+the latest vX.Y.Z", then there is no deletion required. The pusher is
+always adding new versions, and updating a link[1].
+
+But even if it would be sufficient for this use case, kup developers
+may not want such a half-implemented scheme in their protocol.
+
+-Peff
+
+[1] There is a slight complication that the subdirectories live _inside_
+    of the root directory, so it is not implementable with a single
+    symlink.  You could get around that with a few clever http redirects.
