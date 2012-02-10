@@ -1,88 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] gitweb: Option for filling only specified info in
- fill_project_list_info
-Date: Fri, 10 Feb 2012 11:49:13 -0800
-Message-ID: <7vsjiipiyu.fsf@alter.siamese.dyndns.org>
-References: <1328359648-29511-1-git-send-email-jnareb@gmail.com>
- <201202101456.45944.jnareb@gmail.com>
- <7v1uq2shwg.fsf@alter.siamese.dyndns.org>
- <201202101917.52908.jnareb@gmail.com>
+Subject: Re: Git documentation at kernel.org
+Date: Fri, 10 Feb 2012 11:51:54 -0800
+Message-ID: <7vobt6piud.fsf@alter.siamese.dyndns.org>
+References: <CAPyqok3USqMxm0gNf_T9vnCoicp9XSwpWUCYJ8jh79h=V_UuOA@mail.gmail.com>
+ <20120208213410.GA5768@ecki> <7vmx8rtu3e.fsf@alter.siamese.dyndns.org>
+ <vpqbop6tyj6.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 10 20:49:22 2012
+Cc: Clemens Buchacher <drizzd@aon.at>, ftpadmin@kernel.org,
+	Petr Onderka <gsvick@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Feb 10 20:52:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvwTB-0004jt-9c
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 20:49:21 +0100
+	id 1RvwVr-00069P-Mx
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 20:52:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760007Ab2BJTtQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Feb 2012 14:49:16 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54835 "EHLO
+	id S1760029Ab2BJTv6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Feb 2012 14:51:58 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56225 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759958Ab2BJTtP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2012 14:49:15 -0500
+	id S1759958Ab2BJTv4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2012 14:51:56 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4167963D2;
-	Fri, 10 Feb 2012 14:49:15 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 331FF64C8;
+	Fri, 10 Feb 2012 14:51:56 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7pS1F55LFja6uWI8DJmyj73UwIc=; b=Y5NHSs
-	ep6b7/ECKpWYuFHYk91cAoYkuCyGcqEvE5c2AUWlqWYJrg26eTSrtDkW/YoWg2Po
-	YN65nbX5o8aw3C+rpKqYmGun8wVTNH68kzYLGasTOmAs6G6MLbxyjAHEr0GsK63B
-	9nSjAQmbjMi982Q0uhhlwxm5FLiIrlh5lDSfo=
+	:content-type; s=sasl; bh=G+sT2IYnG0JBhGjqM/IPOA1z+Dk=; b=eLu3WD
+	cqbZfNwhRkOjZpN70dOAIg5wO6fpXSppc3NQkH7myXn1EwI/cUhVTt0NT0/IwbV4
+	D7YThyehdRcWtvt0E0UTb3tvPHdi6jdo7Qq+BduaY2JoumWekPFDJNlIqEMf9apD
+	pFZoVH3xRKTk+pgSgqJb4uKDJCgpgzXTAxI7E=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Mz+i0d+S6cNcst7YKU/u2uCtMftoJsDy
-	VUWjzd6xF7gqQQU7hwo3EHF47a8jHuW5OXTZB1ALiguNyl0r+gtI2WudDEfz2Cor
-	XiUCZf46nI8G9+rm6ZDrbIfS9FVtCrV8Q7KAJR9D0LslTe1rWCZ4teEycqJ8EM2L
-	95Mrebwz7G8=
+	:content-type; q=dns; s=sasl; b=L90Qoo+QBTBKv9Dow91q65L5V8NnhUkf
+	Tr7alj+lugiyB9ygj9DhxWBEMbLqOIoyCgFOw8WZvk+S6DZn3IxG7cg0VuvtXbi4
+	E6faHe7cdz1vCt0r6kfcpxhkHCxMldR5nHTrArgJpvLME5zpgeb14RHrK4Fe9Vld
+	WMTkf+FfTs0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 380FA63D1;
-	Fri, 10 Feb 2012 14:49:15 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B50C64C7;
+	Fri, 10 Feb 2012 14:51:56 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B353E63D0; Fri, 10 Feb 2012
- 14:49:14 -0500 (EST)
-In-Reply-To: <201202101917.52908.jnareb@gmail.com> (Jakub Narebski's message
- of "Fri, 10 Feb 2012 19:17:52 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B41FD64C6; Fri, 10 Feb 2012
+ 14:51:55 -0500 (EST)
+In-Reply-To: <vpqbop6tyj6.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Fri, 10 Feb 2012 17:59:25 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4F826BF2-5420-11E1-A63B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: AF7994AE-5420-11E1-8058-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190441>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> If @fill_only is empty, it means for fill_project_list_info to fill
-> all the data, if it is not empty it means that those fields needs to
-> be filled.
-
-That is exactly what I am questioning.  Do you need "I need all these
-fields to be present" and "I will fill these other fields" (which is what
-@fill_only is about, no?) that is different from the former?
-
-> The code of fill_project_list_info goes like this
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->   if (do we need to fill 'age' or 'age_string'?) {
->     fill 'age' and 'age_string'
->   }
->   if (do we need to fill 'desc_long' or 'descr'?) {
->     fill 'descr_long' and 'descr'
->   }
->   if (we are interested in 'ctags' &&
->       do we need to fill 'ctags'?) {
->     fill 'ctags'
->   }
->   ...
+>> Clemens Buchacher <drizzd@aon.at> writes:
+>>
+>>> Please restore access to the following files when possible. Some sites
+>>> are referencing those, including kernel.org itself:
+>>>
+>>>  http://www.kernel.org/pub/software/scm/git/docs/git.html
+>>
+>> The pages reachable from this used to be living documents in that every
+>> time the 'master' branch was updated at k.org, automatically a server side
+>> hook script generated a new set of HTML pages and updated them.
+>
+> Is it possible to have the static HTML uploaded from another machine,
+> not necessarily for each push, but e.g. for every release?
 
-Exactly.  Why do you need @fill_only at all?  If you are interested in
-ctags and you want to make sure ctags is available, the question you want
-to ask the helper function is "Does the project structure already have
-ctags field?".  Why does the helper function needs to know anything else?
+It would probably be possible, but I do not have that much time and
+patience to sign 600+ files in the preformatted HTML tree one-by-one and
+upload them using kup.
