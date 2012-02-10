@@ -1,69 +1,112 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 6/8] gitweb: Highlight interesting parts of diff
-Date: Fri, 10 Feb 2012 13:56:11 -0800 (PST)
-Message-ID: <m3y5satksm.fsf@localhost.localdomain>
-References: <1328865494-24415-1-git-send-email-michal.kiedrowicz@gmail.com>
-	<1328865494-24415-7-git-send-email-michal.kiedrowicz@gmail.com>
-	<20120210202008.GA5874@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH] mergetools/meld: Use --help output to detect --output support
+Date: Fri, 10 Feb 2012 15:57:55 -0600
+Message-ID: <20120210215755.GL19216@burratino>
+References: <20120209191742.GA20703@unpythonic.net>
+ <CAJDDKr58LV9EDJZP+3S0YfyTOXFgJWD6nm=AiA19MkyBF-wb_g@mail.gmail.com>
+ <20120210082106.GA7871@burratino>
+ <7vwr7unzs8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-4
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-2?q?Micha=B3_Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 10 22:56:20 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: David Aguilar <davvid@gmail.com>,
+	Jeff Epler <jepler@unpythonic.net>, git@vger.kernel.org,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Charles Bailey <charles@hashpling.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 10 22:58:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvyS3-0003Pv-HD
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 22:56:19 +0100
+	id 1RvyTt-0004a7-9m
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 22:58:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753947Ab2BJV4O convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Feb 2012 16:56:14 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:39496 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753181Ab2BJV4O convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2012 16:56:14 -0500
-Received: by eaah12 with SMTP id h12so1066906eaa.19
-        for <git@vger.kernel.org>; Fri, 10 Feb 2012 13:56:12 -0800 (PST)
+	id S1760232Ab2BJV6H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Feb 2012 16:58:07 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:44348 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753974Ab2BJV6G (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2012 16:58:06 -0500
+Received: by iacb35 with SMTP id b35so827172iac.19
+        for <git@vger.kernel.org>; Fri, 10 Feb 2012 13:58:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=o++LATgEDOT5e2JB+7+5gDzMP5+sHuKifqp8yRYW4iA=;
-        b=DavdFM1i3Q50N7tIzr5ARlPT1sBhXRfm8tkrut+MrTKLsONKmy0uRBjOBc3VDBlvOb
-         Sp7SrggpVuLbcro6dDfN/65Wjx5vjBu/CGt7i/UePhihA7JGS7fsWvL8FjAMN5anOWs5
-         EjQDlmy9u7jd1Dz2FKYBtpiawoIzrKfLg7i8U=
-Received: by 10.14.194.136 with SMTP id m8mr2471105een.97.1328910972561;
-        Fri, 10 Feb 2012 13:56:12 -0800 (PST)
-Received: from localhost.localdomain (abwh187.neoplus.adsl.tpnet.pl. [83.8.231.187])
-        by mx.google.com with ESMTPS id v51sm26981763eef.2.2012.02.10.13.56.11
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 10 Feb 2012 13:56:11 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q1ALuBr6000766;
-	Fri, 10 Feb 2012 22:56:11 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q1ALuAE3000757;
-	Fri, 10 Feb 2012 22:56:10 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20120210202008.GA5874@sigill.intra.peff.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=uDPv/ljDqw1aF13DGVOLKYXkyLnTLF3MaMEAircqY1k=;
+        b=mEP+Xrq7UN9NhYPm90Gu7ydztp+7su9DQVO4kgyrsze1ewt8T+9aFM+VdIPcK+7QeY
+         m2h5HYDfy7ZPcmCvFHiz/BJ/cRLOjAYXcu6e+I+Bng2T3ttsBw65GoIojcWjnEyz2Zks
+         Xe0SuBrW0B1yeSInMSKB7BJXDAkiHKKU5ufy0=
+Received: by 10.42.19.65 with SMTP id a1mr11631420icb.48.1328911084987;
+        Fri, 10 Feb 2012 13:58:04 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id f26sm13912011ibc.9.2012.02.10.13.58.03
+        (version=SSLv3 cipher=OTHER);
+        Fri, 10 Feb 2012 13:58:04 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vwr7unzs8.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190466>
 
-Jeff King <peff@peff.net> writes:
+In v1.7.7-rc0~3^2 (2011-08-19), git mergetool's "meld" support learned
+to use the --output option when calling versions of meld that are
+detected to support it (1.5.0 and newer, hopefully).
 
-> (I was hoping not to need to get a running gitweb installation in
-> order to see the output).
+Alas, it misdetects old versions (before 1.1.5, 2006-06-11) of meld as
+supporting the option, so on systems with such meld, instead of
+getting a nice merge helper, the operator gets a dialog box with the
+text "Wrong number of arguments (Got 5)".  (Version 1.1.5 is when meld
+switched to using optparse.  One consequence of that change was that
+errors in usage are detected and signalled through the exit status
+even when --help was passed.)
 
-Well, there is always git-instaweb ;-)
+Luckily there is a simpler check that is more reliable: the usage
+string printed by "meld --help" reliably reflects whether --output is
+supported in a given version.  Use it.
 
---=20
-Jakub Nar=EAbski
+Reported-by: Jeff Epler <jepler@unpythonic.net>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Junio C Hamano wrote:
+
+> When an older meld fails when given --output for real (not with the dry
+> run current code tries with --help), can we sanely detect that particular
+> failure?
+
+Unfortunately it just pops up a GUI with a modal dialog box like this:
+	 ___________________________________
+	|                                   |
+	| Wrong number of arguments (Got 5) |
+	|                                   |
+	|                     [Quit] [OK]   |
+	|___________________________________|
+
+If I choose "Quit", the exit status is 0.
+
+But how about this?  "meld --help | grep -e --output" seems to detect
+support for the option reliably.  With 2>&1 on the upstream of the
+pipe, this even seems futureproof. ;-)
+
+ mergetools/meld |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/mergetools/meld b/mergetools/meld
+index eaa115cc..cb672a55 100644
+--- a/mergetools/meld
++++ b/mergetools/meld
+@@ -23,7 +23,7 @@ check_meld_for_output_version () {
+ 	meld_path="$(git config mergetool.meld.path)"
+ 	meld_path="${meld_path:-meld}"
+ 
+-	if "$meld_path" --output /dev/null --help >/dev/null 2>&1
++	if "$meld_path" --help 2>&1 | grep -e --output >/dev/null
+ 	then
+ 		meld_has_output_option=true
+ 	else
+-- 
+1.7.9
