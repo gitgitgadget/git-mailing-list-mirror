@@ -1,119 +1,125 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 1/5] gitweb: Option for filling only specified info in fill_project_list_info
-Date: Fri, 10 Feb 2012 19:17:52 +0100
-Message-ID: <201202101917.52908.jnareb@gmail.com>
-References: <1328359648-29511-1-git-send-email-jnareb@gmail.com> <201202101456.45944.jnareb@gmail.com> <7v1uq2shwg.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3 v2] diff --stat: use the real terminal width
+Date: Fri, 10 Feb 2012 10:24:36 -0800
+Message-ID: <7vmx8qr1gb.fsf@alter.siamese.dyndns.org>
+References: <CACsJy8AQdz=uwDm+FOgcUB5JOi5U7w-W4w7yUPL6wd2FO-bArg@mail.gmail.com>
+ <1328831921-27272-1-git-send-email-zbyszek@in.waw.pl>
+ <1328831921-27272-4-git-send-email-zbyszek@in.waw.pl>
+ <CACsJy8APGeTNv_E3qD=xFCiLC25M_nm3aJbq6YU73J=X0Wxh2w@mail.gmail.com>
+ <4F34FE9A.7020600@in.waw.pl>
+ <1328891972-23695-1-git-send-email-zbyszek@in.waw.pl>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 10 19:18:12 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, pclouds@gmail.com,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+X-From: git-owner@vger.kernel.org Fri Feb 10 19:24:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rvv2t-0007cP-IR
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 19:18:07 +0100
+	id 1Rvv9J-0003Cw-8j
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 19:24:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759568Ab2BJSSC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Feb 2012 13:18:02 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:49698 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757365Ab2BJSSB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2012 13:18:01 -0500
-Received: by eekc14 with SMTP id c14so1051345eek.19
-        for <git@vger.kernel.org>; Fri, 10 Feb 2012 10:18:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=kzpTGHXBT4rWHTzViDibfaaVZvHbWbjW+0WUJ3STBH0=;
-        b=hnR7OemRrfNst9Ne7IAe3f9BkPrpXgcqVD2vrVXqCSvwlLmxAKhvBXvOYbcgEfGscO
-         p4HnNPS/NEJYSkNvj4hJibG/6yIx0f1CQHgDxfUpKPKgyoGLBAzxJ+mDGzgEa2tCRclt
-         BmrORF2T/RCaNNA0c5gkpDiIdQ6qwzNTJ62zc=
-Received: by 10.213.19.10 with SMTP id y10mr541305eba.72.1328897879932;
-        Fri, 10 Feb 2012 10:17:59 -0800 (PST)
-Received: from [192.168.1.13] (abwh187.neoplus.adsl.tpnet.pl. [83.8.231.187])
-        by mx.google.com with ESMTPS id y12sm24709539eeb.11.2012.02.10.10.17.58
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 10 Feb 2012 10:17:59 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v1uq2shwg.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1759649Ab2BJSYk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Feb 2012 13:24:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40659 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754446Ab2BJSYj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2012 13:24:39 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD6566965;
+	Fri, 10 Feb 2012 13:24:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=pxJw1GJuF1Aa
+	yljf53oCtu3juWg=; b=Hv32sI89DNVMGDSK77Qiht5wmc0EzceuUX0JxOqjKejN
+	OqAeosjPjF/YH2APVJaPtX0yQGSXWmPUkEM/vvdQSYEKwyq2yjV4Gjj6X1Sp9oBl
+	EeDtinCXuFlVDJmFqPm914tJLYy5CbsfpCCsm2bgankqhjyh2+NdZIQSukco8h4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=BF2/14
+	yyY0HeANzpYbFubriTnDUPMJMbP5uW/XIvsXW5fyIFVuWfNcTE2gtbIRsiVTljlB
+	zEEMHAignudlXmGx62Wxaz0BWv7fqItt5ft0kbe8VANwpKsGGi9oUYFSfhPR0Ud8
+	+WvKWoZ7oqo77Q9rGhWBUFGI748EK+R/2k1Dc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B55A76963;
+	Fri, 10 Feb 2012 13:24:38 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 397846962; Fri, 10 Feb 2012
+ 13:24:38 -0500 (EST)
+In-Reply-To: <1328891972-23695-1-git-send-email-zbyszek@in.waw.pl> ("Zbigniew
+ =?utf-8?Q?J=C4=99drzejewski-Szmek=22's?= message of "Fri, 10 Feb 2012
+ 17:39:29 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7DAE2608-5414-11E1-9E70-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190433>
 
-On Fri, 10 Feb 2012, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> > (with either "..., 'owner', ..." or "..., [ 'owner' ], ..." for single-key
-> > filling), or
-> >
-> >   if (project_info_needs_filled($pr, ['age', 'age_string'], \@fill_only) {
-> >
-> > Is it?
-> 
-> Whatever. I am not sure what @fill_only is needed for, if the name stands
-> for "only fill these fields, if this argument is empty".  After all,
-> doesn't the above example callsite, without ", \@fill_only" at the end,
-> say "I am going to use age and age_string, so these two need to be filled"
-> already?
+Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
 
-No, the above example callsite says "Do I need to fill either 'age' or
-'age_string'", and is followed by actually filling this info.
+> - style fixes
 
-Currently the code flow WRT. project information goes like this:
+I think I still saw at least one malformatted multi-line comments in th=
+is
+round, though (I stopped looking after I saw one, so there may be other=
+s).
 
-  git_get_projects_list()
-  # this fills some of project info; what is filled depends on whether
-  # $projects_list is a file with list of project or directory to scan
-  filter_forks_from_projects_list()
-  # this does not use project info
-  fill_project_list_info()
-  # this fills all the rest of project info on reduced list
-  search_projects_list(<search data>)
-  # this uses some of project info
+> - some tests for git-format-patch added
+> - patches 3 and 4 squashed together, since they touch the same lines
+> - graph width is limited to 40 columns, even if there's more space
 
-After 2/5 the code goes like this:
+Hmm.
 
-  git_get_projects_list()
-  # this fills some of project info; what is filled depends on whether
-  # $projects_list is a file with list of project or directory to scan
-  filter_forks_from_projects_list()
-  # this does not use project info
-  fill_project_list_info(<search data>)
-  # this fills the rest of project info required for search on reduced list
-  search_projects_list(<search data>)
-  # this uses some of project info
-  fill_project_list_info()
-  # this fills all the rest of project info on further reduced list
+This is what we have in the documentation.
 
-If @fill_only is empty, it means for fill_project_list_info to fill
-all the data, if it is not empty it means that those fields needs to
-be filled.
+        --stat[=3D<width>[,<name-width>[,<count>]]]::
+                Generate a diffstat.  You can override the default
+                output width for 80-column terminal by `--stat=3D<width=
+>`.
+                The width of the filename part can be controlled by
+                giving another width to it separated by a comma.
 
-The code of fill_project_list_info goes like this
+Na=C3=AFvely, one would expect that a "use the real terminal width" ser=
+ies
+would be only to learn the width of the terminal and tweak its hardcode=
+d
+default "80" to that width, and change nothing else, leaving the defaul=
+t
+for name-width to "50", which still can be overridable if needed.
 
-  if (do we need to fill 'age' or 'age_string'?) {
-    fill 'age' and 'age_string'
-  }
-  if (do we need to fill 'desc_long' or 'descr'?) {
-    fill 'descr_long' and 'descr'
-  }
-  if (we are interested in 'ctags' &&
-      do we need to fill 'ctags'?) {
-    fill 'ctags'
-  }
-  ...
+But the reason somebody wants to have a wider width is more often not
+because they want to see longer bars, but because they want to see long
+names without truncation, so in retrospect, the order the "--stat=3D" o=
+ption
+takes its values is inconvenient.  Users would more often want to tinke=
+r
+with name-width than width because the latter can be auto-detected.
 
+Which is a bit unfortunate.
 
--- 
-Jakub Narebski
-Poland
+In any case, the above needs to be updated to describe what the updated
+logic does.  Do you have documentation updates in the series?
+
+Judging from what you wrote in the above, the updated logic is, instead=
+ of
+the "na=C3=AFve" version:
+
+ - auto-detect, if possible, to set the default "width" to COLUMNS inst=
+ead
+   of hardcoded 80; and
+
+ - instead of using hardcoded 50, use width-40 as the default as the
+   default "name-width".
+
+But if that is what is going on, shouldn't your "40" be "30" to retain
+backward compatibility for people who work on 80-column terminals?
+
+Or is there something more complex going on that you are not describing
+here?
