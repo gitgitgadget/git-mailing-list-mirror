@@ -1,94 +1,110 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: nested git repos (not submodules)
-Date: Fri, 10 Feb 2012 16:30:57 -0600
-Message-ID: <4F359AA1.2000901@gmail.com>
-References: <jh1vo3$7af$1@dough.gmane.org> <7vd39ns4py.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Splitting gitweb (was: Re: [PATCH 6/8] gitweb: Highlight interesting parts of diff)
+Date: Fri, 10 Feb 2012 23:52:41 +0100
+Message-ID: <201202102352.42101.jnareb@gmail.com>
+References: <1328865494-24415-1-git-send-email-michal.kiedrowicz@gmail.com> <201202101555.20163.jnareb@gmail.com> <20120210183319.2f56ff88@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 10 23:31:10 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 10 23:56:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rvyzl-0006tH-Pe
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 23:31:10 +0100
+	id 1RvzOV-0004o3-1L
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 23:56:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760289Ab2BJWbD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Feb 2012 17:31:03 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:49472 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753300Ab2BJWbC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2012 17:31:02 -0500
-Received: by ghrr11 with SMTP id r11so1766742ghr.19
-        for <git@vger.kernel.org>; Fri, 10 Feb 2012 14:31:01 -0800 (PST)
+	id S933269Ab2BJWwq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Feb 2012 17:52:46 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:44925 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933265Ab2BJWwm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2012 17:52:42 -0500
+Received: by eaah12 with SMTP id h12so1076357eaa.19
+        for <git@vger.kernel.org>; Fri, 10 Feb 2012 14:52:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=v65ce0KKlWbPHYOXlqEoh+AwvT48hhOfOBHkBFPBYOE=;
-        b=c+2YdRHOVkiPjzFk0kUR+PsyJJt62bABY9p8fagmAvGQ4ltf/DESkfHz0T+6YemqeC
-         0L5nkOnoJBltc+cwvh0AtZ8k9QNjYZA60TKIH7pUmbJx2tlzEDP9uBupc8atv5PD3YUS
-         6M6njKBJ++n3JxO+vFT5pBro3VaLTbfmmn79s=
-Received: by 10.236.193.41 with SMTP id j29mr11649873yhn.12.1328913061625;
-        Fri, 10 Feb 2012 14:31:01 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id o61sm11807364yhk.10.2012.02.10.14.31.00
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=FkN14HTsjDYNBU41VjOXZZkAR3BpQgIcwC2Wivk3Cy0=;
+        b=S6Gfi/E7WgNdEQ1v0rN+hzyzT99LXvDaTVliboRyKVp8fBzvZgcQZagizGw1w6CdNI
+         HpZBONZvnMCPh9rDHOjZ8y7PUdfayYbYasoP/w2RbYv1ShenAarIfu8luhRuHfmfXLCA
+         mgOP2athK0GWo/0SJcTPnRm6z2ZnXb6ScyJ2k=
+Received: by 10.14.127.16 with SMTP id c16mr2618157eei.35.1328914361545;
+        Fri, 10 Feb 2012 14:52:41 -0800 (PST)
+Received: from [192.168.1.13] (abwh187.neoplus.adsl.tpnet.pl. [83.8.231.187])
+        by mx.google.com with ESMTPS id w60sm9225132eeb.4.2012.02.10.14.52.40
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 10 Feb 2012 14:31:00 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.26) Gecko/20120129 Thunderbird/3.1.18
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <7vd39ns4py.fsf@alter.siamese.dyndns.org>
+        Fri, 10 Feb 2012 14:52:41 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20120210183319.2f56ff88@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190472>
 
-On 2/9/2012 10:16 PM, Junio C Hamano wrote:
->
-> The repository controlled by worktree/.git should behave as if subdir/
-> does not exist, except that obviously the project cannot have a regular
-> file "subdir" in it.  When you chdir to worktree/subdir, everything in
-> there should behave as if worktree/.git directory does not exist.
->
-> At least that is the design, and it indeed is how I arrange my primary
-> working tree (I have two "clones" at /git/git.git/ and /git/git.git/Meta,
-> and the latter has a checkout of the "todo" branch), so I would make
-> noises about any breakage for such a layout.
->
-I now see that most of the concept of "a repo worktree path with an o/s 
-subdir containing another repo" is valid provided that the repo is 
-ignoring the worktree of the subdir repo.
+Micha=C5=82 Kiedrowicz wrote:
+> Jakub Narebski <jnareb@gmail.com> wrote:
 
-> I do not know offhand if an attempt to add files inside subdir to the
-> repository controlled by worktree/.git is always correctly prohibited by
-> the code, though, as our code often forgets to error out "stupid user
-> mistakes", and running "git add subdir/bar" when in worktree/ falls into
-> that category.
->
-In my situation, WORKTREE/.git is tracking the worktree of 
-WORKTREE/SUBDIR/.git.  Before WORKTREE/SUBDIR/.git was created, 
-WORKTREE/SUBDIR/ was already being tracked by WORKTREE/.git because 
-WORKTREE/SUBDIR/. directly correlates to the rest of WORKTREE/., 
-WORKTREE/SUBDIR2/., etc.  Now that I know that having "a repo tracking 
-the worktree of a nested repo" is not a sound model, I can advise 
-against it on a go-forward basis without being concerned that I am not 
-open to new ideas.
+> > Well, except the fact
+> > that I'm rather wary about adding more code to gitweb when it is st=
+ill
+> > single monolithic script, rather than split into packages.
+> >=20
+>=20
+> Yeah, jumping between 2k'th and 5k'th line isn't a great fun. Do you
 
-> And the use of that layout predates the submodules by a large margin.
-> In fact, when people suggest use of submodules when the toplevel and the
-> sublevel do not even need tight version dependencies, some of their use
-> cases might be better supported by using the simply-nested layout without
-> even letting the toplevel be aware of the sublevel.
+There is an easy part, an almost easy part, and a hard part.
 
-I will keep this in mind when adding submodules.
+The easy part of splitting gitweb is creating infrastructure for it,
+at least in the basic case.  The 'gitweb/split' branch in my git forks:
 
-Thanks!
+  http://repo.or.cz/w/git/jnareb-git.git
+  https://github.com/jnareb/git
 
-v/r,
-neal
+contains changes to gitweb and gitweb/Makefile, and splitting off
+Gitweb::Util as an example; I'd have to update this branch to current
+state of gitweb.
+
+The almost easy part is to come up with a way to split gitweb.  Do we
+follow SVN::Web (Subversion web interface in Perl), or maybe Gitalist
+(git web interface in Perl, using Catalyst MVC framework)?  Do we use
+MVC paradigm?  Or do we split on functionality: diffs, blobs, trees,
+logs, etc.?
+
+
+The hard part is about splitting main parts of gitweb.  It is easy to
+put generic subroutines that are not specific to git or gitweb in
+Gitweb::Util (or Gitweb::Util::* submodules).  It would be almost as
+easy to put parsing of git command output in Gitweb::Parse (or=20
+Gitweb::Parse::* submodules).
+
+The problem is with putting actual actions in separate submodules.
+=46or that we would need to replace our hacky "longjmp"-based error han=
+dling
+(nonlocal goto in Perl is roughly equivalent to longjmp() in C) to
+exception-based one, as I don't think going back to exit-based error
+ahndling is a good idea.  We would need exception-based error handling
+if we want to implement HTTP output caching anyway, I think.
+
+Not to not reimplement the wheel, badly, we will do better to use some
+non-core Perl modules, namely Try::Tiny for capturing exceptions, and
+HTTP::Exception (based on Exception::Class) for throwing exceptions.
+So we would have to add a way to handle such non-core modules, perhaps
+bundling them with gitweb, like Error is bundled with Git.pm and used
+if it is not present on install.
+
+Maybe Module::Install would help us there with bundling of such
+dependencies for install; maybe "push @INC, __DIR__.'/inc' would be
+a good idea.
+
+It needs thinking about.
+--=20
+Jakub Narebski
+Poland
