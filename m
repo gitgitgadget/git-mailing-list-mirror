@@ -1,188 +1,95 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 28/51] refs.c: rename ref_array -> ref_dir
-Date: Fri, 10 Feb 2012 15:51:47 +0100
-Message-ID: <4F352F03.2030104@alum.mit.edu>
-References: <1323668338-1764-1-git-send-email-mhagger@alum.mit.edu> <1323668338-1764-29-git-send-email-mhagger@alum.mit.edu> <7v7h21xps9.fsf@alter.siamese.dyndns.org> <4EE6E61F.8080405@alum.mit.edu> <7vk461vuy9.fsf@alter.siamese.dyndns.org> <4EE7A387.3070400@alum.mit.edu> <4EE7CDF2.3040408@alum.mit.edu> <7vzkewt5qu.fsf@alter.siamese.dyndns.org> <4F158E99.2020906@alum.mit.edu>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 6/8] gitweb: Highlight interesting parts of diff
+Date: Fri, 10 Feb 2012 15:55:19 +0100
+Message-ID: <201202101555.20163.jnareb@gmail.com>
+References: <1328865494-24415-1-git-send-email-michal.kiedrowicz@gmail.com> <m339aivn4z.fsf@localhost.localdomain> <20120210151528.56145e0c@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Drew Northup <drew.northup@maine.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johan Herland <johan@herland.net>,
-	Julian Phillips <julian@quantumfyre.co.uk>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 10 15:52:57 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 10 15:55:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvrqE-0007M1-SI
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 15:52:51 +0100
+	id 1Rvrsp-0000wo-Su
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 15:55:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759428Ab2BJOwi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Feb 2012 09:52:38 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:44039 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755014Ab2BJOwh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Feb 2012 09:52:37 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q1AEplg9024763
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 10 Feb 2012 15:51:48 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.26) Gecko/20120131 Lightning/1.0b2 Thunderbird/3.1.18
-In-Reply-To: <4F158E99.2020906@alum.mit.edu>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1759445Ab2BJOz0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Feb 2012 09:55:26 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:38015 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755085Ab2BJOzX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2012 09:55:23 -0500
+Received: by eekc14 with SMTP id c14so981398eek.19
+        for <git@vger.kernel.org>; Fri, 10 Feb 2012 06:55:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=0eOsrJsKeEbolMMl6/DC9HirWejvKdEjAaXOAMjhp+s=;
+        b=eqoKYCBiMDNTUu/BeM0hLHXwpbI+tpOBrfrHJc4y4+eMrtYfE9suelV7HP98LarSQJ
+         x2uKmw2KD0K7LR+5QcfGAwp/pg30qyfYYII9mR3VNAwTMX8tFaO4Fglt+DOg3Guaie5L
+         WoOj/NlmiQFN3Bm5oIRyCqekw7HX3RRxMcDqI=
+Received: by 10.213.113.203 with SMTP id b11mr404523ebq.64.1328885721718;
+        Fri, 10 Feb 2012 06:55:21 -0800 (PST)
+Received: from [192.168.1.13] (abwh187.neoplus.adsl.tpnet.pl. [83.8.231.187])
+        by mx.google.com with ESMTPS id z47sm22888113eeh.9.2012.02.10.06.55.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 10 Feb 2012 06:55:21 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20120210151528.56145e0c@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190413>
 
-On 01/17/2012 04:07 PM, Michael Haggerty wrote:
-> On 12/14/2011 12:24 AM, Junio C Hamano wrote:
->> Michael Haggerty <mhagger@alum.mit.edu> writes:
->>> ...  But there are so many calls to the
->>> for_each_ref*() family of functions that I wasn't able to determine
->>> exactly which should allow for extra refs and which shouldn't.
->>
->> Only the ones that follow add_extra_ref() in the control flow.
->>
->> builtin/clone.c adds them in setup_reference() to deal with --reference.
->> The objects known to be complete in these repositories we borrow from
->> need to be marked complete on our end (i.e. clone does not have to fetch)
->> and transport_fetch_refs() that eventually goes to fetch_refs_via_pack()
->> that calls fetch_pack() uses this information. All three for_each_ref()
->> calls in builtin/fetch-pack.c are about "what are the objects that we know
->> are complete?" and needs to pay attention to extra refs.
->>
->> Having said that, I have a slight suspicion that you might be able to
->> eliminate this one in clone.  setup_reference() adds the reference
->> repository to the $GIT_DIR/objects/info/alternates, and the fetch logic
->> already knows to account for the refs in alternate repositories via
->> insert_alternate_refs() callchain.
-> 
-> If I comment out the call from add_one_reference() to add_extra_ref()
-> then I get a single failure, in t5700:
-> 
-> not ok - 8 fetched no objects
-> #	! grep "^want" "$U"
-> 
-> So your suspicion does not seem to be borne out (at least not in the
-> naivest form).
-> 
-> Still studying...
+On Fri, 10 Feb 2012, Micha=C5=82 Kiedrowicz wrote:
+> Jakub Narebski <jnareb@gmail.com> wrote:
+> > Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> writes:
+> >=20
+> > > The code that comares lines is based on
+> > > contrib/diff-highlight/diff-highlight, except that it works with
+> > > multiline changes too.  It also won't highlight lines that are
+> > > completely different because that would only make the output unre=
+adable.
+> > > Combined diffs are not supported but a following commit will chan=
+ge it.
+> >=20
+> > I was thinking that if gitweb were to support "diff refinement
+> > highlighting", it would either use one of *Diff* packages from CPAN=
+,
+> > or "git diff --word-diff" output.
+>=20
+> I think highlighting inline and side-by-side diff outputs is
+> something different from "git diff --word-diff". I find it useful for
+> people who are used to these diff formats (i.e. me :).
 
-I finally had some time to get back to this puzzle.  It took me a while
-to narrow down the problem, and I still don't understand it entirely.
+I was thinking about *using* "git diff --word-diff" for diff refinement
+highlighting of inline (unified) and side-by-side diff...=20
 
-It seems like Junio should be right that setup_reference() doesn't need
-to add the alternate references to extra_refs.  Indeed, if I remove the
-call to add_extra_ref(), I see the alternate references being added to
-ref_list via insert_one_alternate_ref().  However, in the context of
-t5700, clone nevertheless sends "want" lines for one of those references
-and test 8 fails.  Something is screwy.
+though having an option of showing word-diff would be I think a good
+idea in some cases, like e.g. documentation changes.
 
-So how do the extra_refs prevent the "want" lines from being emitted?
-It turns out that when the alternate refs *are* added as extra_refs,
-then find_common() is not called at all.  do_fetch_pack() calls
-everything_local(), which returns true, and do_fetch_pack() skips over
-the call to find_common().
+> OTOH I'm not against using a dedicated package from CPAN. But I think
+> my approach is proven to work (I use contrib/diff-highlight as a
+> filter) and more lightweight (doesn't add another dependency to
+> gitweb). Moreover, adding support for some Diff package may be done
+> later, at any moment. It's just a matter of replacing one function
+> (format_rem_add_line()) with the one that uses Diff.=20
 
-So ISTM that there are two problems:
+O.K., if it is tested code, then all is good.  Well, except the fact
+that I'm rather wary about adding more code to gitweb when it is still
+single monolithic script, rather than split into packages.
 
-First problem: everything_local() seems to be either broken or used
-incorrectly.  I can't decide which because I don't know what its
-semantics are *supposed* to be.
+Anyway, I'll try to review those patches soon.  I like the refactoring
+work (that is from what I had chance to examine).
 
-If everything_local() is trying to check that the references are all in
-the local repository itself, then it is incorrect for clone to enter
-alternates into extra_refs because everything_local() then mistakes them
-for local.
-
-If everything_local() is trying to check that the references are in the
-local repository plus alternates, then it is incorrect that
-everything_local() doesn't consider alternate references in its
-determination.  My guess is that this is the case, and that something
-like the following might be the fix:
-
-> ----------------------------- builtin/fetch-pack.c -----------------------------
-> index 9500f35..4257a8d 100644
-> @@ -581,6 +581,11 @@ static void filter_refs(struct ref **refs, int nr_match, char **match)
->  	*refs = newlist;
->  }
->  
-> +static void mark_alternate_complete(const struct ref *ref, void *unused)
-> +{
-> +	mark_complete(NULL, ref->old_sha1, 0, NULL);
-> +}
-> +
->  static int everything_local(struct ref **refs, int nr_match, char **match)
->  {
->  	struct ref *ref;
-> @@ -609,6 +614,7 @@ static int everything_local(struct ref **refs, int nr_match, char **match)
->  
->  	if (!args.depth) {
->  		for_each_ref(mark_complete, NULL);
-> +		for_each_alternate_ref(mark_alternate_complete, NULL);
->  		if (cutoff)
->  			mark_recent_complete_commits(cutoff);
->  	}
-
-With this patch, then the full test suite passes even if I take out the
-code that adds the alternate refs to extra_refs.
-
-Second problem: it seems like the presence of alternate refs is not
-suppressing the "want" lines for those refs in all cases.  Strangely, in
-the case of t5700, adding the two alternate refs to ref_list
-insert_one_alternate_ref() causes the "want" line for one of them to be
-suppressed, but not for the other.
-
-Specifically: (without the above patch) I commented out the call to
-add_extra_ref() in clone.c:add_one_reference(), then ran t5700 through
-step 8 then aborted.  insert_one_alternate_ref() was called four times:
-
-insert_one_alternate_ref(ccc25a1f9655742174c93f48f616bea8ad0bc6ff)
-insert_one_alternate_ref(ccc25a1f9655742174c93f48f616bea8ad0bc6ff)
-insert_one_alternate_ref(5355551c5a927a2b6349505ada2da4bb702c0a49)
-insert_one_alternate_ref(5355551c5a927a2b6349505ada2da4bb702c0a49)
-
-(The duplication here seems strange.)  However, UPLOAD_LOG still
-contains "want" lines (2 of them!) for one of the commits:
-
-#S
-#E
-#S
-#S
-#E
-want 5355551c5a927a2b6349505ada2da4bb702c0a49 multi_ack_detailed
-side-band-64k thin-pack ofs-delta
-want 5355551c5a927a2b6349505ada2da4bb702c0a49
-#E
-
-The "5355551c" object corresponds to refs/remotes/origin/master in the
-alternate object store:
-
-$ (cd B; git for-each-ref)
-ccc25a1f9655742174c93f48f616bea8ad0bc6ff commit	refs/heads/master
-5355551c5a927a2b6349505ada2da4bb702c0a49 commit	refs/remotes/origin/HEAD
-5355551c5a927a2b6349505ada2da4bb702c0a49 commit	refs/remotes/origin/master
-
-It seems to me that even in the absence of short-circuiting due to
-everything_local() returning true, the presence of the alternate refs
-should be suppressing the "want" lines for those references.
-
-I have some patches that seem to work (and get rid of extra_refs
-entirely, hurrah!), but I don't want to submit them until I understand
-what the correct behavior is *supposed* to be.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+--=20
+Jakub Narebski
+Poland
