@@ -1,115 +1,74 @@
-From: =?UTF-8?B?TWljaGHFgg==?= Kiedrowicz <michal.kiedrowicz@gmail.com>
-Subject: Re: [PATCH 6/8] gitweb: Highlight interesting parts of diff
-Date: Fri, 10 Feb 2012 18:33:19 +0100
-Message-ID: <20120210183319.2f56ff88@gmail.com>
-References: <1328865494-24415-1-git-send-email-michal.kiedrowicz@gmail.com>
-	<m339aivn4z.fsf@localhost.localdomain>
-	<20120210151528.56145e0c@gmail.com>
-	<201202101555.20163.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] gitweb: Option for filling only specified info in
+ fill_project_list_info
+Date: Fri, 10 Feb 2012 09:43:59 -0800
+Message-ID: <7v1uq2shwg.fsf@alter.siamese.dyndns.org>
+References: <1328359648-29511-1-git-send-email-jnareb@gmail.com>
+ <201202100052.26399.jnareb@gmail.com>
+ <7vvcnftvb5.fsf@alter.siamese.dyndns.org>
+ <201202101456.45944.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 10 18:33:56 2012
+X-From: git-owner@vger.kernel.org Fri Feb 10 18:44:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvuM6-0004AS-S4
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 18:33:55 +0100
+	id 1RvuW4-0002tW-Aq
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 18:44:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759690Ab2BJRd0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Feb 2012 12:33:26 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:53510 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759597Ab2BJRdZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2012 12:33:25 -0500
-Received: by eekc14 with SMTP id c14so1038214eek.19
-        for <git@vger.kernel.org>; Fri, 10 Feb 2012 09:33:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        bh=UP7MHpLVJyysBbZXnpiQ+400/9RJOAZIlqco6LdZARs=;
-        b=D7At/laCzo9xyxdSz03dW+lc5EhEGiZBk7OyVgt3dZYuu8ChzE2z1+cR7Rl/MZQqsu
-         WA4MPB1WHEobiU4uYeapV2+C/3Y0uP68EUCx3l+G9mMiv9eJ9AqUxq2BTjuFz1gB2O1F
-         O7miOWZcgs0RccG53IQYpilxGQHfIrn+QSD+Q=
-Received: by 10.213.16.142 with SMTP id o14mr504871eba.144.1328895203609;
-        Fri, 10 Feb 2012 09:33:23 -0800 (PST)
-Received: from localhost (77-177-78-94.net.stream.pl. [94.78.177.77])
-        by mx.google.com with ESMTPS id o49sm24403386eei.0.2012.02.10.09.33.22
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 10 Feb 2012 09:33:23 -0800 (PST)
-In-Reply-To: <201202101555.20163.jnareb@gmail.com>
-X-Mailer: Claws Mail 3.7.10 (GTK+ 2.24.8; x86_64-pc-linux-gnu)
+	id S1754401Ab2BJRoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Feb 2012 12:44:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50507 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750963Ab2BJRoF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2012 12:44:05 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A402059EA;
+	Fri, 10 Feb 2012 12:44:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AZ6I3MlNxo4V6f+z4w1FCE70c5o=; b=HyqN4Y
+	vX108czhzijtrrWeHyw2Ybt/BzfjuvYckrScHWI9DZrQVBfWedAGSm4MUUMBDeRu
+	2vswGjOZd7ekxTpQRTuk/GzysyOnXnnWPS8z0FNESX9yLPEK2yLyRC+o+6EC6aAK
+	aTEPHctbzPfStbUhJsvuU2ast9vxHcGbwepGI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GP24uIhCmXP7aZ2XH9NemNZ1IHe1yuKa
+	pFF5A+neKQc6lI3hK4V6DF6yTqpRL/jRzQmYzJ/bEFWti9K4U+/K/A3dXwwObXe6
+	+mc3cEzJcnhXTlxqzjNuZk9jI/PcCssfIwtiQiOxlSFSYp3k12xUpBU/SS9QRk7L
+	pkSzRvbmcpU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3806C59E9;
+	Fri, 10 Feb 2012 12:44:03 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A245959E2; Fri, 10 Feb 2012
+ 12:44:02 -0500 (EST)
+In-Reply-To: <201202101456.45944.jnareb@gmail.com> (Jakub Narebski's message
+ of "Fri, 10 Feb 2012 14:56:44 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D1F78F34-540E-11E1-8E28-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190425>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> On Fri, 10 Feb 2012, Micha=C5=82 Kiedrowicz wrote:
-> > Jakub Narebski <jnareb@gmail.com> wrote:
-> > > Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> writes:
-> > >=20
-> > > > The code that comares lines is based on
-> > > > contrib/diff-highlight/diff-highlight, except that it works wit=
-h
-> > > > multiline changes too.  It also won't highlight lines that are
-> > > > completely different because that would only make the output un=
-readable.
-> > > > Combined diffs are not supported but a following commit will ch=
-ange it.
-> > >=20
-> > > I was thinking that if gitweb were to support "diff refinement
-> > > highlighting", it would either use one of *Diff* packages from CP=
-AN,
-> > > or "git diff --word-diff" output.
-> >=20
-> > I think highlighting inline and side-by-side diff outputs is
-> > something different from "git diff --word-diff". I find it useful f=
-or
-> > people who are used to these diff formats (i.e. me :).
->=20
-> I was thinking about *using* "git diff --word-diff" for diff refineme=
-nt
-> highlighting of inline (unified) and side-by-side diff...=20
->=20
+> (with either "..., 'owner', ..." or "..., [ 'owner' ], ..." for single-key
+> filling), or
+>
+>   if (project_info_needs_filled($pr, ['age', 'age_string'], \@fill_only) {
+>
+> Is it?
 
-Then I must have misunderstood you. =20
-
-> though having an option of showing word-diff would be I think a good
-> idea in some cases, like e.g. documentation changes.
->=20
-> > OTOH I'm not against using a dedicated package from CPAN. But I thi=
-nk
-> > my approach is proven to work (I use contrib/diff-highlight as a
-> > filter) and more lightweight (doesn't add another dependency to
-> > gitweb). Moreover, adding support for some Diff package may be done
-> > later, at any moment. It's just a matter of replacing one function
-> > (format_rem_add_line()) with the one that uses Diff.=20
->=20
-> O.K., if it is tested code, then all is good. =20
-
-As I wrote, I haven't taken the code as-is (for example, original
-code only works for oneline changes). But the general approach is the
-same.
-
-> Well, except the fact
-> that I'm rather wary about adding more code to gitweb when it is stil=
-l
-> single monolithic script, rather than split into packages.
->=20
-
-Yeah, jumping between 2k'th and 5k'th line isn't a great fun. Do you
-have any roadmap how to split gitweb?
-
-> Anyway, I'll try to review those patches soon.  I like the refactorin=
-g
-> work (that is from what I had chance to examine).
-
-Thanks.
+Whatever. I am not sure what @fill_only is needed for, if the name stands
+for "only fill these fields, if this argument is empty".  After all,
+doesn't the above example callsite, without ", \@fill_only" at the end,
+say "I am going to use age and age_string, so these two need to be filled"
+already?
