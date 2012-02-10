@@ -1,84 +1,139 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: git status: small difference between stating whole repository and
- small subdirectory
-Date: Fri, 10 Feb 2012 14:46:09 +0100
-Message-ID: <CAA01Csq+zVhRTjGqy1DJGK7o5wByd9ADsSim214T7Vkxmk+ykQ@mail.gmail.com>
-References: <CAA01Csr8FbvQ8uFvxX8_6i-hysin6JuaifVVC-yoLyoT0N5F4Q@mail.gmail.com>
-	<CACsJy8DnqYZ5CdZqbebWS4NS85mfwumyao0abeqDxMXrHhDELA@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/5] gitweb: Option for filling only specified info in fill_project_list_info
+Date: Fri, 10 Feb 2012 14:56:44 +0100
+Message-ID: <201202101456.45944.jnareb@gmail.com>
+References: <1328359648-29511-1-git-send-email-jnareb@gmail.com> <201202100052.26399.jnareb@gmail.com> <7vvcnftvb5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 10 14:46:19 2012
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 10 14:56:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rvqno-0005N5-Rz
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 14:46:17 +0100
+	id 1Rvqy7-0003yU-A6
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 14:56:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759252Ab2BJNqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Feb 2012 08:46:12 -0500
-Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:60946 "EHLO
-	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754675Ab2BJNqK (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2012 08:46:10 -0500
-Received: by obcva7 with SMTP id va7so3797800obc.19
-        for <git@vger.kernel.org>; Fri, 10 Feb 2012 05:46:10 -0800 (PST)
+	id S1755053Ab2BJN4u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Feb 2012 08:56:50 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:57535 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754160Ab2BJN4u (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2012 08:56:50 -0500
+Received: by eekc14 with SMTP id c14so964000eek.19
+        for <git@vger.kernel.org>; Fri, 10 Feb 2012 05:56:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=A5nzZH0tMOBND6GjNRNWGGnM7tLeAIssRVSwZJV/2TA=;
-        b=RJSicngeyY4NDWI3K1wruHPZnLPc7RAyuf4GHJmJ5DEB6Mmhgmmx3rQxKiWMJRUYYn
-         pKBiCwvgFx+6jtSdCZci4UBNCgfnyDv78gVHbky/VdFIqaw4TNa5bzWcw9+e4pjJ+fR0
-         Q1huew+DnTFL0yr64LObNJZsjiLkwsVxCyCfo=
-Received: by 10.50.34.202 with SMTP id b10mr11305165igj.2.1328881569882; Fri,
- 10 Feb 2012 05:46:09 -0800 (PST)
-Received: by 10.50.46.33 with HTTP; Fri, 10 Feb 2012 05:46:09 -0800 (PST)
-In-Reply-To: <CACsJy8DnqYZ5CdZqbebWS4NS85mfwumyao0abeqDxMXrHhDELA@mail.gmail.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=tb28X3+U0gzhU5xPUAyKfh5u0b2sg0ODWNyThaAB8ho=;
+        b=I7Zhe5jbEfh4wWoAcnNrrK9RHGdYN3ACSgMmeUtbCCg2wuPtcCe5s1Ev0MGAF3UeV0
+         L4/8eqsXsQbXNqFALBkOjSLuah8g8gGmlkrJgp0ZMb4xe0jjLu8ZDXorN8p1sG7bp5TX
+         iFcyZ9fa81NUNGA9fp21cKFhL8zIN4XPIo/Og=
+Received: by 10.213.25.215 with SMTP id a23mr1115895ebc.60.1328882208935;
+        Fri, 10 Feb 2012 05:56:48 -0800 (PST)
+Received: from [192.168.1.13] (abwh187.neoplus.adsl.tpnet.pl. [83.8.231.187])
+        by mx.google.com with ESMTPS id n17sm22430594eei.3.2012.02.10.05.56.46
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 10 Feb 2012 05:56:47 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vvcnftvb5.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190409>
 
-On Fri, Feb 10, 2012 at 1:33 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> On Fri, Feb 10, 2012 at 4:42 PM, Piotr Krukowiecki
-> <piotr.krukowiecki@gmail.com> wrote:
->> Hi,
+On Fri, 10 Feb 2012, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>> On Fri, 10 Feb 2012, Junio C Hamano wrote:
+>> ...
+>>> That still does not answer the fundamental issues I had with the presented
+>>> API: why does it take only a single $key (please re-read my "A, B and C"
+>>> example), and what does that single $key intersecting with @fill_only have
+>>> anything to do with "needs-filling"?
 >>
->> I compared stating whole tree vs one small subdirectory, and I
->> expected that for the subdirectory status will be very very fast.
->> After all, it has only few files to stat. But it's not fast. Why?
->
-> Because stat'ing is not the only thing git-status does? In order to
-> find out staged changes, unstaged changes and untracked files, it has
-> to do the equivalence of "git diff --cached", "git diff" and "git
-> ls-files -o". I think copy detection is also enabled, which uses more
-> cycles.
+>> project_info_needs_filling() in absence of @fill_only is just a thin
+>> wrapper around "!defined $pr->{$key}", it checks for each key if it needs
+>> to be filled.
+>>
+>> It is used like this
+>>
+>>   if (project_info_needs_filled("A", "A, B, C")) {
+>>      fill A
+>>   }
+>>   if (project_info_needs_filled("B", "A, B, C")) {
+>>      fill B
+>>   }
+>>   ...
+>>  
+>>> After all, that 'age' check actually wants to fill 'age' and 'age_string'
+>>> in the project. [...]
 
-I believe copy detection is not done, neither for tracked nor untracked files.
-Rename detection is done for tracked files. In this case it should not
-matter, as there were no changes to the files.
+Thanks for noticing that... though I think more important is that some
+further command would mark only 'age_string' as needed, and 
+fill_project_list_info() wouldn't notice that it needs to run
+git_get_last_activity() if it checks only 'age'.
 
-My point is, that for such small number of small files (55 files and
-223KB), which had no changes at all, the status took a lot of time (17
-seconds) and doing status on whole repository which has more than
-2000x files and 10000x data took only 2x more time.
+>> It is not as much matter of API, as the use of checks in loop in 
+>> fill_project_list_info().
+>>
+>> What is now
+>>
+>>   my (@activity) = git_get_last_activity($pr->{'path'});
+>>   unless (@activity) {
+>>   	next PROJECT;
+>>   }
+>>   ($pr->{'age'}, $pr->{'age_string'}) = @activity;
+>>
+>> should be
+>>
+>>   if (!defined $pr->{'age'} ||
+>>       !defined $pr->{'age_string'}) {
+>>   	my (@activity) = git_get_last_activity($pr->{'path'});
+>>   	unless (@activity) {
+>>   		next PROJECT;
+>>   	}
+>>   	($pr->{'age'}, $pr->{'age_string'}) = @activity;
+>>   }
+> 
+> Huh?  Compare that with what you wrote above "It is used like this".  This
+> is *NOT* using the API like that.  The caller knows it wants both age and
+> age-string, and if even one of them is missing, do the work to fill both.
+> 
+> So why isn't the info-needs-filled API not checking _both_ with a single
+> call?  It is only because you designed the API to accept only a single $key
+> instead of list of "here are what I care about".
 
-I don't think that the algorithm scales so well, so my guess is that
-'status' is so inefficient for subdirectories (i.e. the "git status --
-dir" filter does not filter as much as it could).
+Passing two lists as parameters is a bit harder and makes for more
+complicated API. 
 
+So what you mean is that instead of proposed
 
-> Profiling it should give you a good idea what parts cost most.
+  if (project_info_needs_filled($pr, 'age', @fill_only) ||
+      project_info_needs_filled($pr, 'age_string', @fill_only) {
 
-I'll try that later.
+it should be
 
-BTW by stating I meant using "status", not that it uses stat() or whatever.
+  if (project_info_needs_filled($pr, 'age', 'age_string', \@fill_only) {
 
+or
+
+  if (project_info_needs_filled($pr, ['age', 'age_string'], @fill_only) {
+
+(with either "..., 'owner', ..." or "..., [ 'owner' ], ..." for single-key
+filling), or
+
+  if (project_info_needs_filled($pr, ['age', 'age_string'], \@fill_only) {
+
+Is it?
 
 -- 
-Piotr Krukowiecki
+Jakub Narebski
+Poland
