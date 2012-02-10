@@ -1,114 +1,94 @@
-From: David Barr <davidbarr@google.com>
-Subject: Re: fatal: Unable to find remote helper for 'https'
-Date: Fri, 10 Feb 2012 13:25:30 +1100
-Message-ID: <CAFfmPPOxFn2=Z9EcYKpe+j9gTQ8V6G4jZHXJAJZ60NzWHyaT+Q@mail.gmail.com>
-References: <loom.20120209T224147-400@post.gmane.org>
-	<CALUzUxq=5iJJNcXH-Xg1htZzGFVT4f5WQS=dy4k7Y_mRemXMSw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Jan 2012, #08; Tue, 31)
+Date: Thu, 09 Feb 2012 18:27:21 -0800
+Message-ID: <7vsjijs9rq.fsf@alter.siamese.dyndns.org>
+References: <7vlion3tr5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nickolai Leschov <nleschov@gmail.com>, git@vger.kernel.org
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 10 03:26:08 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: tbushnell@google.com, tytso@google.com,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkg?= =?utf-8?B?Tmfhu41j?= Duy 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 10 03:27:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RvgBW-0003Ml-6V
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 03:26:02 +0100
+	id 1RvgCv-0004sm-EO
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Feb 2012 03:27:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758071Ab2BJCZd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Feb 2012 21:25:33 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:43926 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754683Ab2BJCZc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Feb 2012 21:25:32 -0500
-Received: by yhoo21 with SMTP id o21so1271171yho.19
-        for <git@vger.kernel.org>; Thu, 09 Feb 2012 18:25:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding:x-system-of-record;
-        bh=34Fsn4ENqhKvNn6CcOMQGABeL5FgGW9saCTJRJw6Xq0=;
-        b=OYIv/qyxGEQ7pHdf4cMKaOMPkN1n78QKxtufgiQzkhb0VStrB4jWNM8OTaGDW5GX1b
-         h6No3LIs4muIcpzEHeNB0FDnlgBfUgYw2sAR63aaTzxYbEEy5mTU5R9m1r1MuKBWqK1C
-         03lvrtHkjSSUxgkeB5P09ccHxMQTS4MSPibZA=
-Received: by 10.236.173.132 with SMTP id v4mr6145969yhl.78.1328840731581;
-        Thu, 09 Feb 2012 18:25:31 -0800 (PST)
-Received: by 10.236.173.132 with SMTP id v4mr6145912yhl.78.1328840730397; Thu,
- 09 Feb 2012 18:25:30 -0800 (PST)
-Received: by 10.101.197.7 with HTTP; Thu, 9 Feb 2012 18:25:30 -0800 (PST)
-In-Reply-To: <CALUzUxq=5iJJNcXH-Xg1htZzGFVT4f5WQS=dy4k7Y_mRemXMSw@mail.gmail.com>
-X-System-Of-Record: true
-X-Gm-Message-State: ALoCoQk+vvTu5OYjcNRMNeYRMzvPgQnG2YrrlSJ2XT1G91VYCYgDsUV0LHYEDRaDf8pj00v3LPYRDyikT+OC8/QHD+MKGRoH6n7HaKDL5xuG2N0GBQJTesRtYClWIHgxZbRjKk5MeOPzD9NyNFvKhdpEdCUkbquJVw==
+	id S1758074Ab2BJC1Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Feb 2012 21:27:25 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34387 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757380Ab2BJC1Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Feb 2012 21:27:24 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D87C07B02;
+	Thu,  9 Feb 2012 21:27:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:references:cc:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6CPYse6cfXmWpLyxBpQEVTEqeE8=; b=LFWfMd
+	RYZmd2SoF2W5a1WhaWS/d1DdVu1/vISBOUhd6Am6Y/CIg1PVfMhgj5z7yvSr9Leg
+	0BPpS0+XMYkWbhOzUUEAw75Wsi/PFqFwzDKU98J5ps6WvjWTb69M6QNcJ72+8IBg
+	gduducLRmmpmh6KJLLE6IRg754bTGjedm8TOk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:references:cc:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QvtPjm+uAiJLOshSwnrAfJ8uPps0hnOe
+	6HcsxRUq3G4gM5iizcxdou0jTsEaVwnDBpVX6apwYGJSKcUDVmwBGCpWj+S6DeR4
+	W+EVZI591ScYLgmFgduijxOxK93e7RHPZhHKMwv1LkBNoVU8bdSRGxVexszoq0eu
+	H5BiOBL0mvg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D015A7B01;
+	Thu,  9 Feb 2012 21:27:23 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 65B997B00; Thu,  9 Feb 2012
+ 21:27:23 -0500 (EST)
+In-Reply-To: <7vlion3tr5.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 31 Jan 2012 23:19:58 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C3DC4AB4-538E-11E1-93F8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190370>
 
-On Fri, Feb 10, 2012 at 11:25 AM, Tay Ray Chuan <rctay89@gmail.com> wro=
-te:
-> Have you installed libcurl4-(gnutls|openssl)-dev? You'll need to
-> choose between gnutls and openssl for the underlying ssl
-> implementation.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> What's cooking in git.git (Jan 2012, #08; Tue, 31)
+> --------------------------------------------------
+> ...
+> [Graduated to "master"]
 >
-> --
-> Cheers,
-> Ray Chuan
+> * nd/clone-detached (2012-01-24) 12 commits
+>   (merged to 'next' on 2012-01-26 at 7b0cc8a)
+>  + clone: fix up delay cloning conditions
+>   (merged to 'next' on 2012-01-23 at bee31c6)
+>  + push: do not let configured foreign-vcs permanently clobbered
+>   (merged to 'next' on 2012-01-23 at 9cab64e)
+>  + clone: print advice on checking out detached HEAD
+>  + clone: allow --branch to take a tag
+>  + clone: refuse to clone if --branch points to bogus ref
+>  + clone: --branch=<branch> always means refs/heads/<branch>
+>  + clone: delay cloning until after remote HEAD checking
+>  + clone: factor out remote ref writing
+>  + clone: factor out HEAD update code
+>  + clone: factor out checkout code
+>  + clone: write detached HEAD in bare repositories
+>  + t5601: add missing && cascade
 >
->
-> On Fri, Feb 10, 2012 at 5:51 AM, Nickolai Leschov <nleschov@gmail.com=
-> wrote:
->> Hello,
->>
->> I have compiled git 1.7.9 from source on Ubuntu 9.04 and I get the f=
-ollowing
->> message when cloning a git repo:
->>
->> fatal: Unable to find remote helper for 'https'
->>
->> I get this message when I try to use https; or similar one for http.=
- Only
->> cloning via git:// protocol works. My system is Ubuntu 9.04 i386. gi=
-t 1.7.9 and
->> two previous versions I tried all exhibit this problem. I have unins=
-talled the
->> git that comes in Ubuntu repositories and build from source instead =
-because I
->> need a newer version.
->>
->> How can I make git work on that system?
->>
->> I have another system with Ubuntu 11.04 i386 and it there git 1.7.4.=
-1 (from
->> repositories) doesn't exhibit such problem.
->>
->> Best regards,
->>
->> Nickolai Leschov
->>
->>
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+> "git clone" learned to detach the HEAD in the resulting repository when
+> the source repository's HEAD does not point to a branch.
 
-You might be interested in the git PPA:
-https://launchpad.net/~git-core/+archive/ppa
+It turns out that this series, as a side effect, fixes a long-standing bug
+that the --branch option cannot be used with the --mirror option.
 
-I noticed that there is no Jaunty package for git 1.7.9, so I asked
-the maintainer about it.
+I am tempted to merge it also to 1.7.9.1 maintenance track. The issue is
+minor (you can always clone with --mirror and then switch the branch with
+"checkout") and it does not look like it warrants further backpointing to
+1.7.8 and older releases, though.
 
-"Jaunty is long past EOL, and I don't think the PPA builders still
-work with it. =A0You can try the hardy or lucid builds."
-- andersk
-
---
-Hope this helps,
-David Barr
+Comments and/or objections?
