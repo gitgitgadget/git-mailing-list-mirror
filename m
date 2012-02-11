@@ -1,72 +1,63 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH] tag: make list exclude !<pattern>
-Date: Sat, 11 Feb 2012 02:13:13 -0800 (PST)
-Message-ID: <m3sjihu18t.fsf@localhost.localdomain>
-References: <20120210185516.GA4903@tgrennan-laptop>
-	<1328926618-17167-1-git-send-email-tmgrennan@gmail.com>
-	<7vaa4qnk4u.fsf@alter.siamese.dyndns.org>
-	<7vy5s9n70x.fsf@alter.siamese.dyndns.org>
+From: Serhat Sevki Dincer <jfcgauss@gmail.com>
+Subject: Re: git svn problem
+Date: Sat, 11 Feb 2012 12:19:43 +0200
+Message-ID: <CAPqC6xR9LFgx4r1t0misYavPe8sky=VJf39N29CU-66Re7zL-Q@mail.gmail.com>
+References: <CAPqC6xRtZXwv+U6AKRUXDz=m-G4AjgWksbwqeMD_qzS8YC=DoQ@mail.gmail.com>
+	<4F358A53.8010409@vilain.net>
+	<CAPqC6xSJ7pfUQJz8FQ743mJMNmZyfJfWxutOnt+FVkP76eXOGw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tom Grennan <tmgrennan@gmail.com>, pclouds@gmail.com,
-	git@vger.kernel.org, krh@redhat.com, jasampler@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 11 11:13:48 2012
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 11 11:19:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rw9xi-0004rd-AL
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Feb 2012 11:13:46 +0100
+	id 1RwA3a-000855-9T
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Feb 2012 11:19:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754581Ab2BKKNQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Feb 2012 05:13:16 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:33568 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754431Ab2BKKNP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Feb 2012 05:13:15 -0500
-Received: by eekc14 with SMTP id c14so1208312eek.19
-        for <git@vger.kernel.org>; Sat, 11 Feb 2012 02:13:13 -0800 (PST)
+	id S1754698Ab2BKKTp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Feb 2012 05:19:45 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:43905 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754377Ab2BKKTo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Feb 2012 05:19:44 -0500
+Received: by qcqw6 with SMTP id w6so2130054qcq.19
+        for <git@vger.kernel.org>; Sat, 11 Feb 2012 02:19:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=YrAmGT10t5YctsMTPdIKHAZStKvK4HPXfdplfWkORVA=;
-        b=PlV5ABxrSM3og8GwRVE2qnoOoQ4Oeb02wBwej/ZQv6uJwj4nkVYq73vTPMfavoGnBk
-         G8GnRFlFrt9ktqeWwGcNAZYw4wcqMZu1tf8dKFv7J6r2WLjtXcyB5oX90CTvXZyLl1ia
-         i6aFpzLLO4k02GvA/Jakmw2GWDMOHLr42AEWw=
-Received: by 10.14.99.2 with SMTP id w2mr3101313eef.69.1328955193826;
-        Sat, 11 Feb 2012 02:13:13 -0800 (PST)
-Received: from localhost.localdomain (abwi47.neoplus.adsl.tpnet.pl. [83.8.232.47])
-        by mx.google.com with ESMTPS id v51sm33350542eef.2.2012.02.11.02.13.12
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 11 Feb 2012 02:13:13 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q1BAD82u009050;
-	Sat, 11 Feb 2012 11:13:08 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q1BAD7Zl009045;
-	Sat, 11 Feb 2012 11:13:07 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7vy5s9n70x.fsf@alter.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=uTvu2FknZqjBn/+o76BrAjy0d7Cn2eBXpUuUAArXjUQ=;
+        b=O+07FEqwSy5ThiJtNBbqafkAPQlSIM1ZCBndJxch4W+uaKdDDslXinzj3CXoT06Iy8
+         r9jO3Y881YnUZ2XvEUsZ4rFq2rfFCMY8viH/Rkl15AmfuJz//S7eVAu54E8O3XInOvlx
+         UCyvBgxSV289ke5FPd1pKxM2nMle4wDcxSNUw=
+Received: by 10.224.59.209 with SMTP id m17mr2615601qah.5.1328955583811; Sat,
+ 11 Feb 2012 02:19:43 -0800 (PST)
+Received: by 10.229.144.196 with HTTP; Sat, 11 Feb 2012 02:19:43 -0800 (PST)
+In-Reply-To: <CAPqC6xSJ7pfUQJz8FQ743mJMNmZyfJfWxutOnt+FVkP76eXOGw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190506>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Ok, I figured out the rest, in case someone needs it:
 
-> In a future versions, we may want to have "branch/tag --list" also ask for
-> FNM_PATHNAME (this *is* a backward incompatible change, so it needs to be
-> performed across major version boundary, with backward compatibility
-> configurations, deprecation warnings and whole nine yards). Under the new
-> match function, today's "branch --list 'maint*'" needs to be spelled as
-> "branch --list 'maint*/*'" or something.
+> I have the following at the moment:
+>
+> rm -rf plone.app.locales ; mkdir plone.app.locales ; cd plone.app.locales
+> git svn init -T trunk http://svn.plone.org/svn/plone/plone.app.locales
+> touch start ; git add start ; git commit -m start
+> git svn fetch -r49624:HEAD
+> git rebase --onto master --root trunk --preserve-merges
+> git checkout -b plone
 
-Or "branch --list 'maint**'
+# edit .git/config: s#/plone/#/collective/#  s#remotes/trunk#remotes/trunkcol#
 
--- 
-Jakub Narebski
+git checkout master
+git svn fetch -r248302:HEAD
+git rebase --onto plone --root trunkcol --preserve-merges
+git checkout -b collective
+git branch -d master plone
