@@ -1,7 +1,7 @@
 From: mhagger@alum.mit.edu
-Subject: [PATCH 2/7] clone.c: move more code into the "if (refs)" conditional
-Date: Sat, 11 Feb 2012 07:20:56 +0100
-Message-ID: <1328941261-29746-3-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 3/7] fetch-pack.c: rename some parameters from "path" to "refname"
+Date: Sat, 11 Feb 2012 07:20:57 +0100
+Message-ID: <1328941261-29746-4-git-send-email-mhagger@alum.mit.edu>
 References: <1328941261-29746-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Jakub Narebski <jnareb@gmail.com>,
@@ -15,19 +15,19 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rw6Kw-0001hy-46
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Feb 2012 07:21:30 +0100
+	id 1Rw6Kw-0001hy-Kz
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Feb 2012 07:21:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753311Ab2BKGVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Feb 2012 01:21:25 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:50475 "EHLO
+	id S1753369Ab2BKGV0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Feb 2012 01:21:26 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:50476 "EHLO
 	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753006Ab2BKGVX (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1753046Ab2BKGVX (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 11 Feb 2012 01:21:23 -0500
 X-Envelope-From: mhagger@alum.mit.edu
 Received: from michael.fritz.box (p54BED675.dip.t-dialin.net [84.190.214.117])
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q1B6L6CC019131;
-	Sat, 11 Feb 2012 07:21:11 +0100
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q1B6L6CD019131;
+	Sat, 11 Feb 2012 07:21:14 +0100
 X-Mailer: git-send-email 1.7.9
 In-Reply-To: <1328941261-29746-1-git-send-email-mhagger@alum.mit.edu>
 X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
@@ -35,78 +35,54 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190487>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
-The bahavior of a bunch of code before the "if (refs)" statement also
-depends on whether refs is set, so make the logic clearer by shifting
-this code into the if statement.
+The parameters denote reference names, which are no longer 1:1 with
+filesystem paths.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- builtin/clone.c |   39 ++++++++++++++++++++-------------------
- 1 files changed, 20 insertions(+), 19 deletions(-)
+ builtin/fetch-pack.c |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index c62d4b5..279fdf0 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -813,28 +813,28 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 6207ecd..9bd2096 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -58,9 +58,9 @@ static void rev_list_push(struct commit *commit, int mark)
  	}
+ }
  
- 	refs = transport_get_remote_refs(transport);
--	mapped_refs = refs ? wanted_peer_refs(refs, refspec) : NULL;
+-static int rev_list_insert_ref(const char *path, const unsigned char *sha1, int flag, void *cb_data)
++static int rev_list_insert_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
+ {
+-	struct object *o = deref_tag(parse_object(sha1), path, 0);
++	struct object *o = deref_tag(parse_object(sha1), refname, 0);
  
--	/*
--	 * transport_get_remote_refs() may return refs with null sha-1
--	 * in mapped_refs (see struct transport->get_refs_list
--	 * comment). In that case we need fetch it early because
--	 * remote_head code below relies on it.
--	 *
--	 * for normal clones, transport_get_remote_refs() should
--	 * return reliable ref set, we can delay cloning until after
--	 * remote HEAD check.
--	 */
--	for (ref = refs; ref; ref = ref->next)
--		if (is_null_sha1(ref->old_sha1)) {
--			complete_refs_before_fetch = 0;
--			break;
--		}
-+	if (refs) {
-+		mapped_refs = wanted_peer_refs(refs, refspec);
-+		/*
-+		 * transport_get_remote_refs() may return refs with null sha-1
-+		 * in mapped_refs (see struct transport->get_refs_list
-+		 * comment). In that case we need fetch it early because
-+		 * remote_head code below relies on it.
-+		 *
-+		 * for normal clones, transport_get_remote_refs() should
-+		 * return reliable ref set, we can delay cloning until after
-+		 * remote HEAD check.
-+		 */
-+		for (ref = refs; ref; ref = ref->next)
-+			if (is_null_sha1(ref->old_sha1)) {
-+				complete_refs_before_fetch = 0;
-+				break;
-+			}
+ 	if (o && o->type == OBJ_COMMIT)
+ 		rev_list_push((struct commit *)o, SEEN);
+@@ -68,9 +68,9 @@ static int rev_list_insert_ref(const char *path, const unsigned char *sha1, int
+ 	return 0;
+ }
  
--	if (!is_local && !complete_refs_before_fetch && refs)
--		transport_fetch_refs(transport, mapped_refs);
-+		if (!is_local && !complete_refs_before_fetch)
-+			transport_fetch_refs(transport, mapped_refs);
+-static int clear_marks(const char *path, const unsigned char *sha1, int flag, void *cb_data)
++static int clear_marks(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
+ {
+-	struct object *o = deref_tag(parse_object(sha1), path, 0);
++	struct object *o = deref_tag(parse_object(sha1), refname, 0);
  
--	if (refs) {
- 		remote_head = find_ref_by_name(refs, "HEAD");
- 		remote_head_points_at =
- 			guess_remote_head(remote_head, mapped_refs, 0);
-@@ -852,6 +852,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	}
- 	else {
- 		warning(_("You appear to have cloned an empty repository."));
-+		mapped_refs = NULL;
- 		our_head_points_at = NULL;
- 		remote_head_points_at = NULL;
- 		remote_head = NULL;
+ 	if (o && o->type == OBJ_COMMIT)
+ 		clear_commit_marks((struct commit *)o,
+@@ -493,7 +493,7 @@ done:
+ 
+ static struct commit_list *complete;
+ 
+-static int mark_complete(const char *path, const unsigned char *sha1, int flag, void *cb_data)
++static int mark_complete(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
+ {
+ 	struct object *o = parse_object(sha1);
+ 
 -- 
 1.7.9
