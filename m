@@ -1,57 +1,87 @@
-From: greened@obbligato.org (David A. Greene)
-Subject: git-subtree Ready #2
-Date: Sat, 11 Feb 2012 11:35:41 -0600
-Message-ID: <877gztmfwy.fsf@smith.obbligato.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] pack-refs: remove all empty directories under
+ $GIT_DIR/refs
+Date: Sat, 11 Feb 2012 09:59:12 -0800
+Message-ID: <7vd39lmetr.fsf@alter.siamese.dyndns.org>
+References: <1328891127-17150-1-git-send-email-pclouds@gmail.com>
+ <1328946907-31650-1-git-send-email-pclouds@gmail.com>
+ <7vhayxn5cg.fsf@alter.siamese.dyndns.org>
+ <CACsJy8Bh=FZ6kNN5hERK5_H7XnZ83BZ_EfsZ5XmJbrnn+CfgcQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 11 18:38:04 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 11 18:59:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RwGtf-0003uQ-Hm
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Feb 2012 18:38:03 +0100
+	id 1RwHEa-0007N1-MJ
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Feb 2012 18:59:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754433Ab2BKRh5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Feb 2012 12:37:57 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:50074 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753909Ab2BKRh4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Feb 2012 12:37:56 -0500
-Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=smith.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.77)
-	(envelope-from <greened@obbligato.org>)
-	id 1RwGwf-0007qW-CJ
-	for git@vger.kernel.org; Sat, 11 Feb 2012 11:41:09 -0600
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
- identified this incoming email as possible spam.  The original message
- has been attached to this so you can view it (if it isn't spam) or label
- similar future email.  If you have any questions, see
- @@CONTACT_ADDRESS@@ for details.
- Content preview:  [This bounced for some reason.] Ok, I have http access now:
-    git clone http://sources.obbligato.org/git/git.git git pull origin subtree
-    [...] 
- Content analysis details:   (-1.0 points, 5.0 required)
-  pts rule name              description
- ---- ---------------------- --------------------------------------------------
- -1.0 ALL_TRUSTED            Passed through trusted hosts only via SMTP
+	id S1752984Ab2BKR7Q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Feb 2012 12:59:16 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48338 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751940Ab2BKR7P convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Feb 2012 12:59:15 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D18446B8E;
+	Sat, 11 Feb 2012 12:59:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=dEXPkjw4+bvg
+	MaxIfLGKbu/mh/g=; b=O4fpbyzAX0r21mKLU0ccBFKfkhK23NNaI8mdWSBI1xb8
+	9G7OC+79AYHkMFDF8OX7DJcBlHwbh+XJknkmTuO1wvkmPKvPjlWGvHHf3j6kUBA2
+	yR26NyfkU6GNl1ZzXBsz5nLxMuTFojo67cSo0a4xYg9yijqqrFC330abpXtJkdY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=UU8sAh
+	CD+QKaW9jZtzMnKvheFAjwhDzB8Ybgce1ZC+itMr8HhXPF2bShQo+CDXKnFQCdXs
+	XUSDEz2AqmNnD49+E8I5uc2u/KcXXMKX0dKCkAo4bP0WgDbhAfeo/j+CWUn0levF
+	p6xT97nWg5Q594yM1B1uvCDz/eo6M7B0qKdQ4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C83D86B8D;
+	Sat, 11 Feb 2012 12:59:14 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5E1D56B8B; Sat, 11 Feb 2012
+ 12:59:14 -0500 (EST)
+In-Reply-To: <CACsJy8Bh=FZ6kNN5hERK5_H7XnZ83BZ_EfsZ5XmJbrnn+CfgcQ@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Sat, 11 Feb 2012 15:55:31 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1BCEBBCA-54DA-11E1-B34B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190521>
 
-[This bounced for some reason.]
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-Ok, I have http access now:
+> 2012/2/11 Junio C Hamano <gitster@pobox.com>:
+>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes=
+:
+> ...
+>> Would it make more sense to note the
+>> directory for which rmdir() fails in try_remove_empty_parents(), and
+>> revisit only these directories, at least?
+>
+> That would leave empty directories not sharing the ref's path until
+> the failed rmdir() unexamined, I think.
 
-git clone http://sources.obbligato.org/git/git.git
-git pull origin subtree
+True. Thanks.
 
-I might need to fiddle with permissions, let me know.
+>>> +     subpath =3D xmalloc(pathlen + 257);
+>>
+>> What is this 257 about?
+>
+> This function is a ripoff from get_ref_dir(). I think 257 is 255 belo=
+w
+> plus '/' and NIL.
 
-                              -Dave
+I do not think there is any justification to copy-and-paste from code t=
+hat
+predates the strbuf infrastructure these days.
