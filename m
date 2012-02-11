@@ -1,209 +1,129 @@
 From: =?UTF-8?B?TWljaGHFgg==?= Kiedrowicz <michal.kiedrowicz@gmail.com>
-Subject: Re: [PATCH 4/8] gitweb: Push formatting diff lines to
- print_diff_chunk()
-Date: Sun, 12 Feb 2012 00:30:54 +0100
-Message-ID: <20120212003054.63255bea@gmail.com>
+Subject: Re: [PATCH 5/8] gitweb: Format diff lines just before printing
+Date: Sun, 12 Feb 2012 00:38:21 +0100
+Message-ID: <20120212003821.276f2c5a@gmail.com>
 References: <1328865494-24415-1-git-send-email-michal.kiedrowicz@gmail.com>
-	<1328865494-24415-5-git-send-email-michal.kiedrowicz@gmail.com>
-	<m3bop5tjt6.fsf@localhost.localdomain>
-	<20120212002025.214b3fb3@gmail.com>
+	<1328865494-24415-6-git-send-email-michal.kiedrowicz@gmail.com>
+	<m37gztthrx.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 12 00:31:06 2012
+X-From: git-owner@vger.kernel.org Sun Feb 12 00:38:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RwMPK-0000w7-2J
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Feb 2012 00:31:06 +0100
+	id 1RwMWV-0005YT-D2
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Feb 2012 00:38:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755208Ab2BKXbA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Feb 2012 18:31:00 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:59869 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755038Ab2BKXbA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Feb 2012 18:31:00 -0500
-Received: by eaah12 with SMTP id h12so1347366eaa.19
-        for <git@vger.kernel.org>; Sat, 11 Feb 2012 15:30:58 -0800 (PST)
+	id S1755250Ab2BKXi0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Feb 2012 18:38:26 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:36618 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755038Ab2BKXi0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Feb 2012 18:38:26 -0500
+Received: by eekc14 with SMTP id c14so1398732eek.19
+        for <git@vger.kernel.org>; Sat, 11 Feb 2012 15:38:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
          :mime-version:content-type:content-transfer-encoding;
-        bh=00Jnl64eAuAcZw+IspuaT82RN1wgt6MNnMbrF67cO1c=;
-        b=nwSVg5ZWXrDI2X7GzVytruDoB36ChrbDW6YuTXM6lLcPulz0G7X3HtEGaEQ1WLhadi
-         RFvvELsGvuNy32LwnYnZoThXJSN2aESqcfItfA7CVFXrwAWdyakmmK8ml8ttzoNiqysY
-         I4MjtHHB424X3xk5fh3xFP3IPqO+WxxNpk7Yc=
-Received: by 10.14.95.8 with SMTP id o8mr3569503eef.111.1329003058616;
-        Sat, 11 Feb 2012 15:30:58 -0800 (PST)
+        bh=7jJX6CWzp1G6opO0YmWweYGsr2hpsELA/gSpg1IoQa0=;
+        b=YgUauQHMRUlAlRIJqarZPJR3YGSO20iDJ1q+XmodryjN3E1fRv3rOLYK/vnk1krSN+
+         yy+rD74pAvxRtBz9c5XnQGPkY3oAimxwxOMqOFcX31qm3XsnUxjsTGeRxyansjVT704X
+         tqX72Bq38rPiXIDaxdB0CGzdK/5lpq7CtUi30=
+Received: by 10.213.28.5 with SMTP id k5mr1176611ebc.35.1329003504975;
+        Sat, 11 Feb 2012 15:38:24 -0800 (PST)
 Received: from localhost (77-177-78-94.net.stream.pl. [94.78.177.77])
-        by mx.google.com with ESMTPS id v51sm41331841eef.2.2012.02.11.15.30.58
+        by mx.google.com with ESMTPS id n58sm41315324een.10.2012.02.11.15.38.24
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 11 Feb 2012 15:30:58 -0800 (PST)
-In-Reply-To: <20120212002025.214b3fb3@gmail.com>
+        Sat, 11 Feb 2012 15:38:24 -0800 (PST)
+In-Reply-To: <m37gztthrx.fsf@localhost.localdomain>
 X-Mailer: Claws Mail 3.7.10 (GTK+ 2.24.8; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190542>
 
-Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> wrote:
+Jakub Narebski <jnareb@gmail.com> wrote:
 
-> Jakub Narebski <jnareb@gmail.com> wrote:
+> Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> writes:
 >=20
-> > Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> writes:
+> > Now we're ready to insert highlightning to diff output.
 > >=20
-> > > Now git_patchset_body() only calls diff_line_class() (removed fro=
-m
-> > > process_diff_line()). The latter function is renamed to
-> > > format_diff_line() and is called from print_diff_chunk().
-> > >=20
-> > > This is a pure code movement, needed for processing raw diff line=
-s in
-> > > the accumulator in print_diff_chunk(). No behavior change is inte=
-nded by
-> > > this change.
+> > The call to untabify() remains in the main loop in print_diff_chunk=
+().
+> > The motivation is that it must be called before any call to esc_htm=
+l()
+> > (because that converts spaces to &nbsp;) and to call it only once.
 > >=20
-> > Well, this is not "pure code movement" per se; it is meant to be
-> > refactoring that doesn't change gitweb output nor behavior.
-> >=20
-> > If I understand correctly the change is from
-> >=20
-> >   read
-> >   format
-> >   accumulate
-> >   print
+> > This is a refactoring patch.  It's not meant to change gitweb outpu=
+t.
+>=20
+> I'm not sure about this patch.
+>=20
+> First, in my opinion it doesn't make much sense standalone, and not
+> squashed with subsequent patch.
+
+True. I wanted to separate "preparation" from "adding new feature" but
+maybe went few steps too far.
+
+>=20
+> Second, it makes format_diff_line an odd duck among all other format_=
+*
+> subroutines in that it post-processes HTML output, rather than
+> generating HTML from data.
+> =20
+> Why "diff refinement highlighting" cannot be part of format_diff_line=
+()?
+> If it does need additional data, just pass it as additional parameter=
+s
+> to this subroutine.
+>=20
+> Another solution could be to borrow idea from stalled and inactive
+> committags feature, namely that parts that are HTML are to be passed
+> as scalar reference (\$str), while plain text (unescaped yet) is to b=
+e
+> passed as string ($str).
+
+I'll look into it.
+
+>=20
+> > -# process patch (diff) line (not to be used for diff headers),
+> > -# returning HTML-formatted (but not wrapped) line
+> > +# wrap patch (diff) line into a <div> (not to be used for diff hea=
+ders),
+> > +# the line must be esc_html()'ed
+> >  sub format_diff_line {
+>=20
+> I just don't like this error-prone "the line must be esc_html()'ed".
+>=20
+> > +# HTML-format diff context, removed and added lines.
+> > +sub format_ctx_rem_add_lines {
+> > +	my ($ctx, $rem, $add) =3D @_;
+> > +	my (@new_ctx, @new_rem, @new_add);
+> > +
+> > +	@new_ctx =3D map { format_diff_line(esc_html($_, -nbsp=3D>1), 'ct=
+x') } @$ctx;
+> > +	@new_rem =3D map { format_diff_line(esc_html($_, -nbsp=3D>1), 're=
+m') } @$rem;
+> > +	@new_add =3D map { format_diff_line(esc_html($_, -nbsp=3D>1), 'ad=
+d') } @$add;
+> > +
+> > +	return (\@new_ctx, \@new_rem, \@new_add);
+> > +}
+> > +
+> >  # Print context lines and then rem/add lines.
+> >  sub print_diff_lines {
+> >  	my ($ctx, $rem, $add, $diff_style, $is_combined) =3D @_;
 > > =20
-> > to
-> >=20
-> >   read
-> >   accumulate
-> >   format
-> >   print
-> >=20
-> > Isn't it?
+> > +	($ctx, $rem, $add) =3D format_ctx_rem_add_lines($ctx, $rem, $add)=
+;
+> > +
 >=20
-> Yeah, this is what I meant :).
-
-Minor correction: The order *does* change, in the sense that first a
-chunk is read, then (in print_diff_chunk) formatted and printed,
-but in print_diff_chunk() the order remains:
-
-	read line
-	format
-	put into accumulator
-	print
+> Nice trick.
 >=20
-> >=20
-> > As a note I would add also that process_diff_line got renamed to
-> > format_diff_line,=20
->=20
-> I thought I wrote that ("The latter function is renamed...")?
->=20
-> > and its output changed to returning only
-> > HTML-formatted line, which bringg it in line with other format_*
-> > subroutines.
-> >=20
->=20
-> OK.
->=20
-> > > Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.co=
-m>
-> >=20
-> > I think it is a good change even without subsequent patches.
-> >=20
-> >   Acked-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
-> >=20
->=20
-> Thanks.
->=20
-> > > ---
-> > >  gitweb/gitweb.perl |   25 ++++++++++++-------------
-> > >  1 files changed, 12 insertions(+), 13 deletions(-)
-> > >=20
-> > > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> > > index d2f75c4..cae9dfa 100755
-> > > --- a/gitweb/gitweb.perl
-> > > +++ b/gitweb/gitweb.perl
-> > > @@ -2320,12 +2320,9 @@ sub format_cc_diff_chunk_header {
-> > >  }
-> > > =20
-> > >  # process patch (diff) line (not to be used for diff headers),
-> > > -# returning class and HTML-formatted (but not wrapped) line
-> > > -sub process_diff_line {
-> > > -	my $line =3D shift;
-> > > -	my ($from, $to) =3D @_;
-> > > -
-> > > -	my $diff_class =3D diff_line_class($line, $from, $to);
-> > > +# returning HTML-formatted (but not wrapped) line
-> > > +sub format_diff_line {
-> > > +	my ($line, $diff_class, $from, $to) =3D @_;
-> > > =20
-> > >  	chomp $line;
-> > >  	$line =3D untabify($line);
-> > > @@ -2343,7 +2340,7 @@ sub process_diff_line {
-> > >  	$diff_classes .=3D " $diff_class" if ($diff_class);
-> > >  	$line =3D "<div class=3D\"$diff_classes\">$line</div>\n";
-> > > =20
-> > > -	return $diff_class, $line;
-> > > +	return $line;
-> > >  }
-> > > =20
-> > >  # Generates undef or something like "_snapshot_" or "snapshot (_=
-tbz2_ _zip_)",
-> > > @@ -4934,7 +4931,7 @@ sub print_diff_lines {
-> > >  }
-> > > =20
-> > >  sub print_diff_chunk {
-> > > -	my ($diff_style, $is_combined, @chunk) =3D @_;
-> > > +	my ($diff_style, $is_combined, $from, $to, @chunk) =3D @_;
-> > >  	my (@ctx, @rem, @add);
-> > >  	my $prev_class =3D '';
-> > > =20
-> > > @@ -4954,6 +4951,8 @@ sub print_diff_chunk {
-> > >  	foreach my $line_info (@chunk) {
-> > >  		my ($class, $line) =3D @$line_info;
-> > > =20
-> > > +		$line =3D format_diff_line($line, $class, $from, $to);
-> > > +
-> > >  		# print chunk headers
-> > >  		if ($class && $class eq 'chunk_header') {
-> > >  			print $line;
-> > > @@ -5107,19 +5106,19 @@ sub git_patchset_body {
-> > > =20
-> > >  			next PATCH if ($patch_line =3D~ m/^diff /);
-> > > =20
-> > > -			my ($class, $line) =3D process_diff_line($patch_line, \%from,=
- \%to);
-> > > +			my $class =3D diff_line_class($patch_line, \%from, \%to);
-> > > =20
-> > >  			if ($class eq 'chunk_header') {
-> > > -				print_diff_chunk($diff_style, $is_combined, @chunk);
-> > > -				@chunk =3D ( [ $class, $line ] );
-> > > +				print_diff_chunk($diff_style, $is_combined, \%from, \%to, @c=
-hunk);
-> > > +				@chunk =3D ( [ $class, $patch_line ] );
-> > >  			} else {
-> > > -				push @chunk, [ $class, $line ];
-> > > +				push @chunk, [ $class, $patch_line ];
-> > >  			}
-> > >  		}
-> > > =20
-> > >  	} continue {
-> > >  		if (@chunk) {
-> > > -			print_diff_chunk($diff_style, $is_combined, @chunk);
-> > > +			print_diff_chunk($diff_style, $is_combined, \%from, \%to, @ch=
-unk);
-> > >  			@chunk =3D ();
-> > >  		}
-> > >  		print "</div>\n"; # class=3D"patch"
-> > > --=20
-> > > 1.7.3.4
-> > >=20
-> >=20
-> > Nice!
-> >=20
