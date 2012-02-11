@@ -1,129 +1,147 @@
-From: =?UTF-8?B?TWljaGHFgg==?= Kiedrowicz <michal.kiedrowicz@gmail.com>
-Subject: Re: [PATCH 5/8] gitweb: Format diff lines just before printing
-Date: Sun, 12 Feb 2012 00:38:21 +0100
-Message-ID: <20120212003821.276f2c5a@gmail.com>
-References: <1328865494-24415-1-git-send-email-michal.kiedrowicz@gmail.com>
-	<1328865494-24415-6-git-send-email-michal.kiedrowicz@gmail.com>
-	<m37gztthrx.fsf@localhost.localdomain>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [RFC/PATCHv2 2/2] git-p4: initial demonstration of possible RCS
+ keyword fixup
+Date: Sat, 11 Feb 2012 18:42:48 -0500
+Message-ID: <20120211234248.GA16691@padd.com>
+References: <1328829442-12550-1-git-send-email-luke@diamand.org>
+ <1328829442-12550-3-git-send-email-luke@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 12 00:38:32 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Eric Scouten <eric@scouten.com>
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Sun Feb 12 00:42:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RwMWV-0005YT-D2
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Feb 2012 00:38:31 +0100
+	id 1RwMan-0008Jw-5T
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Feb 2012 00:42:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755250Ab2BKXi0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Feb 2012 18:38:26 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:36618 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755038Ab2BKXi0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Feb 2012 18:38:26 -0500
-Received: by eekc14 with SMTP id c14so1398732eek.19
-        for <git@vger.kernel.org>; Sat, 11 Feb 2012 15:38:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        bh=7jJX6CWzp1G6opO0YmWweYGsr2hpsELA/gSpg1IoQa0=;
-        b=YgUauQHMRUlAlRIJqarZPJR3YGSO20iDJ1q+XmodryjN3E1fRv3rOLYK/vnk1krSN+
-         yy+rD74pAvxRtBz9c5XnQGPkY3oAimxwxOMqOFcX31qm3XsnUxjsTGeRxyansjVT704X
-         tqX72Bq38rPiXIDaxdB0CGzdK/5lpq7CtUi30=
-Received: by 10.213.28.5 with SMTP id k5mr1176611ebc.35.1329003504975;
-        Sat, 11 Feb 2012 15:38:24 -0800 (PST)
-Received: from localhost (77-177-78-94.net.stream.pl. [94.78.177.77])
-        by mx.google.com with ESMTPS id n58sm41315324een.10.2012.02.11.15.38.24
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 11 Feb 2012 15:38:24 -0800 (PST)
-In-Reply-To: <m37gztthrx.fsf@localhost.localdomain>
-X-Mailer: Claws Mail 3.7.10 (GTK+ 2.24.8; x86_64-pc-linux-gnu)
+	id S1755185Ab2BKXmw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Feb 2012 18:42:52 -0500
+Received: from honk.padd.com ([74.3.171.149]:45029 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755038Ab2BKXmw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Feb 2012 18:42:52 -0500
+Received: from arf.padd.com (unknown [50.55.145.32])
+	by honk.padd.com (Postfix) with ESMTPSA id 1B253E8B;
+	Sat, 11 Feb 2012 15:42:51 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 6E4D15EC5E; Sat, 11 Feb 2012 18:42:48 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <1328829442-12550-3-git-send-email-luke@diamand.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190543>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
+luke@diamand.org wrote on Thu, 09 Feb 2012 23:17 +0000:
+> This change has a go at showing a possible way to fixup RCS
+> keyword handling in git-p4.
+> 
+> It does not cope with deleted files.
+> It does not have good test coverage.
+> It does not solve the problem of the incorrect error messages.
+> But it does at least work after a fashion, and could provide
+> a starting point.
 
-> Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> writes:
->=20
-> > Now we're ready to insert highlightning to diff output.
-> >=20
-> > The call to untabify() remains in the main loop in print_diff_chunk=
-().
-> > The motivation is that it must be called before any call to esc_htm=
-l()
-> > (because that converts spaces to &nbsp;) and to call it only once.
-> >=20
-> > This is a refactoring patch.  It's not meant to change gitweb outpu=
-t.
->=20
-> I'm not sure about this patch.
->=20
-> First, in my opinion it doesn't make much sense standalone, and not
-> squashed with subsequent patch.
+I think this has great promise.  Since p4 can always be trusted
+to regenerate the keywords, we should be able to scrub them off
+at will.
 
-True. I wanted to separate "preparation" from "adding new feature" but
-maybe went few steps too far.
+I'm debating whether it's best just _always_ to scrub the files
+affected by a diff rather than trying the patch, checking for
+failure, then scrubbing and trying again.
 
->=20
-> Second, it makes format_diff_line an odd duck among all other format_=
-*
-> subroutines in that it post-processes HTML output, rather than
-> generating HTML from data.
-> =20
-> Why "diff refinement highlighting" cannot be part of format_diff_line=
-()?
-> If it does need additional data, just pass it as additional parameter=
-s
-> to this subroutine.
->=20
-> Another solution could be to borrow idea from stalled and inactive
-> committags feature, namely that parts that are HTML are to be passed
-> as scalar reference (\$str), while plain text (unescaped yet) is to b=
-e
-> passed as string ($str).
+I'll send along a bunch of test cases I wrote to play around
+with this.  Your case had too many moving parts for me to
+understand.  If there's something in there that isn't covered,
+maybe you can factor it out into something small?  Feel free
+to merge any of my code in with a future resubmission.
 
-I'll look into it.
+Some comments in this code below:
 
->=20
-> > -# process patch (diff) line (not to be used for diff headers),
-> > -# returning HTML-formatted (but not wrapped) line
-> > +# wrap patch (diff) line into a <div> (not to be used for diff hea=
-ders),
-> > +# the line must be esc_html()'ed
-> >  sub format_diff_line {
->=20
-> I just don't like this error-prone "the line must be esc_html()'ed".
->=20
-> > +# HTML-format diff context, removed and added lines.
-> > +sub format_ctx_rem_add_lines {
-> > +	my ($ctx, $rem, $add) =3D @_;
-> > +	my (@new_ctx, @new_rem, @new_add);
-> > +
-> > +	@new_ctx =3D map { format_diff_line(esc_html($_, -nbsp=3D>1), 'ct=
-x') } @$ctx;
-> > +	@new_rem =3D map { format_diff_line(esc_html($_, -nbsp=3D>1), 're=
-m') } @$rem;
-> > +	@new_add =3D map { format_diff_line(esc_html($_, -nbsp=3D>1), 'ad=
-d') } @$add;
-> > +
-> > +	return (\@new_ctx, \@new_rem, \@new_add);
-> > +}
-> > +
-> >  # Print context lines and then rem/add lines.
-> >  sub print_diff_lines {
-> >  	my ($ctx, $rem, $add, $diff_style, $is_combined) =3D @_;
-> > =20
-> > +	($ctx, $rem, $add) =3D format_ctx_rem_add_lines($ctx, $rem, $add)=
-;
-> > +
->=20
-> Nice trick.
->=20
+> @@ -753,6 +753,23 @@ class P4Submit(Command, P4UserMap):
+>  
+>          return result
+>  
+> +    def patchRCSKeywords(self, file):
+> +        # Attempt to zap the RCS keywords in a p4 controlled file
+> +        p4_edit(file)
+> +        (handle, outFileName) = tempfile.mkstemp()
+> +        outFile = os.fdopen(handle, "w+")
+> +        inFile = open(file, "r")
+> +        for line in inFile.readlines():
+> +            line = re.sub(r'\$(Id|Header|Author|Date|DateTime|Change|File|Revision)[^$]*\$',
+
+> +                   r'$\1$', line)
+
+I added a couple test cases that show how text+k, text+ko and
+everything else need to be handled differently.
+
+> +            outFile.write(line)
+> +        inFile.close()
+> +        outFile.close()
+> +        # Forcibly overwrite the original file
+> +        system("cat %s" % outFileName)
+> +        system(["mv", "-f", outFileName, file])
+
+Will need a good bit of error handling in the final version.  I
+like the way you do it a line at a time, avoiding any issues with
+gigantic files.
+
+> @@ -964,9 +982,30 @@ class P4Submit(Command, P4UserMap):
+>          patchcmd = diffcmd + " | git apply "
+>          tryPatchCmd = patchcmd + "--check -"
+>          applyPatchCmd = patchcmd + "--check --apply -"
+> +        patch_succeeded = True
+>  
+>          if os.system(tryPatchCmd) != 0:
+> +            fixed_rcs_keywords = False
+> +            patch_succeeded = False
+>              print "Unfortunately applying the change failed!"
+> +
+> +            # Patch failed, maybe it's just RCS keyword woes. Look through
+> +            # the patch to see if that's possible.
+> +            if gitConfig("git-p4.attemptRCSCleanup","--bool") == "true":
+> +                file = None
+> +                for line in read_pipe_lines(diffcmd):
+> +                    m = re.match(r'^diff --git a/(.*)\s+b/(.*)', line)
+> +                    if m:
+> +                        file = m.group(1)
+> +                    if re.match(r'.*\$(Id|Header|Author|Date|DateTime|Change|File|Revision)[^$]*\$', line):
+> +                        self.patchRCSKeywords(file)
+> +                        fixed_rcs_keywords = True
+
+This is a novel approach too.  Instead of just guessing that
+keywords are causing the conflict, inspect the diff for context
+or edited lines containing keywords.
+
+Or we could just always scrub every file before even trying to
+apply patches.
+
+> +            if fixed_rcs_keywords:
+> +                print "Retrying the patch with RCS keywords cleaned up"
+> +                if os.system(tryPatchCmd) == 0:
+> +                    patch_succeeded = True
+> +
+> +        if not patch_succeeded:
+>              print "What do you want to do?"
+>              response = "x"
+>              while response != "s" and response != "a" and response != "w":
+> @@ -1588,11 +1627,11 @@ class P4Sync(Command, P4UserMap):
+>          if type_base in ("text", "unicode", "binary"):
+>              if "ko" in type_mods:
+>                  text = ''.join(contents)
+> -                text = re.sub(r'\$(Id|Header):[^$]*\$', r'$\1$', text)
+> +                text = re.sub(r'\$(Id|Header)[^$]*\$', r'$\1$', text)
+
+In a few spots I see you've taken the ":" out of the regex.  This
+will match strings like $Idiot$ that shouldn't be keyword
+expanded.
+
+Impressed.
+
+		-- Pete
