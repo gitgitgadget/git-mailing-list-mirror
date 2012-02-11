@@ -1,76 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git SSH Authentication
-Date: Fri, 10 Feb 2012 23:54:30 -0800
-Message-ID: <7vty2xn6tl.fsf@alter.siamese.dyndns.org>
-References: <loom.20120211T045801-602@post.gmane.org>
- <CAMK1S_jmY5KvBH8z6YKszroMai4O5ULeCBYGAGFT4CgVUAfmwg@mail.gmail.com>
+Subject: Re: [PATCHv2 1/4] refs: add common refname_match_patterns()
+Date: Sat, 11 Feb 2012 00:06:56 -0800
+Message-ID: <7vpqdln68v.fsf@alter.siamese.dyndns.org>
+References: <1328926618-17167-1-git-send-email-tmgrennan@gmail.com>
+ <1328926618-17167-2-git-send-email-tmgrennan@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: isawk <kwasi.gyasiagyei@4things.co.za>, git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 11 08:54:46 2012
+Cc: pclouds@gmail.com, git@vger.kernel.org, krh@redhat.com,
+	jasampler@gmail.com
+To: Tom Grennan <tmgrennan@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 11 09:07:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rw7nB-0004bb-GR
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Feb 2012 08:54:45 +0100
+	id 1Rw7zi-00022f-I9
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Feb 2012 09:07:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753904Ab2BKHye (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Feb 2012 02:54:34 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59451 "EHLO
+	id S1753517Ab2BKIG7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Feb 2012 03:06:59 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64016 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753448Ab2BKHyc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Feb 2012 02:54:32 -0500
+	id S1753139Ab2BKIG6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Feb 2012 03:06:58 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2932E405B;
-	Sat, 11 Feb 2012 02:54:32 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6715E42FD;
+	Sat, 11 Feb 2012 03:06:58 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=d9rkKjcNUkfdSoOVJ6SPJRAy6nM=; b=LaQF13
-	etokaa56fxUSH33nzI1Q38Ixwci10DgAQ0aAoO6klsXEkR08cs53h+I+ZVfkAGdz
-	pmPbbB320SxVJErcYPRfE613BaNGJJIKXYEAnZSVrQELeVioi+xXVNLjpyl9a41M
-	D0KNePwVmlgXW82bO+z+yRshQCTbSRBksX5I0=
+	:content-type; s=sasl; bh=7Z9M3bCLrEQfNzNEcrAKPBRsBmc=; b=kgPrn8
+	/QYsAaVvj7U2uxUCJPTvLdjqgrvbUcy1u2s9yXE8KTE0msREmwWBwrPEC9fkfS+T
+	Y+1shtLdoVJbGKjfPve3Xl9t5cEQEr40fBSYto6zwCnQnojGanas+3irDBYdOM8k
+	BnUkDya10W7oqKlTZuUePdIZoz9uh1S2+GqiI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GnoCqskQyfxlj/emKX9J3/mLve6XNN3g
-	hxKz7zvX2ug5P0dp1BxrhZlL1aHFHHHEvqzUpRbFnGa+zKJl9LIikPMVVeJNrxOL
-	FMaw7HQHplwDipS8d95DRfU20rNCtnIKHCgZUB0Nembl1JNeaWBBg6RPBrOsMR7L
-	p/InZ3JA9Kk=
+	:content-type; q=dns; s=sasl; b=F1+VR94lbInJpxlO9gK2DgiyPcCG5P+E
+	cXv+fkFQTJ5BP+z28wSj/tl5MmmZ3dRO0gp5UJWGUyovkqLTc76/o+L+Bn9AwGDK
+	Tl6byxegGj1msiTftRy/oY41uj9oJ+babm6R+MIGi0aRgRSpXMsIUnhadQI/5WqB
+	QB5Ncm7QaiM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20629405A;
-	Sat, 11 Feb 2012 02:54:32 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5DD7942FC;
+	Sat, 11 Feb 2012 03:06:58 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9990C4056; Sat, 11 Feb 2012
- 02:54:31 -0500 (EST)
-In-Reply-To: <CAMK1S_jmY5KvBH8z6YKszroMai4O5ULeCBYGAGFT4CgVUAfmwg@mail.gmail.com> (Sitaram
- Chamarty's message of "Sat, 11 Feb 2012 10:35:42 +0530")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E677C42FB; Sat, 11 Feb 2012
+ 03:06:57 -0500 (EST)
+In-Reply-To: <1328926618-17167-2-git-send-email-tmgrennan@gmail.com> (Tom
+ Grennan's message of "Fri, 10 Feb 2012 18:16:55 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A199AB52-5485-11E1-9646-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 5E70359C-5487-11E1-A48F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190500>
 
-Sitaram Chamarty <sitaramc@gmail.com> writes:
+Tom Grennan <tmgrennan@gmail.com> writes:
 
-> Common causes of pubkey access fail:
->
->   - wrong pubkey being offered: if you are using ssh-agent, make sure
-> you have 'ssh-add'ed the key you want to offer.  Confirm with 'ssh-add
-> -l'
+> +int refname_match_patterns(const char **patterns, const char *refname)
+> +{
+> +	int given_match_pattern = 0, had_match = 0;
+> +
+> +	for (; *patterns; patterns++)
+> +		if (**patterns != '!') {
+> +			given_match_pattern = 1;
+> +			if (!fnmatch(*patterns, refname, 0))
+> +				had_match = 1;
+> +		} else if (!fnmatch(*patterns+1, refname, 0))
+> +			return 0;
+> +	return given_match_pattern ? had_match : 1;
+> +}
 
-A failure related to this I saw is to have (too) many keys in ssh-agent,
-and running ssh without telling it which exact key to use.  The client
-tries each key in turn and the server rejects the connection attempt after
-seeing too many keys tried.  "ssh -v" is useful to diagnose this mode of
-failure, and an entry in ~/.ssh/config like:
+This, while its semantics seem sane, is highly inefficient when you have
+many patterns, and you will be calling this to filter dozens of refs.  And
+it can trivially improved by first pre-parsing the pattern[] array.
 
-    Host example.com
-	User myusernameoverthere
-        IdentityFile ~/.ssh/id_rsa-for-example.com
+ * If you know the patterns do not have any negative entry, you can return
+   true upon seeing the first match. Because you do not pre-parse the
+   pattern[] array, this loop does not know if there is any negative one,
+   and has to scan it always all the way.
 
-would fix it.
+ * If you arrange the pattern[] array so that it has negative ones early,
+   again, you can return false upon seeing the first hit with a negative
+   one. If your input has negative ones at the end, the loop ends up
+   scanning all the way, noting the positive matches, only to discard upon
+   seeing the negative match at the end.
+
+That is why I said Nguyen's idea of reusing pathspec matching logic
+somewhat attractive, even though I think it has downsides (the exact
+matching logic for pathspec is more similar to that of for-each-ref
+and very different from branch/tag).
