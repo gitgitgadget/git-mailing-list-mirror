@@ -1,121 +1,95 @@
-From: Tom Grennan <tmgrennan@gmail.com>
-Subject: Re: [RFC/PATCH] tag: make list exclude !<pattern>
-Date: Sat, 11 Feb 2012 11:47:19 -0800
-Message-ID: <20120211194719.GE4903@tgrennan-laptop>
-References: <20120210185516.GA4903@tgrennan-laptop>
- <1328926618-17167-1-git-send-email-tmgrennan@gmail.com>
- <7vaa4qnk4u.fsf@alter.siamese.dyndns.org>
- <7vy5s9n70x.fsf@alter.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: "git pull" doesn't know "--edit"
+Date: Sat, 11 Feb 2012 12:07:40 -0800
+Message-ID: <CA+55aFwLqvVyMipun4DM4CnbO97Dota3LCM2VPFfLq1LS5a4aQ@mail.gmail.com>
+References: <alpine.LFD.2.02.1202111016340.28503@i5.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: pclouds@gmail.com, git@vger.kernel.org, jasampler@gmail.com
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 11 20:47:39 2012
+X-From: git-owner@vger.kernel.org Sat Feb 11 21:08:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RwIv1-0007J7-8C
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Feb 2012 20:47:35 +0100
+	id 1RwJEt-00029w-GP
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Feb 2012 21:08:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754004Ab2BKTrZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Feb 2012 14:47:25 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:34259 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753842Ab2BKTrY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Feb 2012 14:47:24 -0500
-Received: by vbjk17 with SMTP id k17so2408158vbj.19
-        for <git@vger.kernel.org>; Sat, 11 Feb 2012 11:47:23 -0800 (PST)
+	id S1751756Ab2BKUIB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Feb 2012 15:08:01 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:48994 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751691Ab2BKUIA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Feb 2012 15:08:00 -0500
+Received: by pbcun15 with SMTP id un15so3409085pbc.19
+        for <git@vger.kernel.org>; Sat, 11 Feb 2012 12:08:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=VQ6Wh68MD+5ZWhaPklTqS2KTjlkB82yAC+Bas9RX4r8=;
-        b=SKu6RoD0lPDK7Gvzz8eARSx68rFSDlI//H1n9/Vcqigj/4tT1I+hvfgK0QT1xBKrwZ
-         jcqXIvqTEKkj/atAdK9FQ6EM9nos5jSDCMRwvEiDY74HNtjUqUQIV8ykTUz+Y2TybVH8
-         2ydkWsVyv6T6Mz6LIYvCKenhwBqfNehOGdQWE=
-Received: by 10.52.179.10 with SMTP id dc10mr4894416vdc.118.1328989643368;
-        Sat, 11 Feb 2012 11:47:23 -0800 (PST)
-Received: from localhost (c-98-207-169-74.hsd1.ca.comcast.net. [98.207.169.74])
-        by mx.google.com with ESMTPS id s15sm6667978vdi.9.2012.02.11.11.47.21
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 11 Feb 2012 11:47:22 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vy5s9n70x.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=QrrQcGPzXrNB27jKsQwZM5JcaWfmcKJIvmee/tKlCBw=;
+        b=XyBm5AeIFRAeHPVdPHR9G4ibSHMbhFWA7evwA8aff2TbGnupJLzQ7H6Wa6gk3NICrQ
+         lpjNh6sXREH1AL/eAaipOJs8GUcsk6ay/YYYLdTU0CroBMC9l8MvbWlR2GyWTI9C95NY
+         a2FUVehJyM1/WyLUcMTAE8XZawAUh1igx0cQ4=
+Received: by 10.68.73.4 with SMTP id h4mr30385119pbv.27.1328990880307; Sat, 11
+ Feb 2012 12:08:00 -0800 (PST)
+Received: by 10.143.59.21 with HTTP; Sat, 11 Feb 2012 12:07:40 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.02.1202111016340.28503@i5.linux-foundation.org>
+X-Google-Sender-Auth: CGrBI6nyWAw5WjCCY45W7E4ua-Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190534>
 
-On Fri, Feb 10, 2012 at 11:50:06PM -0800, Junio C Hamano wrote:
->Junio C Hamano <gitster@pobox.com> writes:
+On Sat, Feb 11, 2012 at 10:21 AM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
 >
->>    ... Same
->>    for 1c, which I highly suspect will introduce regression without
->>    looking at the code (for-each-ref is prefix-match only), ...
+> Ok, so now "git merge" defaults to editing when interactive - lovely. But
+> when testing that,
 
-OK I'll study this further and run through t6300-for-each-ref.sh
-I see it has a bunch of errors.
-I think there are similar issues using match_pattern() with
-show-branch and ls-remote.
+Ok, I found another thing that seems to be a buglet, or at least an
+undocumented surprise.
 
-Thanks,
+In the docs, the "GIT_MERGE_AUTOEDIT=no" thing is mentioned as the way
+to get the legacy behavior, which (at least to me) implies that
+setting it to "yes" gets the modern behavior.
 
->This part needs correction.  for-each-ref matches the command line
->arguments differently from branch --list and tag --list in two important
->ways.
->
-> (1) It allows (not "only" which was a mistake in my earlier message)
->     prefix matching, e.g. "for-each-ref refs/heads/", in addition to
->     fnmatch(); and
->
-> (2) The fnmatch() call is made with FNM_PATHMAME, which "branch --list"
->     and "tag --list" does not use.
->
->Strictly speaking, therefore, if you make all three commands to use the
->same matching logic, there is no way to avoid regression.  If you choose
->to use fnmatch() without FNM_PATHNAME, then for-each-ref suddenly starts
->matching wildcards across name hierarchy boundary '/' for a pattern that
->does not match today, e.g. "git for-each-ref 'refs/heads/*'" was a good
->way to grab only the integration branches while excluding individual topic
->branches such as refs/heads/tg/tag-points-at, but this technique can no
->longer be used for such a purpose, which is an unpleasant regression.
->
->I personally think that it was an annoying UI mistake that we let branch
->and tag call fnmatch without FNM_PATHNAME, but we cannot fix it lightly,
->either.  People who use hierchical branch names (e.g. maint-1.0/$topic,
->maint-2.0/$topic, and feature-2.0/$topic) may already be used to list all
->the topics on the maintenance tracks with "branch --list 'maint*'", and we
->need to keep "branch --list" and "tag --list" working as they expect.
->
->One possible way forward (now I am talking about a longer term solution)
->would be to introduce
->
->	refname_match_pattern(const char *refname,
->        		      const char **pattern,
->                              unsigned flags);
->
->where flags can tell the implementation if FNM_PATHNAME should be used,
->and if prefix matching should be attempted, so that the three commands
->share the single same matching function while still retaining their
->current behaviour in the initial round.  Inside the implementation, we
->would use good old fnmatch(), with or without FNM_PATHNAME, depending on
->the flags the caller passes.
->
->In a future versions, we may want to have "branch/tag --list" also ask for
->FNM_PATHNAME (this *is* a backward incompatible change, so it needs to be
->performed across major version boundary, with backward compatibility
->configurations, deprecation warnings and whole nine yards). Under the new
->match function, today's "branch --list 'maint*'" needs to be spelled as
->"branch --list 'maint*/*'" or something.  The prefix matching is probably
->safer to enable by default without causing big regression hassle if we
->limit the prefix match to only patterns that end with an explicit slash,
->as users already *know* today's "branch --list tg/" would not match
->anything (because the pattern does not even match a brahch 'tg', so it is
->unlikely they are using it and expecting only 'tg' to match), which means
->that is an unlikely input we can safely give new meaning to match anything
->under tg/ hierarchy.
->
+But try this:
+
+    .. create test branch that can be merged ..
+    export GIT_MERGE_AUTOEDIT=yes
+    git merge test < /dev/null
+
+and notice how the "GIT_MERGE_AUTOEDIT=yes" will actually *override*
+the automatic merge thing, and will try to start an editor even for
+non-interactive sessions.
+
+Maybe this is intentional, and not a bug? But it does seem a bit odd -
+the name is "AUTOEDIT", not "FORCEDEDIT". And  at least my default
+editor gets confused by the redirected input, although obviously if
+you have a graphical editor in its own window this may well be what
+you want.
+
+Anyway, maybe the "return v" in default_edit_option() should be
+
+    if (!v)
+        return 0;
+
+instead - so that if AUTOEDIT it set to true, it does what the "auto"
+in the name implies.
+
+Of course, the current behavior *can* actually be useful, exactly as
+that way to force the editor to come up. So maybe it's just that my
+expectations that are wrong, and the behavior that "yes" causes a
+forced editor should just be documented instead.
+
+Or maybe the thing could extend the notion of the current boolean to
+be a tri-state instead: in addition to the traditional true/yes/on and
+false/no/off have a "force" mode that is that "always force it on
+regardless".
+
+And maybe this is just a "nobody cares" situation - "Don't do that then".
+
+                    Linus
