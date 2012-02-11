@@ -1,95 +1,108 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: "git pull" doesn't know "--edit"
-Date: Sat, 11 Feb 2012 12:07:40 -0800
-Message-ID: <CA+55aFwLqvVyMipun4DM4CnbO97Dota3LCM2VPFfLq1LS5a4aQ@mail.gmail.com>
-References: <alpine.LFD.2.02.1202111016340.28503@i5.linux-foundation.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Undo last commit?
+Date: Sat, 11 Feb 2012 23:07:09 +0100
+Message-ID: <201202112307.10528.jnareb@gmail.com>
+References: <BANLkTinWujKYvx_fh2iBDOdMbywqzfgwUA@mail.gmail.com> <4F36B147.3070501@gmail.com> <CAHK-92oMc62O0S8Bxt6+uxobE+kg5wOeRDoOsHWvvenXaXmZGQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 11 21:08:08 2012
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Neal Kreitzinger <nkreitzinger@gmail.com>,
+	Holger Hellmuth <hellmuth@ira.uka.de>,
+	Massimo Manca <massimo.manca@micronengineering.it>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ben Walton <bwalton@artsci.utoronto.ca>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	=?utf-8?q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+To: Mike <xandrani@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 11 23:07:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RwJEt-00029w-GP
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Feb 2012 21:08:07 +0100
+	id 1RwL6i-00080u-My
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Feb 2012 23:07:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751756Ab2BKUIB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Feb 2012 15:08:01 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:48994 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751691Ab2BKUIA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Feb 2012 15:08:00 -0500
-Received: by pbcun15 with SMTP id un15so3409085pbc.19
-        for <git@vger.kernel.org>; Sat, 11 Feb 2012 12:08:00 -0800 (PST)
+	id S1754263Ab2BKWHO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Feb 2012 17:07:14 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:52370 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753627Ab2BKWHM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Feb 2012 17:07:12 -0500
+Received: by eaah12 with SMTP id h12so1326792eaa.19
+        for <git@vger.kernel.org>; Sat, 11 Feb 2012 14:07:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=QrrQcGPzXrNB27jKsQwZM5JcaWfmcKJIvmee/tKlCBw=;
-        b=XyBm5AeIFRAeHPVdPHR9G4ibSHMbhFWA7evwA8aff2TbGnupJLzQ7H6Wa6gk3NICrQ
-         lpjNh6sXREH1AL/eAaipOJs8GUcsk6ay/YYYLdTU0CroBMC9l8MvbWlR2GyWTI9C95NY
-         a2FUVehJyM1/WyLUcMTAE8XZawAUh1igx0cQ4=
-Received: by 10.68.73.4 with SMTP id h4mr30385119pbv.27.1328990880307; Sat, 11
- Feb 2012 12:08:00 -0800 (PST)
-Received: by 10.143.59.21 with HTTP; Sat, 11 Feb 2012 12:07:40 -0800 (PST)
-In-Reply-To: <alpine.LFD.2.02.1202111016340.28503@i5.linux-foundation.org>
-X-Google-Sender-Auth: CGrBI6nyWAw5WjCCY45W7E4ua-Q
+        h=from:to:subject:user-agent:cc:references:in-reply-to:mime-version
+         :content-disposition:date:content-type:content-transfer-encoding
+         :message-id;
+        bh=8UBWkdoZ5xAPEM6sBj+3A/mA7oz3BioSMmBr+k5gC8g=;
+        b=ukwmlmrYiXx/nKzxDBHtvsd3j84XST6mhZg5oq4QG7pULGxdncmgGISBS3e0uWpa4X
+         xzvEk7l7nhZKWFWD3RhIiwDYm+V0K+A7yzQG5tAXcWaLokNVE9dI/nmrXyvi+nim5Lh3
+         2E3Et8NYaBYj5JV59AiNl0PNPvn/8YmrF764k=
+Received: by 10.14.28.140 with SMTP id g12mr3465866eea.85.1328998031263;
+        Sat, 11 Feb 2012 14:07:11 -0800 (PST)
+Received: from [192.168.1.13] (abwi47.neoplus.adsl.tpnet.pl. [83.8.232.47])
+        by mx.google.com with ESMTPS id e12sm40535601eea.5.2012.02.11.14.07.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 11 Feb 2012 14:07:10 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <CAHK-92oMc62O0S8Bxt6+uxobE+kg5wOeRDoOsHWvvenXaXmZGQ@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190535>
 
-On Sat, Feb 11, 2012 at 10:21 AM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
+Please do not top-post, and do not remove git mailing list from Cc.
+Sorry for double posting; forgot to re-add git@vger.kernel.org
+
+On Sat, 11 Feb 2012, Mike ??? wrote:
+> 2012/2/11 Neal Kreitzinger <nkreitzinger@gmail.com>
+> > On 6/28/2011 8:57 AM, Holger Hellmuth wrote:
+> > >
+> > > It would be a nice companion to the not-yet-realized "git unadd" ;-)
+> >
+> > or perhaps "git unstage"...
 >
-> Ok, so now "git merge" defaults to editing when interactive - lovely. But
-> when testing that,
+> If lot's of people have the same problem then it IS a design flaw. If
+> something is designed well and genuinely intuitive then they just work.
+> Think iPhone, iPod, some DVD players and other well designed user
+> interfaces. The same goes for command line tools... the options should have
+> names that don't have any ambiguity.
+> 
+Many of problems with git user interface have their source from the fact
+that git, including its interface, was evolved rather than created using
+big-design-upfront workflow.  And it _had_ to be evolved, as there was not
+much of prior art (well, not good prior art) in the area of DVCS.
 
-Ok, I found another thing that seems to be a buglet, or at least an
-undocumented surprise.
+Besides, as they say:
 
-In the docs, the "GIT_MERGE_AUTOEDIT=no" thing is mentioned as the way
-to get the legacy behavior, which (at least to me) implies that
-setting it to "yes" gets the modern behavior.
+  The only "intuitive" interface is the nipple. After that it's all learned.
 
-But try this:
+                                                             -- Bruce Ediger
 
-    .. create test branch that can be merged ..
-    export GIT_MERGE_AUTOEDIT=yes
-    git merge test < /dev/null
+> Techie guys almost always blame the users, this is a very bad attitude. For
+> example I've met so many techies that THINK they can design websites...
+> err... they can't. They CAN program sure, but they CAN'T design the user
+> experience properly as that is not their expertise. Just as we wouldn't
+> expect a graphic designer or user interface specialist to do the coding.
+> 
+There is also problem in that you need to know git well to _code_ interface;
+and when you know git well you don't notice no longer the problems that you
+had as a newbie.
 
-and notice how the "GIT_MERGE_AUTOEDIT=yes" will actually *override*
-the automatic merge thing, and will try to start an editor even for
-non-interactive sessions.
+On the other hand new git users sometimes have problems distinguishing
+between accidental complexity of bad UI design, and essential complexity
+of a powerfull and flexible tool.
 
-Maybe this is intentional, and not a bug? But it does seem a bit odd -
-the name is "AUTOEDIT", not "FORCEDEDIT". And  at least my default
-editor gets confused by the redirected input, although obviously if
-you have a graphical editor in its own window this may well be what
-you want.
+[...]
 
-Anyway, maybe the "return v" in default_edit_option() should be
+So, Mike, will you bitch or will you try to help?
 
-    if (!v)
-        return 0;
-
-instead - so that if AUTOEDIT it set to true, it does what the "auto"
-in the name implies.
-
-Of course, the current behavior *can* actually be useful, exactly as
-that way to force the editor to come up. So maybe it's just that my
-expectations that are wrong, and the behavior that "yes" causes a
-forced editor should just be documented instead.
-
-Or maybe the thing could extend the notion of the current boolean to
-be a tri-state instead: in addition to the traditional true/yes/on and
-false/no/off have a "force" mode that is that "always force it on
-regardless".
-
-And maybe this is just a "nobody cares" situation - "Don't do that then".
-
-                    Linus
+-- 
+Jakub Narebski
+Poland
