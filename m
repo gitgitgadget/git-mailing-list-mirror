@@ -1,89 +1,111 @@
-From: Serhat Sevki Dincer <jfcgauss@gmail.com>
-Subject: Re: git svn problem
-Date: Sat, 11 Feb 2012 02:52:50 +0200
-Message-ID: <CAPqC6xSJ7pfUQJz8FQ743mJMNmZyfJfWxutOnt+FVkP76eXOGw@mail.gmail.com>
-References: <CAPqC6xRtZXwv+U6AKRUXDz=m-G4AjgWksbwqeMD_qzS8YC=DoQ@mail.gmail.com>
-	<4F358A53.8010409@vilain.net>
+From: Tom Grennan <tmgrennan@gmail.com>
+Subject: =?UTF-8?q?Re=3A=20=5BRFC/PATCH=5D=20tag=3A=20make=20list=20exclude=20!=3Cpattern=3E?=
+Date: Fri, 10 Feb 2012 18:16:54 -0800
+Message-ID: <1328926618-17167-1-git-send-email-tmgrennan@gmail.com>
+References: <20120210185516.GA4903@tgrennan-laptop>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Sat Feb 11 01:59:25 2012
+Cc: git@vger.kernel.org, gitster@pobox.com, krh@redhat.com,
+	jasampler@gmail.com
+To: pclouds@gmail.com
+X-From: git-owner@vger.kernel.org Sat Feb 11 03:17:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rw1JF-0005gV-BQ
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Feb 2012 01:59:25 +0100
+	id 1Rw2X1-0002eq-Kz
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Feb 2012 03:17:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754590Ab2BKA6w convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Feb 2012 19:58:52 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:35356 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753738Ab2BKA6v convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Feb 2012 19:58:51 -0500
-Received: by qadc10 with SMTP id c10so652856qad.19
-        for <git@vger.kernel.org>; Fri, 10 Feb 2012 16:58:51 -0800 (PST)
+	id S1754821Ab2BKCRO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Feb 2012 21:17:14 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:35436 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753546Ab2BKCRN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Feb 2012 21:17:13 -0500
+Received: by qcqw6 with SMTP id w6so2034153qcq.19
+        for <git@vger.kernel.org>; Fri, 10 Feb 2012 18:17:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=US/BCVV7gqNzKAOvENydPhI1O4zirlPevHMpdwSRbO0=;
-        b=kpatlCu22TCt1HVuyBwECDFEDtbLrLdplxWiemsrxl5k0bEDiQjpBZQtztoDzwvaRL
-         +z4lzXgaPztyEAI7GaSXLFbMNG471mqMBqU5CkOUUqalDhHs3blEtZQgLjKDNXD/eOB/
-         aDgV1y0PUPqNwvV2oEtVjqsyupZM5tgsfGmX0=
-Received: by 10.224.30.206 with SMTP id v14mr1394664qac.18.1328921570214; Fri,
- 10 Feb 2012 16:52:50 -0800 (PST)
-Received: by 10.229.144.196 with HTTP; Fri, 10 Feb 2012 16:52:50 -0800 (PST)
-In-Reply-To: <4F358A53.8010409@vilain.net>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=jcOQ+Iz42BFe0bNlYj4eT81bDQO/LA3v93W0gaKhqZA=;
+        b=a5EyqyL3ghFD/AD0Ne3+awporAxnQJ+/n1SL2it/2+2t2tiHz1m96SF8Ik2hVua+pR
+         XqDh2jKSu9XJZspwsKNtA7ceZO9QQf2xPyYsFZvZxLAqs92CymPU3JKju8UG2+9vZy2A
+         GWYpcrD4MzwM7AQSWj0pYrv+JwASryu4s7hsA=
+Received: by 10.224.180.67 with SMTP id bt3mr1594676qab.6.1328926632766;
+        Fri, 10 Feb 2012 18:17:12 -0800 (PST)
+Received: from tgrennan-laptop.lab.redback.com ([129.192.185.163])
+        by mx.google.com with ESMTPS id fd1sm16844239qab.1.2012.02.10.18.17.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 10 Feb 2012 18:17:11 -0800 (PST)
+X-Mailer: git-send-email 1.7.8
+In-Reply-To: <20120210185516.GA4903@tgrennan-laptop>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190475>
 
-On Fri, Feb 10, 2012 at 11:21 PM, Sam Vilain <sam@vilain.net> wrote:
-> Import them separately to different git-svn remotes, and once they ar=
-e in
-> the same repository you can graft them together using .git/info/graft=
-s (see
-> man gitrepository-layout). =C2=A0Once it looks right (check using 'gi=
-tk' etc),
-> make it permanent using git filter-branch. You'll also want to remove=
- the
-> .git/svn directory, and re=E2=80=93run 'git svn fetch' so that git sv=
-n's revision
-> database is recomputed. =C2=A0Don't forget the -A option to 'git svn =
-fetch'!
+On Fri, 10 Feb 2012 10:55:16 -0800, Tom Grennan wrote:
+>On Fri, Feb 10, 2012 at 01:34:26PM +0700, Nguyen Thai Ngoc Duy wrote:
+>>On Fri, Feb 10, 2012 at 2:43 AM, Tom Grennan <tmgrennan@gmail.com> wr=
+ote:
+>>> Please see the following patch which filters the tag list of "!" pr=
+efaced
+>>> patterns. =C2=A0If this is deemed desirable and correct, I'll resub=
+mit with updated
+>>> documentation and unit tests.
+>>
+>>git-branch, git-tag and git-for-each-ref are in the same family. I
+>>think it's good to that all three commands share things, like this
+>>pattern matching.
+>
+>Yes, git-branch and git-tag could now use a common match_patterns() bu=
+t
+>git-for-each-ref needs some rearranging; as will: git-describe,
+>git-replace, git-ls-remote, git-name-rev, and git-show-branch.
+>
+>If we pursue this, it may be best to first add match_patterns() to ./r=
+efs.[ch]
+>then incrementally modify these builtin commands to use it.
 
-That sounds too complicated. There should be an easier way (i hope:)
-I have the following at the moment:
+The following series implements !<pattern> with: git-tag, git-branch, a=
+nd
+git-for-each-ref.
 
-rm -rf plone.app.locales ; mkdir plone.app.locales ; cd plone.app.local=
-es
-git svn init -T trunk http://svn.plone.org/svn/plone/plone.app.locales
-touch start ; git add start ; git commit -m start
-git svn fetch -r49624:HEAD
-git rebase --onto master --root trunk --preserve-merges
-git checkout -b plone
+This still requires Documentation and unit test updates but I think the=
+se are
+close to functionally complete.
 
-plone branch looks good, now I would like to do the same with
-collective/plone.app.locales. I tried a couple of things but ended up
-getting errors like:
+>>About the '!' for exclusion, maybe it's better to move from fnmatch()
+>>as matching machinery to pathspec. Then when git learns negative
+>>pathspec [1], we have this feature for free.
+>>
+>>[1] http://thread.gmane.org/gmane.comp.version-control.git/189645/foc=
+us=3D190072
 
-Rebuilding .git/svn/refs/remotes/trunk/.rev_map.db7f04ef-aaf3-0310-a811=
--c281ed44c4ad
-=2E..
-Done rebuilding
-=2Egit/svn/refs/remotes/trunk/.rev_map.db7f04ef-aaf3-0310-a811-c281ed44=
-c4ad
-RA layer request failed: REPORT of '/svn/collective/!svn/vcc/default':
-Could not read chunk size: connection was closed by server
-(http://svn.plone.org) at /usr/lib/git-core/git-svn line 5131
+After looking at this some more, I don't understand the value of replac=
+ing
+libc:fnmatch().  Or are you just referring to '--exclude' instead of
+[!]<pattern> argument parsing?
 
-Is there some way around these errors?
+---
 
-Thanks..
-Serhat
+Tom Grennan (4):
+  refs: add common refname_match_patterns()
+  tag: use refs.c:refname_match_patterns()
+  branch: use refs.c:refname_match_patterns()
+  for-each-ref: use refs.c:refname_match_patterns()
+
+ Documentation/git-tag.txt |   10 ++++++----
+ builtin/branch.c          |   16 ++--------------
+ builtin/for-each-ref.c    |   23 +++--------------------
+ builtin/tag.c             |   15 ++-------------
+ refs.c                    |   14 ++++++++++++++
+ refs.h                    |    8 ++++++++
+ 6 files changed, 35 insertions(+), 51 deletions(-)
+
+--=20
+1.7.8
