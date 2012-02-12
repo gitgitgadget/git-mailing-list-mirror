@@ -1,71 +1,86 @@
-From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
-Subject: Re: [PATCH 2/2] git-svn, perl/Git.pm: extend and use Git->prompt
- method for querying users
-Date: Sun, 12 Feb 2012 17:26:43 +0100
-Message-ID: <4F37E843.6070107@tu-clausthal.de>
-References: <4EF9ED58.8080205@tu-clausthal.de> <20120103184022.GA20926@sigill.intra.peff.net> <4F37E2B0.9060007@tu-clausthal.de> <201202121711.45920.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] strbuf: move strbuf_readline_fd() from bundle.c to
+ strbuf.{c,h}
+Date: Sun, 12 Feb 2012 09:07:48 -0800
+Message-ID: <7v39agkmjf.fsf@alter.siamese.dyndns.org>
+References: <CAMocUqRutwERQ64a=9t36Za6Lm8KxpseS0NYbdGKWbixbsXeyw@mail.gmail.com>
+ <CAMocUqSefruci_ueWHUH6rqz8VFcakHErq8QV_bvghWMyHKVJg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 12 17:26:50 2012
+Content-Type: text/plain; charset=iso-2022-jp
+Cc: Git =?utf-8?B?6YKu5Lu25YiX6KGo?= <git@vger.kernel.org>
+To: =?iso-2022-jp?B?GyRCPXltbBsoQg==?= <xudifsd@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 12 18:08:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RwcGC-0004jr-CW
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Feb 2012 17:26:44 +0100
+	id 1Rwcu7-0004ZJ-25
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Feb 2012 18:08:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755504Ab2BLQ0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Feb 2012 11:26:40 -0500
-Received: from hades.rz.tu-clausthal.de ([139.174.2.20]:47013 "EHLO
-	hades.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755489Ab2BLQ0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Feb 2012 11:26:39 -0500
-Received: from hades.rz.tu-clausthal.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id 59562422048;
-	Sun, 12 Feb 2012 17:26:38 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
-	 bh=r3am3E8ukZTiENpSli4FzKcYmlg=; b=jx4ZYQ9E3DF8KFJYGjebGAGQnPBD
-	WMFeUynnuU1zf+LBCUfOoMfFhNGirU+T0lNNRicJcuYC1X8YXFUevGsrt2V15CIh
-	MCUt81K6wMuIRS/nBcfe6hORFnuMQQkioQTJfAnPzBtyQ93q41azD7UYlq2AYT31
-	2fRnSPeEIo9D51o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
-	dkim1; b=cvRhdtqdylElhaYc91Ii4j9zbg5TZYNz4vCsT5hizb7QdIMOtJy35vt
-	YFW/GiDp3XG9JXcRg0+NtMfEs0DY13x0wFUIQZDTEk1vxGXQjXFPQcMOHWAGrFZi
-	T9TAui5F7sGBKAMSPeaQMUl1OUocqsNMlIwdG8XtdzHM9JQrUMNM=
-Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
-	by hades.rz.tu-clausthal.de (Postfix) with ESMTP id 09840422041;
-	Sun, 12 Feb 2012 17:26:38 +0100 (CET)
-Received: from [139.174.6.11] (account sstri@tu-clausthal.de [139.174.6.11] verified)
-  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.3)
-  with ESMTPSA id 27351381; Sun, 12 Feb 2012 17:26:37 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0) Gecko/20120129 Thunderbird/10.0
-In-Reply-To: <201202121711.45920.jnareb@gmail.com>
-X-Enigmail-Version: 1.3.5
-X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
-X-Spam-Level: (8%, '
- MULTIPLE_RCPTS 0.1, BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_1000_LESS 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_300_399 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_7000_LESS 0, __ANY_URI 0, __BOUNCE_CHALLENGE_SUBJ 0, __BOUNCE_NDR_SUBJ_EXEMPT 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __MOZILLA_MSGID 0, __MULTIPLE_RCPTS_CC_X2 0, __SANE_MSGID 0, __SUBJ_ALPHA_END 0, __TO_MALFORMED_2 0, __URI_NO_MAILTO 0, __URI_NO_PATH 0, __URI_NO_WWW 0, __USER_AGENT 0')
+	id S1755522Ab2BLRHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Feb 2012 12:07:53 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39950 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755509Ab2BLRHx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Feb 2012 12:07:53 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A3637D8F;
+	Sun, 12 Feb 2012 12:07:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HbKef7JuEihknXYL98bE5Ld/Lp8=; b=kkjC+Z
+	IuubeGK5SxSUBKx0RiWOYJBRjMnEFwjhT2rQCsB8309SvdLYqVCyYf2pGFIiMoi+
+	/WfpVpZeF8dAlMOt82gPmjbULYWajOZCKq6HlHf+WdsWleSNZ04ZZtB/m9WyPiay
+	XoItHuxtbPAdTPaRtd+mOUIwAihP3yvbltebU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PUHZIvP6hxt6dpB5hAO7H++NgI6He9Z6
+	oAZkDz8BbBTzPcCFtb7a+v9ygXVK6h4tMruFbnv+sqr58HQvuUGX0rJulxqzQjFt
+	9mUT8uR4L+2VuXcEiAa2s7b4R2L2lW+gKqBumeH4ndKeATx8ETNk0bMvxlfZryej
+	qhqYUpBCcPA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 40FD47D8E;
+	Sun, 12 Feb 2012 12:07:52 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C950F7D8C; Sun, 12 Feb 2012
+ 12:07:51 -0500 (EST)
+In-Reply-To: <CAMocUqSefruci_ueWHUH6rqz8VFcakHErq8QV_bvghWMyHKVJg@mail.gmail.com>
+ (=?iso-2022-jp?B?IhskQj15bWwbKEIiJ3M=?= message of "Sun, 12 Feb 2012 20:25:15
+ +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 18DEF5CA-559C-11E1-BF78-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190581>
 
-Am 12.02.2012 17:11 schrieb Jakub Narebski:
-> Doesn't Subversion use SSH directly?  If it is so, the question is
-> about how SSH itself supports SSH_ASKPASS.
+徐迪 <xudifsd@gmail.com> writes:
 
-Oh sorry, I mixed up SSH and SVN_ASKPASS. :( Of couse SSH_ASKPASS is
-provided by the ssh-client itself.
+> Shouldn't I supposed to receive any information about this patch?
 
--- 
-Best regards,
- Sven Strickroth
+Not necessarily X-<.
+
+Things can get lost in the noise, and sending a reminder message like you
+just did, after waiting for a few to several days, is considered a good
+practice.
+
+> Has it accepted or not?
+
+Anything and everything being considered for inclusion is reachable from
+the tip of the 'next' branch; other patches that might turn out to be of
+value, or ones that at least deserve more sets of eyeballs, are only in
+the 'pu' branch.
+
+> If not what wrong with this patch?
+
+That is not a valid question to ask.
+
+We do not apply a patch merely because it is _not wrong_.  It must be
+clear why it is a good thing for the project to apply the patch.
+
+Your patch in question is barely a day old and I didn't have a chance to
+look at it, and I do not think other volunteer reviewers did, either, so
+I don't know if it is wrong or it has merit yet.
