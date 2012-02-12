@@ -1,71 +1,95 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [RFC PATCH 0/3] git-p4: move to toplevel
-Date: Sun, 12 Feb 2012 18:54:19 +0000
-Message-ID: <4F380ADB.4090304@diamand.org>
-References: <1329070423-23761-1-git-send-email-pw@padd.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Vitor Antunes <vitor.hda@gmail.com>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Sun Feb 12 19:54:18 2012
+From: =?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH/RFC] Auto detection in Makefile if msgfmt is not available
+Date: Sun, 12 Feb 2012 20:09:09 +0100
+Message-ID: <DA8341B0-2A4F-40D8-A5CB-F8159E087C98@web.de>
+References: <201202121342.25113.tboegi@web.de> <CACBZZX4W0onNOstQqNethDBv1tZSijt8Q_HDrcuWr+Z8WYV90w@mail.gmail.com> <7vr4y0j79w.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1084)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 12 20:09:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RweYw-0003su-Ps
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Feb 2012 19:54:15 +0100
+	id 1RwenV-0004lt-QE
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Feb 2012 20:09:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755571Ab2BLSyJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Feb 2012 13:54:09 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:58423 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755056Ab2BLSyI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Feb 2012 13:54:08 -0500
-Received: by wgbdt10 with SMTP id dt10so4243403wgb.1
-        for <git@vger.kernel.org>; Sun, 12 Feb 2012 10:54:07 -0800 (PST)
-Received: by 10.216.134.157 with SMTP id s29mr5172843wei.1.1329072847339;
-        Sun, 12 Feb 2012 10:54:07 -0800 (PST)
-Received: from [86.6.30.7] (cpc19-cmbg14-2-0-cust6.5-4.cable.virginmedia.com. [86.6.30.7])
-        by mx.google.com with ESMTPS id n5sm39246062wiw.7.2012.02.12.10.54.06
-        (version=SSLv3 cipher=OTHER);
-        Sun, 12 Feb 2012 10:54:06 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
-In-Reply-To: <1329070423-23761-1-git-send-email-pw@padd.com>
-X-Gm-Message-State: ALoCoQlVBpqUvwqCXzRV+HVZH3GuvbKYhBWEZTeRNybeGqitjWmv1iQnMD5hOvuHwwTjOk/2Xi2M
+	id S1755771Ab2BLTJN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Feb 2012 14:09:13 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:51662 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755761Ab2BLTJM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Feb 2012 14:09:12 -0500
+Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 15F891C119F62
+	for <git@vger.kernel.org>; Sun, 12 Feb 2012 20:09:11 +0100 (CET)
+Received: from birne.lan ([194.22.188.61]) by smtp.web.de (mrweb002) with
+ ESMTPA (Nemesis) id 0Ldmkd-1SO3Gg3mnT-00iB37; Sun, 12 Feb 2012 20:09:10 +0100
+In-Reply-To: <7vr4y0j79w.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1084)
+X-Provags-ID: V02:K0:iVUQmeSNJOuqoOIwW7sJ24hbGF1CvQZtPC9+xcRHyYb
+ Rt00r1hPpKhCtqUqa0tBp+S0Wg7Ov0E1ShI+jxPUhgyeY5nf5R
+ F4HrmP0cANPoimLlx4tI0amUHwOMnNz1Y4nZ3r1d5jhlb5uop1
+ MtFnMfvlCkBm6GE1x2kHn3xgjQP2lAylQt7+ZxHrTW9/s2obU+
+ gjupOysUaBe0ue5YFQC2A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190589>
 
-On 12/02/12 18:13, Pete Wyckoff wrote:
-> The git-p4 code is in a single python script down in
-> contrib/fast-import now.  I'd like to move it up to the top-level
-> source directory of git to make it easier to build and
-> distribute.  Git-p4 already takes advantage of the git
-> infrastructure for documentation and testing, as well as the
-> community support (Junio, many reviewers).
 
-About time this was done. There's still a few oddities around but far 
-fewer than there used to be. I don't know if Junio has some rules on 
-what a command needs before it graduates from contrib though.
+Am 12.02.2012 um 18:22 schrieb Junio C Hamano:
 
-<snip>
+> =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
+>=20
+>> 2012/2/12 Torsten B=F6gershausen <tboegi@web.de>:
+>>> Added a simple auto-detection and switch to NO_GETTEXT when
+>>> msgfmt could not be found on the system
+>>=20
+>> Oh look, a start at our very own autoconf replacement :)
+>=20
+> It is a bad idea for the Makefile to silently decide to flip NO_GETTE=
+XT
+> when the system happens to be missing msgfmt without letting the user=
+ know
+> what is happening.  Current behaviour to error out will at least give=
+ an
+> opportunity to stop and think if installing gettext suite on the syst=
+em
+> makes sense before proceeding.
+>=20
+> Given that the Makefile only has this to say:
+>=20
+>    # Define NO_GETTEXT if you don't want Git output to be translated.
+>    # A translated Git requires GNU libintl or another gettext impleme=
+ntation,
+>    # plus libintl-perl at runtime.
+>=20
+> expecting that "msgfmt: no such command" clicks "Ah, I do not have ge=
+ttext
+> suite" for anybody who attempts to build (and fail) Git, it however i=
+s
+> also a bit unfair and unhelpful.
+>=20
+> Perhaps something like this is necessary and sufficient.
+>=20
+>    # Define NO_GETTEXT if you don't want Git output to be translated =
+or if
+>    # you do not have gettext suite (e.g. "msgfmt" and "gettext" comma=
+nds).
+>    # A translated Git requires GNU libintl or another gettext impleme=
+ntation,
+>    # plus libintl-perl at runtime.
 
-> a core git package, or as a separate add-on.  Getting support
-> for python and git-p4 in msysgit is something I'd like to see
-> happen too.
-
-Not sure about msysgit, but last time I tried on Windows it didn't work 
-at all well.
-
->
-> While I considered taking this opportunity to split up git-p4
-> into more modular components across multiple files, it seems best
-> now just to do the script move intact.  That effort could come
-> later.  If anyone has a strong preference to do this now, we could.
-
-Regards!
-Luke
+Thanks all!
+a)  the problem was fixed by "sudo apt-get install gettext", which lead=
+s to
+b) The comment was very helpful  ( As I didn't know which package to in=
+stall) and the final question:
+c) Should I send a new patch ?
+/Torsten
