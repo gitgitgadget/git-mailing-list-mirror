@@ -1,85 +1,51 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Harden and improve $project_filter page title
-Date: Sun, 12 Feb 2012 16:21:30 +0100
-Message-ID: <1329060090-32370-1-git-send-email-jnareb@gmail.com>
-Cc: "Bernhard R. Link" <brl+git@mail.brlink.eu>,
-	Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 12 16:22:35 2012
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH/RFC] Auto detection in Makefile if msgfmt is not available
+Date: Sun, 12 Feb 2012 16:22:06 +0100
+Message-ID: <CACBZZX4W0onNOstQqNethDBv1tZSijt8Q_HDrcuWr+Z8WYV90w@mail.gmail.com>
+References: <201202121342.25113.tboegi@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Feb 12 16:22:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RwbG6-00069v-Px
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Feb 2012 16:22:35 +0100
+	id 1RwbG7-00069v-Lb
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Feb 2012 16:22:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755408Ab2BLPV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Feb 2012 10:21:59 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:59983 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754503Ab2BLPV7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Feb 2012 10:21:59 -0500
-Received: by eekc14 with SMTP id c14so1548673eek.19
-        for <git@vger.kernel.org>; Sun, 12 Feb 2012 07:21:57 -0800 (PST)
+	id S1755449Ab2BLPWb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Feb 2012 10:22:31 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:65275 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754503Ab2BLPW3 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Feb 2012 10:22:29 -0500
+Received: by lagu2 with SMTP id u2so3378275lag.19
+        for <git@vger.kernel.org>; Sun, 12 Feb 2012 07:22:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=BpoLwTi30Gd/A3p7xyosAJbj1qBCQ6Hm2mnO2UbkPPo=;
-        b=IaINvHVZ1NyTZswohkHTABRz6an4651ASUBwvAN3B9iJlvbqQ37fLvk4bUL0WeA0X4
-         KNaU2jQF8tsFvJNc2Od6Z1Z+uFZAh9O0mWg44aS2dkCtiMuHZR9YhNMc0zqgLns0PPDU
-         5mwwo1Tp8n/875kc0xG0gTOIzUOQll0mD5flg=
-Received: by 10.14.202.200 with SMTP id d48mr3403834eeo.24.1329060117583;
-        Sun, 12 Feb 2012 07:21:57 -0800 (PST)
-Received: from localhost.localdomain (abwh127.neoplus.adsl.tpnet.pl. [83.8.231.127])
-        by mx.google.com with ESMTPS id w60sm31491125eeb.4.2012.02.12.07.21.55
-        (version=SSLv3 cipher=OTHER);
-        Sun, 12 Feb 2012 07:21:57 -0800 (PST)
-X-Mailer: git-send-email 1.7.9
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=RJbm3/1RfcnHHNUCO2rf8RXEioJIndEVkAFZQ/7ukAs=;
+        b=dk0S2W88IWRP+TW7agj9CG8CZiwBPmYLDRap8k2QZ3Ibz/aIw52+VuQfXuy1kpugvo
+         CUT5jZ2S2sq2X3rvmP7DrMGa3CnxTktyGFuKwhKOFMu9MUrZceg0WBChaOXZmKkw4VZE
+         4a/idZABQQR8KJLokzBnIuAE9sUIJvB6uS6bA=
+Received: by 10.112.84.1 with SMTP id u1mr4572004lby.35.1329060147269; Sun, 12
+ Feb 2012 07:22:27 -0800 (PST)
+Received: by 10.112.1.230 with HTTP; Sun, 12 Feb 2012 07:22:06 -0800 (PST)
+In-Reply-To: <201202121342.25113.tboegi@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190574>
 
-Commit 19d2d23 (gitweb: add project_filter to limit project list
-to a subdirectory, 2012-01-30) added also support for displaying
-$project_filter, if present, in page title.
+2012/2/12 Torsten B=C3=B6gershausen <tboegi@web.de>:
+> Added a simple auto-detection and switch to NO_GETTEXT when
+> msgfmt could not be found on the system
 
-Unfortunately it forgot to treat $project_filter as path, and escape
-it using esc_path(), like it is done for $filename.
-
-Also, it was not obvious that "$site_name - $project_filter" is about
-project filtering: use "$site_name - projects in '$project_filter'".
-
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Though we should probably also esc_path($project), not only
-to_utf8($project) in get_page_title() subroutine.
-
-So I am not that sure if it is really necessary, or if I should follow
-it by further hardening of get_page_title().
-
-Anyway I have noticed this when I was examining gitweb code for
-generating page title, considering adding information about search for
-project search.  So this is patch I will be depending textually via
-context lines on.
-
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 081ac45..8ba2022 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3751,7 +3751,7 @@ sub get_page_title {
- 
- 	unless (defined $project) {
- 		if (defined $project_filter) {
--			$title .= " - " . to_utf8($project_filter);
-+			$title .= " - projects in '" . esc_path($project_filter) . "'";
- 		}
- 		return $title;
- 	}
--- 
-1.7.9
+Oh look, a start at our very own autoconf replacement :)
