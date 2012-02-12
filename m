@@ -1,95 +1,84 @@
-From: =?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH/RFC] Auto detection in Makefile if msgfmt is not available
-Date: Sun, 12 Feb 2012 20:09:09 +0100
-Message-ID: <DA8341B0-2A4F-40D8-A5CB-F8159E087C98@web.de>
-References: <201202121342.25113.tboegi@web.de> <CACBZZX4W0onNOstQqNethDBv1tZSijt8Q_HDrcuWr+Z8WYV90w@mail.gmail.com> <7vr4y0j79w.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 12 20:09:20 2012
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [RFC/PATCHv2 2/2] git-p4: initial demonstration of possible RCS
+ keyword fixup
+Date: Sun, 12 Feb 2012 20:07:00 +0000
+Message-ID: <4F381BE4.2070807@diamand.org>
+References: <1328829442-12550-1-git-send-email-luke@diamand.org> <1328829442-12550-3-git-send-email-luke@diamand.org> <20120211234248.GA16691@padd.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Eric Scouten <eric@scouten.com>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Sun Feb 12 21:07:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RwenV-0004lt-QE
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Feb 2012 20:09:18 +0100
+	id 1Rwfhh-0006lG-0g
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Feb 2012 21:07:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755771Ab2BLTJN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Feb 2012 14:09:13 -0500
-Received: from fmmailgate02.web.de ([217.72.192.227]:51662 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755761Ab2BLTJM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Feb 2012 14:09:12 -0500
-Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 15F891C119F62
-	for <git@vger.kernel.org>; Sun, 12 Feb 2012 20:09:11 +0100 (CET)
-Received: from birne.lan ([194.22.188.61]) by smtp.web.de (mrweb002) with
- ESMTPA (Nemesis) id 0Ldmkd-1SO3Gg3mnT-00iB37; Sun, 12 Feb 2012 20:09:10 +0100
-In-Reply-To: <7vr4y0j79w.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1084)
-X-Provags-ID: V02:K0:iVUQmeSNJOuqoOIwW7sJ24hbGF1CvQZtPC9+xcRHyYb
- Rt00r1hPpKhCtqUqa0tBp+S0Wg7Ov0E1ShI+jxPUhgyeY5nf5R
- F4HrmP0cANPoimLlx4tI0amUHwOMnNz1Y4nZ3r1d5jhlb5uop1
- MtFnMfvlCkBm6GE1x2kHn3xgjQP2lAylQt7+ZxHrTW9/s2obU+
- gjupOysUaBe0ue5YFQC2A==
+	id S1754476Ab2BLUGu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Feb 2012 15:06:50 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:62771 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752796Ab2BLUGt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Feb 2012 15:06:49 -0500
+Received: by wgbdt10 with SMTP id dt10so4270983wgb.1
+        for <git@vger.kernel.org>; Sun, 12 Feb 2012 12:06:48 -0800 (PST)
+Received: by 10.216.136.196 with SMTP id w46mr4567790wei.24.1329077207982;
+        Sun, 12 Feb 2012 12:06:47 -0800 (PST)
+Received: from [86.6.30.7] (cpc19-cmbg14-2-0-cust6.5-4.cable.virginmedia.com. [86.6.30.7])
+        by mx.google.com with ESMTPS id dr5sm39838077wib.0.2012.02.12.12.06.46
+        (version=SSLv3 cipher=OTHER);
+        Sun, 12 Feb 2012 12:06:47 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:7.0.1) Gecko/20110929 Thunderbird/7.0.1
+In-Reply-To: <20120211234248.GA16691@padd.com>
+X-Gm-Message-State: ALoCoQkl+92iTAwEw+oD2/T4ga0JdTRbNDVbsBRbXhzPqxoX68p2ATB+OB/Qg1bZufN9rhhGjMoB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190590>
+
+On 11/02/12 23:42, Pete Wyckoff wrote:
+>
+> I'll send along a bunch of test cases I wrote to play around
+> with this.  Your case had too many moving parts for me to
+> understand.  If there's something in there that isn't covered,
+> maybe you can factor it out into something small?  Feel free
+> to merge any of my code in with a future resubmission.
+
+Thanks - I'm glad you like it! I'll rework it with your code and resubmit.
 
 
-Am 12.02.2012 um 18:22 schrieb Junio C Hamano:
+>
+> Some comments in this code below:
+>
+>
+> This is a novel approach too.  Instead of just guessing that
+> keywords are causing the conflict, inspect the diff for context
+> or edited lines containing keywords.
+>
+> Or we could just always scrub every file before even trying to
+> apply patches.
 
-> =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
->=20
->> 2012/2/12 Torsten B=F6gershausen <tboegi@web.de>:
->>> Added a simple auto-detection and switch to NO_GETTEXT when
->>> msgfmt could not be found on the system
->>=20
->> Oh look, a start at our very own autoconf replacement :)
->=20
-> It is a bad idea for the Makefile to silently decide to flip NO_GETTE=
-XT
-> when the system happens to be missing msgfmt without letting the user=
- know
-> what is happening.  Current behaviour to error out will at least give=
- an
-> opportunity to stop and think if installing gettext suite on the syst=
-em
-> makes sense before proceeding.
->=20
-> Given that the Makefile only has this to say:
->=20
->    # Define NO_GETTEXT if you don't want Git output to be translated.
->    # A translated Git requires GNU libintl or another gettext impleme=
-ntation,
->    # plus libintl-perl at runtime.
->=20
-> expecting that "msgfmt: no such command" clicks "Ah, I do not have ge=
-ttext
-> suite" for anybody who attempts to build (and fail) Git, it however i=
-s
-> also a bit unfair and unhelpful.
->=20
-> Perhaps something like this is necessary and sufficient.
->=20
->    # Define NO_GETTEXT if you don't want Git output to be translated =
-or if
->    # you do not have gettext suite (e.g. "msgfmt" and "gettext" comma=
-nds).
->    # A translated Git requires GNU libintl or another gettext impleme=
-ntation,
->    # plus libintl-perl at runtime.
+I guess scrubbing every file could get quite slow. We have people 
+checking in hundreds of megabytes of C test vectors....
 
-Thanks all!
-a)  the problem was fixed by "sudo apt-get install gettext", which lead=
-s to
-b) The comment was very helpful  ( As I didn't know which package to in=
-stall) and the final question:
-c) Should I send a new patch ?
-/Torsten
+>
+> In a few spots I see you've taken the ":" out of the regex.  This
+> will match strings like $Idiot$ that shouldn't be keyword
+> expanded.
+
+Good point - I'll put the ':' back.
+
+>
+> Impressed.
+
+Thanks!
+
+Updated patch series to follow.
+
+
+Luke
