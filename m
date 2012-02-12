@@ -1,79 +1,177 @@
-From: Sven Strickroth <sven.strickroth@tu-clausthal.de>
-Subject: Re: [PATCH 2/2] git-svn, perl/Git.pm: extend and use Git->prompt
- method for querying users
-Date: Sun, 12 Feb 2012 17:02:56 +0100
-Message-ID: <4F37E2B0.9060007@tu-clausthal.de>
-References: <4EF9ED58.8080205@tu-clausthal.de> <7vd3b967ql.fsf@alter.siamese.dyndns.org> <7vty4l4rr8.fsf@alter.siamese.dyndns.org> <4EFA5F08.2060705@tu-clausthal.de> <7vpqf91kqo.fsf@alter.siamese.dyndns.org> <4EFAF241.9050806@tu-clausthal.de> <7v39c41keo.fsf@alter.siamese.dyndns.org> <7vpqf8z8a6.fsf@alter.siamese.dyndns.org> <4F00B7F3.1060105@tu-clausthal.de> <7vzke4vebl.fsf@alter.siamese.dyndns.org> <20120103184022.GA20926@sigill.intra.peff.net>
+From: =?UTF-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= 
+	<dilyan.palauzov@aegee.org>
+Subject: [PATCH] Re: 1.7.9, libcharset missing from EXTLIBS
+Date: Sun, 12 Feb 2012 17:23:36 +0100
+Message-ID: <4F37E788.7030202@aegee.org>
+References: <4F3472F4.4060605@aegee.org> <7v1uq3toyq.fsf@alter.siamese.dyndns.org> <CACBZZX45=mr=FMqFF+Pw4KPaDAtvs-ePLbFATpyFA93vSfZatw@mail.gmail.com> <4F34EF9D.8030509@aegee.org> <7vipjer0yn.fsf@alter.siamese.dyndns.org> <7vd39mph9x.fsf@alter.siamese.dyndns.org> <4F370DE5.70400@aegee.org> <7vfwegl4x8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Feb 12 17:20:24 2012
+Content-Type: multipart/mixed;
+ boundary="------------030808010300070602020408"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 12 17:23:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RwcA3-0000TN-NP
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Feb 2012 17:20:24 +0100
+	id 1RwcDQ-0002wX-LI
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Feb 2012 17:23:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755480Ab2BLQUR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Feb 2012 11:20:17 -0500
-Received: from poseidon.rz.tu-clausthal.de ([139.174.2.21]:28818 "EHLO
-	poseidon.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755333Ab2BLQUQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Feb 2012 11:20:16 -0500
-X-Greylist: delayed 954 seconds by postgrey-1.27 at vger.kernel.org; Sun, 12 Feb 2012 11:20:16 EST
-Received: from poseidon.rz.tu-clausthal.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id B5980272EBB;
-	Sun, 12 Feb 2012 17:02:50 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; s=dkim1;
-	 bh=U/9qVXK8XIHlCiCB4mNVtzocvbI=; b=mdTC+jyGuvLTMkX3kAQzUI+EAMNi
-	tY2HqxOKQjA23zRSpsGN3UIkgjOUVPpbORbEGKdx8CoNO/3m2LAPwvqI6OUpTKAO
-	Dk8JVOeYhmNLtT0YIDh8gBXhYzQuWRs4qnwphCrJdAu8IYSxHBfBMcB1NVXG1pK5
-	cITQ2kSZvXY2j18=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=tu-clausthal.de; h=
-	message-id:date:from:mime-version:to:cc:subject:references
-	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=
-	dkim1; b=L04rQPIZBdoJNKjiJ8I3nUuxYd0XHoqUXyOKr/OrpNJp1BrULnPc+13
-	ShFDi7fZPYAPeVDCFm93Lz70RUvS61VG/1/UvZ9jFrfVsI2WsVNMbtItytP9Ejve
-	BD1ys231IN7/6q8ZKzyUP6gVms993wdCk8w2sJMIpqxkEeD6H/Go=
-Received: from tu-clausthal.de (hathor.rz.tu-clausthal.de [139.174.2.1])
-	by poseidon.rz.tu-clausthal.de (Postfix) with ESMTP id 81813272EB9;
-	Sun, 12 Feb 2012 17:02:50 +0100 (CET)
-Received: from [139.174.6.11] (account sstri@tu-clausthal.de [139.174.6.11] verified)
-  by tu-clausthal.de (CommuniGate Pro SMTP 5.4.3)
-  with ESMTPSA id 27350792; Sun, 12 Feb 2012 17:02:50 +0100
+	id S1755491Ab2BLQXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Feb 2012 11:23:48 -0500
+Received: from mailout-aegee.scc.kit.edu ([129.13.185.235]:33166 "EHLO
+	mailout-aegee.scc.kit.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755487Ab2BLQXr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Feb 2012 11:23:47 -0500
+Received: from smtp.aegee.org (aegeeserv.aegee.uni-karlsruhe.de [129.13.131.80])
+	by scc-mailout-02.scc.kit.edu with esmtp (Exim 4.72 #1)
+	id 1RwcDH-0007iu-HF; Sun, 12 Feb 2012 17:23:43 +0100
+Authentication-Results: aegeeserv.aegee.org; auth=pass (PLAIN) smtp.auth=didopalauzov
+Received: from [192.168.2.104] (p4FDCFE97.dip.t-dialin.net [79.220.254.151])
+	(authenticated bits=0)
+	by smtp.aegee.org (8.14.5/8.14.5) with ESMTP id q1CGNfqU018671
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Sun, 12 Feb 2012 16:23:42 GMT
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0) Gecko/20120129 Thunderbird/10.0
-In-Reply-To: <20120103184022.GA20926@sigill.intra.peff.net>
-X-Enigmail-Version: 1.3.5
-X-Virus-Scanned: by Sophos PureMessage V5.6 at tu-clausthal.de
-X-Spam-Level: (8%, '
- MULTIPLE_RCPTS 0.1, BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_1000_LESS 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_500_599 0, BODY_SIZE_7000_LESS 0, __ANY_URI 0, __BOUNCE_CHALLENGE_SUBJ 0, __BOUNCE_NDR_SUBJ_EXEMPT 0, __CP_URI_IN_BODY 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __MOZILLA_MSGID 0, __MULTIPLE_RCPTS_CC_X2 0, __SANE_MSGID 0, __SUBJ_ALPHA_END 0, __TO_MALFORMED_2 0, __URI_NO_MAILTO 0, __URI_NO_WWW 0, __URI_NS , __USER_AGENT 0')
+In-Reply-To: <7vfwegl4x8.fsf@alter.siamese.dyndns.org>
+X-Virus-Scanned: clamav-milter 0.97.3 at aegeeserv
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190579>
 
-Hi,
+This is a multi-part message in MIME format.
+--------------030808010300070602020408
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Am 03.01.2012 19:40 schrieb Jeff King:
-> There is one difference between how git and ssh use the ASKPASS
-> variable. In git, we try it _first_, and fall back to asking on the
-> terminal.  For ssh, they first try the terminal, and fall back to
-> askpass only when the terminal cannot be opened.
+The function locale_charset might appear in libiconv as local symbol.  In
+this case linking with -lcharset delivers locale_charset, when the function
+is exported from that library.  This patch defines a new Autoconf/make
+variable CHARSET_LIB to contain the library exporting locale_charset and
+fixes configure.ac to fill CHARSET_LIB with " -lcharset", when
+locale_charset is not exported from libiconv, but is exported from
+libcharset, and amends EXTLIBS to include CHARSET_LIB when HAVE_LIBCHARSET_H
+is defined.
 
-I checked out subversion (svn co
-http://svn.apache.org/repos/asf/subversion/trunk subversion) and
-performed a "grep ASKPASS * -R": Only match in
-"contrib\client-side\emacs\psvn.el". So I doubt if subversion really
-supports SSH_ASKPASS.
+Signed-off-by: Дилян Палаузов <git-dpa@aegee.org>
+---
+ Makefile      |    6 ++++++
+ config.mak.in |    1 +
+ configure.ac  |   10 ++++++++++
+ 3 files changed, 17 insertions(+), 0 deletions(-)
 
+diff --git a/Makefile b/Makefile
+index 87fb30a..571d864 100644
+--- a/Makefile
++++ b/Makefile
+@@ -56,6 +56,11 @@ all::
+ # FreeBSD can use either, but MinGW and some others need to use
+ # libcharset.h's locale_charset() instead.
+ #
++# Define CHARSET_LIB to contain the additional library exporting the symbol
++# locale_charset to link against.  configure.ac checks if locale_charset is
++# exported from libiconv, if not, it checks if locale_charset is
+exported from
++# libcharset and defines then CHARSET_LIB to -lcharset .
++#
+ # Define LIBC_CONTAINS_LIBINTL if your gettext implementation doesn't
+ # need -lintl when linking.
+ #
+@@ -1698,6 +1703,7 @@ endif
+
+ ifdef HAVE_LIBCHARSET_H
+ 	BASIC_CFLAGS += -DHAVE_LIBCHARSET_H
++	EXTLIBS +=$(CHARSET_LIB)
+ endif
+
+ ifdef HAVE_DEV_TTY
+diff --git a/config.mak.in b/config.mak.in
+index 10698c8..b2ba710 100644
+--- a/config.mak.in
++++ b/config.mak.in
+@@ -74,3 +74,4 @@ SNPRINTF_RETURNS_BOGUS=@SNPRINTF_RETURNS_BOGUS@
+ NO_PTHREADS=@NO_PTHREADS@
+ PTHREAD_CFLAGS=@PTHREAD_CFLAGS@
+ PTHREAD_LIBS=@PTHREAD_LIBS@
++CHARSET_LIB=@CHARSET_LIB@
+diff --git a/configure.ac b/configure.ac
+index 630dbdd..1c21a5b 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -836,6 +836,16 @@ AC_CHECK_HEADER([libcharset.h],
+ [HAVE_LIBCHARSET_H=YesPlease],
+ [HAVE_LIBCHARSET_H=])
+ AC_SUBST(HAVE_LIBCHARSET_H)
++# Define CHARSET_LIB if libiconv does not export the locale_charset symbol
++# and libcharset does
++CHARSET_LIB=
++AC_CHECK_LIB([iconv], [locale_charset],
++       [],
++       [AC_CHECK_LIB([charset], [locale_charset],
++                     [CHARSET_LIB=" -lcharset"])
++       ]
++)
++AC_SUBST(CHARSET_LIB)
+ #
+ # Define NO_STRCASESTR if you don't have strcasestr.
+ GIT_CHECK_FUNC(strcasestr,
 -- 
-Best regards,
- Sven Strickroth
+1.7.9
+
+
+
+On 12.02.2012 11:30, Junio C Hamano wrote:
+> Дилян Палаузов  <dilyan.palauzov@aegee.org> writes:
+> 
+>> diff -u git-1.7.9.orig/config.mak.in git-1.7.9/config.mak.in
+>> --- git-1.7.9.orig/config.mak.in        2012-01-27 20:51:04.000000000 +0000
+>> +++ git-1.7.9/config.mak.in     2012-02-12 00:52:41.457968080 +0000
+>> @@ -74,3 +74,4 @@
+>>  NO_PTHREADS=@NO_PTHREADS@
+>>  PTHREAD_CFLAGS=@PTHREAD_CFLAGS@
+>>  PTHREAD_LIBS=@PTHREAD_LIBS@
+>> +LINK_CHARSET=@LINK_CHARSET@
+>> diff -u git-1.7.9.orig/configure.ac git-1.7.9/configure.ac
+>> --- git-1.7.9.orig/configure.ac 2012-01-27 20:51:04.000000000 +0000
+>> +++ git-1.7.9/configure.ac      2012-02-12 00:44:29.222967868 +0000
+>> @@ -836,6 +836,18 @@
+>>  [HAVE_LIBCHARSET_H=YesPlease],
+>>  [HAVE_LIBCHARSET_H=])
+>>  AC_SUBST(HAVE_LIBCHARSET_H)
+>> +# Define LINK_LIBCHARSET if libiconv does not export the
+> 
+> Because the use of configure is optional in our build infrastructure, I
+> wouldn't have objected if this comment were missing from configure.ac, but
+> the new variable *must* be described in Makefile (see the top 250 lines or
+> so of that file).
+> 
+> I also need to point out that LINK_LIBCHARSET does not sit very well with
+> the way how existing Makefile variables are named. Perhaps make the new
+> variable contain the necessary string ("-lcharset" in your case), and name
+> it CHARSET_LIB or something?  By doing so, when we find a platform that
+> has the necessary locale_charset() not in libcharset.{a,so} but somewhere
+> else, e.g. libxyzzy.a, we can accomodate it with "CHARSET_LIB = -lxyzzy".
+> 
+> Thanks.  Also as Ævar pointed out, please do not forget to sign off your
+> patch.
+
+--------------030808010300070602020408
+Content-Type: text/x-vcard; charset=utf-8;
+ name="dilyan_palauzov.vcf"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename="dilyan_palauzov.vcf"
+
+YmVnaW46dmNhcmQNCmZuO3F1b3RlZC1wcmludGFibGU6PUQwPTk0PUQwPUI4PUQwPUJCPUQx
+PThGPUQwPUJEID1EMD05Rj1EMD1CMD1EMD1CQj1EMD1CMD1EMT04Mz1EMD1CNz1EMD1CRT0N
+Cgk9RDA9QjINCm47cXVvdGVkLXByaW50YWJsZTtxdW90ZWQtcHJpbnRhYmxlOj1EMD05Rj1E
+MD1CMD1EMD1CQj1EMD1CMD1EMT04Mz1EMD1CNz1EMD1CRT1EMD1CMjs9RDA9OTQ9RDA9Qjg9
+RDA9QkI9RDE9OEY9RDA9QkQNCmVtYWlsO2ludGVybmV0OmRpbHlhbi5wYWxhdXpvdkBhZWdl
+ZS5vcmcNCnRlbDtob21lOis0OS03MjEtOTQxOTMyNzANCnRlbDtjZWxsOis0OS0xNjItNDA5
+MTE3Mg0Kbm90ZTpzaXA6ODM3MkBhZWdlZS5vcmcNCnZlcnNpb246Mi4xDQplbmQ6dmNhcmQN
+Cg0K
+--------------030808010300070602020408--
