@@ -1,51 +1,54 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH/RFC] Auto detection in Makefile if msgfmt is not available
-Date: Sun, 12 Feb 2012 16:22:06 +0100
-Message-ID: <CACBZZX4W0onNOstQqNethDBv1tZSijt8Q_HDrcuWr+Z8WYV90w@mail.gmail.com>
-References: <201202121342.25113.tboegi@web.de>
+From: Steven Walter <stevenrwalter@gmail.com>
+Subject: Re: [PATCH 1/2] git-svn.perl: perform deletions before anything else
+Date: Sun, 12 Feb 2012 10:35:43 -0500
+Message-ID: <CAK8d-aKJCBq2xpsz65hA4g8oa_szKaofLpkYB3v3_2dd=BAgiQ@mail.gmail.com>
+References: <7vzkcrvkfa.fsf@alter.siamese.dyndns.org> <1328820742-4795-1-git-send-email-stevenrwalter@gmail.com>
+ <1328820742-4795-2-git-send-email-stevenrwalter@gmail.com> <20120212070353.GA30477@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Feb 12 16:22:36 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Feb 12 16:36:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RwbG7-00069v-Lb
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Feb 2012 16:22:36 +0100
+	id 1RwbTi-0006Nr-SZ
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Feb 2012 16:36:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755449Ab2BLPWb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Feb 2012 10:22:31 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:65275 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754503Ab2BLPW3 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Feb 2012 10:22:29 -0500
-Received: by lagu2 with SMTP id u2so3378275lag.19
-        for <git@vger.kernel.org>; Sun, 12 Feb 2012 07:22:27 -0800 (PST)
+	id S1755258Ab2BLPgG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Feb 2012 10:36:06 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:59258 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752876Ab2BLPgF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Feb 2012 10:36:05 -0500
+Received: by yenm8 with SMTP id m8so2053072yen.19
+        for <git@vger.kernel.org>; Sun, 12 Feb 2012 07:36:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=RJbm3/1RfcnHHNUCO2rf8RXEioJIndEVkAFZQ/7ukAs=;
-        b=dk0S2W88IWRP+TW7agj9CG8CZiwBPmYLDRap8k2QZ3Ibz/aIw52+VuQfXuy1kpugvo
-         CUT5jZ2S2sq2X3rvmP7DrMGa3CnxTktyGFuKwhKOFMu9MUrZceg0WBChaOXZmKkw4VZE
-         4a/idZABQQR8KJLokzBnIuAE9sUIJvB6uS6bA=
-Received: by 10.112.84.1 with SMTP id u1mr4572004lby.35.1329060147269; Sun, 12
- Feb 2012 07:22:27 -0800 (PST)
-Received: by 10.112.1.230 with HTTP; Sun, 12 Feb 2012 07:22:06 -0800 (PST)
-In-Reply-To: <201202121342.25113.tboegi@web.de>
+         :cc:content-type;
+        bh=am4+pHWD/Fn02PQbO+/p26ZC99aacTxN+9laRfqjwas=;
+        b=GxNsl8sOB2O7LKq0h3ae0QdIJi1P/KDvtUZP7mkXs7YDNMYvEXmUAvGojfP/1G4zmP
+         gc/S+3ETYLUUl75DcsG3bxL9dhPFrs/KMJrcGVuPgiefbrVZ/BS9f4fmsSDF7VjP5ahU
+         uS6dRv1qp+x4UK9SFaGFOWh7OMnpEZVUNLpuk=
+Received: by 10.236.72.167 with SMTP id t27mr16089974yhd.79.1329060964201;
+ Sun, 12 Feb 2012 07:36:04 -0800 (PST)
+Received: by 10.100.96.10 with HTTP; Sun, 12 Feb 2012 07:35:43 -0800 (PST)
+In-Reply-To: <20120212070353.GA30477@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190575>
 
-2012/2/12 Torsten B=C3=B6gershausen <tboegi@web.de>:
-> Added a simple auto-detection and switch to NO_GETTEXT when
-> msgfmt could not be found on the system
+On Sun, Feb 12, 2012 at 2:03 AM, Eric Wong <normalperson@yhbt.net> wrote:
+> Steven Walter <stevenrwalter@gmail.com> wrote:
+>> Signed-off-by: Steven Walter <stevenrwalter@gmail.com>
+>
+> Thanks, shall I fixup 2/2 and assume you meant to Sign-off on that, too?
 
-Oh look, a start at our very own autoconf replacement :)
+Yes, thanks
+-- 
+-Steven Walter <stevenrwalter@gmail.com>
