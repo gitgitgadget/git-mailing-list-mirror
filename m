@@ -1,95 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] Auto detection in Makefile if msgfmt is not
- available
-Date: Sun, 12 Feb 2012 09:22:51 -0800
-Message-ID: <7vr4y0j79w.fsf@alter.siamese.dyndns.org>
-References: <201202121342.25113.tboegi@web.de>
- <CACBZZX4W0onNOstQqNethDBv1tZSijt8Q_HDrcuWr+Z8WYV90w@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 12 18:23:02 2012
+From: Pete Wyckoff <pw@padd.com>
+Subject: [RFC PATCH 0/3] git-p4: move to toplevel
+Date: Sun, 12 Feb 2012 13:13:40 -0500
+Message-ID: <1329070423-23761-1-git-send-email-pw@padd.com>
+Cc: Luke Diamand <luke@diamand.org>,
+	Vitor Antunes <vitor.hda@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 12 19:14:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rwd8c-0005Zm-Jr
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Feb 2012 18:22:58 +0100
+	id 1RwdwJ-0004YO-B4
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Feb 2012 19:14:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755590Ab2BLRWy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Feb 2012 12:22:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45412 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755565Ab2BLRWx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Feb 2012 12:22:53 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 217E07FF7;
-	Sun, 12 Feb 2012 12:22:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=DQgKkvlkGBYtnHbklavOkebLc
-	F8=; b=b9q2HNmP5v5xvOmHDx6YjW2GZlGli6vT28Z+1K6Rnxg+HMNGcbVYjsGYc
-	SpOSpYHBbdBHUdjF3w0VPhHeD2KiozjPDDuI487ZF8L5aqBzG1zuCJIPDd+9OPPD
-	bpxT5LBEZKtdN17s3ZiaCFPrR1gpdGgU8PLWL7nOTvfa/r2ZKs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=i1r5mg/5gwZNHdlGq0y
-	9ZW+ic1Q0Q656jW8tubjdu+BLyf3gpETyxXzV6UOBdAibnKFU1vQFjNYftf79yxv
-	+u8ypAqVspvOcuhF6VGxH6z/oGto7Nrk7i4xxJQkZ8zJifXMRd1ieBkyybOebKp3
-	hCx1Ai+0DxIx0mUCFdGp+CHM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 193E57FF6;
-	Sun, 12 Feb 2012 12:22:53 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9CBBC7FF5; Sun, 12 Feb 2012
- 12:22:52 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 31CCC204-559E-11E1-B737-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755489Ab2BLSNs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Feb 2012 13:13:48 -0500
+Received: from honk.padd.com ([74.3.171.149]:39180 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754393Ab2BLSNr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Feb 2012 13:13:47 -0500
+Received: from arf.padd.com (unknown [50.55.145.32])
+	by honk.padd.com (Postfix) with ESMTPSA id A9219E8B;
+	Sun, 12 Feb 2012 10:13:46 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 0D36B313C6; Sun, 12 Feb 2012 13:13:43 -0500 (EST)
+X-Mailer: git-send-email 1.7.9.193.g1d4a5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190584>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+The git-p4 code is in a single python script down in
+contrib/fast-import now.  I'd like to move it up to the top-level
+source directory of git to make it easier to build and
+distribute.  Git-p4 already takes advantage of the git
+infrastructure for documentation and testing, as well as the
+community support (Junio, many reviewers).
 
-> 2012/2/12 Torsten B=C3=B6gershausen <tboegi@web.de>:
->> Added a simple auto-detection and switch to NO_GETTEXT when
->> msgfmt could not be found on the system
->
-> Oh look, a start at our very own autoconf replacement :)
+Users install git-p4 currently by copying the git-p4 script from
+contrib/fast-import into a local or personal bin directory, and
+setting up an alias for "git p4" to invoke it.  If it is part of
+the install, the command will be available automatically.  Also,
+distributions may be more likely to pick it up either as part of
+a core git package, or as a separate add-on.  Getting support
+for python and git-p4 in msysgit is something I'd like to see
+happen too.
 
-It is a bad idea for the Makefile to silently decide to flip NO_GETTEXT
-when the system happens to be missing msgfmt without letting the user k=
-now
-what is happening.  Current behaviour to error out will at least give a=
-n
-opportunity to stop and think if installing gettext suite on the system
-makes sense before proceeding.
+While I considered taking this opportunity to split up git-p4
+into more modular components across multiple files, it seems best
+now just to do the script move intact.  That effort could come
+later.  If anyone has a strong preference to do this now, we could.
 
-Given that the Makefile only has this to say:
+Developer note:  Like all scripts in git, the source file is
+git-p4.py, which is built with "make" to git-p4, substituting the
+specified path for python in the first line.  Be sure to edit the
+source file, and to build before running tests.  This is sort of
+a pain for existing developers, but hopefully we can get used to it.
 
-    # Define NO_GETTEXT if you don't want Git output to be translated.
-    # A translated Git requires GNU libintl or another gettext implemen=
-tation,
-    # plus libintl-perl at runtime.
 
-expecting that "msgfmt: no such command" clicks "Ah, I do not have gett=
-ext
-suite" for anybody who attempts to build (and fail) Git, it however is
-also a bit unfair and unhelpful.
+Pete Wyckoff (3):
+  git-p4: move to toplevel
+  git p4: update name in script
+  git p4: use "git p4" directly in tests
 
-Perhaps something like this is necessary and sufficient.
+ .gitignore                              |    1 +
+ Documentation/git-p4.txt                |   23 +++------
+ INSTALL                                 |    3 +
+ Makefile                                |    1 +
+ contrib/fast-import/git-p4.README       |   13 +++++
+ contrib/fast-import/git-p4.bat          |    1 -
+ contrib/fast-import/git-p4 => git-p4.py |   14 +++---
+ t/lib-git-p4.sh                         |    8 +--
+ t/t9800-git-p4-basic.sh                 |   84 +++++++++++++++---------------
+ t/t9801-git-p4-branch.sh                |   32 ++++++------
+ t/t9802-git-p4-filetype.sh              |   10 ++--
+ t/t9803-git-p4-shell-metachars.sh       |   12 ++--
+ t/t9804-git-p4-label.sh                 |    6 +-
+ t/t9805-git-p4-skip-submit-edit.sh      |   22 ++++----
+ t/t9806-git-p4-options.sh               |   28 +++++-----
+ t/t9807-git-p4-submit.sh                |   22 ++++----
+ t/t9808-git-p4-chdir.sh                 |    6 +-
+ t/t9809-git-p4-client-view.sh           |   64 ++++++++++++------------
+ 18 files changed, 179 insertions(+), 171 deletions(-)
+ create mode 100644 contrib/fast-import/git-p4.README
+ delete mode 100644 contrib/fast-import/git-p4.bat
+ rename contrib/fast-import/git-p4 => git-p4.py (99%)
 
-    # Define NO_GETTEXT if you don't want Git output to be translated o=
-r if
-    # you do not have gettext suite (e.g. "msgfmt" and "gettext" comman=
-ds).
-    # A translated Git requires GNU libintl or another gettext implemen=
-tation,
-    # plus libintl-perl at runtime.
+-- 
+1.7.9.192.ga1d4b
