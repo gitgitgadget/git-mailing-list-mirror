@@ -1,75 +1,75 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 2/2] git-svn: un-break "git svn rebase" when
- log.abbrevCommit=true
-Date: Sat, 11 Feb 2012 18:31:31 -0600
-Message-ID: <20120212003131.GG2719@burratino>
-References: <CACBZZX5cwZ4Xz3-C8B3v4eEmyO0B-JiohfRATu1UhxzST0ar5w@mail.gmail.com>
- <1329006186-21346-1-git-send-email-avarab@gmail.com>
- <1329006186-21346-2-git-send-email-avarab@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 12/10] support pager.* for external commands
+Date: Sun, 12 Feb 2012 01:46:34 +0100
+Message-ID: <CACBZZX596wnk2KE9QzUPMc=A6Mt8HbUs7F4rnAZbw1_RrcKHnw@mail.gmail.com>
+References: <20110818215820.GA7767@sigill.intra.peff.net> <20110818220132.GB7799@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 12 01:31:51 2012
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Steffen Daode Nurpmeso <sdaoden@googlemail.com>,
+	=?UTF-8?B?SW5nbyBCcsO8Y2ts?= <ib@wupperonline.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Feb 12 01:47:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RwNM1-0002z5-8Y
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Feb 2012 01:31:45 +0100
+	id 1RwNbE-0005wS-5r
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Feb 2012 01:47:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755384Ab2BLAbi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Feb 2012 19:31:38 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:61857 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752175Ab2BLAbf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Feb 2012 19:31:35 -0500
-Received: by iacb35 with SMTP id b35so2199944iac.19
-        for <git@vger.kernel.org>; Sat, 11 Feb 2012 16:31:34 -0800 (PST)
+	id S1753762Ab2BLAq4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Feb 2012 19:46:56 -0500
+Received: from mail-lpp01m020-f174.google.com ([209.85.217.174]:59534 "EHLO
+	mail-lpp01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753608Ab2BLAqz convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Feb 2012 19:46:55 -0500
+Received: by lbom4 with SMTP id m4so1859691lbo.19
+        for <git@vger.kernel.org>; Sat, 11 Feb 2012 16:46:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=yPBEr7q8P7aWt8nQU/Bp1AAik3of3Qy3jLWAr5SFevA=;
-        b=kweZta+ofEYVPHmylyBTRxQ1DP7RH2CAO6rbU4Oed7DTSPki4VKL7if6NCcs7fUaVu
-         AuV13Up1n9UwbzH+AWxr4010w1mmDz8a6nMCuQ9FmNEi1rDFgmXTEEgD8A+NfL7xdNPT
-         Y7zoo5ZnCeNIoA8QRvd8fWtjSwj64XhpDj45A=
-Received: by 10.50.159.161 with SMTP id xd1mr12136215igb.15.1329006694449;
-        Sat, 11 Feb 2012 16:31:34 -0800 (PST)
-Received: from burratino (adsl-99-35-41-178.dsl.chcgil.sbcglobal.net. [99.35.41.178])
-        by mx.google.com with ESMTPS id vr4sm8096268igb.1.2012.02.11.16.31.33
-        (version=SSLv3 cipher=OTHER);
-        Sat, 11 Feb 2012 16:31:33 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1329006186-21346-2-git-send-email-avarab@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=M1e83Z/gBeUem/whSgBSxw4THZrYXH7/gZ/p4tZGw44=;
+        b=nDQkPDV8YB6wct38h2/Rwtah0FGBhLb3LZusAO8vZvcleQ97JSR4pfvsVyMsJPh6i0
+         3CLzqCNKP1IwmMrB5ytSoUdeXaLUcqRdr9gTOidfejjI5nQRsY2SPckZ5iRF1LeQf2KG
+         hPnzdG4fsKk66D3xDVkxCC3KIRwsTMHwsxRHo=
+Received: by 10.112.27.165 with SMTP id u5mr3838567lbg.48.1329007614166; Sat,
+ 11 Feb 2012 16:46:54 -0800 (PST)
+Received: by 10.112.1.230 with HTTP; Sat, 11 Feb 2012 16:46:34 -0800 (PST)
+In-Reply-To: <20110818220132.GB7799@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190554>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+On Fri, Aug 19, 2011 at 00:01, Jeff King <peff@peff.net> wrote:
 
-> Change git-svn to use git-rev-list(1) instead of git-log(1) since the
-> latter is porcelain that'll cause "git svn rebase" to fail completely
-> if log.abbrevCommit is set to true in the configuration.
-[...]
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -1878,8 +1878,7 @@ sub cmt_sha2rev_batch {
-> =20
->  sub working_head_info {
->  	my ($head, $refs) =3D @_;
-> -	my @args =3D qw/log --no-color --no-decorate --first-parent
-> -	              --pretty=3Dmedium/;
-> +	my @args =3D qw/rev-list --first-parent --pretty=3Dmedium/;
+> +test_expect_success TTY 'command-specific pager works for external c=
+ommands' '
+> + =C2=A0 =C2=A0 =C2=A0 sane_unset PAGER GIT_PAGER &&
+> + =C2=A0 =C2=A0 =C2=A0 echo "foo:initial" >expect &&
+> + =C2=A0 =C2=A0 =C2=A0 >actual &&
+> + =C2=A0 =C2=A0 =C2=A0 test_config pager.external "sed s/^/foo:/ >act=
+ual" &&
+> + =C2=A0 =C2=A0 =C2=A0 test_terminal git --exec-path=3D"`pwd`" extern=
+al log --format=3D%s -1 &&
+> + =C2=A0 =C2=A0 =C2=A0 test_cmp expect actual
 
-Thanks!  The other caller to "git log" in this script uses
---pretty=3Draw and should be safe.
+=46or reasons that I haven't looked into using sed like that breaks
+under /usr/bin/ksh on Solaris. Just using:
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+    sed -e \"s/^/foo:/\"
+
+Instead fixes it, it's not broken with /usr/xpg4/bin/sh, so it's some
+ksh peculiarity.
+
+The error it gives is:
+
+    sed s/^/foo:/ >actual: Not found
+
+Indicating that for some reason it's considering that whole "sed
+s/^/foo:/ >actual" string to be a single command.
