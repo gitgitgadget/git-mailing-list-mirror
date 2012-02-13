@@ -1,80 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Setting up a Git server (+ gitweb) with .htaccess files HOWTO
-Date: Mon, 13 Feb 2012 11:10:56 -0800
-Message-ID: <7v1upyft1b.fsf@alter.siamese.dyndns.org>
-References: <vpqbop266ak.fsf@bauges.imag.fr>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Silence stderr in parse_commit*() subroutines
+Date: Mon, 13 Feb 2012 20:12:04 +0100
+Message-ID: <201202132012.04721.jnareb@gmail.com>
+References: <5fa08a8b-f0a2-4796-bf0d-06a8f13bf703@b23g2000yqn.googlegroups.com> <201202111402.31684.jnareb@gmail.com> <7vmx8mfu8k.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Feb 13 20:11:08 2012
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: rajesh boyapati <boyapatisrajesh@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 13 20:12:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rx1In-0001XY-0a
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 20:11:05 +0100
+	id 1Rx1Jt-0002qT-QD
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 20:12:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757597Ab2BMTK7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Feb 2012 14:10:59 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64385 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754207Ab2BMTK6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Feb 2012 14:10:58 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 076A27617;
-	Mon, 13 Feb 2012 14:10:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+uzQeHS4FXa7j7b+T45GGucFdIM=; b=UWcv/e
-	JbMKHtV91g3zRZCxf1Fmp/9UVuhN8b9Hl5WT7H+clksAXw3Qf4wolixNU3hBIqRN
-	Zjmx6udnuRn2sZFnSq04Ajk4BR1pWReZ6d7XzTTu7nAO1aFWZ7Pbxz3tiZ3+/6qR
-	jKHBKmOKMrlbmf1HylTprRYnUVaVY2iSWLDGY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gzdnlpE4PN3HF3EjjqEYJfoZA1t+WSed
-	svTDKJgEFh/A5lX7k28TR0q5u+A4O9LNZDeY7RUiBWAD1PSCic9NsMaacZqN+4Mk
-	FlSoYkckbhCRDFmi4e7KzBiQCIWNRMEGnAQwnkYmurxrXOyNFHUxRqjLgk3e2TCO
-	/tsAfez/HBY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE4C37616;
-	Mon, 13 Feb 2012 14:10:57 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 82FD77614; Mon, 13 Feb 2012
- 14:10:57 -0500 (EST)
-In-Reply-To: <vpqbop266ak.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Mon, 13 Feb 2012 17:34:43 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 758333EC-5676-11E1-96F1-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932132Ab2BMTMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Feb 2012 14:12:08 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:37432 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757620Ab2BMTMH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Feb 2012 14:12:07 -0500
+Received: by eekc14 with SMTP id c14so1963903eek.19
+        for <git@vger.kernel.org>; Mon, 13 Feb 2012 11:12:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=41/4tWgF7xNNw8RDE1nLtdRx57a7Vm+CjObu6Z1eNt4=;
+        b=COqc4VgevPWxdcbywDWk6YLx5I4bzj7UEDq7crrV48RGA0MhonYbkkFfdCmX9tCAVr
+         qGzDlZnyto0w9a1Avh4vIQTStrR42GAiV1HZn94uPrLKVieBZRCl0bnjt7HzS5h5nzTB
+         jWN2PV7DX0E71ECuULn3HD6w/Rk8t6KnmOktE=
+Received: by 10.213.28.75 with SMTP id l11mr2855626ebc.47.1329160325869;
+        Mon, 13 Feb 2012 11:12:05 -0800 (PST)
+Received: from [192.168.1.13] (aeho143.neoplus.adsl.tpnet.pl. [79.186.196.143])
+        by mx.google.com with ESMTPS id c16sm64027306eei.1.2012.02.13.11.12.04
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 13 Feb 2012 11:12:05 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vmx8mfu8k.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190651>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > Anyway, here is the patch that should fix those "CGI: fatal: Not a valid
+> > object name HEAD" errors for you.
+> 
+> I have to wonder if it is simpler and less error prone to check HEAD
+> before doing anything else immediately after which repository is being
+> consulted, and give the same "no history at all yet in this project" page
+> for most if not all operations, instead of patching things up at this deep
+> in the callchain.
 
-> I've set up a Git server on a machine on which I have a webspace,
-> permission to run CGI scripts, but no shell or root access. Good news:
-> it worked :-).
->
-> I've documented the process here in case anyone's interested:
->
->   http://www-verimag.imag.fr/~moy/?Host-a-Git-repository-over-HTTP-S
+Actually the problem is that there is history (there are other branches),
+but HEAD points to unborn (unused) 'master' branch.
 
-After seeing the section that runs "git init" in a throw-away CGI script,
-I started wondering what the point of this site in forbidding a shell
-access in the first place.
+But you are right that we should fix underlying issue with invalid
+assumption which gitweb uses, that HEAD points to a valid commit if
+repository is non-empty.
 
-After all, if you changed that example with a script that feeds its input
-to a shell, you would have enough "shell access" to do anything you need.
+Though I think leaving safety of 2nd patch could be a good idea anyway.
+And 1st patch fixes a real issue, and does not only provide band-aid.
 
-So...
 
-Well, my reaction at this point was "why bother?", but then I realized
-that that reaction is meant for the administrator of that hosting site,
-not a user of that site, i.e. you.
+P.S. I will resend those three patches as patch series for easier review,
+so they are not tangled in this deep thread.  They should be in 'gitweb/web'
+branch in my public forks of git repository on repo.or.cz and github.
 
-Thanks for an amusing read, anyway.
+-- 
+Jakub Narebski
+Poland
