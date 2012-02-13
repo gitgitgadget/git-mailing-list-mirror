@@ -1,99 +1,69 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: git status: small difference between stating whole repository and
- small subdirectory
-Date: Mon, 13 Feb 2012 17:54:04 +0100
-Message-ID: <CAA01CsqjeDR56n=gdLWtDshp8-=8_cSih9vHV3vnUx0wTockYg@mail.gmail.com>
-References: <CAA01Csr8FbvQ8uFvxX8_6i-hysin6JuaifVVC-yoLyoT0N5F4Q@mail.gmail.com>
-	<CACsJy8DnqYZ5CdZqbebWS4NS85mfwumyao0abeqDxMXrHhDELA@mail.gmail.com>
-	<CAA01Csq+zVhRTjGqy1DJGK7o5wByd9ADsSim214T7Vkxmk+ykQ@mail.gmail.com>
-	<CACsJy8C05wvQRRQJLxrxYKHjXsgh6RugFexkPUKYGxbQkqiXJA@mail.gmail.com>
+From: Michael Schubert <mschub@elegosoft.com>
+Subject: [PATCH] completion: --no-abbrev-commit for git-log and git-show
+Date: Mon, 13 Feb 2012 17:57:50 +0100
+Message-ID: <4F39410E.3060708@elegosoft.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 13 17:54:13 2012
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 13 17:59:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RwzAK-0004Gk-BN
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 17:54:12 +0100
+	id 1RwzFD-0002R3-8A
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 17:59:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757272Ab2BMQyG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Feb 2012 11:54:06 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:55972 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757227Ab2BMQyF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Feb 2012 11:54:05 -0500
-Received: by iacb35 with SMTP id b35so4644471iac.19
-        for <git@vger.kernel.org>; Mon, 13 Feb 2012 08:54:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=qwr7OgOQr8F9Fh/y9xoDjClS/DBUtjwSDIUZtE4erBU=;
-        b=VnvJfPhKVJDPp5Zz1ai4QSCMLlOv6UaQalbHX4rf90Y24ML5ymcTYRVxWjO73hRHf6
-         k5DtZ0JwUYlP/eYrr+OBrI+hlrHzJxHJWu0s8UaOFLU/gJmmKetzwLoklO1Yky6KCh1D
-         w5cxqY/MsPcMro9H77yqGJEigqAKE4OYxlQZo=
-Received: by 10.42.145.131 with SMTP id f3mr26919329icv.8.1329152044900; Mon,
- 13 Feb 2012 08:54:04 -0800 (PST)
-Received: by 10.50.46.33 with HTTP; Mon, 13 Feb 2012 08:54:04 -0800 (PST)
-In-Reply-To: <CACsJy8C05wvQRRQJLxrxYKHjXsgh6RugFexkPUKYGxbQkqiXJA@mail.gmail.com>
+	id S1757249Ab2BMQ7K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Feb 2012 11:59:10 -0500
+Received: from mx0.elegosoft.com ([78.47.87.163]:58874 "EHLO mx0.elegosoft.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751740Ab2BMQ7J (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Feb 2012 11:59:09 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id 9A415DE901;
+	Mon, 13 Feb 2012 17:59:06 +0100 (CET)
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id TRwl9ZMCAHIA; Mon, 13 Feb 2012 17:59:06 +0100 (CET)
+Received: from [10.10.10.197] (i59F7870A.versanet.de [89.247.135.10])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id 70C70DE8FE;
+	Mon, 13 Feb 2012 17:59:06 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.1) Gecko/20120212 Thunderbird/10.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190639>
 
-On Fri, Feb 10, 2012 at 3:37 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> I think the cost is in $GIT_DIR, not the working directory.
+Signed-off-by: Michael Schubert <mschub@elegosoft.com>
+---
+ contrib/completion/git-completion.bash |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Could you explain?
-
-
-I got the problem again today. This time I've made a copy of the
-repository so hopefully I'll able to reproduce the problems.
-
-This time it's a different repository but the 'status' on a small
-subdirectory is even more than 2x slower than on the whole repository.
-
-Whole repo:
-$ find * -type f | wc -l
-33021
-$ du -shc * | grep total
-2.1G	total
-
-The subdir:
-$ find * -type f | wc -l
-17
-$ du -shc * | grep total
-84K	total
-
-As previously, timing was done with cold cache (echo 3 | sudo tee
-/proc/sys/vm/drop_caches) and executed several times.
-
-This time I have used recent git (1.7.9.188.g12766) compiled with -pg.
-git was executed in the subdirectory. Tracked files were not
-changed/deleted, there was just a couple of small untracked files.
-
-Timings:
-
-$ time git status
-real	0m16.595s
-user	0m0.680s
-sys	0m0.616s
-
-$ time git status -- .
-real	0m10.030s
-user	0m0.464s
-sys	0m0.184s
-
-You can find gprof output here:
-http://pastebin.com/mhddDUmv - from whole repo status
-http://pastebin.com/1LdVn77A - from subdir status
-
-
-
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index d7367e9..22d7018 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1587,7 +1587,7 @@ _git_log ()
+ 			$__git_log_gitk_options
+ 			--root --topo-order --date-order --reverse
+ 			--follow --full-diff
+-			--abbrev-commit --abbrev=
++			--abbrev-commit --no-abbrev-commit --abbrev=
+ 			--relative-date --date=
+ 			--pretty= --format= --oneline
+ 			--cherry-pick
+@@ -2384,7 +2384,7 @@ _git_show ()
+ 		return
+ 		;;
+ 	--*)
+-		__gitcomp "--pretty= --format= --abbrev-commit --oneline
++		__gitcomp "--pretty= --format= --abbrev-commit --no-abbrev-commit --online
+ 			$__git_diff_common_options
+ 			"
+ 		return
 -- 
-Piotr Krukowiecki
+1.7.9.324.g3d1db
