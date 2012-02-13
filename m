@@ -1,116 +1,166 @@
-From: Tom Grennan <tmgrennan@gmail.com>
-Subject: Re: [PATCHv2 1/4] refs: add common refname_match_patterns()
-Date: Mon, 13 Feb 2012 09:27:54 -0800
-Message-ID: <20120213172754.GG4903@tgrennan-laptop>
-References: <1328926618-17167-1-git-send-email-tmgrennan@gmail.com>
- <1328926618-17167-2-git-send-email-tmgrennan@gmail.com>
- <4F3614F6.2000106@alum.mit.edu>
- <20120211191748.GC4903@tgrennan-laptop>
- <4F3898F8.2000201@alum.mit.edu>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Silence stderr in parse_commit*() subroutines
+Date: Mon, 13 Feb 2012 19:15:01 +0100
+Message-ID: <201202131915.01753.jnareb@gmail.com>
+References: <5fa08a8b-f0a2-4796-bf0d-06a8f13bf703@b23g2000yqn.googlegroups.com> <201202111402.31684.jnareb@gmail.com> <CA+EqV8xTsavQFWsoijrt+0UcfxSZO2voL=CawrRPvDeB=qHQfg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: pclouds@gmail.com, git@vger.kernel.org, gitster@pobox.com,
-	jasampler@gmail.com
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Feb 13 18:28:16 2012
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: rajesh boyapati <boyapatisrajesh@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 13 19:15:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rwzh7-0006rq-Sf
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 18:28:07 +0100
+	id 1Rx0Qj-0004wj-Vk
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 19:15:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755521Ab2BMR2A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Feb 2012 12:28:00 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:43298 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755181Ab2BMR17 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Feb 2012 12:27:59 -0500
-Received: by qcqw6 with SMTP id w6so3077324qcq.19
-        for <git@vger.kernel.org>; Mon, 13 Feb 2012 09:27:58 -0800 (PST)
+	id S1755666Ab2BMSPG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Feb 2012 13:15:06 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:46772 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757443Ab2BMSPF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Feb 2012 13:15:05 -0500
+Received: by eekc14 with SMTP id c14so1947140eek.19
+        for <git@vger.kernel.org>; Mon, 13 Feb 2012 10:15:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=rfCq54e9kz9Jc4LYNK3khjGaawguVj4kaVw0l1fdHIw=;
-        b=pImFa/POFQQx7c7zUPj5sNMixAxAkD9RZW6GSffEDqVu1n/6VBh3Vyh/XFWYRKrZL8
-         0N1+vQ3gp+cWhu29YOBvUIiOz4hpQasrOmmRh54wnmztztdVKi0ZeAMq3nLsFazGNX+Y
-         OO2oNu1g/eCm1GpGjt7pNAphOlEUe3XXusnNg=
-Received: by 10.229.111.228 with SMTP id t36mr10052860qcp.73.1329154078327;
-        Mon, 13 Feb 2012 09:27:58 -0800 (PST)
-Received: from localhost ([129.192.185.163])
-        by mx.google.com with ESMTPS id gr8sm6646559qab.19.2012.02.13.09.27.56
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=5Hbc1rPjBnHLKawiWnm49BVboW96jSlbhM9CqYeR+s0=;
+        b=A5vRw8cvdgodliKRLXbPyQ9CcpKVZz2eSP7UIdr16bfaQeNYsjjtZkvqWPnXO6mR50
+         8cxZ9qk2/anFvJc5cLH/X861Fu7cp+xumEl8I7qsJ2EC7XklVFJK6q5GGzs4ErBI1Y7k
+         xs3gjmxLEQ41x6TJHN+V4X61Q+R0peg7DBe6U=
+Received: by 10.14.94.193 with SMTP id n41mr4405253eef.74.1329156903650;
+        Mon, 13 Feb 2012 10:15:03 -0800 (PST)
+Received: from [192.168.1.13] (aeho143.neoplus.adsl.tpnet.pl. [79.186.196.143])
+        by mx.google.com with ESMTPS id a58sm63469068eeb.8.2012.02.13.10.15.02
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 13 Feb 2012 09:27:57 -0800 (PST)
+        Mon, 13 Feb 2012 10:15:02 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <CA+EqV8xTsavQFWsoijrt+0UcfxSZO2voL=CawrRPvDeB=qHQfg@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <4F3898F8.2000201@alum.mit.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190641>
 
-On Mon, Feb 13, 2012 at 06:00:40AM +0100, Michael Haggerty wrote:
->On 02/11/2012 08:17 PM, Tom Grennan wrote:
->> Yes, I didn't explicitly state that the precedence is the order written
->> and in correctly described the first case. How about?
->> 
->> /**
->>  * Returns in highest to lowest precedence:
->>  *   1 with an empty patterns list
->>  *   0 if refname fnmatch()es any ^ prefaced pattern
->>  *   1 if refname fnmatch()es any other pattern
->>  *   0 otherwise
->>  */
->
->Much better; thanks.
->
->Please note that this choice of semantics limits its power.  For
->example, if the rule were instead (like with gitattributes(5)) "if more
->than one pattern matches a refname, a later pattern overrides an earlier
->pattern", then one could do things like
->
->    refs/remotes/*/* !refs/remotes/gitster/* refs/remotes/gitster/master
->
->to include specific references within a hierarchy that is otherwise
->excluded.
->
->However, since rev-list apparently uses a rule more like the one that
->you are proposing, it might be better to be consistent than to choose a
->different convention.
+On Mon, 13 Feb 2012, rajesh boyapati wrote:
+> 2012/2/11 Jakub Narebski <jnareb@gmail.com>
+>> On Thu, 9 Feb 2012, Jakub Narebski wrote:
+>>> On Wed, 8 Feb 2012, rajesh boyapati wrote:
+>>>> 2012/2/8 Jakub Narebski <jnareb@gmail.com>
 
-Hmm, I think it's important to have same respective result in each of
-these case's,
+[...]
+>>>> When I applied the above patch and also the patch from your previous
+>>>> e-mail, I am getting this error
+>>>>>>>>>>>>>>>>>
+>>>> [2012-02-08 14:09:58,396] ERROR
+>>>> com.google.gerrit.httpd.gitweb.GitWebServlet : CGI: fatal: bad revision
+>>>> 'HEAD'
+>>>> [2012-02-08 14:10:06,732] ERROR
+>>>> com.google.gerrit.httpd.gitweb.GitWebServlet : CGI: fatal: bad revision
+>>>> 'HEAD'
+>>>> [2012-02-08 14:10:11,404] ERROR
+>>>> com.google.gerrit.httpd.gitweb.GitWebServlet : CGI: fatal: bad revision
+>>>> 'HEAD'
+>>>> [2012-02-08 14:10:15,270] ERROR
+>>>> com.google.gerrit.httpd.gitweb.GitWebServlet : CGI: fatal: Not a valid
+>>>> object name HEAD
+>>>> <<<<<<<<<<<<<<
+>>>> With these patches, the previous errors at line numbers are gone.
+[...]
+>>> This final issue will be a bit harder to fix.  This error message
+>>>
+>>>   fatal: bad revision 'HEAD'
+>>>
+>>> comes from git (I think from "git rev-list" command), and not from gitweb.
+>>> It is printed on STDERR of git command.  What has to be done to fix it is
+>>> to capture stderr of a process, or silence it.
+[...]
+>> Anyway, here is the patch that should fix those "CGI: fatal: Not a valid
+>> object name HEAD" errors for you.
+>>
+>> I'll resend the all the patches as single patch series for inclusion in
+>> git, but I am not sure if this latest patch will be accepted because of
+>> drawbacks of its implementation.
+>>
+>> -->8 ---- ----- ----- ----->8 --
+>> From: Jakub Narebski <jnareb@gmail.com>
+>> Subject: [PATCH] gitweb: Silence stderr in parse_commit*() subroutines
+[...]
+>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+>> index 1181aeb..081ac45 100755
+>> --- a/gitweb/gitweb.perl
+>> +++ b/gitweb/gitweb.perl
+>> @@ -3338,12 +3338,13 @@ sub parse_commit {
+>>
+>>        local $/ = "\0";
+>>
+>> -       open my $fd, "-|", git_cmd(), "rev-list",
+>> +       open my $fd, "-|", quote_command(
+>> +               git_cmd(), "rev-list",
+>>                "--parents",
+>>                "--header",
+>>                "--max-count=1",
+>>                $commit_id,
+>> -               "--",
+>> +               "--") . ' 2>/dev/null',
+>>                or die_error(500, "Open git-rev-list failed");
+>>        my $commit_text = <$fd>;
+>>        %co = parse_commit_text($commit_text, 1)
+>> @@ -3363,7 +3364,8 @@ sub parse_commits {
+>>
+>>        local $/ = "\0";
+>>
+>> -       open my $fd, "-|", git_cmd(), "rev-list",
+>> +       open my $fd, "-|", quote_command(
+>> +               git_cmd(), "rev-list",
+>>                "--header",
+>>                @args,
+>>                ("--max-count=" . $maxcount),
+>> @@ -3371,7 +3373,7 @@ sub parse_commits {
+>>                @extra_options,
+>>                $commit_id,
+>>                "--",
+>> -               ($filename ? ($filename) : ())
+>> +               ($filename ? ($filename) : ())) . ' 2>/dev/null'
+>>                or die_error(500, "Open git-rev-list failed");
+>>        while (my $line = <$fd>) {
+>>                my %co = parse_commit_text($line);
+>>
+> 
+> I am getting this error with this patch
+>>>>>>>>>>>>>>>>>>>
+> [2012-02-13 11:20:19,268] ERROR
+> com.google.gerrit.httpd.gitweb.GitWebServlet : CGI: usage: git rev-list
+> [OPTION] <commit-id>... [ -- paths... ]
+> [2012-02-13 11:20:19,268] ERROR
+> com.google.gerrit.httpd.gitweb.GitWebServlet : CGI:   limiting output:
+> [2012-02-13 11:20:19,268] ERROR
+> com.google.gerrit.httpd.gitweb.GitWebServlet : CGI:     --max-count=nr
+[...]
+> [2012-02-13 11:20:27,913] ERROR
+> com.google.gerrit.httpd.gitweb.GitWebServlet : CGI: fatal: bad flag '--2'
+> used after filename
+> [2012-02-13 11:20:32,579] ERROR
+> com.google.gerrit.httpd.gitweb.GitWebServlet : CGI: fatal: bad flag '--2'
+> used after filename
+> <<<<<<<<<<<<<<<<<<<
 
-  $ git tag -l | grep v1.7.8.*
-  $ git tag -l v1.7.8*
+Strange, I cannot reproduce this with non-Gerrit gitweb.  It looks
+like it somehow lost in between "... -- 2>/dev/null" at the end of
+git-rev-list command, and fails at "--2" which is bad flag.
 
-  $ git tag -l | grep -v .*-rc*
-  $ git tag -l ^*-rc*
-
-  $ git tag -l v1.7.8* | grep -v .*-rc*
-  $ git tag -l v1.7.8* ^*-rc*
-  $ git tag -l ^*-rc* v1.7.8*
-
-What I propose is somewhat analogous to gitignore's double negative,
-      *	An optional prefix !  which negates the pattern; any matching
-	file excluded by a previous pattern will become included again. If
-	a negated pattern matches, this will override lower precedence
-	patterns sources.
-
-I still prefer "^" to "!" b/c A) it doesn't cause the noted regressions;
-and B) doesn't need command quoting.  I'd accept the counter proposals
-of --exclude or --with[out][-TYPE] but frankly, that's more
-code/documentation churn ("less code is always better"[TM]) and worse,
-more crap to type on the command line:
-
-  $ git --with-tags v1.7.8* --without-tags '*-rc*' tag -l v1.7.8* 
-or
-  $ git tag -l --exclude '*-rc*' v1.7.8*
-vs.
-  $ git tag -l v1.7.8* ^*-rc*
+Are you sure you applied the patch correctly?  Does 'object' view
+(take any 'commit' or 'blob' or 'tree' view, and replace action part
+by 'object') works correctly in Gerrit's gitweb?
 
 -- 
-TomG
+Jakub Narebski
+Poland
