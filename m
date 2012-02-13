@@ -1,147 +1,117 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/5] diff-highlight: don't highlight whole lines
-Date: Mon, 13 Feb 2012 17:32:47 -0500
-Message-ID: <20120213223247.GB19521@sigill.intra.peff.net>
+Subject: [PATCH 3/5] diff-highlight: refactor to prepare for multi-line hunks
+Date: Mon, 13 Feb 2012 17:33:10 -0500
+Message-ID: <20120213223310.GC19521@sigill.intra.peff.net>
 References: <20120213222702.GA19393@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 13 23:32:58 2012
+X-From: git-owner@vger.kernel.org Mon Feb 13 23:33:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rx4S7-0002Hk-VM
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 23:32:56 +0100
+	id 1Rx4SU-0002el-O0
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 23:33:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755644Ab2BMWcv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Feb 2012 17:32:51 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34495
+	id S1755927Ab2BMWdO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Feb 2012 17:33:14 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34499
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752250Ab2BMWcu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Feb 2012 17:32:50 -0500
-Received: (qmail 1884 invoked by uid 107); 13 Feb 2012 22:40:00 -0000
+	id S1754792Ab2BMWdO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Feb 2012 17:33:14 -0500
+Received: (qmail 1922 invoked by uid 107); 13 Feb 2012 22:40:24 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 13 Feb 2012 17:40:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Feb 2012 17:32:47 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 13 Feb 2012 17:40:24 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Feb 2012 17:33:10 -0500
 Content-Disposition: inline
 In-Reply-To: <20120213222702.GA19393@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190684>
 
-If you have a change like:
-
-  -foo
-  +bar
-
-we end up highlighting the entirety of both lines (since the
-whole thing is changed). But the point of diff highlighting
-is to pinpoint the specific change in a pair of lines that
-are mostly identical. In this case, the highlighting is just
-noise, since there is nothing to pinpoint, and we are better
-off doing nothing.
-
-The implementation looks for "interesting" pairs by checking
-to see whether they actually have a matching prefix or
-suffix that does not simply consist of colorization and
-whitespace.  However, the implementation makes it easy to
-plug in other heuristics, too, like:
-
-  1. Depending on the source material, the set of "boring"
-     characters could be tweaked to include language-specific
-     stuff (like braces or semicolons for C).
-
-  2. Instead of saying "an interesting line has at least one
-     character of prefix or suffix", we could require that
-     less than N percent of the line be highlighted.
-
-The simple "ignore whitespace, and highlight if there are
-any matched characters" implemented by this patch seems to
-give good results on git.git. I'll leave experimentation
-with other heuristics to somebody who has a dataset that
-does not look good with the current code.
-
-Based on an original idea and implementation by Micha=C5=82
-Kiedrowicz.
+The current code structure assumes that we will only look at
+a pair of lines at any given time, and that the end result
+should always be to output that pair. However, we want to
+eventually handle multi-line hunks, which will involve
+collating pairs of removed/added lines. Let's refactor the
+code to return highlighted pairs instead of printing them.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Regarding attribution: I kept myself as author, because I rewrote it a
-bit and figured that I would take primary responsibility for bugs in
-this patch, and in the long run would be responsible for maintaining it=
-=2E
-But the idea and the substance of the patch are yours, and I would be
-happy to list you as author if you prefer getting the credit that way
-(after all, it bumps your shortlog numbers :) ).
+You did a similar refactoring in your patch, but I found pulling it out
+made the next patch a lot more readable.
 
-The implementation is similar to yours, but pulls some of the decisions
-out into a separate function to make tweaking the above heuristics
-easier.
+ contrib/diff-highlight/diff-highlight |   22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
- contrib/diff-highlight/diff-highlight |   28 +++++++++++++++++++++++++=
-+--
- 1 file changed, 26 insertions(+), 2 deletions(-)
-
-diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highl=
-ight/diff-highlight
-index c3302dd..0d8df84 100755
+diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highlight/diff-highlight
+index 0d8df84..279d211 100755
 --- a/contrib/diff-highlight/diff-highlight
 +++ b/contrib/diff-highlight/diff-highlight
-@@ -8,6 +8,7 @@ use strict;
- my $HIGHLIGHT   =3D "\x1b[7m";
- my $UNHIGHLIGHT =3D "\x1b[27m";
- my $COLOR =3D qr/\x1b\[[0-9;]*m/;
-+my $BORING =3D qr/$COLOR|\s/;
-=20
- my @window;
-=20
-@@ -104,8 +105,14 @@ sub show_pair {
- 		}
+@@ -23,7 +23,7 @@ while (<>) {
+ 	    $window[2] =~ /^$COLOR*\+/ &&
+ 	    $window[3] !~ /^$COLOR*\+/) {
+ 		print shift @window;
+-		show_pair(shift @window, shift @window);
++		show_hunk(shift @window, shift @window);
  	}
-=20
--	print highlight(\@a, $pa, $sa);
--	print highlight(\@b, $pb, $sb);
-+	if (is_pair_interesting(\@a, $pa, $sa, \@b, $pb, $sb)) {
-+		print highlight(\@a, $pa, $sa);
-+		print highlight(\@b, $pb, $sb);
-+	}
-+	else {
-+		print join('', @a);
-+		print join('', @b);
-+	}
+ 	else {
+ 		print shift @window;
+@@ -48,7 +48,7 @@ if (@window == 3 &&
+     $window[1] =~ /^$COLOR*-/ &&
+     $window[2] =~ /^$COLOR*\+/) {
+ 	print shift @window;
+-	show_pair(shift @window, shift @window);
++	show_hunk(shift @window, shift @window);
  }
-=20
- sub split_line {
-@@ -125,3 +132,20 @@ sub highlight {
- 		@{$line}[($suffix+1)..$#$line]
- 	);
- }
+ 
+ # And then flush any remaining lines.
+@@ -58,7 +58,13 @@ while (@window) {
+ 
+ exit 0;
+ 
+-sub show_pair {
++sub show_hunk {
++	my ($a, $b) = @_;
 +
-+# Pairs are interesting to highlight only if we are going to end up
-+# highlighting a subset (i.e., not the whole line). Otherwise, the hig=
-hlighting
-+# is just useless noise. We can detect this by finding either a matchi=
-ng prefix
-+# or suffix (disregarding boring bits like whitespace and colorization=
-).
-+sub is_pair_interesting {
-+	my ($a, $pa, $sa, $b, $pb, $sb) =3D @_;
-+	my $prefix_a =3D join('', @$a[0..($pa-1)]);
-+	my $prefix_b =3D join('', @$b[0..($pb-1)]);
-+	my $suffix_a =3D join('', @$a[($sa+1)..$#$a]);
-+	my $suffix_b =3D join('', @$b[($sb+1)..$#$b]);
-+
-+	return $prefix_a !~ /^$COLOR*-$BORING*$/ ||
-+	       $prefix_b !~ /^$COLOR*\+$BORING*$/ ||
-+	       $suffix_a !~ /^$BORING*$/ ||
-+	       $suffix_b !~ /^$BORING*$/;
++	print highlight_pair($a, $b);
 +}
---=20
++
++sub highlight_pair {
+ 	my @a = split_line(shift);
+ 	my @b = split_line(shift);
+ 
+@@ -106,12 +112,12 @@ sub show_pair {
+ 	}
+ 
+ 	if (is_pair_interesting(\@a, $pa, $sa, \@b, $pb, $sb)) {
+-		print highlight(\@a, $pa, $sa);
+-		print highlight(\@b, $pb, $sb);
++		return highlight_line(\@a, $pa, $sa),
++		       highlight_line(\@b, $pb, $sb);
+ 	}
+ 	else {
+-		print join('', @a);
+-		print join('', @b);
++		return join('', @a),
++		       join('', @b);
+ 	}
+ }
+ 
+@@ -121,7 +127,7 @@ sub split_line {
+ 	       split /($COLOR*)/;
+ }
+ 
+-sub highlight {
++sub highlight_line {
+ 	my ($line, $prefix, $suffix) = @_;
+ 
+ 	return join('',
+-- 
 1.7.8.4.17.g2df81
