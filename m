@@ -1,116 +1,117 @@
-From: Jiang Xin <worldhello.net@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Bulgarian translation of git
-Date: Mon, 13 Feb 2012 15:12:50 +0800
-Message-ID: <CANYiYbFYmGNE09fAeHL_uk+0s+yBapTs4BeGch7iCtWR_v9LXQ@mail.gmail.com>
+Date: Mon, 13 Feb 2012 00:07:52 -0800
+Message-ID: <7v8vk7gnqf.fsf@alter.siamese.dyndns.org>
 References: <75009f1d7c4aba4d62bb226ab122932c@192.168.122.10>
-	<CANYiYbGr3zN-kJwq_MCnttNZP6Cc0aj-fsZjd4V=4z+BA5TvUw@mail.gmail.com>
-	<7vy5s7idxb.fsf@alter.siamese.dyndns.org>
+ <CANYiYbGr3zN-kJwq_MCnttNZP6Cc0aj-fsZjd4V=4z+BA5TvUw@mail.gmail.com>
+ <7vy5s7idxb.fsf@alter.siamese.dyndns.org>
+ <CANYiYbFYmGNE09fAeHL_uk+0s+yBapTs4BeGch7iCtWR_v9LXQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-	=?KOI8-R?B?QWxleGFuZGVyIFNob3BvdiAo4czFy9PBzsTf0iD7z9DP1yk=?= 
+	Christian Stimming <stimming@tuhh.de>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Michele Ballabio <barra_cuda@katamail.com>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	Laszlo Papp <djszapi@archlinux.us>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Emmanuel Trillaud <etrillaud@gmail.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Mizar <mizar.jp@gmail.com>,
+	Peter Karlsson <peter@softwolves.pp.se>,
+	Mikael Magnusson <mikachu@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	=?iso-2022-jp?B?QWxleGFuZGVyIFNob3BvdiAoGyRCJyEnXSdWJ1wnYydRJ18bKEI=?=
+	 =?iso-2022-jp?B?GyRCJ1UnbCdiGyhCIBskQic6J2AnYSdgJ1MbKEIp?= 
 	<lists@kambanaria.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 13 08:12:58 2012
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 13 09:08:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rwq5p-0005Gm-CD
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 08:12:57 +0100
+	id 1Rwqx7-0008Oh-CK
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 09:08:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756301Ab2BMHMw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Feb 2012 02:12:52 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:35331 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756255Ab2BMHMv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Feb 2012 02:12:51 -0500
-Received: by ggnh1 with SMTP id h1so2185218ggn.19
-        for <git@vger.kernel.org>; Sun, 12 Feb 2012 23:12:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=i+C1/LtgVwICFzuBzpmyXKh+eoROjO9ixZ30PHGLDYY=;
-        b=WRaoSyFoG0azeCogNKuXtQH8wRiuXbJV6s9nF0aH7xC5ibWG5A9hYb8DB45uOV7jqr
-         rCd7I0LqzecdU2JxTjJv2Qp0aolNGGJPeoWQSlbAeXQ5Plf7oWRz8PKvW68UVFtRPajL
-         AUExG5Wvi5IfxEDsfiqHurRzIOYUahzxWwIGI=
-Received: by 10.236.139.193 with SMTP id c41mr17966448yhj.24.1329117170464;
- Sun, 12 Feb 2012 23:12:50 -0800 (PST)
-Received: by 10.236.153.195 with HTTP; Sun, 12 Feb 2012 23:12:50 -0800 (PST)
-In-Reply-To: <7vy5s7idxb.fsf@alter.siamese.dyndns.org>
+	id S1751555Ab2BMIH4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Feb 2012 03:07:56 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41552 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750968Ab2BMIHz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Feb 2012 03:07:55 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A185E5A8B;
+	Mon, 13 Feb 2012 03:07:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ByIU8ZwNKBMnOIRrX+sxoFTC1Rg=; b=Y3p3Cd
+	zFuZCruKXuI3Xy3JfNopSzrGJvZ9HkBVmE8h/vT1exgWVvtQ6a3EDHJm/6WNX8UG
+	aHPeEJBabXQa6+ycgbmRe8AuyXRgdqS3LVbKK0rli0zf7LkHM7DLptdjGD1521Fm
+	krS6i3ZY1BPXUoK4TvmNQi2/BFj69AkoaeIng=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=owlioeUk5pVER3pCDxqHqHwfxd73SNFV
+	ypDQaM3rQBZOMh0znyCPTgxQ3p2ATiwt9mqclwtiexsXcl1yRwcLBh4FByxWQsDi
+	xVP9uigf5Wws8MTLVMHtSr0waxjjc1iCEZUlXKQn71lqvNBcI2QQspYaZ42Vkest
+	l6H6mffKk4o=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96D755A8A;
+	Mon, 13 Feb 2012 03:07:54 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1D6E45A88; Mon, 13 Feb 2012
+ 03:07:54 -0500 (EST)
+In-Reply-To: <CANYiYbFYmGNE09fAeHL_uk+0s+yBapTs4BeGch7iCtWR_v9LXQ@mail.gmail.com> (Jiang
+ Xin's message of "Mon, 13 Feb 2012 15:12:50 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D4C4C12A-5619-11E1-A56B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190616>
 
-2012/2/13 Junio C Hamano <gitster@pobox.com>:
-> Jiang Xin <worldhello.net@gmail.com> writes:
+Jiang Xin <worldhello.net@gmail.com> writes:
+
+>> Somebody needs to eyeball this commit before anything else happens on top
+>> of it, so that if there is a glaring mistake it can be caught before it
+>> spreads to affect work by translators for various languages.
 >
->> Junio has a suggestion on how to contrib l10n for git, and you can s=
-ee the
->> discussion here: http://article.gmane.org/gmane.comp.version-control=
-=2Egit/189584.
->>
->> Seems that the suggested git-po repo has not been setup yet, so let =
-me
->> have a try.
->>
->> 1. Repositiry git-po is hosted on GitHub: https://github.com/gotgit/=
-git-po/
->>
->> 2. I made a commit on the maint branch with a initial version of 'po=
-/git.pot'
->> =A0 =A0 https://github.com/gotgit/git-po/commit/4247a7a9d39e2a74ce1d=
-58e5eb1f5e5d87977989
+> So please check this commit with the updated pot file:
+> https://github.com/gotgit/git-po/commit/816049b7ec0e5f452c77a4c4e71e2cb40a0ccb45
+> Please note In this commit I removed one line from the 'po/.gitignore' file.
 
-This commit is based on current maint branch. Since the translated po f=
-iles will
-first in 1.7.10, so the initial pot file should be generated from maste=
-r branch.
-The pot file from the master branch has 10 new messages than from the m=
-aint
-branch.
+Thanks.
 
-=46or clarity, I removed the maint and other branches except the master=
- branch,
-and made a new commit.
+As far as I can tell, this adds git.pot while removes the entry to remove
+it from po/.gitignore (because now it is a tracked file), but there is no
+description on how this file was generated in the log message.
 
-> Somebody needs to eyeball this commit before anything else happens on=
- top
-> of it, so that if there is a glaring mistake it can be caught before =
-it
-> spreads to affect work by translators for various languages.
+Please give a short description to the effect that it was mechanically
+created by running xgettext on the sources as of b6b3b6a (Update draft
+release notes to 1.7.10, 2012-02-10), or something like that.
 
-So please check this commit with the updated pot file:
-https://github.com/gotgit/git-po/commit/816049b7ec0e5f452c77a4c4e71e2cb=
-40a0ccb45
-Please note In this commit I removed one line from the 'po/.gitignore' =
-file.
+Other than that, I do not immediately see anything objectionable in this
+commit; I would still appreciate an extra set of eyeballs or two from
+people who have worked on gitk and/or git-gui i18n/l10n infrastructure in
+the past, just in case I forgot to check some obvious/trivial gotchas.
 
-As a translater for Chinese, I also made a commit with the translated p=
-o file
-'po/zh_CN.po' in branch master-zh-cn (merged back to master branch).
+I am also Cc'ing people who participated in git-gui and gitk l10n with
+more than a couple of commits to their po/ part, found by:
 
->>
->> I have a question, which version of po should be maintained? master
->> branch or maint branch.
->
-> I would say for this round the git-po repository and its pot file sho=
-uld
-> pick up whatever new translatable strings are added to 'master'.
->
-> After this is merged in 1.7.10, we may want to maintain separate trac=
-ks,
-> but at this moment there is no point maintaining something mergeable =
-to
-> 1.7.9.x maintenance track.
->
+    $ cd git-gui/po &&
+      git rev-list --parents HEAD . |
+      while read commit parent
+      do
+        git log --pretty=short $parent..$commit^2 -- :/po
+      done | git shortlog -n -e
 
+(same for gitk-git)
 
---=20
-Jiang Xin
+> As a translater for Chinese, I also made a commit with the translated po file
+> 'po/zh_CN.po' in branch master-zh-cn (merged back to master branch).
+
+Thanks.
