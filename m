@@ -1,86 +1,80 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 6/8] gitweb: Highlight interesting parts of diff
-Date: Mon, 13 Feb 2012 20:58:17 +0100
-Message-ID: <201202132058.18001.jnareb@gmail.com>
-References: <1328865494-24415-1-git-send-email-michal.kiedrowicz@gmail.com> <m3lio8s57v.fsf@localhost.localdomain> <20120213075451.1bc20885@mkiedrowicz.ivo.pl>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] submodules: always use a relative path from
+ gitdir to work tree
+Date: Mon, 13 Feb 2012 11:59:37 -0800
+Message-ID: <7vlio6ec7q.fsf@alter.siamese.dyndns.org>
+References: <4F32F252.7050105@web.de> <4F32F465.7090401@web.de>
+ <4F338156.9090507@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Michal Kiedrowicz <michal.kiedrowicz@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 13 20:58:34 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Antony Male <antony.male@gmail.com>,
+	Phil Hord <phil.hord@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Feb 13 20:59:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rx22i-000068-Or
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 20:58:33 +0100
+	id 1Rx23u-0001H2-GD
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 20:59:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755890Ab2BMT61 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Feb 2012 14:58:27 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:63624 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754877Ab2BMT60 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Feb 2012 14:58:26 -0500
-Received: by eaah12 with SMTP id h12so1901405eaa.19
-        for <git@vger.kernel.org>; Mon, 13 Feb 2012 11:58:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=m67lGyAyramXXj0nATqU9JXeaUP5DJw3H9d+yB9Nfxw=;
-        b=c/vGxaivvoLnhozb4WgnsMBbuoBo85BSyF72bOHRQMFKsss1RMLBlGPwAin4SZuz18
-         /5OiDAx3NUeqKzvO1UIsCj7h1r013r1el48iH5VkW6SqQwwsvOJ9uc6A21XPMv3KrcB5
-         fKDUEdwlnJq+KcLXyQr+CQRprnnY/cfCSMWBk=
-Received: by 10.213.26.8 with SMTP id b8mr2238117ebc.88.1329163105003;
-        Mon, 13 Feb 2012 11:58:25 -0800 (PST)
-Received: from [192.168.1.13] (aeho143.neoplus.adsl.tpnet.pl. [79.186.196.143])
-        by mx.google.com with ESMTPS id o49sm64419986eei.0.2012.02.13.11.58.23
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 13 Feb 2012 11:58:24 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20120213075451.1bc20885@mkiedrowicz.ivo.pl>
-Content-Disposition: inline
+	id S1757758Ab2BMT7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Feb 2012 14:59:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54552 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757714Ab2BMT7j (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Feb 2012 14:59:39 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D3BE6202;
+	Mon, 13 Feb 2012 14:59:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ecJxrimKXJJ5yZ3204qxENTHLTs=; b=UBJv4x
+	GV+aSioLg0OJSYmR4Ntyq2B5GpuYneNxJBM6SKxwEQ/TTTUNUcmmo9yPRCzmOYIb
+	0/SUtrtIBMrigu8enxMAetynMna2o8xhpVN5YdWBPu0yycYEGbvmUHivtJqgZC0g
+	BNfQV9t3mTgwZFSEkxhJ0pY9Fr/AzpJ5QfxFM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QoDybasjV2SKETJ0YH62zM+P0C4liAdj
+	rqScr4B101cmXngwDH06YOORxJqWFjSmNntwNK13jZPSKl6sqx9lwY4rwY+igOwy
+	oxKIX4ca2/6Dl23ldaW3VPELy5soffXBXSisah/0pLMhoMW4Vq1GwDNK0m1JoZC8
+	p4I0m0WWz6A=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 23C816201;
+	Mon, 13 Feb 2012 14:59:39 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AA01D61FE; Mon, 13 Feb 2012
+ 14:59:38 -0500 (EST)
+In-Reply-To: <4F338156.9090507@web.de> (Jens Lehmann's message of "Thu, 09
+ Feb 2012 09:18:30 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 42A8D10A-567D-11E1-8D89-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190656>
 
-Michal Kiedrowicz wrote:
-> Jakub Narebski <jnareb@gmail.com> wrote:
-> > Jakub Narebski <jnareb@gmail.com> writes:
-[...]
-> > > Anyway I have send to git mailing list a patch series, which in one
-> > > of patches adds esc_html_match_hl($str, $regexp) to highlight
-> > > matches in a string.  
-> 
-> Yeah, I saw that but after seeing that they accept different arguments
-> I decided to leave them alone.
-> 
-> > > Your esc_html_mark_range(), after a
-> > > generalization, could be used as underlying "engine".
-> > > 
-> > > Something like this, perhaps (untested):
-> 
-> I think I'll leave it to you after merging both these series to
-> master :)
- 
-Yes, you are right.  Let's do it when we actually need it.
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-[...]
-> > >    # Highlight selected fragments of string, using given CSS class,
-> > >    # and escape HTML.  It is assumed that fragments do not overlap.
-> > >    # Regions are passed as list of pairs (array references).
-> > >    sub esc_html_hl {
-[...]
-> > Actually we can accomodate both operating on string and operating on
-> > array of characters in a single subroutine.  Though it can be left for
-> > later commit, anyway...
+> The first version was whitespace damaged, please use this instead.
 
--- 
-Jakub Narebski
-Poland
+Thanks.  This one looks somewhat iffy (1/2 looked perfectly fine, though).
+
+> +	a=$(cd "$gitdir" && pwd)
+> +	b=$(cd "$path" && pwd)
+> +	while [ "$b" ] && [ "${a%%/*}" = "${b%%/*}" ]
+> +	do
+> +		a=${a#*/} b=${b#*/};
+> +	done
+> +	rel=$(echo $a | sed -e 's|[^/]*|..|g')
+> +	(clear_local_git_env; cd "$path" && git config core.worktree "$rel/$b")
+>  }
+
+
+The style ([ "$b" ] vs "test -n "$b") aside, it strikes me odd that you
+only check $b; it is unclear what guarantees that "$a" is always longer.
+Maybe there is a reason but then a one-line comment here would not hurt?
