@@ -1,324 +1,222 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH v5 3/3] push: teach --recurse-submodules the on-demand
-	option
-Date: Mon, 13 Feb 2012 10:30:08 +0100
-Message-ID: <20120213093008.GD15585@t1405.greatnet.de>
-References: <20120213092541.GA15585@t1405.greatnet.de>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [RFC/PATCH] tag: make list exclude !<pattern>
+Date: Mon, 13 Feb 2012 10:37:24 +0100
+Message-ID: <4F38D9D4.5000203@alum.mit.edu>
+References: <20120210185516.GA4903@tgrennan-laptop> <1328926618-17167-1-git-send-email-tmgrennan@gmail.com> <7vaa4qnk4u.fsf@alter.siamese.dyndns.org> <4F361DD4.9020108@alum.mit.edu> <7vlio9n5ym.fsf@alter.siamese.dyndns.org> <4F389FB1.2070706@alum.mit.edu> <7vsjifgrwl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Fredrik Gustafsson <iveqy@iveqy.com>,
-	Jens Lehmann <jens.lehmann@web.de>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Tom Grennan <tmgrennan@gmail.com>, pclouds@gmail.com,
+	git@vger.kernel.org, krh@redhat.com, jasampler@gmail.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 13 10:36:57 2012
+X-From: git-owner@vger.kernel.org Mon Feb 13 10:37:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RwsLA-00035h-Iy
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 10:36:57 +0100
+	id 1RwsLn-0003e2-L5
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 10:37:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751876Ab2BMJgw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Feb 2012 04:36:52 -0500
-Received: from darksea.de ([83.133.111.250]:53628 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751300Ab2BMJgv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Feb 2012 04:36:51 -0500
-Received: (qmail 15656 invoked by uid 1000); 13 Feb 2012 10:30:08 +0100
-Content-Disposition: inline
-In-Reply-To: <20120213092541.GA15585@t1405.greatnet.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751730Ab2BMJhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Feb 2012 04:37:31 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:41339 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751141Ab2BMJha (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Feb 2012 04:37:30 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q1D9bOIu009570
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 13 Feb 2012 10:37:25 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.26) Gecko/20120131 Lightning/1.0b2 Thunderbird/3.1.18
+In-Reply-To: <7vsjifgrwl.fsf@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190622>
 
-When using this option git will search for all submodules that
-have changed in the revisions to be send. It will then try to
-push the currently checked out branch of each submodule.
+On 02/13/2012 07:37 AM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> Of *course* they operate on different namespaces.  But part of the way
+>> that revisions are selected using rev-list is by *selecting or excluding
+>> refnames* from which it should crawl.
+> 
+> I am appalled if that is truly the understanding of yours, after having
+> taken more than a few patches from you to fairly core parts of Git.
+> 
+> "rev-list A ^B" does not say "include A and exclude B from which rev-list
+> should crawl" AT ALL.  We _actively_ crawl from both A and B.  It is that
+> what are reachable from B is painted in a color different from the color
+> in which we paint what are reachable from A.
 
-This helps when a user has finished working on a change which
-involves submodules and just wants to push everything in one go.
+Please read my emails more carefully before insulting me.
 
-Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
-Mentored-by: Jens Lehmann <Jens.Lehmann@web.de>
-Mentored-by: Heiko Voigt <hvoigt@hvoigt.net>
----
- Documentation/git-push.txt     |   14 ++++--
- builtin/push.c                 |    7 +++
- submodule.c                    |   48 ++++++++++++++++++++
- submodule.h                    |    1 +
- t/t5531-deep-submodule-push.sh |   94 ++++++++++++++++++++++++++++++++++++++++
- transport.c                    |   17 +++++++-
- transport.h                    |    1 +
- 7 files changed, 177 insertions(+), 5 deletions(-)
+It is perfectly clear to me that there are two types of exclusion that
+we are talking about.  And *both* of them are (or should be) relevant to
+rev-parse.
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index aede488..649ee3a 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -162,10 +162,16 @@ useful if you write an alias or script around 'git push'.
- 	is specified. This flag forces progress status even if the
- 	standard error stream is not directed to a terminal.
- 
----recurse-submodules=check::
--	Check whether all submodule commits used by the revisions to be
--	pushed are available on a remote tracking branch. Otherwise the
--	push will be aborted and the command will exit with non-zero status.
-+--recurse-submodules=<check|on-demand>::
-+	Make sure all submodule commits used by the revisions to be
-+	pushed are available on a remote tracking branch. If check is
-+	used it will be checked that all submodule commits that changed
-+	in the revisions to be pushed are available on a remote.
-+	Otherwise the push will be aborted and exit with non-zero
-+	status. If on-demand is used all submodules that changed in the
-+	revisions to be pushed will be pushed. If on-demand was not able
-+	to push all necessary revisions it will also be aborted and exit
-+	with non-zero status.
- 
- 
- include::urls-remotes.txt[]
-diff --git a/builtin/push.c b/builtin/push.c
-index 35cce53..f2ef8dd 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -224,9 +224,16 @@ static int option_parse_recurse_submodules(const struct option *opt,
- 				   const char *arg, int unset)
- {
- 	int *flags = opt->value;
-+
-+	if (*flags & (TRANSPORT_RECURSE_SUBMODULES_CHECK |
-+		      TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND))
-+		die("%s can only be used once.", opt->long_name);
-+
- 	if (arg) {
- 		if (!strcmp(arg, "check"))
- 			*flags |= TRANSPORT_RECURSE_SUBMODULES_CHECK;
-+		else if (!strcmp(arg, "on-demand"))
-+			*flags |= TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND;
- 		else
- 			die("bad %s argument: %s", opt->long_name, arg);
- 	} else
-diff --git a/submodule.c b/submodule.c
-index 3c714c2..ff0cfd8 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -411,6 +411,54 @@ int check_submodule_needs_pushing(unsigned char new_sha1[20],
- 	return needs_pushing->nr;
- }
- 
-+static int push_submodule(const char *path)
-+{
-+	if (add_submodule_odb(path))
-+		return 1;
-+
-+	if (for_each_remote_ref_submodule(path, has_remote, NULL) > 0) {
-+		struct child_process cp;
-+		const char *argv[] = {"push", NULL};
-+
-+		memset(&cp, 0, sizeof(cp));
-+		cp.argv = argv;
-+		cp.env = local_repo_env;
-+		cp.git_cmd = 1;
-+		cp.no_stdin = 1;
-+		cp.dir = path;
-+		if (run_command(&cp))
-+			return 0;
-+		close(cp.out);
-+	}
-+
-+	return 1;
-+}
-+
-+int push_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name)
-+{
-+	int i, ret = 1;
-+	struct string_list needs_pushing;
-+
-+	memset(&needs_pushing, 0, sizeof(struct string_list));
-+	needs_pushing.strdup_strings = 1;
-+
-+	if (!check_submodule_needs_pushing(new_sha1, remotes_name, &needs_pushing))
-+		return 1;
-+
-+	for (i = 0; i < needs_pushing.nr; i++) {
-+		const char *path = needs_pushing.items[i].string;
-+		fprintf(stderr, "Pushing submodule '%s'\n", path);
-+		if (!push_submodule(path)) {
-+			fprintf(stderr, "Unable to push submodule '%s'\n", path);
-+			ret = 0;
-+		}
-+	}
-+
-+	string_list_clear(&needs_pushing, 0);
-+
-+	return ret;
-+}
-+
- static int is_submodule_commit_present(const char *path, unsigned char sha1[20])
- {
- 	int is_present = 0;
-diff --git a/submodule.h b/submodule.h
-index ddd1941..af74941 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -31,5 +31,6 @@ int merge_submodule(unsigned char result[20], const char *path, const unsigned c
- 		    const unsigned char a[20], const unsigned char b[20], int search);
- int check_submodule_needs_pushing(unsigned char new_sha1[20], const char *remotes_name,
- 		struct string_list *needs_pushing);
-+int push_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name);
- 
- #endif
-diff --git a/t/t5531-deep-submodule-push.sh b/t/t5531-deep-submodule-push.sh
-index 30bec4b..1947c28 100755
---- a/t/t5531-deep-submodule-push.sh
-+++ b/t/t5531-deep-submodule-push.sh
-@@ -119,4 +119,98 @@ test_expect_success 'push succeeds if submodule has no remote and is on the firs
- 	)
- '
- 
-+test_expect_success 'push unpushed submodules when not needed' '
-+	(
-+		cd work &&
-+		(
-+			cd gar/bage &&
-+			git checkout master &&
-+			>junk5 &&
-+			git add junk5 &&
-+			git commit -m "Fifth junk" &&
-+			git push &&
-+			git rev-parse origin/master >../../../expected
-+		) &&
-+		git checkout master &&
-+		git add gar/bage &&
-+		git commit -m "Fifth commit for gar/bage" &&
-+		git push --recurse-submodules=on-demand ../pub.git master
-+	) &&
-+	(
-+		cd submodule.git &&
-+		git rev-parse master >../actual
-+	) &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'push unpushed submodules when not needed 2' '
-+	(
-+		cd submodule.git &&
-+		git rev-parse master >../expected
-+	) &&
-+	(
-+		cd work &&
-+		(
-+			cd gar/bage &&
-+			>junk6 &&
-+			git add junk6 &&
-+			git commit -m "Sixth junk"
-+		) &&
-+		>junk2 &&
-+		git add junk2 &&
-+		git commit -m "Second junk for work" &&
-+		git push --recurse-submodules=on-demand ../pub.git master
-+	) &&
-+	(
-+		cd submodule.git &&
-+		git rev-parse master >../actual
-+	) &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'push unpushed submodules recursively' '
-+	(
-+		cd work &&
-+		(
-+			cd gar/bage &&
-+			git checkout master &&
-+			> junk7 &&
-+			git add junk7 &&
-+			git commit -m "Seventh junk" &&
-+			git rev-parse master >../../../expected
-+		) &&
-+		git checkout master &&
-+		git add gar/bage &&
-+		git commit -m "Seventh commit for gar/bage" &&
-+		git push --recurse-submodules=on-demand ../pub.git master
-+	) &&
-+	(
-+		cd submodule.git &&
-+		git rev-parse master >../actual
-+	) &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'push unpushable submodule recursively fails' '
-+	(
-+		cd work &&
-+		(
-+			cd gar/bage &&
-+			git rev-parse origin/master >../../../expected &&
-+			git checkout master~0 &&
-+			> junk8 &&
-+			git add junk8 &&
-+			git commit -m "Eighth junk"
-+		) &&
-+		git add gar/bage &&
-+		git commit -m "Eighth commit for gar/bage" &&
-+		test_must_fail git push --recurse-submodules=on-demand ../pub.git master
-+	) &&
-+	(
-+		cd submodule.git &&
-+		git rev-parse master >../actual
-+	) &&
-+	test_cmp expected actual
-+'
-+
- test_done
-diff --git a/transport.c b/transport.c
-index d13bd4a..8c0fec0 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1009,6 +1009,11 @@ static void die_with_unpushed_submodules(struct string_list *needs_pushing)
- 			"not be found on any remote:\n");
- 	for (i = 0; i < needs_pushing->nr; i++)
- 		printf("  %s\n", needs_pushing->items[i].string);
-+	fprintf(stderr, "\nPlease try\n\n"
-+			"	git push --recurse-submodules=on-demand\n\n"
-+			"or cd to the path and use\n\n"
-+			"	git push\n\n"
-+			"to push them to a remote.\n\n");
- 
- 	string_list_clear(needs_pushing, 0);
- 
-@@ -1053,7 +1058,17 @@ int transport_push(struct transport *transport,
- 			flags & TRANSPORT_PUSH_MIRROR,
- 			flags & TRANSPORT_PUSH_FORCE);
- 
--		if ((flags & TRANSPORT_RECURSE_SUBMODULES_CHECK) && !is_bare_repository()) {
-+		if ((flags & TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND) && !is_bare_repository()) {
-+			struct ref *ref = remote_refs;
-+			for (; ref; ref = ref->next)
-+				if (!is_null_sha1(ref->new_sha1) &&
-+				    !push_unpushed_submodules(ref->new_sha1,
-+					    transport->remote->name))
-+				    die ("Failed to push all needed submodules!");
-+		}
-+
-+		if ((flags & (TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND |
-+			      TRANSPORT_RECURSE_SUBMODULES_CHECK)) && !is_bare_repository()) {
- 			struct ref *ref = remote_refs;
- 			struct string_list needs_pushing;
- 
-diff --git a/transport.h b/transport.h
-index 059b330..9d19c78 100644
---- a/transport.h
-+++ b/transport.h
-@@ -102,6 +102,7 @@ struct transport {
- #define TRANSPORT_PUSH_PORCELAIN 16
- #define TRANSPORT_PUSH_SET_UPSTREAM 32
- #define TRANSPORT_RECURSE_SUBMODULES_CHECK 64
-+#define TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND 128
- 
- #define TRANSPORT_SUMMARY_WIDTH (2 * DEFAULT_ABBREV + 3)
- 
+Take the following repository with three branches:
+
+o---o---o---o  A
+     \   \
+      \   o---o  C
+       \
+        o---o  B
+
+If I do "git rev-list A B ^C" then I get the commits marked "*" in the
+following diagram
+
+o---o---o---*  A
+     \   \
+      \   o---o  C
+       \
+        *---*  B
+
+By excluding C I have necessarily excluded a part of the history of A and B.
+
+If we assume that the proposed feature is implemented and I do "git
+rev-list $(git for-each-ref --format='%(refname)' A B ^C)", then I get
+something different:
+
+*---*---*---*  A
+     \   \
+      \   o---o  C
+       \
+        *---*  B
+
+I argue that this is a useful selection.  For example, maybe I want to
+remove the clutter of branch C from my view, but I still want to see the
+*whole* history of branches A and B.  The middle selection doesn't do it.
+
+Obviously this is not really necessary if there are only three branches,
+but if there are dozens, and if A, B, and C are patterns rather than
+literal branch names, then it can be very convenient.
+
+For example, suppose I want to see the status of all of my submissions
+in your repository in the context of your main branches plus my local
+branches.  It would be great to be able to type
+
+    gitk --with-branch='refs/heads/*' \
+         --with-branch='remotes/gitster/*' \
+         --without-branch='remotes/gitster/*/**' \
+         --with-branch='remotes/gitster/mh/*'
+
+I don't know of a way to do that now.
+
+> A better pair you could have mentioned would be for-each-ref vs rev-parse
+> (not rev-list).  What Tom wanted with "do not show the refs that match the
+> pattern" he originally wanted to give to "tag --list" would be
+> 
+> 	for-each-ref A ^B
+> 
+> that is "show ref that matches A but do not show if it also matches B",
+> while what you want to say is "I want to paint A in positive color and
+> paint B in negative color, and I want to get a canonical notation to do
+> so", it is spelled with rev-parse, not for-each-ref, like this:
+> 
+> 	rev-parse A ^B
+
+That's not what I want; see above.
+
+> In other words,
+> 
+> 	git rev-list $(git rev-parse A ^B)
+> 
+> would be the equivalent to "git rev-list A ^B".
+> 
+> Maybe you are troubled that there are multiple concepts of negation, which
+> ultimately comes from the undeniable fact that for-each-ref and rev-parse
+> operate on entities in different concept domain (refnames and objects)?
+> And if we decide to use "^", then these two different concepts of negation
+> are both expressed with the same operator "prefix ^", leading to
+> confusion?
+
+Not only that, but also that both concepts of negation are interesting
+and useful within "git rev-list", and therefore we should make them
+*combinable*.
+
+To be very explicit, I advocate:
+
+1. Implement an explicit syntax for "do not include references matching
+this pattern in a list of references".  Implement this syntax in
+for-each-ref; something like
+
+    --with-ref=PATTERN / --without-ref=PATTERN
+    --with-branch=PATTERN / --without-branch=PATTERN
+    --with-tag=PATTERN / --without-tag=PATTERN
+    --with-remote=PATTERN / --without-remote=PATTERN
+
+The point of having multiple with/without pairs would be that the first
+would match full refnames explicitly (i.e., the pattern would usually
+start with "refs/"), whereas the other pairs would implicitly prepend
+"refs/heads/", "refs/tags/", or "refs/remotes/", respectively, to the
+pattern for convenience.  There should also be an "--all" option that is
+equivalent to "--with-ref=**".
+
+The output from for-each-ref would essentially be a *list of positive
+references* matching the criteria.  In other words,
+"--without-branch=foo" would cause "refs/heads/foo" to be *excluded*
+from the output altogether, *not* included as "^refs/heads/foo".
+
+The order of the options should be significant, with the last matching
+pattern winning.
+
+2. The pattern matching of refnames should be like fnmatch, with the
+addition of "**" as a wildcard meaning "any characters, including '/'".
+
+3. Other reference-listing commands should take the same options as
+appropriate; for example, "git branch --list" would take
+--with(out)?-branch and --with(out)?-remote (and maybe
+--with(out)?-ref); "git tag --list" would take --with(out)?-tag (and
+maybe --with(out)?-ref), etc.
+
+4. The *exact same options* should be added to rev-list, and would
+effectively be expanded into a list of positive references; e.g.,
+
+    git rev-list --with-branch=A --with-branch=B --without-branch=C
+
+would be equivalent to
+
+    git rev-list $(git for-each-ref --format='%(refname)'
+--with-branch=A --with-branch=B --without-branch=C)
+
+If A, B, and C happen to be branch names rather than patterns, the above
+would be equivalent to
+
+    git rev-list refs/heads/A refs/heads/B
+
+Note that this *differs* (in a useful way!) from
+
+    git rev-list refs/heads/A refs/heads/B --not refs/heads/C
+
+or
+
+    git rev-list refs/heads/A refs/heads/B ^refs/heads/C
+
+which are useful in other scenarios and whose meanings we would of
+course retain.
+
+If "--not" is used in git-rev-list, it would demarcate groups of options
+that are passed separately to for-each-ref; for example,
+
+    git rev-list --all --with-branch=A --without-branch=B \
+           --not --with-branch=C --without-branch=D
+
+would be equivalent to
+
+    git rev-list $(git for-each-ref --format='%(refname)' --all
+--with-branch=A --without-branch=B)\
+           --not $(git for-each-ref --format='%(refname)'
+--with-branch=C --without-branch=D)
+
+Michael
+
 -- 
-1.7.9.114.gead08
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
