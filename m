@@ -1,68 +1,98 @@
-From: =?GB2312?B?0Oy1zw==?= <xudifsd@gmail.com>
-Subject: Re: [PATCH] strbuf: move strbuf_readline_fd() from bundle.c to strbuf.{c,h}
-Date: Mon, 13 Feb 2012 11:54:13 +0800
-Message-ID: <CAMocUqTKCptbn5MRkWKusCvsPJXtd2zOA=nCs_wwuYDT6=-z-Q@mail.gmail.com>
-References: <CAMocUqRutwERQ64a=9t36Za6Lm8KxpseS0NYbdGKWbixbsXeyw@mail.gmail.com>
-	<CAMocUqSefruci_ueWHUH6rqz8VFcakHErq8QV_bvghWMyHKVJg@mail.gmail.com>
-	<7v39agkmjf.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bulgarian translation of git
+Date: Sun, 12 Feb 2012 19:56:48 -0800
+Message-ID: <7vy5s7idxb.fsf@alter.siamese.dyndns.org>
+References: <75009f1d7c4aba4d62bb226ab122932c@192.168.122.10>
+ <CANYiYbGr3zN-kJwq_MCnttNZP6Cc0aj-fsZjd4V=4z+BA5TvUw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: =?GB2312?B?R2l0INPKvP7B0LHt?= <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 13 04:54:45 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	=?iso-2022-jp?B?QWxleGFuZGVyIFNob3BvdiAoGyRCJyEnXSdWJ1wnYydRJ18bKEI=?=
+	 =?iso-2022-jp?B?GyRCJ1UnbCdiGyhCIBskQic6J2AnYSdgJ1MbKEIp?= 
+	<lists@kambanaria.org>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 13 04:57:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rwn01-0004ge-BB
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 04:54:45 +0100
+	id 1Rwn28-00064x-7N
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 04:56:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754274Ab2BMDyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Feb 2012 22:54:15 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:58214 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753367Ab2BMDyO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Feb 2012 22:54:14 -0500
-Received: by bkcjm19 with SMTP id jm19so4179309bkc.19
-        for <git@vger.kernel.org>; Sun, 12 Feb 2012 19:54:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=tmErBOnJ/K+gjtCZyJ2n2ttxuwtntIjaV3HUcB0xE3s=;
-        b=vc5437OZa7wTRhGq8w7BzJujqyiHJ5cPMYUB24jlaxaMkclRPMIz70WnAAiy1Kz4Pw
-         h7/AU4+QrgCypz5xLaDUV+TJ4vgFmGRJlSXCfWnLLVbMik+7DPbH+aHQDUqUTZqQVRPC
-         N6SUqKs465ezVvy3TIn1PpPKUuMctoXv1h8m0=
-Received: by 10.205.129.130 with SMTP id hi2mr6286416bkc.98.1329105253126;
- Sun, 12 Feb 2012 19:54:13 -0800 (PST)
-Received: by 10.204.130.72 with HTTP; Sun, 12 Feb 2012 19:54:13 -0800 (PST)
-In-Reply-To: <7v39agkmjf.fsf@alter.siamese.dyndns.org>
+	id S1754075Ab2BMD4w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Feb 2012 22:56:52 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48380 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754097Ab2BMD4v (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Feb 2012 22:56:51 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A0D66D92;
+	Sun, 12 Feb 2012 22:56:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9CM+DLyulL/JvuZM7zrogqyzP1U=; b=kE73HZ
+	P9QOBKbYF/GD6BlGCC+mHWy2FvX1zTiRTxe8BBJXNyyqC7hgRZSpmF7wPT5DZn2h
+	Hpjci9nX3pYyxhQzw4dUhztcA6s+vFKyLWLCxik+AHcUctK1O3+VVdTprETRRD4e
+	BZg8WuUNCKl9rNX7akluEjZ41T1HyH0ao5bSY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gmq8FTXGNVXbexyxG2K8Exw8OUqEftCB
+	Mus/o7/+b4EDIioXNYXr7aGHj1pVfswh+BRAH/jCXYaonIbCUhEmky2T1p0AFjvJ
+	qvhPa3DqEXEO0RvVcZmMrnLAektNfD9EQXid/v1jsX/OkMbLePoWooFHwqQqsstz
+	J+qFewKklu8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 813DA6D91;
+	Sun, 12 Feb 2012 22:56:50 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D851E6D8E; Sun, 12 Feb 2012
+ 22:56:49 -0500 (EST)
+In-Reply-To: <CANYiYbGr3zN-kJwq_MCnttNZP6Cc0aj-fsZjd4V=4z+BA5TvUw@mail.gmail.com> (Jiang
+ Xin's message of "Mon, 13 Feb 2012 10:46:14 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C1C3C9B8-55F6-11E1-BEC0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190600>
 
->> Shouldn't I supposed to receive any information about this patch?
->
-> Not necessarily X-<.
->
-> Things can get lost in the noise, and sending a reminder message like you
-> just did, after waiting for a few to several days, is considered a good
-> practice.
->
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-Ok, excuse me, but this is my first time to make a patch. I'm
-desperately want to know its fate :)
-
->> Has it accepted or not?
+> Junio has a suggestion on how to contrib l10n for git, and you can see the
+> discussion here: http://article.gmane.org/gmane.comp.version-control.git/189584.
 >
-> Anything and everything being considered for inclusion is reachable from
-> the tip of the 'next' branch; other patches that might turn out to be of
-> value, or ones that at least deserve more sets of eyeballs, are only in
-> the 'pu' branch.
+> Seems that the suggested git-po repo has not been setup yet, so let me
+> have a try.
 >
+> 1. Repositiry git-po is hosted on GitHub: https://github.com/gotgit/git-po/
+>
+> 2. I made a commit on the maint branch with a initial version of 'po/git.pot'
+>     https://github.com/gotgit/git-po/commit/4247a7a9d39e2a74ce1d58e5eb1f5e5d87977989
 
-Does this mean that we can check 'next' branch to see if any of our
-patches being considered for inclusion?
+Somebody needs to eyeball this commit before anything else happens on top
+of it, so that if there is a glaring mistake it can be caught before it
+spreads to affect work by translators for various languages.
+
+
+> 3. As l10n coordinator for Chinese, I translate against the pot file, and
+>     the translated po file 'po/zh_CN.po' is commited in my own branch:
+> maint-zh-cn.
+>     You can find the commit in:
+> https://github.com/gotgit/git-po/commits/maint-zh-cn
+>
+> 4. I will merge the commit in branch maint-zh-cn back or other l10n
+> coordinators' contributes
+>     to maint branch.
+>
+> I have a question, which version of po should be maintained? master
+> branch or maint branch.
+
+I would say for this round the git-po repository and its pot file should
+pick up whatever new translatable strings are added to 'master'.
+
+After this is merged in 1.7.10, we may want to maintain separate tracks,
+but at this moment there is no point maintaining something mergeable to
+1.7.9.x maintenance track.
