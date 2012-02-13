@@ -1,58 +1,99 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Setting up a Git server (+ gitweb) with .htaccess files HOWTO
-Date: Mon, 13 Feb 2012 17:34:43 +0100
-Message-ID: <vpqbop266ak.fsf@bauges.imag.fr>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: git status: small difference between stating whole repository and
+ small subdirectory
+Date: Mon, 13 Feb 2012 17:54:04 +0100
+Message-ID: <CAA01CsqjeDR56n=gdLWtDshp8-=8_cSih9vHV3vnUx0wTockYg@mail.gmail.com>
+References: <CAA01Csr8FbvQ8uFvxX8_6i-hysin6JuaifVVC-yoLyoT0N5F4Q@mail.gmail.com>
+	<CACsJy8DnqYZ5CdZqbebWS4NS85mfwumyao0abeqDxMXrHhDELA@mail.gmail.com>
+	<CAA01Csq+zVhRTjGqy1DJGK7o5wByd9ADsSim214T7Vkxmk+ykQ@mail.gmail.com>
+	<CACsJy8C05wvQRRQJLxrxYKHjXsgh6RugFexkPUKYGxbQkqiXJA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 13 17:34:52 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 13 17:54:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rwyrb-0005Ot-So
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 17:34:52 +0100
+	id 1RwzAK-0004Gk-BN
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 17:54:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757138Ab2BMQer (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Feb 2012 11:34:47 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:50302 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755325Ab2BMQeq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Feb 2012 11:34:46 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q1DGVkKJ007912
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 13 Feb 2012 17:31:46 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1RwyrU-00088v-4Y; Mon, 13 Feb 2012 17:34:44 +0100
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 13 Feb 2012 17:31:46 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q1DGVkKJ007912
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1329755507.83683@OZOfC71P39DZ1w9CJKTcug
+	id S1757272Ab2BMQyG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Feb 2012 11:54:06 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:55972 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757227Ab2BMQyF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Feb 2012 11:54:05 -0500
+Received: by iacb35 with SMTP id b35so4644471iac.19
+        for <git@vger.kernel.org>; Mon, 13 Feb 2012 08:54:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=qwr7OgOQr8F9Fh/y9xoDjClS/DBUtjwSDIUZtE4erBU=;
+        b=VnvJfPhKVJDPp5Zz1ai4QSCMLlOv6UaQalbHX4rf90Y24ML5ymcTYRVxWjO73hRHf6
+         k5DtZ0JwUYlP/eYrr+OBrI+hlrHzJxHJWu0s8UaOFLU/gJmmKetzwLoklO1Yky6KCh1D
+         w5cxqY/MsPcMro9H77yqGJEigqAKE4OYxlQZo=
+Received: by 10.42.145.131 with SMTP id f3mr26919329icv.8.1329152044900; Mon,
+ 13 Feb 2012 08:54:04 -0800 (PST)
+Received: by 10.50.46.33 with HTTP; Mon, 13 Feb 2012 08:54:04 -0800 (PST)
+In-Reply-To: <CACsJy8C05wvQRRQJLxrxYKHjXsgh6RugFexkPUKYGxbQkqiXJA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190638>
 
-Hi,
+On Fri, Feb 10, 2012 at 3:37 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> I think the cost is in $GIT_DIR, not the working directory.
 
-I've set up a Git server on a machine on which I have a webspace,
-permission to run CGI scripts, but no shell or root access. Good news:
-it worked :-).
+Could you explain?
 
-I've documented the process here in case anyone's interested:
 
-  http://www-verimag.imag.fr/~moy/?Host-a-Git-repository-over-HTTP-S
+I got the problem again today. This time I've made a copy of the
+repository so hopefully I'll able to reproduce the problems.
+
+This time it's a different repository but the 'status' on a small
+subdirectory is even more than 2x slower than on the whole repository.
+
+Whole repo:
+$ find * -type f | wc -l
+33021
+$ du -shc * | grep total
+2.1G	total
+
+The subdir:
+$ find * -type f | wc -l
+17
+$ du -shc * | grep total
+84K	total
+
+As previously, timing was done with cold cache (echo 3 | sudo tee
+/proc/sys/vm/drop_caches) and executed several times.
+
+This time I have used recent git (1.7.9.188.g12766) compiled with -pg.
+git was executed in the subdirectory. Tracked files were not
+changed/deleted, there was just a couple of small untracked files.
+
+Timings:
+
+$ time git status
+real	0m16.595s
+user	0m0.680s
+sys	0m0.616s
+
+$ time git status -- .
+real	0m10.030s
+user	0m0.464s
+sys	0m0.184s
+
+You can find gprof output here:
+http://pastebin.com/mhddDUmv - from whole repo status
+http://pastebin.com/1LdVn77A - from subdir status
+
+
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Piotr Krukowiecki
