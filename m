@@ -1,92 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git documentation at kernel.org
-Date: Sun, 12 Feb 2012 19:23:19 -0800
-Message-ID: <7vmx8nju1k.fsf@alter.siamese.dyndns.org>
-References: <CAPyqok3USqMxm0gNf_T9vnCoicp9XSwpWUCYJ8jh79h=V_UuOA@mail.gmail.com>
- <20120208213410.GA5768@ecki> <7vmx8rtu3e.fsf@alter.siamese.dyndns.org>
- <20120210200401.GB5504@sigill.intra.peff.net>
- <vpqehtz909k.fsf@bauges.imag.fr>
- <20120212222508.GA25619@sigill.intra.peff.net>
- <CAP2yMa+2E6101fe3Z2WTCfuGnq17WT7nDUQr7PVH6_YKRnNifw@mail.gmail.com>
- <20120213003024.GA25794@sigill.intra.peff.net>
+From: =?GB2312?B?0Oy1zw==?= <xudifsd@gmail.com>
+Subject: Re: [PATCH] strbuf: move strbuf_readline_fd() from bundle.c to strbuf.{c,h}
+Date: Mon, 13 Feb 2012 11:54:13 +0800
+Message-ID: <CAMocUqTKCptbn5MRkWKusCvsPJXtd2zOA=nCs_wwuYDT6=-z-Q@mail.gmail.com>
+References: <CAMocUqRutwERQ64a=9t36Za6Lm8KxpseS0NYbdGKWbixbsXeyw@mail.gmail.com>
+	<CAMocUqSefruci_ueWHUH6rqz8VFcakHErq8QV_bvghWMyHKVJg@mail.gmail.com>
+	<7v39agkmjf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Scott Chacon <schacon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Clemens Buchacher <drizzd@aon.at>, ftpadmin@kernel.org,
-	Petr Onderka <gsvick@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 13 04:23:30 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: =?GB2312?B?R2l0INPKvP7B0LHt?= <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 13 04:54:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RwmVk-0007Bt-Mb
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 04:23:29 +0100
+	id 1Rwn01-0004ge-BB
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 04:54:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754902Ab2BMDXY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Feb 2012 22:23:24 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34920 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753093Ab2BMDXX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Feb 2012 22:23:23 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 47E9F6784;
-	Sun, 12 Feb 2012 22:23:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9rNPLX1OAlUxf8S02MuP3HFqfME=; b=ldPGIF
-	W0rcClXw5NxISsC2x+gtqAuGIjEKugc4m+3HXP1EOd5yQGOivT2uqOsjCWGs2tM2
-	Av5iS2T+elpF1Yrr5ekpD3JhIysiF8whwKoWndt+hU2Wa1y8IlbpaEJ5qARj0AtF
-	u7hvGC4Nv6Cebtn2trtoOGW77smSv6u5+rEpM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=w2ratxe2wUD9i9DSptI/DaDQHy18SuzA
-	wgwn3g8vlCckbuH0iblL7gFlzsXIQRWlpjmwWwMatg901Kd+qkWhhcP625jlf6y/
-	mB4S03NWDOUXMt6lGmH8fiS3rg1zX6+LjTEQLuv9cN8Vv0s2VmhLDMaGLpv8cMpP
-	5anC7SerQb0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E5D76783;
-	Sun, 12 Feb 2012 22:23:22 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B310F6781; Sun, 12 Feb 2012
- 22:23:21 -0500 (EST)
-In-Reply-To: <20120213003024.GA25794@sigill.intra.peff.net> (Jeff King's
- message of "Sun, 12 Feb 2012 19:30:24 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 14D57EA8-55F2-11E1-81F7-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754274Ab2BMDyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Feb 2012 22:54:15 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:58214 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753367Ab2BMDyO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Feb 2012 22:54:14 -0500
+Received: by bkcjm19 with SMTP id jm19so4179309bkc.19
+        for <git@vger.kernel.org>; Sun, 12 Feb 2012 19:54:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=tmErBOnJ/K+gjtCZyJ2n2ttxuwtntIjaV3HUcB0xE3s=;
+        b=vc5437OZa7wTRhGq8w7BzJujqyiHJ5cPMYUB24jlaxaMkclRPMIz70WnAAiy1Kz4Pw
+         h7/AU4+QrgCypz5xLaDUV+TJ4vgFmGRJlSXCfWnLLVbMik+7DPbH+aHQDUqUTZqQVRPC
+         N6SUqKs465ezVvy3TIn1PpPKUuMctoXv1h8m0=
+Received: by 10.205.129.130 with SMTP id hi2mr6286416bkc.98.1329105253126;
+ Sun, 12 Feb 2012 19:54:13 -0800 (PST)
+Received: by 10.204.130.72 with HTTP; Sun, 12 Feb 2012 19:54:13 -0800 (PST)
+In-Reply-To: <7v39agkmjf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190599>
 
-Jeff King <peff@peff.net> writes:
+>> Shouldn't I supposed to receive any information about this patch?
+>
+> Not necessarily X-<.
+>
+> Things can get lost in the noise, and sending a reminder message like you
+> just did, after waiting for a few to several days, is considered a good
+> practice.
+>
 
-> That sounds great to me. I'd like to be link-compatible with the old
-> kernel.org docs section (even if through redirects) so that old links
-> work (assuming kernel.org gives us a wholesale redirect).  Which means
-> importing all of the docs for released versions. I don't know if the old
-> kernel.org doc tree was saved anywhere, but if I understand correctly,
-> they are identical to what's in the "git-htmldocs" repository (which I
-> _thought_ Junio wasn't going to keep updating, but it seems pretty up to
-> date).
+Ok, excuse me, but this is my first time to make a patch. I'm
+desperately want to know its fate :)
 
-I have been updating htmldocs/manpages repositories on "unless I forget"
-basis every time the public 'master' gets updated, so they are updated as
-frequently as they used to back when they were autogenerated, "unless I
-forget".
+>> Has it accepted or not?
+>
+> Anything and everything being considered for inclusion is reachable from
+> the tip of the 'next' branch; other patches that might turn out to be of
+> value, or ones that at least deserve more sets of eyeballs, are only in
+> the 'pu' branch.
+>
 
-But the contents of htmldocs does _not_ match what used to be at k.org in
-that its git.html does not have links to documentation pages for older
-releases, iow, formatted without "stalenotes" defined.
-
-This is because formatting with "stalenotes" needs to make an assumption
-on the filesystem layout that I cannot enforce to the users of htmldocs
-repository. They will get one tarball for one version, and it is up to
-them where they extract these tarballs.  They need to extract the tarball
-of an older release vX.Y.Z in vX.Y.Z subdirectory next to the git.html of
-the latest living document to match the layout, but otherwise the links
-created by "stalenotes" will become dangling.
+Does this mean that we can check 'next' branch to see if any of our
+patches being considered for inclusion?
