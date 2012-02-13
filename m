@@ -1,81 +1,133 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Remove Git's support for smoke testing
-Date: Mon, 13 Feb 2012 02:32:55 -0800
-Message-ID: <7vty2vf2g8.fsf@alter.siamese.dyndns.org>
-References: <1324660098-26666-1-git-send-email-avarab@gmail.com>
- <CACBZZX7pDYFqSUjqDjjEFZBaTsoN9oa9vy5Cq4CckP2nZSSRyw@mail.gmail.com>
+From: =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+Subject: [BUG] git-merge-octopus creates an empty merge commit with one parent
+Date: Mon, 13 Feb 2012 12:48:56 +0100
+Message-ID: <1329133736-20817-1-git-send-email-michal.kiedrowicz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 13 11:33:06 2012
+Cc: =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 13 12:49:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RwtDT-0000NG-En
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 11:33:03 +0100
+	id 1RwuPX-0005FW-JD
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 12:49:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751563Ab2BMKc6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Feb 2012 05:32:58 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64370 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751179Ab2BMKc6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Feb 2012 05:32:58 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9989D76F7;
-	Mon, 13 Feb 2012 05:32:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=gtib/DLQkdIi
-	qPMArXhjCAPttPE=; b=qIgBVOKlOB3jJY6PvW11TcVcizb9PlO3AWM+JmWCbeh4
-	4lCTrNK85c/Po2z2/MKBWd6RucD9yvBesr+DhCMjglwHc51wkQFhL92M2IQID0Xg
-	ANhm9B9/PeWn9bjUGkpRsjxL1Zq8C1srwtdV8SHYalzqXNiYYNU1IWjQVkQhfUU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=GucF9J
-	Bu28KNFl30P1+dFAnl9l9cJzBA9QKdn6SvjT3Q4Rr5eueCu2nYvRib1hDjTZZ/Vv
-	rs+yHGPx8dvTizYEEFji/JKeXBkm125tmOQiJ3VrH85W63O8ffBurF+eucrFgAkM
-	ptFYsgfu7909MXGtcG1zfgRm8x/hOEPKOh1Ds=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 913FB76F6;
-	Mon, 13 Feb 2012 05:32:57 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2921A76F5; Mon, 13 Feb 2012
- 05:32:57 -0500 (EST)
-In-Reply-To: <CACBZZX7pDYFqSUjqDjjEFZBaTsoN9oa9vy5Cq4CckP2nZSSRyw@mail.gmail.com>
- (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun, 12 Feb
- 2012 01:09:50 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 182B2292-562E-11E1-A198-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753288Ab2BMLtB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Feb 2012 06:49:01 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:60500 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752515Ab2BMLtA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Feb 2012 06:49:00 -0500
+Received: by eaah12 with SMTP id h12so1758456eaa.19
+        for <git@vger.kernel.org>; Mon, 13 Feb 2012 03:48:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=zDGkCNsaSK+JQIQq2E/NHPNcrFggQRgkWV6yApy3OAY=;
+        b=GZKU3Jv+dw49WFPUqCMktBf06Lqk7c0kgHqaktSS/QqpVbMqUzqBGFtbXr5T4Qq8ZS
+         eYLadXWFX9D48ZMd1cq1vrd7kNBXLw1IAWAUnZrJd7Gcn5E4FXmEfx8gvwsMMtsaV+PF
+         nDYeS/PJumEN6IUY62sIf7p6lTUfPMXYUoz6w=
+Received: by 10.213.14.147 with SMTP id g19mr1954183eba.126.1329133739078;
+        Mon, 13 Feb 2012 03:48:59 -0800 (PST)
+Received: from localhost (pc10.ivo.park.gdynia.pl. [153.19.128.10])
+        by mx.google.com with ESMTPS id c16sm60302068eei.1.2012.02.13.03.48.58
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 13 Feb 2012 03:48:58 -0800 (PST)
+X-Mailer: git-send-email 1.7.9.rc2.155.g2e96
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190625>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+This happens when git merge is run to merge multiple commits that are
+descendants of current HEAD (or are HEAD).  We've hit this while updati=
+ng master
+to origin/master but accidentaly we called (while being on master):
 
-> On Fri, Dec 23, 2011 at 18:08, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason=
- <avarab@gmail.com> wrote:
->> I'm no longer running the Git smoke testing service at
->> smoke.git.nix.is due to Smolder being a fragile piece of software no=
-t
->> having time to follow through on making it easy for third parties to
->> run and submit their own smoke tests.
->
-> Junio, could you please apply this? The current release's t/README
-> file is pointing to a service I'm not running anymore.
+	$ git merge master origin/master
 
-Will apply these three directly to maint (they all look sane, safe and =
-do
-not add any new features).
+Here is a minimal testcase:
 
- [PATCH] Makefile: Change the default compiler from "gcc" to "cc"
- [PATCH] Remove Git's support for smoke testing
- [PATCH] t: use sane_unset instead of unset
+	$ git init a
 
-Thanks.
+	$ cd a
+
+	$ echo a>a
+
+	$ git commit -minitial
+
+	$ echo b>a
+
+	$ git add a
+
+	$ git commit -msecond
+
+	$ git checkout master^
+
+	$ git merge master master
+	Fast-forwarding to: master
+	Already up-to-date with master
+	Merge made by the 'octopus' strategy.
+	 a |    2 +-
+	  1 files changed, 1 insertions(+), 1 deletions(-)
+
+	$ git cat-file commit HEAD
+	tree eebfed94e75e7760540d1485c740902590a00332
+	parent bd679e85202280b263e20a57639a142fa14c2c64
+	author Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> 1329132996=
+ +0100
+	committer Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> 1329132=
+996 +0100
+
+	Merge branches 'master' and 'master' into HEAD
+
+=2E.. and below is a patch that adds a testcase to Git's testsuite.
+
+I would expect `git merge master master` to just 'Fast forward'.
+
+Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
+---
+ t/t6028-merge-up-to-date.sh |   17 ++++++++++++++++-
+ 1 files changed, 16 insertions(+), 1 deletions(-)
+
+diff --git a/t/t6028-merge-up-to-date.sh b/t/t6028-merge-up-to-date.sh
+index a91644e..824fca5 100755
+--- a/t/t6028-merge-up-to-date.sh
++++ b/t/t6028-merge-up-to-date.sh
+@@ -16,7 +16,12 @@ test_expect_success setup '
+ 	test_tick &&
+ 	git commit -m second &&
+ 	git tag c1 &&
+-	git branch test
++	git branch test &&
++	echo third >file &&
++	git add file &&
++	test_tick &&
++	git commit -m third &&
++	git tag c2
+ '
+=20
+ test_expect_success 'merge -s recursive up-to-date' '
+@@ -74,4 +79,14 @@ test_expect_success 'merge -s subtree up-to-date' '
+=20
+ '
+=20
++test_expect_failure 'merge fast-forward octopus' '
++
++	git reset --hard c0 &&
++	test_tick &&
++	git merge c1 c2
++	expect=3D$(git rev-parse c2) &&
++	current=3D$(git rev-parse HEAD) &&
++	test "$expect" =3D "$current"
++'
++
+ test_done
+--=20
+1.7.9.rc2.155.g2e96
