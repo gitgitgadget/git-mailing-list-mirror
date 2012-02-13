@@ -1,116 +1,207 @@
 From: Michal Kiedrowicz <michal.kiedrowicz@gmail.com>
-Subject: Re: [PATCH 7/8] gitweb: Use different colors to present marked
- changes
-Date: Mon, 13 Feb 2012 07:46:09 +0100
-Message-ID: <20120213074609.2222bd6a@mkiedrowicz.ivo.pl>
+Subject: Re: [PATCH 8/8] gitweb: Highlight combined diffs
+Date: Mon, 13 Feb 2012 07:48:56 +0100
+Message-ID: <20120213074856.50b1bf37@mkiedrowicz.ivo.pl>
 References: <1328865494-24415-1-git-send-email-michal.kiedrowicz@gmail.com>
-	<1328865494-24415-8-git-send-email-michal.kiedrowicz@gmail.com>
-	<m3pqdksyg1.fsf@localhost.localdomain>
+	<1328865494-24415-9-git-send-email-michal.kiedrowicz@gmail.com>
+	<m3ty2wsyt6.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 13 07:46:19 2012
+X-From: git-owner@vger.kernel.org Mon Feb 13 07:49:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rwpg2-00029I-Vb
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 07:46:19 +0100
+	id 1Rwpii-0003q3-Sv
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 07:49:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752683Ab2BMGqO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Feb 2012 01:46:14 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:43528 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750822Ab2BMGqN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Feb 2012 01:46:13 -0500
-Received: by eaah12 with SMTP id h12so1676542eaa.19
-        for <git@vger.kernel.org>; Sun, 12 Feb 2012 22:46:12 -0800 (PST)
+	id S1754675Ab2BMGtB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Feb 2012 01:49:01 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:36005 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753112Ab2BMGtA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Feb 2012 01:49:00 -0500
+Received: by eekc14 with SMTP id c14so1744605eek.19
+        for <git@vger.kernel.org>; Sun, 12 Feb 2012 22:48:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
          :mime-version:content-type:content-transfer-encoding;
-        bh=fWTZax1ARp+GNBBii0OZ3gXpQ6rRogzRhsiAynQQDqQ=;
-        b=opFo0KLVL03bOpJHiQMPTTx9nhfGWeLm6pIY7NCKyaSdlHhOa5TXqEe+q4f7KxoeKy
-         J9rypA3wQRTYu6x3rtlzLJ3DW6QC4HOx8s9OjZBFde536Yp0X3/nhK/9BTLgaBcpLXO0
-         NptmQMQhHx08WchupYe5SE+rxgDQscZsL6cqA=
-Received: by 10.213.2.74 with SMTP id 10mr2506822ebi.11.1329115572107;
-        Sun, 12 Feb 2012 22:46:12 -0800 (PST)
+        bh=YOd1qr7BU+VDV1XCPL5mxxTufu0QGHecHnRFX0bW9k8=;
+        b=LmW1C5/dGmV8wNEgI7oxSI/jv6AilI2iWwGzjIFP9J1ESNqTCPs0UMX0VVPrVHmufq
+         ITSmBU/X04yI4VPDR4TFSVAYeJcvfjgA42asNySk4VRmTS+EQPYiCmtWR6PQqPoltTy7
+         beERgCrc/Gb+mYzeyGatkPYO/Z4Wgv/ODuR8Q=
+Received: by 10.14.38.208 with SMTP id a56mr4786208eeb.53.1329115738722;
+        Sun, 12 Feb 2012 22:48:58 -0800 (PST)
 Received: from mkiedrowicz.ivo.pl (pc10.ivo.park.gdynia.pl. [153.19.128.10])
-        by mx.google.com with ESMTPS id o49sm57807483eei.0.2012.02.12.22.46.11
+        by mx.google.com with ESMTPS id y12sm57732322eeb.11.2012.02.12.22.48.58
         (version=SSLv3 cipher=OTHER);
-        Sun, 12 Feb 2012 22:46:11 -0800 (PST)
-In-Reply-To: <m3pqdksyg1.fsf@localhost.localdomain>
+        Sun, 12 Feb 2012 22:48:58 -0800 (PST)
+In-Reply-To: <m3ty2wsyt6.fsf@localhost.localdomain>
 X-Mailer: Claws Mail 3.7.10 (GTK+ 2.24.8; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190613>
 
 Jakub Narebski <jnareb@gmail.com> wrote:
 
 > Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> writes:
 >=20
-> > This makes use of the highlight diff feature.
+> > The highlightning of combined diffs is currently disabled.  This is
+> > because output from a combined diff is much harder to highlight
+> > because it's not obvious which removed and added lines should be
+> > compared.
+> >=20
+> > Moreover, code that compares added and removed lines doesn't care
+> > about combined diffs. It only skips first +/- character, treating
+> > second +/- as a line content.
+> >=20
+> > Let's start with a simple case: only highlight changes that come
+> > from one parent, i.e. when every removed line has a corresponding
+> > added line for the same parent.  This way the highlightning cannot
+> > get wrong. For example, following diffs would be highlighted:
+> >=20
+> > 	- removed line for first parent
+> > 	+ added line for first parent
+> > 	  context line
+> > 	 -removed line for second parent
+> > 	 +added line for second parent
+> >=20
+> > or
+> >=20
+> > 	- removed line for first parent
+> > 	 -removed line for second parent
+> > 	+ added line for first parent
+> > 	 +added line for second parent
+> >=20
+> > but following output will not:
+> >=20
+> > 	- removed line for first parent
+> > 	 -removed line for second parent
+> > 	 +added line for second parent
+> > 	++added line for both parents
+> >=20
+> That is a very reasonable approach.
+
+Thanks.
+
+>=20
+> > Further changes may introduce more intelligent approach that better
+> > handles combined diffs.
 > >=20
 > > Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
 > > ---
-> > I decided to split mechanism (generate HTML page with <span>
-> > elements that mark interesting fragments of diff output) from
-> > politics (use these particular colors for this <span> elements),
-> > but otherwise this commit may be squashed with the previous one.
-> > These colors work for me but if someone comes out with better ones,
-> > I'd be happy.
->=20
-> I think it would be better squashed with previous patch, otherwise it
-> is a bit not visible change...
-
-OK, but please note that since previous patch HTML contains <span>
-elements around differing segments of diff so the change exists. It
-just isn't reflected by CSS.
-
-> =20
-> >  gitweb/static/gitweb.css |    8 ++++++++
-> >  1 files changed, 8 insertions(+), 0 deletions(-)
+> >  gitweb/gitweb.perl |   40 +++++++++++++++++++++++++++++++++++++---
+> >  1 files changed, 37 insertions(+), 3 deletions(-)
 > >=20
-> > diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
-> > index c7827e8..4f87d16 100644
-> > --- a/gitweb/static/gitweb.css
-> > +++ b/gitweb/static/gitweb.css
-> > @@ -438,6 +438,10 @@ div.diff.add {
-> >  	color: #008800;
-> >  }
+> > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> > index 1a5b454..2b6cb9e 100755
+> > --- a/gitweb/gitweb.perl
+> > +++ b/gitweb/gitweb.perl
+> > @@ -4944,13 +4944,16 @@ sub esc_html_mark_range {
 > > =20
-> > +div.diff.add span.marked {
-> > +	background-color: #77ff77;
-> > +}
-> > +
-> >  div.diff.from_file a.path,
-> >  div.diff.from_file {
-> >  	color: #aa0000;
-> > @@ -447,6 +451,10 @@ div.diff.rem {
-> >  	color: #cc0000;
-> >  }
+> >  # Format removed and added line, mark changed part and HTML-format
+> > them. sub format_rem_add_line {
+> > -	my ($rem, $add) =3D @_;
+> > +	my ($rem, $add, $is_combined) =3D @_;
+> >  	my @r =3D split(//, $rem);
+> >  	my @a =3D split(//, $add);
+> >  	my ($esc_rem, $esc_add);
+> >  	my ($prefix, $suffix_rem, $suffix_add) =3D (1, $#r, $#a);
+> >  	my ($prefix_is_space, $suffix_is_space) =3D (1, 1);
 > > =20
-> > +div.diff.rem span.marked {
-> > +	background-color: #ff7777;
-> > +}
+> > +	# In combined diff we must ignore two +/- characters.
+> > +	$prefix =3D 2 if ($is_combined);
 > > +
-> >  div.diff.chunk_header a,
-> >  div.diff.chunk_header {
-> >  	color: #990099;
-> > --=20
 >=20
-> I'd have to see those colors in use. =20
+> Errr... actually number of prefix is equalt to number of parents, so
+> it might be in case of octopus merge more than 2.
 
-Then why don't you try it?
+OK
 
-> BTW what colors other
-> highlighting diff GUIs use?
+>=20
+> >  	while ($prefix < @r && $prefix < @a) {
+> >  		last if ($r[$prefix] ne $a[$prefix]);
+> > =20
+> > @@ -4988,11 +4991,42 @@ sub format_ctx_rem_add_lines {
+> >  	my ($ctx, $rem, $add, $is_combined) =3D @_;
+> >  	my (@new_ctx, @new_rem, @new_add);
+> >  	my $num_add_lines =3D @$add;
+> > +	my $can_highlight;
+> > +
+> > +	# Highlight if every removed line has a corresponding
+> > added line.
+> > +	if ($num_add_lines > 0 && $num_add_lines =3D=3D @$rem) {
+> > +		$can_highlight =3D 1;
+> > +
+> > +		# Highlight lines in combined diff only if the
+> > chunk contains
+> > +		# diff between the same version, e.g.
+> > +		#
+> > +		#    - a
+> > +		#   -  b
+> > +		#    + c
+> > +		#   +  d
+> > +		#
+> > +		# Otherwise the highlightling would be confusing.
+> > +		if ($is_combined) {
+> > +			for (my $i =3D 0; $i < $num_add_lines; $i++)
+> > {
+> > +				my $prefix_rem =3D
+> > substr($rem->[$i], 0, 2);
+> > +				my $prefix_add =3D
+> > substr($add->[$i], 0, 2); +
+> > +				$prefix_rem =3D~ s/-/+/g;
+> > +
+> > +				if ($prefix_rem ne $prefix_add) {
+> > +					$can_highlight =3D 0;
+> > +					last;
+>=20
+> Nb. this assumes that we cannot refine and highlight something like
+> this:
+>=20
+>    		#    - a
+>    		#   -  b
+>    		#    + c
+>    		#   ++ d
+>=20
+> But perhaps this is better left for future improvemnt.
+
+I can add a patch for that at the end of this series.
+
+>=20
+> > +				}
+> > +			}
+> > +		}
+> > +	} else {
+> > +		$can_highlight =3D 0;
+> > +	}
+>=20
+> This 'else' would be not necessary if $can_highlight was initialized
+> to 0.
 >=20
 
-AFAIK they just use darker red/green background than for the rest of
-line.
+OK.
+
+> > =20
+> > -	if (!$is_combined && $num_add_lines > 0 && $num_add_lines
+> > =3D=3D @$rem) {
+> > +	if ($can_highlight) {
+> >  		for (my $i =3D 0; $i < $num_add_lines; $i++) {
+> >  			my ($line_rem, $line_add) =3D
+> > format_rem_add_line(
+> > -				$rem->[$i], $add->[$i]);
+> > +				$rem->[$i], $add->[$i],
+> > $is_combined); push @new_rem, $line_rem;
+> >  			push @new_add, $line_add;
+>=20
+> O.K.
+>=20
+
+Thanks for your thorough review.
