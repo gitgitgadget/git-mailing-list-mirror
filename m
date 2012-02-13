@@ -1,117 +1,98 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: GitWeb and atom feed links
-Date: Mon, 13 Feb 2012 23:17:34 +0100
-Message-ID: <201202132317.35255.jnareb@gmail.com>
-References: <F3741779-8DDA-4275-BB68-24D02297C702@pilhuhn.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Support wrapping commit messages when you read them
+Date: Mon, 13 Feb 2012 14:25:29 -0800
+Message-ID: <7vzkcmbcbq.fsf@alter.siamese.dyndns.org>
+References: <8DE6E894-B50D-4F7E-AE18-C10E7E40A550@sidneysm.com>
+ <7vfwg99dom.fsf@alter.siamese.dyndns.org>
+ <46957CEB-5E48-4C11-8428-9A88C3810548@sidneysm.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "Heiko W. Rupp" <hwr@pilhuhn.de>
-X-From: git-owner@vger.kernel.org Mon Feb 13 23:17:44 2012
+To: Sidney San =?utf-8?Q?Mart=C3=ADn?= <s@sidneysm.com>
+X-From: git-owner@vger.kernel.org Mon Feb 13 23:25:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rx4DO-0004YT-Ik
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 23:17:43 +0100
+	id 1Rx4L3-0003nR-Sp
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 23:25:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757280Ab2BMWRi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Feb 2012 17:17:38 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:35228 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754740Ab2BMWRh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Feb 2012 17:17:37 -0500
-Received: by eekc14 with SMTP id c14so2018591eek.19
-        for <git@vger.kernel.org>; Mon, 13 Feb 2012 14:17:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=1qAInIlsGwh3bq6f/lIf0eKRnr4spfU1jmBneEv0Xrc=;
-        b=cR87Hel32Bq9m8TklCet6e71PNyHcStfJkwzdht/fcLppbTGIp/Z9QqUTwP4z0kbF8
-         qAc7r+Fpd/idpnuXUjxWT8bQZij+0qA33fKAmVsn1l3WKY4vp7JZxuvHgMyc/gbLnJNR
-         LxqDgmpDzLMs7VbgNtIfGpQljxLNM9b4SqxU0=
-Received: by 10.14.38.208 with SMTP id a56mr5734183eeb.53.1329171456289;
-        Mon, 13 Feb 2012 14:17:36 -0800 (PST)
-Received: from [192.168.1.13] (aeho143.neoplus.adsl.tpnet.pl. [79.186.196.143])
-        by mx.google.com with ESMTPS id n17sm65665193eei.3.2012.02.13.14.17.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 13 Feb 2012 14:17:35 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <F3741779-8DDA-4275-BB68-24D02297C702@pilhuhn.de>
-Content-Disposition: inline
+	id S1757492Ab2BMWZc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Feb 2012 17:25:32 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61510 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753864Ab2BMWZb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Feb 2012 17:25:31 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F3BFD699B;
+	Mon, 13 Feb 2012 17:25:30 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=U7khGRGGQKxa
+	H8Wf6HSowe0AUXM=; b=I8mmbYR+o2/JfGII5Maiwmqofg7ogthNhydG4Dbbp9hi
+	zz4Ve1eYcIbi4pozFcaw5wALTejsdHcaQmy8cpeDj4vebZRJyxJFkHkilvH03bUx
+	5/XZOSEp7+pgGQfYqa4rcoc/LFnwrIDhgUGqQ1XZeB4Np9vAcS67oqtAf4iWBRY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=bVtXc/
+	3VF7wb59Xp3dbRP+wBd+MeHizZ68dmD2LrZYt5WzTP7v8qBQDvjMb75FFXY2NeJv
+	jjUuHE6GU2uV3bTeAwweWlxbBvOm/zg4GGwdoRk7ZZ06FoiToCUHWFnM7qS7tAA3
+	cv9nR5fVgz4volur6hRxTJgooINPPXV5W5FzE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EA31B699A;
+	Mon, 13 Feb 2012 17:25:30 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 79C916999; Mon, 13 Feb 2012
+ 17:25:30 -0500 (EST)
+In-Reply-To: <46957CEB-5E48-4C11-8428-9A88C3810548@sidneysm.com> ("Sidney San
+ =?utf-8?Q?Mart=C3=ADn=22's?= message of "Mon, 13 Feb 2012 16:26:24 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A323A884-5691-11E1-9927-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190680>
 
-Heiko W. Rupp wrote:
-> 
-> when you e.g. look at http://git.kernel.org/?p=git/git.git;a=summary
-> and then the lower right, there are two buttons for feeds.
+Sidney San Mart=C3=ADn <s@sidneysm.com> writes:
 
-Yes, [Atom] and [RSS], for different formats of the same feed.
+>> After all, SCM is merely a method to help communication between
+>> developers, and sticking to the common denominator is a proven good =
+way to
+>> make sure everybody involved in the project can use what is recorded=
+ in
+>> the repository. This is not limited only to the log message, but equ=
+ally
+>> applies to filenames (e.g. don't create xt_tcpmss.c and xt_TCPMSS.c =
+in the
+>> same directory if you want your project extractable on case insensit=
+ive
+>> filesystems) and even to the sources.
+>>=20
+>> You need to justify the cause a bit better. Why is such a new logic
+>> justified?
+>
+> You=E2=80=99re right, that sentence doesn't say anything.
+>
+> I agree that projects need to have standards for their commit message=
+s,
+> but I also think that line wrapping should be taken care of by the
+> computer so that the humans can think about the content of their comm=
+it
+> messages. It's easier for everyone.
 
-> If you click on e.g. atom, you end up with an url of
-> http://git.kernel.org/?p=git/git.git;a=atom  
-> where the output is not a feed in atom format, but plain html with
-> tables etc. 
-> 
-> If you change the url to http://git.kernel.org/?p=git/git.git&a=atom
-> the output is a correct atom feed (same for rss).
+I just typed M-q to wrap the above paragraph from you to make it readab=
+le.
 
-I don't know what is the source of bug you are seeing; I suspect some
-trouble with output caching that git.kernel.org fork of gitweb has added,
-but this isn't it.  Those two forms of 'atom' URL are equivalent.
-
-Wikipedia says in  http://en.wikipedia.org/wiki/Query_string:
-
- "* The query string is composed of a series of field-value pairs.
-  * The field-value pairs are each separated by an equals sign. The
-    equals sign may be omitted if the value is an empty string.
-  * The series of pairs is separated by the ampersand, '&' or
-    semicolon, ';'.
-
-  [...]
-
-  W3C recommends that all web servers support semicolon separators
-  in the place of ampersand separators.[4]"
-
-[4]: http://www.w3.org/TR/1999/REC-html401-19991224/appendix/notes.html#h-B.2.2
-
- "B.2.2 Ampersands in URI attribute values
-  ----------------------------------------
-
-  The URI that is constructed when a form is submitted may be used as an
-  anchor-style link (e.g., the href attribute for the A element).
-  Unfortunately, the use of the "&" character to separate form fields
-  interacts with its use in SGML attribute values to delimit character
-  entity references. For example, to use the URI "http://host/?x=1&y=2"
-  as a linking URI, it must be written <A href="http://host/?x=1&#38;y=2">
-  or <A href="http://host/?x=1&amp;y=2">.
-
-  We recommend that HTTP server implementors, and in particular, CGI
-  implementors support the use of ";" in place of "&" to save authors
-  the trouble of escaping "&" characters in this manner."
-
-CGI(3pm) says:
-
- "-newstyle_urls
-
-      Separate the name=value pairs in CGI parameter query strings with semi-
-      colons rather than ampersands.  For example:
-
-          ?name=fred;age=24;favorite_color=3
-
-      Semicolon-delimited query strings are always accepted, and will be
-      emitted by self_url() and query_string(). newstyle_urls became the
-      default in version 2.64."
-
--- 
-Jakub Narebski
-Poland
+"Computers are good at automating" is true, and that is why real editor=
+s
+give an easy way to auto-wrap long prose in a paragraph while composing=
+=2E
+But "computers are good at automating" is not a convincing justificatio=
+n
+to let the composer leave unreasonably long lines in the commit log obj=
+ect
+and force the reader side to line-wrap the mess only to fix it up.
