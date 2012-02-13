@@ -1,91 +1,92 @@
-From: Konstantin Ryabitsev <mricon@kernel.org>
-Subject: Re: Git documentation at kernel.org
-Date: Mon, 13 Feb 2012 10:15:58 -0500
-Organization: Linux Foundation/Kernel.org
-Message-ID: <1329146158.13544.6.camel@i5.mricon.com>
-References: <CAPyqok3USqMxm0gNf_T9vnCoicp9XSwpWUCYJ8jh79h=V_UuOA@mail.gmail.com>
-	 <20120208213410.GA5768@ecki> <7vmx8rtu3e.fsf@alter.siamese.dyndns.org>
-	 <20120210200401.GB5504@sigill.intra.peff.net>
-	 <vpqehtz909k.fsf@bauges.imag.fr>
-	 <20120212222508.GA25619@sigill.intra.peff.net>
+From: =?UTF-8?B?VGFqdGkgw4Frb3M=?= <akos.tajti@intland.com>
+Subject: git cherry doesn't list a merge commit
+Date: Mon, 13 Feb 2012 16:17:10 +0100
+Message-ID: <4F392976.9070009@intland.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-Otvcg5avoZc74J5mTWUZ"
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	Clemens Buchacher <drizzd@aon.at>, ftpadmin@kernel.org,
-	Petr Onderka <gsvick@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 13 16:16:12 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 13 16:17:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RwxdT-00077M-LA
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 16:16:11 +0100
+	id 1RwxeW-0008Ai-To
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 16:17:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756868Ab2BMPQG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Feb 2012 10:16:06 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:33784 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752013Ab2BMPQE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Feb 2012 10:16:04 -0500
-Received: by ghrr11 with SMTP id r11so2363737ghr.19
-        for <git@vger.kernel.org>; Mon, 13 Feb 2012 07:16:03 -0800 (PST)
-Received: by 10.50.179.106 with SMTP id df10mr27851034igc.6.1329146163393;
-        Mon, 13 Feb 2012 07:16:03 -0800 (PST)
-Received: from [69.165.198.147] ([69.165.198.147])
-        by mx.google.com with ESMTPS id k3sm14340251igq.1.2012.02.13.07.16.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 13 Feb 2012 07:16:02 -0800 (PST)
-In-Reply-To: <20120212222508.GA25619@sigill.intra.peff.net>
-X-Mailer: Evolution 3.2.3 (3.2.3-1.fc16)
-X-Gm-Message-State: ALoCoQlf0TPMqzGwkqjeqFIZ7xHU0RpsgHhghc2y3PG0DPqGEBRuLJM/KN74Xj46Bw69CVV+014o
+	id S1756885Ab2BMPRN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Feb 2012 10:17:13 -0500
+Received: from moutng.kundenserver.de ([212.227.17.8]:52088 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752013Ab2BMPRM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Feb 2012 10:17:12 -0500
+Received: from [192.168.1.101] (94-21-245-15.pool.digikabel.hu [94.21.245.15])
+	by mrelayeu.kundenserver.de (node=mrbap3) with ESMTP (Nemesis)
+	id 0Md4Bm-1SFBG12DwI-00IbiD; Mon, 13 Feb 2012 16:17:11 +0100
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; hu; rv:1.9.2.25) Gecko/20111213 Thunderbird/3.1.17
+X-Provags-ID: V02:K0:ggYq1TdrW6DHCJVFqN228LFN6J576QuzDQAjr2dU3CL
+ r9rclTTf5UWpLSjK67uRJSO8IhJlUCp/jwfe4Lp1wKPNqNebI+
+ JVr793hjpUgn+cMr4PsBNpLlmfUzLS0Nos2Th/yhl0IRqYAiMm
+ CevQJ6CiB9MAmvvYliya57tmC+Z+lBA2oXSeGyd+v5BycPIrJe
+ yI5hm3fK4Ti38T+e6bgyJgsm3lOkB8WGaZYnMZD8g5vrhyqG60
+ FitZYM09epHZYKYMvHKo/p+1TxLWuyuQA5yuRaByOkP4Yj3r2J
+ i2e5JlVsQg/m20/wcR9lZx70JFVHmRCUFq3LhOaNeRUtLRiplc
+ a66TlMUtQJCpwizUIESw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190631>
 
+Dear List,
 
---=-Otvcg5avoZc74J5mTWUZ
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I have a question/misunderstanding about 'git cherry'. The scenario is=20
+the following:
+I have two repositories (two forks of the same parent repo): A and B. I=
+=20
+created a commit in A, then pulled B to A and finally made an other=20
+commit in A. This resulted the following commits:
 
-On Sun, 2012-02-12 at 17:25 -0500, Jeff King wrote:
-> As far as historical reasons, perhaps the right answer is to put the
-> documentation where it makes sense to go _now_, and ask kernel.org to
-> issue http redirects for http://kernel.org/pub/software/scm/git/docs.=20
+-----
+commit f6afabb0a734843d5d122b612f0701d27b178e42
+Author: akostajti <akos.tajti@intland.com>
+Date: Mon Feb 13 15:59:51 2012 +0100
 
-I think that should be fine, unless John objects. The easiest would be
-to preserve the same directory structure, so we do a dir-level redirect
-instead of creating one-off redirects for each page.
+modified a
 
-Best,
---=20
-Konstantin Ryabitsev
-Systems Administrator, Kernel.org
-Montr=C3=A9al, Qu=C3=A9bec
+commit 4ec4d59f632b93456890db139125419d16a10807
+Merge: a73e884 2a483e8
+Author: akostajti <akos.tajti@intland.com>
+Date: Mon Feb 13 15:59:34 2012 +0100
 
---=-Otvcg5avoZc74J5mTWUZ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
+Merge branch 'master' of http://localhost:3180/git/first-60-project
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+commit a73e884d2dadf29898c2d6b665ed79d352422d26
+Author: akostajti <akos.tajti@intland.com>
+Date: Mon Feb 13 15:58:48 2012 +0100
 
-iQGcBAABCAAGBQJPOSkuAAoJEI6WedmufEleIxEL/3i5Scm661mq4hvT1/f2tedm
-u9HwfDBYQKFXBCEpYxOqnZLgRdOjAaPB643tadOyMFcQDmoRTZngsHoQt6BH/IN7
-R4OrCsurcCh4pfPaQv9dArwECJ0tHHCLsTUByv4rADvqjf+vCizz/3K39o7gW7K9
-o2CX/eqkfdpQVlJjMmL+nFrW1mHlm4Pp2h7kqmqgwD3HHM5TbtpLPxHhPx+TE4bS
-IF9vI8yZ6/ftF5MxfMZ9lJ+cAe/obyCNlFf/LzPBjDWTtYlc/2m7X+Ia2rUmhXJO
-kDyrh0z9g+0NsEFMOoY9trGiqEVUosVcaf4BLwomHod42LLkuiUHWeeKMagnIK0k
-uDUPzqnMxgsXMUiVq/wiOPZdv23qVOlEaVbyR54nJtkr92vRxJGlt/8l+GFn6ElV
-DHLdG4/lCgjHoVYuXqDr7TJ80HEmpz+Eq/Q+22cZWCfzuCpTwpAUQyvhT96ow3M1
-1r67pwE4f5LF8gX3bR2nZDuAbQ7JY8en/vtm2GpaXg==
-=7WHu
------END PGP SIGNATURE-----
+hkl
+-----
 
---=-Otvcg5avoZc74J5mTWUZ--
+Now If I fetch B to A and run 'git cherry FETCH_HEAD master' I get only=
+=20
+two changeset ids:
++ a73e884d2dadf29898c2d6b665ed79d352422d26
++ f6afabb0a734843d5d122b612f0701d27b178e42
+
+However, the manual of git cherry says:
+"*Every* commit that doesn=E2=80=99t exist in the <upstream> branch has=
+ its id=20
+(sha1) reported, prefixed by a symbol. The ones that have equivalent=20
+change already in the <upstream> branch are prefixed with a minus (-) s=
+ign"
+
+In my understanding this means that the merge commit=20
+(4ec4d59f632b93456890db139125419d16a10807) should be also listed by=20
+cherry, because it doesn't exist in the upstream. Am I doing something=20
+wrong? How can I ge git cherry work as I expect?
+
+Thanks in advance,
+=C3=81kos Tajti
