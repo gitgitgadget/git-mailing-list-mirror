@@ -1,98 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Support wrapping commit messages when you read them
-Date: Mon, 13 Feb 2012 14:25:29 -0800
-Message-ID: <7vzkcmbcbq.fsf@alter.siamese.dyndns.org>
-References: <8DE6E894-B50D-4F7E-AE18-C10E7E40A550@sidneysm.com>
- <7vfwg99dom.fsf@alter.siamese.dyndns.org>
- <46957CEB-5E48-4C11-8428-9A88C3810548@sidneysm.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] diff-highlight: Work for multiline changes too
+Date: Mon, 13 Feb 2012 17:27:02 -0500
+Message-ID: <20120213222702.GA19393@sigill.intra.peff.net>
+References: <20120210213209.GA7582@sigill.intra.peff.net>
+ <1328910433-2539-1-git-send-email-michal.kiedrowicz@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Sidney San =?utf-8?Q?Mart=C3=ADn?= <s@sidneysm.com>
-X-From: git-owner@vger.kernel.org Mon Feb 13 23:25:42 2012
+To: =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 13 23:27:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rx4L3-0003nR-Sp
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 23:25:38 +0100
+	id 1Rx4Mo-0005Xp-RE
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 23:27:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757492Ab2BMWZc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Feb 2012 17:25:32 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61510 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753864Ab2BMWZb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Feb 2012 17:25:31 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F3BFD699B;
-	Mon, 13 Feb 2012 17:25:30 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=U7khGRGGQKxa
-	H8Wf6HSowe0AUXM=; b=I8mmbYR+o2/JfGII5Maiwmqofg7ogthNhydG4Dbbp9hi
-	zz4Ve1eYcIbi4pozFcaw5wALTejsdHcaQmy8cpeDj4vebZRJyxJFkHkilvH03bUx
-	5/XZOSEp7+pgGQfYqa4rcoc/LFnwrIDhgUGqQ1XZeB4Np9vAcS67oqtAf4iWBRY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=bVtXc/
-	3VF7wb59Xp3dbRP+wBd+MeHizZ68dmD2LrZYt5WzTP7v8qBQDvjMb75FFXY2NeJv
-	jjUuHE6GU2uV3bTeAwweWlxbBvOm/zg4GGwdoRk7ZZ06FoiToCUHWFnM7qS7tAA3
-	cv9nR5fVgz4volur6hRxTJgooINPPXV5W5FzE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EA31B699A;
-	Mon, 13 Feb 2012 17:25:30 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 79C916999; Mon, 13 Feb 2012
- 17:25:30 -0500 (EST)
-In-Reply-To: <46957CEB-5E48-4C11-8428-9A88C3810548@sidneysm.com> ("Sidney San
- =?utf-8?Q?Mart=C3=ADn=22's?= message of "Mon, 13 Feb 2012 16:26:24 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A323A884-5691-11E1-9927-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754273Ab2BMW1X convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Feb 2012 17:27:23 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34489
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757685Ab2BMW1F (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Feb 2012 17:27:05 -0500
+Received: (qmail 1784 invoked by uid 107); 13 Feb 2012 22:34:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 13 Feb 2012 17:34:15 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Feb 2012 17:27:02 -0500
+Content-Disposition: inline
+In-Reply-To: <1328910433-2539-1-git-send-email-michal.kiedrowicz@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190681>
 
-Sidney San Mart=C3=ADn <s@sidneysm.com> writes:
+On Fri, Feb 10, 2012 at 10:47:13PM +0100, Micha=C5=82 Kiedrowicz wrote:
 
->> After all, SCM is merely a method to help communication between
->> developers, and sticking to the common denominator is a proven good =
-way to
->> make sure everybody involved in the project can use what is recorded=
- in
->> the repository. This is not limited only to the log message, but equ=
-ally
->> applies to filenames (e.g. don't create xt_tcpmss.c and xt_TCPMSS.c =
-in the
->> same directory if you want your project extractable on case insensit=
-ive
->> filesystems) and even to the sources.
->>=20
->> You need to justify the cause a bit better. Why is such a new logic
->> justified?
->
-> You=E2=80=99re right, that sentence doesn't say anything.
->
-> I agree that projects need to have standards for their commit message=
-s,
-> but I also think that line wrapping should be taken care of by the
-> computer so that the humans can think about the content of their comm=
-it
-> messages. It's easier for everyone.
+>  contrib/diff-highlight/diff-highlight |   96 ++++++++++++++++++++++-=
+----------
+>  1 files changed, 65 insertions(+), 31 deletions(-)
 
-I just typed M-q to wrap the above paragraph from you to make it readab=
-le.
-
-"Computers are good at automating" is true, and that is why real editor=
+Thanks for sending. I looked at a whole bunch of patches, and I was
+pleasantly surprised to find how infrequently we hit false positives in
+practice. In fact, the only things that looked worse with your patch
+were places where your patch happened to turn on highlighting for lines
+where the existing heuristics already were a little ugly (i.e., the
+problem was not your patch, but that the existing heuristic is sometime=
 s
-give an easy way to auto-wrap long prose in a paragraph while composing=
-=2E
-But "computers are good at automating" is not a convincing justificatio=
-n
-to let the composer leave unreasonably long lines in the commit log obj=
-ect
-and force the reader side to line-wrap the mess only to fix it up.
+non-optimal).
+
+I ended up pulling your changes out into a few distinct commits. That
+made it easier for me to review and understand what was going on (and
+hopefully ditto for other reviewers, or people who end up bisecting or
+reading the log later). I'll post that series in a moment.
+
+> After looking at outputs I noticed that it can also ignore lines with
+> prefixes/suffixes that consist only of punctuation (asterisk, semicol=
+on, dot,
+> etc), because otherwise whole line is highlighted except for terminat=
+ing
+> punctuation.
+
+I missed this note when I applied the patch and started looking at the
+outputs, and ended up having a similar thought. However, I don't know
+that it buys much in practice, and it's nice to be fairly agnostic abou=
+t
+content. I did leave that open to easy tweaking in my series, though.
+
+  [1/5]: diff-highlight: make perl strict and warnings fatal
+  [2/5]: diff-highlight: don't highlight whole lines
+  [3/5]: diff-highlight: refactor to prepare for multi-line hunks
+  [4/5]: diff-highlight: match multi-line hunks
+  [5/5]: diff-highlight: document some non-optimal cases
+
+-Peff
