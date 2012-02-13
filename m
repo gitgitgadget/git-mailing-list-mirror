@@ -1,383 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (Feb 2012, #05; Mon, 13)
-Date: Mon, 13 Feb 2012 12:42:48 -0800
-Message-ID: <7v4nuuea7r.fsf@alter.siamese.dyndns.org>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [RFC PATCH 0/3] git-p4: move to toplevel
+Date: Mon, 13 Feb 2012 21:37:10 +0100
+Message-ID: <20120213203709.GA31671@ecki>
+References: <1329070423-23761-1-git-send-email-pw@padd.com>
+ <7vehtyec64.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 13 21:43:39 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org,
+	Luke Diamand <luke@diamand.org>,
+	Vitor Antunes <vitor.hda@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 13 21:45:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rx2kL-0003Xu-HX
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 21:43:38 +0100
+	id 1Rx2mJ-0005YX-AM
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Feb 2012 21:45:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758035Ab2BMUna convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Feb 2012 15:43:30 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41967 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758021Ab2BMUmv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Feb 2012 15:42:51 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA1516D47;
-	Mon, 13 Feb 2012 15:42:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=QCVh53A8iUh3faV75dqdCZCyF
-	ag=; b=kxkiQ1DEfDFrdYysTkNsHzBFQX9RWcoQDWu7po00eroz6Yv+IPYuQolo0
-	sllGNqSiCFgt6zxjgM3wnbxRd/y3/UKjy+Tv9tGu6RXXknb1z2+vYSPMtvGj3KQZ
-	e50jgRttiocfhEDEOcluutRbPlCgUuZFv9eyUSxCc9/0UnhVUM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=oyRBG1iRDXCy9sHfh5I
-	nWP1JVBhTJseQIdCcglw+uIry5M2/aEMd6uGYZdAKPnnyYEWvo571OvQiPe2dLG0
-	YSFjtEeLi/b31U+YdE0zYVZok3vMtsuL+yz2q/FmVAHWTuUXNvsqm7kvBh7qZ/I2
-	LOuRoMyDPwrwLvb6XYxmyL88=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C20676D46;
-	Mon, 13 Feb 2012 15:42:50 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C82AA6D43; Mon, 13 Feb 2012
- 15:42:49 -0500 (EST)
-X-master-at: 6f5e880c68099b185e60b2492c75e506e16d8292
-X-next-at: adb73538176221d26b30b46087711875caebc24b
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4B1690F6-5683-11E1-8900-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758087Ab2BMUpf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Feb 2012 15:45:35 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:41963 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1758118Ab2BMUpb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Feb 2012 15:45:31 -0500
+Received: from localhost (p5B22E0DA.dip.t-dialin.net [91.34.224.218])
+	by bsmtp.bon.at (Postfix) with ESMTP id A604C2C4002;
+	Mon, 13 Feb 2012 21:46:49 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7vehtyec64.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190665>
-
-Here are the topics that have been cooking.  Commits prefixed with '-' =
-are
-only in 'pu' (proposed updates) while commits prefixed with '+' are in =
-'next'.
-
-This round mosty consists of topics to fix new features introduced in
-1.7.9, in preparation for 1.7.9.1 maintenance release.  There are still=
- a
-few more to come.
-
-You can find the changes described here in the integration branches of =
-the
-repositories listed at
-
-    http://git-blame.blogspot.com/p/git-public-repositories.html
-
---------------------------------------------------
-[New Topics]
-
-* bl/gitweb-project-filter (2012-02-12) 1 commit
-  (merged to 'next' on 2012-02-13 at 35366b8)
- + gitweb: Harden and improve $project_filter page title
-
-An update to the new feature to "gitweb" to show list of projects for
-intermediate levels in directory hierarchies, already slated for 1.7.10=
-=2E
-
-* dp/i18n-libcharset (2012-02-13) 1 commit
-  (merged to 'next' on 2012-02-13 at 528de77)
- + Makefile: introduce CHARSET_LIB to link with -lcharset
-
-Some systems need to explicitly link -lcharset to get locale_charset().
-
-* lt/pull-no-edit (2012-02-12) 1 commit
-  (merged to 'next' on 2012-02-13 at 352f0cb)
- + "git pull" doesn't know "--edit"
-
-=46or 1.7.10 where "git merge" by default spawns the editor when it can
-automatically commit to record the resulting merge.
-
-* mh/war-on-extra-refs (2012-02-12) 7 commits
-  (merged to 'next' on 2012-02-13 at adb7353)
- + refs: remove the extra_refs API
- + clone: do not add alternate references to extra_refs
- + everything_local(): mark alternate refs as complete
- + fetch-pack.c: inline insert_alternate_refs()
- + fetch-pack.c: rename some parameters from "path" to "refname"
- + clone.c: move more code into the "if (refs)" conditional
- + t5700: document a failure of alternates to affect fetch
-
-Internal API clean-up that is very cleanly done.
-
---------------------------------------------------
-[Graduated to "master"]
-
-* bw/inet-pton-ntop-compat (2012-02-05) 1 commit
-  (merged to 'next' on 2012-02-06 at 61303e6)
- + Drop system includes from inet_pton/inet_ntop compatibility wrappers
-
-The inclusion order of header files bites Solaris again and this fixes =
-it.
-
-* fc/zsh-completion (2012-02-06) 3 commits
-  (merged to 'next' on 2012-02-06 at c94dd12)
- + completion: simplify __gitcomp and __gitcomp_nl implementations
- + completion: use ls -1 instead of rolling a loop to do that ourselves
- + completion: work around zsh option propagation bug
-
-=46ix git subcommand completion for zsh (in contrib/completion).
-
-* jc/checkout-out-of-unborn (2012-02-06) 1 commit
-  (merged to 'next' on 2012-02-07 at 60eb328)
- + git checkout -b: allow switching out of an unborn branch
-
-"checkout -b" did not allow switching out of an unborn branch.
-
-* jc/maint-commit-ignore-i-t-a (2012-02-07) 1 commit
-  (merged to 'next' on 2012-02-10 at e0040cf)
- + commit: ignore intent-to-add entries instead of refusing
-
-Replaces the nd/commit-ignore-i-t-a series that was made unnecessary
-complicated by bad suggestions I made earlier.
-
-* jc/maint-mailmap-output (2012-02-06) 1 commit
-  (merged to 'next' on 2012-02-06 at 0a21425)
- + mailmap: always return a plain mail address from map_user()
-
-map_user() was not rewriting its output correctly, which resulted in th=
-e
-user visible symptom that "git blame -e" sometimes showed excess '>' at
-the end of email addresses.
-
-* jk/maint-tag-show-fixes (2012-02-08) 3 commits
-  (merged to 'next' on 2012-02-08 at 18459c4)
- + tag: do not show non-tag contents with "-n"
- + tag: die when listing missing or corrupt objects
- + tag: fix output of "tag -n" when errors occur
-
-Bugfixes to "git tag -n" that lacked much error checking.
-
-* jk/prompt-fallback-to-tty (2012-02-03) 2 commits
-  (merged to 'next' on 2012-02-06 at c0c995a)
- + prompt: fall back to terminal if askpass fails
- + prompt: clean up strbuf usage
-
-The code to ask for password did not fall back to the terminal input wh=
-en
-GIT_ASKPASS is set but does not work (e.g. lack of X with GUI askpass
-helper).
-
-* jn/gitweb-search-utf-8 (2012-02-03) 1 commit
-  (merged to 'next' on 2012-02-05 at 055e446)
- + gitweb: Allow UTF-8 encoded CGI query parameters and path_info
-
-Search box in "gitweb" did not accept non-ASCII characters correctly.
-
-* jn/merge-no-edit-fix (2012-02-09) 1 commit
-  (merged to 'next' on 2012-02-10 at 014eec9)
- + merge: do not launch an editor on "--no-edit $tag"
-
-In 1.7.9, "merge --no-edit $tag" incorrectly ignored --no-edit.
-
-* mm/empty-loose-error-message (2012-02-06) 1 commit
-  (merged to 'next' on 2012-02-07 at f119cac)
- + fsck: give accurate error message on empty loose object files
-
-Updates the error message emitted when we see an empty loose object.
-
-* mp/make-cleanse-x-for-exe (2012-02-09) 1 commit
-  (merged to 'next' on 2012-02-09 at 35cc89d)
- + Explicitly set X to avoid potential build breakage
-
-The makefile allowed environment variable X seep into it result in
-command names suffixed with unnecessary strings.
-
-* nd/cache-tree-api-refactor (2012-02-07) 1 commit
-  (merged to 'next' on 2012-02-08 at a9abbca)
- + cache-tree: update API to take abitrary flags
-
-Code cleanup.
-
-* nd/diffstat-gramnum (2012-02-03) 1 commit
-  (merged to 'next' on 2012-02-05 at 7335ecc)
- + Use correct grammar in diffstat summary line
-
-The commands in the "git diff" family and "git apply --stat" that count
-the number of files changed and the number of lines inserted/deleted ha=
-ve
-been updated to match the output from "diffstat".  This also opens the
-door to i18n this line.
-
-* nd/find-pack-entry-recent-cache-invalidation (2012-02-01) 2 commits
-  (merged to 'next' on 2012-02-01 at e26aed0)
- + find_pack_entry(): do not keep packed_git pointer locally
- + sha1_file.c: move the core logic of find_pack_entry() into fill_pack=
-_entry()
-
-* nk/ctype-for-perf (2012-02-10) 2 commits
-  (merged to 'next' on 2012-02-10 at b41c6bb)
- + ctype: implement islower/isupper macro
- + ctype.c only wants git-compat-util.h
-
-* tt/profile-build-fix (2012-02-09) 2 commits
-  (merged to 'next' on 2012-02-09 at 1c183af)
- + Makefile: fix syntax for older make
-  (merged to 'next' on 2012-02-07 at c8c5f3f)
- + Fix build problems related to profile-directed optimization
-
---------------------------------------------------
-[Stalled]
-
-* jc/advise-push-default (2011-12-18) 1 commit
- - push: hint to use push.default=3Dupstream when appropriate
-
-Peff had a good suggestion outlining an updated code structure so that
-somebody new can try to dip his or her toes in the development. Any
-takers?
-
-* ss/git-svn-prompt-sans-terminal (2012-01-04) 3 commits
- - fixup! 15eaaf4
- - git-svn, perl/Git.pm: extend Git::prompt helper for querying users
- - perl/Git.pm: "prompt" helper to honor GIT_ASKPASS and SSH_ASKPASS
-
-The bottom one has been replaced with a rewrite based on comments from
-=C3=86var. The second one needs more work, both in perl/Git.pm and prom=
-pt.c, to
-give precedence to tty over SSH_ASKPASS when terminal is available.
-
-* jc/split-blob (2012-01-24) 6 commits
- - chunked-object: streaming checkout
- - chunked-object: fallback checkout codepaths
- - bulk-checkin: support chunked-object encoding
- - bulk-checkin: allow the same data to be multiply hashed
- - new representation types in the packstream
- - varint-in-pack: refactor varint encoding/decoding
-
-Not ready.
-
-I finished the streaming checkout codepath, but as explained in 127b177
-(bulk-checkin: support chunked-object encoding, 2011-11-30), these are
-still early steps of a long and painful journey. At least pack-objects =
-and
-fsck need to learn the new encoding for the series to be usable locally=
-,
-and then index-pack/unpack-objects needs to learn it to be used remotel=
-y.
-
-Given that I heard a lot of noise that people want large files, and tha=
-t I
-was asked by somebody at GitTogether'11 privately for an advice on how =
-to
-pay developers (not me) to help adding necessary support, I am somewhat
-dissapointed that the original patch series that was sent almost two
-months ago still remains here without much comments and updates from th=
-e
-developer community. I even made the interface to the logic that decide=
-s
-where to split chunks easily replaceable, and I deliberately made the
-logic in the original patch extremely stupid to entice others, especial=
-ly
-the "bup" fanboys, to come up with a better logic, thinking that giving
-people an easy target to shoot for, they may be encouraged to help
-out. The plan is not working :-(.
-
-* nd/columns (2012-02-08) 15 commits
- - column: Fix some compiler and sparse warnings
- - column: add a corner-case test to t3200
- - columns: minimum coding style fixes
- - tag: add --column
- - column: support piping stdout to external git-column process
- - status: add --column
- - branch: add --column
- - help: reuse print_columns() for help -a
- - column: add column.ui for default column output settings
- - column: support columns with different widths
- - column: add columnar layout
- - Stop starting pager recursively
- - Add git-column and column mode parsing
- - column: add API to print items in columns
- - Save terminal width before setting up pager
-
-The "show list of ..." mode of a handful of commands learn to produce
-column-oriented output.
-
-Expecting a reroll.
-
---------------------------------------------------
-[Cooking]
-
-* jn/ancient-meld-support (2012-02-10) 1 commit
-  (merged to 'next' on 2012-02-13 at 28aca31)
- + mergetools/meld: Use --help output to detect --output support
-
-More reliably tell if the given version of "meld" supports --output
-option.
-
-* jk/config-include (2012-02-06) 2 commits
-  (merged to 'next' on 2012-02-13 at 307ddf6)
- + config: add include directive
- + docs: add a basic description of the config API
-
-An assignment to the include.path pseudo-variable causes the named file
-to be included in-place when Git looks up configuration variables.
-
-* jk/userdiff-config-simplify (2012-02-07) 1 commit
-  (merged to 'next' on 2012-02-10 at e9854c1)
- + drop odd return value semantics from userdiff_config
-
-Code cleanup.
-
-* tg/tag-points-at (2012-02-13) 2 commits
-  (merged to 'next' on 2012-02-13 at a8f4046)
- + builtin/tag.c: Fix a sparse warning
-  (merged to 'next' on 2012-02-10 at 4bff88f)
- + tag: add --points-at list option
-
-* jl/maint-submodule-relative (2012-02-09) 2 commits
- - submodules: always use a relative path from gitdir to work tree
- - submodules: always use a relative path to gitdir
-
-The second one looked iffy.
-
-* ld/git-p4-expanded-keywords (2012-02-09) 2 commits
- - git-p4: initial demonstration of possible RCS keyword fixup
- - git-p4: add test case for RCS keywords
-
-Waiting for reviews and user reports.
-
-* jk/grep-binary-attribute (2012-02-02) 9 commits
-  (merged to 'next' on 2012-02-05 at 9dffa7e)
- + grep: pre-load userdiff drivers when threaded
- + grep: load file data after checking binary-ness
- + grep: respect diff attributes for binary-ness
- + grep: cache userdiff_driver in grep_source
- + grep: drop grep_buffer's "name" parameter
- + convert git-grep to use grep_source interface
- + grep: refactor the concept of "grep source" into an object
- + grep: move sha1-reading mutex into low-level code
- + grep: make locking flag global
-
-=46ixes a longstanding bug that there was no way to tell "git grep" tha=
-t a
-path may look like text but it is not, which "git diff" can do using th=
-e
-attributes system. Now "git grep" honors the same "binary" (or "-diff")
-attribute.
-
-Will merge to 'master' after 1.7.9.1 settles.
-
-* jk/git-dir-lookup (2012-02-02) 1 commit
-  (merged to 'next' on 2012-02-05 at 1856d74)
- + standardize and improve lookup rules for external local repos
-
-When you have both .../foo and .../foo.git, "git clone .../foo" did not
-favor the former but the latter.
-
-Will merge to 'master' after 1.7.9.1 settles.
-
-* nd/pack-objects-parseopt (2012-02-01) 3 commits
-  (merged to 'next' on 2012-02-05 at d0dc25d)
- + pack-objects: convert to use parse_options()
- + pack-objects: remove bogus comment
- + pack-objects: do not accept "--index-version=3Dversion,"
-
-"pack-objects" learned use parse-options, losing custom command line
-parsing code.
-
-Will merge to 'master' after 1.7.9.1 settles.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190666>
+
+On Mon, Feb 13, 2012 at 12:00:35PM -0800, Junio C Hamano wrote:
+> Pete Wyckoff <pw@padd.com> writes:
+> 
+> > Users install git-p4 currently by copying the git-p4 script from
+> > contrib/fast-import into a local or personal bin directory, and
+> > setting up an alias for "git p4" to invoke it.
+> 
+> Erm,... do you really need the alias if you add git-p4 in a directory on
+> your $PATH?
+
+With recent git versions, this has stopped working. I was told it is a
+feature that git only looks in exec-path now. Maybe I should not have
+believed that?
+
+Clemens
