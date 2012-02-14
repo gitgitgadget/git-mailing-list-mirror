@@ -1,107 +1,117 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: diff --stat
-Date: Tue, 14 Feb 2012 15:29:34 -0500
-Message-ID: <20120214202934.GA23291@sigill.intra.peff.net>
-References: <7v4nuub7el.fsf@alter.siamese.dyndns.org>
- <20120214195036.GD12072@sigill.intra.peff.net>
- <7vfwed6uws.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] submodules: always use a relative path from
+ gitdir to work tree
+Date: Tue, 14 Feb 2012 12:34:36 -0800
+Message-ID: <7vzkcl5f37.fsf@alter.siamese.dyndns.org>
+References: <4F32F252.7050105@web.de> <4F32F465.7090401@web.de>
+ <4F338156.9090507@web.de> <7vlio6ec7q.fsf@alter.siamese.dyndns.org>
+ <4F3A9B98.6040908@web.de> <7v4nut6u4s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 14 21:29:44 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Antony Male <antony.male@gmail.com>,
+	Phil Hord <phil.hord@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Feb 14 21:34:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxP0R-0003Ot-1Q
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 21:29:43 +0100
+	id 1RxP5I-0007p9-DK
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 21:34:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757199Ab2BNU3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Feb 2012 15:29:39 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35866
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755510Ab2BNU3i (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2012 15:29:38 -0500
-Received: (qmail 10905 invoked by uid 107); 14 Feb 2012 20:36:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 14 Feb 2012 15:36:48 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2012 15:29:34 -0500
-Content-Disposition: inline
-In-Reply-To: <7vfwed6uws.fsf@alter.siamese.dyndns.org>
+	id S1760804Ab2BNUek (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Feb 2012 15:34:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47689 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757234Ab2BNUej (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2012 15:34:39 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A03CA7D9A;
+	Tue, 14 Feb 2012 15:34:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=u1Uu+ukyw/4eMJoj5GJWjmxWKzA=; b=SPODcS
+	HqGIEseo9PadVEIYftFJ5Mvg1WnRZQNWuFGyce5BpYx8rRXVrGE6xG2fAXEQzY8k
+	SGiJC6YtFozYAMwtbPpBX5nV3ldWF4olyvkip6th4EfpUzBRRFSofUPsWkl+Pkg6
+	MmQpBgKwZ2NPPChkhF847fbrZOFh00ds9w6lU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=P8dsBCuKnVNtKsC6VIVFrwwV6+YaiPLr
+	i3SAUG8YNoFpsb7hQPNUW9O4DiKuIlINfL0R2/quG8Z4Ye2pG0CzX/kxUNccYYJQ
+	E6xCFjXPfmZ5Stz8l3+HANTABVBLoG8cPw+mMAFrxIpEL5w0Ny2X7mEf4rosGdR7
+	U5vaYXs2ftw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 970087D99;
+	Tue, 14 Feb 2012 15:34:38 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 722107D95; Tue, 14 Feb 2012
+ 15:34:37 -0500 (EST)
+In-Reply-To: <7v4nut6u4s.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 14 Feb 2012 12:24:19 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 50097826-574B-11E1-B129-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190752>
 
-On Tue, Feb 14, 2012 at 12:07:31PM -0800, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Hmm. Looking at scale_linear, the formula is:
-> >
-> >    return ((it - 1) * (width - 1) + max_change - 1) / (max_change - 1);
-> >
-> > I don't see how that can be accurate, since the magnitude of the "-1"
-> > tweak will vary based on the value of "it". This code is due to
-> > 3ed74e6, but I don't quite follow the logic in the commit message.
-> 
-> Doesn't it need +1 at the end, I wonder?  We want to map:
-> 
->  - zero to zero
->  - any number to at least 1
-> 
-> so scaling a non-zero "it" so that maximum maps to (width-1) and then
-> adding 1 would be the right way for the latter case.
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+>
+>> After adding a comment, using test instead of [], testing both $a and
+>> $b and assigning each variable on it's own line I get the following
+>> interdiff. Does that make more sense?
+>
+> My earlier request for comment was to say
+>
+> 	# $a is always longer than $b for such and such reasons
+>
+> to explain why testing $b without testing $a was sufficient.
 
-Yeah, that makes more sense to me. I think you could also get by with
-simply rounding the above properly to the nearest integer (so a little
-bit of error that makes 23.9 into 24.0 would be OK, because we would end
-up rounding 30.9 to 31.0, too). This seems like the most obvious
-solution to me:
+Heh, after I follow the entire module_clone, $gitdir is defined in earlier
+parts of the function to be "$(rev-parse --git-dir)/modules/$path", so it
+is clear that it is longer than $path.  Unless "cd $there && pwd" does not
+result in a funny situation (such as $something/modules is a symbolic link
+to another place that is much closer to the root of the filesystem), that
+is.
 
-  static int divide_and_round(int a, int b)
-  {
-          return (2 * a + b) / (2 * b);
-  }
+And in such a case, the prefix part of $a and $b would be different from
+the very beginning hopefully.
 
-  /*
-   * We want non-zero changes to have at least 1 marker, so special-case
-   * zero, then scale to width-1, and add back in 1.
-   */
-  static int scale_linear(int it, int width, int max_change)
-  {
-          if (!it)
-                  return 0;
-          return 1 + divide_and_round(it * (width-1), max_change);
-  }
+> It is obvious (at least to me) that the loop continues as long as $a and
+> $b begin with the same string before their first '/' and removes that
+> common segment from both of them, so I do not think the new comment is
+> absolutely necessary, but it would not hurt to have it, especially it is
+> short enough and to the point.
+>
+> Thanks.
+>
+>> diff --git a/git-submodule.sh b/git-submodule.sh
+>> index 3463d6d..ed76ce2 100755
+>> --- a/git-submodule.sh
+>> +++ b/git-submodule.sh
+>> @@ -172,9 +172,11 @@ module_clone()
+>>
+>>         a=$(cd "$gitdir" && pwd)
+>>         b=$(cd "$path" && pwd)
+>> -       while [ "$b" ] && [ "${a%%/*}" = "${b%%/*}" ]
+>> +       # Remove all common leading directories
+>> +       while test -n "$a" && test -n "$b" && test "${a%%/*}" = "${b%%/*}"
+>>         do
+>> -               a=${a#*/} b=${b#*/};
+>> +               a=${a#*/}
+>> +               b=${b#*/}
+>>         done
+>>         rel=$(echo $a | sed -e 's|[^/]*|..|g')
 
-Any "must show at least 1" scheme is going to have some error in the
-scaling (because we are rounding up all of the low end). I have a
-feeling that the scheme from 3ed74e6 was trying to distribute that error
-more evenly throughout the scale, and the scheme above is lumping all of
-it at the start (i.e., the difference between what constitutes one
-marker and two markers is much greater than the difference between two
-and three).
+Perhaps aseert that $a never becomes empty before this line (or set it
+explicitly to "." when $a is empty), as otherwise
 
-But that's just a vague feeling. For some reason my brain is not doing
-well with math today, so I'll forego writing a proof.
+>>         (clear_local_git_env; cd "$path" && git config core.worktree "$rel/$b")
 
-> Of course, an easy way out without worrying about the correct math is to
-> scale the total and the smaller one and then declare that the scaled
-> larger one is the difference between the two. That way, both of these two
-> files have 109 in total so the length of the entire graph would be the
-> same ;-).
-
-It looks like we actually did that, pre-3ed74e6. I think it's a valid
-strategy. It is just pushing the error around, but I don't know that
-people are counting the +/- markers on the line and comparing them
-exactly. A little error there is less of a big deal than error between
-two lines which are supposed to have the same number of changes (you'll
-note that we don't give the per-file added/deleted numbers exactly, so
-they are a good place to hide error. :) ).
-
--Peff
+this will refer to "/$b" from the root?
