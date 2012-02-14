@@ -1,163 +1,100 @@
-From: Jeff King <peff@peff.net>
+From: Michal Kiedrowicz <michal.kiedrowicz@gmail.com>
 Subject: Re: [PATCH] diff-highlight: Work for multiline changes too
-Date: Tue, 14 Feb 2012 01:04:04 -0500
-Message-ID: <20120214060404.GA25996@sigill.intra.peff.net>
+Date: Tue, 14 Feb 2012 07:28:48 +0100
+Message-ID: <20120214072848.724c1725@mkiedrowicz.ivo.pl>
 References: <20120210213209.GA7582@sigill.intra.peff.net>
- <1328910433-2539-1-git-send-email-michal.kiedrowicz@gmail.com>
- <20120213222702.GA19393@sigill.intra.peff.net>
- <7v8vk6b7pq.fsf@alter.siamese.dyndns.org>
- <20120214002209.GA23171@sigill.intra.peff.net>
- <7vk43q9pp6.fsf@alter.siamese.dyndns.org>
+	<1328910433-2539-1-git-send-email-michal.kiedrowicz@gmail.com>
+	<20120213222702.GA19393@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 14 07:04:33 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 14 07:28:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxBVA-0001Yt-Mu
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 07:04:33 +0100
+	id 1RxBsn-0004ex-Eg
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 07:28:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751918Ab2BNGEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Feb 2012 01:04:10 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34596
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751367Ab2BNGEH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2012 01:04:07 -0500
-Received: (qmail 4255 invoked by uid 107); 14 Feb 2012 06:11:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 14 Feb 2012 01:11:18 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2012 01:04:04 -0500
-Content-Disposition: inline
-In-Reply-To: <7vk43q9pp6.fsf@alter.siamese.dyndns.org>
+	id S1751605Ab2BNG2x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Feb 2012 01:28:53 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:41803 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751147Ab2BNG2w convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2012 01:28:52 -0500
+Received: by eekc14 with SMTP id c14so2130780eek.19
+        for <git@vger.kernel.org>; Mon, 13 Feb 2012 22:28:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        bh=xEquzhzXvIlotMREuif3e1SFf2qNxaUYPBIAXr7C68M=;
+        b=gCfQmxINlJEFY7RJ935Ho1BpBdfATxMCJAkKRCJuCjRp16L9kMBt1TZm7uAHXxP2RC
+         prvFAay9gHboBkSeJPXTqGJR3yYDE0bv9di26H87YH9yN5E3n8dQCTKGaPY4pAoH7y32
+         rKeZd3nfRAe7aDSo0K2q3e1UG5zqv6DkBPeMU=
+Received: by 10.213.3.147 with SMTP id 19mr184675ebn.122.1329200931536;
+        Mon, 13 Feb 2012 22:28:51 -0800 (PST)
+Received: from mkiedrowicz.ivo.pl (pc10.ivo.park.gdynia.pl. [153.19.128.10])
+        by mx.google.com with ESMTPS id a58sm69722531eeb.8.2012.02.13.22.28.50
+        (version=SSLv3 cipher=OTHER);
+        Mon, 13 Feb 2012 22:28:51 -0800 (PST)
+In-Reply-To: <20120213222702.GA19393@sigill.intra.peff.net>
+X-Mailer: Claws Mail 3.7.10 (GTK+ 2.24.8; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190702>
 
-On Mon, Feb 13, 2012 at 05:19:33PM -0800, Junio C Hamano wrote:
+Jeff King <peff@peff.net> wrote:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I chose reverse because I like the way it looks, and because it should
-> > Just Work if people have selected alternate colors (I never dreamed
-> > somebody would use "reverse" all the time, as I find it horribly ugly.
-> > But to each his own).
-> 
-> I also find it ugly, but I am on black-letters on white background window,
-> and I do not see my terminal's red very well, so it is hard to tell the
-> old from the context if I use the "diff.color.old=red" default; that is
-> the primary reason for my setting.
+> On Fri, Feb 10, 2012 at 10:47:13PM +0100, Micha=C5=82 Kiedrowicz wrot=
+e:
+>=20
+> >  contrib/diff-highlight/diff-highlight |   96
+> > ++++++++++++++++++++++----------- 1 files changed, 65
+> > insertions(+), 31 deletions(-)
+>=20
+> Thanks for sending. I looked at a whole bunch of patches, and I was
+> pleasantly surprised to find how infrequently we hit false positives
+> in practice.=20
 
-I find black-on-white ugly, too, but I have heard some people find it
-more readable. You might try setting color.diff.old to "bold red" to
-make it more readable. Depending on your terminal, that may end up as a
-brighter shade of red.
+Yeah, I completely agree with that.
 
-Configurable colors for diff-highlight would look like the patch below:
+> In fact, the only things that looked worse with your
+> patch were places where your patch happened to turn on highlighting
+> for lines where the existing heuristics already were a little ugly
+> (i.e., the problem was not your patch, but that the existing
+> heuristic is sometimes non-optimal).
+>=20
+> I ended up pulling your changes out into a few distinct commits. That
+> made it easier for me to review and understand what was going on (and
+> hopefully ditto for other reviewers, or people who end up bisecting o=
+r
+> reading the log later). I'll post that series in a moment.
 
-diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highlight/diff-highlight
-index c4404d4..f43832b 100755
---- a/contrib/diff-highlight/diff-highlight
-+++ b/contrib/diff-highlight/diff-highlight
-@@ -2,11 +2,13 @@
- 
- use warnings FATAL => 'all';
- use strict;
-+use Git;
-+
-+my $repo = Git->repository;
-+my $color_old = $repo->get_color('color.diff.highlightold', 'reverse');
-+my $color_new = $repo->get_color('color.diff.highlightnew', 'reverse');
-+my $color_end = $repo->get_color('color.diff.highlightend', 'noreverse');
- 
--# Highlight by reversing foreground and background. You could do
--# other things like bold or underline if you prefer.
--my $HIGHLIGHT   = "\x1b[7m";
--my $UNHIGHLIGHT = "\x1b[27m";
- my $COLOR = qr/\x1b\[[0-9;]*m/;
- my $BORING = qr/$COLOR|\s/;
- 
-@@ -128,8 +130,8 @@ sub highlight_pair {
- 	}
- 
- 	if (is_pair_interesting(\@a, $pa, $sa, \@b, $pb, $sb)) {
--		return highlight_line(\@a, $pa, $sa),
--		       highlight_line(\@b, $pb, $sb);
-+		return highlight_line(\@a, $pa, $sa, $color_old, $color_end),
-+		       highlight_line(\@b, $pb, $sb, $color_new, $color_end);
- 	}
- 	else {
- 		return join('', @a),
-@@ -144,13 +146,13 @@ sub split_line {
- }
- 
- sub highlight_line {
--	my ($line, $prefix, $suffix) = @_;
-+	my ($line, $prefix, $suffix, $highlight, $unhighlight) = @_;
- 
- 	return join('',
- 		@{$line}[0..($prefix-1)],
--		$HIGHLIGHT,
-+		$highlight,
- 		@{$line}[$prefix..$suffix],
--		$UNHIGHLIGHT,
-+		$unhighlight,
- 		@{$line}[($suffix+1)..$#$line]
- 	);
- }
+Very nicely done.
 
-However, there are two problems:
-
-  1. Git's color-parsing support does not understand the "noreverse"
-     attribute. There is no way to turn off attributes short of doing a
-     whole "reset". But we don't want to do that here, because we want
-     whatever other colors were in effect to continue after the
-     highlight ends. The patch to teach "noreverse" is below (though it
-     should probably also teach "normal" and "noblink", too).
-
-  2. The Git.pm:get_color code requires that we have a repository
-     object, which means we will die() if we are not in a git
-     repository. Yet "git config" will do the right thing whether we are
-     in a repository or not. I would have thought all of the _maybe_self
-     stuff in Git.pm would handle "Git->get_color" properly, but it
-     doesn't. That's probably a bug that should be fixed.
-
-I don't especially care about this feature, as I won't use it. But if
-you are interested in using diff-highlight and the lack of configurable
-colors is blocking you, then I at least know there will be one user and
-I don't mind putting a little bit of time into it.
-
-Here's the patch for (1) above.
-
-diff --git a/color.c b/color.c
-index e8e2681..b0f53a7 100644
---- a/color.c
-+++ b/color.c
-@@ -47,9 +47,9 @@ static int parse_color(const char *name, int len)
- 
- static int parse_attr(const char *name, int len)
- {
--	static const int attr_values[] = { 1, 2, 4, 5, 7 };
-+	static const int attr_values[] = { 1, 2, 4, 5, 7, 27 };
- 	static const char * const attr_names[] = {
--		"bold", "dim", "ul", "blink", "reverse"
-+		"bold", "dim", "ul", "blink", "reverse", "noreverse"
- 	};
- 	int i;
- 	for (i = 0; i < ARRAY_SIZE(attr_names); i++) {
-@@ -128,7 +128,7 @@ void color_parse_mem(const char *value, int value_len, const char *var,
- 			attr &= ~bit;
- 			if (sep++)
- 				*dst++ = ';';
--			*dst++ = '0' + i;
-+			dst += sprintf(dst, "%d", i);
- 		}
- 		if (fg >= 0) {
- 			if (sep++)
+>=20
+> > After looking at outputs I noticed that it can also ignore lines
+> > with prefixes/suffixes that consist only of punctuation (asterisk,
+> > semicolon, dot, etc), because otherwise whole line is highlighted
+> > except for terminating punctuation.
+>=20
+> I missed this note when I applied the patch and started looking at th=
+e
+> outputs, and ended up having a similar thought. However, I don't know
+> that it buys much in practice, and it's nice to be fairly agnostic
+> about content. I did leave that open to easy tweaking in my series,
+> though.
+>=20
+>   [1/5]: diff-highlight: make perl strict and warnings fatal
+>   [2/5]: diff-highlight: don't highlight whole lines
+>   [3/5]: diff-highlight: refactor to prepare for multi-line hunks
+>   [4/5]: diff-highlight: match multi-line hunks
+>   [5/5]: diff-highlight: document some non-optimal cases
+>=20
+> -Peff
