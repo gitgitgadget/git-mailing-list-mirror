@@ -1,84 +1,76 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/2] t: mailmap: add simple name translation test
-Date: Tue, 14 Feb 2012 22:28:14 +0200
-Message-ID: <CAMP44s2uZA_xYh8Rb8xNJM0Yf3LmNHgzzrLWd9C1wW64T2yVQA@mail.gmail.com>
-References: <1329235894-20581-1-git-send-email-felipe.contreras@gmail.com>
-	<1329235894-20581-3-git-send-email-felipe.contreras@gmail.com>
-	<7v8vk56us3.fsf@alter.siamese.dyndns.org>
+From: Tim Haga <timhaga@ebene6.org>
+Subject: Re: git-latexdiff: Git and Latexdiff working together
+Date: Tue, 14 Feb 2012 21:19:17 +0100
+Message-ID: <20120214211917.53ef9df6@sirion>
+References: <vpq7gzph7mi.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Marius Storm-Olsen <marius@trolltech.com>,
-	Jim Meyering <jim@meyering.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 14 21:28:25 2012
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Feb 14 21:29:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxOz8-0002CM-EW
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 21:28:23 +0100
+	id 1RxP0A-000397-0Q
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 21:29:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760871Ab2BNU2R convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Feb 2012 15:28:17 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:41962 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760761Ab2BNU2P convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2012 15:28:15 -0500
-Received: by lagu2 with SMTP id u2so375483lag.19
-        for <git@vger.kernel.org>; Tue, 14 Feb 2012 12:28:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=6mhbdL7X02or+HAivfk65GZoy6h0nAFMwil/55vGfeY=;
-        b=pUmXrMb5iIq/wLfb23Kw5MJRCBX/UnThLieU8HVivXFiw7ATLn0sGzb3oUojKEIA07
-         8SlAsCTTaaaen03YgNruNWwQYbjNqM6VzhnIQ7j+i0kftN3MJGQN1chhEbALr4yjmK/R
-         8KKilCjnMlzzwEfY1YICUiytYMUYeEqe6VC9I=
-Received: by 10.112.28.169 with SMTP id c9mr7771677lbh.42.1329251294106; Tue,
- 14 Feb 2012 12:28:14 -0800 (PST)
-Received: by 10.112.41.73 with HTTP; Tue, 14 Feb 2012 12:28:14 -0800 (PST)
-In-Reply-To: <7v8vk56us3.fsf@alter.siamese.dyndns.org>
+	id S1760873Ab2BNU3W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Feb 2012 15:29:22 -0500
+Received: from tamara.ebene6.org ([78.46.96.189]:45139 "EHLO ebene6.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757199Ab2BNU3V (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2012 15:29:21 -0500
+X-Greylist: delayed 594 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Feb 2012 15:29:21 EST
+Received: from sirion (sirion.me-ix.net [IPv6:2a02:2918:1002:3:e478:59ff:fee7:3a5b])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by ebene6.org (Postfix) with ESMTPSA id D57E5538396;
+	Tue, 14 Feb 2012 21:16:08 +0100 (CET)
+In-Reply-To: <vpq7gzph7mi.fsf@bauges.imag.fr>
+X-Mailer: Claws Mail 3.7.9 (GTK+ 2.24.6; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190750>
 
-On Tue, Feb 14, 2012 at 10:10 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->> ---
->
-> It was clear that we didn't have any test for "blame -e" hence it was=
- no
-> brainer to judge that the patch 1/2 is good without any description.
->
-> But I am scratching my head, deciphering what this patch adds.
->
-> It appears to me that the existing tests that map author@example.com =
-from
-> the original "A U Thor" to "Repo Guy" and inspect names and mails in
-> various output already cover this "Wrong with <right@company.xx> can =
-be
-> corrected to Mr. Right" case this patch adds.
+Hi,
 
-Yes, but in the first tests they don't check for 'git blame', and much
-less 'git blame -e', and the second tests only check complex mappings.
+your tool seems very useful for LaTeX users, especially in scientific
+work. I could not test it in detail until now, but i had two or
+three runs with an article draft and it seems to work.
 
-> What am I missing? =C2=A0Instead of explaining it to me, can it be ex=
-plained in
-> the log message?
+Long story short, i would appreciate it if your tool would be
+integrated in git.
 
-If an explanations along the lines of the above make sense, I can resen=
-d.
+T.
 
-Cheers.
 
---=20
-=46elipe Contreras
+Am Tue, 14 Feb 2012 14:22:45 +0100
+schrieb Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
+
+> Hi,
+> 
+> You may know latexdiff, a neat tool to visualize differences between
+> LaTeX files (it annotates your .tex file with colors for removed/added
+> parts, producing another compilable .tex file).
+> 
+> I wrote a little shell-script that allows one to use latexdiff on files
+> versionned by Git, with e.g.
+> 
+>   git latexdiff HEAD^ --main foo.tex --output foo.pdf
+> 
+> Essentially, it does a checkout of the old and new revisions, and calls
+> latexdiff + pdflatex for you.
+> 
+> The result is attached in case anyone is interested.
+> 
+> It may be relevant to add this to contrib/ in git.git. If anyone's
+> interested, let me know, and I'll resend the code in the form of a
+> patch doing that.
+> 
+> Regards,
+> 
