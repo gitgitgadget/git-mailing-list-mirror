@@ -1,398 +1,183 @@
 From: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-Subject: [PATCH 1/3 v4] diff --stat: use the full terminal width
-Date: Wed, 15 Feb 2012 00:45:44 +0100
-Message-ID: <1329263146-19215-1-git-send-email-zbyszek@in.waw.pl>
+Subject: [PATCH 2/3 v4] diff --stat: better alignment for binary files
+Date: Wed, 15 Feb 2012 00:45:45 +0100
+Message-ID: <1329263146-19215-2-git-send-email-zbyszek@in.waw.pl>
 References: <7vsjie9q77.fsf@alter.siamese.dyndns.org>
+ <1329263146-19215-1-git-send-email-zbyszek@in.waw.pl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Michael J Gruber <git@drmicha.warpmail.net>, pclouds@gmail.com,
 	=?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Feb 15 00:46:11 2012
+X-From: git-owner@vger.kernel.org Wed Feb 15 00:46:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxS4X-0003p5-TM
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 00:46:10 +0100
+	id 1RxS4f-0003rl-K1
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 00:46:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761360Ab2BNXqE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Feb 2012 18:46:04 -0500
-Received: from kawka.in.waw.pl ([178.63.212.103]:52598 "EHLO kawka.in.waw.pl"
+	id S1761364Ab2BNXqN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Feb 2012 18:46:13 -0500
+Received: from kawka.in.waw.pl ([178.63.212.103]:52602 "EHLO kawka.in.waw.pl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757405Ab2BNXqD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2012 18:46:03 -0500
+	id S1757411Ab2BNXqK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2012 18:46:10 -0500
 Received: from 89-78-221-60.dynamic.chello.pl ([89.78.221.60] helo=localhost.localdomain)
 	by kawka.in.waw.pl with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.72)
 	(envelope-from <zbyszek@in.waw.pl>)
-	id 1RxS4M-0002jK-Pt; Wed, 15 Feb 2012 00:45:58 +0100
+	id 1RxS4V-0002jK-8W; Wed, 15 Feb 2012 00:46:07 +0100
 X-Mailer: git-send-email 1.7.9.6.ga1838.dirty
-In-Reply-To: <7vsjie9q77.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <1329263146-19215-1-git-send-email-zbyszek@in.waw.pl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190801>
 
-Use as many columns as necessary for filenames, as few columns as
-necessary for change counts, and up to 40 columns for the graph.
+The output for binary and unmerged files was not updated in
+'diff --stat': use the full terminal width'. This fixes this
+omission and modifies the graph width logic to include enough
+space for "Bin XXX -> YYY bytes".
 
-Some projects (especially in Java), have long filename paths, with
-nested directories or long individual filenames. When files are
-renamed, the filename part in stat output can be almost useless. If
-the middle part between { and } is long (because the file was moved to
-a completely different directory), then most of the path would be
-truncated.
-
-It makes sense to detect and use the full terminal width and display
-full filenames if possible.
-
-If commits changing a lot of lines are displayed in a wide terminal
-window (200 or more columns), and the +- graph would use the full
-width, the output would look bad. Messages wrapped to about 80 columns
-would be interspersed with very long +- lines. It makes sense to limit
-the width of the graph part to a fixed value, even if more columns are
-available. This fixed value is subjectively hard-coded to be 40
-columns, which seems to work well for git.git and linux-2.6.git and
-some other repositories.
-
-If there isn't enough columns to print both the filename and the
-graph, at least 5/8 of available space is devoted to filenames. On a
-standard 80 column terminal, or if not connected to a terminal and
-using the default of 80 columns, this gives the same partition as
-before.
-
-Number of columns required for change counts is computed based on the
-maximum number of changed lines. This means that usually a few more
-columns will be available for the filenames and the graph.
-
-Eleven tests are added for various combinations of long filename and
-big change count and ways to specify widths.
+If changes to binary files are mixed with changes to text files,
+change counts are padded to take at least three columns. And the other
+way around, if change counts require more than three columns, then
+"Bin"s is padded to align with the change count. This way, the +- part
+starts in the same column as "XXX -> YYY" part for binary files. This
+makes the graph easier to parse visually thanks to the empty column.
+This mimics the old layout of diff --stat.
 
 Signed-off-by: Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl>
 ---
-Hi,
+ diff.c                 | 39 ++++++++++++++++++++++++++++++++-------
+ t/t4012-diff-binary.sh | 17 +++++++++++++++++
+ 2 files changed, 49 insertions(+), 7 deletions(-)
 
-thank you for the review and comments. I think that they are all taken
-into account.
-
-While working on the tests, I noticed that it would be nice to align
-the output for binary files ("Bin XXX -> YYY bytes") -- that change
-is the subject of patch 2/3.
-
-Tutorial is updated along with tests in 3/3.
-
-I've added 'v4' to the other two patches in this series like to this
-one, despite them beeing new. I hope that this is proper form.
-
-v4:
-- comments are updated and the word "histogram" is banished
-- "mopping up" is removed (but the minimum width are guaranteed)
-
-v3:
-- use decimal_width(max_change) to calculate number of columns
-  required for change counts
-- rework the logic to divide columns
-- document the logic in comments, update docs
-- add more tests
-
-v2:
-- style fixes
-- some tests for git-format-patch added
-- patches 3 and 4 squashed together, since they touch the same lines
-- graph width is limited to 40 columns, even if there's more space
-- patch descriptions extended and cleared up
-
-
- Documentation/diff-options.txt | 14 +++---
- diff.c                         | 94 +++++++++++++++++++++++++++-------=
------
- t/t4014-format-patch.sh        | 96 ++++++++++++++++++++++++++++++++++=
-++++++
- 3 files changed, 169 insertions(+), 35 deletions(-)
-
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-option=
-s.txt
-index 9f7cba2..36e4ee3 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -53,13 +53,15 @@ endif::git-format-patch[]
- 	Generate a diff using the "patience diff" algorithm.
-=20
- --stat[=3D<width>[,<name-width>[,<count>]]]::
--	Generate a diffstat.  You can override the default
--	output width for 80-column terminal by `--stat=3D<width>`.
--	The width of the filename part can be controlled by
--	giving another width to it separated by a comma.
-+	Generate a diffstat. By default, as much space as necessary
-+	will be used for the filename part, and up to 40 columns for
-+	the graph part. Maximum width defaults to terminal width,
-+	or 80 columns if not connected to a terminal, and can be
-+	overriden by `<width>`. The width of the filename part can be
-+	limited by giving another width `<name-width>` after a comma.
- 	By giving a third parameter `<count>`, you can limit the
--	output to the first `<count>` lines, followed by
--	`...` if there are more.
-+	output to the first `<count>` lines, followed by `...` if
-+	there are more.
- +
- These parameters can also be set individually with `--stat-width=3D<wi=
-dth>`,
- `--stat-name-width=3D<name-width>` and `--stat-count=3D<count>`.
 diff --git a/diff.c b/diff.c
-index 7e15426..4dc2b5c 100644
+index 4dc2b5c..0732623 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -1327,7 +1327,7 @@ static void show_stats(struct diffstat_t *data, s=
+@@ -1326,8 +1326,8 @@ static void show_stats(struct diffstat_t *data, s=
 truct diff_options *options)
+ {
  	int i, len, add, del, adds =3D 0, dels =3D 0;
  	uintmax_t max_change =3D 0, max_len =3D 0;
- 	int total_files =3D data->nr;
--	int width, name_width, count;
-+	int width, name_width, graph_width, number_width, count;
+-	int total_files =3D data->nr;
+-	int width, name_width, graph_width, number_width, count;
++	int total_files =3D data->nr, count;
++	int width, name_width, graph_width, number_width =3D 0, bin_width =3D=
+ 0;
  	const char *reset, *add_c, *del_c;
  	const char *line_prefix =3D "";
  	int extra_shown =3D 0;
-@@ -1341,25 +1341,15 @@ static void show_stats(struct diffstat_t *data,=
- struct diff_options *options)
- 		line_prefix =3D msg->buf;
+@@ -1363,8 +1363,21 @@ static void show_stats(struct diffstat_t *data, =
+struct diff_options *options)
+ 		if (max_len < len)
+ 			max_len =3D len;
+=20
+-		if (file->is_binary || file->is_unmerged)
++		if (file->is_unmerged) {
++			/* "Unmerged" is 8 characters */
++			bin_width =3D bin_width < 8 ? 8 : bin_width;
+ 			continue;
++		}
++		if (file->is_binary) {
++			/* "Bin XXX -> YYY bytes" */
++			int w =3D 14 + decimal_width(file->added)
++				+ decimal_width(file->deleted);
++			bin_width =3D bin_width < w ? w : bin_width;
++			/* Display change counts aligned with "Bin" */
++			number_width =3D 3;
++			continue;
++		}
++
+ 		if (max_change < change)
+ 			max_change =3D change;
  	}
-=20
--	width =3D options->stat_width ? options->stat_width : 80;
--	name_width =3D options->stat_name_width ? options->stat_name_width : =
-50;
- 	count =3D options->stat_count ? options->stat_count : data->nr;
-=20
--	/* Sanity: give at least 5 columns to the graph,
--	 * but leave at least 10 columns for the name.
--	 */
--	if (width < 25)
--		width =3D 25;
--	if (name_width < 10)
--		name_width =3D 10;
--	else if (width < name_width + 15)
--		name_width =3D width - 15;
--
--	/* Find the longest filename and max number of changes */
- 	reset =3D diff_get_color_opt(options, DIFF_RESET);
- 	add_c =3D diff_get_color_opt(options, DIFF_FILE_NEW);
- 	del_c =3D diff_get_color_opt(options, DIFF_FILE_OLD);
-=20
-+	/*
-+	 * Find the longest filename and max number of changes
-+	 */
- 	for (i =3D 0; (i < count) && (i < data->nr); i++) {
- 		struct diffstat_file *file =3D data->files[i];
- 		uintmax_t change =3D file->added + file->deleted;
-@@ -1380,19 +1370,64 @@ static void show_stats(struct diffstat_t *data,=
+@@ -1389,10 +1402,19 @@ static void show_stats(struct diffstat_t *data,=
  struct diff_options *options)
- 	}
- 	count =3D i; /* min(count, data->nr) */
-=20
--	/* Compute the width of the graph part;
--	 * 10 is for one blank at the beginning of the line plus
--	 * " | count " between the name and the graph.
-+	/*
-+	 * We have width =3D stat_width or term_columns() columns total.
-+	 * We want a maximum of min(max_len, stat_name_width) for the name pa=
-rt.
-+	 * We want a maximum of min(max_change, 40) for the +- part.
-+	 * We also need 1 for " " and 4 + decimal_width(max_change)
-+	 * for " | NNNN " and one the empty column at the end, altogether
-+	 * 6 + decimal_width(max_change).
+ 	 * stat_name_width fixes the maximum width of the filename,
+ 	 * and is also used to divide available columns if there
+ 	 * aren't enough.
 +	 *
-+	 * If there's not enough space, we will use the smaller of
-+	 * stat_name_width (if set) and 5/8*width for the filename,
-+	 * and the rest for constant elements + histogram, but no more
-+	 * than 40 for the histogram.
-+	 * (5/8 gives 50 for filename and 30 for constant parts +
-+	 * histogram for the standard terminal size).
- 	 *
--	 * From here on, name_width is the width of the name area,
--	 * and width is the width of the graph area.
-+	 * In other words: stat_width limits the maximum width, and
-+	 * stat_name_width fixes the maximum width of the filename,
-+	 * and is also used to divide available columns if there
-+	 * aren't enough.
++	 * Binary files are displayed with "Bin XXX -> YYY bytes"
++	 * instead of the change count and graph. This part is treated
++	 * similarly to the graph part, except that it is not
++	 * "scaled". If total width is too small to accomodate the
++	 * guaranteed minimum width of the filename part and the
++	 * separators and this message, this message will "overflow"
++	 * making the line longer than the maximum width.
  	 */
--	name_width =3D (name_width < max_len) ? name_width : max_len;
--	if (width < (name_width + 10) + max_change)
--		width =3D width - (name_width + 10);
--	else
--		width =3D max_change;
 =20
-+	width =3D options->stat_width ? options->stat_width : term_columns();
-+	number_width =3D decimal_width(max_change);
-+
-+	/*
-+	 * Guarantee 3/8*16=3D=3D6 for the graph part
-+	 * and 5/8*16=3D=3D10 for the filename part
-+	 */
-+	if (width < 16 + 6 + number_width)
-+		width =3D 16 + 6 + number_width;
-+
-+	/*
-+	 * First assign sizes that are wanted, ignoring available width.
-+	 */
-+	graph_width =3D max_change < 40 ? max_change : 40;
-+	name_width =3D (options->stat_name_width > 0 &&
-+		      options->stat_name_width < max_len) ?
-+		options->stat_name_width : max_len;
-+
-+	/*
-+	 * Adjust adjustable widths not to exceed maximum width
-+	 */
-+	if (name_width + number_width + 6 + graph_width > width) {
-+		if (graph_width > width * 3/8 - number_width - 6)
-+			graph_width =3D width * 3/8 - number_width - 6;
-+		if (graph_width > 40)
-+			graph_width =3D  40;
-+		if (name_width > width - number_width - 6 - graph_width)
-+			name_width =3D width - number_width - 6 - graph_width;
-+		else
-+			graph_width =3D width - number_width - 6 - name_width;
-+	}
-+
-+	/*
-+	 * From here name_width is the width of the name area,
-+	 * and graph_width is the width of the graph area.
-+	 * max_change is used to scale graph properly.
-+	 */
- 	for (i =3D 0; i < count; i++) {
- 		const char *prefix =3D "";
- 		char *name =3D data->files[i]->print_name;
-@@ -1448,14 +1483,15 @@ static void show_stats(struct diffstat_t *data,=
- struct diff_options *options)
- 		adds +=3D add;
- 		dels +=3D del;
+ 	width =3D options->stat_width ? options->stat_width : term_columns();
+-	number_width =3D decimal_width(max_change);
++	number_width =3D decimal_width(max_change) > number_width ?
++		decimal_width(max_change) : number_width;
 =20
--		if (width <=3D max_change) {
--			add =3D scale_linear(add, width, max_change);
--			del =3D scale_linear(del, width, max_change);
-+		if (graph_width <=3D max_change) {
-+			add =3D scale_linear(add, graph_width, max_change);
-+			del =3D scale_linear(del, graph_width, max_change);
+ 	/*
+ 	 * Guarantee 3/8*16=3D=3D6 for the graph part
+@@ -1403,8 +1425,11 @@ static void show_stats(struct diffstat_t *data, =
+struct diff_options *options)
+=20
+ 	/*
+ 	 * First assign sizes that are wanted, ignoring available width.
++	 * (strlen("Bin XXX -> YYY bytes") is bin_width + 4)
+ 	 */
+-	graph_width =3D max_change < 40 ? max_change : 40;
++	graph_width =3D max_change + 4 > bin_width ? max_change : bin_width -=
+ 4;
++	if (graph_width > 40)
++		graph_width =3D 40;
+ 	name_width =3D (options->stat_name_width > 0 &&
+ 		      options->stat_name_width < max_len) ?
+ 		options->stat_name_width : max_len;
+@@ -1458,7 +1483,7 @@ static void show_stats(struct diffstat_t *data, s=
+truct diff_options *options)
+ 		if (data->files[i]->is_binary) {
+ 			fprintf(options->file, "%s", line_prefix);
+ 			show_name(options->file, prefix, name, len);
+-			fprintf(options->file, "  Bin ");
++			fprintf(options->file, " %*s ", number_width, "Bin");
+ 			fprintf(options->file, "%s%"PRIuMAX"%s",
+ 				del_c, deleted, reset);
+ 			fprintf(options->file, " -> ");
+@@ -1471,7 +1496,7 @@ static void show_stats(struct diffstat_t *data, s=
+truct diff_options *options)
+ 		else if (data->files[i]->is_unmerged) {
+ 			fprintf(options->file, "%s", line_prefix);
+ 			show_name(options->file, prefix, name, len);
+-			fprintf(options->file, "  Unmerged\n");
++			fprintf(options->file, " Unmerged\n");
+ 			continue;
  		}
- 		fprintf(options->file, "%s", line_prefix);
- 		show_name(options->file, prefix, name, len);
--		fprintf(options->file, "%5"PRIuMAX"%s", added + deleted,
--				added + deleted ? " " : "");
-+		fprintf(options->file, " %*"PRIuMAX"%s",
-+			number_width, added + deleted,
-+			added + deleted ? " " : "");
- 		show_graph(options->file, '+', add, add_c, reset);
- 		show_graph(options->file, '-', del, del_c, reset);
- 		fprintf(options->file, "\n");
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 6797512..a65ade4 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -894,4 +894,100 @@ test_expect_success 'format patch ignores color.u=
-i' '
- 	test_cmp expect actual
+=20
+diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
+index 2d9f9a0..ea0b376 100755
+--- a/t/t4012-diff-binary.sh
++++ b/t/t4012-diff-binary.sh
+@@ -90,4 +90,21 @@ test_expect_success 'diff --no-index with binary cre=
+ation' '
+ 	test_cmp expected actual
  '
 =20
-+name=3Daaaaaaaaaa
-+name=3D$name$name$name$name$name$name$name$name$name$name$name$name
-+test_expect_success 'preparation' "
-+	> ${name} &&
-+	git add ${name} &&
-+	git commit -m message &&
-+	echo a > ${name} &&
-+	git commit -m message ${name}
-+"
-+
-+cat >expect <<'EOF'
-+ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=
-aaa | 1 +
++cat >expect <<EOF
++ binfile  |   Bin 0 -> 1026 bytes
++ textfile | 10000 ++++++++++++++++++++++++++++++++++++++++
 +EOF
-+test_expect_success 'format patch graph width is 80 columns' '
-+	git format-patch --stat --stdout -1 |
-+		grep -m 1 aaaaa > actual &&
-+	test_cmp expect actual
-+'
 +
-+cat >expect <<'EOF'
-+ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
-+EOF
-+test_expect_success 'format patch --stat=3Dwidth with long name' '
-+	git format-patch --stat=3D40 --stdout -1 |
-+		grep -m 1 aaaa > actual &&
-+	test_cmp expect actual
-+'
++test_expect_success 'diff with binary files and big change count
 +
-+test_expect_success 'format patch --stat-width=3Dwidth works long name=
-' '
-+	git format-patch --stat-width=3D40 --stdout -1 |
-+		grep -m 1 aaaa > actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'format patch --stat=3D...,name-width with long na=
-me' '
-+	git format-patch --stat=3D60,32 --stdout -1 |
-+		grep -m 1 aaaa > actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'format patch --stat-name-width with long name' '
-+	git format-patch --stat-name-width=3D32 --stdout -1 |
-+		grep -m 1 aaaa > actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'preparation' '
-+	> abcd &&
-+	git add abcd &&
-+	git commit -m message &&
-+	seq 1000 > abcd &&
-+	git commit -m message abcd
-+'
-+
-+cat >expect <<'EOF'
-+ abcd | 1000 ++++++++++++++++++++++++++++++++++++++++
-+EOF
-+test_expect_success 'format patch graph width is 40 columns' '
-+	git format-patch --stat --stdout -1 |
-+		grep -m 1 abcd > actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'format patch ignores COLUMNS' '
-+	COLUMNS=3D200 git format-patch --stat --stdout -1 |
-+		grep -m 1 abcd > actual &&
-+	test_cmp expect actual
-+'
-+
-+cat >expect <<'EOF'
-+ abcd | 1000 ++++++++++++++++++++++++++
-+EOF
-+test_expect_success 'format patch --stat=3Dwidth with big change' '
-+	git format-patch --stat=3D40 --stdout -1 |
-+		grep -m 1 abcd > actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'format patch --stat-width=3Dwidth with big change=
-' '
-+	git format-patch --stat-width=3D40 --stdout -1 |
-+		grep -m 1 abcd > actual &&
-+	test_cmp expect actual
-+'
-+
-+cat >expect <<'EOF'
-+ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++
-+EOF
-+test_expect_success 'format patch --stat=3Dwidth with big change and l=
-ong name' '
-+	cp abcd aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa &&
-+	git add aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa &&
-+	git commit -m message &&
-+	git format-patch --stat-width=3D60 --stdout -1 |
-+		grep -m 1 aaaa > actual &&
++	Verify that "Bin" and the change count are properly aligned when
++	change count is big' '
++	echo X | dd of=3Dbinfile bs=3D1k seek=3D1 &&
++	git add binfile &&
++	seq 10000 > textfile &&
++	git add textfile &&
++	git diff --cached --stat binfile textfile | grep " | " > actual
 +	test_cmp expect actual
 +'
 +
