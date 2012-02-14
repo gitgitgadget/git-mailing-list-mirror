@@ -1,74 +1,77 @@
-From: Kevin <ikke@ikke.info>
-Subject: Re: cvs2git migration
-Date: Tue, 14 Feb 2012 20:50:09 +0100
-Message-ID: <CAO54GHCYN=YX2wjcJ8vRcsFPirtjHJ=5ZFvqQbEtcNoM_awBGg@mail.gmail.com>
-References: <1329220866066-7283631.post@n2.nabble.com> <1329244386868-7285021.post@n2.nabble.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: diff --stat
+Date: Tue, 14 Feb 2012 14:50:36 -0500
+Message-ID: <20120214195036.GD12072@sigill.intra.peff.net>
+References: <7v4nuub7el.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: supadhyay <supadhyay@imany.com>
-X-From: git-owner@vger.kernel.org Tue Feb 14 20:50:39 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 14 20:50:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxOOb-0003H6-94
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 20:50:37 +0100
+	id 1RxOOi-0003Q9-Br
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 20:50:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759805Ab2BNTuc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Feb 2012 14:50:32 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:63533 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754994Ab2BNTub convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2012 14:50:31 -0500
-Received: by werb13 with SMTP id b13so182580wer.19
-        for <git@vger.kernel.org>; Tue, 14 Feb 2012 11:50:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=gILsTYKUF0sstjQrQ/Imxh5sv2Nvce32JMMiqkaN+OA=;
-        b=hCrk10Tpci8JRH9VH26yYRJvNCIRTHmxhQkZxnRZI0sbUX4ihnQtLqE1w5Sr1iRwpn
-         aAFUhIfM2TCN2znFDGOSwrvVtJndsT7wvYcGojoaNQq0wuEMgMmcMpdb4Mwp6EFvDijH
-         QGoOuSRLtxNyvyNNPpMvT/mZYKn0Rzz+j5VyM=
-Received: by 10.181.11.227 with SMTP id el3mr31048056wid.18.1329249030179;
- Tue, 14 Feb 2012 11:50:30 -0800 (PST)
-Received: by 10.227.113.74 with HTTP; Tue, 14 Feb 2012 11:50:09 -0800 (PST)
-In-Reply-To: <1329244386868-7285021.post@n2.nabble.com>
-X-Google-Sender-Auth: 3zImRSL4Sqr-rOQab2dN8DfHjAE
+	id S1760333Ab2BNTul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Feb 2012 14:50:41 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35827
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755135Ab2BNTul (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2012 14:50:41 -0500
+Received: (qmail 10312 invoked by uid 107); 14 Feb 2012 19:57:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 14 Feb 2012 14:57:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2012 14:50:36 -0500
+Content-Disposition: inline
+In-Reply-To: <7v4nuub7el.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190741>
 
-I see that you have already asked this question before on the mailing l=
-ist
+On Mon, Feb 13, 2012 at 04:11:46PM -0800, Junio C Hamano wrote:
 
-See http://git.661346.n2.nabble.com/User-authentication-in-GIT-td726134=
-9.html
+> Hrm, what is wrong with this picture?
+> 
+> $ git -c diff.color.old=red show --format='%s' --stat
+> Merge branch 'jk/diff-highlight' into pu
+> 
+>  contrib/diff-highlight/README         |  109 ++++++++++++++++++++++++++++++--
+>  contrib/diff-highlight/diff-highlight |  109 ++++++++++++++++++++++++---------
+>  2 files changed, 181 insertions(+), 37 deletions(-)
+> 
+> They both have 109 lines changed but the end of the graph lines do not
+> coincide...
 
+I think it is rounding error. The first one is +102/-7, and the second
+one is +79/-30. When we get to scale_linear, we try to scale 109 change
+markers into a 33-character width. So the right scaling factor is ~.303.
+So our "true" scaled widths should be:
 
-On Tue, Feb 14, 2012 at 7:33 PM, supadhyay <supadhyay@imany.com> wrote:
-> Hi All,
->
-> Can any one please update me what would be the method/steps to migrat=
-e
-> existing CVS users to GIT in CVS2GIT migration? User migration is pos=
-sible
-> or not?
->
-> Thanks in advance...
->
-> --
-> View this message in context: http://git.661346.n2.nabble.com/cvs2git=
--migration-tp7283631p7285021.html
-> Sent from the git mailing list archive at Nabble.com.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
+       README, added: 30.9
+     README, deleted:  2.1
+    highlight, added: 23.9
+  highlight, deleted:  9.1
+
+However, we're dealing with integer numbers of characters, so we need to
+round. In this case, it seems that our rounding produces (30, 2) in the
+first instance and (24, 9) in the second. Which is odd.  You'd think
+we'd either always round to the nearest integer, or always round down.
+But we end up rounding 30.9 down and 23.9 up.  So it may be a subtle
+loss-of-precision error in scale_linear.
+
+Hmm. Looking at scale_linear, the formula is:
+
+   return ((it - 1) * (width - 1) + max_change - 1) / (max_change - 1);
+
+I don't see how that can be accurate, since the magnitude of the "-1"
+tweak will vary based on the value of "it". This code is due to
+3ed74e6, but I don't quite follow the logic in the commit message.
+
+-Peff
