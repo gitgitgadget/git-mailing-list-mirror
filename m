@@ -1,133 +1,127 @@
-From: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-Subject: [PATCH v2] make lineno_width() from blame reusable for others
-Date: Tue, 14 Feb 2012 13:24:11 +0100
-Message-ID: <1329222251-28188-1-git-send-email-zbyszek@in.waw.pl>
-References: <7vhayub9d3.fsf@alter.siamese.dyndns.org>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: git-p4 useclientspec broken?
+Date: Tue, 14 Feb 2012 07:36:32 -0500
+Message-ID: <20120214123632.GA5285@padd.com>
+References: <4F39AF04.5080607@promptu.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	=?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-To: git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Tue Feb 14 13:24:36 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Laurent =?iso-8859-1?Q?Charri=E8re?= <lcharriere@promptu.com>
+X-From: git-owner@vger.kernel.org Tue Feb 14 13:36:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxHQw-0002Bg-Oy
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 13:24:35 +0100
+	id 1RxHcg-0005Gs-6u
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 13:36:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755007Ab2BNMYa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Feb 2012 07:24:30 -0500
-Received: from kawka.in.waw.pl ([178.63.212.103]:52584 "EHLO kawka.in.waw.pl"
+	id S1756213Ab2BNMgh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Feb 2012 07:36:37 -0500
+Received: from honk.padd.com ([74.3.171.149]:47477 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754193Ab2BNMY3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2012 07:24:29 -0500
-Received: from [193.0.104.42] (helo=localhost.localdomain)
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1RxHQn-0008RQ-2M; Tue, 14 Feb 2012 13:24:25 +0100
-X-Mailer: git-send-email 1.7.9.3.g2429d.dirty
-In-Reply-To: <7vhayub9d3.fsf@alter.siamese.dyndns.org>
+	id S1755369Ab2BNMgg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2012 07:36:36 -0500
+Received: from arf.padd.com (unknown [50.55.145.32])
+	by honk.padd.com (Postfix) with ESMTPSA id 4F85FE8B;
+	Tue, 14 Feb 2012 04:36:35 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id C8B3B313C6; Tue, 14 Feb 2012 07:36:32 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <4F39AF04.5080607@promptu.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190720>
 
-builtin/blame.c has a helper function to compute how many columns we
-need to show a line-number, whose implementation is reusable as a more
-generic helper function to count the number of columns necessary to
-show any cardinal number.
+lcharriere@promptu.com wrote on Mon, 13 Feb 2012 16:47 -0800:
+> Since I've upgraded to 1.7.9 (on OS X Lion, FWIW), git-p4 submit
+> fails to apply any patches if I use useclientspec=true when cloning.
+> 
+> My p4 client is as follows:
+> 
+> Client:	malibu
+> (...)
+> Root:	/Users/lcharriere/Documents/Perforce/all
+> (...)
+> View:
+> 	//sandbox/... //malibu/sandbox/...
+> 	//depot/... //malibu/depot/...
+> 
+> Sequence of steps to reproduce:
+> 
+> $ git p4 clone //sandbox/lcharriere/foo --use-client-spec
+> $ cd foo && find .
+> ./.git
+> (...)
+> ./sandbox/lcharriere/foo/.gitignore
+> ./sandbox/lcharriere/foo/foo.py
+> 
+> -- This is new behavior to me, BTW. Previously, I would have seen
+> ./.git
+> (...)
+> ./.gitignore
+> ./foo.py
 
-Rename it to decimal_width(), move it to pager.c and export it for use
-by future callers. The argument type is changed to unsigned to underlin=
-e
-the fact that the function supports only non-negative numbers.
+I did try to clean up our handling of --use-client-spec.  This
+behavior was done on purpose, but maybe I didn't the implications
+on people who were relying on the old way.  In particular the
+behavior of multi-line view specs and those with + and - was
+largely unpredictable.
 
-Signed-off-by: Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl>
----
-I'll be using this in the 'diff --stat: use the full terminal width'
-patch.
+The client spec now has absolute control over what files get put
+where in the git repo, just like in p4.  The argument
+"//sandbox/lcharriere/foo" in your clone command limits the scope
+of what is checked out, but does not affect where it is placed.
 
-v2: - change arg type to unsigned
-    - corrected commit message
+You can get the git layout you expect with this view:
 
- builtin/blame.c | 18 +++---------------
- cache.h         |  1 +
- pager.c         | 12 ++++++++++++
- 3 files changed, 16 insertions(+), 15 deletions(-)
+    //sandbox/lcharriere/foo/... //malibu/...
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 5a67c20..f028e8a 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -1829,18 +1829,6 @@ static int read_ancestry(const char *graft_file)
- }
-=20
- /*
-- * How many columns do we need to show line numbers in decimal?
-- */
--static int lineno_width(int lines)
--{
--	int i, width;
--
--	for (width =3D 1, i =3D 10; i <=3D lines; width++)
--		i *=3D 10;
--	return width;
--}
--
--/*
-  * How many columns do we need to show line numbers, authors,
-  * and filenames?
-  */
-@@ -1880,9 +1868,9 @@ static void find_alignment(struct scoreboard *sb,=
- int *option)
- 		if (largest_score < ent_score(sb, e))
- 			largest_score =3D ent_score(sb, e);
- 	}
--	max_orig_digits =3D lineno_width(longest_src_lines);
--	max_digits =3D lineno_width(longest_dst_lines);
--	max_score_digits =3D lineno_width(largest_score);
-+	max_orig_digits =3D decimal_width(longest_src_lines);
-+	max_digits =3D decimal_width(longest_dst_lines);
-+	max_score_digits =3D decimal_width(largest_score);
- }
-=20
- /*
-diff --git a/cache.h b/cache.h
-index 2f30b3a..3504bcc 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1176,6 +1176,7 @@ extern const char *pager_program;
- extern int pager_in_use(void);
- extern int pager_use_color;
- extern int term_columns(void);
-+extern int decimal_width(unsigned number);
-=20
- extern const char *editor_program;
- extern const char *askpass_program;
-diff --git a/pager.c b/pager.c
-index e06cfa0..2e16a9c 100644
---- a/pager.c
-+++ b/pager.c
-@@ -153,3 +153,15 @@ int term_columns(void)
- #endif
- 	return term_columns_at_startup;
- }
-+
-+/*
-+ * How many columns do we need to show this number in decimal?
-+ */
-+int decimal_width(unsigned number)
-+{
-+	int i, width;
-+
-+	for (width =3D 1, i =3D 10; i <=3D number; width++)
-+		i *=3D 10;
-+	return width;
-+}
---=20
-1.7.9.3.g2429d.dirty
+or simply just don't use --use-client-spec at all:
+
+    git p4 clone //sandbox/lcharriere/foo
+
+Is this new behavior bad for you?  Suggestions welcome.
+
+> $ cat "test" >> sandbox/lcharriere/foo/.gitignore
+> $ git commit -a -m "test"
+> git commit -a -m "test"
+> [master 7398144] test
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+> $ git p4 submit
+> Perforce checkout for depot path //sandbox/lcharriere/foo/ located
+> at /Users/lcharriere/Documents/Perforce/all/sandbox/lcharriere/foo/
+> Synchronizing p4 checkout...
+> ... - file(s) up-to-date.
+> Applying 739814457a8faa84dc0bddd830f671569576b177 test
+> 
+> sandbox/lcharriere/foo/.gitignore - file(s) not on client.
+> error: sandbox/lcharriere/foo/.gitignore: No such file or directory
+> Unfortunately applying the change failed!
+> What do you want to do?
+> [s]kip this patch / [a]pply the patch forcibly and with .rej files /
+> [w]rite the patch to a file (patch.txt)
+
+This is definitely a bug.  I reproduced a similar problem.
+
+> I tried to follow what's going on with pdb:
+> * self.depotPath is //sandbox/lcharriere/foo, so git-p4 chdir's to
+> /Users/lcharriere/Documents/Perforce/all/sandbox/lcharriere/foo/
+> * In P4Submit.applyCommit, line 926 is:
+> p4_edit(path)
+> At this point path is 'sandbox/lcharriere/foo/.gitignore'
+
+The path should be plain old ".gitignore", as you noticed.
+
+> I'm guessing this is why the p4 executable doesn't find it. The path
+> should be .gitignore. Is it possible that the new behavior I
+> mentioned above of reproducing the depot hierarchy when
+> useclientspec is true is having unintended side effects, or is a
+> bug?
+
+I'll get a patch out tonight or soon.  Need to do gobs of testing
+on the submit path to make sure nothing else is broken.
+
+		-- Pete
