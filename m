@@ -1,98 +1,73 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 2/2] test: check that "git blame -e" uses mailmap correctly
-Date: Tue, 14 Feb 2012 14:36:03 -0600
-Message-ID: <20120214203603.GD13210@burratino>
-References: <1329235894-20581-1-git-send-email-felipe.contreras@gmail.com>
- <20120214203431.GB13210@burratino>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 6/8] gitweb: Highlight interesting parts of diff
+Date: Tue, 14 Feb 2012 15:38:01 -0500
+Message-ID: <20120214203801.GB23291@sigill.intra.peff.net>
+References: <1328865494-24415-1-git-send-email-michal.kiedrowicz@gmail.com>
+ <201202131944.50886.jnareb@gmail.com>
+ <20120213220917.4cf14eb1@gmail.com>
+ <201202141831.59699.jnareb@gmail.com>
+ <20120214192340.2d473866@gmail.com>
+ <20120214185233.GA12072@sigill.intra.peff.net>
+ <20120214210453.16c6bd2e@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 14 21:36:19 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 14 21:38:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxP6o-0000kT-4r
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 21:36:18 +0100
+	id 1RxP8s-0002Tm-1v
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 21:38:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760848Ab2BNUgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Feb 2012 15:36:14 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:44692 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757253Ab2BNUgN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2012 15:36:13 -0500
-Received: by ggnh1 with SMTP id h1so295457ggn.19
-        for <git@vger.kernel.org>; Tue, 14 Feb 2012 12:36:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=jORoSzW/4KwxrHn7uXSyMrozQeNNEi0P+8pOx9aZBjs=;
-        b=nrDMZaILdfKNOeALiVyaxxK1V3ITd94h9saumGFG869kEs8BU6TLewEMC2a//cepiU
-         0zRZUhHHo28/Yj5ql58UkwxTa7ePeZYfum+cb9aJ41CxOCPw4/YO4uv53bB5/mZv/glX
-         FFTBjGXjASE9YR4PLVMKhn0PpwbYMCS78G3Hs=
-Received: by 10.50.11.129 with SMTP id q1mr37610776igb.23.1329251772748;
-        Tue, 14 Feb 2012 12:36:12 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id ak10sm731177igc.6.2012.02.14.12.36.12
-        (version=SSLv3 cipher=OTHER);
-        Tue, 14 Feb 2012 12:36:12 -0800 (PST)
+	id S1760898Ab2BNUiI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Feb 2012 15:38:08 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35876
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757213Ab2BNUiG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2012 15:38:06 -0500
+Received: (qmail 11183 invoked by uid 107); 14 Feb 2012 20:45:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 14 Feb 2012 15:45:16 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2012 15:38:01 -0500
 Content-Disposition: inline
-In-Reply-To: <20120214203431.GB13210@burratino>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20120214210453.16c6bd2e@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190756>
 
-From: Felipe Contreras <felipe.contreras@gmail.com>
+On Tue, Feb 14, 2012 at 09:04:53PM +0100, Micha=C5=82 Kiedrowicz wrote:
 
-Until f026358e ("mailmap: always return a plain mail address from
-map_user()", 2012-02-05), git blame -e would add a spurious '>' after
-the unchanged email address with brackets it passed to the mailmap
-machinery, resulting in lines with a doubled '>' like this:
+> Sure, now it's a simple algorithm, but if we add more code, we will
+> have problems with making it consistent in both gitweb and
+> diff-highlight (which is nice-to-have IMO).
 
- 620456e6 (<committer@example.com>>   2005-04-07 15:20:13 -0700 8) eight
+True. I was thinking they would stay simple enough that porting feature=
+s
+wouldn't be too painful. But that might be overly optimistic.
 
-Add a test to make sure it doesn't happen again.  This reuses the test
-data for the existing "shortlog -e" test so it also tests other kinds
-of mail mapping.
+> Note that my patches to gitweb already support combined diffs (in
+> obvious cases) while diff-highlight will fail on them badly (see for
+> example 09bb4eb4f14c).  I haven't done it in diff-highlight because I
+> noticed that problem while working on patches for gitweb.
 
-[jn: fixed some cut+paste cruft, added a patch description]
+Hmm. 09bb4eb4f14c looks fine to me, because all of the combined lines
+are from the left-hand side. A better example is 4802997, where the
+first hunk properly highlights, but the second does not (because we
+interpret the lines as context lines).
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- t/t4203-mailmap.sh |   16 ++++++++++++++++
- 1 files changed, 16 insertions(+), 0 deletions(-)
+Even worse is "git show 5de89d3 -- notes-cache.c", where we match a "- =
+"
+line with a "++" line, and erroneously think the changes begin in the
+second character (even though it is simply a combined-diff marker).
 
-diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-index 45526395..ef900d84 100755
---- a/t/t4203-mailmap.sh
-+++ b/t/t4203-mailmap.sh
-@@ -267,4 +267,20 @@ test_expect_success 'Blame output (complex mapping)' '
- 	test_cmp expect actual.fuzz
- '
- 
-+cat >expect <<\EOF
-+^OBJI (<author@example.com>       DATE 1) one
-+OBJID (<some@dude.xx>             DATE 2) two
-+OBJID (<other@author.xx>          DATE 3) three
-+OBJID (<other@author.xx>          DATE 4) four
-+OBJID (<santa.claus@northpole.xx> DATE 5) five
-+OBJID (<santa.claus@northpole.xx> DATE 6) six
-+OBJID (<cto@company.xx>           DATE 7) seven
-+OBJID (<committer@example.com>    DATE 8) eight
-+EOF
-+test_expect_success 'Blame -e output' '
-+	git blame -e one >actual &&
-+	fuzz_blame actual >actual.fuzz &&
-+	test_cmp expect actual.fuzz
-+'
-+
- test_done
--- 
-1.7.9
+These are reasonably rare, so I don't consider them critical bugs, but
+yeah, it would be nice to fix.
+
+-Peff
