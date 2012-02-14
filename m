@@ -1,102 +1,293 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] diff-highlight: Work for multiline changes too
-Date: Mon, 13 Feb 2012 19:22:09 -0500
-Message-ID: <20120214002209.GA23171@sigill.intra.peff.net>
-References: <20120210213209.GA7582@sigill.intra.peff.net>
- <1328910433-2539-1-git-send-email-michal.kiedrowicz@gmail.com>
- <20120213222702.GA19393@sigill.intra.peff.net>
- <7v8vk6b7pq.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] diff --stat: use the full terminal width
+Date: Mon, 13 Feb 2012 17:08:44 -0800
+Message-ID: <7vsjie9q77.fsf@alter.siamese.dyndns.org>
+References: <7vmx8qr1gb.fsf@alter.siamese.dyndns.org>
+ <1329057019-29983-1-git-send-email-zbyszek@in.waw.pl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 14 01:22:18 2012
+Cc: git@vger.kernel.org, pclouds@gmail.com,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+X-From: git-owner@vger.kernel.org Tue Feb 14 02:08:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rx69y-0005KK-4P
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 01:22:18 +0100
+	id 1Rx6t3-0003Fq-Sd
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 02:08:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754815Ab2BNAWN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Feb 2012 19:22:13 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34530
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750898Ab2BNAWN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Feb 2012 19:22:13 -0500
-Received: (qmail 2753 invoked by uid 107); 14 Feb 2012 00:29:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 13 Feb 2012 19:29:23 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Feb 2012 19:22:09 -0500
-Content-Disposition: inline
-In-Reply-To: <7v8vk6b7pq.fsf@alter.siamese.dyndns.org>
+	id S1756100Ab2BNBIt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Feb 2012 20:08:49 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:32910 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751369Ab2BNBIs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Feb 2012 20:08:48 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 663ED6F57;
+	Mon, 13 Feb 2012 20:08:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=qNhXwPNWxMK4jx5Dp7E9YGTC3
+	Z4=; b=Kg9h+eQYSo2sjCCN1COhnKi6afR0AhIIL5RS6wm19X0BBslkoX+B2HiE/
+	4bxPGPuzwGFcxyz0Wv6rQD19niaJAgxQsWAVulz7Vruu+ARIxioBQD08PlsUMiLs
+	5z7IQsgfkbwej3O2RfFM5Cv7Sp6whIutGILcmAXk6HKf6zocPM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=Q87lbGZcDxBm2jIq2xQ
+	DPBgetZ+fjoKwgrSdrU1YFHbmNc+/qDXIk9TzJwMn5Rshht/ZL0capebFZWheFn9
+	crPn0811kDISqShhgbIBY9/NhssNXw5j4Bx+gzyAo+3f96e7qQ9lVoOx7IZj+SII
+	jtlIY/LsteuNpkrzXnHqTn+4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5CD0F6F56;
+	Mon, 13 Feb 2012 20:08:47 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 617DF6F54; Mon, 13 Feb 2012
+ 20:08:46 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 71F3ABD0-56A8-11E1-A054-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190694>
 
-On Mon, Feb 13, 2012 at 04:05:05PM -0800, Junio C Hamano wrote:
+Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
 
-> Jeff King <peff@peff.net> writes:
->=20
-> > I ended up pulling your changes out into a few distinct commits. Th=
-at
-> > made it easier for me to review and understand what was going on (a=
-nd
-> > hopefully ditto for other reviewers, or people who end up bisecting=
- or
-> > reading the log later). I'll post that series in a moment.
->=20
-> This is all nice.  As I am lazy and this is a long neglected contrib/
-> material I didn't even know it existed ;-), I am tempted to apply the=
-m
-> directly on top of 'master'.
+> Use as many columns as necessary for filenames, as few columns as
+> necessary for change counts, and up to 40 columns for the histogram.
+>
+> Some projects (especially in Java), have long filename paths, with
+> nested directories or long individual filenames. When files are
+> renamed, the stat output can be almost useless. If the middle part
 
-Yeah, given the contrib nature, I'm comfortable just applying. I wanted
-to wait on the attribution question from Micha=C5=82 before sending a f=
-inal
-version, though.
+s/the stat output/the name part in &/;
 
-> This shows the first hunk of your "diff-highlight: refactor to prepar=
-e for
-> multi-line hunks" like this to me, by the way.
->=20
-> @@ -23,7 +23,7 @@ while (<>) {
->             $window[2] =3D~ /^$COLOR*\+/ &&
->             $window[3] !~ /^$COLOR*\+/) {
->                 print shift @window;
-> {-               show_pair}(shift @window, shift @window);
-> +               show_{hunk}(shift @window, shift @window);
->         }
->         else {
->                 print shift @window;
->=20
-> Is this intended, or is setting "diff.color.old =3D red reverse" not
-> supported (without the custom configuration, the leading blank on the=
- old
-> line is not highlighted)?
+> between { and } is long (because the file was moved to a completely
+> different directory), then most of the path would be truncated.
+>
+> It makes sense to detect and use the full terminal width and display
+> full filenames if possible.
+>
+> If commits changing a lot of lines are displayed in a wide terminal
+> window (200 or more columns), and the +- graph would use the full
+> width, the output would look bad. Messages wrapped to about 80
+> columns would be interspersed with very long +- lines. It makes
+> sense to limit the width of the histogram to a fixed value, even if m=
+ore
 
-No, it's not intended, and should be:
+I do not think the graph ++++++--- part is "histogram", which is a name
+for a specific type of graph that depicts a distribution of data.
 
-   -                show-{pair}...
-   +                show+{hunk}...
+We show the number of lines changed in a graph.  Unless people come up
+with a better name, I would suggest calling it just "the graph part", o=
+r
+simply "the graph", throughout the patch.
 
-(and appears that way with my config).  I suspect it is because the
-default highlight color is a subset of your "old" configured color. It
-is ANSI "reverse video", but sadly that does not work as a toggle (i.e.=
-,
-it does not reverse your reverse, but simply is a no-op).
+> columns are available. This fixed value is subjectively hard-coded to
+> be 40 columns, which seems to work well for git.git and linux-2.6.git=
+ and
+> some other repositories.
+>
+> If there isn't enough columns to print both the filename and the hist=
+ogram,
+> at least 5/8 of available space is devoted to filenames. On a standar=
+d 80 column
+> terminal, or if not connected to a terminal and using the default of =
+80 columns,
+> this gives the same partition as before.
+>
+> Number of columns required for change counts is computed based on
+> the maximum number of changed lines. This means that usually a few mo=
+re
+> columns will be available for the filenames and the histogram.
+>
+> Tests are added for various combinations of long filename and big cha=
+nge
+> count and ways to specify widths.
+>
+> Signed-off-by: Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl>
+> ---
+> ...
+> diff --git a/diff.c b/diff.c
+> index 7e15426..7abcbe9 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -1327,7 +1327,7 @@ static void show_stats(struct diffstat_t *data,=
+ struct diff_options *options)
+>  	int i, len, add, del, adds =3D 0, dels =3D 0;
+>  	uintmax_t max_change =3D 0, max_len =3D 0;
+>  	int total_files =3D data->nr;
+> -	int width, name_width, count;
+> +	int width, name_width, graph_width, number_width, count;
+>  	const char *reset, *add_c, *del_c;
+>  	const char *line_prefix =3D "";
+>  	int extra_shown =3D 0;
+> @@ -1341,25 +1341,13 @@ static void show_stats(struct diffstat_t *dat=
+a, struct diff_options *options)
+>  		line_prefix =3D msg->buf;
+>  	}
+> =20
+> -	width =3D options->stat_width ? options->stat_width : 80;
+> -	name_width =3D options->stat_name_width ? options->stat_name_width =
+: 50;
+> -	count =3D options->stat_count ? options->stat_count : data->nr;
 
-I chose reverse because I like the way it looks, and because it should
-Just Work if people have selected alternate colors (I never dreamed
-somebody would use "reverse" all the time, as I find it horribly ugly.
-But to each his own).  We could read the highlight color from
-diff.highlight{Old,New}. That would also let people highlight in purple
-or something if they care.
+It was somewhat distracting that you moved this "count =3D" below, whic=
+h I
+do not think was necessary.
 
--Peff
+> -	/* Sanity: give at least 5 columns to the graph,
+> -	 * but leave at least 10 columns for the name.
+> -	 */
+> -	if (width < 25)
+> -		width =3D 25;
+> -	if (name_width < 10)
+> -		name_width =3D 10;
+> -	else if (width < name_width + 15)
+> -		name_width =3D width - 15;
+
+Removal of this sanity check is fine as long as sanity is kept by the n=
+ew
+code in the later part. This was primarily so that people won't specify
+impossible values (e.g. what happens when name_width that is wider than
+the total width is given).
+
+> ...
+> +	count =3D options->stat_count ? options->stat_count : data->nr;
+> +
+> @@ -1380,19 +1368,63 @@ static void show_stats(struct diffstat_t *dat=
+a, struct diff_options *options)
+>  	}
+>  	count =3D i; /* min(count, data->nr) */
+> =20
+> -	/* Compute the width of the graph part;
+> -	 * 10 is for one blank at the beginning of the line plus
+> -	 * " | count " between the name and the graph.
+
+
+> +	/* We have width =3D stat_width or term_columns() columns total.
+
+Just a style, but in the more recent part of the codebase,
+
+	/*
+         * We have width =3D ....
+
+is preferred.
+
+> +	 * We want a maximum of min(max_len, stat_name_width) for the name =
+part.
+> +	 * We want a maximum of min(max_change, 40) for the +- part.
+> +	 * We also need 1 for " " and 4 + decimal_width(max_change)
+> +	 * for " | NNNN " and one for " " at the end, altogether
+> +	 * 6 + decimal_width(max_change).
+
+The math looks correct but 'one for " " at the end' sounds as if you ar=
+e
+printing a SP, but I think we simply avoid printing anything, so perhap=
+s
+rewrite it to "we leave one column at the end" or something.
+
+> +	 * If there's not enough space, we will use stat_name_width
+> +	 * or 5/8*width for filename, and the rest for constant
+
+"A or B for filename"---unclear how it picks between A or B.
+
+"A or B, whichever is shorter, for filename", perhaps?
+
+> +	 * elements + histogram, but no more than 40 for the histogram.
+> +	 * (5/8 gives 50 for filename and 30 for constant parts and
+> +	 * histogram for the standard terminal size).
+>  	 *
+> -	 * From here on, name_width is the width of the name area,
+> -	 * and width is the width of the graph area.
+> +	 * In other words: stat_width limits the maximum width, and
+> +	 * stat_name_width fixes the maximum width of the filename,
+> +	 * and is also used to divide available columns if there
+> +	 * aren't enough.
+>  	 */
+> -	name_width =3D (name_width < max_len) ? name_width : max_len;
+> -	if (width < (name_width + 10) + max_change)
+> -		width =3D width - (name_width + 10);
+> -	else
+> -		width =3D max_change;
+> +	width =3D options->stat_width ? options->stat_width : term_columns(=
+);
+> +	number_width =3D decimal_width(max_change);
+> +	/* first sizes that are wanted */
+
+Missing verb; "first, compute sizes that are ..."?
+
+> +	graph_width =3D max_change < 40 ? max_change : 40;
+> +	name_width =3D (options->stat_name_width > 0 &&
+> +		      options->stat_name_width < max_len) ?
+> +		options->stat_name_width : max_len;
+
+mental note: name_width can be limited to max_len, and graph_width may =
+be
+quite small when max_change is small.  The total graph may be much smal=
+ler
+than the terminal width in such a case (and it is not a wasted space on
+the right hand side of the terminal).
+
+> +	/* sanity: guarantee a minimum and maximum width */
+> +	if (width < 25)
+> +		width =3D 25;
+> +
+> +	if (name_width + number_width + 6 + graph_width > width) {
+> +		if (graph_width > width * 3/8 - number_width - 6)
+> +			graph_width =3D width * 3/8 - number_width - 6;
+> +		if (graph_width > 40)
+> +			graph_width =3D  40;
+> +		if (name_width > width - number_width - 6 - graph_width)
+> +			name_width =3D width - number_width - 6 - graph_width;
+> +		else
+> +			graph_width =3D width - number_width - 6 - name_width;
+> +	}
+> =20
+> +	/* More sanity: give at least 5 columns to the graph,
+
+Hrm, having to have a separate "More sanity" is ugly, and you seem to
+already know it "This should already be satisfied...".
+
+Can the logic above be tightened to make this "mopping up" unnecessary?
+
+> +	 * but leave at least 10 columns for the name.
+> +	 *
+> +	 * This should already be satisfied, unless max_change is
+> +	 * really huge. If the window is extemely narrow, this might
+> +	 * overflow available columns.
+> +	 */
+> +	if (name_width < 10 && max_len >=3D 10)
+> +		name_width =3D 10;
+
+The logic up to this point uses the same "25 <=3D width, 10 <=3D name_w=
+idth"
+as the original to ensure that graph and the fixed part can use at leas=
+t
+15 columns.  And then you do this:
+
+> +	if (graph_width < 5 && max_change >=3D 5)
+> +		graph_width =3D 5;
+
+which means you are allocating 10 columns for fixed part.  In the
+original, it was OK to give fixed number of columns for fixed part like
+this, as it always gave fixed 5 columns to show the number.  Don't you
+need to adjust that 10 depending on the decimal_width(max_change), now
+your number_width flexes?
+
+This patch also breaks many existing tests that need to be adjusted for
+the change to use decimal_width(max_change), which I do not care to fix=
+ up
+for you.  Perhaps that part of the change needs to be split out into a
+separate patch.
+
+Among the tests it breaks is t1200-tutorial.sh, which means that the
+tutorial document that has illustration of the sample output also needs=
+ to
+be updated before the final round.
+
+Thanks.
