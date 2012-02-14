@@ -1,58 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 0/2] test: tests for the "double > from mailmap" bug
-Date: Tue, 14 Feb 2012 17:35:15 -0500
-Message-ID: <20120214223515.GA25374@sigill.intra.peff.net>
-References: <1329235894-20581-1-git-send-email-felipe.contreras@gmail.com>
- <20120214203431.GB13210@burratino>
- <20120214211402.GC23291@sigill.intra.peff.net>
- <CAMP44s0Dp9Av+ikFHa=QcqKFA5XL9ESBrzWLY0jkSCdH-NxhMw@mail.gmail.com>
- <20120214220732.GB24802@sigill.intra.peff.net>
- <CAMP44s2v25w=14t8ZK82n-_01UCYWuUr2kAb3jEf2YfRiu2uyA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] git-svn, perl/Git.pm: extend and use Git->prompt
+ method for querying users
+Date: Tue, 14 Feb 2012 14:35:23 -0800
+Message-ID: <7v4nut59hw.fsf@alter.siamese.dyndns.org>
+References: <4EF9ED58.8080205@tu-clausthal.de>
+ <20120103184022.GA20926@sigill.intra.peff.net>
+ <4F37E2B0.9060007@tu-clausthal.de> <201202121711.45920.jnareb@gmail.com>
+ <4F37E843.6070107@tu-clausthal.de>
+ <20120214222055.GE24802@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 14 23:35:33 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Sven Strickroth <sven.strickroth@tu-clausthal.de>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 14 23:35:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxQy4-0002rN-Tq
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 23:35:25 +0100
+	id 1RxQyB-0002sb-8q
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 23:35:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932623Ab2BNWfU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Feb 2012 17:35:20 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36011
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932563Ab2BNWfU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2012 17:35:20 -0500
-Received: (qmail 13358 invoked by uid 107); 14 Feb 2012 22:42:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 14 Feb 2012 17:42:30 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2012 17:35:15 -0500
-Content-Disposition: inline
-In-Reply-To: <CAMP44s2v25w=14t8ZK82n-_01UCYWuUr2kAb3jEf2YfRiu2uyA@mail.gmail.com>
+	id S932626Ab2BNWf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Feb 2012 17:35:26 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46181 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932601Ab2BNWf0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2012 17:35:26 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E1F173BE;
+	Tue, 14 Feb 2012 17:35:25 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zKC8TQCX/1E8YCDFp4xQ6vS29M4=; b=QHPZI3
+	Lapd4jQhoi1l+jEOnL0KLTk538w5MU5YwPxYzgJqgB16rUWAT4eLOEWMw7V92yEc
+	B0m6V3jFH4BdrikdAi7raomWs8T/0Bp3vcE06GUw+VjSf/tHtRoNiYs9UI73gJaB
+	JVyT7EWddcf+orXyg51EMcVhc9+vp8KtttUng=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ElUFsMs7BJhaz+NJLVM2fPmrbKcEAdu4
+	2txAFtHp/CvD8Lld1vIK4pB0brFuxtK9UQMf2CPQiNKaoWX0axkh2kLeYfLv0Zlo
+	Kda7kDmy7cmuikJBKn4uviDc35d+ryBLrJIRIzJDephBQThcU3cG2hQG5z3ZkQJ8
+	PU8aPnzroo8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2518B73BD;
+	Tue, 14 Feb 2012 17:35:25 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AB1E773BC; Tue, 14 Feb 2012
+ 17:35:24 -0500 (EST)
+In-Reply-To: <20120214222055.GE24802@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 14 Feb 2012 17:20:55 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2FB98D8E-575C-11E1-BB77-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190785>
 
-On Wed, Feb 15, 2012 at 12:22:53AM +0200, Felipe Contreras wrote:
+Jeff King <peff@peff.net> writes:
 
-> Better != more words. English, like code, is good as simple as
-> possible (but not simpler).
+>   export SSH_ASKPASS=whatever
+>
+>   # this will try the terminal first, then SSH_ASKPASS, because it is
+>   # ssh doing the asking
+>   git push ssh://example.com/repo.git
 
-I'm not going to bother responding to your email point by point, as I
-have very little else to say.
+Sorry, you lost me here.  Does "ssh example.com" consult the terminal
+first and then fall back to SSH_ASKPASS environment variable?
 
-I am telling you that as a reviewer of git patches, I found the more
-verbose message by Jonathan to be much easier to review than your
-one-line description. You may disagree. I offer my experience merely as
-a data point, and I will let others draw their own conclusions. If you
-want to ignore me, that's your right, but I don't see any point in
-arguing further about it.
+I was under the impression that SSH_ASKPASS was to either give hands-free
+access to the keychain or give GUI experience so that people do not have
+to type from their terminals...
 
--Peff
+>   # this will try SSH_ASKPASS first, then the terminal, because git is
+>   # doing the asking
+>   git push https://example.com/repo.git
+>
+> So now I'm more convinced than ever that the order should be
+> GIT_ASKPASS, terminal, SSH_ASKPASS.
