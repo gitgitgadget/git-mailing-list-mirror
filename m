@@ -1,56 +1,47 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH] column: Fix an incorrect parse of the 'nodense' option
- token
-Date: Tue, 14 Feb 2012 18:28:34 +0000
-Message-ID: <4F3AA7D2.9040702@ramsay1.demon.co.uk>
-References: <4F36B64D.4030000@ramsay1.demon.co.uk> <CACsJy8B7=6OYBV-HVK3Cq4_cTdPvm_1MvVv=U2R=4yQw9t5X9Q@mail.gmail.com>
+From: supadhyay <supadhyay@imany.com>
+Subject: Re: cvs2git migration
+Date: Tue, 14 Feb 2012 10:33:06 -0800 (PST)
+Message-ID: <1329244386868-7285021.post@n2.nabble.com>
+References: <1329220866066-7283631.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 14 19:30:32 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 14 19:33:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxN94-0008S8-Hs
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 19:30:30 +0100
+	id 1RxNBh-0002OO-PV
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 19:33:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759364Ab2BNSaS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Feb 2012 13:30:18 -0500
-Received: from lon1-post-1.mail.demon.net ([195.173.77.148]:37619 "EHLO
-	lon1-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757964Ab2BNSaM (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2012 13:30:12 -0500
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by lon1-post-1.mail.demon.net with esmtp (Exim 4.69)
-	id 1RxN8k-0002tS-XA; Tue, 14 Feb 2012 18:30:10 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <CACsJy8B7=6OYBV-HVK3Cq4_cTdPvm_1MvVv=U2R=4yQw9t5X9Q@mail.gmail.com>
+	id S1756978Ab2BNSdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Feb 2012 13:33:08 -0500
+Received: from sam.nabble.com ([216.139.236.26]:39524 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753487Ab2BNSdH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2012 13:33:07 -0500
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <supadhyay@imany.com>)
+	id 1RxNBa-0006MZ-SJ
+	for git@vger.kernel.org; Tue, 14 Feb 2012 10:33:06 -0800
+In-Reply-To: <1329220866066-7283631.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190731>
 
-Nguyen Thai Ngoc Duy wrote:
-> It's about overriding config. If you set "dense" by default in
-> column.ui but do not want it in this particular run, you can say
-> --column=nodense.
+Hi All,
 
-Ah, OK, I missed that (obvious in retrospect!). Thanks.
+Can any one please update me what would be the method/steps to migrate
+existing CVS users to GIT in CVS2GIT migration? User migration is possible
+or not?
 
-> The [no]color is for plumbing only. If a command produces colored
-> output, "color" is required to calculate text length correctly.
-> Overriding it with "nocolor" would break the layout badly so it's no
-> use there. It does not make sense (to me) for users to put "color" in
-> column.ui. Which is why it's not mentioned in document.
+Thanks in advance...
 
-Er... but 'color' is documented with column.ui in config.txt.
-I'm obviously (still) being dense! :-D
-
-ATB,
-Ramsay Jones
+--
+View this message in context: http://git.661346.n2.nabble.com/cvs2git-migration-tp7283631p7285021.html
+Sent from the git mailing list archive at Nabble.com.
