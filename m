@@ -1,117 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] submodules: always use a relative path from
- gitdir to work tree
-Date: Tue, 14 Feb 2012 12:34:36 -0800
-Message-ID: <7vzkcl5f37.fsf@alter.siamese.dyndns.org>
-References: <4F32F252.7050105@web.de> <4F32F465.7090401@web.de>
- <4F338156.9090507@web.de> <7vlio6ec7q.fsf@alter.siamese.dyndns.org>
- <4F3A9B98.6040908@web.de> <7v4nut6u4s.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v3 0/2] test: tests for the "double > from mailmap" bug
+Date: Tue, 14 Feb 2012 14:34:31 -0600
+Message-ID: <20120214203431.GB13210@burratino>
+References: <1329235894-20581-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Antony Male <antony.male@gmail.com>,
-	Phil Hord <phil.hord@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Feb 14 21:34:49 2012
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 14 21:34:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxP5I-0007p9-DK
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 21:34:45 +0100
+	id 1RxP5P-0007xK-HH
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 21:34:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760804Ab2BNUek (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Feb 2012 15:34:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47689 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757234Ab2BNUej (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2012 15:34:39 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A03CA7D9A;
-	Tue, 14 Feb 2012 15:34:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=u1Uu+ukyw/4eMJoj5GJWjmxWKzA=; b=SPODcS
-	HqGIEseo9PadVEIYftFJ5Mvg1WnRZQNWuFGyce5BpYx8rRXVrGE6xG2fAXEQzY8k
-	SGiJC6YtFozYAMwtbPpBX5nV3ldWF4olyvkip6th4EfpUzBRRFSofUPsWkl+Pkg6
-	MmQpBgKwZ2NPPChkhF847fbrZOFh00ds9w6lU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=P8dsBCuKnVNtKsC6VIVFrwwV6+YaiPLr
-	i3SAUG8YNoFpsb7hQPNUW9O4DiKuIlINfL0R2/quG8Z4Ye2pG0CzX/kxUNccYYJQ
-	E6xCFjXPfmZ5Stz8l3+HANTABVBLoG8cPw+mMAFrxIpEL5w0Ny2X7mEf4rosGdR7
-	U5vaYXs2ftw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 970087D99;
-	Tue, 14 Feb 2012 15:34:38 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 722107D95; Tue, 14 Feb 2012
- 15:34:37 -0500 (EST)
-In-Reply-To: <7v4nut6u4s.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 14 Feb 2012 12:24:19 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 50097826-574B-11E1-B129-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1760831Ab2BNUeo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Feb 2012 15:34:44 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:65523 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757234Ab2BNUen (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2012 15:34:43 -0500
+Received: by ghrr11 with SMTP id r11so300028ghr.19
+        for <git@vger.kernel.org>; Tue, 14 Feb 2012 12:34:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=xtOx7rFpCXWdZjWa8x7lpLhYIEAnj2pxDKmTlpsIpT8=;
+        b=EBWv09pa3DDKWpz+OcNQh5jvbpm4bfXTuwo8kmthlvM2GMUm7oE+gJ+DCLAvfaheQ5
+         DXzj1r3SsBjGM3fOPD59L6AgZ/l+LiSsENuMTWqmMUtfMnKTFhNkn2Fx2EH1fM2dxQxH
+         KGifcBwKcPmDFFert5jQVakcyNXJlOrK/HdmM=
+Received: by 10.50.15.132 with SMTP id x4mr7043983igc.27.1329251681127;
+        Tue, 14 Feb 2012 12:34:41 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id gw1sm21322295igb.0.2012.02.14.12.34.40
+        (version=SSLv3 cipher=OTHER);
+        Tue, 14 Feb 2012 12:34:40 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1329235894-20581-1-git-send-email-felipe.contreras@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190753>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi again,
 
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
+Felipe Contreras wrote:
+
+> I sent both the fix and the tests. Another fix was applied, but we are still
+> missing the tests.
 >
->> After adding a comment, using test instead of [], testing both $a and
->> $b and assigning each variable on it's own line I get the following
->> interdiff. Does that make more sense?
->
-> My earlier request for comment was to say
->
-> 	# $a is always longer than $b for such and such reasons
->
-> to explain why testing $b without testing $a was sufficient.
+> These are good before, and after the fix.
 
-Heh, after I follow the entire module_clone, $gitdir is defined in earlier
-parts of the function to be "$(rev-parse --git-dir)/modules/$path", so it
-is clear that it is longer than $path.  Unless "cd $there && pwd" does not
-result in a funny situation (such as $something/modules is a symbolic link
-to another place that is much closer to the root of the filesystem), that
-is.
+To summarize the previous discussion[1]: some people had comments, and
+you seem to have found value in exactly none of them.  OK.  CC-ing
+Peff, since he at least probably has looked over this code before.
 
-And in such a case, the prefix part of $a and $b would be different from
-the very beginning hopefully.
+By the way, the address you are using for Marius is out of date.
 
-> It is obvious (at least to me) that the loop continues as long as $a and
-> $b begin with the same string before their first '/' and removes that
-> common segment from both of them, so I do not think the new comment is
-> absolutely necessary, but it would not hurt to have it, especially it is
-> short enough and to the point.
->
-> Thanks.
->
->> diff --git a/git-submodule.sh b/git-submodule.sh
->> index 3463d6d..ed76ce2 100755
->> --- a/git-submodule.sh
->> +++ b/git-submodule.sh
->> @@ -172,9 +172,11 @@ module_clone()
->>
->>         a=$(cd "$gitdir" && pwd)
->>         b=$(cd "$path" && pwd)
->> -       while [ "$b" ] && [ "${a%%/*}" = "${b%%/*}" ]
->> +       # Remove all common leading directories
->> +       while test -n "$a" && test -n "$b" && test "${a%%/*}" = "${b%%/*}"
->>         do
->> -               a=${a#*/} b=${b#*/};
->> +               a=${a#*/}
->> +               b=${b#*/}
->>         done
->>         rel=$(echo $a | sed -e 's|[^/]*|..|g')
+> Felipe Contreras (2):
+>   t: mailmap: add 'git blame -e' tests
 
-Perhaps aseert that $a never becomes empty before this line (or set it
-explicitly to "." when $a is empty), as otherwise
+So that people don't destroy this test in later refactorings, I would
+like to collect statements that we want the test to ensure remain
+true.
 
->>         (clear_local_git_env; cd "$path" && git config core.worktree "$rel/$b")
+Apparently the fix in f026358e ("mailmap: always return a plain mail
+address from map_user()", 2012-02-05) was for the case of the name
+changing and email address not changing due to mailmap mapping.  Most
+callers use a separate buffer for the email address so there is room
+to modify the name in place, but "git blame" keeps angle brackets in
+the same buffer for no obvious reason I can see.  (Callers should
+be able to add the brackets themselves instead of relying on
+ci.author_mail to contain them, but that's a story for another day.)
 
-this will refer to "/$b" from the root?
+Anyway, the existing tests for the returned email missed this since
+it does not affect "git shortlog -e" but only "git blame -e".
+Therefore this patch reuses the test data for shortlog -e and lets us
+use it for blame, too.  It is easier to understand after the other
+patch, IMHO.
+
+This is _not_ meant as a more general test for the "git blame -e"
+format (which would belong somewhere near t8008) as far as I can tell.
+It is just checking that mailmap doesn't screw up.
+
+>   t: mailmap: add simple name translation test
+
+Before, I thought this might be a straightforward test for the bug
+fixed by f026358e.  That didn't justify the patch that touches
+several different test assertions.
+
+In fact it seems to be intended to test the case addressed by f026358e
+(name changing, email not) in various mailmap callers: "git shortlog -e",
+"git log --pretty", "git blame".
+
+Here's a reroll.
+
+Enjoy,
+Jonathan
+
+Felipe Contreras (2):
+  test: mailmap can change author name without changing email
+  test: check that "git blame -e" uses mailmap correctly
+
+ t/t4203-mailmap.sh |   28 ++++++++++++++++++++++++++++
+ 1 files changed, 28 insertions(+), 0 deletions(-)
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/189896
