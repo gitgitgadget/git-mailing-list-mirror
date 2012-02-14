@@ -1,127 +1,161 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: git-p4 useclientspec broken?
-Date: Tue, 14 Feb 2012 07:36:32 -0500
-Message-ID: <20120214123632.GA5285@padd.com>
-References: <4F39AF04.5080607@promptu.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: git-latexdiff: Git and Latexdiff working together
+Date: Tue, 14 Feb 2012 14:22:45 +0100
+Message-ID: <vpq7gzph7mi.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Laurent =?iso-8859-1?Q?Charri=E8re?= <lcharriere@promptu.com>
-X-From: git-owner@vger.kernel.org Tue Feb 14 13:36:43 2012
+Content-Type: multipart/mixed; boundary="=-=-="
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 14 14:23:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxHcg-0005Gs-6u
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 13:36:43 +0100
+	id 1RxILP-0004uV-VB
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 14:22:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756213Ab2BNMgh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Feb 2012 07:36:37 -0500
-Received: from honk.padd.com ([74.3.171.149]:47477 "EHLO honk.padd.com"
+	id S1755415Ab2BNNWv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Feb 2012 08:22:51 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:47098 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755369Ab2BNMgg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2012 07:36:36 -0500
-Received: from arf.padd.com (unknown [50.55.145.32])
-	by honk.padd.com (Postfix) with ESMTPSA id 4F85FE8B;
-	Tue, 14 Feb 2012 04:36:35 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id C8B3B313C6; Tue, 14 Feb 2012 07:36:32 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <4F39AF04.5080607@promptu.com>
+	id S1754384Ab2BNNWu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2012 08:22:50 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q1EDJSfh011997
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 14 Feb 2012 14:19:28 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1RxILG-00084Y-9i; Tue, 14 Feb 2012 14:22:46 +0100
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 14 Feb 2012 14:19:28 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q1EDJSfh011997
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1329830370.49356@Q/LsV3whvj6LvqMu22tAgg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190721>
 
-lcharriere@promptu.com wrote on Mon, 13 Feb 2012 16:47 -0800:
-> Since I've upgraded to 1.7.9 (on OS X Lion, FWIW), git-p4 submit
-> fails to apply any patches if I use useclientspec=true when cloning.
-> 
-> My p4 client is as follows:
-> 
-> Client:	malibu
-> (...)
-> Root:	/Users/lcharriere/Documents/Perforce/all
-> (...)
-> View:
-> 	//sandbox/... //malibu/sandbox/...
-> 	//depot/... //malibu/depot/...
-> 
-> Sequence of steps to reproduce:
-> 
-> $ git p4 clone //sandbox/lcharriere/foo --use-client-spec
-> $ cd foo && find .
-> ./.git
-> (...)
-> ./sandbox/lcharriere/foo/.gitignore
-> ./sandbox/lcharriere/foo/foo.py
-> 
-> -- This is new behavior to me, BTW. Previously, I would have seen
-> ./.git
-> (...)
-> ./.gitignore
-> ./foo.py
+--=-=-=
+Content-Type: text/plain
 
-I did try to clean up our handling of --use-client-spec.  This
-behavior was done on purpose, but maybe I didn't the implications
-on people who were relying on the old way.  In particular the
-behavior of multi-line view specs and those with + and - was
-largely unpredictable.
+Hi,
 
-The client spec now has absolute control over what files get put
-where in the git repo, just like in p4.  The argument
-"//sandbox/lcharriere/foo" in your clone command limits the scope
-of what is checked out, but does not affect where it is placed.
+You may know latexdiff, a neat tool to visualize differences between
+LaTeX files (it annotates your .tex file with colors for removed/added
+parts, producing another compilable .tex file).
 
-You can get the git layout you expect with this view:
+I wrote a little shell-script that allows one to use latexdiff on files
+versionned by Git, with e.g.
 
-    //sandbox/lcharriere/foo/... //malibu/...
+  git latexdiff HEAD^ --main foo.tex --output foo.pdf
 
-or simply just don't use --use-client-spec at all:
+Essentially, it does a checkout of the old and new revisions, and calls
+latexdiff + pdflatex for you.
 
-    git p4 clone //sandbox/lcharriere/foo
+The result is attached in case anyone is interested.
 
-Is this new behavior bad for you?  Suggestions welcome.
+It may be relevant to add this to contrib/ in git.git. If anyone's
+interested, let me know, and I'll resend the code in the form of a
+patch doing that.
 
-> $ cat "test" >> sandbox/lcharriere/foo/.gitignore
-> $ git commit -a -m "test"
-> git commit -a -m "test"
-> [master 7398144] test
->  1 files changed, 1 insertions(+), 0 deletions(-)
-> $ git p4 submit
-> Perforce checkout for depot path //sandbox/lcharriere/foo/ located
-> at /Users/lcharriere/Documents/Perforce/all/sandbox/lcharriere/foo/
-> Synchronizing p4 checkout...
-> ... - file(s) up-to-date.
-> Applying 739814457a8faa84dc0bddd830f671569576b177 test
-> 
-> sandbox/lcharriere/foo/.gitignore - file(s) not on client.
-> error: sandbox/lcharriere/foo/.gitignore: No such file or directory
-> Unfortunately applying the change failed!
-> What do you want to do?
-> [s]kip this patch / [a]pply the patch forcibly and with .rej files /
-> [w]rite the patch to a file (patch.txt)
+Regards,
 
-This is definitely a bug.  I reproduced a similar problem.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
 
-> I tried to follow what's going on with pdb:
-> * self.depotPath is //sandbox/lcharriere/foo, so git-p4 chdir's to
-> /Users/lcharriere/Documents/Perforce/all/sandbox/lcharriere/foo/
-> * In P4Submit.applyCommit, line 926 is:
-> p4_edit(path)
-> At this point path is 'sandbox/lcharriere/foo/.gitignore'
+--=-=-=
+Content-Type: application/octet-stream
+Content-Disposition: attachment; filename=git-latexdiff
+Content-Transfer-Encoding: base64
 
-The path should be plain old ".gitignore", as you noticed.
-
-> I'm guessing this is why the p4 executable doesn't find it. The path
-> should be .gitignore. Is it possible that the new behavior I
-> mentioned above of reproducing the depot hierarchy when
-> useclientspec is true is having unintended side effects, or is a
-> bug?
-
-I'll get a patch out tonight or soon.  Need to do gobs of testing
-on the submit path to make sure nothing else is broken.
-
-		-- Pete
+IyEgL2Jpbi9zaAoKdXNhZ2UgKCkgewogICAgICAgICAgICBjYXQgPDwgRU9GClVzYWdlOiAkKGJh
+c2VuYW1lICQwKSBbb3B0aW9uc10gT0xEIFtORVddCkNhbGwgbGF0ZXhkaWZmIG9uIHR3byBHaXQg
+cmV2aXNpb25zIG9mIGEgZmlsZS4KCk9MRCBhbmQgTkVXIGFyZSBHaXQgcmV2aXNpb24gaWRlbnRp
+ZmllcnMuIE5FVyBkZWZhdWx0cyB0byBIRUFELgoKT3B0aW9uczoKCS0taGVscAkJVGhpcyBoZWxw
+IG1lc3NhZ2UKCS0tbWFpbiBGSUxFLnRleAlOYW1lIG9mIHRoZSBtYWluIExhVGVYIGZpbGUKCS0t
+bm8tdmlldwlEb24ndCBkaXNwbGF5IHRoZSByZXN1bHRpbmcgUERGIGZpbGUKCS0tdmlldwkJVmll
+dyB0aGUgcmVzdWx0aW5nIFBERiBmaWxlCgkJCShkZWZhdWx0IGlmIC1vIGlzIG5vdCB1c2VkKQoJ
+LS1uby1jbGVhbnVwCURvbid0IGNsZWFudXAgdGVtcCBkaXIgYWZ0ZXIgcnVubmluZwoJLW8gRklM
+RSwgLS1vdXRwdXQgRklMRQoJCQlDb3B5IHJlc3VsdGluZyBQREYgaW50byBGSUxFCgkJCSh1c3Vh
+bGx5IGVuZGluZyB3aXRoIC5wZGYpCkVPRgp9CgpkaWUgKCkgewogICAgZWNobyAiZmF0YWw6ICRA
+IgogICAgZXhpdCAxCn0KCnZlcmJvc2UgKCkgewogICAgaWYgWyAiJHZlcmJvc2UiID0gMSBdOyB0
+aGVuCglwcmludGYgIiVzIC4uLiIgIiRAIgogICAgZmkKfQoKdmVyYm9zZV9wcm9ncmVzcyAoKSB7
+CiAgICBpZiBbICIkdmVyYm9zZSIgPSAxIF07IHRoZW4KCXByaW50ZiAiLiIgIiRAIgogICAgZmkK
+fQoKdmVyYm9zZV9kb25lICgpIHsKICAgIGlmIFsgIiR2ZXJib3NlIiA9IDEgXTsgdGhlbgoJZWNo
+byAiIGRvbmUuIgogICAgZmkKfQoKb2xkPQpuZXc9Cm1haW49CnZpZXc9bWF5YmUKY2xlYW51cD0x
+CnZlcmJvc2U9MApvdXRwdXQ9CmluaXRpYWxfZGlyPSRQV0QKCndoaWxlIHRlc3QgJCMgLW5lIDA7
+IGRvCiAgICBjYXNlICIkMSIgaW4KICAgICAgICAiLS1oZWxwInwiLWgiKQogICAgICAgICAgICB1
+c2FnZQogICAgICAgICAgICBleGl0IDAKICAgICAgICAgICAgOzsKCSItLW1haW4iKQoJICAgIHNo
+aWZ0CgkgICAgbWFpbj0kMQoJICAgIDs7CgkiLS1uby12aWV3IikKCSAgICB2aWV3PTAKCSAgICA7
+OwoJIi0tdmlldyIpCgkgICAgdmlldz0xCgkgICAgOzsKCSItLW5vLWNsZWFudXAiKQoJICAgIGNs
+ZWFudXA9MAoJICAgIDs7CgkiLW8ifCItLW91dHB1dCIpCgkgICAgc2hpZnQKCSAgICBvdXRwdXQ9
+JDEKCSAgICA7OwoJIi0tdmVyYm9zZSJ8Ii12IikKCSAgICB2ZXJib3NlPTEKCSAgICA7OwogICAg
+ICAgICopCgkgICAgaWYgWyAiJDEiID0gIiIgXTsgdGhlbgoJCWVjaG8gIkVtcHR5IHN0cmluZyBu
+b3QgYWxsb3dlZCBhcyBhcmd1bWVudCIKCQl1c2FnZQoJCWV4aXQgMQoJICAgIGVsaWYgWyAiJG9s
+ZCIgPSAiIiBdOyB0aGVuCgkJb2xkPSQxCgkgICAgZWxpZiBbICIkbmV3IiA9ICIiIF07IHRoZW4K
+CQluZXc9JDEKCSAgICBlbHNlCgkJZWNobyAiQmFkIGFyZ3VtZW50ICQxIgoJCXVzYWdlCgkJZXhp
+dCAxCgkgICAgZmkKICAgICAgICAgICAgOzsKICAgIGVzYWMKICAgIHNoaWZ0CmRvbmUKCmlmIFsg
+IiRuZXciID0gIiIgXTsgdGhlbgogICAgbmV3PUhFQUQKZmkKCmlmIFsgIiRvbGQiID0gIiIgXTsg
+dGhlbgogICAgZWNobyAiZmF0YWw6IFBsZWFzZSwgcHJvdmlkZSBhdCBsZWFzdCBvbmUgcmV2aXNp
+b24gdG8gZGlmZiB3aXRoLiIKICAgIHVzYWdlCiAgICBleGl0IDEKZmkKCmlmIFsgIiRtYWluIiA9
+ICIiIF07IHRoZW4KICAgIHByaW50ZiAiJXMiICJObyAtLW1haW4gcHJvdmlkZWQsIHRyeWluZyB0
+byBndWVzcyAuLi4gIgogICAgbWFpbj0kKGdpdCBncmVwIC1sICdeWyBcdF0qXFxkb2N1bWVudGNs
+YXNzJykKICAgICMgTWF5IHJldHVybiBtdWx0aXBsZSByZXN1bHRzLCBidXQgaWYgc28gdGhlIHJl
+c3VsdCB3b24ndCBiZSBhIGZpbGUuCiAgICBpZiBbIC1yICIkbWFpbiIgXTsgdGhlbgoJZWNobyAi
+VXNpbmcgJG1haW4gYXMgdGhlIG1haW4gZmlsZS4iCiAgICBlbHNlCglpZiBbICIkbWFpbiIgPSAi
+IiBdOyB0aGVuCgkgICAgZWNobyAiTm8gY2FuZGlkYXRlIGZvciBtYWluIGZpbGUuIgoJZWxzZQoJ
+ICAgIGVjaG8gIk11bHRpcGxlIGNhbmRpZGF0ZXMgZm9yIG1haW4gZmlsZToiCgkgICAgcHJpbnRm
+ICIlc1xuIiAiJG1haW4iIHwgc2VkICdzL14vXHQvJwoJZmkKCWRpZSAiUGxlYXNlLCBwcm92aWRl
+IGEgbWFpbiBmaWxlIHdpdGggLS1tYWluIEZJTEUudGV4LiIKICAgIGZpCmZpCgppZiBbICEgLXIg
+IiRtYWluIiBdOyB0aGVuCiAgICBkaWUgIkNhbm5vdCByZWFkICRtYWluLiIKZmkKCnZlcmJvc2Ug
+IkNyZWF0aW5nIHRlbXBvcmFyeSBkaXJlY3RvcmllcyIKCmdpdF9wcmVmaXg9JChnaXQgcmV2LXBh
+cnNlIC0tc2hvdy1wcmVmaXgpCmNkICIkKGdpdCByZXYtcGFyc2UgLS1zaG93LWNkdXApIiB8fCBk
+aWUgIkNhbid0IGNkIGJhY2sgdG8gcmVwb3NpdG9yeSByb290IgpnaXRfZGlyPSIkKGdpdCByZXYt
+cGFyc2UgLS1naXQtZGlyKSIgfHwgZGllICJOb3QgYSBnaXQgcmVwb3NpdG9yeT8iCmdpdF9kaXI9
+JChjZCAiJGdpdF9kaXIiOyBwd2QpCgptYWluPSRnaXRfcHJlZml4LyRtYWluCgp0bXBkaXI9JGlu
+aXRpYWxfZGlyL2dpdC1sYXRleGRpZmYuJCQKbWtkaXIgIiR0bXBkaXIiIHx8IGRpZSAiQ2Fubm90
+IGNyZWF0ZSB0ZW1wb3JhcnkgZGlyZWN0b3J5LiIKCmNkICIkdG1wZGlyIiB8fCBkaWUgIkNhbm5v
+dCBjZCB0byAkdG1wZGlyIgoKbWtkaXIgb2xkIG5ldyBkaWZmIHx8IGRpZSAiQ2Fubm90IGNyZWF0
+ZSBvbGQsIG5ldyBhbmQgZGlmZiBkaXJlY3Rvcmllcy4iCgp2ZXJib3NlX2RvbmUKdmVyYm9zZSAi
+Q2hlY2tpbmcgb3V0IG9sZCBhbmQgbmV3IHZlcnNpb24iCgpjZCBvbGQgfHwgZGllICJDYW5ub3Qg
+Y2QgdG8gb2xkLyIKZ2l0IC0tZ2l0LWRpcj0iJGdpdF9kaXIiIC0td29yay10cmVlPS4gY2hlY2tv
+dXQgIiRvbGQiIC0tIC4gfHwgZGllICJjaGVja291dCBmYWlsZWQgZm9yIG9sZC8iCnZlcmJvc2Vf
+cHJvZ3Jlc3MKY2QgLi4vbmV3IHx8IGRpZSAiQ2Fubm90IGNkIHRvIG5ldy8iCmdpdCAtLWdpdC1k
+aXI9IiRnaXRfZGlyIiAtLXdvcmstdHJlZT0uIGNoZWNrb3V0ICIkbmV3IiAtLSAuIHx8IGRpZSAi
+Y2hlY2tvdXQgZmFpbGVkIGZvciBuZXcvIgp2ZXJib3NlX3Byb2dyZXNzCmNkIC4uL2RpZmYgfHwg
+ZGllICJDYW5ub3QgY2QgdG8gZGlmZi8iCmdpdCAtLWdpdC1kaXI9IiRnaXRfZGlyIiAtLXdvcmst
+dHJlZT0uIGNoZWNrb3V0ICIkbmV3IiAtLSAuIHx8IGRpZSAiY2hlY2tvdXQgZmFpbGVkIGZvciBk
+aWZmLyIKdmVyYm9zZV9wcm9ncmVzcwpjZCAuLiB8fCBkaWUgIkNhbm5vdCBjZCBiYWNrIHRvIHRv
+cGxldmVsIgoKdmVyYm9zZV9kb25lCnZlcmJvc2UgIlJ1bm5pbmcgbGF0ZXhkaWZmIC0tZmxhdHRl
+biBvbGQvJG1haW4gbmV3LyRtYWluID4gZGlmZi8kbWFpbiIKCmxhdGV4ZGlmZiAtLWZsYXR0ZW4g
+b2xkLyRtYWluIG5ldy8kbWFpbiA+IGRpZmYvJG1haW4gfHwgZGllICJsYXRleGRpZmYgZmFpbGVk
+IgoKdmVyYm9zZV9kb25lCgptYWluYmFzZT0kKGJhc2VuYW1lICIkbWFpbiIgLnRleCkKbWFpbmRp
+cj0kKGRpcm5hbWUgIiRtYWluIikKCnZlcmJvc2UgIkNvbXBpbGluZyByZXN1bHQiCgpjb21waWxl
+X2Vycm9yPTAKY2QgZGlmZi8iJG1haW5kaXIiIHx8IGRpZSAiQ2FuJ3QgY2QgdG8gZGlmZi8kbWFp
+bmRpciIKaWYgWyAtZiBNYWtlZmlsZSBdOyB0aGVuCiAgICBtYWtlIHx8IGNvbXBpbGVfZXJyb3I9
+MQplbHNlCiAgICBwZGZsYXRleCAtLWludGVyYWN0aW9uIGVycm9yc3RvcG1vZGUgIiRtYWluYmFz
+ZSIgfHwgY29tcGlsZV9lcnJvcj0xCmZpCgp2ZXJib3NlX2RvbmUKCnBkZmZpbGU9IiRtYWluYmFz
+ZSIucGRmCmlmIFsgISAtciAiJHBkZmZpbGUiIF07IHRoZW4KICAgIGVjaG8gIk5vIFBERiBmaWxl
+IGdlbmVyYXRlZC4iCiAgICBjb21waWxlX2Vycm9yPTEKZmkKCmlmIFsgISAtcyAiJHBkZmZpbGUi
+IF07IHRoZW4KICAgIGVjaG8gIlBERiBmaWxlIGdlbmVyYXRlZCBpcyBlbXB0eS4iCiAgICBjb21w
+aWxlX2Vycm9yPTEKZmkKCmlmIFsgIiRjb21waWxlX2Vycm9yIiA9ICIxIiBdOyB0aGVuCiAgICBl
+Y2hvICJFcnJvciBkdXJpbmcgY29tcGlsYXRpb24uIFBsZWFzZSBleGFtaW5lIGFuZCBjbGVhbnVw
+IGlmIG5lZWRlZDoiCiAgICBlY2hvICJEaXJlY3Rvcnk6ICR0bXBkaXIvZGlmZi8kbWFpbmRpci8i
+CiAgICBlY2hvICIgICAgIEZpbGU6ICRtYWluYmFzZS50ZXgiCiAgICAjIERvbid0IGNsZWFuIHVw
+IHRvIGxldCB0aGUgdXNlciBkaWFnbm9zZS4KICAgIGV4aXQgMQpmaQoKaWYgWyAiJG91dHB1dCIg
+IT0gIiIgXTsgdGhlbgogICAgYWJzX3BkZmZpbGU9IiRQV0QvJHBkZmZpbGUiCiAgICAoY2QgIiRp
+bml0aWFsX2RpciIgJiYgY3AgIiRhYnNfcGRmZmlsZSIgIiRvdXRwdXQiKQogICAgZWNobyAiT3V0
+cHV0IHdyaXR0ZW4gb24gJG91dHB1dCIKZmkKCmlmIFsgIiR2aWV3IiA9IDEgXSB8fCBbICIkdmll
+dyIgPSBtYXliZSBdICYmIFsgIiRvdXRwdXQiID0gIiIgXTsgdGhlbgogICAgeHBkZiAiJHBkZmZp
+bGUiCmZpCgppZiBbICIkY2xlYW51cCIgPSAxIF07IHRoZW4KICAgIHZlcmJvc2UgIkNsZWFuaW5n
+LXVwIHJlc3VsdCIKICAgIHJtIC1mciAiJHRtcGRpciIKICAgIHZlcmJvc2VfZG9uZQpmaQo=
+--=-=-=--
