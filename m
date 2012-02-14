@@ -1,71 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/5] do not override receive-pack errors
-Date: Tue, 14 Feb 2012 11:06:24 -0800
-Message-ID: <7vzkcl6xqn.fsf@alter.siamese.dyndns.org>
-References: <7vhazobto3.fsf@alter.siamese.dyndns.org>
- <1329164235-29955-1-git-send-email-drizzd@aon.at>
- <1329164235-29955-3-git-send-email-drizzd@aon.at>
- <7v8vk6csx9.fsf@alter.siamese.dyndns.org> <20120214083324.GA1762@ecki>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 12/10] support pager.* for external commands
+Date: Tue, 14 Feb 2012 14:13:40 -0500
+Message-ID: <20120214191340.GC12072@sigill.intra.peff.net>
+References: <20110818215820.GA7767@sigill.intra.peff.net>
+ <20110818220132.GB7799@sigill.intra.peff.net>
+ <CACBZZX596wnk2KE9QzUPMc=A6Mt8HbUs7F4rnAZbw1_RrcKHnw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Tue Feb 14 20:06:33 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Steffen Daode Nurpmeso <sdaoden@googlemail.com>,
+	Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 14 20:13:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxNhv-0006QF-R0
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 20:06:32 +0100
+	id 1RxNoz-0004gg-5n
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 20:13:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759293Ab2BNTG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Feb 2012 14:06:27 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38248 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752976Ab2BNTG1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2012 14:06:27 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DB3F65CC;
-	Tue, 14 Feb 2012 14:06:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jUtadICpC6evGtXM2v1uuzTUt/w=; b=SyGNUG
-	2WUl0V1mNHl2fZAfnRftDtC3tY5mfJfydDq++gr/jJAJIb6tK3owyahhNmimlTjG
-	QZb0+6DpAbc3DhfeaqJwCPOiBQ0sPM04Q4tElEKtHNxwMF3gN99e5nA5JrCwXs5d
-	TdJV1bt74G9iitArXRfAJkNl8NQDTlCZievg8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hiMPnT/wo13WufEJSl6+/TNI7oBryjge
-	f2mpwAuF/dzSbTWtvKnZ/1wNT5DC4FySGQSNcj5tVSTBCuazow3Xyd9ApC6INmYA
-	KJKAYa54yOZpiJVoFYIS1iqaU4yYhuY/QdOEfcjTvwJNhMC/UeepeCY6qodkUAxQ
-	z7oHodGL3Po=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6461065CB;
-	Tue, 14 Feb 2012 14:06:26 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ECB3665C9; Tue, 14 Feb 2012
- 14:06:25 -0500 (EST)
-In-Reply-To: <20120214083324.GA1762@ecki> (Clemens Buchacher's message of
- "Tue, 14 Feb 2012 09:33:24 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FE0ED8A6-573E-11E1-A80F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758431Ab2BNTNo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Feb 2012 14:13:44 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35795
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753215Ab2BNTNo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2012 14:13:44 -0500
+Received: (qmail 9281 invoked by uid 107); 14 Feb 2012 19:20:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 14 Feb 2012 14:20:54 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2012 14:13:40 -0500
+Content-Disposition: inline
+In-Reply-To: <CACBZZX596wnk2KE9QzUPMc=A6Mt8HbUs7F4rnAZbw1_RrcKHnw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190736>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+On Sun, Feb 12, 2012 at 01:46:34AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
 
-> Yes, it really is. For example, in t5504 rev-list --verify-objects (it
-> was turned on for me if called from there) detects the corrupt object.
-> But the error string is later overwritten with the return value of
-> update, which is NULL in this case.
-> ...
-> Actually, check_alias_update searches for aliases of cmd in ref_list,
-> which is a list of refs from all commands, irrespective of their error
-> status. So this change is correct.
+> On Fri, Aug 19, 2011 at 00:01, Jeff King <peff@peff.net> wrote:
+>=20
+> > +test_expect_success TTY 'command-specific pager works for external=
+ commands' '
+> > + =C2=A0 =C2=A0 =C2=A0 sane_unset PAGER GIT_PAGER &&
+> > + =C2=A0 =C2=A0 =C2=A0 echo "foo:initial" >expect &&
+> > + =C2=A0 =C2=A0 =C2=A0 >actual &&
+> > + =C2=A0 =C2=A0 =C2=A0 test_config pager.external "sed s/^/foo:/ >a=
+ctual" &&
+> > + =C2=A0 =C2=A0 =C2=A0 test_terminal git --exec-path=3D"`pwd`" exte=
+rnal log --format=3D%s -1 &&
+> > + =C2=A0 =C2=A0 =C2=A0 test_cmp expect actual
+>=20
+> For reasons that I haven't looked into using sed like that breaks
+> under /usr/bin/ksh on Solaris. Just using:
+>=20
+>     sed -e \"s/^/foo:/\"
+>=20
+> Instead fixes it, it's not broken with /usr/xpg4/bin/sh, so it's some
+> ksh peculiarity.
+>=20
+> The error it gives is:
+>=20
+>     sed s/^/foo:/ >actual: Not found
+>=20
+> Indicating that for some reason it's considering that whole "sed
+> s/^/foo:/ >actual" string to be a single command.
 
-Ok, thanks for clarificatin on both counts.
+Hrm. Is the problem on the git-executing side, or is it on the setting
+up the config side?
+
+Sadly (or perhaps not) I no longer have any Solaris machines to test on=
+=2E
+Can you confirm that "git config pager.external" looks OK inside that
+test?  Can you confirm via GIT_TRACE=3D1 what is being sent to the shel=
+l?
+
+Also, it looks like we actually run commands internally from git using
+"sh -c". So if it is the executing side that is wrong, I don't see how
+/usr/bin/ksh would be involved at all (it would either be /bin/sh, or
+/usr/xpg4/bin/sh if you have your PATH set).
+
+-Peff
