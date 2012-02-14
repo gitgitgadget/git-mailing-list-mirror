@@ -1,80 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC PATCH 0/3] git-p4: move to toplevel
-Date: Tue, 14 Feb 2012 14:05:15 -0500
-Message-ID: <20120214190515.GB12072@sigill.intra.peff.net>
-References: <1329070423-23761-1-git-send-email-pw@padd.com>
- <7vehtyec64.fsf@alter.siamese.dyndns.org>
- <20120213203709.GA31671@ecki>
- <7vhayuctwm.fsf@alter.siamese.dyndns.org>
- <20120214092048.GC1762@ecki>
- <7vaa4l8diz.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/5] do not override receive-pack errors
+Date: Tue, 14 Feb 2012 11:06:24 -0800
+Message-ID: <7vzkcl6xqn.fsf@alter.siamese.dyndns.org>
+References: <7vhazobto3.fsf@alter.siamese.dyndns.org>
+ <1329164235-29955-1-git-send-email-drizzd@aon.at>
+ <1329164235-29955-3-git-send-email-drizzd@aon.at>
+ <7v8vk6csx9.fsf@alter.siamese.dyndns.org> <20120214083324.GA1762@ecki>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Clemens Buchacher <drizzd@aon.at>, Pete Wyckoff <pw@padd.com>,
-	git@vger.kernel.org, Luke Diamand <luke@diamand.org>,
-	Vitor Antunes <vitor.hda@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 14 20:05:28 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Tue Feb 14 20:06:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxNgr-0005JD-Cz
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 20:05:25 +0100
+	id 1RxNhv-0006QF-R0
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 20:06:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759080Ab2BNTFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Feb 2012 14:05:20 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35780
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757047Ab2BNTFT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2012 14:05:19 -0500
-Received: (qmail 9194 invoked by uid 107); 14 Feb 2012 19:12:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 14 Feb 2012 14:12:29 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2012 14:05:15 -0500
-Content-Disposition: inline
-In-Reply-To: <7vaa4l8diz.fsf@alter.siamese.dyndns.org>
+	id S1759293Ab2BNTG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Feb 2012 14:06:27 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38248 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752976Ab2BNTG1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2012 14:06:27 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DB3F65CC;
+	Tue, 14 Feb 2012 14:06:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jUtadICpC6evGtXM2v1uuzTUt/w=; b=SyGNUG
+	2WUl0V1mNHl2fZAfnRftDtC3tY5mfJfydDq++gr/jJAJIb6tK3owyahhNmimlTjG
+	QZb0+6DpAbc3DhfeaqJwCPOiBQ0sPM04Q4tElEKtHNxwMF3gN99e5nA5JrCwXs5d
+	TdJV1bt74G9iitArXRfAJkNl8NQDTlCZievg8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hiMPnT/wo13WufEJSl6+/TNI7oBryjge
+	f2mpwAuF/dzSbTWtvKnZ/1wNT5DC4FySGQSNcj5tVSTBCuazow3Xyd9ApC6INmYA
+	KJKAYa54yOZpiJVoFYIS1iqaU4yYhuY/QdOEfcjTvwJNhMC/UeepeCY6qodkUAxQ
+	z7oHodGL3Po=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6461065CB;
+	Tue, 14 Feb 2012 14:06:26 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ECB3665C9; Tue, 14 Feb 2012
+ 14:06:25 -0500 (EST)
+In-Reply-To: <20120214083324.GA1762@ecki> (Clemens Buchacher's message of
+ "Tue, 14 Feb 2012 09:33:24 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FE0ED8A6-573E-11E1-A80F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190735>
 
-On Tue, Feb 14, 2012 at 10:40:04AM -0800, Junio C Hamano wrote:
+Clemens Buchacher <drizzd@aon.at> writes:
 
-> I do not think tilde in $PATH is expanded by exec*p family to begin with,
-> so it is not "dash" but POSIX, I would think.  It is bash that is harming
-> other programs, by trying to be more helpful, encouraging this user
-> mistake to add ~ literally on the PATH.
+> Yes, it really is. For example, in t5504 rev-list --verify-objects (it
+> was turned on for me if called from there) detects the corrupt object.
+> But the error string is later overwritten with the return value of
+> update, which is NULL in this case.
+> ...
+> Actually, check_alias_update searches for aliases of cmd in ref_list,
+> which is a list of refs from all commands, irrespective of their error
+> status. So this change is correct.
 
-Hmm. There is an interesting ramification for run-command's "use_shell"
-optimization. Typically, git runs all of the user-provided commands
-given to it via the shell. But if the command contains no
-meta-characters, we skip the shell invocation as an optimization, since
-the shell should simply be word-splitting and calling exec, and the
-behavior will be identical.
-
-But if your shell handles PATH entries differently, then there is a
-difference. I.e., doing this:
-
-  mkdir junk
-  ln -s /usr/bin/vi junk/my-editor
-  export PATH=~/junk:$PATH
-  export GIT_EDITOR=my-editor
-  git commit
-
-might work without the optimization, but not with.
-
-We could check PATH and disable the optimization in that case, but I
-suspect it is not worth it, as:
-
-  1. People who put a literal "~" in their PATH get what they deserve
-     anyway. :)
-
-  2. We explicitly run "sh" in such situations, not SHELL_PATH. Even if
-     "sh" is bash, I believe it should look at its own argv[0] and put
-     itself into a more POSIX-y mode (but I didn't test).
-
--Peff
+Ok, thanks for clarificatin on both counts.
