@@ -1,66 +1,95 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: diff --stat
-Date: Tue, 14 Feb 2012 16:53:18 -0500
-Message-ID: <20120214215318.GA24802@sigill.intra.peff.net>
-References: <7v4nuub7el.fsf@alter.siamese.dyndns.org>
- <20120214195036.GD12072@sigill.intra.peff.net>
- <7vfwed6uws.fsf@alter.siamese.dyndns.org>
- <20120214202934.GA23291@sigill.intra.peff.net>
- <7vty2t5bmw.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/2] test: check that "git blame -e" uses mailmap
+ correctly
+Date: Tue, 14 Feb 2012 15:59:30 -0600
+Message-ID: <20120214215930.GD9651@burratino>
+References: <1329235894-20581-1-git-send-email-felipe.contreras@gmail.com>
+ <20120214203431.GB13210@burratino>
+ <20120214203603.GD13210@burratino>
+ <CAMP44s2M8Ava6xyKX32h9+pbxG+zq1wH1RkdWwfNsZMzcVQEmw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 14 22:53:32 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 14 22:59:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxQJT-0008DH-DZ
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 22:53:28 +0100
+	id 1RxQPd-0005DT-8S
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 22:59:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760478Ab2BNVxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Feb 2012 16:53:23 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35947
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757303Ab2BNVxW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2012 16:53:22 -0500
-Received: (qmail 12362 invoked by uid 107); 14 Feb 2012 22:00:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 14 Feb 2012 17:00:33 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2012 16:53:18 -0500
+	id S932471Ab2BNV7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Feb 2012 16:59:43 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:33822 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757282Ab2BNV7m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2012 16:59:42 -0500
+Received: by ggnh1 with SMTP id h1so344221ggn.19
+        for <git@vger.kernel.org>; Tue, 14 Feb 2012 13:59:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=TxiZhH5Y9CUhx63+B4n4Uu9IFfbw4TiVL5Lzo7Nyk1E=;
+        b=Q5ztY0CC42ss3Lz6HKpQLQZqLl/JYgdz46IEHEmDvEPJXdhtnOuQQ3mVAsj9mUTogX
+         w43+KFWtKxXK+Z+R+M9j1VFtH7yyvvltRjHuVxBER+CbEYNoZPM/HYgIKZt/VkT6kaSA
+         5dWcbxNp0UmTYdWoD7WMOjIVFcNblueoyg2e0=
+Received: by 10.50.236.73 with SMTP id us9mr7574523igc.16.1329256781827;
+        Tue, 14 Feb 2012 13:59:41 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id z22sm1275326ibg.5.2012.02.14.13.59.40
+        (version=SSLv3 cipher=OTHER);
+        Tue, 14 Feb 2012 13:59:41 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <7vty2t5bmw.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <CAMP44s2M8Ava6xyKX32h9+pbxG+zq1wH1RkdWwfNsZMzcVQEmw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190770>
 
-On Tue, Feb 14, 2012 at 01:49:11PM -0800, Junio C Hamano wrote:
+Felipe Contreras wrote:
+> On Tue, Feb 14, 2012 at 10:36 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
->  static int scale_linear(int it, int width, int max_change)
->  {
-> +	if (!it)
-> +		return 0;
->  	/*
-> -	 * make sure that at least one '-' is printed if there were deletions,
-> -	 * and likewise for '+'.
-> +	 * make sure that at least one '-' or '+' is printed if
-> +	 * there is any change to this path. The easiest way is to
-> +	 * scale linearly as if all the quantities were one smaller
-> +	 * than they actually are, and then add one to the result.
->  	 */
->  	if (max_change < 2)
-> -		return it;
-> -	return ((it - 1) * (width - 1) + max_change - 1) / (max_change - 1);
-> +		return 1;
-> +	return 1 + ((it - 1) * (width - 1) / (max_change - 1));
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>
+> I did not sign this.
 
-I'm not sure I understand why the "it - 1" and "max_change - 1" bits are
-still there, or what they are doing in the first place. I.e., why is it
-not simply "scale linearly to width-1, then add 1" as I posted earlier?
+Do you mean you do not agree with the following?
 
--Peff
+	Developer's Certificate of Origin 1.1
+
+	By making a contribution to this project, I certify that:
+
+	(a) The contribution was created in whole or in part by me and I
+	    have the right to submit it under the open source license
+	    indicated in the file; or
+
+	(b) The contribution is based upon previous work that, to the best
+	    of my knowledge, is covered under an appropriate open source
+	    license and I have the right under that license to submit that
+	    work with modifications, whether created in whole or in part
+	    by me, under the same open source license (unless I am
+	    permitted to submit under a different license), as indicated
+	    in the file; or
+
+	(c) The contribution was provided directly to me by some other
+	    person who certified (a), (b) or (c) and I have not modified
+	    it.
+
+	(d) I understand and agree that this project and the contribution
+	    are public and that a record of the contribution (including all
+	    personal information I submit with it, including my sign-off) is
+	    maintained indefinitely and may be redistributed consistent with
+	    this project or the open source license(s) involved.
+
+Anyway, Junio, please feel free to remove Felipe's sign-off from these
+patches, or add an "Against-the-protest-of:" or whatever if that's
+what he wants.
+
+I've reached the point of diminishing returns.  I'll be happy to help
+in any way I can, given a polite explanation of how I can help.
