@@ -1,83 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] git-svn, perl/Git.pm: extend and use Git->prompt
- method for querying users
-Date: Tue, 14 Feb 2012 14:35:23 -0800
-Message-ID: <7v4nut59hw.fsf@alter.siamese.dyndns.org>
-References: <4EF9ED58.8080205@tu-clausthal.de>
- <20120103184022.GA20926@sigill.intra.peff.net>
- <4F37E2B0.9060007@tu-clausthal.de> <201202121711.45920.jnareb@gmail.com>
- <4F37E843.6070107@tu-clausthal.de>
- <20120214222055.GE24802@sigill.intra.peff.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v3 0/2] test: tests for the "double > from mailmap" bug
+Date: Wed, 15 Feb 2012 00:36:44 +0200
+Message-ID: <CAMP44s1adDHvDVCBpPGUb5YpwyLkqB8LcqjAou4b2EzJL7kmYQ@mail.gmail.com>
+References: <1329235894-20581-1-git-send-email-felipe.contreras@gmail.com>
+	<20120214203431.GB13210@burratino>
+	<CAMP44s3YRHgMPX2Hzydm_TLB27OABWETjABMcwrHmDk-=pN2hw@mail.gmail.com>
+	<20120214211552.GA9651@burratino>
+	<CAMP44s1mV2cE=R49qYSLd8eZPhCpRx0hRnnG_-K3iBxp_YQEpQ@mail.gmail.com>
+	<20120214222128.GA24544@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sven Strickroth <sven.strickroth@tu-clausthal.de>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 14 23:35:34 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 14 23:36:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxQyB-0002sb-8q
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 23:35:32 +0100
+	id 1RxQzS-00047v-QC
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 23:36:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932626Ab2BNWf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Feb 2012 17:35:26 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46181 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932601Ab2BNWf0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2012 17:35:26 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E1F173BE;
-	Tue, 14 Feb 2012 17:35:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zKC8TQCX/1E8YCDFp4xQ6vS29M4=; b=QHPZI3
-	Lapd4jQhoi1l+jEOnL0KLTk538w5MU5YwPxYzgJqgB16rUWAT4eLOEWMw7V92yEc
-	B0m6V3jFH4BdrikdAi7raomWs8T/0Bp3vcE06GUw+VjSf/tHtRoNiYs9UI73gJaB
-	JVyT7EWddcf+orXyg51EMcVhc9+vp8KtttUng=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ElUFsMs7BJhaz+NJLVM2fPmrbKcEAdu4
-	2txAFtHp/CvD8Lld1vIK4pB0brFuxtK9UQMf2CPQiNKaoWX0axkh2kLeYfLv0Zlo
-	Kda7kDmy7cmuikJBKn4uviDc35d+ryBLrJIRIzJDephBQThcU3cG2hQG5z3ZkQJ8
-	PU8aPnzroo8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2518B73BD;
-	Tue, 14 Feb 2012 17:35:25 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AB1E773BC; Tue, 14 Feb 2012
- 17:35:24 -0500 (EST)
-In-Reply-To: <20120214222055.GE24802@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 14 Feb 2012 17:20:55 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2FB98D8E-575C-11E1-BB77-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932644Ab2BNWgq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Feb 2012 17:36:46 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:46248 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932081Ab2BNWgp convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2012 17:36:45 -0500
+Received: by lagu2 with SMTP id u2so463489lag.19
+        for <git@vger.kernel.org>; Tue, 14 Feb 2012 14:36:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=dVFhmw6cKWzL+aGe7skH9J1k+G+Q3/3BDT9u+TFOpAo=;
+        b=LtJ9C2Jl/6HBmEcDjFopHMpbZVvTyi7Wg1ctCjNBbon5NRBOxlbmZZ2GJirta08OqB
+         spUmzYcEV0XO/vgyvJXRZLR3HXpfYYepfzL9QKn0ZMXTF6zMyLZi0HE0gwCDusOsuKeO
+         wrXHSPh5Fc9ZE4tyBg45IRYq5bfyR6jdFYbuQ=
+Received: by 10.112.28.169 with SMTP id c9mr7942846lbh.42.1329259004061; Tue,
+ 14 Feb 2012 14:36:44 -0800 (PST)
+Received: by 10.112.41.73 with HTTP; Tue, 14 Feb 2012 14:36:44 -0800 (PST)
+In-Reply-To: <20120214222128.GA24544@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190786>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Feb 15, 2012 at 12:21 AM, Jonathan Nieder <jrnieder@gmail.com> =
+wrote:
+> Now I have offered some suggestions for improving some of your
+> patches. =C2=A0Applying these suggestions would be effortless, since =
+I sent
+> them in patch form. =C2=A0What is your response? =C2=A0You send a poi=
+nt-by-point
+> rebuttal explaining how each detail of my suggestions is bad, bad,
+> bad, and then resend the original with comparatively small changes.
 
->   export SSH_ASKPASS=whatever
->
->   # this will try the terminal first, then SSH_ASKPASS, because it is
->   # ssh doing the asking
->   git push ssh://example.com/repo.git
+That's a difference of opinion. And I didn't say the where 'bad'; I
+just didn't agree with them.
 
-Sorry, you lost me here.  Does "ssh example.com" consult the terminal
-first and then fall back to SSH_ASKPASS environment variable?
+> Can you see how this might indicate a stronger difference of opinion
+> than you have mentioned? =C2=A0And how a reviewer might make the mist=
+ake of
+> thinking his comments were unwelcome after such an experience?
 
-I was under the impression that SSH_ASKPASS was to either give hands-free
-access to the keychain or give GUI experience so that people do not have
-to type from their terminals...
+Your comments are welcome. My comments back are not?
 
->   # this will try SSH_ASKPASS first, then the terminal, because git is
->   # doing the asking
->   git push https://example.com/repo.git
->
-> So now I'm more convinced than ever that the order should be
-> GIT_ASKPASS, terminal, SSH_ASKPASS.
+--=20
+=46elipe Contreras
