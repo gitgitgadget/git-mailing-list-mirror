@@ -1,72 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] git-svn, perl/Git.pm: extend and use Git->prompt
- method for querying users
-Date: Tue, 14 Feb 2012 17:20:55 -0500
-Message-ID: <20120214222055.GE24802@sigill.intra.peff.net>
-References: <4EF9ED58.8080205@tu-clausthal.de>
- <20120103184022.GA20926@sigill.intra.peff.net>
- <4F37E2B0.9060007@tu-clausthal.de>
- <201202121711.45920.jnareb@gmail.com>
- <4F37E843.6070107@tu-clausthal.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v3 0/2] test: tests for the "double > from mailmap" bug
+Date: Tue, 14 Feb 2012 16:21:28 -0600
+Message-ID: <20120214222128.GA24544@burratino>
+References: <1329235894-20581-1-git-send-email-felipe.contreras@gmail.com>
+ <20120214203431.GB13210@burratino>
+ <CAMP44s3YRHgMPX2Hzydm_TLB27OABWETjABMcwrHmDk-=pN2hw@mail.gmail.com>
+ <20120214211552.GA9651@burratino>
+ <CAMP44s1mV2cE=R49qYSLd8eZPhCpRx0hRnnG_-K3iBxp_YQEpQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Sven Strickroth <sven.strickroth@tu-clausthal.de>
-X-From: git-owner@vger.kernel.org Tue Feb 14 23:21:08 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 14 23:21:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxQkE-0007JF-6i
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 23:21:06 +0100
+	id 1RxQkt-0007us-6g
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 23:21:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757277Ab2BNWVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Feb 2012 17:21:00 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35986
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754480Ab2BNWU7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2012 17:20:59 -0500
-Received: (qmail 13022 invoked by uid 107); 14 Feb 2012 22:28:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 14 Feb 2012 17:28:10 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2012 17:20:55 -0500
+	id S1761297Ab2BNWVn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Feb 2012 17:21:43 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:47517 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757335Ab2BNWVm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2012 17:21:42 -0500
+Received: by iacb35 with SMTP id b35so495786iac.19
+        for <git@vger.kernel.org>; Tue, 14 Feb 2012 14:21:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=VU5oxkAIZsaMP+wwGFeBlt0mKd97F11DDihupNs0HG0=;
+        b=heh8PJbGy9Q4AdD0kNfLrG6sSsnVowL1S+I3foEIfwNMaRHY+4zWKxDjgT9dsgAM4m
+         Klag49MBT/nQjb+88hx0GzXJxgaI4hVBTGdhgszqNxnn7mFGZBOiP12B4FSUPKGUL0Sd
+         KRJ5vr+f49Hvdd2g8UcEu7+MFmHyAMvqJGb9I=
+Received: by 10.42.161.73 with SMTP id s9mr30574492icx.16.1329258101737;
+        Tue, 14 Feb 2012 14:21:41 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id al9sm1122665igc.5.2012.02.14.14.21.40
+        (version=SSLv3 cipher=OTHER);
+        Tue, 14 Feb 2012 14:21:40 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <4F37E843.6070107@tu-clausthal.de>
+In-Reply-To: <CAMP44s1mV2cE=R49qYSLd8eZPhCpRx0hRnnG_-K3iBxp_YQEpQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190779>
 
-On Sun, Feb 12, 2012 at 05:26:43PM +0100, Sven Strickroth wrote:
+Felipe Contreras wrote:
 
-> Am 12.02.2012 17:11 schrieb Jakub Narebski:
-> > Doesn't Subversion use SSH directly?  If it is so, the question is
-> > about how SSH itself supports SSH_ASKPASS.
-> 
-> Oh sorry, I mixed up SSH and SVN_ASKPASS. :( Of couse SSH_ASKPASS is
-> provided by the ssh-client itself.
+> The difference of opinion is that I consider the patch already good
+> enough (adding the comments from Junio).
 
-That raises an interesting point for git (I don't remember seeing this
-in the previous discussion, so apologies if I'm repeating). We sometimes
-use SSH_ASKPASS for internal prompting, and sometimes via calling out to
-ssh. So forgetting about git being consistent with the rest of the
-world for a moment, I think we are inconsistent with ourselves. E.g.:
+Ok, I can understand where you're coming from there.
 
-  export SSH_ASKPASS=whatever
+Now I have offered some suggestions for improving some of your
+patches.  Applying these suggestions would be effortless, since I sent
+them in patch form.  What is your response?  You send a point-by-point
+rebuttal explaining how each detail of my suggestions is bad, bad,
+bad, and then resend the original with comparatively small changes.
 
-  # this will try the terminal first, then SSH_ASKPASS, because it is
-  # ssh doing the asking
-  git push ssh://example.com/repo.git
-
-  # this will try SSH_ASKPASS first, then the terminal, because git is
-  # doing the asking
-  git push https://example.com/repo.git
-
-So now I'm more convinced than ever that the order should be
-GIT_ASKPASS, terminal, SSH_ASKPASS.
-
--Peff
+Can you see how this might indicate a stronger difference of opinion
+than you have mentioned?  And how a reviewer might make the mistake of
+thinking his comments were unwelcome after such an experience?
