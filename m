@@ -1,65 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-latexdiff: Git and Latexdiff working together
-Date: Tue, 14 Feb 2012 18:31:51 -0500
-Message-ID: <20120214233151.GA25651@sigill.intra.peff.net>
-References: <vpq7gzph7mi.fsf@bauges.imag.fr>
- <20120214211629.GA23649@sigill.intra.peff.net>
- <vpq4nut6maj.fsf@bauges.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Feb 15 00:32:06 2012
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v3 0/2] t: add blame -e tests for mailmap
+Date: Wed, 15 Feb 2012 01:32:26 +0200
+Message-ID: <1329262348-9546-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 15 00:33:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxRqr-0000jl-HT
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 00:32:01 +0100
+	id 1RxRsI-0001w0-Ou
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 00:33:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761321Ab2BNXb4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Feb 2012 18:31:56 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36075
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757328Ab2BNXbz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2012 18:31:55 -0500
-Received: (qmail 14314 invoked by uid 107); 14 Feb 2012 23:39:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 14 Feb 2012 18:39:06 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Feb 2012 18:31:51 -0500
-Content-Disposition: inline
-In-Reply-To: <vpq4nut6maj.fsf@bauges.imag.fr>
+	id S1761338Ab2BNXd0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Feb 2012 18:33:26 -0500
+Received: from mail-lpp01m020-f174.google.com ([209.85.217.174]:50956 "EHLO
+	mail-lpp01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757386Ab2BNXdZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2012 18:33:25 -0500
+Received: by lbom4 with SMTP id m4so236946lbo.19
+        for <git@vger.kernel.org>; Tue, 14 Feb 2012 15:33:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=oe8FcwcCGqNna5WaV3Af+KG/7ws3qOQvCiHtwy4twS0=;
+        b=dPtosHkJpkX61PH0XtxHgDyL7/qmnl1qjNflkqY6JZHAl5fm7bkG1AuGiqihkgITFc
+         YxcSbLaXxZEfy4tRZuYARz0XXMGXtmYxMEGYYobhNnZLb+An1sI43lagFxW3ouEcPyVf
+         YdYRxSNaMX77YltttHHxHYA1lj2xGvnALKv1U=
+Received: by 10.112.11.10 with SMTP id m10mr7929580lbb.11.1329262404282;
+        Tue, 14 Feb 2012 15:33:24 -0800 (PST)
+Received: from localhost (a91-153-255-128.elisa-laajakaista.fi. [91.153.255.128])
+        by mx.google.com with ESMTPS id os5sm968439lab.13.2012.02.14.15.33.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 14 Feb 2012 15:33:23 -0800 (PST)
+X-Mailer: git-send-email 1.7.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190797>
 
-On Wed, Feb 15, 2012 at 12:13:40AM +0100, Matthieu Moy wrote:
+I sent both the fix and the tests. Another fix was applied, but we are still
+missing the tests.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > My latex usage is all from a past life, so I didn't even try out your
-> > tool.  But I did wonder what your rationale was in making a separate
-> > command as opposed to providing a script that could be plugged in as an
-> > external diff.
-> 
-> My LaTeX documents are usually sets of .tex files including each other,
-> plus figures and possibly Makefiles. So, git-latexdiff does a full
-> checkout of the old and new tree, then runs latexdiff on the main file,
-> and then compiles the result.
-> [...]
+These are good before, and after the fix.
 
-Ah, yeah. I didn't think about the fact that there's a whole ecosystem
-of files that go into producing the output.
+Since v2 (which I forgot to prefix):
 
-> That said, that may be just me not knowing diff drivers or difftools
-> well enough.
+ 1) Be _a bit_ more explicit about the fact that the new tests where missing.
+    Also state in the output that these are for blame show-email.
+ 2) Explain why the existing tests are not enough, and what fixed one of them
 
-No, your analysis is right. A diff driver wouldn't work well at all.
+Felipe Contreras (2):
+  t: mailmap: add missing 'git blame -e' tests
+  t: mailmap: add simple name translation test
 
-Thanks for satisfying my curiosity.
+ t/t4203-mailmap.sh |   32 ++++++++++++++++++++++++++++++++
+ 1 files changed, 32 insertions(+), 0 deletions(-)
 
--Peff
+-- 
+1.7.9
