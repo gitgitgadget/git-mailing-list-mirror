@@ -1,99 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] submodules: always use a relative path from
- gitdir to work tree
-Date: Tue, 14 Feb 2012 12:24:19 -0800
-Message-ID: <7v4nut6u4s.fsf@alter.siamese.dyndns.org>
-References: <4F32F252.7050105@web.de> <4F32F465.7090401@web.de>
- <4F338156.9090507@web.de> <7vlio6ec7q.fsf@alter.siamese.dyndns.org>
- <4F3A9B98.6040908@web.de>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 2/2] t: mailmap: add simple name translation test
+Date: Tue, 14 Feb 2012 22:28:14 +0200
+Message-ID: <CAMP44s2uZA_xYh8Rb8xNJM0Yf3LmNHgzzrLWd9C1wW64T2yVQA@mail.gmail.com>
+References: <1329235894-20581-1-git-send-email-felipe.contreras@gmail.com>
+	<1329235894-20581-3-git-send-email-felipe.contreras@gmail.com>
+	<7v8vk56us3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Antony Male <antony.male@gmail.com>,
-	Phil Hord <phil.hord@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Feb 14 21:24:28 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Marius Storm-Olsen <marius@trolltech.com>,
+	Jim Meyering <jim@meyering.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 14 21:28:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxOvK-0007BE-WB
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 21:24:27 +0100
+	id 1RxOz8-0002CM-EW
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 21:28:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760635Ab2BNUYW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Feb 2012 15:24:22 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41904 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757144Ab2BNUYW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2012 15:24:22 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A76727A12;
-	Tue, 14 Feb 2012 15:24:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4xheLDHFaJO33FEvXDQucp69ZMg=; b=qQa5WD
-	E8Fr1NgvNoUbGvazTm4cBNHCdJzCT5d0BoNK10FOuvWRS2/Nda7UoNrnVu2VcIuW
-	20r+B2iwEDUV7Kf/TasvnVrxeS27eU0OcYIWVun10vpjUc5W+hZ1JZL2qQ2wK0Zm
-	NXBtYohPM2rp5jsRcLHrZ56VVjv/07AxyVGWw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KxsL+zhHgiP1Mbz/RuprnPqtZ9QETFEi
-	MEISnhpPf2PoaWebmQCn+EvdxcbE2bbxnk1J5Vl2o+NT8eKRIMDo2zre0Myx5nAg
-	TdVxgfyxUKdtCrBrx91lpFwXiXIrhd7gr3L83ocjhf5mHBwVgTjhoxMPU8I6B0Gy
-	wk5I7TiGgoA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F0AA7A0D;
-	Tue, 14 Feb 2012 15:24:21 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 337D37A0B; Tue, 14 Feb 2012
- 15:24:21 -0500 (EST)
-In-Reply-To: <4F3A9B98.6040908@web.de> (Jens Lehmann's message of "Tue, 14
- Feb 2012 18:36:24 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E0B82AAE-5749-11E1-B407-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1760871Ab2BNU2R convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Feb 2012 15:28:17 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:41962 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1760761Ab2BNU2P convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2012 15:28:15 -0500
+Received: by lagu2 with SMTP id u2so375483lag.19
+        for <git@vger.kernel.org>; Tue, 14 Feb 2012 12:28:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=6mhbdL7X02or+HAivfk65GZoy6h0nAFMwil/55vGfeY=;
+        b=pUmXrMb5iIq/wLfb23Kw5MJRCBX/UnThLieU8HVivXFiw7ATLn0sGzb3oUojKEIA07
+         8SlAsCTTaaaen03YgNruNWwQYbjNqM6VzhnIQ7j+i0kftN3MJGQN1chhEbALr4yjmK/R
+         8KKilCjnMlzzwEfY1YICUiytYMUYeEqe6VC9I=
+Received: by 10.112.28.169 with SMTP id c9mr7771677lbh.42.1329251294106; Tue,
+ 14 Feb 2012 12:28:14 -0800 (PST)
+Received: by 10.112.41.73 with HTTP; Tue, 14 Feb 2012 12:28:14 -0800 (PST)
+In-Reply-To: <7v8vk56us3.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190749>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
-
-> After adding a comment, using test instead of [], testing both $a and
-> $b and assigning each variable on it's own line I get the following
-> interdiff. Does that make more sense?
-
-My earlier request for comment was to say
-
-	# $a is always longer than $b for such and such reasons
-
-to explain why testing $b without testing $a was sufficient.
-
-It is obvious (at least to me) that the loop continues as long as $a and
-$b begin with the same string before their first '/' and removes that
-common segment from both of them, so I do not think the new comment is
-absolutely necessary, but it would not hurt to have it, especially it is
-short enough and to the point.
-
-Thanks.
-
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 3463d6d..ed76ce2 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -172,9 +172,11 @@ module_clone()
+On Tue, Feb 14, 2012 at 10:10 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
->         a=$(cd "$gitdir" && pwd)
->         b=$(cd "$path" && pwd)
-> -       while [ "$b" ] && [ "${a%%/*}" = "${b%%/*}" ]
-> +       # Remove all common leading directories
-> +       while test -n "$a" && test -n "$b" && test "${a%%/*}" = "${b%%/*}"
->         do
-> -               a=${a#*/} b=${b#*/};
-> +               a=${a#*/}
-> +               b=${b#*/}
->         done
->         rel=$(echo $a | sed -e 's|[^/]*|..|g')
->         (clear_local_git_env; cd "$path" && git config core.worktree "$rel/$b")
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> ---
+>
+> It was clear that we didn't have any test for "blame -e" hence it was=
+ no
+> brainer to judge that the patch 1/2 is good without any description.
+>
+> But I am scratching my head, deciphering what this patch adds.
+>
+> It appears to me that the existing tests that map author@example.com =
+from
+> the original "A U Thor" to "Repo Guy" and inspect names and mails in
+> various output already cover this "Wrong with <right@company.xx> can =
+be
+> corrected to Mr. Right" case this patch adds.
+
+Yes, but in the first tests they don't check for 'git blame', and much
+less 'git blame -e', and the second tests only check complex mappings.
+
+> What am I missing? =C2=A0Instead of explaining it to me, can it be ex=
+plained in
+> the log message?
+
+If an explanations along the lines of the above make sense, I can resen=
+d.
+
+Cheers.
+
+--=20
+=46elipe Contreras
