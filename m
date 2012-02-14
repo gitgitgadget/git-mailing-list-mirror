@@ -1,129 +1,95 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/2] test: mailmap can change author name without changing email
-Date: Wed, 15 Feb 2012 00:48:10 +0200
-Message-ID: <CAMP44s1HitxHkfre_1BPOpt2oVo_rwMnbcer2zxFuA6KJXnj_g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/2] test: tests for the "double > from mailmap" bug
+Date: Tue, 14 Feb 2012 14:49:39 -0800
+Message-ID: <7vzkcl3u9o.fsf@alter.siamese.dyndns.org>
 References: <1329235894-20581-1-git-send-email-felipe.contreras@gmail.com>
-	<20120214203431.GB13210@burratino>
-	<20120214203519.GC13210@burratino>
-	<CAMP44s3di25SbMa1T1=0_s6f-rKnniwEcA+o5HWT7xedcghSeg@mail.gmail.com>
-	<20120214215023.GC9651@burratino>
+ <20120214203431.GB13210@burratino>
+ <20120214211402.GC23291@sigill.intra.peff.net>
+ <CAMP44s0Dp9Av+ikFHa=QcqKFA5XL9ESBrzWLY0jkSCdH-NxhMw@mail.gmail.com>
+ <7v8vk55a99.fsf@alter.siamese.dyndns.org>
+ <CAMP44s0cJroUM2aahRQz2dVPe57XPPOnsxWy+5DfmjXGArz4wA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 14 23:48:19 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+	git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 14 23:49:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxRAW-0005mw-Or
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 23:48:17 +0100
+	id 1RxRC0-00077p-4n
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Feb 2012 23:49:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757282Ab2BNWsM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Feb 2012 17:48:12 -0500
-Received: from mail-lpp01m020-f174.google.com ([209.85.217.174]:51178 "EHLO
-	mail-lpp01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755181Ab2BNWsL convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Feb 2012 17:48:11 -0500
-Received: by lbom4 with SMTP id m4so218331lbo.19
-        for <git@vger.kernel.org>; Tue, 14 Feb 2012 14:48:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=OaI244Ox0Nhf8LBaQ+5AwHpzEXa734uHtMLaOCR1bEU=;
-        b=N10z8uBIoNcLanek+JO7MhN/LPzePd7cpB2VXvtr28G+TMbhx7kDidGeyXqFqa0km8
-         JrlMTxYzichkXLo4wwZuxLQ4KKKJLZIM6k7EXKBbZHTX4w8Jf+veQCZxcwBnVddZUwYr
-         GdkNg86oOgp6xRoiPGlTNyO8BaEVRvvx6L6Pc=
-Received: by 10.152.123.68 with SMTP id ly4mr15810545lab.13.1329259690066;
- Tue, 14 Feb 2012 14:48:10 -0800 (PST)
-Received: by 10.112.41.73 with HTTP; Tue, 14 Feb 2012 14:48:10 -0800 (PST)
-In-Reply-To: <20120214215023.GC9651@burratino>
+	id S1760938Ab2BNWto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Feb 2012 17:49:44 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52206 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755181Ab2BNWtn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2012 17:49:43 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C143D76DD;
+	Tue, 14 Feb 2012 17:49:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sGcxVyoBxi+gp2IArlo/z1+Q4Xs=; b=qa9TrP
+	2dUnZtGvOkv4VA+kgqpE+7K05/WErk3+jcHPT10pDzWad2MyxorB7N6ZfMD4XzSi
+	FddxDSkSknbYjdnCe26NssUg0F9Ry383hHWe0XTMCvesBwoycGca/e1OOhWzBZfQ
+	2htvGKIYcVDuAUUGUz4bqwHW6dRILUzRYsT4Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=J8IrpflsZ88kjYqYLivSrYDN1ncO+cds
+	zJVnC5HEVOjUBuOtVK5q6kcrBYNwV9rHTFiI6bizRSa45YZkgCUf5C0ivpdlIpfi
+	zSe3A9MXy1kSN6SAZh5+iTVxkFNC1dAkcfjdJg8GXQZXwn9jMSDzYhR3JYQBH/op
+	woEeWaEvHFU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B24E576DC;
+	Tue, 14 Feb 2012 17:49:41 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2F6CB76DB; Tue, 14 Feb 2012
+ 17:49:41 -0500 (EST)
+In-Reply-To: <CAMP44s0cJroUM2aahRQz2dVPe57XPPOnsxWy+5DfmjXGArz4wA@mail.gmail.com> (Felipe
+ Contreras's message of "Wed, 15 Feb 2012 00:34:21 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2E3C0160-575E-11E1-8CB2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190789>
 
-On Tue, Feb 14, 2012 at 11:50 PM, Jonathan Nieder <jrnieder@gmail.com> =
-wrote:
-> Felipe Contreras wrote:
->> On Tue, Feb 14, 2012 at 10:35 PM, Jonathan Nieder <jrnieder@gmail.co=
-m> wrote:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+> On Wed, Feb 15, 2012 at 12:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >
->>> (2) 'email@example.com'
->>> becomes the canonical author email for commits with author name 'A =
-U
->>> Thor'.
->>
->> That's not true. I initially thought that was the case, and I think =
-it
->> might be useful to have that, but it's not the case now, and your
->> patch doesn't test this.
->
-> Thanks for explaining. =C2=A0I had indeed confused myself into thinki=
-ng 'A
-> U Thor <email@example.com>' would act like 'A U Thor
-> <email@example.com> <email@example.com>'.
->
-> I should have said:
->
-> -- 8< --
-> A mailmap entry in the format 'A U Thor <email@example.com>' means
-> that 'A U Thor' should be the canonical author name for commits
-> with author address 'email@example.com', and the email address
-> should be left alone.
->
-> We already have tests for this format regarding the committer name,
-> but not in the author name, so the tests do not cover the shortlog an=
-d
-> blame codepaths as they should. =C2=A0Fix that.
-> -- >8 --
+> And I don't understand why people want the obvious to be explained.
 
-At which point the summary doesn't seem to be correct "test: mailmap
-can change author name without changing email". Plus, I fail to see
-what would be the usefulness of this test, as changing name is
-changing the name, regardless if it's the author or the committer.
+Has it ever occurred to you the reason why people ask questions to you is
+perhaps because something that is obvious to you who wrote the patch is
+not obvious at all to others?  Has it also occurred to you that the
+majority of people who need to understand the patch during the review and
+6 months down the road in "git log" output are not *you*?
 
-> [...]
->>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->>
->> I most definitely did not sign this off, and I didn't add any of the=
-se
->> lines, nor wrote anything about this commit message.
->
-> That's why I described the changes I made, signed with my initials,
-> and put my own sign-off below yours. =C2=A0Did I screw up somewhere?
+> Your new point is "you can add a new thing that we did not have, but
+> it would not result in a good addition if that new thing is
+> irrelevant", but you already know what is the new thing from the
+> summary "'git blame -e' tests".
 
-You more or less rewrote the whole thing, I don't think you should put
-my s-o-b in those cases.
+It is not a "new point".  Jonathan, Peff and I all never said that it is
+unclear "what" your patch adds.  The suggestions for improvement given in
+this thread were all to explain "why" better.
 
-Anyway, I have seen people use this format:
+> Everybody seems to assume that a simple commit message = bad. I disagree.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-[jn: rewrite the patch]
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+If you find *everybody* seems to disagree with you, it would help to
+consider a slight possibility that you *might* be wrong.  And "simple" is
+not necessarily "sufficient and simple".
 
-Even better:
+> ... And I already pointed out the double standards.
 
-Based on a patch by Felipe Contreras.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-
-> Note that I am making these changes because, at its heart, I think
-> your patch is good and useful. =C2=A0Otherwise I would have ignored i=
-t and
-> worked on something else. =C2=A0If you prefer that I don't make
-> improvements like this, please indicate why that's a good idea;
-> otherwise I will probably continue to do it when I see good patches,
-> despite all the signals you are giving that I have done something
-> awful by corrupting your perfect patch in this way.
-
-I didn't hint I preferred that. You said you wanted to improve my
-patches, why can't I do the same?
-
---=20
-=46elipe Contreras
+Sorry, but the absolute uniform standards do not exist, unless you are
+living in a fantasy land.  I expect better from list regulars as new
+contributors will inevitably learn from their behaviour (we also learn
+from our past mistakes).
