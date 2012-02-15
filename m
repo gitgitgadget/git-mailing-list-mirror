@@ -1,106 +1,52 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH v5 3/3] push: teach --recurse-submodules the on-demand
- option
-Date: Wed, 15 Feb 2012 23:28:02 +0100
-Message-ID: <4F3C3172.8030505@web.de>
-References: <20120213092541.GA15585@t1405.greatnet.de> <20120213093008.GD15585@t1405.greatnet.de> <7v7gzq9jg2.fsf@alter.siamese.dyndns.org>
+From: Tim Haga <timhaga@ebene6.org>
+Subject: Re: [PATCH] git-latexdiff: new command in contrib, to use latexdiff
+ and Git
+Date: Thu, 16 Feb 2012 00:33:00 +0100
+Message-ID: <20120216003300.17228570@sirion>
+References: <1329320987-15203-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org,
-	Fredrik Gustafsson <iveqy@iveqy.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 15 23:28:17 2012
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Feb 16 00:33:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxnKi-0003dm-5Q
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 23:28:16 +0100
+	id 1RxoLZ-0005EX-LI
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 00:33:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755965Ab2BOW2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Feb 2012 17:28:11 -0500
-Received: from mout.web.de ([212.227.15.3]:51121 "EHLO mout.web.de"
+	id S1755980Ab2BOXdJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Feb 2012 18:33:09 -0500
+Received: from tamara.ebene6.org ([78.46.96.189]:52878 "EHLO ebene6.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751388Ab2BOW2L (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Feb 2012 17:28:11 -0500
-Received: from [192.168.178.48] ([91.3.175.191]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0MPGym-1RtNTf07KS-005FQU; Wed, 15 Feb 2012 23:28:03
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:10.0.1) Gecko/20120208 Thunderbird/10.0.1
-In-Reply-To: <7v7gzq9jg2.fsf@alter.siamese.dyndns.org>
-X-Provags-ID: V02:K0:DcGYpvDRWHZ+FMRG/ov9EE31a7v7laJO7c2DMBW4t/Z
- rf2Y+CvkagMQfZAvXa95phVowX7pEU6Fp6VK/JJqSvHu01o2tC
- X9aHOReZ2kxCW6KUVvzhHMtqP/fvZ59QRd+szpM5R1wNtx2IL5
- Zm3F30YkKJd7m2v6SA+0CpD9QpyFUG/phwxo8mUApoyin7+cgA
- BnXuB1QdnarVuP2s1hX7A==
+	id S1753457Ab2BOXdG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Feb 2012 18:33:06 -0500
+Received: from sirion (sirion.me-ix.net [IPv6:2a02:2918:1002:3:e478:59ff:fee7:3a5b])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by ebene6.org (Postfix) with ESMTPSA id 8AD575383B8;
+	Thu, 16 Feb 2012 00:29:48 +0100 (CET)
+In-Reply-To: <1329320987-15203-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Mailer: Claws Mail 3.7.9 (GTK+ 2.24.6; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190865>
 
-Am 14.02.2012 04:34, schrieb Junio C Hamano:
-> Heiko Voigt <hvoigt@hvoigt.net> writes:
-> 
->> diff --git a/submodule.c b/submodule.c
->> index 3c714c2..ff0cfd8 100644
->> --- a/submodule.c
->> +++ b/submodule.c
->> @@ -411,6 +411,54 @@ int check_submodule_needs_pushing(unsigned char new_sha1[20],
->>  	return needs_pushing->nr;
->>  }
->>  
->> +static int push_submodule(const char *path)
->> +{
->> +	if (add_submodule_odb(path))
->> +		return 1;
->> +
->> +	if (for_each_remote_ref_submodule(path, has_remote, NULL) > 0) {
->> +		struct child_process cp;
->> +		const char *argv[] = {"push", NULL};
->> +
->> +		memset(&cp, 0, sizeof(cp));
->> +		cp.argv = argv;
->> +		cp.env = local_repo_env;
->> +		cp.git_cmd = 1;
->> +		cp.no_stdin = 1;
->> +		cp.dir = path;
->> +		if (run_command(&cp))
->> +			return 0;
->> +		close(cp.out);
->> +	}
->> +
->> +	return 1;
->> +}
-> 
-> Hmm, this makes me wonder if we fire subprocesses and have them run in
-> parallel (to a reasonably limited parallelism), it might make the overall
-> user experience more pleasant, and if we did the same on the fetching
-> side, it would be even nicer.
+While testing your script on my office machine i discovered that the
+following might be a problem:
 
-Yeah, I had the same idea and did some experiments when working on
-fetch some time ago.
+> +if [ "$view" = 1 ] || [ "$view" = maybe ] && [ "$output" = "" ]; then
+> +    xpdf "$pdffile"
+> +fi
 
-> We would need to keep track of children and after firing a handful of them
-> we would need to start waiting for some to finish and collect their exit
-> status before firing more, and at the end we would need to wait for the
-> remaining ones and find how each one of them did before returning from
-> push_unpushed_submodules().  If we were to do so, what are the missing
-> support we would need from the run_command() subsystem?
+Xpdf is not installed on all machines (e.g. it's not installed on my
+office machine), so maybe it would be a good idea to use a environment
+variable instead?
 
-We would not only have to collect the exit status but also the output
-lines. You don't want to see the output of multiple fetches or pushes
-mixed together, so it makes sense to just defer that until the command
-exited and then print everything at once. The interesting part I couldn't
-come up with an easy solution for is to preserve the output order between
-the stdout and stdin lines, as they contain different parts of the
-progress which would look strange when shuffled around.
 
-And I saw that sometimes parallel fetches took way longer than doing them
-sequentially (in my case because of strange DNS behavior of my DSL router),
-so we would definitely want a config option for that (maybe setting the
-maximum number of simultaneous threads to be used).
-
-But don't get me wrong, I'm all for having that feature! :-)
+Tim
