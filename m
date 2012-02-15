@@ -1,64 +1,108 @@
-From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>
-Subject: problem with git grep -P
-Date: Wed, 15 Feb 2012 14:15:00 +0100
-Message-ID: <4F3BAFD4.7080209@in.waw.pl>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: git status: small difference between stating whole repository and
+ small subdirectory
+Date: Wed, 15 Feb 2012 16:14:38 +0100
+Message-ID: <CAA01CsoW-32kOtD2g==2FDcYaxfSVD4Xdy1bYG_wJBWDNept4A@mail.gmail.com>
+References: <CAA01Csr8FbvQ8uFvxX8_6i-hysin6JuaifVVC-yoLyoT0N5F4Q@mail.gmail.com>
+	<CAA01Csp6_9fP2rg4104UWUXwOxZmUVdQNDAaBe6fRou6agBz6g@mail.gmail.com>
+	<8762f9k5sg.fsf@thomas.inf.ethz.ch>
+	<CAA01Cso_8=159UDMFUHiYz1X=gYtpbqRO4h3TMw7N=4YMV8YNg@mail.gmail.com>
+	<CACsJy8DBG2A91=ppCOC6Hf6aYM2soUXXdsY0GU9hr2xqjj4RYA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?B?TWljaGHFgiBLaWVkcm93aWN6?= <michal.kiedrowicz@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 15 14:15:33 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Rast <trast@inf.ethz.ch>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 15 16:14:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rxehj-0003vZ-Jr
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 14:15:28 +0100
+	id 1RxgZA-00070F-IH
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 16:14:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758256Ab2BONPY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Feb 2012 08:15:24 -0500
-Received: from kawka.in.waw.pl ([178.63.212.103]:52644 "EHLO kawka.in.waw.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756094Ab2BONPK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Feb 2012 08:15:10 -0500
-Received: from [193.0.104.42]
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1RxehP-00016h-Sc; Wed, 15 Feb 2012 14:15:08 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20120104 Icedove/8.0
+	id S1751537Ab2BOPOj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Feb 2012 10:14:39 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:57135 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751037Ab2BOPOi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Feb 2012 10:14:38 -0500
+Received: by iacb35 with SMTP id b35so1558853iac.19
+        for <git@vger.kernel.org>; Wed, 15 Feb 2012 07:14:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=HvEZabGPLuReYq3E5PMCdZMLM+/tk6cZD2CKen9bVvs=;
+        b=UgL3KAaG496wJfYR0BhpZL8jSfdldkIkQKpeynjsuXnWXxHDTLM7rYoeyuOJyyHHZy
+         gIbpJvbOjZmm73sRx+vBJNqi71rAWAOexvAgYuQoWK+YGCH0dgA5UFBxRNJVs4Gvtt0k
+         qnrQc5cOMZP392rIqO3M/fg3Jn2h2RLn0NJpc=
+Received: by 10.42.145.131 with SMTP id f3mr39954084icv.8.1329318878239; Wed,
+ 15 Feb 2012 07:14:38 -0800 (PST)
+Received: by 10.50.46.33 with HTTP; Wed, 15 Feb 2012 07:14:38 -0800 (PST)
+In-Reply-To: <CACsJy8DBG2A91=ppCOC6Hf6aYM2soUXXdsY0GU9hr2xqjj4RYA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190831>
 
-Hi,
-I'm not getting output from git grep -P. Simplified test case:
+On Wed, Feb 15, 2012 at 12:01 PM, Nguyen Thai Ngoc Duy
+<pclouds@gmail.com> wrote:
+> On Wed, Feb 15, 2012 at 3:57 PM, Piotr Krukowiecki
+> <piotr.krukowiecki@gmail.com> wrote:
+>> Indeed, after gc the times went down:
+>> 10s -> 2.3s (subdirectory)
+>> 17s -> 9.5s (whole repo)
+>>
+>> 2 seconds is much better and I'd say acceptable for me. But my quest=
+ions are:
+>> - why is it so slow with not packed repo?
+>> - can it be faster without repacking?
+>
+> gc does more than just repacking. If you still have the un-gc'd repo,
+> Try these commands one by one, and time "git status" after each:
+>
+> =A0- git pack-refs --all --prune
+> =A0- git reflog expire --all
+> =A0- git repack -d -l
+> =A0- git prune --expire
+> =A0- git rerere gc
 
-$ git grep -P '^ ' t/t4012-diff-binary.sh
-(nothing)
+It will take some time but hopefully I'll have the stats for tomorrow.
 
-$ git grep -E '^ ' t/t4012-diff-binary.sh
-t/t4012-diff-binary.sh: a |    2 +-
-t/t4012-diff-binary.sh: b |  Bin
-t/t4012-diff-binary.sh: c |    2 +-
-t/t4012-diff-binary.sh: d |  Bin
-t/t4012-diff-binary.sh: 4 files changed, 2 insertions(+), 2 deletions(-)
-t/t4012-diff-binary.sh: binfile  |   Bin 0 -> 1026 bytes
-t/t4012-diff-binary.sh: textfile | 10000 +++++++++++++++++++++++++++++++
 
-I would expect -P to give the same results as -E.
+> I'd be more interested in why auto-gc does not kick in (or whther it =
+should).
 
-Am I missing something special about pcre?
+I don't have any specific options set, so default values should be used=
+=2E
 
-$ git --version
-git version 1.7.9.5.g1210a
-(AFAICT this hasn't changed since grep -P was merged)
+I'm using git-svn though, so my workflow looks like this:
+   git svn fetch + git svn rebase
+   ... git operations like commit, cherry-pick, rebase ...
+   git svn dcommit
 
-I have libpcre3 8.12-4 from debian.
+Not sure if that matters. I remember that I've seen auto-gc being run
+several times in the past - I think after svn fetch/rebase.
 
---
-Zbyszek
+I'm also using git-new-workdir and have 2 extra workdirs.
+
+
+>> - even with packed repo, the time on small subdirectory is much high=
+er
+>> than I'd expect given time on whole repo and subdirectory size - why=
+?
+>
+> Hard to say without measuring. I just notice that I missed your mail
+> with profiling results. I will have a look, but just in case, is the
+> repository publicly available?
+
+Unfortunately it's not public. I can do some measuring if someone
+tells me what to do.
+
+
+--=20
+Piotr Krukowiecki
