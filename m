@@ -1,130 +1,138 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: git status: small difference between stating whole repository and
- small subdirectory
-Date: Wed, 15 Feb 2012 09:57:29 +0100
-Message-ID: <CAA01Cso_8=159UDMFUHiYz1X=gYtpbqRO4h3TMw7N=4YMV8YNg@mail.gmail.com>
-References: <CAA01Csr8FbvQ8uFvxX8_6i-hysin6JuaifVVC-yoLyoT0N5F4Q@mail.gmail.com>
-	<CAA01Csp6_9fP2rg4104UWUXwOxZmUVdQNDAaBe6fRou6agBz6g@mail.gmail.com>
-	<8762f9k5sg.fsf@thomas.inf.ethz.ch>
+From: Jeff King <peff@peff.net>
+Subject: Re: how to determine oldest supported version of git
+Date: Wed, 15 Feb 2012 04:15:26 -0500
+Message-ID: <20120215091526.GA22683@sigill.intra.peff.net>
+References: <jgeekn$of2$1@dough.gmane.org>
+ <7v8vkktt6y.fsf@alter.siamese.dyndns.org>
+ <7vwr7upj9m.fsf@alter.siamese.dyndns.org>
+ <20120215053607.GC29902@sigill.intra.peff.net>
+ <7vaa4k38nj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Feb 15 09:57:36 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 15 10:15:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxagB-000315-Bk
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 09:57:35 +0100
+	id 1Rxaxh-00015X-De
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 10:15:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757936Ab2BOI5a convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Feb 2012 03:57:30 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:46094 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753437Ab2BOI5a convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Feb 2012 03:57:30 -0500
-Received: by ghrr11 with SMTP id r11so492821ghr.19
-        for <git@vger.kernel.org>; Wed, 15 Feb 2012 00:57:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=TcWnXGbzMwYoboyKBML71b8KcqjA3RMNwBMJelytqKY=;
-        b=vP2ZCZKuKx3zC0tz6NgxZp3bPk07vFx1qlmUT7sXf2wx9SchkHJk9teMLSjISLDXcY
-         BMZD2iN7r9E9OEtlEhLwMnwnIG9MmS4H9V9JR3lt5mNyPacbxaAd5a3/FspnRKPoOCrH
-         L6Myw2VPCVwZ8ug/XILnpp6CPaLn8D9sFa+Co=
-Received: by 10.50.179.106 with SMTP id df10mr40456940igc.6.1329296249147;
- Wed, 15 Feb 2012 00:57:29 -0800 (PST)
-Received: by 10.50.46.33 with HTTP; Wed, 15 Feb 2012 00:57:29 -0800 (PST)
-In-Reply-To: <8762f9k5sg.fsf@thomas.inf.ethz.ch>
+	id S1758066Ab2BOJPg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Feb 2012 04:15:36 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37185
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754332Ab2BOJPc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Feb 2012 04:15:32 -0500
+Received: (qmail 18611 invoked by uid 107); 15 Feb 2012 09:22:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 15 Feb 2012 04:22:39 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Feb 2012 04:15:26 -0500
+Content-Disposition: inline
+In-Reply-To: <7vaa4k38nj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190818>
 
-On Tue, Feb 14, 2012 at 12:34 PM, Thomas Rast <trast@inf.ethz.ch> wrote=
-:
-> Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
->
->> On Fri, Feb 10, 2012 at 10:42 AM, Piotr Krukowiecki
->> <piotr.krukowiecki@gmail.com> wrote:
->>> I compared stating whole tree vs one small subdirectory, and I
->>> expected that for the subdirectory status will be very very fast.
->>> After all, it has only few files to stat. But it's not fast. Why?
->>>
->>>
->>> With cold cache (echo 3 | sudo tee /proc/sys/vm/drop_caches):
->>>
->>> $ time git status =A0 =A0> /dev/null
->>> real =A0 =A00m41.670s
->>> user =A0 =A00m0.980s
->>> sys =A0 =A0 0m2.908s
->>>
->>> $ time git status -- src/.../somedir =A0 > /dev/null
->>> real =A0 =A00m17.380s
->>> user =A0 =A00m0.748s
->>> sys =A0 =A0 0m0.328s
+On Tue, Feb 14, 2012 at 10:36:32PM -0800, Junio C Hamano wrote:
+
+> Jeff King <peff@peff.net> writes:
+> 
+> > If you are running v1.7.8.1 now, even if v1.7.9 is out, it is less risky
+> > to move to v1.7.8.2 than to move to v1.7.9.
 > [...]
->> I can't reproduce this behavior at the moment. 'status' on the
->> directory takes about 1.5s instead of 17s. status on whole repositor=
-y
->> takes 27s.
->> This is my work repository, so it was changed today.
->
-> To me these timings smell like a combination of either a network
-> filesystem or a slow/busy disk, and non-packed repositories. =A0Next =
-time
-> this happens look at 'git count-objects', run 'git gc' and redo the
-> timings.
->
-> If you are indeed on a network filesystem, also look at the
-> core.preloadIndex setting.
+> But nobody in the development community rebuilds 'maint' every time it is
+> updated and runs the result as his or her primary production version. Even
+> I do not do that (remember, I run 'next'). I only build and run full test
+> suite. Older maintenance tracks are worse. I do not think anybody runs
+> them before they are tagged and released.
 
-All is on local disk and system is idle.
+That's a good point. Maint releases are not well tested before release.
+However, I think there are two things that help balance that:
 
-Indeed, after gc the times went down:
-10s -> 2.3s (subdirectory)
-17s -> 9.5s (whole repo)
+  1. The commits that go onto them are "obviously" correct. I put
+     obviously in quotes, because of course we can make a mistake. But
+     just looking at the commits that end up in a typical maint release,
+     they're usually quite conservative.
 
-2 seconds is much better and I'd say acceptable for me. But my question=
-s are:
-- why is it so slow with not packed repo?
-- can it be faster without repacking?
-- even with packed repo, the time on small subdirectory is much higher
-than I'd expect given time on whole repo and subdirectory size - why?
+     So in deciding between v1.7.8.4 or v1.7.9, it is a question of
+     whether you are more likely to be screwed by a conservative commit
+     that has gotten less testing, or by one of the host of
+     non-conservative commits that have gotten more testing.
 
+     I don't think we have numbers on the historical balance (and going
+     forward, it would really depend on qualitative factors like "how
+     conservative" anyway).
 
-$ git count-objects -v
-count: 5095
-size: 37084
-in-pack: 755364
-packs: 21
-size-pack: 2398468
-prune-packable: 0
-garbage: 0
+  2. The commits on maint are often tested in isolation. That is, they
+     are not generally cherry-picks, but were rather branched and
+     developed from a maint-worthy version, and then forward ported into
+     master (where forward porting for us is basically merging plus
+     adding any required tweaks). So in an ideal world, the developer
+     considers the fix looking at the maint code, and then the risky
+     forward-porting happens in master (where we have time to cook and
+     squash bugs).
 
-$ git gc
-Counting objects: 760212, done.
-Compressing objects: 100% (158651/158651), done.
-Writing objects: 100% (760212/760212), done.
-Total 760212 (delta 535848), reused 736108 (delta 513257)
-Checking connectivity: 760212, done.
+     On the other hand, just because the developer comes up with the fix
+     based on an old version doesn't mean that they don't make a
+     mistake. And with nobody running it, those mistakes may slip
+     through. Also, we do sometimes base bugfixes on the source of a
+     bug, which is ancient, and then merge up not only to master but
+     also to maint.  The right fix at the source of the bug may be
+     different than what is needed at maint, which is different than
+     what is needed at master.
 
-$ time git status  -- .
-real	0m2.503s
-user	0m0.160s
-sys	0m0.096s
+Hmm. I really wish we had some numbers, because it's very unclear to me
+which factor dominates. My gut says that the maint releases are still
+safer, even with the problems you listed. I recall multiple bugs in
+feature releases that caused quick bugfix releases. I don't recall
+offhand having to quickly issue a fix for a maintenance release.
 
-$ time git status
-real	0m9.663s
-user	0m0.232s
-sys	0m0.556s
+> > Which implies to me that in an ideal world, there would be maint
+> > releases for the current series (i.e., v1.7.9.x now) and the previous
+> > one (v1.7.8.x now). Somewhere around v1.7.9.3 (or after 3 months, or
+> > whatever), stop bothering with v1.7.8.x releases.
+> 
+> Actually what I was thinking was to restructure the release schedule
+> slightly so that
+> 
+>  * We do not merge to 'master' anything but bugfix patches to regressions
+>    introduced by 1.7.10 or to new features introduced by 1.7.10, for two
+>    weeks after it ships;
+> 
+>  * During that time, if an urgent fix is needed, 'maint' is directly
+>    patched to produce 1.7.9.X, and it is merged upward to 'next';
+> 
+>  * After finishing applying the early fixes to 1.7.10 to 'master', we tag
+>    the tip of 'master' as 1.7.10.1 and fork 'maint' from there;
+> 
+>  * At that point, old 'maint' and 1.7.9.X track cease to receive updates,
+>    as there is no point maintaining them. It only encourages distros to
+>    stay behind, adding unnecesary maintenance burden to us.
 
+I think that is not so far from what I proposed (except that my "3
+months or whatever" is your "2 weeks and one version").
 
---=20
-Piotr Krukowiecki
+> Yes, that's the crucial observation to make.  Cherry-picking or down
+> merging fixes tested in a new context to older codebase that is not
+> actively used by the person who is cherry-picking does not produce a
+> stable end product. It only produces stale end product.  It makes it
+> slightly scarier to imagine that the cherry-pick is done by people who
+> may not be as familiar with the codebase as us, but on the other hand,
+> they might be using that old codebase for their day-to-day work, and may
+> have better luck hitting issues that did not manifest themselves in the
+> context of 'master' and 'next.
+
+Good point. I thought of them as less-qualified, but in many ways they
+are more so.
+
+Hmph. You've certainly given me something to think about. I joined this
+thread thinking you were a little bit crazy, but now I think you are
+starting to convince me. :)
+
+-Peff
