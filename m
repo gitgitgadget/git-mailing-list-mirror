@@ -1,62 +1,130 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [ANNOUNCE] Git 1.7.9.1
-Date: Wed, 15 Feb 2012 10:35:03 +0200
-Message-ID: <CAMP44s0W=7FkAi1qOVJa+k8beCno6uh=gdj1CSKssQuc3aZ_BQ@mail.gmail.com>
-References: <7vk43p6wpd.fsf@alter.siamese.dyndns.org>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: git status: small difference between stating whole repository and
+ small subdirectory
+Date: Wed, 15 Feb 2012 09:57:29 +0100
+Message-ID: <CAA01Cso_8=159UDMFUHiYz1X=gYtpbqRO4h3TMw7N=4YMV8YNg@mail.gmail.com>
+References: <CAA01Csr8FbvQ8uFvxX8_6i-hysin6JuaifVVC-yoLyoT0N5F4Q@mail.gmail.com>
+	<CAA01Csp6_9fP2rg4104UWUXwOxZmUVdQNDAaBe6fRou6agBz6g@mail.gmail.com>
+	<8762f9k5sg.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: linux-kernel-owner@vger.kernel.org Wed Feb 15 09:35:26 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Feb 15 09:57:36 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1RxaKi-0001Nd-4U
-	for glk-linux-kernel-3@plane.gmane.org; Wed, 15 Feb 2012 09:35:24 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1RxagB-000315-Bk
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 09:57:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757924Ab2BOIfI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 15 Feb 2012 03:35:08 -0500
-Received: from mail-lpp01m020-f174.google.com ([209.85.217.174]:43069 "EHLO
-	mail-lpp01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753145Ab2BOIfF convert rfc822-to-8bit
-	(ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 15 Feb 2012 03:35:05 -0500
-Received: by lbom4 with SMTP id m4so412053lbo.19
-        for <multiple recipients>; Wed, 15 Feb 2012 00:35:03 -0800 (PST)
+	id S1757936Ab2BOI5a convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Feb 2012 03:57:30 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:46094 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753437Ab2BOI5a convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Feb 2012 03:57:30 -0500
+Received: by ghrr11 with SMTP id r11so492821ghr.19
+        for <git@vger.kernel.org>; Wed, 15 Feb 2012 00:57:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=qouNDYILrkkthLnnl7f1VK+yDUTIp3k9unah8MpfNlY=;
-        b=PDMfmNLAsefy2x3DNChZm1FyaCUhL6HGja3ndsBuOgxJ2OOdVgLR+t3mjc4mmTYCW1
-         hq7L3xz7Kwvajb5WB7HD2VPYl8qmhIP4AAR7eIun+shvYxRq8Jple0EBXjya95TWk2kb
-         CG0K9nKSYvXiGh/rXdRI3K5R2Qn8ayoDYCqmw=
-Received: by 10.152.123.68 with SMTP id ly4mr16831626lab.13.1329294903147;
- Wed, 15 Feb 2012 00:35:03 -0800 (PST)
-Received: by 10.112.41.73 with HTTP; Wed, 15 Feb 2012 00:35:03 -0800 (PST)
-In-Reply-To: <7vk43p6wpd.fsf@alter.siamese.dyndns.org>
-Sender: linux-kernel-owner@vger.kernel.org
+        bh=TcWnXGbzMwYoboyKBML71b8KcqjA3RMNwBMJelytqKY=;
+        b=vP2ZCZKuKx3zC0tz6NgxZp3bPk07vFx1qlmUT7sXf2wx9SchkHJk9teMLSjISLDXcY
+         BMZD2iN7r9E9OEtlEhLwMnwnIG9MmS4H9V9JR3lt5mNyPacbxaAd5a3/FspnRKPoOCrH
+         L6Myw2VPCVwZ8ug/XILnpp6CPaLn8D9sFa+Co=
+Received: by 10.50.179.106 with SMTP id df10mr40456940igc.6.1329296249147;
+ Wed, 15 Feb 2012 00:57:29 -0800 (PST)
+Received: by 10.50.46.33 with HTTP; Wed, 15 Feb 2012 00:57:29 -0800 (PST)
+In-Reply-To: <8762f9k5sg.fsf@thomas.inf.ethz.ch>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190816>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190817>
 
-On Tue, Feb 14, 2012 at 9:28 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> The latest maintenance release Git 1.7.9.1 is now available at the us=
-ual
-> places. =C2=A0This is primarily to fix various user experience kinks =
-in the new
-> feature added in 1.7.9 release, so that there no longer is an excuse =
-for
-> users to hold on to older releases.
+On Tue, Feb 14, 2012 at 12:34 PM, Thomas Rast <trast@inf.ethz.ch> wrote=
+:
+> Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
+>
+>> On Fri, Feb 10, 2012 at 10:42 AM, Piotr Krukowiecki
+>> <piotr.krukowiecki@gmail.com> wrote:
+>>> I compared stating whole tree vs one small subdirectory, and I
+>>> expected that for the subdirectory status will be very very fast.
+>>> After all, it has only few files to stat. But it's not fast. Why?
+>>>
+>>>
+>>> With cold cache (echo 3 | sudo tee /proc/sys/vm/drop_caches):
+>>>
+>>> $ time git status =A0 =A0> /dev/null
+>>> real =A0 =A00m41.670s
+>>> user =A0 =A00m0.980s
+>>> sys =A0 =A0 0m2.908s
+>>>
+>>> $ time git status -- src/.../somedir =A0 > /dev/null
+>>> real =A0 =A00m17.380s
+>>> user =A0 =A00m0.748s
+>>> sys =A0 =A0 0m0.328s
+> [...]
+>> I can't reproduce this behavior at the moment. 'status' on the
+>> directory takes about 1.5s instead of 17s. status on whole repositor=
+y
+>> takes 27s.
+>> This is my work repository, so it was changed today.
+>
+> To me these timings smell like a combination of either a network
+> filesystem or a slow/busy disk, and non-packed repositories. =A0Next =
+time
+> this happens look at 'git count-objects', run 'git gc' and redo the
+> timings.
+>
+> If you are indeed on a network filesystem, also look at the
+> core.preloadIndex setting.
 
-I don't see the tag:
-http://git.kernel.org/?p=3Dgit/git.git;a=3Dtag;h=3Drefs/tags/v1.7.9.1
+All is on local disk and system is idle.
+
+Indeed, after gc the times went down:
+10s -> 2.3s (subdirectory)
+17s -> 9.5s (whole repo)
+
+2 seconds is much better and I'd say acceptable for me. But my question=
+s are:
+- why is it so slow with not packed repo?
+- can it be faster without repacking?
+- even with packed repo, the time on small subdirectory is much higher
+than I'd expect given time on whole repo and subdirectory size - why?
+
+
+$ git count-objects -v
+count: 5095
+size: 37084
+in-pack: 755364
+packs: 21
+size-pack: 2398468
+prune-packable: 0
+garbage: 0
+
+$ git gc
+Counting objects: 760212, done.
+Compressing objects: 100% (158651/158651), done.
+Writing objects: 100% (760212/760212), done.
+Total 760212 (delta 535848), reused 736108 (delta 513257)
+Checking connectivity: 760212, done.
+
+$ time git status  -- .
+real	0m2.503s
+user	0m0.160s
+sys	0m0.096s
+
+$ time git status
+real	0m9.663s
+user	0m0.232s
+sys	0m0.556s
+
 
 --=20
-=46elipe Contreras
+Piotr Krukowiecki
