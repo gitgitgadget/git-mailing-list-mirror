@@ -1,94 +1,73 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: Bulgarian translation of git
-Date: Wed, 15 Feb 2012 11:28:28 +0800
-Message-ID: <CANYiYbF-M0SLP=XFkD+nEVRth05pf3hohPLyqQ75qjtNGqANMA@mail.gmail.com>
-References: <75009f1d7c4aba4d62bb226ab122932c@192.168.122.10>
-	<CANYiYbGr3zN-kJwq_MCnttNZP6Cc0aj-fsZjd4V=4z+BA5TvUw@mail.gmail.com>
-	<7vy5s7idxb.fsf@alter.siamese.dyndns.org>
-	<20120213133957.GA4838@burratino>
-	<7vehtyftwf.fsf@alter.siamese.dyndns.org>
+From: greened@obbligato.org (David A. Greene)
+Subject: Re: git-subtree Ready #2
+Date: Tue, 14 Feb 2012 22:30:16 -0600
+Message-ID: <8739acra5j.fsf@smith.obbligato.org>
+References: <877gztmfwy.fsf@smith.obbligato.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=GB2312
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 15 04:28:34 2012
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 15 05:34:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxVXm-0001ed-H7
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 04:28:34 +0100
+	id 1RxWZU-0001P3-5D
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 05:34:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932180Ab2BOD23 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Feb 2012 22:28:29 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:53915 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757594Ab2BOD23 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2012 22:28:29 -0500
-Received: by yenm8 with SMTP id m8so439221yen.19
-        for <git@vger.kernel.org>; Tue, 14 Feb 2012 19:28:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=45zLJE6oP3XSqC7zVQI7k0OrKb+OjJEd8xoZ8QpJoAA=;
-        b=wv9gitsZDjPn0udypNflOQ6CBUxXLRcwsAc54bmdrV2dxn5MG24iYD18NsXF+RApeD
-         GiFGv2UvK/NbCd/qNo2sNYwJjrOIk0E8VP7yFb1OLysBB2asAg0K2Quk2fGsI4dApO8B
-         EOe6MSQ5vyVP6OUIReRIEhGtejON0y/Rvx7eE=
-Received: by 10.236.139.193 with SMTP id c41mr30546339yhj.24.1329276508325;
- Tue, 14 Feb 2012 19:28:28 -0800 (PST)
-Received: by 10.236.153.195 with HTTP; Tue, 14 Feb 2012 19:28:28 -0800 (PST)
-In-Reply-To: <7vehtyftwf.fsf@alter.siamese.dyndns.org>
+	id S1755394Ab2BOEck (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Feb 2012 23:32:40 -0500
+Received: from li209-253.members.linode.com ([173.255.199.253]:48048 "EHLO
+	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754752Ab2BOEck (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Feb 2012 23:32:40 -0500
+Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=smith.obbligato.org)
+	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.77)
+	(envelope-from <greened@obbligato.org>)
+	id 1RxWXl-0000zL-L7
+	for git@vger.kernel.org; Tue, 14 Feb 2012 22:32:38 -0600
+In-Reply-To: <877gztmfwy.fsf@smith.obbligato.org> (David A. Greene's message
+	of "Sat, 11 Feb 2012 11:35:41 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Filter-Spam-Score: ()
+X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
+ identified this incoming email as possible spam.  The original message
+ has been attached to this so you can view it (if it isn't spam) or label
+ similar future email.  If you have any questions, see
+ @@CONTACT_ADDRESS@@ for details.
+ Content preview:  greened@obbligato.org (David A. Greene) writes: > [This bounced
+    for some reason.] > > Ok, I have http access now: > > git clone http://sources.obbligato.org/git/git.git
+    > git pull origin subtree Haven't heard anything lately so I want to make
+    sure there's not an access problem. [...] 
+ Content analysis details:   (-1.0 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+ -1.0 ALL_TRUSTED            Passed through trusted hosts only via SMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190809>
 
-I squash the following in the pot initial commit, and update the commit=
- log.
-commit:  https://github.com/gotgit/git-po/commit/master%5E
+greened@obbligato.org (David A. Greene) writes:
 
-diff --git a/Makefile b/Makefile
-index 87fb3..88268 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2576,7 +2576,6 @@ dist-doc:
-
- distclean: clean
-        $(RM) configure
--       $(RM) po/git.pot
-
- clean:
-        $(RM) *.o block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o
-xdiff/*.o vcs-svn/*.o \
-
-
-2012/2/14 Junio C Hamano <gitster@pobox.com>:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+> [This bounced for some reason.]
 >
->> Hopefully that would make it easier for translators to keep both
->> tracks well maintained at the same time.
+> Ok, I have http access now:
 >
-> I somehow think it is not such a big deal if l10n messages are not
-> maintained for maintenance tracks at all, actually, given that our cy=
-cles
-> for the master track have been 8-10 weeks long, which is not a long t=
-ime
-> to wait, compared to 5 years people survived without any ;-).
->
+> git clone http://sources.obbligato.org/git/git.git
+> git pull origin subtree
 
+Haven't heard anything lately so I want to make sure there's not an
+access problem.
 
+This is also available at:
 
---=20
-=BD=AF=F6=CE
+git clone git://sources.obbligato.org/git/git.git
 
-=B1=B1=BE=A9=C8=BA=D3=A2=BB=E3=D0=C5=CF=A2=BC=BC=CA=F5=D3=D0=CF=DE=B9=AB=
-=CB=BE
-=D3=CA=BC=FE: worldhello.net@gmail.com
-=CD=F8=D6=B7: http://www.ossxp.com/
-=B2=A9=BF=CD: http://www.worldhello.net/
-=CE=A2=B2=A9: http://weibo.com/gotgit/
-=B5=E7=BB=B0: 010-51262007, 18601196889
+or by gitweb:
+
+http://sources.obbligato.org
+
+                          -Dave
