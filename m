@@ -1,158 +1,127 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3 v4] diff --stat: use the full terminal width
-Date: Tue, 14 Feb 2012 17:18:01 -0800
-Message-ID: <7vwr7o3nee.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 3/3 v4] Update diff --stat output in tests and tutorial
+Date: Tue, 14 Feb 2012 17:21:52 -0800
+Message-ID: <7vpqdg3n7z.fsf@alter.siamese.dyndns.org>
 References: <7vsjie9q77.fsf@alter.siamese.dyndns.org>
  <1329263146-19215-1-git-send-email-zbyszek@in.waw.pl>
+ <1329263146-19215-3-git-send-email-zbyszek@in.waw.pl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>,
 	pclouds@gmail.com
 To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Wed Feb 15 02:18:13 2012
+X-From: git-owner@vger.kernel.org Wed Feb 15 02:22:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxTVc-0001ih-KP
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 02:18:12 +0100
+	id 1RxTZI-0004th-Kx
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 02:22:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761443Ab2BOBSI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Feb 2012 20:18:08 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49372 "EHLO
+	id S1761424Ab2BOBV4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Feb 2012 20:21:56 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50912 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761418Ab2BOBSG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2012 20:18:06 -0500
+	id S1757516Ab2BOBVz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Feb 2012 20:21:55 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A43C67EF;
-	Tue, 14 Feb 2012 20:18:05 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1257668BE;
+	Tue, 14 Feb 2012 20:21:55 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=H4B35ZwT0W+mqTF3h/lU0Bi23
-	2U=; b=uNrOHPRzduHTHowABa06TkGiBkCMQErS8SIwX1zjOdOvk9lNbpCXow6v6
-	w3+97KZATbFzCsuTnLT7+kCgpcXLl8lhZ8olbEwrBxQKeNJnAXoiiDqIJfnwK3KH
-	YsUgGODDFsYjxYSgwjqTIi81CTMYfeLotYuMWiJb3WyqWtwrNY=
+	:content-transfer-encoding; s=sasl; bh=IiPRzUw5fcJKH3VWNdPU08DyE
+	3g=; b=av6e9IlNfbqleE58tNUy2P5OYzl3T6b+csdrPVRVvvAdVCS/pazyiV+xL
+	6HKcX8+YDWN4omJKTaLYDhGbFMRM4CJLKcsMrUU9/Ho4wJOtbR3+0wEa2E/hvXgh
+	ifqIjGtxVrd6RqdKVhNNMSfnYGzrTmDnnN+Yaubw7YtRlaq12s=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=NQiIal9sIP6mxoE9nX/
-	ZR/uImbcnXxtbAkKj/UKJGZUcBmVR7j348Eq+MOm3UCIT/nYmpQKl4UMqM0PDnvs
-	YlIN1NTbToVNVxL26AJvSeG6M0TtTCixG/imvw78as/u9DegHomDmiI8OW6mEarX
-	SbbVAcku0eUTJXfgDOSvNMfw=
+	:content-transfer-encoding; q=dns; s=sasl; b=Vrov1JJNv/0uRAaNayN
+	FP3qIfzTbF1wGtTmbQ2xAdg0LsRaa+ltvNRe/OWZ4L6DF/bIzEmpC+plwMsnvwke
+	7MeArMt+2YkRiP+fluHqHs3HX0hl4V1KjZ3Pjet8Cx0IuGz3ynAdUh694Kp/cjMP
+	fpa1iRBaSxKprkcobxPkkYck=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 10FE967EE;
-	Tue, 14 Feb 2012 20:18:05 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 082EF68BD;
+	Tue, 14 Feb 2012 20:21:55 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 65AB267ED; Tue, 14 Feb 2012
- 20:18:03 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5834D68BB; Tue, 14 Feb 2012
+ 20:21:54 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E87C398C-5772-11E1-923D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 7206F23C-5773-11E1-9171-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190806>
 
 Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
 
-> - comments are updated and the word "histogram" is banished
+> Signed-off-by: Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl>
+> ---
+> All tests pass for me after this change.
 
-Heh, I still see at least three instances of them in this patch.
+Err, this is not what I meant when I said "split that part to a differe=
+nt
+patch".
 
-> - use decimal_width(max_change) to calculate number of columns
+If you didn't have this bit in [PATCH 1/3]
 
-Please see comments for 3/3 I'll send separately.
+        -               fprintf(options->file, "%5"PRIuMAX"%s", added +=
+ deleted,
+        -                               added + deleted ? " " : "");
+        +               fprintf(options->file, " %*"PRIuMAX"%s",
+        +                       number_width, added + deleted,
 
-> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-> index 6797512..a65ade4 100755
-> --- a/t/t4014-format-patch.sh
-> +++ b/t/t4014-format-patch.sh
-> @@ -894,4 +894,100 @@ test_expect_success 'format patch ignores color=
-=2Eui' '
->  	test_cmp expect actual
->  '
-> =20
-> +name=3Daaaaaaaaaa
-> +name=3D$name$name$name$name$name$name$name$name$name$name$name$name
+then I think most of the changes in [PATCH 3/3] is unnecessary when usi=
+ng
+the default 80-column output, which is how the test is run.
 
-How long is this name?  120 columns?  I think that should be fine for a=
-ny
-filesystem we care about.
+In other words, ideally, the [PATCH 1/3] should improve the diffstat
+generation code in such a way that it produces output that is identical=
+ to
+the existing test vectors when COLUMNS is set to 80 but takes advantage=
+ of
+wider terminal when available.  So either the above change should not b=
+e
+part of [PATCH 1/3] at all, or you still chnage this fprintf(), but use
+number_width that is hardcoded to 4 instead of using the value computed
+with decimal_width(max_change).  As to the test part, when a wider COLU=
+MNS
+is given, the code would obviously take advantage of it, so it may:
 
-> +test_expect_success 'preparation' "
-> +	> ${name} &&
-> +	git add ${name} &&
-> +	git commit -m message &&
-> +	echo a > ${name} &&
-> +	git commit -m message ${name}
-> +"
+ - contain a change to the test suite somewhere, probably t/test-lib.sh=
+,
+   to set COLUMNS=3D80 and export it, to make sure that the existing te=
+st
+   won't be broken when the number of columns learned from ioctl(1) is
+   different from 80; and
 
-Please write these (exactly -- paying close attention to SP) like this:
+ - add a new test that explicitly sets wider COLUMNS and makes sure you
+   get a wider diffstat graph.
 
-	>"$name" &&
-	git add "$name" &&
-        git commit -m message &&
-        echo a >"$name" &&
-        git commit -m message "$name"
+and almost no other changes to the expected output.
 
-Points to note:
+If you do not arrange [PATCH 1/3] that way, we cannot verify that it do=
+es
+not introduce any regression to existing users.  Just applying [1/3] wo=
+uld
+start failing tests, and we cannot tell which failure is a false alarm =
+due
+to this change, and which ones is a real regression that you are produc=
+ing
+wrong output when COLUMNS is set to 80.
 
- - Even though you (and the reader) may know that "$name" does not cont=
-ain
-   word-breaking spaces, writing double-quotes around it reduces the
-   mental burden from the readers;
+And then as a separate patch [PATCH 3/3] at the very end of the series,
+you would either introduce the above change to fprintf(), or if you
+changed fprintf() in [PATCH 1/3] but used hardcoded number_width, then
+change it to use decimal_width().
 
- - Strictly speaking, the target of I/O redirection (e.g. >"$name") doe=
-s
-   not have to have quotes around it, but some versions of bash are kno=
-wn
-   to give misguided warnings against it;
+That change in turn makes the bulk of this patch to update the expected
+output necessary.
 
- - We do not write SP between the redirection and filename, but we do h=
-ave
-   one SP before the redirection; and
+If your series is organized that way, we can weigh pros-and-cons of the
+change to use decimal_width() a lot more easily.
 
- - Unless you want to express concatenation with string that can appear
-   later in words (e.g. "${name}1"), avoid ${name} to lessen the mental
-   burden to readers, as "${" often signals there is some magic coming
-   (e.g. "${name#strip}").
-
-> +cat >expect <<'EOF'
-> + ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=
-aaaaa | 1 +
-> +EOF
-> +test_expect_success 'format patch graph width is 80 columns' '
-
-Please make sure this test (and all the other new tests) pass with or
-without your the patch that updates diff.c, as we need to ensure that
-COLUMNS=3D80 or vanilla format-patch produces result that is identical =
-to
-the old output without regression (again, see comments to [PATCH 3/3]).
-
-> +	git format-patch --stat --stdout -1 |
-> +		grep -m 1 aaaaa > actual &&
-
-Do not use "grep -m $count"; it is not portable.
-
-Literal translation of the above would be:
-
-	sed -n -e "/aaaaa/{
-        	p
-                q
-	}"
-
-but you can perhaps rely on the fact that there is only one path and '|=
-'
-does not ppear in the payload or log message, and use this instead:
-
-	grep "|" >actual
-
-Also to catch errors in format-patch that unexpectedly dies (after all,
-you are touching diff machinery with your patch), avoid using pipes, an=
-d
-write it perhaps like this:
-
-	git format-patch --stat --stdout -1 >output &&
-        grep "|" >actual &&
+Thanks.
