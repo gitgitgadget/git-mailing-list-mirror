@@ -1,77 +1,71 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bulgarian translation of git
-Date: Wed, 15 Feb 2012 10:09:37 -0800
-Message-ID: <7vehtw0xzy.fsf@alter.siamese.dyndns.org>
-References: <75009f1d7c4aba4d62bb226ab122932c@192.168.122.10>
- <CANYiYbGr3zN-kJwq_MCnttNZP6Cc0aj-fsZjd4V=4z+BA5TvUw@mail.gmail.com>
- <7vy5s7idxb.fsf@alter.siamese.dyndns.org> <20120213133957.GA4838@burratino>
- <7vehtyftwf.fsf@alter.siamese.dyndns.org>
- <CANYiYbF-M0SLP=XFkD+nEVRth05pf3hohPLyqQ75qjtNGqANMA@mail.gmail.com>
+Subject: Re: [StGit PATCH] Parse commit object header correctly
+Date: Wed, 15 Feb 2012 10:13:12 -0800
+Message-ID: <7vaa4k0xtz.fsf@alter.siamese.dyndns.org>
+References: <4F3120D4.1050604@warmcat.com>
+ <7vvcni1r5u.fsf@alter.siamese.dyndns.org>
+ <7vd39pzsmq.fsf_-_@alter.siamese.dyndns.org> <4F3247CA.1020904@alum.mit.edu>
+ <CAHkRjk451=_XaQuUXmxAvB3sRRz6-J+c7A2ZrfLwfGz=z05Lag@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 15 19:09:44 2012
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Karl =?utf-8?Q?Hasselstr?= =?utf-8?Q?=C3=B6m?= 
+	<kha@treskal.com>,
+	=?iso-2022-jp?B?QW5keSBHcmVlbiAo?=
+	 =?iso-2022-jp?B?GyRCTlMwQlcvGyhCKQ==?= <andy@warmcat.com>,
+	git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 15 19:13:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxjIW-0007pL-7l
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 19:09:44 +0100
+	id 1RxjM1-0002TU-W4
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 19:13:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754028Ab2BOSJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Feb 2012 13:09:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60085 "EHLO
+	id S1754321Ab2BOSNQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Feb 2012 13:13:16 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62481 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752011Ab2BOSJj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Feb 2012 13:09:39 -0500
+	id S1751747Ab2BOSNP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Feb 2012 13:13:15 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1837A6104;
-	Wed, 15 Feb 2012 13:09:39 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A1AF0623C;
+	Wed, 15 Feb 2012 13:13:14 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RaNB7CQ9Re7xobGIxxcbGsT3qAk=; b=hdCF/9
-	o84dFkBe4MS27n8AJ3Om8IO2cqLgJtgPgHVv7FEQtabANs03LWDcZsjCcW4yhhCi
-	CbMXiFqsqj4qvzhbEP3T3QcqnCAnwsIlSNvC8djmT+odrs6lPPUswbVAghxwWX9X
-	Wq2QFPFyCMa+/R6bKtVT+Dtq6iZd7lfl15wDM=
+	:content-type; s=sasl; bh=VTf/1dDepYTzygte8njeyI7H64E=; b=RuNyIW
+	yTWL7fcRfAFWvUNaX931xKfDJBiV8LeqJ2dO49S4amkVdOitPAYAzVYwLAUzoMr5
+	WP8gYSiSbSioKXy05aldic9zM7onF1Vfg7jqTL+E874r1Z5vPdV3uVDJ7FmStX54
+	S7u6MImYX+51Hz79mTHPpXt4Sha9LUq5AvEeA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ur0kCF4dJ9vq/WdHcKQ2c4b6LIB3Id3R
-	1iNfsi7Cd/oj2XitUstVNKUq1ezH97CBhyVZSUqeft6KJfyiv2CeVLW9XJ+eaXDP
-	KwcvQeB4voQPfX0OzUxv/PH1PUjQ6CLPSG0Hz3IMWuUaVp6WzVRt25qBK76Xpyb6
-	poGrjdNP6oU=
+	:content-type; q=dns; s=sasl; b=B/Wn1xng8jaRTYsyR4z6umEE0TgLTlUp
+	Cs+auePf5qIYm5fa2OrMiDLL6t680OWSFDjO00XAbMjL0ofuG3Z6ue+Bk2fLED93
+	3r7TCqrcdMgMcOfBAsdeiJxOs5OEpp/BkvGYhFcfQ5EF42mUqDM4UdOVayf7m88O
+	ZfVw1LYnal0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E85C6102;
-	Wed, 15 Feb 2012 13:09:39 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 97DDB623B;
+	Wed, 15 Feb 2012 13:13:14 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7D6A96101; Wed, 15 Feb 2012
- 13:09:38 -0500 (EST)
-In-Reply-To: <CANYiYbF-M0SLP=XFkD+nEVRth05pf3hohPLyqQ75qjtNGqANMA@mail.gmail.com> (Jiang
- Xin's message of "Wed, 15 Feb 2012 11:28:28 +0800")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 165AF6239; Wed, 15 Feb 2012
+ 13:13:13 -0500 (EST)
+In-Reply-To: <CAHkRjk451=_XaQuUXmxAvB3sRRz6-J+c7A2ZrfLwfGz=z05Lag@mail.gmail.com> (Catalin
+ Marinas's message of "Wed, 15 Feb 2012 12:24:34 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 39782516-5800-11E1-A231-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B9F755FE-5800-11E1-9F98-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190844>
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Catalin Marinas <catalin.marinas@gmail.com> writes:
 
-> I squash the following in the pot initial commit, and update the commit log.
-> commit:  https://github.com/gotgit/git-po/commit/master%5E
->
-> diff --git a/Makefile b/Makefile
-> index 87fb3..88268 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2576,7 +2576,6 @@ dist-doc:
->
->  distclean: clean
->         $(RM) configure
-> -       $(RM) po/git.pot
+> ... I'll
+> publish it to the 'master' branch shortly and release a 0.16.1
+> hopefully this week.
 
-Yeah, that change is very sensible.  I am surprised that nobody noticed it
-so far while this topic was discussed.
+Thanks.
