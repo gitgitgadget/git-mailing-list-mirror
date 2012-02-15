@@ -1,138 +1,140 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: how to determine oldest supported version of git
-Date: Wed, 15 Feb 2012 04:15:26 -0500
-Message-ID: <20120215091526.GA22683@sigill.intra.peff.net>
-References: <jgeekn$of2$1@dough.gmane.org>
- <7v8vkktt6y.fsf@alter.siamese.dyndns.org>
- <7vwr7upj9m.fsf@alter.siamese.dyndns.org>
- <20120215053607.GC29902@sigill.intra.peff.net>
- <7vaa4k38nj.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Silence stderr in parse_commit*() subroutines
+Date: Wed, 15 Feb 2012 11:04:54 +0100
+Message-ID: <201202151104.55348.jnareb@gmail.com>
+References: <5fa08a8b-f0a2-4796-bf0d-06a8f13bf703@b23g2000yqn.googlegroups.com> <201202132004.41991.jnareb@gmail.com> <CA+EqV8w5jCHa2NY+NLaht901Qk=kQvALG3EA6BkePiGow3YFeQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 15 10:15:42 2012
+To: rajesh boyapati <boyapatisrajesh@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 15 11:05:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rxaxh-00015X-De
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 10:15:41 +0100
+	id 1Rxbjb-0008D4-DI
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 11:05:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758066Ab2BOJPg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Feb 2012 04:15:36 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37185
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754332Ab2BOJPc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Feb 2012 04:15:32 -0500
-Received: (qmail 18611 invoked by uid 107); 15 Feb 2012 09:22:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 15 Feb 2012 04:22:39 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Feb 2012 04:15:26 -0500
+	id S1753592Ab2BOKFD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Feb 2012 05:05:03 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:49272 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751903Ab2BOKFB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Feb 2012 05:05:01 -0500
+Received: by eaah12 with SMTP id h12so277398eaa.19
+        for <git@vger.kernel.org>; Wed, 15 Feb 2012 02:04:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=BV//fTramHajBvU6R0/L/l97GHXWTPoJ2SY1y6jiGqw=;
+        b=W8DsKN31PAfv+9w5xovuGeie/PVnSgv4IFjNlIKwJ941XI5b5jP8ONmaZG5u9vwHlb
+         RTPbwptkahQWM8CCJFEU0Pt4j1Yx+wLzT/wa1w1fA+ukyJxM5QUmViEIViw3MbS5e80f
+         rzJw5O/iWUO7ieLhDwYxaQCvEJspRe3BrZK+0=
+Received: by 10.213.10.4 with SMTP id n4mr143278ebn.34.1329300299425;
+        Wed, 15 Feb 2012 02:04:59 -0800 (PST)
+Received: from [192.168.1.13] (abwo207.neoplus.adsl.tpnet.pl. [83.8.238.207])
+        by mx.google.com with ESMTPS id n17sm9496854eei.3.2012.02.15.02.04.57
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 15 Feb 2012 02:04:58 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <CA+EqV8w5jCHa2NY+NLaht901Qk=kQvALG3EA6BkePiGow3YFeQ@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vaa4k38nj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190821>
 
-On Tue, Feb 14, 2012 at 10:36:32PM -0800, Junio C Hamano wrote:
+On Mon, 13 Feb 2012, rajesh boyapati wrote:
+> 2012/2/13 Jakub Narebski <jnareb@gmail.com>
+>> On Mon, 13 Feb 2012, rajesh boyapati wrote:
 
-> Jeff King <peff@peff.net> writes:
+
+>>> This is the patch I applied
+>>>>>>>>>>>>>>>
+>>> sub parse_commit {
+>>>     my ($commit_id) = @_;
+>>>     my %co;
+>>>
+>>>         return unless defined $commit_id;
+>>>
+>>>     local $/ = "\0";
+>>>
+>>>     *open my $fd, "-|", quote_command(
+>>>              git_cmd(), "rev-list",*
+>>>         "--parents",
+>>>         "--header",
+>>>         "--max-count=1",
+>>>         $commit_id,
+>>>        * "--") . '2>/dev/null',*
+>>                   ^^^^^^^^^^^^^
+>>
+>> It should be ' 2>/dev/null', with space before redirection, and not
+>> '2>/dev/null'.  This space is here necessary.
 > 
-> > If you are running v1.7.8.1 now, even if v1.7.9 is out, it is less risky
-> > to move to v1.7.8.2 than to move to v1.7.9.
-> [...]
-> But nobody in the development community rebuilds 'maint' every time it is
-> updated and runs the result as his or her primary production version. Even
-> I do not do that (remember, I run 'next'). I only build and run full test
-> suite. Older maintenance tracks are worse. I do not think anybody runs
-> them before they are tagged and released.
-
-That's a good point. Maint releases are not well tested before release.
-However, I think there are two things that help balance that:
-
-  1. The commits that go onto them are "obviously" correct. I put
-     obviously in quotes, because of course we can make a mistake. But
-     just looking at the commits that end up in a typical maint release,
-     they're usually quite conservative.
-
-     So in deciding between v1.7.8.4 or v1.7.9, it is a question of
-     whether you are more likely to be screwed by a conservative commit
-     that has gotten less testing, or by one of the host of
-     non-conservative commits that have gotten more testing.
-
-     I don't think we have numbers on the historical balance (and going
-     forward, it would really depend on qualitative factors like "how
-     conservative" anyway).
-
-  2. The commits on maint are often tested in isolation. That is, they
-     are not generally cherry-picks, but were rather branched and
-     developed from a maint-worthy version, and then forward ported into
-     master (where forward porting for us is basically merging plus
-     adding any required tweaks). So in an ideal world, the developer
-     considers the fix looking at the maint code, and then the risky
-     forward-porting happens in master (where we have time to cook and
-     squash bugs).
-
-     On the other hand, just because the developer comes up with the fix
-     based on an old version doesn't mean that they don't make a
-     mistake. And with nobody running it, those mistakes may slip
-     through. Also, we do sometimes base bugfixes on the source of a
-     bug, which is ancient, and then merge up not only to master but
-     also to maint.  The right fix at the source of the bug may be
-     different than what is needed at maint, which is different than
-     what is needed at master.
-
-Hmm. I really wish we had some numbers, because it's very unclear to me
-which factor dominates. My gut says that the maint releases are still
-safer, even with the problems you listed. I recall multiple bugs in
-feature releases that caused quick bugfix releases. I don't recall
-offhand having to quickly issue a fix for a maintenance release.
-
-> > Which implies to me that in an ideal world, there would be maint
-> > releases for the current series (i.e., v1.7.9.x now) and the previous
-> > one (v1.7.8.x now). Somewhere around v1.7.9.3 (or after 3 months, or
-> > whatever), stop bothering with v1.7.8.x releases.
 > 
-> Actually what I was thinking was to restructure the release schedule
-> slightly so that
+> Sorry for the typo error. I changed that and I am now seeing this error in
+> Gerrit's error_log
+> <<<<<<<<<<<<<
+> [2012-02-13 13:45:35,201] ERROR
+> com.google.gerrit.httpd.gitweb.GitWebServlet : CGI: fatal: Not a valid
+> object name HEAD
+> >>>>>>>>>>>>>
+
+WTF, redirecting stderr (file descriptor number 2) to /dev/null should have
+silenced git-rev-list in case of errors.
+
+Compare
+
+  $ git rev-list foo --
+  fatal: bad revision 'foo'
+
+with
+
+  $ git rev-list foo -- 2>/dev/null
+
+which gives no output.
+
+I wonder what shell does gitweb use if run from com.google.gerrit.httpd
+as servlet...
+
+[...]
+>> Many views in gitweb do default to HEAD.  If HEAD does not point to a valid
+>> commit, they would fail, in better or worse way.
+>>
+>> Except for the first one those patches are more of band-aid and workaround
+>> than fixing underlying issue that gitweb assumes that HEAD is valid in
+>> non-empty repository.  But fixing this will require more work.
+>>
+> Yes, I agree with you.
+>
+> If the HEAD's in a git project are pointed to master branch, those are fine
+> with Gerrits gitweb. Everything is working fine. (See the images in attached
+> file "Master.zip")
 > 
->  * We do not merge to 'master' anything but bugfix patches to regressions
->    introduced by 1.7.10 or to new features introduced by 1.7.10, for two
->    weeks after it ships;
-> 
->  * During that time, if an urgent fix is needed, 'maint' is directly
->    patched to produce 1.7.9.X, and it is merged upward to 'next';
-> 
->  * After finishing applying the early fixes to 1.7.10 to 'master', we tag
->    the tip of 'master' as 1.7.10.1 and fork 'maint' from there;
-> 
->  * At that point, old 'maint' and 1.7.9.X track cease to receive updates,
->    as there is no point maintaining them. It only encourages distros to
->    stay behind, adding unnecesary maintenance burden to us.
+> For the HEAD's in the git projects that are pointed to a branch other than
+> master (I mean if master branch is empty), I have the problem when I click
+> on tabs (log, shortlog, commit, commitdiff, tree) after clicking "summary"
+> tab.  (See the images in attched file "Unborn-branch.zip").
 
-I think that is not so far from what I proposed (except that my "3
-months or whatever" is your "2 weeks and one version").
+That is because those views defaults to HEAD, which doesn't point to
+a valid commit because 'master' branch it does point to doesn't have any
+commits on it.  They should probably be disabled (grayed-out, and made
+ordinary text and not hyperlink) if HEAD is invalid.
 
-> Yes, that's the crucial observation to make.  Cherry-picking or down
-> merging fixes tested in a new context to older codebase that is not
-> actively used by the person who is cherry-picking does not produce a
-> stable end product. It only produces stale end product.  It makes it
-> slightly scarier to imagine that the cherry-pick is done by people who
-> may not be as familiar with the codebase as us, but on the other hand,
-> they might be using that old codebase for their day-to-day work, and may
-> have better luck hitting issues that did not manifest themselves in the
-> context of 'master' and 'next.
+But this would require more work than those patches.
+>
+> If I click other tabs before clicking "summary" tab, they are working fine.
 
-Good point. I thought of them as less-qualified, but in many ways they
-are more so.
+That is because if you select some branch, then all those views use
+currently selected branch (passed via URL, e.g. 'h' or 'hb' parameter
+in case of query-params URL).
 
-Hmph. You've certainly given me something to think about. I joined this
-thread thinking you were a little bit crazy, but now I think you are
-starting to convince me. :)
-
--Peff
+-- 
+Jakub Narebski
+Poland
