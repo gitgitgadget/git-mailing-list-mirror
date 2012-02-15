@@ -1,93 +1,125 @@
-From: greened@obbligato.org (David A. Greene)
-Subject: Re: git-subtree Ready #2
-Date: Tue, 14 Feb 2012 23:31:30 -0600
-Message-ID: <87sjicpsr1.fsf@smith.obbligato.org>
-References: <877gztmfwy.fsf@smith.obbligato.org>
-	<8739acra5j.fsf@smith.obbligato.org>
-	<20120215050855.GB29902@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: how to determine oldest supported version of git
+Date: Wed, 15 Feb 2012 00:36:07 -0500
+Message-ID: <20120215053607.GC29902@sigill.intra.peff.net>
+References: <jgeekn$of2$1@dough.gmane.org>
+ <7v8vkktt6y.fsf@alter.siamese.dyndns.org>
+ <7vwr7upj9m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 15 06:34:28 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Neal Kreitzinger <neal@rsss.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 15 06:36:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxXVY-00075h-9z
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 06:34:24 +0100
+	id 1RxXXK-0000E7-St
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 06:36:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751571Ab2BOFdv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Feb 2012 00:33:51 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:48064 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751502Ab2BOFdu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Feb 2012 00:33:50 -0500
-Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=smith.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.77)
-	(envelope-from <greened@obbligato.org>)
-	id 1RxXV0-00011X-PQ; Tue, 14 Feb 2012 23:33:51 -0600
-In-Reply-To: <20120215050855.GB29902@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 15 Feb 2012 00:08:55 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
- identified this incoming email as possible spam.  The original message
- has been attached to this so you can view it (if it isn't spam) or label
- similar future email.  If you have any questions, see
- @@CONTACT_ADDRESS@@ for details.
- Content preview:  Jeff King <peff@peff.net> writes: > On Tue, Feb 14, 2012 at
-    10:30:16PM -0600, David A. Greene wrote: > >> This is also available at:
-   >> >> git clone git://sources.obbligato.org/git/git.git > > Hmm. So it seems
-    like a pretty straightforward subtree merge of > git-subtree. [...] 
- Content analysis details:   (-1.0 points, 5.0 required)
-  pts rule name              description
- ---- ---------------------- --------------------------------------------------
- -1.0 ALL_TRUSTED            Passed through trusted hosts only via SMTP
+	id S1752649Ab2BOFgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Feb 2012 00:36:11 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36205
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751805Ab2BOFgJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Feb 2012 00:36:09 -0500
+Received: (qmail 16531 invoked by uid 107); 15 Feb 2012 05:43:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 15 Feb 2012 00:43:20 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Feb 2012 00:36:07 -0500
+Content-Disposition: inline
+In-Reply-To: <7vwr7upj9m.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190813>
 
-Jeff King <peff@peff.net> writes:
+On Fri, Feb 10, 2012 at 11:42:45AM -0800, Junio C Hamano wrote:
 
-> On Tue, Feb 14, 2012 at 10:30:16PM -0600, David A. Greene wrote:
->
->> This is also available at:
->> 
->> git clone git://sources.obbligato.org/git/git.git
->
-> Hmm. So it seems like a pretty straightforward subtree merge of
-> git-subtree. 
+> Also our strict no regression policy means that it is not like an
+> option --foo in one version of Git changes its meaning from X to Y
+> across version boundaries, and even if on rare occasions we need to
+> introduce incompatibilities to improve the system, we give enough
+> advance warning and execute careful migration plans to ensure that
+> third-parties can keep up, and the "fix at the oldest branch and merge
+> upwards" policy means fixes to important bugs will be in all the
+> maintenance tracks, including the 'master' version.
 
-Yep.
+Just because we have a no-regression policy does not mean that we always
+succeed. Bugs happen in new features. Hopefully the bugs only exist
+for users of the new features, but occasionally they creep into
+everybody's workflow.
 
-> I can't say I'm super excited about having copied bits like
-> contrib/subtree/t/Makefile that are basically replicas of git's
-> t/Makefile.  
+If you are running v1.7.8.1 now, even if v1.7.9 is out, it is less risky
+to move to v1.7.8.2 than to move to v1.7.9. Even though the risk of
+moving to v1.7.9 is small, which I think is what you are arguing, it is
+still greater than moving to a branch on which a release engineer (read:
+you) has cherry-picked only ultra-safe bugfixes.
 
-I know, I didn't like it either but could not think of a better way.
+I think you are perhaps arguing that we are so safe that the difference
+in risk is negligible. I do think we do better than many other projects,
+but as a data storage project, I think it's nice to have a very
+conservative branch (OTOH, data-loss bugs have historically been
+extremely rare for git).
 
-> But there's not that much of it, the cruft lives in contrib, and
-> there's really not a good solution short of actually making
-> git-subtree a first-class git command.
+> So in practical terms, once 1.7.9 is out, there is *no* practical reason
+> for anybody to use 1.7.8.x or anything older.
 
-That's the conclusion I came to.  Moving it to a first-class command
-should be pretty simple when the time comes.
+Wouldn't that also mean that v1.7.8.x has no reason to exist in the
+first place? That is, if it is truly safe to move to v1.7.9, then why
+did we bother making maintenance releases in the first place? Why not
+just release the tip of master more frequently?
 
-> But more important than the physical layout is the maintenance plan
-> going forward.  Is Avery going to keep maintaining git-subtree, and we
-> will just occasionally pull? Are you maintaining it? Where will patches
-> go? To a github repo? To git@vger?
+I think the answer is that v1.7.9 is _not_ as safe. But v1.7.9.4
+probably _is_. That is, v1.7.9 will introduce new features, and
+hopefully bugs will be shaken out while topics cook in master and next.
+But once v1.7.9 is released, we get a much wider audience, and we will
+probably find a few new bugs and some accidental regressions. Those will
+slowly get fixed and we will get new minor v1.7.9.x releases, until at
+some point the v1.7.9.x series gets just as solid as the v1.7.8.x series
+was.
 
-I am still waiting to hear from Avery on that.  I will ping him again.
-My intention is to certainly participate in maintenance.  I use
-git-subtree daily so it's in my interest to keep it working.
+IOW, if you are on v1.7.8.2 and a we have a new bugfix, whether you want
+a v1.7.8.3 or whether you jump to v1.7.9 should depend on where the
+v1.7.9 series is in terms of maturity.
 
-I plan to send patcher to git@vger.  I don't think a pull would be
-practical given the removal of redundant files and other things.
+Which implies to me that in an ideal world, there would be maint
+releases for the current series (i.e., v1.7.9.x now) and the previous
+one (v1.7.8.x now). Somewhere around v1.7.9.3 (or after 3 months, or
+whatever), stop bothering with v1.7.8.x releases.
 
-                           -Dave
+Of course that takes time and effort (from you, mostly). If we dropped
+maint releases entirely, then nobody would have to bother with the
+release engineering task of deciding which topics were safe, and which
+were not.
+
+> If we only released the feature releases without _any_ maintenance
+> releases, distros no longer have an excuse to stick to older maintenance
+> tracks ("For the upcoming Zesty Zebra LTS, Git will stay at 1.7.7.x and
+> never updated to any newer major version.")
+
+I suspect that distros would not simply keep updating. Conservative
+distros like Debian and RedHat (and probably Ubuntu LTSs, though I have
+no experience with that) have policies in place about what can and
+should go into updates. And they will end up doing the release
+engineering themselves, staying on v1.7.7 + a bunch of cherry-picked
+patches.
+
+In some ways, that's a good thing; they can deal with the release
+management work. OTOH, it's duplicated effort, and done by people who
+are not as intimately familiar with git. A distro can probably pick up
+your v1.7.8.x for an interim stable release without having to look
+through all of the patches themselves.
+
+Of course, the distros end up doing some of that release management
+themselves, anyway. The git project's idea of "old" is 6-12 months, and
+distros with long-term releases operate on much larger scales. So long
+after we are tired of v1.7.8.x, they will probably still be
+cherry-picking patches onto it. So maybe it is not worth caring about
+distro's release management, as we are only helping them for a few
+months, anyway.
+
+-Peff
