@@ -1,118 +1,128 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH] Parse commit object header correctly
-Date: Wed, 15 Feb 2012 12:24:34 +0000
-Message-ID: <CAHkRjk451=_XaQuUXmxAvB3sRRz6-J+c7A2ZrfLwfGz=z05Lag@mail.gmail.com>
-References: <4F3120D4.1050604@warmcat.com> <7vvcni1r5u.fsf@alter.siamese.dyndns.org>
- <7vd39pzsmq.fsf_-_@alter.siamese.dyndns.org> <4F3247CA.1020904@alum.mit.edu>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH/RFC] Document format of basic Git objects
+Date: Wed, 15 Feb 2012 20:22:20 +0700
+Message-ID: <1329312140-24089-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>,
-	=?UTF-8?B?IkFuZHkgR3JlZW4gKOael+WuieW7uCki?= <andy@warmcat.com>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Feb 15 13:25:07 2012
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 15 14:15:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rxdux-0005fV-CC
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 13:25:03 +0100
+	id 1Rxehi-0003vZ-Lw
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Feb 2012 14:15:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755699Ab2BOMY6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Feb 2012 07:24:58 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:41089 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751277Ab2BOMY5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Feb 2012 07:24:57 -0500
-Received: by qadc10 with SMTP id c10so2979747qad.19
-        for <git@vger.kernel.org>; Wed, 15 Feb 2012 04:24:56 -0800 (PST)
+	id S1758172Ab2BONPH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Feb 2012 08:15:07 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:34218 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756094Ab2BONPG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Feb 2012 08:15:06 -0500
+Received: by pbcun15 with SMTP id un15so1385695pbc.19
+        for <git@vger.kernel.org>; Wed, 15 Feb 2012 05:15:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=fgba/JyUgqHXpHIl14kkBN2OxX4PWuTw9Rhk9LDeEsI=;
-        b=jUoqdZprSyaO+yb3Bxfhvkivfbx0F5tlTv6xPNcOFPgSf6Vu07Ib/FnZaO03tvETa8
-         CzOXiYckWedSUJKMh3/B1OMq27eVLqZNawBT6msaNNHiMswOpx/o1/pJFcodpacRWG1g
-         hD2AXQ6mNq2vNGNQhHfPQxc7HzogIrOa3srSc=
-Received: by 10.229.114.210 with SMTP id f18mr1827854qcq.54.1329308694277;
- Wed, 15 Feb 2012 04:24:54 -0800 (PST)
-Received: by 10.229.164.8 with HTTP; Wed, 15 Feb 2012 04:24:34 -0800 (PST)
-In-Reply-To: <4F3247CA.1020904@alum.mit.edu>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=VYPFunybMl7fSBNdzxTS4VRo7AYZF1u9byeHNMtNns0=;
+        b=aMC9IzlmfYv68k8h7p7qWCTZmvzAN0BrBR5cfbLfPrNvbFuPi1q4jYoFAn2kc5eXIW
+         8hj125AACG983v41/qcrMzLWAHtry717+HUyi8ylDul5onu1b5ihlryW2PNO8R0xFeoI
+         pVAnhqpjpIJAL0rAz3p+7BmM7cOooeydU9iH8=
+Received: by 10.68.224.9 with SMTP id qy9mr3493805pbc.102.1329311705913;
+        Wed, 15 Feb 2012 05:15:05 -0800 (PST)
+Received: from tre ([115.74.57.120])
+        by mx.google.com with ESMTPS id q8sm10709743pbi.1.2012.02.15.05.15.01
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 15 Feb 2012 05:15:04 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Wed, 15 Feb 2012 20:22:21 +0700
+X-Mailer: git-send-email 1.7.8.36.g69ee2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190829>
 
-On 8 February 2012 10:00, Michael Haggerty <mhagger@alum.mit.edu> wrote=
-:
-> On 02/08/2012 08:33 AM, Junio C Hamano wrote:
->> To allow parsing the header produced by versions of Git newer than t=
-he
->> code written to parse it, all commit parsers are expected to skip un=
-known
->> header lines, so that newer types of header lines can be added safel=
-y.
->> The only three things that are promised are:
->>
->> =A0(1) the header ends with an empty line (just an LF, not "a blank =
-line"),
->> =A0(2) unknown lines can be skipped, and
->> =A0(3) a header "field" begins with the field name, followed by a si=
-ngle SP
->> =A0 =A0 =A0followed by the value.
->>
->> The parser used by StGit, introduced by commit cbe4567 (New StGit co=
-re
->> infrastructure: repository operations, 2007-12-19), was accidentally=
- a bit
->> too loose to lose information, and a bit too strict to raise excepti=
-on
->> when dealing with a line it does not understand.
-=2E..
-> All in all, I would recommend something like (untested):
->
-> =A0 =A0 =A0 =A0@return: A new L{CommitData} object
-> =A0 =A0 =A0 =A0@rtype: L{CommitData}"""
-> =A0 =A0 =A0 =A0cd =3D cls(parents =3D [])
-> =A0 =A0 =A0 =A0lines =3D []
-> =A0 =A0 =A0 =A0raw_lines =3D s.split('\n')
-> =A0 =A0 =A0 =A0# Collapse multi-line header lines
-> =A0 =A0 =A0 =A0for i, line in enumerate(raw_lines):
-> =A0 =A0 =A0 =A0 =A0 =A0if not line:
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0cd.set_message('\n'.join(raw_lines[i+1=
-:]))
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0break
-> =A0 =A0 =A0 =A0 =A0 =A0if line.startswith(' '):
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0# continuation line
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0lines[-1] +=3D '\n' + line[1:]
-> =A0 =A0 =A0 =A0 =A0 =A0else:
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0lines.append(line)
->
-> =A0 =A0 =A0 =A0for line in lines:
-> =A0 =A0 =A0 =A0 =A0 =A0if ' ' in line:
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0key, value =3D line.split(' ', 1)
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if key =3D=3D 'tree':
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0cd =3D cd.set_tree(repository.=
-get_tree(value))
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0elif key =3D=3D 'parent':
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0cd =3D cd.add_parent(repositor=
-y.get_commit(value))
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0elif key =3D=3D 'author':
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0cd =3D cd.set_author(Person.pa=
-rse(value))
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0elif key =3D=3D 'committer':
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0cd =3D cd.set_committer(Person=
-=2Eparse(value))
-> =A0 =A0 =A0 =A0return cd
+Basic objects' format is pretty simple and (I think) well-known.
+However it's good that we document them. At least we can keep track of
+the evolution of an object format. The commit object, for example,
+over the years has learned "encoding" and recently GPG signing.
 
-Thank you all for comments and patches. I used a combination of
-Junio's patch with the comments from Michael and a fix from me. I'll
-publish it to the 'master' branch shortly and release a 0.16.1
-hopefully this week.
+This is just a draft text with a bunch of fixmes. But I'd like to hear
+from the community if this is a worthy effort. If so, then whether
+git-cat-file is a proper place for it. Or maybe we put relevant text
+in commit-tree, write-tree and mktag, then refer to them in cat-file
+because cat-file can show raw objects.
 
+So comments?
+
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ PS. This also makes me wonder if tag object supports "encoding".
+ Haven't dug down in history yet.
+
+ Documentation/git-cat-file.txt |   40 ++++++++++++++++++++++++++++++++=
+++++++++
+ 1 files changed, 40 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-fil=
+e.txt
+index 2fb95bb..e3dd6d9 100644
+--- a/Documentation/git-cat-file.txt
++++ b/Documentation/git-cat-file.txt
+@@ -100,6 +100,46 @@ for each object specified on stdin that does not e=
+xist in the repository:
+ <object> SP missing LF
+ ------------
+=20
++OBJECT FORMAT
++-------------
++
++Tree object consists of a series of tree entries sorted in memcmp()
++order by entry name. Each entry consists of:
++
++- POSIX file mode encoded in octal ascii
++- One space character
++- Entry name terminated by one character NUL
++- 20 byte SHA-1 of the entry
++
++Tag object is ascii plain text in a format similar to email format
++(RFC 822). It consists of a header and a body, separated by a blank
++line. The header includes exactly four fields in the following order:
++
++1. "object" field, followed by SHA-1 in ascii of the tagged object
++2. "type" field, followed by the type in ascii of the tagged object
++   (either "commit", "tag", "blob" or "tree" without quotes,
++   case-sensitive)
++3. "tag" field, followed by the tag name
++4. "tagger" field, followed by the <XXX, to be named>
++
++The tag body contains the tag's message and possibly GPG signature.
++
++Commit object is in similar format to tag object. The commit body is
++in plain text of the chosen encoding (by default UTF-8). The commit
++header has the following fields in listed order
++
++1. One "tree" field, followed by the commit's tree's SHA-1 in ascii
++2. Zero, one or more "parent" field
++3. One "author" field, in <XXX to be named> format
++3. One "committer" field, in <XXX to be named> format
++4. Optionally one "encoding" field, followed by the encoding used for
++   commit body
++5. GPG signature (fixme)
++
++More headers after these fields are allowed. Unrecognized header
++fields must be kept untouched if the commit is rewritten. However, a
++compliant Git implementation produces the above header fields only.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
 --=20
-Catalin
+1.7.8.36.g69ee2
