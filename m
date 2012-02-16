@@ -1,375 +1,152 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v2] git-latexdiff: new command in contrib, to use latexdiff and Git
-Date: Thu, 16 Feb 2012 09:39:20 +0100
-Message-ID: <1329381560-15853-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <vpq39abrxav.fsf@bauges.imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Feb 16 09:39:53 2012
+From: Steven Michalske <smichalske@gmail.com>
+Subject: Re: [PATCH] git-latexdiff: new command in contrib, to use latexdiff and Git
+Date: Thu, 16 Feb 2012 00:47:06 -0800
+Message-ID: <94614DF7-9EE3-47CB-BC6E-97069597557E@gmail.com>
+References: <1329320987-15203-1-git-send-email-Matthieu.Moy@imag.fr> <20120216003300.17228570@sirion> <vpq39abrxav.fsf@bauges.imag.fr>
+Mime-Version: 1.0 (Apple Message framework v1251.1)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Tim Haga <timhaga@ebene6.org>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Feb 16 09:47:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rxwsa-0000qK-8v
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 09:39:52 +0100
+	id 1Rxwzm-0006MH-Nn
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 09:47:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755724Ab2BPIjk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Feb 2012 03:39:40 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:56969 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755597Ab2BPIjj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2012 03:39:39 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q1G8a6Bo000577
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 16 Feb 2012 09:36:06 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1RxwsE-00010T-Ga; Thu, 16 Feb 2012 09:39:30 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1RxwsE-00048Q-DY; Thu, 16 Feb 2012 09:39:30 +0100
-X-Mailer: git-send-email 1.7.9.111.gf3fb0.dirty
+	id S1755758Ab2BPIrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Feb 2012 03:47:12 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:33673 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752174Ab2BPIrL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Feb 2012 03:47:11 -0500
+Received: by pbcun15 with SMTP id un15so2290699pbc.19
+        for <git@vger.kernel.org>; Thu, 16 Feb 2012 00:47:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        bh=EQI5s8dMQNQwgfdUoyfBAdFdDWF/qk6GZ2AvsDy87yY=;
+        b=dwSepwYDn7VRi55PnXIQSDK1gyALleCrx2501xQ28l9DeymXpjos9fl2yERD2VM2sF
+         ggDYfvNJqJZQ4JXA6cH303N9uC6VtLM7GDsff1AhIUQyXjzrE7ztEqhRV3NYi+lEkAL3
+         d+Fma0Nb7r9LA9sNrK6XtEnXvFCNBC6zFe8rc=
+Received: by 10.68.216.132 with SMTP id oq4mr11493233pbc.41.1329382031007;
+        Thu, 16 Feb 2012 00:47:11 -0800 (PST)
+Received: from [192.168.1.114] (c-67-161-24-30.hsd1.ca.comcast.net. [67.161.24.30])
+        by mx.google.com with ESMTPS id b6sm1795343pbf.32.2012.02.16.00.47.08
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 16 Feb 2012 00:47:09 -0800 (PST)
 In-Reply-To: <vpq39abrxav.fsf@bauges.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 16 Feb 2012 09:36:06 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q1G8a6Bo000577
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1329986169.44616@JnSwP1lDBY5lZLPRPJlbsA
+X-Mailer: Apple Mail (2.1251.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190886>
 
-git-latexdiff is a wrapper around latexdiff
-(http://www.ctan.org/pkg/latexdiff) that allows using it to diff two
-revisions of a LaTeX file.
+On Mac OS X use the open command and the OS will use the correct viewer chosen by the user
 
-git-latexdiff is made to work on documents split accross multiple .tex
-files (plus possibly figures and other non-diffable files), hence could
-not be implemented as a per-file diff driver.
+open "$pdffile"
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Changes since v1:
 
-- Configuration/autodetection of PDF viewer
-- Reformat output of -h to match what PARSE_OPTION does for other commands
+On Feb 16, 2012, at 12:34 AM, Matthieu Moy wrote:
 
- contrib/latex/Makefile      |   22 ++++
- contrib/latex/README        |   12 ++
- contrib/latex/git-latexdiff |  249 +++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 283 insertions(+), 0 deletions(-)
- create mode 100644 contrib/latex/Makefile
- create mode 100644 contrib/latex/README
- create mode 100755 contrib/latex/git-latexdiff
-
-diff --git a/contrib/latex/Makefile b/contrib/latex/Makefile
-new file mode 100644
-index 0000000..4617906
---- /dev/null
-+++ b/contrib/latex/Makefile
-@@ -0,0 +1,22 @@
-+-include ../../config.mak
-+-include ../../config.mak.autogen
-+
-+ifndef SHELL_PATH
-+	SHELL_PATH = /bin/sh
-+endif
-+
-+SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
-+gitexecdir_SQ = $(subst ','\'',$(gitexecdir))
-+
-+SCRIPT=git-latexdiff
-+
-+.PHONY: install help
-+help:
-+	@echo 'This is the help target of the Makefile. Current configuration:'
-+	@echo '  gitexecdir = $(gitexecdir_SQ)'
-+	@echo '  SHELL_PATH = $(SHELL_PATH_SQ)'
-+	@echo 'Run "$(MAKE) install" to install $(SCRIPT) in gitexecdir.'
-+
-+install:
-+	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' $(SCRIPT) > '$(gitexecdir_SQ)/$(SCRIPT)'
-+	chmod 755 '$(gitexecdir)/$(SCRIPT)'
-diff --git a/contrib/latex/README b/contrib/latex/README
-new file mode 100644
-index 0000000..2d7fdd6
---- /dev/null
-+++ b/contrib/latex/README
-@@ -0,0 +1,12 @@
-+git-latexdiff is a wrapper around latexdiff
-+(http://www.ctan.org/pkg/latexdiff) that allows using it to diff two
-+revisions of a LaTeX file.
-+
-+The script internally checks out the full tree for the specified
-+revisions, and calls latexdiff with the --flatten option, hence this
-+works if the document is split into multiple .tex files.
-+
-+Try "git latexdiff -h" for more information.
-+
-+To install, either drop git-latexdiff in your $PATH, or run "make
-+install".
-diff --git a/contrib/latex/git-latexdiff b/contrib/latex/git-latexdiff
-new file mode 100755
-index 0000000..57c2237
---- /dev/null
-+++ b/contrib/latex/git-latexdiff
-@@ -0,0 +1,249 @@
-+#! /bin/sh
-+
-+# Author: Matthieu Moy <Matthieu.Moy@imag.fr> (2012)
-+
-+# Missing features (patches welcome ;-) :
-+# - diff the index or the current worktree 
-+# - checkout only a subdirectory of the repo
-+# - hardlink temporary checkouts as much as possible
-+
-+usage () {
-+            cat << EOF
-+Usage: $(basename $0) [options] OLD [NEW]
-+Call latexdiff on two Git revisions of a file.
-+
-+OLD and NEW are Git revision identifiers. NEW defaults to HEAD.
-+
-+Options:
-+    --help                this help message
-+    --main <file.tex>     name of the main LaTeX file
-+    --no-view             don't display the resulting PDF file
-+    --view                view the resulting PDF file
-+                            (default if -o is not used)
-+    --pdf-viewer <cmd>    use <cmd> to view the PDF file (default: \$PDFVIEWER)
-+    --no-cleanup          don't cleanup temp dir after running
-+    -o <file>, --output <file>
-+                          copy resulting PDF into <file>
-+                             (usually ending with .pdf)
-+EOF
-+}
-+
-+die () {
-+    echo "fatal: $@"
-+    exit 1
-+}
-+
-+verbose () {
-+    if [ "$verbose" = 1 ]; then
-+	printf "%s ..." "$@"
-+    fi
-+}
-+
-+verbose_progress () {
-+    if [ "$verbose" = 1 ]; then
-+	printf "." "$@"
-+    fi
-+}
-+
-+verbose_done () {
-+    if [ "$verbose" = 1 ]; then
-+	echo " ${1:-done}."
-+    fi
-+}
-+
-+old=
-+new=
-+main=
-+view=maybe
-+cleanup=1
-+verbose=0
-+output=
-+initial_dir=$PWD
-+
-+while test $# -ne 0; do
-+    case "$1" in
-+        "--help"|"-h")
-+            usage
-+            exit 0
-+            ;;
-+	"--main")
-+	    shift
-+	    main=$1
-+	    ;;
-+	"--no-view")
-+	    view=0
-+	    ;;
-+	"--view")
-+	    view=1
-+	    ;;
-+	"--pdf-viewer")
-+	    shift
-+	    PDFVIEWER="$1"
-+	    ;;
-+	"--no-cleanup")
-+	    cleanup=0
-+	    ;;
-+	"-o"|"--output")
-+	    shift
-+	    output=$1
-+	    ;;
-+	"--verbose"|"-v")
-+	    verbose=1
-+	    ;;
-+        *)
-+	    if [ "$1" = "" ]; then
-+		echo "Empty string not allowed as argument"
-+		usage
-+		exit 1
-+	    elif [ "$old" = "" ]; then
-+		old=$1
-+	    elif [ "$new" = "" ]; then
-+		new=$1
-+	    else
-+		echo "Bad argument $1"
-+		usage
-+		exit 1
-+	    fi
-+            ;;
-+    esac
-+    shift
-+done
-+
-+if [ "$new" = "" ]; then
-+    new=HEAD
-+fi
-+
-+if [ "$old" = "" ]; then
-+    echo "fatal: Please, provide at least one revision to diff with."
-+    usage
-+    exit 1
-+fi
-+
-+verbose "Auto-detecting PDF viewer"
-+for command in xdg-open evince okular xpdf acroread; do
-+    if [ "$PDFVIEWER" = "" ]; then
-+	if command -v "$command" >/dev/null 2>&1; then
-+	    PDFVIEWER="$command"
-+	else
-+	    verbose_progress
-+	fi
-+    fi
-+done
-+verbose_done "$PDFVIEWER"
-+
-+case "$view" in
-+    maybe|1)
-+	if [ "$PDFVIEWER" = "" ]; then
-+	    echo "warning: could not find a PDF viewer on your system."
-+	    echo "warning: Please set \$PDFVIEWER or use --pdf-viewer CMD."
-+	    PDFVIEWER=false
-+	fi
-+	;;
-+esac
-+
-+if [ "$main" = "" ]; then
-+    printf "%s" "No --main provided, trying to guess ... "
-+    main=$(git grep -l '^[ \t]*\\documentclass')
-+    # May return multiple results, but if so the result won't be a file.
-+    if [ -r "$main" ]; then
-+	echo "Using $main as the main file."
-+    else
-+	if [ "$main" = "" ]; then
-+	    echo "No candidate for main file."
-+	else
-+	    echo "Multiple candidates for main file:"
-+	    printf "%s\n" "$main" | sed 's/^/\t/'
-+	fi
-+	die "Please, provide a main file with --main FILE.tex."
-+    fi
-+fi
-+
-+if [ ! -r "$main" ]; then
-+    die "Cannot read $main."
-+fi
-+
-+verbose "Creating temporary directories"
-+
-+git_prefix=$(git rev-parse --show-prefix)
-+cd "$(git rev-parse --show-cdup)" || die "Can't cd back to repository root"
-+git_dir="$(git rev-parse --git-dir)" || die "Not a git repository?"
-+git_dir=$(cd "$git_dir"; pwd)
-+
-+main=$git_prefix/$main
-+
-+tmpdir=$initial_dir/git-latexdiff.$$
-+mkdir "$tmpdir" || die "Cannot create temporary directory."
-+
-+cd "$tmpdir" || die "Cannot cd to $tmpdir"
-+
-+mkdir old new diff || die "Cannot create old, new and diff directories."
-+
-+verbose_done
-+verbose "Checking out old and new version"
-+
-+cd old || die "Cannot cd to old/"
-+git --git-dir="$git_dir" --work-tree=. checkout "$old" -- . || die "checkout failed for old/"
-+verbose_progress
-+cd ../new || die "Cannot cd to new/"
-+git --git-dir="$git_dir" --work-tree=. checkout "$new" -- . || die "checkout failed for new/"
-+verbose_progress
-+cd ..
-+
-+verbose_done
-+verbose "Running latexdiff --flatten old/$main new/$main > $main"
-+
-+latexdiff --flatten old/"$main" new/"$main" > diff.tex || die "latexdiff failed"
-+
-+mv -f diff.tex new/"$main"
-+
-+verbose_done
-+
-+mainbase=$(basename "$main" .tex)
-+maindir=$(dirname "$main")
-+
-+verbose "Compiling result"
-+
-+compile_error=0
-+cd new/"$maindir" || die "Can't cd to new/$maindir"
-+if [ -f Makefile ]; then
-+    make || compile_error=1
-+else
-+    pdflatex --interaction errorstopmode "$mainbase" || compile_error=1
-+fi
-+
-+verbose_done
-+
-+pdffile="$mainbase".pdf
-+if [ ! -r "$pdffile" ]; then
-+    echo "No PDF file generated."
-+    compile_error=1
-+fi
-+
-+if [ ! -s "$pdffile" ]; then
-+    echo "PDF file generated is empty."
-+    compile_error=1
-+fi
-+
-+if [ "$compile_error" = "1" ]; then
-+    echo "Error during compilation. Please examine and cleanup if needed:"
-+    echo "Directory: $tmpdir/new/$maindir/"
-+    echo "     File: $mainbase.tex"
-+    # Don't clean up to let the user diagnose.
-+    exit 1
-+fi
-+
-+if [ "$output" != "" ]; then
-+    abs_pdffile="$PWD/$pdffile"
-+    (cd "$initial_dir" && cp "$abs_pdffile" "$output")
-+    echo "Output written on $output"
-+fi
-+
-+if [ "$view" = 1 ] || [ "$view" = maybe ] && [ "$output" = "" ]; then
-+    "$PDFVIEWER" "$pdffile"
-+fi
-+
-+if [ "$cleanup" = 1 ]; then
-+    verbose "Cleaning-up result"
-+    rm -fr "$tmpdir"
-+    verbose_done
-+fi
--- 
-1.7.9.111.gf3fb0.dirty
+> Tim Haga <timhaga@ebene6.org> writes:
+> 
+>> While testing your script on my office machine i discovered that the
+>> following might be a problem:
+>> 
+>>> +if [ "$view" = 1 ] || [ "$view" = maybe ] && [ "$output" = "" ]; then
+>>> +    xpdf "$pdffile"
+>>> +fi
+>> 
+>> Xpdf is not installed on all machines (e.g. it's not installed on my
+>> office machine), so maybe it would be a good idea to use a environment
+>> variable instead?
+> 
+> Right. I'm squashing this into the next version to allow configuration
+> (environment variable or --pdf-viewer) and sensible auto-detection:
+> 
+> diff --git a/contrib/latex/git-latexdiff b/contrib/latex/git-latexdiff
+> index 13aeb9a..85aafda 100755
+> --- a/contrib/latex/git-latexdiff
+> +++ b/contrib/latex/git-latexdiff
+> @@ -20,6 +20,8 @@ Options:
+> 	--no-view	Don't display the resulting PDF file
+> 	--view		View the resulting PDF file
+> 			(default if -o is not used)
+> +	--pdf-viewer CMD
+> +			Use CMD to view the PDF file (default: \$PDFVIEWER)
+> 	--no-cleanup	Don't cleanup temp dir after running
+> 	-o FILE, --output FILE
+> 			Copy resulting PDF into FILE
+> @@ -46,7 +48,7 @@ verbose_progress () {
+> 
+> verbose_done () {
+>     if [ "$verbose" = 1 ]; then
+> -	echo " done."
+> +	echo " ${1:-done}."
+>     fi
+> }
+> 
+> @@ -75,6 +77,10 @@ while test $# -ne 0; do
+> 	"--view")
+> 	    view=1
+> 	    ;;
+> +	"--pdf-viewer")
+> +	    shift
+> +	    PDFVIEWER="$1"
+> +	    ;;
+> 	"--no-cleanup")
+> 	    cleanup=0
+> 	    ;;
+> @@ -114,6 +120,28 @@ if [ "$old" = "" ]; then
+>     exit 1
+> fi
+> 
+> +verbose "Auto-detecting PDF viewer"
+> +for command in xdg-open evince okular xpdf acroread; do
+> +    if [ "$PDFVIEWER" = "" ]; then
+> +	if command -v "$command" >/dev/null 2>&1; then
+> +	    PDFVIEWER="$command"
+> +	else
+> +	    verbose_progress
+> +	fi
+> +    fi
+> +done
+> +verbose_done "$PDFVIEWER"
+> +
+> +case "$view" in
+> +    maybe|1)
+> +	if [ "$PDFVIEWER" = "" ]; then
+> +	    echo "warning: could not find a PDF viewer on your system."
+> +	    echo "warning: Please set \$PDFVIEWER or use --pdf-viewer CMD."
+> +	    PDFVIEWER=false
+> +	fi
+> +	;;
+> +esac
+> +
+> if [ "$main" = "" ]; then
+>     printf "%s" "No --main provided, trying to guess ... "
+>     main=$(git grep -l '^[ \t]*\\documentclass')
+> @@ -212,7 +240,7 @@ if [ "$output" != "" ]; then
+> fi
+> 
+> if [ "$view" = 1 ] || [ "$view" = maybe ] && [ "$output" = "" ]; then
+> -    xpdf "$pdffile"
+> +    "$PDFVIEWER" "$pdffile"
+> fi
+> 
+> if [ "$cleanup" = 1 ]; then
+> 
+> -- 
+> Matthieu Moy
+> http://www-verimag.imag.fr/~moy/
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
