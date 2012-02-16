@@ -1,158 +1,141 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 8/8] config: do not respect includes for single-file --list
-Date: Thu, 16 Feb 2012 03:10:01 -0500
-Message-ID: <20120216081001.GH11843@sigill.intra.peff.net>
-References: <20120216080102.GA11793@sigill.intra.peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] git-latexdiff: new command in contrib, to use latexdiff and Git
+Date: Thu, 16 Feb 2012 09:34:48 +0100
+Message-ID: <vpq39abrxav.fsf@bauges.imag.fr>
+References: <1329320987-15203-1-git-send-email-Matthieu.Moy@imag.fr>
+	<20120216003300.17228570@sirion>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 16 09:10:09 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Tim Haga <timhaga@ebene6.org>
+X-From: git-owner@vger.kernel.org Thu Feb 16 09:35:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxwPo-0004TP-QB
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 09:10:09 +0100
+	id 1Rxwnx-0005mE-6h
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 09:35:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754744Ab2BPIKE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Feb 2012 03:10:04 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38600
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752278Ab2BPIKD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2012 03:10:03 -0500
-Received: (qmail 28148 invoked by uid 107); 16 Feb 2012 08:17:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 16 Feb 2012 03:17:14 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Feb 2012 03:10:01 -0500
-Content-Disposition: inline
-In-Reply-To: <20120216080102.GA11793@sigill.intra.peff.net>
+	id S1755439Ab2BPIe7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Feb 2012 03:34:59 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:35801 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753538Ab2BPIe6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Feb 2012 03:34:58 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q1G8VhPr004845
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 16 Feb 2012 09:31:43 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Rxwnh-0000lo-6c; Thu, 16 Feb 2012 09:34:49 +0100
+In-Reply-To: <20120216003300.17228570@sirion> (Tim Haga's message of "Thu, 16
+	Feb 2012 00:33:00 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 16 Feb 2012 09:31:44 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q1G8VhPr004845
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1329985908.38793@OqJOs4ty2+F3/bZXf9/snA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190884>
 
-The original include implementation tried not to impact
-calls to "git config" that look at a single file. However,
-since we called into git_config in a few places (e.g.,
---list), our respect_includes flag was not supported.
+Tim Haga <timhaga@ebene6.org> writes:
 
-This patch teaches git_config_with_options a flag to
-respect includes (instead of doing so by default), and
-teaches git-config to use it.
+> While testing your script on my office machine i discovered that the
+> following might be a problem:
+>
+>> +if [ "$view" = 1 ] || [ "$view" = maybe ] && [ "$output" = "" ]; then
+>> +    xpdf "$pdffile"
+>> +fi
+>
+> Xpdf is not installed on all machines (e.g. it's not installed on my
+> office machine), so maybe it would be a good idea to use a environment
+> variable instead?
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/config.c          |    7 ++++---
- cache.h                   |    3 ++-
- config.c                  |   14 ++++++++------
- t/t1305-config-include.sh |    8 ++++++++
- 4 files changed, 22 insertions(+), 10 deletions(-)
+Right. I'm squashing this into the next version to allow configuration
+(environment variable or --pdf-viewer) and sensible auto-detection:
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 8901dd9..d41a9bf 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -316,7 +316,7 @@ static void get_color(const char *def_color)
- 	get_color_found = 0;
- 	parsed_color[0] = '\0';
- 	git_config_with_options(git_get_color_config, NULL,
--				given_config_file);
-+				given_config_file, respect_includes);
+diff --git a/contrib/latex/git-latexdiff b/contrib/latex/git-latexdiff
+index 13aeb9a..85aafda 100755
+--- a/contrib/latex/git-latexdiff
++++ b/contrib/latex/git-latexdiff
+@@ -20,6 +20,8 @@ Options:
+ 	--no-view	Don't display the resulting PDF file
+ 	--view		View the resulting PDF file
+ 			(default if -o is not used)
++	--pdf-viewer CMD
++			Use CMD to view the PDF file (default: \$PDFVIEWER)
+ 	--no-cleanup	Don't cleanup temp dir after running
+ 	-o FILE, --output FILE
+ 			Copy resulting PDF into FILE
+@@ -46,7 +48,7 @@ verbose_progress () {
  
- 	if (!get_color_found && def_color)
- 		color_parse(def_color, "command line", parsed_color);
-@@ -344,7 +344,7 @@ static int get_colorbool(int print)
- 	get_colorbool_found = -1;
- 	get_diff_color_found = -1;
- 	git_config_with_options(git_get_colorbool_config, NULL,
--				given_config_file);
-+				given_config_file, respect_includes);
- 
- 	if (get_colorbool_found < 0) {
- 		if (!strcmp(get_colorbool_slot, "color.diff"))
-@@ -441,7 +441,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 	if (actions == ACTION_LIST) {
- 		check_argc(argc, 0, 0);
- 		if (git_config_with_options(show_all_config, NULL,
--					    given_config_file) < 0) {
-+					    given_config_file,
-+					    respect_includes) < 0) {
- 			if (given_config_file)
- 				die_errno("unable to read config file '%s'",
- 					  given_config_file);
-diff --git a/cache.h b/cache.h
-index 411c60d..ff54d6f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1115,7 +1115,8 @@ extern int git_config_from_file(config_fn_t fn, const char *, void *);
- extern void git_config_push_parameter(const char *text);
- extern int git_config_from_parameters(config_fn_t fn, void *data);
- extern int git_config(config_fn_t fn, void *);
--extern int git_config_with_options(config_fn_t fn, void *, const char *filename);
-+extern int git_config_with_options(config_fn_t fn, void *,
-+				   const char *filename, int respect_includes);
- extern int git_config_early(config_fn_t fn, void *, const char *repo_config);
- extern int git_parse_ulong(const char *, unsigned long *);
- extern int git_config_int(const char *, const char *);
-diff --git a/config.c b/config.c
-index e1d6857..ad03908 100644
---- a/config.c
-+++ b/config.c
-@@ -976,16 +976,18 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
+ verbose_done () {
+     if [ "$verbose" = 1 ]; then
+-	echo " done."
++	echo " ${1:-done}."
+     fi
  }
  
- int git_config_with_options(config_fn_t fn, void *data,
--			    const char *filename)
-+			    const char *filename, int respect_includes)
- {
- 	char *repo_config = NULL;
- 	int ret;
- 	struct config_include_data inc = CONFIG_INCLUDE_INIT;
+@@ -75,6 +77,10 @@ while test $# -ne 0; do
+ 	"--view")
+ 	    view=1
+ 	    ;;
++	"--pdf-viewer")
++	    shift
++	    PDFVIEWER="$1"
++	    ;;
+ 	"--no-cleanup")
+ 	    cleanup=0
+ 	    ;;
+@@ -114,6 +120,28 @@ if [ "$old" = "" ]; then
+     exit 1
+ fi
  
--	inc.fn = fn;
--	inc.data = data;
--	fn = git_config_include;
--	data = &inc;
-+	if (respect_includes) {
-+		inc.fn = fn;
-+		inc.data = data;
-+		fn = git_config_include;
-+		data = &inc;
-+	}
- 
- 	/*
- 	 * If we have a specific filename, use it. Otherwise, follow the
-@@ -1003,7 +1005,7 @@ int git_config_with_options(config_fn_t fn, void *data,
- 
- int git_config(config_fn_t fn, void *data)
- {
--	return git_config_with_options(fn, data, NULL);
-+	return git_config_with_options(fn, data, NULL, 1);
- }
- 
- /*
-diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
-index 0a27ec4..f3e03a0 100755
---- a/t/t1305-config-include.sh
-+++ b/t/t1305-config-include.sh
-@@ -59,6 +59,14 @@ test_expect_success 'single file lookup does not expand includes by default' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'single file list does not expand includes by default' '
-+	echo "[test]one = 1" >one &&
-+	echo "[include]path = one" >.gitconfig &&
-+	echo "include.path=one" >expect &&
-+	git config -f .gitconfig --list >actual &&
-+	test_cmp expect actual
-+'
++verbose "Auto-detecting PDF viewer"
++for command in xdg-open evince okular xpdf acroread; do
++    if [ "$PDFVIEWER" = "" ]; then
++	if command -v "$command" >/dev/null 2>&1; then
++	    PDFVIEWER="$command"
++	else
++	    verbose_progress
++	fi
++    fi
++done
++verbose_done "$PDFVIEWER"
 +
- test_expect_success 'writing config file does not expand includes' '
- 	echo "[test]one = 1" >one &&
- 	echo "[include]path = one" >.gitconfig &&
++case "$view" in
++    maybe|1)
++	if [ "$PDFVIEWER" = "" ]; then
++	    echo "warning: could not find a PDF viewer on your system."
++	    echo "warning: Please set \$PDFVIEWER or use --pdf-viewer CMD."
++	    PDFVIEWER=false
++	fi
++	;;
++esac
++
+ if [ "$main" = "" ]; then
+     printf "%s" "No --main provided, trying to guess ... "
+     main=$(git grep -l '^[ \t]*\\documentclass')
+@@ -212,7 +240,7 @@ if [ "$output" != "" ]; then
+ fi
+ 
+ if [ "$view" = 1 ] || [ "$view" = maybe ] && [ "$output" = "" ]; then
+-    xpdf "$pdffile"
++    "$PDFVIEWER" "$pdffile"
+ fi
+ 
+ if [ "$cleanup" = 1 ]; then
+
 -- 
-1.7.9.1.4.g8ffed
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
