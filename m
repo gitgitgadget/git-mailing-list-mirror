@@ -1,90 +1,91 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v3] git-latexdiff: new command in contrib, to use latexdiff and Git
-Date: Thu, 16 Feb 2012 05:40:26 -0800 (PST)
-Message-ID: <m3d39esxrg.fsf@localhost.localdomain>
-References: <vpq39abrxav.fsf@bauges.imag.fr>
-	<1329395775-18294-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: git status: small difference between stating whole repository and small subdirectory
+Date: Thu, 16 Feb 2012 15:05:02 +0100
+Message-ID: <87d39eswkx.fsf@thomas.inf.ethz.ch>
+References: <CAA01Csr8FbvQ8uFvxX8_6i-hysin6JuaifVVC-yoLyoT0N5F4Q@mail.gmail.com>
+	<CAA01Csp6_9fP2rg4104UWUXwOxZmUVdQNDAaBe6fRou6agBz6g@mail.gmail.com>
+	<8762f9k5sg.fsf@thomas.inf.ethz.ch>
+	<CAA01Cso_8=159UDMFUHiYz1X=gYtpbqRO4h3TMw7N=4YMV8YNg@mail.gmail.com>
+	<20120215190318.GA5992@sigill.intra.peff.net>
+	<CAA01Cso5y23UMguEe0vwOc6kR3-DjuC8-LTMDsMeeOKU4rVGvg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Feb 16 14:40:41 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 16 15:05:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ry1ZZ-0003hT-8k
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 14:40:33 +0100
+	id 1Ry1xQ-0004ib-OC
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 15:05:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752245Ab2BPNk3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Feb 2012 08:40:29 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:58508 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751242Ab2BPNk2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2012 08:40:28 -0500
-Received: by eaah12 with SMTP id h12so726948eaa.19
-        for <git@vger.kernel.org>; Thu, 16 Feb 2012 05:40:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=x/Ditq7/YmJsrHxyJXLiJlzlCyPQgPn1N+uBny4VgKw=;
-        b=WmbCke/azTee5d3JebybisHLfb6NK+Wug6yH9nRohxgUujl0fIqOU6WG5oMkz2LlEm
-         wckM8Oam6jsEYl1LruK92qTAcZ8Jr5j0cunOeudUmrEUY8FZPc8E8SStHZBOYRoW2SjR
-         4NJM/tjJbOHZYHo5tSJJXP7g4E3VGlx5fg6rM=
-Received: by 10.14.53.74 with SMTP id f50mr1599897eec.5.1329399626934;
-        Thu, 16 Feb 2012 05:40:26 -0800 (PST)
-Received: from localhost.localdomain (abwb213.neoplus.adsl.tpnet.pl. [83.8.225.213])
-        by mx.google.com with ESMTPS id u9sm6416794eem.11.2012.02.16.05.40.24
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 16 Feb 2012 05:40:26 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q1GDdliS009148;
-	Thu, 16 Feb 2012 14:39:57 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q1GDdVaC009144;
-	Thu, 16 Feb 2012 14:39:31 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1329395775-18294-1-git-send-email-Matthieu.Moy@imag.fr>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751257Ab2BPOFG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Feb 2012 09:05:06 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:19759 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750906Ab2BPOFF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Feb 2012 09:05:05 -0500
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 16 Feb
+ 2012 15:05:00 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 16 Feb
+ 2012 15:05:02 +0100
+In-Reply-To: <CAA01Cso5y23UMguEe0vwOc6kR3-DjuC8-LTMDsMeeOKU4rVGvg@mail.gmail.com>
+	(Piotr Krukowiecki's message of "Thu, 16 Feb 2012 14:37:47 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190895>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
 
-> Changes since v2:
-> 
-[...]
-> - Shell style issues (thanks to Jakub)
-[...]
+> On Wed, Feb 15, 2012 at 8:03 PM, Jeff King <peff@peff.net> wrote:
+>> On Wed, Feb 15, 2012 at 09:57:29AM +0100, Piotr Krukowiecki wrote:
+>>>
+>> I notice that you're still I/O bound even after the repack:
+>>
+>>> $ time git status =C2=A0-- .
+>>> real =C2=A0 =C2=A00m2.503s
+>>> user =C2=A0 =C2=A00m0.160s
+>>> sys =C2=A0 =C2=A0 0m0.096s
+>>>
+>>> $ time git status
+>>> real =C2=A0 =C2=A00m9.663s
+>>> user =C2=A0 =C2=A00m0.232s
+>>> sys =C2=A0 =C2=A0 0m0.556s
+>>
+>> Did you drop caches here, too?
+>
+> Yes I did - with cache the status takes something like 0.1-0.3s on wh=
+ole repo.
 
-> +verbose "Auto-detecting PDF viewer"
-> +candidates="xdg-open evince okular xpdf acroread"
-> +if [ "$(uname)" = Darwin ]; then
-> +    # open exists on GNU/Linux, but does not open PDFs
-> +    candidates="open $candidates"
-> +fi
-> +
-> +for command in $candidates; do
-> +    if [ "$PDFVIEWER" = "" ]; then
-> +	if command -v "$command" >/dev/null 2>&1; then
-> +	    PDFVIEWER="$command"
-> +	else
-> +	    verbose_progress
-> +	fi
-> +    fi
-> +done
-> +verbose_done "$PDFVIEWER"
+So umm, I'm not sure that leaves anything to be improved.
 
-Eh?  I don't see shell style issues fixed (loop inside conditional
-instead of vice-versa, "test ..." instead of "[ ... ]").
+I looked at some strace dumps, and limiting the status to a subdirector=
+y
+(in my case, '-- t' in git.git) does omit the lstat()s on uninteresting
+parts of the index-listed files, as well as the getdents() (i.e.,
+readdir()) for parts of the tree that are not interesting.
 
-Nb. I think it would be good to put detecting PDF viewer in its own
-function, don't you?
+BTW, some other parts of git-status's display may be responsible for th=
+e
+amount of data it pulls from disk.  In particular, the "Your branch is
+ahead" display requires computing the merge-base between HEAD and
+@{upstream}.  If your @{upstream} is way ahead/behind, or points at a
+disjoint chunk of history, this may mean essentially pulling all of the
+involved history from disk.  If my memory of pack organization serves
+right, the commit objects involved would essentially be spread across
+the whole pack (corresponding to "time") and thus this operation would
+more or less load the entire pack from disk.
 
--- 
-Jakub Narebski
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
