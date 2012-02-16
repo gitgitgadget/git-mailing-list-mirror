@@ -1,70 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-latexdiff: new command in contrib, to use latexdiff
- and Git
-Date: Thu, 16 Feb 2012 13:04:25 -0800
-Message-ID: <7vfweaxzfq.fsf@alter.siamese.dyndns.org>
-References: <1329320987-15203-1-git-send-email-Matthieu.Moy@imag.fr>
- <20120216003300.17228570@sirion> <vpq39abrxav.fsf@bauges.imag.fr>
- <7v8vk2zghl.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH v2 0/3] Adding a performance framework
+Date: Thu, 16 Feb 2012 22:41:12 +0100
+Message-ID: <cover.1329428159.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Tim Haga <timhaga@ebene6.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 16 22:04:36 2012
+Content-Type: text/plain
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Feb 16 22:41:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ry8VH-0002pQ-No
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 22:04:36 +0100
+	id 1Ry95A-0003HQ-2b
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 22:41:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752693Ab2BPVE2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Feb 2012 16:04:28 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47157 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752000Ab2BPVE1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2012 16:04:27 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E0EC26BFA;
-	Thu, 16 Feb 2012 16:04:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/OpSzSyx+ekocozK9F+moG+BljU=; b=IBtJ4t
-	sotFH7LsxFMT4a6GOuj0ioH5VgRUjxWOT5cmHKl4XtVykr9V9J289FT1iFUVKssh
-	pjaJ5w8igoI7Bsu2dTgcNkpLHXqglrIL4VsGitR5cPpeWj5XNYpVamyfjHDrLxld
-	HscWYK6rMh92ItDHCr0FIpVwDcHuzaFcNTCdI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Vvql1rgTXKSJpG2q9smc7nXB8CzbsyJl
-	ULS0HW7/J3k9m04Znuy7MllzUCDKtNJioaNqznXsH4gQZfEz15yS9zbrr4w3LuYv
-	9odPAk86V1tDy+O2WYOZ5GQtD7cHKkQBDBptutHceA1Y/sjR1WAasyVOPQwAV1Ng
-	VGnVwLfP7FA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D8BC86BF9;
-	Thu, 16 Feb 2012 16:04:26 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 725116BF8; Thu, 16 Feb 2012
- 16:04:26 -0500 (EST)
-In-Reply-To: <7v8vk2zghl.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 16 Feb 2012 12:10:46 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CF30EC5A-58E1-11E1-838B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754582Ab2BPVle (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Feb 2012 16:41:34 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:1107 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753062Ab2BPVld (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Feb 2012 16:41:33 -0500
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 16 Feb
+ 2012 22:41:28 +0100
+Received: from thomas.inf.ethz.ch (188.155.176.28) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 16 Feb
+ 2012 22:41:31 +0100
+X-Mailer: git-send-email 1.7.9.1.334.gd1409
+X-Originating-IP: [188.155.176.28]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190911>
 
-Junio C Hamano <gitster@pobox.com> writes:
+This is a reroll of the original RFC at
 
-> Honestly speaking, this is looking more like an "useful application for
-> latex users who happen to use git to store their document source", and not
-> a "useful addition for all git users", to me.
+  http://thread.gmane.org/gmane.comp.version-control.git/187127
 
-Sorry, un-proofread draft escaped.
+Basically, a perf framework that uses little perf scripts written in
+the style we already use in the test suite.
 
-Please replace "for all git users" with "to git to help users who happen
-to have latex documents in their repositories."
+As Junio pointed out, the line between GIT_BUILD_DIR and
+GIT_TEST_INSTALLED was not very clear cut or well adhered to, so I
+threw out the overrides for the former.  This also made
+GIT-TEST-OPTIONS moot.
+
+There are no other changes, though I did a rebase on current next.
+
+
+Thomas Rast (3):
+  Move the user-facing test library to test-lib-functions.sh
+  Introduce a performance testing framework
+  Add a performance test for git-grep
+
+ Makefile                        |   22 +-
+ t/Makefile                      |   43 ++-
+ t/perf/.gitignore               |    2 +
+ t/perf/Makefile                 |   15 +
+ t/perf/README                   |  146 +++++++
+ t/perf/aggregate.perl           |  166 ++++++++
+ t/perf/min_time.perl            |   21 +
+ t/perf/p0000-perf-lib-sanity.sh |   41 ++
+ t/perf/p0001-rev-list.sh        |   17 +
+ t/perf/p7810-grep.sh            |   23 ++
+ t/perf/perf-lib.sh              |  198 +++++++++
+ t/perf/run                      |   82 ++++
+ t/test-lib-functions.sh         |  835 +++++++++++++++++++++++++++++++++++++++
+ t/test-lib.sh                   |  574 ++--------------------------
+ 14 files changed, 1633 insertions(+), 552 deletions(-)
+ create mode 100644 t/perf/.gitignore
+ create mode 100644 t/perf/Makefile
+ create mode 100644 t/perf/README
+ create mode 100755 t/perf/aggregate.perl
+ create mode 100755 t/perf/min_time.perl
+ create mode 100755 t/perf/p0000-perf-lib-sanity.sh
+ create mode 100755 t/perf/p0001-rev-list.sh
+ create mode 100755 t/perf/p7810-grep.sh
+ create mode 100644 t/perf/perf-lib.sh
+ create mode 100755 t/perf/run
+ create mode 100644 t/test-lib-functions.sh
+
+-- 
+1.7.9.1.334.gd1409
