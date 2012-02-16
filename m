@@ -1,97 +1,64 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v2] git-latexdiff: new command in contrib, to use latexdiff and Git
-Date: Thu, 16 Feb 2012 01:15:27 -0800 (PST)
-Message-ID: <m3hayrrvf9.fsf@localhost.localdomain>
-References: <vpq39abrxav.fsf@bauges.imag.fr>
-	<1329381560-15853-1-git-send-email-Matthieu.Moy@imag.fr>
+From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+Subject: Re: [PATCH] completion: --list option for git-branch
+Date: Thu, 16 Feb 2012 10:28:42 +0100
+Message-ID: <4F3CCC4A.5010100@in.waw.pl>
+References: <1329338218-9822-1-git-send-email-ralf.thielow@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Feb 16 10:15:56 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: spearce@spearce.org, git@vger.kernel.org, gitster@pobox.com
+To: Ralf Thielow <ralf.thielow@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 16 10:29:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxxRR-0002BU-GG
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 10:15:54 +0100
+	id 1Rxxe8-0003kN-45
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 10:29:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757539Ab2BPJPg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Feb 2012 04:15:36 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:48949 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757527Ab2BPJPa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2012 04:15:30 -0500
-Received: by eaah12 with SMTP id h12so642539eaa.19
-        for <git@vger.kernel.org>; Thu, 16 Feb 2012 01:15:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=7e10l59Iw0ChsrY+MYEk8Ybvj1xoZ3DtfY16Kx9wPfs=;
-        b=A5oyFXmp81/hiRDq2E9dNPRWQ031QWyZxdICu9TMoeWT2GkpgwQJ9fxKmUcC5Jghyi
-         naA96CGRdx6zRm1Tha7yjGMU6m0cjJ5ZsgZq1GTyDs1Uhr9lUQlbpRzZeDy92u9eNaym
-         jCxDSSn62JPVNXZimuwsgvaZ541CzT3DyUdDw=
-Received: by 10.14.127.4 with SMTP id c4mr1141367eei.7.1329383728158;
-        Thu, 16 Feb 2012 01:15:28 -0800 (PST)
-Received: from localhost.localdomain (abwb213.neoplus.adsl.tpnet.pl. [83.8.225.213])
-        by mx.google.com with ESMTPS id u9sm4171588eem.11.2012.02.16.01.15.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 16 Feb 2012 01:15:27 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q1G9FN2r006194;
-	Thu, 16 Feb 2012 10:15:24 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q1G9FMNM006191;
-	Thu, 16 Feb 2012 10:15:22 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1329381560-15853-1-git-send-email-Matthieu.Moy@imag.fr>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751995Ab2BPJ25 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Feb 2012 04:28:57 -0500
+Received: from kawka.in.waw.pl ([178.63.212.103]:52688 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750828Ab2BPJ2y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Feb 2012 04:28:54 -0500
+Received: from [193.0.105.130]
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1Rxxdx-000192-JE; Thu, 16 Feb 2012 10:28:49 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20120104 Icedove/8.0
+In-Reply-To: <1329338218-9822-1-git-send-email-ralf.thielow@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190889>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+On 02/15/2012 09:36 PM, Ralf Thielow wrote:
+> Signed-off-by: Ralf Thielow<ralf.thielow@googlemail.com>
+> ---
+>   contrib/completion/git-completion.bash |    2 +-
+>   1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index d7367e9..1505cff 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1137,7 +1137,7 @@ _git_branch ()
+>   		__gitcomp "
+>   			--color --no-color --verbose --abbrev= --no-abbrev
+>   			--track --no-track --contains --merged --no-merged
+> -			--set-upstream --edit-description
+> +			--set-upstream --edit-description --list
+>   			"
+>   		;;
+>   	*)
+Normally one would use just a bare 'git branch' to list branches.
+Why would you want to use --list in an interactive environment (as 
+opposed to a script)? Isn't it better not to clutter the completion
+options with something that the user actually has not need for?
 
-> +verbose "Auto-detecting PDF viewer"
-> +for command in xdg-open evince okular xpdf acroread; do
-> +    if [ "$PDFVIEWER" = "" ]; then
-> +	if command -v "$command" >/dev/null 2>&1; then
-> +	    PDFVIEWER="$command"
-> +	else
-> +	    verbose_progress
-> +	fi
-> +    fi
-> +done
-> +verbose_done "$PDFVIEWER"
-
-Why we autodetect PDF viewer unconditionally?  Why we do not stop on
-first detected viewer rather than last?  Why not
-
-  +if [ "$PDFVIEWER" = "" ]; then
-  +	verbose "Auto-detecting PDF viewer"
-  +	for command in xdg-open evince okular xpdf acroread; do
-  +		if command -v "$command" >/dev/null 2>&1; then
-  +			PDFVIEWER=$command
-  +			break
-  +		else
-  +			verbose_progress
-  +		fi
-  +	done
-  +	verbose_done "$PDFVIEWER"
-  +fi
-
-Nb. Documentation/CodingGuidelines says:
-
-  For shell scripts specifically (not exhaustive):
-  
-  [...]
-  
-   - We prefer "test" over "[ ... ]".
-
-I know that 'contrib/' is more relaxed...
--- 
-Jakub Narebski
+Zbyszek
