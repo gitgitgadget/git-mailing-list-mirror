@@ -1,51 +1,72 @@
-From: "Neal Kreitzinger" <neal@rsss.com>
-Subject: importance of .git extension for bare repos
-Date: Wed, 15 Feb 2012 19:04:40 -0600
-Message-ID: <jhhkn8$a0t$1@dough.gmane.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 16 02:05:01 2012
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: importance of .git extension for bare repos
+Date: Thu, 16 Feb 2012 09:38:08 +0800
+Message-ID: <CALUzUxqEirjnCBHt28dwcgTBqC+u0wydNsnVR1rgyGG0-R_M1w@mail.gmail.com>
+References: <jhhkn8$a0t$1@dough.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Neal Kreitzinger <neal@rsss.com>
+X-From: git-owner@vger.kernel.org Thu Feb 16 02:38:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxpmO-0001tH-B3
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 02:05:00 +0100
+	id 1RxqJ5-0001s8-FQ
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 02:38:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755657Ab2BPBEw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Feb 2012 20:04:52 -0500
-Received: from plane.gmane.org ([80.91.229.3]:50475 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751572Ab2BPBEv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Feb 2012 20:04:51 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1RxpmE-0001mc-67
-	for git@vger.kernel.org; Thu, 16 Feb 2012 02:04:50 +0100
-Received: from 67.63.162.200 ([67.63.162.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 16 Feb 2012 02:04:50 +0100
-Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 16 Feb 2012 02:04:50 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 67.63.162.200
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-RFC2646: Format=Flowed; Original
+	id S932078Ab2BPBia convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Feb 2012 20:38:30 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:40051 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756770Ab2BPBiJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Feb 2012 20:38:09 -0500
+Received: by werb13 with SMTP id b13so1012778wer.19
+        for <git@vger.kernel.org>; Wed, 15 Feb 2012 17:38:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=8G73OOYE9jaPVJSRvyj1LEpkVFnRCmZPSuz5byGCHXg=;
+        b=c74crlV61InbMWrGn4Z6Q7LXDakk+4OHCUhBVHKb3Yt9dBSrr8YyANXeqAHmz0eSZJ
+         TmEZ/xeulThSkivxMEBRP1iyI1GIPEW28mQ974wrfCiIms2FonSrxZS/+Pwn6ZG113S5
+         yD2r+LmW/hSNNdvU5LmeqMCobGlDC9Im/L9No=
+Received: by 10.180.107.68 with SMTP id ha4mr866453wib.9.1329356288540; Wed,
+ 15 Feb 2012 17:38:08 -0800 (PST)
+Received: by 10.223.89.15 with HTTP; Wed, 15 Feb 2012 17:38:08 -0800 (PST)
+In-Reply-To: <jhhkn8$a0t$1@dough.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190871>
 
-I have a user who has created bare repos without naming them with the .git 
-extension.  As a result, the file paths are MYBARE/config instead of 
-MYBARE.git/config, etc.  Is this a supported naming convention for bare 
-repos in git.git, or is it going to have some problems?
+I don't believe its significant to git itself, it's just a convention
+for us humans.
 
-v/r,
-neal 
+--=20
+Cheers,
+Ray Chuan
+
+
+On Thu, Feb 16, 2012 at 9:04 AM, Neal Kreitzinger <neal@rsss.com> wrote=
+:
+> I have a user who has created bare repos without naming them with the=
+ .git
+> extension. =A0As a result, the file paths are MYBARE/config instead o=
+f
+> MYBARE.git/config, etc. =A0Is this a supported naming convention for =
+bare
+> repos in git.git, or is it going to have some problems?
+>
+> v/r,
+> neal
+>
+>
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
