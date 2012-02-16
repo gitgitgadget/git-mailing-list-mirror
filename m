@@ -1,82 +1,97 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] git-latexdiff: new command in contrib, to use latexdiff and Git
-Date: Thu, 16 Feb 2012 09:59:29 +0100
-Message-ID: <vpqy5s3i26m.fsf@bauges.imag.fr>
-References: <1329320987-15203-1-git-send-email-Matthieu.Moy@imag.fr>
-	<20120216003300.17228570@sirion> <vpq39abrxav.fsf@bauges.imag.fr>
-	<94614DF7-9EE3-47CB-BC6E-97069597557E@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v2] git-latexdiff: new command in contrib, to use latexdiff and Git
+Date: Thu, 16 Feb 2012 01:15:27 -0800 (PST)
+Message-ID: <m3hayrrvf9.fsf@localhost.localdomain>
+References: <vpq39abrxav.fsf@bauges.imag.fr>
+	<1329381560-15853-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Tim Haga <timhaga@ebene6.org>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Steven Michalske <smichalske@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 16 09:59:44 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Feb 16 10:15:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxxBn-0006sM-B4
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 09:59:43 +0100
+	id 1RxxRR-0002BU-GG
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 10:15:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756049Ab2BPI7i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Feb 2012 03:59:38 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:38896 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755854Ab2BPI7i (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2012 03:59:38 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q1G8uOZx009811
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 16 Feb 2012 09:56:24 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1RxxBa-00020a-79; Thu, 16 Feb 2012 09:59:30 +0100
-In-Reply-To: <94614DF7-9EE3-47CB-BC6E-97069597557E@gmail.com> (Steven
-	Michalske's message of "Thu, 16 Feb 2012 00:47:06 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 16 Feb 2012 09:56:25 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q1G8uOZx009811
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1329987388.76936@AMS+7QwhAj9QTbFamLZabg
+	id S1757539Ab2BPJPg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Feb 2012 04:15:36 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:48949 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757527Ab2BPJPa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Feb 2012 04:15:30 -0500
+Received: by eaah12 with SMTP id h12so642539eaa.19
+        for <git@vger.kernel.org>; Thu, 16 Feb 2012 01:15:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=7e10l59Iw0ChsrY+MYEk8Ybvj1xoZ3DtfY16Kx9wPfs=;
+        b=A5oyFXmp81/hiRDq2E9dNPRWQ031QWyZxdICu9TMoeWT2GkpgwQJ9fxKmUcC5Jghyi
+         naA96CGRdx6zRm1Tha7yjGMU6m0cjJ5ZsgZq1GTyDs1Uhr9lUQlbpRzZeDy92u9eNaym
+         jCxDSSn62JPVNXZimuwsgvaZ541CzT3DyUdDw=
+Received: by 10.14.127.4 with SMTP id c4mr1141367eei.7.1329383728158;
+        Thu, 16 Feb 2012 01:15:28 -0800 (PST)
+Received: from localhost.localdomain (abwb213.neoplus.adsl.tpnet.pl. [83.8.225.213])
+        by mx.google.com with ESMTPS id u9sm4171588eem.11.2012.02.16.01.15.26
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 16 Feb 2012 01:15:27 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q1G9FN2r006194;
+	Thu, 16 Feb 2012 10:15:24 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id q1G9FMNM006191;
+	Thu, 16 Feb 2012 10:15:22 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1329381560-15853-1-git-send-email-Matthieu.Moy@imag.fr>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190888>
 
-Steven Michalske <smichalske@gmail.com> writes:
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-> On Mac OS X use the open command and the OS will use the correct viewer chosen by the user
->
-> open "$pdffile"
+> +verbose "Auto-detecting PDF viewer"
+> +for command in xdg-open evince okular xpdf acroread; do
+> +    if [ "$PDFVIEWER" = "" ]; then
+> +	if command -v "$command" >/dev/null 2>&1; then
+> +	    PDFVIEWER="$command"
+> +	else
+> +	    verbose_progress
+> +	fi
+> +    fi
+> +done
+> +verbose_done "$PDFVIEWER"
 
-Unfortunately, open also exists on my system, but does not do that at
-all. I'm squashing this into the next version:
+Why we autodetect PDF viewer unconditionally?  Why we do not stop on
+first detected viewer rather than last?  Why not
 
---- a/contrib/latex/git-latexdiff
-+++ b/contrib/latex/git-latexdiff
-@@ -120,7 +120,13 @@ if [ "$old" = "" ]; then
- fi
- 
- verbose "Auto-detecting PDF viewer"
--for command in xdg-open evince okular xpdf acroread; do
-+candidates="xdg-open evince okular xpdf acroread"
-+if [ "$(uname)" = Darwin ]; then
-+    # open exists on GNU/Linux, but does not open PDFs
-+    candidates="open $candidates"
-+fi
-+
-+for command in $candidates; do
-     if [ "$PDFVIEWER" = "" ]; then
-        if command -v "$command" >/dev/null 2>&1; then
-            PDFVIEWER="$command"
+  +if [ "$PDFVIEWER" = "" ]; then
+  +	verbose "Auto-detecting PDF viewer"
+  +	for command in xdg-open evince okular xpdf acroread; do
+  +		if command -v "$command" >/dev/null 2>&1; then
+  +			PDFVIEWER=$command
+  +			break
+  +		else
+  +			verbose_progress
+  +		fi
+  +	done
+  +	verbose_done "$PDFVIEWER"
+  +fi
 
+Nb. Documentation/CodingGuidelines says:
+
+  For shell scripts specifically (not exhaustive):
+  
+  [...]
+  
+   - We prefer "test" over "[ ... ]".
+
+I know that 'contrib/' is more relaxed...
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Jakub Narebski
