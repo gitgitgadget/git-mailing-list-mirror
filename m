@@ -1,119 +1,158 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 7/8] config: eliminate config_exclusive_filename
-Date: Thu, 16 Feb 2012 03:09:32 -0500
-Message-ID: <20120216080932.GG11843@sigill.intra.peff.net>
+Subject: [PATCH 8/8] config: do not respect includes for single-file --list
+Date: Thu, 16 Feb 2012 03:10:01 -0500
+Message-ID: <20120216081001.GH11843@sigill.intra.peff.net>
 References: <20120216080102.GA11793@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 16 09:09:42 2012
+X-From: git-owner@vger.kernel.org Thu Feb 16 09:10:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxwPL-00046M-Hr
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 09:09:40 +0100
+	id 1RxwPo-0004TP-QB
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 09:10:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755571Ab2BPIJf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Feb 2012 03:09:35 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38597
+	id S1754744Ab2BPIKE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Feb 2012 03:10:04 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38600
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754878Ab2BPIJe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2012 03:09:34 -0500
-Received: (qmail 28116 invoked by uid 107); 16 Feb 2012 08:16:46 -0000
+	id S1752278Ab2BPIKD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Feb 2012 03:10:03 -0500
+Received: (qmail 28148 invoked by uid 107); 16 Feb 2012 08:17:14 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 16 Feb 2012 03:16:46 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Feb 2012 03:09:32 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 16 Feb 2012 03:17:14 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Feb 2012 03:10:01 -0500
 Content-Disposition: inline
 In-Reply-To: <20120216080102.GA11793@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190883>
 
-This is a magic global variable that was intended as an
-override to the usual git-config lookup process. Once upon a
-time, you could specify GIT_CONFIG to any git program, and
-it would look only at that file. This turned out to be
-confusing and cause a lot of bugs for little gain. As a
-result, dc87183 (Only use GIT_CONFIG in "git config", not
-other programs, 2008-06-30) took this away for all callers
-except git-config.
+The original include implementation tried not to impact
+calls to "git config" that look at a single file. However,
+since we called into git_config in a few places (e.g.,
+--list), our respect_includes flag was not supported.
 
-Since git-config no longer uses it either, the variable can
-just go away. As the diff shows, nobody was setting to
-anything except NULL, so we can just replace any sites where
-it was read with NULL.
+This patch teaches git_config_with_options a flag to
+respect includes (instead of doing so by default), and
+teaches git-config to use it.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-This could be squashed into the last patch (really, all of the last few
-patches could be squashed). But I was able to "git grep
-config_exclusive_filename" at this state and see that yes, indeed, the
-variable is now totally useless.
+ builtin/config.c          |    7 ++++---
+ cache.h                   |    3 ++-
+ config.c                  |   14 ++++++++------
+ t/t1305-config-include.sh |    8 ++++++++
+ 4 files changed, 22 insertions(+), 10 deletions(-)
 
- cache.h  |    2 --
- config.c |   10 +++-------
- 2 files changed, 3 insertions(+), 9 deletions(-)
-
+diff --git a/builtin/config.c b/builtin/config.c
+index 8901dd9..d41a9bf 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -316,7 +316,7 @@ static void get_color(const char *def_color)
+ 	get_color_found = 0;
+ 	parsed_color[0] = '\0';
+ 	git_config_with_options(git_get_color_config, NULL,
+-				given_config_file);
++				given_config_file, respect_includes);
+ 
+ 	if (!get_color_found && def_color)
+ 		color_parse(def_color, "command line", parsed_color);
+@@ -344,7 +344,7 @@ static int get_colorbool(int print)
+ 	get_colorbool_found = -1;
+ 	get_diff_color_found = -1;
+ 	git_config_with_options(git_get_colorbool_config, NULL,
+-				given_config_file);
++				given_config_file, respect_includes);
+ 
+ 	if (get_colorbool_found < 0) {
+ 		if (!strcmp(get_colorbool_slot, "color.diff"))
+@@ -441,7 +441,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 	if (actions == ACTION_LIST) {
+ 		check_argc(argc, 0, 0);
+ 		if (git_config_with_options(show_all_config, NULL,
+-					    given_config_file) < 0) {
++					    given_config_file,
++					    respect_includes) < 0) {
+ 			if (given_config_file)
+ 				die_errno("unable to read config file '%s'",
+ 					  given_config_file);
 diff --git a/cache.h b/cache.h
-index 7cb8874..411c60d 100644
+index 411c60d..ff54d6f 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1150,8 +1150,6 @@ struct config_include_data {
- #define CONFIG_INCLUDE_INIT { 0 }
- extern int git_config_include(const char *name, const char *value, void *data);
- 
--extern const char *config_exclusive_filename;
--
- #define MAX_GITNAME (1000)
- extern char git_default_email[MAX_GITNAME];
- extern char git_default_name[MAX_GITNAME];
+@@ -1115,7 +1115,8 @@ extern int git_config_from_file(config_fn_t fn, const char *, void *);
+ extern void git_config_push_parameter(const char *text);
+ extern int git_config_from_parameters(config_fn_t fn, void *data);
+ extern int git_config(config_fn_t fn, void *);
+-extern int git_config_with_options(config_fn_t fn, void *, const char *filename);
++extern int git_config_with_options(config_fn_t fn, void *,
++				   const char *filename, int respect_includes);
+ extern int git_config_early(config_fn_t fn, void *, const char *repo_config);
+ extern int git_parse_ulong(const char *, unsigned long *);
+ extern int git_config_int(const char *, const char *);
 diff --git a/config.c b/config.c
-index fbf883d..e1d6857 100644
+index e1d6857..ad03908 100644
 --- a/config.c
 +++ b/config.c
-@@ -26,8 +26,6 @@ static config_file *cf;
+@@ -976,16 +976,18 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
+ }
  
- static int zlib_compression_seen;
+ int git_config_with_options(config_fn_t fn, void *data,
+-			    const char *filename)
++			    const char *filename, int respect_includes)
+ {
+ 	char *repo_config = NULL;
+ 	int ret;
+ 	struct config_include_data inc = CONFIG_INCLUDE_INIT;
  
--const char *config_exclusive_filename = NULL;
--
- #define MAX_INCLUDE_DEPTH 10
- static const char include_depth_advice[] =
- "exceeded maximum include depth (%d) while including\n"
-@@ -1005,7 +1003,7 @@ int git_config_with_options(config_fn_t fn, void *data,
+-	inc.fn = fn;
+-	inc.data = data;
+-	fn = git_config_include;
+-	data = &inc;
++	if (respect_includes) {
++		inc.fn = fn;
++		inc.data = data;
++		fn = git_config_include;
++		data = &inc;
++	}
+ 
+ 	/*
+ 	 * If we have a specific filename, use it. Otherwise, follow the
+@@ -1003,7 +1005,7 @@ int git_config_with_options(config_fn_t fn, void *data,
  
  int git_config(config_fn_t fn, void *data)
  {
--	return git_config_with_options(fn, data, config_exclusive_filename);
-+	return git_config_with_options(fn, data, NULL);
+-	return git_config_with_options(fn, data, NULL);
++	return git_config_with_options(fn, data, NULL, 1);
  }
  
  /*
-@@ -1504,8 +1502,7 @@ write_err_out:
- int git_config_set_multivar(const char *key, const char *value,
- 			const char *value_regex, int multi_replace)
- {
--	return git_config_set_multivar_in_file(config_exclusive_filename,
--					       key, value, value_regex,
-+	return git_config_set_multivar_in_file(NULL, key, value, value_regex,
- 					       multi_replace);
- }
+diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
+index 0a27ec4..f3e03a0 100755
+--- a/t/t1305-config-include.sh
++++ b/t/t1305-config-include.sh
+@@ -59,6 +59,14 @@ test_expect_success 'single file lookup does not expand includes by default' '
+ 	test_cmp expect actual
+ '
  
-@@ -1631,8 +1628,7 @@ out:
- 
- int git_config_rename_section(const char *old_name, const char *new_name)
- {
--	return git_config_rename_section_in_file(config_exclusive_filename,
--						 old_name, new_name);
-+	return git_config_rename_section_in_file(NULL, old_name, new_name);
- }
- 
- /*
++test_expect_success 'single file list does not expand includes by default' '
++	echo "[test]one = 1" >one &&
++	echo "[include]path = one" >.gitconfig &&
++	echo "include.path=one" >expect &&
++	git config -f .gitconfig --list >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'writing config file does not expand includes' '
+ 	echo "[test]one = 1" >one &&
+ 	echo "[include]path = one" >.gitconfig &&
 -- 
 1.7.9.1.4.g8ffed
