@@ -1,94 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 0/8] gitweb: Faster and improved project search
-Date: Thu, 16 Feb 2012 12:40:54 -0800
-Message-ID: <7vmx8iy0ix.fsf@alter.siamese.dyndns.org>
-References: <1329338332-30358-1-git-send-email-jnareb@gmail.com>
+From: Richard Holmes <rholmes777@gmail.com>
+Subject: git-svn: simple user-level versions question, plus help request
+Date: Thu, 16 Feb 2012 14:57:58 -0600
+Message-ID: <CAJaBf=oFpNZ3gf=Oqj9415_WpMyAM=EYnW6R9cZCPteqSxnogQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 16 21:41:08 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 16 21:58:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ry88Z-0006bS-JY
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 21:41:07 +0100
+	id 1Ry8P6-0005Na-Gd
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 21:58:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754044Ab2BPUk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Feb 2012 15:40:57 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35003 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752349Ab2BPUk5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2012 15:40:57 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4FF4665E2;
-	Thu, 16 Feb 2012 15:40:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2BUcgNoLpzbzPZjIiqVFfw5sHyk=; b=C2GOgh
-	I+soC8FL9HkLkJR05XSjdmqyyzBv21rO9csd51zU1Oe54fteL82Ksh6S8lAkG06o
-	qoIs5nNwHeZ8XiA1HoyIePT6G/tyUKccPOJU6W3PzKn0VSsXyKsdWM8fvLARIy2+
-	9tUmNNcrK8t3MTSAx9cgHWncZ4YwZr4pnDtEE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sm1ld4FHoInJjxz8TYyWxjjuGFmmRy4o
-	wAiE6FbwXWqa2G2v5xtJ4OjaxbKCeTGDU+dXjzVd0PjSmK/OZvIzxvibDMQH7RHU
-	ZFHNZXIdUjx6UogkNSu211ip5QGUzDSKrWU8TulYTCMy1RzkRoqGcUUk/I64y9SB
-	BWz8oqM+kxw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 481A165E1;
-	Thu, 16 Feb 2012 15:40:56 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C560D65DE; Thu, 16 Feb 2012
- 15:40:55 -0500 (EST)
-In-Reply-To: <1329338332-30358-1-git-send-email-jnareb@gmail.com> (Jakub
- Narebski's message of "Wed, 15 Feb 2012 21:38:44 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 865F2CE2-58DE-11E1-B763-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755753Ab2BPU57 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Feb 2012 15:57:59 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:63043 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754089Ab2BPU57 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Feb 2012 15:57:59 -0500
+Received: by vcge1 with SMTP id e1so1831489vcg.19
+        for <git@vger.kernel.org>; Thu, 16 Feb 2012 12:57:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=prQOPs/uzlCBKB7kbX1HwcmQ0IoykX+qdOBf9lEold4=;
+        b=rld6pvwp3xwGvHJbJ3eWV0HdFt5xIm0eTA6++RqzNzUUgpCE9gD+SWxR9E4i1cgwW8
+         H1zR73kn4+U020xn21eXOESMZEwInsDaCW7iQIVjgsgETeRSlUzTAvEh1ANov0vFqp7t
+         kH/6q1ZasV8LAf+d2Zs/oko0xCF+AyGlmc9hc=
+Received: by 10.220.149.200 with SMTP id u8mr2178917vcv.35.1329425878293; Thu,
+ 16 Feb 2012 12:57:58 -0800 (PST)
+Received: by 10.52.240.171 with HTTP; Thu, 16 Feb 2012 12:57:58 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190909>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Hi all,
 
-> [Cc-ing Junio because of his involvement in discussion about first
->  patch in previous version of this series.]
->
-> First three patches in this series are mainly about speeding up
-> project search (and perhaps in the future also project pagination).
-> Well, first one is unification, refactoring and future-proofing.
-> The second and third patch could be squashed together; second adds
-> @fill_only, but third actually uses it.
->
-> Next set of patches is about highlighting matched part, making it
-> easier to recognize why project was selected, what we were searching
-> for (though better page title would also help second issue).
->
-> Well, fourth patch (first in set mentioned above) is here for the
-> commit message, otherwise it could have been squashed with next one.
->
-> Last patch in this series is beginning of using esc_html_match_hl()
-> for other searches in gitweb -- the easiest part.
+I've enjoyed using git-svn in the past, and it's been great until I
+had to update my local svn executable to support the server's adoption
+of sslv3.  I updated and configured my svn client with ra_serf and
+then I could use svn standalone again.
 
-Notice that you never said anything about what you wanted to achieve with
-this entire series?  " -- the easiest part." does not mean anything.
-The easiest part of what?
+When I went back to a git-svn project, I found that I could no longer
+interact with the svn server via git-svn.  I tried recreate the
+git-svn tree by blowing away my working copy and starting over:
+     git svn init --stdlayout https://<redacted>/svn/path/to/repo
+and got the familiar ssl error:
+    Initialized empty Git repository in /Volumes/foo/bar/.git/
+    RA layer request failed: OPTIONS of
+'https://<redacted>/svn/path/to/repo': SSL handshake failed: SSL
+error: bad decompression (https://<redacted>) at
+/usr/local/Cellar/git/1.7.8.2/libexec/git-core/git-svn line 2299
 
-Where in the series do the "faster" and "improved" come from?  What do you
-exactly mean by "faster" and "improved"?  In which commit would we find
-the answers to the questions like:
+(Yes, I'm using MacOS Lion and Homebrew to install git).  So, it
+appears that the svn with the ra_serf is not being used by git-svn.
+Obvious questions:
+    1) Can I force git to use "my" version of svn for git-svn?
+    2) If so, how / where is this configured?
+    3) If not, what else can I do to get git-svn to talk to my svn server?
 
- - What operation was slow and how you tackled that slowness?
- - What are the benchmark results?
+After looking at the respective versions, it appears that git svn
+shows svn version 1.6.16 and my svn (standalone) client shows svn
+version 1.6.17 (and its associated RA modules):
 
-In general, "improve" is such a loaded word (after all, patches sent to
-the list are almost always meant to "improve" things) that it almost does
-not convey a single bit of information.  Are you fixing bugs?  Are you
-tidying up an unreadable piece of code?  Are you fixing styles?  Are you
-producing prettier output?  Are you refactoring cut-and-pasted repetition
-into a common helper function?  Are you adding a new feature?
+    $ git svn --version
+    git-svn version 1.7.8.2 (svn 1.6.16)
+    $ svn --version
+svn, version 1.6.17 (r1128011)
+   compiled Aug 26 2011, 09:41:54
+
+Copyright (C) 2000-2009 CollabNet.
+Subversion is open source software, see http://subversion.apache.org/
+This product includes software developed by CollabNet (http://www.Collab.Net/).
+
+The following repository access (RA) modules are available:
+
+* ra_neon : Module for accessing a repository via WebDAV protocol using Neon.
+  - handles 'http' scheme
+  - handles 'https' scheme
+* ra_svn : Module for accessing a repository using the svn network protocol.
+  - with Cyrus SASL authentication
+  - handles 'svn' scheme
+* ra_local : Module for accessing a repository on local disk.
+  - handles 'file' scheme
+* ra_serf : Module for accessing a repository via WebDAV protocol using serf.
+  - handles 'http' scheme
+  - handles 'https' scheme
+
+$ which git
+/usr/local/bin/git
+$ which svn
+/opt/subversion/bin/svn
+
+Sorry for the long post, but any help would be appreciated.  Doesn't
+seem to be a common problem (judging from lack of discussion on
+google), so I'd appreciate any pointers, either to documentation about
+git's svn path / configuration, problem tickets, or ways to determine
+if I've done something wonky to my environment to seriously confuse
+git / svn.
+
+Thanks!
+
+-Richard.
