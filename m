@@ -1,86 +1,94 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 1/3] gitweb: Deal with HEAD pointing to unborn branch
- in "heads" view
-Date: Thu, 16 Feb 2012 12:29:12 -0800
-Message-ID: <7vr4xuy12f.fsf@alter.siamese.dyndns.org>
-References: <1329320203-20272-1-git-send-email-jnareb@gmail.com>
- <1329320203-20272-2-git-send-email-jnareb@gmail.com>
+Subject: Re: [PATCHv2 0/8] gitweb: Faster and improved project search
+Date: Thu, 16 Feb 2012 12:40:54 -0800
+Message-ID: <7vmx8iy0ix.fsf@alter.siamese.dyndns.org>
+References: <1329338332-30358-1-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, rajesh boyapati <boyapatisrajesh@gmail.com>
+Cc: git@vger.kernel.org
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 16 21:29:23 2012
+X-From: git-owner@vger.kernel.org Thu Feb 16 21:41:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ry7xC-00046g-BH
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 21:29:22 +0100
+	id 1Ry88Z-0006bS-JY
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 21:41:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755854Ab2BPU3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Feb 2012 15:29:17 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59856 "EHLO
+	id S1754044Ab2BPUk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Feb 2012 15:40:57 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35003 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753870Ab2BPU3Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2012 15:29:16 -0500
+	id S1752349Ab2BPUk5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Feb 2012 15:40:57 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DD7516336;
-	Thu, 16 Feb 2012 15:29:15 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4FF4665E2;
+	Thu, 16 Feb 2012 15:40:56 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Vs10ChVJiQKjw2Gx0y7iHsZ2vnU=; b=tyXrYX
-	dBv0/WMcsFpYvzmwIwob39wm2imOdP2deYPWozIB0HlKCYHPGS3rp3B2FSIA3hfr
-	5HBnj7+dCXvLkjUjJ9kEfoNPwOWfcT4rPps99FFSm6Xf7MC7UvxYQRi1TxHuIeT7
-	uFQSLbpZQuH2h6oOt3bTEqIlatMbQP7bPK3fg=
+	:content-type; s=sasl; bh=2BUcgNoLpzbzPZjIiqVFfw5sHyk=; b=C2GOgh
+	I+soC8FL9HkLkJR05XSjdmqyyzBv21rO9csd51zU1Oe54fteL82Ksh6S8lAkG06o
+	qoIs5nNwHeZ8XiA1HoyIePT6G/tyUKccPOJU6W3PzKn0VSsXyKsdWM8fvLARIy2+
+	9tUmNNcrK8t3MTSAx9cgHWncZ4YwZr4pnDtEE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Xb+3fJJNYk+/K/KdPH2zS5chCWKlFtLz
-	5fDI4qITynGl6wUYiSVX8QGaRkrisY7+I+6TvCaYZs4WWQQVJGRzRl6ZBfz/dulC
-	VgEVoEJgLghSD4BIF0sNisFjQAdtAgzxjpfKLkKmdhOu80XwbH47TIdqLqyFYgb8
-	7ESmwgUU5XI=
+	:content-type; q=dns; s=sasl; b=sm1ld4FHoInJjxz8TYyWxjjuGFmmRy4o
+	wAiE6FbwXWqa2G2v5xtJ4OjaxbKCeTGDU+dXjzVd0PjSmK/OZvIzxvibDMQH7RHU
+	ZFHNZXIdUjx6UogkNSu211ip5QGUzDSKrWU8TulYTCMy1RzkRoqGcUUk/I64y9SB
+	BWz8oqM+kxw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D16626335;
-	Thu, 16 Feb 2012 15:29:15 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 481A165E1;
+	Thu, 16 Feb 2012 15:40:56 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 25BBF6333; Thu, 16 Feb 2012
- 15:29:15 -0500 (EST)
-In-Reply-To: <1329320203-20272-2-git-send-email-jnareb@gmail.com> (Jakub
- Narebski's message of "Wed, 15 Feb 2012 16:36:41 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C560D65DE; Thu, 16 Feb 2012
+ 15:40:55 -0500 (EST)
+In-Reply-To: <1329338332-30358-1-git-send-email-jnareb@gmail.com> (Jakub
+ Narebski's message of "Wed, 15 Feb 2012 21:38:44 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E4BFD9BE-58DC-11E1-A1DD-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 865F2CE2-58DE-11E1-B763-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190908>
 
 Jakub Narebski <jnareb@gmail.com> writes:
 
-> Gitweb has problems if HEAD points to an unborn branch, with no
-> commits on it yet, but there are other branches present (so it is not
-> newly initialized repository).
-
-It would be more readable if you rephrase the vague "has problems" with a
-concrete description of what the problem is.
-
-Also, drop the " (so it is ...)"  part, which does not add much useful
-information.  Your next paragraph describes how a repository can come to
-this state anyway.
-
-> This can happen if non-bare repository (with default 'master' branch)
-> is updated not via committing but by other means like push to it, or
-> Gerrit.  It can happen also just after running "git checkout --orphan
-> <new branch>" but before creating any new commit on this branch.
+> [Cc-ing Junio because of his involvement in discussion about first
+>  patch in previous version of this series.]
 >
-> This commit adds test and fixes the issue of being on unborn branch
-> (of HEAD not pointing to a commit) in "heads" view, and also in
-> "summary" view -- which includes "heads" excerpt as subview.
+> First three patches in this series are mainly about speeding up
+> project search (and perhaps in the future also project pagination).
+> Well, first one is unification, refactoring and future-proofing.
+> The second and third patch could be squashed together; second adds
+> @fill_only, but third actually uses it.
+>
+> Next set of patches is about highlighting matched part, making it
+> easier to recognize why project was selected, what we were searching
+> for (though better page title would also help second issue).
+>
+> Well, fourth patch (first in set mentioned above) is here for the
+> commit message, otherwise it could have been squashed with next one.
+>
+> Last patch in this series is beginning of using esc_html_match_hl()
+> for other searches in gitweb -- the easiest part.
 
-The reader has not seen anything more than "has problems" at this point,
-so "fixes the issue of ..." is not very helpful.  You could have just said
-"adds tests and fixes it", if you said that the unspecified "problems"
-apear in "heads" and "summary" view at the beginning of the log message.
+Notice that you never said anything about what you wanted to achieve with
+this entire series?  " -- the easiest part." does not mean anything.
+The easiest part of what?
 
-Thanks.
+Where in the series do the "faster" and "improved" come from?  What do you
+exactly mean by "faster" and "improved"?  In which commit would we find
+the answers to the questions like:
+
+ - What operation was slow and how you tackled that slowness?
+ - What are the benchmark results?
+
+In general, "improve" is such a loaded word (after all, patches sent to
+the list are almost always meant to "improve" things) that it almost does
+not convey a single bit of information.  Are you fixing bugs?  Are you
+tidying up an unreadable piece of code?  Are you fixing styles?  Are you
+producing prettier output?  Are you refactoring cut-and-pasted repetition
+into a common helper function?  Are you adding a new feature?
