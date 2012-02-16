@@ -1,81 +1,111 @@
-From: Michael Schubert <mschub@elegosoft.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: Identify Commit ID from an Extracted Source Snapshot
-Date: Fri, 17 Feb 2012 00:43:29 +0100
-Message-ID: <4F3D94A1.2040706@elegosoft.com>
-References: <BEDA323D25EF6045A68DAB9FD91A0BF123A85B38@DB3PRD0402MB118.eurprd04.prod.outlook.com> <4F3D8A7C.2020400@elegosoft.com> <4F3D8EFF.9000806@vilain.net>
+Date: Thu, 16 Feb 2012 17:53:08 -0600
+Message-ID: <20120216235240.GA20779@burratino>
+References: <BEDA323D25EF6045A68DAB9FD91A0BF123A85B38@DB3PRD0402MB118.eurprd04.prod.outlook.com>
+ <4F3D8A7C.2020400@elegosoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: James Walmsley <james@fullfat-fs.co.uk>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Fri Feb 17 00:44:53 2012
+To: Michael Schubert <mschub@elegosoft.com>
+X-From: git-owner@vger.kernel.org Fri Feb 17 00:53:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RyB0P-000445-34
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Feb 2012 00:44:53 +0100
+	id 1RyB8s-0003Y4-OC
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Feb 2012 00:53:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755012Ab2BPXos convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Feb 2012 18:44:48 -0500
-Received: from mx0.elegosoft.com ([78.47.87.163]:58337 "EHLO mx0.elegosoft.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751896Ab2BPXos (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2012 18:44:48 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.elegosoft.com (Postfix) with ESMTP id 32148DE8CC;
-	Fri, 17 Feb 2012 00:44:45 +0100 (CET)
-Received: from mx0.elegosoft.com ([127.0.0.1])
-	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id k+lAzazrQHVv; Fri, 17 Feb 2012 00:44:45 +0100 (CET)
-Received: from [192.168.1.101] (g231216233.adsl.alicedsl.de [92.231.216.233])
-	by mx0.elegosoft.com (Postfix) with ESMTPSA id DBF27DE8CB;
-	Fri, 17 Feb 2012 00:44:44 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.1) Gecko/20120212 Thunderbird/10.0.1
-In-Reply-To: <4F3D8EFF.9000806@vilain.net>
+	id S1755284Ab2BPXxb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Feb 2012 18:53:31 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:47980 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754841Ab2BPXxb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Feb 2012 18:53:31 -0500
+Received: by iacb35 with SMTP id b35so3582856iac.19
+        for <git@vger.kernel.org>; Thu, 16 Feb 2012 15:53:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=ZQLfSvZWlHT4I5rsaMjCwvG59AEVE62RwbhzAvDVXtc=;
+        b=I+XGNEcUJAR+X6unzCQOqqkbOyeY0PdIlUNJZi0ojZoN1HcvQsV6TS9Z6P8De1w0z4
+         HL1rxPsTwnoPm9aav8Jfxi4agQW9XxVuhaJtszQxxyO4x0QgPpVB0BElLvMP+SJEXm2k
+         Ym1jcm8PJcyXEBqZboiWi6+iI8+RCZ4d+eMUw=
+Received: by 10.50.203.98 with SMTP id kp2mr5889423igc.5.1329436410451;
+        Thu, 16 Feb 2012 15:53:30 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id z22sm12965867ibg.5.2012.02.16.15.53.29
+        (version=SSLv3 cipher=OTHER);
+        Thu, 16 Feb 2012 15:53:29 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <4F3D8A7C.2020400@elegosoft.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190924>
 
-On 02/17/2012 12:19 AM, Sam Vilain wrote:
-> On 2/16/12 3:00 PM, Michael Schubert wrote:
->> On 02/16/2012 11:06 PM, James Walmsley wrote:
->>> I couldn't find this on google, and I have no idea if its even=20
->>> possible. I have several zip files from previous versions of my=20
->>> source code. (I imported svn into git). I would like to add TAGS
->>> to git which represent the versions based on the files in my zip=20
->>> archives.
->>>=20
->>> Does anyone know how to do this?
->>=20
->> If it's just about providing the ancient code together with the=20
->> (imported) more recent history from SVN, you could create an extra=20
->> orphan branch for each zip packet, add the files, commit and=20
->> eventually tag.
->>=20
->> If your question is more like "how do I tell git to find out where=20
->> this old code fits in my history and eventually place it there",=20
->> the answer is: you cannot do it. No VCS will do this and
->> especially not Git.
->=20
-> Once you've got a tree in git which corresponds to the contents of
-> the zip file, you can use git diff --stat TREEID COMMITID
->=20
-> You can get the commitid by obtaining the most recent timestamp for a
-> file within the archive, then just using git rev-list --all
-> --since=3D... --until=3D... to get a window of commit IDs, and hunt
-> around until you find the one with the smallest diff.
->=20
-> It's hardly a straightforward thing, usually because the contents of
-> the zip file never quite match the exact contents of source
-> control=97think autoconf and other files generated for distribution b=
-ut
-> not stored in the history.  So you need to use a fuzzy search.
+Michael Schubert wrote:
 
-I totally disregared the "slicing and rebuilding history approach", jus=
-t
-because I didn't think that's what James is asking about. Could be fun.
+> If your question is more like "how do I tell git to find out where
+> this old code fits in my history and eventually place it there",
+> the answer is: you cannot do it. No VCS will do this and especially
+> not Git.
+
+Wouldn't it be possible to add the tags you want by walking through
+the commit log to find a matching commit for each tarball?
+
+For example:
+
+	# Usage: "GIT_DIR=<repository> tag-tars <tarballs>"
+	# Arguments should be tarballs containing releases in
+	# reverse-chronological order.
+	# Should be run in an empty directory, which will be
+	# used as a workspace.
+
+	# save stdin
+	exec 3<&0
+
+	GIT_DIR=$(git rev-parse --resolve-git-dir "$GIT_DIR") || exit 1
+	GIT_INDEX_FILE=$GIT_DIR/index.tag-tars
+	export GIT_INDEX_FILE
+
+	if test -n "$(git ls-files -c -o | head -1)"
+	then
+		echo >&2 'fatal: I need an empty directory to work with'
+		exit 1
+	fi
+
+	for tar
+	do
+		# empty workspace
+		git ls-files | xargs rm -f --
+		rm -f "$GIT_INDEX_FILE"
+
+		# get tree name for tarball
+		tar --strip-components=1 -xf "$tar"
+		git ls-files -o | git update-index --add --stdin
+		tree=$(git write-tree)
+
+		# tag the first commit found matching that tree, if any
+		git rev-list master |
+		while read cmit
+		do
+			if git diff-tree --quiet $cmit $tree
+			then
+				git tag -a ${tar%%.*} $cmit <&3
+				break
+			fi
+		done
+	done
+
+Variation using --numstat and a path filter to find the closest commit
+ignoring some files instead of an exact match left as an exercise to
+the reader.
+
+Hope that helps,
+Jonathan
