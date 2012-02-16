@@ -1,98 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3 v5] diff --stat: tests for long filenames and big
- change counts
-Date: Thu, 16 Feb 2012 12:01:38 -0800
-Message-ID: <7vd39ezgwt.fsf@alter.siamese.dyndns.org>
-References: <7vpqdg3n7z.fsf@alter.siamese.dyndns.org>
- <1329303808-16989-1-git-send-email-zbyszek@in.waw.pl>
- <7vvcn810ml.fsf@alter.siamese.dyndns.org> <4F3CD318.1040600@in.waw.pl>
+Subject: Re: [PATCH] git-latexdiff: new command in contrib, to use latexdiff
+ and Git
+Date: Thu, 16 Feb 2012 12:10:46 -0800
+Message-ID: <7v8vk2zghl.fsf@alter.siamese.dyndns.org>
+References: <1329320987-15203-1-git-send-email-Matthieu.Moy@imag.fr>
+ <20120216003300.17228570@sirion> <vpq39abrxav.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>,
-	pclouds@gmail.com
-To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Thu Feb 16 21:01:51 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Tim Haga <timhaga@ebene6.org>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Feb 16 21:11:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ry7WU-0003th-H8
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 21:01:46 +0100
+	id 1Ry7fP-0003pt-0h
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 21:10:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754495Ab2BPUBl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Feb 2012 15:01:41 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41426 "EHLO
+	id S1755455Ab2BPUKu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Feb 2012 15:10:50 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47099 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754175Ab2BPUBl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Feb 2012 15:01:41 -0500
+	id S1753842Ab2BPUKs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Feb 2012 15:10:48 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 157B57C4B;
-	Thu, 16 Feb 2012 15:01:40 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 35C6E7E8A;
+	Thu, 16 Feb 2012 15:10:48 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=xcvzncIFCi88
-	ShhSzFpqrKqpMzU=; b=Lhd+MotuuQCrm+Xmas/cqIRtLwImDe0x0xviwYZrabAx
-	NjEr6gn6wkfBAurkmzJF+vyFr8XYMEF3rTQHDBCHicssVyUfxibFMh1u0fOVlDCJ
-	z7TFf4T53Tv4M7fY+pSD3mfVJVeoOs9E4MFaSFu+VKv/lV+togKCBLyeE9IC2HI=
+	:content-type; s=sasl; bh=CsygR948hxmZfJcXu8YkzuGfJ7M=; b=bBnDH3
+	5q42RxCdS0are/8jCuTtl2qvonxbNVb/YMi1mRYKpiMEgknj9DnE1l9nvoOdY7EH
+	8I+hwh+kxelR9/ivTV9iWaHC9de8/PGrkbce92uPRprtiDPo1tD0GOkgvOIEi2S+
+	n4hXzVDbHHPneK/Sb3bQGDkXccsolVvIqm1AQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=RVpAyX
-	vs1lXWnxiJHZ4Euh8TPYmehB/lZGq55hRZmWzQpMBCLO/RYl/dowHfJG5hTXKgin
-	7D0PKGigS4kIxE5EUF99yQlxt9mFi92yHxdAXAFADF9jtEJ4RzcUr0Mf/OxHTXeD
-	hOe3j0om9nrz2+JNPlYnPFBwsacJlX4yhiKyw=
+	:content-type; q=dns; s=sasl; b=gkgSVQAJeorT2iJfOqarXqpmmq8E/ZFP
+	3T9n7KiJUgLCVk3EoryiJM7nKhT9OVE2mCK3/82hzMqt0Etnh8nBz3vRyJXr8sqf
+	2/CLZExApxCl4KcPspYVVz/Lk2dW7cfX1lgfJsqaUNS5jkICyheiVv8H+Arlx8m1
+	qAHxugBlCPI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0B4E17C4A;
-	Thu, 16 Feb 2012 15:01:40 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 291EF7E89;
+	Thu, 16 Feb 2012 15:10:48 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8CCF07C49; Thu, 16 Feb 2012
- 15:01:39 -0500 (EST)
-In-Reply-To: <4F3CD318.1040600@in.waw.pl> ("Zbigniew =?utf-8?Q?J=C4=99drze?=
- =?utf-8?Q?jewski-Szmek=22's?= message of "Thu, 16 Feb 2012 10:57:44 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B116C7E88; Thu, 16 Feb 2012
+ 15:10:47 -0500 (EST)
+In-Reply-To: <vpq39abrxav.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Thu, 16 Feb 2012 09:34:48 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 09F73866-58D9-11E1-A360-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 50ABB9FC-58DA-11E1-A0AB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190904>
 
-Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> On 02/15/2012 06:12 PM, Junio C Hamano wrote:
->> Zbigniew J=C4=99drzejewski-Szmek<zbyszek@in.waw.pl>  writes:
+> Tim Haga <timhaga@ebene6.org> writes:
+>
+>> While testing your script on my office machine i discovered that the
+>> following might be a problem:
 >>
->>> Eleven tests for various combinations of a long filename and/or big
->>> change count and ways to specify widths for diff --stat.
->>> ---
+>>> +if [ "$view" = 1 ] || [ "$view" = maybe ] && [ "$output" = "" ]; then
+>>> +    xpdf "$pdffile"
+>>> +fi
 >>
->> Sign-off?
->
->> Hrm, this does not seem to pass, making the result of applying [1/3]=
- fail;
->> I see that the elided name is shown much shorter than the above expe=
-cts.
->
-> Hi,
->
-> I'm sorry for not properly testing the patch with tests. I somehow
-> convinced myself that the tests pass. This whole series needs more
-> work, even after squashing in your two patches.
+>> Xpdf is not installed on all machines (e.g. it's not installed on my
+>> office machine), so maybe it would be a good idea to use a environment
+>> variable instead?
 
-It is nothing to be sorry about if a series needs more polishing; that =
-is
-what the review discussions are for.
+Honestly speaking, this is looking more like an "useful application for
+latex users who happen to use git to store their document source", and not
+a "useful addition for all git users", to me.
 
-I've queued the series after restructuring it, and merged except for [3=
-/3]
-to 'pu', which conflicts too heavily with the nd/diffstat-gramnum topic
-that is already in 'master'.  I'd say we should concentrate on your fir=
-st
-two patches without the "num-width" stuff and get them in first, and th=
-en
-later consider if rerolling the [3/3] patch is worth it after the dust
-settles.
+These two viewpoint suggests completely different evolution path for this
+program.  Imagining what the first major new enhancement intended for
+people outside the original audience <git,latex> will be, I have this
+suspicion that "this new version will help people who have their documents
+stored in Mercurial" would be much more realistic (and the end result
+being useful) than "this new version will help git users who do not write
+their documents in latex but in asciidoc".
 
-Thanks.
+For that reason, I suspect that in the longer term, the tool will benefit
+more if I do not take this patch and the tool lives standalone.
