@@ -1,60 +1,224 @@
-From: Michael Schubert <mschub@elegosoft.com>
-Subject: Re: Identify Commit ID from an Extracted Source Snapshot
-Date: Fri, 17 Feb 2012 00:00:12 +0100
-Message-ID: <4F3D8A7C.2020400@elegosoft.com>
-References: <BEDA323D25EF6045A68DAB9FD91A0BF123A85B38@DB3PRD0402MB118.eurprd04.prod.outlook.com>
+From: Jehan Bing <jehan@orb.com>
+Subject: [PATCH] Add an option to require a filter to be successful
+Date: Thu, 16 Feb 2012 15:18:48 -0800
+Message-ID: <1329434328-26621-1-git-send-email-jehan@orb.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: James Walmsley <james@fullfat-fs.co.uk>
-X-From: git-owner@vger.kernel.org Fri Feb 17 00:01:35 2012
+Cc: jehan@orb.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 17 00:18:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RyAKU-0008Fd-JY
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Feb 2012 00:01:34 +0100
+	id 1RyAb2-0005qZ-4C
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Feb 2012 00:18:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754880Ab2BPXBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Feb 2012 18:01:30 -0500
-Received: from mx0.elegosoft.com ([78.47.87.163]:58089 "EHLO mx0.elegosoft.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754695Ab2BPXB3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Feb 2012 18:01:29 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.elegosoft.com (Postfix) with ESMTP id 567FCDE8CA;
-	Fri, 17 Feb 2012 00:01:28 +0100 (CET)
-Received: from mx0.elegosoft.com ([127.0.0.1])
-	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7DJqdmcNS2bB; Fri, 17 Feb 2012 00:01:28 +0100 (CET)
-Received: from [192.168.1.101] (g231216233.adsl.alicedsl.de [92.231.216.233])
-	by mx0.elegosoft.com (Postfix) with ESMTPSA id 198E2DE8C8;
-	Fri, 17 Feb 2012 00:01:28 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.1) Gecko/20120212 Thunderbird/10.0.1
-In-Reply-To: <BEDA323D25EF6045A68DAB9FD91A0BF123A85B38@DB3PRD0402MB118.eurprd04.prod.outlook.com>
+	id S1754192Ab2BPXSi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Feb 2012 18:18:38 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:55858 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752810Ab2BPXSf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Feb 2012 18:18:35 -0500
+Received: by pbcun15 with SMTP id un15so3018837pbc.19
+        for <git@vger.kernel.org>; Thu, 16 Feb 2012 15:18:35 -0800 (PST)
+Received: by 10.68.217.67 with SMTP id ow3mr18335128pbc.125.1329434315267;
+        Thu, 16 Feb 2012 15:18:35 -0800 (PST)
+Received: from jehan-Ubuntu-VBox.orb.com (173-167-111-189-sfba.hfc.comcastbusiness.net. [173.167.111.189])
+        by mx.google.com with ESMTPS id r10sm15018009pbs.12.2012.02.16.15.18.34
+        (version=SSLv3 cipher=OTHER);
+        Thu, 16 Feb 2012 15:18:34 -0800 (PST)
+X-Mailer: git-send-email 1.7.9
+X-Gm-Message-State: ALoCoQlY78TpApITYKIuKd7jRJSm+/2tKucBiQFxwQIYuEbbOdzzqcEfRqGtPY4znnItDjBC0B3H
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190920>
 
-On 02/16/2012 11:06 PM, James Walmsley wrote:
-> I couldn't find this on google, and I have no idea if its even
-> possible. I have several zip files from previous versions of my
-> source code. (I imported svn into git). I would like to add TAGS to
-> git which represent the versions based on the files in my zip
-> archives.
-> 
-> Does anyone know how to do this?
+By default, if a filter driver fails, the unfiltered content will be
+used. This patch adds a "filter.<name>.required" config option. When
+set to true, git will abort if the filter fails.
 
-If it's just about providing the ancient code together with the
-(imported) more recent history from SVN, you could create an extra
-orphan branch for each zip packet, add the files, commit and
-eventually tag.
+A typical usage would be for a "bigfile" filter, where the smudge
+command can fail if the file is not available locally. Without the
+"required", the content of repository, i.e. a reference to the real
+content, will be checked out. Unless one saves the output logs, it
+then fairly easy to lose track of what "bigfile" wasn't checked out
+correctly.
 
-If your question is more like "how do I tell git to find out where
-this old code fits in my history and eventually place it there",
-the answer is: you cannot do it. No VCS will do this and especially
-not Git.
+Another example would be for an encrypted repository if the clean
+command (encryption) fails. Without the "required", an unencrypted
+content could be stored in the repository by mistake.
+
+Signed-off-by: Jehan Bing <jehan@orb.com>
+---
+ Documentation/gitattributes.txt |   14 ++++++++++++
+ convert.c                       |   28 +++++++++++++++++++++---
+ t/t0021-conversion.sh           |   43 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 81 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index a85b187..4d1af93 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -305,6 +305,10 @@ intent is that if someone unsets the filter driver definition,
+ or does not have the appropriate filter program, the project
+ should still be usable.
+ 
++The exception is if the filter definition has the `required`
++attribute set to `true`. In that case, the filter must apply
++successfully or git will abort the current operation.
++
+ For example, in .gitattributes, you would assign the `filter`
+ attribute for paths.
+ 
+@@ -335,6 +339,16 @@ input that is already correctly indented.  In this case, the lack of a
+ smudge filter means that the clean filter _must_ accept its own output
+ without modifying it.
+ 
++If you do not wish git to continue if `clean` or `smudge` fail, you can
++add a `required` attribute to the filter:
++
++------------------------
++[filter "crypt"]
++	clean = openssl enc ...
++	smudge = openssl enc -d ...
++	required = true
++------------------------
++
+ Sequence "%f" on the filter command line is replaced with the name of
+ the file the filter is working on.  A filter might use this in keyword
+ substitution.  For example:
+diff --git a/convert.c b/convert.c
+index 12868ed..6c95a90 100644
+--- a/convert.c
++++ b/convert.c
+@@ -429,6 +429,7 @@ static struct convert_driver {
+ 	struct convert_driver *next;
+ 	const char *smudge;
+ 	const char *clean;
++	int required;
+ } *user_convert, **user_convert_tail;
+ 
+ static int read_convert_config(const char *var, const char *value, void *cb)
+@@ -472,6 +473,11 @@ static int read_convert_config(const char *var, const char *value, void *cb)
+ 	if (!strcmp("clean", ep))
+ 		return git_config_string(&drv->clean, var, value);
+ 
++	if (!strcmp("required", ep)) {
++		drv->required = git_config_bool(var, value);
++		return 0;
++	}
++
+ 	return 0;
+ }
+ 
+@@ -747,13 +753,19 @@ int convert_to_git(const char *path, const char *src, size_t len,
+ {
+ 	int ret = 0;
+ 	const char *filter = NULL;
++	int required = 0;
+ 	struct conv_attrs ca;
+ 
+ 	convert_attrs(&ca, path);
+-	if (ca.drv)
++	if (ca.drv) {
+ 		filter = ca.drv->clean;
++		required = ca.drv->required;
++	}
+ 
+ 	ret |= apply_filter(path, src, len, dst, filter);
++	if (!ret && required)
++		die("required filter '%s' failed", ca.drv->name);
++
+ 	if (ret) {
+ 		src = dst->buf;
+ 		len = dst->len;
+@@ -771,13 +783,16 @@ static int convert_to_working_tree_internal(const char *path, const char *src,
+ 					    size_t len, struct strbuf *dst,
+ 					    int normalizing)
+ {
+-	int ret = 0;
++	int ret = 0, ret_filter = 0;
+ 	const char *filter = NULL;
++	int required = 0;
+ 	struct conv_attrs ca;
+ 
+ 	convert_attrs(&ca, path);
+-	if (ca.drv)
++	if (ca.drv) {
+ 		filter = ca.drv->smudge;
++		required = ca.drv->required;
++	}
+ 
+ 	ret |= ident_to_worktree(path, src, len, dst, ca.ident);
+ 	if (ret) {
+@@ -796,7 +811,12 @@ static int convert_to_working_tree_internal(const char *path, const char *src,
+ 			len = dst->len;
+ 		}
+ 	}
+-	return ret | apply_filter(path, src, len, dst, filter);
++
++	ret_filter = apply_filter(path, src, len, dst, filter);
++	if (!ret_filter && required)
++		die("required filter %s failed", ca.drv->name);
++
++	return ret | ret_filter;
+ }
+ 
+ int convert_to_working_tree(const char *path, const char *src, size_t len, struct strbuf *dst)
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index f19e651..f80a59f 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -153,4 +153,47 @@ test_expect_success 'filter shell-escaped filenames' '
+ 	:
+ '
+ 
++test_expect_success 'required filter success' '
++	git config filter.required.smudge cat &&
++	git config filter.required.clean cat &&
++	git config filter.required.required true &&
++
++	{
++	    echo "*.r filter=required"
++	} >.gitattributes &&
++
++	echo test > test.r &&
++	git add test.r &&
++	rm -f test.r &&
++	git checkout -- test.r
++'
++
++test_expect_success 'required filter smudge failure' '
++	git config filter.failsmudge.smudge false &&
++	git config filter.failsmudge.clean cat &&
++	git config filter.failsmudge.required true &&
++
++	{
++	    echo "*.fs filter=failsmudge"
++	} >.gitattributes &&
++
++	echo test > test.fs &&
++	git add test.fs &&
++	rm -f test.fs &&
++	! git checkout -- test.fs
++'
++
++test_expect_success 'required filter clean failure' '
++	git config filter.failclean.smudge cat &&
++	git config filter.failclean.clean false &&
++	git config filter.failclean.required true &&
++
++	{
++	    echo "*.fc filter=failclean"
++	} >.gitattributes &&
++
++	echo test > test.fc &&
++	! git add test.fc
++'
++
+ test_done
+-- 
+1.7.9
