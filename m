@@ -1,48 +1,110 @@
-From: Chris Leong <walkraft@gmail.com>
-Subject: Re: diff -G with case insensitivity
-Date: Thu, 16 Feb 2012 11:33:36 +1100
-Message-ID: <CAJ6vYjcxNJ_OHLiV6x2kTqEafetMT-0BXHu1YdxK-DMJZRre0w@mail.gmail.com>
-References: <CAJ6vYjejtZkupy750rvz6HW_0SNPyBVTa78DO4nY8Bi368neQw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-send-email: allow overriding smtp-encryption config
+ to 'none'
+Date: Wed, 15 Feb 2012 19:49:03 -0500
+Message-ID: <20120216004903.GA21170@sigill.intra.peff.net>
+References: <1329342178-14540-1-git-send-email-computersforpeace@gmail.com>
+ <20120215220629.GA17672@sigill.intra.peff.net>
+ <CAN8TOE_BnkOcMQRTY-GWrHozYD0+0giWn2LtjB8AVnP_DzA+Sg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 16 01:34:33 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Brian Norris <computersforpeace@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 16 01:49:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RxpIu-0003LL-Dj
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 01:34:33 +0100
+	id 1RxpX6-0006fl-5I
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Feb 2012 01:49:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752063Ab2BPAd6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Feb 2012 19:33:58 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:53772 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751436Ab2BPAd5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Feb 2012 19:33:57 -0500
-Received: by bkcjm19 with SMTP id jm19so1481093bkc.19
-        for <git@vger.kernel.org>; Wed, 15 Feb 2012 16:33:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=nAzXe2cPMqsNQ2OfQ3Om+KOlPmTln0EFBoEJbDBNBbM=;
-        b=o8IwxnVKFHEyKcBDrv5dIN+HP6rOjSxuc7CVih7UWZgIhrNV7/58BiobEgLJcagXCV
-         YLi3eCWS1/gTUzqVk7loCi8w5NqaIiB7tXMzY+cK6T+SGSF8FodCwoW0ZLF94jAXzAuW
-         osx2Q0tRAbY+Fq1R4L0BflZx/U0YV6FrnmCUw=
-Received: by 10.205.131.13 with SMTP id ho13mr144249bkc.58.1329352436250; Wed,
- 15 Feb 2012 16:33:56 -0800 (PST)
-Received: by 10.205.34.200 with HTTP; Wed, 15 Feb 2012 16:33:36 -0800 (PST)
-In-Reply-To: <CAJ6vYjejtZkupy750rvz6HW_0SNPyBVTa78DO4nY8Bi368neQw@mail.gmail.com>
+	id S1756657Ab2BPAtH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Feb 2012 19:49:07 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37381
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753584Ab2BPAtG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Feb 2012 19:49:06 -0500
+Received: (qmail 24761 invoked by uid 107); 16 Feb 2012 00:56:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 15 Feb 2012 19:56:17 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Feb 2012 19:49:03 -0500
+Content-Disposition: inline
+In-Reply-To: <CAN8TOE_BnkOcMQRTY-GWrHozYD0+0giWn2LtjB8AVnP_DzA+Sg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190869>
 
-Also, is there a method to restrict it to only showing the chunks that
-match - rather than files?
+On Wed, Feb 15, 2012 at 03:49:59PM -0800, Brian Norris wrote:
 
-On Thu, Feb 16, 2012 at 11:18 AM, Chris Leong <walkraft@gmail.com> wrote:
-> Is there any way to run diff -G with a case insensitivity flag?
+> > Sounds reasonable.
+>=20
+> An error like
+>   Command unknown: 'AUTH' at /usr/local/libexec/git-core/git-send-ema=
+il
+> is reasonable?
+
+Sorry, no, I meant your goal of allowing overriding config sounds like =
+a
+reasonable thing to want. But from reading your message below, it seems
+that is not actually the problem you are trying to solve.
+
+> > Defaulting everything except "ssl" or "tls" to "none" seems risky t=
+o me.
+> > If I am understanding your patch correctly, then doing this:
+> >
+> > =C2=A0git send-email --smtp-encryption=3DSSL
+> >
+> > will silently treat that as "don't do encryption", which could have
+> > surprising security implications for the user. I chose all-caps as =
+it is
+> > an obvious mistake to make. We probably should treat it the same as
+> > lowercase "ssl", but the same argument applies to other typos like
+> > "tsl".
+>=20
+> Well, git-send-email already doesn't handle typos or capitalization
+> correctly, AFAICT. So nothing new here.
+
+Hmm. From your description and the patch, I thought that was something
+introduced by your patch. But looking at the existing code, it seems
+like that is already the case. IOW, I don't understand why
+"--smtp-encryption=3Dnone" does not already work looking at the current
+code.
+
+So being more careful about typos is an improvement we could make, but
+it is not a feature that would need to be part of a bugfix patch.
+
+> > It seems like a much safer default would be to die() on an invalid
+> > encryption specifier.
+>=20
+> Fine. But then we need to define a behavior that means 'no
+> encryption.' Like 'none' instead of just saying 'anything but tls or
+> ssl.'
+
+Right. I meant that you should introduce "none" as an explicit "no, I
+don't want this" and die when the flag is not one of {ssl, tls, none}.
+
+> Now that I look at this again, I think part of the issue I have is
+> that there is no way to override *smtp-user* via command-line, in
+> order to do unencrypted, unauthenticated email. So the
+> *authentication* not the encryption is really my main problem...I'll
+> take another look and try a new patch.
+
+Ah, I see. I misunderstood the original problem you were trying to solv=
+e
+(I thought your example was "see? Encryption is off, so the server won'=
+t
+do AUTH, demonstrating that the patch works.").
+
+Overriding the smtp user from the config is a separate issue, and I
+don't think that is currently possible. The usual way to spell an optio=
+n
+like that in git is "--no-smtp-user", but it seems that we use perl's
+GetOptions, which does not understand that syntax. So you'd have to add
+a "--no-smtp-user" by hand.
+
+-Peff
