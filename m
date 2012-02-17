@@ -1,163 +1,95 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: git status: small difference between stating whole repository and
- small subdirectory
-Date: Fri, 17 Feb 2012 18:19:06 +0100
-Message-ID: <CAA01Csq6vSekW=Fa236bB0H3LVtN43Gb2aLMVE+A1wVyUqYJ7A@mail.gmail.com>
-References: <CAA01Csr8FbvQ8uFvxX8_6i-hysin6JuaifVVC-yoLyoT0N5F4Q@mail.gmail.com>
-	<CAA01Csp6_9fP2rg4104UWUXwOxZmUVdQNDAaBe6fRou6agBz6g@mail.gmail.com>
-	<8762f9k5sg.fsf@thomas.inf.ethz.ch>
-	<CAA01Cso_8=159UDMFUHiYz1X=gYtpbqRO4h3TMw7N=4YMV8YNg@mail.gmail.com>
-	<20120215190318.GA5992@sigill.intra.peff.net>
-	<CAA01Cso5y23UMguEe0vwOc6kR3-DjuC8-LTMDsMeeOKU4rVGvg@mail.gmail.com>
-	<20120216192001.GB4348@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-latexdiff: new command in contrib, to use latexdiff
+ and Git
+Date: Fri, 17 Feb 2012 09:25:36 -0800
+Message-ID: <7vwr7ltlrj.fsf@alter.siamese.dyndns.org>
+References: <1329320987-15203-1-git-send-email-Matthieu.Moy@imag.fr>
+ <20120216003300.17228570@sirion> <vpq39abrxav.fsf@bauges.imag.fr>
+ <7v8vk2zghl.fsf@alter.siamese.dyndns.org> <vpqty2px4l5.fsf@bauges.imag.fr>
+ <7vmx8hvb69.fsf@alter.siamese.dyndns.org> <vpqobsx7d9s.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@inf.ethz.ch>,
-	Git Mailing List <git@vger.kernel.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 17 18:19:18 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Tim Haga <timhaga@ebene6.org>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Feb 17 18:25:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RyRSn-0005te-S3
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Feb 2012 18:19:18 +0100
+	id 1RyRZ4-0002tW-HZ
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Feb 2012 18:25:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752392Ab2BQRTJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Feb 2012 12:19:09 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:59475 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751539Ab2BQRTI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Feb 2012 12:19:08 -0500
-Received: by yenm8 with SMTP id m8so1926810yen.19
-        for <git@vger.kernel.org>; Fri, 17 Feb 2012 09:19:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=XgXG/AZwcFx6w4olWwxpPIUwoSnA0jp9qvl0pervBjM=;
-        b=XL2CiKdyyd6dmybwAahzGDjcoEFT3SquW6bBoIzXaiRm5QgmT+h5SyV9o3EQX1ckaR
-         ZraTmEc8zhrAYHyise8Wp7F5XnHGO+VMfO6MPJG0Emm1tSC+MUkpTzJNyRakCtn3brpK
-         M3L4CAx7GhiHZx/4dVwSCX/3w31DnE/Tclsy0=
-Received: by 10.50.194.170 with SMTP id hx10mr24628004igc.6.1329499146934;
- Fri, 17 Feb 2012 09:19:06 -0800 (PST)
-Received: by 10.50.46.33 with HTTP; Fri, 17 Feb 2012 09:19:06 -0800 (PST)
-In-Reply-To: <20120216192001.GB4348@sigill.intra.peff.net>
+	id S1753871Ab2BQRZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Feb 2012 12:25:42 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47617 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753402Ab2BQRZl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Feb 2012 12:25:41 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 937AD7DCA;
+	Fri, 17 Feb 2012 12:25:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zCwMHrDo67p09UC11IH+W7EPan4=; b=FhqgME
+	u0H7b61BQR095vDjkGDWLaQWqc5acPgLegNHzJ9gLjOvfKT1Shkr0OgYRDh4sc2o
+	x83TaQDHT2NqU9fAdyziiu0gRS+zEE/UkW0euWBoS9cac/Dke+IlBdiIjnYZpX6B
+	XTIhzk3xpPnFJXpkN9vVUjonHlKlJ5gXJMngA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uK4EOfYuiF04huOAf8suFPG0jNWMQPsr
+	gR5CKRDF7TXlLHWU824WiLWj7DhlOLkLWcph4hXTbfQcGcew1mvPUTiB3EC6Ld1v
+	YRuzsQyiEoWUT5Of5jFHsYZE8Wi3V6mK7fMNy4zXdVkbgY8m5xdGlAwE4kpzozhr
+	A8CHYj/dqyQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B2C07DC9;
+	Fri, 17 Feb 2012 12:25:40 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0B6C37DC8; Fri, 17 Feb 2012
+ 12:25:39 -0500 (EST)
+In-Reply-To: <vpqobsx7d9s.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Fri, 17 Feb 2012 15:19:59 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 69A5AE10-598C-11E1-B588-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190966>
 
-On Thu, Feb 16, 2012 at 8:20 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Feb 16, 2012 at 02:37:47PM +0100, Piotr Krukowiecki wrote:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+
+>> Look at what we have in the contrib/ area.  I think what is common among
+>> them is that their primary benefit is to enrich user's Git experience.
 >
->> >> $ time git status =A0-- .
->> >> real =A0 =A00m2.503s
->> >> user =A0 =A00m0.160s
->> >> sys =A0 =A0 0m0.096s
->> >>
->> >> $ time git status
->> >> real =A0 =A00m9.663s
->> >> user =A0 =A00m0.232s
->> >> sys =A0 =A0 0m0.556s
->> >
->> > Did you drop caches here, too?
->>
->> Yes I did - with cache the status takes something like 0.1-0.3s on w=
-hole repo.
->
-> OK, then that makes sense. It's pretty much just I/O on the filesyste=
-m
-> and on the object db.
->
-> You can break status down a little more to see which is which. Try "g=
-it
-> update-index --refresh" to see just how expensive the lstat and index
-> handling is.
+> ... and many of them is to enrich the user experience using Git with
+> another tool (shell, text editor, foreign VCS).
 
-"git update-index --refresh" with dropped cache took
-real	0m3.726s
-user	0m0.024s
-sys	0m0.404s
+... where the amount of the benefit they get does not change regardless of
+the payload.  That is what makes them tool in Git users' toolbox, not
+shell scripters' or p4 users' toolbox.
 
-while "git status" with dropped cache takes
-real	0m13.578s
-user	0m0.240s
-sys	0m0.600s
+> Git's _core_ already has some code to show diff hunks for various
+> languages,...
 
-I'm not sure why it takes more than the 9s reported before - IIRC I
-did the previous test in single mode under bare shell and this time
-I'm testing under gnome. This or it's the effect of running
-update-index :/
-Now status on subdir takes 9.5s. But still the
-not-much-faster-status-on-subdir rule is true.
+I would have to say that it is an oranges vs squirrels comparison.  I do
+not see a justification to reject an addition of an entry to an array that
+adds a few strings of regexp to drive the mechanism that is already in
+core, when it gets compiled in, and it is useless by itself outside Git.
+Unless the language is something obscure, that is.
 
+Read git-latexdiff that is a free-standing 200+ line script again
+yourself. The use of Git in the script is not more than how you would
+emulate what you would use "cp -r" in order to populate the old/ and new/
+directories if the two versions were stored in the file system outside
+Git. If you rip the part that deals with "the two versions happen to be
+stored in Git" out, the remainder deals with parsing the command line,
+interfacing with latex and reporting the result, none of which is in any
+way Git specific.  That is much larger part of the script, which I view as
+a clear sign that it is an application to serve the need for LaTeX users
+better, which happens to be written for the subset of LaTeX users who have
+their contents in Git.
 
-> And then try "git diff-index HEAD" for an idea of how expensive it is=
- to
-> just read the objects and compare to the index.
-
-The diff-index after dropping cache takes
-real	0m14.095s
-user	0m0.268s
-sys	0m0.564s
-
-
->> > Not really. You're showing an I/O problem, and repacking is git's =
-way of
->> > reducing I/O.
->>
->> So if I understand correctly, the reason is because git must compare
->> workspace files with packed objects - and the problem is
->> reading/seeking/searching in the packs?
->
-> Mostly reading (we keep a sorted index and access the packfiles via
-> mmap, so we only touch the pages we need). But you're also paying to
-> lstat() the directory tree, too. And you're paying to load (probably)
-> the whole index into memory, although it's relatively compact compare=
-d
-> to the actual file data.
-
-If the index is the objects/pack/*.idx files than it's 21MB
-
-
->> Is there a way to make packs better? I think most operations are on
->> workdir files - so maybe it'd be possible to tell gc/repack/whatever
->> to optimize access to files which I currently have in workdir?
->
-> It already does optimize for that case. If you can make it even bette=
-r,
-> I'm sure people would be happy to see the numbers.
-
-If I understand correctly, you only need to compute sha1 on the
-workdir files and compare it with sha1 files recorded in index/gitdir.
-It seems that to get the sha1 from index/gitdir I need to read the
-packfiles? Maybe it'd be possible to cache/index it somehow, for
-example in separate and smaller file?
-
-
-> Mostly I think it is just the case that disk I/O is slow, and the
-> operation you're asking for has to do a certain amount of it. What ki=
-nd
-> of disk/filesystem are you pulling off of?
->
-> It's not a fuse filesystem by any chance, is it? I have a repo on an
-> encfs-mounted filesystem, and the lstat times are absolutely horrific=
-=2E
-
-No, it's ext4 and the disk Seagate Barracuda 7200.12 500GB, as it
-reads on the cover :)
-
-But IMO faster disk won't help with this - times will be smaller, but
-you'll still have to read the same data, so the subdir times will be
-just 2x faster than whole repo, won't it? So maybe in my case it will
-go down to e.g. 2s on subdir, but for someone with larger repository
-it will still be 10s...
-
-
---=20
-Piotr Krukowiecki
+Aren't there LaTeX tools archives that would be a much better home for
+this tool?
