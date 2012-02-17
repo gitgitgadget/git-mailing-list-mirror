@@ -1,96 +1,217 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] git-latexdiff: new command in contrib, to use latexdiff and Git
-Date: Fri, 17 Feb 2012 15:19:59 +0100
-Message-ID: <vpqobsx7d9s.fsf@bauges.imag.fr>
-References: <1329320987-15203-1-git-send-email-Matthieu.Moy@imag.fr>
-	<20120216003300.17228570@sirion> <vpq39abrxav.fsf@bauges.imag.fr>
-	<7v8vk2zghl.fsf@alter.siamese.dyndns.org>
-	<vpqty2px4l5.fsf@bauges.imag.fr>
-	<7vmx8hvb69.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Tim Haga <timhaga@ebene6.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 17 15:20:17 2012
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH] Add --with-gcc-warnings configure option
+Date: Fri, 17 Feb 2012 09:25:19 -0500
+Message-ID: <1329488719-6991-1-git-send-email-gitter.spiros@gmail.com>
+Cc: jnareb@gmail.com, Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 17 15:26:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RyOfY-00022v-2E
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Feb 2012 15:20:16 +0100
+	id 1RyOkr-0005mb-4N
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Feb 2012 15:25:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751988Ab2BQOUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Feb 2012 09:20:09 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:35629 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751862Ab2BQOUI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Feb 2012 09:20:08 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q1HEGWvY032139
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 17 Feb 2012 15:16:32 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1RyOfI-0004bo-JZ; Fri, 17 Feb 2012 15:20:00 +0100
-In-Reply-To: <7vmx8hvb69.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 17 Feb 2012 05:31:26 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 17 Feb 2012 15:16:32 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q1HEGWvY032139
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1330092995.24858@PqnbFWh3a2l/lXsjrePEjA
+	id S1751862Ab2BQOZ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Feb 2012 09:25:29 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:53484 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751009Ab2BQOZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Feb 2012 09:25:28 -0500
+Received: by iacb35 with SMTP id b35so4460806iac.19
+        for <git@vger.kernel.org>; Fri, 17 Feb 2012 06:25:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=+LYNm0Doy/7wlYC5HdK5vC+Ba+zJwdmi4ikpz3ckxAs=;
+        b=J5LUYetZUzkeH9edSyEM2PG9tiCECDV7/3QuDQ9wwzFCSnvYLZkFYDmPyY1vB3pGSW
+         nIbKPRZGvomEXia60difmoQrKUMdiwUkh2KG59++7+Vebc1ccUWnZoE+lZCwYyjwlEbK
+         ajaqjmYzjRQY+5PCmSyT63eQjJbe5lLDdOKR8=
+Received: by 10.42.108.6 with SMTP id f6mr1573880icp.7.1329488725027;
+        Fri, 17 Feb 2012 06:25:25 -0800 (PST)
+Received: from localhost.localdomain (vm049244212.pmman.net. [198.49.244.212])
+        by mx.google.com with ESMTPS id d15sm15548993ibf.7.2012.02.17.06.25.24
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 17 Feb 2012 06:25:24 -0800 (PST)
+X-Mailer: git-send-email 1.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190958>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Introduce a new --with-gcc-warnings configure option
+using a new autoconf macro that check if the compiler
+know the option passed or not in a portable way.
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> I agree that the next step may be to allow users of <whatever SCM
->> outside Git>, but I don't think the way to do that would be to make the
->> script generic. The script is a quick hack, and all the "clever" parts
->> of it are calls to Git.
->
-> You are not suggesting me to take and carry any future request that wants
-> to add any quick hack that is heavily specific to Git and not portable to
-> other SCMs to the contrib/ area only because they depend on Git, are
-> you?
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ Makefile      |    2 +-
+ config.mak.in |    1 +
+ configure.ac  |  118 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 120 insertions(+), 1 deletions(-)
 
-I'm answering the remark you made:
-
-| I have this suspicion that "this new version will help people who have
-| their documents stored in Mercurial" would be much more realistic (and
-| the end result being useful) than "this new version will help git users
-| who do not write their documents in latex but in asciidoc".
-
-I think the probability that a next version of git-latexdiff is to
-support another SCM is 0, and I tried to explain that.
-
-Do you think I failed to address this remark?
-
-> Look at what we have in the contrib/ area.  I think what is common among
-> them is that their primary benefit is to enrich user's Git experience.
-
-... and many of them is to enrich the user experience using Git with
-another tool (shell, text editor, foreign VCS).
-
-Without git-latexdiff, you can run "git diff" on LaTeX documents, while
-with it, you can get a better view of the diff. To me, this is "enrich
-user's experience" of users running "git diff".
-
-Git's _core_ already has some code to show diff hunks for various
-languages, and I don't think anyone would want to move these out because
-they only benefit people tracking files in these languages.
-
+diff --git a/Makefile b/Makefile
+index a0de4e9..21bc8d4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -310,7 +310,7 @@ endif
+ 
+ CFLAGS = -g -O2 -Wall
+ LDFLAGS =
+-ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
++ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS) $(AM_CFLAGS)
+ ALL_LDFLAGS = $(LDFLAGS)
+ STRIP ?= strip
+ 
+diff --git a/config.mak.in b/config.mak.in
+index b2ba710..5b7dbfd 100644
+--- a/config.mak.in
++++ b/config.mak.in
+@@ -2,6 +2,7 @@
+ # @configure_input@
+ 
+ CC = @CC@
++AM_CFLAGS = @GIT_CFLAGS@
+ CFLAGS = @CFLAGS@
+ CPPFLAGS = @CPPFLAGS@
+ LDFLAGS = @LDFLAGS@
+diff --git a/configure.ac b/configure.ac
+index 24190de..92dc1a9 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -14,6 +14,34 @@ echo "# ${config_append}.  Generated by configure." > "${config_append}"
+ 
+ 
+ ## Definitions of macros
++# git_AS_VAR_APPEND(VAR, VALUE)
++# ----------------------------
++# Provide the functionality of AS_VAR_APPEND if Autoconf does not have it.
++m4_ifdef([AS_VAR_APPEND],
++[m4_copy([AS_VAR_APPEND], [git_AS_VAR_APPEND])],
++[m4_define([git_AS_VAR_APPEND],
++[AS_VAR_SET([$1], [AS_VAR_GET([$1])$2])])])
++
++# GIT_CFLAGS_ADD(PARAMETER, [VARIABLE = GIT_CFLAGS])
++# ------------------------------------------------
++# Adds parameter to GIT_CFLAGS if the compiler supports it.  For example,
++# GIT_CFLAGS_ADD([-Wall],[GIT_CFLAGS]).
++AC_DEFUN([GIT_CFLAGS_ADD],
++[AS_VAR_PUSHDEF([git_my_cflags], [git_cv_warn_$1])dnl
++AC_CACHE_CHECK([whether compiler handles $1], [git_my_cflags], [
++  save_CFLAGS="$CFLAGS"
++  CFLAGS="${CFLAGS} $1"
++  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([])],
++                    [AS_VAR_SET([git_my_cflags], [yes])],
++                    [AS_VAR_SET([git_my_cflags], [no])])
++  CFLAGS="$save_CFLAGS"
++])
++AS_VAR_PUSHDEF([git_cflags], m4_if([$2], [], [[GIT_CFLAGS]], [[$2]]))dnl
++AS_VAR_IF([git_my_cflags], [yes], [git_AS_VAR_APPEND([git_cflags], [" $1"])])
++AS_VAR_POPDEF([git_cflags])dnl
++AS_VAR_POPDEF([git_my_cflags])dnl
++m4_ifval([$2], [AS_LITERAL_IF([$2], [AC_SUBST([$2])], [])])dnl
++])
+ # GIT_CONF_APPEND_LINE(LINE)
+ # --------------------------
+ # Append LINE to file ${config_append}
+@@ -158,6 +186,96 @@ if test -z "$lib"; then
+    lib=lib
+ fi
+ 
++# Turn gcc warning
++
++AC_ARG_ENABLE([gcc-warnings],
++  [AS_HELP_STRING([--enable-gcc-warnings],
++                  [turn on GCC warnings (for developers)@<:@default=no@:>@])],
++  [case $enableval in
++     yes|no) ;;
++     *)      AC_MSG_ERROR([bad value $enableval for gcc-warnings option]) ;;
++   esac
++   git_gcc_warnings=$enableval],
++  [git_gcc_warnings=no]
++)
++
++AS_IF([test "x$git_gcc_warnings" = xyes],
++  [ # Add/Delete as needed
++  MAX_STACK_SIZE=32768
++  GIT_CFLAGS_ADD([-Wall], [GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-pedantic], [GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wextra], [GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wformat-y2k], [GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-fdiagnostics-show-option],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-funit-at-a-time],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-fstrict-aliasing],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wstrict-overflow],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-fstrict-overflow],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wpointer-arith],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wundef],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wformat-security],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Winit-self],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wmissing-include-dirs],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wunused],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wunknown-pragmas],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wstrict-aliasing],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wshadow],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wbad-function-cast],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wcast-align],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wwrite-strings],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wlogical-op],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Waggregate-return],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wstrict-prototypes],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wold-style-definition],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wmissing-prototypes],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wmissing-declarations],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wmissing-noreturn],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wmissing-format-attribute],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wredundant-decls],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wnested-externs],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Winline],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Winvalid-pch],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wvolatile-register-var],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wdisabled-optimization],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wbuiltin-macro-redefined],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wmudflap],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wpacked-bitfield-compat],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wsync-nand],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wattributes],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wcoverage-mismatch],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wmultichar],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wcpp],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wdeprecated-declarations],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wdiv-by-zero],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wdouble-promotion],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wendif-labels],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wformat-contains-nul],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wformat-extra-args],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wformat-zero-length],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wformat=2],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wmultichar],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wnormalized=nfc],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Woverflow],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wpointer-to-int-cast],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wpragmas],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wsuggest-attribute=const],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wsuggest-attribute=noreturn],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wsuggest-attribute=pure],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wtrampolines],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wno-missing-field-initializers],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wno-sign-compare],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wjump-misses-init],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wno-format-nonliteral],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wframe-larger-than=$MAX_STACK_SIZE],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-fstack-protector-all],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-fasynchronous-unwind-tables],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-fdiagnostics-show-option],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-funit-at-a-time],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-fipa-pure-const],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wno-aggregate-return],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wno-redundant-decls],[GIT_CFLAGS])
++  AC_SUBST([GIT_CFLAGS])
++  ])
+ AC_ARG_ENABLE([pthreads],
+  [AS_HELP_STRING([--enable-pthreads=FLAGS],
+   [FLAGS is the value to pass to the compiler to enable POSIX Threads.]
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.8.rc3.31.g017d1
