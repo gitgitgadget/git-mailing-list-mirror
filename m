@@ -1,71 +1,69 @@
 From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH v2 1/3] Move the user-facing test library to test-lib-functions.sh
-Date: Fri, 17 Feb 2012 10:00:07 +0100
-Message-ID: <8762f5rg14.fsf@thomas.inf.ethz.ch>
-References: <cover.1329428159.git.trast@student.ethz.ch>
-	<d5127b0051d354fc0c02666b972b853d1736d09c.1329428159.git.trast@student.ethz.ch>
-	<7v7gzmxw78.fsf@alter.siamese.dyndns.org>
+Subject: git-status does not propagate -uall to submodules
+Date: Fri, 17 Feb 2012 10:18:57 +0100
+Message-ID: <874nupq0la.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-Cc: Thomas Rast <trast@student.ethz.ch>, <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 17 10:00:23 2012
+Cc: Jens Lehmann <Jens.Lehmann@web.de>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Feb 17 10:19:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RyJfx-00007C-SC
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Feb 2012 10:00:22 +0100
+	id 1RyJyH-0000ec-Ng
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Feb 2012 10:19:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752174Ab2BQJAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Feb 2012 04:00:15 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:27181 "EHLO edge20.ethz.ch"
+	id S1751730Ab2BQJTC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Feb 2012 04:19:02 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:30647 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752150Ab2BQJAO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Feb 2012 04:00:14 -0500
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 17 Feb
- 2012 10:00:09 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 17 Feb
- 2012 10:00:08 +0100
-In-Reply-To: <7v7gzmxw78.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 16 Feb 2012 14:14:19 -0800")
+	id S1751533Ab2BQJTA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Feb 2012 04:19:00 -0500
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 17 Feb
+ 2012 10:18:54 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 17 Feb
+ 2012 10:18:58 +0100
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
 X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190942>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> Thomas Rast <trast@student.ethz.ch> writes:
->
->> This just moves all the user-facing functions to a separate file and
->> sources that instead.
->>
->> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
->> ---
->>  t/test-lib-functions.sh |  835 +++++++++++++++++++++++++++++++++++++++++++++++
->>  t/test-lib.sh           |  552 +-------------------------------
->>  2 files changed, 840 insertions(+), 547 deletions(-)
->>  create mode 100644 t/test-lib-functions.sh
->
-> I would have expected from the log description that the number of deleted
-> lines would be about the same as the number of added lines, and the
-> difference would primarily come from the addition of "include" aka "dot"
-> ". ./test-lib-functions.sh" that becomes necessary in t/test-lib.sh, some
-> boilerplate material at the beginning of the new file e.g. "#!/bin/sh",
-> and copying (not moving) the same Copyright block to the new file.
->
-> But 835-552 = 283 feels way way more than that.  What else is going on?
+While helping with the submodule display on #git I noticed that if you
+have a submodule with status.showuntrackedfiles=no, and run 'git status
+-uall' from the superproject, then this does not propagate into the
+submodule's status.  In code:
 
-Hum, you're right.  I checked with blame -C -C that I introduced no new
-lines, but I must accidentally have duplicated parts of it during
-conflict resolution.
+  $ (cd bar && git config status.showuntrackedfiles)                  
+  no                                                                                                 
+  $ git ls-files -s                                                   
+  100644 926c01b7259c489a422442a8dc5cb5ea7c58f60c 0       .gitmodules                                
+  160000 eb5af46e1a938d064c9f7bae9561013654a43316 0       bar                                        
+  $ (cd bar && git status -s -unormal)
+  ?? otheruntracked                                                                                  
+  ?? untracked
+  $ git status
+  # On branch master
+  nothing to commit (working directory clean)
+
+So far that's expected; after all the submodule is configured not to
+display untracked files.  But with -uall:
+
+  $ git status -uall
+  # On branch master
+  nothing to commit (working directory clean)
+
+Shouldn't the -uall propagate, since the user is explicitly asking for
+it?  That is, the display should summarize what git-status *with the
+same arguments* would show inside the submodules?
 
 -- 
 Thomas Rast
