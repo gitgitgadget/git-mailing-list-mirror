@@ -1,102 +1,96 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv2 1/3] gitweb: Deal with HEAD pointing to unborn branch in "heads" view
-Date: Fri, 17 Feb 2012 14:41:34 +0100
-Message-ID: <201202171441.35618.jnareb@gmail.com>
-References: <1329320203-20272-1-git-send-email-jnareb@gmail.com> <201202162341.09712.jnareb@gmail.com> <7vsjiawe74.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] git-latexdiff: new command in contrib, to use latexdiff and Git
+Date: Fri, 17 Feb 2012 15:19:59 +0100
+Message-ID: <vpqobsx7d9s.fsf@bauges.imag.fr>
+References: <1329320987-15203-1-git-send-email-Matthieu.Moy@imag.fr>
+	<20120216003300.17228570@sirion> <vpq39abrxav.fsf@bauges.imag.fr>
+	<7v8vk2zghl.fsf@alter.siamese.dyndns.org>
+	<vpqty2px4l5.fsf@bauges.imag.fr>
+	<7vmx8hvb69.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, rajesh boyapati <boyapatisrajesh@gmail.com>
+Content-Type: text/plain
+Cc: Tim Haga <timhaga@ebene6.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 17 14:41:34 2012
+X-From: git-owner@vger.kernel.org Fri Feb 17 15:20:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RyO42-0003qs-HS
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Feb 2012 14:41:30 +0100
+	id 1RyOfY-00022v-2E
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Feb 2012 15:20:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751685Ab2BQNl0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Feb 2012 08:41:26 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:42170 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751514Ab2BQNlZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Feb 2012 08:41:25 -0500
-Received: by eaah12 with SMTP id h12so1321757eaa.19
-        for <git@vger.kernel.org>; Fri, 17 Feb 2012 05:41:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=qEM6J4zrBJbRy/4mqSfgMyhUdLHjL81I6pCi49mB6Jo=;
-        b=rg73PhXGnhUOiuBKLf/3kHpJ2/MGdVW/IERhpRrMUZP9AXWvojWr0zo+IbK4GyFlxu
-         ZxyEONlB3qNvulXfVR+vs2270Aa/GiKt3qRkYVrDi8olztaGb/Vpi2rcIBoCfFfKjHeR
-         ukyfhnRtsL/7gErPkVCNxkpq3GA5FKDxLAImE=
-Received: by 10.213.19.133 with SMTP id a5mr1127278ebb.72.1329486084295;
-        Fri, 17 Feb 2012 05:41:24 -0800 (PST)
-Received: from [192.168.1.13] (abwb118.neoplus.adsl.tpnet.pl. [83.8.225.118])
-        by mx.google.com with ESMTPS id v51sm38702039eef.2.2012.02.17.05.41.22
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 17 Feb 2012 05:41:23 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vsjiawe74.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751988Ab2BQOUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Feb 2012 09:20:09 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:35629 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751862Ab2BQOUI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Feb 2012 09:20:08 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q1HEGWvY032139
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 17 Feb 2012 15:16:32 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1RyOfI-0004bo-JZ; Fri, 17 Feb 2012 15:20:00 +0100
+In-Reply-To: <7vmx8hvb69.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 17 Feb 2012 05:31:26 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 17 Feb 2012 15:16:32 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q1HEGWvY032139
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1330092995.24858@PqnbFWh3a2l/lXsjrePEjA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190957>
 
-On Fri, 17 Feb 2012, Junio C Hamano wrote:
- 
-> But after trying to write a reroll myself, I have to wonder what would
-> happen if you have two branches pointing at the same commit as the one at
-> HEAD.  Why isn't the use of current_head class controlled by comparison
-> between the name of the ref and the output from "symbolic-ref HEAD"?
+Junio C Hamano <gitster@pobox.com> writes:
 
-If there is more than one branch that points to HEAD commit, they all
-will be highlighted.
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>
+>> I agree that the next step may be to allow users of <whatever SCM
+>> outside Git>, but I don't think the way to do that would be to make the
+>> script generic. The script is a quick hack, and all the "clever" parts
+>> of it are calls to Git.
+>
+> You are not suggesting me to take and carry any future request that wants
+> to add any quick hack that is heavily specific to Git and not portable to
+> other SCMs to the contrib/ area only because they depend on Git, are
+> you?
 
-Using "git symbolic-ref HEAD", or just reading '.git/HEAD' file or symlink
-is on my todo list.  This will make gitweb highlight current branch
-correctly even if there is more than one branch that point to the same
-HEAD commit, and make it possible to support "detached HEAD" (which I think
-is not supported at all now).
+I'm answering the remark you made:
 
-Anyway the test is here to stay... :-)
- 
-> -- >8 --
-> From: Jakub Narebski <jnareb@gmail.com>
-> Date: Wed, 15 Feb 2012 16:36:41 +0100
-> Subject: [PATCH] gitweb: Fix "heads" view when there is no current branch
-> 
-> In a repository whose HEAD points to an unborn branch with no commits,
-> "heads" view and "summary" view (which shows what is shown in "heads"
-> view) compared the object names of commits at the tip of branches with the
-> output from "git rev-parse HEAD", which caused comparison of a string with
-> undef and resulted in a warning in the server log.
-> 
-> This can happen if non-bare repository (with default 'master' branch)
-> is updated not via committing but by other means like push to it, or
-> Gerrit.  It can happen also just after running "git checkout --orphan
-> <new branch>" but before creating any new commit on this branch.
-> 
-> Rewrite the comparison so that it also works when $head points at nothing;
-> in such a case, no branch can be "the current branch", add a test for it.
-> 
-> While at it rename local variable $head to $head_at, as it points to
-> current commit rather than current branch name (HEAD contents).
-> 
-> Reported-by: Rajesh Boyapati
-> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
+| I have this suspicion that "this new version will help people who have
+| their documents stored in Mercurial" would be much more realistic (and
+| the end result being useful) than "this new version will help git users
+| who do not write their documents in latex but in asciidoc".
 
-Thanks!
+I think the probability that a next version of git-latexdiff is to
+support another SCM is 0, and I tried to explain that.
+
+Do you think I failed to address this remark?
+
+> Look at what we have in the contrib/ area.  I think what is common among
+> them is that their primary benefit is to enrich user's Git experience.
+
+... and many of them is to enrich the user experience using Git with
+another tool (shell, text editor, foreign VCS).
+
+Without git-latexdiff, you can run "git diff" on LaTeX documents, while
+with it, you can get a better view of the diff. To me, this is "enrich
+user's experience" of users running "git diff".
+
+Git's _core_ already has some code to show diff hunks for various
+languages, and I don't think anyone would want to move these out because
+they only benefit people tracking files in these languages.
 
 -- 
-Jakub Narebski
-Poland
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
