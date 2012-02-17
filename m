@@ -1,83 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-latexdiff: new command in contrib, to use latexdiff
- and Git
-Date: Fri, 17 Feb 2012 05:31:26 -0800
-Message-ID: <7vmx8hvb69.fsf@alter.siamese.dyndns.org>
-References: <1329320987-15203-1-git-send-email-Matthieu.Moy@imag.fr>
- <20120216003300.17228570@sirion> <vpq39abrxav.fsf@bauges.imag.fr>
- <7v8vk2zghl.fsf@alter.siamese.dyndns.org> <vpqty2px4l5.fsf@bauges.imag.fr>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv2 1/3] gitweb: Deal with HEAD pointing to unborn branch in "heads" view
+Date: Fri, 17 Feb 2012 14:41:34 +0100
+Message-ID: <201202171441.35618.jnareb@gmail.com>
+References: <1329320203-20272-1-git-send-email-jnareb@gmail.com> <201202162341.09712.jnareb@gmail.com> <7vsjiawe74.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tim Haga <timhaga@ebene6.org>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Feb 17 14:31:36 2012
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, rajesh boyapati <boyapatisrajesh@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 17 14:41:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RyNuR-0004KL-16
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Feb 2012 14:31:35 +0100
+	id 1RyO42-0003qs-HS
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Feb 2012 14:41:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751288Ab2BQNbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Feb 2012 08:31:31 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38489 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750865Ab2BQNb3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Feb 2012 08:31:29 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EAC0842D1;
-	Fri, 17 Feb 2012 08:31:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XAUn25+BrBRVLl/Qhw8Ykl1agSw=; b=Ps4XhG
-	EZPl/vKlAt6BsvhALxhzpC1NRSw1aBUDCljLSg3RxftTWJf2HVGbE7NS2wlb3bTJ
-	yockK4/motiP4ESEEQJPOdLBspXNuKqlIQ+OQ1mPXpGNLk7g4E7m2e+YUwZwA2Yi
-	x2R7QgvL6s9J5xWGAHxSKeDInsOL6/fOpJLdE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Gip5tFxnd9wcbEqDC07DdpA+Je44xPYr
-	gJw3CiTeUmBCpvlkzqfCywrdqDWYlSnMSRi5P3t0Q0lzw5CppFD2KKRlPpTjjCr4
-	JyjgauFEn5JEkxeG6S3sef/jv3cSI2EqqT4TpRhPZf7G633KS/aw9SNkqaik55lp
-	sGox+V1sVpU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E206F42D0;
-	Fri, 17 Feb 2012 08:31:28 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 76C3D42CF; Fri, 17 Feb 2012
- 08:31:28 -0500 (EST)
-In-Reply-To: <vpqty2px4l5.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Fri, 17 Feb 2012 09:10:46 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B2439B3A-596B-11E1-8DE4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751685Ab2BQNl0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Feb 2012 08:41:26 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:42170 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751514Ab2BQNlZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Feb 2012 08:41:25 -0500
+Received: by eaah12 with SMTP id h12so1321757eaa.19
+        for <git@vger.kernel.org>; Fri, 17 Feb 2012 05:41:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=qEM6J4zrBJbRy/4mqSfgMyhUdLHjL81I6pCi49mB6Jo=;
+        b=rg73PhXGnhUOiuBKLf/3kHpJ2/MGdVW/IERhpRrMUZP9AXWvojWr0zo+IbK4GyFlxu
+         ZxyEONlB3qNvulXfVR+vs2270Aa/GiKt3qRkYVrDi8olztaGb/Vpi2rcIBoCfFfKjHeR
+         ukyfhnRtsL/7gErPkVCNxkpq3GA5FKDxLAImE=
+Received: by 10.213.19.133 with SMTP id a5mr1127278ebb.72.1329486084295;
+        Fri, 17 Feb 2012 05:41:24 -0800 (PST)
+Received: from [192.168.1.13] (abwb118.neoplus.adsl.tpnet.pl. [83.8.225.118])
+        by mx.google.com with ESMTPS id v51sm38702039eef.2.2012.02.17.05.41.22
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 17 Feb 2012 05:41:23 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vsjiawe74.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190956>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Fri, 17 Feb 2012, Junio C Hamano wrote:
+ 
+> But after trying to write a reroll myself, I have to wonder what would
+> happen if you have two branches pointing at the same commit as the one at
+> HEAD.  Why isn't the use of current_head class controlled by comparison
+> between the name of the ref and the output from "symbolic-ref HEAD"?
 
-> I agree that the next step may be to allow users of <whatever SCM
-> outside Git>, but I don't think the way to do that would be to make the
-> script generic. The script is a quick hack, and all the "clever" parts
-> of it are calls to Git.
+If there is more than one branch that points to HEAD commit, they all
+will be highlighted.
 
-You are not suggesting me to take and carry any future request that wants
-to add any quick hack that is heavily specific to Git and not portable to
-other SCMs to the contrib/ area only because they depend on Git, are you?
+Using "git symbolic-ref HEAD", or just reading '.git/HEAD' file or symlink
+is on my todo list.  This will make gitweb highlight current branch
+correctly even if there is more than one branch that point to the same
+HEAD commit, and make it possible to support "detached HEAD" (which I think
+is not supported at all now).
 
-That would bloat the contrib/ area with stuff that do not belong there and
-we need to draw a line somewhere.  The criteria I use to draw it is by
-answering "is this an application that merely happens to use git, or is it
-a way to help people who use Git?" question.
+Anyway the test is here to stay... :-)
+ 
+> -- >8 --
+> From: Jakub Narebski <jnareb@gmail.com>
+> Date: Wed, 15 Feb 2012 16:36:41 +0100
+> Subject: [PATCH] gitweb: Fix "heads" view when there is no current branch
+> 
+> In a repository whose HEAD points to an unborn branch with no commits,
+> "heads" view and "summary" view (which shows what is shown in "heads"
+> view) compared the object names of commits at the tip of branches with the
+> output from "git rev-parse HEAD", which caused comparison of a string with
+> undef and resulted in a warning in the server log.
+> 
+> This can happen if non-bare repository (with default 'master' branch)
+> is updated not via committing but by other means like push to it, or
+> Gerrit.  It can happen also just after running "git checkout --orphan
+> <new branch>" but before creating any new commit on this branch.
+> 
+> Rewrite the comparison so that it also works when $head points at nothing;
+> in such a case, no branch can be "the current branch", add a test for it.
+> 
+> While at it rename local variable $head to $head_at, as it points to
+> current commit rather than current branch name (HEAD contents).
+> 
+> Reported-by: Rajesh Boyapati
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
 
-Look at what we have in the contrib/ area.  I think what is common among
-them is that their primary benefit is to enrich user's Git experience.
-Bash completion for example is dependent on bash and it may be useless for
-Csh users, but if you are a bash user, your Git experience will be
-infinitely better with it regardless of what kind of payload you are
-tracking in your Git repository.  And in my mind, "regardless of what you
-are tracking" is the key part that defines "the enhancement is about
-user's Git experience".
+Thanks!
+
+-- 
+Jakub Narebski
+Poland
