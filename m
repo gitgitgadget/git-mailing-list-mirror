@@ -1,126 +1,76 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: git status: small difference between stating whole repository and
- small subdirectory
-Date: Fri, 17 Feb 2012 17:55:03 +0100
-Message-ID: <CAA01CsqfM4=cHBuJ5faPuWHPcHKAeO7fRQdSQzaFLZMdQaVGrA@mail.gmail.com>
-References: <CAA01Csr8FbvQ8uFvxX8_6i-hysin6JuaifVVC-yoLyoT0N5F4Q@mail.gmail.com>
-	<CAA01Csp6_9fP2rg4104UWUXwOxZmUVdQNDAaBe6fRou6agBz6g@mail.gmail.com>
-	<8762f9k5sg.fsf@thomas.inf.ethz.ch>
-	<CAA01Cso_8=159UDMFUHiYz1X=gYtpbqRO4h3TMw7N=4YMV8YNg@mail.gmail.com>
-	<20120215190318.GA5992@sigill.intra.peff.net>
-	<CAA01Cso5y23UMguEe0vwOc6kR3-DjuC8-LTMDsMeeOKU4rVGvg@mail.gmail.com>
-	<87d39eswkx.fsf@thomas.inf.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/3]
+Date: Fri, 17 Feb 2012 09:03:22 -0800
+Message-ID: <7v62f5v1d1.fsf@alter.siamese.dyndns.org>
+References: <7v7gzmxw78.fsf@alter.siamese.dyndns.org>
+ <cover.1329472405.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Feb 17 17:55:30 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Feb 17 18:03:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RyR5l-0003Ty-Tv
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Feb 2012 17:55:30 +0100
+	id 1RyRDW-0001g0-0Q
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Feb 2012 18:03:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753085Ab2BQQzK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Feb 2012 11:55:10 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:49097 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752312Ab2BQQzF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Feb 2012 11:55:05 -0500
-Received: by yhoo21 with SMTP id o21so1930671yho.19
-        for <git@vger.kernel.org>; Fri, 17 Feb 2012 08:55:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=QGTd/DyqZwzeQbE1xIpL7V0u0DQ2AGbmVzDEc6d3DXo=;
-        b=I8jRj+/XkK5FblMKZV7cWbeQ70AOZkkIaY9/O+vhXOqEcB6aKA5AV0uKMXkLQODCVs
-         B5NfYS9OJT6xzbnMXYqO6Kg3U9g4nUylbcqDpVjKtWABltMaROVgKBEURdkiz5MY171y
-         pzRd7o9MMQyIZI5JSzFV/AdXs9I6gjt+D0+ng=
-Received: by 10.50.194.170 with SMTP id hx10mr24510886igc.6.1329497704038;
- Fri, 17 Feb 2012 08:55:04 -0800 (PST)
-Received: by 10.50.46.33 with HTTP; Fri, 17 Feb 2012 08:55:03 -0800 (PST)
-In-Reply-To: <87d39eswkx.fsf@thomas.inf.ethz.ch>
+	id S1751462Ab2BQRDZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Feb 2012 12:03:25 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37767 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751038Ab2BQRDZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Feb 2012 12:03:25 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D645789A;
+	Fri, 17 Feb 2012 12:03:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VSMAdqsG+mo9VpHbqYh5DswyC/k=; b=YOHJKq
+	ZL9Rt2W3+uf0EV8g82UMQQsXqCOIhGtk/HxRWDGwT3ToV7Hyrd9DKjM6qcgqeOjQ
+	v6wh2sc1WBgVU5Ebt1jldq5kzI77+tC7LVs5GKFpbewo8kr7XNa0QU0O/NktDUJU
+	8ChyHBwWvK4agURJlH4d9cX65kiwGvwv4gMkc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=W/8/cqUsCMhTmyaDoftL/Lol8fv1TT5h
+	VBzL21ErwK7QYexlTouGPF2ynj9S4YkD0Do1nsEbak6f2nI8tASezl8lDotVZzzW
+	nUWLltz3sjT0pLAGtefh/8UWpbwD7V/BJfmxTMONG39LU60dc/vgdMzt+hdwN0Wj
+	/M49WWkPObY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 24F667899;
+	Fri, 17 Feb 2012 12:03:24 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B0D8D7898; Fri, 17 Feb 2012
+ 12:03:23 -0500 (EST)
+In-Reply-To: <cover.1329472405.git.trast@student.ethz.ch> (Thomas Rast's
+ message of "Fri, 17 Feb 2012 11:25:07 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4D22E418-5989-11E1-BE2E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190963>
 
-On Thu, Feb 16, 2012 at 3:05 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
-> Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
->
->> On Wed, Feb 15, 2012 at 8:03 PM, Jeff King <peff@peff.net> wrote:
->>> On Wed, Feb 15, 2012 at 09:57:29AM +0100, Piotr Krukowiecki wrote:
->>>>
->>> I notice that you're still I/O bound even after the repack:
->>>
->>>> $ time git status =A0-- .
->>>> real =A0 =A00m2.503s
->>>> user =A0 =A00m0.160s
->>>> sys =A0 =A0 0m0.096s
->>>>
->>>> $ time git status
->>>> real =A0 =A00m9.663s
->>>> user =A0 =A00m0.232s
->>>> sys =A0 =A0 0m0.556s
->>>
->>> Did you drop caches here, too?
->>
->> Yes I did - with cache the status takes something like 0.1-0.3s on w=
-hole repo.
->
-> So umm, I'm not sure that leaves anything to be improved.
+Thomas Rast <trast@student.ethz.ch> writes:
 
-But even with caches time on small directory is only half of time on wh=
-ole repo:
-0.15s vs 0.07s
+> There were actually more mistakes lurking :-( so I am resending the
+> whole series.
 
+Ok, will requeue.  The diff you attached to this cover letter looked at
+least halfway sane, compared to the previous round ;-), though it is not
+exactly clear what goes to lib-test-functions and what goes to lib-test
+(for example, you moved test_expect_success to 'test-functions', but it
+calls test_ok_ that is in 'test-lib', and test_ok_ is directly used by
+test_perf in the new 't/perf/perf-lib.sh'), making it harder for people to
+decide where to put their additions to the test infrastructure from now
+on.  There needs a bit of description in the first patch to guide them.
 
-> I looked at some strace dumps, and limiting the status to a subdirect=
-ory
-> (in my case, '-- t' in git.git) does omit the lstat()s on uninteresti=
-ng
-> parts of the index-listed files, as well as the getdents() (i.e.,
-> readdir()) for parts of the tree that are not interesting.
+I seem to be getting intermittent test failures, and every time the
+failing tests are different, when these three are queued to 'pu'. I didn't
+look for what goes wrong and how.
 
-Same in my case.
-
-I've run strace with -c which shows system calls times. As I
-understand the results the time used by lstat() is very small. With
-dropped caches:
-
-% time     seconds  usecs/call     calls    errors syscall
------- ----------- ----------- --------- --------- ----------------
- 90.70    0.065108           3     25361        12 lstat
-  6.78    0.004869           1      6534           getdents
-  1.94    0.001392           0      6964      3238 open
-  0.27    0.000194           0      3726           close
-
-
-> BTW, some other parts of git-status's display may be responsible for =
-the
-> amount of data it pulls from disk. =A0In particular, the "Your branch=
- is
-> ahead" display requires computing the merge-base between HEAD and
-> @{upstream}. =A0If your @{upstream} is way ahead/behind, or points at=
- a
-> disjoint chunk of history, this may mean essentially pulling all of t=
-he
-> involved history from disk. =A0If my memory of pack organization serv=
-es
-> right, the commit objects involved would essentially be spread across
-> the whole pack (corresponding to "time") and thus this operation woul=
-d
-> more or less load the entire pack from disk.
-
-I don't think this is the case - I'm using git-svn and thus have no
-upstream in git meaning.
-
-
---=20
-Piotr Krukowiecki
+Thanks.
