@@ -1,63 +1,90 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2] Add a setting to require a filter to be successful
-Date: Fri, 17 Feb 2012 08:08:00 +0100
-Message-ID: <4F3DFCD0.6070002@viscovery.net>
-References: <7vobsywck1.fsf@alter.siamese.dyndns.org> <4f3daaf7.e302440a.02ba.fffff463@mx.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] git-latexdiff: new command in contrib, to use latexdiff and Git
+Date: Fri, 17 Feb 2012 09:10:46 +0100
+Message-ID: <vpqty2px4l5.fsf@bauges.imag.fr>
+References: <1329320987-15203-1-git-send-email-Matthieu.Moy@imag.fr>
+	<20120216003300.17228570@sirion> <vpq39abrxav.fsf@bauges.imag.fr>
+	<7v8vk2zghl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: jehan@orb.com
-X-From: git-owner@vger.kernel.org Fri Feb 17 08:08:29 2012
+Content-Type: text/plain
+Cc: Tim Haga <timhaga@ebene6.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 17 09:11:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RyHvh-0005RB-3F
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Feb 2012 08:08:29 +0100
+	id 1RyIuE-000703-8A
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Feb 2012 09:11:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751363Ab2BQHII (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Feb 2012 02:08:08 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:60059 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750814Ab2BQHIG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Feb 2012 02:08:06 -0500
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1RyHvF-00086I-AE; Fri, 17 Feb 2012 08:08:01 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id E569D1660F;
-	Fri, 17 Feb 2012 08:08:00 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:9.0) Gecko/20111222 Thunderbird/9.0.1
-In-Reply-To: <4f3daaf7.e302440a.02ba.fffff463@mx.google.com>
-X-Spam-Score: -1.4 (-)
+	id S1751849Ab2BQIK5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Feb 2012 03:10:57 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:57719 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751730Ab2BQIK4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Feb 2012 03:10:56 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q1H87KPv015464
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 17 Feb 2012 09:07:20 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1RyItz-0005aE-Qs; Fri, 17 Feb 2012 09:10:47 +0100
+In-Reply-To: <7v8vk2zghl.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 16 Feb 2012 12:10:46 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 17 Feb 2012 09:07:21 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q1H87KPv015464
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1330070845.34675@mUGPanzg4PAh5fMNyVTHbw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190937>
 
-Am 2/17/2012 2:19, schrieb jehan@orb.com:
-> @@ -747,13 +753,19 @@ int convert_to_git(const char *path, const char *src, size_t len,
-...
->  	ret |= apply_filter(path, src, len, dst, filter);
-> +	if (!ret && required)
-> +		die("required filter '%s' failed", ca.drv->name);
+Junio C Hamano <gitster@pobox.com> writes:
 
-Wouldn't it be much more helpful if this were:
+> Honestly speaking, this is looking more like an "useful application for
+> latex users who happen to use git to store their document source", and not
+> a "useful addition for all git users", to me.
+>
+> These two viewpoint suggests completely different evolution path for this
+> program.  Imagining what the first major new enhancement intended for
+> people outside the original audience <git,latex> will be, I have this
+> suspicion that "this new version will help people who have their documents
+> stored in Mercurial" would be much more realistic (and the end result
+> being useful) than "this new version will help git users who do not write
+> their documents in latex but in asciidoc".
 
-	die("%s: clean filter '%s' failed", path, ca.drv->name);
+I agree that the next step may be to allow users of <whatever SCM
+outside Git>, but I don't think the way to do that would be to make the
+script generic. The script is a quick hack, and all the "clever" parts
+of it are calls to Git. If someone were to adapt this for Mercurial or
+Bzr, writting a python plugin would be a much better way to go
+(Mercurial already has "hg extdiff" doing the hardlinked checkouts for
+example, and both would allow better command-line option parsing than
+my "case $1 in ... esac").
 
-Likewise (with s/clean/smudge/) in convert_to_working_tree_internal().
+I normally like code reuse very much, but trying to make a 250 lines
+long script generic enough to accept multiple SCMs would be more work
+than a rewrite.
 
-> +	! git checkout -- test.fs
+OTOH, having this script in contrib/ has several advantages over
+maintaining it as a separate one-file project:
 
-	test_must_fail git checkout -- test.fs
+- "make install" uses Git's Makefile configuration, so it's easy to
+  install.
 
-> +	! git add test.fc
+- It makes it natural to use this mailing list for discussion. The
+  script has already improved a lot since I posted it as a patch here.
 
-	test_must_fail git add test.fc
-
--- Hannes
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
