@@ -1,82 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git-svn won't remember pem password
-Date: Sat, 18 Feb 2012 03:30:00 -0800 (PST)
-Message-ID: <m3zkcgqt0g.fsf@localhost.localdomain>
-References: <E56535F6-2C9B-4D14-A88F-2471E34D2769@gmail.com>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: Gitk local language issue
+Date: Sat, 18 Feb 2012 13:09:01 +0000
+Message-ID: <8762f4xp8y.fsf@fox.patthoyts.tk>
+References: <1329467459691-7293532.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Igor <mrigor83@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 18 12:30:47 2012
+Cc: git@vger.kernel.org
+To: shyamal <shyamal2005@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 18 14:09:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RyiV4-0005S7-0H
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Feb 2012 12:30:46 +0100
+	id 1Ryk2O-0004Wy-Uc
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Feb 2012 14:09:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752572Ab2BRLaF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Feb 2012 06:30:05 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:64793 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752095Ab2BRLaD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Feb 2012 06:30:03 -0500
-Received: by eekc14 with SMTP id c14so1646795eek.19
-        for <git@vger.kernel.org>; Sat, 18 Feb 2012 03:30:02 -0800 (PST)
-Received-SPF: pass (google.com: domain of jnareb@gmail.com designates 10.213.3.201 as permitted sender) client-ip=10.213.3.201;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of jnareb@gmail.com designates 10.213.3.201 as permitted sender) smtp.mail=jnareb@gmail.com; dkim=pass header.i=jnareb@gmail.com
-Received: from mr.google.com ([10.213.3.201])
-        by 10.213.3.201 with SMTP id 9mr455375ebo.93.1329564602198 (num_hops = 1);
-        Sat, 18 Feb 2012 03:30:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=d+ie1WRMxMKi28dP+cd0xdNP1tQybBWBEWvI5qn7uJE=;
-        b=eF6I31bUfPqniBwS3Ccbt589bTJBpT7ACW3zJxbP6hx2KUsr5KYYCIKnlQ+Jk3DANp
-         iHqjEHdFDUFAZI9AkUDtx8CNa0U80j1GCn8IzXDbI8ncFgaIQb/fnpMlXVS9DBPhENz3
-         ZNa9Hs67H0KQxKZQKL7GqX3IVyml0NTaZchg8=
-Received: by 10.213.3.201 with SMTP id 9mr377138ebo.93.1329564600716;
-        Sat, 18 Feb 2012 03:30:00 -0800 (PST)
-Received: from localhost.localdomain (abwr227.neoplus.adsl.tpnet.pl. [83.8.241.227])
-        by mx.google.com with ESMTPS id s48sm47859768eem.0.2012.02.18.03.29.59
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 18 Feb 2012 03:30:00 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q1IBTkvG008726;
-	Sat, 18 Feb 2012 12:29:52 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q1IBTZgG008723;
-	Sat, 18 Feb 2012 12:29:35 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <E56535F6-2C9B-4D14-A88F-2471E34D2769@gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752288Ab2BRNJJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Feb 2012 08:09:09 -0500
+Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:59443 "EHLO
+	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752242Ab2BRNJH (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Feb 2012 08:09:07 -0500
+Received: from know-smtpout-4.server.virginmedia.net ([62.254.123.4])
+          by mtaout02-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20120218130904.RDXL15568.mtaout02-winn.ispmail.ntl.com@know-smtpout-4.server.virginmedia.net>;
+          Sat, 18 Feb 2012 13:09:04 +0000
+Received: from [94.171.229.22] (helo=fox.patthoyts.tk)
+	by know-smtpout-4.server.virginmedia.net with esmtpa (Exim 4.63)
+	(envelope-from <patthoyts@users.sourceforge.net>)
+	id 1Ryk2B-0006OH-Ua; Sat, 18 Feb 2012 13:09:03 +0000
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id C1AB2217EE; Sat, 18 Feb 2012 13:09:02 +0000 (GMT)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+X-Home-Page: http://www.patthoyts.tk/
+X-Web: http://www.patthoyts.tk/
+In-Reply-To: <1329467459691-7293532.post@n2.nabble.com> (shyamal's message of
+	"Fri, 17 Feb 2012 00:30:59 -0800 (PST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+X-Cloudmark-Analysis: v=1.1 cv=R50lirqlHffDPPkwUlkuVa99MrvKdVWo//yz83qex8g= c=1 sm=0 a=O9HYxzjLEG8A:10 a=kj9zAlcOel0A:10 a=pGLkceISAAAA:8 a=Rf460ibiAAAA:8 a=8eIMXMbzO203UfjatMAA:9 a=meFZqHEATPx4Zu0bZGUA:7 a=CjuIK1q_8ugA:10 a=MSl-tDqOz04A:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191006>
 
-Igor <mrigor83@gmail.com> writes:
+shyamal <shyamal2005@gmail.com> writes:
 
-> I'm running into an issue where I have to enter my pem certificate
-> password every time I git-svn fetch or git-svn dcommit. Vanilla svn
-> uses OS X KeyChain and remembers my password just fine. Is there a
-> known solution for this? Other users have ran into same issue as
-> described here:
+>Hi,
 >
->   http://stackoverflow.com/questions/605519/does-git-svn-store-svn-passwords
+>I am working in Japan now on a windows environment.
+>I installed GIT on my machine.When I run the application,The menus are in
+>Japanese.To get the English menu I added 
+>@set LANG=en 
+>at the beginning of git.cmd file.This worked like a magic :-)
+>But when I click the Visualize master' history from the repository menu of
+>Git Gui, a new interface (Gitk:Websites) opens where all the menus are still
+>in Japanese.Any idea how to change the menu to  English in Gitk too?
+>
+>Thanks in advance
+>
+>Regards,
+>Shyamal.
 
-> However, that solution of removing .subversion folder did not work
-> for me.
+If I modify the git.cmd file here on my English system to include
+@set LANG=fr just after the @set PLINK_PROTOCOL=ssh command, then git
+gui runs with French menus and selecting the view history menu item
+launches gitk with French menus.
 
-I don't know if it is svn that has to remember password, or git that
-has to remember password.  Git 1.7.9 learned "credentials API" that
-allows integration with platform native keychain mechanisms, and I
-think OS X Keychain is one of examples / supported platforms (but it
-might not made it into core git)... though I am not sure if it affects
-git-svn, or only HTTP(S) transport.
+This is because git-gui executes a new tcl interpreter subprocess passing
+in the known gitk script location. So the gitk process inherits the
+git-gui environment (including this LANG setting). It doesn't call the
+gitk.cmd script on Windows.
+
+Possibly your interpreter is picking up some other locale setting. The
+msgcat script will use LC_ALL, LC_MESSAGES or LANG (in that order) and
+only makes use of the first one it sees. So perhaps you have an LC_ALL
+set someplace - however, I would assume that would force the git-gui
+script to use that locale too.
+
+One quick hack would be to modify bin/gitk and after the msgcat
+initialization force the locale using:
+   msgcat::mclocale en
+
 
 -- 
-Jakub Narebski
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
