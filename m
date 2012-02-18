@@ -1,106 +1,76 @@
-From: =?UTF-8?q?Philip=20J=C3=A4genstedt?= <philip@foolip.org>
-Subject: [PATCH] completion: remote set-* <name> and <branch>
-Date: Sat, 18 Feb 2012 14:32:53 +0100
-Message-ID: <1329571973-20796-1-git-send-email-philip@foolip.org>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: Does pack v4 do anything to commits?
+Date: Sat, 18 Feb 2012 10:34:43 -0500 (EST)
+Message-ID: <alpine.LFD.2.02.1202181013350.24536@xanadu.home>
+References: <CACsJy8CZPG3b3LBF-EFO_kOv6i157jy5414+bHcqiwOKyC+8VA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?q?Philip=20J=C3=A4genstedt?= <philip@foolip.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Feb 18 14:34:30 2012
+Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 18 16:34:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RykQj-0002Gb-SB
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Feb 2012 14:34:26 +0100
+	id 1RymJL-0007CX-BJ
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Feb 2012 16:34:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752197Ab2BRNeU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Feb 2012 08:34:20 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:34756 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751989Ab2BRNeU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Feb 2012 08:34:20 -0500
-Received: by lagu2 with SMTP id u2so4788473lag.19
-        for <git@vger.kernel.org>; Sat, 18 Feb 2012 05:34:18 -0800 (PST)
-Received-SPF: pass (google.com: domain of philip@foolip.org designates 10.112.88.10 as permitted sender) client-ip=10.112.88.10;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of philip@foolip.org designates 10.112.88.10 as permitted sender) smtp.mail=philip@foolip.org
-Received: from mr.google.com ([10.112.88.10])
-        by 10.112.88.10 with SMTP id bc10mr4394491lbb.60.1329572058596 (num_hops = 1);
-        Sat, 18 Feb 2012 05:34:18 -0800 (PST)
-Received: by 10.112.88.10 with SMTP id bc10mr3659507lbb.60.1329572058521;
-        Sat, 18 Feb 2012 05:34:18 -0800 (PST)
-Received: from localhost.localdomain (h128n3-g-hn-a11.ias.bredband.telia.com. [217.209.32.128])
-        by mx.google.com with ESMTPS id il7sm11500200lbb.9.2012.02.18.05.34.17
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 18 Feb 2012 05:34:17 -0800 (PST)
-X-Mailer: git-send-email 1.7.9.1.245.g4cbe6
-X-Gm-Message-State: ALoCoQkxUbFqCI4nPRrUKfucnJ1mtW4M0S3c/kR8rTZGimH5GT2v4370lrkgDMDh9p3Kl04ylBt5
+	id S1752501Ab2BRPeq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Feb 2012 10:34:46 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:29718 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752156Ab2BRPeo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Feb 2012 10:34:44 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-VM-MR005.ip.videotron.ca
+ (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
+ 2011)) with ESMTP id <0LZL0019BHXVUP80@VL-VM-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 18 Feb 2012 10:34:43 -0500 (EST)
+In-reply-to: <CACsJy8CZPG3b3LBF-EFO_kOv6i157jy5414+bHcqiwOKyC+8VA@mail.gmail.com>
+User-Agent: Alpine 2.02 (LFD 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191009>
 
-Complete <name> only for set-url. For set-branches and
-set-head, complete <name> and <branch> over the network,
-like e.g. git pull already does.
+On Sat, 18 Feb 2012, Nguyen Thai Ngoc Duy wrote:
 
-Signed-off-by: Philip J=C3=A4genstedt <philip@foolip.org>
----
- contrib/completion/git-completion.bash |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+> Hi Nico,
+> 
+> I had an experiment on speeding up "rev-list --all". If I cache sha-1
+> of tree and parent, and committer date of single-parent commits, in
+> binary form, rev-list can be sped up significantly. On linux-2.6.git,
+> it goes from 14s to 4s (2s to 0.8 for git.git). Profiling shows that
+> commit parsing (get_sha1_hex, parse_commit_date) dominates rev-list
+> time.
+> 
+> >From what I remember, pack v4 is mainly about changing tree
+> representation so that we can traverse object DAG as fast as possible.
+> Do you do anything to commit representation too? Maybe it's worth
+> storing the above info along with the compressed commit objects in
+> pack to shave some more seconds.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 1505cff..8e7abb6 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -738,6 +738,9 @@ __git_complete_remote_or_refspec ()
- {
- 	local cur_=3D"$cur" cmd=3D"${words[1]}"
- 	local i c=3D2 remote=3D"" pfx=3D"" lhs=3D1 no_complete_refspec=3D0
-+	if [ "$cmd" =3D "remote" ]; then
-+		c=3D$((++c))
-+	fi
- 	while [ $c -lt $cword ]; do
- 		i=3D"${words[c]}"
- 		case "$i" in
-@@ -788,7 +791,7 @@ __git_complete_remote_or_refspec ()
- 			__gitcomp_nl "$(__git_refs)" "$pfx" "$cur_"
- 		fi
- 		;;
--	pull)
-+	pull|remote)
- 		if [ $lhs =3D 1 ]; then
- 			__gitcomp_nl "$(__git_refs "$remote")" "$pfx" "$cur_"
- 		else
-@@ -2289,7 +2292,7 @@ _git_config ()
-=20
- _git_remote ()
- {
--	local subcommands=3D"add rename rm show prune update set-head"
-+	local subcommands=3D"add rename rm set-head set-branches set-url show=
- prune update"
- 	local subcommand=3D"$(__git_find_on_cmdline "$subcommands")"
- 	if [ -z "$subcommand" ]; then
- 		__gitcomp "$subcommands"
-@@ -2297,9 +2300,12 @@ _git_remote ()
- 	fi
-=20
- 	case "$subcommand" in
--	rename|rm|show|prune)
-+	rename|rm|set-url|show|prune)
- 		__gitcomp_nl "$(__git_remotes)"
- 		;;
-+	set-head|set-branches)
-+		__git_complete_remote_or_refspec
-+		;;
- 	update)
- 		local i c=3D'' IFS=3D$'\n'
- 		for i in $(git --git-dir=3D"$(__gitdir)" config --get-regexp "remote=
-s\..*" 2>/dev/null); do
---=20
-1.7.9.1.245.g4cbe6
+Both the tree and commit object representations are completely changed 
+to evacuate SHA1 parsing and searching entirely.  The SHA1 references 
+are uncompressed, and replaced by indices into the pack for direct 
+lookup without any binary search.  And the commit dates are stored in 
+binary form. All path names as well as author/committer names are 
+factored out into a table as well. This should make history traversal 
+operations almost as fast as walking a linked list in memory, while 
+making the actual pack size smaller at the same time.
+
+> By the way, is latest packv4 code available somewhere to fetch?
+
+Well, not yet.  Incidentally, I'm going in the Caribbeans for a week in 
+a week, with no kids and only my wife who is going to be busy with scuba 
+diving activities.  Like I did last year, I'm going to take some time to 
+pursue my work on Pack v4 during that time.  And I intend to publish it 
+when I come back, whatever state it is in, so someone else can complete 
+the work eventually (I have too much to do to spend significant time on 
+Git these days).
+
+
+Nicolas
