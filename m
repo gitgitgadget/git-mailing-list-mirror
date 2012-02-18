@@ -1,74 +1,100 @@
-From: Beat Bolli <bbolli@ewanet.ch>
-Subject: [PATCH] cherry-pick -x: always insert an empty line
-Date: Sat, 18 Feb 2012 22:14:50 +0100
-Message-ID: <1329599690-9152-1-git-send-email-bbolli@ewanet.ch>
-Cc: Beat Bolli <bbolli@ewanet.ch>, Eric Raible <raible@nextest.com>
+From: Adrian Cornish <git@bluedreamer.com>
+Subject: git clean is not removing a submodule added to a branch when
+ switching branches
+Date: Sat, 18 Feb 2012 14:27:42 -0700
+Message-ID: <CAGc=MuDrE_1CVzOsqcodhadcfajaa-BHjHVAp9mFDNbU=wVQqQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 18 22:23:59 2012
+X-From: git-owner@vger.kernel.org Sat Feb 18 22:27:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ryrl7-0001hX-Hq
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Feb 2012 22:23:57 +0100
+	id 1Ryros-0003uA-Gx
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Feb 2012 22:27:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753505Ab2BRVXB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Feb 2012 16:23:01 -0500
-Received: from smtp2.mail.fcom.ch ([212.60.46.171]:46003 "EHLO
-	smtp2.mail.fcom.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753352Ab2BRVW6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Feb 2012 16:22:58 -0500
-X-Greylist: delayed 457 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Feb 2012 16:22:58 EST
-Received: from smtp2.mail.fcom.ch (localhost [127.0.0.1])
-	by smtp2 (Postfix) with ESMTP id 558372D4BF;
-	Sat, 18 Feb 2012 22:15:15 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on smtp2.mail.fcom.ch
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,RCVD_IN_SORBS_DUL,
-	RDNS_DYNAMIC autolearn=no version=3.2.5
-Received: from drbeat.li (228-101-204-62-pool.cable.fcom.ch [62.204.101.228])
-	by smtp2 (Postfix) with ESMTPS id 0FDA92D4B9;
-	Sat, 18 Feb 2012 22:15:12 +0100 (CET)
-Received: by drbeat.li (Postfix, from userid 1000)
-	id A1BBF17F1A; Sat, 18 Feb 2012 22:15:11 +0100 (CET)
-X-Mailer: git-send-email 1.7.9
-X-AV-Checked: ClamAV using ClamSMTP
+	id S1753483Ab2BRV1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Feb 2012 16:27:44 -0500
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:61992 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753436Ab2BRV1n (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Feb 2012 16:27:43 -0500
+Received: by wics10 with SMTP id s10so2215048wic.19
+        for <git@vger.kernel.org>; Sat, 18 Feb 2012 13:27:42 -0800 (PST)
+Received-SPF: pass (google.com: domain of adriancornish73@gmail.com designates 10.180.14.73 as permitted sender) client-ip=10.180.14.73;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of adriancornish73@gmail.com designates 10.180.14.73 as permitted sender) smtp.mail=adriancornish73@gmail.com; dkim=pass header.i=adriancornish73@gmail.com
+Received: from mr.google.com ([10.180.14.73])
+        by 10.180.14.73 with SMTP id n9mr6064335wic.16.1329600462619 (num_hops = 1);
+        Sat, 18 Feb 2012 13:27:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        bh=S4SI1PZrHgrWgpBEmhRMhVL3u/NJiMkCNXmFr6rO5M4=;
+        b=q2uiZGkTXM/gT12XmRE3i+PYzhlOhbsV2UHH57UYqIAxPSRYhCty9kISEwUVBVZt79
+         kaz8o7qudmv/XpY9zfpOxC4Zx22ypow+G9qUNuMVGXwDz8tRBDCXEZyslS2oorxNCmaH
+         bBgMt2wLnzbEgxwQTdWNf0FC5OeTPpDJ5clto=
+Received: by 10.180.14.73 with SMTP id n9mr5096371wic.16.1329600462557; Sat,
+ 18 Feb 2012 13:27:42 -0800 (PST)
+Received: by 10.216.229.165 with HTTP; Sat, 18 Feb 2012 13:27:42 -0800 (PST)
+X-Google-Sender-Auth: m1a2a0o7LtExU8927Xn-g2DdZuA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191013>
 
-When cherry-picking a commit that has only a summary, the -x option
-creates an invalid commit message because it puts the hash of the commit
-being picked on the second line which should be left empty.
+If I add a submodule to a branch and then switch branches, git
+checkout warns it cannot
+remove the submodule. If I then issue a git clean - it says it removes
+the submodule but
+in fact does nothing at all. Is this a bug or expected behaviour.
 
-This patch fixes this buglet by always inserting an empty line before
-the added line.
+TIA
 
-Aside from that, even with a non-trivial commit the generated note
-"(cherry picked from commit 555c9864971744abb558796aea28e12a1ac20839)"
-seems abrupt when appended directly.
+Adrian
 
-Cc: Eric Raible <raible@nextest.com>
-Signed-off-by: Beat Bolli <bbolli@ewanet.ch>
----
- sequencer.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Below are cut&paste steps to reproduce.
 
-diff --git a/sequencer.c b/sequencer.c
-index 5fcbcb8..63fd589 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -382,7 +382,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 		}
- 
- 		if (opts->record_origin) {
--			strbuf_addstr(&msgbuf, "(cherry picked from commit ");
-+			strbuf_addstr(&msgbuf, "\n(cherry picked from commit ");
- 			strbuf_addstr(&msgbuf, sha1_to_hex(commit->object.sha1));
- 			strbuf_addstr(&msgbuf, ")\n");
- 		}
--- 
-1.7.9
+git --version
+#git version 1.7.8.4
+
+git init submod
+cd submod
+echo "This is a submodule" > README.txt
+git add .
+git commit -m "Initial commit"
+cd ..
+git init prog
+cd prog
+echo "This is a program" > README.txt
+git add .
+git commit -a -m "Initial commit"
+git checkout -b topic1
+git submodule add ../submod
+git commit -m "Added submodule"
+
+git checkout master
+#warning: unable to rmdir submod: Directory not empty
+#Switched to branch 'master'
+
+git status
+# On branch master
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       submod/
+#nothing added to commit but untracked files present (use "git add" to track)
+
+git clean -fd
+#Removing submod/
+
+git status
+# On branch master
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       submod/
+#nothing added to commit but untracked files present (use "git add" to track)
