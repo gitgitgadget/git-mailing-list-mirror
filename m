@@ -1,61 +1,78 @@
-From: Jehan Bing <jehan@orb.com>
-Subject: Re: [PATCH v2] Add a setting to require a filter to be successful
-Date: Fri, 17 Feb 2012 16:43:41 -0800
-Message-ID: <4F3EF43D.2040102@orb.com>
-References: <7vobsywck1.fsf@alter.siamese.dyndns.org> <4f3daaf7.e302440a.02ba.fffff463@mx.google.com> <4F3DFCD0.6070002@viscovery.net> <7vd39dqa1i.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 0/3]
+Date: Fri, 17 Feb 2012 19:51:48 -0500
+Message-ID: <20120218005148.GA1940@sigill.intra.peff.net>
+References: <7v7gzmxw78.fsf@alter.siamese.dyndns.org>
+ <cover.1329472405.git.trast@student.ethz.ch>
+ <7v62f5v1d1.fsf@alter.siamese.dyndns.org>
+ <7vk43lqbt8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
+Content-Type: text/plain; charset=utf-8
+Cc: Thomas Rast <trast@student.ethz.ch>, Jehan Bing <jehan@orb.com>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 18 01:44:18 2012
+X-From: git-owner@vger.kernel.org Sat Feb 18 01:52:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RyYPP-0000yP-IX
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Feb 2012 01:44:15 +0100
+	id 1RyYXI-0006P7-3L
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Feb 2012 01:52:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752222Ab2BRAno (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Feb 2012 19:43:44 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:38911 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751989Ab2BRAno (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Feb 2012 19:43:44 -0500
-Received: by pbcun15 with SMTP id un15so4268710pbc.19
-        for <git@vger.kernel.org>; Fri, 17 Feb 2012 16:43:43 -0800 (PST)
-Received-SPF: pass (google.com: domain of jehan@orb.com designates 10.68.138.194 as permitted sender) client-ip=10.68.138.194;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of jehan@orb.com designates 10.68.138.194 as permitted sender) smtp.mail=jehan@orb.com
-Received: from mr.google.com ([10.68.138.194])
-        by 10.68.138.194 with SMTP id qs2mr35894509pbb.53.1329525823681 (num_hops = 1);
-        Fri, 17 Feb 2012 16:43:43 -0800 (PST)
-Received: by 10.68.138.194 with SMTP id qs2mr28945654pbb.53.1329525823644;
-        Fri, 17 Feb 2012 16:43:43 -0800 (PST)
-Received: from [192.168.13.5] (173-167-111-189-sfba.hfc.comcastbusiness.net. [173.167.111.189])
-        by mx.google.com with ESMTPS id x6sm6453484pbp.31.2012.02.17.16.43.42
-        (version=SSLv3 cipher=OTHER);
-        Fri, 17 Feb 2012 16:43:42 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <7vd39dqa1i.fsf@alter.siamese.dyndns.org>
-X-Gm-Message-State: ALoCoQm/La61y1VBUPxSr8ZwDRrbT7nk4AmUN0cK63vOt4/4D2hjY+CsXfvsQCFEC0XGB2aUcxwj
+	id S1751801Ab2BRAvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Feb 2012 19:51:51 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41291
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751056Ab2BRAvu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Feb 2012 19:51:50 -0500
+Received: (qmail 13742 invoked by uid 107); 18 Feb 2012 00:51:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 17 Feb 2012 19:51:49 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Feb 2012 19:51:48 -0500
+Content-Disposition: inline
+In-Reply-To: <7vk43lqbt8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190990>
 
-On 2012-02-17 16:07, Junio C Hamano wrote:
-> A few test in t0021 use 'false' as the filter, which can exit without
-> reading any byte from us, before we start writing and causes us to die
-> with SIGPIPE, leading to intermittent test failure.  I think treating this
-> as a failure of running the filter (the end user's filter should read what
-> is fed in full, produce its output and write the result back to us) is the
-> right thing to do, and this patch needs more work to handle such a
-> situation better, probably by using sigchain_push(SIGPIPE) or something.
+On Fri, Feb 17, 2012 at 03:28:51PM -0800, Junio C Hamano wrote:
 
-If I understand what you're saying, current version of git already have 
-the problem: if a filter fails without reading anything, git will die 
-instead of using the unfiltered content. My patch has only made the 
-issue apparent by testing with a failing filter.
-Am I understanding correctly?
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Thomas Rast <trast@student.ethz.ch> writes:
+> > ...
+> > I seem to be getting intermittent test failures, and every time the
+> > failing tests are different, when these three are queued to 'pu'. I didn't
+> > look for what goes wrong and how.
+> 
+> False alarm. I suspect that it is jb/required-filter topic that is causing
+> intermittent failures from convert.c depending on the timing of how fast
+> filter subprocess dies vs how fast we consume its result or something.
+> 
+> Repeatedly running t0021 like this:
+> 
+>     $ cd t
+>     $ while sh t0021-conversion.sh ; do :; done
+> 
+> under load seems to make it fail every once in a while.
+> 
+> test_must_fail: died by signal: git add test.fc
+> 
+> Are we dying on SIGPIPE or something?
+
+I would be unsurprised if that is the case. Joey Hess mentioned similar
+issues with hooks a month or two ago. And I have been seeing
+intermittent failures of t5541 under load that I traced back to SIGPIPE.
+I've been meaning to dig further and come up with a good solution.
+Here's some previous discussion:
+
+  http://article.gmane.org/gmane.comp.version-control.git/186291
+
+I'd be happy if we just ignored SIGPIPE everywhere, but turned it on for
+the log family.
+
+-Peff
