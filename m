@@ -1,66 +1,74 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: [PATCH 0/1] Make libintl in libc detection more robust
-Date: Sat, 18 Feb 2012 14:38:03 -0500
-Message-ID: <1329593884-9999-1-git-send-email-john@szakmeister.net>
-Cc: John Szakmeister <john@szakmeister.net>
+From: Beat Bolli <bbolli@ewanet.ch>
+Subject: [PATCH] cherry-pick -x: always insert an empty line
+Date: Sat, 18 Feb 2012 22:14:50 +0100
+Message-ID: <1329599690-9152-1-git-send-email-bbolli@ewanet.ch>
+Cc: Beat Bolli <bbolli@ewanet.ch>, Eric Raible <raible@nextest.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 18 20:40:45 2012
+X-From: git-owner@vger.kernel.org Sat Feb 18 22:23:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ryq9D-0001r4-Tr
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Feb 2012 20:40:44 +0100
+	id 1Ryrl7-0001hX-Hq
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Feb 2012 22:23:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752583Ab2BRTjY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Feb 2012 14:39:24 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:55393 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752565Ab2BRTjV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Feb 2012 14:39:21 -0500
-Received: by qadc10 with SMTP id c10so1955479qad.19
-        for <git@vger.kernel.org>; Sat, 18 Feb 2012 11:39:20 -0800 (PST)
-Received-SPF: pass (google.com: domain of jszakmeister@gmail.com designates 10.229.102.88 as permitted sender) client-ip=10.229.102.88;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of jszakmeister@gmail.com designates 10.229.102.88 as permitted sender) smtp.mail=jszakmeister@gmail.com; dkim=pass header.i=jszakmeister@gmail.com
-Received: from mr.google.com ([10.229.102.88])
-        by 10.229.102.88 with SMTP id f24mr9618898qco.117.1329593960956 (num_hops = 1);
-        Sat, 18 Feb 2012 11:39:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        bh=jYhaqI9YfmIOWhB3q11ubavssyTrG/Kv23rPrutD0cg=;
-        b=nmMXUnr4MD13cy7T/8ZoGoAXqG7JupfNAX07Ql3HDF8rqqLx1yxUsqUas5M2pLExQo
-         Wfs3dkAQWnXOszXsxFp5NbZg3aPpvzne6vWMVuTBRlWho3yx0ZBbhL4DEcoYbbGl6ZJh
-         XhJ6BYIE5k32Td9ehiJkZmkztz1y9j3clfPCA=
-Received: by 10.229.102.88 with SMTP id f24mr8176885qco.117.1329593960866;
-        Sat, 18 Feb 2012 11:39:20 -0800 (PST)
-Received: from localhost.localdomain (pool-71-179-190-236.bltmmd.fios.verizon.net. [71.179.190.236])
-        by mx.google.com with ESMTPS id bf2sm8430903qab.20.2012.02.18.11.39.19
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 18 Feb 2012 11:39:20 -0800 (PST)
-X-Mailer: git-send-email 1.7.9.1
+	id S1753505Ab2BRVXB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Feb 2012 16:23:01 -0500
+Received: from smtp2.mail.fcom.ch ([212.60.46.171]:46003 "EHLO
+	smtp2.mail.fcom.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753352Ab2BRVW6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Feb 2012 16:22:58 -0500
+X-Greylist: delayed 457 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Feb 2012 16:22:58 EST
+Received: from smtp2.mail.fcom.ch (localhost [127.0.0.1])
+	by smtp2 (Postfix) with ESMTP id 558372D4BF;
+	Sat, 18 Feb 2012 22:15:15 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on smtp2.mail.fcom.ch
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,RCVD_IN_SORBS_DUL,
+	RDNS_DYNAMIC autolearn=no version=3.2.5
+Received: from drbeat.li (228-101-204-62-pool.cable.fcom.ch [62.204.101.228])
+	by smtp2 (Postfix) with ESMTPS id 0FDA92D4B9;
+	Sat, 18 Feb 2012 22:15:12 +0100 (CET)
+Received: by drbeat.li (Postfix, from userid 1000)
+	id A1BBF17F1A; Sat, 18 Feb 2012 22:15:11 +0100 (CET)
+X-Mailer: git-send-email 1.7.9
+X-AV-Checked: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191012>
 
-When building the latest release, I noticed that pthreads support
-was disabled.  It turns out that the libintl in libc support is
-adding "-lintl" to LIBS, even though I don't have that library on my
-Mac.  This patch fixes the issue by moving the check for libintl.h
-closer to the checks for libintl in libc, and only adding "-lintl"
-when NO_GETTEXT is empty.
+When cherry-picking a commit that has only a summary, the -x option
+creates an invalid commit message because it puts the hash of the commit
+being picked on the second line which should be left empty.
 
-This is my first time submitting a patch to git.  I hope I've done
-things correctly!
+This patch fixes this buglet by always inserting an empty line before
+the added line.
 
-John Szakmeister (1):
-  Don't append -lintl when there is no gettext support
+Aside from that, even with a non-trivial commit the generated note
+"(cherry picked from commit 555c9864971744abb558796aea28e12a1ac20839)"
+seems abrupt when appended directly.
 
- configure.ac |   20 ++++++++++++--------
- 1 files changed, 12 insertions(+), 8 deletions(-)
+Cc: Eric Raible <raible@nextest.com>
+Signed-off-by: Beat Bolli <bbolli@ewanet.ch>
+---
+ sequencer.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
+diff --git a/sequencer.c b/sequencer.c
+index 5fcbcb8..63fd589 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -382,7 +382,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 		}
+ 
+ 		if (opts->record_origin) {
+-			strbuf_addstr(&msgbuf, "(cherry picked from commit ");
++			strbuf_addstr(&msgbuf, "\n(cherry picked from commit ");
+ 			strbuf_addstr(&msgbuf, sha1_to_hex(commit->object.sha1));
+ 			strbuf_addstr(&msgbuf, ")\n");
+ 		}
 -- 
-1.7.9.1
+1.7.9
