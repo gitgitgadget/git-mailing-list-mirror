@@ -1,65 +1,76 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Does pack v4 do anything to commits?
-Date: Sat, 18 Feb 2012 11:44:40 +0700
-Message-ID: <CACsJy8CZPG3b3LBF-EFO_kOv6i157jy5414+bHcqiwOKyC+8VA@mail.gmail.com>
+From: Brian Norris <computersforpeace@gmail.com>
+Subject: Re: [PATCH] git-send-email: allow overriding smtp-encryption config
+ to 'none'
+Date: Fri, 17 Feb 2012 21:27:44 -0800
+Message-ID: <CAN8TOE-vek=ooq4DRcNF0iCg+rJMt6SUhMi4+_dOWaRJ44KLLA@mail.gmail.com>
+References: <1329342178-14540-1-git-send-email-computersforpeace@gmail.com>
+	<20120215220629.GA17672@sigill.intra.peff.net>
+	<CAN8TOE_BnkOcMQRTY-GWrHozYD0+0giWn2LtjB8AVnP_DzA+Sg@mail.gmail.com>
+	<20120216004903.GA21170@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Sat Feb 18 05:45:48 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Feb 18 06:27:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RycB9-0002yi-Lh
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Feb 2012 05:45:48 +0100
+	id 1Rycpt-0003mf-Px
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Feb 2012 06:27:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751975Ab2BREpM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Feb 2012 23:45:12 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:38125 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751116Ab2BREpL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Feb 2012 23:45:11 -0500
-Received: by wgbdt10 with SMTP id dt10so3260653wgb.1
-        for <git@vger.kernel.org>; Fri, 17 Feb 2012 20:45:10 -0800 (PST)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.216.136.211 as permitted sender) client-ip=10.216.136.211;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.216.136.211 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
-Received: from mr.google.com ([10.216.136.211])
-        by 10.216.136.211 with SMTP id w61mr328502wei.18.1329540310340 (num_hops = 1);
-        Fri, 17 Feb 2012 20:45:10 -0800 (PST)
+	id S1751230Ab2BRF1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Feb 2012 00:27:46 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:60001 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750917Ab2BRF1p (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Feb 2012 00:27:45 -0500
+Received: by ghrr11 with SMTP id r11so2144917ghr.19
+        for <git@vger.kernel.org>; Fri, 17 Feb 2012 21:27:44 -0800 (PST)
+Received-SPF: pass (google.com: domain of computersforpeace@gmail.com designates 10.236.72.170 as permitted sender) client-ip=10.236.72.170;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of computersforpeace@gmail.com designates 10.236.72.170 as permitted sender) smtp.mail=computersforpeace@gmail.com; dkim=pass header.i=computersforpeace@gmail.com
+Received: from mr.google.com ([10.236.72.170])
+        by 10.236.72.170 with SMTP id t30mr17105902yhd.101.1329542864923 (num_hops = 1);
+        Fri, 17 Feb 2012 21:27:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=imTYw7+IqvZKEhH1icV8om3qAEZk1E1Xa+Pu2CCY7as=;
-        b=QKc4Db2IX3S2ocweQymkmbGmGx27EunNkRotv+dTstOvyqtgyhPU08CHwHzJ7an0FJ
-         0hPrNLXiNT6d7Ytxu488A5dFzvUPzER9avE7VgOwZ8TAq0Nve7el/iBPaptaHt32UJ3n
-         16GN2lS8u9rbrgdn8LsCsYzkBHkv05lVE2aFI=
-Received: by 10.216.136.211 with SMTP id w61mr282686wei.18.1329540310249; Fri,
- 17 Feb 2012 20:45:10 -0800 (PST)
-Received: by 10.223.2.139 with HTTP; Fri, 17 Feb 2012 20:44:40 -0800 (PST)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=+tiquqLfbua0G1vYk2nCtSs4TmnRU1ZXNRTbILRUDIs=;
+        b=FDyCkDg+S6pp5Sw4Acf8+yvQHc1HhXYp+joiRTGd+YK3IK6NDwaFkUK3/QTaGWOncI
+         NO4VLUFm9AKl3QYcaSN3BlyaIJG4wLuHthxw+yX1L25WuNkJezzzmhFZVal+8U7HTj5V
+         1Dg6uoPAkk8IqwZq6IkYoWboXzMRbTYydwqUU=
+Received: by 10.236.72.170 with SMTP id t30mr13102148yhd.101.1329542864877;
+ Fri, 17 Feb 2012 21:27:44 -0800 (PST)
+Received: by 10.236.25.5 with HTTP; Fri, 17 Feb 2012 21:27:44 -0800 (PST)
+In-Reply-To: <20120216004903.GA21170@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190994>
 
-Hi Nico,
+On Wed, Feb 15, 2012 at 4:49 PM, Jeff King <peff@peff.net> wrote:
+> Ah, I see. I misunderstood the original problem you were trying to solve
+> (I thought your example was "see? Encryption is off, so the server won't
+> do AUTH, demonstrating that the patch works.").
 
-I had an experiment on speeding up "rev-list --all". If I cache sha-1
-of tree and parent, and committer date of single-parent commits, in
-binary form, rev-list can be sped up significantly. On linux-2.6.git,
-it goes from 14s to 4s (2s to 0.8 for git.git). Profiling shows that
-commit parsing (get_sha1_hex, parse_commit_date) dominates rev-list
-time.
+Yeah, I got a little bit off track on what my actual goal was...
 
->From what I remember, pack v4 is mainly about changing tree
-representation so that we can traverse object DAG as fast as possible.
-Do you do anything to commit representation too? Maybe it's worth
-storing the above info along with the compressed commit objects in
-pack to shave some more seconds.
+> Overriding the smtp user from the config is a separate issue, and I
+> don't think that is currently possible. The usual way to spell an option
+> like that in git is "--no-smtp-user", but it seems that we use perl's
+> GetOptions, which does not understand that syntax. So you'd have to add
+> a "--no-smtp-user" by hand.
 
-By the way, is latest packv4 code available somewhere to fetch?
--- 
-Duy
+I think the "--no-smtp-user" is what I really wanted. I've written a
+different patch that actually targets the user name properly, but I've
+also found a current solution that can work for scripting purposes:
+just redirect the $GIT_CONFIG environment variable to /dev/null
+temporarily. Perhaps I'll send my new patch sometime, but it's not
+pressing and I'm not sure what kind of use it would actually get.
+
+Thanks for the pointers.
+
+Brian
