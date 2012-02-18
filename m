@@ -1,108 +1,93 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: SIGPIPE handling (Re: [PATCH v3 0/3])
-Date: Sat, 18 Feb 2012 05:24:40 -0500
-Message-ID: <20120218102439.GA17263@sigill.intra.peff.net>
-References: <7v7gzmxw78.fsf@alter.siamese.dyndns.org>
- <cover.1329472405.git.trast@student.ethz.ch>
- <7v62f5v1d1.fsf@alter.siamese.dyndns.org>
- <7vk43lqbt8.fsf@alter.siamese.dyndns.org>
- <20120218005148.GA1940@sigill.intra.peff.net>
- <7v8vk0r481.fsf@alter.siamese.dyndns.org>
- <20120218085221.GA13922@sigill.intra.peff.net>
- <20120218100517.GA8998@burratino>
+From: "=?UTF-8?q?Philip=20J=C3=A4genstedt?=" <philip.jagenstedt@gmail.com>
+Subject: [PATCH] remote: align set-branches builtin usage and documentation
+Date: Sat, 18 Feb 2012 12:17:47 +0100
+Message-ID: <1329563867-13283-1-git-send-email-philip@foolip.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Jehan Bing <jehan@orb.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 18 11:24:59 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Philip=20J=C3=A4genstedt?= <philip@foolip.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 18 12:18:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RyhTL-0000mw-5y
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Feb 2012 11:24:55 +0100
+	id 1RyiIk-0005nG-Fk
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Feb 2012 12:18:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752451Ab2BRKYr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Feb 2012 05:24:47 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42446
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752310Ab2BRKYq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Feb 2012 05:24:46 -0500
-Received: (qmail 17674 invoked by uid 107); 18 Feb 2012 10:24:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 18 Feb 2012 05:24:45 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 18 Feb 2012 05:24:40 -0500
-Content-Disposition: inline
-In-Reply-To: <20120218100517.GA8998@burratino>
+	id S1752506Ab2BRLR5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Feb 2012 06:17:57 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:49379 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752438Ab2BRLR4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Feb 2012 06:17:56 -0500
+Received: by lagu2 with SMTP id u2so4730120lag.19
+        for <git@vger.kernel.org>; Sat, 18 Feb 2012 03:17:55 -0800 (PST)
+Received-SPF: pass (google.com: domain of philip.jagenstedt@gmail.com designates 10.112.98.36 as permitted sender) client-ip=10.112.98.36;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of philip.jagenstedt@gmail.com designates 10.112.98.36 as permitted sender) smtp.mail=philip.jagenstedt@gmail.com; dkim=pass header.i=philip.jagenstedt@gmail.com
+Received: from mr.google.com ([10.112.98.36])
+        by 10.112.98.36 with SMTP id ef4mr4654350lbb.55.1329563875461 (num_hops = 1);
+        Sat, 18 Feb 2012 03:17:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=lzLp71dwg4dBk1cf+5KEuf4Nhr+q48PdEivXoMo4HHM=;
+        b=GX8fkVkzW42AfUC7Qx0IxDmeG37yRADUDTnVVpxIYi6sWvZDH+FF4CCbUHF/K1SPfe
+         YKgJ+38yZkvwE0lXsPe6IDMBzgVp5aYX2aU6q0ImFp3fcJbWh+0gzGvyTyuB8qiWwjhU
+         cMZcnjQ/B1crGYBUaZfvMWuTwd4eqqSnxXbVk=
+Received: by 10.112.98.36 with SMTP id ef4mr3876727lbb.55.1329563875397;
+        Sat, 18 Feb 2012 03:17:55 -0800 (PST)
+Received: from localhost.localdomain (h128n3-g-hn-a11.ias.bredband.telia.com. [217.209.32.128])
+        by mx.google.com with ESMTPS id mc3sm12319351lab.12.2012.02.18.03.17.53
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 18 Feb 2012 03:17:54 -0800 (PST)
+X-Mailer: git-send-email 1.7.9.1.246.g77c8c.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191004>
 
-On Sat, Feb 18, 2012 at 04:06:07AM -0600, Jonathan Nieder wrote:
+The order of [--add] <name> <branch>... was inconsistent
+between builtin remote usage messages and git-remote.txt.
+Align it closer to the order used in set-url.
 
-> Jeff King wrote:
-> 
-> > Less robust than that is to just ignore SIGPIPE in most git programs
-> > (which don't benefit from it, and where it is only a liability), but
-> > then manually enable it for the few that care
-> 
-> This seems backwards.  Aren't the only places where it is just a
-> liability places where git is writing to a pipe that git has created?
+Signed-off-by: Philip J=C3=A4genstedt <philip@foolip.org>
+---
+ Documentation/git-remote.txt |    2 +-
+ builtin/remote.c             |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Yes. But the problem is that those spots are buried deep within library
-code, and are an implementation detail that the caller shouldn't need to
-know about.
-
-But more importantly, I see SIGPIPE as an optimization. The program on
-the generating side of a pipe _could_ keep making output and dumping it
-nowhere. So the optimization is about telling it early that it can stop
-bothering. But that optimization is affecting correctness in some cases.
-And in cases of correctness versus optimization, it's nice if we can be
-correct by default and then optimize in places where it matters most and
-where we've verified that correctness isn't harmed.
-
-I also think it's simply easier to list the places that benefit from
-SIGPIPE than those that are harmed by it. But if we wanted to go the
-other way (allow by default and turn it off in a few programs), at the
-very least all of the network programs (receive-pack.  upload-pack, etc)
-should start ignoring it completely.
-
-> We could keep the benefits of SIGPIPE (including simpler error
-> handling and lack of distracting EPIPE message) in most code, and only
-> switch to SIGPIPE-ignored semantics where the signal has a chance to
-> cause harm.  Maybe run_command should automatically ignore SIGPIPE
-> when creating a pipe for the launched command's standard input (with a
-> flag to ask not to), as a rough heuristic.
-
-That's a reasonable heuristic, but not foolproof. If I have a
-long-running subprocess with a pipe, then SIGPIPE will be off for a long
-time, meaning the code you thought was protected by it is not. In
-practice, I think it would work OK with our current code-base, as we
-tend to have short-lived subprocesses. You'd have to special case the
-starting of the pager, of course, but that's not too hard.
-
-> There's a subtlety I'm glossing over here, which is that for commands
-> that produce a lot of output (think: "git fetch --all"), output may
-> still not the primary goal.  I think even they should not block
-> SIGPIPE, to follow the principle of least surprise in the following
-> interaction:
-> 
-> 	git fetch --all 2>&1 | less
-> 	... one page later, get bored ...
-> 	q (to quit)
-> 
-> Most Unix programs would be killed by SIGPIPE after such a sequence,
-> so I would expect git to be, too.
-
-But it's quite non-deterministic whether or when git-fetch will be
-killed. It may have written all data to the pipe. You may quit, but
-fetch still runs for a while before producing output. If you want it
-killed, you are much better off to do so by sending it SIGINT.
-
--Peff
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.tx=
+t
+index 5a8c506..d376d19 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -14,7 +14,7 @@ SYNOPSIS
+ 'git remote rename' <old> <new>
+ 'git remote rm' <name>
+ 'git remote set-head' <name> (-a | -d | <branch>)
+-'git remote set-branches' <name> [--add] <branch>...
++'git remote set-branches' [--add] <name> <branch>...
+ 'git remote set-url' [--push] <name> <newurl> [<oldurl>]
+ 'git remote set-url --add' [--push] <name> <newurl>
+ 'git remote set-url --delete' [--push] <name> <url>
+diff --git a/builtin/remote.c b/builtin/remote.c
+index f54a89a..fec92bc 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -16,7 +16,7 @@ static const char * const builtin_remote_usage[] =3D =
+{
+ 	"git remote [-v | --verbose] show [-n] <name>",
+ 	"git remote prune [-n | --dry-run] <name>",
+ 	"git remote [-v | --verbose] update [-p | --prune] [(<group> | <remot=
+e>)...]",
+-	"git remote set-branches <name> [--add] <branch>...",
++	"git remote set-branches [--add] <name> <branch>...",
+ 	"git remote set-url <name> <newurl> [<oldurl>]",
+ 	"git remote set-url --add <name> <newurl>",
+ 	"git remote set-url --delete <name> <url>",
+--=20
+1.7.9.1.246.g77c8c.dirty
