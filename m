@@ -1,82 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-send-email: allow overriding smtp-encryption config
- to 'none'
-Date: Sat, 18 Feb 2012 01:24:19 -0500
-Message-ID: <20120218062418.GA3818@sigill.intra.peff.net>
-References: <1329342178-14540-1-git-send-email-computersforpeace@gmail.com>
- <20120215220629.GA17672@sigill.intra.peff.net>
- <CAN8TOE_BnkOcMQRTY-GWrHozYD0+0giWn2LtjB8AVnP_DzA+Sg@mail.gmail.com>
- <20120216004903.GA21170@sigill.intra.peff.net>
- <CAN8TOE-vek=ooq4DRcNF0iCg+rJMt6SUhMi4+_dOWaRJ44KLLA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Add a setting to require a filter to be successful
+Date: Fri, 17 Feb 2012 23:27:49 -0800
+Message-ID: <7v4nuor47e.fsf@alter.siamese.dyndns.org>
+References: <7vobsywck1.fsf@alter.siamese.dyndns.org>
+ <4f3daaf7.e302440a.02ba.fffff463@mx.google.com>
+ <4F3DFCD0.6070002@viscovery.net> <7vd39dqa1i.fsf@alter.siamese.dyndns.org>
+ <4F3EF43D.2040102@orb.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Brian Norris <computersforpeace@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 18 07:24:27 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
+To: Jehan Bing <jehan@orb.com>
+X-From: git-owner@vger.kernel.org Sat Feb 18 08:28:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rydic-0005vv-Uk
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Feb 2012 07:24:27 +0100
+	id 1RyeiA-0004NX-AC
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Feb 2012 08:28:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751836Ab2BRGYV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Feb 2012 01:24:21 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41373
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751116Ab2BRGYV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Feb 2012 01:24:21 -0500
-Received: (qmail 15302 invoked by uid 107); 18 Feb 2012 06:24:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 18 Feb 2012 01:24:20 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 18 Feb 2012 01:24:19 -0500
-Content-Disposition: inline
-In-Reply-To: <CAN8TOE-vek=ooq4DRcNF0iCg+rJMt6SUhMi4+_dOWaRJ44KLLA@mail.gmail.com>
+	id S1751987Ab2BRH16 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Feb 2012 02:27:58 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47675 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751050Ab2BRH1v (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Feb 2012 02:27:51 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E7E947EC8;
+	Sat, 18 Feb 2012 02:27:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=a8kKENyWVimZhDpWKyQPddXerF8=; b=uHrUk4
+	4nyjF6RLiuhTqzE5X36kYg8O9P/ztunr8h+fxoeP8xwSO6cG/z5CKVld5Jcm+40N
+	zhHA4VBjprgcDr+1CLx3Jbeyn1SFyvxSStjW9N3WGSg7uB1O0sideteDsCxi6q9S
+	UZf21g4sL2hviT7WnKz1dLYLMddZF9iKj50gE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MNCWB2OoZDIkR11aFydYzLwsQBFmBPya
+	4+pWhK9PQDRPF8Th0VxjDOGH0Le43avdqsRF5XrYd1o92DFsmQXp9w2tZrQax4Qj
+	N7ikuVrc800KPpZJnWtMNtEgoXRMBDF/kjhim4/24P9elZ1B/Pc8/vMwiZyVtsnX
+	O7W9Yi7ZMrE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DFE3C7EC7;
+	Sat, 18 Feb 2012 02:27:50 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 583767EC6; Sat, 18 Feb 2012
+ 02:27:50 -0500 (EST)
+In-Reply-To: <4F3EF43D.2040102@orb.com> (Jehan Bing's message of "Fri, 17 Feb
+ 2012 16:43:41 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 100F9C8C-5A02-11E1-B1FE-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/190996>
 
-On Fri, Feb 17, 2012 at 09:27:44PM -0800, Brian Norris wrote:
+Jehan Bing <jehan@orb.com> writes:
 
-> > Overriding the smtp user from the config is a separate issue, and I
-> > don't think that is currently possible. The usual way to spell an option
-> > like that in git is "--no-smtp-user", but it seems that we use perl's
-> > GetOptions, which does not understand that syntax. So you'd have to add
-> > a "--no-smtp-user" by hand.
-> 
-> I think the "--no-smtp-user" is what I really wanted. I've written a
-> different patch that actually targets the user name properly, but I've
-> also found a current solution that can work for scripting purposes:
-> just redirect the $GIT_CONFIG environment variable to /dev/null
-> temporarily.
+> If I understand what you're saying, current version of git already
+> have the problem: if a filter fails without reading anything, git will
+> die instead of using the unfiltered content. My patch has only made
+> the issue apparent by testing with a failing filter.
+> Am I understanding correctly?
 
-Just FYI, the fact that doing so works is somewhat accidental. Long ago,
-GIT_CONFIG was respected everywhere as an override to stop reading any
-other config. Later, it was dropped, but retained its meaning only for
-the git-config command, mostly for historical reasons (although these
-days one would do better to use "git config -f $file" instead).
-
-So the reason it works for git-send-email is that send-email in turn
-calls git-config to actually look at config values, because send-email
-is a perl script and not a C program. In other words, the fact that
-GIT_CONFIG is respected is a coincidence of some implementation
-decisions, not an intended behavior.
-
-I don't think we have any plans for those implementation details to
-change in the near future.  So by all means, use it if you like for the
-time being. But know that it's not a behavior which is guaranteed not to
-change in future versions.
-
-> Perhaps I'll send my new patch sometime, but it's not pressing and I'm
-> not sure what kind of use it would actually get.
-
-I think the ideal case would be a patch that teaches the send-email
-option parsing code to understand a "--no-*" counterpart for every
-option, without having to modify each option individually. I haven't
-looked at how easy or hard that would be, though.
-
--Peff
+Yes.
