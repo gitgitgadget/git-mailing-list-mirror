@@ -1,100 +1,64 @@
-From: Adrian Cornish <git@bluedreamer.com>
-Subject: git clean is not removing a submodule added to a branch when
- switching branches
-Date: Sat, 18 Feb 2012 14:27:42 -0700
-Message-ID: <CAGc=MuDrE_1CVzOsqcodhadcfajaa-BHjHVAp9mFDNbU=wVQqQ@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn won't remember pem password
+Date: Sun, 19 Feb 2012 01:30:11 +0000
+Message-ID: <20120219013011.GB31886@dcvr.yhbt.net>
+References: <E56535F6-2C9B-4D14-A88F-2471E34D2769@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 18 22:27:58 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthijs Kooijman <matthijs@stdin.nl>,
+	Gustav Munkby <grddev@gmail.com>,
+	Edward Rudd <urkle@outoforder.cc>,
+	Carsten Bormann <cabo@tzi.org>, git@vger.kernel.org
+To: Igor <mrigor83@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 19 02:31:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ryros-0003uA-Gx
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Feb 2012 22:27:50 +0100
+	id 1Ryvcp-000476-3A
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Feb 2012 02:31:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753483Ab2BRV1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Feb 2012 16:27:44 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:61992 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753436Ab2BRV1n (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Feb 2012 16:27:43 -0500
-Received: by wics10 with SMTP id s10so2215048wic.19
-        for <git@vger.kernel.org>; Sat, 18 Feb 2012 13:27:42 -0800 (PST)
-Received-SPF: pass (google.com: domain of adriancornish73@gmail.com designates 10.180.14.73 as permitted sender) client-ip=10.180.14.73;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of adriancornish73@gmail.com designates 10.180.14.73 as permitted sender) smtp.mail=adriancornish73@gmail.com; dkim=pass header.i=adriancornish73@gmail.com
-Received: from mr.google.com ([10.180.14.73])
-        by 10.180.14.73 with SMTP id n9mr6064335wic.16.1329600462619 (num_hops = 1);
-        Sat, 18 Feb 2012 13:27:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        bh=S4SI1PZrHgrWgpBEmhRMhVL3u/NJiMkCNXmFr6rO5M4=;
-        b=q2uiZGkTXM/gT12XmRE3i+PYzhlOhbsV2UHH57UYqIAxPSRYhCty9kISEwUVBVZt79
-         kaz8o7qudmv/XpY9zfpOxC4Zx22ypow+G9qUNuMVGXwDz8tRBDCXEZyslS2oorxNCmaH
-         bBgMt2wLnzbEgxwQTdWNf0FC5OeTPpDJ5clto=
-Received: by 10.180.14.73 with SMTP id n9mr5096371wic.16.1329600462557; Sat,
- 18 Feb 2012 13:27:42 -0800 (PST)
-Received: by 10.216.229.165 with HTTP; Sat, 18 Feb 2012 13:27:42 -0800 (PST)
-X-Google-Sender-Auth: m1a2a0o7LtExU8927Xn-g2DdZuA
+	id S1754031Ab2BSBb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Feb 2012 20:31:28 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:47228 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753879Ab2BSBaN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Feb 2012 20:30:13 -0500
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80E131F7A0;
+	Sun, 19 Feb 2012 01:30:11 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <E56535F6-2C9B-4D14-A88F-2471E34D2769@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191014>
 
-If I add a submodule to a branch and then switch branches, git
-checkout warns it cannot
-remove the submodule. If I then issue a git clean - it says it removes
-the submodule but
-in fact does nothing at all. Is this a bug or expected behaviour.
+Igor <mrigor83@gmail.com> wrote:
+> I'm running into an issue where I have to enter my pem certificate
+> password every time I git-svn fetch or git-svn dcommit. Vanilla svn
+> uses OS X KeyChain and remembers my password just fine. Is there a
+> known solution for this? Other users have ran into same issue as
+> described here:
+> http://stackoverflow.com/questions/605519/does-git-svn-store-svn-passwords.
+> However, that solution of removing .subversion folder did not work for
+> me.
 
-TIA
+Hi Igor, this issue seems related to the platform specific auth
+providers patches.   There have been bugs in the SVN bindings in
+previous releases and uncertainty about how everything works.
 
-Adrian
+I haven't been interested enough to follow along closely[1], but maybe
+some other folks Cc:-ed can finally push this through.
 
-Below are cut&paste steps to reproduce.
+http://mid.gmane.org/20120103204403.GI17548@login.drsnuggles.stderr.nl
 
-git --version
-#git version 1.7.8.4
+Basically I'm waiting for a patch that we can be certain won't break the
+majority of existing use cases (especially no triggering of segfaults
+and other nastiness in released versions of SVN bindings).
 
-git init submod
-cd submod
-echo "This is a submodule" > README.txt
-git add .
-git commit -m "Initial commit"
-cd ..
-git init prog
-cd prog
-echo "This is a program" > README.txt
-git add .
-git commit -a -m "Initial commit"
-git checkout -b topic1
-git submodule add ../submod
-git commit -m "Added submodule"
-
-git checkout master
-#warning: unable to rmdir submod: Directory not empty
-#Switched to branch 'master'
-
-git status
-# On branch master
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#       submod/
-#nothing added to commit but untracked files present (use "git add" to track)
-
-git clean -fd
-#Removing submod/
-
-git status
-# On branch master
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#       submod/
-#nothing added to commit but untracked files present (use "git add" to track)
+[1] - I barely use git-svn anymore, and wouldn't touch GNOME or OSX
+      with a 10-foot pole...
