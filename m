@@ -1,79 +1,109 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git status: small difference between stating whole repository
- and small subdirectory
-Date: Mon, 20 Feb 2012 17:41:40 -0500
-Message-ID: <20120220224140.GA7116@sigill.intra.peff.net>
-References: <20120217222912.GC31830@sigill.intra.peff.net>
- <CAA01CsozANwtox06iihKBL8iii175FHAhChmNhG1B0ofGKWcEA@mail.gmail.com>
- <20120220140653.GC5131@sigill.intra.peff.net>
- <87ty2l38ay.fsf@thomas.inf.ethz.ch>
- <20120220143644.GA13938@do>
- <20120220143952.GA8387@sigill.intra.peff.net>
- <20120220151134.GA13135@sigill.intra.peff.net>
- <87d3991gyg.fsf@thomas.inf.ethz.ch>
- <20120220203540.GA5966@sigill.intra.peff.net>
- <7v1uppkvpx.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] pre-rebase: Refuse to rewrite commits that are reachable
+ from upstream
+Date: Mon, 20 Feb 2012 14:43:15 -0800
+Message-ID: <7vobstjfcs.fsf@alter.siamese.dyndns.org>
+References: <201202111445.33260.jnareb@gmail.com>
+ <1329772071-11301-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Rast <trast@inf.ethz.ch>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 20 23:41:49 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jnareb@gmail.com, philipoakley@iee.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Feb 20 23:43:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzbvZ-0007lP-3p
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 23:41:49 +0100
+	id 1Rzbx5-00007w-Nw
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 23:43:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754678Ab2BTWlo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Feb 2012 17:41:44 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44258
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754632Ab2BTWln (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2012 17:41:43 -0500
-Received: (qmail 8129 invoked by uid 107); 20 Feb 2012 22:41:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 20 Feb 2012 17:41:43 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Feb 2012 17:41:40 -0500
-Content-Disposition: inline
-In-Reply-To: <7v1uppkvpx.fsf@alter.siamese.dyndns.org>
+	id S1754697Ab2BTWnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Feb 2012 17:43:19 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62314 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754593Ab2BTWnS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2012 17:43:18 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4425C6119;
+	Mon, 20 Feb 2012 17:43:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=y6A63+zDIim2B/LF4x4PZe+qhGc=; b=ES/thJ
+	otG1W4jxSCcgy6uYc6ZY3ztofsPc8ThXgz0S9j7J6CIX9YsYmGp1rY0N/z53fFf2
+	dvAgug3czHi5+6qwwnmldEifZzjqdOhV5MJ9jPOI+vLJFQ3rER1xEcaOrCSfhh/j
+	srP+fjR+iydfiWyK+/n36luZord4krWNMFwu8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GcEMPFOXtW4c8PgQUg+Q/FDcz0ZBU2q0
+	Ka68ybI7mjHZM7KOyTL2fFFxOYnk9APqvgFs4sSSe+Wftf5Dt6p9XU2icT5IPPpX
+	+KxwBY7tZyi5KhP8en3J/KHKiGZ12D5FVlWX6TJoPK0ow9HSjdeUrYCm+cpWABtx
+	q+uAy2xqA/w=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39DC36118;
+	Mon, 20 Feb 2012 17:43:17 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8EB0A6117; Mon, 20 Feb 2012
+ 17:43:16 -0500 (EST)
+In-Reply-To: <1329772071-11301-1-git-send-email-johan@herland.net> (Johan
+ Herland's message of "Mon, 20 Feb 2012 22:07:51 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4777E8BE-5C14-11E1-99CC-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191123>
 
-On Mon, Feb 20, 2012 at 02:04:26PM -0800, Junio C Hamano wrote:
+Johan Herland <johan@herland.net> writes:
 
-> > ... Things may have changed since then, of course, but I at
-> > least know that they were sufficient in 34110cd^.
-> 
-> Looking at where cache_tree_free() is called, I think back then the
-> two-way merge was deemed OK, but we did not trust three-way merge or
-> merge-recursive at all.
+> Teach the pre-rebase sample hook to refuse rewriting commits on a branch
+> that are present in that branch's @{upstream}. This is to prevent users
+> from rewriting commits that have already been published.
 
-Thanks, I'll take a look more closely at those cases.
+If the user has configured an option to always create @{u} when creating a
+branch from somewhere else, transplanting $n good commits from his master
+that is forked from the shared master onto his maint would be done like
+this:
 
-> It is OK to check that we do not over-invalidate for performance, but it
-> is a lot more important to make sure we do not under-invalidate for
-> correctness.  I am a bit worried that you seem to be putting more stress
-> on the former.
+	$ git checkout -b copy master
+        $ git rebase -i --onto maint HEAD~$n
 
-I think it is just selection bias of the specific parts of his tests
-that I was responding to. I completely agree that correctness is way
-more important, and I'm also trying to come up with tests to validate
-correctness. I just wasn't talking about them there.
+If these good commits have been published to 'master', because the
+upstream of 'copy' is set to the local 'master', would the new mechanism
+hinder this attempt to backport good fixes?  Perhaps it is safer to
+trigger only when @{u} exists and it is not local?
 
-I still think replaying real-world test cases is going to be more likely
-to find issues in invalidation. I can come up with lots of simple
-test-cases, but they're not likely to find anything we wouldn't find in
-the code with trivial inspection. I think a combination of careful
-analysis and real-world validation is going to be more helpful in the
-long run than the kind of simplistic tests that are in t0090.
+But because you wanted to discuss more about the issues than the
+implementation, let me think aloud a bit, reviewing what I usually do.
 
--Peff
+I keep things simpler by sticking to a very simple rule. I allow myself to
+rebase only what is not yet in 'next', so the logic becomes a simple "am I
+creating a new commit based on what is already in 'next'?"
+
+During the course of integration testing with 'next', however, I often
+find a topic or two that I have merged to it is less than ideal, and of
+course, the whole point of doing integration testing with 'next' is to
+find such problematic topics before pushing 'next' out.  I rewind 'next',
+rebuild the problematic topics, and then rebuild 'next', and all of these
+happen before 'next' is pushed out.  The step that rewinds 'next' that
+acquired problematic versions of the topics makes the topics eligible for
+rebase.
+
+That would mean that a configuration variable "rebase.bottomLimit = next"
+is sufficient to implement such a check for me.  No per-branch bottom is
+needed, because everything is merged to 'next' and tested to see if they
+do not need further rebases for fixing them up before they are published.
+
+Perhaps "I mistakenly rebased something that I have already published" is
+a mere symptom a bigger problem.  The issue may not be that we do not give
+them a good tool to help them to be more careful with less effort on their
+part before they rebase.  It may instead be that it is too easy to publish
+branches that are not ready to be pushed out, and that is the real cause
+of the "I realized I need to fix the topic and I fixed it, but I did not
+realize that it was too late and I shouldn't have rebased" problem.
+
+I wonder if it would be a more direct solution to the issue you are
+raising to give them a good tool to help them to be more careful with less
+effort on their part before they publish (not before they rebase).
