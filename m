@@ -1,109 +1,90 @@
-From: "Nicolas Mailhot" <nicolas.mailhot@laposte.net>
-Subject: Re: Handle HTTP error 511 Network Authentication Required (standard
- secure proxy authentification/captive portal detection)
-Date: Mon, 20 Feb 2012 20:51:11 +0100
-Message-ID: <12ec87a8c95ca12c22f05e1ec961d326.squirrel@arekh.dyndns.org>
-References: <4b8f33ba4c870528a82ab85d6dad68bd.squirrel@arekh.dyndns.org>
-    <20120220010617.GB4140@sigill.intra.peff.net>
-    <9cd657a3c4960a8c496515a03bbf623e.squirrel@arekh.dyndns.org>
-    <20120220135639.GA5131@sigill.intra.peff.net>
-    <e1d3ddd965eb32717163aaa87fa71e17.squirrel@arekh.dyndns.org>
-    <20120220154452.GA27456@sigill.intra.peff.net>
-    <cb81840f853a1d43a7da03ea24c86445.squirrel@arekh.dyndns.org>
-    <20120220191500.GA29228@sigill.intra.peff.net>
-    <72fbd4155349723da1c3c503c1c9c620.squirrel@arekh.dyndns.org>
-    <20120220193006.GA30904@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git status: small difference between stating whole repository
+ and small subdirectory
+Date: Mon, 20 Feb 2012 11:56:13 -0800
+Message-ID: <7vr4xpl1nm.fsf@alter.siamese.dyndns.org>
+References: <8762f9k5sg.fsf@thomas.inf.ethz.ch>
+ <CAA01Cso_8=159UDMFUHiYz1X=gYtpbqRO4h3TMw7N=4YMV8YNg@mail.gmail.com>
+ <20120215190318.GA5992@sigill.intra.peff.net>
+ <CAA01Cso5y23UMguEe0vwOc6kR3-DjuC8-LTMDsMeeOKU4rVGvg@mail.gmail.com>
+ <20120216192001.GB4348@sigill.intra.peff.net>
+ <CAA01Csq6vSekW=Fa236bB0H3LVtN43Gb2aLMVE+A1wVyUqYJ7A@mail.gmail.com>
+ <20120217203755.GA30114@sigill.intra.peff.net>
+ <7vaa4hrtbe.fsf@alter.siamese.dyndns.org>
+ <20120217222912.GC31830@sigill.intra.peff.net>
+ <CAA01CsozANwtox06iihKBL8iii175FHAhChmNhG1B0ofGKWcEA@mail.gmail.com>
+ <20120220140653.GC5131@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Nicolas Mailhot" <nicolas.mailhot@laposte.net>,
-	git@vger.kernel.org
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 20 20:51:32 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 20 20:56:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzZGe-00066D-Gp
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 20:51:24 +0100
+	id 1RzZLR-00007Y-FF
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 20:56:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752362Ab2BTTvT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Feb 2012 14:51:19 -0500
-Received: from smtpout1.laposte.net ([193.253.67.226]:8821 "EHLO
-	smtpout.laposte.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751535Ab2BTTvS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2012 14:51:18 -0500
-Received: from arekh.dyndns.org ([88.174.226.208])
-	by mwinf8501-out with ME
-	id cKrD1i0044WQcrc03KrDKj; Mon, 20 Feb 2012 20:51:13 +0100
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by arekh.dyndns.org (Postfix) with ESMTP id DD6687674;
-	Mon, 20 Feb 2012 20:51:12 +0100 (CET)
-X-Virus-Scanned: amavisd-new at arekh.dyndns.org
-Received: from arekh.dyndns.org ([127.0.0.1])
-	by localhost (arekh.okg [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id P9Z-bxXd8+vO; Mon, 20 Feb 2012 20:51:11 +0100 (CET)
-Received: from arekh.dyndns.org (localhost.localdomain [127.0.0.1])
-	by arekh.dyndns.org (Postfix) with ESMTP;
-	Mon, 20 Feb 2012 20:51:10 +0100 (CET)
-Received: from 192.168.0.4
-        (SquirrelMail authenticated user nim)
-        by arekh.dyndns.org with HTTP;
-        Mon, 20 Feb 2012 20:51:11 +0100
-In-Reply-To: <20120220193006.GA30904@sigill.intra.peff.net>
-User-Agent: SquirrelMail/1.4.22-4.fc17
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1752253Ab2BTT4R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Feb 2012 14:56:17 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56198 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751653Ab2BTT4Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2012 14:56:16 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C0AEC7B40;
+	Mon, 20 Feb 2012 14:56:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jc36WDTc7SgeDTli/KitrDXoFLA=; b=iAo6dR
+	cWMtB2tUhuBsCnNCa21cdyzTT3lIH4/4I2xIW1KBc2fmTVpT6IVkXI/hnaeGj4dB
+	KRIXn3CWZchHfBU/C2jHgDIHjVHdvZ9oZ1WQ46GREp7B0MIPZs4mG7Xz0qmV/GtL
+	4jns38gxGKMIu3Y+ZsmfuJxG1NacujXS5XKCs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Dera8lquhzVpkrqj382qvff64Q6Hg7M4
+	wkQOQoRDCNr5uNyEa9mBOIlB89xhR2jRLIR1b+Tjqa6cCuBnTQNwQkyao5XrGZTr
+	k1aByQ/0g5wD54u36SVhWAIsb2CL10TW2BTzCbsVYgZxO8qNcCN7JIM4pt2wtR9Z
+	XRlp4hCkWcQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B67987B3F;
+	Mon, 20 Feb 2012 14:56:15 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1FBB97B3E; Mon, 20 Feb 2012
+ 14:56:15 -0500 (EST)
+In-Reply-To: <20120220140653.GC5131@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 20 Feb 2012 09:06:53 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F2376B34-5BFC-11E1-B60D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191093>
 
+Jeff King <peff@peff.net> writes:
 
-Le Lun 20 f=C3=A9vrier 2012 20:30, Jeff King a =C3=A9crit :
-> On Mon, Feb 20, 2012 at 08:24:15PM +0100, Nicolas Mailhot wrote:
->
->> > I think a good first step would be improving the error message for=
- a
->> > 511, then. Unfortunately, it seems from the rfc draft you sent tha=
-t
->> > callers are expected to parse the link out of the HTML given in th=
-e body
->> > of the response. It seems silly that there is not a Location field
->> > associated with a 511, similar to redirects.
->>
->> The URL is not lost in the HTML text, it's in the url meta field
->>
->> <meta http-equiv=3D"refresh"
->>        content=3D"0; url=3Dhttps://login.example.net/">
->
-> Sorry, but
->
->   1. That is in the HTML in the body of the response (by body I don't
->      mean the HTML <body>, but the body of the http request).
->
->   2. I don't see anything in the rfc indicating that there must be a
->      meta tag in the response. They use it in the example of the rfc,
->      but they also have human-readable text with an <a> link.  Do we =
-yet
->      know what will be common among captive portals?
->
-> You said you have a non-hypothetical case. Can you show us the respon=
-se?
+> Interestingly, on my git.git repo, I had an empty cache. Running "git
+> read-tree HEAD" filled it (according to test-dump-cache-tree). It seems
+> that running "git checkout" empties the cache.  So perhaps git could do
+> better about keeping the cache valid over time.
 
-Not yet because it's currently non-standard custom redirection mess we'=
-re
-repurposing to follow the ietf spec (got tired of being accused of runn=
-ing a
-crap non-standard proxy by users, so now it's ll be a crap standard pro=
-xy)
+At least in the early days unpack-trees built the result by manually
+adding an entry without calling the add_index_entry() all over the place,
+which meant that it was futile to pretend that there is even a slight
+chance that complex beast would correctly invalidate cached tree
+information at all the necessary places. I recall that I added a code to
+nuke the cache tree at the very beginning of "merging" codepaths to avoid
+any bogus cache tree result to be stored in the resulting index.
 
-The proxy response is totally configurable (a so there's no reason we w=
-on't
-follow the new spec to the letter
-
-
---=20
-Nicolas Mailhot
+These days, we have src_index and dst_index, and dst_index IIRC can start
+as empty in which case "start from kept information and selectively
+invalidate" would not work at all.  When src_index and dst_index are the
+same, however, you should be able to keep the cached tree valid, at least
+in theory.
