@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 5/5] diff: --ignore-case
-Date: Sun, 19 Feb 2012 18:16:28 -0800
-Message-ID: <1329704188-9955-6-git-send-email-gitster@pobox.com>
+Subject: [PATCH 4/5] xdiff: introduce XDF_IGNORE_CASE
+Date: Sun, 19 Feb 2012 18:16:27 -0800
+Message-ID: <1329704188-9955-5-git-send-email-gitster@pobox.com>
 References: <1329704188-9955-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Mon Feb 20 03:16:56 2012
@@ -10,180 +10,195 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzIoB-0007vG-9f
+	id 1RzIoA-0007vG-Lu
 	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 03:16:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753410Ab2BTCQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Feb 2012 21:16:42 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59466 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753212Ab2BTCQk (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753374Ab2BTCQk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Sun, 19 Feb 2012 21:16:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59441 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753261Ab2BTCQi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Feb 2012 21:16:38 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 08A9B77EA
-	for <git@vger.kernel.org>; Sun, 19 Feb 2012 21:16:40 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE82077E2
+	for <git@vger.kernel.org>; Sun, 19 Feb 2012 21:16:37 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=YVxh
-	i0xByL3kbnISx4STmJsshsI=; b=gYJjjCHk9JuEAjVpT7Hw68fOecAt4nGO0OAI
-	nAb6f6BSlyIUoAOu58dO/371AKEZYmIF3JqQLOOVI5VwGj4l+EkRr6aJsNTLn7I7
-	p/vuc0riLDOcqrdpck19WQdJMGKZwCtI5A9nzFXXihXcbVED1biCFUO0ZZTdCsI5
-	ilqZ8PA=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Bmoo
+	7A0Pzmoyk2xhhmp2RTEDaYI=; b=Hocnx8OE7noHTaKoQlD3pD8YCvxt3olDV1l9
+	rAncpe73E1Aw1pXv5e/JdOnTz+UqcRawi2Blg+T88ZGMwqAWx54rP+9181z7ubIy
+	zl9WPtXbBfhHu6LUvCESthRC0CHlRR4I7a/vxpzY+WzGcYuz681pl9b9AXhFCFf/
+	f+VcW7s=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=hlYHrC
-	Fnc1E30IHpLExSjU0ebBn3RJ8w1Ga4qfX1JU03MEzoiJ9jy8ZoDWgtAWSrdp2Y8C
-	CYgl0dZM3TJh+VCFyrlhtp5w+KenTvngX/CNH2VqEJL+URXdSKAwkdNdmVcFb1J6
-	prtufdXVpbzQ3qbAYgHD29fztojbpD5OWenL0=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=AanBoY
+	GO+7A75kgZA7such6YbZDZYXSltWlN0avgNbE8EUVs7QYcb/eP/UkgakHEJjNdgV
+	qI0HwtuN03LhmTswYV1f8sDR2WnGUVvOrYc8NiWH8oJVqx0usjkziQTD2pC8utba
+	vKq1nJXKWSNcn3EYcKiinkyrTqCzm3ERgLPk4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EFD1677E9
-	for <git@vger.kernel.org>; Sun, 19 Feb 2012 21:16:39 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E616B77E1
+	for <git@vger.kernel.org>; Sun, 19 Feb 2012 21:16:37 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4086377E7 for
- <git@vger.kernel.org>; Sun, 19 Feb 2012 21:16:39 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3EF5277E0 for
+ <git@vger.kernel.org>; Sun, 19 Feb 2012 21:16:37 -0500 (EST)
 X-Mailer: git-send-email 1.7.9.1.265.g25f75
 In-Reply-To: <1329704188-9955-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: EC0B9DFA-5B68-11E1-A09B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: EAD97CA4-5B68-11E1-B9C6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191040>
 
-Teach the front-end to flip XDF_IGNORE_CASE bit with the options GNU diff
-uses.
+Teach the hash function and per-line comparison logic to compare lines
+while ignoring the differences in case.  It is not an ignore-whitespace
+option but still needs to trigger the inexact match logic, and that is
+why the previous step introduced XDF_INEXACT_MATCH mask.
+
+Assign the 7th bit for this option, and move the bits to select diff
+algorithms out of the way in order to leave room for a few bits to add
+more variants of ignore-whitespace, such as --ignore-tab-expansion, if
+somebody else is inclined to do so later.
+
+We would still need to teach the front-end to flip this bit, for this
+change to be any useful.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/diff-options.txt |    4 ++++
- diff.c                         |    2 ++
- t/lib-diff-alternative.sh      |   45 ++++++++++++++++++++++++++++++++++++++--
- t/t4033-diff-patience.sh       |    6 ++++++
- t/t4050-diff-histogram.sh      |    2 ++
- 5 files changed, 57 insertions(+), 2 deletions(-)
+ xdiff/xdiff.h  |    7 ++++---
+ xdiff/xutils.c |   50 ++++++++++++++++++++++++++++++++++++++++++--------
+ 2 files changed, 46 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 9f7cba2..791e07f 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -404,6 +404,10 @@ endif::git-format-patch[]
- 	differences even if one line has whitespace where the other
- 	line has none.
+diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
+index 48793f9..5a01a0e 100644
+--- a/xdiff/xdiff.h
++++ b/xdiff/xdiff.h
+@@ -36,10 +36,11 @@ extern "C" {
+ 	(XDF_IGNORE_WHITESPACE | \
+ 	 XDF_IGNORE_WHITESPACE_CHANGE | \
+ 	 XDF_IGNORE_WHITESPACE_AT_EOL)
+-#define XDF_INEXACT_MATCH XDF_WHITESPACE_FLAGS
++#define XDF_IGNORE_CASE (1 << 7)
++#define XDF_INEXACT_MATCH (XDF_WHITESPACE_FLAGS | XDF_IGNORE_CASE)
  
-+--ignore-case::
-+	Ignore changes in case only; only ASCII alphabet is supported for
-+	now.
-+
- --inter-hunk-context=<lines>::
- 	Show the context between diff hunks, up to the specified number
- 	of lines, thereby fusing hunks that are close to each other.
-diff --git a/diff.c b/diff.c
-index 87b2ec1..d7604b7 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3399,6 +3399,8 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		DIFF_XDL_SET(options, IGNORE_WHITESPACE_CHANGE);
- 	else if (!strcmp(arg, "--ignore-space-at-eol"))
- 		DIFF_XDL_SET(options, IGNORE_WHITESPACE_AT_EOL);
-+	else if (!strcmp(arg, "--ignore-case"))
-+		DIFF_XDL_SET(options, IGNORE_CASE);
- 	else if (!strcmp(arg, "--patience"))
- 		options->xdl_opts = DIFF_WITH_ALG(options, PATIENCE_DIFF);
- 	else if (!strcmp(arg, "--histogram"))
-diff --git a/t/lib-diff-alternative.sh b/t/lib-diff-alternative.sh
-index 75ffd91..45c665e 100644
---- a/t/lib-diff-alternative.sh
-+++ b/t/lib-diff-alternative.sh
-@@ -104,8 +104,9 @@ EOF
+-#define XDF_PATIENCE_DIFF (1 << 5)
+-#define XDF_HISTOGRAM_DIFF (1 << 6)
++#define XDF_PATIENCE_DIFF (1 << 8)
++#define XDF_HISTOGRAM_DIFF (1 << 9)
+ #define XDF_DIFF_ALGORITHM_MASK (XDF_PATIENCE_DIFF | XDF_HISTOGRAM_DIFF)
+ #define XDF_DIFF_ALG(x) ((x) & XDF_DIFF_ALGORITHM_MASK)
  
- 	STRATEGY=$1
- 
-+	cmd='git diff --no-index'
- 	test_expect_success "$STRATEGY diff" '
--		test_must_fail git diff --no-index "--$STRATEGY" file1 file2 > output &&
-+		test_must_fail $cmd ${STRATEGY:+"--$STRATEGY"} file1 file2 >output &&
- 		test_cmp expect output
- 	'
- 
-@@ -157,9 +158,49 @@ EOF
- 
- 	STRATEGY=$1
- 
-+	cmd='git diff --no-index'
- 	test_expect_success 'completely different files' '
--		test_must_fail git diff --no-index "--$STRATEGY" uniq1 uniq2 > output &&
-+
-+		test_must_fail $cmd  ${STRATEGY:+"--$STRATEGY"} uniq1 uniq2 >output &&
- 		test_cmp expect output
- 	'
+diff --git a/xdiff/xutils.c b/xdiff/xutils.c
+index aa6de74..925f1d0 100644
+--- a/xdiff/xutils.c
++++ b/xdiff/xutils.c
+@@ -170,6 +170,19 @@ long xdl_guess_lines(mmfile_t *mf, long sample) {
+ 	return nl + 1;
  }
  
-+test_diff_ignore () {
-+
-+	STRATEGY=$1
-+
-+	echo "A quick brown fox" >test.0
-+	echo "A  quick brown fox" >test-b
-+	echo " A quick brownfox" >test-w
-+	echo "A quick brown fox " >test--ignore-space-at-eol
-+	echo "A Quick Brown Fox" >test--ignore-case
-+	echo "A Quick  Brown Fox" >test--ignore-case-b
-+	echo "A quick brown fox jumps" >test
-+	cases="-b -w --ignore-space-at-eol --ignore-case"
-+
-+	if test -z "$STRATEGY"
-+	then
-+		label=baseline
-+	else
-+		label=$STRATEGY
-+	fi
-+
-+	cmd="git diff --no-index ${STRATEGY:+--$STRATEGY}"
-+
-+	test_expect_success "$label diff" '
-+		test_must_fail $cmd test.0 test
-+	'
-+	for case in $cases
-+	do
-+		test_expect_success "$label diff $case" '
-+			$cmd $case test.0 test$case &&
-+			test_must_fail $cmd test.0 test
-+		'
-+	done
-+
-+	test_expect_success "$label diff -b --ignore-case" '
-+		$cmd -b --ignore-case test.0 test--ignore-case-b
-+	'
-+
++static inline int match_a_byte(char ch1, char ch2, long flags)
++{
++	if (ch1 == ch2)
++		return 1;
++	if (!(flags & XDF_IGNORE_CASE) || ((ch1 | ch2) & 0x80))
++		return 0;
++	if (isupper(ch1))
++		ch1 = tolower(ch1);
++	if (isupper(ch2))
++		ch2 = tolower(ch2);
++	return (ch1 == ch2);
 +}
-diff --git a/t/t4033-diff-patience.sh b/t/t4033-diff-patience.sh
-index 3c9932e..c7f8c6c 100755
---- a/t/t4033-diff-patience.sh
-+++ b/t/t4033-diff-patience.sh
-@@ -5,8 +5,14 @@ test_description='patience diff algorithm'
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-diff-alternative.sh
- 
-+# baseline
-+test_diff_unique ""
-+test_diff_ignore ""
 +
- test_diff_frobnitz "patience"
+ int xdl_recmatch(const char *l1, long s1, const char *l2, long s2, long flags)
+ {
+ 	int i1, i2;
+@@ -192,7 +205,7 @@ int xdl_recmatch(const char *l1, long s1, const char *l2, long s2, long flags)
+ 	if (flags & XDF_IGNORE_WHITESPACE) {
+ 		goto skip_ws;
+ 		while (i1 < s1 && i2 < s2) {
+-			if (l1[i1++] != l2[i2++])
++			if (!match_a_byte(l1[i1++], l2[i2++], flags))
+ 				return 0;
+ 		skip_ws:
+ 			while (i1 < s1 && XDL_ISSPACE(l1[i1]))
+@@ -210,15 +223,28 @@ int xdl_recmatch(const char *l1, long s1, const char *l2, long s2, long flags)
+ 					i2++;
+ 				continue;
+ 			}
+-			if (l1[i1++] != l2[i2++])
++			if (!match_a_byte(l1[i1++], l2[i2++], flags))
+ 				return 0;
+ 		}
+-	} else if (flags & XDF_IGNORE_WHITESPACE_AT_EOL) {
+-		while (i1 < s1 && i2 < s2 && l1[i1++] == l2[i2++])
++	} else {
++		/*
++		 * Either XDF_IGNORE_WHITESPACE_AT_EOL is set, or
++		 * no whitespace is ignored, but INEXACT_MATCH is
++		 * in effect for other reasons.
++		 */
++		while (i1 < s1 && i2 < s2 &&
++		       match_a_byte(l1[i1++], l2[i2++], flags))
+ 			; /* keep going */
+ 	}
  
- test_diff_unique "patience"
- 
-+test_diff_ignore "patience"
+ 	/*
++	 * If we are not ignoring any whitespace, we must have consumed
++	 * everything for the lines to match.
++	 */
++	if (!(flags & XDF_WHITESPACE_FLAGS))
++		return i1 == s1 && i2 == s2;
 +
- test_done
-diff --git a/t/t4050-diff-histogram.sh b/t/t4050-diff-histogram.sh
-index fd3e86a..98c6686 100755
---- a/t/t4050-diff-histogram.sh
-+++ b/t/t4050-diff-histogram.sh
-@@ -9,4 +9,6 @@ test_diff_frobnitz "histogram"
++	/*
+ 	 * After running out of one side, the remaining side must have
+ 	 * nothing but whitespace for the lines to match.  Note that
+ 	 * ignore-whitespace-at-eol case may break out of the loop
+@@ -238,6 +264,14 @@ int xdl_recmatch(const char *l1, long s1, const char *l2, long s2, long flags)
+ 	return 1;
+ }
  
- test_diff_unique "histogram"
- 
-+test_diff_ignore "histogram"
++static inline unsigned long hash_a_byte(const char ch_, long flags)
++{
++	unsigned long ch = ch_ & 0xFF;
++	if ((flags & XDF_IGNORE_CASE) && !(ch & 0x80) && isupper(ch))
++		ch = tolower(ch);
++	return ch;
++}
 +
- test_done
+ static unsigned long xdl_hash_record_with_whitespace(char const **data,
+ 		char const *top, long flags) {
+ 	unsigned long ha = 5381;
+@@ -256,20 +290,20 @@ static unsigned long xdl_hash_record_with_whitespace(char const **data,
+ 			else if (flags & XDF_IGNORE_WHITESPACE_CHANGE
+ 				 && !at_eol) {
+ 				ha += (ha << 5);
+-				ha ^= (unsigned long) ' ';
++				ha ^= hash_a_byte(' ', flags);
+ 			}
+ 			else if (flags & XDF_IGNORE_WHITESPACE_AT_EOL
+ 				 && !at_eol) {
+ 				while (ptr2 != ptr + 1) {
+ 					ha += (ha << 5);
+-					ha ^= (unsigned long) *ptr2;
++					ha ^= hash_a_byte(*ptr2, flags);
+ 					ptr2++;
+ 				}
+ 			}
+ 			continue;
+ 		}
+ 		ha += (ha << 5);
+-		ha ^= (unsigned long) *ptr;
++		ha ^= hash_a_byte(*ptr, flags);
+ 	}
+ 	*data = ptr < top ? ptr + 1: ptr;
+ 
+@@ -286,7 +320,7 @@ unsigned long xdl_hash_record(char const **data, char const *top, long flags) {
+ 
+ 	for (; ptr < top && *ptr != '\n'; ptr++) {
+ 		ha += (ha << 5);
+-		ha ^= (unsigned long) *ptr;
++		ha ^= hash_a_byte(*ptr, flags);
+ 	}
+ 	*data = ptr < top ? ptr + 1: ptr;
+ 
 -- 
 1.7.9.1.265.g25f75
