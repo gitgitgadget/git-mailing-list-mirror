@@ -1,95 +1,88 @@
-From: "Nicolas Mailhot" <nicolas.mailhot@laposte.net>
+From: Jeff King <peff@peff.net>
 Subject: Re: Handle HTTP error 511 Network Authentication Required (standard
  secure proxy authentification/captive portal detection)
-Date: Mon, 20 Feb 2012 16:34:19 +0100
-Message-ID: <e1d3ddd965eb32717163aaa87fa71e17.squirrel@arekh.dyndns.org>
+Date: Mon, 20 Feb 2012 10:44:52 -0500
+Message-ID: <20120220154452.GA27456@sigill.intra.peff.net>
 References: <4b8f33ba4c870528a82ab85d6dad68bd.squirrel@arekh.dyndns.org>
-    <20120220010617.GB4140@sigill.intra.peff.net>
-    <9cd657a3c4960a8c496515a03bbf623e.squirrel@arekh.dyndns.org>
-    <20120220135639.GA5131@sigill.intra.peff.net>
+ <20120220010617.GB4140@sigill.intra.peff.net>
+ <9cd657a3c4960a8c496515a03bbf623e.squirrel@arekh.dyndns.org>
+ <20120220135639.GA5131@sigill.intra.peff.net>
+ <e1d3ddd965eb32717163aaa87fa71e17.squirrel@arekh.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Nicolas Mailhot" <nicolas.mailhot@laposte.net>,
-	git@vger.kernel.org
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 20 16:34:37 2012
+Cc: git@vger.kernel.org
+To: Nicolas Mailhot <nicolas.mailhot@laposte.net>
+X-From: git-owner@vger.kernel.org Mon Feb 20 16:45:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzVG8-0005dg-Hv
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 16:34:36 +0100
+	id 1RzVQC-00035z-Ae
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 16:45:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753354Ab2BTPec convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Feb 2012 10:34:32 -0500
-Received: from smtpout5.laposte.net ([193.253.67.230]:38087 "EHLO
-	smtpout.laposte.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752657Ab2BTPeb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2012 10:34:31 -0500
-Received: from arekh.dyndns.org ([88.174.226.208])
-	by mwinf8509-out with ME
-	id cFaR1i0064WQcrc03FaRgX; Mon, 20 Feb 2012 16:34:26 +0100
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by arekh.dyndns.org (Postfix) with ESMTP id 42BC07032;
-	Mon, 20 Feb 2012 16:34:25 +0100 (CET)
-X-Virus-Scanned: amavisd-new at arekh.dyndns.org
-Received: from arekh.dyndns.org ([127.0.0.1])
-	by localhost (arekh.okg [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3x9lOHteoBuP; Mon, 20 Feb 2012 16:34:20 +0100 (CET)
-Received: from arekh.dyndns.org (localhost.localdomain [127.0.0.1])
-	by arekh.dyndns.org (Postfix) with ESMTP;
-	Mon, 20 Feb 2012 16:34:19 +0100 (CET)
-Received: from 163.116.6.10
-        (SquirrelMail authenticated user nim)
-        by arekh.dyndns.org with HTTP;
-        Mon, 20 Feb 2012 16:34:19 +0100
-In-Reply-To: <20120220135639.GA5131@sigill.intra.peff.net>
-User-Agent: SquirrelMail/1.4.22-4.fc17
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1753678Ab2BTPoz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Feb 2012 10:44:55 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43901
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753263Ab2BTPoz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2012 10:44:55 -0500
+Received: (qmail 2592 invoked by uid 107); 20 Feb 2012 15:44:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 20 Feb 2012 10:44:54 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Feb 2012 10:44:52 -0500
+Content-Disposition: inline
+In-Reply-To: <e1d3ddd965eb32717163aaa87fa71e17.squirrel@arekh.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191079>
 
+On Mon, Feb 20, 2012 at 04:34:19PM +0100, Nicolas Mailhot wrote:
 
-Le Lun 20 f=C3=A9vrier 2012 14:56, Jeff King a =C3=A9crit :
-> On Mon, Feb 20, 2012 at 06:38:54AM +0100, Nicolas Mailhot wrote:
->
->> > As a non-browser client, what should git do? We can't make sense o=
-f the
->> > content at http://login.corporatenetwork, which is most likely an =
-HTML
->> > form asking for credentials (or even money, if the captive portal =
-is
->> > something like a public wireless provider). The best we can probab=
-ly do
->> > is die and say "apparently you need to go http://login.corporatene=
-twork
->> > in a browser before making your request".
->>
->> Actually, the best would be to launch something capable of interpret=
-ing html
->> forms on the url given by the error.
->
-> Doing that portably is near impossible (keep in mind that git runs on
-> things like antique versions of Solaris).
+> >> Actually, the best would be to launch something capable of interpreting html
+> >> forms on the url given by the error.
+> >
+> > Doing that portably is near impossible (keep in mind that git runs on
+> > things like antique versions of Solaris).
+> 
+> Can't the you let the user specify a browser command (firefox, elinks w3m) to
+> auto-feed the portal page to when needed ?
 
-Can't the you let the user specify a browser command (firefox, elinks w=
-3m) to
-auto-feed the portal page to when needed ?
+Yes, that's why I said "we could add a configuration option" in the part
+that you snipped. But doing it out of the box is not going to be
+portable.
 
-The main problem with captive portals is when they shut down the connec=
-tion
-and the user has no idea how to restore it (and error 511 is intended t=
-o fix
-this, but that won't do a lot of good if the user does is not shown the
-captive portal url transmitted with the error)
+> The main problem with captive portals is when they shut down the connection
+> and the user has no idea how to restore it (and error 511 is intended to fix
+> this, but that won't do a lot of good if the user does is not shown the
+> captive portal url transmitted with the error)
 
-Regards,
+In my experience, the captive portal process usually goes like this:
 
---=20
-Nicolas Mailhot
+  1. Connect to network.
+
+  2. Try some non-browser command. Wonder why in the world it isn't
+     working.
+
+  3. Open a browser and say "Ah, I see. A captive portal".
+
+The 511 proposal makes step 2 a lot better if the protocol is http[1].
+But it pretty much makes it better even without non-browser client
+support, because at least you will get a 511 error instead of having git
+complain that the remote repository is corrupted (which happens if the
+captive portal returns a redirect to an html page).
+
+We should already be doing that. Adding more support could make step 3 a
+little nicer, but like I said, I'd be more interested in seeing a real
+case first. It may even be a feature that would be more appropriate to
+curl (which git builds on for http access).
+
+-Peff
+
+[1] Of course it doesn't help at all for git:// or ssh:// (which are
+    usually even worse off in the first place, as many captive portals
+    will simply drop the packets, making it look like the remote server
+    is down).
