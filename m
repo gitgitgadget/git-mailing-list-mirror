@@ -1,8 +1,8 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: git status: small difference between stating whole repository
  and small subdirectory
-Date: Mon, 20 Feb 2012 15:17:49 -0500
-Message-ID: <20120220201749.GA5405@sigill.intra.peff.net>
+Date: Mon, 20 Feb 2012 15:35:40 -0500
+Message-ID: <20120220203540.GA5966@sigill.intra.peff.net>
 References: <20120217203755.GA30114@sigill.intra.peff.net>
  <7vaa4hrtbe.fsf@alter.siamese.dyndns.org>
  <20120217222912.GC31830@sigill.intra.peff.net>
@@ -12,107 +12,103 @@ References: <20120217203755.GA30114@sigill.intra.peff.net>
  <20120220143644.GA13938@do>
  <20120220143952.GA8387@sigill.intra.peff.net>
  <20120220151134.GA13135@sigill.intra.peff.net>
- <7vfwe5l13w.fsf@alter.siamese.dyndns.org>
+ <87d3991gyg.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
 	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 20 21:18:00 2012
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Feb 20 21:35:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzZgL-0002b9-Rj
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 21:17:58 +0100
+	id 1RzZxf-0003bj-Eb
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 21:35:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753086Ab2BTURx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Feb 2012 15:17:53 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44128
+	id S1753391Ab2BTUfq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Feb 2012 15:35:46 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44143
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752290Ab2BTURw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2012 15:17:52 -0500
-Received: (qmail 6543 invoked by uid 107); 20 Feb 2012 20:17:52 -0000
+	id S1753324Ab2BTUfq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2012 15:35:46 -0500
+Received: (qmail 6721 invoked by uid 107); 20 Feb 2012 20:35:43 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 20 Feb 2012 15:17:52 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Feb 2012 15:17:49 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 20 Feb 2012 15:35:43 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Feb 2012 15:35:40 -0500
 Content-Disposition: inline
-In-Reply-To: <7vfwe5l13w.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <87d3991gyg.fsf@thomas.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191100>
 
-On Mon, Feb 20, 2012 at 12:08:03PM -0800, Junio C Hamano wrote:
+On Mon, Feb 20, 2012 at 07:45:59PM +0100, Thomas Rast wrote:
 
-> >   4. At the end of unpack_trees, we forget about src_index, and copy
-> >      o->result into *o->dst_index byte for byte. I.e., we overwrite
-> >      the_index.cache_tree, which has been properly updated the whole
-> >      time,
+> > +	o->result.cache_tree = o->src_index->cache_tree;
+> >  	o->src_index = NULL;
+> >  	ret = check_updates(o) ? (-2) : 0;
+> >  	if (o->dst_index)
 > 
-> I strongly suspect that "properly updated" part needs to be thoroughly
-> audited.  I wouldn't be surprised that this behaviour is what we did when
-> we split src_index vs dst_index when he rewrote unpack_trees() in order to
-> emulate the original "unpack-trees is beyond salvation because it does not
-> maintain cache tree correctly, just nuke it" behaviour.
-
-Yep, I am also concerned about that.
-
-> > But it does not actually insert the _destination_ tree into the cache
-> > tree. Which we can do in certain situations, but only if there were no
-> > paths in the tree that were left unchanged (e.g., you modify "foo", then
-> > "git checkout HEAD^", which updates "bar". Your tree does not match
-> > HEAD^, and must be invalidated).  While it would be cool to be able to
-> > handle those complex cases,...
+> Brilliant.  I know I'm stealing Junio's punchline, but please make it so
+> :-)
 > 
-> It may look cool but it may not be a good change. You are spending extra
-> cycles to optimize for the next write-tree that may not happen before the
-> index is further updated.
+> Browsing around in history, it seems that this was silently broken by
+> 34110cd (Make 'unpack_trees()' have a separate source and destination
+> index, 2008-03-06), which introduced the distinction between source and
+> destination index.  Before that they were the same, so the cache tree
+> would have been updated correctly.
 
-I don't think it would be too many cycles; you would have to mark each
-tree you enter as having items from the left-hand tree or the right-hand
-tree. If only one, you can reuse the cache-tree entry (or tree sha1, if
-coming from a tree). Otherwise, you must invalidate.  And it doesn't
-just help the next write-tree, but any intermediate index diffs.
+OK, good. When you write a one-liner that makes a huge change in
+performance, it is usually a good idea to think to yourself "no, it
+couldn't be this easy, could it?".
 
-Of course any such change would need timings to justify it, though.
+But after more discussion from people more clueful than I (this is the
+first time I've even looked at cache-tree code), I'm feeling like this
+is the right direction, at least, if not exactly the right patch.
+And seeing that it is in fact a regression in 34110cd, and that the
+existing cache-tree invalidations predate that makes me feel better. At
+one point, at least, they were complete and we were depending on them to
+be accurate. Things may have changed since then, of course, but I at
+least know that they were sufficient in 34110cd^.
 
-That being said, I think just invalidating really covers 99% of the
-cases. What we really care about is that when I modify kernel/foo.c, the
-~2300 other directories (besides "" and "kernel") don't need rebuilt,
-and that is relatively simple to do. Even if doing it the other way
-produced a tiny speedup, I would be concerned with the increase in code
-complexity.
+> +# NEEDSWORK: only one of these two can succeed.  The second is there
+> +# because it would be the better result.
+> +test_expect_success 'checkout HEAD^ correctly invalidates cache-tree' '
+> +	git checkout HEAD^ &&
+> +	test_invalid_cache_tree
+> +'
+> +
+> +test_expect_failure 'checkout HEAD^ gives full cache-tree' '
+> +	git checkout master &&
+> +	git read-tree HEAD &&
+>  	git checkout HEAD^ &&
+> -	test_shallow_cache_tree
+> +	test_cache_tree
+>  '
 
-> > I think this implementation matches the intent of the original calls to
-> > cache_tree_invalidate_path sprinkled throughout unpack-trees.c.
-> 
-> Yes, and as long as we invalidate all the directories that need to be
-> invalidated during the unpack-tree operation, I think it is a correct
-> thing to do.
+I think you can construct two tests that will both work in the "ideal"
+case. In the first one, you move to a tree that updates "foo", and
+therefore the root cache-tree is invalidated.
 
-OK. I'll do some reading of the code to convince myself that the
-unpack_trees callbacks are doing the right thing. I'm not sure of a good
-automatic test that would detect a failure there. Just making test cases
-is going to end up too contrived, unless we are missing something really
-obvious.
+In the second, you update "subdir1/foo" in the index, then move to a
+commit that differs in "subdir1/bar" and "subdir2/bar". You should see
+that subdir2 has the cache-tree of the destination commit, but that
+subdir1 is invalidated (and therefore the root is also invalidated).
+That will fail with my patch, of course, as it would invalidate subdir2,
+also; so it would just be an expect_failure for somebody in the future.
 
-I'm thinking maybe something like replaying the commit history of
-linux-2.6 and making sure that each the tree generated by the cache-tree
-in each case matches the actual committed tree.
+In general, t0090 could benefit from using a larger tree. For example,
+the add test does "git add foo" and checks that the root cache-tree was
+invalidated. But it should _also_ check that the cache-tree for a
+subdirectory is _not_ invalidated (and it isn't; git-add does the right
+thing).
 
-> > But I
-> > have to say that it seems a little odd for us to be modifying the
-> > o->src_index throughout the whole thing.
-> 
-> Yes, that part is logically *wrong*.  I think it is a remnant from the
-> days when there was no distinction between src_index and dst_index.
-
-OK. I'll include a fix for that in the series I prepare.
+I'll see if I can work up some fancier tests, too.
 
 -Peff
