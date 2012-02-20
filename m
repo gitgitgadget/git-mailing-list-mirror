@@ -1,75 +1,77 @@
-From: greened@obbligato.org (David A. Greene)
-Subject: Re: git-subtree Ready #2
-Date: Mon, 20 Feb 2012 13:34:57 -0600
-Message-ID: <87pqd9wb6m.fsf@smith.obbligato.org>
-References: <877gztmfwy.fsf@smith.obbligato.org>
-	<8739acra5j.fsf@smith.obbligato.org>
-	<20120215050855.GB29902@sigill.intra.peff.net>
-	<87sjicpsr1.fsf@smith.obbligato.org>
-	<87ty2ro1zf.fsf@smith.obbligato.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/5] diff --ignore-case
+Date: Mon, 20 Feb 2012 11:47:58 -0800
+Message-ID: <7vvcn1l21d.fsf@alter.siamese.dyndns.org>
+References: <1329704188-9955-1-git-send-email-gitster@pobox.com>
+ <4F420749.9010206@kdbg.org> <7v8vjxnayn.fsf@alter.siamese.dyndns.org>
+ <871upp4n15.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 20 20:37:39 2012
+Cc: Johannes Sixt <j6t@kdbg.org>, <git@vger.kernel.org>,
+	Chris Leong <walkraft@gmail.com>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Feb 20 20:48:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzZ3G-0007kU-51
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 20:37:34 +0100
+	id 1RzZDe-0004ec-RG
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 20:48:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751954Ab2BTThY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Feb 2012 14:37:24 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:49896 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751653Ab2BTThX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2012 14:37:23 -0500
-Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=smith.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.77)
-	(envelope-from <greened@obbligato.org>)
-	id 1RzZ3S-0006Tf-Gq; Mon, 20 Feb 2012 13:37:46 -0600
-In-Reply-To: <87ty2ro1zf.fsf@smith.obbligato.org> (David A. Greene's message
-	of "Wed, 15 Feb 2012 22:07:16 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
- identified this incoming email as possible spam.  The original message
- has been attached to this so you can view it (if it isn't spam) or label
- similar future email.  If you have any questions, see
- @@CONTACT_ADDRESS@@ for details.
- Content preview:  greened@obbligato.org (David A. Greene) writes: > greened@obbligato.org
-    (David A. Greene) writes: > >>> But more important than the physical layout
-    is the maintenance plan >>> going forward. Is Avery going to keep maintaining
-    git-subtree, and we >>> will just occasionally pull? Are you maintaining
-   it? Where will patches >>> go? To a github repo? To git@vger? > > I've attached
-    Avery's response below. The short summary is that he > thinks maintaining
-    it in the vger git repository is the way to go and > that he's fine movi 
+	id S1752815Ab2BTTsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Feb 2012 14:48:05 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52962 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752786Ab2BTTsC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2012 14:48:02 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0AC797977;
+	Mon, 20 Feb 2012 14:48:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=R4YuyapTv6fvxY76fN5beGMnvvA=; b=TM46tl
+	Naf4oiv7HXBUpLUKjSULNU/7ZdjQ6r5zeLcYKXLBvaSBgC24lduQcHXvvlpMl6TP
+	1OqPYpJEeb6Lia1/vsJq3sQA7WwJIhe3CBymKfm8Hj7CANqSkSsrGw7ut6jFhioK
+	bpHTcWz6MzYRhKg66CYh6Cu+Qouejh9kHLeGM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GLVj6fufD4/eOF8FKmrzAT/1sFotmDcq
+	SyQ/eutFJWd9T/xmZM/xAKHlAVvbr0Vt97NVSTCoJ+mOD3vCXk2vMqxvrfDgCzmH
+	EvG7llPA1cDjk2APeQTxE7qQpHB6y92zl+K0vZN0xSZxezlRjvo1dSinKW3Q1V2Q
+	ezRncfbBY10=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ECE877976;
+	Mon, 20 Feb 2012 14:48:00 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 831BE7975; Mon, 20 Feb 2012
+ 14:48:00 -0500 (EST)
+In-Reply-To: <871upp4n15.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Mon, 20 Feb 2012 15:06:30 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CB6A54E0-5BFB-11E1-A0B8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191091>
 
-greened@obbligato.org (David A. Greene) writes:
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-> greened@obbligato.org (David A. Greene) writes:
+> I wonder which one of us misunderstood the original request ;-)
+
+Heh, I did ;-)
+
+> It was
 >
->>> But more important than the physical layout is the maintenance plan
->>> going forward.  Is Avery going to keep maintaining git-subtree, and we
->>> will just occasionally pull? Are you maintaining it? Where will patches
->>> go? To a github repo? To git@vger?
+> } Is there any way to run diff -G with a case insensitivity flag?
 >
-> I've attached Avery's response below.  The short summary is that he
-> thinks maintaining it in the vger git repository is the way to go and
-> that he's fine moving patches to/from GitHub as necessary.
+> and I took that to mean "I want to find addition/removal of a string
+> like -G does, but I don't know how it was capitalized".
 
-So what's the next step?  I guess one of the git maintaners will have to
-do a pull and merge.  Anything I need to do on this end for that to
-happen?
+I think it is just the matter of checking REG_ICASE that may be set in
+revs->grep_filter.regflags, and propagating it down to the regcomp at the
+beginning of diffcore_pickaxe_grep().
 
-Thanks!
-
-                             -Dave
+Want to try and see how well it works?
