@@ -1,77 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] diff --ignore-case
-Date: Mon, 20 Feb 2012 11:47:58 -0800
-Message-ID: <7vvcn1l21d.fsf@alter.siamese.dyndns.org>
-References: <1329704188-9955-1-git-send-email-gitster@pobox.com>
- <4F420749.9010206@kdbg.org> <7v8vjxnayn.fsf@alter.siamese.dyndns.org>
- <871upp4n15.fsf@thomas.inf.ethz.ch>
+From: "Nicolas Mailhot" <nicolas.mailhot@laposte.net>
+Subject: Re: Handle HTTP error 511 Network Authentication Required (standard
+ secure proxy authentification/captive portal detection)
+Date: Mon, 20 Feb 2012 20:51:11 +0100
+Message-ID: <12ec87a8c95ca12c22f05e1ec961d326.squirrel@arekh.dyndns.org>
+References: <4b8f33ba4c870528a82ab85d6dad68bd.squirrel@arekh.dyndns.org>
+    <20120220010617.GB4140@sigill.intra.peff.net>
+    <9cd657a3c4960a8c496515a03bbf623e.squirrel@arekh.dyndns.org>
+    <20120220135639.GA5131@sigill.intra.peff.net>
+    <e1d3ddd965eb32717163aaa87fa71e17.squirrel@arekh.dyndns.org>
+    <20120220154452.GA27456@sigill.intra.peff.net>
+    <cb81840f853a1d43a7da03ea24c86445.squirrel@arekh.dyndns.org>
+    <20120220191500.GA29228@sigill.intra.peff.net>
+    <72fbd4155349723da1c3c503c1c9c620.squirrel@arekh.dyndns.org>
+    <20120220193006.GA30904@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j6t@kdbg.org>, <git@vger.kernel.org>,
-	Chris Leong <walkraft@gmail.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Feb 20 20:48:19 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Nicolas Mailhot" <nicolas.mailhot@laposte.net>,
+	git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 20 20:51:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzZDe-0004ec-RG
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 20:48:19 +0100
+	id 1RzZGe-00066D-Gp
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 20:51:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752815Ab2BTTsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Feb 2012 14:48:05 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52962 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752786Ab2BTTsC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2012 14:48:02 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0AC797977;
-	Mon, 20 Feb 2012 14:48:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=R4YuyapTv6fvxY76fN5beGMnvvA=; b=TM46tl
-	Naf4oiv7HXBUpLUKjSULNU/7ZdjQ6r5zeLcYKXLBvaSBgC24lduQcHXvvlpMl6TP
-	1OqPYpJEeb6Lia1/vsJq3sQA7WwJIhe3CBymKfm8Hj7CANqSkSsrGw7ut6jFhioK
-	bpHTcWz6MzYRhKg66CYh6Cu+Qouejh9kHLeGM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GLVj6fufD4/eOF8FKmrzAT/1sFotmDcq
-	SyQ/eutFJWd9T/xmZM/xAKHlAVvbr0Vt97NVSTCoJ+mOD3vCXk2vMqxvrfDgCzmH
-	EvG7llPA1cDjk2APeQTxE7qQpHB6y92zl+K0vZN0xSZxezlRjvo1dSinKW3Q1V2Q
-	ezRncfbBY10=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ECE877976;
-	Mon, 20 Feb 2012 14:48:00 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 831BE7975; Mon, 20 Feb 2012
- 14:48:00 -0500 (EST)
-In-Reply-To: <871upp4n15.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
- "Mon, 20 Feb 2012 15:06:30 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CB6A54E0-5BFB-11E1-A0B8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752362Ab2BTTvT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Feb 2012 14:51:19 -0500
+Received: from smtpout1.laposte.net ([193.253.67.226]:8821 "EHLO
+	smtpout.laposte.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751535Ab2BTTvS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2012 14:51:18 -0500
+Received: from arekh.dyndns.org ([88.174.226.208])
+	by mwinf8501-out with ME
+	id cKrD1i0044WQcrc03KrDKj; Mon, 20 Feb 2012 20:51:13 +0100
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by arekh.dyndns.org (Postfix) with ESMTP id DD6687674;
+	Mon, 20 Feb 2012 20:51:12 +0100 (CET)
+X-Virus-Scanned: amavisd-new at arekh.dyndns.org
+Received: from arekh.dyndns.org ([127.0.0.1])
+	by localhost (arekh.okg [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id P9Z-bxXd8+vO; Mon, 20 Feb 2012 20:51:11 +0100 (CET)
+Received: from arekh.dyndns.org (localhost.localdomain [127.0.0.1])
+	by arekh.dyndns.org (Postfix) with ESMTP;
+	Mon, 20 Feb 2012 20:51:10 +0100 (CET)
+Received: from 192.168.0.4
+        (SquirrelMail authenticated user nim)
+        by arekh.dyndns.org with HTTP;
+        Mon, 20 Feb 2012 20:51:11 +0100
+In-Reply-To: <20120220193006.GA30904@sigill.intra.peff.net>
+User-Agent: SquirrelMail/1.4.22-4.fc17
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191092>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
 
-> I wonder which one of us misunderstood the original request ;-)
-
-Heh, I did ;-)
-
-> It was
+Le Lun 20 f=C3=A9vrier 2012 20:30, Jeff King a =C3=A9crit :
+> On Mon, Feb 20, 2012 at 08:24:15PM +0100, Nicolas Mailhot wrote:
 >
-> } Is there any way to run diff -G with a case insensitivity flag?
+>> > I think a good first step would be improving the error message for=
+ a
+>> > 511, then. Unfortunately, it seems from the rfc draft you sent tha=
+t
+>> > callers are expected to parse the link out of the HTML given in th=
+e body
+>> > of the response. It seems silly that there is not a Location field
+>> > associated with a 511, similar to redirects.
+>>
+>> The URL is not lost in the HTML text, it's in the url meta field
+>>
+>> <meta http-equiv=3D"refresh"
+>>        content=3D"0; url=3Dhttps://login.example.net/">
 >
-> and I took that to mean "I want to find addition/removal of a string
-> like -G does, but I don't know how it was capitalized".
+> Sorry, but
+>
+>   1. That is in the HTML in the body of the response (by body I don't
+>      mean the HTML <body>, but the body of the http request).
+>
+>   2. I don't see anything in the rfc indicating that there must be a
+>      meta tag in the response. They use it in the example of the rfc,
+>      but they also have human-readable text with an <a> link.  Do we =
+yet
+>      know what will be common among captive portals?
+>
+> You said you have a non-hypothetical case. Can you show us the respon=
+se?
 
-I think it is just the matter of checking REG_ICASE that may be set in
-revs->grep_filter.regflags, and propagating it down to the regcomp at the
-beginning of diffcore_pickaxe_grep().
+Not yet because it's currently non-standard custom redirection mess we'=
+re
+repurposing to follow the ietf spec (got tired of being accused of runn=
+ing a
+crap non-standard proxy by users, so now it's ll be a crap standard pro=
+xy)
 
-Want to try and see how well it works?
+The proxy response is totally configurable (a so there's no reason we w=
+on't
+follow the new spec to the letter
+
+
+--=20
+Nicolas Mailhot
