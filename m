@@ -1,112 +1,87 @@
-From: =?iso-8859-1?Q?Sidney_San_Mart=EDn?= <s@sidneysm.com>
-Subject: Re: [PATCH] Support wrapping commit messages when you read them
-Date: Mon, 20 Feb 2012 16:09:25 -0500
-Message-ID: <5171724E-AAE9-4419-9D0F-C09FB8048488@sidneysm.com>
-References: <8DE6E894-B50D-4F7E-AE18-C10E7E40A550@sidneysm.com> <7vfwg99dom.fsf@alter.siamese.dyndns.org> <46957CEB-5E48-4C11-8428-9A88C3810548@sidneysm.com> <7vzkcmbcbq.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1257)
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Jeff King <peff@peff.net>
+Subject: Re: rfe: git-config: lack of color reset option
+Date: Mon, 20 Feb 2012 16:20:06 -0500
+Message-ID: <20120220212006.GB6335@sigill.intra.peff.net>
+References: <alpine.LNX.2.01.1202202142160.31585@frira.zrqbmnf.qr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 20 22:09:34 2012
+To: Jan Engelhardt <jengelh@medozas.de>
+X-From: git-owner@vger.kernel.org Mon Feb 20 22:20:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzaUH-0004rj-Lq
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 22:09:34 +0100
+	id 1Rzaeg-0001vU-Ka
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 22:20:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753969Ab2BTVJ3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Feb 2012 16:09:29 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:48887 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753799Ab2BTVJ2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Feb 2012 16:09:28 -0500
-Received: by qadc10 with SMTP id c10so3629805qad.19
-        for <git@vger.kernel.org>; Mon, 20 Feb 2012 13:09:27 -0800 (PST)
-Received-SPF: pass (google.com: domain of s@sidneysm.com designates 10.229.76.204 as permitted sender) client-ip=10.229.76.204;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of s@sidneysm.com designates 10.229.76.204 as permitted sender) smtp.mail=s@sidneysm.com; dkim=pass header.i=s@sidneysm.com
-Received: from mr.google.com ([10.229.76.204])
-        by 10.229.76.204 with SMTP id d12mr16822920qck.156.1329772167720 (num_hops = 1);
-        Mon, 20 Feb 2012 13:09:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sidneysm.com; s=google;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=i+K1adZtfOHF6f5fesboEyg8k5IiBWP/T0DrMf5cB4Q=;
-        b=RYgplQMbyXz3nkgoFogfRjhdTT4QL5+rv5BH4LZLJ1BnEHLXpGOWbcGMHDT3406NLo
-         FwgK5gttPzQCaOSIrILhVY3O5Vhjeo+qA9JgRMkLwvSfr88xzYBSS/GfGv7FUFKM4DB2
-         HEXfU2TXx7J51CucZyxZq/3h4cjw7x96BSQis=
-Received: by 10.229.76.204 with SMTP id d12mr14313752qck.156.1329772167517;
-        Mon, 20 Feb 2012 13:09:27 -0800 (PST)
-Received: from [10.66.81.18] (h-64-236-128-13.nat.aol.com. [64.236.128.13])
-        by mx.google.com with ESMTPS id eo4sm52521668qab.16.2012.02.20.13.09.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 20 Feb 2012 13:09:26 -0800 (PST)
-In-Reply-To: <7vzkcmbcbq.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1257)
-X-Gm-Message-State: ALoCoQkzSoWmR3Jix36DZZIUIAsNidV6PDmj7/cf6Gl3I9wp9fXJcXJTunt9jSxXsOdythWNtI2s
+	id S1753725Ab2BTVUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Feb 2012 16:20:11 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44190
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753480Ab2BTVUK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2012 16:20:10 -0500
+Received: (qmail 7193 invoked by uid 107); 20 Feb 2012 21:20:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 20 Feb 2012 16:20:09 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Feb 2012 16:20:06 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.LNX.2.01.1202202142160.31585@frira.zrqbmnf.qr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191106>
 
-On Feb 13, 2012, at 5:25 PM, Junio C Hamano wrote:
+On Mon, Feb 20, 2012 at 09:50:11PM +0100, Jan Engelhardt wrote:
 
-> I just typed M-q to wrap the above paragraph from you to make it read=
-able.
+> given the following config:
+> 
+> [color "diff"]
+> 	commit = bold white blue
+> [color "decorate"]
+> 	branch = green
+> 
+> The attributes from color.diff.commit are inherited for color.decorate.
 
-Out of curiosity, how do you read your mail? I don=92t know anyone whos=
-e mail
-is set up like that.
+This is an artifact of the way the ANSI colorizing works. Git says "turn
+on bold white and a blue background", then it outputs some content, then
+it says "turn on green", and so forth. At the end we issue a "reset" to
+turn everything back to normal. We should perhaps issue a reset before
+outputting the decoration, as we are moving from one colorized bit to
+the other, and we don't know what we are inheriting.
 
-I=92m happy to wrap my text if it=92s tricky for you to read it otherwi=
-se =97 but
-=46WIW my mail client doesn=92t support hard wrapping (I=92m doing it i=
-n my editor).
+Of course that would break people who _want_ the blue background to
+continue into the branch decoration. But they can easily fix it by
+putting "green blue" in their config.
 
-> "Computers are good at automating" is true, and that is why real edit=
-ors
-> give an easy way to auto-wrap long prose in a paragraph while composi=
-ng.
-> But "computers are good at automating" is not a convincing justificat=
-ion
-> to let the composer leave unreasonably long lines in the commit log o=
-bject
-> and force the reader side to line-wrap the mess only to fix it up.
+> 1. There seems to be no way to reset the attributes such that
+> "color.decorate.branch = default green blue" wouuld have an effect.
 
-I asked in #git how other people handle wrapping. Out of three people w=
-ho
-responded, only one said that they had configured their editor (the oth=
-er two
-do it by hand). One thought that Git already did dumb (character-level)=
- line
-wrapping, but it turns out he had set LESS=3D and GIT_PAGER=3D'less -FR=
-X'.
+I would have expected that perhaps setting color.decorate.branch to
+"reset green" would work, but it seems that we don't allow arbitrary
+sequences. Which would be another possible solution.
 
-So, even if it is possible to set up your editor to wrap prose appropri=
-ately,
-I don=92t think it=92s as common as one might hope.
+In your case, I think you just want turn off bold without resetting the
+whole thing. That is its own attribute. It would be nice if we supported
+"nobold", "noreverse", etc. But you wouldn't really need them if we
+properly reset at the transition between two colorized bits.
 
-I=92m not suggesting that the reader side should take care of the wrapp=
-ing
-because it *can*, I=92m suggesting that it shouldn=92t take specially-c=
-onfigured
-editors to get consistent and good results =97 which I assume is why vi=
-rtually
-all new prose-writing tools do wrapping on the viewing end.
+> 2. It would be nice if there was an option to only paint the 
+> commit hash, rather than the entire line including the decorate 
+> parenthesis group.
 
-What do you think about Git UIs which use proportional fonts for text w=
-here
-hard wrapping doesn=92t work at all? (I brought this up before but want=
- your
-take on it).
+Yeah, the parentheses are explicitly painted. I'm not sure how to easily
+fix that short of adding lots of painfully small config options.
 
-And, using man and, now, "git help -a" as examples: they both adapt the=
-ir
-output to the width of the user=92s terminal. Isn=92t that a good thing=
-?
+I have a long term dream that our --pretty=format specifiers would grow
+featureful enough that all of the other --pretty formats could be
+implemented in terms of them. And then you could tweak to your hearts
+content, starting with the embedded definition of what "git log" shows
+and putting colors wherever you like. I'm not sure how far we are off
+from doing that now. You could try writing a format-specifier that looks
+like git-log output and see if there is anything lacking.
 
-If those aren=92t good justification=85 what would be?
+-Peff
