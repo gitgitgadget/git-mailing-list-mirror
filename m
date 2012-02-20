@@ -1,88 +1,96 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Handle HTTP error 511 Network Authentication Required (standard
- secure proxy authentification/captive portal detection)
-Date: Mon, 20 Feb 2012 10:44:52 -0500
-Message-ID: <20120220154452.GA27456@sigill.intra.peff.net>
-References: <4b8f33ba4c870528a82ab85d6dad68bd.squirrel@arekh.dyndns.org>
- <20120220010617.GB4140@sigill.intra.peff.net>
- <9cd657a3c4960a8c496515a03bbf623e.squirrel@arekh.dyndns.org>
- <20120220135639.GA5131@sigill.intra.peff.net>
- <e1d3ddd965eb32717163aaa87fa71e17.squirrel@arekh.dyndns.org>
+Subject: Re: [PATCH/RFC v2] Document format of basic Git objects
+Date: Mon, 20 Feb 2012 11:11:01 -0500
+Message-ID: <20120220161101.GA27105@sigill.intra.peff.net>
+References: <1329312140-24089-1-git-send-email-pclouds@gmail.com>
+ <1329624946-32173-1-git-send-email-pclouds@gmail.com>
+ <7vlinzp67m.fsf@alter.siamese.dyndns.org>
+ <CACsJy8CEeZPf55idLB9NE-rf--ySmZh_9gkMc_zo0VmiVftMUg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Nicolas Mailhot <nicolas.mailhot@laposte.net>
-X-From: git-owner@vger.kernel.org Mon Feb 20 16:45:01 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jonathan Niedier <jrnieder@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Scott Chacon <schacon@gmail.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 20 17:11:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzVQC-00035z-Ae
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 16:45:00 +0100
+	id 1RzVpZ-0000mo-3V
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 17:11:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753678Ab2BTPoz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Feb 2012 10:44:55 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43901
+	id S1753794Ab2BTQLG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Feb 2012 11:11:06 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43926
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753263Ab2BTPoz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2012 10:44:55 -0500
-Received: (qmail 2592 invoked by uid 107); 20 Feb 2012 15:44:54 -0000
+	id S1753771Ab2BTQLF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2012 11:11:05 -0500
+Received: (qmail 2867 invoked by uid 107); 20 Feb 2012 16:11:04 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 20 Feb 2012 10:44:54 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Feb 2012 10:44:52 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 20 Feb 2012 11:11:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Feb 2012 11:11:01 -0500
 Content-Disposition: inline
-In-Reply-To: <e1d3ddd965eb32717163aaa87fa71e17.squirrel@arekh.dyndns.org>
+In-Reply-To: <CACsJy8CEeZPf55idLB9NE-rf--ySmZh_9gkMc_zo0VmiVftMUg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191080>
 
-On Mon, Feb 20, 2012 at 04:34:19PM +0100, Nicolas Mailhot wrote:
+On Mon, Feb 20, 2012 at 08:55:28PM +0700, Nguyen Thai Ngoc Duy wrote:
 
-> >> Actually, the best would be to launch something capable of interpreting html
-> >> forms on the url given by the error.
-> >
-> > Doing that portably is near impossible (keep in mind that git runs on
-> > things like antique versions of Solaris).
-> 
-> Can't the you let the user specify a browser command (firefox, elinks w3m) to
-> auto-feed the portal page to when needed ?
+> > Author-ident is typically utf-8 already, so you cannot assume "ASCI=
+I".
+>=20
+> I wonder if anyone puts non utf-8 strings in there, or could we
+> enforce utf-8 (i.e. validate and reject non utf-8 strings) and accept
+> encoded word syntax (rfc 2047) with the help of the new
+> $GIT_IDENT_ENCODING variable. The "accept ..." part can wait until
+> someone is hit by "utf-8 only" check and steps up.
 
-Yes, that's why I said "we could add a configuration option" in the part
-that you snipped. But doing it out of the box is not going to be
-portable.
+I was just having a similar discussion with libgit2 folks, who were
+wondering if there would ever be non-utf8 in there. When we call
+"reencode_commit_message", it looks like we do the whole object. In
+other words, your author name _must_ match any encoding you specify in
+the "encoding" header.
 
-> The main problem with captive portals is when they shut down the connection
-> and the user has no idea how to restore it (and error 511 is intended to fix
-> this, but that won't do a lot of good if the user does is not shown the
-> captive portal url transmitted with the error)
+I.e., if you do:
 
-In my experience, the captive portal process usually goes like this:
+  # latin1 =C3=A9
+  e=3D`printf '\xe9'`
 
-  1. Connect to network.
+  export GIT_AUTHOR_NAME=3D"P${e}ff King"
+  git init
+  git config i18n.commitencoding iso8859-1
+  touch foo && git add foo &&
+  git commit --allow-empty -m "more latin1 ${e}ncoding"
 
-  2. Try some non-browser command. Wonder why in the world it isn't
-     working.
+both the name and the message should show fine on your utf8 terminal if
+you do this:
 
-  3. Open a browser and say "Ah, I see. A captive portal".
+  git config i18n.logoutputencoding utf8
+  git show
 
-The 511 proposal makes step 2 a lot better if the protocol is http[1].
-But it pretty much makes it better even without non-browser client
-support, because at least you will get a 511 error instead of having git
-complain that the remote repository is corrupted (which happens if the
-captive portal returns a redirect to an html page).
+And similarly, we do the right thing in format-patch, both with and
+without logoutputencoding set:
 
-We should already be doing that. Adding more support could make step 3 a
-little nicer, but like I said, I'd be more interested in seeing a real
-case first. It may even be a feature that would be more appropriate to
-curl (which git builds on for http access).
+  $ git format-patch --root --stdout | grep -Ei "^(from|subject):"
+  From: =3D?iso8859-1?q?P=3DE9ff=3D20King?=3D <peff@peff.net>
+  Subject: [PATCH] =3D?iso8859-1?q?more=3D20latin1=3D20=3DE9ncoding?=3D
+
+  $ git config i18n.logoutputencoding utf8
+  $ git format-patch --root --stdout | grep -Ei "^(from|subject):"
+  From: =3D?utf8?q?P=3DC3=3DA9ff=3D20King?=3D <peff@peff.net>
+  Subject: [PATCH] =3D?utf8?q?more=3D20latin1=3D20=3DC3=3DA9ncoding?=3D
+
+(where 0xc3a9 is the utf8 equivalent of latin1 0xe9).
+
+So I have no idea if people are using it or not, but it is actually
+usable.
 
 -Peff
-
-[1] Of course it doesn't help at all for git:// or ssh:// (which are
-    usually even worse off in the first place, as many captive portals
-    will simply drop the packets, making it look like the remote server
-    is down).
