@@ -1,7 +1,7 @@
 From: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-Subject: [PATCH 7/8 v6] diff --stat: limit graph part to 40 columns
-Date: Mon, 20 Feb 2012 22:57:13 +0100
-Message-ID: <1329775034-21551-8-git-send-email-zbyszek@in.waw.pl>
+Subject: [PATCH 2/8 v6] diff --stat: tests for long filenames and big change counts
+Date: Mon, 20 Feb 2012 22:57:08 +0100
+Message-ID: <1329775034-21551-3-git-send-email-zbyszek@in.waw.pl>
 References: <1329775034-21551-1-git-send-email-zbyszek@in.waw.pl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -16,370 +16,243 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzbFS-0004Tj-Mv
+	id 1RzbFT-0004Tj-ET
 	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 22:58:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754361Ab2BTV6I convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Feb 2012 16:58:08 -0500
-Received: from kawka.in.waw.pl ([178.63.212.103]:52863 "EHLO kawka.in.waw.pl"
+	id S1754177Ab2BTV6A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Feb 2012 16:58:00 -0500
+Received: from kawka.in.waw.pl ([178.63.212.103]:52838 "EHLO kawka.in.waw.pl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754195Ab2BTV6H (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2012 16:58:07 -0500
+	id S1753944Ab2BTV56 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2012 16:57:58 -0500
 Received: from 89-78-221-60.dynamic.chello.pl ([89.78.221.60] helo=localhost.localdomain)
 	by kawka.in.waw.pl with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.72)
 	(envelope-from <zbyszek@in.waw.pl>)
-	id 1RzbFG-0007o6-4W; Mon, 20 Feb 2012 22:58:06 +0100
+	id 1RzbF7-0007o6-3N; Mon, 20 Feb 2012 22:57:57 +0100
 X-Mailer: git-send-email 1.7.9.1.353.g684b4
 In-Reply-To: <1329775034-21551-1-git-send-email-zbyszek@in.waw.pl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191113>
 
-The way that available columns are divided between the filename part
-and the graph part is modified to use as many columns as necessary for
-the filenames and up to 40 columns for the graph.
+In preparation for updates to the "diff --stat" that updates the logic
+to split the allotted columns into the name part and the graph part to
+make the output more readable, add a handful of tests to document the
+corner case behaviour in which long filenames and big changes are shown=
+=2E
 
-If commits changing a lot of lines are displayed in a wide terminal
-window (200 or more columns), and the +- graph would use the full
-width, the output would look bad. Messages wrapped to about 80 columns
-would be interspersed with very long +- lines. It makes sense to limit
-the width of the graph part to a fixed value, even if more columns are
-available. This fixed value is subjectively hard-coded to be 40
-columns, which seems to work well for git.git and linux-2.6.git and
-some other repositories.
-
-If there isn't enough columns to print both the filename and the
-graph, at least 5/8 of available space is devoted to filenames. On a
-standard 80 column terminal, or if not connected to a terminal and
-using the default of 80 columns, this gives the same partition as
-before.
-
-The effect of this change is visible in the patch to t4052 that fixes a
-few tests marked with test_expect_failure, and the change to shorten th=
-e
-maximum graph width to 40 columns. Since limiting the graph part to
-40 columns makes COLUMNS=3D200 stop influencing diff --stat behaviour,
-because it isn't wide enough now, a new test with COLUMNS=3D40 is added
-to check that the environment variable influences diff, show, log, but =
-not
-format-patch. The old test with COLUMNS=3D200 is added to check for
-regressions.
+When a pathname is so long that it cannot fit on the column, the curren=
+t
+code truncates it to make sure that the graph part has enough room to s=
+how
+a meaningful graph.  If the actual change is small (e.g. only one line
+changed), this results in the final output that is shorter than the wid=
+th
+we aim for.  A couple of new tests marked with test_expect_failure
+demonstrate this bug.
 
 Signed-off-by: Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl>
 ---
- Documentation/diff-options.txt | 14 +++---
- diff.c                         | 94 +++++++++++++++++++++++++++-------=
-------
- t/t4052-stat-output.sh         | 45 ++++++++++++-------
- 3 files changed, 102 insertions(+), 51 deletions(-)
+ t/t4052-stat-output.sh | 182 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 182 insertions(+)
+ create mode 100755 t/t4052-stat-output.sh
 
-diff --git Documentation/diff-options.txt Documentation/diff-options.tx=
-t
-index 9ed78c9..e4d0e3e 100644
---- Documentation/diff-options.txt
-+++ Documentation/diff-options.txt
-@@ -53,13 +53,15 @@ endif::git-format-patch[]
- 	Generate a diff using the "patience diff" algorithm.
-=20
- --stat[=3D<width>[,<name-width>[,<count>]]]::
--	Generate a diffstat.  You can override the default
--	output width for 80-column terminal by `--stat=3D<width>`.
--	The width of the filename part can be controlled by
--	giving another width to it separated by a comma.
-+	Generate a diffstat. By default, as much space as necessary
-+	will be used for the filename part, and up to 40 columns for
-+	the graph part. Maximum width defaults to terminal width,
-+	or 80 columns if not connected to a terminal, and can be
-+	overriden by `<width>`. The width of the filename part can be
-+	limited by giving another width `<name-width>` after a comma.
- 	By giving a third parameter `<count>`, you can limit the
--	output to the first `<count>` lines, followed by
--	`...` if there are more.
-+	output to the first `<count>` lines, followed by `...` if
-+	there are more.
- +
- These parameters can also be set individually with `--stat-width=3D<wi=
-dth>`,
- `--stat-name-width=3D<name-width>` and `--stat-count=3D<count>`.
-diff --git diff.c diff.c
-index 1db46a4..8a9a387 100644
---- diff.c
-+++ diff.c
-@@ -1375,7 +1375,7 @@ static void show_stats(struct diffstat_t *data, s=
-truct diff_options *options)
- 	int i, len, add, del, adds =3D 0, dels =3D 0;
- 	uintmax_t max_change =3D 0, max_len =3D 0;
- 	int total_files =3D data->nr;
--	int width, name_width, count;
-+	int width, name_width, graph_width, number_width =3D 4, count;
- 	const char *reset, *add_c, *del_c;
- 	const char *line_prefix =3D "";
- 	int extra_shown =3D 0;
-@@ -1389,28 +1389,15 @@ static void show_stats(struct diffstat_t *data,=
- struct diff_options *options)
- 		line_prefix =3D msg->buf;
- 	}
-=20
--	if (options->stat_width =3D=3D -1)
--		width =3D term_columns();
--	else
--		width =3D options->stat_width ? options->stat_width : 80;
--	name_width =3D options->stat_name_width ? options->stat_name_width : =
-50;
- 	count =3D options->stat_count ? options->stat_count : data->nr;
-=20
--	/* Sanity: give at least 5 columns to the graph,
--	 * but leave at least 10 columns for the name.
--	 */
--	if (width < 25)
--		width =3D 25;
--	if (name_width < 10)
--		name_width =3D 10;
--	else if (width < name_width + 15)
--		name_width =3D width - 15;
--
--	/* Find the longest filename and max number of changes */
- 	reset =3D diff_get_color_opt(options, DIFF_RESET);
- 	add_c =3D diff_get_color_opt(options, DIFF_FILE_NEW);
- 	del_c =3D diff_get_color_opt(options, DIFF_FILE_OLD);
-=20
-+	/*
-+	 * Find the longest filename and max number of changes
-+	 */
- 	for (i =3D 0; (i < count) && (i < data->nr); i++) {
- 		struct diffstat_file *file =3D data->files[i];
- 		uintmax_t change =3D file->added + file->deleted;
-@@ -1431,19 +1418,66 @@ static void show_stats(struct diffstat_t *data,=
- struct diff_options *options)
- 	}
- 	count =3D i; /* min(count, data->nr) */
-=20
--	/* Compute the width of the graph part;
--	 * 10 is for one blank at the beginning of the line plus
--	 * " | count " between the name and the graph.
-+	/*
-+	 * We have width =3D stat_width or term_columns() columns total.
-+	 * We want a maximum of min(max_len, stat_name_width) for the name pa=
-rt.
-+	 * We want a maximum of min(max_change, 40) for the +- part.
-+	 * We also need 1 for " " and 4 + decimal_width(max_change)
-+	 * for " | NNNN " and one the empty column at the end, altogether
-+	 * 6 + decimal_width(max_change).
-+	 *
-+	 * If there's not enough space, we will use the smaller of
-+	 * stat_name_width (if set) and 5/8*width for the filename,
-+	 * and the rest for constant elements + graph part, but no more
-+	 * than 40 for the graph part.
-+	 * (5/8 gives 50 for filename and 30 for the constant parts + graph
-+	 * for the standard terminal size).
- 	 *
--	 * From here on, name_width is the width of the name area,
--	 * and width is the width of the graph area.
-+	 * In other words: stat_width limits the maximum width, and
-+	 * stat_name_width fixes the maximum width of the filename,
-+	 * and is also used to divide available columns if there
-+	 * aren't enough.
- 	 */
--	name_width =3D (name_width < max_len) ? name_width : max_len;
--	if (width < (name_width + 10) + max_change)
--		width =3D width - (name_width + 10);
-+
-+	if (options->stat_width =3D=3D -1)
-+		width =3D term_columns();
- 	else
--		width =3D max_change;
-+		width =3D options->stat_width ? options->stat_width : 80;
-=20
-+	/*
-+	 * Guarantee 3/8*16=3D=3D6 for the graph part
-+	 * and 5/8*16=3D=3D10 for the filename part
-+	 */
-+	if (width < 16 + 6 + number_width)
-+		width =3D 16 + 6 + number_width;
-+
-+	/*
-+	 * First assign sizes that are wanted, ignoring available width.
-+	 */
-+	graph_width =3D max_change < 40 ? max_change : 40;
-+	name_width =3D (options->stat_name_width > 0 &&
-+		      options->stat_name_width < max_len) ?
-+		options->stat_name_width : max_len;
-+
-+	/*
-+	 * Adjust adjustable widths not to exceed maximum width
-+	 */
-+	if (name_width + number_width + 6 + graph_width > width) {
-+		if (graph_width > width * 3/8 - number_width - 6)
-+			graph_width =3D width * 3/8 - number_width - 6;
-+		if (graph_width > 40)
-+			graph_width =3D  40;
-+		if (name_width > width - number_width - 6 - graph_width)
-+			name_width =3D width - number_width - 6 - graph_width;
-+		else
-+			graph_width =3D width - number_width - 6 - name_width;
-+	}
-+
-+	/*
-+	 * From here name_width is the width of the name area,
-+	 * and graph_width is the width of the graph area.
-+	 * max_change is used to scale graph properly.
-+	 */
- 	for (i =3D 0; i < count; i++) {
- 		const char *prefix =3D "";
- 		char *name =3D data->files[i]->print_name;
-@@ -1499,18 +1533,18 @@ static void show_stats(struct diffstat_t *data,=
- struct diff_options *options)
- 		adds +=3D add;
- 		dels +=3D del;
-=20
--		if (width <=3D max_change) {
-+		if (graph_width <=3D max_change) {
- 			int total =3D add + del;
-=20
--			total =3D scale_linear(add + del, width, max_change);
-+			total =3D scale_linear(add + del, graph_width, max_change);
- 			if (total < 2 && add && del)
- 				/* width >=3D 2 due to the sanity check */
- 				total =3D 2;
- 			if (add < del) {
--				add =3D scale_linear(add, width, max_change);
-+				add =3D scale_linear(add, graph_width, max_change);
- 				del =3D total - add;
- 			} else {
--				del =3D scale_linear(del, width, max_change);
-+				del =3D scale_linear(del, graph_width, max_change);
- 				add =3D total - del;
- 			}
- 		}
 diff --git t/t4052-stat-output.sh t/t4052-stat-output.sh
-index 2b4510c..1b237b7 100755
---- t/t4052-stat-output.sh
+new file mode 100755
+index 0000000..031107b
+--- /dev/null
 +++ t/t4052-stat-output.sh
-@@ -28,19 +28,19 @@ EOF
-=20
- while read cmd args
- do
--	test_expect_failure "$cmd graph width defaults to 80 columns" '
-+	test_expect_success "$cmd graph width defaults to 80 columns" '
- 		git $cmd $args >output &&
- 		grep " | " output >actual &&
- 		test_cmp expect80 actual
- 	'
-=20
--	test_expect_failure "$cmd --stat=3Dwidth with long name" '
-+	test_expect_success "$cmd --stat=3Dwidth with long name" '
- 		git $cmd $args --stat=3D40 >output &&
- 		grep " | " output >actual &&
- 		test_cmp expect40 actual
- 	'
-=20
--	test_expect_failure "$cmd --stat-width=3Dwidth with long name" '
-+	test_expect_success "$cmd --stat-width=3Dwidth with long name" '
- 		git $cmd $args --stat-width=3D40 >output &&
- 		grep " | " output >actual &&
- 		test_cmp expect40 actual
-@@ -78,27 +78,42 @@ test_expect_success 'preparation for big change tes=
-ts' '
- '
-=20
- cat >expect80 <<'EOF'
-- abcd | 1000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+@@ -0,0 +1,182 @@
++#!/bin/sh
++#
++# Copyright (c) 2012 Zbigniew J=C4=99drzejewski-Szmek
++#
++
++test_description=3D'test --stat output of various commands'
++
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-terminal.sh
++
++# 120 character name
++name=3Daaaaaaaaaa
++name=3D$name$name$name$name$name$name$name$name$name$name$name$name
++test_expect_success 'preparation' '
++	>"$name" &&
++	git add "$name" &&
++	git commit -m message &&
++	echo a >"$name" &&
++	git commit -m message "$name"
++'
++cat >expect80 <<'EOF'
++ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=
+ |    1 +
++EOF
++
++cat >expect40 <<-'EOF'
++ ...aaaaaaaaaaaaaaaaaaaaaaaaaa |    1 +
++EOF
++
++while read cmd args
++do
++	test_expect_failure "$cmd graph width defaults to 80 columns" '
++		git $cmd $args >output &&
++		grep " | " output >actual &&
++		test_cmp expect80 actual
++	'
++
++	test_expect_failure "$cmd --stat=3Dwidth with long name" '
++		git $cmd $args --stat=3D40 >output &&
++		grep " | " output >actual &&
++		test_cmp expect40 actual
++	'
++
++	test_expect_failure "$cmd --stat-width=3Dwidth with long name" '
++		git $cmd $args --stat-width=3D40 >output &&
++		grep " | " output >actual &&
++		test_cmp expect40 actual
++	'
++
++	test_expect_success "$cmd --stat=3D...,name-width with long name" '
++		git $cmd $args --stat=3D60,29 >output &&
++		grep " | " output >actual &&
++		test_cmp expect40 actual
++	'
++
++	test_expect_success "$cmd --stat-name-width with long name" '
++		git $cmd $args --stat-name-width=3D29 >output &&
++		grep " | " output >actual &&
++		test_cmp expect40 actual
++	'
++done <<\EOF
++format-patch -1 --stdout
++diff HEAD^ HEAD --stat
++show --stat
++log -1 --stat
++EOF
++
++
++test_expect_success 'preparation for big change tests' '
++	>abcd &&
++	git add abcd &&
++	git commit -m message &&
++	i=3D0 &&
++	while test $i -lt 1000
++	do
++		echo $i && i=3D$(($i + 1))
++	done >abcd &&
++	git commit -m message abcd
++'
++
++cat >expect80 <<'EOF'
++ abcd | 1000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
 +++++++++
-+ abcd | 1000 ++++++++++++++++++++++++++++++++++++++++
- EOF
-=20
--cat >expect200 <<'EOF'
-- abcd | 1000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++EOF
++
 +while read verb expect cmd args
 +do
-+	test_expect_success "$cmd $verb too many COLUMNS (big change)" '
++	test_expect_success "$cmd $verb COLUMNS (big change)" '
 +		COLUMNS=3D200 git $cmd $args >output
 +		grep " | " output >actual &&
 +		test_cmp "$expect" actual
 +	'
 +done <<\EOF
 +ignores expect80 format-patch -1 --stdout
-+respects expect80 diff HEAD^ HEAD --stat
-+respects expect80 show --stat
-+respects expect80 log -1 --stat
++ignores expect80 diff HEAD^ HEAD --stat
++ignores expect80 show --stat
++ignores expect80 log -1 --stat
 +EOF
 +
-+cat >expect40 <<'EOF'
++cat >expect <<'EOF'
 + abcd | 1000 ++++++++++++++++++++++++++
- EOF
-=20
- while read verb expect cmd args
- do
--	test_expect_success "$cmd $verb COLUMNS (big change)" '
--		COLUMNS=3D200 git $cmd $args >output
-+	test_expect_success "$cmd $verb not enough COLUMNS (big change)" '
-+		COLUMNS=3D40 git $cmd $args >output
- 		grep " | " output >actual &&
- 		test_cmp "$expect" actual
- 	'
- done <<\EOF
- ignores expect80 format-patch -1 --stdout
--respects expect200 diff HEAD^ HEAD --stat
--respects expect200 show --stat
--respects expect200 log -1 --stat
-+respects expect40 diff HEAD^ HEAD --stat
-+respects expect40 show --stat
-+respects expect40 log -1 --stat
- EOF
-=20
++EOF
 +
- cat >expect <<'EOF'
-  abcd | 1000 ++++++++++++++++++++++++++
- EOF
-@@ -130,7 +145,7 @@ test_expect_success 'preparation for long filename =
-tests' '
- '
-=20
- cat >expect <<'EOF'
-- ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++
-+ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++
- EOF
-=20
- while read cmd args
-@@ -151,7 +166,7 @@ cat >expect80 <<'EOF'
-  ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++=
++while read cmd args
++do
++	test_expect_success "$cmd --stat=3Dwidth with big change" '
++		git $cmd $args --stat=3D40 >output
++		grep " | " output >actual &&
++		test_cmp expect actual
++	'
++
++	test_expect_success "$cmd --stat-width=3Dwidth with big change" '
++		git $cmd $args --stat-width=3D40 >output
++		grep " | " output >actual &&
++		test_cmp expect actual
++	'
++done <<\EOF
++format-patch -1 --stdout
++diff HEAD^ HEAD --stat
++show --stat
++log -1 --stat
++EOF
++
++test_expect_success 'preparation for long filename tests' '
++	cp abcd aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa &&
++	git add aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa &&
++	git commit -m message
++'
++
++cat >expect <<'EOF'
++ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++
++EOF
++
++while read cmd args
++do
++	test_expect_success "$cmd --stat=3Dwidth with big change and long nam=
+e" '
++		git $cmd $args --stat-width=3D60 >output &&
++		grep " | " output >actual &&
++		test_cmp expect actual
++	'
++done <<\EOF
++format-patch -1 --stdout
++diff HEAD^ HEAD --stat
++show --stat
++log -1 --stat
++EOF
++
++cat >expect80 <<'EOF'
++ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++=
 +++++++++
- EOF
- cat >expect200 <<'EOF'
-- ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++=
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-+ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++=
-++++++++++++++++++++++++++++++
- EOF
- while read verb expect cmd args
- do
-@@ -168,7 +183,7 @@ respects expect200 log -1 --stat
- EOF
-=20
- cat >expect <<'EOF'
-- abcd | 1000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
-+++++++++++++++++++++++++++++
-+ abcd | 1000 ++++++++++++++++++++++++++++++++++++++++
- EOF
- test_expect_success 'merge --stat respects COLUMNS (big change)' '
- 	git checkout -b branch HEAD^^ &&
-@@ -178,7 +193,7 @@ test_expect_success 'merge --stat respects COLUMNS =
-(big change)' '
- '
-=20
- cat >expect <<'EOF'
-- ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++=
-+++++++++++++++++++++++++++++
-+ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++=
-+++++++++++++++++++++++++++++
- EOF
- test_expect_success 'merge --stat respects COLUMNS (long filename)' '
- 	COLUMNS=3D100 git merge --stat --no-ff master >output &&
++EOF
++while read verb expect cmd args
++do
++	test_expect_success "$cmd $verb COLUMNS (long filename)" '
++		COLUMNS=3D200 git $cmd $args >output
++		grep " | " output >actual &&
++		test_cmp "$expect" actual
++	'
++done <<\EOF
++ignores expect80 format-patch -1 --stdout
++ignores expect80 diff HEAD^ HEAD --stat
++ignores expect80 show --stat
++ignores expect80 log -1 --stat
++EOF
++
++cat >expect <<'EOF'
++ abcd | 1000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
++++++++++
++EOF
++test_expect_success 'merge --stat ignores COLUMNS (big change)' '
++	git checkout -b branch HEAD^^ &&
++	COLUMNS=3D100 git merge --stat --no-ff master^ >output &&
++	grep " | " output >actual
++	test_cmp expect actual
++'
++
++cat >expect <<'EOF'
++ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++=
++++++++++
++EOF
++test_expect_success 'merge --stat ignores COLUMNS (long filename)' '
++	COLUMNS=3D100 git merge --stat --no-ff master >output &&
++	grep " | " output >actual
++	test_cmp expect actual
++'
++
++test_done
 --=20
 1.7.9.1.353.g684b4
