@@ -1,100 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Handle HTTP error 511 Network Authentication Required (standard
- secure proxy authentification/captive portal detection)
-Date: Mon, 20 Feb 2012 08:56:39 -0500
-Message-ID: <20120220135639.GA5131@sigill.intra.peff.net>
-References: <4b8f33ba4c870528a82ab85d6dad68bd.squirrel@arekh.dyndns.org>
- <20120220010617.GB4140@sigill.intra.peff.net>
- <9cd657a3c4960a8c496515a03bbf623e.squirrel@arekh.dyndns.org>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH 0/5] diff --ignore-case
+Date: Mon, 20 Feb 2012 15:06:30 +0100
+Message-ID: <871upp4n15.fsf@thomas.inf.ethz.ch>
+References: <1329704188-9955-1-git-send-email-gitster@pobox.com>
+	<4F420749.9010206@kdbg.org> <7v8vjxnayn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Nicolas Mailhot <nicolas.mailhot@laposte.net>
-X-From: git-owner@vger.kernel.org Mon Feb 20 14:56:52 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Johannes Sixt <j6t@kdbg.org>, <git@vger.kernel.org>,
+	Chris Leong <walkraft@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 20 15:06:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzTjX-00071n-OC
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 14:56:52 +0100
+	id 1RzTt0-0004IF-Gq
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 15:06:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751733Ab2BTN4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Feb 2012 08:56:47 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43782
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751129Ab2BTN4q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2012 08:56:46 -0500
-Received: (qmail 796 invoked by uid 107); 20 Feb 2012 13:56:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 20 Feb 2012 08:56:45 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Feb 2012 08:56:39 -0500
-Content-Disposition: inline
-In-Reply-To: <9cd657a3c4960a8c496515a03bbf623e.squirrel@arekh.dyndns.org>
+	id S1752805Ab2BTOGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Feb 2012 09:06:33 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:44914 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752352Ab2BTOGd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2012 09:06:33 -0500
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 20 Feb
+ 2012 15:06:29 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 20 Feb
+ 2012 15:06:30 +0100
+In-Reply-To: <7v8vjxnayn.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 20 Feb 2012 00:52:16 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191069>
 
-On Mon, Feb 20, 2012 at 06:38:54AM +0100, Nicolas Mailhot wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> > As a non-browser client, what should git do? We can't make sense of the
-> > content at http://login.corporatenetwork, which is most likely an HTML
-> > form asking for credentials (or even money, if the captive portal is
-> > something like a public wireless provider). The best we can probably do
-> > is die and say "apparently you need to go http://login.corporatenetwork
-> > in a browser before making your request".
-> 
-> Actually, the best would be to launch something capable of interpreting html
-> forms on the url given by the error.
+> Johannes Sixt <j6t@kdbg.org> writes:
+>
+>> Am 20.02.2012 03:16, schrieb Junio C Hamano:
+>>> This teaches our "diff" machinery to optionally consider lines that are
+>>> different only in upper/lower-cases to be equivalent.
+>>
+>> When would I want to use --ignore-case?
+>
+> I wouldn't myself; it was just I saw somebody asked if -G can be used to
+> do case insensitive and then I realized we do not even support such in the
+> diff machinery to begin with, but now this opens a way to do so by copying
+> the xdl options when the pickaxe-grep codepath runs a subdiff.
 
-Doing that portably is near impossible (keep in mind that git runs on
-things like antique versions of Solaris). Not to mention that git is
-often running without a user present, or on a remote system connected
-to the user only by ssh. So our best bet would probably be a
-configuration option to tell git how to run a browser. Distributions
-which ship binary packages could ship a sane default for their system.
+I wonder which one of us misunderstood the original request ;-)
 
-> But short of that, that depends on how good git is at resuming work
-> later. Error 511 can occur at any time, not just on initial connection
-> (because credentials can expire at any time). So pausing may be better
-> than dying.
+It was
 
-It can, but I doubt it is a big problem with smart-http. We will make a
-handful of quick negotiation requests at the beginning, and then the
-bulk of the data will come over a single http request.
+} Is there any way to run diff -G with a case insensitivity flag?
 
-> However without going there: the portal page will usually be pretty simple, a
-> standard basic auth form, can't git handle this? If simple web clients such as
-> git have specific constrains on what can appear or not on this page, can you
-> not define them and send them ietf-side so they can document them in a later
-> rfc revision?
+and I took that to mean "I want to find addition/removal of a string
+like -G does, but I don't know how it was capitalized".  OTOH you
+interpreted it as "I want to run -G but ignore changes in case while
+diffing".
 
-Git handles http basic auth. But my experience has been that captive
-portals almost _never_ do basic auth. Instead, they give you an html
-page with a bunch of form fields. And possibly some javascript required
-to submit it. Git does not understand either of those things, and nor
-should it; spawning a browser is the right thing to do there.
+So maybe Chris can comment on what was intended?
 
-I don't think the IETF can or should mandate what goes on such a page.
-Some portals will want login/password. Some will want billing
-information. Some will even want other things (at some airports, I have
-seen captive portals offer the option to take a short survey in return
-for net access for a day). So it is not a matter of what git wants, but
-what the captive portals want.
-
-> The main impetus from my point of view is that captive portal/proxy auth is a
-> mess, because they try to trick web clients into displaying something they are
-> not prepared to and don't want to do, and this spec is replacing trick with
-> explicit request, which is nice.
-
-Yeah, and I think it is an improvement over the current state. Right now
-git will properly fail with a 511 (which is what the designers
-intended). I'd rather hold off on something more advanced until somebody
-comes forward with a concrete case and says "hey, my network gives a 511
-in this instance, and here's what would be the best thing for git to
-do". Preferably with patches, of course. :)
-
--Peff
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
