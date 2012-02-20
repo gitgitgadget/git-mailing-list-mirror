@@ -1,68 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: rfe: git-config: lack of color reset option
-Date: Mon, 20 Feb 2012 14:05:53 -0800
-Message-ID: <7vwr7hjh32.fsf@alter.siamese.dyndns.org>
-References: <alpine.LNX.2.01.1202202142160.31585@frira.zrqbmnf.qr>
- <20120220212006.GB6335@sigill.intra.peff.net>
+From: Johan Herland <johan@herland.net>
+Subject: [RFC] pre-rebase: Refuse to rewrite commits that are reachable from
+ upstream
+Date: Mon, 20 Feb 2012 22:07:51 +0100
+Message-ID: <1329772071-11301-1-git-send-email-johan@herland.net>
+References: <201202111445.33260.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jan Engelhardt <jengelh@medozas.de>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 20 23:06:05 2012
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
+Cc: Johan Herland <johan@herland.net>, gitster@pobox.com,
+	jnareb@gmail.com, philipoakley@iee.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 20 23:08:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzbMu-00082L-RH
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 23:06:01 +0100
+	id 1RzbPF-0000iZ-3f
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 23:08:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754573Ab2BTWF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Feb 2012 17:05:56 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46637 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753800Ab2BTWF4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2012 17:05:56 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 947AD7A49;
-	Mon, 20 Feb 2012 17:05:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KdFraMGbDTCsqboa9LloG3+3giQ=; b=ndEx1C
-	pM+gyty3lo0w5FUP5DBrxm4b7Bqpi8iC//LLxWtXMjAMB126zeJYrqCtHxmbDilm
-	NkRMN1AsQ77sas6mYy1DQNL4cSoAyTZL3OZle3xJHW4iIDgIoCh/8VTuLtnxR2xA
-	k+Hjj7oJJQEqCUDyjALBTi2X2QPRPgBz9OCBY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AjoRevcCMmFHbxK5QQuMuKMa7pizzTmc
-	djHpUucm8xomr4isbAyXivfsrmXtrX+GNXY5+UswJLDdRFegHZTdeLp5GpqIhKUq
-	mEIwS4FiLxzMutX2x00MF5RhzqRwVfGGpbb0oabkV95c5V6eJHoZGRUXN0tEG2/d
-	CSuufUg7Hhc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B83D7A48;
-	Mon, 20 Feb 2012 17:05:55 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F14557A47; Mon, 20 Feb 2012
- 17:05:54 -0500 (EST)
-In-Reply-To: <20120220212006.GB6335@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 20 Feb 2012 16:20:06 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0F5F3C16-5C0F-11E1-A162-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754592Ab2BTWIU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Feb 2012 17:08:20 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:60096 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754577Ab2BTWIU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2012 17:08:20 -0500
+X-Greylist: delayed 3601 seconds by postgrey-1.27 at vger.kernel.org; Mon, 20 Feb 2012 17:08:20 EST
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LZP00KWZMPSMA10@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 20 Feb 2012 22:08:16 +0100 (MET)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id A80831EA5638_F42B640B	for <git@vger.kernel.org>; Mon,
+ 20 Feb 2012 21:08:16 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 839E21EA31EB_F42B640F	for <git@vger.kernel.org>; Mon,
+ 20 Feb 2012 21:08:16 +0000 (GMT)
+Received: from alpha.herland ([84.208.177.71]) by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LZP00JAIMPSU410@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 20 Feb 2012 22:08:16 +0100 (MET)
+X-Mailer: git-send-email 1.7.9.1.314.ga9004
+In-reply-to: <201202111445.33260.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191119>
 
-Jeff King <peff@peff.net> writes:
+Teach the pre-rebase sample hook to refuse rewriting commits on a branch
+that are present in that branch's @{upstream}. This is to prevent users
+from rewriting commits that have already been published.
 
-> This is an artifact of the way the ANSI colorizing works. Git says "turn
-> on bold white and a blue background", then it outputs some content, then
-> it says "turn on green", and so forth. At the end we issue a "reset" to
-> turn everything back to normal. We should perhaps issue a reset before
-> outputting the decoration, as we are moving from one colorized bit to
-> the other, and we don't know what we are inheriting.
+If the branch has no @{upstream}, or the commits-to-be-rebased are not
+reachable from the upstream (hence assumed to be unpublished), the rebase
+is not refused.
 
-Yeah, I agree with the diagnosis and the proposed solution. It sounds
-both simple and correct thing to do.
+This patch is not an ideal solution to the problem, for at least the
+following reasons:
+
+ - There is no way for the user to override this check, except skipping
+   the pre-rebase hook entirely with --no-verify.
+
+ - The check only works for branches with a configured upstream. If the
+   user's workflow does not rely on upstream branches, or uses some other
+   method of publishing commits, the check will produce false negatives
+   (i.e. allow rebases that should have been refused).
+
+ - The check only applies to rebase. I wanted to add the same check
+   on 'commit --amend', but there's no obvious way to detect --amend
+   from within the pre-commit hook.
+
+ - There may be other rewrite scenarios where we want to do this check,
+   such as 'git reset'. Maybe a pre-rewrite hook should be added?
+
+ - Some (including myself) want this check to be performed by default,
+   since it's mostly targeted at newbies that are less likely to enable
+   the pre-rebase (pre-rewrite) hook, so maybe the check should be added
+   to core git instead.
+
+Discussed-with: Jakub Narebski <jnareb@gmail.com>
+Signed-off-by: Johan Herland <johan@herland.net>
+---
+ templates/hooks--pre-rebase.sample |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/templates/hooks--pre-rebase.sample b/templates/hooks--pre-rebase.sample
+index 053f111..4c28b27 100755
+--- a/templates/hooks--pre-rebase.sample
++++ b/templates/hooks--pre-rebase.sample
+@@ -25,6 +25,20 @@ else
+ 	exit 0 ;# we do not interrupt rebasing detached HEAD
+ fi
+ 
++# Are we rewriting upstreamed commits?
++upstream=`git rev-parse --verify "${topic#refs/heads/}@{u}" 2>/dev/null`
++if test -n "$upstream"
++then
++	# See if any of the commits to be rebased are reachable from upstream.
++	basecommit=`git rev-parse --verify "$basebranch"`
++	mergebase=`git merge-base "$basecommit" "$upstream"`
++	if test "$basecommit" != "$upstream" -a "$basecommit" = "$mergebase"
++	then
++		echo >&2 "Cannot rebase commits that are in $topic's upstream"
++		exit 1
++	fi
++fi
++
+ case "$topic" in
+ refs/heads/??/*)
+ 	;;
+-- 
+1.7.9.1.314.ga9004
