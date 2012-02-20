@@ -1,114 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git status: small difference between stating whole repository
- and small subdirectory
-Date: Mon, 20 Feb 2012 15:35:40 -0500
-Message-ID: <20120220203540.GA5966@sigill.intra.peff.net>
-References: <20120217203755.GA30114@sigill.intra.peff.net>
- <7vaa4hrtbe.fsf@alter.siamese.dyndns.org>
- <20120217222912.GC31830@sigill.intra.peff.net>
- <CAA01CsozANwtox06iihKBL8iii175FHAhChmNhG1B0ofGKWcEA@mail.gmail.com>
- <20120220140653.GC5131@sigill.intra.peff.net>
- <87ty2l38ay.fsf@thomas.inf.ethz.ch>
- <20120220143644.GA13938@do>
- <20120220143952.GA8387@sigill.intra.peff.net>
- <20120220151134.GA13135@sigill.intra.peff.net>
- <87d3991gyg.fsf@thomas.inf.ethz.ch>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: git clean is not removing a submodule added to a branch when
+ switching branches
+Date: Mon, 20 Feb 2012 21:36:55 +0100
+Message-ID: <4F42AEE7.9060103@web.de>
+References: <CAGc=MuDrE_1CVzOsqcodhadcfajaa-BHjHVAp9mFDNbU=wVQqQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Feb 20 21:35:56 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Adrian Cornish <git@bluedreamer.com>
+X-From: git-owner@vger.kernel.org Mon Feb 20 21:46:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzZxf-0003bj-Eb
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 21:35:51 +0100
+	id 1Rza7t-0000qH-Od
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 21:46:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753391Ab2BTUfq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Feb 2012 15:35:46 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44143
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753324Ab2BTUfq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2012 15:35:46 -0500
-Received: (qmail 6721 invoked by uid 107); 20 Feb 2012 20:35:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 20 Feb 2012 15:35:43 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Feb 2012 15:35:40 -0500
-Content-Disposition: inline
-In-Reply-To: <87d3991gyg.fsf@thomas.inf.ethz.ch>
+	id S1753619Ab2BTUqV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Feb 2012 15:46:21 -0500
+Received: from fmmailgate06.web.de ([217.72.192.247]:40843 "EHLO
+	fmmailgate06.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753529Ab2BTUqU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2012 15:46:20 -0500
+X-Greylist: delayed 563 seconds by postgrey-1.27 at vger.kernel.org; Mon, 20 Feb 2012 15:46:20 EST
+Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
+	by fmmailgate06.web.de (Postfix) with ESMTP id 56878C418FA
+	for <git@vger.kernel.org>; Mon, 20 Feb 2012 21:36:56 +0100 (CET)
+Received: from [192.168.178.48] ([91.3.176.249]) by smtp.web.de (mrweb001)
+ with ESMTPA (Nemesis) id 0Lwq0e-1SWTvz2Wy0-016Jd7; Mon, 20 Feb 2012 21:36:55
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <CAGc=MuDrE_1CVzOsqcodhadcfajaa-BHjHVAp9mFDNbU=wVQqQ@mail.gmail.com>
+X-Provags-ID: V02:K0:BB2rOOxjkEU2A7w5hbsA6+JCNhj2Y/cOMNhdpAvFFpJ
+ 2TN8HxjfmH+Km9Z8ukysFfM9j3MP9yloLk9iKWk7c4FSvSCRxY
+ yaf6A4vIcPs/MJRRJ+ymC79l3zoTwfHWm0cKLDLLOensJMv0Rk
+ Nylk/s+Tgs0By2GRUDMr7bDoT4qRsoB7uU9Hr25kxmYLM3nVFh
+ /DWGF6qcvUXX2/dfz/s7A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191101>
 
-On Mon, Feb 20, 2012 at 07:45:59PM +0100, Thomas Rast wrote:
+Am 18.02.2012 22:27, schrieb Adrian Cornish:
+> If I add a submodule to a branch and then switch branches, git
+> checkout warns it cannot
+> remove the submodule. If I then issue a git clean - it says it removes
+> the submodule but
+> in fact does nothing at all. Is this a bug or expected behaviour.
 
-> > +	o->result.cache_tree = o->src_index->cache_tree;
-> >  	o->src_index = NULL;
-> >  	ret = check_updates(o) ? (-2) : 0;
-> >  	if (o->dst_index)
-> 
-> Brilliant.  I know I'm stealing Junio's punchline, but please make it so
-> :-)
-> 
-> Browsing around in history, it seems that this was silently broken by
-> 34110cd (Make 'unpack_trees()' have a separate source and destination
-> index, 2008-03-06), which introduced the distinction between source and
-> destination index.  Before that they were the same, so the cache tree
-> would have been updated correctly.
+Right this is just how things work. I won't call it expected behavior,
+as some users (like you) would expect to see the submodule be removed
+(while others are used to the current behavior that submodule work
+trees are never touched).
 
-OK, good. When you write a one-liner that makes a huge change in
-performance, it is usually a good idea to think to yourself "no, it
-couldn't be this easy, could it?".
+But one of last years GSoC projects took first steps into the
+direction of safely removing submodules (without losing any history).
+I have experimental code at my Github repo [1] to update submodule
+work trees along with the superproject, but polishing that for
+inclusion into mainline will still take some time.
 
-But after more discussion from people more clueful than I (this is the
-first time I've even looked at cache-tree code), I'm feeling like this
-is the right direction, at least, if not exactly the right patch.
-And seeing that it is in fact a regression in 34110cd, and that the
-existing cache-tree invalidations predate that makes me feel better. At
-one point, at least, they were complete and we were depending on them to
-be accurate. Things may have changed since then, of course, but I at
-least know that they were sufficient in 34110cd^.
-
-> +# NEEDSWORK: only one of these two can succeed.  The second is there
-> +# because it would be the better result.
-> +test_expect_success 'checkout HEAD^ correctly invalidates cache-tree' '
-> +	git checkout HEAD^ &&
-> +	test_invalid_cache_tree
-> +'
-> +
-> +test_expect_failure 'checkout HEAD^ gives full cache-tree' '
-> +	git checkout master &&
-> +	git read-tree HEAD &&
->  	git checkout HEAD^ &&
-> -	test_shallow_cache_tree
-> +	test_cache_tree
->  '
-
-I think you can construct two tests that will both work in the "ideal"
-case. In the first one, you move to a tree that updates "foo", and
-therefore the root cache-tree is invalidated.
-
-In the second, you update "subdir1/foo" in the index, then move to a
-commit that differs in "subdir1/bar" and "subdir2/bar". You should see
-that subdir2 has the cache-tree of the destination commit, but that
-subdir1 is invalidated (and therefore the root is also invalidated).
-That will fail with my patch, of course, as it would invalidate subdir2,
-also; so it would just be an expect_failure for somebody in the future.
-
-In general, t0090 could benefit from using a larger tree. For example,
-the add test does "git add foo" and checks that the root cache-tree was
-invalidated. But it should _also_ check that the cache-tree for a
-subdirectory is _not_ invalidated (and it isn't; git-add does the right
-thing).
-
-I'll see if I can work up some fancier tests, too.
-
--Peff
+[1] https://github.com/jlehmann/git-submod-enhancements
