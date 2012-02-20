@@ -1,97 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git status: small difference between stating whole repository
- and small subdirectory
-Date: Mon, 20 Feb 2012 15:09:03 -0500
-Message-ID: <20120220200902.GA5314@sigill.intra.peff.net>
-References: <20120215190318.GA5992@sigill.intra.peff.net>
- <CAA01Cso5y23UMguEe0vwOc6kR3-DjuC8-LTMDsMeeOKU4rVGvg@mail.gmail.com>
- <20120216192001.GB4348@sigill.intra.peff.net>
- <CAA01Csq6vSekW=Fa236bB0H3LVtN43Gb2aLMVE+A1wVyUqYJ7A@mail.gmail.com>
- <20120217203755.GA30114@sigill.intra.peff.net>
- <7vaa4hrtbe.fsf@alter.siamese.dyndns.org>
- <20120217222912.GC31830@sigill.intra.peff.net>
- <CAA01CsozANwtox06iihKBL8iii175FHAhChmNhG1B0ofGKWcEA@mail.gmail.com>
- <20120220140653.GC5131@sigill.intra.peff.net>
- <7vr4xpl1nm.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Handle HTTP error 511 Network Authentication Required (standard
+ secure proxy authentification/captive portal detection)
+Date: Mon, 20 Feb 2012 12:16:03 -0800
+Message-ID: <7v8vjxl0qk.fsf@alter.siamese.dyndns.org>
+References: <4b8f33ba4c870528a82ab85d6dad68bd.squirrel@arekh.dyndns.org>
+ <20120220010617.GB4140@sigill.intra.peff.net>
+ <9cd657a3c4960a8c496515a03bbf623e.squirrel@arekh.dyndns.org>
+ <20120220135639.GA5131@sigill.intra.peff.net>
+ <e1d3ddd965eb32717163aaa87fa71e17.squirrel@arekh.dyndns.org>
+ <20120220154452.GA27456@sigill.intra.peff.net>
+ <alpine.DEB.2.00.1202202002330.28090@tvnag.unkk.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Git Mailing List <git@vger.kernel.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 20 21:09:13 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>,
+	Nicolas Mailhot <nicolas.mailhot@laposte.net>,
+	git@vger.kernel.org
+To: Daniel Stenberg <daniel@haxx.se>
+X-From: git-owner@vger.kernel.org Mon Feb 20 21:16:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzZXs-0006kL-Ej
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 21:09:12 +0100
+	id 1RzZeh-0001nM-Bw
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 21:16:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752754Ab2BTUJH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Feb 2012 15:09:07 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44112
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752174Ab2BTUJG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2012 15:09:06 -0500
-Received: (qmail 6359 invoked by uid 107); 20 Feb 2012 20:09:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 20 Feb 2012 15:09:05 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Feb 2012 15:09:03 -0500
-Content-Disposition: inline
-In-Reply-To: <7vr4xpl1nm.fsf@alter.siamese.dyndns.org>
+	id S1753458Ab2BTUQH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Feb 2012 15:16:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65407 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752290Ab2BTUQF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2012 15:16:05 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 182E16060;
+	Mon, 20 Feb 2012 15:16:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2WbI3T0dNeai6TwfUjo4l9KrD2g=; b=BZ4jiS
+	ESYnQ0+jGf8Pn/PTsK1HgCoejXwNr8XajvF1PGgjKSIwOAWz6BBND0NM4Zgx3FBN
+	AP6VKoWffb/ioWc8SIYIt4zIBXjth5UNGmAlsadxmHBbqnZGmLxg3i9y0EjNZqGG
+	UIc79C74Zk01y/OWo858/Bgk0HvwEzlFuaSBU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cHOd0Jrxusa7gE1DAFsb04G3p3ouPsow
+	nIbcGNF3eh38GhuRm+cH/SoUZHQ47QdSppfLyfhI1pcP+dkZ2nh+VExu7Qt9w7z1
+	Qqy+x0RWEGV623EqF2LwfqO+9vNbYDRRjVcqLg7EI7ICo7ibQZeve0/igJsnOmsd
+	On+Pu0wfbBE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0FB2B605F;
+	Mon, 20 Feb 2012 15:16:05 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9215B605E; Mon, 20 Feb 2012
+ 15:16:04 -0500 (EST)
+In-Reply-To: <alpine.DEB.2.00.1202202002330.28090@tvnag.unkk.fr> (Daniel
+ Stenberg's message of "Mon, 20 Feb 2012 20:06:46 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B731C126-5BFF-11E1-A07D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191098>
 
-On Mon, Feb 20, 2012 at 11:56:13AM -0800, Junio C Hamano wrote:
+Daniel Stenberg <daniel@haxx.se> writes:
 
-> These days, we have src_index and dst_index, and dst_index IIRC can start
-> as empty in which case "start from kept information and selectively
-> invalidate" would not work at all.  When src_index and dst_index are the
-> same, however, you should be able to keep the cached tree valid, at least
-> in theory.
+> As a git user, I would probably be very surprised if using 'git'
+> suddenly caused by browser to pop up a captive portal login. I would
+> prefer git to instead properly explain to me that is being the victim
+> of a 511 and what I should do to fix it.
 
-Yeah, I was worried that the cache invalidations sprinkled throughout
-unpack-trees.c would not be sufficient (and because we are invalidating,
-a missing invalidation would give us bogus cache info, which is Very
-Bad).
+I agree what you envisioned, nothing more, nothing less, is the ideal
+solution.
 
-So I think the one-liner I posted before is not sufficient in the
-general case, because it definitely doesn't consider where the
-destination is starting from. It should at least be more like:
-
-  if (src_index == dst_index) {
-          /* We would ordinarily want to do a deep copy here, but since
-           * we know that we will be overwriting src_index in the long
-           * run, it's OK to just take ownership of its cache_tree. */
-          o->result.cache_tree = o->src_index->cache_tree;
-          o->src_index->cache_tree = NULL;
-  }
-
-  [... do the usual tree traversal here, except invalidate entries in
-       o->result.call_tree instead of o->src_index. That makes it a
-       no-op when src_index != dst_index (because we have no cache tree
-       defined in result, then), and otherwise we are invalidating what
-       will go into the result...]
-
-  [then as before, we copy the result to dst_index; except now the
-   result may have src_index's cache_tree plus any invalidations]
-  o->result = *o->dst_index;
-
-And fortunately that does exactly what we want in all cases, because we
-always either read from and write to the_index, or we write to NULL (in
-which case we will not bother with a cache_tree for the result, and it
-is fixing a minor bug that we might be invalidating src_index's tree in the
-first place).
-
-I'm still slightly worried that we are missing some invalidation
-somewhere deep in unpack_tree's callbacks (especially because they _are_
-callbacks, and invalidating the cache_tree properly is now a promise
-that the callbacks have to make).
-
--Peff
+Thanks.
