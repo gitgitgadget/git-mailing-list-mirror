@@ -1,96 +1,111 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC v2] Document format of basic Git objects
-Date: Mon, 20 Feb 2012 11:11:01 -0500
-Message-ID: <20120220161101.GA27105@sigill.intra.peff.net>
-References: <1329312140-24089-1-git-send-email-pclouds@gmail.com>
- <1329624946-32173-1-git-send-email-pclouds@gmail.com>
- <7vlinzp67m.fsf@alter.siamese.dyndns.org>
- <CACsJy8CEeZPf55idLB9NE-rf--ySmZh_9gkMc_zo0VmiVftMUg@mail.gmail.com>
+From: "Nicolas Mailhot" <nicolas.mailhot@laposte.net>
+Subject: Re: Handle HTTP error 511 Network Authentication Required (standard
+ secure proxy authentification/captive portal detection)
+Date: Mon, 20 Feb 2012 19:27:08 +0100
+Message-ID: <cb81840f853a1d43a7da03ea24c86445.squirrel@arekh.dyndns.org>
+References: <4b8f33ba4c870528a82ab85d6dad68bd.squirrel@arekh.dyndns.org>
+    <20120220010617.GB4140@sigill.intra.peff.net>
+    <9cd657a3c4960a8c496515a03bbf623e.squirrel@arekh.dyndns.org>
+    <20120220135639.GA5131@sigill.intra.peff.net>
+    <e1d3ddd965eb32717163aaa87fa71e17.squirrel@arekh.dyndns.org>
+    <20120220154452.GA27456@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonathan Niedier <jrnieder@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Scott Chacon <schacon@gmail.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 20 17:11:16 2012
+Cc: "Nicolas Mailhot" <nicolas.mailhot@laposte.net>,
+	git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 20 19:27:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzVpZ-0000mo-3V
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 17:11:13 +0100
+	id 1RzXxP-00063W-Vr
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 19:27:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753794Ab2BTQLG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Feb 2012 11:11:06 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43926
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753771Ab2BTQLF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2012 11:11:05 -0500
-Received: (qmail 2867 invoked by uid 107); 20 Feb 2012 16:11:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 20 Feb 2012 11:11:04 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Feb 2012 11:11:01 -0500
-Content-Disposition: inline
-In-Reply-To: <CACsJy8CEeZPf55idLB9NE-rf--ySmZh_9gkMc_zo0VmiVftMUg@mail.gmail.com>
+	id S1752543Ab2BTS1W convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Feb 2012 13:27:22 -0500
+Received: from smtpout1.laposte.net ([193.253.67.226]:19038 "EHLO
+	smtpout.laposte.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752535Ab2BTS1V (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2012 13:27:21 -0500
+Received: from arekh.dyndns.org ([88.174.226.208])
+	by mwinf8501-out with ME
+	id cJTB1i0084WQcrc03JTDZR; Mon, 20 Feb 2012 19:27:14 +0100
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by arekh.dyndns.org (Postfix) with ESMTP id A1ED11E71;
+	Mon, 20 Feb 2012 19:27:11 +0100 (CET)
+X-Virus-Scanned: amavisd-new at arekh.dyndns.org
+Received: from arekh.dyndns.org ([127.0.0.1])
+	by localhost (arekh.okg [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id A+uNauyl57X6; Mon, 20 Feb 2012 19:27:08 +0100 (CET)
+Received: from arekh.dyndns.org (localhost.localdomain [127.0.0.1])
+	by arekh.dyndns.org (Postfix) with ESMTP;
+	Mon, 20 Feb 2012 19:27:08 +0100 (CET)
+Received: from 192.168.0.4
+        (SquirrelMail authenticated user nim)
+        by arekh.dyndns.org with HTTP;
+        Mon, 20 Feb 2012 19:27:08 +0100
+In-Reply-To: <20120220154452.GA27456@sigill.intra.peff.net>
+User-Agent: SquirrelMail/1.4.22-4.fc17
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191081>
 
-On Mon, Feb 20, 2012 at 08:55:28PM +0700, Nguyen Thai Ngoc Duy wrote:
 
-> > Author-ident is typically utf-8 already, so you cannot assume "ASCI=
-I".
->=20
-> I wonder if anyone puts non utf-8 strings in there, or could we
-> enforce utf-8 (i.e. validate and reject non utf-8 strings) and accept
-> encoded word syntax (rfc 2047) with the help of the new
-> $GIT_IDENT_ENCODING variable. The "accept ..." part can wait until
-> someone is hit by "utf-8 only" check and steps up.
+Le Lun 20 f=C3=A9vrier 2012 16:44, Jeff King a =C3=A9crit :
 
-I was just having a similar discussion with libgit2 folks, who were
-wondering if there would ever be non-utf8 in there. When we call
-"reencode_commit_message", it looks like we do the whole object. In
-other words, your author name _must_ match any encoding you specify in
-the "encoding" header.
+> In my experience, the captive portal process usually goes like this:
+>
+>   1. Connect to network.
+>
+>   2. Try some non-browser command. Wonder why in the world it isn't
+>      working.
+>
+>   3. Open a browser and say "Ah, I see. A captive portal".
+>
+> The 511 proposal makes step 2 a lot better if the protocol is http[1]=
+=2E
+> But it pretty much makes it better even without non-browser client
+> support, because at least you will get a 511 error instead of having =
+git
+> complain that the remote repository is corrupted (which happens if th=
+e
+> captive portal returns a redirect to an html page).
+>
+> We should already be doing that. Adding more support could make step =
+3 a
+> little nicer, but like I said, I'd be more interested in seeing a rea=
+l
+> case first. It may even be a feature that would be more appropriate t=
+o
+> curl (which git builds on for http access).
 
-I.e., if you do:
+Step 3 is a quite less obvious on a corporate network, where Internet a=
+ccess
+is gated by a filtering proxy, that will let some sites pass transparen=
+tly but
+require credentials to let you access others. Worst case, there are sev=
+eral
+load-balanced gateways on different physical sites (to avoid spofs in c=
+ase of
+planes falling on the wrong place), that do not share authentication (b=
+ecause
+propagating auth across physical sites is hard). So no, just launching =
+a
+browser is not sufficient to find the captive portal, you need to actua=
+lly
+access the URL returned by error 511 in meta information. Git should at
+minimum report this URL.
 
-  # latin1 =C3=A9
-  e=3D`printf '\xe9'`
+(and no this is not an hypothetical scenario and yes there are git user=
+s
+trying to pass the gateways there)
 
-  export GIT_AUTHOR_NAME=3D"P${e}ff King"
-  git init
-  git config i18n.commitencoding iso8859-1
-  touch foo && git add foo &&
-  git commit --allow-empty -m "more latin1 ${e}ncoding"
-
-both the name and the message should show fine on your utf8 terminal if
-you do this:
-
-  git config i18n.logoutputencoding utf8
-  git show
-
-And similarly, we do the right thing in format-patch, both with and
-without logoutputencoding set:
-
-  $ git format-patch --root --stdout | grep -Ei "^(from|subject):"
-  From: =3D?iso8859-1?q?P=3DE9ff=3D20King?=3D <peff@peff.net>
-  Subject: [PATCH] =3D?iso8859-1?q?more=3D20latin1=3D20=3DE9ncoding?=3D
-
-  $ git config i18n.logoutputencoding utf8
-  $ git format-patch --root --stdout | grep -Ei "^(from|subject):"
-  From: =3D?utf8?q?P=3DC3=3DA9ff=3D20King?=3D <peff@peff.net>
-  Subject: [PATCH] =3D?utf8?q?more=3D20latin1=3D20=3DC3=3DA9ncoding?=3D
-
-(where 0xc3a9 is the utf8 equivalent of latin1 0xe9).
-
-So I have no idea if people are using it or not, but it is actually
-usable.
-
--Peff
+--=20
+Nicolas Mailhot
