@@ -1,7 +1,7 @@
 From: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-Subject: [PATCH 2/8 v6] diff --stat: tests for long filenames and big change counts
-Date: Mon, 20 Feb 2012 22:57:08 +0100
-Message-ID: <1329775034-21551-3-git-send-email-zbyszek@in.waw.pl>
+Subject: [PATCH 6/8 v6] merge --stat: use the full terminal width
+Date: Mon, 20 Feb 2012 22:57:12 +0100
+Message-ID: <1329775034-21551-7-git-send-email-zbyszek@in.waw.pl>
 References: <1329775034-21551-1-git-send-email-zbyszek@in.waw.pl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -16,243 +16,81 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzbFT-0004Tj-ET
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 22:58:19 +0100
+	id 1RzbFS-0004Tj-4V
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 22:58:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754177Ab2BTV6A convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Feb 2012 16:58:00 -0500
-Received: from kawka.in.waw.pl ([178.63.212.103]:52838 "EHLO kawka.in.waw.pl"
+	id S1754285Ab2BTV6F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Feb 2012 16:58:05 -0500
+Received: from kawka.in.waw.pl ([178.63.212.103]:52858 "EHLO kawka.in.waw.pl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753944Ab2BTV56 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2012 16:57:58 -0500
+	id S1754195Ab2BTV6E (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2012 16:58:04 -0500
 Received: from 89-78-221-60.dynamic.chello.pl ([89.78.221.60] helo=localhost.localdomain)
 	by kawka.in.waw.pl with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.72)
 	(envelope-from <zbyszek@in.waw.pl>)
-	id 1RzbF7-0007o6-3N; Mon, 20 Feb 2012 22:57:57 +0100
+	id 1RzbFD-0007o6-Lo; Mon, 20 Feb 2012 22:58:03 +0100
 X-Mailer: git-send-email 1.7.9.1.353.g684b4
 In-Reply-To: <1329775034-21551-1-git-send-email-zbyszek@in.waw.pl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191114>
 
-In preparation for updates to the "diff --stat" that updates the logic
-to split the allotted columns into the name part and the graph part to
-make the output more readable, add a handful of tests to document the
-corner case behaviour in which long filenames and big changes are shown=
-=2E
-
-When a pathname is so long that it cannot fit on the column, the curren=
-t
-code truncates it to make sure that the graph part has enough room to s=
-how
-a meaningful graph.  If the actual change is small (e.g. only one line
-changed), this results in the final output that is shorter than the wid=
-th
-we aim for.  A couple of new tests marked with test_expect_failure
-demonstrate this bug.
+Make merge --stat behave like diff --stat and use the full terminal
+width.
 
 Signed-off-by: Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl>
 ---
- t/t4052-stat-output.sh | 182 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 182 insertions(+)
- create mode 100755 t/t4052-stat-output.sh
+ builtin/merge.c        | 1 +
+ t/t4052-stat-output.sh | 8 ++++----
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
+diff --git builtin/merge.c builtin/merge.c
+index ed0f959..7b368e7 100644
+--- builtin/merge.c
++++ builtin/merge.c
+@@ -399,6 +399,7 @@ static void finish(struct commit *head_commit,
+ 	if (new_head && show_diffstat) {
+ 		struct diff_options opts;
+ 		diff_setup(&opts);
++		opts.stat_width =3D -1; /* use full terminal width */
+ 		opts.output_format |=3D
+ 			DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTAT;
+ 		opts.detect_rename =3D DIFF_DETECT_RENAME;
 diff --git t/t4052-stat-output.sh t/t4052-stat-output.sh
-new file mode 100755
-index 0000000..031107b
---- /dev/null
+index acc54cd..2b4510c 100755
+--- t/t4052-stat-output.sh
 +++ t/t4052-stat-output.sh
-@@ -0,0 +1,182 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2012 Zbigniew J=C4=99drzejewski-Szmek
-+#
-+
-+test_description=3D'test --stat output of various commands'
-+
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-terminal.sh
-+
-+# 120 character name
-+name=3Daaaaaaaaaa
-+name=3D$name$name$name$name$name$name$name$name$name$name$name$name
-+test_expect_success 'preparation' '
-+	>"$name" &&
-+	git add "$name" &&
-+	git commit -m message &&
-+	echo a >"$name" &&
-+	git commit -m message "$name"
-+'
-+cat >expect80 <<'EOF'
-+ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=
- |    1 +
-+EOF
-+
-+cat >expect40 <<-'EOF'
-+ ...aaaaaaaaaaaaaaaaaaaaaaaaaa |    1 +
-+EOF
-+
-+while read cmd args
-+do
-+	test_expect_failure "$cmd graph width defaults to 80 columns" '
-+		git $cmd $args >output &&
-+		grep " | " output >actual &&
-+		test_cmp expect80 actual
-+	'
-+
-+	test_expect_failure "$cmd --stat=3Dwidth with long name" '
-+		git $cmd $args --stat=3D40 >output &&
-+		grep " | " output >actual &&
-+		test_cmp expect40 actual
-+	'
-+
-+	test_expect_failure "$cmd --stat-width=3Dwidth with long name" '
-+		git $cmd $args --stat-width=3D40 >output &&
-+		grep " | " output >actual &&
-+		test_cmp expect40 actual
-+	'
-+
-+	test_expect_success "$cmd --stat=3D...,name-width with long name" '
-+		git $cmd $args --stat=3D60,29 >output &&
-+		grep " | " output >actual &&
-+		test_cmp expect40 actual
-+	'
-+
-+	test_expect_success "$cmd --stat-name-width with long name" '
-+		git $cmd $args --stat-name-width=3D29 >output &&
-+		grep " | " output >actual &&
-+		test_cmp expect40 actual
-+	'
-+done <<\EOF
-+format-patch -1 --stdout
-+diff HEAD^ HEAD --stat
-+show --stat
-+log -1 --stat
-+EOF
-+
-+
-+test_expect_success 'preparation for big change tests' '
-+	>abcd &&
-+	git add abcd &&
-+	git commit -m message &&
-+	i=3D0 &&
-+	while test $i -lt 1000
-+	do
-+		echo $i && i=3D$(($i + 1))
-+	done >abcd &&
-+	git commit -m message abcd
-+'
-+
-+cat >expect80 <<'EOF'
+@@ -168,9 +168,9 @@ respects expect200 log -1 --stat
+ EOF
+=20
+ cat >expect <<'EOF'
+- abcd | 1000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
++++++++++
 + abcd | 1000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
++++++++++++++++++++++++++++++
+ EOF
+-test_expect_success 'merge --stat ignores COLUMNS (big change)' '
++test_expect_success 'merge --stat respects COLUMNS (big change)' '
+ 	git checkout -b branch HEAD^^ &&
+ 	COLUMNS=3D100 git merge --stat --no-ff master^ >output &&
+ 	grep " | " output >actual
+@@ -178,9 +178,9 @@ test_expect_success 'merge --stat ignores COLUMNS (=
+big change)' '
+ '
+=20
+ cat >expect <<'EOF'
+- ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++=
 +++++++++
-+EOF
-+
-+while read verb expect cmd args
-+do
-+	test_expect_success "$cmd $verb COLUMNS (big change)" '
-+		COLUMNS=3D200 git $cmd $args >output
-+		grep " | " output >actual &&
-+		test_cmp "$expect" actual
-+	'
-+done <<\EOF
-+ignores expect80 format-patch -1 --stdout
-+ignores expect80 diff HEAD^ HEAD --stat
-+ignores expect80 show --stat
-+ignores expect80 log -1 --stat
-+EOF
-+
-+cat >expect <<'EOF'
-+ abcd | 1000 ++++++++++++++++++++++++++
-+EOF
-+
-+while read cmd args
-+do
-+	test_expect_success "$cmd --stat=3Dwidth with big change" '
-+		git $cmd $args --stat=3D40 >output
-+		grep " | " output >actual &&
-+		test_cmp expect actual
-+	'
-+
-+	test_expect_success "$cmd --stat-width=3Dwidth with big change" '
-+		git $cmd $args --stat-width=3D40 >output
-+		grep " | " output >actual &&
-+		test_cmp expect actual
-+	'
-+done <<\EOF
-+format-patch -1 --stdout
-+diff HEAD^ HEAD --stat
-+show --stat
-+log -1 --stat
-+EOF
-+
-+test_expect_success 'preparation for long filename tests' '
-+	cp abcd aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa &&
-+	git add aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa &&
-+	git commit -m message
-+'
-+
-+cat >expect <<'EOF'
-+ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++
-+EOF
-+
-+while read cmd args
-+do
-+	test_expect_success "$cmd --stat=3Dwidth with big change and long nam=
-e" '
-+		git $cmd $args --stat-width=3D60 >output &&
-+		grep " | " output >actual &&
-+		test_cmp expect actual
-+	'
-+done <<\EOF
-+format-patch -1 --stdout
-+diff HEAD^ HEAD --stat
-+show --stat
-+log -1 --stat
-+EOF
-+
-+cat >expect80 <<'EOF'
 + ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++=
-+++++++++
-+EOF
-+while read verb expect cmd args
-+do
-+	test_expect_success "$cmd $verb COLUMNS (long filename)" '
-+		COLUMNS=3D200 git $cmd $args >output
-+		grep " | " output >actual &&
-+		test_cmp "$expect" actual
-+	'
-+done <<\EOF
-+ignores expect80 format-patch -1 --stdout
-+ignores expect80 diff HEAD^ HEAD --stat
-+ignores expect80 show --stat
-+ignores expect80 log -1 --stat
-+EOF
-+
-+cat >expect <<'EOF'
-+ abcd | 1000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
-+++++++++
-+EOF
-+test_expect_success 'merge --stat ignores COLUMNS (big change)' '
-+	git checkout -b branch HEAD^^ &&
-+	COLUMNS=3D100 git merge --stat --no-ff master^ >output &&
-+	grep " | " output >actual
-+	test_cmp expect actual
-+'
-+
-+cat >expect <<'EOF'
-+ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++=
-+++++++++
-+EOF
-+test_expect_success 'merge --stat ignores COLUMNS (long filename)' '
-+	COLUMNS=3D100 git merge --stat --no-ff master >output &&
-+	grep " | " output >actual
-+	test_cmp expect actual
-+'
-+
-+test_done
++++++++++++++++++++++++++++++
+ EOF
+-test_expect_success 'merge --stat ignores COLUMNS (long filename)' '
++test_expect_success 'merge --stat respects COLUMNS (long filename)' '
+ 	COLUMNS=3D100 git merge --stat --no-ff master >output &&
+ 	grep " | " output >actual
+ 	test_cmp expect actual
 --=20
 1.7.9.1.353.g684b4
