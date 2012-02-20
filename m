@@ -1,126 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/5] xdiff: introduce XDF_INEXACT_MATCH
-Date: Sun, 19 Feb 2012 18:16:26 -0800
-Message-ID: <1329704188-9955-4-git-send-email-gitster@pobox.com>
-References: <1329704188-9955-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 20 03:16:56 2012
+From: Nikolaus Demmel <nikolaus@nikolaus-demmel.de>
+Subject: Re: git-svn won't remember pem password
+Date: Mon, 20 Feb 2012 04:08:36 +0100
+Message-ID: <D3380C12-D9AE-47EF-86D5-17352E4DF35C@nikolaus-demmel.de>
+References: <E56535F6-2C9B-4D14-A88F-2471E34D2769@gmail.com> <m3zkcgqt0g.fsf@localhost.localdomain> <20120220005727.GA4140@sigill.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v1084)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Jakub Narebski <jnareb@gmail.com>, Igor <mrigor83@gmail.com>,
+	git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 20 04:08:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzIoA-0007vG-1i
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 03:16:54 +0100
+	id 1RzJcL-00061Y-Au
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 04:08:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753296Ab2BTCQi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Feb 2012 21:16:38 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59420 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753212Ab2BTCQg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Feb 2012 21:16:36 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EDECC77DF
-	for <git@vger.kernel.org>; Sun, 19 Feb 2012 21:16:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=hPmk
-	U3Z+kPKtkzGoDX+5TQS4MX0=; b=jgGxJ4RL8QMoZCT4KSn6/kxpyxxxzke1W9sy
-	QRISlpcLcxhQz0c6N77+r2NAtZz4Cm2WP+iThvoigRGpb1XSlIOrkWrjg4YQ6b08
-	ZGNJLiBH9eqc7la4jam8i8roXPfdqZtfwkqfrNwLHPOjMq0ULlg80Bl70xjoDvIq
-	xpIqMo8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=jyInYU
-	Oj2gBzSDFlnFaRkI+OMysWU0Vufv0FqrGQtVbwdXQHQlMWNo5S2e958cI7xSa1Zi
-	dFtxZB2tcHEiyq+6B2qWUrNctJVUn0Ru+ka6ls/aP2hMfdLCkIkJtCwZ6kfUaNw9
-	kPLa9vJxF7YA/fqU1bloIGUM+KbJbhLmqVEYA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E568777DE
-	for <git@vger.kernel.org>; Sun, 19 Feb 2012 21:16:35 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4C9E677DD for
- <git@vger.kernel.org>; Sun, 19 Feb 2012 21:16:35 -0500 (EST)
-X-Mailer: git-send-email 1.7.9.1.265.g25f75
-In-Reply-To: <1329704188-9955-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: E9B0D566-5B68-11E1-8483-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751599Ab2BTDIk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Feb 2012 22:08:40 -0500
+Received: from moutng.kundenserver.de ([212.227.17.10]:50256 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751230Ab2BTDIj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Feb 2012 22:08:39 -0500
+Received: from [192.168.178.100] (c-cca272d5.015-455-73746f34.cust.bredbandsbolaget.se [213.114.162.204])
+	by mrelayeu.kundenserver.de (node=mreu0) with ESMTP (Nemesis)
+	id 0Lxbn5-1SWSeE2QRP-017DPk; Mon, 20 Feb 2012 04:08:38 +0100
+In-Reply-To: <20120220005727.GA4140@sigill.intra.peff.net>
+X-Mailer: Apple Mail (2.1084)
+X-Provags-ID: V02:K0:P83Kk7A11qYeFY5KlRtbDODhBaVuhtQzZf06hta3k7A
+ ztV6Py3CUiMFGe7f/X9xiNZJnTIIRJCozxOBPDjAvQvHEFR7em
+ wvfg9hEKQKR/tr1kgYafCtRr6Fg8g+DLxmGkLMvcV1sw8TkYLK
+ Bz+Lo/NwcI+FQbjUcfNIIbV0Qs+oilkG+J/5nsJyQYwVgBZ06+
+ 5ENfXBf7bcznNdSOMTGM34BhxDOE4sQGTwSH6Lf+xjdHbwTPKP
+ 6SO1pE99D4LKKDSWOXeYCEx6B+6uFUEbiQYZ4xY3LCRF9UYR5/
+ fETmYgGNnftZKB9OYEJcUkwJqKs2GVsgB9pm052pV6VRH/Eioe
+ 5TYz7+dZeI3ADlNFuNTgrudp4V0or9ZBnnzlBCc4R21ZtnT580
+ x4G6/hXDdkSHyUDI+yH2CtTV3Bb4+/UMpE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191042>
 
-The XDF_WHITESPACE_FLAGS mask is used to decide if a simple memcmp() is
-sufficient to tell if two lines are the same for the purpose of producing
-diff. In the current code, only options in the ignore-whitespace family
-happen to call for a matching logic that is more complex than memcmp(),
-but when we add new options, e.g. ignore-case, it will become apparent
-that the mask is misnamed.
 
-Introduce XDF_INEXACT_MATCH mask to express its true meaning: when any of
-these bits are set, we may need to inspect the contents of the two lines
-that are not exactly the same, as we may still consider them "matching".
+Am 20.02.2012 um 01:57 schrieb Jeff King:
 
-The XDF_WHITESPACE_FLAGS will become useful again in a later patch in the
-series and its definition is kept.
+> On Sat, Feb 18, 2012 at 03:30:00AM -0800, Jakub Narebski wrote:
+> 
+>> Igor <mrigor83@gmail.com> writes:
+>> 
+>>> I'm running into an issue where I have to enter my pem certificate
+>>> password every time I git-svn fetch or git-svn dcommit. Vanilla svn
+>>> uses OS X KeyChain and remembers my password just fine. Is there a
+>>> known solution for this? Other users have ran into same issue as
+>>> described here:
+>>> 
+>>>  http://stackoverflow.com/questions/605519/does-git-svn-store-svn-passwords
+>> 
+>>> However, that solution of removing .subversion folder did not work
+>>> for me.
+>> 
+>> I don't know if it is svn that has to remember password, or git that
+>> has to remember password.  Git 1.7.9 learned "credentials API" that
+>> allows integration with platform native keychain mechanisms, and I
+>> think OS X Keychain is one of examples / supported platforms (but it
+>> might not made it into core git)... though I am not sure if it affects
+>> git-svn, or only HTTP(S) transport.
+> 
+> It does not affect git-svn currently.
+> 
+> I have some thoughts on providing access to the credentials API for
+> scripts like git-svn (right now, it is accessible only by C git
+> programs). However, there is an important question: should password
+> prompting in git-svn behave like git, or behave like svn?
+> 
+> So far, it has been the latter, and I think that is reasonable. The
+> resource that requires the credentials is an svn repo, not a git repo,
+> so you are more likely to want to share credentials for it with real
+> svn, and not other git commands.
+> 
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- diff.c         |    2 +-
- xdiff/xdiff.h  |    6 +++++-
- xdiff/xutils.c |    4 ++--
- 3 files changed, 8 insertions(+), 4 deletions(-)
+IMHO a normal user would expect git-svn to store credentials in the same way as normal svn. I think this is the way it should be.
 
-diff --git a/diff.c b/diff.c
-index 52cda7a..87b2ec1 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2142,7 +2142,7 @@ static void builtin_diff(const char *name_a,
- 		struct emit_callback ecbdata;
- 		const struct userdiff_funcname *pe;
- 
--		if (!DIFF_XDL_TST(o, WHITESPACE_FLAGS) || must_show_header) {
-+		if (!DIFF_XDL_TST(o, INEXACT_MATCH) || must_show_header) {
- 			fprintf(o->file, "%s", header.buf);
- 			strbuf_reset(&header);
- 		}
-diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-index 09215af..48793f9 100644
---- a/xdiff/xdiff.h
-+++ b/xdiff/xdiff.h
-@@ -32,7 +32,11 @@ extern "C" {
- #define XDF_IGNORE_WHITESPACE (1 << 2)
- #define XDF_IGNORE_WHITESPACE_CHANGE (1 << 3)
- #define XDF_IGNORE_WHITESPACE_AT_EOL (1 << 4)
--#define XDF_WHITESPACE_FLAGS (XDF_IGNORE_WHITESPACE | XDF_IGNORE_WHITESPACE_CHANGE | XDF_IGNORE_WHITESPACE_AT_EOL)
-+#define XDF_WHITESPACE_FLAGS \
-+	(XDF_IGNORE_WHITESPACE | \
-+	 XDF_IGNORE_WHITESPACE_CHANGE | \
-+	 XDF_IGNORE_WHITESPACE_AT_EOL)
-+#define XDF_INEXACT_MATCH XDF_WHITESPACE_FLAGS
- 
- #define XDF_PATIENCE_DIFF (1 << 5)
- #define XDF_HISTOGRAM_DIFF (1 << 6)
-diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-index 0de084e..aa6de74 100644
---- a/xdiff/xutils.c
-+++ b/xdiff/xutils.c
-@@ -176,7 +176,7 @@ int xdl_recmatch(const char *l1, long s1, const char *l2, long s2, long flags)
- 
- 	if (s1 == s2 && !memcmp(l1, l2, s1))
- 		return 1;
--	if (!(flags & XDF_WHITESPACE_FLAGS))
-+	if (!(flags & XDF_INEXACT_MATCH))
- 		return 0;
- 
- 	i1 = 0;
-@@ -281,7 +281,7 @@ unsigned long xdl_hash_record(char const **data, char const *top, long flags) {
- 	unsigned long ha = 5381;
- 	char const *ptr = *data;
- 
--	if (flags & XDF_WHITESPACE_FLAGS)
-+	if (flags & XDF_INEXACT_MATCH)
- 		return xdl_hash_record_with_whitespace(data, top, flags);
- 
- 	for (; ptr < top && *ptr != '\n'; ptr++) {
--- 
-1.7.9.1.265.g25f75
+Best regards,
+Nikolaus
