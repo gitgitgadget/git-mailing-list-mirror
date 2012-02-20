@@ -1,103 +1,187 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Manually decoding a git object
-Date: Mon, 20 Feb 2012 18:27:47 -0000
-Organization: OPDS
-Message-ID: <EF3174E8E5D5433CBC44E912309946A8@PhilipOakley>
-References: <1329312140-24089-1-git-send-email-pclouds@gmail.com><1329624946-32173-1-git-send-email-pclouds@gmail.com><A716A27D407F401DAAC373027D5CFF2A@PhilipOakley><87mx8dj4at.fsf@thomas.inf.ethz.ch><5D290031F60941368FB1A36464201DCF@PhilipOakley> <871uppbwnu.fsf@thomas.inf.ethz.ch>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: git status: small difference between stating whole repository and small subdirectory
+Date: Mon, 20 Feb 2012 19:45:59 +0100
+Message-ID: <87d3991gyg.fsf@thomas.inf.ethz.ch>
+References: <20120216192001.GB4348@sigill.intra.peff.net>
+	<CAA01Csq6vSekW=Fa236bB0H3LVtN43Gb2aLMVE+A1wVyUqYJ7A@mail.gmail.com>
+	<20120217203755.GA30114@sigill.intra.peff.net>
+	<7vaa4hrtbe.fsf@alter.siamese.dyndns.org>
+	<20120217222912.GC31830@sigill.intra.peff.net>
+	<CAA01CsozANwtox06iihKBL8iii175FHAhChmNhG1B0ofGKWcEA@mail.gmail.com>
+	<20120220140653.GC5131@sigill.intra.peff.net>
+	<87ty2l38ay.fsf@thomas.inf.ethz.ch> <20120220143644.GA13938@do>
+	<20120220143952.GA8387@sigill.intra.peff.net>
+	<20120220151134.GA13135@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Git List" <git@vger.kernel.org>,
-	=?UTF-8?B?5b6Q6L+q?= <xudifsd@gmail.com>
-To: "Thomas Rast" <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Feb 20 19:27:48 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 20 19:46:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzXxi-0006Do-SC
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 19:27:47 +0100
+	id 1RzYFU-0007U0-1x
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Feb 2012 19:46:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752603Ab2BTS1m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Feb 2012 13:27:42 -0500
-Received: from smtp2go.com ([207.58.142.213]:41458 "EHLO smtp2go.com"
+	id S1752667Ab2BTSqD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Feb 2012 13:46:03 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:42782 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752535Ab2BTS1m (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2012 13:27:42 -0500
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752327Ab2BTSqB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2012 13:46:01 -0500
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 20 Feb
+ 2012 19:45:59 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 20 Feb
+ 2012 19:45:59 +0100
+In-Reply-To: <20120220151134.GA13135@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 20 Feb 2012 10:11:34 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191083>
 
-From: "Thomas Rast" <trast@inf.ethz.ch> Sent: Monday, February 20, 2012
-10:56 AM
-> Philip Oakley <philipoakley@iee.org> writes:
->
->> From: "Thomas Rast" <trast@inf.ethz.ch> Sent: Monday, February 20,
->> 2012 8:29 AM
->>>
->>> The SHA1 is over the decompressed object contents.  The file simply
->>> holds a zlib-compressed stream of those contents.  (It's pretty much
->>> like gzip without the file header.)
->>>
->>> You can use any bindings to zlib and something that does sha1, e.g. in
->>> python:
->>>
->>>  $ cd g/.git/objects/aa/  # my git.git
->>>  $ ls
->>>  592bda986a8380b64acd8cbb3d5bdfcbc0834d
->>> 6322a757bee31919f54edcc127608a3d724c99
->>>  $ python
->>>  Python 2.7.2 (default, Aug 19 2011, 20:41:43) [GCC] on linux2
->>>  Type "help", "copyright", "credits" or "license" for more information.
->>>  >>> import hashlib
->>>  >>>
->>> hashlib.sha1(open('592bda986a8380b64acd8cbb3d5bdfcbc0834d').read().decode('zlib')).digest().encode('hex')
->>>  'aa592bda986a8380b64acd8cbb3d5bdfcbc0834d'
->>>
->>> Notice that the first byte of the hash goes into the directory name.
->>>
->>
->> At the moment I'm in a Catch 22 situation where I can't make the first
->> step of examining the deflated contents, so I can't do all those next
->> steps to get the sha1 etc.. Have I misunderstood your suggestions?
->
-> Huh?  The method I showed does not rely on knowing the SHA1.  The fact
-> that I used it on a properly filed away (by its SHA1) object file is
-> immaterial, if perhaps confusing.
->
-> I can untangle that python expression for you:
->
-> hashlib.sha1(foo).digest()      gives the SHA1 digest of the string foo,
-> as a (binary) string
-> foo.encode('hex')               turns foo from (binary) string into its
-> hex representation
-> open('filename').read()         opens the file called filename, and
-> returns its whole contents
-> foo.decode('zlib')              applies the zlib decompressor to foo, and
-> returns the resulting data
->
-> So that trick works for any file[*], and you can then use its results to
-> file it back where it needs to go.
->
->
-> [*] that is sufficiently small for Python to hold it in memory, but git
-> shares the same problems in that department.
->
+Jeff King <peff@peff.net> writes:
 
-I see what you mean now. I'll need to work out how to get Python in
-msysgit - the 'minimal' part of msys keeps on biting... That is, I didn't
-see it (Python) in the 1.7.8 full install bash - I didn't see it anyway.
+> diff --git a/unpack-trees.c b/unpack-trees.c
+> index 8be3f6c..e8aedea 100644
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -1135,6 +1135,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+>  		}
+>  	}
+>  
+> +	o->result.cache_tree = o->src_index->cache_tree;
+>  	o->src_index = NULL;
+>  	ret = check_updates(o) ? (-2) : 0;
+>  	if (o->dst_index)
 
-I was hopeful that unzip/gunzip would have an option to simply deflate a
-(file)stream, rather than it expecting the normal file archive.
+Brilliant.  I know I'm stealing Junio's punchline, but please make it so
+:-)
+
+Browsing around in history, it seems that this was silently broken by
+34110cd (Make 'unpack_trees()' have a separate source and destination
+index, 2008-03-06), which introduced the distinction between source and
+destination index.  Before that they were the same, so the cache tree
+would have been updated correctly.
+
+> It makes "git checkout" with no changes just work (since we preserve the
+> cache tree, and it doesn't need updated). It makes something like "git
+> checkout HEAD^" work, keeping most of the cache-tree intact, but
+> invalidating trees containing paths that were modified.
+
+Great.  Here's a test you could use.  It's a bit noisy because the
+shallow in test_shallow_cache_tree no longer made any sense, but I think
+it tests what we want to see.
+
+diff --git i/t/t0090-cache-tree.sh w/t/t0090-cache-tree.sh
+index 6c33e28..5706305 100755
+--- i/t/t0090-cache-tree.sh
++++ w/t/t0090-cache-tree.sh
+@@ -16,14 +16,16 @@ cmp_cache_tree () {
+ # We don't bother with actually checking the SHA1:
+ # test-dump-cache-tree already verifies that all existing data is
+ # correct.
+-test_shallow_cache_tree () {
+-	printf "SHA  (%d entries, 0 subtrees)\n" $(git ls-files|wc -l) >expect &&
++test_cache_tree () {
++	printf "SHA  (%d entries, 1 subtrees)\n" $(git ls-files|wc -l) >expect &&
++	printf "SHA sub/ (%d entries, 0 subtrees)\n" $(git ls-files sub|wc -l) >>expect &&
+ 	cmp_cache_tree expect
+ }
+ 
+ test_invalid_cache_tree () {
+-	echo "invalid                                   (0 subtrees)" >expect &&
+-	printf "SHA #(ref)  (%d entries, 0 subtrees)\n" $(git ls-files|wc -l) >>expect &&
++	echo "invalid                                   (1 subtrees)" >expect &&
++	printf "SHA #(ref)  (%d entries, 1 subtrees)\n" $(git ls-files|wc -l) >>expect &&
++	printf "SHA sub/ (%d entries, 0 subtrees)\n" $(git ls-files sub|wc -l) >>expect &&
+ 	cmp_cache_tree expect
+ }
+ 
+@@ -33,13 +35,16 @@ test_no_cache_tree () {
+ }
+ 
+ test_expect_failure 'initial commit has cache-tree' '
++	mkdir sub &&
++	echo bar > sub/bar &&
++	git add sub/bar &&
+ 	test_commit foo &&
+-	test_shallow_cache_tree
++	test_cache_tree
+ '
+ 
+ test_expect_success 'read-tree HEAD establishes cache-tree' '
+ 	git read-tree HEAD &&
+-	test_shallow_cache_tree
++	test_cache_tree
+ '
+ 
+ test_expect_success 'git-add invalidates cache-tree' '
+@@ -59,7 +64,7 @@ test_expect_success 'update-index invalidates cache-tree' '
+ test_expect_success 'write-tree establishes cache-tree' '
+ 	test-scrap-cache-tree &&
+ 	git write-tree &&
+-	test_shallow_cache_tree
++	test_cache_tree
+ '
+ 
+ test_expect_success 'test-scrap-cache-tree works' '
+@@ -70,24 +75,39 @@ test_expect_success 'test-scrap-cache-tree works' '
+ 
+ test_expect_success 'second commit has cache-tree' '
+ 	test_commit bar &&
+-	test_shallow_cache_tree
++	test_cache_tree
+ '
+ 
+ test_expect_success 'reset --hard gives cache-tree' '
+ 	test-scrap-cache-tree &&
+ 	git reset --hard &&
+-	test_shallow_cache_tree
++	test_cache_tree
+ '
+ 
+ test_expect_success 'reset --hard without index gives cache-tree' '
+ 	rm -f .git/index &&
+ 	git reset --hard &&
+-	test_shallow_cache_tree
++	test_cache_tree
+ '
+ 
+-test_expect_failure 'checkout gives cache-tree' '
++test_expect_success 'checkout HEAD leaves cache-tree intact' '
++	git read-tree HEAD &&
++	git checkout HEAD &&
++	test_cache_tree
++'
++
++# NEEDSWORK: only one of these two can succeed.  The second is there
++# because it would be the better result.
++test_expect_success 'checkout HEAD^ correctly invalidates cache-tree' '
++	git checkout HEAD^ &&
++	test_invalid_cache_tree
++'
++
++test_expect_failure 'checkout HEAD^ gives full cache-tree' '
++	git checkout master &&
++	git read-tree HEAD &&
+ 	git checkout HEAD^ &&
+-	test_shallow_cache_tree
++	test_cache_tree
+ '
+ 
+ test_done
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
