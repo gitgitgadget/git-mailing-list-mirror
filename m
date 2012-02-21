@@ -1,92 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Patchset NTLM-Authentication
-Date: Tue, 21 Feb 2012 10:02:16 -0800
-Message-ID: <7vfwe4gj4n.fsf@alter.siamese.dyndns.org>
-References: <4CDEC141B5583D408E79F2931DB7708301802B70@GSX300A.mxchg.m.corp>
- <87vcn0h77a.fsf@thomas.inf.ethz.ch>
- <4CDEC141B5583D408E79F2931DB7708301802BE7@GSX300A.mxchg.m.corp>
- <8762f05n9q.fsf_-_@thomas.inf.ethz.ch>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/4] Do attempt pretty print in ASCII-incompatible
+ encodings
+Date: Tue, 21 Feb 2012 13:21:18 -0500
+Message-ID: <20120221182118.GA32668@sigill.intra.peff.net>
+References: <1329834292-2511-1-git-send-email-pclouds@gmail.com>
+ <1329834292-2511-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, <avarab@gmail.com>
-To: "Schmidt\, Marco" <Marco.Schmidt@cassidian.com>,
-	Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Feb 21 19:02:28 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 21 19:21:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rzu2l-0008JQ-Tr
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 19:02:28 +0100
+	id 1RzuLA-0001xK-5o
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 19:21:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753272Ab2BUSCX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Feb 2012 13:02:23 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37391 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751232Ab2BUSCW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Feb 2012 13:02:22 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0EE87736D;
-	Tue, 21 Feb 2012 13:02:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RlSf6/rzWAw8AtcALEGHqqZq3dU=; b=ffkRKR
-	LpeAbeY0B7F76WugCsuCsccpqwD02Ni9e/SZHSXHncWf8IgPD3m6R3XkM8/uZHuF
-	nw1NBulv8VrW6tNE5EYe+nKm5KbIuGuJAUTygjdurAFvR0BaTNbvkO458kohvonN
-	eniGMHSj8fNUf2upxnNuwtK5uE+47StIKaJ9E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JHFIgWUi+Tfw2QnKgaULuAtghcxMoqwO
-	oeKciJc6pqCetrfzWdfoW4gWpkj73rMlstRROZACt6bISQptMoRkWHoYD4fRLbF9
-	3ToRe/PfapN+m2f9b8M3jPjH7IJNsVMuTyZj8rfdC7XZP3tQwMo/M62sMjH/QWUK
-	P/BZLGk6RLc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0686E736B;
-	Tue, 21 Feb 2012 13:02:21 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 00E6E7369; Tue, 21 Feb 2012
- 13:02:17 -0500 (EST)
-In-Reply-To: <8762f05n9q.fsf_-_@thomas.inf.ethz.ch> (Thomas Rast's message of
- "Tue, 21 Feb 2012 14:28:17 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 31624928-5CB6-11E1-B404-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754571Ab2BUSVV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Feb 2012 13:21:21 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45332
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752240Ab2BUSVU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Feb 2012 13:21:20 -0500
+Received: (qmail 17734 invoked by uid 107); 21 Feb 2012 18:21:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 21 Feb 2012 13:21:20 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Feb 2012 13:21:18 -0500
+Content-Disposition: inline
+In-Reply-To: <1329834292-2511-2-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191174>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+On Tue, Feb 21, 2012 at 09:24:50PM +0700, Nguyen Thai Ngoc Duy wrote:
 
->   This mostly parallels http.authAny which was introduced in b8ac923
->   (Add an option for using any HTTP authentication scheme, not only
->   basic, 2009-11-27).  http.authAny was removed, and its feature
->   unconditionally enabled, in 525ecd2 (Remove http.authAny, 2009-12-28).
->   However the reasoning of the latter does not apply here because XXXX.
+> We rely on ASCII everywhere. We print "\n" directly without conversion
+> for example. The end result would be a mix of some encoding and ASCII
+> if they are incompatible. Do not do that.
+> 
+> In theory we could convert everything to utf-8 as intermediate medium,
+> process process process, then convert final output to the desired
+> encoding. But that's a lot of work (unless we have a pager-like
+> converter) with little real use. Users can just pipe everything to
+> iconv instead.
 
-Thanks, Thomas.
+I'm not sure why we bother checking this. Using non-ASCII-superset
+encodings is broken, yes, but are people actually doing that? I assume
+that the common one is utf-16, and anybody using it will experience
+severe breakage immediately. So are people actually doing this? Are
+there actually encodings that will cause subtle breakage that we want to
+catch?
 
-I think this paragraph is essential, especially the XXXX part, if we were
-to accept the proposed change and keep the new configuration.  Otherwise
-we won't know what to do when somebody proposes to unconditionally enable
-this ;-)
-
-If it turns out that we can set CURLOPT_PROXYAUTH always to CURLAUTH_ANY
-without compromising security, then an explanation why this does not have
-to be optional, similar to what justified 525ecd2, needs to be there
-instead, and the patch needs to be tweaked to drop the configuration bits.
-
-Marco, I extracted your patch in the attachment and took a look at it
-before composing the above response.
-
- - Your log message seems to be indented by two spaces for some strange
-   reason;
-
- - it does not have any justification like the example Thomas gave
-   you; and
-
- - it also is missing your S-o-b.
-
-Care to re-roll one more time?
+-Peff
