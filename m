@@ -1,80 +1,105 @@
-From: Christian Hammerl <info@christian-hammerl.de>
-Subject: Re: [PATCH] completion: Allow dash as the first character for __git_ps1
-Date: Tue, 21 Feb 2012 21:49:24 +0100
-Message-ID: <80e5224c-66f4-4bdf-9e0e-9aeb7f4f319d@email.android.com>
-References: <1329740273-5580-1-git-send-email-info@christian-hammerl.de> <7vty2jgbsh.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Ignore SIGPIPE when running a filter driver
+Date: Tue, 21 Feb 2012 12:58:53 -0800
+Message-ID: <7vlinvgaya.fsf@alter.siamese.dyndns.org>
+References: <1329771217-9088-1-git-send-email-jehan@orb.com>
+ <20120221030150.GA31737@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 21 21:49:49 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jehan Bing <jehan@orb.com>, git@vger.kernel.org, gitster@pobox.com,
+	j.sixt@viscovery.net, peff@peff.net
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 21 21:59:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rzwef-0007F1-Ec
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 21:49:45 +0100
+	id 1Rzwnr-0003xc-5G
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 21:59:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753109Ab2BUUtk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Feb 2012 15:49:40 -0500
-Received: from w3variance.de ([85.197.82.140]:52840 "EHLO w3variance.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752805Ab2BUUtk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Feb 2012 15:49:40 -0500
-Received: from [2.212.244.135] (helo=[10.135.244.135])
-	by w3variance.de with esmtpa (Exim 4.75)
-	(envelope-from <info@christian-hammerl.de>)
-	id 1RzweE-0007Dw-S5; Tue, 21 Feb 2012 21:49:20 +0100
-User-Agent: K-9 Mail for Android
-In-Reply-To: <7vty2jgbsh.fsf@alter.siamese.dyndns.org>
+	id S1755372Ab2BUU64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Feb 2012 15:58:56 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33258 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754277Ab2BUU6z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Feb 2012 15:58:55 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A1C76605;
+	Tue, 21 Feb 2012 15:58:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Y4YfIxy1VK9PoYtBUM3jqYaN8VA=; b=Kv5Us7
+	28tdacE18tpjtx4VZWI7JiviorevfZQnOWg4hOYvJiZejILwUdW/hZkKsUWUHShq
+	EE8TFA0Zvrd3ulsEv4Wn1RRtcGSPZR9zIyMX9nBniujL0E+Aewf357C68QL3Z524
+	0EERP1u+rhMKZ97vWHAnLtOrxe4Ek4Bnk1+k4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YX2rdsFD2MrJtIBA3hCSlLyRxLdSvNtl
+	EnUB4p623M5pWSHzdpUcpK6iLQ6sWAL8MplrLGYtp4WTBrYHn+8XAhfIuXrpRHCQ
+	QF9JW1U2YZnNoTH4UBWwiQeoDfYCmzAMQfccWtxh9AZWFDCfl7GBQEiCvDeARmCC
+	gfB28hBHY0g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 51B866604;
+	Tue, 21 Feb 2012 15:58:55 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D388B6603; Tue, 21 Feb 2012
+ 15:58:54 -0500 (EST)
+In-Reply-To: <20120221030150.GA31737@burratino> (Jonathan Nieder's message of
+ "Mon, 20 Feb 2012 21:01:50 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DD9F2B8A-5CCE-11E1-A108-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191184>
 
-Yes, kind of.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-It is more like PS1='\W$(__git_ps1 "-[ %s ]")'. And i am fixing it after each update on my machine. ;-)
-
-
-
-Junio C Hamano <gitster@pobox.com> schrieb:
-
->Christian Hammerl <info@christian-hammerl.de> writes:
->
->> If the argument for `__git_ps1` begins with a dash, `printf` tries to
->> interpret it as an option which results in an error message.
->> The problem is solved by adding '--' before the argument to tell
->> `printf` to not interpret the following argument as an option.
->> Adding '--' directly to the argument does not help because the
->argument
->> is enclosed by double quotes.
+>> If a filter is not defined or if it fails, git behaves as if the filter
+>> is a no-op passthru. However, if the filter exits before reading all
+>> the content, and depending on the timing git, could be kill with
+>> SIGPIPE instead.
 >>
->> Signed-off-by: Christian Hammerl <info@christian-hammerl.de>
->> ---
->>  contrib/completion/git-completion.bash |    2 +-
->>  1 files changed, 1 insertions(+), 1 deletions(-)
+>> Ignore SIGPIPE while processing the filter to detect when it exits
+>> early and fallback to using the unfiltered content.
 >>
->> diff --git a/contrib/completion/git-completion.bash
->b/contrib/completion/git-completion.bash
->> index 91c7acb..61ff152 100755
->> --- a/contrib/completion/git-completion.bash
->> +++ b/contrib/completion/git-completion.bash
->> @@ -313,7 +313,7 @@ __git_ps1 ()
->>  		fi
->>  
->>  		local f="$w$i$s$u"
->> -		printf "${1:- (%s)}" "$c${b##refs/heads/}${f:+ $f}$r$p"
->> +		printf -- "${1:- (%s)}" "$c${b##refs/heads/}${f:+ $f}$r$p"
->>  	fi
->>  }
+>> Signed-off-by: Jehan Bing <jehan@orb.com>
 >
->Hmm, so you may be doing something like PS1='\W$(__git_ps1 "-%s")'?
->OK, and thanks.  
+> For the benefit of the uninitiated ("how would ignoring an error help
+> me detect an error?"): setting the SIGPIPE handler to SIG_IGN does not
+> actually ignore the broken pipe condition but causes it to be reported
+> as an I/O error, errno == EPIPE.  That means instead of being killed
+> by SIGPIPE, git gets to fall back to passthrough and report the
+> filter's mistake.
 
--- 
-Diese Nachricht wurde von meinem Android-Mobiltelefon mit K-9 Mail gesendet.
+Yes.  
+
+You could rephrase  bit better to further clarify it, perhaps like this:
+
+    Ignore SIGPIPE when running a filter driver
+    
+    If a filter is not defined or if it fails, git should behave as if the
+    filter is a no-op passthru.
+    
+    However, if the filter exits before reading all the content, depending on
+    the timing, git could be killed with SIGPIPE when it tries to write to the
+    pipe connected to the filter.
+    
+    Ignore SIGPIPE while processing the filter to give us a chance to check
+    the return value from a failed write, in order to detect and act on this
+    mode of failure in a more controlled way.
+    
+    Signed-off-by: Jehan Bing <jehan@orb.com>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+although I think Jehan's original was already clear enough.
+
+> So at least on POSIX-y platforms, this patch looks good to me.  Thanks
+> for writing it.
+
+Thank you and Johannes for eyeballing and sanity checking.
+
+Will queue.
