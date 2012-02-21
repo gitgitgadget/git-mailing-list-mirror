@@ -1,75 +1,72 @@
-From: Georgi Valkov <georgi.t.valkov@gmail.com>
-Subject: [ANNOUNCE] git-link -- builds repository browser links
-Date: Tue, 21 Feb 2012 02:06:11 +0200
-Message-ID: <4F42DFF3.4090106@gmail.com>
+From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+Subject: Re: [PATCH 0/8 v6] diff --stat: use the full terminal width
+Date: Tue, 21 Feb 2012 01:26:42 +0100
+Message-ID: <4F42E4C2.7070801@in.waw.pl>
+References: <1329775034-21551-1-git-send-email-zbyszek@in.waw.pl> <7v4nuljcnk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 21 01:06:23 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>,
+	pclouds@gmail.com, j.sixt@viscovery.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 21 01:26:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzdFH-0004UU-8u
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 01:06:15 +0100
+	id 1RzdZH-0006dB-Mp
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 01:26:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754736Ab2BUAGK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Feb 2012 19:06:10 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:47881 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754055Ab2BUAGJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Feb 2012 19:06:09 -0500
-Received: by eekc14 with SMTP id c14so2459953eek.19
-        for <git@vger.kernel.org>; Mon, 20 Feb 2012 16:06:07 -0800 (PST)
-Received-SPF: pass (google.com: domain of georgi.t.valkov@gmail.com designates 10.14.132.203 as permitted sender) client-ip=10.14.132.203;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of georgi.t.valkov@gmail.com designates 10.14.132.203 as permitted sender) smtp.mail=georgi.t.valkov@gmail.com; dkim=pass header.i=georgi.t.valkov@gmail.com
-Received: from mr.google.com ([10.14.132.203])
-        by 10.14.132.203 with SMTP id o51mr11414793eei.76.1329782767982 (num_hops = 1);
-        Mon, 20 Feb 2012 16:06:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=C1101ScSMtfLGILO6OSKzVePnATA9kB9QpWLjhCjWLo=;
-        b=aNQecqZ25LfI6SPtrfcfPYPjILrjigtZrnH1A9rUTEQRCdj6hc7JcFb6EUip2+4HUc
-         CxlmffE9EMlm2eWW5M3qQL535LQXjWAlaLyG57do+i2s4nZ0CDt5R+frXVYngbHpPb4p
-         eXBTgoolli2mZhWHk7A3PqfmK51TksHYbsYKY=
-Received: by 10.14.132.203 with SMTP id o51mr9075616eei.76.1329782767917;
-        Mon, 20 Feb 2012 16:06:07 -0800 (PST)
-Received: from [192.168.1.101] (92-247-205-65.spectrumnet.bg. [92.247.205.65])
-        by mx.google.com with ESMTPS id s48sm80828642eem.0.2012.02.20.16.06.07
-        (version=SSLv3 cipher=OTHER);
-        Mon, 20 Feb 2012 16:06:07 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.24) Gecko/20111114 Icedove/3.1.16
+	id S1754847Ab2BUA0v convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Feb 2012 19:26:51 -0500
+Received: from kawka.in.waw.pl ([178.63.212.103]:52874 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754814Ab2BUA0u (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Feb 2012 19:26:50 -0500
+Received: from 89-78-221-60.dynamic.chello.pl ([89.78.221.60] helo=[192.168.0.12])
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1RzdZA-0008Rk-Q8; Tue, 21 Feb 2012 01:26:48 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20120104 Icedove/8.0
+In-Reply-To: <7v4nuljcnk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191128>
 
-Hi all,
+On 02/21/2012 12:41 AM, Junio C Hamano wrote:
+> Zbigniew J=C4=99drzejewski-Szmek<zbyszek@in.waw.pl>  writes:
+>
+>> JC:
+>>> Perhaps the maximum for garph_width should be raised to something l=
+ike
+>>> "min(80, stat_width) - name_width"?
+>> I think that a graph like
+>> a | 1000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
++++++++++++
+>> b |    1 -
+>> is not very readable. I like the consistency forced by the 40-column=
+ limit.
+>> But I guess that this is very subjective.
+>
+> The above makes it very obvious that there is a huge amount of change=
+ made
+> to 'a' and a bit of deletion to 'b', compared to a mini-graph that is
+> truncated to half the screen width.
+Yes. But the same graph with 40 columns tells me exactly the same thing=
+=2E
+OTOH, if the filenames+graph fill the whole 80 columns, everything is=20
+nicely aligned wrt. to text above and below. Maybe it should be=20
+configurable after all?
 
-If you find yourselves sending out a ton of gitweb, cgit or github links 
-every day, git-link is a sub-command that can speed things up for you by 
-eliminating pointy-clicky time that you would spend in a browser.
+> Besides, the above is what you would get without your patch on 80-col=
+umn
+> terminal, no?
+Yes.
 
-Example:
- > $ git config --add link.url http://git.kernel.org/?p=git/git.git
- > $ git config --add link.browser gitweb
-
- > $ git link v1.7.9~^{tree}
- > 
-http://git.kernel.org/?p=git/git.git;a=tree;h=903db0d86a809b1f84415654369a3cf6dff5f4d5
-
- > $ git link --clipboard fsck.c
- > 
-http://git.kernel.org/?p=git/git.git;a=blob;h=6c855f84f01c19678399d85181da1094bd61b371;f=fsck.c
-
-Links:
-  - https://github.com/gvalkov/git-link
-  - http://pypi.python.org/pypi/gitlink
-
-Best,
-G.
+Zbyszek
