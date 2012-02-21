@@ -1,129 +1,107 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCHv3] git-p4: add initial support for RCS keywords
-Date: Tue, 21 Feb 2012 07:18:34 -0500
-Message-ID: <20120221121834.GB18317@padd.com>
-References: <1329258835-17223-1-git-send-email-luke@diamand.org>
- <1329258835-17223-2-git-send-email-luke@diamand.org>
+From: supadhyay <supadhyay@imany.com>
+Subject: cvs2git failed in pass2 ...
+Date: Tue, 21 Feb 2012 04:52:02 -0800 (PST)
+Message-ID: <1329828722466-7304605.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Eric Scouten <eric@scouten.com>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Tue Feb 21 13:18:46 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 21 13:52:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rzog9-0001DT-PR
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 13:18:46 +0100
+	id 1RzpCV-0002UY-0Q
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 13:52:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755167Ab2BUMSk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Feb 2012 07:18:40 -0500
-Received: from honk.padd.com ([74.3.171.149]:39568 "EHLO honk.padd.com"
+	id S1754396Ab2BUMwF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Feb 2012 07:52:05 -0500
+Received: from sam.nabble.com ([216.139.236.26]:40641 "EHLO sam.nabble.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754195Ab2BUMSj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Feb 2012 07:18:39 -0500
-Received: from arf.padd.com (unknown [50.55.145.32])
-	by honk.padd.com (Postfix) with ESMTPSA id 05B4E3A7D;
-	Tue, 21 Feb 2012 04:18:39 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id D4A8031481; Tue, 21 Feb 2012 07:18:34 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <1329258835-17223-2-git-send-email-luke@diamand.org>
+	id S1754235Ab2BUMwE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Feb 2012 07:52:04 -0500
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <supadhyay@imany.com>)
+	id 1RzpCM-00074t-Fh
+	for git@vger.kernel.org; Tue, 21 Feb 2012 04:52:02 -0800
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191154>
 
-luke@diamand.org wrote on Tue, 14 Feb 2012 22:33 +0000:
-> diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
-[..]
-> +git-p4.attemptRCSCleanup:
-> +    If enabled, 'git p4 submit' will attempt to sort cleanup RCS keywords
-> +    ($Header$, etc). These would otherwise cause merge conflicts and prevent
-> +    the submit going ahead. This option should be considered experimental at
-> +    present.
+Hi All,
 
-=> "attempt to cleanup"
+I am using cvs2svn  tool to convert my CVS repository to GIT. I have
+download the "cvs2svn-2.3.0.tar.gz" file.
 
-> diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-[..]
-> +#
-> +# return the raw p4 type of a file (text, text+ko, etc)
-> +#
-> +def p4_type(file):
-> +    files = p4_read_pipe_lines(["files", file])
-> +    info = files[0]
-> +    m = re.search(r'\(([a-z0-9A-Z+]+)\)\s*$', info)
-> +    if m:
-> +        ret = m.group(1)
-> +        if verbose:
-> +            print "%s => %s" % (file, ret)
-> +        return ret
-> +    else:
-> +        die("Could not extract file type from '%s'" % info)
+I have created git user to install GIT and then using the same user (gi=
+t) I
+try to run "./cvs2git" command  below way.
 
-p4 fstat -T headType
-gives just the type, no need to parse the info string
+=2E/cvs2git \  --blobfile=3D/home/git/tmp/git-files/git-blob.dat \=20
+--dumpfile=3D/home/git/tmp/git-files/git-dump.dat \    --username=3Dgit=
+  =20
+/opt/source/Repo_from_CVS/VD
 
-> +#
-> +# Given a type base and modifier, return a regexp matching
-> +# the keywords that can be expanded in the file
-> +#
-> +def p4_keywords_regexp_for_type(base, type_mods):
-> +    if base in ("text", "unicode", "binary"):
-> +        if "ko" in type_mods:
-> +            return r'\$(Id|Header)[^$]*\$'
-> +        elif "k" in type_mods:
-> +            return r'\$(Id|Header|Author|Date|DateTime|Change|File|Revision)[^$]*\$'
+It took around 10 mins to finish pass1 and for pass 2 it raised the war=
+nings
+and messages like below=20
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Done
 
-Still no ":"?  Won't that match too much?
+Time for pass1 (CollectRevsPass): 526.3 seconds.
+----- pass 2 (CleanMetadataPass) -----
+Converting metadata to UTF8...
+WARNING: Problem decoding log message:
+-----------------------------------------------------------------------=
+----
+version 4  - Note concerning =E2=80=9CLeave One=E2=80=9D option for Int=
+ernal Duplicate Check
+added
+=20
+-----------------------------------------------------------------------=
+----
+WARNING: Problem decoding log message:
+-----------------------------------------------------------------------=
+----
+=2E.....
+=2E.....
+=2E.....
+-----------------------------------------------------------------------=
+----
+WARNING: Problem decoding log message:
+-----------------------------------------------------------------------=
+----
+all labels to be right-justified
+all labels to end with =E2=80=9C:=E2=80=9D
+removed Selected Error Codes label
+=E2=80=98Select One=E2=80=99 dropdowns are horizontally aligned with co=
+rresponding text
+boxes
+=20
+-----------------------------------------------------------------------=
+----
+ERROR: There were warnings converting author names and/or log messages
+to Unicode (see messages above).  Please restart this pass
+with one or more '--encoding' parameters or with
+'--fallback-encoding'.
 
-> +    def patchRCSKeywords(self, file, pattern):
+***********************************************************************=
+************
+can any one suggest me how to overcome this warning or any workaround ?=
+?
 
-Nice, clean.
+Thanks in advance...
 
->      def p4UserForCommit(self,id):
-[..]
-> +                for line in read_pipe_lines(diffcmd):
-> +                    # read diff lines: for each file reported, if it can have
-> +                    # keywords expanded, and the diff contains keywords, then
-> +                    # try zapping the p4 file.
-> +                    m = re.match(r'^diff --git a/(.*)\s+b/(.*)', line)
 
-I'm still sort of iffy on this.  You have editedFiles, and could
-just use that directly.  Grepping through the diff won't give you
-any more information.
 
-> +                    if pattern:
-> +                        print line
 
-Debugging?  Maybe add a leading comment saying why this line.
-
-> @@ -1585,15 +1685,11 @@ class P4Sync(Command, P4UserMap):
->  
->          # Note that we do not try to de-mangle keywords on utf16 files,
->          # even though in theory somebody may want that.
-> -        if type_base in ("text", "unicode", "binary"):
-> -            if "ko" in type_mods:
-> -                text = ''.join(contents)
-> -                text = re.sub(r'\$(Id|Header):[^$]*\$', r'$\1$', text)
-> -                contents = [ text ]
-> -            elif "k" in type_mods:
-> -                text = ''.join(contents)
-> -                text = re.sub(r'\$(Id|Header|Author|Date|DateTime|Change|File|Revision):[^$]*\$', r'$\1$', text)
-> -                contents = [ text ]
-> +        pattern = p4_keywords_regexp_for_type(type_base, type_mods)
-> +        if pattern:
-> +            text = ''.join(contents)
-> +            text = re.sub(pattern, r'$\1$', text)
-> +            contents = [ text ]
-
-Nice.  Glad you refactored this.
-
-Fix the colon thing at least, then happy to add my Acked-By.
-
-Sorry for the delay.
-
-		-- Pete
+--
+View this message in context: http://git.661346.n2.nabble.com/cvs2git-f=
+ailed-in-pass2-tp7304605p7304605.html
+Sent from the git mailing list archive at Nabble.com.
