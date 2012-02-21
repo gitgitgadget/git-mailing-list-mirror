@@ -1,73 +1,94 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: Patchset NTLM-Authentication
-Date: Tue, 21 Feb 2012 10:22:17 +0100
-Message-ID: <87vcn0h77a.fsf@thomas.inf.ethz.ch>
-References: <4CDEC141B5583D408E79F2931DB7708301802B70@GSX300A.mxchg.m.corp>
+From: Ivan Tolstosheyev <ivan.tolstosheyev@gmail.com>
+Subject: Git tree object storing policy
+Date: Tue, 21 Feb 2012 09:22:12 +0000 (UTC)
+Message-ID: <loom.20120221T094746-680@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <git@vger.kernel.org>, <gitster@pobox.com>, <avarab@gmail.com>
-To: "Schmidt, Marco" <Marco.Schmidt@cassidian.com>
-X-From: git-owner@vger.kernel.org Tue Feb 21 10:22:31 2012
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 21 10:25:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzlvY-0005AT-87
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 10:22:28 +0100
+	id 1RzlyE-0006jd-RG
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 10:25:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753336Ab2BUJWW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Feb 2012 04:22:22 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:26103 "EHLO edge10.ethz.ch"
+	id S1754061Ab2BUJZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Feb 2012 04:25:08 -0500
+Received: from plane.gmane.org ([80.91.229.3]:42111 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752274Ab2BUJWU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Feb 2012 04:22:20 -0500
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 21 Feb
- 2012 10:22:17 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 21 Feb
- 2012 10:22:17 +0100
-In-Reply-To: <4CDEC141B5583D408E79F2931DB7708301802B70@GSX300A.mxchg.m.corp>
-	(Marco Schmidt's message of "Tue, 21 Feb 2012 09:07:59 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1753442Ab2BUJZF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Feb 2012 04:25:05 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Rzly3-0006e9-Ve
+	for git@vger.kernel.org; Tue, 21 Feb 2012 10:25:04 +0100
+Received: from dhcp-217-126-wifi.yandex.net ([213.180.217.126])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 21 Feb 2012 10:25:03 +0100
+Received: from ivan.tolstosheyev by dhcp-217-126-wifi.yandex.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 21 Feb 2012 10:25:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 213.180.217.126 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.46 Safari/535.11 YE)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191146>
 
-"Schmidt, Marco" <Marco.Schmidt@cassidian.com> writes:
+Hello,
 
-> I'm not conform with your patch submitting policy. I had no chance to
-> track the git repository from my current location.
+now tree object is a simple list of <attributes, hash, name>sorted by name
+(tricky sorted, cause we assuming that directory name "$X" is actually "$X/"
+in comparison function). The problem is, that if I want to insert 10k files
+in empty git repository on / folder there will be 10k new 
+trees with sizes from (1 to 10k)*(hash+name+attribute)+eps  .
 
-You should read Documentation/SubmittingPatches.  If your location does
-not let you use any git:// or git+http:// ("smart http") transports, you
-can use the wereHamster's bundler service https://bundler.caurea.org/ to
-get a bundle that you can download over http.  (If you cannot download
-*anything* over http, what is your internet access good for?)
+itroot@localhost ~/tmp> cat git-test.sh 
+#!/usr/bin/env bash
 
-Looking at the attachments:
+git init test
+cd test
+for i in `seq 1 10000` 
+do
+touch ${i} ; git add ${i} ; git commit -m "Add ${i}" ;
+done
+cd ..
+du -hs test
+itroot@localhost ~/tmp>
 
-[0002-Einf-hren-der-HTTP-Proxy-Authentifizierung.patch]
-[0003-First-working-step.patch]
-[0004-remove-debug-information.patch]
+itroot@localhost ~/tmp> ./git-test.sh
+...
+180M	test
+itroot@localhost ~/tmp>
 
-* You seem to have forgotten the first patch.  As it stands, the 0002
-  one does not apply to my tree.
+180 MB!!!?? and 7.4M after `git gc` - thanks to delta compression!
 
-* The commit messages are useless.  The second one at least says
-  "introduce HTTP proxy authentication" which tells me something about
-  *what it does*, but in German.  It should also tell me why and how and
-  possible other considerations.  See SubmittingPatches.
+Ok, you can say that this example is artificial, and I can add 10k files
+with 1 commit. Thats true. But manipulating files in big tree objects
+(in a big directories) is storage-expensive, and if I need to store a 
+lot of files in one directory and frequently change them - git just
+don't scales now properly at this use-case.
 
-* The commits should "spring into perfect existence".  That is, in the
-  above you should squash 3 and 4 into 2 so that 2 starts out working
-  (presumably -- I'm only looking at the subjects) .  You can use rebase
-  -i to clean everything up.
+What do I propose? 
+We can add another git object, named for example "btree" , 
+that contains another "btree" objects or files.  This will be a simple
+btree structure (tree entries sorted practically by name, BTW,
+maybe it's time to fix sorting =] ), that allows us to do insertion,
+removal, search in ln(n) time. But - we do not have troubles 
+with big direcories now. BTW, if all directories are small, btree
+will be tree-like - just btree pointing to  files.
+So, one big tree with 10k files transforms to (hmm, for example...)
+101 btrees - one, pointing to 100 btrees, and thay points to files.
+(100 entries per btree is a wild guess =) )
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Suggestions?
+
+ 
