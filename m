@@ -1,90 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: how do you review auto-resolved files
-Date: Tue, 21 Feb 2012 13:19:17 -0800
-Message-ID: <7vhayjga0a.fsf@alter.siamese.dyndns.org>
-References: <ji0vik$e48$1@dough.gmane.org>
+From: =?ISO-8859-1?Q?Philip_J=E4genstedt?= <philip@foolip.org>
+Subject: Re: [PATCH] completion: remote set-* <name> and <branch>
+Date: Tue, 21 Feb 2012 22:29:33 +0100
+Message-ID: <CAKHWUkZjQYnf=LwS_RC-E_7gV73AzbWjxs33E5-FL25s6_qX4g@mail.gmail.com>
+References: <1329571973-20796-1-git-send-email-philip@foolip.org> <7vvcn2lyw6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Neal Kreitzinger" <neal@rsss.com>
-X-From: git-owner@vger.kernel.org Tue Feb 21 22:19:27 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Teemu Likonen <tlikonen@iki.fi>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 21 22:30:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rzx7N-0005n7-ME
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 22:19:26 +0100
+	id 1RzxHc-0002S5-HK
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 22:30:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753707Ab2BUVTV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Feb 2012 16:19:21 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46760 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752438Ab2BUVTU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Feb 2012 16:19:20 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A707B6EF3;
-	Tue, 21 Feb 2012 16:19:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=02tCAzZHC1D5ffE3WpnAtaugVyU=; b=jwsIqr
-	pTBCji/t66bcLuqpPgDoDuTA0TiYhvzCKWpiYxgf3/tS3J+u8mx513Gj5WE6b5of
-	gPEXEqtEQaIGrmCol6Its659UeOwDB4ybQy6BfqZR1fMUie+p8Si00yyPTlQc/5P
-	OLkj7gd1fx01MJEfy40qCw9ir01JhlyK4jZlc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=c4auVwpeXZdC8FBEgzQRVAI8QuwFuEKI
-	AT1rFeI43GSTKIU6/YMUtyaHAt3UkbsBE3lt3Pmcf8DqIH95Qk+hcLLPacoFuDb9
-	5lt+JIa5IoWpgZyj222Qd8nmiHpD5kv5uTI+TvZdN+9haqRSL7iliWj23g/wQJwX
-	aTKgWdUWz9A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9EDC46EF2;
-	Tue, 21 Feb 2012 16:19:19 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3414B6EEE; Tue, 21 Feb 2012
- 16:19:19 -0500 (EST)
-In-Reply-To: <ji0vik$e48$1@dough.gmane.org> (Neal Kreitzinger's message of
- "Tue, 21 Feb 2012 14:41:57 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B75F91C8-5CD1-11E1-95AE-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754175Ab2BUV3z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Feb 2012 16:29:55 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:59360 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752693Ab2BUV3y convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Feb 2012 16:29:54 -0500
+Received: by vcge1 with SMTP id e1so4562737vcg.19
+        for <git@vger.kernel.org>; Tue, 21 Feb 2012 13:29:53 -0800 (PST)
+Received-SPF: pass (google.com: domain of philip@foolip.org designates 10.220.232.10 as permitted sender) client-ip=10.220.232.10;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of philip@foolip.org designates 10.220.232.10 as permitted sender) smtp.mail=philip@foolip.org
+Received: from mr.google.com ([10.220.232.10])
+        by 10.220.232.10 with SMTP id js10mr15316199vcb.53.1329859793591 (num_hops = 1);
+        Tue, 21 Feb 2012 13:29:53 -0800 (PST)
+Received: by 10.220.232.10 with SMTP id js10mr12258821vcb.53.1329859793234;
+ Tue, 21 Feb 2012 13:29:53 -0800 (PST)
+Received: by 10.52.178.193 with HTTP; Tue, 21 Feb 2012 13:29:33 -0800 (PST)
+In-Reply-To: <7vvcn2lyw6.fsf@alter.siamese.dyndns.org>
+X-Gm-Message-State: ALoCoQmmC4SMxxZTASMnlxDr+dMdNsiBcQwYQzz/wsQ215kJ1jj/jpt9JoyukexeJ8jmskqL42Xp
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191187>
 
-"Neal Kreitzinger" <neal@rsss.com> writes:
-
-> When git does a merges (merge/rebase/cherry-pick) it auto-resolves same-file 
-> changes that do not conflict on the same line(s).
+On Mon, Feb 20, 2012 at 08:58, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> Philip J=E4genstedt <philip@foolip.org> writes:
 >
-> Technical Question:  What are the recommended commands for reviewing the 
-> files that auto-resolved after a "merge"?
+>> Complete <name> only for set-url. For set-branches and
+>> set-head, complete <name> and <branch> over the network,
+>> like e.g. git pull already does.
+>>
+>> Signed-off-by: Philip J=E4genstedt <philip@foolip.org>
+>
+> You addressed your patch to Shawn, who originally wrote this, but
+>
+> "git shortlog -n -s --no-merges --since=3D9.months pu contrib/complet=
+ion"
+>
+> indicates that he no longer is involved in enhancing this script, and=
+ it
+> has seen actions primarily from three people I Cc'ed this message to.
 
-Imagine that you are the maintainer of the mainline and are reviewing the
-work made on a side branch that you just merged, but pretend that the
-contribution came as a patch instead.  How would you assess the damage to
-your mainline?
+Thanks. Perhaps git-completion.bash should not say "Send all patches
+to the current maintainer" and simply defer to SubmittingPatches?
 
-You would use "git show --first-parent $commit" for that.
+>> =A0contrib/completion/git-completion.bash | =A0 12 +++++++++---
+>> =A01 file changed, 9 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/contrib/completion/git-completion.bash b/contrib/comple=
+tion/git-completion.bash
+>> index 1505cff..8e7abb6 100755
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -738,6 +738,9 @@ __git_complete_remote_or_refspec ()
+>> =A0{
+>> =A0 =A0 =A0 local cur_=3D"$cur" cmd=3D"${words[1]}"
+>> =A0 =A0 =A0 local i c=3D2 remote=3D"" pfx=3D"" lhs=3D1 no_complete_r=
+efspec=3D0
+>> + =A0 =A0 if [ "$cmd" =3D "remote" ]; then
+>> + =A0 =A0 =A0 =A0 =A0 =A0 c=3D$((++c))
+>> + =A0 =A0 fi
+>
+> I don't know about others, but auto-incrementing a variable and assig=
+ning
+> the result to the same variable, while not wrong at all, hurts my bra=
+in.
+>
+> =A0 =A0 =A0 =A0c=3D$(($c + 1))
+>
+> is far more readable and does not suggest there is any funky magic
+> involved. =A0Also it is a good habit to get into not to omit $ from
+> variables inside arithmetic substitution, even though bash allows it =
+and
+> this script is meant to be consumed only by shells that understand th=
+is
+> bash-ism.
+>
+> I do not know offhand if zsh groks it, but the point is that you do n=
+ot
+> have to worry about it if you write "$(($c+1))" instead of "$((c+1))"=
+=2E
 
-And then look at what the sideline wanted to do to the old baseline:
+CodingGuidlines suggests to follow local convention, which was
+"c=3D$((++c))". This file also uses "++n", "i++" and "((i++))". I will
+send a v2 patch that normalizes these, open to discussion of course.
 
-	git log -p $commit^..$commit
-
-which would, unless the person who worked on the side branch did a shoddy
-job describing his work, explain what the side branch wanted to achieve
-and also _how_ it wanted to achieve it.
-
-And then re-read the first "git show" output with that knowledge, together
-with the knowledge you have on your mainline codebase, and decide if the
-solution used by the side branch is still valid.  If it makes sense, you
-are done.  If the advance in your mainline since the side branch forked
-invalidated some assumption the side branch made (e.g. a helper function
-the side branch used has changed its meaning, a helper function the side
-branch changed its meaning gained more callsite on the mainline, etc.),
-you have a semantic conflict that you would need to address.
-
-It is unclear what exactly you consider "auto-resolve" in your message, so
-I'd refrain from commenting on the "Philosophical" part, at least for now.
+--=20
+Philip J=E4genstedt
