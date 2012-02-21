@@ -1,174 +1,114 @@
-From: "Schmidt, Marco" <Marco.Schmidt@cassidian.com>
-Subject: Patchset NTLM-Authentication
-Date: Tue, 21 Feb 2012 09:07:59 +0100
-Message-ID: <4CDEC141B5583D408E79F2931DB7708301802B70@GSX300A.mxchg.m.corp>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-subtree Ready #2
+Date: Tue, 21 Feb 2012 00:44:31 -0800
+Message-ID: <7v4nukinio.fsf@alter.siamese.dyndns.org>
+References: <877gztmfwy.fsf@smith.obbligato.org>
+ <8739acra5j.fsf@smith.obbligato.org>
+ <20120215050855.GB29902@sigill.intra.peff.net>
+ <87sjicpsr1.fsf@smith.obbligato.org> <87ty2ro1zf.fsf@smith.obbligato.org>
+ <20120220205346.GA6335@sigill.intra.peff.net>
+ <7vd399jdwc.fsf@alter.siamese.dyndns.org>
+ <87ehtowxu7.fsf@smith.obbligato.org>
+ <7vwr7gitjl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="----_=_NextPart_001_01CCF06F.F2061336"
-Cc: <gitster@pobox.com>, <avarab@gmail.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 21 09:20:47 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Avery Pennarun <apenwarr@gmail.com>
+To: greened@obbligato.org (David A. Greene)
+X-From: git-owner@vger.kernel.org Tue Feb 21 09:44:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rzkxq-00065s-1D
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 09:20:46 +0100
+	id 1RzlKx-0001yO-SL
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 09:44:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752860Ab2BUIUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Feb 2012 03:20:41 -0500
-Received: from mail.eads.net ([80.156.45.113]:46438 "EHLO mail.eads.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752285Ab2BUIUk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Feb 2012 03:20:40 -0500
-X-Greylist: delayed 738 seconds by postgrey-1.27 at vger.kernel.org; Tue, 21 Feb 2012 03:20:38 EST
-Received: from gsx3072-vs5.mxchg.m.corp ([53.147.176.149])
-	by mail.eads.net (8.13.8/8.13.8/Debian-2) with ESMTP id q1L87i1V016737;
-	Tue, 21 Feb 2012 09:07:45 +0100
-Received: from gsx300a.mxchg.m.corp ([10.43.212.131]) by gsx3072-vs5.mxchg.m.corp with Microsoft SMTPSVC(6.0.3790.4675);
-	 Tue, 21 Feb 2012 09:08:07 +0100
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Patchset NTLM-Authentication
-Thread-Index: Aczwb+zGnjMH2YRwTwS7eqyjC+Gd8w==
-X-OriginalArrivalTime: 21 Feb 2012 08:08:07.0915 (UTC) FILETIME=[F201EBB0:01CCF06F]
+	id S1752362Ab2BUIof (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Feb 2012 03:44:35 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42180 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752174Ab2BUIoe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Feb 2012 03:44:34 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 90F4C2F4E;
+	Tue, 21 Feb 2012 03:44:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fPbL4qHAeGgwENAZCsePFiqQmIM=; b=l2uIrv
+	BqA+qBHI2HttEoYF8hyaUZOqUlHd/mstDjcCWxg5xULRSJYp0Gm+eJ3aX29im8TY
+	5IlpKOF43tOfy7DWdaLzaXWZzQCwk9oaNemBhWFIx5mRiSFxsysGhGcYAS+1+emO
+	6CkyyjKfmM2VhXe1hp8pZkhdjPIPhxbS+ZfyU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ixRkeIaG153keEOeGJz4dImVq9LPvB7T
+	p4GvspOgjI5Dxjg2oa/Fko83iKXTK5JcH11YGBmxBbOCNIIjhl25wMfjGmjWZVF2
+	8fICVMflKt2wXFdM/ROyCPNoCDtxL8ZV6tcZhyT1iwf1l+ttTmz9t0rphAV2n+y/
+	LdJKXYaOGJg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 87EF32F4D;
+	Tue, 21 Feb 2012 03:44:33 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DEE2C2F4C; Tue, 21 Feb 2012
+ 03:44:32 -0500 (EST)
+In-Reply-To: <7vwr7gitjl.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 20 Feb 2012 22:34:22 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 46A2A8D0-5C68-11E1-A7F1-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191141>
 
-This is a multi-part message in MIME format.
+Junio C Hamano <gitster@pobox.com> writes:
 
-------_=_NextPart_001_01CCF06F.F2061336
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+> greened@obbligato.org (David A. Greene) writes:
+>
+>> Ok, but we will preserve the history via the subtree merge, yes?
+>
+> I'll comment on just this part, but a short answer is "no, I do not think
+> so".
+> ...
+> I was saying that the history up to the current state, littered with these
+> commits that are not "logical progression" but merely "a snapshot of
+> then-current state" may not be worth preserving, with or without better
+> messages.
+>
+> Rewriting the entire history to make it a logical progression just for the
+> sake of history is obviously not worth the effort.
 
-Support NTLM-Authentication against proxy.
+Having said all that, my preference is not so strong to out-right veto
+doing a true merge; I wouldn't lose sleep if we end up merging the tip of
+your subtree branch with all the history behind it as-is.
 
-I have include a minimal patch set to support NTLM authentification
-against a proxy server.=20
+BUT.
 
-The patch adds a boolean configuration variable "http.proxyauthany" to
-enable CURLOPT_PROXYAUTH =3D CURLAUTH_ANY.
+Even though I freely admit that I was the guilty one who came up with
+"merge -s subtree", and Linus's "gitk merge" was the original sin, having
+a subtree merge like gitk, git-gui and gitweb in the history is not
+without downsides.
 
-I'm not conform with your patch submitting policy. I had no chance to
-track the git repository from my current location.
+The most problematic one that we regularly suffer from is that the
+commands in the log family cannot work well across a subtree merge with
+pathspec limiting, e.g. "git log git-gui/po", and we have to resort to
+something like:
 
+    $ cd git-gui/po &&
+      git rev-list --parents HEAD . |
+      while read commit parent
+      do
+        git log --pretty=short $parent..$commit^2 -- :/po
+      done | git shortlog -n -e
 
-Marco Schmidt
+to achieve what should be a simple "git shortlog -n -e git-gui/po".  I
+suspect that a subtree merge may also lead bisection into uninteresting
+tangents as it joins otherwise disjoint history.
 
-------_=_NextPart_001_01CCF06F.F2061336
-Content-Type: application/octet-stream;
-	name="0002-Einf-hren-der-HTTP-Proxy-Authentifizierung.patch"
-Content-Transfer-Encoding: base64
-Content-Description: 0002-Einf-hren-der-HTTP-Proxy-Authentifizierung.patch
-Content-Disposition: attachment;
-	filename="0002-Einf-hren-der-HTTP-Proxy-Authentifizierung.patch"
-
-RnJvbSA4YTM4OTJlY2E2OWEwYzYwM2E1M2IzZDNhYTA1MmY0NWM0YTViNjQ4IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBNYXJjbyBTY2htaWR0IDxNYXJjby5TY2htaWR0QGNhc3NpZGlh
-bi5jb20+CkRhdGU6IEZyaSwgMjcgSmFuIDIwMTIgMTM6MDg6NDQgKzAxMDAKU3ViamVjdDogW1BB
-VENIIDIvNF0gPT9VVEYtOD9xP0VpbmY9RkNocmVuPTIwZGVyPTIwSFRUUD0yMFByb3h5PTIwQXV0
-aGVudGlmaT89CiA9P1VURi04P3E/emllcnVuZz89Ck1JTUUtVmVyc2lvbjogMS4wCkNvbnRlbnQt
-VHlwZTogdGV4dC9wbGFpbjsgY2hhcnNldD1VVEYtOApDb250ZW50LVRyYW5zZmVyLUVuY29kaW5n
-OiA4Yml0CgotLS0KIGh0dHAuYyB8ICAgMTEgKysrKysrKysrKysKIDEgZmlsZXMgY2hhbmdlZCwg
-MTEgaW5zZXJ0aW9ucygrKSwgMCBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9odHRwLmMgYi9o
-dHRwLmMKaW5kZXggZjNiMmM5MC4uZGM1MWQ0MSAxMDA2NDQKLS0tIGEvaHR0cC5jCisrKyBiL2h0
-dHAuYwpAQCAtNDEsNiArNDEsNyBAQCBzdGF0aWMgbG9uZyBjdXJsX2xvd19zcGVlZF9saW1pdCA9
-IC0xOwogc3RhdGljIGxvbmcgY3VybF9sb3dfc3BlZWRfdGltZSA9IC0xOwogc3RhdGljIGludCBj
-dXJsX2Z0cF9ub19lcHN2Owogc3RhdGljIGNvbnN0IGNoYXIgKmN1cmxfaHR0cF9wcm94eTsKK3N0
-YXRpYyBpbnQgY3VybF9odHRwX3Byb3h5YXV0aGFueSA9IDA7CiBzdGF0aWMgY29uc3QgY2hhciAq
-Y3VybF9jb29raWVfZmlsZTsKIHN0YXRpYyBjaGFyICp1c2VyX25hbWUsICp1c2VyX3Bhc3MsICpk
-ZXNjcmlwdGlvbjsKIHN0YXRpYyBjb25zdCBjaGFyICp1c2VyX2FnZW50OwpAQCAtMjIyLDYgKzIy
-MywxMCBAQCBzdGF0aWMgaW50IGh0dHBfb3B0aW9ucyhjb25zdCBjaGFyICp2YXIsIGNvbnN0IGNo
-YXIgKnZhbHVlLCB2b2lkICpjYikKIAl9CiAJaWYgKCFzdHJjbXAoImh0dHAucHJveHkiLCB2YXIp
-KQogCQlyZXR1cm4gZ2l0X2NvbmZpZ19zdHJpbmcoJmN1cmxfaHR0cF9wcm94eSwgdmFyLCB2YWx1
-ZSk7CisJCisJaWYgKCFzdHJjbXAoImh0dHAucHJveHlhdXRoYW55IiwgdmFyKSkgIHsKKwkJY3Vy
-bF9odHRwX3Byb3h5YXV0aGFueSA9IGdpdF9jb25maWdfYm9vbCh2YXIsIHZhbHVlKTsKKwl9CiAK
-IAlpZiAoIXN0cmNtcCgiaHR0cC5jb29raWVmaWxlIiwgdmFyKSkKIAkJcmV0dXJuIGdpdF9jb25m
-aWdfc3RyaW5nKCZjdXJsX2Nvb2tpZV9maWxlLCB2YXIsIHZhbHVlKTsKQEAgLTMzMCw2ICszMzUs
-MTIgQEAgc3RhdGljIENVUkwgKmdldF9jdXJsX2hhbmRsZSh2b2lkKQogCiAJaWYgKGN1cmxfaHR0
-cF9wcm94eSkKIAkJY3VybF9lYXN5X3NldG9wdChyZXN1bHQsIENVUkxPUFRfUFJPWFksIGN1cmxf
-aHR0cF9wcm94eSk7CisJCisJaWYgKGN1cmxfaHR0cF9wcm94eWF1dGhhbnkpIHsKKwkJY3VybF9l
-YXN5X3NldG9wdChyZXN1bHQsIENVUkxPUFRfUFJPWFlBVVRILCBDVVJMQVVUSF9BTlkpOworCQlw
-cmludGYoIkNVUkxPUFRfUFJPWFlBVVRIISEhISIpOworCX0KKwogCiAJcmV0dXJuIHJlc3VsdDsK
-IH0KLS0gCjEuNy44Cgo=
-
-------_=_NextPart_001_01CCF06F.F2061336
-Content-Type: application/octet-stream;
-	name="0003-First-working-step.patch"
-Content-Transfer-Encoding: base64
-Content-Description: 0003-First-working-step.patch
-Content-Disposition: attachment;
-	filename="0003-First-working-step.patch"
-
-RnJvbSAyYjczMzZjNDk1OWZjNGRmMzBkYTllNjhmNjUyZjJjNTk0MWYwYzkxIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBNYXJjbyBTY2htaWR0IDxNYXJjby5TY2htaWR0QGNhc3NpZGlh
-bi5jb20+CkRhdGU6IEZyaSwgMjcgSmFuIDIwMTIgMTQ6MzU6MTUgKzAxMDAKU3ViamVjdDogW1BB
-VENIIDMvNF0gRmlyc3Qgd29ya2luZyBzdGVwCgotLS0KIGh0dHAuYyB8ICAgIDkgKysrKysrKyst
-CiAxIGZpbGVzIGNoYW5nZWQsIDggaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbnMoLSkKCmRpZmYg
-LS1naXQgYS9odHRwLmMgYi9odHRwLmMKaW5kZXggZGM1MWQ0MS4uM2RiZDM5MCAxMDA2NDQKLS0t
-IGEvaHR0cC5jCisrKyBiL2h0dHAuYwpAQCAtMTczLDYgKzE3Myw4IEBAIHN0YXRpYyBpbnQgZ2l0
-X2NvbmZpZ19wYXRoKGNvbnN0IGNoYXIgKipyZXN1bHQsCiAKIHN0YXRpYyBpbnQgaHR0cF9vcHRp
-b25zKGNvbnN0IGNoYXIgKnZhciwgY29uc3QgY2hhciAqdmFsdWUsIHZvaWQgKmNiKQogeworCWZw
-cmludGYoc3RkZXJyLCAiaHR0cF9vcHRpb25zOiAlcyA9ICVzXG4iLCB2YXIsIHZhbHVlKTsKKwkK
-IAlpZiAoIXN0cmNtcCgiaHR0cC5zc2x2ZXJpZnkiLCB2YXIpKSB7CiAJCWN1cmxfc3NsX3Zlcmlm
-eSA9IGdpdF9jb25maWdfYm9vbCh2YXIsIHZhbHVlKTsKIAkJcmV0dXJuIDA7CkBAIC0yMjYsNiAr
-MjI4LDggQEAgc3RhdGljIGludCBodHRwX29wdGlvbnMoY29uc3QgY2hhciAqdmFyLCBjb25zdCBj
-aGFyICp2YWx1ZSwgdm9pZCAqY2IpCiAJCiAJaWYgKCFzdHJjbXAoImh0dHAucHJveHlhdXRoYW55
-IiwgdmFyKSkgIHsKIAkJY3VybF9odHRwX3Byb3h5YXV0aGFueSA9IGdpdF9jb25maWdfYm9vbCh2
-YXIsIHZhbHVlKTsKKwkJZnByaW50ZihzdGRlcnIsICJodHRwX29wdGlvbnM6IGN1cmxfaHR0cF9w
-cm94eWF1dGhhbnkgPSAlaSIsIGN1cmxfaHR0cF9wcm94eWF1dGhhbnkpOworCQlyZXR1cm4gMDsK
-IAl9CiAKIAlpZiAoIXN0cmNtcCgiaHR0cC5jb29raWVmaWxlIiwgdmFyKSkKQEAgLTMzNiw5ICsz
-NDAsMTIgQEAgc3RhdGljIENVUkwgKmdldF9jdXJsX2hhbmRsZSh2b2lkKQogCWlmIChjdXJsX2h0
-dHBfcHJveHkpCiAJCWN1cmxfZWFzeV9zZXRvcHQocmVzdWx0LCBDVVJMT1BUX1BST1hZLCBjdXJs
-X2h0dHBfcHJveHkpOwogCQorCWZwcmludGYoc3RkZXJyLCAiREVCVUc6IGN1cmxfaHR0cF9wcm94
-eWF1dGhhbnlcbiIpOworCQorCS8qIGh0dHAgcHJveHkgY291bGQgYmUgc2V0IGZyb20gZW52aXJv
-bWVudCAtIHNldCBDVVJMT1BUX1BST1hZQVVUSCAqLwogCWlmIChjdXJsX2h0dHBfcHJveHlhdXRo
-YW55KSB7CiAJCWN1cmxfZWFzeV9zZXRvcHQocmVzdWx0LCBDVVJMT1BUX1BST1hZQVVUSCwgQ1VS
-TEFVVEhfQU5ZKTsKLQkJcHJpbnRmKCJDVVJMT1BUX1BST1hZQVVUSCEhISEiKTsKKwkJZnByaW50
-ZihzdGRlcnIsICJjdXJsX2Vhc3lfc2V0b3B0KHJlc3VsdCwgQ1VSTE9QVF9QUk9YWUFVVEgsIENV
-UkxBVVRIX0FOWSk7XG4iKTsKIAl9CiAKIAotLSAKMS43LjgKCg==
-
-------_=_NextPart_001_01CCF06F.F2061336
-Content-Type: application/octet-stream;
-	name="0004-remove-debug-information.patch"
-Content-Transfer-Encoding: base64
-Content-Description: 0004-remove-debug-information.patch
-Content-Disposition: attachment;
-	filename="0004-remove-debug-information.patch"
-
-RnJvbSA1NWI3NmI1ZjY1ODkwNGQyNDBkYjI5YmIwZDU5ZjhjMWRjZWRkNGI1IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBNYXJjbyBTY2htaWR0IDxNYXJjby5TY2htaWR0QGNhc3NpZGlh
-bi5jb20+CkRhdGU6IEZyaSwgMjcgSmFuIDIwMTIgMTQ6NDA6NTcgKzAxMDAKU3ViamVjdDogW1BB
-VENIIDQvNF0gcmVtb3ZlIGRlYnVnIGluZm9ybWF0aW9uCgotLS0KIGh0dHAuYyB8ICAgIDggKyst
-LS0tLS0KIDEgZmlsZXMgY2hhbmdlZCwgMiBpbnNlcnRpb25zKCspLCA2IGRlbGV0aW9ucygtKQoK
-ZGlmZiAtLWdpdCBhL2h0dHAuYyBiL2h0dHAuYwppbmRleCAzZGJkMzkwLi5mYmM1MmYwIDEwMDY0
-NAotLS0gYS9odHRwLmMKKysrIGIvaHR0cC5jCkBAIC0xNzMsOCArMTczLDYgQEAgc3RhdGljIGlu
-dCBnaXRfY29uZmlnX3BhdGgoY29uc3QgY2hhciAqKnJlc3VsdCwKIAogc3RhdGljIGludCBodHRw
-X29wdGlvbnMoY29uc3QgY2hhciAqdmFyLCBjb25zdCBjaGFyICp2YWx1ZSwgdm9pZCAqY2IpCiB7
-Ci0JZnByaW50ZihzdGRlcnIsICJodHRwX29wdGlvbnM6ICVzID0gJXNcbiIsIHZhciwgdmFsdWUp
-OwotCQogCWlmICghc3RyY21wKCJodHRwLnNzbHZlcmlmeSIsIHZhcikpIHsKIAkJY3VybF9zc2xf
-dmVyaWZ5ID0gZ2l0X2NvbmZpZ19ib29sKHZhciwgdmFsdWUpOwogCQlyZXR1cm4gMDsKQEAgLTIy
-OCw3ICsyMjYsNiBAQCBzdGF0aWMgaW50IGh0dHBfb3B0aW9ucyhjb25zdCBjaGFyICp2YXIsIGNv
-bnN0IGNoYXIgKnZhbHVlLCB2b2lkICpjYikKIAkKIAlpZiAoIXN0cmNtcCgiaHR0cC5wcm94eWF1
-dGhhbnkiLCB2YXIpKSAgewogCQljdXJsX2h0dHBfcHJveHlhdXRoYW55ID0gZ2l0X2NvbmZpZ19i
-b29sKHZhciwgdmFsdWUpOwotCQlmcHJpbnRmKHN0ZGVyciwgImh0dHBfb3B0aW9uczogY3VybF9o
-dHRwX3Byb3h5YXV0aGFueSA9ICVpIiwgY3VybF9odHRwX3Byb3h5YXV0aGFueSk7CiAJCXJldHVy
-biAwOwogCX0KIApAQCAtMzQwLDEzICszMzcsMTIgQEAgc3RhdGljIENVUkwgKmdldF9jdXJsX2hh
-bmRsZSh2b2lkKQogCWlmIChjdXJsX2h0dHBfcHJveHkpCiAJCWN1cmxfZWFzeV9zZXRvcHQocmVz
-dWx0LCBDVVJMT1BUX1BST1hZLCBjdXJsX2h0dHBfcHJveHkpOwogCQotCWZwcmludGYoc3RkZXJy
-LCAiREVCVUc6IGN1cmxfaHR0cF9wcm94eWF1dGhhbnlcbiIpOwotCQorI2lmZGVmIExJQkNVUkxf
-Q0FOX0hBTkRMRV9BVVRIX0FOWQkKIAkvKiBodHRwIHByb3h5IGNvdWxkIGJlIHNldCBmcm9tIGVu
-dmlyb21lbnQgLSBzZXQgQ1VSTE9QVF9QUk9YWUFVVEggKi8KIAlpZiAoY3VybF9odHRwX3Byb3h5
-YXV0aGFueSkgewogCQljdXJsX2Vhc3lfc2V0b3B0KHJlc3VsdCwgQ1VSTE9QVF9QUk9YWUFVVEgs
-IENVUkxBVVRIX0FOWSk7Ci0JCWZwcmludGYoc3RkZXJyLCAiY3VybF9lYXN5X3NldG9wdChyZXN1
-bHQsIENVUkxPUFRfUFJPWFlBVVRILCBDVVJMQVVUSF9BTlkpO1xuIik7CiAJfQorI2VuZGlmCiAK
-IAogCXJldHVybiByZXN1bHQ7Ci0tIAoxLjcuOAoK
-
-------_=_NextPart_001_01CCF06F.F2061336--
+If we still have an active upstream that grows its history in a separate
+repository, like gitk and git-gui do, we cannot avoid a subtree merge in
+order to continue merging from them.  Because you seem to be taking over
+and are going to maintain it as part of git.git proper, eventually aiming
+to move it out of contrib/, it's just that I do not think it is worth the
+trouble.
