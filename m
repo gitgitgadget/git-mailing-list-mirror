@@ -1,69 +1,92 @@
-From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>
-Subject: Re: [PATCH 0/8 v6] diff --stat: use the full terminal width
-Date: Tue, 21 Feb 2012 17:11:40 +0100
-Message-ID: <4F43C23C.8070304@in.waw.pl>
-References: <1329775034-21551-1-git-send-email-zbyszek@in.waw.pl> <CACsJy8AXH6xm-ShH_HF6RwATFwsYtAZQfcWoB9VpaiCMj6e8vQ@mail.gmail.com>
+From: Eric Scouten <eric@scouten.com>
+Subject: Re: [PATCHv3] git-p4: add initial support for RCS keywords
+Date: Tue, 21 Feb 2012 08:54:17 -0800
+Message-ID: <CAEe=O8qui8PryuZiZNDwLk39+tKVDnh+5eP9m_WrHi=K9ekMNQ@mail.gmail.com>
+References: <1329258835-17223-1-git-send-email-luke@diamand.org>
+	<1329258835-17223-2-git-send-email-luke@diamand.org>
+	<20120221121834.GB18317@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	j.sixt@viscovery.net
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 21 17:12:18 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Luke Diamand <luke@diamand.org>, git@vger.kernel.org
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Tue Feb 21 17:54:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzsK7-0006GR-TH
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 17:12:16 +0100
+	id 1Rzsyt-0005Jh-6y
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 17:54:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752583Ab2BUQML (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Feb 2012 11:12:11 -0500
-Received: from kawka.in.waw.pl ([178.63.212.103]:52916 "EHLO kawka.in.waw.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752316Ab2BUQMK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Feb 2012 11:12:10 -0500
-Received: from planck.fuw.edu.pl ([193.0.81.236] helo=[192.168.0.175])
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1RzsJe-0007b0-RG; Tue, 21 Feb 2012 17:12:07 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20120104 Icedove/8.0
-In-Reply-To: <CACsJy8AXH6xm-ShH_HF6RwATFwsYtAZQfcWoB9VpaiCMj6e8vQ@mail.gmail.com>
+	id S1752674Ab2BUQyS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Feb 2012 11:54:18 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:49820 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751719Ab2BUQyR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Feb 2012 11:54:17 -0500
+Received: by yhoo21 with SMTP id o21so3023672yho.19
+        for <git@vger.kernel.org>; Tue, 21 Feb 2012 08:54:17 -0800 (PST)
+Received-SPF: pass (google.com: domain of eric.scouten@gmail.com designates 10.60.22.40 as permitted sender) client-ip=10.60.22.40;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of eric.scouten@gmail.com designates 10.60.22.40 as permitted sender) smtp.mail=eric.scouten@gmail.com; dkim=pass header.i=eric.scouten@gmail.com
+Received: from mr.google.com ([10.60.22.40])
+        by 10.60.22.40 with SMTP id a8mr12355006oef.59.1329843257371 (num_hops = 1);
+        Tue, 21 Feb 2012 08:54:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=FuoZAHDKzSox7JZzzc783pWodIfIHc6YWoBnWf3755I=;
+        b=eVgMUAK2wqHLmJJ8AyC2K9RxwJzHByAqT2xg7JhjmtttGhQdsma+4B5pN5a0LiPyXI
+         oisIalsnfrx4uiAfvQ2kp7OiJlYQjuLKFQTUqPt5VtDkHFYKpKRSHsy820ZH85c6zZOi
+         uTiJPuaCM7aWOXWmAY1NXuXnA5nqFim/CfLOU=
+Received: by 10.60.22.40 with SMTP id a8mr10568489oef.59.1329843257132; Tue,
+ 21 Feb 2012 08:54:17 -0800 (PST)
+Received: by 10.182.61.135 with HTTP; Tue, 21 Feb 2012 08:54:17 -0800 (PST)
+In-Reply-To: <20120221121834.GB18317@padd.com>
+X-Google-Sender-Auth: tNwBUwXK6b2g_li5R0XOK6eFMUs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191168>
 
-On 02/21/2012 04:16 PM, Nguyen Thai Ngoc Duy wrote:
-> Not related to changes in the series, but on the same topic. Have you
-> considered grouping pathnames to reduce pressure on truncating them?
-> Instead of showing
->
-> a/b/c | ++--
-> a/b/d | --++
->
-> you could show
->
-> a/b:
-> c | ++--
-> d | --++
->
-> Optimal grouping strategy could be hard, but at least we could use it
-> for the case "git diff --stat -- one/path/deep/in/here"
-I use (or would like to be able to use) the --stat output to select with 
-the mouse and paste into something like
-   emacsclient -n <pathname>
-This would be harder with the grouping, because I'd have to select two 
-parts and paste two times and type a slash. So for me this would be a minus.
+[Resent in plain-text. Apologies for dupe content to Pete and Luke.]
 
-Also, I'm not sure about grouping if there's more than one group. The 
-graph wouldn't be as readable. But if there's only one group, i.e. if 
-all filenames have a common prefix ending in a slash, like in your 
-example, this could be useful.
+On Tue, Feb 21, 2012 at 04:18, Pete Wyckoff <pw@padd.com> wrote:
 
-Zbyszek
+> luke@diamand.org wrote on Tue, 14 Feb 2012 22:33 +0000:
+
+> > diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p=
+4
+> > +#
+> > +# Given a type base and modifier, return a regexp matching
+> > +# the keywords that can be expanded in the file
+> > +#
+> > +def p4_keywords_regexp_for_type(base, type_mods):
+> > + =A0 =A0if base in ("text", "unicode", "binary"):
+> > + =A0 =A0 =A0 =A0if "ko" in type_mods:
+> > + =A0 =A0 =A0 =A0 =A0 =A0return r'\$(Id|Header)[^$]*\$'
+> > + =A0 =A0 =A0 =A0elif "k" in type_mods:
+> > + =A0 =A0 =A0 =A0 =A0 =A0return
+> > r'\$(Id|Header|Author|Date|DateTime|Change|File|Revision)[^$]*\$'
+>
+> Still no ":"? =A0Won't that match too much?
+
+> Fix the colon thing at least, then happy to add my Acked-By.
+
+No, that would be an incorrect change. The colon is added by P4 when
+it expands the keyword pattern, but it is *not* part of the pattern
+required by P4 to trigger a keyword expansion.
+
+http://kb.perforce.com/article/54/using-rcs-keywords
+
+-Eric
+
+
+--
+Eric Scouten :: software developer, photographer :: Poulsbo, WA (near S=
+eattle)
+http://ericscouten.com :: click for Flickr, Facebook, Twitter, LinkedIn=
+ links
