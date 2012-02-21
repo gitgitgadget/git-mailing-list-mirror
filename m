@@ -1,103 +1,133 @@
-From: "Schmidt, Marco" <Marco.Schmidt@cassidian.com>
-Subject: Allow NTLM-Authentication against a http-proxy server
-Date: Tue, 21 Feb 2012 15:31:46 +0100
-Message-ID: <4CDEC141B5583D408E79F2931DB7708301802C40@GSX300A.mxchg.m.corp>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: git status: small difference between stating whole repository and
+ small subdirectory
+Date: Tue, 21 Feb 2012 21:45:13 +0700
+Message-ID: <CACsJy8DE86qzA1=GiKZFRCt5aH8X4iMyDvfrhnqwmbq52szhHg@mail.gmail.com>
+References: <20120215190318.GA5992@sigill.intra.peff.net> <CAA01Cso5y23UMguEe0vwOc6kR3-DjuC8-LTMDsMeeOKU4rVGvg@mail.gmail.com>
+ <20120216192001.GB4348@sigill.intra.peff.net> <CAA01Csq6vSekW=Fa236bB0H3LVtN43Gb2aLMVE+A1wVyUqYJ7A@mail.gmail.com>
+ <20120217203755.GA30114@sigill.intra.peff.net> <7vaa4hrtbe.fsf@alter.siamese.dyndns.org>
+ <20120217222912.GC31830@sigill.intra.peff.net> <CAA01CsozANwtox06iihKBL8iii175FHAhChmNhG1B0ofGKWcEA@mail.gmail.com>
+ <20120220140653.GC5131@sigill.intra.peff.net> <87ty2l38ay.fsf@thomas.inf.ethz.ch>
+ <20120220143644.GA13938@do>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="----_=_NextPart_001_01CCF0A5.8CE7AF5A"
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 21 15:32:14 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Rast <trast@inf.ethz.ch>, Jeff King <peff@peff.net>,
+	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 21 15:45:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzqlC-000849-VC
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 15:32:07 +0100
+	id 1RzqyT-0007NE-Kp
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 15:45:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753612Ab2BUOcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Feb 2012 09:32:00 -0500
-Received: from mail.eads.net ([80.156.45.113]:43745 "EHLO mail.eads.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752950Ab2BUOb7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Feb 2012 09:31:59 -0500
-Received: from gsx3072-vs5.mxchg.m.corp ([53.147.176.149])
-	by mail.eads.net (8.13.8/8.13.8/Debian-2) with ESMTP id q1LEVREk021821
-	for <git@vger.kernel.org>; Tue, 21 Feb 2012 15:31:33 +0100
-Received: from gsx300a.mxchg.m.corp ([10.43.212.131]) by gsx3072-vs5.mxchg.m.corp with Microsoft SMTPSVC(6.0.3790.4675);
-	 Tue, 21 Feb 2012 15:31:50 +0100
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Allow NTLM-Authentication against a http-proxy server
-Thread-Index: AczwpYnkENfk0U5lSGyciOzNWe1wNQ==
-X-OriginalArrivalTime: 21 Feb 2012 14:31:50.0761 (UTC) FILETIME=[8CB16D90:01CCF0A5]
+	id S1754354Ab2BUOpp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Feb 2012 09:45:45 -0500
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:46068 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751796Ab2BUOpo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Feb 2012 09:45:44 -0500
+Received: by wics10 with SMTP id s10so3542701wic.19
+        for <git@vger.kernel.org>; Tue, 21 Feb 2012 06:45:43 -0800 (PST)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.180.14.73 as permitted sender) client-ip=10.180.14.73;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.180.14.73 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
+Received: from mr.google.com ([10.180.14.73])
+        by 10.180.14.73 with SMTP id n9mr26523905wic.16.1329835543427 (num_hops = 1);
+        Tue, 21 Feb 2012 06:45:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=s06KDoNMdIZtPvYeCjcvyoUZY3t8YpoI/7fURR7d5ks=;
+        b=hpjUDD/vkykmBByoqgvhl+aEkk+3dixUJvOdIrW0GgmtODnR8EIdoODOkgD8Lr4fNg
+         Jy0mRN/7OuG0vGjasNOgCH7ce7r1wV/uo0H/ffoqfLPuIqteTUQ4BbsQihgnu6E52vr/
+         E/r0c7lf1eu3SYbpO1j/TlkiJ++eEuBqrJNG0=
+Received: by 10.180.14.73 with SMTP id n9mr22066591wic.16.1329835543321; Tue,
+ 21 Feb 2012 06:45:43 -0800 (PST)
+Received: by 10.223.13.5 with HTTP; Tue, 21 Feb 2012 06:45:13 -0800 (PST)
+In-Reply-To: <20120220143644.GA13938@do>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191162>
 
-This is a multi-part message in MIME format.
+On Mon, Feb 20, 2012 at 9:36 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.co=
+m> wrote:
+> On Mon, Feb 20, 2012 at 03:09:57PM +0100, Thomas Rast wrote:
+>> > Interestingly, on my git.git repo, I had an empty cache. Running "=
+git
+>> > read-tree HEAD" filled it (according to test-dump-cache-tree). It =
+seems
+>> > that running "git checkout" empties the cache. =C2=A0So perhaps gi=
+t could do
+>> > better about keeping the cache valid over time.
+>>
+>> test_expect_failure 'checkout gives cache-tree' '
+>> =C2=A0 =C2=A0 =C2=A0 git checkout HEAD^ &&
+>> =C2=A0 =C2=A0 =C2=A0 test_shallow_cache_tree
+>> '
+>>
+>> ;-)
+>
+> Quick and dirty that passes that test.
 
-------_=_NextPart_001_01CCF0A5.8CE7AF5A
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+I'm aware that Jeff's tackling at lower level, which retains
+cache-tree for many more cases. But this patch seems simple and safe
+to me, and in my experience this case happens quite often (or maybe I
+tend to keep my index clean). Junio, any chance this patch may get in?
 
-After some back and forward - here is my patch to support
-NTLM-authentication against a http-proxy server again.=20
-
-Big thanks are going to Thomas Rast for helping to fiddle the patch to a
-more correct form and his commit message ;).=20
-
-Marco Schmidt
-
-
-
-=20
-
-------_=_NextPart_001_01CCF0A5.8CE7AF5A
-Content-Type: application/octet-stream;
-	name="0001-http-curl-let-user-configure-any-proxy-authenticatio.patch"
-Content-Transfer-Encoding: base64
-Content-Description: 0001-http-curl-let-user-configure-any-proxy-authenticatio.patch
-Content-Disposition: attachment;
-	filename="0001-http-curl-let-user-configure-any-proxy-authenticatio.patch"
-
-RnJvbSBmNGUxMTJlNDFhZWY3NWYwODUzMmZkYTUzYTFiOTAyMTIwOGEzNzc0IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBNYXJjbyBTY2htaWR0IDxNYXJjby5TY2htaWR0QGNhc3NpZGlh
-bi5jb20+CkRhdGU6IFR1ZSwgMjEgRmViIDIwMTIgMTI6MzA6MjkgKzAxMDAKU3ViamVjdDogW1BB
-VENIXSBodHRwL2N1cmw6IGxldCB1c2VyIGNvbmZpZ3VyZSAiYW55IiBwcm94eSBhdXRoZW50aWNh
-dGlvbgoKICBOb3JtYWxseSwgY3VybCB1c2VzIG9ubHkgdGhlICJiYXNpYyIgYXV0aGVudGljYXRp
-b24gc2NoZW1lIHdoZW4KICB0YWxraW5nIHRvIHByb3hpZXMsIHdoaWNoIG1heSBub3QgYmUgZGVz
-aXJhYmxlIChpdCBzZW5kcyB0aGUgcGFzc3dvcmQKICBpbiBjbGVhcnRleHQpIG9yIHN1ZmZpY2ll
-bnQgKHRoZSBhdXRob3IgbmVlZHMgTlRMTSBhdXRoZW50aWNhdGlvbiBmb3IKICBoaXMgcHJveHkp
-LgoKICBJbnRyb2R1Y2UgdGhlIGNvbmZpZyBzZXR0aW5nIGh0dHAucHJveHlBdXRoQW55LiAgV2hl
-biBlbmFibGVkLCB3ZSB0ZWxsCiAgY3VybCB0byB1c2UgYW55IGF1dGhlbnRpY2F0aW9uIHNjaGVt
-ZSBzdXBwb3J0ZWQgYnkgdGhlIHByb3h5Ci0tLQogaHR0cC5jIHwgICAxMiArKysrKysrKysrKysK
-IDEgZmlsZXMgY2hhbmdlZCwgMTIgaW5zZXJ0aW9ucygrKSwgMCBkZWxldGlvbnMoLSkKCmRpZmYg
-LS1naXQgYS9odHRwLmMgYi9odHRwLmMKaW5kZXggMGZmZDc5Yy4uNWM1NWVmZCAxMDA2NDQKLS0t
-IGEvaHR0cC5jCisrKyBiL2h0dHAuYwpAQCAtNDEsNiArNDEsNyBAQCBzdGF0aWMgbG9uZyBjdXJs
-X2xvd19zcGVlZF9saW1pdCA9IC0xOwogc3RhdGljIGxvbmcgY3VybF9sb3dfc3BlZWRfdGltZSA9
-IC0xOwogc3RhdGljIGludCBjdXJsX2Z0cF9ub19lcHN2Owogc3RhdGljIGNvbnN0IGNoYXIgKmN1
-cmxfaHR0cF9wcm94eTsKK3N0YXRpYyBpbnQgY3VybF9odHRwX3Byb3h5YXV0aGFueSA9IDA7CiBz
-dGF0aWMgY29uc3QgY2hhciAqY3VybF9jb29raWVfZmlsZTsKIHN0YXRpYyBzdHJ1Y3QgY3JlZGVu
-dGlhbCBodHRwX2F1dGggPSBDUkVERU5USUFMX0lOSVQ7CiBzdGF0aWMgaW50IGh0dHBfcHJvYWN0
-aXZlX2F1dGg7CkBAIC0xOTAsNiArMTkxLDExIEBAIHN0YXRpYyBpbnQgaHR0cF9vcHRpb25zKGNv
-bnN0IGNoYXIgKnZhciwgY29uc3QgY2hhciAqdmFsdWUsIHZvaWQgKmNiKQogCX0KIAlpZiAoIXN0
-cmNtcCgiaHR0cC5wcm94eSIsIHZhcikpCiAJCXJldHVybiBnaXRfY29uZmlnX3N0cmluZygmY3Vy
-bF9odHRwX3Byb3h5LCB2YXIsIHZhbHVlKTsKKwkKKwlpZiAoIXN0cmNtcCgiaHR0cC5wcm94eWF1
-dGhhbnkiLCB2YXIpKSB7CisJCWN1cmxfaHR0cF9wcm94eWF1dGhhbnkgPSBnaXRfY29uZmlnX2Jv
-b2wodmFyLCB2YWx1ZSk7CisJCXJldHVybiAwOworCX0KIAogCWlmICghc3RyY21wKCJodHRwLmNv
-b2tpZWZpbGUiLCB2YXIpKQogCQlyZXR1cm4gZ2l0X2NvbmZpZ19zdHJpbmcoJmN1cmxfY29va2ll
-X2ZpbGUsIHZhciwgdmFsdWUpOwpAQCAtMjk3LDYgKzMwMywxMiBAQCBzdGF0aWMgQ1VSTCAqZ2V0
-X2N1cmxfaGFuZGxlKHZvaWQpCiAKIAlpZiAoY3VybF9odHRwX3Byb3h5KQogCQljdXJsX2Vhc3lf
-c2V0b3B0KHJlc3VsdCwgQ1VSTE9QVF9QUk9YWSwgY3VybF9odHRwX3Byb3h5KTsKKwkKKyNpZmRl
-ZiBMSUJDVVJMX0NBTl9IQU5ETEVfQVVUSF9BTlkJCisJaWYgKGN1cmxfaHR0cF9wcm94eWF1dGhh
-bnkpIHsKKwkJY3VybF9lYXN5X3NldG9wdChyZXN1bHQsIENVUkxPUFRfUFJPWFlBVVRILCBDVVJM
-QVVUSF9BTlkpOworCX0KKyNlbmRpZgogCiAJcmV0dXJuIHJlc3VsdDsKIH0KLS0gCjEuNy43LjEu
-bXN5c2dpdC4wCgo=
-
-------_=_NextPart_001_01CCF0A5.8CE7AF5A--
+> -- 8< --
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index 5bf96ba..c06287a 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -319,6 +319,10 @@ static void show_local_changes(struct object *he=
+ad, struct diff_options *opts)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0die(_("diff_se=
+tup_done failed"));
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0add_pending_object(&rev, head, NULL);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0run_diff_index(&rev, 0);
+> + =C2=A0 =C2=A0 =C2=A0 if (!DIFF_OPT_TST(&rev.diffopt, HAS_CHANGES)) =
+{
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 struct tree *tree =
+=3D parse_tree_indirect(head->sha1);
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 prime_cache_tree(&=
+active_cache_tree, tree);
+> + =C2=A0 =C2=A0 =C2=A0 }
+> =C2=A0}
+>
+> =C2=A0static void describe_detached_head(const char *msg, struct comm=
+it *commit)
+> @@ -493,13 +497,13 @@ static int merge_working_tree(struct checkout_o=
+pts *opts,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+>
+> + =C2=A0 =C2=A0 =C2=A0 if (!opts->force && !opts->quiet)
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 show_local_changes=
+(&new->commit->object, &opts->diff_options);
+> +
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (write_cache(newfd, active_cache, activ=
+e_nr) ||
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0commit_locked_index(lock_fil=
+e))
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0die(_("unable =
+to write new index file"));
+>
+> - =C2=A0 =C2=A0 =C2=A0 if (!opts->force && !opts->quiet)
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 show_local_changes=
+(&new->commit->object, &opts->diff_options);
+> -
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0return 0;
+> =C2=A0}
+>
+> -- 8< --
+> --
+> Duy
+--=20
+Duy
