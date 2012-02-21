@@ -1,128 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] completion: remote set-* <name> and <branch>
-Date: Tue, 21 Feb 2012 14:23:11 -0800
-Message-ID: <7v8vjvg71s.fsf@alter.siamese.dyndns.org>
-References: <1329571973-20796-1-git-send-email-philip@foolip.org>
- <7vvcn2lyw6.fsf@alter.siamese.dyndns.org>
- <CAKHWUkZjQYnf=LwS_RC-E_7gV73AzbWjxs33E5-FL25s6_qX4g@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] cherry-pick: No advice to commit if --no-commit
+Date: Tue, 21 Feb 2012 16:23:22 -0600
+Message-ID: <20120221222049.GA31934@burratino>
+References: <1329858317-3066-1-git-send-email-hordp@cisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Teemu Likonen <tlikonen@iki.fi>
-To: Philip =?utf-8?Q?J=C3=A4genstedt?= <philip@foolip.org>
-X-From: git-owner@vger.kernel.org Tue Feb 21 23:23:22 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Phil Hord <phil.hord@gmail.com>
+To: Phil Hord <hordp@cisco.com>
+X-From: git-owner@vger.kernel.org Tue Feb 21 23:23:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rzy7E-0005N3-Cy
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 23:23:20 +0100
+	id 1Rzy7U-0005YX-SE
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 23:23:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755787Ab2BUWXP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Feb 2012 17:23:15 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49436 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754454Ab2BUWXO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Feb 2012 17:23:14 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 63C987F2D;
-	Tue, 21 Feb 2012 17:23:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=QDjHws3h2Lht
-	qTTDtaDSlXgmDAQ=; b=rYvdkdFBoCeLuVV2cX0iwsTa15M0vjLE+OV1Zm3Lpgd9
-	WuRf5/Lj9OKfRwUhb1+4LobeV15+SIrHDb1vyKFKEPBZU5GHVyray0zDBDSkvAtH
-	OaRFTXRijo4oW4e0qJKeS2K3NGDkJx0xTQkdfLLqaafN9avQPmjaq+GuhvEbNuQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=emZvlt
-	p7fKE4bnbd/8yWGctoSwIi0IVKBiJOSEcZWVr0GvLU0w7tDWQJoPCh8toqy5tuig
-	HgK+HCDQQTYBAuwdbbyXLYe7UVp6QpHIDU6n9cSmHS3Q3tFPhO2MyOLBg0Qn4mW5
-	XjeERLJGyb90wLIjB9wYn4cAhiDk7vyTtcVP8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 58AE47F2C;
-	Tue, 21 Feb 2012 17:23:13 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AE5687F2B; Tue, 21 Feb 2012
- 17:23:12 -0500 (EST)
-In-Reply-To: <CAKHWUkZjQYnf=LwS_RC-E_7gV73AzbWjxs33E5-FL25s6_qX4g@mail.gmail.com> ("Philip
- =?utf-8?Q?J=C3=A4genstedt=22's?= message of "Tue, 21 Feb 2012 22:29:33
- +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A451D470-5CDA-11E1-A961-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755941Ab2BUWXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Feb 2012 17:23:32 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:51399 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755816Ab2BUWXb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Feb 2012 17:23:31 -0500
+Received: by iacb35 with SMTP id b35so9466874iac.19
+        for <git@vger.kernel.org>; Tue, 21 Feb 2012 14:23:30 -0800 (PST)
+Received-SPF: pass (google.com: domain of jrnieder@gmail.com designates 10.42.80.3 as permitted sender) client-ip=10.42.80.3;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of jrnieder@gmail.com designates 10.42.80.3 as permitted sender) smtp.mail=jrnieder@gmail.com; dkim=pass header.i=jrnieder@gmail.com
+Received: from mr.google.com ([10.42.80.3])
+        by 10.42.80.3 with SMTP id t3mr29635883ick.49.1329863010625 (num_hops = 1);
+        Tue, 21 Feb 2012 14:23:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=ITEX1WctjfJwI4+nWV4QepBN7Q1uRKd4kPKoGGTxl/w=;
+        b=q+QcxWn9iGt7vjZBsqWxxXer8a2+0jguitOttVqH+35gWHIrLZpCzQn8noXvvSDExK
+         WzFlMTOYdMewKtOyFRg+OoJzlTvPydddYKH8ZIMys0PwCWNCoIUfQCSxiYshTiJANgOv
+         aDbNHHcGl8uC8UCN/Qw+yph1QPCbyq0g1ONlI=
+Received: by 10.42.80.3 with SMTP id t3mr23699961ick.49.1329863010575;
+        Tue, 21 Feb 2012 14:23:30 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id df2sm11421164igb.0.2012.02.21.14.23.29
+        (version=SSLv3 cipher=OTHER);
+        Tue, 21 Feb 2012 14:23:30 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1329858317-3066-1-git-send-email-hordp@cisco.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191191>
 
-Philip J=C3=A4genstedt <philip@foolip.org> writes:
+Hi Phil,
 
-> Thanks. Perhaps git-completion.bash should not say "Send all patches
-> to the current maintainer" and simply defer to SubmittingPatches?
+Phil Hord wrote:
 
-I see you did this in your follow-up patch.  Thanks.
+> Signed-off-by: Phil Hord <hordp@cisco.com>
 
->>> =C2=A0{
->>> =C2=A0 =C2=A0 =C2=A0 local cur_=3D"$cur" cmd=3D"${words[1]}"
->>> =C2=A0 =C2=A0 =C2=A0 local i c=3D2 remote=3D"" pfx=3D"" lhs=3D1 no_=
-complete_refspec=3D0
->>> + =C2=A0 =C2=A0 if [ "$cmd" =3D "remote" ]; then
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 c=3D$((++c))
->>> + =C2=A0 =C2=A0 fi
->>
->> I don't know about others, but auto-incrementing a variable and assi=
-gning
->> the result to the same variable, while not wrong at all, hurts my br=
-ain.
->>
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0c=3D$(($c + 1))
->>
->> is far more readable and does not suggest there is any funky magic
->> involved. =C2=A0Also it is a good habit to get into not to omit $ fr=
-om
->> variables inside arithmetic substitution, even though bash allows it=
- and
->> this script is meant to be consumed only by shells that understand t=
-his
->> bash-ism.
->>
->> I do not know offhand if zsh groks it, but the point is that you do =
-not
->> have to worry about it if you write "$(($c+1))" instead of "$((c+1))=
-".
->
-> CodingGuidlines suggests to follow local convention, which was
-> "c=3D$((++c))". This file also uses "++n", "i++" and "((i++))". I wil=
-l
-> send a v2 patch that normalizes these, open to discussion of course.
+Thanks.
 
-OK, it was my mistake to suggest $c++ in this file; it liberally uses
-dollar-less variables, and I agree that it is a good idea to stick to t=
-hat
-local convention.
+> +++ b/sequencer.c
+[...]
+> @@ -138,10 +138,12 @@ static void print_advice(int show_hint)
+>  		return;
+>  	}
+>  
+> -	if (show_hint)
+> +	if (show_hint) {
+>  		advise(_("after resolving the conflicts, mark the corrected paths\n"
+> -			 "with 'git add <paths>' or 'git rm <paths>'\n"
+> -			 "and commit the result with 'git commit'"));
+> +			 "with 'git add <paths>' or 'git rm <paths>'"));
+> +		if (!opts->no_commit)
+> +			advise(_( "and commit the result with 'git commit'"));
 
-But I think you went too far in your follow-up patch to make the increm=
-ent
-and decrement uniform.
+"cherry-pick --no-commit" was not about to commit, but the user might
+have been.  I think the hint is intended to convey that authorship
+will be correctly preserved if the user continues with "git commit"
+and no special -c option is necessary.
 
-"i++" is so much easier on the eye unless you must use "++i" in order t=
-o
-use the value of the incremented "i" in an expression, and the changes =
-to
-turn existing instances of free-standing "i++" to "++i" done only for t=
-he
-side effect of incrementing the variables look totally backwards.
+Could you say a little more about the motivation for this patch?  For
+example, did the existing message confuse someone, or was it grating
+in the context of some particular workflow?
 
-Although I do not deeply care.  Just leaving the new one as you origina=
-lly
-wrote, i.e.
+A smaller detail: splitting the message into two like this gives
+translators less control over how to phrase the message and where to
+wrap lines.  Luckily that is easy to fix with
 
-	c=3D$((++c))
+	if (opts->no_commit)
+		advise(...);
+	else
+		advise(...);
 
-would have been easier to review for the area experts, I would think.
+which means more flexibility in phrasing the message with pertinent
+advice for each case. ;-)
+
+Ciao,
+Jonathan
