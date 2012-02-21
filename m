@@ -1,80 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] utf8: die if failed to re-encoding
-Date: Tue, 21 Feb 2012 09:36:59 -0800
-Message-ID: <7vk43ggkas.fsf@alter.siamese.dyndns.org>
-References: <1329834292-2511-1-git-send-email-pclouds@gmail.com>
- <1329834292-2511-3-git-send-email-pclouds@gmail.com>
+From: Eric Scouten <eric@scouten.com>
+Subject: Re: [PATCHv3] git-p4: add initial support for RCS keywords
+Date: Tue, 21 Feb 2012 09:59:35 -0800
+Message-ID: <CAEe=O8pnYF1Zxh33Wkm7LfFWGZwDLNRRCDdPYJ1QWjgR8OR+7w@mail.gmail.com>
+References: <1329258835-17223-1-git-send-email-luke@diamand.org>
+	<1329258835-17223-2-git-send-email-luke@diamand.org>
+	<20120221121834.GB18317@padd.com>
+	<CAEe=O8qui8PryuZiZNDwLk39+tKVDnh+5eP9m_WrHi=K9ekMNQ@mail.gmail.com>
+	<7vobssgkt6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 21 18:37:12 2012
+Cc: Pete Wyckoff <pw@padd.com>, Luke Diamand <luke@diamand.org>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 21 18:59:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzteK-0002yG-7J
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 18:37:12 +0100
+	id 1Rzu0C-0006ku-1a
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 18:59:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753666Ab2BURhE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Feb 2012 12:37:04 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51778 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753312Ab2BURhC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Feb 2012 12:37:02 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F3816801;
-	Tue, 21 Feb 2012 12:37:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=0XQmsqvtEWNN
-	LxhaJxeFbL8D4ww=; b=dd0rZEw9oxbCIvzFozSLQyThUoIM7CpScrQoSM33faxN
-	Y4vfc0yglDl3C7mSOT4scnRlLeiIvtcZUnvUPvDN3IywTE0cqmrYY9t5IXpxn84U
-	FiOSRbQOUXs3NKSU2KAVKGfxG6e5z1TzghTC3Ys5P3zSAf6UzOoqFZDV5eb+1rM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=HIvwK8
-	J+Hon+k0WlyDWJ3xNslEHKW4/F+zpJKMGIZeygFVfk3/qLR01os+evGmrZIjHwiv
-	gCwYtovvjWJPfpVAI8F3uyjXYzWpWDNF9Vs1TDaoC3TOl43IS5hd4o3AEB7T4QdS
-	lLMb/chUTeEgzpu0pUvfWhfsAyYzqWvXgiIVE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 56EBA6800;
-	Tue, 21 Feb 2012 12:37:01 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DADAA67FF; Tue, 21 Feb 2012
- 12:37:00 -0500 (EST)
-In-Reply-To: <1329834292-2511-3-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 21 Feb
- 2012 21:24:51 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A91DDBFC-5CB2-11E1-9678-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754922Ab2BUR7h convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Feb 2012 12:59:37 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:37573 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754515Ab2BUR7f convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Feb 2012 12:59:35 -0500
+Received: by obcva7 with SMTP id va7so8837511obc.19
+        for <git@vger.kernel.org>; Tue, 21 Feb 2012 09:59:35 -0800 (PST)
+Received-SPF: pass (google.com: domain of eric.scouten@gmail.com designates 10.60.22.40 as permitted sender) client-ip=10.60.22.40;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of eric.scouten@gmail.com designates 10.60.22.40 as permitted sender) smtp.mail=eric.scouten@gmail.com; dkim=pass header.i=eric.scouten@gmail.com
+Received: from mr.google.com ([10.60.22.40])
+        by 10.60.22.40 with SMTP id a8mr12486395oef.59.1329847175230 (num_hops = 1);
+        Tue, 21 Feb 2012 09:59:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=JqlfRusz6OARVuSkLaMHC10vJBxbuRj8J7VdLfJuqjo=;
+        b=S+DWuZ6ItxarqIb9ObnFtVGq9WVKwyX3XynutmXyWndv/iWUXpLUaD8QrrjNVmlgB8
+         85FeN3S+Tm3cSSAm0GzCZx3gdawgI46qN6UXJwC+TERuPg037yRDTmyOr6w46Ore2syG
+         sgZpEnFbwiFQUd+i2k2ySE+bCbK5jSphLXuks=
+Received: by 10.60.22.40 with SMTP id a8mr10680140oef.59.1329847175168; Tue,
+ 21 Feb 2012 09:59:35 -0800 (PST)
+Received: by 10.182.61.135 with HTTP; Tue, 21 Feb 2012 09:59:35 -0800 (PST)
+In-Reply-To: <7vobssgkt6.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: a68MrHIZZ8XUzCp_tlr90uXxwDw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191172>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Tue, Feb 21, 2012 at 09:25, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> Eric Scouten <eric@scouten.com> writes:
+>
+>>> > r'\$(Id|Header|Author|Date|DateTime|Change|File|Revision)[^$]*\$'
+>>>
+>>> Still no ":"? =A0Won't that match too much?
+>>
+>>> Fix the colon thing at least, then happy to add my Acked-By.
+>>
+>> No, that would be an incorrect change. The colon is added by P4 when
+>> it expands the keyword pattern, but it is *not* part of the pattern
+>> required by P4 to trigger a keyword expansion.
+>>
+>> http://kb.perforce.com/article/54/using-rcs-keywords
+>
+> I have this suspicion that both Pete and your last sentence is correc=
+t,
+> but the regexp in the patch and your "would be an incorrect change" a=
+re
+> wrong.
+>
+> I am not a P4 expert, but I would be very surprised if P4 expands "$I=
+da$"
+> as if it is "$Id$" or "$Id: old expansion$", which the regexp would m=
+atch.
+>
+> Wouldn't it be more like this?
+>
+> =A0 =A0 =A0 =A0\$ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0# begins=
+ with a dollar, followed by...
+> =A0 =A0 =A0 =A0( Id | Header | ... ) =A0 # one of these keywords, fol=
+lowed by ...
+> =A0 =A0 =A0 =A0( :[^$]+ )? =A0 =A0 =A0 =A0 =A0 =A0 # possibly an old =
+expansion, followed by
+> =A0 =A0 =A0 =A0\$ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0# anothe=
+r dollar sign
 
-> Return value NULL in this case means "no conversion needed", which is
-> not quite true when conv =3D=3D -1.
+Good catch. Yes, you're probably right.
 
-Doing this only when producing new commits to avoid spreading damage mi=
-ght
-be a good idea.
-
-But utf8.c::reencode_string() is sufficiently deep in the call-chains t=
-o
-make me suspect that the codepaths this change affects are not limited =
-to
-creation ones.  If this also forbids readers from resurrecting salvagea=
-ble
-bits while reading (imagine your commit had "encodign vscii" but your l=
-og
-message was in English, except only your name had letters outside ASCII
-that I cannot locally convert to utf-8 for viewing), I do not think it =
-is
-an acceptable change.
+--=20
+Eric Scouten :: software developer, photographer :: Poulsbo, WA (near S=
+eattle)
+http://ericscouten.com :: click for Flickr, Facebook, Twitter, LinkedIn=
+ links
