@@ -1,103 +1,92 @@
-From: Eric Scouten <eric@scouten.com>
-Subject: Re: [PATCHv3] git-p4: add initial support for RCS keywords
-Date: Tue, 21 Feb 2012 09:59:35 -0800
-Message-ID: <CAEe=O8pnYF1Zxh33Wkm7LfFWGZwDLNRRCDdPYJ1QWjgR8OR+7w@mail.gmail.com>
-References: <1329258835-17223-1-git-send-email-luke@diamand.org>
-	<1329258835-17223-2-git-send-email-luke@diamand.org>
-	<20120221121834.GB18317@padd.com>
-	<CAEe=O8qui8PryuZiZNDwLk39+tKVDnh+5eP9m_WrHi=K9ekMNQ@mail.gmail.com>
-	<7vobssgkt6.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Patchset NTLM-Authentication
+Date: Tue, 21 Feb 2012 10:02:16 -0800
+Message-ID: <7vfwe4gj4n.fsf@alter.siamese.dyndns.org>
+References: <4CDEC141B5583D408E79F2931DB7708301802B70@GSX300A.mxchg.m.corp>
+ <87vcn0h77a.fsf@thomas.inf.ethz.ch>
+ <4CDEC141B5583D408E79F2931DB7708301802BE7@GSX300A.mxchg.m.corp>
+ <8762f05n9q.fsf_-_@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pete Wyckoff <pw@padd.com>, Luke Diamand <luke@diamand.org>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 21 18:59:52 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, <avarab@gmail.com>
+To: "Schmidt\, Marco" <Marco.Schmidt@cassidian.com>,
+	Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Feb 21 19:02:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rzu0C-0006ku-1a
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 18:59:48 +0100
+	id 1Rzu2l-0008JQ-Tr
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 19:02:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754922Ab2BUR7h convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Feb 2012 12:59:37 -0500
-Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:37573 "EHLO
-	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754515Ab2BUR7f convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Feb 2012 12:59:35 -0500
-Received: by obcva7 with SMTP id va7so8837511obc.19
-        for <git@vger.kernel.org>; Tue, 21 Feb 2012 09:59:35 -0800 (PST)
-Received-SPF: pass (google.com: domain of eric.scouten@gmail.com designates 10.60.22.40 as permitted sender) client-ip=10.60.22.40;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of eric.scouten@gmail.com designates 10.60.22.40 as permitted sender) smtp.mail=eric.scouten@gmail.com; dkim=pass header.i=eric.scouten@gmail.com
-Received: from mr.google.com ([10.60.22.40])
-        by 10.60.22.40 with SMTP id a8mr12486395oef.59.1329847175230 (num_hops = 1);
-        Tue, 21 Feb 2012 09:59:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=JqlfRusz6OARVuSkLaMHC10vJBxbuRj8J7VdLfJuqjo=;
-        b=S+DWuZ6ItxarqIb9ObnFtVGq9WVKwyX3XynutmXyWndv/iWUXpLUaD8QrrjNVmlgB8
-         85FeN3S+Tm3cSSAm0GzCZx3gdawgI46qN6UXJwC+TERuPg037yRDTmyOr6w46Ore2syG
-         sgZpEnFbwiFQUd+i2k2ySE+bCbK5jSphLXuks=
-Received: by 10.60.22.40 with SMTP id a8mr10680140oef.59.1329847175168; Tue,
- 21 Feb 2012 09:59:35 -0800 (PST)
-Received: by 10.182.61.135 with HTTP; Tue, 21 Feb 2012 09:59:35 -0800 (PST)
-In-Reply-To: <7vobssgkt6.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: a68MrHIZZ8XUzCp_tlr90uXxwDw
+	id S1753272Ab2BUSCX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Feb 2012 13:02:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37391 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751232Ab2BUSCW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Feb 2012 13:02:22 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0EE87736D;
+	Tue, 21 Feb 2012 13:02:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RlSf6/rzWAw8AtcALEGHqqZq3dU=; b=ffkRKR
+	LpeAbeY0B7F76WugCsuCsccpqwD02Ni9e/SZHSXHncWf8IgPD3m6R3XkM8/uZHuF
+	nw1NBulv8VrW6tNE5EYe+nKm5KbIuGuJAUTygjdurAFvR0BaTNbvkO458kohvonN
+	eniGMHSj8fNUf2upxnNuwtK5uE+47StIKaJ9E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JHFIgWUi+Tfw2QnKgaULuAtghcxMoqwO
+	oeKciJc6pqCetrfzWdfoW4gWpkj73rMlstRROZACt6bISQptMoRkWHoYD4fRLbF9
+	3ToRe/PfapN+m2f9b8M3jPjH7IJNsVMuTyZj8rfdC7XZP3tQwMo/M62sMjH/QWUK
+	P/BZLGk6RLc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0686E736B;
+	Tue, 21 Feb 2012 13:02:21 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 00E6E7369; Tue, 21 Feb 2012
+ 13:02:17 -0500 (EST)
+In-Reply-To: <8762f05n9q.fsf_-_@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Tue, 21 Feb 2012 14:28:17 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 31624928-5CB6-11E1-B404-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191173>
 
-On Tue, Feb 21, 2012 at 09:25, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> Eric Scouten <eric@scouten.com> writes:
->
->>> > r'\$(Id|Header|Author|Date|DateTime|Change|File|Revision)[^$]*\$'
->>>
->>> Still no ":"? =A0Won't that match too much?
->>
->>> Fix the colon thing at least, then happy to add my Acked-By.
->>
->> No, that would be an incorrect change. The colon is added by P4 when
->> it expands the keyword pattern, but it is *not* part of the pattern
->> required by P4 to trigger a keyword expansion.
->>
->> http://kb.perforce.com/article/54/using-rcs-keywords
->
-> I have this suspicion that both Pete and your last sentence is correc=
-t,
-> but the regexp in the patch and your "would be an incorrect change" a=
-re
-> wrong.
->
-> I am not a P4 expert, but I would be very surprised if P4 expands "$I=
-da$"
-> as if it is "$Id$" or "$Id: old expansion$", which the regexp would m=
-atch.
->
-> Wouldn't it be more like this?
->
-> =A0 =A0 =A0 =A0\$ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0# begins=
- with a dollar, followed by...
-> =A0 =A0 =A0 =A0( Id | Header | ... ) =A0 # one of these keywords, fol=
-lowed by ...
-> =A0 =A0 =A0 =A0( :[^$]+ )? =A0 =A0 =A0 =A0 =A0 =A0 # possibly an old =
-expansion, followed by
-> =A0 =A0 =A0 =A0\$ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0# anothe=
-r dollar sign
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-Good catch. Yes, you're probably right.
+>   This mostly parallels http.authAny which was introduced in b8ac923
+>   (Add an option for using any HTTP authentication scheme, not only
+>   basic, 2009-11-27).  http.authAny was removed, and its feature
+>   unconditionally enabled, in 525ecd2 (Remove http.authAny, 2009-12-28).
+>   However the reasoning of the latter does not apply here because XXXX.
 
---=20
-Eric Scouten :: software developer, photographer :: Poulsbo, WA (near S=
-eattle)
-http://ericscouten.com :: click for Flickr, Facebook, Twitter, LinkedIn=
- links
+Thanks, Thomas.
+
+I think this paragraph is essential, especially the XXXX part, if we were
+to accept the proposed change and keep the new configuration.  Otherwise
+we won't know what to do when somebody proposes to unconditionally enable
+this ;-)
+
+If it turns out that we can set CURLOPT_PROXYAUTH always to CURLAUTH_ANY
+without compromising security, then an explanation why this does not have
+to be optional, similar to what justified 525ecd2, needs to be there
+instead, and the patch needs to be tweaked to drop the configuration bits.
+
+Marco, I extracted your patch in the attachment and took a look at it
+before composing the above response.
+
+ - Your log message seems to be indented by two spaces for some strange
+   reason;
+
+ - it does not have any justification like the example Thomas gave
+   you; and
+
+ - it also is missing your S-o-b.
+
+Care to re-roll one more time?
