@@ -1,70 +1,107 @@
-From: Daniel Stenberg <daniel@haxx.se>
-Subject: Re: Patchset NTLM-Authentication
-Date: Tue, 21 Feb 2012 20:02:34 +0100 (CET)
-Message-ID: <alpine.DEB.2.00.1202211954160.5167@tvnag.unkk.fr>
-References: <4CDEC141B5583D408E79F2931DB7708301802B70@GSX300A.mxchg.m.corp> <87vcn0h77a.fsf@thomas.inf.ethz.ch> <4CDEC141B5583D408E79F2931DB7708301802BE7@GSX300A.mxchg.m.corp> <8762f05n9q.fsf_-_@thomas.inf.ethz.ch> <7vfwe4gj4n.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git status: small difference between stating whole repository
+ and small subdirectory
+Date: Tue, 21 Feb 2012 11:16:37 -0800
+Message-ID: <7v8vjwgfoq.fsf@alter.siamese.dyndns.org>
+References: <20120215190318.GA5992@sigill.intra.peff.net>
+ <CAA01Cso5y23UMguEe0vwOc6kR3-DjuC8-LTMDsMeeOKU4rVGvg@mail.gmail.com>
+ <20120216192001.GB4348@sigill.intra.peff.net>
+ <CAA01Csq6vSekW=Fa236bB0H3LVtN43Gb2aLMVE+A1wVyUqYJ7A@mail.gmail.com>
+ <20120217203755.GA30114@sigill.intra.peff.net>
+ <7vaa4hrtbe.fsf@alter.siamese.dyndns.org>
+ <20120217222912.GC31830@sigill.intra.peff.net>
+ <CAA01CsozANwtox06iihKBL8iii175FHAhChmNhG1B0ofGKWcEA@mail.gmail.com>
+ <20120220140653.GC5131@sigill.intra.peff.net>
+ <87ty2l38ay.fsf@thomas.inf.ethz.ch> <20120220143644.GA13938@do>
+ <CACsJy8DE86qzA1=GiKZFRCt5aH8X4iMyDvfrhnqwmbq52szhHg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: "Schmidt, Marco" <Marco.Schmidt@cassidian.com>,
-	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
-	avarab@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 21 20:03:22 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@inf.ethz.ch>, Jeff King <peff@peff.net>,
+	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 21 20:17:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Rzuzh-0007aY-Fi
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 20:03:21 +0100
+	id 1RzvCh-0007NU-JP
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 20:16:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755773Ab2BUTDP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Feb 2012 14:03:15 -0500
-Received: from giant.haxx.se ([80.67.6.50]:35767 "EHLO giant.haxx.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755706Ab2BUTDP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Feb 2012 14:03:15 -0500
-Received: from giant.haxx.se (localhost.localdomain [127.0.0.1])
-	by giant.haxx.se (8.14.4/8.14.4/Debian-2) with ESMTP id q1LJ2ZmN018482
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 21 Feb 2012 20:02:35 +0100
-Received: from localhost (dast@localhost)
-	by giant.haxx.se (8.14.4/8.14.4/Submit) with ESMTP id q1LJ2YUU018477;
-	Tue, 21 Feb 2012 20:02:34 +0100
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-X-X-Sender: dast@giant.haxx.se
-In-Reply-To: <7vfwe4gj4n.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-fromdanielhimself: yes
+	id S1755777Ab2BUTQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Feb 2012 14:16:42 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47132 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754074Ab2BUTQl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Feb 2012 14:16:41 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D20168BD;
+	Tue, 21 Feb 2012 14:16:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cMQX+a5kqdKuT0jyOsgBZrhAL0w=; b=G5KWpv
+	sJnYvIcWLFT0aqbAc6IlLv/eN+XjmoTgMl2e5mGPQx2jjiiijvJ6jBuZ11i3xHfQ
+	eMOAPsYSOTZ0XLYvCbpDTHogsL3A2kwVqoexsgy5OjYcykfJ4nuGB4k5W897dw/8
+	jTLIcTxRxR+2Agw1wAaFgFA5JC2BPTXxdEm5E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gty1GYk0wGPqDX5aEnmtEgCabW24/e/B
+	j+G219su3UoKsn5Z6Dlte048s/Mvvr4+qgtNS1orFaUKepyHFfNnyKudztAS2wq+
+	gvyP1QmexbtQZMh+66GPl5ky3h/NZHPvddiRX4g/wPkzGEXvXl7dxVuGg0OBx2Di
+	GOdoazCezbc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 235E568BC;
+	Tue, 21 Feb 2012 14:16:40 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9A95F68BB; Tue, 21 Feb 2012
+ 14:16:39 -0500 (EST)
+In-Reply-To: <CACsJy8DE86qzA1=GiKZFRCt5aH8X4iMyDvfrhnqwmbq52szhHg@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Tue, 21 Feb 2012 21:45:13 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 94B8E0EA-5CC0-11E1-A915-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191177>
 
-On Tue, 21 Feb 2012, Junio C Hamano wrote:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> If it turns out that we can set CURLOPT_PROXYAUTH always to CURLAUTH_ANY 
-> without compromising security, then an explanation why this does not have to 
-> be optional, similar to what justified 525ecd2, needs to be there instead, 
-> and the patch needs to be tweaked to drop the configuration bits.
+> I'm aware that Jeff's tackling at lower level, which retains
+> cache-tree for many more cases.
+>
+> But this patch seems simple and safe
+> to me, and in my experience this case happens quite often (or maybe I
+> tend to keep my index clean). Junio, any chance this patch may get in?
 
-Allow me to provide some libcurl info on this!
+I do not think we are talking about a duplicated effort here.
 
-Setting it to ANY will unconditionally cause an extra roundtrip which you can 
-avoid if you know what auth type the proxy wants and you set it at once. With 
-ANY set, libcurl will first "probe" the proxy to figure out which type to use 
-and then go on and actually do it in a second request (and possibly even a 
-third request in some cases).
+By definition, the change to hook into unpack_trees() and making sure we
+invalidate all the necessary subtrees in the cache cannot give you a cache
+tree that is more populated than what you started with.  And the train of
+thought in Peff's message is to improve this invalidation---we currently
+invalidate everything ;-)
 
-It can actually be seen as a security _improvement_ in some cases where for 
-example Basic auth (user+password sent as plain text) can be avoided in 
-preference to a more secure mechanism, but I think that's a rather rare case 
-for git.
+Somebody has to populate the cache tree fully when we _know_ the index
+matches a certain tree, and adding a call to prime_cache_tree() in
+strategic places is a way to do so.  The most obvious is write-tree, but
+there are a few other existing codepaths that do so.
 
-IMO, if ANY is considered fine for normal host authentication I think it could 
-be considered fine for proxy authentication as well.
+Because prime_cache_tree() by itself is a fairly expensive operation that
+reads all the trees recursively, its benefits need to be evaluated. It
+should to happen only in an operation that is already heavy-weight, is
+likely to have read all the trees and have many of them in-core cache, and
+also relatively rarely happens compared to "git add" so that the cost can
+be amortised over time, such as "reset --(hard|mixed)".
 
--- 
+Switching branches is likely to fall into that category, but that is just
+my gut feeling.  I would feel better at night if somebody did a benchmark
+;-)
 
-  / daniel.haxx.se
+One thing we do not currently do anywhere that _might_ be of merit is to
+make a call to cache_tree_update() instead of prime_cache_tree() when we
+already know that only a very small subpart of the cache-tree is invalid
+and it is cheaper to repair it by rehashing only a small portion of the
+index than to re-prime the entire cache tree with prime_cache_tree().
