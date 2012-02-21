@@ -1,75 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/4] Only re-encode certain parts in commit object, not
- the whole
-Date: Tue, 21 Feb 2012 13:25:59 -0500
-Message-ID: <20120221182559.GB32668@sigill.intra.peff.net>
-References: <1329834292-2511-1-git-send-email-pclouds@gmail.com>
- <1329834292-2511-4-git-send-email-pclouds@gmail.com>
+From: Daniel Stenberg <daniel@haxx.se>
+Subject: Re: Patchset NTLM-Authentication
+Date: Tue, 21 Feb 2012 20:02:34 +0100 (CET)
+Message-ID: <alpine.DEB.2.00.1202211954160.5167@tvnag.unkk.fr>
+References: <4CDEC141B5583D408E79F2931DB7708301802B70@GSX300A.mxchg.m.corp> <87vcn0h77a.fsf@thomas.inf.ethz.ch> <4CDEC141B5583D408E79F2931DB7708301802BE7@GSX300A.mxchg.m.corp> <8762f05n9q.fsf_-_@thomas.inf.ethz.ch> <7vfwe4gj4n.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 21 19:26:10 2012
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: "Schmidt, Marco" <Marco.Schmidt@cassidian.com>,
+	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
+	avarab@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 21 20:03:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzuPg-0004c5-M8
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 19:26:09 +0100
+	id 1Rzuzh-0007aY-Fi
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 20:03:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754515Ab2BUS0C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Feb 2012 13:26:02 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45339
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753445Ab2BUS0B (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Feb 2012 13:26:01 -0500
-Received: (qmail 17788 invoked by uid 107); 21 Feb 2012 18:26:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 21 Feb 2012 13:26:01 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Feb 2012 13:25:59 -0500
-Content-Disposition: inline
-In-Reply-To: <1329834292-2511-4-git-send-email-pclouds@gmail.com>
+	id S1755773Ab2BUTDP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Feb 2012 14:03:15 -0500
+Received: from giant.haxx.se ([80.67.6.50]:35767 "EHLO giant.haxx.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755706Ab2BUTDP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Feb 2012 14:03:15 -0500
+Received: from giant.haxx.se (localhost.localdomain [127.0.0.1])
+	by giant.haxx.se (8.14.4/8.14.4/Debian-2) with ESMTP id q1LJ2ZmN018482
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 21 Feb 2012 20:02:35 +0100
+Received: from localhost (dast@localhost)
+	by giant.haxx.se (8.14.4/8.14.4/Submit) with ESMTP id q1LJ2YUU018477;
+	Tue, 21 Feb 2012 20:02:34 +0100
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+X-X-Sender: dast@giant.haxx.se
+In-Reply-To: <7vfwe4gj4n.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-fromdanielhimself: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191176>
 
-On Tue, Feb 21, 2012 at 09:24:52PM +0700, Nguyen Thai Ngoc Duy wrote:
+On Tue, 21 Feb 2012, Junio C Hamano wrote:
 
-> Commit object has its own format, which happens to be in ascii, but
-> not really subject to re-encoding.
-> 
-> There are only four areas that may be re-encoded: author line,
-> committer line, mergetag lines and commit body.  Encoding of tags
-> embedded in mergetag lines is not decided by commit encoding, so leave
-> it out and consider it binary.
+> If it turns out that we can set CURLOPT_PROXYAUTH always to CURLAUTH_ANY 
+> without compromising security, then an explanation why this does not have to 
+> be optional, similar to what justified 525ecd2, needs to be there instead, 
+> and the patch needs to be tweaked to drop the configuration bits.
 
-Is this worth the effort? Yes, re-encoding the ASCII bits of the commit
-object is unnecessary. But do we actually handle encodings that are not
-ASCII supersets? IOW, I could see the point if this is making it
-possible to hold utf-16 names and messages in your commits (though why
-you would want to do so is beyond me...). But my understanding is that
-this is horribly broken anyway by other parts of the code. And even
-looking at your code below:
+Allow me to provide some libcurl info on this!
 
-> +static char *reencode_commit(const char *buffer,
-> +			     const char *out_enc, const char *in_enc)
-> +{
-> +	struct strbuf out = STRBUF_INIT;
-> +	struct strbuf buf = STRBUF_INIT;
-> +	char *reencoded, *s, *e;
-> +
-> +	strbuf_addstr(&buf, buffer);
-> +
-> +	s = strstr(buf.buf, "\nauthor ");
-> +	assert(s != NULL);
+Setting it to ANY will unconditionally cause an extra roundtrip which you can 
+avoid if you know what auth type the proxy wants and you set it at once. With 
+ANY set, libcurl will first "probe" the proxy to figure out which type to use 
+and then go on and actually do it in a second request (and possibly even a 
+third request in some cases).
 
-Wouldn't this assert trigger in the presence of encodings which
-contain ASCII NUL (e.g., wide encodings like utf-16)?
+It can actually be seen as a security _improvement_ in some cases where for 
+example Basic auth (user+password sent as plain text) can be avoided in 
+preference to a more secure mechanism, but I think that's a rather rare case 
+for git.
 
-Is there an encoding you have in mind which would be helped by this?
+IMO, if ANY is considered fine for normal host authentication I think it could 
+be considered fine for proxy authentication as well.
 
--Peff
+-- 
+
+  / daniel.haxx.se
