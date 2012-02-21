@@ -1,221 +1,128 @@
-From: =?UTF-8?q?Philip=20J=C3=A4genstedt?= <philip@foolip.org>
-Subject: [PATCH v2] completion: remote set-* <name> and <branch>
-Date: Tue, 21 Feb 2012 22:54:34 +0100
-Message-ID: <1329861274-21418-1-git-send-email-philip@foolip.org>
-References: <CAKHWUkZjQYnf=LwS_RC-E_7gV73AzbWjxs33E5-FL25s6_qX4g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] completion: remote set-* <name> and <branch>
+Date: Tue, 21 Feb 2012 14:23:11 -0800
+Message-ID: <7v8vjvg71s.fsf@alter.siamese.dyndns.org>
+References: <1329571973-20796-1-git-send-email-philip@foolip.org>
+ <7vvcn2lyw6.fsf@alter.siamese.dyndns.org>
+ <CAKHWUkZjQYnf=LwS_RC-E_7gV73AzbWjxs33E5-FL25s6_qX4g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+Cc: git@vger.kernel.org,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
 	Felipe Contreras <felipe.contreras@gmail.com>,
-	Teemu Likonen <tlikonen@iki.fi>,
-	=?UTF-8?q?Philip=20J=C3=A4genstedt?= <philip@foolip.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 21 22:55:32 2012
+	Teemu Likonen <tlikonen@iki.fi>
+To: Philip =?utf-8?Q?J=C3=A4genstedt?= <philip@foolip.org>
+X-From: git-owner@vger.kernel.org Tue Feb 21 23:23:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzxgF-0006k8-2z
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 22:55:27 +0100
+	id 1Rzy7E-0005N3-Cy
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 23:23:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755562Ab2BUVzV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Feb 2012 16:55:21 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:60553 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754623Ab2BUVzT (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Feb 2012 16:55:19 -0500
-Received: by lagu2 with SMTP id u2so8174602lag.19
-        for <git@vger.kernel.org>; Tue, 21 Feb 2012 13:55:17 -0800 (PST)
-Received-SPF: pass (google.com: domain of philip@foolip.org designates 10.152.145.135 as permitted sender) client-ip=10.152.145.135;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of philip@foolip.org designates 10.152.145.135 as permitted sender) smtp.mail=philip@foolip.org
-Received: from mr.google.com ([10.152.145.135])
-        by 10.152.145.135 with SMTP id su7mr20514691lab.5.1329861317913 (num_hops = 1);
-        Tue, 21 Feb 2012 13:55:17 -0800 (PST)
-Received: by 10.152.145.135 with SMTP id su7mr17124033lab.5.1329861317852;
-        Tue, 21 Feb 2012 13:55:17 -0800 (PST)
-Received: from localhost.localdomain (h128n3-g-hn-a11.ias.bredband.telia.com. [217.209.32.128])
-        by mx.google.com with ESMTPS id jb2sm23041821lab.7.2012.02.21.13.55.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 21 Feb 2012 13:55:17 -0800 (PST)
-X-Mailer: git-send-email 1.7.5.4
-In-Reply-To: <CAKHWUkZjQYnf=LwS_RC-E_7gV73AzbWjxs33E5-FL25s6_qX4g@mail.gmail.com>
-X-Gm-Message-State: ALoCoQkRSSep0+O2wV/Fz8YkzllBJLq7LsYYvPvif1JuC8NuLd+vBwq+KM4wiudzzMQL9Vl6YIym
+	id S1755787Ab2BUWXP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Feb 2012 17:23:15 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49436 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754454Ab2BUWXO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Feb 2012 17:23:14 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 63C987F2D;
+	Tue, 21 Feb 2012 17:23:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=QDjHws3h2Lht
+	qTTDtaDSlXgmDAQ=; b=rYvdkdFBoCeLuVV2cX0iwsTa15M0vjLE+OV1Zm3Lpgd9
+	WuRf5/Lj9OKfRwUhb1+4LobeV15+SIrHDb1vyKFKEPBZU5GHVyray0zDBDSkvAtH
+	OaRFTXRijo4oW4e0qJKeS2K3NGDkJx0xTQkdfLLqaafN9avQPmjaq+GuhvEbNuQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=emZvlt
+	p7fKE4bnbd/8yWGctoSwIi0IVKBiJOSEcZWVr0GvLU0w7tDWQJoPCh8toqy5tuig
+	HgK+HCDQQTYBAuwdbbyXLYe7UVp6QpHIDU6n9cSmHS3Q3tFPhO2MyOLBg0Qn4mW5
+	XjeERLJGyb90wLIjB9wYn4cAhiDk7vyTtcVP8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 58AE47F2C;
+	Tue, 21 Feb 2012 17:23:13 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AE5687F2B; Tue, 21 Feb 2012
+ 17:23:12 -0500 (EST)
+In-Reply-To: <CAKHWUkZjQYnf=LwS_RC-E_7gV73AzbWjxs33E5-FL25s6_qX4g@mail.gmail.com> ("Philip
+ =?utf-8?Q?J=C3=A4genstedt=22's?= message of "Tue, 21 Feb 2012 22:29:33
+ +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A451D470-5CDA-11E1-A961-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191190>
 
-Complete <name> only for set-url. For set-branches and
-set-head, complete <name> and <branch> over the network,
-like e.g. git pull already does.
+Philip J=C3=A4genstedt <philip@foolip.org> writes:
 
-The style used for incrementing and decrementing variables was fairly
-inconsistenty and was normalized to use ++x, or ((++x)) in contexts
-where the former would otherwise be interpreted as a command. This is a
-bash-ism, but for obvious reasons this script is already bash-specific.
+> Thanks. Perhaps git-completion.bash should not say "Send all patches
+> to the current maintainer" and simply defer to SubmittingPatches?
 
-=46inally, remove out-of-date documentation for how to submit patches a=
-nd
-(silently) defer to Documentation/SubmittingPatches like all other code=
-=2E
+I see you did this in your follow-up patch.  Thanks.
 
-Signed-off-by: Philip J=C3=A4genstedt <philip@foolip.org>
----
- contrib/completion/git-completion.bash |   42 +++++++++++++-----------=
--------
- 1 files changed, 18 insertions(+), 24 deletions(-)
+>>> =C2=A0{
+>>> =C2=A0 =C2=A0 =C2=A0 local cur_=3D"$cur" cmd=3D"${words[1]}"
+>>> =C2=A0 =C2=A0 =C2=A0 local i c=3D2 remote=3D"" pfx=3D"" lhs=3D1 no_=
+complete_refspec=3D0
+>>> + =C2=A0 =C2=A0 if [ "$cmd" =3D "remote" ]; then
+>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 c=3D$((++c))
+>>> + =C2=A0 =C2=A0 fi
+>>
+>> I don't know about others, but auto-incrementing a variable and assi=
+gning
+>> the result to the same variable, while not wrong at all, hurts my br=
+ain.
+>>
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0c=3D$(($c + 1))
+>>
+>> is far more readable and does not suggest there is any funky magic
+>> involved. =C2=A0Also it is a good habit to get into not to omit $ fr=
+om
+>> variables inside arithmetic substitution, even though bash allows it=
+ and
+>> this script is meant to be consumed only by shells that understand t=
+his
+>> bash-ism.
+>>
+>> I do not know offhand if zsh groks it, but the point is that you do =
+not
+>> have to worry about it if you write "$(($c+1))" instead of "$((c+1))=
+".
+>
+> CodingGuidlines suggests to follow local convention, which was
+> "c=3D$((++c))". This file also uses "++n", "i++" and "((i++))". I wil=
+l
+> send a v2 patch that normalizes these, open to discussion of course.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 1505cff..9dac084 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -60,18 +60,6 @@
- #       per-repository basis by setting the bash.showUpstream config
- #       variable.
- #
--#
--# To submit patches:
--#
--#    *) Read Documentation/SubmittingPatches
--#    *) Send all patches to the current maintainer:
--#
--#       "Shawn O. Pearce" <spearce@spearce.org>
--#
--#    *) Always CC the Git mailing list:
--#
--#       git@vger.kernel.org
--#
-=20
- if [[ -n ${ZSH_VERSION-} ]]; then
- 	autoload -U +X bashcompinit && bashcompinit
-@@ -395,7 +383,7 @@ __git_reassemble_comp_words_by_ref()
- 	fi
- 	# List of word completion separators has shrunk;
- 	# re-assemble words to complete.
--	for ((i=3D0, j=3D0; i < ${#COMP_WORDS[@]}; i++, j++)); do
-+	for ((i=3D0, j=3D0; i < ${#COMP_WORDS[@]}; ++i, ++j)); do
- 		# Append each nonempty word consisting of just
- 		# word separator characters to the current word.
- 		first=3Dt
-@@ -408,7 +396,7 @@ __git_reassemble_comp_words_by_ref()
- 			# Attach to the previous token,
- 			# unless the previous token is the command name.
- 			if [ $j -ge 2 ] && [ -n "$first" ]; then
--				((j--))
-+				((--j))
- 			fi
- 			first=3D
- 			words_[$j]=3D${words_[j]}${COMP_WORDS[i]}
-@@ -416,7 +404,7 @@ __git_reassemble_comp_words_by_ref()
- 				cword_=3D$j
- 			fi
- 			if (($i < ${#COMP_WORDS[@]} - 1)); then
--				((i++))
-+				((++i))
- 			else
- 				# Done.
- 				return
-@@ -738,6 +726,9 @@ __git_complete_remote_or_refspec ()
- {
- 	local cur_=3D"$cur" cmd=3D"${words[1]}"
- 	local i c=3D2 remote=3D"" pfx=3D"" lhs=3D1 no_complete_refspec=3D0
-+	if [ "$cmd" =3D "remote" ]; then
-+		((++c))
-+	fi
- 	while [ $c -lt $cword ]; do
- 		i=3D"${words[c]}"
- 		case "$i" in
-@@ -755,7 +746,7 @@ __git_complete_remote_or_refspec ()
- 		-*) ;;
- 		*) remote=3D"$i"; break ;;
- 		esac
--		c=3D$((++c))
-+		((++c))
- 	done
- 	if [ -z "$remote" ]; then
- 		__gitcomp_nl "$(__git_remotes)"
-@@ -788,7 +779,7 @@ __git_complete_remote_or_refspec ()
- 			__gitcomp_nl "$(__git_refs)" "$pfx" "$cur_"
- 		fi
- 		;;
--	pull)
-+	pull|remote)
- 		if [ $lhs =3D 1 ]; then
- 			__gitcomp_nl "$(__git_refs "$remote")" "$pfx" "$cur_"
- 		else
-@@ -995,7 +986,7 @@ __git_find_on_cmdline ()
- 				return
- 			fi
- 		done
--		c=3D$((++c))
-+		((++c))
- 	done
- }
-=20
-@@ -1006,7 +997,7 @@ __git_has_doubledash ()
- 		if [ "--" =3D "${words[c]}" ]; then
- 			return 0
- 		fi
--		c=3D$((++c))
-+		((++c))
- 	done
- 	return 1
- }
-@@ -1129,7 +1120,7 @@ _git_branch ()
- 		-d|-m)	only_local_ref=3D"y" ;;
- 		-r)	has_r=3D"y" ;;
- 		esac
--		c=3D$((++c))
-+		((++c))
- 	done
-=20
- 	case "$cur" in
-@@ -2289,7 +2280,7 @@ _git_config ()
-=20
- _git_remote ()
- {
--	local subcommands=3D"add rename rm show prune update set-head"
-+	local subcommands=3D"add rename rm set-head set-branches set-url show=
- prune update"
- 	local subcommand=3D"$(__git_find_on_cmdline "$subcommands")"
- 	if [ -z "$subcommand" ]; then
- 		__gitcomp "$subcommands"
-@@ -2297,9 +2288,12 @@ _git_remote ()
- 	fi
-=20
- 	case "$subcommand" in
--	rename|rm|show|prune)
-+	rename|rm|set-url|show|prune)
- 		__gitcomp_nl "$(__git_remotes)"
- 		;;
-+	set-head|set-branches)
-+		__git_complete_remote_or_refspec
-+		;;
- 	update)
- 		local i c=3D'' IFS=3D$'\n'
- 		for i in $(git --git-dir=3D"$(__gitdir)" config --get-regexp "remote=
-s\..*" 2>/dev/null); do
-@@ -2580,7 +2574,7 @@ _git_tag ()
- 			f=3D1
- 			;;
- 		esac
--		c=3D$((++c))
-+		((++c))
- 	done
-=20
- 	case "$prev" in
-@@ -2633,7 +2627,7 @@ _git ()
- 		--help) command=3D"help"; break ;;
- 		*) command=3D"$i"; break ;;
- 		esac
--		c=3D$((++c))
-+		((++c))
- 	done
-=20
- 	if [ -z "$command" ]; then
---=20
-1.7.5.4
+OK, it was my mistake to suggest $c++ in this file; it liberally uses
+dollar-less variables, and I agree that it is a good idea to stick to t=
+hat
+local convention.
+
+But I think you went too far in your follow-up patch to make the increm=
+ent
+and decrement uniform.
+
+"i++" is so much easier on the eye unless you must use "++i" in order t=
+o
+use the value of the incremented "i" in an expression, and the changes =
+to
+turn existing instances of free-standing "i++" to "++i" done only for t=
+he
+side effect of incrementing the variables look totally backwards.
+
+Although I do not deeply care.  Just leaving the new one as you origina=
+lly
+wrote, i.e.
+
+	c=3D$((++c))
+
+would have been easier to review for the area experts, I would think.
