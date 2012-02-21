@@ -1,167 +1,174 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] pre-rebase: Refuse to rewrite commits that are reachable
- from upstream
-Date: Mon, 20 Feb 2012 23:44:41 -0800
-Message-ID: <7vehtoiqae.fsf@alter.siamese.dyndns.org>
-References: <201202111445.33260.jnareb@gmail.com>
- <1329772071-11301-1-git-send-email-johan@herland.net>
- <7vobstjfcs.fsf@alter.siamese.dyndns.org>
- <CALKQrgcDDVH8rxn80ZTMyR3y3n3Vs1LSCtH=ZiwG7it_LE2wgQ@mail.gmail.com>
+From: "Schmidt, Marco" <Marco.Schmidt@cassidian.com>
+Subject: Patchset NTLM-Authentication
+Date: Tue, 21 Feb 2012 09:07:59 +0100
+Message-ID: <4CDEC141B5583D408E79F2931DB7708301802B70@GSX300A.mxchg.m.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jnareb@gmail.com, philipoakley@iee.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Feb 21 08:45:00 2012
+Content-Type: multipart/mixed;
+	boundary="----_=_NextPart_001_01CCF06F.F2061336"
+Cc: <gitster@pobox.com>, <avarab@gmail.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 21 09:20:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1RzkP7-00059O-Cs
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 08:44:53 +0100
+	id 1Rzkxq-00065s-1D
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Feb 2012 09:20:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752602Ab2BUHop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Feb 2012 02:44:45 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57184 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752519Ab2BUHop (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Feb 2012 02:44:45 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F0962873;
-	Tue, 21 Feb 2012 02:44:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cfMtPRLnEQIdsEe+ftR/4W9fWK4=; b=UqL8F9
-	gb70k5nEE8ORja5mvpkkymjNvidEyl2nmdCImqwOZPQTlclToxQWzpQpREt3ppzX
-	tpq4fz1GxKn0EtVUlV26PaTRC+XOJFC0OTGg8psqq1kyVnekpf/sO5+8Ut5qPqpt
-	Zwl5SSZmsK8G5R5AZjuBSebXCG7MmK0bQlLdc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=M4ADonytd6oM4xyl2o5QnmATGF1ZE7ja
-	fC3SfwpLORRv64qWNrcTzF40gTPsCaoNCxhb6tK2ySknuhTeE2TpbitCcAeujFot
-	ziXvno51bxCh6pa4T2AKZg0HAroSlXIqxZrpHro5zKoczwzaUyBTwUv/uTyImaxH
-	rsX1ppi4b00=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 06B0A2872;
-	Tue, 21 Feb 2012 02:44:44 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5CAC92871; Tue, 21 Feb 2012
- 02:44:43 -0500 (EST)
-In-Reply-To: <CALKQrgcDDVH8rxn80ZTMyR3y3n3Vs1LSCtH=ZiwG7it_LE2wgQ@mail.gmail.com> (Johan
- Herland's message of "Tue, 21 Feb 2012 01:03:09 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EB1B636A-5C5F-11E1-8D6C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752860Ab2BUIUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Feb 2012 03:20:41 -0500
+Received: from mail.eads.net ([80.156.45.113]:46438 "EHLO mail.eads.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752285Ab2BUIUk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Feb 2012 03:20:40 -0500
+X-Greylist: delayed 738 seconds by postgrey-1.27 at vger.kernel.org; Tue, 21 Feb 2012 03:20:38 EST
+Received: from gsx3072-vs5.mxchg.m.corp ([53.147.176.149])
+	by mail.eads.net (8.13.8/8.13.8/Debian-2) with ESMTP id q1L87i1V016737;
+	Tue, 21 Feb 2012 09:07:45 +0100
+Received: from gsx300a.mxchg.m.corp ([10.43.212.131]) by gsx3072-vs5.mxchg.m.corp with Microsoft SMTPSVC(6.0.3790.4675);
+	 Tue, 21 Feb 2012 09:08:07 +0100
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Patchset NTLM-Authentication
+Thread-Index: Aczwb+zGnjMH2YRwTwS7eqyjC+Gd8w==
+X-OriginalArrivalTime: 21 Feb 2012 08:08:07.0915 (UTC) FILETIME=[F201EBB0:01CCF06F]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191140>
 
-Johan Herland <johan@herland.net> writes:
+This is a multi-part message in MIME format.
 
-> What  you are describing here may be a common workflow, but
-> "rebase.bottomLimit" is still very specific to that kind of workflow.
-> What I'm after is a much more workflow-agnostic concept of:
->
->   "If I have pushed something, I should probably not rebase it"
+------_=_NextPart_001_01CCF06F.F2061336
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Your "this branch pushes directly to that remote branch, so I can check if
-it will result in rewrite of published commit" is even *less* generic than
-having a single bottomLimit in my illustration.
+Support NTLM-Authentication against proxy.
 
-I may not push out my topic branches directly, only the aggregate of them
-in 'next', but once 'next' is pushed out, they are not eligible for
-rebasing.  A per-branch bottom, e.g. rebase.$branch.bottomLimit, might
-make it more flexible to cover such a case, though.
+I have include a minimal patch set to support NTLM authentification
+against a proxy server.=20
 
-On the other hand, without any such safety, a merge to 'next' would give
-many conflicts and "shortlog master..next" will show many duplicates after
-any topic that are already merged to it are accidentally rewritten, and it
-is just the matter of using reflog on topic branches to recover from such
-a mistake.
+The patch adds a boolean configuration variable "http.proxyauthany" to
+enable CURLOPT_PROXYAUTH =3D CURLAUTH_ANY.
 
->> I wonder if it would be a more direct solution to the issue you are
->> raising to give them a good tool to help them to be more careful with less
->> effort on their part before they publish (not before they rebase).
-> 
-> ..., I'm not sure how we can help the user _not_ publish the
-> branch until it's ready.
+I'm not conform with your patch submitting policy. I had no chance to
+track the git repository from my current location.
 
-I think we are in agreement that we do not think of a good solution
-offhand to the real cause of the issue, except by encouraging the use of
-throw-away review branches, perhaps.
 
-> I think the following decribes what often happens for many users:
->
->  1. User A pushes the branch to a public repo.
->  2. User B points out a simple mistake in the branch.
+Marco Schmidt
 
-That's the CVS workflow, and it is not "a" public repo but "the" public
-repo shared between A and B (and also with all the project participants).
+------_=_NextPart_001_01CCF06F.F2061336
+Content-Type: application/octet-stream;
+	name="0002-Einf-hren-der-HTTP-Proxy-Authentifizierung.patch"
+Content-Transfer-Encoding: base64
+Content-Description: 0002-Einf-hren-der-HTTP-Proxy-Authentifizierung.patch
+Content-Disposition: attachment;
+	filename="0002-Einf-hren-der-HTTP-Proxy-Authentifizierung.patch"
 
->  3. User A makes a fix
->  4. User A squashes the fix into the (already-published) history.
->  5. User A attempts to push the "fixed" history (but is rejected by
-> the public repo because of non-fast-forward).
-> At this point, the damage is already done,...
+RnJvbSA4YTM4OTJlY2E2OWEwYzYwM2E1M2IzZDNhYTA1MmY0NWM0YTViNjQ4IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBNYXJjbyBTY2htaWR0IDxNYXJjby5TY2htaWR0QGNhc3NpZGlh
+bi5jb20+CkRhdGU6IEZyaSwgMjcgSmFuIDIwMTIgMTM6MDg6NDQgKzAxMDAKU3ViamVjdDogW1BB
+VENIIDIvNF0gPT9VVEYtOD9xP0VpbmY9RkNocmVuPTIwZGVyPTIwSFRUUD0yMFByb3h5PTIwQXV0
+aGVudGlmaT89CiA9P1VURi04P3E/emllcnVuZz89Ck1JTUUtVmVyc2lvbjogMS4wCkNvbnRlbnQt
+VHlwZTogdGV4dC9wbGFpbjsgY2hhcnNldD1VVEYtOApDb250ZW50LVRyYW5zZmVyLUVuY29kaW5n
+OiA4Yml0CgotLS0KIGh0dHAuYyB8ICAgMTEgKysrKysrKysrKysKIDEgZmlsZXMgY2hhbmdlZCwg
+MTEgaW5zZXJ0aW9ucygrKSwgMCBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9odHRwLmMgYi9o
+dHRwLmMKaW5kZXggZjNiMmM5MC4uZGM1MWQ0MSAxMDA2NDQKLS0tIGEvaHR0cC5jCisrKyBiL2h0
+dHAuYwpAQCAtNDEsNiArNDEsNyBAQCBzdGF0aWMgbG9uZyBjdXJsX2xvd19zcGVlZF9saW1pdCA9
+IC0xOwogc3RhdGljIGxvbmcgY3VybF9sb3dfc3BlZWRfdGltZSA9IC0xOwogc3RhdGljIGludCBj
+dXJsX2Z0cF9ub19lcHN2Owogc3RhdGljIGNvbnN0IGNoYXIgKmN1cmxfaHR0cF9wcm94eTsKK3N0
+YXRpYyBpbnQgY3VybF9odHRwX3Byb3h5YXV0aGFueSA9IDA7CiBzdGF0aWMgY29uc3QgY2hhciAq
+Y3VybF9jb29raWVfZmlsZTsKIHN0YXRpYyBjaGFyICp1c2VyX25hbWUsICp1c2VyX3Bhc3MsICpk
+ZXNjcmlwdGlvbjsKIHN0YXRpYyBjb25zdCBjaGFyICp1c2VyX2FnZW50OwpAQCAtMjIyLDYgKzIy
+MywxMCBAQCBzdGF0aWMgaW50IGh0dHBfb3B0aW9ucyhjb25zdCBjaGFyICp2YXIsIGNvbnN0IGNo
+YXIgKnZhbHVlLCB2b2lkICpjYikKIAl9CiAJaWYgKCFzdHJjbXAoImh0dHAucHJveHkiLCB2YXIp
+KQogCQlyZXR1cm4gZ2l0X2NvbmZpZ19zdHJpbmcoJmN1cmxfaHR0cF9wcm94eSwgdmFyLCB2YWx1
+ZSk7CisJCisJaWYgKCFzdHJjbXAoImh0dHAucHJveHlhdXRoYW55IiwgdmFyKSkgIHsKKwkJY3Vy
+bF9odHRwX3Byb3h5YXV0aGFueSA9IGdpdF9jb25maWdfYm9vbCh2YXIsIHZhbHVlKTsKKwl9CiAK
+IAlpZiAoIXN0cmNtcCgiaHR0cC5jb29raWVmaWxlIiwgdmFyKSkKIAkJcmV0dXJuIGdpdF9jb25m
+aWdfc3RyaW5nKCZjdXJsX2Nvb2tpZV9maWxlLCB2YXIsIHZhbHVlKTsKQEAgLTMzMCw2ICszMzUs
+MTIgQEAgc3RhdGljIENVUkwgKmdldF9jdXJsX2hhbmRsZSh2b2lkKQogCiAJaWYgKGN1cmxfaHR0
+cF9wcm94eSkKIAkJY3VybF9lYXN5X3NldG9wdChyZXN1bHQsIENVUkxPUFRfUFJPWFksIGN1cmxf
+aHR0cF9wcm94eSk7CisJCisJaWYgKGN1cmxfaHR0cF9wcm94eWF1dGhhbnkpIHsKKwkJY3VybF9l
+YXN5X3NldG9wdChyZXN1bHQsIENVUkxPUFRfUFJPWFlBVVRILCBDVVJMQVVUSF9BTlkpOworCQlw
+cmludGYoIkNVUkxPUFRfUFJPWFlBVVRIISEhISIpOworCX0KKwogCiAJcmV0dXJuIHJlc3VsdDsK
+IH0KLS0gCjEuNy44Cgo=
 
-Which is probably a sufficient safety which the user can learn from.  If
-this happens too often, that probably means we are not helping them enough
-to learn not to "commit --amend" or "rebase" if they are using Git as a
-better CVS.
+------_=_NextPart_001_01CCF06F.F2061336
+Content-Type: application/octet-stream;
+	name="0003-First-working-step.patch"
+Content-Transfer-Encoding: base64
+Content-Description: 0003-First-working-step.patch
+Content-Disposition: attachment;
+	filename="0003-First-working-step.patch"
 
-> You could say that User A should be more careful and push to a "less
-> public" repo in step #1 (thus allowing the fix to be squashed before
-> pushing to a "more public" repo in step #5),...
+RnJvbSAyYjczMzZjNDk1OWZjNGRmMzBkYTllNjhmNjUyZjJjNTk0MWYwYzkxIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBNYXJjbyBTY2htaWR0IDxNYXJjby5TY2htaWR0QGNhc3NpZGlh
+bi5jb20+CkRhdGU6IEZyaSwgMjcgSmFuIDIwMTIgMTQ6MzU6MTUgKzAxMDAKU3ViamVjdDogW1BB
+VENIIDMvNF0gRmlyc3Qgd29ya2luZyBzdGVwCgotLS0KIGh0dHAuYyB8ICAgIDkgKysrKysrKyst
+CiAxIGZpbGVzIGNoYW5nZWQsIDggaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbnMoLSkKCmRpZmYg
+LS1naXQgYS9odHRwLmMgYi9odHRwLmMKaW5kZXggZGM1MWQ0MS4uM2RiZDM5MCAxMDA2NDQKLS0t
+IGEvaHR0cC5jCisrKyBiL2h0dHAuYwpAQCAtMTczLDYgKzE3Myw4IEBAIHN0YXRpYyBpbnQgZ2l0
+X2NvbmZpZ19wYXRoKGNvbnN0IGNoYXIgKipyZXN1bHQsCiAKIHN0YXRpYyBpbnQgaHR0cF9vcHRp
+b25zKGNvbnN0IGNoYXIgKnZhciwgY29uc3QgY2hhciAqdmFsdWUsIHZvaWQgKmNiKQogeworCWZw
+cmludGYoc3RkZXJyLCAiaHR0cF9vcHRpb25zOiAlcyA9ICVzXG4iLCB2YXIsIHZhbHVlKTsKKwkK
+IAlpZiAoIXN0cmNtcCgiaHR0cC5zc2x2ZXJpZnkiLCB2YXIpKSB7CiAJCWN1cmxfc3NsX3Zlcmlm
+eSA9IGdpdF9jb25maWdfYm9vbCh2YXIsIHZhbHVlKTsKIAkJcmV0dXJuIDA7CkBAIC0yMjYsNiAr
+MjI4LDggQEAgc3RhdGljIGludCBodHRwX29wdGlvbnMoY29uc3QgY2hhciAqdmFyLCBjb25zdCBj
+aGFyICp2YWx1ZSwgdm9pZCAqY2IpCiAJCiAJaWYgKCFzdHJjbXAoImh0dHAucHJveHlhdXRoYW55
+IiwgdmFyKSkgIHsKIAkJY3VybF9odHRwX3Byb3h5YXV0aGFueSA9IGdpdF9jb25maWdfYm9vbCh2
+YXIsIHZhbHVlKTsKKwkJZnByaW50ZihzdGRlcnIsICJodHRwX29wdGlvbnM6IGN1cmxfaHR0cF9w
+cm94eWF1dGhhbnkgPSAlaSIsIGN1cmxfaHR0cF9wcm94eWF1dGhhbnkpOworCQlyZXR1cm4gMDsK
+IAl9CiAKIAlpZiAoIXN0cmNtcCgiaHR0cC5jb29raWVmaWxlIiwgdmFyKSkKQEAgLTMzNiw5ICsz
+NDAsMTIgQEAgc3RhdGljIENVUkwgKmdldF9jdXJsX2hhbmRsZSh2b2lkKQogCWlmIChjdXJsX2h0
+dHBfcHJveHkpCiAJCWN1cmxfZWFzeV9zZXRvcHQocmVzdWx0LCBDVVJMT1BUX1BST1hZLCBjdXJs
+X2h0dHBfcHJveHkpOwogCQorCWZwcmludGYoc3RkZXJyLCAiREVCVUc6IGN1cmxfaHR0cF9wcm94
+eWF1dGhhbnlcbiIpOworCQorCS8qIGh0dHAgcHJveHkgY291bGQgYmUgc2V0IGZyb20gZW52aXJv
+bWVudCAtIHNldCBDVVJMT1BUX1BST1hZQVVUSCAqLwogCWlmIChjdXJsX2h0dHBfcHJveHlhdXRo
+YW55KSB7CiAJCWN1cmxfZWFzeV9zZXRvcHQocmVzdWx0LCBDVVJMT1BUX1BST1hZQVVUSCwgQ1VS
+TEFVVEhfQU5ZKTsKLQkJcHJpbnRmKCJDVVJMT1BUX1BST1hZQVVUSCEhISEiKTsKKwkJZnByaW50
+ZihzdGRlcnIsICJjdXJsX2Vhc3lfc2V0b3B0KHJlc3VsdCwgQ1VSTE9QVF9QUk9YWUFVVEgsIENV
+UkxBVVRIX0FOWSk7XG4iKTsKIAl9CiAKIAotLSAKMS43LjgKCg==
 
-That is essentially a workflow that uses throw-away review branches in a
-distributed environment, and at that point, we are not constrained by the
-limitation of the CVS workflow. While still in early review cycles (which
-corresponds to being in our 'pu'), "commit --amend" and "rebase" are fine
-tool to be used.  And...
+------_=_NextPart_001_01CCF06F.F2061336
+Content-Type: application/octet-stream;
+	name="0004-remove-debug-information.patch"
+Content-Transfer-Encoding: base64
+Content-Description: 0004-remove-debug-information.patch
+Content-Disposition: attachment;
+	filename="0004-remove-debug-information.patch"
 
-> but how "public" is
-> "public" enough to have someone point out the bug, but still
-> "unpublic" enough to allow rebase?
+RnJvbSA1NWI3NmI1ZjY1ODkwNGQyNDBkYjI5YmIwZDU5ZjhjMWRjZWRkNGI1IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBNYXJjbyBTY2htaWR0IDxNYXJjby5TY2htaWR0QGNhc3NpZGlh
+bi5jb20+CkRhdGU6IEZyaSwgMjcgSmFuIDIwMTIgMTQ6NDA6NTcgKzAxMDAKU3ViamVjdDogW1BB
+VENIIDQvNF0gcmVtb3ZlIGRlYnVnIGluZm9ybWF0aW9uCgotLS0KIGh0dHAuYyB8ICAgIDggKyst
+LS0tLS0KIDEgZmlsZXMgY2hhbmdlZCwgMiBpbnNlcnRpb25zKCspLCA2IGRlbGV0aW9ucygtKQoK
+ZGlmZiAtLWdpdCBhL2h0dHAuYyBiL2h0dHAuYwppbmRleCAzZGJkMzkwLi5mYmM1MmYwIDEwMDY0
+NAotLS0gYS9odHRwLmMKKysrIGIvaHR0cC5jCkBAIC0xNzMsOCArMTczLDYgQEAgc3RhdGljIGlu
+dCBnaXRfY29uZmlnX3BhdGgoY29uc3QgY2hhciAqKnJlc3VsdCwKIAogc3RhdGljIGludCBodHRw
+X29wdGlvbnMoY29uc3QgY2hhciAqdmFyLCBjb25zdCBjaGFyICp2YWx1ZSwgdm9pZCAqY2IpCiB7
+Ci0JZnByaW50ZihzdGRlcnIsICJodHRwX29wdGlvbnM6ICVzID0gJXNcbiIsIHZhciwgdmFsdWUp
+OwotCQogCWlmICghc3RyY21wKCJodHRwLnNzbHZlcmlmeSIsIHZhcikpIHsKIAkJY3VybF9zc2xf
+dmVyaWZ5ID0gZ2l0X2NvbmZpZ19ib29sKHZhciwgdmFsdWUpOwogCQlyZXR1cm4gMDsKQEAgLTIy
+OCw3ICsyMjYsNiBAQCBzdGF0aWMgaW50IGh0dHBfb3B0aW9ucyhjb25zdCBjaGFyICp2YXIsIGNv
+bnN0IGNoYXIgKnZhbHVlLCB2b2lkICpjYikKIAkKIAlpZiAoIXN0cmNtcCgiaHR0cC5wcm94eWF1
+dGhhbnkiLCB2YXIpKSAgewogCQljdXJsX2h0dHBfcHJveHlhdXRoYW55ID0gZ2l0X2NvbmZpZ19i
+b29sKHZhciwgdmFsdWUpOwotCQlmcHJpbnRmKHN0ZGVyciwgImh0dHBfb3B0aW9uczogY3VybF9o
+dHRwX3Byb3h5YXV0aGFueSA9ICVpIiwgY3VybF9odHRwX3Byb3h5YXV0aGFueSk7CiAJCXJldHVy
+biAwOwogCX0KIApAQCAtMzQwLDEzICszMzcsMTIgQEAgc3RhdGljIENVUkwgKmdldF9jdXJsX2hh
+bmRsZSh2b2lkKQogCWlmIChjdXJsX2h0dHBfcHJveHkpCiAJCWN1cmxfZWFzeV9zZXRvcHQocmVz
+dWx0LCBDVVJMT1BUX1BST1hZLCBjdXJsX2h0dHBfcHJveHkpOwogCQotCWZwcmludGYoc3RkZXJy
+LCAiREVCVUc6IGN1cmxfaHR0cF9wcm94eWF1dGhhbnlcbiIpOwotCQorI2lmZGVmIExJQkNVUkxf
+Q0FOX0hBTkRMRV9BVVRIX0FOWQkKIAkvKiBodHRwIHByb3h5IGNvdWxkIGJlIHNldCBmcm9tIGVu
+dmlyb21lbnQgLSBzZXQgQ1VSTE9QVF9QUk9YWUFVVEggKi8KIAlpZiAoY3VybF9odHRwX3Byb3h5
+YXV0aGFueSkgewogCQljdXJsX2Vhc3lfc2V0b3B0KHJlc3VsdCwgQ1VSTE9QVF9QUk9YWUFVVEgs
+IENVUkxBVVRIX0FOWSk7Ci0JCWZwcmludGYoc3RkZXJyLCAiY3VybF9lYXN5X3NldG9wdChyZXN1
+bHQsIENVUkxPUFRfUFJPWFlBVVRILCBDVVJMQVVUSF9BTlkpO1xuIik7CiAJfQorI2VuZGlmCiAK
+IAogCXJldHVybiByZXN1bHQ7Ci0tIAoxLjcuOAoK
 
-... I can imagine that currently that is determined purely by project
-convention. Perhaps there needs a way to mark throw-away review branches
-like 'pu' (or saying the same thing from the different perspective, to
-mark cast-in-stone integration branches like 'next') so that tools can
-mechanically decide what should and should not be rewritten.
-
-To extend the idea of promoting throw-away review branches further,
-perhaps it might help if there is an easy way to let the users publish
-their "master" to a branch that is not the "master" of the central shared
-repository even in the CVS workflow (e.g. by default a push from user A
-always goes to refs/review/A/master), and to have an option to "git push"
-that makes it go to the "master" when the user really means the branch is
-ready (and it would move refs/review/A/master to attic to be later gc'ed).
-
-> ... And I
-> think that refusing rewrites of commits that are already present in
-> the @{upstream} remote-tracking branch is good enough to help most
-> users avoid steps #4 through #6 (in a push-based workflow[1]).
-
-See above regarding branches that should not be rebased even if they are
-not directly pushed out.
-
-> In
-> fact, from a pedagogical POV, I think step #4 is probably the best
-> spot for novice users to learn exactly the distinction between
-> acceptable and unacceptable history rewrites (instead of having it
-> explained to them as a consequence of the step #5).
-
-I doubt you have enough information at point #4, unless you restrict the
-workflow you allow your novice users to use fairly severely, to give
-appropriate advice.  While I agree with you that it would be the best if
-we could do so at step #4 without stopping the user from doing what s/he
-needs to do with false positive, I think it is not pedagogical POV but
-dreaming if the world were ideal without knowing what it would take to
-make it ideal.
-
-At least I don't know offhand what kind of changes are needed to restrict
-the user actions to an "approved" workflow so that step #4 can make a
-useful decision (that is, no false positives and small enough false
-negatives).
+------_=_NextPart_001_01CCF06F.F2061336--
