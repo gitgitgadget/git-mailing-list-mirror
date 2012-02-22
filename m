@@ -1,101 +1,186 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: Re: [PATCH] contrib: added git-diffall
-Date: Wed, 22 Feb 2012 15:14:43 -0500
-Message-ID: <CAFouetgyYRKT7h1h4hv40Kxp=ibq1Hw-1mzFe6DsyAUknXKyYQ@mail.gmail.com>
-References: <1329785969-828-1-git-send-email-tim.henigan@gmail.com>
-	<7vd397g8ic.fsf@alter.siamese.dyndns.org>
-	<CAFouetiLmK3dXLRkBh+cTNA_OMPS77xo8z95WK5y4tk-o-UUog@mail.gmail.com>
-	<7vbooregj6.fsf@alter.siamese.dyndns.org>
-	<CAJDDKr72rPqp1z-12Ht3Q2UaeUVFutKwoOgkD1G+SbhsBs+p1A@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [RFC/PATCH 2/3] remote: reorganize check_pattern_match()
+Date: Wed, 22 Feb 2012 22:15:41 +0200
+Message-ID: <CAMP44s2HUG_ocHBaVpcsZHWMf2Tww+=bVun5H9+S5EGkoiJHRQ@mail.gmail.com>
+References: <1329505957-24595-1-git-send-email-felipe.contreras@gmail.com>
+	<1329505957-24595-3-git-send-email-felipe.contreras@gmail.com>
+	<7vvcn5qecl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 22 21:14:55 2012
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 22 21:15:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0IaU-00058y-8D
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 21:14:54 +0100
+	id 1S0IbM-0005oH-GK
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 21:15:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752436Ab2BVUOp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Feb 2012 15:14:45 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:49069 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751871Ab2BVUOo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Feb 2012 15:14:44 -0500
-Received: by iacb35 with SMTP id b35so469405iac.19
-        for <git@vger.kernel.org>; Wed, 22 Feb 2012 12:14:43 -0800 (PST)
-Received-SPF: pass (google.com: domain of tim.henigan@gmail.com designates 10.50.154.200 as permitted sender) client-ip=10.50.154.200;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of tim.henigan@gmail.com designates 10.50.154.200 as permitted sender) smtp.mail=tim.henigan@gmail.com; dkim=pass header.i=tim.henigan@gmail.com
-Received: from mr.google.com ([10.50.154.200])
-        by 10.50.154.200 with SMTP id vq8mr28994477igb.14.1329941683828 (num_hops = 1);
-        Wed, 22 Feb 2012 12:14:43 -0800 (PST)
+	id S1752681Ab2BVUPn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Feb 2012 15:15:43 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:58423 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751871Ab2BVUPm convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Feb 2012 15:15:42 -0500
+Received: by mail-lpp01m010-f46.google.com with SMTP id u2so485743lag.19
+        for <git@vger.kernel.org>; Wed, 22 Feb 2012 12:15:42 -0800 (PST)
+Received-SPF: pass (google.com: domain of felipe.contreras@gmail.com designates 10.112.84.233 as permitted sender) client-ip=10.112.84.233;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of felipe.contreras@gmail.com designates 10.112.84.233 as permitted sender) smtp.mail=felipe.contreras@gmail.com; dkim=pass header.i=felipe.contreras@gmail.com
+Received: from mr.google.com ([10.112.84.233])
+        by 10.112.84.233 with SMTP id c9mr10924111lbz.1.1329941742073 (num_hops = 1);
+        Wed, 22 Feb 2012 12:15:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=HJBz1qVqgb5y+XUc8ur2Ev7KhdzSc795RJj5CotS0l4=;
-        b=ivcZPzax40TfVG5WjdqJYebiNA9I+lorCCkorX0uzsx8fUVJqQ7ebpf0mbU/ZKv+lr
-         aYbTKJZp6sA3pES7QFFOANHKCq+7o6n1ukA4ntktjlldZJ014LD2oAwyPITEK2A6eyzb
-         7l/5ScjRGZFHuCyZGbQ+Q7i0wG97grAjJdnUI=
-Received: by 10.50.154.200 with SMTP id vq8mr23543165igb.14.1329941683782;
- Wed, 22 Feb 2012 12:14:43 -0800 (PST)
-Received: by 10.42.220.136 with HTTP; Wed, 22 Feb 2012 12:14:43 -0800 (PST)
-In-Reply-To: <CAJDDKr72rPqp1z-12Ht3Q2UaeUVFutKwoOgkD1G+SbhsBs+p1A@mail.gmail.com>
+        bh=nSQlbnduiJhajL7H5uoFUNDauROBIt0awcXey/x0xXs=;
+        b=EnSJblFtKE2QUheCsZ8AB0sXMf/OEQHhDmsSPv+RbyDmTR4BFCB7ipYzqZo1PLmbqQ
+         ppqFs0UH6ytmWMiZZZPFkYV9UFFLb5zzBgOH55N2FM7zQxIpbB/BDvwlNc0UBEbpMC6A
+         PtNqZO5TaihLrlIcYl6MqDfbxw0pP0e95b7rI=
+Received: by 10.112.84.233 with SMTP id c9mr9163481lbz.1.1329941741989; Wed,
+ 22 Feb 2012 12:15:41 -0800 (PST)
+Received: by 10.112.41.73 with HTTP; Wed, 22 Feb 2012 12:15:41 -0800 (PST)
+In-Reply-To: <7vvcn5qecl.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191277>
 
-On Wed, Feb 22, 2012 at 4:15 AM, David Aguilar <davvid@gmail.com> wrote=
-:
-> On Tue, Feb 21, 2012 at 6:41 PM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->> Tim Henigan <tim.henigan@gmail.com> writes:
+On Sat, Feb 18, 2012 at 12:34 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> There's a lot of code that can be consolidated there, and will be us=
+eful
+>> for next patches.
 >>
->> David, any idea on this?
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> ---
+>> =C2=A0remote.c | =C2=A0 59 ++++++++++++++++++++++++++++++-----------=
+------------------
+>> =C2=A01 files changed, 30 insertions(+), 29 deletions(-)
+>>
+>> diff --git a/remote.c b/remote.c
+>> index 55d68d1..019aafc 100644
+>> --- a/remote.c
+>> +++ b/remote.c
+>> @@ -1110,10 +1110,11 @@ static int match_explicit_refs(struct ref *s=
+rc, struct ref *dst,
+>> =C2=A0 =C2=A0 =C2=A0 return errs;
+>> =C2=A0}
+>>
+>> -static const struct refspec *check_pattern_match(const struct refsp=
+ec *rs,
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0int rs_nr,
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0const struct ref *src)
+>> +static char *check_pattern_match(const struct refspec *rs, int rs_n=
+r, struct ref *ref,
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int send_mirror, const s=
+truct refspec **ret_pat)
+>> =C2=A0{
 >
-> I don't see any bash-isms there myself, either. =C2=A0We should keep =
-this
-> stuff without bash-isms.
-> I haven't had time to read these patches in depth yet but will try to
-> read the re-roll.
+> For a change that not just adds parameters but removes an existing on=
+e,
+> this is way under-described with neither in-code comment nor log mess=
+age.
+
+But it doesn't. src is renamed to ref.
+
+>> + =C2=A0 =C2=A0 const struct refspec *pat;
+>> + =C2=A0 =C2=A0 char *name;
+>> =C2=A0 =C2=A0 =C2=A0 int i;
+>> =C2=A0 =C2=A0 =C2=A0 int matching_refs =3D -1;
+>> =C2=A0 =C2=A0 =C2=A0 for (i =3D 0; i < rs_nr; i++) {
+>> @@ -1123,14 +1124,31 @@ static const struct refspec *check_pattern_m=
+atch(const struct refspec *rs,
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 continue;
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
+>>
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (rs[i].pattern && mat=
+ch_name_with_pattern(rs[i].src, src->name,
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NULL, NU=
+LL))
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 return rs + i;
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (rs[i].pattern) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 const char *dst_side =3D rs[i].dst ? rs[i].dst : rs[i].src;
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 if (match_name_with_pattern(rs[i].src, ref->name, dst_side, &name))=
+ {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 matching_refs =3D i;
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;
 >
-> Can we ask the github user to elaborate on what exactly was erroring =
-out?
-> Does dash not handle || inside $()? =C2=A0We can only make wild guess=
-es
-> without their help.
+> We used to discard what match_name_with_pattern() finds out by matchi=
+ng a
+> wildcard refspec against the ref by passing two NULLs. =C2=A0This upd=
+ates the
+> code to capture what destination ref ref->name is mapped to, by using=
+ the
+> same logic as the original and only caller, i.e. 'foo' without destin=
+ation
+> maps to the same 'foo' destination, 'foo:bar' maps to the named 'bar'=
+=2E
 >
-> The only hint from the pull request is "silent exit with no results".
-> Do we do that?
-> There are a few code paths where we do "exit 1" but that's only under
-> error conditions.
+> This function is not used by fetching side of the codepath, so we do =
+not
+> have to worry about its need to use different dst_side selection logi=
+c
+> (i.e. 'foo' without destination maps to "do not store anywhere other =
+than
+> FETCH_HEAD"). =C2=A0Good.
+
+I actually didn't parse a lot of that.
+
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 }
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
+>> =C2=A0 =C2=A0 =C2=A0 }
+>> -...
+>> + =C2=A0 =C2=A0 if (matching_refs =3D=3D -1)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;
+>> +
+>> + =C2=A0 =C2=A0 pat =3D rs + matching_refs;
+>> + =C2=A0 =C2=A0 if (pat->matching) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* "matching refs";=
+ traditionally we pushed everything
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* including refs o=
+utside refs/heads/ hierarchy, but
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* that does not ma=
+ke much sense these days.
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!send_mirror && pref=
+ixcmp(ref->name, "refs/heads/"))
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 return NULL;
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 name =3D xstrdup(ref->na=
+me);
+>> + =C2=A0 =C2=A0 }
 >
-> We haven't had any reports about git-mergetool/difftool, which use
-> these functions...
-> are we certain the problem was not some other bash-isms in the script=
-?
+> So you are moving some code from what the sole caller of this functio=
+n
+> does after calling us, and that is where the new parameters come from=
+=2E
+> And by doing so, you do not have to run the same match_name_with_patt=
+ern()
+> again. =C2=A0OK.
 
-I have not heard back from the user, but I tested on Ubuntu earlier
-today.  I found that when using an older version of the script
-(fbedb7a in the GitHub repo), I could repeat the error.  It is the
-'git-diffall' script that fails silently, I believe due to a bash-ism
-that was fixed in a subsequent commit.
+Indeed.
 
-In my latest local version of the script, I have switched back to
-#!/bin/sh.  It runs successfully, so I will squash the change into v2
-of the patch.
-
-=46or what it is worth, since that bug was originally reported, I have
-been running "checkbashisms" [1] on the git-diffall script.  That
-utility reports that the script is clean.
-
--Tim
-
-[1]: http://sourceforge.net/projects/checkbaskisms/
+--=20
+=46elipe Contreras
