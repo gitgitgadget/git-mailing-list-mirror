@@ -1,118 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] bundle: use a strbuf to scan the log for boundary
- commits
-Date: Wed, 22 Feb 2012 12:22:04 -0800
-Message-ID: <7vlinuaaab.fsf@alter.siamese.dyndns.org>
-References: <a795f6dca5e7c3fc5f9212becda4a46116c502b7.1329939233.git.trast@student.ethz.ch> <fa1553d59714fd89fdab1bf54af19ac631a30a8c.1329939233.git.trast@student.ethz.ch>
+From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
+Subject: Re: Problems with unrecognized headers in git bundles
+Date: Wed, 22 Feb 2012 21:25:36 +0100
+Message-ID: <CAA787rm4c1zYgQJ3kP5=ujpEK1Dda9+h_P3BBmg2yX2eZca=TA@mail.gmail.com>
+References: <4F451259.7010304@codethink.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>,
-	Jannis Pohlmann <jannis.pohlmann@codethink.co.uk>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Feb 22 21:22:22 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jannis Pohlmann <jannis.pohlmann@codethink.co.uk>
+X-From: git-owner@vger.kernel.org Wed Feb 22 21:25:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0Iha-0002Hf-CJ
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 21:22:14 +0100
+	id 1S0Ikw-0004vT-ME
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 21:25:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752869Ab2BVUWI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Feb 2012 15:22:08 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41362 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751871Ab2BVUWH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Feb 2012 15:22:07 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 804256466;
-	Wed, 22 Feb 2012 15:22:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4qk3Hrbquq/UVBdL//cBSjWEexA=; b=wtWiz3
-	Ik04zVaR4bQIFNNoRoR4VtzgUnEGKikgep2KZBjZDWupbR4XZCWDlZ+GDLMPcTLK
-	b7c5ClQ6QX8tm0Bi0s25zcPvFP+qjA0jUmx2jPo9YMCo8dpW9SfoR5ehPmnTatct
-	hiccJo2J5FV/Yae/Bn9Ea/vS1pDNT8lZ9bFjk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=o1pJkI8bGqdbf+STxVsf2BvX7uf+MAmV
-	J2bl9Bsp6wRajqa+Nzda/penmM916P2xErmisSVSN7ujY5LbB954VnW1Jf6H/od8
-	eo0GsyhASMznXjXG/5Vx9PZu16qEtogV1sdZpjXOIQm+eiCDhEPvlxs4Jb5nsBp6
-	SDqijRIt2mY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7803C6465;
-	Wed, 22 Feb 2012 15:22:06 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C8FCA6461; Wed, 22 Feb 2012
- 15:22:05 -0500 (EST)
-In-Reply-To: <fa1553d59714fd89fdab1bf54af19ac631a30a8c.1329939233.git.trast@student.ethz.ch> (Thomas Rast's message of "Wed, 22 Feb 2012 20:34:23 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E353AD66-5D92-11E1-BCAB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753035Ab2BVUZi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Feb 2012 15:25:38 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:60919 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752199Ab2BVUZh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Feb 2012 15:25:37 -0500
+Received: by qadc10 with SMTP id c10so5945488qad.19
+        for <git@vger.kernel.org>; Wed, 22 Feb 2012 12:25:36 -0800 (PST)
+Received-SPF: pass (google.com: domain of sunny256@gmail.com designates 10.229.136.19 as permitted sender) client-ip=10.229.136.19;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of sunny256@gmail.com designates 10.229.136.19 as permitted sender) smtp.mail=sunny256@gmail.com; dkim=pass header.i=sunny256@gmail.com
+Received: from mr.google.com ([10.229.136.19])
+        by 10.229.136.19 with SMTP id p19mr24193854qct.133.1329942336926 (num_hops = 1);
+        Wed, 22 Feb 2012 12:25:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=8v0Hp5l2fXGOVEAeyDiZ8gNDjVrnEuvdYj133qlmGUI=;
+        b=xZEi8lzQEcF5b1Xv+aLd3DjjPp6d3p+zWT+utzeCYTkaFSJhop3o6WPpyMG0dcFDS6
+         nT2EOPBkeYjFmwcNoXvVFvkkI9Qwetd+QgKYnZITXcKbjfXFxfYb4wiNHjh2bshBKDec
+         6E9KdA6dZIX/6f+MhBSNfhkNgvwHOZYHzJ64o=
+Received: by 10.229.136.19 with SMTP id p19mr20460856qct.133.1329942336819;
+ Wed, 22 Feb 2012 12:25:36 -0800 (PST)
+Received: by 10.229.240.133 with HTTP; Wed, 22 Feb 2012 12:25:36 -0800 (PST)
+In-Reply-To: <4F451259.7010304@codethink.co.uk>
+X-Google-Sender-Auth: yfW2ZQ0rOO_5UpBQ7pkfNE1L48c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191279>
 
-Thomas Rast <trast@student.ethz.ch> writes:
-
-> The first part of the bundle header contains the boundary commits, and
-> could be approximated by
+On 22 February 2012 17:05, Jannis Pohlmann wrote:
+> Hi,
 >
->   # v2 git bundle
->   $(git rev-list --pretty=oneline --boundary <ARGS> | grep ^-)
+> creating bundles from some repositories seems to lead to bundles with
+> incorrectly formatted headers, at least with git >=3D 1.7.2. When
+> cloning from such bundles, git prints the following error/warning:
 >
-> git-bundle actually spawns exactly this rev-list invocation, and does
-> the grepping internally.
+> =C2=A0$ git clone perl-clone.bundle perl-clone
+> =C2=A0Cloning into 'perl-clone'...
+> =C2=A0warning: unrecognized header: --work around mangled archname on=
+=2E..
 >
-> There was a subtle bug in the latter step: it used fgets() with a
-> 1024-byte buffer.  If the user has sufficiently long subjects (e.g.,
-> by not adhering to the git oneline-subject convention in the first
-> place), the 'oneline' format can easily overflow the buffer.  fgets()
-> then returns the rest of the line in the next call(s).  If one of
-> these remaining parts started with '-', git-bundle would mistakenly
-> insert it into the bundle thinking it was a boundary commit.
+> This can be reproduced easily with git from any version >=3D 1.7.2 or
+> from master, using the following steps:
 >
-> Fix it by using strbuf_getwholeline() instead, which handles arbitrary
-> line lengths correctly.
+> =C2=A0git clone git://perl5.git.perl.org/perl.git perl
+> =C2=A0GIT_DIR=3Dperl/.git git bundle create perl-clone.bundle --all
+> =C2=A0git clone perl-clone.bundle perl-clone
 >
-> Note that on the receiving side in parse_bundle_header() we were
-> already using strbuf_getwholeline_fd(), so that part is safe.
+> The content of the bundle is:
+>
+> =C2=A0# v2 git bundle
+> =C2=A0-- work around mangled archname on win32 while finding...
+> =C2=A039ec54a59ce332fc44e553f4e5eeceef88e8369e refs/heads/blead
+> =C2=A039ec54a59ce332fc44e553f4e5eeceef88e8369e refs/remotes/origin/HE=
+AD
 
-Thanks for diagnosing this, but I wonder if it even needs --pretty=oneline
-to begin with, except for debugging purposes.
+Have researched this a bit, and I've found that all git versions back t=
+o
+when git-bundle was introduced (around v1.5.4) produces the same invali=
+d
+line. The culprit is commit 3e8148feadabd0d0b1869fcc4d218a6475a5b0bc in
+perl.git, branch 'maint-5.005'. The log message of that commit contains
+email headers, maybe that's the reason git bundle gets confused?
 
-Do we ever use the subject string read from the rev-list output in any
-way?
-
-In other words, I am wondering if the right patch to minimally fix the
-issue starting from older releases is something along this line instead:
-
-diff --git a/bundle.c b/bundle.c
-index b8acf3c..339dbb0 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -248,7 +248,7 @@ int create_bundle(struct bundle_header *header, const char *path,
- 	static struct lock_file lock;
- 	int bundle_fd = -1;
- 	int bundle_to_stdout;
--	const char **argv_boundary = xmalloc((argc + 4) * sizeof(const char *));
-+	const char **argv_boundary = xmalloc((argc + 3) * sizeof(const char *));
- 	const char **argv_pack = xmalloc(6 * sizeof(const char *));
- 	int i, ref_count = 0;
- 	char buffer[1024];
-@@ -271,11 +271,10 @@ int create_bundle(struct bundle_header *header, const char *path,
- 	init_revisions(&revs, NULL);
- 
- 	/* write prerequisites */
--	memcpy(argv_boundary + 3, argv + 1, argc * sizeof(const char *));
-+	memcpy(argv_boundary + 2, argv + 1, argc * sizeof(const char *));
- 	argv_boundary[0] = "rev-list";
- 	argv_boundary[1] = "--boundary";
--	argv_boundary[2] = "--pretty=oneline";
--	argv_boundary[argc + 2] = NULL;
-+	argv_boundary[argc + 1] = NULL;
- 	memset(&rls, 0, sizeof(rls));
- 	rls.argv = argv_boundary;
- 	rls.out = -1;
+        =C3=98yvind
