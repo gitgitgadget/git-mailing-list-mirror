@@ -1,80 +1,131 @@
-From: Steven Walter <stevenrwalter@gmail.com>
-Subject: Re: [PATCH] git-svn.perl: fix a false-positive in the "already
- exists" test
-Date: Tue, 21 Feb 2012 21:32:29 -0500
-Message-ID: <CAK8d-aLXs0yMzYMXm7fKytOGDXesUEx7a8PN_Mg9gw6+Q6OTBA@mail.gmail.com>
-References: <20120219105442.GA11889@dcvr.yhbt.net> <1329747474-17976-1-git-send-email-stevenrwalter@gmail.com>
- <7vk43feho8.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] contrib: added git-diffall
+Date: Tue, 21 Feb 2012 18:41:17 -0800
+Message-ID: <7vbooregj6.fsf@alter.siamese.dyndns.org>
+References: <1329785969-828-1-git-send-email-tim.henigan@gmail.com>
+ <7vd397g8ic.fsf@alter.siamese.dyndns.org>
+ <CAFouetiLmK3dXLRkBh+cTNA_OMPS77xo8z95WK5y4tk-o-UUog@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: normalperson@yhbt.net, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 22 03:32:56 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 22 03:41:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S020l-0002Q4-TU
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 03:32:56 +0100
+	id 1S029R-0000Va-Cb
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 03:41:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755654Ab2BVCcu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Feb 2012 21:32:50 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:56907 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753641Ab2BVCct convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Feb 2012 21:32:49 -0500
-Received: by ghrr11 with SMTP id r11so3235126ghr.19
-        for <git@vger.kernel.org>; Tue, 21 Feb 2012 18:32:49 -0800 (PST)
-Received-SPF: pass (google.com: domain of stevenrwalter@gmail.com designates 10.101.136.7 as permitted sender) client-ip=10.101.136.7;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of stevenrwalter@gmail.com designates 10.101.136.7 as permitted sender) smtp.mail=stevenrwalter@gmail.com; dkim=pass header.i=stevenrwalter@gmail.com
-Received: from mr.google.com ([10.101.136.7])
-        by 10.101.136.7 with SMTP id o7mr1643676ann.55.1329877969238 (num_hops = 1);
-        Tue, 21 Feb 2012 18:32:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=27Cf5yqcF1HqTm2mBCZLipYTD00sNbR4rpPeYzHmR0U=;
-        b=MXAWNfdJClz2PQ7AuAnUxsJLvnkaCubCCF852QEqY8u2nVRgCDcdQugKL77N3+AFma
-         nWzm4Fyy2y3Dd6xshDNCyVvEAkU5Uud12//JWElYXt8Vh06Q+vmr1jeXjqONXvJGB4Pe
-         mazb40SZIxSKPgZh16QrfYEXJBmLm6XjH+4sM=
-Received: by 10.101.136.7 with SMTP id o7mr1347593ann.55.1329877969156; Tue,
- 21 Feb 2012 18:32:49 -0800 (PST)
-Received: by 10.100.96.10 with HTTP; Tue, 21 Feb 2012 18:32:29 -0800 (PST)
-In-Reply-To: <7vk43feho8.fsf@alter.siamese.dyndns.org>
+	id S1753335Ab2BVCl0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Feb 2012 21:41:26 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39990 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752065Ab2BVClX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Feb 2012 21:41:23 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E2F677BA8;
+	Tue, 21 Feb 2012 21:41:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0ETroTSK3cYgBKyHrkiQ6e4bApA=; b=TMxWJR
+	rwfJb8zbv8gyTVoSsCc1DOXrkOJC41Kt9hgNg1bP/Z9R0qNegouZDyAJo9cD0kZJ
+	+YhFifWIgH1nJ7VNCiGVvK5D3a6u2hLGjDfVu+Dd3m71wagQrs/GHk5lCBK/lWu3
+	M//FW38VIILZ0orU6hw3SgohbrpvXjiyuydXg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tQIib/+CIPMD8GE2gUBljHrXg42vbPtA
+	Ct0Gh8Eq7dd7vKsNzBbUsl5/fC8hhBZsfoDIyWhZtx/kW9D2B8kZQa3GDRVVRMaL
+	7RWZ8AfYSIVySNk36KUrdWKUWkcSdTn3xGc3M49IgNiWAzxyf0pJOrsv8fAj5VRB
+	VnkUE2rkYdE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D966B7BA7;
+	Tue, 21 Feb 2012 21:41:19 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3DF367BA6; Tue, 21 Feb 2012
+ 21:41:19 -0500 (EST)
+In-Reply-To: <CAFouetiLmK3dXLRkBh+cTNA_OMPS77xo8z95WK5y4tk-o-UUog@mail.gmail.com> (Tim
+ Henigan's message of "Tue, 21 Feb 2012 21:02:43 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B303EDD6-5CFE-11E1-BDD7-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191225>
 
-On Tue, Feb 21, 2012 at 9:16 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Steven Walter <stevenrwalter@gmail.com> writes:
->
->> diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
->> index b041516..4029f84 100755
->> --- a/t/t9100-git-svn-basic.sh
->> +++ b/t/t9100-git-svn-basic.sh
->> @@ -92,9 +92,11 @@ test_expect_success "$name" '
->> =A0 =A0 =A0 echo yyy > bar/zzz/yyy &&
->> =A0 =A0 =A0 git update-index --add bar/zzz/yyy &&
->> =A0 =A0 =A0 git commit -m "$name" &&
->> + =A0 =A0 git svn set-tree --find-copies-harder --rmdir \
->> + =A0 =A0 =A0 =A0 =A0 =A0 ${remotes_git_svn}..mybranch3 &&
->> + =A0 =A0 svn_cmd up "$SVN_TREE" &&
->> + =A0 =A0 test -d "$SVN_TREE"/bar/zzz &&
->> + =A0 =A0 test -e "$SVN_TREE"/bar/zzz/yyy ' || true
->
-> Care to explain what this " || true" is doing here, please?
+Tim Henigan <tim.henigan@gmail.com> writes:
 
-Ahh, good catch.  I think the answer is that it shouldn't be there.
-It was originally there because of the "test_must_fail" line, I think
-(at least the other tests that use test_must_fail also have "||
-true").  The tests all still pass with that "|| true" removed.  Do you
-want to just fix that up, or a new version of the original patch, or a
-fix on top of the original patches?
---=20
--Steven Walter <stevenrwalter@gmail.com>
+> There is no specific reason it must be bash.  I changed from
+> "#!/bin/sh" to "#!/bin/bash -e" due to a bug report from a user on
+> Ubuntu [1].  The user reported that:
+>
+>     "If you use /bin/sh on ubuntu you get the dash shell instead of bash shell.
+>     This causes git_merge_tool_path to fail. The error isn't trapped,
+> so it exits
+>     without displaying anything and without cleaning up."
+>
+> Given that all the other scripts distributed with git use /bin/sh, I
+> will change this script to match.
+
+You need to dig back to that bug report deeper and find out what exactly
+is causing the "failure", before blindly allowing /bin/dash to be used.
+
+I think the above function name is a typo of get_merge_tool_path that is
+borrowed from git-mergetool--lib.sh, but nothing in the function jumps as
+a blatant bash-ism at me from a quick reading.
+
+David, any idea on this?
+
+>> The following is only after a cursory scanning, so there may be other
+>> things that needs fixing, but anyway:
+>>
+>>  - Don't use "which" in scripts.  Its output is not machine parseable, and
+>>   exit code is not reliable, across platforms.  It is only meant for
+>>   consumption by human who can read English (or natural language in the
+>>   current locale).
+>
+> I used "which" in two places.  Both were added to support problems
+> with missing standard tools on certain platforms (missing mktemp on
+> msysgit and missing option from tar on Mac [2]).  Is there some other
+> standard way to detect the platform or if certain utils are present?
+
+There are examples in the script you are borrowing functions from, even in
+the function that allegedly fail for the dash user ;-).
+
+> The cleanup triggers on all the platforms I have tested (Ubuntu,
+> msysgit, Mac).  I could change it, but for me it has "just worked".
+
+You set "trap cleanup" for exit event, and then the control reaches the
+end of the script, which is an exit event, and the cleanup function is
+called.  So it is natural that if you manage to get to that "trap cleanup"
+line, of course cleanup will run.  But if you dropped "trap" and "EXIT"
+from that line, it amounts to the same thing.
+
+A more important thing to know is that until the control reaches that
+"trap cleanup EXIT" line, you do not have that trap set.  So if you caused
+the program to exit in an earlier part of the program (say, in the big
+"while read name" loop) before the control reaches this line, you won't
+see any cleanup.
+
+Perhaps that is what you wanted, but then again writing "trap" and "EXIT"
+there is pointless.
+
+Usually people set up a clean-up task with trap before going into complex
+stuff, so that no matter where in the complex code the trapped condition
+(typically a signal, but an exit event is also possible) happens, they can
+be sure the clean-up task is run.  That is the reason behind the following
+ordering.
+
+>> If you are to set up temporary files or directories that you want to clean
+>> up, a good discipline is to follow this order:
+>>
+>>  - define variable(s) to hold the temporary locations, e.g.
+>>    tmpdir=$(mktemp ...)
+>>
+>>  - set the trap before starting to use these temporary locations, e.g.
+>>    trap 'rm -rf "$tmpdir' 0 1 2 3 15
+>>
+>>  - and then start populating tmpdir and do whatever you want to do.
