@@ -1,53 +1,74 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn.perl: fix a false-positive in the "already
- exists" test
-Date: Wed, 22 Feb 2012 00:33:17 +0000
-Message-ID: <20120222003317.GA1069@dcvr.yhbt.net>
-References: <20120219105442.GA11889@dcvr.yhbt.net>
- <1329747474-17976-1-git-send-email-stevenrwalter@gmail.com>
+Subject: [PULL git-svn] various git svn updates
+Date: Wed, 22 Feb 2012 00:38:57 +0000
+Message-ID: <20120222003857.GA1212@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Steven Walter <stevenrwalter@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 22 01:33:40 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Steven Walter <stevenrwalter@gmail.com>,
+	Steven Walter <swalter@lexmark.com>,
+	Wei-Yin Chen <chen.weiyin@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Frederic Heitzmann <frederic.heitzmann@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 22 01:39:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S009K-0004ts-8T
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 01:33:38 +0100
+	id 1S00EY-0007br-W6
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 01:39:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753133Ab2BVAdT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Feb 2012 19:33:19 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:42202 "EHLO dcvr.yhbt.net"
+	id S1754727Ab2BVAi6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Feb 2012 19:38:58 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:33736 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751747Ab2BVAdT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Feb 2012 19:33:19 -0500
+	id S1752631Ab2BVAi6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Feb 2012 19:38:58 -0500
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D09131F7A8;
-	Wed, 22 Feb 2012 00:33:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA6851F7A8;
+	Wed, 22 Feb 2012 00:38:57 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <1329747474-17976-1-git-send-email-stevenrwalter@gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191205>
 
-Steven Walter <stevenrwalter@gmail.com> wrote:
-> open_or_add_dir checks to see if the directory already exists or not.
-> If it already exists and is not a directory, then we fail.  However,
-> open_or_add_dir did not previously account for the possibility that the
-> path did exist as a file, but is deleted in the current commit.
-> 
-> In order to prevent this legitimate case from failing, open_or_add_dir
-> needs to know what files are deleted in the current commit.
-> Unfortunately that information has to be plumbed through a couple of
-> layers.
-> 
-> Signed-off-by: Steven Walter <stevenrwalter@gmail.com>
+The following changes since commit b3a769dc355b32c95783dc07f59e4dfebdd8=
+bdc7:
 
-Thanks, will push.
-Acked-by: Eric Wong <normalperson@yhbt.net>
+  Update draft release notes to 1.7.10 (2012-02-20 00:29:40 -0800)
+
+are available in the git repository at:
+
+  git://bogomips.org/git-svn master
+
+for you to fetch changes up to 379862ec5a413e636d977a6ea3d618f0b3eafceb=
+:
+
+  git-svn.perl: fix a false-positive in the "already exists" test (2012=
+-02-21 21:37:31 +0000)
+
+----------------------------------------------------------------
+=46rederic Heitzmann (1):
+      completion: add --interactive option to git svn dcommit
+
+Steven Walter (2):
+      git-svn.perl: perform deletions before anything else
+      git-svn.perl: fix a false-positive in the "already exists" test
+
+Wei-Yin Chen (=E9=99=B3=E5=A8=81=E5=B0=B9) (1):
+      git-svn: Fix time zone in --localtime
+
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (2):
+      git-svn: remove redundant porcelain option to rev-list
+      git-svn: un-break "git svn rebase" when log.abbrevCommit=3Dtrue
+
+ contrib/completion/git-completion.bash |    2 +-
+ git-svn.perl                           |   68 +++++++++++++++++++-----=
+--------
+ t/t9100-git-svn-basic.sh               |   33 +++++++++-------
+ 3 files changed, 59 insertions(+), 44 deletions(-)
