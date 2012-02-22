@@ -1,80 +1,133 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4] git-p4: add initial support for RCS keywords
-Date: Wed, 22 Feb 2012 11:29:53 -0800
-Message-ID: <7vy5ruacpa.fsf@alter.siamese.dyndns.org>
-References: <1329905741-2092-1-git-send-email-luke@diamand.org>
- <1329905741-2092-2-git-send-email-luke@diamand.org>
- <20120222125327.GA2292@padd.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH 2/2] bundle: use a strbuf to scan the log for boundary commits
+Date: Wed, 22 Feb 2012 20:34:23 +0100
+Message-ID: <fa1553d59714fd89fdab1bf54af19ac631a30a8c.1329939233.git.trast@student.ethz.ch>
+References: <a795f6dca5e7c3fc5f9212becda4a46116c502b7.1329939233.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Eric Scouten <eric@scouten.com>,
-	Pete Wyckoff <pw@padd.com>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Wed Feb 22 20:30:03 2012
+Content-Type: text/plain
+Cc: Jannis Pohlmann <jannis.pohlmann@codethink.co.uk>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 22 20:34:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0Ht4-0005N6-Tl
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 20:30:03 +0100
+	id 1S0HxV-0000TY-C7
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 20:34:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755277Ab2BVT35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Feb 2012 14:29:57 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51371 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754734Ab2BVT34 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Feb 2012 14:29:56 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20EC97933;
-	Wed, 22 Feb 2012 14:29:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qwBKU2NWClCUPys4liEssAE0L30=; b=JzdFaf
-	J+x2fdz7tEGUjYJxSRURBIWCS6aJlU20VoDZAzCFqdiw3QMk6d5R0IIxPiBolbPp
-	9pbWPRRA1m+Vty4z+nANHqRUnt8poPD7tHd1y3t45P0aUmDNzkM34YjV1Ee20NTw
-	y9e+/sTp5Bhl/0yB8weF5hbhc+ori62FuZm44=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J46oIiJoTlzrSAikV9h1RV/sbPoSEG2m
-	CDtpanq3pvPl789RmqQEBAQ00NjxMIxZ1HQHBVY5re9UsFxPJ52OSyQZI/E2Qkm/
-	pf9RwjxFoxWtRDhXh/x5P0ZG91nddYRokpp5ikRH2lGkVFCIO0rrsN+JOK839xrD
-	NdERfkewDUQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 170187932;
-	Wed, 22 Feb 2012 14:29:55 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9F1D27931; Wed, 22 Feb 2012
- 14:29:54 -0500 (EST)
-In-Reply-To: <20120222125327.GA2292@padd.com> (Pete Wyckoff's message of
- "Wed, 22 Feb 2012 07:53:27 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9900FC8E-5D8B-11E1-89A5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755346Ab2BVTec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Feb 2012 14:34:32 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:58843 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751995Ab2BVTeb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Feb 2012 14:34:31 -0500
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 22 Feb
+ 2012 20:34:28 +0100
+Received: from thomas.inf.ethz.ch (129.132.209.16) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 22 Feb
+ 2012 20:34:28 +0100
+X-Mailer: git-send-email 1.7.9.1.430.g4998543
+In-Reply-To: <a795f6dca5e7c3fc5f9212becda4a46116c502b7.1329939233.git.trast@student.ethz.ch>
+X-Originating-IP: [129.132.209.16]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191271>
 
-Pete Wyckoff <pw@padd.com> writes:
+The first part of the bundle header contains the boundary commits, and
+could be approximated by
 
->> Improved-by: Pete Wyckoff <pw@padd.com>
->> Signed-off-by: Luke Diamand <luke@diamand.org>
->
-> Looks brilliant.  Ack.  Thanks for suffering through N rounds of
-> review.  :)
+  # v2 git bundle
+  $(git rev-list --pretty=oneline --boundary <ARGS> | grep ^-)
 
-Well, I hate to say that I need to ask another round, to redo this patch
-on top of ld/git-p4-expanded-keywords topic that has already been in
-'next'; a patch that replaces what is in 'next' will lose fix-ups for
-issues I pointed out in the first round that you forgot to follow and were
-fixed up locally by me when I queued the existing one.
+git-bundle actually spawns exactly this rev-list invocation, and does
+the grepping internally.
 
-When working on an improvement to what you have sent out, please make it a
-habit of comparing your result with what are already queued, even when the
-earlier patches are still in 'pu'.  They often are polished with trivial
-improvements (both to the patch and the log message) based on review
-comments from people when they are queued, which you do not want to lose.
+There was a subtle bug in the latter step: it used fgets() with a
+1024-byte buffer.  If the user has sufficiently long subjects (e.g.,
+by not adhering to the git oneline-subject convention in the first
+place), the 'oneline' format can easily overflow the buffer.  fgets()
+then returns the rest of the line in the next call(s).  If one of
+these remaining parts started with '-', git-bundle would mistakenly
+insert it into the bundle thinking it was a boundary commit.
 
-Thanks.
+Fix it by using strbuf_getwholeline() instead, which handles arbitrary
+line lengths correctly.
+
+Note that on the receiving side in parse_bundle_header() we were
+already using strbuf_getwholeline_fd(), so that part is safe.
+
+Reported-by: Jannis Pohlmann <jannis.pohlmann@codethink.co.uk>
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
+ bundle.c          |   14 +++++++-------
+ t/t5704-bundle.sh |   17 +++++++++++++++++
+ 2 files changed, 24 insertions(+), 7 deletions(-)
+
+diff --git a/bundle.c b/bundle.c
+index 313de42..0dbd174 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -234,7 +234,7 @@ int create_bundle(struct bundle_header *header, const char *path,
+ 	const char **argv_boundary = xmalloc((argc + 4) * sizeof(const char *));
+ 	const char **argv_pack = xmalloc(6 * sizeof(const char *));
+ 	int i, ref_count = 0;
+-	char buffer[1024];
++	struct strbuf buf = STRBUF_INIT;
+ 	struct rev_info revs;
+ 	struct child_process rls;
+ 	FILE *rls_fout;
+@@ -266,16 +266,16 @@ int create_bundle(struct bundle_header *header, const char *path,
+ 	if (start_command(&rls))
+ 		return -1;
+ 	rls_fout = xfdopen(rls.out, "r");
+-	while (fgets(buffer, sizeof(buffer), rls_fout)) {
++	while (strbuf_getwholeline(&buf, rls_fout, '\n') != EOF) {
+ 		unsigned char sha1[20];
+-		if (buffer[0] == '-') {
+-			write_or_die(bundle_fd, buffer, strlen(buffer));
+-			if (!get_sha1_hex(buffer + 1, sha1)) {
++		if (buf.len > 0 && buf.buf[0] == '-') {
++			write_or_die(bundle_fd, buf.buf, buf.len);
++			if (!get_sha1_hex(buf.buf + 1, sha1)) {
+ 				struct object *object = parse_object(sha1);
+ 				object->flags |= UNINTERESTING;
+-				add_pending_object(&revs, object, buffer);
++				add_pending_object(&revs, object, buf.buf);
+ 			}
+-		} else if (!get_sha1_hex(buffer, sha1)) {
++		} else if (!get_sha1_hex(buf.buf, sha1)) {
+ 			struct object *object = parse_object(sha1);
+ 			object->flags |= SHOWN;
+ 		}
+diff --git a/t/t5704-bundle.sh b/t/t5704-bundle.sh
+index 4ae127d..7c2f307 100755
+--- a/t/t5704-bundle.sh
++++ b/t/t5704-bundle.sh
+@@ -59,4 +59,21 @@ test_expect_success 'empty bundle file is rejected' '
+ 
+ '
+ 
++# If "ridiculous" is at least 1004 chars, this traps a bug in old
++# versions where the resulting 1025-char line (with --pretty=oneline)
++# was longer than a 1024-char buffer
++test_expect_success 'ridiculously long subject in boundary' '
++
++	: > file4 &&
++	test_tick &&
++	git add file4 &&
++	printf "abcdefghijkl %s\n" $(seq 1 100) | git commit -F - &&
++	test_commit fifth &&
++	git bundle create long-subject-bundle.bdl HEAD^..HEAD &&
++	git fetch long-subject-bundle.bdl &&
++	sed -n "/^-/{p;q}" long-subject-bundle.bdl > boundary &&
++	grep "^-$_x40 " boundary
++
++'
++
+ test_done
+-- 
+1.7.9.1.430.g4998543
