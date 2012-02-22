@@ -1,81 +1,63 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [FYI] very large text files and their problems.
-Date: Wed, 22 Feb 2012 23:18:19 +0700
-Message-ID: <CACsJy8Bdbegs7QdztvsFnKPcpAX5UL7s7uc37wF3_nF4kJQjrQ@mail.gmail.com>
-References: <20120222154926.GC11202@pomac.netswarm.net>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH] Improve http proxy support
+Date: Wed, 22 Feb 2012 17:43:25 +0100
+Message-ID: <87fwe2x1hu.fsf@thomas.inf.ethz.ch>
+References: <CAAUd640GaLz4TGs_Lz6KbSFK0VcEVxGfO6PpSCdhch+fYwVovw@mail.gmail.com>
+	<vpqd397x8fc.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Ian Kumlien <pomac@vapor.com>
-X-From: git-owner@vger.kernel.org Wed Feb 22 17:18:58 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, <git@vger.kernel.org>
+To: Nelson =?utf-8?B?QmVuw610ZXogTGXDs24=?= <nbenitezl@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 22 17:43:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0Eu8-0004CQ-9W
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 17:18:57 +0100
+	id 1S0FHy-0004Mj-1d
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 17:43:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753734Ab2BVQSv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Feb 2012 11:18:51 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:53178 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752255Ab2BVQSu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Feb 2012 11:18:50 -0500
-Received: by wics10 with SMTP id s10so139131wic.19
-        for <git@vger.kernel.org>; Wed, 22 Feb 2012 08:18:49 -0800 (PST)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.180.74.177 as permitted sender) client-ip=10.180.74.177;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.180.74.177 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
-Received: from mr.google.com ([10.180.74.177])
-        by 10.180.74.177 with SMTP id u17mr37184565wiv.13.1329927529333 (num_hops = 1);
-        Wed, 22 Feb 2012 08:18:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=7VIhD3FzE/Kbp+fS1ajy8bkOmNVHflJlAKhRk7hfc6Q=;
-        b=GaaDYrWKGEsiyHlvo8J2sSsTnOXMrerMsocfc968rmmfQAizToRnm65xzNO9qU9L9h
-         5SXt1Nr5Ui3n6gZhAiXWhEx8XzzE6Bew+rQNrYWMa290DQCJxDbQHMsfbaZB/+i1o0gR
-         rMOj9C6mmOMb+VVxA/nnuntp6pOWo5MAzOras=
-Received: by 10.180.74.177 with SMTP id u17mr30746822wiv.13.1329927529264;
- Wed, 22 Feb 2012 08:18:49 -0800 (PST)
-Received: by 10.223.13.5 with HTTP; Wed, 22 Feb 2012 08:18:19 -0800 (PST)
-In-Reply-To: <20120222154926.GC11202@pomac.netswarm.net>
+	id S1754073Ab2BVQna convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Feb 2012 11:43:30 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:41005 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754029Ab2BVQn2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Feb 2012 11:43:28 -0500
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 22 Feb
+ 2012 17:43:23 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 22 Feb
+ 2012 17:43:25 +0100
+In-Reply-To: <vpqd397x8fc.fsf@bauges.imag.fr> (Matthieu Moy's message of "Wed,
+	22 Feb 2012 15:13:43 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191264>
 
-On Wed, Feb 22, 2012 at 10:49 PM, Ian Kumlien <pomac@vapor.com> wrote:
-> Hi,
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+
+> Nelson Ben=C3=ADtez Le=C3=B3n <nbenitezl@gmail.com> writes:
 >
-> We just saw a interesting issue, git compressed a ~3.4 gb project to ~57 mb.
-
-How big are those files? How many of them? How often do they change?
-
-> But when we tried to clone it on a big machine we got:
+>> Hi, my initial motivation for this patch was to add NTLM proxy
+>> authentication [...]
 >
-> fatal: Out of memory, malloc failed (tried to allocate
-> 18446744072724798634 bytes)
->
-> This is already fixed in the 1.7.10 mainline - but it also seems like
+> That sounds interesting, but please read Documentation/SubmittingPatc=
+hes
+> in Git's tree. The formatting of your email is wrong (giving more wor=
+k
+> for your maintainer) and you need to sign-off your patch to allow you=
+r
+> code to be legally included.
 
-Does 1.7.9 have this problem?
+Judging from the message, it also conflates three changes into one
+patch.  Don't do that.
 
-> git needs to have atleast the same ammount of memory as the largest
-> file free... Couldn't this be worked around?
->
-> On a (32 bit) machine with 4GB memory - results in:
-> fatal: Out of memory, malloc failed (tried to allocate 3310214313 bytes)
->
-> (and i see how this could be a problem, but couldn't it be mitigated? or
-> is it bydesign and intended behaviour?)
-
-I think that it's delta resolving that hogs all your memory. If your
-files are smaller than 512M, try lower core.bigFileThreshold. The
-topic jc/split-blob, which stores a big file are several smaller
-pieces, might solve your problem. Unfortunately the topic is not
-complete yet.
--- 
-Duy
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
