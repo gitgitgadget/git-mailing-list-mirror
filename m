@@ -1,137 +1,117 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 4/5] xdiff: introduce XDF_IGNORE_CASE
-Date: Wed, 22 Feb 2012 10:07:56 -0800 (PST)
-Message-ID: <m3ehtmeo7c.fsf@localhost.localdomain>
-References: <1329704188-9955-1-git-send-email-gitster@pobox.com>
-	<1329704188-9955-5-git-send-email-gitster@pobox.com>
+From: Ian Kumlien <pomac@vapor.com>
+Subject: Re: [FYI] very large text files and their problems.
+Date: Wed, 22 Feb 2012 19:39:40 +0100
+Message-ID: <1329935980.23912.5.camel@pi>
+Reply-To: pomac@vapor.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 22 19:08:07 2012
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-532IvP1wWiPEST2AAE3X"
+Cc: pclouds@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 22 19:46:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0Gbl-0005aE-Ou
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 19:08:06 +0100
+	id 1S0HDF-0007yt-7G
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 19:46:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754754Ab2BVSH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Feb 2012 13:07:59 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:53540 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753022Ab2BVSH6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Feb 2012 13:07:58 -0500
-Received: by eekc14 with SMTP id c14so125099eek.19
-        for <git@vger.kernel.org>; Wed, 22 Feb 2012 10:07:57 -0800 (PST)
-Received-SPF: pass (google.com: domain of jnareb@gmail.com designates 10.14.119.202 as permitted sender) client-ip=10.14.119.202;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of jnareb@gmail.com designates 10.14.119.202 as permitted sender) smtp.mail=jnareb@gmail.com; dkim=pass header.i=jnareb@gmail.com
-Received: from mr.google.com ([10.14.119.202])
-        by 10.14.119.202 with SMTP id n50mr16206946eeh.120.1329934077751 (num_hops = 1);
-        Wed, 22 Feb 2012 10:07:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=xROYE1aqSB34Fh0O137c2t5JxhOzclVtX835aDHm+yw=;
-        b=BVoB3L3BZTPodnlIeD/rM5276BqyEk+syHH0AVhm0tzd4MzIqJCi15hFF94TuxlFKV
-         gvxa3r/evHyLwqxo+dhHGLOQOTdAq1+0wV7vwRwSufHZnUD6OeLwcNk5KztzdB24OP9Y
-         P3tIB4AGW9yGFEDJ7wso17eMcPetI2AhAfhqg=
-Received: by 10.14.119.202 with SMTP id n50mr12984392eeh.120.1329934077572;
-        Wed, 22 Feb 2012 10:07:57 -0800 (PST)
-Received: from localhost.localdomain (abvp35.neoplus.adsl.tpnet.pl. [83.8.213.35])
-        by mx.google.com with ESMTPS id c16sm105152663eei.1.2012.02.22.10.07.56
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 22 Feb 2012 10:07:56 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q1MI7rbP020537;
-	Wed, 22 Feb 2012 19:07:53 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q1MI7q9a020533;
-	Wed, 22 Feb 2012 19:07:52 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1329704188-9955-5-git-send-email-gitster@pobox.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754112Ab2BVSqo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Feb 2012 13:46:44 -0500
+Received: from mail.vapor.com ([83.220.149.2]:44252 "EHLO nitrogen.vapor.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751995Ab2BVSqn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Feb 2012 13:46:43 -0500
+X-Greylist: delayed 419 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Feb 2012 13:46:43 EST
+Received: from twilight.demius.net (c-387a71d5.013-195-6c756e10.cust.bredbandsbolaget.se [213.113.122.56])
+	by nitrogen.vapor.com (Postfix) with ESMTPSA id 049A12B6004;
+	Wed, 22 Feb 2012 19:39:43 +0100 (CET)
+Received: from [10.0.0.11] (pi.local [10.0.0.11])
+	by twilight.demius.net (Postfix) with ESMTP id 575628E01D1;
+	Wed, 22 Feb 2012 19:39:41 +0100 (CET)
+X-Mailer: Evolution 2.32.3 
+X-Virus-Scanned: clamav-milter 0.97.3 at twilight.demius.net
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED autolearn=ham
+	version=3.3.2
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on twilight.pomac.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191269>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Teach the hash function and per-line comparison logic to compare lines
-> while ignoring the differences in case.  It is not an ignore-whitespace
-> option but still needs to trigger the inexact match logic, and that is
-> why the previous step introduced XDF_INEXACT_MATCH mask.
+--=-532IvP1wWiPEST2AAE3X
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Nb. how it compares with ignore case in filesystem paths?
- 
-> Assign the 7th bit for this option, and move the bits to select diff
-> algorithms out of the way in order to leave room for a few bits to add
-> more variants of ignore-whitespace, such as --ignore-tab-expansion, if
-> somebody else is inclined to do so later.
+Seems like i ruined my dovecot config in a recent upgrade - which also
+affected my mail... =3D/
 
-Or do a proper Unicode sorting / collation algorithm, with different
-levels 
+Anyway, it's all fixed now.
 
-  (4.3 Form a sort key for each string, UTS #10.):
+from: Nguyen Thai Ngoc Duy <pclouds () gmail ! com>
+> On Wed, Feb 22, 2012 at 10:49 PM, Ian Kumlien <pomac@vapor.com> wrote:
+> > Hi,
+> >
+> > We just saw a interesting issue, git compressed a ~3.4 gb project to
+> ~57 mb.
+>=20
+> How big are those files? How many of them? How often do they change?
 
-     Level 1: alphabetic ordering
-     Level 2: diacritic ordering
-     Level 3: case ordering
-     Level 4: tie-breaking (e.g. in the case when variable is 'shifted')
+This is the initial check in, one of the files is a 3.3 gb text file.
 
-> We would still need to teach the front-end to flip this bit, for this
-> change to be any useful.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
+> > But when we tried to clone it on a big machine we got:
+> >
+> > fatal: Out of memory, malloc failed (tried to allocate
+> > 18446744072724798634 bytes)
+> >
+> > This is already fixed in the 1.7.10 mainline - but it also seems
+> like
+>=20
+> Does 1.7.9 have this problem?
 
-> +static inline int match_a_byte(char ch1, char ch2, long flags)
-> +{
-> +	if (ch1 == ch2)
-> +		return 1;
-> +	if (!(flags & XDF_IGNORE_CASE) || ((ch1 | ch2) & 0x80))
-> +		return 0;
-> +	if (isupper(ch1))
-> +		ch1 = tolower(ch1);
-> +	if (isupper(ch2))
-> +		ch2 = tolower(ch2);
-> +	return (ch1 == ch2);
-> +}
+I've tested with 1.7.9.1, haven't downgraded to test with 1.7.9...
 
-<del>
-Wouldn't a better solution be a collate algorithm rather than changing
-a sorting function?  Or is it a performance hack on typical body of
-text under version control (mainly lowercase)?
-</del>
+> > git needs to have atleast the same ammount of memory as the largest
+> > file free... Couldn't this be worked around?
+> >
+> > On a (32 bit) machine with 4GB memory - results in:
+> > fatal: Out of memory, malloc failed (tried to allocate 3310214313
+> bytes)
+> >
+> > (and i see how this could be a problem, but couldn't it be
+> mitigated? or
+> > is it bydesign and intended behaviour?)
+>=20
+> I think that it's delta resolving that hogs all your memory. If your
+> files are smaller than 512M, try lower core.bigFileThreshold. The
+> topic jc/split-blob, which stores a big file are several smaller
+> pieces, might solve your problem. Unfortunately the topic is not
+> complete yet.
 
-"(libc.info)Collation Fuctions" says:
+the problem here is that there is one file that is exactly: 3310214313
+bytes, so it should all be one "blob".
 
-     The functions `strcoll' and `wcscoll' perform this translation
-  implicitly, in order to do one comparison.  By contrast, `strxfrm' and
-  `wcsxfrm' perform the mapping explicitly.  If you are making multiple
-  comparisons using the same string or set of strings, it is likely to be
-  more efficient to use `strxfrm' or `wcsxfrm' to transform all the
-  strings just once, and subsequently compare the transformed strings
-  with `strcmp' or `wcscmp'.
+split-blob would be really interesting for several reasons though =3D)
 
-The function match_a_byte (memcoll?) defined here is similar to strcoll;
-do we compare single line with more than one other line?
+> --=20
+> Duy
+> --
+--=20
+Ian Kumlien  -- http://demius.net || http://pomac.netswarm.net
 
-> +static inline unsigned long hash_a_byte(const char ch_, long flags)
-> +{
-> +	unsigned long ch = ch_ & 0xFF;
-> +	if ((flags & XDF_IGNORE_CASE) && !(ch & 0x80) && isupper(ch))
-> +		ch = tolower(ch);
-> +	return ch;
-> +}
-> +
+--=-532IvP1wWiPEST2AAE3X
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
-Hmmm... hash_a_byte (memxfrm?) is similar to strxfrm, so you do use
-one or the other...
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.17 (GNU/Linux)
 
--- 
-Jakub Narebski
+iEYEABECAAYFAk9FNmwACgkQ7F3Euyc51N8JSwCeJjwPt8hyCKmx2zgSHR6PoBQZ
+NCoAni2z6Z+PHOr1g89kJlDKcAtPhZiB
+=5yKO
+-----END PGP SIGNATURE-----
+
+--=-532IvP1wWiPEST2AAE3X--
