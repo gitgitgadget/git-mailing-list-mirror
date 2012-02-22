@@ -1,80 +1,64 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git status: small difference between stating whole repository
- and small subdirectory
-Date: Tue, 21 Feb 2012 18:55:10 -0800
-Message-ID: <7v7gzfefw1.fsf@alter.siamese.dyndns.org>
-References: <20120215190318.GA5992@sigill.intra.peff.net>
- <CAA01Cso5y23UMguEe0vwOc6kR3-DjuC8-LTMDsMeeOKU4rVGvg@mail.gmail.com>
- <20120216192001.GB4348@sigill.intra.peff.net>
- <CAA01Csq6vSekW=Fa236bB0H3LVtN43Gb2aLMVE+A1wVyUqYJ7A@mail.gmail.com>
- <20120217203755.GA30114@sigill.intra.peff.net>
- <7vaa4hrtbe.fsf@alter.siamese.dyndns.org>
- <20120217222912.GC31830@sigill.intra.peff.net>
- <CAA01CsozANwtox06iihKBL8iii175FHAhChmNhG1B0ofGKWcEA@mail.gmail.com>
- <20120220140653.GC5131@sigill.intra.peff.net>
- <87ty2l38ay.fsf@thomas.inf.ethz.ch> <20120220143644.GA13938@do>
- <CACsJy8DE86qzA1=GiKZFRCt5aH8X4iMyDvfrhnqwmbq52szhHg@mail.gmail.com>
- <7v8vjwgfoq.fsf@alter.siamese.dyndns.org>
- <CACsJy8C3Myqs4=GvURWqCTxGp0R1RWotdiHGnnvBSaxyTteujw@mail.gmail.com>
+Subject: Re: [PATCH 4/4] Only re-encode certain parts in commit object, not
+ the whole
+Date: Tue, 21 Feb 2012 19:14:52 -0800
+Message-ID: <7v39a3eez7.fsf@alter.siamese.dyndns.org>
+References: <1329834292-2511-1-git-send-email-pclouds@gmail.com>
+ <1329834292-2511-4-git-send-email-pclouds@gmail.com>
+ <20120221182559.GB32668@sigill.intra.peff.net>
+ <CACsJy8BZixyzf73TGPdf+_=rz59J4GWUq8B8WXuf+n97-OF=sQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@inf.ethz.ch>, Jeff King <peff@peff.net>,
-	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
 To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 22 03:55:23 2012
+X-From: git-owner@vger.kernel.org Wed Feb 22 04:15:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S02MT-0000xe-DF
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 03:55:21 +0100
+	id 1S02fU-0005vZ-RW
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 04:15:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755467Ab2BVCzP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Feb 2012 21:55:15 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45992 "EHLO
+	id S1753850Ab2BVDO4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Feb 2012 22:14:56 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54082 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753747Ab2BVCzN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Feb 2012 21:55:13 -0500
+	id S1751830Ab2BVDOz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Feb 2012 22:14:55 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD66C7EDE;
-	Tue, 21 Feb 2012 21:55:12 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD539632F;
+	Tue, 21 Feb 2012 22:14:54 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hiOApm41RQtt1BWHCzWz1fi8ELA=; b=bpE/cq
-	B74c4OozwY0SR+uASMogUhVLo9xQJDFvmv69qIFlIeVGvlk7DJY6RH4Lo1Xh+r20
-	vqrVvZlfHiubTRHnV389cvAGzNA9Z/VeyTayOlSfsr7b1VOSA4DWvb/rncAppWi8
-	IRMgKVDy82aR4T1K1RUHgxE3K8leb6KBf45/w=
+	:content-type; s=sasl; bh=im8GK4TuH1nIxA8KwkWYJ36QMXI=; b=VE/sL4
+	bxbhX7fsgHeXS5Jhmd6sprpzWtDrE7nEeT2gs+FdHx/iOyonuyLymMaVTZcCNNF5
+	gWHVjZMR2oMeSbNeedrL01naTfD7oXsFn8dBNQqMif/BVgfc9j+yv33gz4HUfXRi
+	nYx04l0YzKDNuDOXDC2JqUV0Txio4jSELGAq0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SROPwhhAfWG2F825ZcFZeWS8lGgirE/q
-	fFr7kFgkg1XY6Rgs8F77U//qgfQBtoAjcdHQULrCV8WChM7aet1MVOVkEKdqjBaY
-	8bwWJAPYNwDaCgOy4oKPV0YmASTPZqIsDkAIJ0cBQLNrM+tU1Xs12qnBF4UXXnwn
-	c9G4Jk3Uduk=
+	:content-type; q=dns; s=sasl; b=NTuXgOs2PodExY2SAZ7qjVhqRTbtbEyQ
+	4HqwKf65givDTy1/4Lsg98DN1x6i0ZiS5OBI0vT/VJz8UAU/rUQ0fxXerJ4AaDnb
+	a7P2rMpkyMjW6x+SSNeolNCo0nxEMDANfaU4NOdl+xdY6Lj4MaGrY5IqS1fv7tfP
+	noQOW2qCars=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B47097EDD;
-	Tue, 21 Feb 2012 21:55:12 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A3C69632E;
+	Tue, 21 Feb 2012 22:14:54 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BE3BC7EDB; Tue, 21 Feb 2012
- 21:55:11 -0500 (EST)
-In-Reply-To: <CACsJy8C3Myqs4=GvURWqCTxGp0R1RWotdiHGnnvBSaxyTteujw@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Wed, 22 Feb 2012 09:12:22 +0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3BC8E632D; Tue, 21 Feb 2012
+ 22:14:54 -0500 (EST)
+In-Reply-To: <CACsJy8BZixyzf73TGPdf+_=rz59J4GWUq8B8WXuf+n97-OF=sQ@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Wed, 22 Feb 2012 09:01:20 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A34317E4-5D00-11E1-A5D2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 640B0EC6-5D03-11E1-826A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191226>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+By the way, zj/term-columns topic has already graduated to 'master', so if
+you are still interested in your earlier nd/columns topic, it would be a
+good time to re-roll it.
 
-> That makes me think if "diff --cached" can take advantage of
-> cache-tree to avoid walking down valid cached trees and do tree-tree
-> diff in those cases instead. Not sure if it gains us anything but code
-> complexity.
-
-Why do I have this funny feeling that we saw that comment in this thread
-already?
+No hurries, but pointing it out just in case you forgot.
