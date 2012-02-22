@@ -1,123 +1,71 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 1/4] remote: use a local variable in match_push_refs()
-Date: Thu, 23 Feb 2012 00:43:38 +0200
-Message-ID: <1329950621-21165-2-git-send-email-felipe.contreras@gmail.com>
-References: <1329950621-21165-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
+From: Matt McClure <matthewlmcclure@gmail.com>
+Subject: Re: Manual hunk edit mode + emacs + ^G == garbage
+Date: Wed, 22 Feb 2012 21:43:34 +0000 (UTC)
+Message-ID: <loom.20120222T222339-97@post.gmane.org>
+References: <39CB17A9-2717-491B-8E01-F3E855F90649@sb.org> <AANLkTimM92SdY_+v5JcOx2kYbDKBJJzBofFm0FLF_S6K@mail.gmail.com> <buomxqhayqc.fsf@dhlpc061.dev.necel.com> <EDCC7CB3-4DFF-45B8-9E23-E12045CC29D7@sb.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 22 23:45:15 2012
+X-From: git-owner@vger.kernel.org Thu Feb 23 00:05:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0Kvv-0006f5-Tw
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 23:45:12 +0100
+	id 1S0LFM-0003mf-Hz
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 00:05:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752207Ab2BVWoz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Feb 2012 17:44:55 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:51615 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752108Ab2BVWoy (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Feb 2012 17:44:54 -0500
-Received: by lagu2 with SMTP id u2so658933lag.19
-        for <git@vger.kernel.org>; Wed, 22 Feb 2012 14:44:52 -0800 (PST)
-Received-SPF: pass (google.com: domain of felipe.contreras@gmail.com designates 10.152.123.68 as permitted sender) client-ip=10.152.123.68;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of felipe.contreras@gmail.com designates 10.152.123.68 as permitted sender) smtp.mail=felipe.contreras@gmail.com; dkim=pass header.i=felipe.contreras@gmail.com
-Received: from mr.google.com ([10.152.123.68])
-        by 10.152.123.68 with SMTP id ly4mr24272268lab.13.1329950692924 (num_hops = 1);
-        Wed, 22 Feb 2012 14:44:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=Mgc1phEGK21mmcp5mDlnOY9umR15G15Q9az2dyeCq38=;
-        b=jxOE0w24fOFgcuoyOHGc1PYd3tjYkOqCoMXDmlXvkEaV7Wm1TOwPZ+ZyWzqu4JHY46
-         9gwV1n3KjpzKZxobARW68qCPbRTx7JvLcrBlQgHbbmWDyGjh505O1PaOuMQfLqbspOiu
-         OzlbJ9p28qGHmbx1Hhg0fbeGPtjmpzj/VB/uI=
-Received: by 10.152.123.68 with SMTP id ly4mr20375004lab.13.1329950692860;
-        Wed, 22 Feb 2012 14:44:52 -0800 (PST)
-Received: from localhost (a88-113-3-26.elisa-laajakaista.fi. [88.113.3.26])
-        by mx.google.com with ESMTPS id mb8sm26277385lab.8.2012.02.22.14.44.51
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 22 Feb 2012 14:44:52 -0800 (PST)
-X-Mailer: git-send-email 1.7.9.1
-In-Reply-To: <1329950621-21165-1-git-send-email-felipe.contreras@gmail.com>
+	id S1752386Ab2BVXFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Feb 2012 18:05:09 -0500
+Received: from plane.gmane.org ([80.91.229.3]:42810 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751013Ab2BVXFI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Feb 2012 18:05:08 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1S0LFC-0003en-9t
+	for git@vger.kernel.org; Thu, 23 Feb 2012 00:05:06 +0100
+Received: from c-24-91-16-82.hsd1.ma.comcast.net ([24.91.16.82])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 23 Feb 2012 00:05:06 +0100
+Received: from matthewlmcclure by c-24-91-16-82.hsd1.ma.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 23 Feb 2012 00:05:06 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 24.91.16.82 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.56 Safari/535.11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191308>
 
-So that we can reuse src later on. No functional changes.
+Kevin Ballard <kevin <at> sb.org> writes:
 
-Will be useful in next patches.
+> I'm still very much interested in finding a solution to why ^G kills
+> emacs when it's invoked by git. As I said earlier, it appears that emacs
+> shares the same process group with the perl process that called it, even
+> though Andreas Schwab says it puts itself into its own process group and
+> invoking emacs from the shell does just that. Does anyone know why this
+> might be happening?
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- remote.c |   19 ++++++++++---------
- 1 files changed, 10 insertions(+), 9 deletions(-)
+Kevin,
 
-diff --git a/remote.c b/remote.c
-index 73a3809..55d68d1 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1157,7 +1157,7 @@ int match_push_refs(struct ref *src, struct ref **dst,
- 	int send_mirror = flags & MATCH_REFS_MIRROR;
- 	int errs;
- 	static const char *default_refspec[] = { ":", NULL };
--	struct ref **dst_tail = tail_ref(dst);
-+	struct ref *ref, **dst_tail = tail_ref(dst);
- 
- 	if (!nr_refspec) {
- 		nr_refspec = 1;
-@@ -1167,14 +1167,14 @@ int match_push_refs(struct ref *src, struct ref **dst,
- 	errs = match_explicit_refs(src, *dst, &dst_tail, rs, nr_refspec);
- 
- 	/* pick the remainder */
--	for ( ; src; src = src->next) {
-+	for (ref = src; ref; ref = ref->next) {
- 		struct ref *dst_peer;
- 		const struct refspec *pat = NULL;
- 		char *dst_name;
--		if (src->peer_ref)
-+		if (ref->peer_ref)
- 			continue;
- 
--		pat = check_pattern_match(rs, nr_refspec, src);
-+		pat = check_pattern_match(rs, nr_refspec, ref);
- 		if (!pat)
- 			continue;
- 
-@@ -1184,13 +1184,14 @@ int match_push_refs(struct ref *src, struct ref **dst,
- 			 * including refs outside refs/heads/ hierarchy, but
- 			 * that does not make much sense these days.
- 			 */
--			if (!send_mirror && prefixcmp(src->name, "refs/heads/"))
-+			if (!send_mirror && prefixcmp(ref->name, "refs/heads/"))
- 				continue;
--			dst_name = xstrdup(src->name);
-+			dst_name = xstrdup(ref->name);
-+
- 
- 		} else {
- 			const char *dst_side = pat->dst ? pat->dst : pat->src;
--			if (!match_name_with_pattern(pat->src, src->name,
-+			if (!match_name_with_pattern(pat->src, ref->name,
- 						     dst_side, &dst_name))
- 				die("Didn't think it matches any more");
- 		}
-@@ -1211,9 +1212,9 @@ int match_push_refs(struct ref *src, struct ref **dst,
- 
- 			/* Create a new one and link it */
- 			dst_peer = make_linked_ref(dst_name, &dst_tail);
--			hashcpy(dst_peer->new_sha1, src->new_sha1);
-+			hashcpy(dst_peer->new_sha1, ref->new_sha1);
- 		}
--		dst_peer->peer_ref = copy_ref(src);
-+		dst_peer->peer_ref = copy_ref(ref);
- 		dst_peer->force = pat->force;
- 	free_name:
- 		free(dst_name);
--- 
-1.7.9.1
+I was having the same problem you described on Mac OS X Lion and found this
+old thread. A workaround that works for me is:
+
+~/bin/emacs.sh:
+
+#!/bin/bash -i
+
+emacs "$@"
+
+-- cut --
+
+git config --global core.editor ~/bin/emacs.sh
+
+Matt
