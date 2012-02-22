@@ -1,112 +1,164 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git status: small difference between stating whole repository
- and small subdirectory
-Date: Tue, 21 Feb 2012 19:32:49 -0800
-Message-ID: <7vvcmzczku.fsf@alter.siamese.dyndns.org>
-References: <20120215190318.GA5992@sigill.intra.peff.net>
- <CAA01Cso5y23UMguEe0vwOc6kR3-DjuC8-LTMDsMeeOKU4rVGvg@mail.gmail.com>
- <20120216192001.GB4348@sigill.intra.peff.net>
- <CAA01Csq6vSekW=Fa236bB0H3LVtN43Gb2aLMVE+A1wVyUqYJ7A@mail.gmail.com>
- <20120217203755.GA30114@sigill.intra.peff.net>
- <7vaa4hrtbe.fsf@alter.siamese.dyndns.org>
- <20120217222912.GC31830@sigill.intra.peff.net>
- <CAA01CsozANwtox06iihKBL8iii175FHAhChmNhG1B0ofGKWcEA@mail.gmail.com>
- <20120220140653.GC5131@sigill.intra.peff.net>
- <87ty2l38ay.fsf@thomas.inf.ethz.ch> <20120220143644.GA13938@do>
- <CACsJy8DE86qzA1=GiKZFRCt5aH8X4iMyDvfrhnqwmbq52szhHg@mail.gmail.com>
+Subject: Re: [PATCH] git-svn.perl: fix a false-positive in the "already
+ exists" test
+Date: Tue, 21 Feb 2012 21:08:49 -0800
+Message-ID: <7vmx8bcv4u.fsf@alter.siamese.dyndns.org>
+References: <20120219105442.GA11889@dcvr.yhbt.net>
+ <1329747474-17976-1-git-send-email-stevenrwalter@gmail.com>
+ <7vk43feho8.fsf@alter.siamese.dyndns.org>
+ <CAK8d-aLXs0yMzYMXm7fKytOGDXesUEx7a8PN_Mg9gw6+Q6OTBA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@inf.ethz.ch>, Jeff King <peff@peff.net>,
-	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 22 04:33:34 2012
+Cc: normalperson@yhbt.net, git@vger.kernel.org
+To: Steven Walter <stevenrwalter@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 22 06:08:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S02xN-00026M-Gq
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 04:33:29 +0100
+	id 1S04Rk-0004do-Fu
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 06:08:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753546Ab2BVDcy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Feb 2012 22:32:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60640 "EHLO
+	id S1750798Ab2BVFIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Feb 2012 00:08:53 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34508 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753081Ab2BVDcx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Feb 2012 22:32:53 -0500
+	id S1750714Ab2BVFIw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Feb 2012 00:08:52 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F38866E4;
-	Tue, 21 Feb 2012 22:32:52 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 549227CAC;
+	Wed, 22 Feb 2012 00:08:51 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BesAj2evOCEZE3LY7vlknJOxFfQ=; b=DqjJx1
-	tpJiaIBirW5j2ikRWuKiT2XzF92LVlWWIdR0ju0k+bCHnjD5MNefJxEV4Ektbzzx
-	nChNptUc7FLGfNumTzQ5WgbAfx6DbHS5ec+F3FHEv2vWL4Ra35OTi9KU8yzEEiM3
-	tx/WYuZTlToFuNcfi+lNbdWX4t1KeAjYWZm4Y=
+	:content-type; s=sasl; bh=9QwtROTH2CoX7yiGufI4Rlq7jyc=; b=wsV6ab
+	YvFw8iaiztGIiY0vQ8OaOIkcItv2zRcL5Yti69jBUyGUugZIm7YwbOFQYk5tRPL4
+	PanypfO70BgffKr4aakDk1HG+0lTtHnBmeMa3awuP9/HoFF9beYLZ4d8I5DdAVGG
+	KnrBcKa3xhzP8R6SUFNt6ssJtyK6h3ApH3rLc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OXyKsAAInPrSv+SwxeZxLcGbeRtnItrb
-	2AMI0Q3owRzQ9lDJcq5RNt1oUFVposTudE3ed9R14DqUa0AEBMGSk7Bl++tyo4K3
-	RLRo1n+Pf5ZSQeKT/8jooO8j3IvSInavHi5CzDCncdvZAFcqW/d03enTPvNps526
-	N2PTX3S+w4U=
+	:content-type; q=dns; s=sasl; b=R7C5aoIja0A5gowr5Fojx+HGwfKdO2mh
+	eaZ/kaZr+BlxV0sGKD6Qkhv+xUkmy8RiFslDIMDh6XBpkNFp15dl7uGGKHXix1uj
+	Ph4ScQ6vY77QrE2jyhX+nq/7iTn4D5esR1AdAZSR3nvmjUH9UtqF+bS9c+nnjrIP
+	R9iq6xEIQPc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 10B4566E3;
-	Tue, 21 Feb 2012 22:32:52 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4B0957CAB;
+	Wed, 22 Feb 2012 00:08:51 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 58AB266E1; Tue, 21 Feb 2012
- 22:32:51 -0500 (EST)
-In-Reply-To: <CACsJy8DE86qzA1=GiKZFRCt5aH8X4iMyDvfrhnqwmbq52szhHg@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Tue, 21 Feb 2012 21:45:13 +0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 99F5C7CAA; Wed, 22 Feb 2012
+ 00:08:50 -0500 (EST)
+In-Reply-To: <CAK8d-aLXs0yMzYMXm7fKytOGDXesUEx7a8PN_Mg9gw6+Q6OTBA@mail.gmail.com> (Steven
+ Walter's message of "Tue, 21 Feb 2012 21:32:29 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E60E7988-5D05-11E1-921D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 4ED8B606-5D13-11E1-8374-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191229>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+Steven Walter <stevenrwalter@gmail.com> writes:
 
->> diff --git a/builtin/checkout.c b/builtin/checkout.c
->> index 5bf96ba..c06287a 100644
->> --- a/builtin/checkout.c
->> +++ b/builtin/checkout.c
->> @@ -319,6 +319,10 @@ static void show_local_changes(struct object *head, struct diff_options *opts)
->>                die(_("diff_setup_done failed"));
->>        add_pending_object(&rev, head, NULL);
->>        run_diff_index(&rev, 0);
->> +       if (!DIFF_OPT_TST(&rev.diffopt, HAS_CHANGES)) {
->> +               struct tree *tree = parse_tree_indirect(head->sha1);
->> +               prime_cache_tree(&active_cache_tree, tree);
->> +       }
->>  }
+>>> +     test -e "$SVN_TREE"/bar/zzz/yyy ' || true
+>>
+>> Care to explain what this " || true" is doing here, please?
+>
+> Ahh, good catch.  I think the answer is that it shouldn't be there.
+> It was originally there because of the "test_must_fail" line, I think
+> (at least the other tests that use test_must_fail also have "||
+> true").
 
-I think this patch is wrong on at least two counts.
+Ok, that may explain the copy&paste error.
 
- * The run_diff_index(&rev, 0) you reused is doing "diff HEAD" and not
-   "diff --cached HEAD".  The added check does not say anything about the
-   comparison between the index and the tree at the HEAD.
+But I do not think test_must_fail followed by || true makes much sense,
+either.  The purpose of "test_must_fail" is to make sure the tested git
+command exits with non-zero status in a controlled way (i.e. not crash)
+so if the tested command that is expected to exit with non-zero status
+exited with zero status, the test has detected an *error*.  E.g. if you
+know that the index and the working tree are different at one point in the
+test sequence, you would say:
 
- * Even if we added an extra run_diff_index(&rev, 1) there, or added a
-   call to index_differs_from() to run "diff --cached HEAD" to check what
-   needs to be checked, it is still not quite right.
+	... other setup steps ... &&
+	test_must_fail git diff --exit-code &&
+        ... and other tests ...
 
-On the latter point, imagine what happens in the two invocations of
-checkout in the following sequence:
+so that failure by "git diff --exit-code" to exit with non-zero status
+(i.e. it did not find any difference when it should have) breaks the &&
+cascade.
 
-   $ git reset --hard master
-   $ git checkout master
-   $ git checkout master
+I just took a quick look at t9100 but I think all " || true" can be safely
+removed.  None of them is associated with test_must_fail in any way.  For
+whatever reason, these test seem to do
 
-The second one should notice that the cache tree is fully valid, so the
-internal "diff --cached" it runs should only open the top-level tree
-and scan entries in it, without recursing into any of the subtrees, and
-realize that the index is in sync with "HEAD", which should be a very
-cheap operation (that is the whole point of the current topic of our
-discussion looking at the cache-tree).  Then the new code calls
-prime_cache_tree() to read _everything_?
+	test_expect_success 'label of the test' '
+        	body of the test
+	' || true
 
-Probably cache_tree_fully_valid() should be called before deciding that we
-need to re-populate the cache tree from "HEAD".
+for no good reason.
+
+> Do you want to just fix that up, or a new version of the original patch,
+> or a fix on top of the original patches?
+
+Eric queued the patch and then had me pull it as part of his history
+already, so it is doubly too late to replace it.
+
+Can you apply this patch and re-test?
+
+
+ t/t9100-git-svn-basic.sh |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
+index 4029f84..749b75e 100755
+--- a/t/t9100-git-svn-basic.sh
++++ b/t/t9100-git-svn-basic.sh
+@@ -65,7 +65,8 @@ test_expect_success "$name" "
+ 	git update-index --add dir/file/file &&
+ 	git commit -m '$name' &&
+ 	test_must_fail git svn set-tree --find-copies-harder --rmdir \
+-		${remotes_git_svn}..mybranch" || true
++		${remotes_git_svn}..mybranch
++"
+ 
+ 
+ name='detect node change from directory to file #1'
+@@ -79,7 +80,8 @@ test_expect_success "$name" '
+ 	git update-index --add -- bar &&
+ 	git commit -m "$name" &&
+ 	test_must_fail git svn set-tree --find-copies-harder --rmdir \
+-		${remotes_git_svn}..mybranch2' || true
++		${remotes_git_svn}..mybranch2
++'
+ 
+ 
+ name='detect node change from file to directory #2'
+@@ -96,7 +98,8 @@ test_expect_success "$name" '
+ 		${remotes_git_svn}..mybranch3 &&
+ 	svn_cmd up "$SVN_TREE" &&
+ 	test -d "$SVN_TREE"/bar/zzz &&
+-	test -e "$SVN_TREE"/bar/zzz/yyy ' || true
++	test -e "$SVN_TREE"/bar/zzz/yyy
++'
+ 
+ name='detect node change from directory to file #2'
+ test_expect_success "$name" '
+@@ -109,7 +112,8 @@ test_expect_success "$name" '
+ 	git update-index --add -- dir &&
+ 	git commit -m "$name" &&
+ 	test_must_fail git svn set-tree --find-copies-harder --rmdir \
+-		${remotes_git_svn}..mybranch4' || true
++		${remotes_git_svn}..mybranch4
++'
+ 
+ 
+ name='remove executable bit from a file'
+@@ -162,7 +166,7 @@ test_expect_success "$name" '
+ 
+ name='modify a symlink to become a file'
+ test_expect_success "$name" '
+-	echo git help > help || true &&
++	echo git help >help &&
+ 	rm exec-2.sh &&
+ 	cp help exec-2.sh &&
+ 	git update-index exec-2.sh &&
