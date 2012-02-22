@@ -1,113 +1,107 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: git status: small difference between stating whole repository and small subdirectory
-Date: Wed, 22 Feb 2012 14:17:13 +0100
-Message-ID: <878vjvxb1i.fsf@thomas.inf.ethz.ch>
-References: <20120215190318.GA5992@sigill.intra.peff.net>
-	<CAA01Cso5y23UMguEe0vwOc6kR3-DjuC8-LTMDsMeeOKU4rVGvg@mail.gmail.com>
-	<20120216192001.GB4348@sigill.intra.peff.net>
-	<CAA01Csq6vSekW=Fa236bB0H3LVtN43Gb2aLMVE+A1wVyUqYJ7A@mail.gmail.com>
-	<20120217203755.GA30114@sigill.intra.peff.net>
-	<7vaa4hrtbe.fsf@alter.siamese.dyndns.org>
-	<20120217222912.GC31830@sigill.intra.peff.net>
-	<CAA01CsozANwtox06iihKBL8iii175FHAhChmNhG1B0ofGKWcEA@mail.gmail.com>
-	<20120220140653.GC5131@sigill.intra.peff.net>
-	<87ty2l38ay.fsf@thomas.inf.ethz.ch> <20120220143644.GA13938@do>
-	<CACsJy8DE86qzA1=GiKZFRCt5aH8X4iMyDvfrhnqwmbq52szhHg@mail.gmail.com>
-	<7v8vjwgfoq.fsf@alter.siamese.dyndns.org>
-	<CACsJy8C3Myqs4=GvURWqCTxGp0R1RWotdiHGnnvBSaxyTteujw@mail.gmail.com>
-	<7v7gzfefw1.fsf@alter.siamese.dyndns.org>
-	<CACsJy8BZyokLSpbA=C6YEO1JajyemT9vLG=C9W4E4coA5OfszQ@mail.gmail.com>
+From: =?ISO-8859-1?Q?Nelson_Ben=EDtez_Le=F3n?= <nbenitezl@gmail.com>
+Subject: [PATCH] Improve http proxy support
+Date: Wed, 22 Feb 2012 15:04:36 +0100
+Message-ID: <CAAUd640GaLz4TGs_Lz6KbSFK0VcEVxGfO6PpSCdhch+fYwVovw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 22 14:17:39 2012
+Content-Type: multipart/mixed; boundary=bcaec555566c3a7f4804b98e0369
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 22 15:05:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0C4e-0000KZ-I2
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 14:17:36 +0100
+	id 1S0Coa-0005LH-JI
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 15:05:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751577Ab2BVNRR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Feb 2012 08:17:17 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:23049 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750971Ab2BVNRQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Feb 2012 08:17:16 -0500
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 22 Feb
- 2012 14:17:12 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 22 Feb
- 2012 14:17:13 +0100
-In-Reply-To: <CACsJy8BZyokLSpbA=C6YEO1JajyemT9vLG=C9W4E4coA5OfszQ@mail.gmail.com>
-	(Nguyen Thai Ngoc Duy's message of "Wed, 22 Feb 2012 19:54:03 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1752488Ab2BVOE7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Feb 2012 09:04:59 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:47254 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752259Ab2BVOE6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Feb 2012 09:04:58 -0500
+Received: by bkcjm19 with SMTP id jm19so69213bkc.19
+        for <git@vger.kernel.org>; Wed, 22 Feb 2012 06:04:57 -0800 (PST)
+Received-SPF: pass (google.com: domain of nbenitezl@gmail.com designates 10.112.29.6 as permitted sender) client-ip=10.112.29.6;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of nbenitezl@gmail.com designates 10.112.29.6 as permitted sender) smtp.mail=nbenitezl@gmail.com; dkim=pass header.i=nbenitezl@gmail.com
+Received: from mr.google.com ([10.112.29.6])
+        by 10.112.29.6 with SMTP id f6mr11550378lbh.69.1329919497659 (num_hops = 1);
+        Wed, 22 Feb 2012 06:04:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=RLGE1Ld4iPP656XX+7JuGtmY2fMuqpR1Lj33LjUaqvM=;
+        b=dGp9OZxeVSALShjjrSsZLDWRVjwICL7IuWKJR+xNUDyyTH1dMyoo9Nr90zhYkqDAfG
+         o4yzRr2Aeh5Qx3wdKCBWGtOvjhURah/+ZLq9a4RHcqw43T9/I+mOhHO37ohNyHDtJdVu
+         BIBLn60WSlv1J4Gwygf7X0xyJDESVjeWMnOxY=
+Received: by 10.112.29.6 with SMTP id f6mr9736038lbh.69.1329919497502; Wed, 22
+ Feb 2012 06:04:57 -0800 (PST)
+Received: by 10.152.114.74 with HTTP; Wed, 22 Feb 2012 06:04:36 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191256>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+--bcaec555566c3a7f4804b98e0369
+Content-Type: text/plain; charset=ISO-8859-1
 
-> On Sat, Feb 18, 2012 at 5:25 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Jeff King <peff@peff.net> writes:
->>
->>> That being said, we do have an index extension to store the tree sha1 of
->>> whole directories (i.e., we populate it when we write a whole tree or
->>> subtree into the index from the object db, and it becomes invalidated
->>> when a file becomes modified). This optimization is used by things like
->>> "git commit" to avoid having to recreate the same sub-trees over and
->>> over when creating tree objects from the index. But we could also use it
->>> here to avoid having to even read the sub-tree objects from the object
->>> db.
->>
->> Like b65982b (Optimize "diff-index --cached" using cache-tree, 2009-05-20)
->> perhaps?
->
-> This optimizes the case when a cached tree matches entirely.I wonder
-> whether it's faster if we switch to tree-tree diff whenever we find
-> valid cached trees. If cache-tree is fully valid, "git diff --cached
-> foo" would be equivalent to "git diff HEAD foo".
+Hi, my initial motivation for this patch was to add NTLM proxy
+authentication so I could 'git clone' from inside my employers
+network, but apart from doing that, I also added two more features,
+so, this patch adds the following improvements to the http proxy
+support:
 
-Not necessarily; the cache-tree is valid if it faithfully represents
-what is in the index.  It does not have any direct relation to HEAD.
+- Support NTLM proxy authentication (as well as other authentication
+methods) by setting CURLOPT_PROXYAUTH[1] to CURLAUTH_ANY.
 
-> I tried "git diff --raw HEAD HEAD~100" (where HEAD was
-> v3.1-rc1-272-g73e0881 on linux-2.6) and "git diff --cached --raw
-> HEAD~100" with no cache-tree. The former is a little bit faster than
-> the latter (177ms vs 275ms). On gentoo-x86, 70k worktree files, it's
-> 4.33s vs 4.45s. But in tree-tree diff we pay high in cold cache case
-> for loading trees from "HEAD". So no, probably not worth more code
-> changes. Your optimization is good enough.
+- Look up environment vars http_proxy and HTTP_PROXY in case git
+http.proxy config option is not set. This supports system wide proxy
+support in terminals.
 
-I'm still wondering about using mincore() to good effect.  I tried it
-for git-grep, but it ended up slowing things down.  However, it irks me
-that in some cases a clueful use of one form over the other can really
-make a huge performance difference, e.g.,
+- Support proxy urls with username but without a password, in which
+case we interactively ask for the password (as it's already done in
+http auth code). This makes possible to not have the password written
+down in git config files or in env vars.
 
-  git grep stuff
-  git grep HEAD stuff
+Thanks!
 
-If I am in a big repository that I haven't used in a while, the HEAD
-form will be much faster as the worktree search would fault many files.
-OTOH if I am in a heavily-used repository (and perhaps just said 'make'
-minutes ago) the worktree version will avoid the pack decompression
-effort.
+[1] http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTPROXYAUTH
 
-Sadly this also has the problem that we must first determine whether
-substituting HEAD for the worktree (or vice versa) is valid at all.  For
-grep perhaps there could be a "just do a fast search somewhere" option
-since usually you are looking for something that hasn't changed in ages.
+--bcaec555566c3a7f4804b98e0369
+Content-Type: application/octet-stream; name="gitproxyauthv2.patch"
+Content-Disposition: attachment; filename="gitproxyauthv2.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_gyyfk58z0
 
-Ok, that was almost completely beside the point of this thread.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+LS0tIGh0dHAuYwkyMDEyLTAxLTE5IDAxOjE5OjIyLjAwMDAwMDAwMCArMDEwMAorKysgaHR0cC5t
+b2QyLmMJMjAxMi0wMi0yMiAxNDo0NDoxMS43Mjc3NzMwMzggKzAxMDAKQEAgLTI5OSw4ICsyOTks
+NTQgQEAKIAlpZiAoY3VybF9mdHBfbm9fZXBzdikKIAkJY3VybF9lYXN5X3NldG9wdChyZXN1bHQs
+IENVUkxPUFRfRlRQX1VTRV9FUFNWLCAwKTsKIAotCWlmIChjdXJsX2h0dHBfcHJveHkpCi0JCWN1
+cmxfZWFzeV9zZXRvcHQocmVzdWx0LCBDVVJMT1BUX1BST1hZLCBjdXJsX2h0dHBfcHJveHkpOwor
+CWlmICghY3VybF9odHRwX3Byb3h5KSB7CisJCWNvbnN0IGNoYXIgKmVudl9wcm94eTsKKwkJZW52
+X3Byb3h5ID0gZ2V0ZW52KCJIVFRQX1BST1hZIik7CisJCWlmICghZW52X3Byb3h5KSB7CisJCQll
+bnZfcHJveHkgPSBnZXRlbnYoImh0dHBfcHJveHkiKTsKKwkJfQorCQlpZiAoZW52X3Byb3h5KSB7
+CisJCQljdXJsX2h0dHBfcHJveHkgPSB4c3RyZHVwKGVudl9wcm94eSk7CisJCX0KKwl9CisJaWYg
+KGN1cmxfaHR0cF9wcm94eSkgeworCQljaGFyICphdCwgKmNvbG9uLCAqcHJveHl1c2VyOworCQlj
+b25zdCBjaGFyICpjcDsKKwkJY3AgPSBzdHJzdHIoY3VybF9odHRwX3Byb3h5LCAiOi8vIik7CisJ
+CWlmIChjcCA9PSBOVUxMKSB7CisJCQljcCA9IGN1cmxfaHR0cF9wcm94eTsKKwkJfSBlbHNlIHsK
+KwkJCWNwICs9IDM7CisJCX0KKwkJYXQgPSBzdHJjaHIoY3AsICdAJyk7CisJCWNvbG9uID0gc3Ry
+Y2hyKGNwLCAnOicpOworCQlpZiAoYXQgJiYgKCFjb2xvbiB8fCBhdCA8IGNvbG9uKSkgeworCQkJ
+LyogcHJveHkgc3RyaW5nIGhhcyB1c2VybmFtZSBidXQgbm8gcGFzc3dvcmQsIGFzayBmb3IgcGFz
+c3dvcmQgKi8KKwkJCWNoYXIgKmFza19zdHIsICpwcm94eXVzZXIsICpwcm94eXBhc3M7CisJCQlp
+bnQgbGVuOworCQkJc3RydWN0IHN0cmJ1ZiBwYnVmID0gU1RSQlVGX0lOSVQ7CisJCQlsZW4gPSBh
+dCAtIGNwOworCQkJcHJveHl1c2VyID0geG1hbGxvYyhsZW4gKyAxKTsKKwkJCW1lbWNweShwcm94
+eXVzZXIsIGNwLCBsZW4pOworCQkJcHJveHl1c2VyW2xlbl0gPSAnXDAnOworCQkJCisJCQlzdHJi
+dWZfYWRkZigmcGJ1ZiwgIkVudGVyIHBhc3N3b3JkIGZvciBwcm94eSAlcy4uLiIsIGF0KzEpOwor
+CQkJYXNrX3N0ciA9IHN0cmJ1Zl9kZXRhY2goJnBidWYsIE5VTEwpOworCQkJcHJveHlwYXNzID0g
+eHN0cmR1cChnaXRfZ2V0cGFzcyhhc2tfc3RyKSk7CisJCQkKKwkJCXN0cmJ1Zl9pbnNlcnQoJnBi
+dWYsIDAsIGN1cmxfaHR0cF9wcm94eSwgY3AgLSBjdXJsX2h0dHBfcHJveHkpOworCQkJc3RyYnVm
+X2FkZGYoJnBidWYsICIlczolcyIsIHByb3h5dXNlciwgcHJveHlwYXNzKTsKKwkJCXN0cmJ1Zl9h
+ZGQoJnBidWYsIGF0LCBzdHJsZW4oYXQpKTsKKwkJCWN1cmxfZWFzeV9zZXRvcHQocmVzdWx0LCBD
+VVJMT1BUX1BST1hZLCBzdHJidWZfZGV0YWNoKCZwYnVmLCBOVUxMKSk7CisJCQkKKwkJCWZyZWUo
+YXNrX3N0cik7CisJCQlmcmVlKHByb3h5dXNlcik7CisJCQlmcmVlKHByb3h5cGFzcyk7CisJCX0g
+ZWxzZSB7CisJCQljdXJsX2Vhc3lfc2V0b3B0KHJlc3VsdCwgQ1VSTE9QVF9QUk9YWSwgY3VybF9o
+dHRwX3Byb3h5KTsKKwkJfQorCQljdXJsX2Vhc3lfc2V0b3B0KHJlc3VsdCwgQ1VSTE9QVF9QUk9Y
+WUFVVEgsIENVUkxBVVRIX0FOWSk7CisJfQogCiAJcmV0dXJuIHJlc3VsdDsKIH0K
+--bcaec555566c3a7f4804b98e0369--
