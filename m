@@ -1,221 +1,99 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: Re: [PATCH] contrib: added git-diffall
-Date: Tue, 21 Feb 2012 21:02:43 -0500
-Message-ID: <CAFouetiLmK3dXLRkBh+cTNA_OMPS77xo8z95WK5y4tk-o-UUog@mail.gmail.com>
-References: <1329785969-828-1-git-send-email-tim.henigan@gmail.com>
-	<7vd397g8ic.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: git status: small difference between stating whole repository and
+ small subdirectory
+Date: Wed, 22 Feb 2012 09:12:22 +0700
+Message-ID: <CACsJy8C3Myqs4=GvURWqCTxGp0R1RWotdiHGnnvBSaxyTteujw@mail.gmail.com>
+References: <20120215190318.GA5992@sigill.intra.peff.net> <CAA01Cso5y23UMguEe0vwOc6kR3-DjuC8-LTMDsMeeOKU4rVGvg@mail.gmail.com>
+ <20120216192001.GB4348@sigill.intra.peff.net> <CAA01Csq6vSekW=Fa236bB0H3LVtN43Gb2aLMVE+A1wVyUqYJ7A@mail.gmail.com>
+ <20120217203755.GA30114@sigill.intra.peff.net> <7vaa4hrtbe.fsf@alter.siamese.dyndns.org>
+ <20120217222912.GC31830@sigill.intra.peff.net> <CAA01CsozANwtox06iihKBL8iii175FHAhChmNhG1B0ofGKWcEA@mail.gmail.com>
+ <20120220140653.GC5131@sigill.intra.peff.net> <87ty2l38ay.fsf@thomas.inf.ethz.ch>
+ <20120220143644.GA13938@do> <CACsJy8DE86qzA1=GiKZFRCt5aH8X4iMyDvfrhnqwmbq52szhHg@mail.gmail.com>
+ <7v8vjwgfoq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Cc: Thomas Rast <trast@inf.ethz.ch>, Jeff King <peff@peff.net>,
+	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 22 03:02:50 2012
+X-From: git-owner@vger.kernel.org Wed Feb 22 03:13:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S01Xc-0008EW-K5
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 03:02:49 +0100
+	id 1S01hT-0006I8-Bd
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 03:12:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754294Ab2BVCCo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Feb 2012 21:02:44 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:58716 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753850Ab2BVCCn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Feb 2012 21:02:43 -0500
-Received: by iacb35 with SMTP id b35so9680317iac.19
-        for <git@vger.kernel.org>; Tue, 21 Feb 2012 18:02:43 -0800 (PST)
-Received-SPF: pass (google.com: domain of tim.henigan@gmail.com designates 10.50.11.200 as permitted sender) client-ip=10.50.11.200;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of tim.henigan@gmail.com designates 10.50.11.200 as permitted sender) smtp.mail=tim.henigan@gmail.com; dkim=pass header.i=tim.henigan@gmail.com
-Received: from mr.google.com ([10.50.11.200])
-        by 10.50.11.200 with SMTP id s8mr23828283igb.10.1329876163157 (num_hops = 1);
-        Tue, 21 Feb 2012 18:02:43 -0800 (PST)
+	id S1754265Ab2BVCMy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Feb 2012 21:12:54 -0500
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:55839 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751719Ab2BVCMx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Feb 2012 21:12:53 -0500
+Received: by wics10 with SMTP id s10so3899788wic.19
+        for <git@vger.kernel.org>; Tue, 21 Feb 2012 18:12:52 -0800 (PST)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.180.99.65 as permitted sender) client-ip=10.180.99.65;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.180.99.65 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
+Received: from mr.google.com ([10.180.99.65])
+        by 10.180.99.65 with SMTP id eo1mr31751111wib.13.1329876772641 (num_hops = 1);
+        Tue, 21 Feb 2012 18:12:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        bh=5OX6P98nN7iBAnQmDWaNXd7hgAJNUAqlqDQysjZTbMU=;
-        b=udvEZ3xiSIrv/u5mBmDEc5gIe3Do5Kc5Cw8pz7WklBntlBS73KltXvqH7zVDvgqqeL
-         3pzezJVobdARSsDHo99DhgNfHhD2AQYh3zaWs9i73qsPs+EfCwPVTbSy/CXyfYySefKC
-         1fczas/bWa6x+hL/xFHB49yO2EGXHkfwPx1RM=
-Received: by 10.50.11.200 with SMTP id s8mr19268883igb.10.1329876163057; Tue,
- 21 Feb 2012 18:02:43 -0800 (PST)
-Received: by 10.42.220.136 with HTTP; Tue, 21 Feb 2012 18:02:43 -0800 (PST)
-In-Reply-To: <7vd397g8ic.fsf@alter.siamese.dyndns.org>
+        bh=TiCoO2ovhE0sHbTg7x3aCtaGiYBWpluhyHM2uVY/FvE=;
+        b=bQVRNJ7zNDExO81qX3qk5zS0t6YggBhjPI4J5W0TDItGGBwUTJFreZ7ltpg879K4yS
+         6i/mAUrW0D8Jz1i6dONsSnkhtNirBVoQojjOOilHe7uKe0DbAOqD829IvVRkXzALg0V/
+         3oIJMBaQ2ye/PLviIyzxQHkaxiBvLYyVpiU6M=
+Received: by 10.180.99.65 with SMTP id eo1mr26491400wib.13.1329876772590; Tue,
+ 21 Feb 2012 18:12:52 -0800 (PST)
+Received: by 10.223.13.5 with HTTP; Tue, 21 Feb 2012 18:12:22 -0800 (PST)
+In-Reply-To: <7v8vjwgfoq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191220>
 
-Thank you for taking the time to review this patch.  I appreciate it.
-
-
-On Tue, Feb 21, 2012 at 4:51 PM, Junio C Hamano <gitster@pobox.com> wro=
+On Wed, Feb 22, 2012 at 2:16 AM, Junio C Hamano <gitster@pobox.com> wro=
 te:
-> Tim Henigan <tim.henigan@gmail.com> writes:
-
->> +#!/bin/bash -e
+> Because prime_cache_tree() by itself is a fairly expensive operation =
+that
+> reads all the trees recursively, its benefits need to be evaluated. I=
+t
+> should to happen only in an operation that is already heavy-weight, i=
+s
+> likely to have read all the trees and have many of them in-core cache=
+, and
+> also relatively rarely happens compared to "git add" so that the cost=
+ can
+> be amortised over time, such as "reset --(hard|mixed)".
 >
-> Does this have to be bash-only (iow, infested with bash-isms beyond
-> repair), or is you wrote this merely from inertia?
+> Switching branches is likely to fall into that category, but that is =
+just
+> my gut feeling. =C2=A0I would feel better at night if somebody did a =
+benchmark
+> ;-)
 
-There is no specific reason it must be bash.  I changed from
-"#!/bin/sh" to "#!/bin/bash -e" due to a bug report from a user on
-Ubuntu [1].  The user reported that:
+In this particular case, "git diff --cached" is run internally, so I
+say all trees are read once and hopefully most of them still in OS
+cache. Will run some benchmark, maybe with the coming perf test suite.
 
-    "If you use /bin/sh on ubuntu you get the dash shell instead of bas=
-h shell.
-    This causes git_merge_tool_path to fail. The error isn't trapped,
-so it exits
-    without displaying anything and without cleaning up."
-
-Given that all the other scripts distributed with git use /bin/sh, I
-will change this script to match.
-
-
-> The following is only after a cursory scanning, so there may be other
-> things that needs fixing, but anyway:
->
-> =C2=A0- Don't use "which" in scripts. =C2=A0Its output is not machine=
- parseable, and
-> =C2=A0 exit code is not reliable, across platforms. =C2=A0It is only =
-meant for
-> =C2=A0 consumption by human who can read English (or natural language=
- in the
-> =C2=A0 current locale).
-
-I used "which" in two places.  Both were added to support problems
-with missing standard tools on certain platforms (missing mktemp on
-msysgit and missing option from tar on Mac [2]).  Is there some other
-standard way to detect the platform or if certain utils are present?
-
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if test -z "$paths"
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 then
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 paths=3D$1
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 else
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 paths=3D"$p=
-aths $1"
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fi
->
-> Just a style tip; if you are going to let shell $IFS split this list
-> anyway, it is customary to write the above as
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0paths=3D"$paths$1 "
-
-Nice...I will change to use this format.
-
-
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git diff --name-only "$l=
-eft"..."$right" -- $paths > "$tmp"/filelist
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git diff ... -- $paths >"$tmp/filelist"
-=2E.. <snip>
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0mkdir -p "$tmp/$left_dir" "$tmp/$right_dir=
-"
-
-Will change all instances.
-
-
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if test -n "$compare_sta=
-ged"
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 then
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 ls_list=3D$(git ls-tree HEAD $name)
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 if test -n "$ls_list"
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 then
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mkdir -p "$tmp"/"$left_dir"/"$(dirname =
-"$name")"
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git show HEAD:"$name" > "$tmp"/"$left_d=
-ir"/"$name"
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fi
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 else
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mkdir -p "$tmp"/"$left_dir"/"$(dirname =
-"$name")"
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git show :"$name" > "$tmp"/"$left_dir"/=
-"$name"
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fi
->
-> That's misleadingly indented. =C2=A0First I thought "in what case wou=
-ld we want
-> to switch the LHS between HEAD:$path and :$path when doing diff --cac=
-hed?"
-> but the overindented four lines starting from the funny "fi" is about=
- non
-> cached case.
-
-That is embarrassing.  I will fix it.
-
-<snip>
-
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 find "$tmp/$right_dir" -=
-type f|while read file; do
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 cp "$file" "$git_top_dir/${file#$tmp/$right_dir/}"
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 done
->
-> Why is this loop written in such a dense way? =C2=A0Everything else (=
-except for
-> that misindented part) were almost to our CodingStyle and was fairly =
-easy
-> to read, though.
-
-I missed this in my style cleanup.  I will fix it.
-
-
->> + =C2=A0 =C2=A0 fi
->> +
->> + =C2=A0 =C2=A0 # Remove the tmp directory
->> + =C2=A0 =C2=A0 rm -rf "$tmp"
->> +}
->> +
->> +trap cleanup EXIT
->
-> Does this even trigger? =C2=A0This is not Perl that parses and runs s=
-et-up code
-> before executing everything else, so I suspect this last line amounts=
+> One thing we do not currently do anywhere that _might_ be of merit is=
  to
-> the same thing as writing just
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0cleanup
->
-> without trap nor signal names.
+> make a call to cache_tree_update() instead of prime_cache_tree() when=
+ we
+> already know that only a very small subpart of the cache-tree is inva=
+lid
+> and it is cheaper to repair it by rehashing only a small portion of t=
+he
+> index than to re-prime the entire cache tree with prime_cache_tree().
 
-The cleanup triggers on all the platforms I have tested (Ubuntu,
-msysgit, Mac).  I could change it, but for me it has "just worked".
-
-
-> If you are to set up temporary files or directories that you want to =
-clean
-> up, a good discipline is to follow this order:
->
-> =C2=A0- define variable(s) to hold the temporary locations, e.g.
-> =C2=A0 =C2=A0tmpdir=3D$(mktemp ...)
->
-> =C2=A0- set the trap before starting to use these temporary locations=
-, e.g.
-> =C2=A0 =C2=A0trap 'rm -rf "$tmpdir' 0 1 2 3 15
->
-> =C2=A0- and then start populating tmpdir and do whatever you want to =
-do.
-
-I will review the changes needed for this before submitting v2 of my pa=
-tch.
-
-[1]: https://github.com/thenigan/git-diffall/pull/9
-[2]: https://github.com/thenigan/git-diffall/pull/2#issuecomment-498472
+That makes me think if "diff --cached" can take advantage of
+cache-tree to avoid walking down valid cached trees and do tree-tree
+diff in those cases instead. Not sure if it gains us anything but code
+complexity.
+--=20
+Duy
