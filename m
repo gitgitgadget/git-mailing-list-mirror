@@ -1,209 +1,344 @@
-From: Tom Grennan <tmgrennan@gmail.com>
-Subject: Re: [PATCHv3 1/5] refs: add match_pattern()
-Date: Wed, 22 Feb 2012 15:47:33 -0800
-Message-ID: <20120222234733.GD2410@tgrennan-laptop>
-References: <1329874130-16818-1-git-send-email-tmgrennan@gmail.com>
- <1329874130-16818-2-git-send-email-tmgrennan@gmail.com>
- <7vobsrbcny.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] contrib: added git-diffall
+Date: Wed, 22 Feb 2012 15:48:33 -0800
+Message-ID: <7vipiy8m5q.fsf@alter.siamese.dyndns.org>
+References: <1329948749-5908-1-git-send-email-tim.henigan@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, peff@peff.net, jasampler@gmail.com,
-	pclouds@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 23 00:47:47 2012
+Cc: git@vger.kernel.org, davvid@gmail.com, stefano.lattarini@gmail.com
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 23 00:48:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0LuT-0008B9-SH
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 00:47:46 +0100
+	id 1S0LvO-0000LB-UW
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 00:48:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752823Ab2BVXrl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Feb 2012 18:47:41 -0500
-Received: from mail-qw0-f53.google.com ([209.85.216.53]:46761 "EHLO
-	mail-qw0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752596Ab2BVXrk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Feb 2012 18:47:40 -0500
-Received: by qafk1 with SMTP id k1so810394qaf.19
-        for <git@vger.kernel.org>; Wed, 22 Feb 2012 15:47:39 -0800 (PST)
-Received-SPF: pass (google.com: domain of tmgrennan@gmail.com designates 10.229.69.67 as permitted sender) client-ip=10.229.69.67;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of tmgrennan@gmail.com designates 10.229.69.67 as permitted sender) smtp.mail=tmgrennan@gmail.com; dkim=pass header.i=tmgrennan@gmail.com
-Received: from mr.google.com ([10.229.69.67])
-        by 10.229.69.67 with SMTP id y3mr23380594qci.15.1329954459474 (num_hops = 1);
-        Wed, 22 Feb 2012 15:47:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=svfrxY503iDNzB+NEyUa3zffb6X+ZPXELDs/FZDgA0k=;
-        b=i6s9md40eLVoIVuYAhNdDg6xyTxuaPKdY0yDjUAj2QumqmkUeKUMBNiFc0sBRh4UJ6
-         p5XhtcIrIyYsT8HkWrJ+A0+PZm8YUw8b/YeZY+3uLd0+xlk6rz5891VK51ZttDaVcvsI
-         UJ/Do1VHTTp4G2IqwA8AU1kjwUBz8xbriI+yc=
-Received: by 10.229.69.67 with SMTP id y3mr19705304qci.15.1329954458731;
-        Wed, 22 Feb 2012 15:47:38 -0800 (PST)
-Received: from localhost ([129.192.185.163])
-        by mx.google.com with ESMTPS id e2sm69636800qao.14.2012.02.22.15.47.35
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 22 Feb 2012 15:47:37 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vobsrbcny.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752900Ab2BVXsi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Feb 2012 18:48:38 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53951 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751207Ab2BVXsh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Feb 2012 18:48:37 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 95DB7781C;
+	Wed, 22 Feb 2012 18:48:36 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HJ5yNVccB08un1onSVYccEod7fI=; b=L20oZA
+	ZAxTrKis2/DY4rM/YKnSetjTJKJE2cVB2nx2e8qYljcYbh5TzAFpQq//1zqUXBbO
+	INT9pAnIyEy0b+VxvGmNImYXTisl8LUoFlWUMrfgY+h/kQ2DmaWv2bclVnveQQke
+	nG1gQyAAQ6rTbF7/cAfYuY48bUQk3uz/h5BN4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qJ0QTE2K2/6WgavNVb8Df+RAsmF3awML
+	LVxKW6Ke8hVonD/ZGIOFpznppFbjeIYFHN4E8m3VotNtcT8DyjcWHkPXei1KyDxF
+	CtGW0nXtpKzjynk0dfXbul249z6CJhYxM+0P0xs7U9JKzSGUoaVEmcbY/R2zICZZ
+	t06BUPGh6F4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D21B781A;
+	Wed, 22 Feb 2012 18:48:36 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 75D9C7818; Wed, 22 Feb 2012
+ 18:48:35 -0500 (EST)
+In-Reply-To: <1329948749-5908-1-git-send-email-tim.henigan@gmail.com> (Tim
+ Henigan's message of "Wed, 22 Feb 2012 17:12:29 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BC23AF12-5DAF-11E1-96B4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191311>
 
-On Tue, Feb 21, 2012 at 10:33:05PM -0800, Junio C Hamano wrote:
->Tom Grennan <tmgrennan@gmail.com> writes:
+Tim Henigan <tim.henigan@gmail.com> writes:
+
+> This script adds directory diff support to git.  It launches a single
+> instance of the user-configured external diff tool and performs a
+> directory diff between the specified revisions. The before/after files
+> are copied to a tmp directory to do this.  Either 'diff.tool' or
+> 'merge.tool' must be set before running the script.
 >
->> +static int match_path(const char *name, const char *pattern, int nlen)
->> +{
->> +	int plen = strlen(pattern);
->> +
->> +	return ((plen <= nlen) &&
->> +		!strncmp(name, pattern, plen) &&
->> +		(name[plen] == '\0' ||
->> +		 name[plen] == '/' ||
->> +		 pattern[plen-1] == '/'));
->> +}
->
->This is a counterpart to the tail match found in ls-remote, so we would
->want to call it with a name that makes it clear this is a leading path
->match not just "path" match.  Perhaps match_leading_path() or something.
+> The existing 'git difftool' command already allows the user to view diffs
+> using an external tool.  However if multiple files have changed, a
+> separate instance of the tool is launched for each one.  This can be
+> tedious when many files are involved.
 
-OK
-
->> +int match_pattern(const char *name, const char **match,
->> +		  struct string_list *exclude, int flags)
->> +{
->> +	int nlen = strlen(name);
->> +
->> +	if (exclude) {
->> +		struct string_list_item *x;
->> +		for_each_string_list_item(x, exclude) {
->> +			if (!fnmatch(x->string, name, 0))
->> +				return 0;
->> +		}
->> +	}
->> +	if (!match || !*match)
->> +		return 1;
->> +	for (; *match; match++) {
->> +		if (flags == FNM_PATHNAME)
->> +			if (match_path(name, *match, nlen))
->> +				return 1;
->> +		if (!fnmatch(*match, name, flags))
->> +			return 1;
->> +	}
->> +	return 0;
->> +}
->
->As an API for a consolidated and generic function, the design needs a bit
->more improving, I would think.
->
-> - The name match_pattern() was OK for a static function inside a single
->   file, but it is way too vague for a global function. This is to match
->   refnames, so I suspect there should at least be a string "ref_"
->   somewhere in its name.
-
-OK
-
-> - You pass "flags" argument, so that later we _could_ enhance the
->   implementation to cover needs for new callers, but alas, it uses its
->   full bits to express only one "do we do FNM_PATHNAME or not?" bit of
->   information, so essentially "flags" does not give us any expandability.
-
-I agree.
-
-> - Is it a sane assumption that a caller that asks FNM_PATHNAME will
->   always want match_path() semantics, too?  Aren't these two logically
->   independent?
-
-Yes, these should be ligically independent although the current use has
-combined them.
-
-> - Is it a sane assumption that a caller that gives an exclude list will
->   want neither FNM_PATHNAME semantics nor match_path() semantics?
-
-I'm not sure.  I tried using FNM_PATHNAME with both exclusion and match
-patterns of git-for-each-ref but I couldn't get it to do something like
+We encourage our log messages to describe the problem first and then
+present solution to the problem, so I would update the above perhaps like
 this:
-	git for-each-ref ... --exclude '*HEAD' refs/remotes/
 
-I don't remember if this worked,
-	git for-each-ref ... --exclude HEAD refs/remotes/
+	The 'git difftool' command lets the user to use an external tool
+	to view diffs, but it runs the tool for one file at the time. This
+	makes it tedious to review a change that spans multiple files.
 
-Now I see how an implicit TRAILING match would be useful,
-	git for-each-ref ... --exclude /HEAD refs/remotes/
+        The "git-diffall" script instead prepares temporary directories
+        with preimage and postimage files, and launches a single instance
+        of an external diff tool to view the differences in them.
+        diff.tool or merge.tool configuration variable is used to specify
+        what external tool is used.
 
-Where git-for-each-ref uses this flag:
-	REF_MATCH_LEADING | REF_MATCH_TRAILING | REF_MATCH_FNM_PATH
+I am wondering if reusing "diff.tool" or "merge.tool" is a good idea,
+though.
 
-I'll experiment with this more. 
+I guess that it is OK to assume that any external tool that can compare
+two directories MUST be able to compare two individual files, and if that
+is true, it is perfectly fine to reuse the configuration.  But if an
+external tool "frobdiff" that can compare two directories cannot compare
+two individual files, it will make it impossible for the user to run "git
+difftool" if diff.tool is set to "frobdiff" to use with "diffall".
 
-> - Positive patterns are passed in "const char **match", and negative ones
->   are in "struct string_list *". Doesn't the inconsistency strike you as
->   strange?
+Another thing that comes to my mind is if a user has an external tool that
+can use "diffall", is there ever a situation where the user chooses to use
+"difftool" instead, to go files one by one.  I cannot offhand imagine any.
 
-Yes, I tried to minimize change but the conversion of argv's to
-string_list's won't add that much.
+Perhaps a longer term integration plan may be to lift the logic from this
+script and make it part of "difftool", and then add a boolean variable
+"difftool.<tool>.canCompareDirectory", without adding "git diffall" as a
+subcommand.  The user can still run "git difftool", and when the external
+tool can compare two directories, the code to populate temporary directory
+(and to set the trap to clean after itself) taken from this tool will run
+inside "git difftool" frontend and then the external tool to compare the
+two directories is spawned.
 
->Perhaps like...
->
->#define REF_MATCH_LEADING       01
->#define REF_MATCH_TRAILING      02
->#define REF_MATCH_FNM_PATH      04
->
->static int match_one(const char *name, size_t namelen, const char *pattern,
->		unsigned flags)
->{
->       	if ((flags & REF_MATCH_LEADING) &&
->            match_leading_path(name, pattern, namelen))
->		return 1;
->       	if ((flags & REF_MATCH_TRAILING) &&
->            match_trailing_path(name, pattern, namelen))
->		return 1;
->	if (!fnmatch(pattern, name, 
->		     (flags & REF_MATCH_FNM_PATH) ? FNM_PATHNAME : 0))
->		return 1;
->	return 0;
->}
->
->int ref_match_pattern(const char *name,
->		const char **pattern, const char **exclude, unsigned flags)
->{
->	size_t namelen = strlen(name);
->        if (exclude) {
->		while (*exclude) {
->			if (match_one(name, namelen, *exclude, flags))
->				return 0;
->			exclude++;
->		}
->	}
->        if (!pattern || !*pattern)
->        	return 1;
->	while (*pattern) {
->		if (match_one(name, namelen, *pattern, flags))
->			return 1;
->		pattern++;
->	}
->        return 0;
->}
->
->and then the caller could do something like
->
->	ref_match_pattern("refs/heads/master",
->        		  ["maste?", NULL],
->                          ["refs/heads/", NULL],
->                          (REF_MATCH_FNM_PATH|REF_MATCH_LEADING));
->
->Note that the above "ref_match_pattern()" gives the same "flags" for the
->call to match_one() for elements in both positive and negative array and
->it is very deliberate.  See review comment to [3/5] for the reasoning.
+I also think that in a yet longer term, if this mode of "instantiate two
+directories to be compared, and let the external tool do the comparison"
+proves useful, almost all the "interesting" work done in this script
+should be made unnecessary by adding an updated "external diff interface"
+on the core side, so that nobody has to hurt his brain to implement an
+error-prone command line parsing logic.
 
-OK, I think that I understand, but please confirm, you'd expect no output in
-the above example, right?
+In other words, this statement cannot stay true:
 
--- 
-TomG
+> +This script is compatible with all the forms used to specify a
+> +range of revisions to diff:
+
+without updating the script every time underlying "git diff" gains new way
+of comparing things.  If we move the "prepare two directories, and point
+an external tool at them" logic to the core, we do not have to worry about
+it at all.
+
+Besides, I do not think the script covers all the forms; "git diff -R"
+support is totally missing.
+
+But that is all two steps in the future.
+
+> +# mktemp is not available on all platforms (missing from msysgit)
+> +# Use a hard-coded tmp dir if it is not available
+> +tmp="$(mktemp -d -t tmp.XXXXXX 2>/dev/null)" || {
+> +	tmp=/tmp/git-diffall-tmp
+> +}
+
+It would not withstand malicious attacks, but doing
+
+	tmp=/tmp/git-diffall-tmp.$$
+
+would at least protect you from accidental name crashes better in the
+fallback codepath.
+
+> +
+> +trap 'rm -rf "$tmp" 2>/dev/null' EXIT
+
+Do you need to suppress errors, especially when you are running "rm -rf"
+with the 'f' option?
+
+> +mkdir -p "$tmp"
+> +
+> +left=
+> +right=
+> +paths=
+> +path_sep=
+> +compare_staged=
+> +common_ancestor=
+> +left_dir=
+> +right_dir=
+> +diff_tool=
+> +copy_back=
+
+You can write multiple assignment on a line to save vertical space if you
+want to, and the initialization sequence like this is a good place to do
+so.
+
+> +while test $# != 0
+> +do
+> +	case "$1" in
+> +	-h|--h|--he|--hel|--help)
+> +		usage
+> +		;;
+> +	--cached)
+> +		compare_staged=1
+> +		;;
+> +	--copy-back)
+> +		copy_back=1
+> +		;;
+> +	-x|--e|--ex|--ext|--extc|--extcm|--extcmd)
+> +		diff_tool=$2
+> +		shift
+> +		;;
+
+What if your command line ends with -x without $2?
+
+Don't you want to match "-t/--tool" that "difftool" already uses?
+
+> +	--)
+> +		path_sep=1
+> +		;;
+> +	-*)
+> +		echo Invalid option: "$1"
+> +		usage
+> +		;;
+> +	*)
+> +		# could be commit, commit range or path limiter
+> +		case "$1" in
+> +		*...*)
+> +			left=${1%...*}
+> +			right=${1#*...}
+> +			common_ancestor=1
+> +			;;
+
+Strictly speaking, that is not just a common_ancestor but is a merge_base,
+which is a common ancestor none of whose children is a common ancestor.
+
+> +		*..*)
+> +			left=${1%..*}
+> +			right=${1#*..}
+> +			;;
+> +		*)
+> +			if test -n "$path_sep"
+> +			then
+> +				paths="$paths$1 "
+> +			elif test -z "$left"
+> +			then
+> +				left=$1
+> +			elif test -z "$right"
+> +			then
+> +				right=$1
+> +			else
+> +				paths="$paths$1 "
+> +			fi
+> +			;;
+> +		esac
+
+Hrm, so "diffall HEAD~2 Documentation/" is not the way to compare the
+contents of the Documentation/ directory between the named commit and
+the working tree, like "diff HEAD~2 Documentation/" does.
+
+That is not a show-stopper (a double-dash is an easy workaround), but
+it is worth pointing out.
+
+> +		;;
+> +	esac
+> +	shift
+> +done
+> +
+> +# Determine the set of files which changed
+> +if test -n "$left" && test -n "$right"
+> +then
+> +	left_dir="cmt-$(git rev-parse --short $left)"
+> +	right_dir="cmt-$(git rev-parse --short $right)"
+> +
+> +	if test -n "$compare_staged"
+> +	then
+> +		usage
+> +	elif test -n "$common_ancestor"
+> +	then
+> +		git diff --name-only "$left"..."$right" -- $paths > "$tmp/filelist"
+> +	else
+> +		git diff --name-only "$left" "$right" -- $paths > "$tmp/filelist"
+> +	fi
+
+And this will not work with pathspec that have $IFS characters.  If we
+really wanted to we could do that by properly quoting "$1" when you build
+$paths and then use eval when you run "git diff" here (look for 'sq' and
+'eval' in existing scripts, e.g. "git-am.sh", if you are interested).
+
+Also you may want to write filelist using -z format to protect yourself
+from paths that contain LF, but that would require the loop "while read
+name" to be rewritten.
+
+> +# Exit immediately if there are no diffs
+> +if test ! -s "$tmp/filelist"
+> +then
+> +	exit 0
+> +fi
+
+Ok, you have trap set already so $tmp will disappear with this exit ;-)
+
+> +if test -n "$copy_back" && test "$right_dir" != "working_tree"
+> +then
+> +	echo "--copy-back is only valid when diff includes the working tree."
+> +	exit 1
+> +fi
+
+I actually wondered why $right_dir needs to be populated with a copy in
+the first place (if you do not copy but give the working tree itself to
+the external tool, you do not even have to copy back).
+
+I know the answer to the question, namely, "because the external tool
+thinks files that are not in $left_dir are added files", but if you can
+find a way to tell the external tool to ignore new files (similar to how
+"diff -r" without -N works), running the tool with temporary left_dir and
+the true workdir as right_dir would be a lot cleaner solution to the
+problem.
+
+> +# Create the named tmp directories that will hold the files to be compared
+> +mkdir -p "$tmp/$left_dir" "$tmp/$right_dir"
+> +
+> +# Populate the tmp/right_dir directory with the files to be compared
+> +if test -n "$right"
+> +then
+> +	while read name
+> +	do
+> +		ls_list=$(git ls-tree $right $name)
+> +		if test -n "$ls_list"
+> +		then
+> +			mkdir -p "$tmp/$right_dir/$(dirname "$name")"
+> +			git show "$right":"$name" > "$tmp/$right_dir/$name" || true
+> +		fi
+> +	done < "$tmp/filelist"
+
+"while read -r name" might make this slightly more robust; even though
+this loses leading and trailing whitespaces in filenames, we probably
+can get away without worrying about them.
+
+> +else
+> +	# Mac users have gnutar rather than tar
+> +	(tar --ignore-failed-read -c -T "$tmp/filelist" | (cd "$tmp/$right_dir" && tar -x)) || {
+> +		gnutar --ignore-failed-read -c -T "$tmp/filelist" | (cd "$tmp/$right_dir" && gnutar -x)
+> +	}
+
+What is this "--ignore-failed-read" about?  Not reporting unreadable as an
+error smells really bad.
+
+If you require GNUism in your tar usage, this should be made configurable
+so that people can use alternative names (some systems come with "tar"
+that is POSIX and "gtar" that is GNU).
+
+> +cd "$tmp"
+> +LOCAL="$left_dir"
+> +REMOTE="$right_dir"
+> +
+> +if test -n "$diff_tool"
+> +then
+> +	export BASE
+> +	eval $diff_tool '"$LOCAL"' '"$REMOTE"'
+> +else
+> +	run_merge_tool "$merge_tool" false
+> +fi
+> +
+> +# Copy files back to the working dir, if requested
+> +if test -n "$copy_back" && test "$right_dir" = "working_tree"
+> +then
+> +	cd "$start_dir"
+> +	git_top_dir=$(git rev-parse --show-toplevel)
+> +	find "$tmp/$right_dir" -type f |
+> +	while read file
+> +	do
+> +		cp "$file" "$git_top_dir/${file#$tmp/$right_dir/}"
+> +	done
+> +fi
+
+This will copy new files created in $right_dir.  Is that intended?
