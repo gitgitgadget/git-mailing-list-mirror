@@ -1,186 +1,118 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [RFC/PATCH 2/3] remote: reorganize check_pattern_match()
-Date: Wed, 22 Feb 2012 22:15:41 +0200
-Message-ID: <CAMP44s2HUG_ocHBaVpcsZHWMf2Tww+=bVun5H9+S5EGkoiJHRQ@mail.gmail.com>
-References: <1329505957-24595-1-git-send-email-felipe.contreras@gmail.com>
-	<1329505957-24595-3-git-send-email-felipe.contreras@gmail.com>
-	<7vvcn5qecl.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] bundle: use a strbuf to scan the log for boundary
+ commits
+Date: Wed, 22 Feb 2012 12:22:04 -0800
+Message-ID: <7vlinuaaab.fsf@alter.siamese.dyndns.org>
+References: <a795f6dca5e7c3fc5f9212becda4a46116c502b7.1329939233.git.trast@student.ethz.ch> <fa1553d59714fd89fdab1bf54af19ac631a30a8c.1329939233.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 22 21:15:51 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>,
+	Jannis Pohlmann <jannis.pohlmann@codethink.co.uk>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Feb 22 21:22:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0IbM-0005oH-GK
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 21:15:49 +0100
+	id 1S0Iha-0002Hf-CJ
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 21:22:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752681Ab2BVUPn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Feb 2012 15:15:43 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:58423 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751871Ab2BVUPm convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Feb 2012 15:15:42 -0500
-Received: by mail-lpp01m010-f46.google.com with SMTP id u2so485743lag.19
-        for <git@vger.kernel.org>; Wed, 22 Feb 2012 12:15:42 -0800 (PST)
-Received-SPF: pass (google.com: domain of felipe.contreras@gmail.com designates 10.112.84.233 as permitted sender) client-ip=10.112.84.233;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of felipe.contreras@gmail.com designates 10.112.84.233 as permitted sender) smtp.mail=felipe.contreras@gmail.com; dkim=pass header.i=felipe.contreras@gmail.com
-Received: from mr.google.com ([10.112.84.233])
-        by 10.112.84.233 with SMTP id c9mr10924111lbz.1.1329941742073 (num_hops = 1);
-        Wed, 22 Feb 2012 12:15:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=nSQlbnduiJhajL7H5uoFUNDauROBIt0awcXey/x0xXs=;
-        b=EnSJblFtKE2QUheCsZ8AB0sXMf/OEQHhDmsSPv+RbyDmTR4BFCB7ipYzqZo1PLmbqQ
-         ppqFs0UH6ytmWMiZZZPFkYV9UFFLb5zzBgOH55N2FM7zQxIpbB/BDvwlNc0UBEbpMC6A
-         PtNqZO5TaihLrlIcYl6MqDfbxw0pP0e95b7rI=
-Received: by 10.112.84.233 with SMTP id c9mr9163481lbz.1.1329941741989; Wed,
- 22 Feb 2012 12:15:41 -0800 (PST)
-Received: by 10.112.41.73 with HTTP; Wed, 22 Feb 2012 12:15:41 -0800 (PST)
-In-Reply-To: <7vvcn5qecl.fsf@alter.siamese.dyndns.org>
+	id S1752869Ab2BVUWI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Feb 2012 15:22:08 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41362 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751871Ab2BVUWH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Feb 2012 15:22:07 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 804256466;
+	Wed, 22 Feb 2012 15:22:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4qk3Hrbquq/UVBdL//cBSjWEexA=; b=wtWiz3
+	Ik04zVaR4bQIFNNoRoR4VtzgUnEGKikgep2KZBjZDWupbR4XZCWDlZ+GDLMPcTLK
+	b7c5ClQ6QX8tm0Bi0s25zcPvFP+qjA0jUmx2jPo9YMCo8dpW9SfoR5ehPmnTatct
+	hiccJo2J5FV/Yae/Bn9Ea/vS1pDNT8lZ9bFjk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=o1pJkI8bGqdbf+STxVsf2BvX7uf+MAmV
+	J2bl9Bsp6wRajqa+Nzda/penmM916P2xErmisSVSN7ujY5LbB954VnW1Jf6H/od8
+	eo0GsyhASMznXjXG/5Vx9PZu16qEtogV1sdZpjXOIQm+eiCDhEPvlxs4Jb5nsBp6
+	SDqijRIt2mY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7803C6465;
+	Wed, 22 Feb 2012 15:22:06 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C8FCA6461; Wed, 22 Feb 2012
+ 15:22:05 -0500 (EST)
+In-Reply-To: <fa1553d59714fd89fdab1bf54af19ac631a30a8c.1329939233.git.trast@student.ethz.ch> (Thomas Rast's message of "Wed, 22 Feb 2012 20:34:23 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E353AD66-5D92-11E1-BCAB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191278>
 
-On Sat, Feb 18, 2012 at 12:34 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+Thomas Rast <trast@student.ethz.ch> writes:
+
+> The first part of the bundle header contains the boundary commits, and
+> could be approximated by
 >
->> There's a lot of code that can be consolidated there, and will be us=
-eful
->> for next patches.
->>
->> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->> ---
->> =C2=A0remote.c | =C2=A0 59 ++++++++++++++++++++++++++++++-----------=
-------------------
->> =C2=A01 files changed, 30 insertions(+), 29 deletions(-)
->>
->> diff --git a/remote.c b/remote.c
->> index 55d68d1..019aafc 100644
->> --- a/remote.c
->> +++ b/remote.c
->> @@ -1110,10 +1110,11 @@ static int match_explicit_refs(struct ref *s=
-rc, struct ref *dst,
->> =C2=A0 =C2=A0 =C2=A0 return errs;
->> =C2=A0}
->>
->> -static const struct refspec *check_pattern_match(const struct refsp=
-ec *rs,
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0int rs_nr,
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0const struct ref *src)
->> +static char *check_pattern_match(const struct refspec *rs, int rs_n=
-r, struct ref *ref,
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int send_mirror, const s=
-truct refspec **ret_pat)
->> =C2=A0{
+>   # v2 git bundle
+>   $(git rev-list --pretty=oneline --boundary <ARGS> | grep ^-)
 >
-> For a change that not just adds parameters but removes an existing on=
-e,
-> this is way under-described with neither in-code comment nor log mess=
-age.
-
-But it doesn't. src is renamed to ref.
-
->> + =C2=A0 =C2=A0 const struct refspec *pat;
->> + =C2=A0 =C2=A0 char *name;
->> =C2=A0 =C2=A0 =C2=A0 int i;
->> =C2=A0 =C2=A0 =C2=A0 int matching_refs =3D -1;
->> =C2=A0 =C2=A0 =C2=A0 for (i =3D 0; i < rs_nr; i++) {
->> @@ -1123,14 +1124,31 @@ static const struct refspec *check_pattern_m=
-atch(const struct refspec *rs,
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 continue;
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
->>
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (rs[i].pattern && mat=
-ch_name_with_pattern(rs[i].src, src->name,
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NULL, NU=
-LL))
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 return rs + i;
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (rs[i].pattern) {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 const char *dst_side =3D rs[i].dst ? rs[i].dst : rs[i].src;
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 if (match_name_with_pattern(rs[i].src, ref->name, dst_side, &name))=
- {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 matching_refs =3D i;
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;
+> git-bundle actually spawns exactly this rev-list invocation, and does
+> the grepping internally.
 >
-> We used to discard what match_name_with_pattern() finds out by matchi=
-ng a
-> wildcard refspec against the ref by passing two NULLs. =C2=A0This upd=
-ates the
-> code to capture what destination ref ref->name is mapped to, by using=
- the
-> same logic as the original and only caller, i.e. 'foo' without destin=
-ation
-> maps to the same 'foo' destination, 'foo:bar' maps to the named 'bar'=
-=2E
+> There was a subtle bug in the latter step: it used fgets() with a
+> 1024-byte buffer.  If the user has sufficiently long subjects (e.g.,
+> by not adhering to the git oneline-subject convention in the first
+> place), the 'oneline' format can easily overflow the buffer.  fgets()
+> then returns the rest of the line in the next call(s).  If one of
+> these remaining parts started with '-', git-bundle would mistakenly
+> insert it into the bundle thinking it was a boundary commit.
 >
-> This function is not used by fetching side of the codepath, so we do =
-not
-> have to worry about its need to use different dst_side selection logi=
-c
-> (i.e. 'foo' without destination maps to "do not store anywhere other =
-than
-> FETCH_HEAD"). =C2=A0Good.
-
-I actually didn't parse a lot of that.
-
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 }
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
->> =C2=A0 =C2=A0 =C2=A0 }
->> -...
->> + =C2=A0 =C2=A0 if (matching_refs =3D=3D -1)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;
->> +
->> + =C2=A0 =C2=A0 pat =3D rs + matching_refs;
->> + =C2=A0 =C2=A0 if (pat->matching) {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* "matching refs";=
- traditionally we pushed everything
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* including refs o=
-utside refs/heads/ hierarchy, but
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* that does not ma=
-ke much sense these days.
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!send_mirror && pref=
-ixcmp(ref->name, "refs/heads/"))
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 return NULL;
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 name =3D xstrdup(ref->na=
-me);
->> + =C2=A0 =C2=A0 }
+> Fix it by using strbuf_getwholeline() instead, which handles arbitrary
+> line lengths correctly.
 >
-> So you are moving some code from what the sole caller of this functio=
-n
-> does after calling us, and that is where the new parameters come from=
-=2E
-> And by doing so, you do not have to run the same match_name_with_patt=
-ern()
-> again. =C2=A0OK.
+> Note that on the receiving side in parse_bundle_header() we were
+> already using strbuf_getwholeline_fd(), so that part is safe.
 
-Indeed.
+Thanks for diagnosing this, but I wonder if it even needs --pretty=oneline
+to begin with, except for debugging purposes.
 
---=20
-=46elipe Contreras
+Do we ever use the subject string read from the rev-list output in any
+way?
+
+In other words, I am wondering if the right patch to minimally fix the
+issue starting from older releases is something along this line instead:
+
+diff --git a/bundle.c b/bundle.c
+index b8acf3c..339dbb0 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -248,7 +248,7 @@ int create_bundle(struct bundle_header *header, const char *path,
+ 	static struct lock_file lock;
+ 	int bundle_fd = -1;
+ 	int bundle_to_stdout;
+-	const char **argv_boundary = xmalloc((argc + 4) * sizeof(const char *));
++	const char **argv_boundary = xmalloc((argc + 3) * sizeof(const char *));
+ 	const char **argv_pack = xmalloc(6 * sizeof(const char *));
+ 	int i, ref_count = 0;
+ 	char buffer[1024];
+@@ -271,11 +271,10 @@ int create_bundle(struct bundle_header *header, const char *path,
+ 	init_revisions(&revs, NULL);
+ 
+ 	/* write prerequisites */
+-	memcpy(argv_boundary + 3, argv + 1, argc * sizeof(const char *));
++	memcpy(argv_boundary + 2, argv + 1, argc * sizeof(const char *));
+ 	argv_boundary[0] = "rev-list";
+ 	argv_boundary[1] = "--boundary";
+-	argv_boundary[2] = "--pretty=oneline";
+-	argv_boundary[argc + 2] = NULL;
++	argv_boundary[argc + 1] = NULL;
+ 	memset(&rls, 0, sizeof(rls));
+ 	rls.argv = argv_boundary;
+ 	rls.out = -1;
