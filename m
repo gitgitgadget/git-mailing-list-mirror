@@ -1,78 +1,70 @@
-From: "Matt Seitz (matseitz)" <matseitz@cisco.com>
-Subject: gitk: set uicolor SystemButtonFace error on X11 if .gitk created using Win32 tk
-Date: Wed, 22 Feb 2012 14:13:23 -0800
-Message-ID: <70952A932255A2489522275A628B97C31288FA0B@xmb-sjc-233.amer.cisco.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bug report: "git-merge --ff" should fail if branches have
+ diverged
+Date: Wed, 22 Feb 2012 14:14:24 -0800
+Message-ID: <7vr4xm8qin.fsf@alter.siamese.dyndns.org>
+References: <DB0837FD-0963-4BF9-BD7B-B243F580CC1C@imgtec.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 22 23:13:36 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Sean Gies <Sean.Gies@imgtec.com>
+X-From: git-owner@vger.kernel.org Wed Feb 22 23:14:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0KRJ-0008MK-BH
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 23:13:33 +0100
+	id 1S0KSG-0000aX-54
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 23:14:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755834Ab2BVWN3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Feb 2012 17:13:29 -0500
-Received: from mtv-iport-3.cisco.com ([173.36.130.14]:8549 "EHLO
-	mtv-iport-3.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755575Ab2BVWN2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Feb 2012 17:13:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=matseitz@cisco.com; l=677; q=dns/txt;
-  s=iport; t=1329948808; x=1331158408;
-  h=mime-version:content-transfer-encoding:subject:date:
-   message-id:from:to;
-  bh=u6gLGSDtvirp+onBm+d6vaWBFQJqokssYUvdgDN88OM=;
-  b=LL5a6J7IQaxQEK7Fvp3l798BtMXs6CEbs7RlyNsqoQseZEbwbmevN+Fa
-   oP2pZmc1QOaQS2t9rgwefXxrFhVLXr57slOG0ZVPCyUK1ZlOhTlYtAnP5
-   Aqqnl3D5v/7ed6RwgI48QDeNekX9w///GXkM04myeuBR0VyWugYbMqu8t
-   s=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av0EANVnRU+rRDoH/2dsb2JhbABEskyBB4F1AQQSAR0KUQEqBhgHVwEEGxqHaJgOgScBnneCV4osRxECAwECAoRMAYEEBw0CAwYCDQYZgjtjBIhPn3c
-X-IronPort-AV: E=Sophos;i="4.73,466,1325462400"; 
-   d="scan'208";a="31945778"
-Received: from mtv-core-2.cisco.com ([171.68.58.7])
-  by mtv-iport-3.cisco.com with ESMTP; 22 Feb 2012 22:13:28 +0000
-Received: from xbh-sjc-231.amer.cisco.com (xbh-sjc-231.cisco.com [128.107.191.100])
-	by mtv-core-2.cisco.com (8.14.3/8.14.3) with ESMTP id q1MMDR4F001463
-	for <git@vger.kernel.org>; Wed, 22 Feb 2012 22:13:27 GMT
-Received: from xmb-sjc-233.amer.cisco.com ([128.107.191.88]) by xbh-sjc-231.amer.cisco.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Wed, 22 Feb 2012 14:13:27 -0800
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-X-CR-Hashedpuzzle: AOr9 AQZY AQ2/ CIVz DSuC D9Ey ErP6 EtEV FxpS GWJn Gb3C G/cS HJsF H+Q9 IP5j JW0q;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA=;Sosha1_v1;7;{B83B824F-9FED-4073-AB0B-1E9682E4C6FB};bQBhAHQAcwBlAGkAdAB6AEAAYwBpAHMAYwBvAC4AYwBvAG0A;Wed, 22 Feb 2012 22:13:23 GMT;ZwBpAHQAawA6ACAAcwBlAHQAIAB1AGkAYwBvAGwAbwByACAAUwB5AHMAdABlAG0AQgB1AHQAdABvAG4ARgBhAGMAZQAgAGUAcgByAG8AcgAgAG8AbgAgAFgAMQAxACAAaQBmACAALgBnAGkAdABrACAAYwByAGUAYQB0AGUAZAAgAHUAcwBpAG4AZwAgAFcAaQBuADMAMgAgAHQAawA=
-X-CR-Puzzleid: {B83B824F-9FED-4073-AB0B-1E9682E4C6FB}
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: gitk: set uicolor SystemButtonFace error on X11 if .gitk created using Win32 tk
-thread-index: AczxrzFkHFTIirhXSlyFv8fdHXgxDA==
-X-OriginalArrivalTime: 22 Feb 2012 22:13:27.0676 (UTC) FILETIME=[33C103C0:01CCF1AF]
+	id S1755836Ab2BVWO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Feb 2012 17:14:27 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65402 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753817Ab2BVWO1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Feb 2012 17:14:27 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 94751615C;
+	Wed, 22 Feb 2012 17:14:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HdClzMtA9wGxqBv+cMJMQghoi9E=; b=EoekSl
+	VImZuZxXDlMEEevpyhkb0JrmSfDn+KhulaLjAumpWwqOCBPY7Zc6GA/MgVSkcRkn
+	N9reSJ9gWiM7vML4+aCVtyOkskOj9+94DYmnxTuBWwr6dSERaGR9qQ59hUc9e6hB
+	biWZw9naJXAwJDAX2POAfHmmchaJkOQ5wzZrQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Traj0Mm9T2T0oVg26MpW9RtVVwOWW+Y2
+	spebSQrI2MzEO2kMdub464w88v5bqvrRB+kJUzcBDtjqoCnIqE2wdwlxHa3Fblpj
+	oXOPQZ7vQMgFMuaw1DH59WUVkuqWfgJhn7Mlt2qm4vafm1eksCaaGOESecUT4yqA
+	H+m7qCrxSJQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 857BC615B;
+	Wed, 22 Feb 2012 17:14:26 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F1B706159; Wed, 22 Feb 2012
+ 17:14:25 -0500 (EST)
+In-Reply-To: <DB0837FD-0963-4BF9-BD7B-B243F580CC1C@imgtec.com> (Sean Gies's
+ message of "Wed, 22 Feb 2012 21:51:05 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 94C7857C-5DA2-11E1-A39A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191299>
 
-Would you please change gitk to not hard-code Win32-specific color
-values when creating .gitk on a Win32 windowing system?
+Sean Gies <Sean.Gies@imgtec.com> writes:
 
-Gitk stopped working for me on Cygwin when Cygwin changed from using a
-Win32 native version of tk to using the standard X11 version.  The error
-was because gitk had previously created a .gitk file using Win32
-specific color values:
+> When I specify the "--ff" option to git-merge, I expect it to perform a
+> fast-forward merge or none at all.
 
-https://github.com/gitster/git/commit/1924d1bc0dc99cd3460d3551671908cc76
-c09d3b
+That expectation needs to be adjusted with s/--ff/--ff-only/, I think.
 
-I was able to work around the problem by replacing the Win32 specific
-colors in my .gitk file with the default colors gitk uses on other
-windowing systems.
- 
-See also:
+The "--no-ff" option says "Never do fast-forward and always create extra
+commit even when the side branch is a descendant", and the "--ff" option
+is a way to countermand it, i.e. "It is ok to fast-forward this merge".
 
-http://cygwin.com/ml/cygwin/2012-02/msg00391.html
+And there is another one "I do not want anything bug fast forward", and
+that is spelled --ff-only.
