@@ -1,154 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] remote-curl: Fix push status report when all branches
- fail
-Date: Wed, 22 Feb 2012 05:13:02 -0500
-Message-ID: <20120222101302.GA11606@sigill.intra.peff.net>
-References: <8739bacpql.fsf@thomas.inf.ethz.ch>
- <1327079011-24788-1-git-send-email-spearce@spearce.org>
+From: Luke Diamand <luke@diamand.org>
+Subject: [PATCHv4] git-p4: RCS keyword handling
+Date: Wed, 22 Feb 2012 10:15:40 +0000
+Message-ID: <1329905741-2092-1-git-send-email-luke@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Feb 22 11:13:17 2012
+Cc: Pete Wyckoff <pw@padd.com>, Eric Scouten <eric@scouten.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Luke Diamand <luke@diamand.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 22 11:15:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S09CG-0003Ux-9I
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 11:13:16 +0100
+	id 1S09Ee-0005Y3-M6
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 11:15:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754175Ab2BVKNK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Feb 2012 05:13:10 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47004
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752113Ab2BVKNI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Feb 2012 05:13:08 -0500
-Received: (qmail 27260 invoked by uid 107); 22 Feb 2012 10:13:08 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 22 Feb 2012 05:13:08 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Feb 2012 05:13:02 -0500
-Content-Disposition: inline
-In-Reply-To: <1327079011-24788-1-git-send-email-spearce@spearce.org>
+	id S1754147Ab2BVKPk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Feb 2012 05:15:40 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:38726 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752113Ab2BVKPj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Feb 2012 05:15:39 -0500
+Received: by wgbdt10 with SMTP id dt10so6551841wgb.1
+        for <git@vger.kernel.org>; Wed, 22 Feb 2012 02:15:38 -0800 (PST)
+Received-SPF: pass (google.com: domain of luke@diamand.org designates 10.180.93.194 as permitted sender) client-ip=10.180.93.194;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of luke@diamand.org designates 10.180.93.194 as permitted sender) smtp.mail=luke@diamand.org
+Received: from mr.google.com ([10.180.93.194])
+        by 10.180.93.194 with SMTP id cw2mr33580828wib.0.1329905738091 (num_hops = 1);
+        Wed, 22 Feb 2012 02:15:38 -0800 (PST)
+Received: by 10.180.93.194 with SMTP id cw2mr27795149wib.0.1329905737945;
+        Wed, 22 Feb 2012 02:15:37 -0800 (PST)
+Received: from ethel.cable.virginmedia.net (cpc19-cmbg14-2-0-cust6.5-4.cable.virginmedia.com. [86.6.30.7])
+        by mx.google.com with ESMTPS id m16sm69061192wie.9.2012.02.22.02.15.35
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 22 Feb 2012 02:15:36 -0800 (PST)
+X-Mailer: git-send-email 1.7.9.259.ga92e
+X-Gm-Message-State: ALoCoQkwmriAyFoQ4mubAoB5PCxAari4Y1ZkR2y+KJxo6++dw4nGH8vV3gAo6GYjIzlEIJU7Fqzq
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191245>
 
-On Fri, Jan 20, 2012 at 09:03:31AM -0800, Shawn O. Pearce wrote:
+Updated patch incorporating comments from Pete and Junio to
+handle RCS keyword expansion in git-p4.
 
-> diff --git a/remote-curl.c b/remote-curl.c
-> index 48c20b8..25c1af7 100644
-> --- a/remote-curl.c
-> +++ b/remote-curl.c
-> @@ -822,12 +822,13 @@ static void parse_push(struct strbuf *buf)
->  			break;
->  	} while (1);
->  
-> -	if (push(nr_spec, specs))
-> -		exit(128); /* error already reported */
-> -
-> +	ret = push(nr_spec, specs);
->  	printf("\n");
->  	fflush(stdout);
->  
-> +	if (ret)
-> +		exit(128); /* error already reported */
-> +
+Note: The current patch fails to to handle the case where a user
+adds an expanded RCS keyword in *git* (e.g. via cut-n-paste).
+I'll try to address that separately. There's a failing test case
+for this.
 
-This hunk is causing intermittent failures of t5541 for me, especially
-when the system is under heavy load (e.g., make -j32 test). Before your
-patch, this is what happened:
+This version:
 
-  1. remote-curl relays the status lines from send-pack, then sees that
-     send-pack reported error, and it exits
+ - uses "p4 fstat" to get the filetype
+ - uses Junio's suggested regexp to match $Keyword:$
+ - uses the sets of added/deleted files rather than parsing diff output
+ - various other small fixes spotted by Pete
+ - adds additional test cases
 
-  2. push reads the status lines, looking for a blank line to terminate
-     them. It sees EOF instead of the blank line and exits(128) itself.
+Luke Diamand (1):
+  git-p4: add initial support for RCS keywords
 
-After your patch, this happens:
+ Documentation/git-p4.txt   |    5 +
+ contrib/fast-import/git-p4 |  118 ++++++++++++--
+ t/t9810-git-p4-rcs.sh      |  388 ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 501 insertions(+), 10 deletions(-)
+ create mode 100755 t/t9810-git-p4-rcs.sh
 
-  1. remote-curl relays the status lines, alway appends the blank line
-     terminator, and then exits
-
-  2. push reads the status lines, including the blank line terminator,
-     and reports them to the user.
-
-  3. push then disconnects the remote-curl helper by writing a blank
-     line to it (to signal end-of-input), followed by finish_command().
-     The latter propagates the error code from the exit in step 1, and
-     we use that to signal failure from "git push".
-
-There's a race condition now in step 3. The push process may write to
-the pipe going to remote-curl after it has exited, causing it to receive
-SIGPIPE and die.  We can block SIGPIPE, but that's not sufficient; we'll
-still notice that our write() returns EPIPE and die.
-
-Obviously we can't not print the post-push "\n" in remote-curl, for the
-reasons you outlined in the commit message of this patch. We also can't
-not exit from remote-curl on error. Even though in the test in t5541 we
-have signaled error via the ref statuses, we might have received an
-error that does not come through a ref status (e.g., if we couldn't run
-send-pack at all).
-
-We can't not write the "\n" to signal end-of-input to remote-curl,
-because we don't actually know yet that there's an error (we find out
-when we wait() on the process). Barring any asynchronous SIGCHLD
-handling, of course, but I don't think we want to get into that.
-
-So it's kind of a bug in the remote helper protocol. The helpers can
-signal failure only by dying, but we can find out about that failure
-only after disconnecting, which involves writing to them. It would be
-much more sane if the helpers returned an overall text status from each
-command (e.g., printed "error push failed" instead of dying).
-
-But that would involve changing the protocol, of course. I think our
-best option is to work around it by considering the final blank line we
-send before disconnect as "best effort". That is, it is a courtesy to
-the remote helper to tell it we are hanging up cleanly, and if it does
-not arrive, then we can ignore the problem and proceed with closing the
-pipe. I.e., something like:
-
-diff --git a/transport-helper.c b/transport-helper.c
-index 6f227e2..f6b3b1f 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -9,6 +9,7 @@
- #include "remote.h"
- #include "string-list.h"
- #include "thread-utils.h"
-+#include "sigchain.h"
- 
- static int debug;
- 
-@@ -220,15 +221,21 @@ static struct child_process *get_helper(struct transport *transport)
- static int disconnect_helper(struct transport *transport)
- {
- 	struct helper_data *data = transport->data;
--	struct strbuf buf = STRBUF_INIT;
- 	int res = 0;
- 
- 	if (data->helper) {
- 		if (debug)
- 			fprintf(stderr, "Debug: Disconnecting.\n");
- 		if (!data->no_disconnect_req) {
--			strbuf_addf(&buf, "\n");
--			sendline(data, &buf);
-+			/*
-+			 * Ignore write errors; there's nothing we can do,
-+			 * since we're about to close the pipe anyway. And the
-+			 * most likely error is EPIPE due to the helper dying
-+			 * to report an error itself.
-+			 */
-+			sigchain_push(SIGPIPE, SIG_IGN);
-+			xwrite(data->helper->in, "\n", 1);
-+			sigchain_pop(SIGPIPE);
- 		}
- 		close(data->helper->in);
- 		close(data->helper->out);
-
-which makes the t5541 failures go away for me. What do you think?
-
--Peff
+-- 
+1.7.9.259.ga92e
