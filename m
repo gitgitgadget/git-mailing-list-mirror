@@ -1,78 +1,167 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCHv4] git-p4: add initial support for RCS keywords
-Date: Wed, 22 Feb 2012 22:44:20 +0000
-Message-ID: <4F456FC4.7060007@diamand.org>
-References: <1329905741-2092-1-git-send-email-luke@diamand.org> <1329905741-2092-2-git-send-email-luke@diamand.org> <20120222125327.GA2292@padd.com> <7vy5ruacpa.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Eric Scouten <eric@scouten.com>,
-	Pete Wyckoff <pw@padd.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 22 23:44:20 2012
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 2/4] remote: reorganize check_pattern_match()
+Date: Thu, 23 Feb 2012 00:43:39 +0200
+Message-ID: <1329950621-21165-3-git-send-email-felipe.contreras@gmail.com>
+References: <1329950621-21165-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 22 23:44:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0Kv5-0005x9-2a
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 23:44:19 +0100
+	id 1S0Kvj-0006Vf-91
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Feb 2012 23:44:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751676Ab2BVWoJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Feb 2012 17:44:09 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:64427 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751230Ab2BVWoH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Feb 2012 17:44:07 -0500
-Received: by wics10 with SMTP id s10so370676wic.19
-        for <git@vger.kernel.org>; Wed, 22 Feb 2012 14:44:05 -0800 (PST)
-Received-SPF: pass (google.com: domain of luke@diamand.org designates 10.180.78.130 as permitted sender) client-ip=10.180.78.130;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of luke@diamand.org designates 10.180.78.130 as permitted sender) smtp.mail=luke@diamand.org
-Received: from mr.google.com ([10.180.78.130])
-        by 10.180.78.130 with SMTP id b2mr550770wix.1.1329950645203 (num_hops = 1);
-        Wed, 22 Feb 2012 14:44:05 -0800 (PST)
-Received: by 10.180.78.130 with SMTP id b2mr455160wix.1.1329950645135;
-        Wed, 22 Feb 2012 14:44:05 -0800 (PST)
-Received: from [86.6.30.7] (cpc19-cmbg14-2-0-cust6.5-4.cable.virginmedia.com. [86.6.30.7])
-        by mx.google.com with ESMTPS id fl2sm1539177wib.4.2012.02.22.14.44.03
-        (version=SSLv3 cipher=OTHER);
-        Wed, 22 Feb 2012 14:44:03 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.21) Gecko/20110831 Iceowl/1.0b2 Icedove/3.1.13
-In-Reply-To: <7vy5ruacpa.fsf@alter.siamese.dyndns.org>
-X-Gm-Message-State: ALoCoQkFpP00joPDasjkckz/s5CsbbfHX9SJ6+B+XwLuSeOvOG9eM1MLqWcTpnW0RW5yUc7zyAB8
+	id S1752231Ab2BVWo4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Feb 2012 17:44:56 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:43465 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751461Ab2BVWoz (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Feb 2012 17:44:55 -0500
+Received: by mail-lpp01m010-f46.google.com with SMTP id u2so658901lag.19
+        for <git@vger.kernel.org>; Wed, 22 Feb 2012 14:44:54 -0800 (PST)
+Received-SPF: pass (google.com: domain of felipe.contreras@gmail.com designates 10.112.10.70 as permitted sender) client-ip=10.112.10.70;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of felipe.contreras@gmail.com designates 10.112.10.70 as permitted sender) smtp.mail=felipe.contreras@gmail.com; dkim=pass header.i=felipe.contreras@gmail.com
+Received: from mr.google.com ([10.112.10.70])
+        by 10.112.10.70 with SMTP id g6mr12038353lbb.0.1329950694482 (num_hops = 1);
+        Wed, 22 Feb 2012 14:44:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=d0uU/fH4fC38jB0IWtnFb94ADrZhjAJ/AVvo4VeEab8=;
+        b=lntJpZdDsQxEtDUsObxJlkVGVZTlCRQq+iu8WXOQkcYNNdQ+SvGrlAsJvtN/IJKeS1
+         UA8oBymuMpO3zaO97bv3eCXaCrd9weWM81CaKcjFXRg4DzwbY3jQw/T7rcJPd1zWgLs3
+         NSBf/ZReKaNE9+zxpJEepZsd2CfttxXGzQ1iA=
+Received: by 10.112.10.70 with SMTP id g6mr10083447lbb.0.1329950694392;
+        Wed, 22 Feb 2012 14:44:54 -0800 (PST)
+Received: from localhost (a88-113-3-26.elisa-laajakaista.fi. [88.113.3.26])
+        by mx.google.com with ESMTPS id jg7sm33548963lbb.0.2012.02.22.14.44.53
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 22 Feb 2012 14:44:53 -0800 (PST)
+X-Mailer: git-send-email 1.7.9.1
+In-Reply-To: <1329950621-21165-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191303>
 
-On 22/02/12 19:29, Junio C Hamano wrote:
-> Pete Wyckoff<pw@padd.com>  writes:
->
->>> Improved-by: Pete Wyckoff<pw@padd.com>
->>> Signed-off-by: Luke Diamand<luke@diamand.org>
->>
->> Looks brilliant.  Ack.  Thanks for suffering through N rounds of
->> review.  :)
->
-> Well, I hate to say that I need to ask another round, to redo this patch
-> on top of ld/git-p4-expanded-keywords topic that has already been in
-> 'next'; a patch that replaces what is in 'next' will lose fix-ups for
-> issues I pointed out in the first round that you forgot to follow and were
-> fixed up locally by me when I queued the existing one.
->
-> When working on an improvement to what you have sent out, please make it a
-> habit of comparing your result with what are already queued, even when the
-> earlier patches are still in 'pu'.  They often are polished with trivial
-> improvements (both to the patch and the log message) based on review
-> comments from people when they are queued, which you do not want to lose.
+There's a lot of code that can be consolidated there, and will be useful
+for next patches.
 
-Sorry - I had completely forgotten about that.
+Right now match_name_with_pattern() is called twice, the first one
+without value and result, and the second one with them. Since
+check_pattern_match() is only used in one place, we can just reorganize
+it to make a single call and fetch the values at the same time.
 
-No need to apologize for asking me to rework this. I'm using this 
-amazing version control system that makes it really easy.
+Since this is a semantic change, also rename the function to
+get_ref_match() which actually describes more closely what it's actually
+doing now.
 
-Now, if I was using Perforce, then by now I would pretty unhappy.... P
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ remote.c |   59 ++++++++++++++++++++++++++++++-----------------------------
+ 1 files changed, 30 insertions(+), 29 deletions(-)
 
->
-> Thanks.
+diff --git a/remote.c b/remote.c
+index 55d68d1..9d29acc 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1110,10 +1110,11 @@ static int match_explicit_refs(struct ref *src, struct ref *dst,
+ 	return errs;
+ }
+ 
+-static const struct refspec *check_pattern_match(const struct refspec *rs,
+-						 int rs_nr,
+-						 const struct ref *src)
++static char *get_ref_match(const struct refspec *rs, int rs_nr, const struct ref *ref,
++		int send_mirror, const struct refspec **ret_pat)
+ {
++	const struct refspec *pat;
++	char *name;
+ 	int i;
+ 	int matching_refs = -1;
+ 	for (i = 0; i < rs_nr; i++) {
+@@ -1123,14 +1124,31 @@ static const struct refspec *check_pattern_match(const struct refspec *rs,
+ 			continue;
+ 		}
+ 
+-		if (rs[i].pattern && match_name_with_pattern(rs[i].src, src->name,
+-							     NULL, NULL))
+-			return rs + i;
++		if (rs[i].pattern) {
++			const char *dst_side = rs[i].dst ? rs[i].dst : rs[i].src;
++			if (match_name_with_pattern(rs[i].src, ref->name, dst_side, &name)) {
++				matching_refs = i;
++				break;
++			}
++		}
+ 	}
+-	if (matching_refs != -1)
+-		return rs + matching_refs;
+-	else
++	if (matching_refs == -1)
+ 		return NULL;
++
++	pat = rs + matching_refs;
++	if (pat->matching) {
++		/*
++		 * "matching refs"; traditionally we pushed everything
++		 * including refs outside refs/heads/ hierarchy, but
++		 * that does not make much sense these days.
++		 */
++		if (!send_mirror && prefixcmp(ref->name, "refs/heads/"))
++			return NULL;
++		name = xstrdup(ref->name);
++	}
++	if (ret_pat)
++		*ret_pat = pat;
++	return name;
+ }
+ 
+ static struct ref **tail_ref(struct ref **head)
+@@ -1171,36 +1189,19 @@ int match_push_refs(struct ref *src, struct ref **dst,
+ 		struct ref *dst_peer;
+ 		const struct refspec *pat = NULL;
+ 		char *dst_name;
++
+ 		if (ref->peer_ref)
+ 			continue;
+ 
+-		pat = check_pattern_match(rs, nr_refspec, ref);
+-		if (!pat)
++		dst_name = get_ref_match(rs, nr_refspec, ref, send_mirror, &pat);
++		if (!dst_name)
+ 			continue;
+ 
+-		if (pat->matching) {
+-			/*
+-			 * "matching refs"; traditionally we pushed everything
+-			 * including refs outside refs/heads/ hierarchy, but
+-			 * that does not make much sense these days.
+-			 */
+-			if (!send_mirror && prefixcmp(ref->name, "refs/heads/"))
+-				continue;
+-			dst_name = xstrdup(ref->name);
+-
+-
+-		} else {
+-			const char *dst_side = pat->dst ? pat->dst : pat->src;
+-			if (!match_name_with_pattern(pat->src, ref->name,
+-						     dst_side, &dst_name))
+-				die("Didn't think it matches any more");
+-		}
+ 		dst_peer = find_ref_by_name(*dst, dst_name);
+ 		if (dst_peer) {
+ 			if (dst_peer->peer_ref)
+ 				/* We're already sending something to this ref. */
+ 				goto free_name;
+-
+ 		} else {
+ 			if (pat->matching && !(send_all || send_mirror))
+ 				/*
+-- 
+1.7.9.1
