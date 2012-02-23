@@ -1,77 +1,64 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] pretty: add '*' modifier to add LF after non-empty
-Date: Thu, 23 Feb 2012 11:53:24 -0800
-Message-ID: <7v7gzd498r.fsf@alter.siamese.dyndns.org>
-References: <1330002637-9347-1-git-send-email-pionchon.luc@gmail.com>
+Subject: Re: [PATCHv5] git-p4: add initial support for RCS keywords
+Date: Thu, 23 Feb 2012 12:03:16 -0800
+Message-ID: <7v39a148sb.fsf@alter.siamese.dyndns.org>
+References: <1329983490-4033-1-git-send-email-luke@diamand.org>
+ <1329983490-4033-2-git-send-email-luke@diamand.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Luc Pionchon <pionchon.luc@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 23 20:53:35 2012
+Cc: git@vger.kernel.org, Pete Wyckoff <pw@padd.com>,
+	Eric Scouten <eric@scouten.com>
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Thu Feb 23 21:03:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0ejO-000404-2u
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 20:53:34 +0100
+	id 1S0esv-0002ZQ-Ut
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 21:03:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755348Ab2BWTx3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Feb 2012 14:53:29 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36369 "EHLO
+	id S932152Ab2BWUDU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Feb 2012 15:03:20 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43362 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753246Ab2BWTx2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Feb 2012 14:53:28 -0500
+	id S932123Ab2BWUDS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Feb 2012 15:03:18 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B03F79A6;
-	Thu, 23 Feb 2012 14:53:27 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E390B7D6F;
+	Thu, 23 Feb 2012 15:03:17 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/lLYb8C4ghmhNk/q7jsQKSSUjX4=; b=tqs87C
-	I6eNe3k9W6ddlhnlIH/GEgi7Mxm2P01Cpcxzs4rHqsxZQE5LAhygNug3CDhnwCdv
-	+PVx+O1F1VDEFjNdwFw2AtrQTuIMI7Kh4dkq3gknIHYDw0SpEwVM+1vvxtCiYjFv
-	tn4vE2lQyYL3M62fERtwAPPlt3Hb6n5Ei8mXY=
+	:content-type; s=sasl; bh=C+vMGG7pvYRp0iZ486vk93sHul8=; b=hl7TDT
+	tyvjOjsxGUKe6nIJdmA4FZuW+6y4t2KvIrJOWRtUEXI4BXilY8fGiF5wuI5q4NhB
+	vwFJyJD/wK8p21qLHBD2P5g0RDb0rDlMkr9jjIYhyHZPNQp8EOwMrE4IJYgLuV1O
+	gpQbpPxXsC5b9lqc2DHSqgobGZcYuHpKZTPyQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RhwsURcjGfSQ5jAO8pdPTz0ZS4dZC6qG
-	IIwlqDDesg/8ntGkl3/F2RI/IDlpbVkPcyNBdO/x8k8RXYLLSg0z12F6rN4OegZd
-	27SgL1aDNjYwBrh5gQY32vT8DoYRy0NyBXj7dyKpYgQm1jKXbhvv5bbG0dV8bgO8
-	i5xqLd3suVk=
+	:content-type; q=dns; s=sasl; b=mdwUxAI/Ae4ANv9LtWCgOAU7VZ2VEqQU
+	OeALCzJSbOkX0xc34/ERru01Znl782lXIKoRpAzQyRj9Xl8XJEhtYLHtNasHLMqe
+	uL5Mti3/y8k4QJttre5Bwq//XtgeEPT64y5Woc76RRi1LgGpU48ELvmtJZzcj7S8
+	A4iTgAys6ws=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E3B979A4;
-	Thu, 23 Feb 2012 14:53:27 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA3117D6E;
+	Thu, 23 Feb 2012 15:03:17 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D5173798D; Thu, 23 Feb 2012
- 14:53:25 -0500 (EST)
-In-Reply-To: <1330002637-9347-1-git-send-email-pionchon.luc@gmail.com> (Luc
- Pionchon's message of "Thu, 23 Feb 2012 15:10:37 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 70C207D6D; Thu, 23 Feb 2012
+ 15:03:17 -0500 (EST)
+In-Reply-To: <1329983490-4033-2-git-send-email-luke@diamand.org> (Luke
+ Diamand's message of "Thu, 23 Feb 2012 07:51:30 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0CF39CD8-5E58-11E1-AE72-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6D2F2EC2-5E59-11E1-9536-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191390>
 
-Luc Pionchon <pionchon.luc@gmail.com> writes:
+Hmm...  I somehow was expecting that the patch will be an incremental
+update to what has already been queued in 'next' for the past several
+days, with its commit log describing what the incremental improvements
+are.
 
-> Add the '*' modifier, similar to the '+' modifier,
-> to add a line-feed after a non-empty placeholder.
-
-Hrm, I thought I designed the plus and minus fairly carefully so that
-nobody needs to add this later.
-
-Wouldn't it be sufficient to write
-
-        Foo%n%-d
-
-that says "We usually have LF after Foo, and write %d after that, but we
-might not have anything interesting in %d at all, in which case we don't
-add that %n"?
-
-> +test_expect_success 'add LF after non-empty (1) (empty)' '
-> +	git show -s --pretty=format:"%*d%s%nfoo%n" HEAD^^ >actual &&
-
-Shouldn't this be equivalent to "%n%-d%s%nfoo%n", which in turn is covered
-by one of the previous tests (del LF before empty)?
+I'll revert it out and apply this on top.  Thanks.
