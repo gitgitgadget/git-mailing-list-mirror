@@ -1,657 +1,141 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: [PATCHv5] git-p4: add initial support for RCS keywords
-Date: Thu, 23 Feb 2012 07:51:30 +0000
-Message-ID: <1329983490-4033-2-git-send-email-luke@diamand.org>
-References: <1329983490-4033-1-git-send-email-luke@diamand.org>
+From: Beat Bolli <bbolli@ewanet.ch>
+Subject: Re: [PATCH] cherry-pick -x: always insert an empty line
+Date: Thu, 23 Feb 2012 09:39:13 +0100
+Message-ID: <4F45FB31.4000808@ewanet.ch>
+References: <1329599690-9152-1-git-send-email-bbolli@ewanet.ch> <7vhaynp605.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Cc: Pete Wyckoff <pw@padd.com>, Eric Scouten <eric@scouten.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Luke Diamand <luke@diamand.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 23 08:51:33 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig3895BDFBD3820342EE9CAE94"
+Cc: git@vger.kernel.org, Eric Raible <raible@nextest.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 23 09:47:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0TSd-0008Ok-E4
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 08:51:33 +0100
+	id 1S0ULF-0008IF-2B
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 09:47:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754183Ab2BWHvU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Feb 2012 02:51:20 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:38687 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753086Ab2BWHvS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Feb 2012 02:51:18 -0500
-Received: by wgbdt10 with SMTP id dt10so797902wgb.1
-        for <git@vger.kernel.org>; Wed, 22 Feb 2012 23:51:17 -0800 (PST)
-Received-SPF: pass (google.com: domain of luke@diamand.org designates 10.216.137.4 as permitted sender) client-ip=10.216.137.4;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of luke@diamand.org designates 10.216.137.4 as permitted sender) smtp.mail=luke@diamand.org
-Received: from mr.google.com ([10.216.137.4])
-        by 10.216.137.4 with SMTP id x4mr176380wei.15.1329983477026 (num_hops = 1);
-        Wed, 22 Feb 2012 23:51:17 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=gamma;
-        h=mime-version:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references:x-gm-message-state;
-        bh=BPVRRzvCZR0UtOb8jKydWxtkDx5dVETV8dsYSmA7IcQ=;
-        b=xhhP989H0ygFegX+UztSIpVxny8MoPhjiD8Nba9YIK1vsUtbr/JW9IUoSKBbOHImm6
-         WTWHsqbIf7GC6g1HhxhbPOgBr5Led5Hf8+TP0gBtAvrCusMRM3D8ZxNblBpRZjWCTZMC
-         W3um1YJRfMj5LeerEeDz8RJg1jns6hGj10qOY=
-Received: by 10.216.137.4 with SMTP id x4mr142393wei.15.1329983476902;
-        Wed, 22 Feb 2012 23:51:16 -0800 (PST)
-Received: from ethel.cable.virginmedia.net (cpc19-cmbg14-2-0-cust6.5-4.cable.virginmedia.com. [86.6.30.7])
-        by mx.google.com with ESMTPS id ga1sm2947688wib.5.2012.02.22.23.51.15
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 22 Feb 2012 23:51:15 -0800 (PST)
-X-Mailer: git-send-email 1.7.9.259.ga92e
-In-Reply-To: <1329983490-4033-1-git-send-email-luke@diamand.org>
-X-Gm-Message-State: ALoCoQmBXNIZjdYiEO29swzfHgxbse5w/McHeghoQLt7vyLIs4cn3K6y0Jb8EmxdhyPX72zHIckh
+	id S1752304Ab2BWIrw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Feb 2012 03:47:52 -0500
+Received: from mx1.2b3w.ch ([92.42.186.250]:38549 "EHLO mx1.2b3w.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750861Ab2BWIrv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Feb 2012 03:47:51 -0500
+X-Greylist: delayed 509 seconds by postgrey-1.27 at vger.kernel.org; Thu, 23 Feb 2012 03:47:51 EST
+Received: from mx1.2b3w.ch (localhost [127.0.0.1])
+	by mx1.2b3w.ch (Postfix) with ESMTP id 8B35BC34C7;
+	Thu, 23 Feb 2012 09:39:19 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on dilbert.2b3w.ch
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00,
+	NORMAL_HTTP_TO_IP autolearn=ham version=3.3.2
+Received: from [10.23.0.73] (gateway-2.swissqual.com [195.137.175.3])
+	by mx1.2b3w.ch (Postfix) with ESMTPSA id 6340CC34AC;
+	Thu, 23 Feb 2012 09:39:19 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <7vhaynp605.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.3.5
+OpenPGP: url=http://drbeat.li/pubkey.asc
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191334>
 
-RCS keywords cause problems for git-p4 as perforce always
-expands them (if +k is set) and so when applying the patch,
-git reports that the files have been modified by both sides,
-when in fact they haven't.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig3895BDFBD3820342EE9CAE94
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-This change means that when git-p4 detects a problem applying
-a patch, it will check to see if keyword expansion could be
-the culprit. If it is, it strips the keywords in the p4
-repository so that they match what git is expecting. It then
-has another go at applying the patch.
+On 2012-02-19 09:44, Junio C Hamano wrote:
+> Beat Bolli <bbolli@ewanet.ch> writes:
+>=20
+>> When cherry-picking a commit that has only a summary, the -x option
+>> creates an invalid commit message because it puts the hash of the comm=
+it
+>> being picked on the second line which should be left empty.
+>>
+>> This patch fixes this buglet by always inserting an empty line before
+>> the added line.
+>>
+>> Aside from that, even with a non-trivial commit the generated note
+>> "(cherry picked from commit 555c9864971744abb558796aea28e12a1ac20839)"=
 
-This behaviour is enabled with a new git-p4 configuration
-option and is off by default.
+>> seems abrupt when appended directly.
+>>
+>> Cc: Eric Raible <raible@nextest.com>
+>> Signed-off-by: Beat Bolli <bbolli@ewanet.ch>
+>> ---
+>>  sequencer.c |    2 +-
+>>  1 files changed, 1 insertions(+), 1 deletions(-)
+>>
+>> diff --git a/sequencer.c b/sequencer.c
+>> index 5fcbcb8..63fd589 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> @@ -382,7 +382,7 @@ static int do_pick_commit(struct commit *commit, s=
+truct replay_opts *opts)
+>>  		}
+>> =20
+>>  		if (opts->record_origin) {
+>> -			strbuf_addstr(&msgbuf, "(cherry picked from commit ");
+>> +			strbuf_addstr(&msgbuf, "\n(cherry picked from commit ");
+>=20
+> Doesn't this need to be conditional?
+>=20
+> If we cherry pick your commit somewhere else with "-x -s", the resultin=
+g
+> commit log message would end like this:
+>=20
+>     Aside from that, even with a non-trivial commit the generated note
+>     "(cherry picked from commit 555c9864971744abb558796aea28e12a1ac2083=
+9)"
+>     seems abrupt when appended directly.
+>=20
+>     Cc: Eric Raible <raible@nextest.com>
+>     Signed-off-by: Beat Bolli <bbolli@ewanet.ch>
+>=20
+>     (cherry picked from commit 555c9864971744abb558796aea28e12a1ac20839=
+)
+>     Signed-off-by: Frotz Xyzzy <nitfol@example.xz>
+>=20
+> which clearly is worse-looking with the extra LF you added in this patc=
+h.
 
-Acked-by: Pete Wyckoff <pw@padd.com>
-Signed-off-by: Luke Diamand <luke@diamand.org>
----
- Documentation/git-p4.txt   |    5 +
- contrib/fast-import/git-p4 |  118 ++++++++++++--
- t/t9810-git-p4-rcs.sh      |  388 ++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 501 insertions(+), 10 deletions(-)
- create mode 100755 t/t9810-git-p4-rcs.sh
+What should the condition then be? What is the canonical format for
+cherry-picks with Signed-off-by: and Cc: footer lines?
 
-diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
-index 8b92cc0..3fecefa 100644
---- a/Documentation/git-p4.txt
-+++ b/Documentation/git-p4.txt
-@@ -483,6 +483,11 @@ git-p4.skipUserNameCheck::
- 	user map, 'git p4' exits.  This option can be used to force
- 	submission regardless.
- 
-+git-p4.attemptRCSCleanup:
-+    If enabled, 'git p4 submit' will attempt to cleanup RCS keywords
-+    ($Header$, etc). These would otherwise cause merge conflicts and prevent
-+    the submit going ahead. This option should be considered experimental at
-+    present.
- 
- IMPLEMENTATION DETAILS
- ----------------------
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index a78d9c5..c8b6c8a 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -10,7 +10,7 @@
- 
- import optparse, sys, os, marshal, subprocess, shelve
- import tempfile, getopt, os.path, time, platform
--import re
-+import re, shutil
- 
- verbose = False
- 
-@@ -186,6 +186,47 @@ def split_p4_type(p4type):
-         mods = s[1]
-     return (base, mods)
- 
-+#
-+# return the raw p4 type of a file (text, text+ko, etc)
-+#
-+def p4_type(file):
-+    results = p4CmdList(["fstat", "-T", "headType", file])
-+    return results[0]['headType']
-+
-+#
-+# Given a type base and modifier, return a regexp matching
-+# the keywords that can be expanded in the file
-+#
-+def p4_keywords_regexp_for_type(base, type_mods):
-+    if base in ("text", "unicode", "binary"):
-+        kwords = None
-+        if "ko" in type_mods:
-+            kwords = 'Id|Header'
-+        elif "k" in type_mods:
-+            kwords = 'Id|Header|Author|Date|DateTime|Change|File|Revision'
-+        else:
-+            return None
-+        pattern = r"""
-+            \$              # Starts with a dollar, followed by...
-+            (%s)            # one of the keywords, followed by...
-+            (:[^$]+)?       # possibly an old expansion, followed by...
-+            \$              # another dollar
-+            """ % kwords
-+        return pattern
-+    else:
-+        return None
-+
-+#
-+# Given a file, return a regexp matching the possible
-+# RCS keywords that will be expanded, or None for files
-+# with kw expansion turned off.
-+#
-+def p4_keywords_regexp_for_file(file):
-+    if not os.path.exists(file):
-+        return None
-+    else:
-+        (type_base, type_mods) = split_p4_type(p4_type(file))
-+        return p4_keywords_regexp_for_type(type_base, type_mods)
- 
- def setP4ExecBit(file, mode):
-     # Reopens an already open file and changes the execute bit to match
-@@ -753,6 +794,29 @@ class P4Submit(Command, P4UserMap):
- 
-         return result
- 
-+    def patchRCSKeywords(self, file, pattern):
-+        # Attempt to zap the RCS keywords in a p4 controlled file matching the given pattern
-+        (handle, outFileName) = tempfile.mkstemp(dir='.')
-+        try:
-+            outFile = os.fdopen(handle, "w+")
-+            inFile = open(file, "r")
-+            regexp = re.compile(pattern, re.VERBOSE)
-+            for line in inFile.readlines():
-+                line = regexp.sub(r'$\1$', line)
-+                outFile.write(line)
-+            inFile.close()
-+            outFile.close()
-+            # Forcibly overwrite the original file
-+            os.unlink(file)
-+            shutil.move(outFileName, file)
-+        except:
-+            # cleanup our temporary file
-+            os.unlink(outFileName)
-+            print "Failed to strip RCS keywords in %s" % file
-+            raise
-+
-+        print "Patched up RCS keywords in %s" % file
-+
-     def p4UserForCommit(self,id):
-         # Return the tuple (perforce user,git email) for a given git commit id
-         self.getUserMapFromPerforceServer()
-@@ -918,6 +982,7 @@ class P4Submit(Command, P4UserMap):
-         filesToDelete = set()
-         editedFiles = set()
-         filesToChangeExecBit = {}
-+
-         for line in diff:
-             diff = parseDiffTreeEntry(line)
-             modifier = diff['status']
-@@ -964,9 +1029,45 @@ class P4Submit(Command, P4UserMap):
-         patchcmd = diffcmd + " | git apply "
-         tryPatchCmd = patchcmd + "--check -"
-         applyPatchCmd = patchcmd + "--check --apply -"
-+        patch_succeeded = True
- 
-         if os.system(tryPatchCmd) != 0:
-+            fixed_rcs_keywords = False
-+            patch_succeeded = False
-             print "Unfortunately applying the change failed!"
-+
-+            # Patch failed, maybe it's just RCS keyword woes. Look through
-+            # the patch to see if that's possible.
-+            if gitConfig("git-p4.attemptRCSCleanup","--bool") == "true":
-+                file = None
-+                pattern = None
-+                kwfiles = {}
-+                for file in editedFiles | filesToDelete:
-+                    # did this file's delta contain RCS keywords?
-+                    pattern = p4_keywords_regexp_for_file(file)
-+
-+                    if pattern:
-+                        # this file is a possibility...look for RCS keywords.
-+                        regexp = re.compile(pattern, re.VERBOSE)
-+                        for line in read_pipe_lines(["git", "diff", "%s^..%s" % (id, id), file]):
-+                            if regexp.search(line):
-+                                if verbose:
-+                                    print "got keyword match on %s in %s in %s" % (pattern, line, file)
-+                                kwfiles[file] = pattern
-+                                break
-+
-+                for file in kwfiles:
-+                    if verbose:
-+                        print "zapping %s with %s" % (line,pattern)
-+                    self.patchRCSKeywords(file, kwfiles[file])
-+                    fixed_rcs_keywords = True
-+
-+            if fixed_rcs_keywords:
-+                print "Retrying the patch with RCS keywords cleaned up"
-+                if os.system(tryPatchCmd) == 0:
-+                    patch_succeeded = True
-+
-+        if not patch_succeeded:
-             print "What do you want to do?"
-             response = "x"
-             while response != "s" and response != "a" and response != "w":
-@@ -1585,15 +1686,12 @@ class P4Sync(Command, P4UserMap):
- 
-         # Note that we do not try to de-mangle keywords on utf16 files,
-         # even though in theory somebody may want that.
--        if type_base in ("text", "unicode", "binary"):
--            if "ko" in type_mods:
--                text = ''.join(contents)
--                text = re.sub(r'\$(Id|Header):[^$]*\$', r'$\1$', text)
--                contents = [ text ]
--            elif "k" in type_mods:
--                text = ''.join(contents)
--                text = re.sub(r'\$(Id|Header|Author|Date|DateTime|Change|File|Revision):[^$]*\$', r'$\1$', text)
--                contents = [ text ]
-+        pattern = p4_keywords_regexp_for_type(type_base, type_mods)
-+        if pattern:
-+            regexp = re.compile(pattern, re.VERBOSE)
-+            text = ''.join(contents)
-+            text = regexp.sub(r'$\1$', text)
-+            contents = [ text ]
- 
-         self.gitStream.write("M %s inline %s\n" % (git_mode, relPath))
- 
-diff --git a/t/t9810-git-p4-rcs.sh b/t/t9810-git-p4-rcs.sh
-new file mode 100755
-index 0000000..49dfde0
---- /dev/null
-+++ b/t/t9810-git-p4-rcs.sh
-@@ -0,0 +1,388 @@
-+#!/bin/sh
-+
-+test_description='git-p4 rcs keywords'
-+
-+. ./lib-git-p4.sh
-+
-+test_expect_success 'start p4d' '
-+	start_p4d
-+'
-+
-+#
-+# Make one file with keyword lines at the top, and
-+# enough plain text to be able to test modifications
-+# far away from the keywords.
-+#
-+test_expect_success 'init depot' '
-+	(
-+		cd "$cli" &&
-+		cat <<-\EOF >filek &&
-+		$Id$
-+		/* $Revision$ */
-+		# $Change$
-+		line4
-+		line5
-+		line6
-+		line7
-+		line8
-+		EOF
-+		cp filek fileko &&
-+		sed -i "s/Revision/Revision: do not scrub me/" fileko
-+		cp fileko file_text &&
-+		sed -i "s/Id/Id: do not scrub me/" file_text
-+		p4 add -t text+k filek &&
-+		p4 submit -d "filek" &&
-+		p4 add -t text+ko fileko &&
-+		p4 submit -d "fileko" &&
-+		p4 add -t text file_text &&
-+		p4 submit -d "file_text"
-+	)
-+'
-+
-+#
-+# Generate these in a function to make it easy to use single quote marks.
-+#
-+write_scrub_scripts () {
-+	cat >"$TRASH_DIRECTORY/scrub_k.py" <<-\EOF &&
-+	import re, sys
-+	sys.stdout.write(re.sub(r'(?i)\$(Id|Header|Author|Date|DateTime|Change|File|Revision):[^$]*\$', r'$\1$', sys.stdin.read()))
-+	EOF
-+	cat >"$TRASH_DIRECTORY/scrub_ko.py" <<-\EOF
-+	import re, sys
-+	sys.stdout.write(re.sub(r'(?i)\$(Id|Header):[^$]*\$', r'$\1$', sys.stdin.read()))
-+	EOF
-+}
-+
-+test_expect_success 'scrub scripts' '
-+	write_scrub_scripts
-+'
-+
-+#
-+# Compare $cli/file to its scrubbed version, should be different.
-+# Compare scrubbed $cli/file to $git/file, should be same.
-+#
-+scrub_k_check () {
-+	file="$1" &&
-+	scrub="$TRASH_DIRECTORY/$file" &&
-+	"$PYTHON_PATH" "$TRASH_DIRECTORY/scrub_k.py" <"$git/$file" >"$scrub" &&
-+	! test_cmp "$cli/$file" "$scrub" &&
-+	test_cmp "$git/$file" "$scrub" &&
-+	rm "$scrub"
-+}
-+scrub_ko_check () {
-+	file="$1" &&
-+	scrub="$TRASH_DIRECTORY/$file" &&
-+	"$PYTHON_PATH" "$TRASH_DIRECTORY/scrub_ko.py" <"$git/$file" >"$scrub" &&
-+	! test_cmp "$cli/$file" "$scrub" &&
-+	test_cmp "$git/$file" "$scrub" &&
-+	rm "$scrub"
-+}
-+
-+#
-+# Modify far away from keywords.  If no RCS lines show up
-+# in the diff, there is no conflict.
-+#
-+test_expect_success 'edit far away from RCS lines' '
-+	test_when_finished cleanup_git &&
-+	"$GITP4" clone --dest="$git" //depot &&
-+	(
-+		cd "$git" &&
-+		git config git-p4.skipSubmitEdit true &&
-+		sed -i "s/^line7/line7 edit/" filek &&
-+		git commit -m "filek line7 edit" filek &&
-+		"$GITP4" submit &&
-+		scrub_k_check filek
-+	)
-+'
-+
-+#
-+# Modify near the keywords.  This will require RCS scrubbing.
-+#
-+test_expect_success 'edit near RCS lines' '
-+	test_when_finished cleanup_git &&
-+	"$GITP4" clone --dest="$git" //depot &&
-+	(
-+		cd "$git" &&
-+		git config git-p4.skipSubmitEdit true &&
-+		git config git-p4.attemptRCSCleanup true &&
-+		sed -i "s/^line4/line4 edit/" filek &&
-+		git commit -m "filek line4 edit" filek &&
-+		"$GITP4" submit &&
-+		scrub_k_check filek
-+	)
-+'
-+
-+#
-+# Modify the keywords themselves.  This also will require RCS scrubbing.
-+#
-+test_expect_success 'edit keyword lines' '
-+	test_when_finished cleanup_git &&
-+	"$GITP4" clone --dest="$git" //depot &&
-+	(
-+		cd "$git" &&
-+		git config git-p4.skipSubmitEdit true &&
-+		git config git-p4.attemptRCSCleanup true &&
-+		sed -i "/Revision/d" filek &&
-+		git commit -m "filek remove Revision line" filek &&
-+		"$GITP4" submit &&
-+		scrub_k_check filek
-+	)
-+'
-+
-+#
-+# Scrubbing text+ko files should not alter all keywords, just Id, Header.
-+#
-+test_expect_success 'scrub ko files differently' '
-+	test_when_finished cleanup_git &&
-+	"$GITP4" clone --dest="$git" //depot &&
-+	(
-+		cd "$git" &&
-+		git config git-p4.skipSubmitEdit true &&
-+		git config git-p4.attemptRCSCleanup true &&
-+		sed -i "s/^line4/line4 edit/" fileko &&
-+		git commit -m "fileko line4 edit" fileko &&
-+		"$GITP4" submit &&
-+		scrub_ko_check fileko &&
-+		! scrub_k_check fileko
-+	)
-+'
-+
-+# hack; git-p4 submit should do it on its own
-+test_expect_success 'cleanup after failure' '
-+	(
-+		cd "$cli" &&
-+		p4 revert ...
-+	)
-+'
-+
-+#
-+# Do not scrub anything but +k or +ko files.  Sneak a change into
-+# the cli file so that submit will get a conflict.  Make sure that
-+# scrubbing doesn't make a mess of things.
-+#
-+# Assumes that git-p4 exits leaving the p4 file open, with the
-+# conflict-generating patch unapplied.
-+#
-+# This might happen only if the git repo is behind the p4 repo at
-+# submit time, and there is a conflict.
-+#
-+test_expect_success 'do not scrub plain text' '
-+	test_when_finished cleanup_git &&
-+	"$GITP4" clone --dest="$git" //depot &&
-+	(
-+		cd "$git" &&
-+		git config git-p4.skipSubmitEdit true &&
-+		git config git-p4.attemptRCSCleanup true &&
-+		sed -i "s/^line4/line4 edit/" file_text &&
-+		git commit -m "file_text line4 edit" file_text &&
-+		(
-+			cd "$cli" &&
-+			p4 open file_text &&
-+			sed -i "s/^line5/line5 p4 edit/" file_text &&
-+			p4 submit -d "file5 p4 edit"
-+		) &&
-+		! "$GITP4" submit &&
-+		(
-+			# exepct something like:
-+			#    file_text - file(s) not opened on this client
-+			# but not copious diff output
-+			cd "$cli" &&
-+			p4 diff file_text >wc &&
-+			test_line_count = 1 wc
-+		)
-+	)
-+'
-+
-+# hack; git-p4 submit should do it on its own
-+test_expect_success 'cleanup after failure 2' '
-+	(
-+		cd "$cli" &&
-+		p4 revert ...
-+	)
-+'
-+
-+create_kw_file () {
-+	cat <<\EOF >"$1"
-+/* A file
-+	Id: $Id$
-+	Revision: $Revision$
-+	File: $File$
-+ */
-+int main(int argc, const char **argv) {
-+	return 0;
-+}
-+EOF
-+}
-+
-+test_expect_success 'add kwfile' '
-+	(
-+		cd "$cli" &&
-+		echo file1 >file1 &&
-+		p4 add file1 &&
-+		p4 submit -d "file 1" &&
-+		create_kw_file kwfile1.c &&
-+		p4 add kwfile1.c &&
-+		p4 submit -d "Add rcw kw file" kwfile1.c
-+	)
-+'
-+
-+p4_append_to_file () {
-+	f="$1" &&
-+	p4 edit -t ktext "$f" &&
-+	echo "/* $(date) */" >>"$f" &&
-+	p4 submit -d "appending a line in p4"
-+}
-+
-+# Create some files with RCS keywords. If they get modified
-+# elsewhere then the version number gets bumped which then
-+# results in a merge conflict if we touch the RCS kw lines,
-+# even though the change itself would otherwise apply cleanly.
-+test_expect_success 'cope with rcs keyword expansion damage' '
-+	test_when_finished cleanup_git &&
-+	"$GITP4" clone --dest="$git" //depot &&
-+	(
-+		cd "$git" &&
-+		git config git-p4.skipSubmitEdit true &&
-+		git config git-p4.attemptRCSCleanup true &&
-+		(cd ../cli && p4_append_to_file kwfile1.c) &&
-+		old_lines=$(wc -l <kwfile1.c) &&
-+		perl -n -i -e "print unless m/Revision:/" kwfile1.c &&
-+		new_lines=$(wc -l <kwfile1.c) &&
-+		test $new_lines = $(($old_lines - 1)) &&
-+
-+		git add kwfile1.c &&
-+		git commit -m "Zap an RCS kw line" &&
-+		"$GITP4" submit &&
-+		"$GITP4" rebase &&
-+		git diff p4/master &&
-+		"$GITP4" commit &&
-+		echo "try modifying in both" &&
-+		cd "$cli" &&
-+		p4 edit kwfile1.c &&
-+		echo "line from p4" >>kwfile1.c &&
-+		p4 submit -d "add a line in p4" kwfile1.c &&
-+		cd "$git" &&
-+		echo "line from git at the top" | cat - kwfile1.c >kwfile1.c.new &&
-+		mv kwfile1.c.new kwfile1.c &&
-+		git commit -m "Add line in git at the top" kwfile1.c &&
-+		"$GITP4" rebase &&
-+		"$GITP4" submit
-+	)
-+'
-+
-+test_expect_success 'cope with rcs keyword file deletion' '
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$cli" &&
-+		echo "\$Revision\$" >kwdelfile.c &&
-+		p4 add -t ktext kwdelfile.c &&
-+		p4 submit -d "Add file to be deleted" &&
-+		cat kwdelfile.c &&
-+		grep 1 kwdelfile.c
-+	) &&
-+	"$GITP4" clone --dest="$git" //depot &&
-+	(
-+		cd "$git" &&
-+		grep Revision kwdelfile.c &&
-+		git rm -f kwdelfile.c &&
-+		git commit -m "Delete a file containing RCS keywords" &&
-+		git config git-p4.skipSubmitEdit true &&
-+		git config git-p4.attemptRCSCleanup true &&
-+		"$GITP4" submit
-+	) &&
-+	(
-+		cd "$cli" &&
-+		p4 sync &&
-+		! test -f kwdelfile.c
-+	)
-+'
-+
-+# If you add keywords in git of the form $Header$ then everything should
-+# work fine without any special handling.
-+test_expect_success 'Add keywords in git which match the default p4 values' '
-+	test_when_finished cleanup_git &&
-+	"$GITP4" clone --dest="$git" //depot &&
-+	(
-+		cd "$git" &&
-+		echo "NewKW: \$Revision\$" >>kwfile1.c &&
-+		git add kwfile1.c &&
-+		git commit -m "Adding RCS keywords in git" &&
-+		git config git-p4.skipSubmitEdit true &&
-+		git config git-p4.attemptRCSCleanup true &&
-+		"$GITP4" submit
-+	) &&
-+	(
-+		cd "$cli" &&
-+		p4 sync &&
-+		test -f kwfile1.c &&
-+		grep "NewKW.*Revision.*[0-9]" kwfile1.c
-+
-+	)
-+'
-+
-+# If you add keywords in git of the form $Header:#1$ then things will fail
-+# unless git-p4 takes steps to scrub the *git* commit.
-+#
-+test_expect_failure 'Add keywords in git which do not match the default p4 values' '
-+	test_when_finished cleanup_git &&
-+	"$GITP4" clone --dest="$git" //depot &&
-+	(
-+		cd "$git" &&
-+		echo "NewKW2: \$Revision:1\$" >>kwfile1.c &&
-+		git add kwfile1.c &&
-+		git commit -m "Adding RCS keywords in git" &&
-+		git config git-p4.skipSubmitEdit true &&
-+		git config git-p4.attemptRCSCleanup true &&
-+		"$GITP4" submit
-+	) &&
-+	(
-+		cd "$cli" &&
-+		p4 sync &&
-+		grep "NewKW2.*Revision.*[0-9]" kwfile1.c
-+
-+	)
-+'
-+
-+# Check that the existing merge conflict handling still works.
-+# Modify kwfile1.c in git, and delete in p4. We should be able
-+# to skip the git commit.
-+#
-+test_expect_success 'merge conflict handling still works' '
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$cli" &&
-+		echo "Hello:\$Id\$" >merge2.c &&
-+		echo "World" >>merge2.c &&
-+		p4 add -t ktext merge2.c &&
-+		p4 submit -d "add merge test file"
-+	) &&
-+	"$GITP4" clone --dest="$git" //depot &&
-+	(
-+		cd "$git" &&
-+		sed -e "/Hello/d" merge2.c >merge2.c.tmp &&
-+		mv merge2.c.tmp merge2.c &&
-+		git add merge2.c &&
-+		git commit -m "Modifying merge2.c"
-+	) &&
-+	(
-+		cd "$cli" &&
-+		p4 delete merge2.c &&
-+		p4 submit -d "remove merge test file"
-+	) &&
-+	(
-+		cd "$git" &&
-+		test -f merge2.c &&
-+		git config git-p4.skipSubmitEdit true &&
-+		git config git-p4.attemptRCSCleanup true &&
-+		!(echo "s" | "$GITP4" submit) &&
-+		git rebase --skip &&
-+		! test -f merge2.c
-+	)
-+'
-+
-+
-+test_expect_success 'kill p4d' '
-+	kill_p4d
-+'
-+
-+test_done
--- 
-1.7.9.259.ga92e
+>=20
+>>  			strbuf_addstr(&msgbuf, sha1_to_hex(commit->object.sha1));
+>>  			strbuf_addstr(&msgbuf, ")\n");
+>>  		}
+
+--=20
+mail: echo '<bNbolOli@ewaSPnetAM.ch>' | tr -d '[A-S]'
+pgp: 0x506A903A; 49D5 794A EA77 F907 764F  D89E 304B 93CF 506A 903A
+gsm: 4.7.7.6.0.7.7.9.7.1.4.e164.arpa
+icbm: 47.0452 N, 7.2715 E
+http: www.drbeat.li
+
+"It takes love over gold, and mind over matter" -- Dire Straits
+
+
+--------------enig3895BDFBD3820342EE9CAE94
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (MingW32)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAk9F+zQACgkQMEuTz1BqkDo8TACffMdbUKTJ6FHC6birSL0KbwVM
+EEIAn1YlCGi8P3Bccw6dCplwqOewP6Jr
+=S9Zt
+-----END PGP SIGNATURE-----
+
+--------------enig3895BDFBD3820342EE9CAE94--
