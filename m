@@ -1,326 +1,239 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (Feb 2012, #08; Wed, 22)
-Date: Wed, 22 Feb 2012 18:34:32 -0800
-Message-ID: <7vfwe26zwn.fsf@alter.siamese.dyndns.org>
+Subject: [ANNOUNCE] Git 1.7.9.2
+Date: Wed, 22 Feb 2012 18:38:29 -0800
+Message-ID: <7vbooq6zq2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 23 03:34:44 2012
+X-From: git-owner@vger.kernel.org Thu Feb 23 03:38:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0OW2-00016V-PU
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 03:34:43 +0100
+	id 1S0OZq-0003c9-4A
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 03:38:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752731Ab2BWCeh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Feb 2012 21:34:37 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33324 "EHLO
+	id S1752786Ab2BWCid convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Feb 2012 21:38:33 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35144 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752036Ab2BWCeg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Feb 2012 21:34:36 -0500
+	id S1751207Ab2BWCic convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Feb 2012 21:38:32 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 444187B25;
-	Wed, 22 Feb 2012 21:34:35 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1516F7BE5;
+	Wed, 22 Feb 2012 21:38:32 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
 	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=2ibY12Wmj95UkO47czigvR/c4
-	7w=; b=yKi3LaTQOMznmlvwz44MJKgB1NsexkCHGdF65EShsCwLxSfsQaRfqUZVJ
-	rT62GfvDao/MYbrJ3Nmc4gbTLhkHK6/iIC0HxVuUIgSJSx0FzyygW+NEvFvfWjwA
-	I1Rgn3yHFySdN2+6aBdZZX7qKPZKKkB4/jqVoCcvwj68bjQiKI=
+	:content-transfer-encoding; s=sasl; bh=IAj1IMHGzxOu9TjPZK3HFV/du
+	Vg=; b=x4GRCfrhHL3OWO0nyppC90+2sn2ocwWvAGa3ffqdGcjI62gAMJHzUdHsP
+	yt2g7tORntXHrSsRIk5KXwVl2T1vF3TV5fy1xMth6vKldtzrRUp9Y2hlyB4eOnH6
+	QZ+kwUMDvFR4jTY75MHoj/RYemYWePxMI7lnTVYy+HuFQiFfYg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
 	:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=c/u658KZT0gJZTte+gz
-	JV9bfV1oZZSrjDIa5OyY88cetVPxcUsxpuyXojrP5/iSYFaPxuZ1QX49V3809qBY
-	y5YgHRlg+xwM6X0cVV7SPoOFOmV0l+twycekFYcNsMA7fZItJ1U6cC2/Aq4HvHe0
-	yD9/bMdNVPpUqTJBdRY97wP0=
+	:content-transfer-encoding; q=dns; s=sasl; b=kTngOKo3EDk59RSAZw5
+	3IFg9NfuOB0LeZ0NJZb1fhbw66R7yhbVmo77Hr5V8jddDT2t+I8m3f8KrC7Q/JeI
+	9nTVxbhO5ZNesLX7pMmMRnzj9ydKs4oWW4IhURBrCSWRFQcCg60J6fTiqx7ZXMWY
+	MiQbOnCwCxBme/CvHhBPp4+c=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B8517B24;
-	Wed, 22 Feb 2012 21:34:35 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0CA317BE4;
+	Wed, 22 Feb 2012 21:38:32 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 387D07B23; Wed, 22 Feb 2012
- 21:34:34 -0500 (EST)
-X-master-at: f1f1b96e99fa064ed9f0da263d4b4eb0407b3ceb
-X-next-at: b4472eeb9efa715ecf088c254868d80ebfa252fd
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 549FC7BE3; Wed, 22 Feb 2012
+ 21:38:31 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EC0409D6-5DC6-11E1-B888-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 7958E478-5DC7-11E1-84D3-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191324>
 
-Here are the topics that have been cooking.  Commits prefixed with '-' =
-are
-only in 'pu' (proposed updates) while commits prefixed with '+' are in =
-'next'.
+The latest maintenance release Git 1.7.9.2 is now available at the
+usual places.
 
-You can find the changes described here in the integration branches of =
-the
-repositories listed at
+The release tarballs are found at:
 
-    http://git-blame.blogspot.com/p/git-public-repositories.html
+    http://code.google.com/p/git-core/downloads/list
 
-But I seem to be getting this from the github:
+and their SHA-1 checksums are:
 
-  ERROR: Permission to git/git.git denied to gitster.
-  fatal: The remote end hung up unexpectedly
+7aff1048480a8637de94e8d82744d312c0b5e060  git-1.7.9.2.tar.gz
+3cf13b03b2f64d0458212232cc18983231f8251e  git-htmldocs-1.7.9.2.tar.gz
+d6992d899fb70e40983f94a2f96ad24b8ee93557  git-manpages-1.7.9.2.tar.gz
 
-so https://github.com/git/git/ is not updated.  All others are OK.
+Also the following public repositories all have a copy of the v1.7.9.2
+tag and the maint branch that the tag points at:
 
---------------------------------------------------
-[New Topics]
+  url =3D git://repo.or.cz/alt-git.git
+  url =3D https://code.google.com/p/git-core/
+  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
+  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url =3D https://github.com/gitster/git
 
-* jb/filter-ignore-sigpipe (2012-02-21) 1 commit
- - Ignore SIGPIPE when running a filter driver
+Git v1.7.9.2 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
 
-Looked sane.
-Will merge to "next".
+=46ixes since v1.7.9.1
+--------------------
 
-* jc/pickaxe-ignore-case (2012-02-21) 1 commit
- - pickaxe: allow -i to search in patch case-insensitively
+ * Bash completion script (in contrib/) did not like a pattern that
+   begins with a dash to be passed to __git_ps1 helper function.
 
-* jc/doc-merge-options (2012-02-22) 1 commit
- - Documentation/merge-options.txt: group "ff" related options together
+ * Adaptation of the bash completion script (in contrib/) for zsh
+   incorrectly listed all subcommands when "git <TAB><TAB>" was given
+   to ask for list of porcelain subcommands.
 
-Documentation for "git merge" had "--ff-only" far away from other optio=
-ns
-related to the handling of fast-forward merges.
+ * The build procedure for profile-directed optimized binary was not
+   working very well.
 
-* ph/cherry-pick-advice-refinement (2012-02-22) 1 commit
- - cherry-pick: No advice to commit if --no-commit
+ * Some systems need to explicitly link -lcharset to get locale_charset=
+().
 
-* pj/completion-remote-set-url-branches (2012-02-22) 2 commits
- - completion: normalize increment/decrement style
- - completion: remote set-* <name> and <branch>
+ * t5541 ignored user-supplied port number used for HTTP server testing=
+=2E
 
-* th/git-diffall (2012-02-22) 1 commit
- - contrib: added git-diffall
+ * The error message emitted when we see an empty loose object was
+   not phrased correctly.
 
---------------------------------------------------
-[Graduated to "master"]
+ * The code to ask for password did not fall back to the terminal
+   input when GIT_ASKPASS is set but does not work (e.g. lack of X
+   with GUI askpass helper).
 
-* jk/diff-highlight (2012-02-13) 5 commits
-  (merged to 'next' on 2012-02-20 at ba040ae)
- + diff-highlight: document some non-optimal cases
- + diff-highlight: match multi-line hunks
- + diff-highlight: refactor to prepare for multi-line hunks
- + diff-highlight: don't highlight whole lines
- + diff-highlight: make perl strict and warnings fatal
+ * We failed to give the true terminal width to any subcommand when
+   they are invoked with the pager, i.e. "git -p cmd".
 
-Updates diff-highlight (in contrib/).
+ * map_user() was not rewriting its output correctly, which resulted
+   in the user visible symptom that "git blame -e" sometimes showed
+   excess '>' at the end of email addresses.
 
-* jn/gitweb-unborn-head (2012-02-17) 1 commit
-  (merged to 'next' on 2012-02-20 at 80e3ff2)
- + gitweb: Fix "heads" view when there is no current branch
+ * "git checkout -b" did not allow switching out of an unborn branch.
 
-"gitweb" compared non-existent value of HEAD with the names of commit
-objects at tips of branches, triggering runtime warnings.
+ * When you have both .../foo and .../foo.git, "git clone .../foo" did =
+not
+   favor the former but the latter.
 
---------------------------------------------------
-[Stalled]
+ * "git commit" refused to create a commit when entries added with
+   "add -N" remained in the index, without telling Git what their conte=
+nt
+   in the next commit should be. We should have created the commit with=
+out
+   these paths.
 
-* jl/maint-submodule-relative (2012-02-09) 2 commits
- - submodules: always use a relative path from gitdir to work tree
- - submodules: always use a relative path to gitdir
+ * "git diff --stat" said "files", "insertions", and "deletions" even
+   when it is showing one "file", one "insertion" or one "deletion".
 
-The second one looked iffy.
+ * The output from "git diff --stat" for two paths that have the same
+   amount of changes showed graph bars of different length due to the
+   way we handled rounding errors.
 
-* hv/submodule-recurse-push (2012-02-13) 3 commits
- - push: teach --recurse-submodules the on-demand option
- - Refactor submodule push check to use string list instead of integer
- - Teach revision walking machinery to walk multiple times sequencially
+ * "git grep" did not pay attention to -diff (hence -binary) attribute.
 
-The bottom one was not clearly explained and needs a reroll.
+ * The transport programs (fetch, push, clone)ignored --no-progress
+   and showed progress when sending their output to a terminal.
 
-* zj/diff-stat-dyncol (2012-02-15) 6 commits
- . diff --stat: use less columns for change counts
- - (squash to the previous -- replace the last line of the log with the=
- following)
- - diff --stat: use the full terminal width
- - (squash to the previous -- replace the log message with this)
- - diff --stat: tests for long filenames and big change counts
- - Merge branches zj/decimal-width and zj/term-columns
+ * Sometimes error status detected by a check in an earlier phase of
+   "git receive-pack" (the other end of "git push") was lost by later
+   checks, resulting in false indication of success.
 
-I am beginning to think that the last one should wait until the dust fr=
-om
-the earlier part settles.
+ * "git rev-list --verify" sometimes skipped verification depending on
+   the phase of the moon, which dates back to 1.7.8.x series.
 
-* jc/advise-push-default (2011-12-18) 1 commit
- - push: hint to use push.default=3Dupstream when appropriate
+ * Search box in "gitweb" did not accept non-ASCII characters correctly=
+=2E
 
-Peff had a good suggestion outlining an updated code structure so that
-somebody new can try to dip his or her toes in the development. Any
-takers?
+ * Search interface of "gitweb" did not show multiple matches in the sa=
+me file
+   correctly.
 
-* ss/git-svn-prompt-sans-terminal (2012-01-04) 3 commits
- - fixup! 15eaaf4
- - git-svn, perl/Git.pm: extend Git::prompt helper for querying users
- - perl/Git.pm: "prompt" helper to honor GIT_ASKPASS and SSH_ASKPASS
+Also contains minor fixes and documentation updates.
 
-The bottom one has been replaced with a rewrite based on comments from
-=C3=86var. The second one needs more work, both in perl/Git.pm and prom=
-pt.c, to
-give precedence to tty over SSH_ASKPASS when terminal is available.
+----------------------------------------------------------------
 
-* jc/split-blob (2012-01-24) 6 commits
- - chunked-object: streaming checkout
- - chunked-object: fallback checkout codepaths
- - bulk-checkin: support chunked-object encoding
- - bulk-checkin: allow the same data to be multiply hashed
- - new representation types in the packstream
- - varint-in-pack: refactor varint encoding/decoding
+Changes since v1.7.9.1 are as follows:
 
-Not ready.
+Christian Hammerl (1):
+      completion: Allow dash as the first character for __git_ps1
 
-I finished the streaming checkout codepath, but as explained in 127b177
-(bulk-checkin: support chunked-object encoding, 2011-11-30), these are
-still early steps of a long and painful journey. At least pack-objects =
-and
-fsck need to learn the new encoding for the series to be usable locally=
-,
-and then index-pack/unpack-objects needs to learn it to be used remotel=
-y.
+Clemens Buchacher (4):
+      git rev-list: fix invalid typecast
+      push/fetch/clone --no-progress suppresses progress output
+      t5541: check error message against the real port number used
+      do not override receive-pack errors
 
-Given that I heard a lot of noise that people want large files, and tha=
-t I
-was asked by somebody at GitTogether'11 privately for an advice on how =
-to
-pay developers (not me) to help adding necessary support, I am somewhat
-dissapointed that the original patch series that was sent almost two
-months ago still remains here without much comments and updates from th=
-e
-developer community. I even made the interface to the logic that decide=
-s
-where to split chunks easily replaceable, and I deliberately made the
-logic in the original patch extremely stupid to entice others, especial=
-ly
-the "bup" fanboys, to come up with a better logic, thinking that giving
-people an easy target to shoot for, they may be encouraged to help
-out. The plan is not working :-(.
+=46elipe Contreras (3):
+      completion: work around zsh option propagation bug
+      completion: use ls -1 instead of rolling a loop to do that oursel=
+ves
+      completion: simplify __gitcomp and __gitcomp_nl implementations
 
-* nd/columns (2012-02-08) 15 commits
- . column: Fix some compiler and sparse warnings
- . column: add a corner-case test to t3200
- . columns: minimum coding style fixes
- . tag: add --column
- . column: support piping stdout to external git-column process
- . status: add --column
- . branch: add --column
- . help: reuse print_columns() for help -a
- . column: add column.ui for default column output settings
- . column: support columns with different widths
- . column: add columnar layout
- . Stop starting pager recursively
- . Add git-column and column mode parsing
- . column: add API to print items in columns
- . Save terminal width before setting up pager
+Jakub Narebski (2):
+      gitweb: Allow UTF-8 encoded CGI query parameters and path_info
+      gitweb: Fix 'grep' search for multiple matches in file
 
-Expecting a reroll on top of zj/term-columns topic.
+Jeff King (12):
+      grep: make locking flag global
+      grep: move sha1-reading mutex into low-level code
+      grep: refactor the concept of "grep source" into an object
+      convert git-grep to use grep_source interface
+      grep: drop grep_buffer's "name" parameter
+      grep: cache userdiff_driver in grep_source
+      grep: respect diff attributes for binary-ness
+      grep: load file data after checking binary-ness
+      grep: pre-load userdiff drivers when threaded
+      standardize and improve lookup rules for external local repos
+      prompt: clean up strbuf usage
+      prompt: fall back to terminal if askpass fails
 
---------------------------------------------------
-[Cooking]
+Jiang Xin (2):
+      i18n: git-commit whence_s "merge/cherry-pick" message
+      i18n: format_tracking_info "Your branch is behind" message
 
-* fc/push-prune (2012-02-22) 4 commits
- - push: add '--prune' option
- - remote: refactor code into alloc_delete_ref()
- - remote: reorganize check_pattern_match()
- - remote: use a local variable in match_push_refs()
+Johannes Sixt (1):
+      Makefile: fix syntax for older make
 
-Rerolled and looked sane.
-Will merge to "next".
+Junio C Hamano (8):
+      mailmap: always return a plain mail address from map_user()
+      git checkout -b: allow switching out of an unborn branch
+      commit: ignore intent-to-add entries instead of refusing
+      diff --stat: show bars of same length for paths with same amount =
+of changes
+      Update draft release notes to 1.7.9.2
+      Update draft release notes to 1.7.9.2
+      Update draft release notes to 1.7.9.2
+      Git 1.7.9.2
 
-* jc/add-refresh-unmerged (2012-02-17) 1 commit
-  (merged to 'next' on 2012-02-21 at 09f8721)
- + refresh_index: do not show unmerged path that is outside pathspec
+Matthieu Moy (1):
+      fsck: give accurate error message on empty loose object files
 
-"git add --refresh <pathspec>" warned about unmerged paths outside the
-given pathspec.
+Namhyung Kim (2):
+      ctype.c only wants git-compat-util.h
+      ctype: implement islower/isupper macro
 
-* jc/diff-ignore-case (2012-02-19) 6 commits
- - diff -i
- - diff: --ignore-case
- - xdiff: introduce XDF_IGNORE_CASE
- - xdiff: introduce XDF_INEXACT_MATCH
- - xdiff: PATIENCE/HISTOGRAM are not independent option bits
- - xdiff: remove XDL_PATCH_* macros
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (3):
+      sha1_file.c: move the core logic of find_pack_entry() into fill_p=
+ack_entry()
+      find_pack_entry(): do not keep packed_git pointer locally
+      Use correct grammar in diffstat summary line
 
-"git diff" learns "--ignore-case" option.
+Philip J=C3=A4genstedt (2):
+      completion: remove stale "to submit patches" documentation
+      completion: use tabs for indentation
 
-* jn/gitweb-hilite-regions (2012-02-19) 5 commits
- - gitweb: Use esc_html_match_hl() in 'grep' search
- - gitweb: Highlight matched part of shortened project description
- - gitweb: Highlight matched part of project description when searching=
- projects
- - gitweb: Highlight matched part of project name when searching projec=
-ts
- - gitweb: Introduce esc_html_hl_regions
- (this branch uses jn/gitweb-search-optim.)
+Ralf Thielow (2):
+      completion: --edit-description option for git-branch
+      completion: --list option for git-branch
 
-Not reviewed and do not know what this is about yet ;-).
+Theodore Ts'o (1):
+      Fix build problems related to profile-directed optimization
 
-* jn/gitweb-search-optim (2012-02-19) 3 commits
- - gitweb: Faster project search
- - gitweb: Option for filling only specified info in fill_project_list_=
-info
- - gitweb: Refactor checking if part of project info need filling
- (this branch is used by jn/gitweb-hilite-regions.)
+Zbigniew J=C4=99drzejewski-Szmek (2):
+      pager: find out the terminal width before spawning the pager
+      man: rearrange git synopsis to fit in 80 lines
 
-The API introduced in the second step still has yucky design, but at le=
-ast
-it is more clear than the previous rounds what this is trying to do.
-
-* js/configure-libintl (2012-02-20) 1 commit
-  (merged to 'next' on 2012-02-21 at 79d7ccc)
- + configure: don't use -lintl when there is no gettext support
-
-Build fix for autoconf, meant for 'maint' track.
-
-* pj/remote-set-branches-usage-fix (2012-02-19) 1 commit
-  (merged to 'next' on 2012-02-21 at cb71d0e)
- + remote: fix set-branches usage and documentation
-
-Documentation fix.
-
-* tr/perftest (2012-02-17) 3 commits
-  (merged to 'next' on 2012-02-20 at 4c75ba9)
- + Add a performance test for git-grep
- + Introduce a performance testing framework
- + Move the user-facing test library to test-lib-functions.sh
-
-* jb/required-filter (2012-02-17) 1 commit
- - Add a setting to require a filter to be successful
-
-A content filter used to be a way to make the recorded contents "more
-useful", but this defines a way to optionally mark a filter "required".
-Will merge to "next" after waiting for a few more days for comments.
-
-* jk/config-include (2012-02-17) 10 commits
-  (merged to 'next' on 2012-02-20 at 7b150b7)
- + config: add include directive
- + config: eliminate config_exclusive_filename
- + config: stop using config_exclusive_filename
- + config: provide a version of git_config with more options
- + config: teach git_config_rename_section a file argument
- + config: teach git_config_set_multivar_in_file a default path
- + config: copy the return value of prefix_filename
- + t1300: add missing &&-chaining
- + docs/api-config: minor clarifications
- + docs: add a basic description of the config API
-
-An assignment to the include.path pseudo-variable causes the named file
-to be included in-place when Git looks up configuration variables.
-
-Reverted the earlier round from 'next' and then fixed up further.
-
-* ld/git-p4-expanded-keywords (2012-02-14) 1 commit
-  (merged to 'next' on 2012-02-16 at a9004c5)
- + git-p4: add initial support for RCS keywords
-
-Teach git-p4 to unexpand $RCS$-like keywords that are embedded in
-tracked contents in order to reduce unnecessary merge conflicts.
-
-Waiting for follow-up fix-up patches.
+=D0=94=D0=B8=D0=BB=D1=8F=D0=BD =D0=9F=D0=B0=D0=BB=D0=B0=D1=83=D0=B7=D0=BE=
+=D0=B2 (1):
+      Makefile: introduce CHARSET_LIB to link with -lcharset
