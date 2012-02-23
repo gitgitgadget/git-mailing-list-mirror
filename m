@@ -1,80 +1,59 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: [PATCH 2/4] Do attempt pretty print in ASCII-incompatible
- encodings
-Date: Thu, 23 Feb 2012 12:25:21 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1202231219050.21935@ds9.cixit.se>
-References: <1329834292-2511-1-git-send-email-pclouds@gmail.com> <1329834292-2511-2-git-send-email-pclouds@gmail.com> <20120221182118.GA32668@sigill.intra.peff.net>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: [ANNOUNCE] Git 1.7.9.2
+Date: Thu, 23 Feb 2012 17:06:47 +0530
+Message-ID: <CAMK1S_iKPDWYBVDgHNRvwhbJ+Cy9NdJP+2pa8JOst1vKDs3gCA@mail.gmail.com>
+References: <7vbooq6zq2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=utf-8;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
-	=?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 23 12:31:42 2012
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 23 12:36:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0Wtg-0002A1-Mq
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 12:31:41 +0100
+	id 1S0Wyk-0006NF-Al
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 12:36:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751985Ab2BWLbg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Feb 2012 06:31:36 -0500
-Received: from upper-gw.cixit.se ([92.43.32.133]:45649 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750843Ab2BWLbf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Feb 2012 06:31:35 -0500
-X-Greylist: delayed 360 seconds by postgrey-1.27 at vger.kernel.org; Thu, 23 Feb 2012 06:31:34 EST
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id q1NBPM4W001580
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 23 Feb 2012 12:25:22 +0100
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id q1NBPLpO001576;
-	Thu, 23 Feb 2012 12:25:22 +0100
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <20120221182118.GA32668@sigill.intra.peff.net>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Thu, 23 Feb 2012 12:25:22 +0100 (CET)
+	id S1752681Ab2BWLgt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Feb 2012 06:36:49 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:46811 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752536Ab2BWLgs convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Feb 2012 06:36:48 -0500
+Received: by obcva7 with SMTP id va7so1277799obc.19
+        for <git@vger.kernel.org>; Thu, 23 Feb 2012 03:36:47 -0800 (PST)
+Received-SPF: pass (google.com: domain of sitaramc@gmail.com designates 10.60.26.133 as permitted sender) client-ip=10.60.26.133;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of sitaramc@gmail.com designates 10.60.26.133 as permitted sender) smtp.mail=sitaramc@gmail.com; dkim=pass header.i=sitaramc@gmail.com
+Received: from mr.google.com ([10.60.26.133])
+        by 10.60.26.133 with SMTP id l5mr322093oeg.22.1329997007778 (num_hops = 1);
+        Thu, 23 Feb 2012 03:36:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=AsmDp3vIf1gP4Sz/lOZBls1loUrdhyq64BaC9tMWKrQ=;
+        b=H2BHFRGOHb7RdasmA4jQfbhKFIFQ8OqreU8kbXuzy0H7vQsOtdoFtI1rMNbhHWxcxR
+         rfIeyl3tt7Gz0KT/PZUux2Zd99K9xTtXhAiV7VuldcTDn4QmMRtFBTY17yYVb0OpFaaj
+         0CHG3nvaf6Y2X5MEkPzKJZWmlfcUaMBP7tT7E=
+Received: by 10.60.26.133 with SMTP id l5mr284114oeg.22.1329997007743; Thu, 23
+ Feb 2012 03:36:47 -0800 (PST)
+Received: by 10.182.175.106 with HTTP; Thu, 23 Feb 2012 03:36:47 -0800 (PST)
+In-Reply-To: <7vbooq6zq2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191354>
 
-Jeff King:
+On Thu, Feb 23, 2012 at 8:08 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
 
-> I'm not sure why we bother checking this. Using non-ASCII-superset
-> encodings is broken, yes, but are people actually doing that?
-[...]
-> Are there actually encodings that will cause subtle breakage that we =
-want=20
-> to catch?
+> =C2=A0* "git rev-list --verify" sometimes skipped verification depend=
+ing on
+> =C2=A0 the phase of the moon, which dates back to 1.7.8.x series.
 
-Shift-JIS could be a problem; if implemented to the letter it would con=
-vert=20
-0x5C to a Yen character and 0x7E as an overline. Otherwise I expect it =
-only=20
-being a problem with ISO 646 encodings, especially the ones that replac=
-e "@"=20
-with something else [1].
-
-Also any ISO 2022 seven-bit encoding (ISO-2022-{CN,JP,KR}) could cause=20
-problems, especially if there is any preprocessing done on the string t=
-hat=20
-does not respect its state-shifting (most 0x21--0x7E characters can be =
-lead=20
-and trail bytes in their multi-byte modes).
-
---=20
-\\// Peter - http://www.softwolves.pp.se/
-
-  [1] Trying to send Internet e-mail from a system using the extended
-      Swedish seven-bit encoding, where 0x40 mapped to "=C3=89", could
-      sometimes be a challenge.
+phase of the moon?  should have been named --were-ify I guess :-)
