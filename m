@@ -1,56 +1,65 @@
-From: Jeff King <peff@peff.net>
+From: Andreas Schwab <schwab@linux-m68k.org>
 Subject: Re: git log -z doesn't separate commits with NULs
-Date: Thu, 23 Feb 2012 05:27:03 -0500
-Message-ID: <20120223102702.GC2912@sigill.intra.peff.net>
+Date: Thu, 23 Feb 2012 11:35:14 +0100
+Message-ID: <m262exrg65.fsf@igel.home>
 References: <4F46036F.3040406@gmail.com>
- <4F460EB7.3030503@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nikolaj Shurkaev <snnicky@gmail.com>, git@vger.kernel.org
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Thu Feb 23 11:27:14 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Nikolaj Shurkaev <snnicky@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 23 11:35:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0VtI-000132-1n
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 11:27:13 +0100
+	id 1S0W1F-0007b0-1D
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 11:35:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755345Ab2BWK1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Feb 2012 05:27:07 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48664
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753086Ab2BWK1G (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Feb 2012 05:27:06 -0500
-Received: (qmail 8585 invoked by uid 107); 23 Feb 2012 10:27:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 23 Feb 2012 05:27:06 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Feb 2012 05:27:03 -0500
-Content-Disposition: inline
-In-Reply-To: <4F460EB7.3030503@diamand.org>
+	id S1755387Ab2BWKfT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Feb 2012 05:35:19 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:50537 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752282Ab2BWKfT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Feb 2012 05:35:19 -0500
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3TtsQY000bz3hhZt;
+	Thu, 23 Feb 2012 11:35:16 +0100 (CET)
+X-Auth-Info: YnRSs/NSx6Ll65pLwwy9YPogdNnUw7C+VFUqhAKdmjI=
+Received: from igel.home (ppp-88-217-102-60.dynamic.mnet-online.de [88.217.102.60])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 517DE1C000A9;
+	Thu, 23 Feb 2012 11:35:17 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id E0005CA29E; Thu, 23 Feb 2012 11:35:15 +0100 (CET)
+X-Yow: Look!!  Karl Malden!
+In-Reply-To: <4F46036F.3040406@gmail.com> (Nikolaj Shurkaev's message of "Thu,
+	23 Feb 2012 12:14:23 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191350>
 
-On Thu, Feb 23, 2012 at 10:02:31AM +0000, Luke Diamand wrote:
+Nikolaj Shurkaev <snnicky@gmail.com> writes:
 
-> >Thus I suspect there is a but in git log -z command and that doesn't
-> >"Separate the commits with NULs instead of with new newlines." as
-> >promised in the documents.
-> >Is my understanding correct or I don't understand the documentation or
-> >somehow pass wrong parameters into git log?
-> 
-> Just a guess, but doesn't the "--patch" option to git log ask it to
-> produce a patch output? Surely that will override the -z: patch will
-> not be expecting NULs.
+> I did something like this:
+> git log -z --patch HEAD~10..HEAD -- SomePathHere | xargs -0 
+> --max-chars=1000000 ~/1.sh
+>
+> If I put
+> echo "started"
+> into the file  ~/1.sh I see that the file is called only once instead of
+> multiple times.
 
-No. You will get the patch text and the log message together, with
-commits separated by NUL. Some diff output formats will also respect
-"-z" to produce NULs internally (e.g., "--raw" will use it to separate
-filenames), but "--patch" does not.
+If you want the command to be called once for each commit you need to
+pass --max-args=1 to xargs.  Otherwise xargs will cumulate the arguments
+until --max-chars is reached, and the command is expected to loop over
+them.
 
--Peff
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
