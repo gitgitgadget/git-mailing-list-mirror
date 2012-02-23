@@ -1,106 +1,81 @@
-From: "Matt Seitz (matseitz)" <matseitz@cisco.com>
-Subject: RE: gitk: set uicolor SystemButtonFace error on X11 if .gitk created using Win32 tk
-Date: Thu, 23 Feb 2012 11:20:13 -0800
-Message-ID: <70952A932255A2489522275A628B97C31294E764@xmb-sjc-233.amer.cisco.com>
-References: <70952A932255A2489522275A628B97C31288FA0B@xmb-sjc-233.amer.cisco.com> <CABPQNSZqX0_YAn=mOpuRquG9OzFgwS9fQ6=YXqULxMz-hbH6Zw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] merge: use editor by default in interactive sessions
+Date: Thu, 23 Feb 2012 11:23:37 -0800
+Message-ID: <7vd3954ame.fsf@alter.siamese.dyndns.org>
+References: <7vipk26p1b.fsf@alter.siamese.dyndns.org>
+ <CABPQNSZVOjOKpqv4s1ZCEQRd_yT3us3mqC9aN-KK5PHqztYQQg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: <kusmabite@gmail.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 23 20:20:52 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Thu Feb 23 20:23:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0eDj-0005Yu-EF
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 20:20:51 +0100
+	id 1S0eGX-0007ka-BV
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 20:23:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754396Ab2BWTUR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Feb 2012 14:20:17 -0500
-Received: from mtv-iport-4.cisco.com ([173.36.130.15]:54040 "EHLO
-	mtv-iport-4.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752207Ab2BWTUQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Feb 2012 14:20:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=matseitz@cisco.com; l=1345; q=dns/txt;
-  s=iport; t=1330024816; x=1331234416;
-  h=mime-version:content-transfer-encoding:subject:date:
-   message-id:in-reply-to:references:from:to:cc;
-  bh=LvxblgeNb9Da0KSi+Gmplnb+mqBKH/zqc0JOwRnxylQ=;
-  b=hjQBLUjqYNOKX/rimTJ5RJLri2MSj6P/xBJC3mIFZlsLPTtFEIpJ5Msj
-   6Xw+U4w5SmuJWUaShBvTr+2YooRjTlfbqkGiBllLrz6OhAxcgNv5sDUCE
-   EFn4FP2vhms4mMszc3i/YWB/HJkkGmKzR3dfsiSfCsNJvXKWRUi7fbYsb
-   g=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av8EAIKQRk+rRDoI/2dsb2JhbABEslOBB4FzAQEBAwESAR0KPwULAgEIFQ0GFwEGASAlAwENAQEEEwgah1+gIAGXB4JXhiiEBRUXRxEFAwKETAGBMw8PgjtjBIhPmACHdw
-X-IronPort-AV: E=Sophos;i="4.73,471,1325462400"; 
-   d="scan'208";a="31917900"
-Received: from mtv-core-3.cisco.com ([171.68.58.8])
-  by mtv-iport-4.cisco.com with ESMTP; 23 Feb 2012 19:20:15 +0000
-Received: from xbh-sjc-231.amer.cisco.com (xbh-sjc-231.cisco.com [128.107.191.100])
-	by mtv-core-3.cisco.com (8.14.3/8.14.3) with ESMTP id q1NJKFlm009665;
-	Thu, 23 Feb 2012 19:20:15 GMT
-Received: from xmb-sjc-233.amer.cisco.com ([128.107.191.88]) by xbh-sjc-231.amer.cisco.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Thu, 23 Feb 2012 11:20:15 -0800
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <CABPQNSZqX0_YAn=mOpuRquG9OzFgwS9fQ6=YXqULxMz-hbH6Zw@mail.gmail.com>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: gitk: set uicolor SystemButtonFace error on X11 if .gitk created using Win32 tk
-thread-index: AczyM/q3t3SnB4PqSe6oABRvVgRUUgAJPXjg
-X-OriginalArrivalTime: 23 Feb 2012 19:20:15.0724 (UTC) FILETIME=[2C14BAC0:01CCF260]
+	id S1754974Ab2BWTXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Feb 2012 14:23:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50963 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754687Ab2BWTXj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Feb 2012 14:23:39 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DB78702E;
+	Thu, 23 Feb 2012 14:23:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=W1E4O9TqFuIMpsg2heodfE2o6dQ=; b=VfGDih
+	9riaujm1Ep1FhNFkdqjdsyJpwiKM2aIffCXZ3ziKN9V6fXamvu4TPEY7W/XqM4U/
+	BUidDdroSmdvNVx6R9PciLPcBykuGviOzJdaQsIR5fDBCxir3KnSwiHIjzkp8aIp
+	bUvjhO82GTOTQgZDLb0WGQhhaEVcYBXI9Prm8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=B0E3Xq6jZ4O8P3UgqXHoN7TjYmHYQt9B
+	vmJuFdbZRpRUNVMnSrkSB807BaQ1AUu6xXiOr8Ig7ScWv98z1UEqRU7EKHvZPTa3
+	c9beAMO2DYb2l0+uPvamCX739YzOR0yoOLuhV/9yG7+gPlyZD7biPkqCSBCa6vOu
+	F0Duz5Ks77I=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 64C65702D;
+	Thu, 23 Feb 2012 14:23:39 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC86B702C; Thu, 23 Feb 2012
+ 14:23:38 -0500 (EST)
+In-Reply-To: <CABPQNSZVOjOKpqv4s1ZCEQRd_yT3us3mqC9aN-KK5PHqztYQQg@mail.gmail.com> (Erik
+ Faye-Lund's message of "Thu, 23 Feb 2012 13:43:52 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E37DBDE2-5E53-11E1-BE22-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191387>
 
-> From: Erik Faye-Lund [mailto:kusmabite@gmail.com]
-> 
-> Are you saying that the tk shipped with recent Cygwin reports "win32"
-> for "[tk windowingsystem]", but does not recognize the
-> "SystemButtonFace" etc values?
+Erik Faye-Lund <kusmabite@gmail.com> writes:
 
-Here is what I am saying:
+>> +       /* Use editor if stdin and stdout are the same and is a tty */
+>> +       return (!fstat(0, &st_stdin) &&
+>> +               !fstat(1, &st_stdout) &&
+>> +               isatty(0) &&
+>> +               st_stdin.st_dev == st_stdout.st_dev &&
+>> +               st_stdin.st_ino == st_stdout.st_ino &&
+>> +               st_stdin.st_mode == st_stdout.st_mode);
+>
+> I just stumbled over this code, and I got a bit worried; the
+> stat-implementation we use on Windows sets st_ino to 0, so
+> "st_stdin.st_ino == st_stdout.st_ino" will always evaluate to true.
+>
+> Perhaps we should add a check for isatty(1) here as well? ...
+> Or is there something I'm missing here?
 
-1.  Cygwin tk 8.4.x and earlier:
--Reports "win32" for "[tk windowingsystem]"
--Recognizes the "SystemButtonFace" etc values
+No, the intention was not "we do this whether standard output is tty or
+not", but was "we check that fd#0 and fd#1 are connected to the same
+device by trusting stat() to do the right thing, so checking isatty(0)
+is sufficient".  As that "trusting stat()" assumption does not hold for
+your platform, we would need to add isatty(1) to accomodate it.
 
-2.  Cygwin tk 8.5.11:
--Reports "x11" for "[tk windowingsystem]"
--Does not recognize the "SystemButtonFace" etc values
-
-> Does this patch help?
-
-No, this has the same problem: if gitk is installed using a tk that
-reports "win32" for "[tk windowingsystem]", then gitk hard codes win32
-specific values into .gitk.  If the user later changes to a tk that
-doesn't support win32 specific values, gitk will no longer work.
-
-Two use cases:  
-
-1.  My situation:  User replaces a win32 tk with an x11 tk
-2.  User uses a common .gitk file when running Windows and Linux.
-
-Here's the error:
-$ uname -a
-CYGWIN_NT-5.1 matseitz-wxp 1.7.10(0.259/5/3) 2012-02-05 12:36 i686
-Cygwin
-$ wish
-% tk windowingsystem
-x11
-% exit
-$ gitk &
-[1] 6312
-$ Error in startup script: unknown color name "ButtonFace"
-    while executing
-"winfo rgb . $c"
-    (procedure "setui" line 3)
-    invoked from within
-"setui $uicolor"
-    (file "/usr/bin/gitk" line 11522)
+Thanks for a set of sharp eyes.
