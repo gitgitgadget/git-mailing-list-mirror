@@ -1,82 +1,70 @@
-From: Nikolaj Shurkaev <snnicky@gmail.com>
-Subject: Re: git log -z doesn't separate commits with NULs
-Date: Thu, 23 Feb 2012 15:19:17 +0300
-Message-ID: <4F462EC5.6090007@gmail.com>
-References: <4F46036F.3040406@gmail.com> <m262exrg65.fsf@igel.home>
+From: =?ISO-8859-1?Q?Nelson_Ben=EDtez_Le=F3n?= <nbenitezl@gmail.com>
+Subject: Re: [PATCH] Improve http proxy support
+Date: Thu, 23 Feb 2012 13:20:45 +0100
+Message-ID: <CAAUd643RHOrhm+gfW5UeXfjcG0Xr+q0nxzAVqYsh8VxhhP_m1g@mail.gmail.com>
+References: <CAAUd640GaLz4TGs_Lz6KbSFK0VcEVxGfO6PpSCdhch+fYwVovw@mail.gmail.com>
+ <vpqd397x8fc.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1251;
-	format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Thu Feb 23 13:19:46 2012
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Feb 23 13:21:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0XeA-0007hY-7w
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 13:19:43 +0100
+	id 1S0Xfw-0000lJ-7t
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 13:21:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755457Ab2BWMTZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Feb 2012 07:19:25 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:49197 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755067Ab2BWMTX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Feb 2012 07:19:23 -0500
-Received: by bkcjm19 with SMTP id jm19so946993bkc.19
-        for <git@vger.kernel.org>; Thu, 23 Feb 2012 04:19:22 -0800 (PST)
-Received-SPF: pass (google.com: domain of snnicky@gmail.com designates 10.205.129.141 as permitted sender) client-ip=10.205.129.141;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of snnicky@gmail.com designates 10.205.129.141 as permitted sender) smtp.mail=snnicky@gmail.com; dkim=pass header.i=snnicky@gmail.com
-Received: from mr.google.com ([10.205.129.141])
-        by 10.205.129.141 with SMTP id hi13mr591455bkc.7.1329999562463 (num_hops = 1);
-        Thu, 23 Feb 2012 04:19:22 -0800 (PST)
+	id S1752025Ab2BWMV1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Feb 2012 07:21:27 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:44458 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751676Ab2BWMV0 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Feb 2012 07:21:26 -0500
+Received: by lagu2 with SMTP id u2so1382210lag.19
+        for <git@vger.kernel.org>; Thu, 23 Feb 2012 04:21:25 -0800 (PST)
+Received-SPF: pass (google.com: domain of nbenitezl@gmail.com designates 10.112.29.6 as permitted sender) client-ip=10.112.29.6;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of nbenitezl@gmail.com designates 10.112.29.6 as permitted sender) smtp.mail=nbenitezl@gmail.com; dkim=pass header.i=nbenitezl@gmail.com
+Received: from mr.google.com ([10.112.29.6])
+        by 10.112.29.6 with SMTP id f6mr482852lbh.69.1329999685351 (num_hops = 1);
+        Thu, 23 Feb 2012 04:21:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=f6FOshxuw1EbMEy5KFI0Hw/LNW1ZgB0TKPlfe41mQq0=;
-        b=VXrul178HPOnVAHVTH6epgqEamAS+rymQK8m4nDyukLWbrObBV0lD41cQCCFVoUc5Y
-         4VLXHtLzKjgrRaxWDPQZ2PVE4KFPCz5tRJppBQpgzH033aEvfTPfetowQhFelDuyujtL
-         tYYgQ4MExfS6TOmD5Z2QxGDMWdgk+Yf8LY2m0=
-Received: by 10.205.129.141 with SMTP id hi13mr488380bkc.7.1329999562392;
-        Thu, 23 Feb 2012 04:19:22 -0800 (PST)
-Received: from [192.168.1.130] ([80.249.81.45])
-        by mx.google.com with ESMTPS id x11sm2444566bkd.2.2012.02.23.04.19.20
-        (version=SSLv3 cipher=OTHER);
-        Thu, 23 Feb 2012 04:19:21 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <m262exrg65.fsf@igel.home>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=uoGJ8EvPATBNdRy68Ve3zv7+VzMW7TKHbSbKbnh1Mfw=;
+        b=gY/Fr1HZOpYOaXt23/fELGK/mdvMl7Gfp3UKH98sHR+IUUWlikjUuESlEjKeYFhmJV
+         KvG0j/WzZRoKLQVu/y1U25gKFzygFvqYCnWgWu9fuOcriqwY6iLXDrL20ulptbzVB7cw
+         iUftPt+q0eaNUwUEEP3QfhwgxpN7vwXKVdTtk=
+Received: by 10.112.29.6 with SMTP id f6mr411538lbh.69.1329999685270; Thu, 23
+ Feb 2012 04:21:25 -0800 (PST)
+Received: by 10.152.114.74 with HTTP; Thu, 23 Feb 2012 04:20:45 -0800 (PST)
+In-Reply-To: <vpqd397x8fc.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191358>
 
-Thank you.
-
-That really helped me.
----
-Nikolaj
-
-23.02.2012 13:35, Andreas Schwab =EF=E8=F8=E5=F2:
-> Nikolaj Shurkaev<snnicky@gmail.com>  writes:
+El d=EDa 22 de febrero de 2012 15:13, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> escribi=F3:
+> Nelson Ben=EDtez Le=F3n <nbenitezl@gmail.com> writes:
 >
->> I did something like this:
->> git log -z --patch HEAD~10..HEAD -- SomePathHere | xargs -0
->> --max-chars=3D1000000 ~/1.sh
->>
->> If I put
->> echo "started"
->> into the file  ~/1.sh I see that the file is called only once instea=
-d of
->> multiple times.
-> If you want the command to be called once for each commit you need to
-> pass --max-args=3D1 to xargs.  Otherwise xargs will cumulate the argu=
-ments
-> until --max-chars is reached, and the command is expected to loop ove=
+>> Hi, my initial motivation for this patch was to add NTLM proxy
+>> authentication [...]
+>
+> That sounds interesting, but please read Documentation/SubmittingPatc=
+hes
+> in Git's tree. The formatting of your email is wrong (giving more wor=
+k
+> for your maintainer) and you need to sign-off your patch to allow you=
 r
-> them.
->
-> Andreas.
->
+> code to be legally included.
+
+Thank you for the advice, I read README file (couldn't find a HACKING
+one) and the git website, and neither of those had a reference to
+SubmittingPatches..
