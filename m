@@ -1,81 +1,160 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 3/5] tag --exclude option
-Date: Wed, 22 Feb 2012 17:00:12 -0800
-Message-ID: <7vty2i749v.fsf@alter.siamese.dyndns.org>
-References: <1329874130-16818-1-git-send-email-tmgrennan@gmail.com>
- <1329874130-16818-4-git-send-email-tmgrennan@gmail.com>
- <7vhayjbcna.fsf@alter.siamese.dyndns.org>
- <20120223002215.GE2410@tgrennan-laptop>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 4/4] push: add 'prune' option
+Date: Thu, 23 Feb 2012 03:09:00 +0200
+Message-ID: <CAMP44s1s_NeXeUpxDR0cLoLGjSaf-0E_62MzAxeiHS=-6c045A@mail.gmail.com>
+References: <1329950621-21165-1-git-send-email-felipe.contreras@gmail.com>
+	<1329950621-21165-5-git-send-email-felipe.contreras@gmail.com>
+	<7v1upm8jnq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, peff@peff.net, jasampler@gmail.com,
-	pclouds@gmail.com
-To: Tom Grennan <tmgrennan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 23 02:00:26 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 23 02:09:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0N2l-0006sR-FJ
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 02:00:23 +0100
+	id 1S0NBH-00049x-HO
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 02:09:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754563Ab2BWBAQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Feb 2012 20:00:16 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54961 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753413Ab2BWBAP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Feb 2012 20:00:15 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B08A867E2;
-	Wed, 22 Feb 2012 20:00:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KfMwWAzk1/1KMUuvmpQhvoJrrIU=; b=sjrwt5
-	oNdc/4mV/JbJcVt5IoHlPeOkCvM3EkncdyD211ygUOoP0e0XQTJDy8mPe+as6CBl
-	xu/+DUxcFgS0YUFeBjyRgFH0A72x5U3VCSrJ6Kvhu1SbN5unoqepGvR7t0GjE63b
-	3Ot71AUhzuWa0m/AjCdPp1IBTs7d7t6uQeOZw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MkI1IHuyNppHb/anvX5mky+DdKbc6Xxf
-	LZnZDdWBddLD/d9drtIZ8pLuO2DBZr6dg6fo96LBObtS7avc4gmsAVI6+AIAORf5
-	2QN1mlu89Q8CzbzlK91keoDVZCT4BcM0u2NwRheaX9hSvJFfkOxm/UQXmEaYswvL
-	TjKuItK7wTg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A767867E0;
-	Wed, 22 Feb 2012 20:00:14 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 276C467DF; Wed, 22 Feb 2012
- 20:00:14 -0500 (EST)
-In-Reply-To: <20120223002215.GE2410@tgrennan-laptop> (Tom Grennan's message
- of "Wed, 22 Feb 2012 16:22:15 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BE5A0CAE-5DB9-11E1-AC65-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754117Ab2BWBJF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Feb 2012 20:09:05 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:47748 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753413Ab2BWBJE convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Feb 2012 20:09:04 -0500
+Received: by lagu2 with SMTP id u2so791897lag.19
+        for <git@vger.kernel.org>; Wed, 22 Feb 2012 17:09:01 -0800 (PST)
+Received-SPF: pass (google.com: domain of felipe.contreras@gmail.com designates 10.152.125.20 as permitted sender) client-ip=10.152.125.20;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of felipe.contreras@gmail.com designates 10.152.125.20 as permitted sender) smtp.mail=felipe.contreras@gmail.com; dkim=pass header.i=felipe.contreras@gmail.com
+Received: from mr.google.com ([10.152.125.20])
+        by 10.152.125.20 with SMTP id mm20mr24432332lab.6.1329959341022 (num_hops = 1);
+        Wed, 22 Feb 2012 17:09:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=NNLGWoOQ/MqShYGUcg4ExauO6J+QNmDD4ig/irbDGU8=;
+        b=a9Mk5zfTErs5EzjUP7n+dwUGPYbt3/JtgOKo9DVhXlr42TV7+BXi6ANy4eNN/7spKW
+         aqtXO6v9yfG7qdhN6KGFDeLLPhSMzem8HvDDrCqZWdpgA9w0RRRextX1LtUI9oeF7My5
+         9+cO9vG2g6cB+SrBU9OhXJ1Cij1sARQyL+A4I=
+Received: by 10.152.125.20 with SMTP id mm20mr20518565lab.6.1329959340892;
+ Wed, 22 Feb 2012 17:09:00 -0800 (PST)
+Received: by 10.112.41.73 with HTTP; Wed, 22 Feb 2012 17:09:00 -0800 (PST)
+In-Reply-To: <7v1upm8jnq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191319>
 
-Tom Grennan <tmgrennan@gmail.com> writes:
-
-> On Tue, Feb 21, 2012 at 10:33:29PM -0800, Junio C Hamano wrote:
+On Thu, Feb 23, 2012 at 2:42 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
->>As you do not specify what kind of pattern matching is done to this
->>exclude pattern, it is important to use the same logic between positive
->>and negative ones to give users a consistent UI.  Unfortunately we use
->>fnmatch without FNM_PATHNAME for positive ones, so this exclude pattern
->>needs to follow the same semantics to reduce confusion.
->>
->>This comment applies to all the patches in this series to add this option
->>to existing commands that take the positive pattern.
+>> +--prune::
+>> + =C2=A0 =C2=A0 Remove remote branches that don't have a local count=
+erpart. For example
+>> + =C2=A0 =C2=A0 a remote branch `tmp` will be removed if a local bra=
+nch with the same
+>> + =C2=A0 =C2=A0 name doesn't exist any more. This also respects refs=
+pecs, e.g.
+>> + =C2=A0 =C2=A0 `refs/heads/*:refs/tmp/*` would make sure that remot=
+e `refs/tmp/foo`
+>> + =C2=A0 =C2=A0 will be removed if `refs/heads/foo` doesn't exist.
 >
-> OK, should I also describe the --no-exclude option?
+> I do not think it adds much useful information to mention `tmp` only =
+once
+> over what is already said by the first sentence. =C2=A0Also, the firs=
+t sentence
+> of the example does not make it clear that it is assuming a same-for-=
+same
+> mapping.
 
-If you support it, yes.  What does it do?
+Sure, the first sentence doesn't make it clear, but it would be a
+valid and obvious assumption. The second sentence makes it clear, and
+the name `tmp` immediately evokes a branch that will probably be
+removed.
 
---no-exclude::
-	Cancels all the `--exclude` options given so far on the command line.
+> Coming up with a precise technical description is easy, but it is har=
+d to
+> explain to the end user in easy terms, and I commend you for attempti=
+ng to
+> add an example in a short single sentence, though.
+>
+> Perhaps spelling out the underlying assumption the example makes is t=
+he
+> best we could do here without going too technical.
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0... For example, if you are pushing all yo=
+ur local branches to
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0update the local branches of the remote,
 
-perhaps?
+Yeah, but that's 'git push --all', and that's not the common
+operation--'git push' is. So that's what I presumed the reader would
+assume, and it really doesn't make a difference as to what will
+follow:
+
+>        `tmp` branch will be
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0removed from the remote if you removed you=
+r `tmp` branch locally.
+
+This reuses the name `tmp`, which seems to be your objective, but it
+doesn't explain _why_ it would remove `tmp`; is it because `tmp` is
+the upstream branch, or is it because it has the same name?
+
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0If you are pushing all your local branches=
+ on your laptop to a
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0repository on your desktop machine under `=
+refs/remotes/laptop/`
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0hierarchy to back them up, `refs/remotes/l=
+aptop/tmp` is removed
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0from the remote if you no longer have the =
+branch `tmp` on your
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0laptop.
+
+Unfortunately, I as a reader have trouble understanding this. More
+specifically I have trouble understanding where `refs/remotes/laptop/`
+is coming from, and what it is meaning. I have always pictured
+`refs/remotes` as something that 'git fetch' updates, and always from
+the relevant repository. While eventually I could understand what this
+thing is doing, it took me more than one read, and I had to read
+slowly, and even then it seems completely non-standard to me.
+
+I think a synthetic example, like `refs/heads/*:refs/tmp/*`, is much
+easier to understand because it doesn't mess up with any established
+refs, and also has the advantage that it shows the relevant refspec,
+which is useful for people that are not familiar with refspecs, and in
+fact, people could try it out without messing with their current refs.
+
+>> diff --git a/remote.h b/remote.h
+>> index b395598..341142c 100644
+>> --- a/remote.h
+>> +++ b/remote.h
+>> @@ -145,7 +145,8 @@ int branch_merge_matches(struct branch *, int n,=
+ const char *);
+>> =C2=A0enum match_refs_flags {
+>> =C2=A0 =C2=A0 =C2=A0 MATCH_REFS_NONE =C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D=
+ 0,
+>> =C2=A0 =C2=A0 =C2=A0 MATCH_REFS_ALL =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+=3D (1 << 0),
+>> - =C2=A0 =C2=A0 MATCH_REFS_MIRROR =C2=A0 =C2=A0 =C2=A0 =3D (1 << 1)
+>> + =C2=A0 =C2=A0 MATCH_REFS_MIRROR =C2=A0 =C2=A0 =C2=A0 =3D (1 << 1),
+>> + =C2=A0 =C2=A0 MATCH_REFS_PRUNE =C2=A0 =C2=A0 =C2=A0 =C2=A0=3D (1 <=
+< 2),
+>> =C2=A0};
+>
+> Lose the ',' at the end, for the same reason why deleted line did not=
+ have
+> one.
+
+And why is that? Isn't git c99? That comma would only ensure that the
+next patch that touches this would be two lines instead of one.
+
+Cheers.
+
+--=20
+=46elipe Contreras
