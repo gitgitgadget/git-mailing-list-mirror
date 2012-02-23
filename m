@@ -1,191 +1,160 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCHv3 2/3] gitweb: Option for filling only specified info in fill_project_list_info
-Date: Thu, 23 Feb 2012 16:54:47 +0100
-Message-ID: <1330012488-7970-3-git-send-email-jnareb@gmail.com>
+Subject: [PATCHv3 3/3] gitweb: Faster project search
+Date: Thu, 23 Feb 2012 16:54:48 +0100
+Message-ID: <1330012488-7970-4-git-send-email-jnareb@gmail.com>
 References: <1330012488-7970-1-git-send-email-jnareb@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 23 16:55:58 2012
+X-From: git-owner@vger.kernel.org Thu Feb 23 16:56:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0b1O-0001R1-Pn
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 16:55:55 +0100
+	id 1S0b1z-0001tK-NC
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 16:56:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752810Ab2BWPzu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Feb 2012 10:55:50 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:49856 "EHLO
+	id S1752877Ab2BWP41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Feb 2012 10:56:27 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:63750 "EHLO
 	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752339Ab2BWPzu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Feb 2012 10:55:50 -0500
-Received: by bkcjm19 with SMTP id jm19so1178058bkc.19
-        for <git@vger.kernel.org>; Thu, 23 Feb 2012 07:55:48 -0800 (PST)
-Received-SPF: pass (google.com: domain of jnareb@gmail.com designates 10.205.127.130 as permitted sender) client-ip=10.205.127.130;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of jnareb@gmail.com designates 10.205.127.130 as permitted sender) smtp.mail=jnareb@gmail.com; dkim=pass header.i=jnareb@gmail.com
-Received: from mr.google.com ([10.205.127.130])
-        by 10.205.127.130 with SMTP id ha2mr261019bkc.28.1330012548716 (num_hops = 1);
-        Thu, 23 Feb 2012 07:55:48 -0800 (PST)
+	with ESMTP id S1752339Ab2BWP40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Feb 2012 10:56:26 -0500
+Received: by bkcjm19 with SMTP id jm19so1178897bkc.19
+        for <git@vger.kernel.org>; Thu, 23 Feb 2012 07:56:25 -0800 (PST)
+Received-SPF: pass (google.com: domain of jnareb@gmail.com designates 10.204.151.77 as permitted sender) client-ip=10.204.151.77;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of jnareb@gmail.com designates 10.204.151.77 as permitted sender) smtp.mail=jnareb@gmail.com; dkim=pass header.i=jnareb@gmail.com
+Received: from mr.google.com ([10.204.151.77])
+        by 10.204.151.77 with SMTP id b13mr1023538bkw.57.1330012585342 (num_hops = 1);
+        Thu, 23 Feb 2012 07:56:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=sWjPbMuKPPEAgPxH1OlO/Asmfl3sqfDl3qk6dUHytsQ=;
-        b=XDkA2ij82e5ugfT21GjYpO8SsKDkhoqpiLWbfYuPt36tYHDmRX/1TqF31x542sUVqB
-         l/gTs4U8gtQoWBfS14vYPfVOCOD7ZfooQS78wcn7g1pGl3VjWe4dd8UlDo6omnf5X5hq
-         JMh34Dy/cOnD9u736MEReSZmVrwfFrmwT77Uo=
-Received: by 10.205.127.130 with SMTP id ha2mr214249bkc.28.1330012548630;
-        Thu, 23 Feb 2012 07:55:48 -0800 (PST)
+        bh=n/4jN414pY/ygz8kks+P/LNe7pt7a4kut9KcKbx2Z7U=;
+        b=c9We7l3JyaCNBHaeb0W4WFU7CQSyxGxoQitMG6NQNqp5WFFZIl0RdaOEqcU8aOEgwY
+         e4uNgCRz4wI/OzFVcsD6N+f1UAm9UsXzJIJQG8kKh7g+2YcZsdzXNN6vjXbJtwtbbwUP
+         HqNZB9VHRWhNdLzzCdeE3twXvO7xJmf14+13U=
+Received: by 10.204.151.77 with SMTP id b13mr849120bkw.57.1330012585219;
+        Thu, 23 Feb 2012 07:56:25 -0800 (PST)
 Received: from localhost.localdomain (abvx74.neoplus.adsl.tpnet.pl. [83.8.221.74])
-        by mx.google.com with ESMTPS id i2sm3550051bkd.10.2012.02.23.07.55.46
+        by mx.google.com with ESMTPS id i2sm3550051bkd.10.2012.02.23.07.56.23
         (version=SSLv3 cipher=OTHER);
-        Thu, 23 Feb 2012 07:55:47 -0800 (PST)
+        Thu, 23 Feb 2012 07:56:24 -0800 (PST)
 X-Mailer: git-send-email 1.7.9
 In-Reply-To: <1330012488-7970-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191376>
 
-Enhance fill_project_list_info() subroutine to accept optional
-parameters that specify which fields in project information needs to
-be filled.  If none are specified then fill_project_list_info()
-behaves as it used to, and ensure that all project info is filled.
+Before searching by some field the information we search for must be
+filled in, but we do not have to fill other fields that are not
+involved in the search.
 
-This is in preparation of future lazy filling of project info in
-project search and pagination of sorted list of projects.
+To be able to request filling only specified fields,
+fill_project_list_info() was enhanced in previous commit to take
+additional parameters which specify part of projects info to fill.
+This way we can limit doing expensive calculations (like running
+git-for-each-ref to get 'age' / "Last changed" info) to doing those
+only for projects which we will show as search results.
+
+This commit actually uses this interface, changing gitweb code from
+the following behavior
+
+  fill all project info on all projects
+  search projects
+
+to behaving like this pseudocode
+
+  fill search fields on all projects
+  search projects
+  fill all project info on search results
+
+
+With this commit the number of git commands used to generate search
+results is 2*<matched projects> + 1, and depends on number of matched
+projects rather than number of all projects (all repositories).
+
+Note: this is 'git for-each-ref' to find last activity, and 'git config'
+for each project, and 'git --version' once.
+
+
+Example performance improvements, for search that selects 2
+repositories out of 12 in total:
+
+* Before (warm cache):
+  "This page took 0.867151 seconds  and 27 git commands to generate."
+
+* After (warm cache):
+  "This page took 0.673643 seconds  and 5 git commands to generate."
+
+Now imagine that they are 5 repositories out of 5000, and cold or
+trashed cache case.
 
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-This could have been squashed with the next commit, but this way it is
-pure refactoring that shouldn't change gitweb behavior, and hopefully
-makes this patch easier to review.
+Changes from v2 (v2 is the same as v1):
+* Rewritten and extended commit message (though extending perhaps have
+  gone too far...).
 
-Changes from v2:
-* Instead of overloading project_info_needs_filling() to do both
-  handling of which fields need to be filled, and which fields
-  we want to have filled, just make its caller filter its arguments.
-
-  This means that in this version of patch there are no changes to
-  project_info_needs_filling() subroutine.
-
-# Instead of handling both cases (the one with set of wanted keys,
-  and the one where we want to fill all remaining info) in a single
-  filtering subroutine, use two different anonymous subroutines
-  to filter or not filter keys.
-
-* Expanded comment about fill_project_list_info to include detailed
-  description of when it does remove projects from returned list (and
-  why it is), and examples for both types of usage of this subroutine.
-
-* Rewritten major part of commit message, which in v2 was not updated
-  to reflect new development, and referred to behavior in v1.
-
-[Should I include changes from v1 here, in the future?]
+  Added paragraphs are "This commit actually uses this interface..."
+  and "Example performance improvements..."
 
 
-On Mon, 20 Feb 2012, Junio C Hamano wrote
-in http://thread.gmane.org/gmane.comp.version-control.git/190852/focus=191046
-JH>
-JH> I must say that the approach to put the set filtering logic inside
-JH> project_info_needs_filling function smells like a bad API design.
-JH>
-JH> In other words, wouldn't a callchain that uses a more natural set of API
-JH> functions be like this?
-JH> 
-JH>       # the top-level caller that is interested only in these two fields
-JH>       fill_project_list_info($projlist, 'age', 'owner');
-JH> 
-JH>       # in fill_project_list_info()
-JH>       my $projlist = shift;
-JH>       my %wanted = map { $_ => 1 } @_;
-JH> 
-JH>       foreach my $pr (@$projlist) {
-JH>               if (project_info_needs_filling($pr,
-JH>                       filter_set(\%wanted, 'age', 'age_string'))) {
+Junio C Hamano wrote in
+http://thread.gmane.org/gmane.comp.version-control.git/190852/focus=191053
+[...]
+JC> "must be filled in." is correct, but that happens without the previous
+JC> patch.  The first sentence must also say:
+JC> 
+JC>         In order to search by some field, the information we look for must
+JC>         be filled in, but we do not have to fill other fields that are not
+JC>         involved in the search.
+JC> 
+JC> to justify the previous "fill_project_list_info can be asked to return
+JC> without getting unused fields" patch.  
 
-I think this might be an even better solution, instead of handling all
-keys / selected keys in filter_set(), provide different $filter_set
-subroutines:
+Done.  Thanks for a suggestion.
 
-        foreach my $pr (@$projlist) {
-                  if (project_info_needs_filling($pr,
-                          $filter_set->('age', 'age_string'))) {
+JC> The rest of the log message then makes good sense.
 
+Ooops...
 
- gitweb/gitweb.perl |   33 +++++++++++++++++++++++++--------
- 1 files changed, 25 insertions(+), 8 deletions(-)
+ gitweb/gitweb.perl |    9 +++++++--
+ 1 files changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index cdd84c7..7fb7a55 100755
+index 7fb7a55..4ceb1a6 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -5209,39 +5209,56 @@ sub project_info_needs_filling {
- 	return;
- }
+@@ -2987,6 +2987,10 @@ sub search_projects_list {
+ 	return @$projlist
+ 		unless ($tagfilter || $searchtext);
  
--# fills project list info (age, description, owner, category, forks)
-+# fills project list info (age, description, owner, category, forks, etc.)
- # for each project in the list, removing invalid projects from
--# returned list
-+# returned list, or fill only specified info.
-+#
-+# Invalid projects are removed from the returned list if and only if you
-+# ask 'age' or 'age_string' to be filled, because they are the only fields
-+# that run unconditionally git command that requires repository, and
-+# therefore do always check if project repository is invalid.
-+#
-+# USAGE:
-+# * fill_project_list_info(\@project_list, 'descr_long', 'ctags')
-+#   ensures that 'descr_long' and 'ctags' fields are filled
-+# * @project_list = fill_project_list_info(\@project_list)
-+#   ensures that all fields are filled (and invalid projects removed)
-+#
- # NOTE: modifies $projlist, but does not remove entries from it
- sub fill_project_list_info {
--	my $projlist = shift;
-+	my ($projlist, @wanted_keys) = @_;
++	# searching projects require filling to be run before it;
++	fill_project_list_info($projlist,
++	                       $tagfilter  ? 'ctags' : (),
++	                       $searchtext ? ('path', 'descr') : ());
  	my @projects;
-+	my $filter_set = sub { return @_; };
-+	if (@wanted_keys) {
-+		my %wanted_keys = map { $_ => 1 } @wanted_keys;
-+		$filter_set = sub { return grep { $wanted_keys{$_} } @_; };
-+	}
- 
- 	my $show_ctags = gitweb_check_feature('ctags');
   PROJECT:
  	foreach my $pr (@$projlist) {
--		if (project_info_needs_filling($pr, 'age', 'age_string')) {
-+		if (project_info_needs_filling($pr, $filter_set->('age', 'age_string'))) {
- 			my (@activity) = git_get_last_activity($pr->{'path'});
- 			unless (@activity) {
- 				next PROJECT;
- 			}
- 			($pr->{'age'}, $pr->{'age_string'}) = @activity;
- 		}
--		if (project_info_needs_filling($pr, 'descr', 'descr_long')) {
-+		if (project_info_needs_filling($pr, $filter_set->('descr', 'descr_long'))) {
- 			my $descr = git_get_project_description($pr->{'path'}) || "";
- 			$descr = to_utf8($descr);
- 			$pr->{'descr_long'} = $descr;
- 			$pr->{'descr'} = chop_str($descr, $projects_list_description_width, 5);
- 		}
--		if (project_info_needs_filling($pr, 'owner')) {
-+		if (project_info_needs_filling($pr, $filter_set->('owner'))) {
- 			$pr->{'owner'} = git_get_project_owner("$pr->{'path'}") || "";
- 		}
- 		if ($show_ctags &&
--		    project_info_needs_filling($pr, 'ctags')) {
-+		    project_info_needs_filling($pr, $filter_set->('ctags'))) {
- 			$pr->{'ctags'} = git_get_project_ctags($pr->{'path'});
- 		}
- 		if ($projects_list_group_categories &&
--		    project_info_needs_filling($pr, 'category')) {
-+		    project_info_needs_filling($pr, $filter_set->('category'))) {
- 			my $cat = git_get_project_category($pr->{'path'}) ||
- 			                                   $project_list_default_category;
- 			$pr->{'category'} = to_utf8($cat);
+@@ -5394,12 +5398,13 @@ sub git_project_list_body {
+ 	# filtering out forks before filling info allows to do less work
+ 	@projects = filter_forks_from_projects_list(\@projects)
+ 		if ($check_forks);
+-	@projects = fill_project_list_info(\@projects);
+-	# searching projects require filling to be run before it
++	# search_projects_list pre-fills required info
+ 	@projects = search_projects_list(\@projects,
+ 	                                 'searchtext' => $searchtext,
+ 	                                 'tagfilter'  => $tagfilter)
+ 		if ($tagfilter || $searchtext);
++	# fill the rest
++	@projects = fill_project_list_info(\@projects);
+ 
+ 	$order ||= $default_projects_order;
+ 	$from = 0 unless defined $from;
 -- 
 1.7.9
