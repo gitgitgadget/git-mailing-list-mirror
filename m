@@ -1,182 +1,147 @@
-From: Steven Walter <stevenrwalter@gmail.com>
-Subject: Re: [PATCH] git-svn.perl: fix a false-positive in the "already
- exists" test
-Date: Thu, 23 Feb 2012 18:17:33 -0500
-Message-ID: <CAK8d-aJufwFobREQ6R3Oxr=J7hbVtoZ7wvhurb=LQGUFO9tTsw@mail.gmail.com>
-References: <20120219105442.GA11889@dcvr.yhbt.net> <1329747474-17976-1-git-send-email-stevenrwalter@gmail.com>
- <7vk43feho8.fsf@alter.siamese.dyndns.org> <CAK8d-aLXs0yMzYMXm7fKytOGDXesUEx7a8PN_Mg9gw6+Q6OTBA@mail.gmail.com>
- <7vmx8bcv4u.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/4] t5704: match tests to modern style
+Date: Thu, 23 Feb 2012 15:36:34 -0800
+Message-ID: <7vzkc915rx.fsf@alter.siamese.dyndns.org>
+References: <cover.1329988335.git.trast@student.ethz.ch>
+ <c6579adc648119fbd1c54e2a1a9a0de86e0e8b57.1329988335.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: normalperson@yhbt.net, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 24 00:18:03 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
+	Jannis Pohlmann <jannis.pohlmann@codethink.co.uk>,
+	<git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Feb 24 00:36:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0hvE-0003g4-RK
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 00:18:02 +0100
+	id 1S0iDM-0008T0-4Z
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 00:36:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757287Ab2BWXRy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Feb 2012 18:17:54 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:53040 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756141Ab2BWXRx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Feb 2012 18:17:53 -0500
-Received: by yhoo21 with SMTP id o21so903884yho.19
-        for <git@vger.kernel.org>; Thu, 23 Feb 2012 15:17:53 -0800 (PST)
-Received-SPF: pass (google.com: domain of stevenrwalter@gmail.com designates 10.236.157.9 as permitted sender) client-ip=10.236.157.9;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of stevenrwalter@gmail.com designates 10.236.157.9 as permitted sender) smtp.mail=stevenrwalter@gmail.com; dkim=pass header.i=stevenrwalter@gmail.com
-Received: from mr.google.com ([10.236.157.9])
-        by 10.236.157.9 with SMTP id n9mr6741705yhk.96.1330039073303 (num_hops = 1);
-        Thu, 23 Feb 2012 15:17:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Pj6lWvNzHAfLrhera1tkhazHcMxFq4hm0Cu2KjWf9ec=;
-        b=JeuhNpSw2Ko3zNv8BTC78LASLUgfgLOGrnzJ8Jr28JdeuI49mcacdwb/yBbAPDLWD6
-         eAuXXFXXHVg9tl5iwExjjNhhcV1lLjUji8zyDPskQf49Jc9Fo/9JdUkNnAs97JlBFKhg
-         Cc/cmSe2ZEshtqOsjOBfoSuPk6i51wFYScSf4=
-Received: by 10.236.157.9 with SMTP id n9mr5441117yhk.96.1330039073242; Thu,
- 23 Feb 2012 15:17:53 -0800 (PST)
-Received: by 10.100.96.10 with HTTP; Thu, 23 Feb 2012 15:17:33 -0800 (PST)
-In-Reply-To: <7vmx8bcv4u.fsf@alter.siamese.dyndns.org>
+	id S1756847Ab2BWXgj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Feb 2012 18:36:39 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54268 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753521Ab2BWXgi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Feb 2012 18:36:38 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E53C6CAC;
+	Thu, 23 Feb 2012 18:36:37 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=brR35ssjOj4rAvE2II9FWEFMoD0=; b=wHW6+t
+	C84Oz2JmqqhZhPdUq9ZXuO9p/M5G5Wjt8JVxR2ejsuL5nNfVWzGN7nOvWKjTvKx5
+	ej69Fn1AlHVCDBFuUxyQkbWFFtD4ecLhXJBMibeRWxiFm3VHdKWeNmh823MsYxv5
+	yV4wa+i23dipQwP32HOac9Mf1LrQqPCR2s5Uk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hHnPjQG1VyzjG9LABX4wmxpVC+RspBw9
+	3QfOPwSuN7nTRWPB/0/ktOJ9T8xFL+VJ6Ar0qsZwOTRtrzayGs92k/ikr5T2stXA
+	RWRkRkiiSek2wvr9ZDrJFiIoxwcoSLoTnwCFX7/Sq4uP0wskjzGYOl8Rn7x0tXV8
+	1ArlH0sZEXc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 259366CAB;
+	Thu, 23 Feb 2012 18:36:37 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 74B336CA9; Thu, 23 Feb 2012
+ 18:36:36 -0500 (EST)
+In-Reply-To: <c6579adc648119fbd1c54e2a1a9a0de86e0e8b57.1329988335.git.trast@student.ethz.ch> (Thomas Rast's message of "Thu, 23 Feb 2012 10:42:23 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3A02033A-5E77-11E1-8E3B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191404>
 
-Signed-Off-By: Steven Walter <stevenrwalter@gmail.com>
+Thomas Rast <trast@student.ethz.ch> writes:
 
-On Wed, Feb 22, 2012 at 12:08 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Steven Walter <stevenrwalter@gmail.com> writes:
->
->>>> + =A0 =A0 test -e "$SVN_TREE"/bar/zzz/yyy ' || true
->>>
->>> Care to explain what this " || true" is doing here, please?
->>
->> Ahh, good catch. =A0I think the answer is that it shouldn't be there=
-=2E
->> It was originally there because of the "test_must_fail" line, I thin=
-k
->> (at least the other tests that use test_must_fail also have "||
->> true").
->
-> Ok, that may explain the copy&paste error.
->
-> But I do not think test_must_fail followed by || true makes much sens=
-e,
-> either. =A0The purpose of "test_must_fail" is to make sure the tested=
- git
-> command exits with non-zero status in a controlled way (i.e. not cras=
-h)
-> so if the tested command that is expected to exit with non-zero statu=
-s
-> exited with zero status, the test has detected an *error*. =A0E.g. if=
- you
-> know that the index and the working tree are different at one point i=
-n the
-> test sequence, you would say:
->
-> =A0 =A0 =A0 =A0... other setup steps ... &&
-> =A0 =A0 =A0 =A0test_must_fail git diff --exit-code &&
-> =A0 =A0 =A0 =A0... and other tests ...
->
-> so that failure by "git diff --exit-code" to exit with non-zero statu=
-s
-> (i.e. it did not find any difference when it should have) breaks the =
-&&
-> cascade.
->
-> I just took a quick look at t9100 but I think all " || true" can be s=
-afely
-> removed. =A0None of them is associated with test_must_fail in any way=
-=2E =A0For
-> whatever reason, these test seem to do
->
-> =A0 =A0 =A0 =A0test_expect_success 'label of the test' '
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0body of the test
-> =A0 =A0 =A0 =A0' || true
->
-> for no good reason.
->
->> Do you want to just fix that up, or a new version of the original pa=
-tch,
->> or a fix on top of the original patches?
->
-> Eric queued the patch and then had me pull it as part of his history
-> already, so it is doubly too late to replace it.
->
-> Can you apply this patch and re-test?
->
->
-> =A0t/t9100-git-svn-basic.sh | =A0 14 +++++++++-----
-> =A01 file changed, 9 insertions(+), 5 deletions(-)
->
-> diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
-> index 4029f84..749b75e 100755
-> --- a/t/t9100-git-svn-basic.sh
-> +++ b/t/t9100-git-svn-basic.sh
-> @@ -65,7 +65,8 @@ test_expect_success "$name" "
-> =A0 =A0 =A0 =A0git update-index --add dir/file/file &&
-> =A0 =A0 =A0 =A0git commit -m '$name' &&
-> =A0 =A0 =A0 =A0test_must_fail git svn set-tree --find-copies-harder -=
--rmdir \
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 ${remotes_git_svn}..mybranch" || true
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 ${remotes_git_svn}..mybranch
-> +"
->
->
-> =A0name=3D'detect node change from directory to file #1'
-> @@ -79,7 +80,8 @@ test_expect_success "$name" '
-> =A0 =A0 =A0 =A0git update-index --add -- bar &&
-> =A0 =A0 =A0 =A0git commit -m "$name" &&
-> =A0 =A0 =A0 =A0test_must_fail git svn set-tree --find-copies-harder -=
--rmdir \
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 ${remotes_git_svn}..mybranch2' || true
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 ${remotes_git_svn}..mybranch2
-> +'
->
->
-> =A0name=3D'detect node change from file to directory #2'
-> @@ -96,7 +98,8 @@ test_expect_success "$name" '
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0${remotes_git_svn}..mybranch3 &&
-> =A0 =A0 =A0 =A0svn_cmd up "$SVN_TREE" &&
-> =A0 =A0 =A0 =A0test -d "$SVN_TREE"/bar/zzz &&
-> - =A0 =A0 =A0 test -e "$SVN_TREE"/bar/zzz/yyy ' || true
-> + =A0 =A0 =A0 test -e "$SVN_TREE"/bar/zzz/yyy
-> +'
->
-> =A0name=3D'detect node change from directory to file #2'
-> =A0test_expect_success "$name" '
-> @@ -109,7 +112,8 @@ test_expect_success "$name" '
-> =A0 =A0 =A0 =A0git update-index --add -- dir &&
-> =A0 =A0 =A0 =A0git commit -m "$name" &&
-> =A0 =A0 =A0 =A0test_must_fail git svn set-tree --find-copies-harder -=
--rmdir \
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 ${remotes_git_svn}..mybranch4' || true
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 ${remotes_git_svn}..mybranch4
-> +'
->
->
-> =A0name=3D'remove executable bit from a file'
-> @@ -162,7 +166,7 @@ test_expect_success "$name" '
->
-> =A0name=3D'modify a symlink to become a file'
-> =A0test_expect_success "$name" '
-> - =A0 =A0 =A0 echo git help > help || true &&
-> + =A0 =A0 =A0 echo git help >help &&
-> =A0 =A0 =A0 =A0rm exec-2.sh &&
-> =A0 =A0 =A0 =A0cp help exec-2.sh &&
-> =A0 =A0 =A0 =A0git update-index exec-2.sh &&
+> Fix all of them.  There's a catch to the last point: test_commit
+> creates a tag.  We still change it to test_commit, and explicitly
+> delete the tags, so as to highlight that the test relies on not having
+> them.
 
+I do not have an objection to the use of these three test_commits, and I
+do not have an objection to delete the extra three tags they create so
+that the set of refs in the repository matches what the later test
+expects, either.
 
+But I found the explanation a bit iffy.
 
---=20
--Steven Walter <stevenrwalter@gmail.com>
+>  test_expect_success 'setup' '
+> +	test_commit initial &&
+>  	test_tick &&
+>  	git tag -m tag tag &&
+> +	test_commit second &&
+> +	test_commit third &&
+> +	git tag -d initial &&
+> +	git tag -d second &&
+> +	git tag -d third
+>  '
+>  
+>  test_expect_success 'tags can be excluded by rev-list options' '
+>  	git bundle create bundle --all --since=7.Apr.2005.15:16:00.-0700 &&
+>  	git ls-remote bundle > output &&
+>  	! grep tag output
+>  '
+
+If you do not delete 'third' tag, which matches the tip of the current
+branch, the resulting bundle created with "create --all" would end up
+containing that tag, and you will see it in the ls-remote output.
+
+But the funny thing is that you can leave initial and second in the
+repository and the resulting bundle still passes the test.  'initial',
+'second' and 'tag' are excluded.  Exclusion of 'tag' tag (sheesh, it makes
+this conversation more confusing than necessary) is what this test checks,
+and the date range given to the rev-list ensures that initial and second
+are not included.
+
+But the tip of the current branch and the lightweight 'third' tag both
+point at the same commit object, and that, together with the fact that we
+ask for '--all', is the reason why it is included in the result, making
+the test fail.
+
+So perhaps a better fix may be to do something like the attached on top,
+and rewrite everything after "Fix all of them".
+
+	... Fix all of them.
+
+        Also rename the manually created tag 'tag' that points at a commit
+        that is older than the --since threshold a later test uses, to a
+        more descriptive 'ancienttag', and update the check that reads
+        from the resulting bundle with ls-remote to look for 'ancienttag'.
+        The purpose of this test is to make sure that the tag that
+        predates the date range is not in the resulting bundle, but
+        because these test_commit also will create tags, one of which
+        (namely, 'third') points at a commit that is newer than that
+        threshold, ls-remote will list it in its output. Looking for 'tag'
+        will match refs/tags/third, making the test incorrectly fail.
+
+diff --git a/t/t5704-bundle.sh b/t/t5704-bundle.sh
+index a51c8b0..3c436e7 100755
+--- a/t/t5704-bundle.sh
++++ b/t/t5704-bundle.sh
+@@ -6,18 +6,15 @@ test_description='some bundle related tests'
+ test_expect_success 'setup' '
+ 	test_commit initial &&
+ 	test_tick &&
+-	git tag -m tag tag &&
++	git tag -m tag antienttag &&
+ 	test_commit second &&
+-	test_commit third &&
+-	git tag -d initial &&
+-	git tag -d second &&
+-	git tag -d third
++	test_commit third
+ '
+ 
+ test_expect_success 'tags can be excluded by rev-list options' '
+ 	git bundle create bundle --all --since=7.Apr.2005.15:16:00.-0700 &&
+ 	git ls-remote bundle > output &&
+-	! grep tag output
++	! grep antienttag output
+ '
+ 
+ test_expect_success 'die if bundle file cannot be created' '
