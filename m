@@ -1,150 +1,98 @@
-From: Luc Pionchon <pionchon.luc@gmail.com>
-Subject: [PATCH] pretty: add '*' modifier to add LF after non-empty
-Date: Thu, 23 Feb 2012 15:10:37 +0200
-Message-ID: <1330002637-9347-1-git-send-email-pionchon.luc@gmail.com>
-Cc: gitster@pobox.com, Luc Pionchon <pionchon.luc@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 23 14:11:40 2012
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git log -z doesn't separate commits with NULs
+Date: Thu, 23 Feb 2012 05:15:21 -0800 (PST)
+Message-ID: <m34nuhelnf.fsf@localhost.localdomain>
+References: <4F46036F.3040406@gmail.com>
+	<20120223102426.GB2912@sigill.intra.peff.net>
+	<4F462E61.4020203@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Nikolaj Shurkaev <snnicky@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 23 14:15:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0YSJ-0000wE-KI
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 14:11:33 +0100
+	id 1S0YWA-0003uE-7y
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 14:15:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752282Ab2BWNLP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Feb 2012 08:11:15 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:35899 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751684Ab2BWNLP (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Feb 2012 08:11:15 -0500
-Received: by lagu2 with SMTP id u2so1440840lag.19
-        for <git@vger.kernel.org>; Thu, 23 Feb 2012 05:11:13 -0800 (PST)
-Received-SPF: pass (google.com: domain of pionchon.luc@gmail.com designates 10.152.45.134 as permitted sender) client-ip=10.152.45.134;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pionchon.luc@gmail.com designates 10.152.45.134 as permitted sender) smtp.mail=pionchon.luc@gmail.com; dkim=pass header.i=pionchon.luc@gmail.com
-Received: from mr.google.com ([10.152.45.134])
-        by 10.152.45.134 with SMTP id n6mr1082796lam.45.1330002673590 (num_hops = 1);
-        Thu, 23 Feb 2012 05:11:13 -0800 (PST)
+	id S1752277Ab2BWNPY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Feb 2012 08:15:24 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:56537 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751962Ab2BWNPY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Feb 2012 08:15:24 -0500
+Received: by eekc4 with SMTP id c4so396804eek.19
+        for <git@vger.kernel.org>; Thu, 23 Feb 2012 05:15:23 -0800 (PST)
+Received-SPF: pass (google.com: domain of jnareb@gmail.com designates 10.14.199.193 as permitted sender) client-ip=10.14.199.193;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of jnareb@gmail.com designates 10.14.199.193 as permitted sender) smtp.mail=jnareb@gmail.com; dkim=pass header.i=jnareb@gmail.com
+Received: from mr.google.com ([10.14.199.193])
+        by 10.14.199.193 with SMTP id x41mr898103een.29.1330002923076 (num_hops = 1);
+        Thu, 23 Feb 2012 05:15:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=sUc9BN6jR5ZqcKJ2EvUqdfh/T850B3CavL43AHKQe5w=;
-        b=hJ7VF+lSiKd0Rb9wN2iiAdqM0eYybbjYl9kd0AVHx7HrVg8x93viW/1g2VwGJu1dGk
-         uZjXbQ+g4elA1oMeKiSyU/1jWnc8ZBj1iS/HxSCKHKgaKgu/JUu0V0VUxAXU6DrMf+BO
-         xL7rnZBIyAaMP56uc3i6k1m8Qy1xVIwTAVg4c=
-Received: by 10.152.45.134 with SMTP id n6mr915239lam.45.1330002673526;
-        Thu, 23 Feb 2012 05:11:13 -0800 (PST)
-Received: from localhost.localdomain (a88-114-28-50.elisa-laajakaista.fi. [88.114.28.50])
-        by mx.google.com with ESMTPS id uc6sm1689711lbb.3.2012.02.23.05.11.11
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=qq2pMQ4hccqkd7wSm8rJL0sK8xVvpZBSDysAWurs6h8=;
+        b=TRLSR02ysrRKHM2N90CAWsifUJi4ri2+GZB5ds2SlQfQF0cF2n7/puE0T0Rq5D2c7u
+         BEaukwKIn/aad9QtD+bdenp6cG6aHL5c4ReSX+9mqJCqSbc/Sgm4INysC3QoESBErGDp
+         oDyV1WWG6L9nIzipNFRKMnw+JCITmUTHr/oPk=
+Received: by 10.14.199.193 with SMTP id x41mr703782een.29.1330002922876;
+        Thu, 23 Feb 2012 05:15:22 -0800 (PST)
+Received: from localhost.localdomain (abvx74.neoplus.adsl.tpnet.pl. [83.8.221.74])
+        by mx.google.com with ESMTPS id n56sm5287257eeh.6.2012.02.23.05.15.20
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 23 Feb 2012 05:11:12 -0800 (PST)
-X-Mailer: git-send-email 1.7.4.1
+        Thu, 23 Feb 2012 05:15:21 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q1NDFHQd003007;
+	Thu, 23 Feb 2012 14:15:18 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id q1NDFGpX003004;
+	Thu, 23 Feb 2012 14:15:16 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <4F462E61.4020203@gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191362>
 
-Add the '*' modifier, similar to the '+' modifier,
-to add a line-feed after a non-empty placeholder.
+Nikolaj Shurkaev <snnicky@gmail.com> writes:
 
-Allow to print a head-line which content can be empty.
-For example for decorations:
+> Thank you very much for your tips. They really helped me. I was trying
+> to create patches that would affect only some given files or
+> folders. By this moment I have the following:
+> 
+> GeneratePatches.sh
+> ---------------------
+> #!/bin/bash
+> #parameter 1 - <since>..<to>
+> #parameter 2 - path to file
+> git log -z --reverse --format=email --patch "$1" -- "$2" | xargs
+> --null --max-args=1 ./CreatePatchFile.sh
+> ---------------------
+> 
+> and CreatePatchFile.sh
+> ---------------------
+> #!/bin/bash
+> 
+> myPatchNumber=$(ls ./*-patch.patch 2>/dev/null | wc -l)
+> let "myPatchNumber += 1"
+> 
+> patchFile="./"$(printf "%04d" $myPatchNumber)"-patch.patch"
+> echo "$@" > "$patchFile"
+> ---------------------
+> 
+> I call
+> ./GeneratePatches.sh HEAD~3..HEAD SomePath
+> and that produces something very similar to what I want.
+> 
+> Perhaps there is a better way to do that.
 
-    $ git log --graph --pretty=format:"%C(green)%*d %C(reset)%s"
-                                                ^^^
+So what git-format-patch is lacking?
 
-    *  (HEAD, origin/master, origin/HEAD, master)
-    |  Update draft release notes to 1.7.10
-    *    Merge branch 'jc/maint-request-pull-for-tag'
-    |\  
-    | *  (origin/jc/maint-request-pull-for-tag)
-    | |  request-pull: explicitly ask tags/$name to be pulled
-    * |    Merge branch 'bl/gitweb-project-filter'
-    |\ \  
-    | * |  (origin/bl/gitweb-project-filter)
-    | | |  gitweb: Make project search respect project_filter
-
-
-Signed-off-by: Luc Pionchon <pionchon.luc@gmail.com>
----
- Documentation/pretty-formats.txt |    4 ++++
- pretty.c                         |    6 ++++++
- t/t6006-rev-list-format.sh       |   10 ++++++++++
- 3 files changed, 20 insertions(+), 0 deletions(-)
-
-Hi,
-
-I now started to use git.  When formatting my 'log' output, I have been looking for a modifier to add a line feed after a (potentially empty) placeholder.  Git allows to add a line feed before, but not after a placeholder.  This is a small patch that adds the feature.  I hope it is useful to others.
-
-
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 880b6f2..9114d49 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -159,6 +159,10 @@ If you add a `{plus}` (plus sign) after '%' of a placeholder, a line-feed
- is inserted immediately before the expansion if and only if the
- placeholder expands to a non-empty string.
- 
-+If you add a `*` (asterisk sign) after '%' of a placeholder, a line-feed
-+is inserted immediately after the expansion if and only if the
-+placeholder expands to a non-empty string.
-+
- If you add a `-` (minus sign) after '%' of a placeholder, line-feeds that
- immediately precede the expansion are deleted if and only if the
- placeholder expands to an empty string.
-diff --git a/pretty.c b/pretty.c
-index 8688b8f..5ebaf88 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1132,6 +1132,7 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
- 		NO_MAGIC,
- 		ADD_LF_BEFORE_NON_EMPTY,
- 		DEL_LF_BEFORE_EMPTY,
-+		ADD_LF_AFTER_NON_EMPTY,
- 		ADD_SP_BEFORE_NON_EMPTY
- 	} magic = NO_MAGIC;
- 
-@@ -1142,6 +1143,9 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
- 	case '+':
- 		magic = ADD_LF_BEFORE_NON_EMPTY;
- 		break;
-+	case '*':
-+		magic = ADD_LF_AFTER_NON_EMPTY;
-+		break;
- 	case ' ':
- 		magic = ADD_SP_BEFORE_NON_EMPTY;
- 		break;
-@@ -1162,6 +1166,8 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
- 	} else if (orig_len != sb->len) {
- 		if (magic == ADD_LF_BEFORE_NON_EMPTY)
- 			strbuf_insert(sb, orig_len, "\n", 1);
-+		else if (magic == ADD_LF_AFTER_NON_EMPTY)
-+			strbuf_addstr(sb, "\n");
- 		else if (magic == ADD_SP_BEFORE_NON_EMPTY)
- 			strbuf_insert(sb, orig_len, " ", 1);
- 	}
-diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
-index 4442790..c692061 100755
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -208,6 +208,16 @@ test_expect_success 'add LF before non-empty (2)' '
- 	grep "^$" actual
- '
- 
-+test_expect_success 'add LF after non-empty (1) (empty)' '
-+	git show -s --pretty=format:"%*d%s%nfoo%n" HEAD^^ >actual &&
-+	test $(wc -l <actual) = 2
-+'
-+
-+test_expect_success 'add LF after non-empty (2) (non empty)' '
-+	git show -s --pretty=format:"%*d%s%nfoo%n" HEAD >actual &&
-+	test $(wc -l <actual) = 3
-+'
-+
- test_expect_success 'add SP before non-empty (1)' '
- 	git show -s --pretty=format:"%s% bThanks" HEAD^^ >actual &&
- 	test $(wc -w <actual) = 2
 -- 
-1.7.4.1
+Jakub Narebski
