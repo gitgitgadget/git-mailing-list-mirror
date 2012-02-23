@@ -1,81 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] merge: use editor by default in interactive sessions
-Date: Thu, 23 Feb 2012 11:23:37 -0800
-Message-ID: <7vd3954ame.fsf@alter.siamese.dyndns.org>
-References: <7vipk26p1b.fsf@alter.siamese.dyndns.org>
- <CABPQNSZVOjOKpqv4s1ZCEQRd_yT3us3mqC9aN-KK5PHqztYQQg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git log -z doesn't separate commits with NULs
+Date: Thu, 23 Feb 2012 14:34:51 -0500
+Message-ID: <20120223193451.GB30132@sigill.intra.peff.net>
+References: <4F46036F.3040406@gmail.com>
+ <20120223102426.GB2912@sigill.intra.peff.net>
+ <4F462E61.4020203@gmail.com>
+ <m34nuhelnf.fsf@localhost.localdomain>
+ <4F4643BB.8090001@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Thu Feb 23 20:23:53 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Nikolaj Shurkaev <snnicky@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 23 20:35:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0eGX-0007ka-BV
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 20:23:46 +0100
+	id 1S0eRO-0007Lk-Fm
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 20:34:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754974Ab2BWTXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Feb 2012 14:23:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50963 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754687Ab2BWTXj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Feb 2012 14:23:39 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DB78702E;
-	Thu, 23 Feb 2012 14:23:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=W1E4O9TqFuIMpsg2heodfE2o6dQ=; b=VfGDih
-	9riaujm1Ep1FhNFkdqjdsyJpwiKM2aIffCXZ3ziKN9V6fXamvu4TPEY7W/XqM4U/
-	BUidDdroSmdvNVx6R9PciLPcBykuGviOzJdaQsIR5fDBCxir3KnSwiHIjzkp8aIp
-	bUvjhO82GTOTQgZDLb0WGQhhaEVcYBXI9Prm8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=B0E3Xq6jZ4O8P3UgqXHoN7TjYmHYQt9B
-	vmJuFdbZRpRUNVMnSrkSB807BaQ1AUu6xXiOr8Ig7ScWv98z1UEqRU7EKHvZPTa3
-	c9beAMO2DYb2l0+uPvamCX739YzOR0yoOLuhV/9yG7+gPlyZD7biPkqCSBCa6vOu
-	F0Duz5Ks77I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 64C65702D;
-	Thu, 23 Feb 2012 14:23:39 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC86B702C; Thu, 23 Feb 2012
- 14:23:38 -0500 (EST)
-In-Reply-To: <CABPQNSZVOjOKpqv4s1ZCEQRd_yT3us3mqC9aN-KK5PHqztYQQg@mail.gmail.com> (Erik
- Faye-Lund's message of "Thu, 23 Feb 2012 13:43:52 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E37DBDE2-5E53-11E1-BE22-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755791Ab2BWTey (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Feb 2012 14:34:54 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48947
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755746Ab2BWTex (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Feb 2012 14:34:53 -0500
+Received: (qmail 13756 invoked by uid 107); 23 Feb 2012 19:34:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 23 Feb 2012 14:34:54 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Feb 2012 14:34:51 -0500
+Content-Disposition: inline
+In-Reply-To: <4F4643BB.8090001@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191388>
 
-Erik Faye-Lund <kusmabite@gmail.com> writes:
+On Thu, Feb 23, 2012 at 04:48:43PM +0300, Nikolaj Shurkaev wrote:
 
->> +       /* Use editor if stdin and stdout are the same and is a tty */
->> +       return (!fstat(0, &st_stdin) &&
->> +               !fstat(1, &st_stdout) &&
->> +               isatty(0) &&
->> +               st_stdin.st_dev == st_stdout.st_dev &&
->> +               st_stdin.st_ino == st_stdout.st_ino &&
->> +               st_stdin.st_mode == st_stdout.st_mode);
->
-> I just stumbled over this code, and I got a bit worried; the
-> stat-implementation we use on Windows sets st_ino to 0, so
-> "st_stdin.st_ino == st_stdout.st_ino" will always evaluate to true.
->
-> Perhaps we should add a check for isatty(1) here as well? ...
-> Or is there something I'm missing here?
+> For example there are commits that affect not only files in folder A
+> but files in folder B, C and so on.  If I do format-patch that will
+> give me nice patches, but there are modifications of folders B, C and
+> so on there.  I do not know a way to generate patches via format-patch
+> that affect only files in folder A.
 
-No, the intention was not "we do this whether standard output is tty or
-not", but was "we check that fd#0 and fd#1 are connected to the same
-device by trusting stat() to do the right thing, so checking isatty(0)
-is sufficient".  As that "trusting stat()" assumption does not hold for
-your platform, we would need to add isatty(1) to accomodate it.
+Doesn't:
 
-Thanks for a set of sharp eyes.
+  git format-patch HEAD~3..HEAD SomePath
+
+do what you want? It is certainly designed to, and it seems to work for
+me.
+
+-Peff
