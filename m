@@ -1,79 +1,103 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH] mingw: work around stat-limitation
-Date: Thu, 23 Feb 2012 21:25:44 +0100
-Message-ID: <1330028744-5280-1-git-send-email-kusmabite@gmail.com>
-Cc: gitster@pobox.com, j6t@kdbg.org, msysgit@googlegroups.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 23 21:26:11 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] merge: use editor by default in interactive sessions
+Date: Thu, 23 Feb 2012 12:26:18 -0800
+Message-ID: <7vlint2t5h.fsf@alter.siamese.dyndns.org>
+References: <7vipk26p1b.fsf@alter.siamese.dyndns.org>
+ <CABPQNSZVOjOKpqv4s1ZCEQRd_yT3us3mqC9aN-KK5PHqztYQQg@mail.gmail.com>
+ <7vd3954ame.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Thu Feb 23 21:26:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0fEv-0001uB-QE
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 21:26:10 +0100
+	id 1S0fFD-00025I-47
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Feb 2012 21:26:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932174Ab2BWUZ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Feb 2012 15:25:59 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:39338 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932170Ab2BWUZ6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Feb 2012 15:25:58 -0500
-Received: by lagu2 with SMTP id u2so1927117lag.19
-        for <git@vger.kernel.org>; Thu, 23 Feb 2012 12:25:56 -0800 (PST)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 10.112.27.165 as permitted sender) client-ip=10.112.27.165;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of kusmabite@gmail.com designates 10.112.27.165 as permitted sender) smtp.mail=kusmabite@gmail.com; dkim=pass header.i=kusmabite@gmail.com
-Received: from mr.google.com ([10.112.27.165])
-        by 10.112.27.165 with SMTP id u5mr1251451lbg.48.1330028756853 (num_hops = 1);
-        Thu, 23 Feb 2012 12:25:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=GVp/wB0YKa/8Sai7Na0JFnfbYMxbzOva9RFd7AX6D/Y=;
-        b=EKh8VQIT0vHuIeOxtQT1e9513e69TqYH08w6pP+S5F4/Z8A53jUCBRrfnJr2c4Bh9n
-         zmaXyAuLk1/7pc7bTc5YyYTmqxSh03Y6kSTO3FTU7Tf1CGAYzkWHTFDqZZxbT0t3pl/Y
-         hrU6x0tq8RWEee8D4kdFia+5vEWBLXLmN1jxc=
-Received: by 10.112.27.165 with SMTP id u5mr1058469lbg.48.1330028756735;
-        Thu, 23 Feb 2012 12:25:56 -0800 (PST)
-Received: from localhost (cm-84.215.107.111.getinternet.no. [84.215.107.111])
-        by mx.google.com with ESMTPS id fl2sm2900414lbb.4.2012.02.23.12.25.54
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 23 Feb 2012 12:25:55 -0800 (PST)
-X-Mailer: git-send-email 1.7.9
+	id S932176Ab2BWU0W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Feb 2012 15:26:22 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58634 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932071Ab2BWU0V (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Feb 2012 15:26:21 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA2356517;
+	Thu, 23 Feb 2012 15:26:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JQfdgzKYboBuDbTH68wEIdfjEvk=; b=Xv4oQY
+	w1tg/JKZo3saW/GYQg2yAcaNojrO0iD5f+XMM0GzORKKs9YCu8hXRnddREJbrfzE
+	gfc8kGgQEeM/cqezqxnpTeeXxyJRMXZymN5rirrtvrl5evhrVM8fFudPuCbKAr8f
+	XHXTyeyD+sFRB/6eDvBVO9vRPxFn/eFC1JUj0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TijlnaDv8lQcOhqqnlH7pYGMTAfVLdx8
+	bPyVbQB9PM52PdDksgsNl/93YPIbrJJSnb/ABCAzjIYQpe5s8VjZ5mZjloPbVCLC
+	rXZ6V4dOWwkpVj1JWoR9cOHu1eshlXYq+pRGTJJkmCCFrkes+p7ESDL5Z6Qi9PBQ
+	kvTHNiN/rUI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C0C2D6516;
+	Thu, 23 Feb 2012 15:26:20 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F6F86515; Thu, 23 Feb 2012
+ 15:26:20 -0500 (EST)
+In-Reply-To: <7vd3954ame.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 23 Feb 2012 11:23:37 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A5653F5E-5E5C-11E1-9528-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191395>
 
-Our stat implementation for Windows always sets st_ino to 0. This
-means that checking if isatty(0) and comparing the reported inodes
-of stdout and stdin is not sufficient to detect that both are
-pointing to the same TTY.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Luckily, there's only one console on Windows, so adding a check for
-isatty(1) should do the trick. For platforms where inodes are
-reported correctly, this should still be correct.
+> Erik Faye-Lund <kusmabite@gmail.com> writes:
+>
+>>> +       /* Use editor if stdin and stdout are the same and is a tty */
+>>> +       return (!fstat(0, &st_stdin) &&
+>>> +               !fstat(1, &st_stdout) &&
+>>> +               isatty(0) &&
+>>> +               st_stdin.st_dev == st_stdout.st_dev &&
+>>> +               st_stdin.st_ino == st_stdout.st_ino &&
+>>> +               st_stdin.st_mode == st_stdout.st_mode);
+>>
+>> I just stumbled over this code, and I got a bit worried; the
+>> stat-implementation we use on Windows sets st_ino to 0, so
+>> "st_stdin.st_ino == st_stdout.st_ino" will always evaluate to true.
+>>
+>> Perhaps we should add a check for isatty(1) here as well? ...
+>> Or is there something I'm missing here?
+>
+> No, the intention was ...
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
----
+s/No,/No, you are not missing anything./;
 
-Here's a proper patch for this glitch.
+I'll queue it with this explanation:
 
- builtin/merge.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+    merge: do not trust fstat(2) too much when checking interactiveness
+    
+    The heuristic used by "git merge" to decide if it automatically gives an
+    editor upon clean automerge is to see if the standard input and the
+    standard output is the same device and is a tty, we are in an interactive
+    session.  "The same device" test was done by comparing fstat(2) result on
+    the two file descriptors (and they must match), and we asked isatty() only
+    for the standard input (we insist that they are the same device and there
+    is no point asking tty-ness of the standard output).
+    
+    The stat(2) emulation on Windows port however does not give a usable value
+    in st_ino field, so even if the standard output is connected to something
+    different from the standard input, "The same device" test may incorrectly
+    return true. To accomodate it, add another isatty() check for the standard
+    output stream as well.
+    
+    Reported-by: Erik Faye-Lund <kusmabite@gmail.com>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index ed0f959..bef01e3 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1130,6 +1130,7 @@ static int default_edit_option(void)
- 	return (!fstat(0, &st_stdin) &&
- 		!fstat(1, &st_stdout) &&
- 		isatty(0) &&
-+		isatty(1) &&
- 		st_stdin.st_dev == st_stdout.st_dev &&
- 		st_stdin.st_ino == st_stdout.st_ino &&
- 		st_stdin.st_mode == st_stdout.st_mode);
--- 
-1.7.9
+Thanks.
