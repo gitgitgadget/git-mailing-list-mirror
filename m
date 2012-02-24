@@ -1,72 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] branch: don't assume the merge filter ref exists
-Date: Mon, 27 Feb 2012 14:43:05 -0500
-Message-ID: <20120227194305.GE1600@sigill.intra.peff.net>
-References: <20120227122609.GA26981@mx.loc>
- <1330355513-22351-1-git-send-email-cmn@elego.de>
- <20120227193044.GD1600@sigill.intra.peff.net>
- <7vk4386pgi.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	Bernhard Reutner-Fischer <rep.dot.nop@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 27 20:43:22 2012
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: [PATCH v2 2/2] CodingGuidelines: Add note forbidding use of 'which' in shell scripts
+Date: Fri, 24 Feb 2012 18:12:58 -0500
+Message-ID: <1330125178-9194-2-git-send-email-tim.henigan@gmail.com>
+References: <1330125178-9194-1-git-send-email-tim.henigan@gmail.com>
+Cc: tim.henigan@gmail.com
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Feb 27 20:43:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S26Tb-0000ZP-2U
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 20:43:15 +0100
+	id 1S26UI-00014v-7C
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 20:43:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754478Ab2B0TnJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Feb 2012 14:43:09 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58963
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754244Ab2B0TnI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2012 14:43:08 -0500
-Received: (qmail 29919 invoked by uid 107); 27 Feb 2012 19:43:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 27 Feb 2012 14:43:10 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Feb 2012 14:43:05 -0500
-Content-Disposition: inline
-In-Reply-To: <7vk4386pgi.fsf@alter.siamese.dyndns.org>
+	id S1755026Ab2B0Tnt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Feb 2012 14:43:49 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:50913 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753957Ab2B0Tns (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Feb 2012 14:43:48 -0500
+Received: by vbbff1 with SMTP id ff1so1184417vbb.19
+        for <git@vger.kernel.org>; Mon, 27 Feb 2012 11:43:47 -0800 (PST)
+Received-SPF: pass (google.com: domain of tim.henigan@gmail.com designates 10.220.116.10 as permitted sender) client-ip=10.220.116.10;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of tim.henigan@gmail.com designates 10.220.116.10 as permitted sender) smtp.mail=tim.henigan@gmail.com; dkim=pass header.i=tim.henigan@gmail.com
+Received: from mr.google.com ([10.220.116.10])
+        by 10.220.116.10 with SMTP id k10mr9780107vcq.25.1330371827470 (num_hops = 1);
+        Mon, 27 Feb 2012 11:43:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=s3yaan1mv5VJOGRKoWnzSIgcH4L3e/SFdCewZuUPz/I=;
+        b=m23tyrmJPt8oTXkEUC1dgkRTTqWYJdu0OrpQKnUj6QYp4W/NkOEyb850qX6Xg7qJ/7
+         o17inS3uPNTEJZQJsv5MZ415fInIcQ3qPspi2lGH909ARoctrP3tUIc0gkDX49KLF0kg
+         M4INfXrXcDTeM6uLGQQg0yzlp+oXXFQTh1HD4=
+Received: by 10.220.116.10 with SMTP id k10mr7905811vcq.25.1330371827329;
+        Mon, 27 Feb 2012 11:43:47 -0800 (PST)
+Received: from localhost (adsl-99-38-69-118.dsl.sfldmi.sbcglobal.net. [99.38.69.118])
+        by mx.google.com with ESMTPS id gz4sm12030839vdb.19.2012.02.27.11.43.45
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 27 Feb 2012 11:43:46 -0800 (PST)
+X-Mailer: git-send-email 1.7.9.1
+In-Reply-To: <1330125178-9194-1-git-send-email-tim.henigan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191660>
 
-On Mon, Feb 27, 2012 at 11:33:49AM -0800, Junio C Hamano wrote:
+During the code review of a recent patch, it was noted that shell scripts
+must not use 'which'.  The output of the command is not machine parseable
+and its exit code is not reliable across platforms.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > You would also get NULL if the object exists but is not a commit. Maybe:
-> >
-> >   die("object '%s' does not point to a commit", ...)
-> >
-> > would be better? It covers the wrong-type case, and is still technically
-> > true when the object does not exist.
-> 
-> For this particular message I like the above a lot better.  The output
-> from "git grep -e 'invalid object' -e 'bad object'" seems to show that
-> the use of both are fairly evenly distributed.
+It is better to use 'type' to accomplish this task.
 
-It looks like "bad object" generally comes from parse_object failing,
-which makes sense. It either means object corruption or you fed a full
-40-char sha1 that didn't exist (which, if you are being that specific,
-probably is an indication of broken-ness in your repository).
+Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
+---
 
-It looks like "invalid object" comes from failing to access the subject
-of an annotated tag or an entry in a tree, both of which would meet the
-same criteria (corruption or a missing 40-char sha1).
+Updated to the documentation pattern recommended by Junio Hamano:
+"If you want to do Z, use X not Y, because Y is broken ..."
 
-I don't think bad versus invalid in existing cases is a big deal, as
-they are both used consistently. But in this case, I think either would
-be wrong, since it is equally likely that the user gave an existing, OK
-object of the wrong type.
+I grepped through the code and found the 'type <command' is indeed used
+in place of 'which' to test for the presence of commands on $PATH.
 
--Peff
+
+ Documentation/CodingGuidelines |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 5a190b9..816c5ad 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -49,6 +49,11 @@ For shell scripts specifically (not exhaustive):
+    properly nests.  It should have been the way Bourne spelled
+    it from day one, but unfortunately isn't.
+ 
++ - If you want to find out if a command is available on the user's
++   $PATH, you should use 'type <command>', instead of 'which'.
++   The output of 'which' is not machine parseable and its exit code
++   is not reliable across platforms.
++
+  - We use POSIX compliant parameter substitutions and avoid bashisms;
+    namely:
+ 
+-- 
+1.7.9.1
