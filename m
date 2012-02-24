@@ -1,123 +1,87 @@
-From: Luc Pionchon <pionchon.luc@gmail.com>
-Subject: Re: [PATCH] pretty: add '*' modifier to add LF after non-empty
-Date: Fri, 24 Feb 2012 12:58:58 +0200
-Message-ID: <CAEYyJDyE88w2R5duQgm21w50OkU+J4qbs00=TfV=FvXPyUWaVA@mail.gmail.com>
-References: <1330002637-9347-1-git-send-email-pionchon.luc@gmail.com> <7v7gzd498r.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [FYI] very large text files and their problems.
+Date: Fri, 24 Feb 2012 18:14:46 +0700
+Message-ID: <CACsJy8Aq=ofaHo3RkOBWTYP3eehZAU0E=HeDoUpR0nh+seKxzA@mail.gmail.com>
+References: <20120222154926.GC11202@pomac.netswarm.net> <CACsJy8Bdbegs7QdztvsFnKPcpAX5UL7s7uc37wF3_nF4kJQjrQ@mail.gmail.com>
+ <20120224101121.GA9526@pomac.netswarm.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 24 11:59:47 2012
+To: Ian Kumlien <pomac@vapor.com>
+X-From: git-owner@vger.kernel.org Fri Feb 24 12:15:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0ssL-0007bg-Fu
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 11:59:45 +0100
+	id 1S0t7W-0008RZ-3S
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 12:15:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756714Ab2BXK7l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Feb 2012 05:59:41 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:48638 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751653Ab2BXK7k convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2012 05:59:40 -0500
-Received: by lagu2 with SMTP id u2so2652635lag.19
-        for <git@vger.kernel.org>; Fri, 24 Feb 2012 02:59:38 -0800 (PST)
-Received-SPF: pass (google.com: domain of pionchon.luc@gmail.com designates 10.112.99.231 as permitted sender) client-ip=10.112.99.231;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pionchon.luc@gmail.com designates 10.112.99.231 as permitted sender) smtp.mail=pionchon.luc@gmail.com; dkim=pass header.i=pionchon.luc@gmail.com
-Received: from mr.google.com ([10.112.99.231])
-        by 10.112.99.231 with SMTP id et7mr663656lbb.57.1330081178549 (num_hops = 1);
-        Fri, 24 Feb 2012 02:59:38 -0800 (PST)
+	id S1753037Ab2BXLPS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Feb 2012 06:15:18 -0500
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:49566 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752609Ab2BXLPR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2012 06:15:17 -0500
+Received: by wgbgn7 with SMTP id gn7so346593wgb.1
+        for <git@vger.kernel.org>; Fri, 24 Feb 2012 03:15:16 -0800 (PST)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.180.8.226 as permitted sender) client-ip=10.180.8.226;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.180.8.226 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
+Received: from mr.google.com ([10.180.8.226])
+        by 10.180.8.226 with SMTP id u2mr3954001wia.16.1330082116294 (num_hops = 1);
+        Fri, 24 Feb 2012 03:15:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=UcPMUd4bhD2WEsoJjEnB4WpIA/3+yYPvvWJpr8fbFls=;
-        b=RKItVCLFnaCv56eyxd196T75fZvTODHY74KgUGYy0Dz1FC+dYsTsNMqST5/nLzpSKj
-         mI1IbvZTad+OSYZvQVCvbaJmhkACJdkYpysdVuHoJbYa2GKpvBpYOCRpRiD0T/ys9ZMv
-         bgloQCanc+/6tSLsSndCLdkPOrnpzd2nrm3mM=
-Received: by 10.112.99.231 with SMTP id et7mr554799lbb.57.1330081178479; Fri,
- 24 Feb 2012 02:59:38 -0800 (PST)
-Received: by 10.152.21.165 with HTTP; Fri, 24 Feb 2012 02:58:58 -0800 (PST)
-In-Reply-To: <7v7gzd498r.fsf@alter.siamese.dyndns.org>
+         :cc:content-type;
+        bh=dt14fS6MZNn1OpJLF6XBobGn78wdR4b4A7q/ejJTB74=;
+        b=x8gqdTeboHRm5H3s1wdTLz/R3znY+TdSi0ZjJ3hCmrzYhMzYs6XL9cC8enS4Zd7tE/
+         LzDTbkvNEKPVMdO1VMDs39lj77MBkdZhyYZs2P55I4uo9E8hyd73drErAWL3YgzlOd8C
+         iUOiSPCQN7LQbRLaDAEL9dIGZGNP3GXmnrxRs=
+Received: by 10.180.8.226 with SMTP id u2mr3171976wia.16.1330082116255; Fri,
+ 24 Feb 2012 03:15:16 -0800 (PST)
+Received: by 10.223.13.5 with HTTP; Fri, 24 Feb 2012 03:14:46 -0800 (PST)
+In-Reply-To: <20120224101121.GA9526@pomac.netswarm.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191429>
 
-On Thu, Feb 23, 2012 at 21:53, Junio C Hamano <gitster@pobox.com> wrote=
-:
+On Fri, Feb 24, 2012 at 5:11 PM, Ian Kumlien <pomac@vapor.com> wrote:
+> I'm uncertain if you got my reply since i did it out of bounds - so i'll
+> repeat myself - sorry... =)
+
+yes I received it, just too busy this week.
+
+>> > git needs to have atleast the same ammount of memory as the largest
+>> > file free... Couldn't this be worked around?
+>> >
+>> > On a (32 bit) machine with 4GB memory - results in:
+>> > fatal: Out of memory, malloc failed (tried to allocate 3310214313 bytes)
+>> >
+>> > (and i see how this could be a problem, but couldn't it be mitigated? or
+>> > is it bydesign and intended behaviour?)
+>>
+>> I think that it's delta resolving that hogs all your memory. If your
+>> files are smaller than 512M, try lower core.bigFileThreshold. The
+>> topic jc/split-blob, which stores a big file are several smaller
+>> pieces, might solve your problem. Unfortunately the topic is not
+>> complete yet.
 >
-> Luc Pionchon <pionchon.luc@gmail.com> writes:
+> Well, in this case it's just stream unpacking gzip data to disk, i
+> understand if delta would be a problem... But wouldn't delta be a
+> problem in the sence of <size_of_change>+<size_of_subdata>+<result> ?
 >
-> > Add the '*' modifier, similar to the '+' modifier,
-> > to add a line-feed after a non-empty placeholder.
->
-> Hrm, I thought I designed the plus and minus fairly carefully so that
-> nobody needs to add this later.
->
-> Wouldn't it be sufficient to write
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0Foo%n%-d
->
->
-> that says "We usually have LF after Foo, and write %d after that, but=
- we
-> might not have anything interesting in %d at all, in which case we do=
-n't
-> add that %n"?
+> Ie, if the file is mmapped - it shouldn't have to be allocated, right?
 
-What I want is a LF after the non empty, rather than before.
-It seems to me that %n%-d is equivalent to %+d,
-or did I miss something?
+We should not delta large files. I was worried that the large file
+check could go wrong, But I guess your blob's not deltified in this
+case.
 
-See the 3 examples below, with %n%-d, %+d and %*d
-
-$ ./git log -5 --graph --pretty=3Dformat:"%C(yellow bold)%n%-d %C(reset=
-)%s"
-*
-|\=C2=A0=C2=A0 (HEAD, origin/master, origin/HEAD, master) Sync with 1.7=
-=2E9.2
-| *
-| |=C2=A0 (v1.7.9.2, origin/maint) Git 1.7.9.2
-| *=C2=A0 completion: use tabs for indentation
-| *=C2=A0 completion: remove stale "to submit patches" documentation
-* |=C2=A0 git-p4: the option to specify 'host' is -H, not -h
-
-$ ./git log -5 --graph --pretty=3Dformat:"%C(yellow bold)%+d %C(reset)%=
-s"
-*
-|\   (HEAD, origin/master, origin/HEAD, master) Sync with 1.7.9.2
-| *
-| |  (v1.7.9.2, origin/maint) Git 1.7.9.2
-| *  completion: use tabs for indentation
-| *  completion: remove stale "to submit patches" documentation
-* |  git-p4: the option to specify 'host' is -H, not -h
-
-$ ./git log -5 --graph --pretty=3Dformat:"%C(yellow bold)%*d %C(reset)%=
-s"
-*=C2=A0=C2=A0=C2=A0 (HEAD, origin/master, origin/HEAD, master)
-|\=C2=A0=C2=A0 Sync with 1.7.9.2
-| *=C2=A0 (v1.7.9.2, origin/maint)
-| |=C2=A0 Git 1.7.9.2
-| *=C2=A0 completion: use tabs for indentation
-| *=C2=A0 completion: remove stale "to submit patches" documentation
-* |=C2=A0 git-p4: the option to specify 'host' is -H, not -h
-
-
-Also as a side note, I noticed that color is lost after new lines.
-
->
-> > +test_expect_success 'add LF after non-empty (1) (empty)' '
-> > + =C2=A0 =C2=A0 git show -s --pretty=3Dformat:"%*d%s%nfoo%n" HEAD^^=
- >actual &&
->
-> Shouldn't this be equivalent to "%n%-d%s%nfoo%n", which in turn is co=
-vered
-> by one of the previous tests (del LF before empty)?
-
-I think the later is equivalent to %+d%s%nfoo%n, am I wrong?
+When you receive a pack during a clone, the pack is streamed to
+index-pack, not mmapped, and index-pack checks every object in there
+in uncompressed form. I think I have found a way to avoid allocating
+that much. Need some more check, then send out.
+-- 
+Duy
