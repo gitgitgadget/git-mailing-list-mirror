@@ -1,163 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Improving merge messages for 1.7.10 and making "pull" easier
-Date: Fri, 24 Feb 2012 11:39:39 -0800
-Message-ID: <7vy5rsyq9w.fsf@alter.siamese.dyndns.org>
-References: <CACBZZX5UVq9k7jvSy3m+yMVj7_JbfLp8ugFWf2gGFdMz_8GPEA@mail.gmail.com>
+From: Marlene Cote <Marlene_Cote@affirmednetworks.com>
+Subject: RE: FW: question about merge in 1.7.10
+Date: Fri, 24 Feb 2012 19:33:58 +0000
+Message-ID: <1F026B57884A5841B330471696849DE9114508EC@MBX021-W4-CA-5.exch021.domain.local>
+References: <1F026B57884A5841B330471696849DE9114503D7@MBX021-W4-CA-5.exch021.domain.local>
+ <4F47E51B.6080401@in.waw.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 24 20:39:50 2012
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: =?utf-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+X-From: git-owner@vger.kernel.org Fri Feb 24 20:44:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S10zd-0003CI-3b
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 20:39:49 +0100
+	id 1S113o-0005pV-Tr
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 20:44:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757554Ab2BXTjn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Feb 2012 14:39:43 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47197 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755141Ab2BXTjm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Feb 2012 14:39:42 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 939337C88;
-	Fri, 24 Feb 2012 14:39:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=aMSEYK++nbsE
-	qFzQ27f8uy9wTT8=; b=Wa4/V2aFqVQTIcZZ/oAK1C6VunCtvep2k0KY8KDKv3fU
-	M7PUfOZF/dxixsR/LC19eExjpjKwmvHLfLO6AlC9XHIR4FYRQwggz6DlNuw6Pvv2
-	eMLLb2kkyNuFQ86tPxcmlOuNKbS/SI9qXS0wpjNucdC3TKd4hoNT2bdgNDH7hBE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=BNvXZf
-	i4b8Ex7HauXgigDuq9i3r9MjcLu6Z4KrMFFWEWzFIiSZH+AREtGNTlW0YOeDJhNE
-	naz2sdsyctPIaClIgVrFhBc4hco5tiQtY8r4bBIcGRUAEOddXZZOh11hhs1s9Va/
-	uKbRPY71lvhKQDhTIa6+Ma0vUgQAdEjJ6m6lA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A7BA7C87;
-	Fri, 24 Feb 2012 14:39:41 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E41EC7C86; Fri, 24 Feb 2012
- 14:39:40 -0500 (EST)
-In-Reply-To: <CACBZZX5UVq9k7jvSy3m+yMVj7_JbfLp8ugFWf2gGFdMz_8GPEA@mail.gmail.com>
- (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 24 Feb
- 2012 10:59:00 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4B47F9D0-5F1F-11E1-A619-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757702Ab2BXToE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Feb 2012 14:44:04 -0500
+Received: from hub021-ca-3.exch021.serverdata.net ([64.78.22.170]:18812 "EHLO
+	hub021-ca-3.exch021.serverdata.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757643Ab2BXToD (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Feb 2012 14:44:03 -0500
+X-Greylist: delayed 602 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Feb 2012 14:44:03 EST
+Received: from MBX021-W4-CA-5.exch021.domain.local ([10.254.4.87]) by
+ HUB021-CA-3.exch021.domain.local ([10.254.4.36]) with mapi id 14.01.0355.002;
+ Fri, 24 Feb 2012 11:33:59 -0800
+Thread-Topic: FW: question about merge in 1.7.10
+Thread-Index: Aczy+mbZUkic1+k9RsG5U0pOmiLu+AABrx4AABsjEoAAEKVH0A==
+In-Reply-To: <4F47E51B.6080401@in.waw.pl>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [108.20.57.98]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191450>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-
-> Firstly (and as a more general thing) I think we should add a mention
-> of "git merge --abort" to the message, just saving an empty file is
-> not sufficient to fully clear the merge state:
-
-Makes sense, but the new message does not quite parse.
-
->> "Lines starting with '#' will be ignored, and an empty message follo=
-wed\n"
->> "by 'git merge --abort' the merge.\n");
-
-Perhaps s/the merge/aborts &/ or something.
-
-> Additionally, perhaps it would be a good idea to:
->
->  * Detect if the user didn't run this explicitly but implicitly from =
-a
->    "git pull". We could pass some env var along or another option
->    (e.g. --internal-from-porcelain=3Dpull) and add this:
->
->        You've merged implicitly via a "git pull", if you're just
->        updating some local work in progress to keep up with upstream
->        you may want to use "git pull --rebase" instead (or set the
->        pull.rebase configuration variable) to rebase instead of merge=
-=2E
-
-Won't this message be given to _all_ users of "git pull", even to the o=
-nes
-who already have decided correctly that "pull" is the right thing in th=
-eir
-situation?  With a new advice.* settings to squelch it, perhaps.
-
->  * Explicitly check if we're merging an updated upstream into the
->    work-in-progress topic,...
-
-It might be a worthy goal, but how would we detect it?  A few examples
-that we shouldn't give an unhelpful advice with a false positive are
-merges into:
-
- - The 'master' branch used by people who use Git as an improved CVS, w=
-hen
-   they do an equivalent of 'cvs update'.  Merging the updated 'master'
-   from the central repository into their 'master' that contains their
-   work that may or may not be ready to be pushed back is how their
-   project works.  It is a norm for them to make such a merge, even tho=
-ugh
-   more experienced people may prefer to see the history of their proje=
-ct
-   kept cleaner by suggesting their project participants to use their o=
-wn
-   topic branches.
-
- - Integration branches like my 'next', when it gets a merge from
-   'master'. This is "merging an updated upstream" but is done in order=
- to
-   keep the promise that 'next' would contain everything in 'master'.
-
-And what alternative would we offer?  If we were to suggest "rebase", w=
-e
-would also need to consider the topic of the other a-couple-of-days-old
-thread to detect which part of history is no longer subject to rewrite.
-
-> I work with a lot of inexperienced git users and a lot of them are
-> going to be very confused by this change. I still think it's a good
-> change to make, but we could do a lot more to mitigate the inevitable
-> confusion.
-
-What exact change are you talking about with "this change"?  Earlier yo=
-u
-had a chance to edit the merge log only when it needed your help resolv=
-ing
-(hence you did a separate "git commit" to record it) but you had to "gi=
-t
-commit --amend" (or start with "git merge --no-commit") to edit the mer=
-ge
-log if it did not need any help resolving conflicts, but now you do not
-have to.  Is that the change you have in mind?
-
-I would like to know how that would lead to an "inevitable confusion".
-Admittedly, the original without any "# Please do X" comment, the user =
-may
-wonder what is being asked of him when he sees the editor for the first
-time, but I thought Thomas's patch took care of that issue.
-
-> One thing that would help these users in particular would be to have
-> some easy to use replacement for their frequent use of "git
-> pull".
-
-After this part, I think you shifted into a different topic.
-
-I have mixed feelings about "rebase your unpublished work and keep it
-always a descendant of the upstream" workflow you seem to be advocating=
-=2E
-It _might_ deserve a bit more visibility, but I do not think rewording
-this message done during "merge" is the place to do so.
-
-> They don't often commit their work (because of git inexperience) so
-> rebasing will error out because the tree is unclean.
-
-That is a *good* thing, isn't it?  There lies the perfect opportunity f=
-or
-them to train their fingers to commit first and then rebase.
+SSBrbm93IHRoYXQgdGhlIHRyZWUgd2lsbCBiZSBkaXJ0eS4gIFRoZSBjaGFuZ2UgdG8gZ2l0IGlu
+IDEuNy4xMCBzYXlzIHRoYXQgdGhlIG1lcmdlIHdpbGwgcmVxdWlyZSBhIGNvbW1pdCBtZXNzYWdl
+IHdoZW4gdGhlIGNvbW1hbmQgaXMgcnVuLiAgU2luY2UgSSBhbSBub3QgY29tbWl0dGluZywgSSBu
+ZWVkIHRvIHN1cHBseSBhIG1lc3NhZ2UsIGJ1dCBvbmx5IGxhdGVyIHdoZW4gSSBjb21taXQuICBO
+b3Qgd2hlbiBJIGV4ZWN1dGUgdGhlIG1lcmdlIGNvbW1hbmQuICBUaGlzIG1lYW5zIG15IHNjcmlw
+dHMgZG9uJ3QgaGF2ZSB0byBjaGFuZ2UuDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpG
+cm9tOiBaYmlnbmlldyBKxJlkcnplamV3c2tpLVN6bWVrIFttYWlsdG86emJ5c3pla0Bpbi53YXcu
+cGxdIA0KU2VudDogRnJpZGF5LCBGZWJydWFyeSAyNCwgMjAxMiAyOjMwIFBNDQpUbzogTWFybGVu
+ZSBDb3RlDQpDYzogZ2l0QHZnZXIua2VybmVsLm9yZw0KU3ViamVjdDogUmU6IEZXOiBxdWVzdGlv
+biBhYm91dCBtZXJnZSBpbiAxLjcuMTANCg0KT24gMDIvMjQvMjAxMiAwMzozMyBQTSwgTWFybGVu
+ZSBDb3RlIHdyb3RlOg0KPg0KPiBJIHVzZWQgbWVyZ2Ugd2l0aCAtbm8tY29tbWl0IC1uby1mZi4g
+IFNvLCBJIGFzc3VtZSBJIHdvbid0IHNlZSBhbnkgY2hhbmdlIGluIGJlaGF2aW9yLCBzaW5jZSBt
+ZXJnZSBpcyBub3QgcGVyZm9ybWluZyBjb21taXRzLCByaWdodD8NCkhpIE1hcmxlbmUsDQotLW5v
+LWNvbW1pdCBvbmx5IHN0b3BzIHRoZSBsYXN0IHN0ZXAsIGkuZS4gbWFraW5nIG9mIHRoZSBjb21t
+aXQuIFRoZSB0cmVlICh3b3JraW5nIGZpbGVzKSBpcyBjaGFuZ2VkIGJlZm9yZSB0aGF0LiBTbyBi
+YXNpY2FsbHkgYWZ0ZXIgYSBtZXJnZSB3aXRoIC0tbm8tY29tbWl0LCB5b3VyIHRyZWUgd2lsbCBi
+ZSBkaXJ0eSBhbmQgZ2l0IHN0YXR1cyB3aWxsIHNob3cgbW9kaWZpZWQgZmlsZXMuDQoNCnpieXN6
+ZWsNCg0K
