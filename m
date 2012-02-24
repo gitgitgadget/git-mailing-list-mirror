@@ -1,70 +1,86 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: git gui:  how to fetch a single branch
-Date: Fri, 24 Feb 2012 10:57:17 -0600
-Message-ID: <4F47C16D.4080208@gmail.com>
-References: <70952A932255A2489522275A628B97C31294E91C@xmb-sjc-233.amer.cisco.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: measuring the % change between two commits
+Date: Fri, 24 Feb 2012 22:35:07 +0530
+Message-ID: <CAMK1S_hHCQ2SxhD=GiyHTzd=rgZF5aT7XdWn5-HEv1Xsr_+KvQ@mail.gmail.com>
+References: <CAMK1S_gXQaE+RZxe4S7vqAyPka9N9PAoe+557FaLO+JJoJFshA@mail.gmail.com>
+	<7vpqd52tqr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Matt Seitz (matseitz)" <matseitz@cisco.com>
-X-From: git-owner@vger.kernel.org Fri Feb 24 17:57:47 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 24 18:05:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0ySd-00034k-GQ
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 17:57:35 +0100
+	id 1S0ya4-0001yH-5r
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 18:05:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757910Ab2BXQ5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Feb 2012 11:57:21 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:59738 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753660Ab2BXQ5T (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2012 11:57:19 -0500
-Received: by ghrr11 with SMTP id r11so1228835ghr.19
-        for <git@vger.kernel.org>; Fri, 24 Feb 2012 08:57:19 -0800 (PST)
-Received-SPF: pass (google.com: domain of nkreitzinger@gmail.com designates 10.236.136.4 as permitted sender) client-ip=10.236.136.4;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of nkreitzinger@gmail.com designates 10.236.136.4 as permitted sender) smtp.mail=nkreitzinger@gmail.com; dkim=pass header.i=nkreitzinger@gmail.com
-Received: from mr.google.com ([10.236.136.4])
-        by 10.236.136.4 with SMTP id v4mr5953924yhi.44.1330102639126 (num_hops = 1);
-        Fri, 24 Feb 2012 08:57:19 -0800 (PST)
+	id S1757809Ab2BXRFJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Feb 2012 12:05:09 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:64540 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753624Ab2BXRFI convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2012 12:05:08 -0500
+Received: by obcva7 with SMTP id va7so3052190obc.19
+        for <git@vger.kernel.org>; Fri, 24 Feb 2012 09:05:07 -0800 (PST)
+Received-SPF: pass (google.com: domain of sitaramc@gmail.com designates 10.182.15.5 as permitted sender) client-ip=10.182.15.5;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of sitaramc@gmail.com designates 10.182.15.5 as permitted sender) smtp.mail=sitaramc@gmail.com; dkim=pass header.i=sitaramc@gmail.com
+Received: from mr.google.com ([10.182.15.5])
+        by 10.182.15.5 with SMTP id t5mr1221956obc.2.1330103107804 (num_hops = 1);
+        Fri, 24 Feb 2012 09:05:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=QtcrHdX9CfEf2j752TpEUpHAebUtimRFRLbhiixUP6M=;
-        b=EhjNZVm+LkDwOniyP/pk5GE71GHFW+Nm9eD+Dx5WB8dJYnmtGH+ygv7FLB3ZBphoVE
-         nO0/J+FVxUXqJvI3KWSIKucDELUZwU1njm7cpcpiRgpM6KycWTV0cR4gPaieB9VUyyk+
-         pAt0/zzODxe5FxS+WqC9Z7sHwe+TXnm89rTM4=
-Received: by 10.236.136.4 with SMTP id v4mr4565582yhi.44.1330102639083;
-        Fri, 24 Feb 2012 08:57:19 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id v21sm4249223yhk.3.2012.02.24.08.57.17
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 24 Feb 2012 08:57:17 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.27) Gecko/20120216 Thunderbird/3.1.19
-In-Reply-To: <70952A932255A2489522275A628B97C31294E91C@xmb-sjc-233.amer.cisco.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=bt7YvclhM++u81fpeQIBP52BKD8z3OZAOpjJ0KzOigk=;
+        b=v5SXg2tu4CDaypn3xmSybe1ZtZsipTJntgo6a9Yvf54oqPqDwL6+rM2leWXDYi+axc
+         yx/DW5K6cKdRB6d5SWIfW09SLwLoLQ5XQEMaKQ+YlD1aRm7xeXImK4tlZ9OlRvNnZu5W
+         BbaW1G2ifrF13h7iQB9cH9wxYKDns+y+tDoQk=
+Received: by 10.182.15.5 with SMTP id t5mr1060294obc.2.1330103107739; Fri, 24
+ Feb 2012 09:05:07 -0800 (PST)
+Received: by 10.182.175.106 with HTTP; Fri, 24 Feb 2012 09:05:07 -0800 (PST)
+In-Reply-To: <7vpqd52tqr.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191443>
 
-On 2/23/2012 5:58 PM, Matt Seitz (matseitz) wrote:
-> How can I use "git gui" to fetch a single branch from a remote
-> repository?
+On Fri, Feb 24, 2012 at 1:43 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Sitaram Chamarty <sitaramc@gmail.com> writes:
 >
-> If I select Remote->Fetch From, and then a remote repository, it appears
-> to always fetch all the branches from the remote repository with no
-> option to select which branch I want to fetch.
+>> I could do a --numstat and then do a 'wc -l' on each file I guess, b=
+ut
+>> I was hoping to avoid that.
+>>
+>> --dirstat gives you a percentage but does not count the top level di=
+rectory.
 >
-One way you can do it is to create a remote to that branch (see -t 
-option of git remote manpage).  Then fetching that remote only fetches 
-that branch.  Of course, this is practical if you are interested in 
-fetching certain branches consistently, but not as practical for 
-fetching random single branches frequently.
+> Note that dirstat is not about "how much damage was caused to the ent=
+ire
+> codebase". =C2=A0It only measures "How is the damage this patch cause=
+s
+> distributed across directories it touches". =C2=A0It was unclear from=
+ your "a %
+> measure for the changes between two commits" which one you meant, but=
+ I am
+> guessing from your "--numstat and wc -l" reference that you are askin=
+g for
+> the former, e.g. we have 300,000 lines of code and between these two
+> commits 10,000 lines changed, hence we updated 3% of the codebase dur=
+ing
+> that period".
 
-v/r,
-neal
+yes; I wanted an overall figure.  Clearly I misunderstood dirstat
+then.  (Should have guessed from the "...may not total to 100%..."
+comment somewhere.
+
+Thanks
+
+--=20
+Sitaram
