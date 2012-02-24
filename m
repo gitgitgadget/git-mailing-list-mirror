@@ -1,64 +1,138 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: FW: question about merge in 1.7.10
-Date: Fri, 24 Feb 2012 13:55:52 -0800
-Message-ID: <7v4nufopzr.fsf@alter.siamese.dyndns.org>
-References: <1F026B57884A5841B330471696849DE9114503D7@MBX021-W4-CA-5.exch021.domain.local> <4F47E51B.6080401@in.waw.pl> <1F026B57884A5841B330471696849DE9114508EC@MBX021-W4-CA-5.exch021.domain.local> <7vbooox6xy.fsf@alter.siamese.dyndns.org> <1F026B57884A5841B330471696849DE911450B9B@MBX021-W4-CA-5.exch021.domain.local>
+From: Jeff King <peff@peff.net>
+Subject: [PATCHv2 1/3] teach convert_to_git a "dry run" mode
+Date: Fri, 24 Feb 2012 17:02:37 -0500
+Message-ID: <20120224220237.GA1809@sigill.intra.peff.net>
+References: <20120224211913.GA30942@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Marlene Cote <Marlene_Cote@affirmednetworks.com>
-X-From: git-owner@vger.kernel.org Fri Feb 24 22:56:02 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 24 23:02:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S137S-0003jU-Dg
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 22:56:02 +0100
+	id 1S13Dw-0007VK-Jg
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 23:02:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758171Ab2BXVz6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Feb 2012 16:55:58 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41654 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756917Ab2BXVz5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2012 16:55:57 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 664167755;
-	Fri, 24 Feb 2012 16:55:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8fbA0Hw+8XwpIRy5pht7mbjdK4Q=; b=rV6XY9
-	+DR1tbpOW5o97rsOjpY+WR5uJYMKPAaxqdwt9wdFJ+k2XjH+B92L7wcZkKtFpTv9
-	IQGZ+XB0/kMJbvKSRRzQ6Z3pn/kiazCxUd1dEHx0Eu9ugNt1/j+93ZE00EW0w+KT
-	YYTpO0W9zdJ7So9fVJbKW9Udqlx51eaNYjhLA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ptz69pfCCUrtK/vElJycV431ePjeOLYM
-	yZYYiH/mn0X5HKQU1KM+zpyyv6jUqEndH1Llvfz5PO9/Bi/kghqYWnnR7Q9iBgUC
-	iiRdr26RX1ZRoVrPrt10tG4mGMUDKMOMlepzTVmypZifiDXfQXoSSVNc6Z0ecIXC
-	D5P9JhfYb/k=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5CC4D7753;
-	Fri, 24 Feb 2012 16:55:55 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C555D7751; Fri, 24 Feb 2012
- 16:55:54 -0500 (EST)
-In-Reply-To: <1F026B57884A5841B330471696849DE911450B9B@MBX021-W4-CA-5.exch021.domain.local> (Marlene Cote's message of "Fri, 24 Feb 2012 21:24:50 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 534A4B84-5F32-11E1-80B2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755130Ab2BXWCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Feb 2012 17:02:39 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56104
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752681Ab2BXWCj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2012 17:02:39 -0500
+Received: (qmail 29849 invoked by uid 107); 24 Feb 2012 22:02:40 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 24 Feb 2012 17:02:40 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Feb 2012 17:02:37 -0500
+Content-Disposition: inline
+In-Reply-To: <20120224211913.GA30942@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191491>
 
-Marlene Cote <Marlene_Cote@affirmednetworks.com> writes:
+Some callers may want to know whether convert_to_git will
+actually do anything before performing the conversion
+itself (e.g., to decide whether to stream or handle blobs
+in-core). This patch lets callers specify the dry run mode
+by passing a NULL destination buffer. The return value,
+instead of indicating whether conversion happened, will
+indicate whether conversion would occur.
 
-> Sorry.  You are correct.  You said it would open an editor session.  
+For readability, we also include a wrapper function which
+makes it more obvious we are not actually performing the
+conversion.
 
-Whew.  I was really worried that we may be sending a wrong message and
-making users needlessly afraid of changes.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This splits the 1/2 from the first series into two patches. This part
+handles the dry-run aspect. Unlike the previous version, it uses a NULL
+destination, rather than a NULL source to indicate the dry-run mode.
+Which just makes more sense, and means that the "don't bother doing
+source analysis" bit is split off.
 
-Thanks for a prompt response.
+No callers introduced in this series actually want to do a dry-run with
+a non-NULL source buffer, so that feature is of dubious value. But it's
+not any extra code to do it this way, and the resulting commits are much
+easier to read, I think.
+
+ convert.c |   17 +++++++++++++++--
+ convert.h |    5 +++++
+ 2 files changed, 20 insertions(+), 2 deletions(-)
+
+diff --git a/convert.c b/convert.c
+index 12868ed..65fa9d5 100644
+--- a/convert.c
++++ b/convert.c
+@@ -231,6 +231,13 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
+ 	if (!stats.cr)
+ 		return 0;
+ 
++	/*
++	 * At this point all of our source analysis is done, and we are sure we
++	 * would convert. If we are in dry-run mode, we can give an answer.
++	 */
++	if (!buf)
++		return 1;
++
+ 	/* only grow if not in place */
+ 	if (strbuf_avail(buf) + buf->len < len)
+ 		strbuf_grow(buf, len - buf->len);
+@@ -391,6 +398,9 @@ static int apply_filter(const char *path, const char *src, size_t len,
+ 	if (!cmd)
+ 		return 0;
+ 
++	if (!dst)
++		return 1;
++
+ 	memset(&async, 0, sizeof(async));
+ 	async.proc = filter_buffer;
+ 	async.data = &params;
+@@ -525,6 +535,9 @@ static int ident_to_git(const char *path, const char *src, size_t len,
+ 	if (!ident || !count_ident(src, len))
+ 		return 0;
+ 
++	if (!buf)
++		return 1;
++
+ 	/* only grow if not in place */
+ 	if (strbuf_avail(buf) + buf->len < len)
+ 		strbuf_grow(buf, len - buf->len);
+@@ -754,13 +767,13 @@ int convert_to_git(const char *path, const char *src, size_t len,
+ 		filter = ca.drv->clean;
+ 
+ 	ret |= apply_filter(path, src, len, dst, filter);
+-	if (ret) {
++	if (ret && dst) {
+ 		src = dst->buf;
+ 		len = dst->len;
+ 	}
+ 	ca.crlf_action = input_crlf_action(ca.crlf_action, ca.eol_attr);
+ 	ret |= crlf_to_git(path, src, len, dst, ca.crlf_action, checksafe);
+-	if (ret) {
++	if (ret && dst) {
+ 		src = dst->buf;
+ 		len = dst->len;
+ 	}
+diff --git a/convert.h b/convert.h
+index d799a16..ec5fd69 100644
+--- a/convert.h
++++ b/convert.h
+@@ -40,6 +40,11 @@ extern int convert_to_working_tree(const char *path, const char *src,
+ 				   size_t len, struct strbuf *dst);
+ extern int renormalize_buffer(const char *path, const char *src, size_t len,
+ 			      struct strbuf *dst);
++static inline int would_convert_to_git(const char *path, const char *src,
++				       size_t len, enum safe_crlf checksafe)
++{
++	return convert_to_git(path, src, len, NULL, checksafe);
++}
+ 
+ /*****************************************************************
+  *
+-- 
+1.7.9.11.gca600
