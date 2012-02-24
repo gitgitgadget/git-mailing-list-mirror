@@ -1,58 +1,72 @@
-From: Jonathan Corbet <corbet@lwn.net>
-Subject: Re: Announcing nntpgit
-Date: Fri, 24 Feb 2012 14:43:09 -0700
-Organization: LWN.net
-Message-ID: <20120224144309.4657052e@dt>
-References: <20120224133942.49a7a420@dt>
-	<7v62evykrq.fsf@alter.siamese.dyndns.org>
+From: Romain Vimont =?ISO-8859-1?Q?=28=AEom=29?= <rom@rom1v.com>
+Subject: Re: [BugReport] git tag -a / git show
+Date: Fri, 24 Feb 2012 22:42:43 +0100
+Message-ID: <1330119763.2727.10.camel@rom-laptop>
+References: <b05f03b381140ca57a7d03a934f605bd@rom1v.com>
+	 <4F47E48D.4080501@in.waw.pl> <1330113345.2727.3.camel@rom-laptop>
+	 <20120224205203.GA21780@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 24 22:43:31 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Zbigniew =?UTF-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 24 22:43:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S12vI-0005LW-KO
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 22:43:28 +0100
+	id 1S12vT-0005Qp-1Q
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 22:43:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757286Ab2BXVnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Feb 2012 16:43:12 -0500
-Received: from tex.lwn.net ([70.33.254.29]:38363 "EHLO vena.lwn.net"
+	id S1758114Ab2BXVne convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Feb 2012 16:43:34 -0500
+Received: from rom1v.com ([78.236.177.60]:37203 "EHLO rom1v.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754766Ab2BXVnL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2012 16:43:11 -0500
-Received: from dt (localhost.localdomain [127.0.0.1])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by vena.lwn.net (Postfix) with ESMTP id 6D36B154005A;
-	Fri, 24 Feb 2012 14:43:10 -0700 (MST)
-In-Reply-To: <7v62evykrq.fsf@alter.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.8.0 (GTK+ 2.24.10; x86_64-redhat-linux-gnu)
+	id S1754766Ab2BXVnd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2012 16:43:33 -0500
+Received: from [192.168.0.101] (unknown [192.168.0.127])
+	by rom1v.com (Postfix) with ESMTPSA id 1A21910DA;
+	Fri, 24 Feb 2012 22:33:03 +0100 (CET)
+In-Reply-To: <20120224205203.GA21780@sigill.intra.peff.net>
+X-Mailer: Evolution 3.2.2-1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191488>
 
-On Fri, 24 Feb 2012 13:38:33 -0800
-Junio C Hamano <gitster@pobox.com> wrote:
+Thank you, I didn't know this '^' thing ;-)
 
-> How do you handle message threading (References: and In-Reply-To:)?
-> 
-> Would a commit on the "mainline" (a rough approximation of it would be
-> "log --first-parent" starting from the tip) form the discussion starter
-> article, and any side branch that fork from them would be a discussion
-> thread starting at the commit?
-
-There's really no threading at all at this point; it's just a linear
-series of commits-as-messages as provided by a vanilla "git log".  I could
-certainly see trying to do something fancier, if it were useful, but it's
-not something I've thought about much yet.
-
-Like I said, it's really young stuff :)
-
-jon
+Le vendredi 24 f=C3=A9vrier 2012 =C3=A0 15:52 -0500, Jeff King a =C3=A9=
+crit :
+> On Fri, Feb 24, 2012 at 08:55:45PM +0100, Romain Vimont (=C2=AEom) wr=
+ote:
+>=20
+> > Tonight, I just tried something which do exactly what I wanted to d=
+o
+> > this morning:
+> >=20
+> > $ git checkout -b temp
+> > $ git commit -a -m 'My config file with mock_data=3Dtrue'
+> > $ git tag -a v0.1 -m v0.1
+> > $ git checkout master
+> > $ git branch -D temp
+>=20
+> There is nothing at all wrong with the commands above, but you might =
+be
+> interested to know that you can do it without the temporary branch:
+>=20
+>   $ git commit -a -m 'My config...'
+>   $ git tag -m v0.1 v0.1
+>   $ git reset HEAD^
+>=20
+> The final reset will rewind your branch tip and the index state to wh=
+at
+> it was before the commit, but will leave the files in the working tre=
+e
+> untouched.
+>=20
+> -Peff
+>=20
