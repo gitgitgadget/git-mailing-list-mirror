@@ -1,76 +1,123 @@
-From: =?UTF-8?Q?Romain_Vimont_=28=C2=AEom=29?= <rom@rom1v.com>
-Subject: [BugReport] git tag -a / git show
-Date: Fri, 24 Feb 2012 11:24:48 +0100
-Message-ID: <b05f03b381140ca57a7d03a934f605bd@rom1v.com>
+From: Luc Pionchon <pionchon.luc@gmail.com>
+Subject: Re: [PATCH] pretty: add '*' modifier to add LF after non-empty
+Date: Fri, 24 Feb 2012 12:58:58 +0200
+Message-ID: <CAEYyJDyE88w2R5duQgm21w50OkU+J4qbs00=TfV=FvXPyUWaVA@mail.gmail.com>
+References: <1330002637-9347-1-git-send-email-pionchon.luc@gmail.com> <7v7gzd498r.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 24 11:44:41 2012
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 24 11:59:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0sdk-0006vG-5a
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 11:44:40 +0100
+	id 1S0ssL-0007bg-Fu
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 11:59:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753671Ab2BXKof convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Feb 2012 05:44:35 -0500
-Received: from rom1v.com ([78.236.177.60]:51045 "EHLO rom1v.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752670Ab2BXKoe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2012 05:44:34 -0500
-X-Greylist: delayed 554 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Feb 2012 05:44:34 EST
-Received: by rom1v.com (Postfix, from userid 33)
-	id 6C36A10DA; Fri, 24 Feb 2012 11:24:48 +0100 (CET)
-X-PHP-Originating-Script: 1000:main.inc
-X-Sender: rom@rom1v.com
-User-Agent: Roundcube Webmail/0.7
+	id S1756714Ab2BXK7l convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Feb 2012 05:59:41 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:48638 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751653Ab2BXK7k convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2012 05:59:40 -0500
+Received: by lagu2 with SMTP id u2so2652635lag.19
+        for <git@vger.kernel.org>; Fri, 24 Feb 2012 02:59:38 -0800 (PST)
+Received-SPF: pass (google.com: domain of pionchon.luc@gmail.com designates 10.112.99.231 as permitted sender) client-ip=10.112.99.231;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of pionchon.luc@gmail.com designates 10.112.99.231 as permitted sender) smtp.mail=pionchon.luc@gmail.com; dkim=pass header.i=pionchon.luc@gmail.com
+Received: from mr.google.com ([10.112.99.231])
+        by 10.112.99.231 with SMTP id et7mr663656lbb.57.1330081178549 (num_hops = 1);
+        Fri, 24 Feb 2012 02:59:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=UcPMUd4bhD2WEsoJjEnB4WpIA/3+yYPvvWJpr8fbFls=;
+        b=RKItVCLFnaCv56eyxd196T75fZvTODHY74KgUGYy0Dz1FC+dYsTsNMqST5/nLzpSKj
+         mI1IbvZTad+OSYZvQVCvbaJmhkACJdkYpysdVuHoJbYa2GKpvBpYOCRpRiD0T/ys9ZMv
+         bgloQCanc+/6tSLsSndCLdkPOrnpzd2nrm3mM=
+Received: by 10.112.99.231 with SMTP id et7mr554799lbb.57.1330081178479; Fri,
+ 24 Feb 2012 02:59:38 -0800 (PST)
+Received: by 10.152.21.165 with HTTP; Fri, 24 Feb 2012 02:58:58 -0800 (PST)
+In-Reply-To: <7v7gzd498r.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191428>
 
-$ git --version
-git version 1.7.5.4
+On Thu, Feb 23, 2012 at 21:53, Junio C Hamano <gitster@pobox.com> wrote=
+:
+>
+> Luc Pionchon <pionchon.luc@gmail.com> writes:
+>
+> > Add the '*' modifier, similar to the '+' modifier,
+> > to add a line-feed after a non-empty placeholder.
+>
+> Hrm, I thought I designed the plus and minus fairly carefully so that
+> nobody needs to add this later.
+>
+> Wouldn't it be sufficient to write
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0Foo%n%-d
+>
+>
+> that says "We usually have LF after Foo, and write %d after that, but=
+ we
+> might not have anything interesting in %d at all, in which case we do=
+n't
+> add that %n"?
 
-$ git log --pretty=3Donline
-0ef41513d0b6d0ad28f21d0ac1da7096ad1dc6ff This is the last commit
-a4702c69c28484d357179166cf3b116764da20a4 This is a commit
+What I want is a LF after the non empty, rather than before.
+It seems to me that %n%-d is equivalent to %+d,
+or did I miss something?
 
-Now, I edit some files (for example in a config file "mock_data=3Dtrue"=
-),=20
-then I want to tag without commiting this change.
+See the 3 examples below, with %n%-d, %+d and %*d
 
-$ git tag -a v0.1 -m 'My v0.1 with mock data'
+$ ./git log -5 --graph --pretty=3Dformat:"%C(yellow bold)%n%-d %C(reset=
+)%s"
+*
+|\=C2=A0=C2=A0 (HEAD, origin/master, origin/HEAD, master) Sync with 1.7=
+=2E9.2
+| *
+| |=C2=A0 (v1.7.9.2, origin/maint) Git 1.7.9.2
+| *=C2=A0 completion: use tabs for indentation
+| *=C2=A0 completion: remove stale "to submit patches" documentation
+* |=C2=A0 git-p4: the option to specify 'host' is -H, not -h
 
-$ git show v0.1
-tag v0.1
-Tagger: Me <me@me.me>
-Date:   Fri Feb 24 11:23:38 2012 +0100
+$ ./git log -5 --graph --pretty=3Dformat:"%C(yellow bold)%+d %C(reset)%=
+s"
+*
+|\   (HEAD, origin/master, origin/HEAD, master) Sync with 1.7.9.2
+| *
+| |  (v1.7.9.2, origin/maint) Git 1.7.9.2
+| *  completion: use tabs for indentation
+| *  completion: remove stale "to submit patches" documentation
+* |  git-p4: the option to specify 'host' is -H, not -h
 
-     My v0.1 with mock data
-
-commit 0ef41513d0b6d0ad28f21d0ac1da7096ad1dc6ff
-Author: Me <me@me.me>
-Date:   Fri Feb 24 11:14:19 2012 +0100
-
-     This is the last commit
-
-diff --git a/myfile b/myfile
-index 8430bf6..20feeb6 100644
-=2E..
+$ ./git log -5 --graph --pretty=3Dformat:"%C(yellow bold)%*d %C(reset)%=
+s"
+*=C2=A0=C2=A0=C2=A0 (HEAD, origin/master, origin/HEAD, master)
+|\=C2=A0=C2=A0 Sync with 1.7.9.2
+| *=C2=A0 (v1.7.9.2, origin/maint)
+| |=C2=A0 Git 1.7.9.2
+| *=C2=A0 completion: use tabs for indentation
+| *=C2=A0 completion: remove stale "to submit patches" documentation
+* |=C2=A0 git-p4: the option to specify 'host' is -H, not -h
 
 
-And it shows the diff between a4702c69c28484d357179166cf3b116764da20a4=20
-and 0ef41513d0b6d0ad28f21d0ac1da7096ad1dc6ff (the two last commits).
-Instead, it should show the diff between=20
-0ef41513d0b6d0ad28f21d0ac1da7096ad1dc6ff (the last commit) and v0.1 (th=
-e=20
-tag).
+Also as a side note, I noticed that color is lost after new lines.
 
-Best regards,
-=C2=AEom
+>
+> > +test_expect_success 'add LF after non-empty (1) (empty)' '
+> > + =C2=A0 =C2=A0 git show -s --pretty=3Dformat:"%*d%s%nfoo%n" HEAD^^=
+ >actual &&
+>
+> Shouldn't this be equivalent to "%n%-d%s%nfoo%n", which in turn is co=
+vered
+> by one of the previous tests (del LF before empty)?
+
+I think the later is equivalent to %+d%s%nfoo%n, am I wrong?
