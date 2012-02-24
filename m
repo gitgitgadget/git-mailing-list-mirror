@@ -1,83 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: [BUG?] bulk checkin does not respect filters
-Date: Thu, 23 Feb 2012 22:02:45 -0500
-Message-ID: <20120224030244.GA15742@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG?] bulk checkin does not respect filters
+Date: Thu, 23 Feb 2012 19:17:49 -0800
+Message-ID: <7vvcmw2a3m.fsf@alter.siamese.dyndns.org>
+References: <20120224030244.GA15742@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 24 04:03:29 2012
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 24 04:18:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0lRJ-0007eA-Ix
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 04:03:22 +0100
+	id 1S0lfS-0007Ws-4J
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 04:17:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754184Ab2BXDCr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Feb 2012 22:02:47 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49289
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753026Ab2BXDCr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Feb 2012 22:02:47 -0500
-Received: (qmail 19708 invoked by uid 107); 24 Feb 2012 03:02:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 23 Feb 2012 22:02:48 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Feb 2012 22:02:45 -0500
-Content-Disposition: inline
+	id S1755108Ab2BXDRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Feb 2012 22:17:52 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43678 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754817Ab2BXDRv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Feb 2012 22:17:51 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 158EF7481;
+	Thu, 23 Feb 2012 22:17:51 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FMQpjxCcHCy8QqS9vsGLhsIUlZI=; b=UTcIdb
+	Rx59NTGreBu4HyTSKR5E1f6+ufWmGoRSytnWoJnECO/Wt8xLAh/VvrDB+zT2EpET
+	1ETmif8W+DlAM9KiqrPccJM2gIJ7O7oWutECQHlk+l8M+/SKLL6iw6kKjcOI6ZHU
+	nmvR2oWMUtvfkRKqs93aHGdWMIKWB+XT2qRFI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jv7H58ZCT2Oy3za2vUdCsStViDBxEXmo
+	jIR5c1ReZG/eRroC8zt9bxaI9MmLU41nXSQeRbEC1xy9e2+I1UC66iScVv++yJzx
+	W8yvpKpVRN/CznYgMnM/O5pvdJUpPDo4XWf2rlI/Q8ZKNCNW6P+SNpWuEab00qdO
+	AaqXAOZGxx0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E27D7480;
+	Thu, 23 Feb 2012 22:17:51 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6F866747E; Thu, 23 Feb 2012
+ 22:17:50 -0500 (EST)
+In-Reply-To: <20120224030244.GA15742@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 23 Feb 2012 22:02:45 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 21E6497C-5E96-11E1-8ED0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191412>
 
-If I do this:
+Jeff King <peff@peff.net> writes:
 
-  git init repo &&
-  cd repo &&
-  echo foo >small &&
-  cat small small small small >large &&
-  echo '* filter=foo2bar' >.gitattributes &&
-  git config filter.foo2bar.clean 'sed s/foo/bar/' &&
-  git config core.bigfilethreshold 10 &&
-  git add . &&
-  echo "===> small" && git cat-file blob :small
-  echo "===> large" && git cat-file blob :large
+> Thoughts? Was this intentional, or just overlooked?
 
-the output I get is:
+This is intentional in the sense it is not worth worrying about (I
+personally consider large and binary gunk equivalent and something nobody
+should care about anything more than 1. what the exact contents it had at
+each point in history and 2. if it did or did not change between two
+versions, but definitely not 3. how different these two versions were),
+and does not deserve the complexity to support filtering and textconv'ing.
 
-  ===> small
-  bar
-  ===> large
-  foo
-  foo
-  foo
-  foo
+If somebody strongly feels about lifting the limitation with a clean patch
+that does not harm the common case codepaths, patches are welcome, but I
+am not planning to do it myself ;-)
 
-I.e., the clean filter is not applied to the bulk checkin file. Nor can
-it be easily, because we need to know the size of the file to write the
-blob header, and we don't know that until we see all of the filter's
-output.
-
-In practice, I don't know if this is a huge deal, as people aren't going
-to be asking to de-CRLF files that actually cross the 512M
-bigfilethreshold (OTOH, I seem to recall there are some filters floating
-around for normalizing gzip'd files, which could plausibly be gigantic).
-
-But it seems like the right choice when we see this conflict is not
-"don't do filters for streaming checkin", but rather "don't do streaming
-checkin when filters are in use" (because streaming is an optimization,
-and filters are about correctness).
-
-It would be even nicer if filters could play well with bulk checkin, but
-I think that would involve streaming to a tempfile, checking the size of
-the file, and then streaming that into an object. Which is better than
-putting the whole thing in memory if it would involve swapping, but
-probably worse than doing so if you can possibly fit the whole thing in
-(because you're doing a ton of extra I/O for the tempfile).
-
-Thoughts? Was this intentional, or just overlooked?
-
--Peff
+It is worth documenting this limitation, though.
