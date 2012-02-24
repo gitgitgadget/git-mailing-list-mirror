@@ -1,154 +1,172 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: git-subtree Ready #2
-Date: Thu, 23 Feb 2012 20:19:25 -0500
-Message-ID: <CAHqTa-2s1xbAfNvjD7cXBe2TBMs1985nag1NOYVfE+dATvfEWA@mail.gmail.com>
-References: <877gztmfwy.fsf@smith.obbligato.org> <8739acra5j.fsf@smith.obbligato.org>
- <20120215050855.GB29902@sigill.intra.peff.net> <87sjicpsr1.fsf@smith.obbligato.org>
- <87ty2ro1zf.fsf@smith.obbligato.org> <20120220205346.GA6335@sigill.intra.peff.net>
- <7vd399jdwc.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] index-pack: remove real_type from struct object_entry
+Date: Fri, 24 Feb 2012 09:42:00 +0700
+Message-ID: <1330051320-19043-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
-	"David A. Greene" <greened@obbligato.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 24 02:19:53 2012
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 24 03:43:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0jp9-0002uH-UW
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 02:19:52 +0100
+	id 1S0l7m-0003eL-10
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 03:43:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756845Ab2BXBTr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Feb 2012 20:19:47 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:40048 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756812Ab2BXBTp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Feb 2012 20:19:45 -0500
-Received: by yenm8 with SMTP id m8so935009yen.19
-        for <git@vger.kernel.org>; Thu, 23 Feb 2012 17:19:45 -0800 (PST)
-Received-SPF: pass (google.com: domain of apenwarr@gmail.com designates 10.101.93.2 as permitted sender) client-ip=10.101.93.2;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of apenwarr@gmail.com designates 10.101.93.2 as permitted sender) smtp.mail=apenwarr@gmail.com; dkim=pass header.i=apenwarr@gmail.com
-Received: from mr.google.com ([10.101.93.2])
-        by 10.101.93.2 with SMTP id v2mr100588anl.5.1330046385329 (num_hops = 1);
-        Thu, 23 Feb 2012 17:19:45 -0800 (PST)
+	id S1754295Ab2BXCmj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Feb 2012 21:42:39 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:41251 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754204Ab2BXCmX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Feb 2012 21:42:23 -0500
+Received: by pbcun15 with SMTP id un15so2104713pbc.19
+        for <git@vger.kernel.org>; Thu, 23 Feb 2012 18:42:22 -0800 (PST)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.68.216.225 as permitted sender) client-ip=10.68.216.225;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.68.216.225 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
+Received: from mr.google.com ([10.68.216.225])
+        by 10.68.216.225 with SMTP id ot1mr1926228pbc.25.1330051342862 (num_hops = 1);
+        Thu, 23 Feb 2012 18:42:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=QMNE0F83jOY+QCEKW3/KXtV2uk/M6BX7NRbuSHZWO5c=;
-        b=F3GdYiCZNEQ/MLinHKMk6IJZ5q0IbSON+QWlSzTDf1d1xM4XUH3wyw/HJ4bJihgQ98
-         F4se7J7i0kGI0kvkAKj6xGZm2p5LyFIPLXpFTiiHOmo2CJPannWZqIdL/SRT2B4nqhOM
-         ufop9Qvhe887K0B87DA+dLW6HZwpox9889V6A=
-Received: by 10.101.93.2 with SMTP id v2mr77693anl.5.1330046385213; Thu, 23
- Feb 2012 17:19:45 -0800 (PST)
-Received: by 10.146.112.6 with HTTP; Thu, 23 Feb 2012 17:19:25 -0800 (PST)
-In-Reply-To: <7vd399jdwc.fsf@alter.siamese.dyndns.org>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=V0tvYkZLf5AAoBM2BZ18STYF/P+5H+yJPKvuSOsirE8=;
+        b=amLGVDklJCWU+Lvdmp8n4p9dLxpxqX1MAIW+e71JmgbPtrrdcJlg0ur17zrya28BeO
+         s/UppaSawV6+5JZcogD6K5FFkgBc5jybnYUXfy/0dYBbvgwG/anfD7qxxXzbhzS1PXge
+         0zDa9f5m+W0/XSohkgZU8/70Il7hI0C1tElyc=
+Received: by 10.68.216.225 with SMTP id ot1mr1561602pbc.25.1330051342809;
+        Thu, 23 Feb 2012 18:42:22 -0800 (PST)
+Received: from pclouds@gmail.com ([113.161.77.29])
+        by mx.google.com with ESMTPS id a1sm3012901pbj.72.2012.02.23.18.42.18
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 23 Feb 2012 18:42:21 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 24 Feb 2012 09:42:02 +0700
+X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191410>
 
-On Mon, Feb 20, 2012 at 6:14 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> It sounds like the simplest and cleanest would be to treat it as if i=
-ts
-> current version came as a patch submission, cook it just like any oth=
-er
-> topic in 'pu' down to 'next' down to eventually 'master', with the us=
-ual
-> review cycle of pointing out what is wrong and needs fixing followed =
-by a
-> series of re-rolls.
+Since ce3f6dc (fix multiple issues in index-pack), real_type is
+identical to type, there's no reason to keep it.
 
-Yeah, my original intent with git-subtree was to one day submit it as
-basically a single patch against git.  That's why I have some slightly
-suspicious commit messages in there (though in my defense, I think
-*most* of the commit messages are quite sensible :)).
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ I'm pretty sure I read it right (i.e. type =3D=3D real_type), but I ma=
+y
+ have overlooked something. Not so sure why real_type was introduced
+ in the first place..
 
-> After looking at the history of subtree branch there, however, I agre=
-e
-> that it would not help anybody to have its history in my tree with lo=
-g
-> messages like these (excerpt from shortlog output):
-> [...]
-> =A0 =A0 =A0Docs: when pushing to github, the repo path needs to end i=
-n .git
-> [...]
+ builtin/index-pack.c |   16 ++++++----------
+ 1 files changed, 6 insertions(+), 10 deletions(-)
 
-That commit message in particular I thought was perfectly fine; it's
-specifically a fix to the git-subtree docs to clarify a question from
-an actual user.
-
-Overall I agree that there's little benefit in preserving the history,
-at least as far as I can see, *except* that some code changes were
-submitted by people other than me and squashing those changes might
-conceivably cause licensing confusion down the road.  It's probably a
-fairly quick exercise with git-filter-branch to get rid of the more
-egregious commit message problems, if that's what we want to do.  (In
-particular, just expurgating the entire 'todo' file from the history
-probably makes plenty of sense.)
-
-There's no value I can see in being able to do future merges from
-outside the tree, so a filter-branch or rebase before merging should
-be pretty harmless.
-
-> The total amount of change does not look too bad, either:
->
-> =A0 =A0$ git diff --stat master...origin/subtree
-> =A0 =A0 contrib/subtree/.gitignore =A0 =A0 =A0 =A0 | =A0 =A05 +
-> =A0 =A0 contrib/subtree/COPYING =A0 =A0 =A0 =A0 =A0 =A0| =A0339 +++++=
-++++++++++++
-> =A0 =A0 contrib/subtree/Makefile =A0 =A0 =A0 =A0 =A0 | =A0 45 +++
-> =A0 =A0 contrib/subtree/README =A0 =A0 =A0 =A0 =A0 =A0 | =A0 =A08 +
-> =A0 =A0 contrib/subtree/git-subtree.sh =A0 =A0 | =A0712 +++++++++++++=
-+++++++++++++++++++++++
-> =A0 =A0 contrib/subtree/git-subtree.txt =A0 =A0| =A0366 +++++++++++++=
-+++++
-> =A0 =A0 contrib/subtree/t/Makefile =A0 =A0 =A0 =A0 | =A0 71 ++++
-> =A0 =A0 contrib/subtree/t/t7900-subtree.sh | =A0508 +++++++++++++++++=
-++++++++
-> =A0 =A0 contrib/subtree/todo =A0 =A0 =A0 =A0 =A0 =A0 =A0 | =A0 50 +++
-> =A0 =A0 t/test-lib.sh =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0| =A0=
- 11 +-
-> =A0 =A0 10 files changed, 2114 insertions(+), 1 deletion(-)
-
-Note that COPYING, .gitignore, Makefile, t/Makefile, todo, and README
-should probably be ditched if it weren't going into contrib.  The
-interesting files are git-subtree.{sh,txt} and t7900-subtree.sh.
-
-> I haven't looked at the script fully, but it has an issue
-> from its first line, which is marked with "#!/bin/bash". =A0It is unc=
-lear if
-> it is infested by bash-isms beyond repair (in which case "#!/bin/bash=
-" is
-> fine), or it was written portably but was marked with "#!/bin/bash" j=
-ust
-> by inertia.
-
-I'm generally pretty careful to avoid bashisms, but since my /bin/sh
-is bash, I usually mark scripts with /bin/bash just to be safe until
-someone has actually verified them with a non-bash shell.  I expect
-few if any problems with that part.
-
->=A0A patch that corresponds to the above diffstat immediately
-> shows many style issues including trailing eye-sore whitespaces.
->
-> It seems that it is even capable of installing from contrib/subtree, =
-so
-> keeping it in contrib/ while many issues it may have gets fixed would=
- not
-> hurt the original goal of giving the script more visibility.
-
-Personally, I would prefer to just iterate the patch a few times to
-correct the coding style problems you see, rather than merging into
-contrib where it might be forgotten rather than fixed.  As Peff
-alluded, people who want to install it separately from git already
-can; if we're going to merge it into git, let's do it right.
-
-Have fun,
-
-AVery
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index dd1c5c9..2db9a35 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -18,7 +18,6 @@ struct object_entry {
+ 	unsigned long size;
+ 	unsigned int hdr_size;
+ 	enum object_type type;
+-	enum object_type real_type;
+ 	unsigned delta_depth;
+ 	int base_object_no;
+ };
+@@ -581,7 +580,6 @@ static void resolve_delta(struct object_entry *delt=
+a_obj,
+ {
+ 	void *base_data, *delta_data;
+=20
+-	delta_obj->real_type =3D base->obj->real_type;
+ 	delta_obj->delta_depth =3D base->obj->delta_depth + 1;
+ 	if (deepest_delta < delta_obj->delta_depth)
+ 		deepest_delta =3D delta_obj->delta_depth;
+@@ -594,7 +592,7 @@ static void resolve_delta(struct object_entry *delt=
+a_obj,
+ 	free(delta_data);
+ 	if (!result->data)
+ 		bad_object(delta_obj->idx.offset, "failed to apply delta");
+-	sha1_object(result->data, result->size, delta_obj->real_type,
++	sha1_object(result->data, result->size, delta_obj->type,
+ 		    delta_obj->idx.sha1);
+ 	nr_resolved_deltas++;
+ }
+@@ -626,7 +624,7 @@ static struct base_data *find_unresolved_deltas_1(s=
+truct base_data *base,
+ 		struct object_entry *child =3D objects + deltas[base->ref_first].obj=
+_no;
+ 		struct base_data *result =3D alloc_base_data();
+=20
+-		assert(child->real_type =3D=3D OBJ_REF_DELTA);
++		assert(child->type =3D=3D OBJ_REF_DELTA);
+ 		resolve_delta(child, base, result);
+ 		if (base->ref_first =3D=3D base->ref_last && base->ofs_last =3D=3D -=
+1)
+ 			free_base_data(base);
+@@ -639,7 +637,7 @@ static struct base_data *find_unresolved_deltas_1(s=
+truct base_data *base,
+ 		struct object_entry *child =3D objects + deltas[base->ofs_first].obj=
+_no;
+ 		struct base_data *result =3D alloc_base_data();
+=20
+-		assert(child->real_type =3D=3D OBJ_OFS_DELTA);
++		assert(child->type =3D=3D OBJ_OFS_DELTA);
+ 		resolve_delta(child, base, result);
+ 		if (base->ofs_first =3D=3D base->ofs_last)
+ 			free_base_data(base);
+@@ -702,7 +700,6 @@ static void parse_pack_objects(unsigned char *sha1)
+ 	for (i =3D 0; i < nr_objects; i++) {
+ 		struct object_entry *obj =3D &objects[i];
+ 		void *data =3D unpack_raw_entry(obj, &delta->base);
+-		obj->real_type =3D obj->type;
+ 		if (is_delta_type(obj->type)) {
+ 			nr_deltas++;
+ 			delta->obj_no =3D i;
+@@ -805,7 +802,6 @@ static struct object_entry *append_obj_to_pack(stru=
+ct sha1file *f,
+ 	obj[0].size =3D size;
+ 	obj[0].hdr_size =3D n;
+ 	obj[0].type =3D type;
+-	obj[0].real_type =3D type;
+ 	obj[1].idx.offset =3D obj[0].idx.offset + n;
+ 	obj[1].idx.offset +=3D write_compressed(f, buf, size);
+ 	obj[0].idx.crc32 =3D crc32_end(f);
+@@ -838,7 +834,7 @@ static void fix_unresolved_deltas(struct sha1file *=
+f, int nr_unresolved)
+ 	 */
+ 	sorted_by_pos =3D xmalloc(nr_unresolved * sizeof(*sorted_by_pos));
+ 	for (i =3D 0; i < nr_deltas; i++) {
+-		if (objects[deltas[i].obj_no].real_type !=3D OBJ_REF_DELTA)
++		if (objects[deltas[i].obj_no].type !=3D OBJ_REF_DELTA)
+ 			continue;
+ 		sorted_by_pos[n++] =3D &deltas[i];
+ 	}
+@@ -849,7 +845,7 @@ static void fix_unresolved_deltas(struct sha1file *=
+f, int nr_unresolved)
+ 		enum object_type type;
+ 		struct base_data *base_obj =3D alloc_base_data();
+=20
+-		if (objects[d->obj_no].real_type !=3D OBJ_REF_DELTA)
++		if (objects[d->obj_no].type !=3D OBJ_REF_DELTA)
+ 			continue;
+ 		base_obj->data =3D read_sha1_file(d->base.sha1, &type, &base_obj->si=
+ze);
+ 		if (!base_obj->data)
+@@ -1053,7 +1049,7 @@ static void show_pack_info(int stat_only)
+ 			continue;
+ 		printf("%s %-6s %lu %lu %"PRIuMAX,
+ 		       sha1_to_hex(obj->idx.sha1),
+-		       typename(obj->real_type), obj->size,
++		       typename(obj->type), obj->size,
+ 		       (unsigned long)(obj[1].idx.offset - obj->idx.offset),
+ 		       (uintmax_t)obj->idx.offset);
+ 		if (is_delta_type(obj->type)) {
+--=20
+1.7.3.1.256.g2539c.dirty
