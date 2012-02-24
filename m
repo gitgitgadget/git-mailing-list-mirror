@@ -1,91 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG?] bulk checkin does not respect filters
-Date: Thu, 23 Feb 2012 19:42:11 -0800
-Message-ID: <7vr4xk28z0.fsf@alter.siamese.dyndns.org>
-References: <20120224030244.GA15742@sigill.intra.peff.net>
- <7vvcmw2a3m.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] index-pack: remove real_type from struct object_entry
+Date: Fri, 24 Feb 2012 13:08:46 +0700
+Message-ID: <CACsJy8DT7QyLHbUQft2zbOm9Nv94b9trakk+nEfu4zT_xdf1AA@mail.gmail.com>
+References: <1330051320-19043-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 24 04:42:21 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 24 07:09:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0m31-0005YM-Op
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 04:42:20 +0100
+	id 1S0oLM-0000Lh-96
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 07:09:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754983Ab2BXDmP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Feb 2012 22:42:15 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53880 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753026Ab2BXDmO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Feb 2012 22:42:14 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F26B787C;
-	Thu, 23 Feb 2012 22:42:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9ftZIGgZrmgB9BHXGdtw4VrlNIQ=; b=EAtmJK
-	YQy2ILLLWj8MuyiQsGWK+aZ8WU353zfSPQASzUbdq+3lUBvUel6LrXyYEnBRd11d
-	UdRMUW231rVQJZ1a+S886jT554UYoePQ5rPpDns40EvQpnO+O0MzUlKR9aqr6sRj
-	9m5/Th3FzmttAAKu465s5yNbVts3uQrxDantE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=P5lgQLoOe5KEmR6pLcMPEYc3zTjVNK55
-	VGf62TouHz+SpU251gvOFoBQDSuyONRg+Wy+e3MEbrk8Q/9XyXj1FWNsF/GxNxqi
-	2lUC0noWoygF7ygq1srzvHhC4stYmkcLp5UG9rYi5wis1saf8mdz4g+YFcuxxeKe
-	ZgFsoBdQUIU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 05F4A787B;
-	Thu, 23 Feb 2012 22:42:14 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6841F7879; Thu, 23 Feb 2012
- 22:42:13 -0500 (EST)
-In-Reply-To: <7vvcmw2a3m.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 23 Feb 2012 19:17:49 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 89E5E296-5E99-11E1-8D71-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754667Ab2BXGJS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Feb 2012 01:09:18 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:43152 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754600Ab2BXGJR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Feb 2012 01:09:17 -0500
+Received: by werb13 with SMTP id b13so1213764wer.19
+        for <git@vger.kernel.org>; Thu, 23 Feb 2012 22:09:16 -0800 (PST)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.180.92.227 as permitted sender) client-ip=10.180.92.227;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.180.92.227 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
+Received: from mr.google.com ([10.180.92.227])
+        by 10.180.92.227 with SMTP id cp3mr1813366wib.13.1330063756314 (num_hops = 1);
+        Thu, 23 Feb 2012 22:09:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=aRBr6u/iTiSt3oMrTQ3jza2PqRwEe4JsFrPWc4ulEjk=;
+        b=sAcJ/9DsOO+DG8hn0mlBEYLAgndnvqL30qzAnVdjAT0xwB8k1ywr4i3gkniZsyKchq
+         74ZQT7jN4Vxf97E3gl29qIzqxyY3rNSFpVAZVLSnUPJmQNH8JMqEGfGbWLzN46rMq1Gb
+         PP2M3zf4k3btZEHnGsImBQy6OkcfZVGNkU6JM=
+Received: by 10.180.92.227 with SMTP id cp3mr1476027wib.13.1330063756242; Thu,
+ 23 Feb 2012 22:09:16 -0800 (PST)
+Received: by 10.223.13.5 with HTTP; Thu, 23 Feb 2012 22:08:46 -0800 (PST)
+In-Reply-To: <1330051320-19043-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191414>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Jeff King <peff@peff.net> writes:
+2012/2/24 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>=
+:
+> @@ -581,7 +580,6 @@ static void resolve_delta(struct object_entry *de=
+lta_obj,
+> =C2=A0{
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0void *base_data, *delta_data;
 >
->> Thoughts? Was this intentional, or just overlooked?
+> - =C2=A0 =C2=A0 =C2=A0 delta_obj->real_type =3D base->obj->real_type;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0delta_obj->delta_depth =3D base->obj->delt=
+a_depth + 1;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (deepest_delta < delta_obj->delta_depth=
+)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0deepest_delta =
+=3D delta_obj->delta_depth;
 
-It is a bit curious that anything filtered even goes to the streaming
-codepath, given this piece of code in write_entry() in entry.c:
-
-	if (ce_mode_s_ifmt == S_IFREG) {
-		struct stream_filter *filter = get_stream_filter(path, ce->sha1);
-		if (filter &&
-		    !streaming_write_entry(ce, path, filter,
-					   state, to_tempfile,
-					   &fstat_done, &st))
-			goto finish;
-	}
-
-and get_stream_filter() in convert.c has an explicit exception for this
-case at the very beginning:
-
-struct stream_filter *get_stream_filter(const char *path, const unsigned char *sha1)
-{
-	struct conv_attrs ca;
-	enum crlf_action crlf_action;
-	struct stream_filter *filter = NULL;
-
-	convert_attrs(&ca, path);
-
-	if (ca.drv && (ca.drv->smudge || ca.drv->clean))
-		return filter;
-
-to make sure that it says "No streaming filtering is possible, do not even
-attempt to call streaming_write_entry()".
+This is wrong. Sorry for the noise.
+--=20
+Duy
