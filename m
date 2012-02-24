@@ -1,259 +1,414 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] Perform cheaper connectivity check when pack is used as medium
-Date: Mon, 27 Feb 2012 22:39:51 +0700
-Message-ID: <1330357191-32011-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 27 16:41:08 2012
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: [PATCH v4] contrib: added git-diffall
+Date: Fri, 24 Feb 2012 14:48:57 -0500
+Message-ID: <1330112937-7134-1-git-send-email-tim.henigan@gmail.com>
+Cc: davvid@gmail.com, stefano.lattarini@gmail.com,
+	tim.henigan@gmail.com
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Feb 27 17:19:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S22h8-00048M-U8
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 16:40:59 +0100
+	id 1S23Ig-0001lX-Fi
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 17:19:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753401Ab2B0Pkx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Feb 2012 10:40:53 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:36762 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753057Ab2B0Pkw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2012 10:40:52 -0500
-Received: by daed14 with SMTP id d14so1220484dae.19
-        for <git@vger.kernel.org>; Mon, 27 Feb 2012 07:40:52 -0800 (PST)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.68.129.137 as permitted sender) client-ip=10.68.129.137;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.68.129.137 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
-Received: from mr.google.com ([10.68.129.137])
-        by 10.68.129.137 with SMTP id nw9mr41848376pbb.73.1330357252312 (num_hops = 1);
-        Mon, 27 Feb 2012 07:40:52 -0800 (PST)
+	id S1753844Ab2B0QTl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Feb 2012 11:19:41 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:48990 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753690Ab2B0QTk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Feb 2012 11:19:40 -0500
+Received: by vbbff1 with SMTP id ff1so973737vbb.19
+        for <git@vger.kernel.org>; Mon, 27 Feb 2012 08:19:39 -0800 (PST)
+Received-SPF: pass (google.com: domain of tim.henigan@gmail.com designates 10.52.35.69 as permitted sender) client-ip=10.52.35.69;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of tim.henigan@gmail.com designates 10.52.35.69 as permitted sender) smtp.mail=tim.henigan@gmail.com; dkim=pass header.i=tim.henigan@gmail.com
+Received: from mr.google.com ([10.52.35.69])
+        by 10.52.35.69 with SMTP id f5mr7492696vdj.29.1330359579833 (num_hops = 1);
+        Mon, 27 Feb 2012 08:19:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=LyNqFDOCh9rGSqNkL6HSxJqdQEMuRFxHlh6lTMaQk94=;
-        b=MjIYwQk5LJQUgO9mu710UPCfxh4V+MiK8Q4DZGbrygPSglOgpPbrUE/mlWhMjphuD5
-         NxwktFBFIWM8jRf93L/KbkCin++6MLgxWbRv0XfZ2QiqPo+wrtPNWvKSY52RstErPWkz
-         RiJe48lolv0otgtLT/7AFC/JwjNw9RmhZO2cQ=
-Received: by 10.68.129.137 with SMTP id nw9mr35572843pbb.73.1330357252216;
-        Mon, 27 Feb 2012 07:40:52 -0800 (PST)
-Received: from pclouds@gmail.com ([115.74.56.186])
-        by mx.google.com with ESMTPS id d10sm3459601pbr.59.2012.02.27.07.40.42
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=q9uIKfexYXdVBOUM+xDqpRtcXIxISYzY7U7HWx13bgo=;
+        b=q14IERpXvBJfqF88CwPO5WpBzFXgi6CkxI5ThNlH74rUIqeONJUV8iNQQjYOKicXpm
+         M3XHVpD8C7Ihj7DpbgPfSGhUFk22Rkimtblt55p5nmifAuKMHPWSlaQky95dfAvgS9BW
+         yRBsmo77dLhTF5HPnmB1AnJOGU66bR3834nuI=
+Received: by 10.52.35.69 with SMTP id f5mr6070902vdj.29.1330359579676;
+        Mon, 27 Feb 2012 08:19:39 -0800 (PST)
+Received: from localhost (adsl-99-38-69-118.dsl.sfldmi.sbcglobal.net. [99.38.69.118])
+        by mx.google.com with ESMTPS id ei6sm11216156vdc.6.2012.02.27.08.19.37
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 27 Feb 2012 07:40:51 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 27 Feb 2012 22:39:52 +0700
-X-Mailer: git-send-email 1.7.8.36.g69ee2
+        Mon, 27 Feb 2012 08:19:38 -0800 (PST)
+X-Mailer: git-send-email 1.7.9.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191627>
 
-When we fetch or push, usually "git rev-list --verify-objects --not
---all --stdin" is used to make sure that there are no gaps between
-existing refs and new refs. --verify-objects calls parse_object(),
-which internally calls check_sha1_signature() to verify object content
-matches its SHA-1 signature.
+The 'git difftool' command allows the user to view diffs using an
+external tool.  It runs a separate instance of the tool for each
+file in the diff. This makes it tedious to review changes spanning
+multiple files.
 
-check_sha1_signature() is an expensive operation, especially when new
-refs are far away from existing ones because all objects in between
-are re-hashed. However, if we receive new objects by pack, we can
-skip the operation because packs themselves do not contain SHA-1
-signatures. All signatures are recreated by index-pack's hashing the
-pack, which we can trust.
+The 'git-diffall' script instead prepares temporary directories
+with the files to be compared and launches a single instance of
+the external diff tool to view them (i.e. a directory diff).
 
-Detect pack transfer cases and turn --verify-objects to --objects.
---objects is similar to --verify-objects except that it does not call
-check_sha1_signature().
+The 'diff.tool' or 'merge.tool' configuration variable is used
+to specify which external tool is used.
 
-As an (extreme) example, a repository is created with only one commit:
-e83c516 (Initial revision of "git", the information manager from hell
-- 2005-04-07). The rest of git.git is fetched on top. Without the
-patch:
-
-$ time git fetch file:///home/pclouds/w/git/.git
-remote: Counting objects: 125638, done.
-remote: Compressing objects: 100% (33201/33201), done.
-remote: Total 125638 (delta 92568), reused 123517 (delta 90743)
-Receiving objects: 100% (125638/125638), 34.58 MiB | 8.07 MiB/s, done.
-Resolving deltas: 100% (92568/92568), done.
-=46rom file:///home/pclouds/w/git/
- * branch            HEAD       -> FETCH_HEAD
-
-real    1m30.972s
-user    1m31.410s
-sys     0m1.757s
-
-With the patch:
-
-$ time git fetch file:///home/pclouds/w/git/.git
-remote: Counting objects: 125647, done.
-remote: Compressing objects: 100% (33209/33209), done.
-remote: Total 125647 (delta 92576), reused 123516 (delta 90744)
-Receiving objects: 100% (125647/125647), 34.58 MiB | 7.99 MiB/s, done.
-Resolving deltas: 100% (92576/92576), done.
-=46rom file:///home/pclouds/w/git/
- * branch            HEAD       -> FETCH_HEAD
-
-real    0m51.456s
-user    0m52.737s
-sys     0m1.548s
-
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
+Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
 ---
- builtin/fetch.c        |   12 +++++++-----
- builtin/receive-pack.c |    4 ++--
- connected.c            |    5 ++++-
- connected.h            |    3 ++-
- transport.c            |    5 +++++
- transport.h            |    1 +
- 6 files changed, 21 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 65f5f9b..2b62f42 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -368,7 +368,7 @@ static int iterate_ref_map(void *cb_data, unsigned =
-char sha1[20])
- }
-=20
- static int store_updated_refs(const char *raw_url, const char *remote_=
-name,
--		struct ref *ref_map)
-+			      struct ref *ref_map, int pack_transport)
- {
- 	FILE *fp;
- 	struct commit *commit;
-@@ -389,7 +389,8 @@ static int store_updated_refs(const char *raw_url, =
-const char *remote_name,
- 		url =3D xstrdup("foreign");
-=20
- 	rm =3D ref_map;
--	if (check_everything_connected(iterate_ref_map, 0, &rm)) {
-+	if (check_everything_connected(iterate_ref_map, 0,
-+				       pack_transport ? 0 : 1, &rm)) {
- 		rc =3D error(_("%s did not send all necessary objects\n"), url);
- 		goto abort;
- 	}
-@@ -516,7 +517,7 @@ static int quickfetch(struct ref *ref_map)
- 	 */
- 	if (depth)
- 		return -1;
--	return check_everything_connected(iterate_ref_map, 1, &rm);
-+	return check_everything_connected(iterate_ref_map, 1, 0, &rm);
- }
-=20
- static int fetch_refs(struct transport *transport, struct ref *ref_map=
-)
-@@ -526,8 +527,9 @@ static int fetch_refs(struct transport *transport, =
-struct ref *ref_map)
- 		ret =3D transport_fetch_refs(transport, ref_map);
- 	if (!ret)
- 		ret |=3D store_updated_refs(transport->url,
--				transport->remote->name,
--				ref_map);
-+					  transport->remote->name,
-+					  ref_map,
-+					  is_pack_transport(transport));
- 	transport_unlock_pack(transport);
- 	return ret;
- }
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 0afb8b2..5935751 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -669,7 +669,7 @@ static void set_connectivity_errors(struct command =
-*commands)
- 	for (cmd =3D commands; cmd; cmd =3D cmd->next) {
- 		struct command *singleton =3D cmd;
- 		if (!check_everything_connected(command_singleton_iterator,
--						0, &singleton))
-+						0, 0, &singleton))
- 			continue;
- 		cmd->error_string =3D "missing necessary objects";
- 	}
-@@ -705,7 +705,7 @@ static void execute_commands(struct command *comman=
-ds, const char *unpacker_erro
-=20
- 	cmd =3D commands;
- 	if (check_everything_connected(iterate_receive_command_list,
--				       0, &cmd))
-+				       0, 0, &cmd))
- 		set_connectivity_errors(commands);
-=20
- 	if (run_receive_hook(commands, pre_receive_hook, 0)) {
-diff --git a/connected.c b/connected.c
-index d762423..6ebd330 100644
---- a/connected.c
-+++ b/connected.c
-@@ -14,7 +14,8 @@
-  *
-  * Returns 0 if everything is connected, non-zero otherwise.
-  */
--int check_everything_connected(sha1_iterate_fn fn, int quiet, void *cb=
-_data)
-+int check_everything_connected(sha1_iterate_fn fn, int quiet,
-+			       int strict, void *cb_data)
- {
- 	struct child_process rev_list;
- 	const char *argv[] =3D {"rev-list", "--verify-objects",
-@@ -26,6 +27,8 @@ int check_everything_connected(sha1_iterate_fn fn, in=
-t quiet, void *cb_data)
- 	if (fn(cb_data, sha1))
- 		return err;
-=20
-+	if (!strict)
-+		argv[1] =3D "--objects";
- 	if (quiet)
- 		argv[5] =3D "--quiet";
-=20
-diff --git a/connected.h b/connected.h
-index 7e4585a..1f191da 100644
---- a/connected.h
-+++ b/connected.h
-@@ -15,6 +15,7 @@ typedef int (*sha1_iterate_fn)(void *, unsigned char =
-[20]);
-  *
-  * Return 0 if Ok, non zero otherwise (i.e. some missing objects)
-  */
--extern int check_everything_connected(sha1_iterate_fn, int quiet, void=
- *cb_data);
-+extern int check_everything_connected(sha1_iterate_fn, int quiet,
-+				      int strict, void *cb_data);
-=20
- #endif /* CONNECTED_H */
-diff --git a/transport.c b/transport.c
-index 181f8f2..cd5e0ca 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1248,3 +1248,8 @@ void for_each_alternate_ref(alternate_ref_fn fn, =
-void *data)
- 	cb.data =3D data;
- 	foreach_alt_odb(refs_from_alternate_cb, &cb);
- }
+This script has been hosted on GitHub [1] since April 2010. Enough people
+have found it useful that I hope it will be considered for inclusion in
+the standard git install, either in contrib or as a new core command.
+
+Changes in v4:
+  - Corrected location of hard-coded tmp dir
+  - Renamed 'path_sep' to 'dashdash_seen'
+  - Documented '--extcmd' in the README
+  - Changed test for '--extcmd=<command>' to use $#
+  - Documented that '--' is mandatory if a pathspec is given
+
+  v4 matches commit 251177b8e4 on GitHub [1].
+
+Changes in v3:
+  - Fixed a bug that caused failures if file names included spaces
+  - Added unique suffix to tmp dir name (tmp/git-diffall-tmp.$$)
+  - Renamed "common_ancestor" to "merge_base"
+  - Cleaned up README to be more accurate
+  - Added useful error message if --extcmd is final option, but no
+    command was specified
+  - Removed spaces after redirection operators
+
+  v3 matches commit f36e4881e5 on GitHub [1].
+
+Changes in v2:
+  - Changed to #!/bin/sh
+  - Eliminated use of 'which' statements
+  - Fixed trap function to actually run on abnormal exit
+  - Simplified path concatenation logic ($IFS)
+  - Corrected indentation errors
+  - Improved readability of while loop
+  - Cleaned up quoting of variables
+
+  v2 matches commit 5d4b90de3 on GitHub [1].
+
+[1]: https://github.com/thenigan/git-diffall
+
+
+ contrib/diffall/README      |   31 +++++
+ contrib/diffall/git-diffall |  261 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 292 insertions(+), 0 deletions(-)
+ create mode 100644 contrib/diffall/README
+ create mode 100755 contrib/diffall/git-diffall
+
+diff --git a/contrib/diffall/README b/contrib/diffall/README
+new file mode 100644
+index 0000000..507f17d
+--- /dev/null
++++ b/contrib/diffall/README
+@@ -0,0 +1,31 @@
++The git-diffall script provides a directory based diff mechanism
++for git.
 +
-+int is_pack_transport(const struct transport *transport)
-+{
-+	return transport->fetch =3D=3D fetch_refs_via_pack;
++To determine what diff viewer is used, the script requires either
++the 'diff.tool' or 'merge.tool' configuration option to be set.
++
++This script is compatible with most common forms used to specify a
++range of revisions to diff:
++
++  1. git diffall: shows diff between working tree and staged changes
++  2. git diffall --cached [<commit>]: shows diff between staged
++     changes and HEAD (or other named commit)
++  3. git diffall <commit>: shows diff between working tree and named
++     commit
++  4. git diffall <commit> <commit>: show diff between two named commits
++  5. git diffall <commit>..<commit>: same as above
++  6. git diffall <commit>...<commit>: show the changes on the branch
++     containing and up to the second, starting at a common ancestor
++     of both <commit>
++
++Note: all forms take an optional path limiter [-- <path>*]
++
++The '--extcmd=<command>' option allows the user to specify a custom
++command for viewing diffs.  When given, configured defaults are
++ignored and the script runs $command $LOCAL $REMOTE.  Additionally,
++$BASE is set in the environment.
++
++This script is based on an example provided by Thomas Rast on the
++Git list [1]:
++
++[1] http://thread.gmane.org/gmane.comp.version-control.git/124807
+diff --git a/contrib/diffall/git-diffall b/contrib/diffall/git-diffall
+new file mode 100755
+index 0000000..b9d51ca
+--- /dev/null
++++ b/contrib/diffall/git-diffall
+@@ -0,0 +1,261 @@
++#!/bin/sh
++# Copyright 2010 - 2012, Tim Henigan <tim.henigan@gmail.com>
++#
++# Perform a directory diff between commits in the repository using
++# the external diff or merge tool specified in the user's config.
++
++USAGE='[--cached] [--copy-back] [-x|--extcmd=<command>] <commit>{0,2} [-- <path>*]
++
++    --cached     Compare to the index rather than the working tree.
++
++    --copy-back  Copy files back to the working tree when the diff
++                 tool exits (in case they were modified by the
++                 user).  This option is only valid if the diff
++                 compared with the working tree.
++
++    -x=<command>
++    --extcmd=<command>  Specify a custom command for viewing diffs.
++                 git-diffall ignores the configured defaults and
++                 runs $command $LOCAL $REMOTE when this option is
++                 specified. Additionally, $BASE is set in the
++                 environment.
++'
++
++SUBDIRECTORY_OK=1
++. "$(git --exec-path)/git-sh-setup"
++
++TOOL_MODE=diff
++. "$(git --exec-path)/git-mergetool--lib"
++
++merge_tool="$(get_merge_tool)"
++if test -z "$merge_tool"
++then
++	echo "Error: Either the 'diff.tool' or 'merge.tool' option must be set."
++	usage
++fi
++
++start_dir=$(pwd)
++
++# needed to access tar utility
++cdup=$(git rev-parse --show-cdup) &&
++cd "$cdup" || {
++	echo >&2 "Cannot chdir to $cdup, the toplevel of the working tree"
++	exit 1
 +}
-diff --git a/transport.h b/transport.h
-index ce99ef8..7cf72ff 100644
---- a/transport.h
-+++ b/transport.h
-@@ -150,6 +150,7 @@ int transport_disconnect(struct transport *transpor=
-t);
- char *transport_anonymize_url(const char *url);
- void transport_take_over(struct transport *transport,
- 			 struct child_process *child);
-+int is_pack_transport(const struct transport *transport);
-=20
- int transport_connect(struct transport *transport, const char *name,
- 		      const char *exec, int fd[2]);
---=20
-1.7.8.36.g69ee2
++
++# mktemp is not available on all platforms (missing from msysgit)
++# Use a hard-coded tmp dir if it is not available
++tmp="$(mktemp -d -t tmp.XXXXXX 2>/dev/null)" || {
++	tmp=/tmp/git-diffall-tmp.$$
++	mkdir "$tmp" || exit 1
++}
++
++trap 'rm -rf "$tmp" 2>/dev/null' EXIT
++
++left=
++right=
++paths=
++dashdash_seen=
++compare_staged=
++merge_base=
++left_dir=
++right_dir=
++diff_tool=
++copy_back=
++
++while test $# != 0
++do
++	case "$1" in
++	-h|--h|--he|--hel|--help)
++		usage
++		;;
++	--cached)
++		compare_staged=1
++		;;
++	--copy-back)
++		copy_back=1
++		;;
++	-x|--e|--ex|--ext|--extc|--extcm|--extcmd)
++		if test $# == 1
++		then
++			echo You must specify the tool for use with --extcmd
++			usage
++		else
++			diff_tool=$2
++			shift
++		fi
++		;;
++	--)
++		dashdash_seen=1
++		;;
++	-*)
++		echo Invalid option: "$1"
++		usage
++		;;
++	*)
++		# could be commit, commit range or path limiter
++		case "$1" in
++		*...*)
++			left=${1%...*}
++			right=${1#*...}
++			merge_base=1
++			;;
++		*..*)
++			left=${1%..*}
++			right=${1#*..}
++			;;
++		*)
++			if test -n "$dashdash_seen"
++			then
++				paths="$paths$1 "
++			elif test -z "$left"
++			then
++				left=$1
++			elif test -z "$right"
++			then
++				right=$1
++			else
++				paths="$paths$1 "
++			fi
++			;;
++		esac
++		;;
++	esac
++	shift
++done
++
++# Determine the set of files which changed
++if test -n "$left" && test -n "$right"
++then
++	left_dir="cmt-$(git rev-parse --short $left)"
++	right_dir="cmt-$(git rev-parse --short $right)"
++
++	if test -n "$compare_staged"
++	then
++		usage
++	elif test -n "$merge_base"
++	then
++		git diff --name-only "$left"..."$right" -- $paths >"$tmp/filelist"
++	else
++		git diff --name-only "$left" "$right" -- $paths >"$tmp/filelist"
++	fi
++elif test -n "$left"
++then
++	left_dir="cmt-$(git rev-parse --short $left)"
++
++	if test -n "$compare_staged"
++	then
++		right_dir="staged"
++		git diff --name-only --cached "$left" -- $paths >"$tmp/filelist"
++	else
++		right_dir="working_tree"
++		git diff --name-only "$left" -- $paths >"$tmp/filelist"
++	fi
++else
++	left_dir="HEAD"
++
++	if test -n "$compare_staged"
++	then
++		right_dir="staged"
++		git diff --name-only --cached -- $paths >"$tmp/filelist"
++	else
++		right_dir="working_tree"
++		git diff --name-only -- $paths >"$tmp/filelist"
++	fi
++fi
++
++# Exit immediately if there are no diffs
++if test ! -s "$tmp/filelist"
++then
++	exit 0
++fi
++
++if test -n "$copy_back" && test "$right_dir" != "working_tree"
++then
++	echo "--copy-back is only valid when diff includes the working tree."
++	exit 1
++fi
++
++# Create the named tmp directories that will hold the files to be compared
++mkdir -p "$tmp/$left_dir" "$tmp/$right_dir"
++
++# Populate the tmp/right_dir directory with the files to be compared
++if test -n "$right"
++then
++	while read name
++	do
++		ls_list=$(git ls-tree $right "$name")
++		if test -n "$ls_list"
++		then
++			mkdir -p "$tmp/$right_dir/$(dirname "$name")"
++			git show "$right":"$name" >"$tmp/$right_dir/$name" || true
++		fi
++	done < "$tmp/filelist"
++elif test -n "$compare_staged"
++then
++	while read name
++	do
++		ls_list=$(git ls-files -- "$name")
++		if test -n "$ls_list"
++		then
++			mkdir -p "$tmp/$right_dir/$(dirname "$name")"
++			git show :"$name" >"$tmp/$right_dir/$name"
++		fi
++	done < "$tmp/filelist"
++else
++	# Mac users have gnutar rather than tar
++	(tar --ignore-failed-read -c -T "$tmp/filelist" | (cd "$tmp/$right_dir" && tar -x)) || {
++		gnutar --ignore-failed-read -c -T "$tmp/filelist" | (cd "$tmp/$right_dir" && gnutar -x)
++	}
++fi
++
++# Populate the tmp/left_dir directory with the files to be compared
++while read name
++do
++	if test -n "$left"
++	then
++		ls_list=$(git ls-tree $left "$name")
++		if test -n "$ls_list"
++		then
++			mkdir -p "$tmp/$left_dir/$(dirname "$name")"
++			git show "$left":"$name" >"$tmp/$left_dir/$name" || true
++		fi
++	else
++		if test -n "$compare_staged"
++		then
++			ls_list=$(git ls-tree HEAD "$name")
++			if test -n "$ls_list"
++			then
++				mkdir -p "$tmp/$left_dir/$(dirname "$name")"
++				git show HEAD:"$name" >"$tmp/$left_dir/$name"
++			fi
++		else
++			mkdir -p "$tmp/$left_dir/$(dirname "$name")"
++			git show :"$name" >"$tmp/$left_dir/$name"
++		fi
++	fi
++done < "$tmp/filelist"
++
++cd "$tmp"
++LOCAL="$left_dir"
++REMOTE="$right_dir"
++
++if test -n "$diff_tool"
++then
++	export BASE
++	eval $diff_tool '"$LOCAL"' '"$REMOTE"'
++else
++	run_merge_tool "$merge_tool" false
++fi
++
++# Copy files back to the working dir, if requested
++if test -n "$copy_back" && test "$right_dir" = "working_tree"
++then
++	cd "$start_dir"
++	git_top_dir=$(git rev-parse --show-toplevel)
++	find "$tmp/$right_dir" -type f |
++	while read file
++	do
++		cp "$file" "$git_top_dir/${file#$tmp/$right_dir/}"
++	done
++fi
+-- 
+1.7.9.1
