@@ -1,112 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [Not A BugReport] git tag -a / git show
-Date: Fri, 24 Feb 2012 11:50:27 -0800
-Message-ID: <7vsji0yprw.fsf@alter.siamese.dyndns.org>
+From: Romain Vimont =?ISO-8859-1?Q?=28=AEom=29?= <rom@rom1v.com>
+Subject: Re: [BugReport] git tag -a / git show
+Date: Fri, 24 Feb 2012 20:55:45 +0100
+Message-ID: <1330113345.2727.3.camel@rom-laptop>
 References: <b05f03b381140ca57a7d03a934f605bd@rom1v.com>
+	 <4F47E48D.4080501@in.waw.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>
-To: =?utf-8?Q?Romain_Vimont_=28=C2=AEom=29?= <rom@rom1v.com>
-X-From: git-owner@vger.kernel.org Fri Feb 24 20:50:40 2012
+Cc: git@vger.kernel.org
+To: Zbigniew =?UTF-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+X-From: git-owner@vger.kernel.org Fri Feb 24 20:56:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S11A3-0001Nz-OX
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 20:50:36 +0100
+	id 1S11Fz-00052c-6w
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 20:56:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757714Ab2BXTua convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Feb 2012 14:50:30 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51762 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754196Ab2BXTu3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Feb 2012 14:50:29 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68AF07ECD;
-	Fri, 24 Feb 2012 14:50:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=aZRlz8snZEVU
-	dnT4dR2wiBMXYFc=; b=nwojJq51ruAjuRHZL93XcdIrZvpuJw3kBknhCkc79eWD
-	b6CKZwxD5TPym7yhmMFZ30WGKI4o3LEJdUvAMsqco3cz7/+9ronCu6TdHD3lXY9D
-	pNChkBrZKr9Wrmd0e3i8PdWF2EGIkCXR31HK5H8tZH9q7vivfBxu4NH6tFBy414=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=EO8Bt/
-	GiWaTeqxmBJq7OznpgnHK6AzprrZoIccxBv9s52Q0xi5FFMYpJDsmkJEk4cDjneg
-	3kseFrKgBn7C3vg2Kaj4QPy7r6Y46DzQILkdTq82kUDNdWCqaws6HX4oWyJDVu2/
-	e7ew3hQMAJcYEcbCmy70rGYzJaA4wKHPpgppM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5FDCB7ECC;
-	Fri, 24 Feb 2012 14:50:29 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E584A7EC9; Fri, 24 Feb 2012
- 14:50:28 -0500 (EST)
-In-Reply-To: <b05f03b381140ca57a7d03a934f605bd@rom1v.com> ("Romain Vimont
- =?utf-8?Q?=28=C2=AEom=29=22's?= message of "Fri, 24 Feb 2012 11:24:48 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CD859B22-5F20-11E1-BC54-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757800Ab2BXT4i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Feb 2012 14:56:38 -0500
+Received: from rom1v.com ([78.236.177.60]:35061 "EHLO rom1v.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757769Ab2BXT4h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2012 14:56:37 -0500
+Received: from [192.168.0.101] (unknown [192.168.0.127])
+	by rom1v.com (Postfix) with ESMTPSA id 7555F10DA;
+	Fri, 24 Feb 2012 20:46:06 +0100 (CET)
+In-Reply-To: <4F47E48D.4080501@in.waw.pl>
+X-Mailer: Evolution 3.2.2-1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191452>
 
-"Romain Vimont (=C2=AEom)" <rom@rom1v.com> writes:
+Thank you for your answer.
 
-> Now, I edit some files (for example in a config file
-> "mock_data=3Dtrue"), then I want to tag without commiting this change=
+After my message this morning, that's what I did: I commited with the
+mock data then tag.
+
+Tonight, I just tried something which do exactly what I wanted to do
+this morning:
+
+$ git checkout -b temp
+$ git commit -a -m 'My config file with mock_data=3Dtrue'
+$ git tag -a v0.1 -m v0.1
+$ git checkout master
+$ git branch -D temp
+
+With these commands, the tag is associated to a commit which is not in
+any branch.
+
+Regards,
+=C2=A9om
+
+Le vendredi 24 f=C3=A9vrier 2012 =C3=A0 20:27 +0100, Zbigniew J=C4=99dr=
+zejewski-Szmek a
+=C3=A9crit :
+> On 02/24/2012 11:24 AM, Romain Vimont (=C2=AEom) wrote:
+> > $ git log --pretty=3Donline
+> > 0ef41513d0b6d0ad28f21d0ac1da7096ad1dc6ff This is the last commit
+> > a4702c69c28484d357179166cf3b116764da20a4 This is a commit
+> >
+> > Now, I edit some files (for example in a config file "mock_data=3Dt=
+rue"),
+> > then I want to tag without commiting this change.
+> >
+> > $ git tag -a v0.1 -m 'My v0.1 with mock data'
+>=20
+> > And it shows the diff between a4702c69c28484d357179166cf3b116764da2=
+0a4
+> > and 0ef41513d0b6d0ad28f21d0ac1da7096ad1dc6ff (the two last commits)=
 =2E
-
-Tag applies to an existing commit [*1*].  Your change in the working tr=
-ee
-is purely ephemeral until it is committed.
-
-In other words, you don't "tag without committing".
-
-> $ git tag -a v0.1 -m 'My v0.1 with mock data'
-
-By omitting the [<head>] part from your command line for a command whos=
-e
-usage is:
-
-  usage: git tag [-a|-s|-u <key-id>] [-f] [-m <msg>|-F <file>] <tagname=
-> [<head>]
-
-you asked <head> to default to HEAD, the most recent commit, so the tag
-points at your 0ef41513d0b6 (This is the last commit).  The tag message
-should say "My v0.1" without anything else.
-
-And show naturally shows the patch to bring its parent to that tagged
-commit.
-
-If you wanted to keep your mainline pristine without mock data, and wan=
-t
-to have a playpen that uses mock data, a way to do so is to use a separ=
-ate
-branch, e.g.
-
-        $ git checkout -b playpen
-
-Now, you are on your 'playpen' branch that was forked from the tip of
-whatever branch you were on, perhaps 'master'.  Then commit that state
-with whatever change that is specific to the playpen you want to keep o=
-ut
-of the mainline:
-
-	$ edit config.txt ;# set mock_data=3Dtrue
-        $ git commit -a -m 'With mock data'
-
-You can optionally tag the resulting commit if you want to.  You are st=
-ill
-on the 'playpen' branch, so you probably would want to come back to the
-previous branch after you are done.
-
-
-[Footnote]
-
-*1* technically, tag can apply to any type of object, but it is most
-common to apply to a commit.
+>=20
+> Hi Romain,
+> git tag attaches the tag to the last commit, 0ef41513 in your case.=20
+> Dirty changes in your tree are ignored by the tag command. You would=20
+> have to commit them first, and attach the tag to this new commit.
+>=20
+> zbyszek
+>=20
