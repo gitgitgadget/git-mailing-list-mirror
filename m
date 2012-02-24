@@ -1,83 +1,108 @@
 From: Romain Vimont =?ISO-8859-1?Q?=28=AEom=29?= <rom@rom1v.com>
-Subject: Re: [BugReport] git tag -a / git show
-Date: Fri, 24 Feb 2012 20:55:45 +0100
-Message-ID: <1330113345.2727.3.camel@rom-laptop>
+Subject: Re: [Not A BugReport] git tag -a / git show
+Date: Fri, 24 Feb 2012 20:58:48 +0100
+Message-ID: <1330113528.2727.5.camel@rom-laptop>
 References: <b05f03b381140ca57a7d03a934f605bd@rom1v.com>
-	 <4F47E48D.4080501@in.waw.pl>
+	 <7vsji0yprw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Zbigniew =?UTF-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Fri Feb 24 20:56:43 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 24 20:59:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S11Fz-00052c-6w
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 20:56:43 +0100
+	id 1S11Iu-0006lg-D4
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 20:59:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757800Ab2BXT4i convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Feb 2012 14:56:38 -0500
-Received: from rom1v.com ([78.236.177.60]:35061 "EHLO rom1v.com"
+	id S1757751Ab2BXT7k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Feb 2012 14:59:40 -0500
+Received: from rom1v.com ([78.236.177.60]:35063 "EHLO rom1v.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757769Ab2BXT4h (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2012 14:56:37 -0500
+	id S1754258Ab2BXT7j (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2012 14:59:39 -0500
 Received: from [192.168.0.101] (unknown [192.168.0.127])
-	by rom1v.com (Postfix) with ESMTPSA id 7555F10DA;
-	Fri, 24 Feb 2012 20:46:06 +0100 (CET)
-In-Reply-To: <4F47E48D.4080501@in.waw.pl>
+	by rom1v.com (Postfix) with ESMTPSA id B5E991BCC;
+	Fri, 24 Feb 2012 20:49:08 +0100 (CET)
+In-Reply-To: <7vsji0yprw.fsf@alter.siamese.dyndns.org>
 X-Mailer: Evolution 3.2.2-1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191453>
 
-Thank you for your answer.
+Thank you for the details.
 
-After my message this morning, that's what I did: I commited with the
-mock data then tag.
+> *1* technically, tag can apply to any type of object, but it is most
+common to apply to a commit.
 
-Tonight, I just tried something which do exactly what I wanted to do
-this morning:
+To what other type of object can you apply a tag ?
 
-$ git checkout -b temp
-$ git commit -a -m 'My config file with mock_data=3Dtrue'
-$ git tag -a v0.1 -m v0.1
-$ git checkout master
-$ git branch -D temp
+Good evening.
 
-With these commands, the tag is associated to a commit which is not in
-any branch.
-
-Regards,
-=C2=A9om
-
-Le vendredi 24 f=C3=A9vrier 2012 =C3=A0 20:27 +0100, Zbigniew J=C4=99dr=
-zejewski-Szmek a
-=C3=A9crit :
-> On 02/24/2012 11:24 AM, Romain Vimont (=C2=AEom) wrote:
-> > $ git log --pretty=3Donline
-> > 0ef41513d0b6d0ad28f21d0ac1da7096ad1dc6ff This is the last commit
-> > a4702c69c28484d357179166cf3b116764da20a4 This is a commit
-> >
-> > Now, I edit some files (for example in a config file "mock_data=3Dt=
-rue"),
-> > then I want to tag without commiting this change.
-> >
+Le vendredi 24 f=C3=A9vrier 2012 =C3=A0 11:50 -0800, Junio C Hamano a =C3=
+=A9crit :
+> "Romain Vimont (=C2=AEom)" <rom@rom1v.com> writes:
+>=20
+> > Now, I edit some files (for example in a config file
+> > "mock_data=3Dtrue"), then I want to tag without commiting this chan=
+ge.
+>=20
+> Tag applies to an existing commit [*1*].  Your change in the working =
+tree
+> is purely ephemeral until it is committed.
+>=20
+> In other words, you don't "tag without committing".
+>=20
 > > $ git tag -a v0.1 -m 'My v0.1 with mock data'
 >=20
-> > And it shows the diff between a4702c69c28484d357179166cf3b116764da2=
-0a4
-> > and 0ef41513d0b6d0ad28f21d0ac1da7096ad1dc6ff (the two last commits)=
-=2E
+> By omitting the [<head>] part from your command line for a command wh=
+ose
+> usage is:
 >=20
-> Hi Romain,
-> git tag attaches the tag to the last commit, 0ef41513 in your case.=20
-> Dirty changes in your tree are ignored by the tag command. You would=20
-> have to commit them first, and attach the tag to this new commit.
+>   usage: git tag [-a|-s|-u <key-id>] [-f] [-m <msg>|-F <file>] <tagna=
+me> [<head>]
 >=20
-> zbyszek
+> you asked <head> to default to HEAD, the most recent commit, so the t=
+ag
+> points at your 0ef41513d0b6 (This is the last commit).  The tag messa=
+ge
+> should say "My v0.1" without anything else.
+>=20
+> And show naturally shows the patch to bring its parent to that tagged
+> commit.
+>=20
+> If you wanted to keep your mainline pristine without mock data, and w=
+ant
+> to have a playpen that uses mock data, a way to do so is to use a sep=
+arate
+> branch, e.g.
+>=20
+>         $ git checkout -b playpen
+>=20
+> Now, you are on your 'playpen' branch that was forked from the tip of
+> whatever branch you were on, perhaps 'master'.  Then commit that stat=
+e
+> with whatever change that is specific to the playpen you want to keep=
+ out
+> of the mainline:
+>=20
+> 	$ edit config.txt ;# set mock_data=3Dtrue
+>         $ git commit -a -m 'With mock data'
+>=20
+> You can optionally tag the resulting commit if you want to.  You are =
+still
+> on the 'playpen' branch, so you probably would want to come back to t=
+he
+> previous branch after you are done.
+>=20
+>=20
+> [Footnote]
+>=20
+> *1* technically, tag can apply to any type of object, but it is most
+> common to apply to a commit.
 >=20
