@@ -1,139 +1,128 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG?] bulk checkin does not respect filters
-Date: Fri, 24 Feb 2012 03:28:03 -0500
-Message-ID: <20120224082803.GB18688@sigill.intra.peff.net>
-References: <20120224030244.GA15742@sigill.intra.peff.net>
- <7vvcmw2a3m.fsf@alter.siamese.dyndns.org>
+From: Nikolaj Shurkaev <snnicky@gmail.com>
+Subject: Re: git log -z doesn't separate commits with NULs
+Date: Fri, 24 Feb 2012 12:21:13 +0300
+Message-ID: <4F475689.4040203@gmail.com>
+References: <4F46036F.3040406@gmail.com> <20120223102426.GB2912@sigill.intra.peff.net> <4F462E61.4020203@gmail.com> <m34nuhelnf.fsf@localhost.localdomain> <4F4643BB.8090001@gmail.com> <20120223193451.GB30132@sigill.intra.peff.net> <7vy5rt2u0c.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 24 09:28:15 2012
+X-From: git-owner@vger.kernel.org Fri Feb 24 10:21:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0qVf-0001ms-VP
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 09:28:12 +0100
+	id 1S0rLF-0001wD-Ud
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 10:21:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755964Ab2BXI2G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Feb 2012 03:28:06 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55418
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755133Ab2BXI2F (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2012 03:28:05 -0500
-Received: (qmail 21906 invoked by uid 107); 24 Feb 2012 08:28:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 24 Feb 2012 03:28:07 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Feb 2012 03:28:03 -0500
-Content-Disposition: inline
-In-Reply-To: <7vvcmw2a3m.fsf@alter.siamese.dyndns.org>
+	id S1756571Ab2BXJVV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Feb 2012 04:21:21 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:51280 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756552Ab2BXJVT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2012 04:21:19 -0500
+Received: by werb13 with SMTP id b13so1298154wer.19
+        for <git@vger.kernel.org>; Fri, 24 Feb 2012 01:21:18 -0800 (PST)
+Received-SPF: pass (google.com: domain of snnicky@gmail.com designates 10.180.79.229 as permitted sender) client-ip=10.180.79.229;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of snnicky@gmail.com designates 10.180.79.229 as permitted sender) smtp.mail=snnicky@gmail.com; dkim=pass header.i=snnicky@gmail.com
+Received: from mr.google.com ([10.180.79.229])
+        by 10.180.79.229 with SMTP id m5mr3125298wix.6.1330075278402 (num_hops = 1);
+        Fri, 24 Feb 2012 01:21:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=fbbgna5fT0dkaXJ7VBwdXFmshNqqsiAyZx5bygju4nE=;
+        b=TiZBq32LqY6yJwlLJYtADAEewJ3X8oXekyMiEwWuDn/wuemgu1aURj7iZ09lnA6a5r
+         vibuAR01sVhE7f4fxZzTDaFh8NtGutFYVgGsPWFH605NM+MZT9t4RttA8SsuJ1H3uBlf
+         sCAA526g6gf06li6ISqI9PExUeOWf1OoV2ilw=
+Received: by 10.180.79.229 with SMTP id m5mr2501777wix.6.1330075278271;
+        Fri, 24 Feb 2012 01:21:18 -0800 (PST)
+Received: from [192.168.1.130] ([80.249.81.45])
+        by mx.google.com with ESMTPS id d7sm5803441wiz.6.2012.02.24.01.21.15
+        (version=SSLv3 cipher=OTHER);
+        Fri, 24 Feb 2012 01:21:16 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <7vy5rt2u0c.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191418>
 
-On Thu, Feb 23, 2012 at 07:17:49PM -0800, Junio C Hamano wrote:
+Hello.
 
-> > Thoughts? Was this intentional, or just overlooked?
-> 
-> This is intentional in the sense it is not worth worrying about (I
-> personally consider large and binary gunk equivalent and something nobody
-> should care about anything more than 1. what the exact contents it had at
-> each point in history and 2. if it did or did not change between two
-> versions, but definitely not 3. how different these two versions were),
-> and does not deserve the complexity to support filtering and textconv'ing.
+Thank you for the hint.
 
-We're purely in the hypothetical devil's advocate realm here, as I do
-not use the filtering feature myself. But what if I had a filter that
-canonicalized large binary files in some way (e.g., by re-zipping large
-zipfiles using deterministic parameters). Even though they are large
-binary gunk and you would never want to diff two versions, the important
-thing is getting an identical sha1 when the underlying data has not
-changed. I.e., your point 2 above, but applied to the "clean" repository
-versions of files.
+git format-patch HEAD~3..HEAD -- SomePath
 
-> If somebody strongly feels about lifting the limitation with a clean patch
-> that does not harm the common case codepaths, patches are welcome, but I
-> am not planning to do it myself ;-)
+does exactly what I need. But that way of usage is not described in git=
+=20
+documentation thus I thought there is no way to do that. I've just=20
+double checked
 
-Perhaps something like this:
+git format-patch --help
 
----
- convert.c   |   18 ++++++++++++++++++
- convert.h   |    1 +
- sha1_file.c |    3 ++-
- 3 files changed, 21 insertions(+), 1 deletion(-)
+doesn't describe that. I'll propose to put something like this into git=
+=20
+documentation
+-----------------------------------------------------------------------=
+---------------------
+diff --git a/Documentation/git-format-patch.txt=20
+b/Documentation/git-format-patch.txt
+index 6ea9be7..63267c6 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -23,6 +23,7 @@ SYNOPSIS
+[--cover-letter] [--quiet]
+[<common diff options>]
+[ <since> | <revision range> ]
++ [[\--] <path>...]
 
-diff --git a/convert.c b/convert.c
-index 12868ed..254301a 100644
---- a/convert.c
-+++ b/convert.c
-@@ -742,6 +742,24 @@ static void convert_attrs(struct conv_attrs *ca, const char *path)
- 	}
- }
- 
-+int want_convert_to_git(const char *path)
-+{
-+	struct conv_attrs ca;
-+	convert_attrs(&ca, path);
+DESCRIPTION
+-----------
+@@ -219,6 +220,12 @@ you can use `--suffix=3D-patch` to get=20
+`0001-description-of-my-change-patch`.
+range are always formatted as creation patches, independently
+of this flag.
+
++[\--] <path>...::
++ Put in patches only those modifications that affect specified files
++ and folders. It's important to understand that log message of the
++ commit may become inappropriate because some parts of patch may be
++ cut off.
 +
-+	if (ca.drv && ca.drv->clean)
-+		return 1;
-+	if (ca.ident)
-+		return 1;
-+
-+	ca.crlf_action = input_crlf_action(ca.crlf_action, ca.eol_attr);
-+	if (ca.crlf_action == CRLF_BINARY)
-+		return 0;
-+	if (ca.crlf_action == CRLF_GUESS && auto_crlf == AUTO_CRLF_FALSE)
-+		return 0;
-+	return 1;
-+}
-+
- int convert_to_git(const char *path, const char *src, size_t len,
-                    struct strbuf *dst, enum safe_crlf checksafe)
- {
-diff --git a/convert.h b/convert.h
-index d799a16..4d5936d 100644
---- a/convert.h
-+++ b/convert.h
-@@ -36,6 +36,7 @@ extern enum eol core_eol;
- /* returns 1 if *dst was used */
- extern int convert_to_git(const char *path, const char *src, size_t len,
- 			  struct strbuf *dst, enum safe_crlf checksafe);
-+extern int want_convert_to_git(const char *path);
- extern int convert_to_working_tree(const char *path, const char *src,
- 				   size_t len, struct strbuf *dst);
- extern int renormalize_buffer(const char *path, const char *src, size_t len,
-diff --git a/sha1_file.c b/sha1_file.c
-index f9f8d5e..6c0e05c 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2720,7 +2720,8 @@ int index_fd(unsigned char *sha1, int fd, struct stat *st,
- 
- 	if (!S_ISREG(st->st_mode))
- 		ret = index_pipe(sha1, fd, type, path, flags);
--	else if (size <= big_file_threshold || type != OBJ_BLOB)
-+	else if (size <= big_file_threshold || type != OBJ_BLOB ||
-+		 want_convert_to_git(path))
- 		ret = index_core(sha1, fd, size, type, path, flags);
- 	else
- 		ret = index_stream(sha1, fd, size, type, path, flags);
+CONFIGURATION
+-------------
+You can specify extra mail header lines to be added to each message,
+-----------------------------------------------------------------------=
+---------------------
 
-There should be no performance impact, as the new code only kicks in for
-files that exceed big_file_threshold (and even then, it is just an extra
-duplicate attr lookup, which the check_attr code caches anyway).
+--
+Nikolaj.
 
-I don't like repeating all of the convert_to_git policy logic. Perhaps
-if you pass a NULL buffer to convert_to_git, it should run through its
-usual logic, stopping just short of actually writing anything, and
-return a flag indicating whether it _would_ convert (this can't be 100%
-accurate, as sometimes conversion depends on looking at the actual
-contents of the buffer, but it could at least tell us "yes, I might
-convert" versus "no, I will definitely not convert").
-
--Peff
+23.02.2012 23:07, Junio C Hamano =D0=BF=D0=B8=D1=88=D0=B5=D1=82:
+> Jeff King<peff@peff.net>  writes:
+>
+>> On Thu, Feb 23, 2012 at 04:48:43PM +0300, Nikolaj Shurkaev wrote:
+>>
+>> Doesn't:
+>>
+>>    git format-patch HEAD~3..HEAD SomePath
+>>
+>> do what you want? It is certainly designed to, and it seems to work =
+for
+>> me.
+> It is not quite "designed to", though.
+>
+> It happens to work that way, and I do not think we want to forbid its=
+ use,
+> but we would want to discourage anybody from blindly using it without
+> thinking if the end results suits his/her purpose (and the reason sho=
+uld
+> be obvious to those who think, the hint is "log message").
+>
