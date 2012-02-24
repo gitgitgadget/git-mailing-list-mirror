@@ -1,62 +1,59 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [Not A BugReport] git tag -a / git show
-Date: Sat, 25 Feb 2012 00:14:39 +0100
-Message-ID: <m2fwdzzuw0.fsf@igel.home>
-References: <b05f03b381140ca57a7d03a934f605bd@rom1v.com>
-	<7vsji0yprw.fsf@alter.siamese.dyndns.org>
-	<1330113528.2727.5.camel@rom-laptop>
+From: "Dmitry V. Levin" <ldv@altlinux.org>
+Subject: [PATCH] Makefile: add thread-utils.h to LIB_H
+Date: Sat, 25 Feb 2012 03:42:42 +0400
+Message-ID: <20120224234242.GA3124@altlinux.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Romain Vimont =?utf-8?Q?=28=C2=AEom=29?= <rom@rom1v.com>
-X-From: git-owner@vger.kernel.org Sat Feb 25 00:14:54 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 25 00:51:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S14Lg-0004bY-9X
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 00:14:48 +0100
+	id 1S14uw-0007hv-Fd
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 00:51:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932346Ab2BXXOp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Feb 2012 18:14:45 -0500
-Received: from mail-out.m-online.net ([212.18.0.10]:36529 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932264Ab2BXXOn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2012 18:14:43 -0500
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3TvpDK1NCpz3hhVp;
-	Sat, 25 Feb 2012 00:14:39 +0100 (CET)
-X-Auth-Info: XNU+QoM3vkoDMe8K1OGan+no+iRdjy/tbzkLa8WpTUo=
-Received: from igel.home (ppp-93-104-155-43.dynamic.mnet-online.de [93.104.155.43])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 7ED9E1C00343;
-	Sat, 25 Feb 2012 00:14:42 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id 4C594CA299; Sat, 25 Feb 2012 00:14:39 +0100 (CET)
-X-Yow: A wide-eyed, innocent UNICORN, poised delicately in a MEADOW filled with
- LILACS, LOLLIPOPS & small CHILDREN at the HUSH of twilight??
-In-Reply-To: <1330113528.2727.5.camel@rom-laptop> ("Romain Vimont
- =?utf-8?Q?=5C=22=28=C2=AEom=29=5C=22=22's?=
-	message of "Fri, 24 Feb 2012 20:58:48 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+	id S1754383Ab2BXXvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Feb 2012 18:51:08 -0500
+Received: from vint.altlinux.org ([194.107.17.35]:52898 "EHLO
+	vint.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754183Ab2BXXvH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2012 18:51:07 -0500
+X-Greylist: delayed 504 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Feb 2012 18:51:07 EST
+Received: from wo.int.altlinux.org (wo.int.altlinux.org [192.168.1.4])
+	by vint.altlinux.org (Postfix) with ESMTP id 7B338226C0AB;
+	Fri, 24 Feb 2012 23:42:42 +0000 (UTC)
+Received: by wo.int.altlinux.org (Postfix, from userid 508)
+	id 59E2F3F48773; Sat, 25 Feb 2012 03:42:42 +0400 (MSK)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191500>
 
-Romain Vimont "(=C2=AEom)" <rom@rom1v.com> writes:
+Starting with commit v1.7.8-165-g0579f91, grep.h includes
+thread-utils.h, so the latter has to be added to LIB_H.
 
-> To what other type of object can you apply a tag ?
+Signed-off-by: Dmitry V. Levin <ldv@altlinux.org>
+---
+ Makefile |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-Any.  Take a look at the junio-gpg-pub tag in git's repository, or the
-v2.6.11-tree tag in Linus's kernel repository.
+diff --git a/Makefile b/Makefile
+index 99a7a2b..e4f8e0e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -615,6 +615,7 @@ LIB_H += streaming.h
+ LIB_H += string-list.h
+ LIB_H += submodule.h
+ LIB_H += tag.h
++LIB_H += thread-utils.h
+ LIB_H += transport.h
+ LIB_H += tree.h
+ LIB_H += tree-walk.h
 
-Andreas.
-
---=20
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
-ED5
-"And now for something completely different."
+-- 
+ldv
