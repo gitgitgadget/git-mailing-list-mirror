@@ -1,397 +1,154 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: [PATCH v3] contrib: added git-diffall
-Date: Thu, 23 Feb 2012 19:49:41 -0500
-Message-ID: <1330044581-792-1-git-send-email-tim.henigan@gmail.com>
-Cc: davvid@gmail.com, stefano.lattarini@gmail.com,
-	tim.henigan@gmail.com
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Feb 24 01:50:05 2012
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: git-subtree Ready #2
+Date: Thu, 23 Feb 2012 20:19:25 -0500
+Message-ID: <CAHqTa-2s1xbAfNvjD7cXBe2TBMs1985nag1NOYVfE+dATvfEWA@mail.gmail.com>
+References: <877gztmfwy.fsf@smith.obbligato.org> <8739acra5j.fsf@smith.obbligato.org>
+ <20120215050855.GB29902@sigill.intra.peff.net> <87sjicpsr1.fsf@smith.obbligato.org>
+ <87ty2ro1zf.fsf@smith.obbligato.org> <20120220205346.GA6335@sigill.intra.peff.net>
+ <7vd399jdwc.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	"David A. Greene" <greened@obbligato.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 24 02:19:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0jME-000820-F0
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 01:49:59 +0100
+	id 1S0jp9-0002uH-UW
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 02:19:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756143Ab2BXAtx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Feb 2012 19:49:53 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:38608 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751346Ab2BXAtw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Feb 2012 19:49:52 -0500
-Received: by iacb35 with SMTP id b35so2297264iac.19
-        for <git@vger.kernel.org>; Thu, 23 Feb 2012 16:49:51 -0800 (PST)
-Received-SPF: pass (google.com: domain of tim.henigan@gmail.com designates 10.50.34.202 as permitted sender) client-ip=10.50.34.202;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of tim.henigan@gmail.com designates 10.50.34.202 as permitted sender) smtp.mail=tim.henigan@gmail.com; dkim=pass header.i=tim.henigan@gmail.com
-Received: from mr.google.com ([10.50.34.202])
-        by 10.50.34.202 with SMTP id b10mr69698igj.2.1330044591952 (num_hops = 1);
-        Thu, 23 Feb 2012 16:49:51 -0800 (PST)
+	id S1756845Ab2BXBTr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Feb 2012 20:19:47 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:40048 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756812Ab2BXBTp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Feb 2012 20:19:45 -0500
+Received: by yenm8 with SMTP id m8so935009yen.19
+        for <git@vger.kernel.org>; Thu, 23 Feb 2012 17:19:45 -0800 (PST)
+Received-SPF: pass (google.com: domain of apenwarr@gmail.com designates 10.101.93.2 as permitted sender) client-ip=10.101.93.2;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of apenwarr@gmail.com designates 10.101.93.2 as permitted sender) smtp.mail=apenwarr@gmail.com; dkim=pass header.i=apenwarr@gmail.com
+Received: from mr.google.com ([10.101.93.2])
+        by 10.101.93.2 with SMTP id v2mr100588anl.5.1330046385329 (num_hops = 1);
+        Thu, 23 Feb 2012 17:19:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=lPZdohtkSz9tVf+t2XRwwTr0vz9MqqEl2ejzTqVt1SY=;
-        b=bssaBkZhidZOrBWCTeDxkha1ZeX/toFub4UMrq6byuTdFDzE0yTgFvRPneJQsVACvy
-         GStLv/ZZTM094S6fO1ajURqFekDuVM2SdK3G8olbyNbsFShiXZ0hjzEIQrHAyRFcNUhr
-         4rd54pmFPjvlgRiMMHB57/H6vh7sop4q4qkU8=
-Received: by 10.50.34.202 with SMTP id b10mr59043igj.2.1330044591884;
-        Thu, 23 Feb 2012 16:49:51 -0800 (PST)
-Received: from localhost ([75.38.216.51])
-        by mx.google.com with ESMTPS id vr4sm153817igb.1.2012.02.23.16.49.49
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 23 Feb 2012 16:49:51 -0800 (PST)
-X-Mailer: git-send-email 1.7.9.GIT
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=QMNE0F83jOY+QCEKW3/KXtV2uk/M6BX7NRbuSHZWO5c=;
+        b=F3GdYiCZNEQ/MLinHKMk6IJZ5q0IbSON+QWlSzTDf1d1xM4XUH3wyw/HJ4bJihgQ98
+         F4se7J7i0kGI0kvkAKj6xGZm2p5LyFIPLXpFTiiHOmo2CJPannWZqIdL/SRT2B4nqhOM
+         ufop9Qvhe887K0B87DA+dLW6HZwpox9889V6A=
+Received: by 10.101.93.2 with SMTP id v2mr77693anl.5.1330046385213; Thu, 23
+ Feb 2012 17:19:45 -0800 (PST)
+Received: by 10.146.112.6 with HTTP; Thu, 23 Feb 2012 17:19:25 -0800 (PST)
+In-Reply-To: <7vd399jdwc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191409>
 
-The 'git difftool' command allows the user to view diffs using an
-external tool.  It runs a separate instance of the tool for each
-file in the diff. This makes it tedious to review changes spanning
-multiple files.
+On Mon, Feb 20, 2012 at 6:14 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> It sounds like the simplest and cleanest would be to treat it as if i=
+ts
+> current version came as a patch submission, cook it just like any oth=
+er
+> topic in 'pu' down to 'next' down to eventually 'master', with the us=
+ual
+> review cycle of pointing out what is wrong and needs fixing followed =
+by a
+> series of re-rolls.
 
-The 'git-diffall' script instead prepares temporary directories
-with the files to be compared and launches a single instance of
-the external diff tool to view them (i.e. a directory diff).
+Yeah, my original intent with git-subtree was to one day submit it as
+basically a single patch against git.  That's why I have some slightly
+suspicious commit messages in there (though in my defense, I think
+*most* of the commit messages are quite sensible :)).
 
-The 'diff.tool' or 'merge.tool' configuration variable is used
-to specify which external tool is used.
+> After looking at the history of subtree branch there, however, I agre=
+e
+> that it would not help anybody to have its history in my tree with lo=
+g
+> messages like these (excerpt from shortlog output):
+> [...]
+> =A0 =A0 =A0Docs: when pushing to github, the repo path needs to end i=
+n .git
+> [...]
 
-Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
----
+That commit message in particular I thought was perfectly fine; it's
+specifically a fix to the git-subtree docs to clarify a question from
+an actual user.
 
-This script has been hosted on GitHub [1] since April 2010. Enough people
-have found it useful that I hope it will be considered for inclusion in
-the standard git install, either in contrib or as a new core command.
+Overall I agree that there's little benefit in preserving the history,
+at least as far as I can see, *except* that some code changes were
+submitted by people other than me and squashing those changes might
+conceivably cause licensing confusion down the road.  It's probably a
+fairly quick exercise with git-filter-branch to get rid of the more
+egregious commit message problems, if that's what we want to do.  (In
+particular, just expurgating the entire 'todo' file from the history
+probably makes plenty of sense.)
 
-Changes in v3:
-    - Fixed a bug that caused failures if file names included spaces
-    - Added unique suffix to tmp dir name (tmp/git-diffall-tmp.$$)
-    - Renamed "common_ancestor" to "merge_base"
-    - Cleaned up README to be more accurate
-    - Added useful error message if --extcmd is final option, but no
-      command was specified
-    - Removed spaces after redirection operators
+There's no value I can see in being able to do future merges from
+outside the tree, so a filter-branch or rebase before merging should
+be pretty harmless.
 
-    v3 matches commit f36e4881e5 on GitHub [1].
+> The total amount of change does not look too bad, either:
+>
+> =A0 =A0$ git diff --stat master...origin/subtree
+> =A0 =A0 contrib/subtree/.gitignore =A0 =A0 =A0 =A0 | =A0 =A05 +
+> =A0 =A0 contrib/subtree/COPYING =A0 =A0 =A0 =A0 =A0 =A0| =A0339 +++++=
+++++++++++++
+> =A0 =A0 contrib/subtree/Makefile =A0 =A0 =A0 =A0 =A0 | =A0 45 +++
+> =A0 =A0 contrib/subtree/README =A0 =A0 =A0 =A0 =A0 =A0 | =A0 =A08 +
+> =A0 =A0 contrib/subtree/git-subtree.sh =A0 =A0 | =A0712 +++++++++++++=
++++++++++++++++++++++++
+> =A0 =A0 contrib/subtree/git-subtree.txt =A0 =A0| =A0366 +++++++++++++=
++++++
+> =A0 =A0 contrib/subtree/t/Makefile =A0 =A0 =A0 =A0 | =A0 71 ++++
+> =A0 =A0 contrib/subtree/t/t7900-subtree.sh | =A0508 +++++++++++++++++=
+++++++++
+> =A0 =A0 contrib/subtree/todo =A0 =A0 =A0 =A0 =A0 =A0 =A0 | =A0 50 +++
+> =A0 =A0 t/test-lib.sh =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0| =A0=
+ 11 +-
+> =A0 =A0 10 files changed, 2114 insertions(+), 1 deletion(-)
 
-Changes in v2:
-    - Changed to #!/bin/sh
-    - Eliminated use of 'which' statements
-    - Fixed trap function to actually run on abnormal exit
-    - Simplified path concatenation logic ($IFS)
-    - Corrected indentation errors
-    - Improved readability of while loop
-    - Cleaned up quoting of variables
+Note that COPYING, .gitignore, Makefile, t/Makefile, todo, and README
+should probably be ditched if it weren't going into contrib.  The
+interesting files are git-subtree.{sh,txt} and t7900-subtree.sh.
 
-    v2 matches commit 5d4b90de3 on GitHub [1].
+> I haven't looked at the script fully, but it has an issue
+> from its first line, which is marked with "#!/bin/bash". =A0It is unc=
+lear if
+> it is infested by bash-isms beyond repair (in which case "#!/bin/bash=
+" is
+> fine), or it was written portably but was marked with "#!/bin/bash" j=
+ust
+> by inertia.
 
-[1]: https://github.com/thenigan/git-diffall
+I'm generally pretty careful to avoid bashisms, but since my /bin/sh
+is bash, I usually mark scripts with /bin/bash just to be safe until
+someone has actually verified them with a non-bash shell.  I expect
+few if any problems with that part.
 
- contrib/diffall/README      |   24 ++++
- contrib/diffall/git-diffall |  261 +++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 285 insertions(+)
- create mode 100644 contrib/diffall/README
- create mode 100755 contrib/diffall/git-diffall
+>=A0A patch that corresponds to the above diffstat immediately
+> shows many style issues including trailing eye-sore whitespaces.
+>
+> It seems that it is even capable of installing from contrib/subtree, =
+so
+> keeping it in contrib/ while many issues it may have gets fixed would=
+ not
+> hurt the original goal of giving the script more visibility.
 
-diff --git a/contrib/diffall/README b/contrib/diffall/README
-new file mode 100644
-index 0000000..111f3f6
---- /dev/null
-+++ b/contrib/diffall/README
-@@ -0,0 +1,24 @@
-+The git-diffall script provides a directory based diff mechanism
-+for git.  The script relies on the diff.tool configuration option
-+to determine what diff viewer is used.
-+
-+This script is compatible with most common forms used to specify a
-+range of revisions to diff:
-+
-+  1. git diffall: shows diff between working tree and staged changes
-+  2. git diffall --cached [<commit>]: shows diff between staged
-+     changes and HEAD (or other named commit)
-+  3. git diffall <commit>: shows diff between working tree and named
-+     commit
-+  4. git diffall <commit> <commit>: show diff between two named commit
-+  5. git diffall <commit>..<commit>: same as above
-+  6. git diffall <commit>...<commit>: show the changes on the branch
-+     containing and up to the second , starting at a common ancestor
-+     of both <commit>
-+
-+Note: all forms take an optional path limiter [--] [<path>*]
-+
-+This script is based on an example provided by Thomas Rast on the
-+Git list [1]:
-+
-+[1] http://thread.gmane.org/gmane.comp.version-control.git/124807
-diff --git a/contrib/diffall/git-diffall b/contrib/diffall/git-diffall
-new file mode 100755
-index 0000000..e00fe89
---- /dev/null
-+++ b/contrib/diffall/git-diffall
-@@ -0,0 +1,261 @@
-+#!/bin/sh
-+# Copyright 2010 - 2012, Tim Henigan <tim.henigan@gmail.com>
-+#
-+# Perform a directory diff between commits in the repository using
-+# the external diff or merge tool specified in the user's config.
-+
-+USAGE='[--cached] [--copy-back] [-x|--extcmd=<command>] <commit>{0,2} -- <path>*
-+
-+    --cached     Compare to the index rather than the working tree.
-+
-+    --copy-back  Copy files back to the working tree when the diff
-+                 tool exits (in case they were modified by the
-+                 user).  This option is only valid if the diff
-+                 compared with the working tree.
-+
-+    -x=<command>
-+    --extcmd=<command>  Specify a custom command for viewing diffs.
-+                 git-diffall ignores the configured defaults and
-+                 runs $command $LOCAL $REMOTE when this option is
-+                 specified. Additionally, $BASE is set in the
-+                 environment.
-+'
-+
-+SUBDIRECTORY_OK=1
-+. "$(git --exec-path)/git-sh-setup"
-+
-+TOOL_MODE=diff
-+. "$(git --exec-path)/git-mergetool--lib"
-+
-+merge_tool="$(get_merge_tool)"
-+if test -z "$merge_tool"
-+then
-+	echo "Error: Either the 'diff.tool' or 'merge.tool' option must be set."
-+	usage
-+fi
-+
-+start_dir=$(pwd)
-+
-+# needed to access tar utility
-+cdup=$(git rev-parse --show-cdup) &&
-+cd "$cdup" || {
-+	echo >&2 "Cannot chdir to $cdup, the toplevel of the working tree"
-+	exit 1
-+}
-+
-+# mktemp is not available on all platforms (missing from msysgit)
-+# Use a hard-coded tmp dir if it is not available
-+tmp="$(mktemp -d -t tmp.XXXXXX 2>/dev/null)" || {
-+	tmp=/git-diffall-tmp.$$
-+	mkdir "$tmp" || exit 1
-+}
-+
-+trap 'rm -rf "$tmp" 2>/dev/null' EXIT
-+
-+left=
-+right=
-+paths=
-+path_sep=
-+compare_staged=
-+merge_base=
-+left_dir=
-+right_dir=
-+diff_tool=
-+copy_back=
-+
-+while test $# != 0
-+do
-+	case "$1" in
-+	-h|--h|--he|--hel|--help)
-+		usage
-+		;;
-+	--cached)
-+		compare_staged=1
-+		;;
-+	--copy-back)
-+		copy_back=1
-+		;;
-+	-x|--e|--ex|--ext|--extc|--extcm|--extcmd)
-+		if test -z $2
-+		then
-+			echo You must specify the tool for use with --extcmd
-+			usage
-+		else
-+			diff_tool=$2
-+			shift
-+		fi
-+		;;
-+	--)
-+		path_sep=1
-+		;;
-+	-*)
-+		echo Invalid option: "$1"
-+		usage
-+		;;
-+	*)
-+		# could be commit, commit range or path limiter
-+		case "$1" in
-+		*...*)
-+			left=${1%...*}
-+			right=${1#*...}
-+			merge_base=1
-+			;;
-+		*..*)
-+			left=${1%..*}
-+			right=${1#*..}
-+			;;
-+		*)
-+			if test -n "$path_sep"
-+			then
-+				paths="$paths$1 "
-+			elif test -z "$left"
-+			then
-+				left=$1
-+			elif test -z "$right"
-+			then
-+				right=$1
-+			else
-+				paths="$paths$1 "
-+			fi
-+			;;
-+		esac
-+		;;
-+	esac
-+	shift
-+done
-+
-+# Determine the set of files which changed
-+if test -n "$left" && test -n "$right"
-+then
-+	left_dir="cmt-$(git rev-parse --short $left)"
-+	right_dir="cmt-$(git rev-parse --short $right)"
-+
-+	if test -n "$compare_staged"
-+	then
-+		usage
-+	elif test -n "$merge_base"
-+	then
-+		git diff --name-only "$left"..."$right" -- $paths >"$tmp/filelist"
-+	else
-+		git diff --name-only "$left" "$right" -- $paths >"$tmp/filelist"
-+	fi
-+elif test -n "$left"
-+then
-+	left_dir="cmt-$(git rev-parse --short $left)"
-+
-+	if test -n "$compare_staged"
-+	then
-+		right_dir="staged"
-+		git diff --name-only --cached "$left" -- $paths >"$tmp/filelist"
-+	else
-+		right_dir="working_tree"
-+		git diff --name-only "$left" -- $paths >"$tmp/filelist"
-+	fi
-+else
-+	left_dir="HEAD"
-+
-+	if test -n "$compare_staged"
-+	then
-+		right_dir="staged"
-+		git diff --name-only --cached -- $paths >"$tmp/filelist"
-+	else
-+		right_dir="working_tree"
-+		git diff --name-only -- $paths >"$tmp/filelist"
-+	fi
-+fi
-+
-+# Exit immediately if there are no diffs
-+if test ! -s "$tmp/filelist"
-+then
-+	exit 0
-+fi
-+
-+if test -n "$copy_back" && test "$right_dir" != "working_tree"
-+then
-+	echo "--copy-back is only valid when diff includes the working tree."
-+	exit 1
-+fi
-+
-+# Create the named tmp directories that will hold the files to be compared
-+mkdir -p "$tmp/$left_dir" "$tmp/$right_dir"
-+
-+# Populate the tmp/right_dir directory with the files to be compared
-+if test -n "$right"
-+then
-+	while read name
-+	do
-+		ls_list=$(git ls-tree $right "$name")
-+		if test -n "$ls_list"
-+		then
-+			mkdir -p "$tmp/$right_dir/$(dirname "$name")"
-+			git show "$right":"$name" >"$tmp/$right_dir/$name" || true
-+		fi
-+	done < "$tmp/filelist"
-+elif test -n "$compare_staged"
-+then
-+	while read name
-+	do
-+		ls_list=$(git ls-files -- "$name")
-+		if test -n "$ls_list"
-+		then
-+			mkdir -p "$tmp/$right_dir/$(dirname "$name")"
-+			git show :"$name" >"$tmp/$right_dir/$name"
-+		fi
-+	done < "$tmp/filelist"
-+else
-+	# Mac users have gnutar rather than tar
-+	(tar --ignore-failed-read -c -T "$tmp/filelist" | (cd "$tmp/$right_dir" && tar -x)) || {
-+		gnutar --ignore-failed-read -c -T "$tmp/filelist" | (cd "$tmp/$right_dir" && gnutar -x)
-+	}
-+fi
-+
-+# Populate the tmp/left_dir directory with the files to be compared
-+while read name
-+do
-+	if test -n "$left"
-+	then
-+		ls_list=$(git ls-tree $left "$name")
-+		if test -n "$ls_list"
-+		then
-+			mkdir -p "$tmp/$left_dir/$(dirname "$name")"
-+			git show "$left":"$name" >"$tmp/$left_dir/$name" || true
-+		fi
-+	else
-+		if test -n "$compare_staged"
-+		then
-+			ls_list=$(git ls-tree HEAD "$name")
-+			if test -n "$ls_list"
-+			then
-+				mkdir -p "$tmp/$left_dir/$(dirname "$name")"
-+				git show HEAD:"$name" >"$tmp/$left_dir/$name"
-+			fi
-+		else
-+			mkdir -p "$tmp/$left_dir/$(dirname "$name")"
-+			git show :"$name" >"$tmp/$left_dir/$name"
-+		fi
-+	fi
-+done < "$tmp/filelist"
-+
-+cd "$tmp"
-+LOCAL="$left_dir"
-+REMOTE="$right_dir"
-+
-+if test -n "$diff_tool"
-+then
-+	export BASE
-+	eval $diff_tool '"$LOCAL"' '"$REMOTE"'
-+else
-+	run_merge_tool "$merge_tool" false
-+fi
-+
-+# Copy files back to the working dir, if requested
-+if test -n "$copy_back" && test "$right_dir" = "working_tree"
-+then
-+	cd "$start_dir"
-+	git_top_dir=$(git rev-parse --show-toplevel)
-+	find "$tmp/$right_dir" -type f |
-+	while read file
-+	do
-+		cp "$file" "$git_top_dir/${file#$tmp/$right_dir/}"
-+	done
-+fi
--- 
-1.7.9.GIT
+Personally, I would prefer to just iterate the patch a few times to
+correct the coding style problems you see, rather than merging into
+contrib where it might be forgotten rather than fixed.  As Peff
+alluded, people who want to install it separately from git already
+can; if we're going to merge it into git, let's do it right.
+
+Have fun,
+
+AVery
