@@ -1,108 +1,79 @@
-From: Romain Vimont =?ISO-8859-1?Q?=28=AEom=29?= <rom@rom1v.com>
-Subject: Re: [Not A BugReport] git tag -a / git show
-Date: Fri, 24 Feb 2012 20:58:48 +0100
-Message-ID: <1330113528.2727.5.camel@rom-laptop>
-References: <b05f03b381140ca57a7d03a934f605bd@rom1v.com>
-	 <7vsji0yprw.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: FW: question about merge in 1.7.10
+Date: Fri, 24 Feb 2012 12:00:32 -0800
+Message-ID: <7vobsoypb3.fsf@alter.siamese.dyndns.org>
+References: <1F026B57884A5841B330471696849DE9114503D7@MBX021-W4-CA-5.exch021.domain.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 24 20:59:47 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Marlene Cote <Marlene_Cote@affirmednetworks.com>
+X-From: git-owner@vger.kernel.org Fri Feb 24 21:00:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S11Iu-0006lg-D4
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 20:59:44 +0100
+	id 1S11Jo-0007Gk-Oq
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 21:00:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757751Ab2BXT7k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Feb 2012 14:59:40 -0500
-Received: from rom1v.com ([78.236.177.60]:35063 "EHLO rom1v.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754258Ab2BXT7j (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2012 14:59:39 -0500
-Received: from [192.168.0.101] (unknown [192.168.0.127])
-	by rom1v.com (Postfix) with ESMTPSA id B5E991BCC;
-	Fri, 24 Feb 2012 20:49:08 +0100 (CET)
-In-Reply-To: <7vsji0yprw.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 3.2.2-1 
+	id S1757808Ab2BXUAf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Feb 2012 15:00:35 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56586 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756018Ab2BXUAe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2012 15:00:34 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62527609F;
+	Fri, 24 Feb 2012 15:00:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=es0fjq1pnDe/6nes/K9rlp6aWBo=; b=K1p3PQ
+	c02HX4aqRjRJNhgiVAU7nn77OQvYx5UE3/VHfxnZH6CBnf+ZW0q0vN/5bkCdY2ax
+	WXK1NdXkmH6FjqwwRB7d9eO9KezVietGfcqrv89Fk6yjUOWtzwEhVgSCWEkV09qH
+	kqIkYkjkLzs8QoiNrU8nex5XXCg1FJdQSHctY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=s8x/xNbXQ9cVxnNTA55LzNgtRhfeEJou
+	ISPop/MrJBZciVMX9nwhOg2En/mJrgx8bIPAMlCVf3WFyqCGnchSHGw6Guu4fSA9
+	eQDurOPRkHPIeP7SetEjRBdd0nWCo740+DCZHkzRdkjqUoSAwIvrjUMecjE4m18O
+	4vZNwU/uA7I=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 59AB9609E;
+	Fri, 24 Feb 2012 15:00:34 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E327E609D; Fri, 24 Feb 2012
+ 15:00:33 -0500 (EST)
+In-Reply-To: <1F026B57884A5841B330471696849DE9114503D7@MBX021-W4-CA-5.exch021.domain.local> (Marlene Cote's message of "Fri, 24 Feb 2012 14:33:14 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 361FD87C-5F22-11E1-BFDF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191454>
 
-Thank you for the details.
+Marlene Cote <Marlene_Cote@affirmednetworks.com> writes:
 
-> *1* technically, tag can apply to any type of object, but it is most
-common to apply to a commit.
+> I used merge with -no-commit -no-ff. So, I assume I won't see any
+> change in behavior, since merge is not performing commits, right?
 
-To what other type of object can you apply a tag ?
+The _only_ difference is when
 
-Good evening.
+ (1) "git merge" is run interactively;
+ (2) the merge goes cleanly that it does not need to ask help from the
+     user to resolve conflicts; and
+ (3) it records the result by creating a commit.
 
-Le vendredi 24 f=C3=A9vrier 2012 =C3=A0 11:50 -0800, Junio C Hamano a =C3=
-=A9crit :
-> "Romain Vimont (=C2=AEom)" <rom@rom1v.com> writes:
->=20
-> > Now, I edit some files (for example in a config file
-> > "mock_data=3Dtrue"), then I want to tag without commiting this chan=
-ge.
->=20
-> Tag applies to an existing commit [*1*].  Your change in the working =
-tree
-> is purely ephemeral until it is committed.
->=20
-> In other words, you don't "tag without committing".
->=20
-> > $ git tag -a v0.1 -m 'My v0.1 with mock data'
->=20
-> By omitting the [<head>] part from your command line for a command wh=
-ose
-> usage is:
->=20
->   usage: git tag [-a|-s|-u <key-id>] [-f] [-m <msg>|-F <file>] <tagna=
-me> [<head>]
->=20
-> you asked <head> to default to HEAD, the most recent commit, so the t=
-ag
-> points at your 0ef41513d0b6 (This is the last commit).  The tag messa=
-ge
-> should say "My v0.1" without anything else.
->=20
-> And show naturally shows the patch to bring its parent to that tagged
-> commit.
->=20
-> If you wanted to keep your mainline pristine without mock data, and w=
-ant
-> to have a playpen that uses mock data, a way to do so is to use a sep=
-arate
-> branch, e.g.
->=20
->         $ git checkout -b playpen
->=20
-> Now, you are on your 'playpen' branch that was forked from the tip of
-> whatever branch you were on, perhaps 'master'.  Then commit that stat=
-e
-> with whatever change that is specific to the playpen you want to keep=
- out
-> of the mainline:
->=20
-> 	$ edit config.txt ;# set mock_data=3Dtrue
->         $ git commit -a -m 'With mock data'
->=20
-> You can optionally tag the resulting commit if you want to.  You are =
-still
-> on the 'playpen' branch, so you probably would want to come back to t=
-he
-> previous branch after you are done.
->=20
->=20
-> [Footnote]
->=20
-> *1* technically, tag can apply to any type of object, but it is most
-> common to apply to a commit.
->=20
+Because your use case with "--no-commit" does not satisfy the last
+criteria, I do not expect you to see any difference.  Otherwise you may
+have found a bug.
+
+As noted in
+
+    http://git-blame.blogspot.com/2012/02/anticipating-git-1710.html
+
+please try out the version from the 'master' branch before it gets
+released, so that you can help us avoid surprises in the corner cases.
+
+Thanks.
