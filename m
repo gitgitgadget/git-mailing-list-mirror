@@ -1,74 +1,91 @@
-From: Charles Brossollet <chbrosso@lltech.fr>
-Subject: Submodule status inside nested submodule fails
-Date: Fri, 24 Feb 2012 09:53:23 +0000 (UTC)
-Message-ID: <loom.20120224T104003-230@post.gmane.org>
+From: Ian Kumlien <pomac@vapor.com>
+Subject: Re: [FYI] very large text files and their problems.
+Date: Fri, 24 Feb 2012 11:11:21 +0100
+Message-ID: <20120224101121.GA9526@pomac.netswarm.net>
+References: <20120222154926.GC11202@pomac.netswarm.net>
+ <CACsJy8Bdbegs7QdztvsFnKPcpAX5UL7s7uc37wF3_nF4kJQjrQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 24 11:00:15 2012
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 24 11:11:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0rwk-0006b5-Iq
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 11:00:14 +0100
+	id 1S0s7q-0004EV-9X
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 11:11:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756695Ab2BXKAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Feb 2012 05:00:07 -0500
-Received: from plane.gmane.org ([80.91.229.3]:47886 "EHLO plane.gmane.org"
+	id S1756132Ab2BXKLg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Feb 2012 05:11:36 -0500
+Received: from mail.vapor.com ([83.220.149.2]:56122 "EHLO nitrogen.vapor.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756690Ab2BXKAG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2012 05:00:06 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1S0rwa-0006X7-E8
-	for git@vger.kernel.org; Fri, 24 Feb 2012 11:00:04 +0100
-Received: from babel.loa.espci.fr ([193.54.80.96])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 24 Feb 2012 11:00:04 +0100
-Received: from chbrosso by babel.loa.espci.fr with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 24 Feb 2012 11:00:04 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 193.54.80.96 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:10.0.2) Gecko/20100101 Firefox/10.0.2)
+	id S1753292Ab2BXKLe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2012 05:11:34 -0500
+Received: from twilight.demius.net (c-387a71d5.013-195-6c756e10.cust.bredbandsbolaget.se [213.113.122.56])
+	by nitrogen.vapor.com (Postfix) with ESMTPSA id D5C4140C4BB;
+	Fri, 24 Feb 2012 11:11:21 +0100 (CET)
+Received: by twilight.demius.net (Postfix, from userid 1000)
+	id 5CD698E06C1; Fri, 24 Feb 2012 11:11:21 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <CACsJy8Bdbegs7QdztvsFnKPcpAX5UL7s7uc37wF3_nF4kJQjrQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191426>
 
-Hello there,
+I'm uncertain if you got my reply since i did it out of bounds - so i'll
+repeat myself - sorry... =)
 
-Using MSysGit 1.7.9 on Win7 (64 bit), I have a repo with the following 
-structure:
+On Wed, Feb 22, 2012 at 11:18:19PM +0700, Nguyen Thai Ngoc Duy wrote:
+> On Wed, Feb 22, 2012 at 10:49 PM, Ian Kumlien <pomac@vapor.com> wrote:
+> > Hi,
+> >
+> > We just saw a interesting issue, git compressed a ~3.4 gb project to ~57 mb.
+> 
+> How big are those files? How many of them? How often do they change?
 
-main/
-  src/
-  ext/
-    submodule/
-       modules/module1
-       modules/module2
+This was the first check in, there is no deltas yet.
 
-submodule is... a submodule, having itself submodules.
+The file in question is ~3.3 gb in size - ie exactly: 3310214313 bytes
+(as seen below in the malloc failure)
 
-When I query submodule status --recursive in main/, no problem.
-But when I query submodule status in  ext/submodule, I get error "You need to
-run this command from the toplevel of the working tree.", which is a wrong
-error message.
+git show <blob sha1 id> |wc -c gives the same exact result.
 
-Searching for message in git source I found the test triggering the message to
-be an empty result for "git rev-parse --show-cdup". Running the command in
-ext/submodule strangely returns the *absolute* path of ext/submodule, which
-should not happen because this command returns path of current dir relative to
-the containing working tree.
+> > But when we tried to clone it on a big machine we got:
+> >
+> > fatal: Out of memory, malloc failed (tried to allocate
+> > 18446744072724798634 bytes)
+> >
+> > This is already fixed in the 1.7.10 mainline - but it also seems like
+> 
+> Does 1.7.9 have this problem?
 
-Is there something wrong with my repo? Or have I found a bug? Any help
-appreciated
+Only tested 1.7.8 and 1.7.9.1 - works in mainline git (pre-1.7.10)
 
-Charles
+> > git needs to have atleast the same ammount of memory as the largest
+> > file free... Couldn't this be worked around?
+> >
+> > On a (32 bit) machine with 4GB memory - results in:
+> > fatal: Out of memory, malloc failed (tried to allocate 3310214313 bytes)
+> >
+> > (and i see how this could be a problem, but couldn't it be mitigated? or
+> > is it bydesign and intended behaviour?)
+> 
+> I think that it's delta resolving that hogs all your memory. If your
+> files are smaller than 512M, try lower core.bigFileThreshold. The
+> topic jc/split-blob, which stores a big file are several smaller
+> pieces, might solve your problem. Unfortunately the topic is not
+> complete yet.
+
+Well, in this case it's just stream unpacking gzip data to disk, i
+understand if delta would be a problem... But wouldn't delta be a
+problem in the sence of <size_of_change>+<size_of_subdata>+<result> ?
+
+Ie, if the file is mmapped - it shouldn't have to be allocated, right?
+
+> -- 
+> Duy
