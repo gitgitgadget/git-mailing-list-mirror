@@ -1,69 +1,80 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] index-pack: remove real_type from struct object_entry
-Date: Fri, 24 Feb 2012 13:08:46 +0700
-Message-ID: <CACsJy8DT7QyLHbUQft2zbOm9Nv94b9trakk+nEfu4zT_xdf1AA@mail.gmail.com>
-References: <1330051320-19043-1-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG?] bulk checkin does not respect filters
+Date: Fri, 24 Feb 2012 02:54:25 -0500
+Message-ID: <20120224075425.GA18688@sigill.intra.peff.net>
+References: <20120224030244.GA15742@sigill.intra.peff.net>
+ <7vvcmw2a3m.fsf@alter.siamese.dyndns.org>
+ <7vr4xk28z0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 24 07:09:27 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 24 08:54:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S0oLM-0000Lh-96
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 07:09:26 +0100
+	id 1S0pzD-0005RN-9e
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 08:54:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754667Ab2BXGJS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Feb 2012 01:09:18 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:43152 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754600Ab2BXGJR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Feb 2012 01:09:17 -0500
-Received: by werb13 with SMTP id b13so1213764wer.19
-        for <git@vger.kernel.org>; Thu, 23 Feb 2012 22:09:16 -0800 (PST)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.180.92.227 as permitted sender) client-ip=10.180.92.227;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.180.92.227 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
-Received: from mr.google.com ([10.180.92.227])
-        by 10.180.92.227 with SMTP id cp3mr1813366wib.13.1330063756314 (num_hops = 1);
-        Thu, 23 Feb 2012 22:09:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=aRBr6u/iTiSt3oMrTQ3jza2PqRwEe4JsFrPWc4ulEjk=;
-        b=sAcJ/9DsOO+DG8hn0mlBEYLAgndnvqL30qzAnVdjAT0xwB8k1ywr4i3gkniZsyKchq
-         74ZQT7jN4Vxf97E3gl29qIzqxyY3rNSFpVAZVLSnUPJmQNH8JMqEGfGbWLzN46rMq1Gb
-         PP2M3zf4k3btZEHnGsImBQy6OkcfZVGNkU6JM=
-Received: by 10.180.92.227 with SMTP id cp3mr1476027wib.13.1330063756242; Thu,
- 23 Feb 2012 22:09:16 -0800 (PST)
-Received: by 10.223.13.5 with HTTP; Thu, 23 Feb 2012 22:08:46 -0800 (PST)
-In-Reply-To: <1330051320-19043-1-git-send-email-pclouds@gmail.com>
+	id S1756213Ab2BXHya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Feb 2012 02:54:30 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55376
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754974Ab2BXHy2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2012 02:54:28 -0500
+Received: (qmail 21722 invoked by uid 107); 24 Feb 2012 07:54:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 24 Feb 2012 02:54:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Feb 2012 02:54:25 -0500
+Content-Disposition: inline
+In-Reply-To: <7vr4xk28z0.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191415>
 
-2012/2/24 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>=
-:
-> @@ -581,7 +580,6 @@ static void resolve_delta(struct object_entry *de=
-lta_obj,
-> =C2=A0{
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0void *base_data, *delta_data;
->
-> - =C2=A0 =C2=A0 =C2=A0 delta_obj->real_type =3D base->obj->real_type;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0delta_obj->delta_depth =3D base->obj->delt=
-a_depth + 1;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (deepest_delta < delta_obj->delta_depth=
-)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0deepest_delta =
-=3D delta_obj->delta_depth;
+On Thu, Feb 23, 2012 at 07:42:11PM -0800, Junio C Hamano wrote:
 
-This is wrong. Sorry for the noise.
---=20
-Duy
+> It is a bit curious that anything filtered even goes to the streaming
+> codepath, given this piece of code in write_entry() in entry.c:
+> 
+> 	if (ce_mode_s_ifmt == S_IFREG) {
+> 		struct stream_filter *filter = get_stream_filter(path, ce->sha1);
+> 		if (filter &&
+> 		    !streaming_write_entry(ce, path, filter,
+> 					   state, to_tempfile,
+> 					   &fstat_done, &st))
+> 			goto finish;
+> 	}
+> 
+> and get_stream_filter() in convert.c has an explicit exception for this
+> case at the very beginning:
+
+I think it is because we don't follow that code path at all. The stack trace
+for "git add" looks on a large file looks like:
+
+#0  stream_to_pack (...) at bulk-checkin.c:101
+#1  deflate_to_pack (...) at bulk-checkin.c:219
+#2  index_bulk_checkin (...) at bulk-checkin.c:258
+#3  index_stream (...) at sha1_file.c:2712
+#4  index_fd (...) at sha1_file.c:2726
+#5  index_path (...) at sha1_file.c:2742
+#6  add_to_index (...) at read-cache.c:644
+#7  add_file_to_index (...) at read-cache.c:673
+#8  add_files (...) at builtin/add.c:363
+#9  cmd_add (...) at builtin/add.c:474
+#10 run_builtin (...) at git.c:324
+#11 handle_internal_command (...) at git.c:484
+#12 run_argv (...) at git.c:530
+#13 main (...) at git.c:605 
+
+Isn't write_entry the _other_ side of things. I.e., checking out, not
+checking in? That side works fine (making the large file handling
+for git-add even more odd. We will fail to apply the "clean" filter when
+adding it, but we will apply the smudge filter when we write it out).
+
+-Peff
