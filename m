@@ -1,70 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] do not stream large files to pack when filters are
- in use
-Date: Fri, 24 Feb 2012 14:42:02 -0800
-Message-ID: <7v399zhn0l.fsf@alter.siamese.dyndns.org>
-References: <20120224093924.GA11680@sigill.intra.peff.net>
- <20120224094805.GB11846@sigill.intra.peff.net>
- <7vehtkyp6i.fsf@alter.siamese.dyndns.org>
- <20120224204810.GC21447@sigill.intra.peff.net>
- <20120224211913.GA30942@sigill.intra.peff.net>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [Not A BugReport] git tag -a / git show
+Date: Sat, 25 Feb 2012 00:14:39 +0100
+Message-ID: <m2fwdzzuw0.fsf@igel.home>
+References: <b05f03b381140ca57a7d03a934f605bd@rom1v.com>
+	<7vsji0yprw.fsf@alter.siamese.dyndns.org>
+	<1330113528.2727.5.camel@rom-laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 24 23:42:17 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Romain Vimont =?utf-8?Q?=28=C2=AEom=29?= <rom@rom1v.com>
+X-From: git-owner@vger.kernel.org Sat Feb 25 00:14:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S13q7-00044h-Um
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Feb 2012 23:42:12 +0100
+	id 1S14Lg-0004bY-9X
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 00:14:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932380Ab2BXWmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Feb 2012 17:42:06 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60568 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932238Ab2BXWmF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2012 17:42:05 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C020B6047;
-	Fri, 24 Feb 2012 17:42:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rUNSwsAv4QDUe+1DSnAAAG2Y37A=; b=Gd5VYm
-	zb517W9L0JQgyJ/YZh3HL0Pk0QRn+hM+ZTnN5u+SZf5NYDfPHaU9TBWGACocR279
-	LqJoIHK5QfA4q38wtwYhzKSdCYbn5FkVBfnOaI2bw8/cwgGBysIS53Ka/aEZbqe2
-	0PkvcjUAqKC/3E6k+wy7sPkAfMEW09c0ZrCSM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VakIWdH0sJILx1X1NQA7PPFhf6v+OSrC
-	bDaatNqplnE8Vj/BOf3FQslSxlGqGFOzk78QaGh/AKg2GxiGPG8TLBfyhqt1O1Rh
-	4CSxslmbqW36hwdWdAzltqDEF1w+cBsCV5ckp6vQ898LaDZHPF+Vo7H9NqO7Tzxu
-	hH5imHmtNtc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B83F96046;
-	Fri, 24 Feb 2012 17:42:04 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3A5496045; Fri, 24 Feb 2012
- 17:42:04 -0500 (EST)
-In-Reply-To: <20120224211913.GA30942@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 24 Feb 2012 16:19:13 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C5FF95CA-5F38-11E1-A0E4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932346Ab2BXXOp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Feb 2012 18:14:45 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:36529 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932264Ab2BXXOn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2012 18:14:43 -0500
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3TvpDK1NCpz3hhVp;
+	Sat, 25 Feb 2012 00:14:39 +0100 (CET)
+X-Auth-Info: XNU+QoM3vkoDMe8K1OGan+no+iRdjy/tbzkLa8WpTUo=
+Received: from igel.home (ppp-93-104-155-43.dynamic.mnet-online.de [93.104.155.43])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 7ED9E1C00343;
+	Sat, 25 Feb 2012 00:14:42 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 4C594CA299; Sat, 25 Feb 2012 00:14:39 +0100 (CET)
+X-Yow: A wide-eyed, innocent UNICORN, poised delicately in a MEADOW filled with
+ LILACS, LOLLIPOPS & small CHILDREN at the HUSH of twilight??
+In-Reply-To: <1330113528.2727.5.camel@rom-laptop> ("Romain Vimont
+ =?utf-8?Q?=5C=22=28=C2=AEom=29=5C=22=22's?=
+	message of "Fri, 24 Feb 2012 20:58:48 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191499>
 
-Jeff King <peff@peff.net> writes:
+Romain Vimont "(=C2=AEom)" <rom@rom1v.com> writes:
 
-> I'll post the fixed series in a minute (with this fix, and the improved
-> convert_to_git wrapper).
+> To what other type of object can you apply a tag ?
 
-Thanks.
+Any.  Take a look at the junio-gpg-pub tag in git's repository, or the
+v2.6.11-tree tag in Linus's kernel repository.
 
-The exclusion of path==NULL case was something I didn't think much about,
-but I think your solution is the right one.
+Andreas.
+
+--=20
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
+ED5
+"And now for something completely different."
