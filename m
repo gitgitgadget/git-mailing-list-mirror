@@ -1,70 +1,91 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: git-subtree Ready #2
-Date: Fri, 24 Feb 2012 18:57:33 -0500
-Message-ID: <CAHqTa-1fbi5W7R2fLu3bp7Yuv_ZB9nxhgjHkLGuU8-V4016+JA@mail.gmail.com>
-References: <877gztmfwy.fsf@smith.obbligato.org> <8739acra5j.fsf@smith.obbligato.org>
- <20120215050855.GB29902@sigill.intra.peff.net> <87sjicpsr1.fsf@smith.obbligato.org>
- <87ty2ro1zf.fsf@smith.obbligato.org> <20120220205346.GA6335@sigill.intra.peff.net>
- <7vd399jdwc.fsf@alter.siamese.dyndns.org> <CAHqTa-2s1xbAfNvjD7cXBe2TBMs1985nag1NOYVfE+dATvfEWA@mail.gmail.com>
- <7vobsox84l.fsf@alter.siamese.dyndns.org>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: git compiled on same distro, different versions
+Date: Fri, 24 Feb 2012 18:05:30 -0600
+Message-ID: <4F4825CA.1060506@gmail.com>
+References: <ji8u2f$gml$1@dough.gmane.org> <7vboonhoko.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jeff King <peff@peff.net>,
-	"David A. Greene" <greened@obbligato.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 25 00:58:01 2012
+X-From: git-owner@vger.kernel.org Sat Feb 25 01:05:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S151T-0003Mk-1R
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 00:57:59 +0100
+	id 1S158s-000756-Eo
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 01:05:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754831Ab2BXX5y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Feb 2012 18:57:54 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:37472 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752675Ab2BXX5x (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Feb 2012 18:57:53 -0500
-Received: by yhoo21 with SMTP id o21so1425926yho.19
-        for <git@vger.kernel.org>; Fri, 24 Feb 2012 15:57:53 -0800 (PST)
-Received-SPF: pass (google.com: domain of apenwarr@gmail.com designates 10.236.79.202 as permitted sender) client-ip=10.236.79.202;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of apenwarr@gmail.com designates 10.236.79.202 as permitted sender) smtp.mail=apenwarr@gmail.com; dkim=pass header.i=apenwarr@gmail.com
-Received: from mr.google.com ([10.236.79.202])
-        by 10.236.79.202 with SMTP id i50mr8985001yhe.61.1330127873361 (num_hops = 1);
-        Fri, 24 Feb 2012 15:57:53 -0800 (PST)
+	id S1755525Ab2BYAFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Feb 2012 19:05:30 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:51786 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755356Ab2BYAFa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Feb 2012 19:05:30 -0500
+Received: by yenm8 with SMTP id m8so1425465yen.19
+        for <git@vger.kernel.org>; Fri, 24 Feb 2012 16:05:29 -0800 (PST)
+Received-SPF: pass (google.com: domain of nkreitzinger@gmail.com designates 10.236.125.130 as permitted sender) client-ip=10.236.125.130;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of nkreitzinger@gmail.com designates 10.236.125.130 as permitted sender) smtp.mail=nkreitzinger@gmail.com; dkim=pass header.i=nkreitzinger@gmail.com
+Received: from mr.google.com ([10.236.125.130])
+        by 10.236.125.130 with SMTP id z2mr8747968yhh.94.1330128329520 (num_hops = 1);
+        Fri, 24 Feb 2012 16:05:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=WtnWpj2DRTooN8vqnTmXc22GzIGNlOYTx+QPPxBjfR4=;
-        b=eU7eyZT2RazQW59KhxLoXJN1KJX2uC3pkPPPZNrecwNDFIVRvZd2yytm6zCNkzJC5q
-         FQiw7/C1SZQmFMD5Tsi54c9/y/pBn4F0zAF/Fg7QpNpUJwIBug9USbHO2AAUwxDhmoP5
-         lJNfBOoy8Yr+yRH+Rf8UTN56+tsv7s7tbvu1o=
-Received: by 10.236.79.202 with SMTP id i50mr6807493yhe.61.1330127873314; Fri,
- 24 Feb 2012 15:57:53 -0800 (PST)
-Received: by 10.146.112.6 with HTTP; Fri, 24 Feb 2012 15:57:33 -0800 (PST)
-In-Reply-To: <7vobsox84l.fsf@alter.siamese.dyndns.org>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=1kVmJjsOJKjzKaA6S0LbBwAnObfh7xNB4caF1vT63ss=;
+        b=UW9G1dmlwyvrz51d75eBhjTNrpCY0BGbLTnyRycQwMr+0/zaAc2omX1RYz5e4v/LpC
+         Hv/CUpbwU0GsQ+ycl3urrQS9ffNlrMcHbcF993LAF8LPakZCogb34uDF9NIFQQKppNUt
+         VuEhDPrW64Q9kDoe4cJR6+6oBtgzN8mdTPt70=
+Received: by 10.236.125.130 with SMTP id z2mr6634549yhh.94.1330128329472;
+        Fri, 24 Feb 2012 16:05:29 -0800 (PST)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id e45sm16423105yhk.2.2012.02.24.16.05.27
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 24 Feb 2012 16:05:28 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.27) Gecko/20120216 Thunderbird/3.1.19
+In-Reply-To: <7vboonhoko.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191502>
 
-On Fri, Feb 24, 2012 at 3:56 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Avery Pennarun <apenwarr@gmail.com> writes:
->> Overall I agree that there's little benefit in preserving the history,
->> at least as far as I can see, *except* that some code changes were
->> submitted by people other than me and squashing those changes might
->> conceivably cause licensing confusion down the road.
+On 2/24/2012 4:08 PM, Junio C Hamano wrote:
+> "Neal Kreitzinger"<neal@rsss.com>  writes:
 >
-> That is a good point, and it sounds like a good enough justification to
-> merge with history, at least for me.
+>> If I only test a new git version (compiled from git.git source) on RHEL6
+>> before I put it on the RHEL5 box is that sufficient for validation?  Should
+>> git behave the same on both?  If not, why?
+>
+> I somehow find this a strange question to ask to Git people; you may have
+> better luck asking the question to RHEL folks.
+>
+> Having said that, one of the reasons the result may not work, off the top
+> of my head, is that the binary you compiled would expect to link with the
+> system libraries that are available on your RHEL6 installation.  If your
+> RHEL5 installation does not have a matching and ABI compatible library to
+> any of them, the resulting binary would obviously not work there.
+>
+"high-level" question:
+If I compile git 1.7.9.2 (from git.git source) on RHEL6 test-box and 
+test it and conclude that it "works right" is that sufficient for me to 
+then go ahead and compile git 1.7.9.2 on RHEL5 real-box and 
+expect/assume that it will also "work right"?  IOW, will they produce 
+the same results?  Because if not then I have just potentially broken 
+the real-box.
 
-Should we filter-branch or rebase the history first, or just leave it as is?
+"low-level" question:
+I suspect git calls linux commands alot.  Git has "plumbing" commands 
+that are not supposed to "break" scripts.  Does linux also have 
+"plumbing" commands that are not supposed to "break" scripts?  Does git 
+only use linux "plumbing" commands?  Because if git commands uses linux 
+"porcelain" then the linux "porcelain" change could cause git to change 
+(not necessarily "break").  Maybe git-porcelain only uses 
+linux-porcelain, and git-plumbing only uses linux-plumbing.
 
-Like I said, since I don't expect there to be any more back-and-forth
-development, rebasing should be pretty harmless.
+Definitely thanks in advance for any replies!
 
-Avery
+v/r,
+neal
