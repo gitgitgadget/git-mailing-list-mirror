@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v6 06/11] column: add column.ui for default column output settings
-Date: Sat, 25 Feb 2012 18:41:13 +0700
-Message-ID: <1330170078-29353-7-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v6 08/11] branch: add --column
+Date: Sat, 25 Feb 2012 18:41:15 +0700
+Message-ID: <1330170078-29353-9-git-send-email-pclouds@gmail.com>
 References: <1330170078-29353-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,241 +11,308 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 25 12:39:54 2012
+X-From: git-owner@vger.kernel.org Sat Feb 25 12:40:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S1Fyh-00029c-Q6
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 12:39:52 +0100
+	id 1S1FzB-0002Ur-IG
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 12:40:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756555Ab2BYLjn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Feb 2012 06:39:43 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:52288 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756544Ab2BYLjk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Feb 2012 06:39:40 -0500
-Received: by mail-pw0-f46.google.com with SMTP id up15so414856pbc.19
-        for <git@vger.kernel.org>; Sat, 25 Feb 2012 03:39:40 -0800 (PST)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.68.73.97 as permitted sender) client-ip=10.68.73.97;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.68.73.97 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
-Received: from mr.google.com ([10.68.73.97])
-        by 10.68.73.97 with SMTP id k1mr18359078pbv.61.1330169980755 (num_hops = 1);
-        Sat, 25 Feb 2012 03:39:40 -0800 (PST)
+	id S1756604Ab2BYLj4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Feb 2012 06:39:56 -0500
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:44098 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756485Ab2BYLjy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Feb 2012 06:39:54 -0500
+Received: by mail-pz0-f46.google.com with SMTP id d14so3436768dae.19
+        for <git@vger.kernel.org>; Sat, 25 Feb 2012 03:39:53 -0800 (PST)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.68.194.65 as permitted sender) client-ip=10.68.194.65;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.68.194.65 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
+Received: from mr.google.com ([10.68.194.65])
+        by 10.68.194.65 with SMTP id hu1mr18709263pbc.75.1330169993944 (num_hops = 1);
+        Sat, 25 Feb 2012 03:39:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=mPro69fP4BlL6Aplo/av3C4tK9GONTuWdHEK0e1Fvzo=;
-        b=ZD+GOdxd5sYkTyIO2aN+ke8PStBpfODK5uI1pkBbAFHUYy7g1u2EuVUGuARnbEDeb4
-         j2i2YGXPK7B70iJ0o5BLOI9WxxOZk+NunXo774rCeP4GCCSsmqFqJqQKpMrrHx+yjNCM
-         w3MWqvgaJL0OmERd29BMK/FlQWoWmokl1Efz8=
-Received: by 10.68.73.97 with SMTP id k1mr15266876pbv.61.1330169980706;
-        Sat, 25 Feb 2012 03:39:40 -0800 (PST)
+        bh=FzZrsvTTcwsVuEJWBS4XRoQCmkwNMp+Aw2y7FN6K0y4=;
+        b=scLDoMfUnNv/hmBWCTO3qI7G8D9YvNA9zIPmW3yckxe1aQXTq2GMIldGcRIx/VL6bb
+         NG+HHvc10r/BG2hz8p/J9di/OCwE0B6T3o+5TSfJI9CYPdEoxLlU8TmGR++eC4Tk7GyZ
+         FAM7EG4pbbWytx3uIO8Y6WznNsswch7AyslcQ=
+Received: by 10.68.194.65 with SMTP id hu1mr15559891pbc.75.1330169993895;
+        Sat, 25 Feb 2012 03:39:53 -0800 (PST)
 Received: from tre ([115.74.53.120])
-        by mx.google.com with ESMTPS id e8sm7001539pbg.47.2012.02.25.03.39.36
+        by mx.google.com with ESMTPS id l1sm7000621pbe.54.2012.02.25.03.39.49
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 25 Feb 2012 03:39:39 -0800 (PST)
-Received: by tre (sSMTP sendmail emulation); Sat, 25 Feb 2012 18:41:59 +0700
+        Sat, 25 Feb 2012 03:39:52 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Sat, 25 Feb 2012 18:42:11 +0700
 X-Mailer: git-send-email 1.7.8.36.g69ee2
 In-Reply-To: <1330170078-29353-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191530>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/config.txt     |   26 ++++++++++++++++++++++++++
- Documentation/git-column.txt |    6 +++++-
- builtin/column.c             |   21 +++++++++++++++++++++
- column.c                     |   28 ++++++++++++++++++++++++++++
- column.h                     |    2 ++
- 5 files changed, 82 insertions(+), 1 deletions(-)
+ Documentation/config.txt     |    4 ++
+ Documentation/git-branch.txt |    9 +++++
+ Makefile                     |    2 +-
+ builtin/branch.c             |   32 +++++++++++++++--
+ t/t3200-branch.sh            |   77 ++++++++++++++++++++++++++++++++++=
+++++++++
+ 5 files changed, 119 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index abeb82b..5216598 100644
+index 5216598..c14db27 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -821,6 +821,32 @@ color.ui::
- 	`never` if you prefer git commands not to use color unless enabled
- 	explicitly with some other configuration or the `--color` option.
+@@ -847,6 +847,10 @@ column.ui::
+ +
+ 	This option defaults to 'never'.
 =20
-+column.ui::
-+	Specify whether supported commands should output in columns.
-+	This variable consists of a list of tokens separated by spaces
-+	or commas:
-++
-+--
-+`always`;;
-+	always show in columns
-+`never`;;
-+	never show in columns
-+`auto`;;
-+	show in columns if the output is to the terminal
-+`column`;;
-+	fill columns before rows (default)
-+`row`;;
-+	fill rows before columns
-+`dense`;;
-+	make unequal size columns to utilize more space
-+`nodense`;;
-+	make equal size columns
-+`color`;;
-+	input contains ANSI escape sequence for coloring
-+--
-++
-+	This option defaults to 'never'.
++column.branch::
++	Specify whether to output branch listing in `git branch` in columns.
++	See `column.ui` for details.
 +
  commit.status::
  	A boolean to enable/disable inclusion of status information in the
  	commit message template when using an editor to prepare the commit
-diff --git a/Documentation/git-column.txt b/Documentation/git-column.tx=
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.tx=
 t
-index 508b85f..94fd7ac 100644
---- a/Documentation/git-column.txt
-+++ b/Documentation/git-column.txt
-@@ -8,7 +8,7 @@ git-column - Display data in columns
- SYNOPSIS
- --------
+index 0427e80..ba5cccb 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -10,6 +10,7 @@ SYNOPSIS
  [verse]
--'git column' [--mode=3D<mode> | --rawmode=3D<n>] [--width=3D<width>]
-+'git column' [--command=3D<name>] [--[raw]mode=3D<mode>] [--width=3D<w=
-idth>]
- 	     [--indent=3D<string>] [--nl=3D<string>] [--pading=3D<n>]
+ 'git branch' [--color[=3D<when>] | --no-color] [-r | -a]
+ 	[--list] [-v [--abbrev=3D<length> | --no-abbrev]]
++	[--column[=3D<options>] | --no-column]
+ 	[(--merged | --no-merged | --contains) [<commit>]] [<pattern>...]
+ 'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branch=
+name> [<start-point>]
+ 'git branch' (-m | -M) [<oldbranch>] <newbranch>
+@@ -107,6 +108,14 @@ OPTIONS
+ 	default to color output.
+ 	Same as `--color=3Dnever`.
 =20
- DESCRIPTION
-@@ -17,6 +17,10 @@ This command formats its input into multiple columns=
-=2E
-=20
- OPTIONS
- -------
-+--command=3D<name>::
-+	Look up layout mode using configuration variable column.<name> and
-+	column.ui.
++--column[=3D<options>]::
++--no-column::
++	Display branch listing in columns. See configuration variable
++	column.branch for option syntax.`--column` and `--no-column`
++	without options are equivalent to 'always' and 'never' respectively.
+++
++This option is only applicable in non-verbose mode.
 +
- --mode=3D<mode>::
- 	Specify layout mode. See configuration variable column.ui for option
- 	syntax.
-diff --git a/builtin/column.c b/builtin/column.c
-index 3b0f74e..102d71b 100644
---- a/builtin/column.c
-+++ b/builtin/column.c
-@@ -11,12 +11,19 @@ static const char * const builtin_column_usage[] =3D=
- {
- };
- static unsigned int colopts;
+ -r::
+ --remotes::
+ 	List or delete (if used with -d) the remote-tracking branches.
+diff --git a/Makefile b/Makefile
+index 0998f0d..320d3f8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2168,7 +2168,7 @@ builtin/prune.o builtin/reflog.o reachable.o: rea=
+chable.h
+ builtin/commit.o builtin/revert.o wt-status.o: wt-status.h
+ builtin/tar-tree.o archive-tar.o: tar.h
+ connect.o transport.o url.o http-backend.o: url.h
+-column.o help.o pager.o: column.h
++builtin/branch.o column.o help.o pager.o: column.h
+ http-fetch.o http-walker.o remote-curl.o transport.o walker.o: walker.=
+h
+ http.o http-walker.o http-push.o http-fetch.o remote-curl.o: http.h ur=
+l.h
 =20
-+static int column_config(const char *var, const char *value, void *cb)
-+{
-+	return git_column_config(var, value, cb, &colopts);
-+}
+diff --git a/builtin/branch.c b/builtin/branch.c
+index cb17bc3..611cc0e 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -15,6 +15,8 @@
+ #include "branch.h"
+ #include "diff.h"
+ #include "revision.h"
++#include "string-list.h"
++#include "column.h"
+=20
+ static const char * const builtin_branch_usage[] =3D {
+ 	"git branch [options] [-r | -a] [--merged | --no-merged]",
+@@ -53,6 +55,9 @@ static enum merge_filter {
+ } merge_filter;
+ static unsigned char merge_filter_ref[20];
+=20
++static struct string_list output =3D STRING_LIST_INIT_DUP;
++static unsigned int colopts;
 +
- int cmd_column(int argc, const char **argv, const char *prefix)
+ static int parse_branch_color_slot(const char *var, int ofs)
  {
- 	struct string_list list =3D STRING_LIST_INIT_DUP;
- 	struct strbuf sb =3D STRBUF_INIT;
- 	struct column_options copts;
-+	const char *command =3D NULL, *real_command =3D NULL;
- 	struct option options[] =3D {
-+		OPT_STRING(0, "command", &real_command, "name", "lookup config vars"=
-),
- 		OPT_COLUMN(0, "mode", &colopts, "layout to use"),
- 		OPT_INTEGER(0, "rawmode", &colopts, "layout to use"),
- 		OPT_INTEGER(0, "width", &copts.width, "Maximum width"),
-@@ -26,6 +33,15 @@ int cmd_column(int argc, const char **argv, const ch=
-ar *prefix)
- 		OPT_END()
+ 	if (!strcasecmp(var+ofs, "plain"))
+@@ -70,6 +75,8 @@ static int parse_branch_color_slot(const char *var, i=
+nt ofs)
+=20
+ static int git_branch_config(const char *var, const char *value, void =
+*cb)
+ {
++	if (!prefixcmp(var, "column."))
++		return git_column_config(var, value, "branch", &colopts);
+ 	if (!strcmp(var, "color.branch")) {
+ 		branch_use_color =3D git_config_colorbool(var, value);
+ 		return 0;
+@@ -474,7 +481,12 @@ static void print_ref_item(struct ref_item *item, =
+int maxwidth, int verbose,
+ 	else if (verbose)
+ 		/* " f7c0c00 [ahead 58, behind 197] vcs-svn: drop obj_pool.h" */
+ 		add_verbose_info(&out, item, verbose, abbrev);
+-	printf("%s\n", out.buf);
++	if (colopts & COL_ENABLED) {
++		assert(!verbose && "--column and --verbose are incompatible");
++		string_list_append(&output, out.buf);
++	} else {
++		printf("%s\n", out.buf);
++	}
+ 	strbuf_release(&name);
+ 	strbuf_release(&out);
+ }
+@@ -727,6 +739,7 @@ int cmd_branch(int argc, const char **argv, const c=
+har *prefix)
+ 			PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG,
+ 			opt_parse_merge_filter, (intptr_t) "HEAD",
+ 		},
++		OPT_COLUMN(0, "column", &colopts, "list branches in columns"),
+ 		OPT_END(),
  	};
 =20
-+	/* This one is special and must be the first one */
-+	if (argc > 1 && !prefixcmp(argv[1], "--command=3D")) {
-+		int nonitok =3D 0;
-+		setup_git_directory_gently(&nonitok);
+@@ -749,6 +762,8 @@ int cmd_branch(int argc, const char **argv, const c=
+har *prefix)
+ 	}
+ 	hashcpy(merge_filter_ref, head_sha1);
+=20
 +
-+		command =3D argv[1] + 10;
-+		git_config(column_config, (void *)command);
++	colopts |=3D COL_ANSI;
+ 	argc =3D parse_options(argc, argv, prefix, options, builtin_branch_us=
+age,
+ 			     0);
+=20
+@@ -760,12 +775,21 @@ int cmd_branch(int argc, const char **argv, const=
+ char *prefix)
+=20
+ 	if (abbrev =3D=3D -1)
+ 		abbrev =3D DEFAULT_ABBREV;
++	if (verbose) {
++		if (explicitly_enable_column(colopts))
++			die(_("--column and --verbose are incompatible"));
++		colopts =3D 0;
 +	}
-+
- 	memset(&copts, 0, sizeof(copts));
- 	copts.width =3D term_columns();
- 	copts.padding =3D 1;
-@@ -33,6 +49,11 @@ int cmd_column(int argc, const char **argv, const ch=
-ar *prefix)
- 	if (argc)
- 		usage_with_options(builtin_column_usage, options);
 =20
-+	if (real_command || command) {
-+		if (!real_command || !command || strcmp(real_command, command))
-+			die(_("--command must be the first argument"));
-+	}
-+
- 	while (!strbuf_getline(&sb, stdin, '\n'))
- 		string_list_append(&list, sb.buf);
-=20
-diff --git a/column.c b/column.c
-index 3c77997..94fd1a1 100644
---- a/column.c
-+++ b/column.c
-@@ -2,6 +2,7 @@
- #include "column.h"
- #include "string-list.h"
- #include "parse-options.h"
-+#include "color.h"
- #include "utf8.h"
-=20
- #define MODE(mode) ((mode) & COL_MODE)
-@@ -363,6 +364,33 @@ int git_config_column(unsigned int *mode, const ch=
-ar *value,
- 	return 0;
- }
-=20
-+static int column_config(const char *var, const char *value,
-+			 const char *key, unsigned int *colopts)
-+{
-+	if (git_config_column(colopts, value, -1))
-+		return error("invalid %s mode %s", key, value);
-+	return 0;
-+}
-+
-+int git_column_config(const char *var, const char *value,
-+		      const char *command, unsigned int *colopts)
-+{
-+	if (!strcmp(var, "column.ui"))
-+		return column_config(var, value, "column.ui", colopts);
-+
-+	if (command) {
-+		struct strbuf sb =3D STRBUF_INIT;
-+		int ret =3D 0;
-+		strbuf_addf(&sb, "column.%s", command);
-+		if (!strcmp(var, sb.buf))
-+			ret =3D column_config(var, value, sb.buf, colopts);
-+		strbuf_release(&sb);
+ 	if (delete)
+ 		return delete_branches(argc, argv, delete > 1, kinds);
+-	else if (list)
+-		return print_ref_list(kinds, detached, verbose, abbrev,
+-				      with_commit, argv);
++	else if (list) {
++		int ret =3D print_ref_list(kinds, detached, verbose, abbrev,
++					 with_commit, argv);
++		print_columns(&output, colopts, NULL);
++		string_list_clear(&output, 0);
 +		return ret;
 +	}
-+
-+	return 0;
-+}
-+
- int parseopt_column_callback(const struct option *opt,
- 			     const char *arg, int unset)
- {
-diff --git a/column.h b/column.h
-index eb03c6c..43528da 100644
---- a/column.h
-+++ b/column.h
-@@ -27,6 +27,8 @@ extern void print_columns(const struct string_list *l=
-ist,
- 			  struct column_options *opts);
- extern int git_config_column(unsigned int *mode, const char *value,
- 			     int stdout_is_tty);
-+extern int git_column_config(const char *var, const char *value,
-+			     const char *command, unsigned int *colopts);
+ 	else if (edit_description) {
+ 		const char *branch_name;
+ 		struct strbuf branch_ref =3D STRBUF_INIT;
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index dd1aceb..c38592a 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -160,6 +160,83 @@ test_expect_success 'git branch --list -d t should=
+ fail' '
+ 	test_path_is_missing .git/refs/heads/t
+ '
 =20
- struct option;
- extern int parseopt_column_callback(const struct option *opt,
++test_expect_success 'git branch --column' '
++	COLUMNS=3D80 git branch --column=3Dcolumn >actual &&
++	cat >expected <<\EOF &&
++  a/b/c     bam       foo       l       * master    n         o/p     =
+  r
++  abc       bar       j/k       m/m       master2   o/o       q
++EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'git branch --column with an extremely long branch=
+ name' '
++	long=3Dthis/is/a/part/of/long/branch/name &&
++	long=3Dz$long/$long/$long/$long &&
++	test_when_finished "git branch -d $long" &&
++	git branch $long &&
++	COLUMNS=3D80 git branch --column=3Dcolumn >actual &&
++	cat >expected <<EOF &&
++  a/b/c
++  abc
++  bam
++  bar
++  foo
++  j/k
++  l
++  m/m
++* master
++  master2
++  n
++  o/o
++  o/p
++  q
++  r
++  $long
++EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'git branch with column.*' '
++	git config column.ui column &&
++	git config column.branch "dense" &&
++	COLUMNS=3D80 git branch >actual &&
++	git config --unset column.branch &&
++	git config --unset column.ui &&
++	cat >expected <<\EOF &&
++  a/b/c   bam   foo   l   * master    n     o/p   r
++  abc     bar   j/k   m/m   master2   o/o   q
++EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'git branch --column -v should fail' '
++	test_must_fail git branch --column -v
++'
++
++test_expect_success 'git branch -v with column.ui ignored' '
++	git config column.ui column &&
++	COLUMNS=3D80 git branch -v | cut -c -10 | sed "s/ *$//" >actual &&
++	git config --unset column.ui &&
++	cat >expected <<\EOF &&
++  a/b/c
++  abc
++  bam
++  bar
++  foo
++  j/k
++  l
++  m/m
++* master
++  master2
++  n
++  o/o
++  o/p
++  q
++  r
++EOF
++	test_cmp expected actual
++'
++
+ mv .git/config .git/config-saved
+=20
+ test_expect_success 'git branch -m q q2 without config should succeed'=
+ '
 --=20
 1.7.8.36.g69ee2
