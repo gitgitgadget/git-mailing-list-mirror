@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v6 08/11] branch: add --column
-Date: Sat, 25 Feb 2012 18:41:15 +0700
-Message-ID: <1330170078-29353-9-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v6 09/11] status: add --column
+Date: Sat, 25 Feb 2012 18:41:16 +0700
+Message-ID: <1330170078-29353-10-git-send-email-pclouds@gmail.com>
 References: <1330170078-29353-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -17,102 +17,94 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S1FzB-0002Ur-IG
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 12:40:21 +0100
+	id 1S1FzC-0002Ur-2M
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 12:40:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756604Ab2BYLj4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Feb 2012 06:39:56 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:44098 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756485Ab2BYLjy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Feb 2012 06:39:54 -0500
-Received: by mail-pz0-f46.google.com with SMTP id d14so3436768dae.19
-        for <git@vger.kernel.org>; Sat, 25 Feb 2012 03:39:53 -0800 (PST)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.68.194.65 as permitted sender) client-ip=10.68.194.65;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.68.194.65 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
-Received: from mr.google.com ([10.68.194.65])
-        by 10.68.194.65 with SMTP id hu1mr18709263pbc.75.1330169993944 (num_hops = 1);
-        Sat, 25 Feb 2012 03:39:53 -0800 (PST)
+	id S1756507Ab2BYLkE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Feb 2012 06:40:04 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:52288 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756470Ab2BYLkB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Feb 2012 06:40:01 -0500
+Received: by mail-pw0-f46.google.com with SMTP id up15so414856pbc.19
+        for <git@vger.kernel.org>; Sat, 25 Feb 2012 03:40:01 -0800 (PST)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.68.224.9 as permitted sender) client-ip=10.68.224.9;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.68.224.9 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
+Received: from mr.google.com ([10.68.224.9])
+        by 10.68.224.9 with SMTP id qy9mr18203684pbc.102.1330170001202 (num_hops = 1);
+        Sat, 25 Feb 2012 03:40:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=FzZrsvTTcwsVuEJWBS4XRoQCmkwNMp+Aw2y7FN6K0y4=;
-        b=scLDoMfUnNv/hmBWCTO3qI7G8D9YvNA9zIPmW3yckxe1aQXTq2GMIldGcRIx/VL6bb
-         NG+HHvc10r/BG2hz8p/J9di/OCwE0B6T3o+5TSfJI9CYPdEoxLlU8TmGR++eC4Tk7GyZ
-         FAM7EG4pbbWytx3uIO8Y6WznNsswch7AyslcQ=
-Received: by 10.68.194.65 with SMTP id hu1mr15559891pbc.75.1330169993895;
-        Sat, 25 Feb 2012 03:39:53 -0800 (PST)
+        bh=eLtS1FBIuhcLaHcCFo1C+r7GlDVPT72jMPVNOXMPVn4=;
+        b=azFV8Vk1i+6DlgXSZHqQVAF4/6njBEVYZKHJoApSg1MctMhVSF948lW4KxjkVv9DLu
+         2NWpE0DXq4IHzXThkInHTnCgqZ4DX4DKbhawov5ixfG43OxfDNAC7IADosQeNV8FIRkw
+         3DIZ5Sl98QggmdCg756sm/uFabBtyyu4O5Q5U=
+Received: by 10.68.224.9 with SMTP id qy9mr15154140pbc.102.1330170001158;
+        Sat, 25 Feb 2012 03:40:01 -0800 (PST)
 Received: from tre ([115.74.53.120])
-        by mx.google.com with ESMTPS id l1sm7000621pbe.54.2012.02.25.03.39.49
+        by mx.google.com with ESMTPS id o4sm7018043pbq.16.2012.02.25.03.39.56
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 25 Feb 2012 03:39:52 -0800 (PST)
-Received: by tre (sSMTP sendmail emulation); Sat, 25 Feb 2012 18:42:11 +0700
+        Sat, 25 Feb 2012 03:39:59 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Sat, 25 Feb 2012 18:42:19 +0700
 X-Mailer: git-send-email 1.7.8.36.g69ee2
 In-Reply-To: <1330170078-29353-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191531>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/config.txt     |    4 ++
- Documentation/git-branch.txt |    9 +++++
+ Documentation/config.txt     |    4 ++++
+ Documentation/git-status.txt |    7 +++++++
  Makefile                     |    2 +-
- builtin/branch.c             |   32 +++++++++++++++--
- t/t3200-branch.sh            |   77 ++++++++++++++++++++++++++++++++++=
-++++++++
- 5 files changed, 119 insertions(+), 5 deletions(-)
+ builtin/commit.c             |    6 ++++++
+ t/t7508-status.sh            |   24 ++++++++++++++++++++++++
+ wt-status.c                  |   28 ++++++++++++++++++++++++++--
+ wt-status.h                  |    1 +
+ 7 files changed, 69 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 5216598..c14db27 100644
+index c14db27..ebb210c 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -847,6 +847,10 @@ column.ui::
- +
- 	This option defaults to 'never'.
+@@ -851,6 +851,10 @@ column.branch::
+ 	Specify whether to output branch listing in `git branch` in columns.
+ 	See `column.ui` for details.
 =20
-+column.branch::
-+	Specify whether to output branch listing in `git branch` in columns.
++column.status::
++	Specify whether to output untracked files in `git status` in columns.
 +	See `column.ui` for details.
 +
  commit.status::
  	A boolean to enable/disable inclusion of status information in the
  	commit message template when using an editor to prepare the commit
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.tx=
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.tx=
 t
-index 0427e80..ba5cccb 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- [verse]
- 'git branch' [--color[=3D<when>] | --no-color] [-r | -a]
- 	[--list] [-v [--abbrev=3D<length> | --no-abbrev]]
-+	[--column[=3D<options>] | --no-column]
- 	[(--merged | --no-merged | --contains) [<commit>]] [<pattern>...]
- 'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branch=
-name> [<start-point>]
- 'git branch' (-m | -M) [<oldbranch>] <newbranch>
-@@ -107,6 +108,14 @@ OPTIONS
- 	default to color output.
- 	Same as `--color=3Dnever`.
+index 3d51717..2f87207 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -77,6 +77,13 @@ configuration variable documented in linkgit:git-con=
+fig[1].
+ 	Terminate entries with NUL, instead of LF.  This implies
+ 	the `--porcelain` output format if no other format is given.
 =20
 +--column[=3D<options>]::
 +--no-column::
-+	Display branch listing in columns. See configuration variable
-+	column.branch for option syntax.`--column` and `--no-column`
-+	without options are equivalent to 'always' and 'never' respectively.
-++
-+This option is only applicable in non-verbose mode.
++	Display untracked files in columns. See configuration variable
++	column.status for option syntax.`--column` and `--no-column`
++	without options are equivalent to 'always' and 'never'
++	respectively.
 +
- -r::
- --remotes::
- 	List or delete (if used with -d) the remote-tracking branches.
+=20
+ OUTPUT
+ ------
 diff --git a/Makefile b/Makefile
-index 0998f0d..320d3f8 100644
+index 320d3f8..d9c5f00 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -2168,7 +2168,7 @@ builtin/prune.o builtin/reflog.o reachable.o: rea=
@@ -120,199 +112,172 @@ chable.h
  builtin/commit.o builtin/revert.o wt-status.o: wt-status.h
  builtin/tar-tree.o archive-tar.o: tar.h
  connect.o transport.o url.o http-backend.o: url.h
--column.o help.o pager.o: column.h
-+builtin/branch.o column.o help.o pager.o: column.h
+-builtin/branch.o column.o help.o pager.o: column.h
++builtin/branch.o builtin/commit.o column.o help.o pager.o: column.h
  http-fetch.o http-walker.o remote-curl.o transport.o walker.o: walker.=
 h
  http.o http-walker.o http-push.o http-fetch.o remote-curl.o: http.h ur=
 l.h
 =20
-diff --git a/builtin/branch.c b/builtin/branch.c
-index cb17bc3..611cc0e 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -15,6 +15,8 @@
- #include "branch.h"
- #include "diff.h"
- #include "revision.h"
-+#include "string-list.h"
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 3714582..b42b83f 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -27,6 +27,7 @@
+ #include "quote.h"
+ #include "submodule.h"
+ #include "gpg-interface.h"
 +#include "column.h"
 =20
- static const char * const builtin_branch_usage[] =3D {
- 	"git branch [options] [-r | -a] [--merged | --no-merged]",
-@@ -53,6 +55,9 @@ static enum merge_filter {
- } merge_filter;
- static unsigned char merge_filter_ref[20];
-=20
-+static struct string_list output =3D STRING_LIST_INIT_DUP;
+ static const char * const builtin_commit_usage[] =3D {
+ 	"git commit [options] [--] <filepattern>...",
+@@ -88,6 +89,7 @@ static int quiet, verbose, no_verify, allow_empty, dr=
+y_run, renew_authorship;
+ static int no_post_rewrite, allow_empty_message;
+ static char *untracked_files_arg, *force_date, *ignore_submodule_arg;
+ static char *sign_commit;
 +static unsigned int colopts;
-+
- static int parse_branch_color_slot(const char *var, int ofs)
- {
- 	if (!strcasecmp(var+ofs, "plain"))
-@@ -70,6 +75,8 @@ static int parse_branch_color_slot(const char *var, i=
-nt ofs)
 =20
- static int git_branch_config(const char *var, const char *value, void =
-*cb)
+ /*
+  * The default commit message cleanup mode will remove the lines
+@@ -1145,6 +1147,8 @@ static int git_status_config(const char *k, const=
+ char *v, void *cb)
  {
-+	if (!prefixcmp(var, "column."))
-+		return git_column_config(var, value, "branch", &colopts);
- 	if (!strcmp(var, "color.branch")) {
- 		branch_use_color =3D git_config_colorbool(var, value);
- 		return 0;
-@@ -474,7 +481,12 @@ static void print_ref_item(struct ref_item *item, =
-int maxwidth, int verbose,
- 	else if (verbose)
- 		/* " f7c0c00 [ahead 58, behind 197] vcs-svn: drop obj_pool.h" */
- 		add_verbose_info(&out, item, verbose, abbrev);
--	printf("%s\n", out.buf);
-+	if (colopts & COL_ENABLED) {
-+		assert(!verbose && "--column and --verbose are incompatible");
-+		string_list_append(&output, out.buf);
-+	} else {
-+		printf("%s\n", out.buf);
-+	}
- 	strbuf_release(&name);
- 	strbuf_release(&out);
- }
-@@ -727,6 +739,7 @@ int cmd_branch(int argc, const char **argv, const c=
-har *prefix)
- 			PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG,
- 			opt_parse_merge_filter, (intptr_t) "HEAD",
- 		},
-+		OPT_COLUMN(0, "column", &colopts, "list branches in columns"),
+ 	struct wt_status *s =3D cb;
+=20
++	if (!prefixcmp(k, "column."))
++		return git_column_config(k, v, "status", &colopts);
+ 	if (!strcmp(k, "status.submodulesummary")) {
+ 		int is_bool;
+ 		s->submodule_summary =3D git_config_bool_or_int(k, v, &is_bool);
+@@ -1210,6 +1214,7 @@ int cmd_status(int argc, const char **argv, const=
+ char *prefix)
+ 		{ OPTION_STRING, 0, "ignore-submodules", &ignore_submodule_arg, "whe=
+n",
+ 		  "ignore changes to submodules, optional when: all, dirty, untracke=
+d. (Default: all)",
+ 		  PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
++		OPT_COLUMN(0, "column", &colopts, "list untracked files in columns")=
+,
  		OPT_END(),
  	};
 =20
-@@ -749,6 +762,8 @@ int cmd_branch(int argc, const char **argv, const c=
-har *prefix)
- 	}
- 	hashcpy(merge_filter_ref, head_sha1);
-=20
-+
-+	colopts |=3D COL_ANSI;
- 	argc =3D parse_options(argc, argv, prefix, options, builtin_branch_us=
-age,
- 			     0);
-=20
-@@ -760,12 +775,21 @@ int cmd_branch(int argc, const char **argv, const=
+@@ -1223,6 +1228,7 @@ int cmd_status(int argc, const char **argv, const=
  char *prefix)
+ 	argc =3D parse_options(argc, argv, prefix,
+ 			     builtin_status_options,
+ 			     builtin_status_usage, 0);
++	s.colopts =3D colopts;
 =20
- 	if (abbrev =3D=3D -1)
- 		abbrev =3D DEFAULT_ABBREV;
-+	if (verbose) {
-+		if (explicitly_enable_column(colopts))
-+			die(_("--column and --verbose are incompatible"));
-+		colopts =3D 0;
-+	}
-=20
- 	if (delete)
- 		return delete_branches(argc, argv, delete > 1, kinds);
--	else if (list)
--		return print_ref_list(kinds, detached, verbose, abbrev,
--				      with_commit, argv);
-+	else if (list) {
-+		int ret =3D print_ref_list(kinds, detached, verbose, abbrev,
-+					 with_commit, argv);
-+		print_columns(&output, colopts, NULL);
-+		string_list_clear(&output, 0);
-+		return ret;
-+	}
- 	else if (edit_description) {
- 		const char *branch_name;
- 		struct strbuf branch_ref =3D STRBUF_INIT;
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index dd1aceb..c38592a 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -160,6 +160,83 @@ test_expect_success 'git branch --list -d t should=
- fail' '
- 	test_path_is_missing .git/refs/heads/t
+ 	if (null_termination && status_format =3D=3D STATUS_FORMAT_LONG)
+ 		status_format =3D STATUS_FORMAT_PORCELAIN;
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index fc57b13..8f5cfac 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -59,6 +59,30 @@ test_expect_success 'status (1)' '
+ 	test_i18ngrep "use \"git rm --cached <file>\.\.\.\" to unstage" outpu=
+t
  '
 =20
-+test_expect_success 'git branch --column' '
-+	COLUMNS=3D80 git branch --column=3Dcolumn >actual &&
-+	cat >expected <<\EOF &&
-+  a/b/c     bam       foo       l       * master    n         o/p     =
-  r
-+  abc       bar       j/k       m/m       master2   o/o       q
++test_expect_success 'status --column' '
++	COLUMNS=3D50 git status --column=3D"column dense" >output &&
++	cat >expect <<\EOF &&
++# On branch master
++# Changes to be committed:
++#   (use "git reset HEAD <file>..." to unstage)
++#
++#	new file:   dir2/added
++#
++# Changes not staged for commit:
++#   (use "git add <file>..." to update what will be committed)
++#   (use "git checkout -- <file>..." to discard changes in working dir=
+ectory)
++#
++#	modified:   dir1/modified
++#
++# Untracked files:
++#   (use "git add <file>..." to include in what will be committed)
++#
++#	dir1/untracked dir2/untracked untracked
++#	dir2/modified  output
 +EOF
-+	test_cmp expected actual
++	test_cmp expect output
 +'
 +
-+test_expect_success 'git branch --column with an extremely long branch=
- name' '
-+	long=3Dthis/is/a/part/of/long/branch/name &&
-+	long=3Dz$long/$long/$long/$long &&
-+	test_when_finished "git branch -d $long" &&
-+	git branch $long &&
-+	COLUMNS=3D80 git branch --column=3Dcolumn >actual &&
-+	cat >expected <<EOF &&
-+  a/b/c
-+  abc
-+  bam
-+  bar
-+  foo
-+  j/k
-+  l
-+  m/m
-+* master
-+  master2
-+  n
-+  o/o
-+  o/p
-+  q
-+  r
-+  $long
-+EOF
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'git branch with column.*' '
-+	git config column.ui column &&
-+	git config column.branch "dense" &&
-+	COLUMNS=3D80 git branch >actual &&
-+	git config --unset column.branch &&
-+	git config --unset column.ui &&
-+	cat >expected <<\EOF &&
-+  a/b/c   bam   foo   l   * master    n     o/p   r
-+  abc     bar   j/k   m/m   master2   o/o   q
-+EOF
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'git branch --column -v should fail' '
-+	test_must_fail git branch --column -v
-+'
-+
-+test_expect_success 'git branch -v with column.ui ignored' '
-+	git config column.ui column &&
-+	COLUMNS=3D80 git branch -v | cut -c -10 | sed "s/ *$//" >actual &&
-+	git config --unset column.ui &&
-+	cat >expected <<\EOF &&
-+  a/b/c
-+  abc
-+  bam
-+  bar
-+  foo
-+  j/k
-+  l
-+  m/m
-+* master
-+  master2
-+  n
-+  o/o
-+  o/p
-+  q
-+  r
-+EOF
-+	test_cmp expected actual
-+'
-+
- mv .git/config .git/config-saved
+ cat >expect <<\EOF
+ # On branch master
+ # Changes to be committed:
+diff --git a/wt-status.c b/wt-status.c
+index 9ffc535..eee059e 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -11,6 +11,7 @@
+ #include "remote.h"
+ #include "refs.h"
+ #include "submodule.h"
++#include "column.h"
 =20
- test_expect_success 'git branch -m q q2 without config should succeed'=
- '
+ static char default_wt_status_colors[][COLOR_MAXLEN] =3D {
+ 	GIT_COLOR_NORMAL, /* WT_STATUS_HEADER */
+@@ -641,6 +642,8 @@ static void wt_status_print_other(struct wt_status =
+*s,
+ {
+ 	int i;
+ 	struct strbuf buf =3D STRBUF_INIT;
++	static struct string_list output =3D STRING_LIST_INIT_DUP;
++	struct column_options copts;
+=20
+ 	if (!l->nr)
+ 		return;
+@@ -649,12 +652,33 @@ static void wt_status_print_other(struct wt_statu=
+s *s,
+=20
+ 	for (i =3D 0; i < l->nr; i++) {
+ 		struct string_list_item *it;
++		const char *path;
+ 		it =3D &(l->items[i]);
++		path =3D quote_path(it->string, strlen(it->string),
++				  &buf, s->prefix);
++		if (s->colopts & COL_ENABLED) {
++			string_list_append(&output, path);
++			continue;
++		}
+ 		status_printf(s, color(WT_STATUS_HEADER, s), "\t");
+ 		status_printf_more(s, color(WT_STATUS_UNTRACKED, s),
+-			"%s\n", quote_path(it->string, strlen(it->string),
+-					    &buf, s->prefix));
++				   "%s\n", path);
+ 	}
++
++	strbuf_release(&buf);
++	if ((s->colopts & COL_ENABLED) =3D=3D 0)
++		return;
++
++	strbuf_addf(&buf, "%s#\t%s",
++		    color(WT_STATUS_HEADER, s),
++		    color(WT_STATUS_UNTRACKED, s));
++	memset(&copts, 0, sizeof(copts));
++	copts.padding =3D 1;
++	copts.indent =3D buf.buf;
++	if (want_color(s->use_color))
++		copts.nl =3D GIT_COLOR_RESET "\n";
++	print_columns(&output, s->colopts, &copts);
++	string_list_clear(&output, 0);
+ 	strbuf_release(&buf);
+ }
+=20
+diff --git a/wt-status.h b/wt-status.h
+index 682b4c8..6dd7207 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -56,6 +56,7 @@ struct wt_status {
+ 	enum untracked_status_type show_untracked_files;
+ 	const char *ignore_submodule_arg;
+ 	char color_palette[WT_STATUS_MAXSLOT][COLOR_MAXLEN];
++	int colopts;
+=20
+ 	/* These are computed during processing of the individual sections */
+ 	int commitable;
 --=20
 1.7.8.36.g69ee2
