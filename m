@@ -1,7 +1,7 @@
 From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 3/3] parse-options: remove PARSE_OPT_NEGHELP
-Date: Sat, 25 Feb 2012 20:15:56 +0100
-Message-ID: <4F49336C.3000303@lsrfire.ath.cx>
+Subject: [PATCH 1/3] test-parse-options: convert to OPT_BOOL()
+Date: Sat, 25 Feb 2012 20:11:16 +0100
+Message-ID: <4F493254.1020801@lsrfire.ath.cx>
 References: <4F49317A.3080809@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15
@@ -12,155 +12,158 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Pierre Habouzit <madcoder@debian.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 25 20:16:16 2012
+X-From: git-owner@vger.kernel.org Sat Feb 25 20:17:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S1N6I-0001Wh-WB
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 20:16:11 +0100
+	id 1S1N7q-0002fG-Ul
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 20:17:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757576Ab2BYTQG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Feb 2012 14:16:06 -0500
-Received: from india601.server4you.de ([85.25.151.105]:38114 "EHLO
+	id S1757621Ab2BYTRm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Feb 2012 14:17:42 -0500
+Received: from india601.server4you.de ([85.25.151.105]:38116 "EHLO
 	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757546Ab2BYTQF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Feb 2012 14:16:05 -0500
+	with ESMTP id S1757546Ab2BYTRl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Feb 2012 14:17:41 -0500
 Received: from [192.168.2.105] (p4FFD9274.dip.t-dialin.net [79.253.146.116])
-	by india601.server4you.de (Postfix) with ESMTPSA id EDD982F81C7;
-	Sat, 25 Feb 2012 20:16:02 +0100 (CET)
+	by india601.server4you.de (Postfix) with ESMTPSA id 753592F8117;
+	Sat, 25 Feb 2012 20:11:23 +0100 (CET)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
 In-Reply-To: <4F49317A.3080809@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191544>
 
-PARSE_OPT_NEGHELP is confusing because short options defined with that
-flag do the opposite of what the helptext says. It is also not needed
-anymore now that options starting with no- can be negated by removing
-that prefix. Convert its only two users to OPT_BOOL() and then remove
-support for PARSE_OPT_NEGHELP.
+Introduce OPT_BOOL() to test-parse-options and add some tests for
+these "true" boolean options. Rename OPT_BOOLEAN to OPT_COUNTUP and
+OPTION_BOOLEAN to OPTION_COUNTUP as well.
 
 Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 ---
- builtin/fast-export.c |    4 +---
- builtin/grep.c        |   15 +++++++--------
- parse-options.c       |    6 ++----
- parse-options.h       |    4 ----
- 4 files changed, 10 insertions(+), 19 deletions(-)
+ t/t0040-parse-options.sh |   60 ++++++++++++++++++++++++++++++++++++++++++++--
+ test-parse-options.c     |   12 ++++++----
+ 2 files changed, 66 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 08fed98..19509ea 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -647,9 +647,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 			     "Output full tree for each commit"),
- 		OPT_BOOLEAN(0, "use-done-feature", &use_done_feature,
- 			     "Use the done feature to terminate the stream"),
--		{ OPTION_NEGBIT, 0, "data", &no_data, NULL,
--			"Skip output of blob data",
--			PARSE_OPT_NOARG | PARSE_OPT_NEGHELP, NULL, 1 },
-+		OPT_BOOL(0, "no-data", &no_data, "Skip output of blob data"),
- 		OPT_END()
+diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+index a1e4616..79aefe2 100755
+--- a/t/t0040-parse-options.sh
++++ b/t/t0040-parse-options.sh
+@@ -10,7 +10,10 @@ test_description='our own option parser'
+ cat > expect << EOF
+ usage: test-parse-options <options>
+ 
+-    -b, --boolean         get a boolean
++    --yes                 get a boolean
++    -D, --no-doubt        begins with 'no-'
++    -B, --no-fear         be brave
++    -b, --boolean         increment by one
+     -4, --or4             bitwise-or boolean with ...0100
+     --neg-or4             same as --no-or4
+ 
+@@ -53,6 +56,59 @@ test_expect_success 'test help' '
+ 
+ mv expect expect.err
+ 
++cat >expect.template <<EOF
++boolean: 0
++integer: 0
++timestamp: 0
++string: (not set)
++abbrev: 7
++verbose: 0
++quiet: no
++dry run: no
++file: (not set)
++EOF
++
++check() {
++	what="$1" &&
++	shift &&
++	expect="$1" &&
++	shift &&
++	sed "s/^$what .*/$what $expect/" <expect.template >expect &&
++	test-parse-options $* >output 2>output.err &&
++	test ! -s output.err &&
++	test_cmp expect output
++}
++
++check_unknown() {
++	case "$1" in
++	--*)
++		echo error: unknown option \`${1#--}\' >expect ;;
++	-*)
++		echo error: unknown switch \`${1#-}\' >expect ;;
++	esac &&
++	cat expect.err >>expect &&
++	test_must_fail test-parse-options $* >output 2>output.err &&
++	test ! -s output &&
++	test_cmp expect output.err
++}
++
++test_expect_success 'OPT_BOOL() #1' 'check boolean: 1 --yes'
++test_expect_success 'OPT_BOOL() #2' 'check boolean: 1 --no-doubt'
++test_expect_success 'OPT_BOOL() #3' 'check boolean: 1 -D'
++test_expect_success 'OPT_BOOL() #4' 'check boolean: 1 --no-fear'
++test_expect_success 'OPT_BOOL() #5' 'check boolean: 1 -B'
++
++test_expect_success 'OPT_BOOL() is idempotent #1' 'check boolean: 1 --yes --yes'
++test_expect_success 'OPT_BOOL() is idempotent #2' 'check boolean: 1 -DB'
++
++test_expect_success 'OPT_BOOL() negation #1' 'check boolean: 0 -D --no-yes'
++test_expect_success 'OPT_BOOL() negation #2' 'check boolean: 0 -D --no-no-doubt'
++
++test_expect_success 'OPT_BOOL() no negation #1' 'check_unknown --fear'
++test_expect_success 'OPT_BOOL() no negation #2' 'check_unknown --no-no-fear'
++
++test_expect_failure 'OPT_BOOL() positivation' 'check boolean: 0 -D --doubt'
++
+ cat > expect << EOF
+ boolean: 2
+ integer: 1729
+@@ -296,7 +352,7 @@ test_expect_success 'OPT_NEGBIT() works' '
+ 	test_cmp expect output
+ '
+ 
+-test_expect_success 'OPT_BOOLEAN() with PARSE_OPT_NODASH works' '
++test_expect_success 'OPT_COUNTUP() with PARSE_OPT_NODASH works' '
+ 	test-parse-options + + + + + + > output 2> output.err &&
+ 	test ! -s output.err &&
+ 	test_cmp expect output
+diff --git a/test-parse-options.c b/test-parse-options.c
+index 36487c4..3c9510a 100644
+--- a/test-parse-options.c
++++ b/test-parse-options.c
+@@ -37,7 +37,11 @@ int main(int argc, const char **argv)
+ 		NULL
  	};
- 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index e4ea900..b151467 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -671,7 +671,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	struct string_list path_list = STRING_LIST_INIT_NODUP;
- 	int i;
- 	int dummy;
--	int use_index = 1;
-+	int no_index = 0;
- 	enum {
- 		pattern_type_unspecified = 0,
- 		pattern_type_bre,
-@@ -684,9 +684,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
  	struct option options[] = {
- 		OPT_BOOLEAN(0, "cached", &cached,
- 			"search in index instead of in the work tree"),
--		{ OPTION_BOOLEAN, 0, "index", &use_index, NULL,
--			"finds in contents not managed by git",
--			PARSE_OPT_NOARG | PARSE_OPT_NEGHELP },
-+		OPT_BOOL(0, "no-index", &no_index,
-+			 "finds in contents not managed by git"),
- 		OPT_BOOLEAN(0, "untracked", &untracked,
- 			"search in both tracked and untracked files"),
- 		OPT_SET_INT(0, "exclude-standard", &opt_exclude,
-@@ -851,7 +850,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		break; /* nothing */
- 	}
- 
--	if (use_index && !startup_info->have_repository)
-+	if (!no_index && !startup_info->have_repository)
- 		/* die the same way as if we did it at the beginning */
- 		setup_git_directory();
- 
-@@ -963,11 +962,11 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	if (!show_in_pager)
- 		setup_pager();
- 
--	if (!use_index && (untracked || cached))
-+	if (no_index && (untracked || cached))
- 		die(_("--cached or --untracked cannot be used with --no-index."));
- 
--	if (!use_index || untracked) {
--		int use_exclude = (opt_exclude < 0) ? use_index : !!opt_exclude;
-+	if (no_index || untracked) {
-+		int use_exclude = (opt_exclude < 0) ? !no_index : !!opt_exclude;
- 		if (list.nr)
- 			die(_("--no-index or --untracked cannot be used with revs."));
- 		hit = grep_directory(&opt, &pathspec, use_exclude);
-diff --git a/parse-options.c b/parse-options.c
-index 8906841..1908996 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -533,7 +533,7 @@ static int usage_with_options_internal(struct parse_opt_ctx_t *ctx,
- 			continue;
- 
- 		pos = fprintf(outfile, "    ");
--		if (opts->short_name && !(opts->flags & PARSE_OPT_NEGHELP)) {
-+		if (opts->short_name) {
- 			if (opts->flags & PARSE_OPT_NODASH)
- 				pos += fprintf(outfile, "%c", opts->short_name);
- 			else
-@@ -542,9 +542,7 @@ static int usage_with_options_internal(struct parse_opt_ctx_t *ctx,
- 		if (opts->long_name && opts->short_name)
- 			pos += fprintf(outfile, ", ");
- 		if (opts->long_name)
--			pos += fprintf(outfile, "--%s%s",
--				(opts->flags & PARSE_OPT_NEGHELP) ?  "no-" : "",
--				opts->long_name);
-+			pos += fprintf(outfile, "--%s", opts->long_name);
- 		if (opts->type == OPTION_NUMBER)
- 			pos += fprintf(outfile, "-NUM");
- 
-diff --git a/parse-options.h b/parse-options.h
-index 2e811dc..def9ced 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -40,7 +40,6 @@ enum parse_opt_option_flags {
- 	PARSE_OPT_LASTARG_DEFAULT = 16,
- 	PARSE_OPT_NODASH = 32,
- 	PARSE_OPT_LITERAL_ARGHELP = 64,
--	PARSE_OPT_NEGHELP = 128,
- 	PARSE_OPT_SHELL_EVAL = 256
- };
- 
-@@ -90,9 +89,6 @@ typedef int parse_opt_ll_cb(struct parse_opt_ctx_t *ctx,
-  *   PARSE_OPT_LITERAL_ARGHELP: says that argh shouldn't be enclosed in brackets
-  *				(i.e. '<argh>') in the help message.
-  *				Useful for options with multiple parameters.
-- *   PARSE_OPT_NEGHELP: says that the long option should always be shown with
-- *				the --no prefix in the usage message. Sometimes
-- *				useful for users of OPTION_NEGBIT.
-  *
-  * `callback`::
-  *   pointer to the callback to use for OPTION_CALLBACK or
+-		OPT_BOOLEAN('b', "boolean", &boolean, "get a boolean"),
++		OPT_BOOL(0, "yes", &boolean, "get a boolean"),
++		OPT_BOOL('D', "no-doubt", &boolean, "begins with 'no-'"),
++		{ OPTION_SET_INT, 'B', "no-fear", &boolean, NULL,
++		  "be brave", PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 1 },
++		OPT_COUNTUP('b', "boolean", &boolean, "increment by one"),
+ 		OPT_BIT('4', "or4", &boolean,
+ 			"bitwise-or boolean with ...0100", 4),
+ 		OPT_NEGBIT(0, "neg-or4", &boolean, "same as --no-or4", 4),
+@@ -62,11 +66,11 @@ int main(int argc, const char **argv)
+ 		OPT_ARGUMENT("quux", "means --quux"),
+ 		OPT_NUMBER_CALLBACK(&integer, "set integer to NUM",
+ 			number_callback),
+-		{ OPTION_BOOLEAN, '+', NULL, &boolean, NULL, "same as -b",
++		{ OPTION_COUNTUP, '+', NULL, &boolean, NULL, "same as -b",
+ 		  PARSE_OPT_NOARG | PARSE_OPT_NONEG | PARSE_OPT_NODASH },
+-		{ OPTION_BOOLEAN, 0, "ambiguous", &ambiguous, NULL,
++		{ OPTION_COUNTUP, 0, "ambiguous", &ambiguous, NULL,
+ 		  "positive ambiguity", PARSE_OPT_NOARG | PARSE_OPT_NONEG },
+-		{ OPTION_BOOLEAN, 0, "no-ambiguous", &ambiguous, NULL,
++		{ OPTION_COUNTUP, 0, "no-ambiguous", &ambiguous, NULL,
+ 		  "negative ambiguity", PARSE_OPT_NOARG | PARSE_OPT_NONEG },
+ 		OPT_GROUP("Standard options"),
+ 		OPT__ABBREV(&abbrev),
 -- 
 1.7.9.2
