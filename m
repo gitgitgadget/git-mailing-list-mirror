@@ -1,62 +1,58 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: cvs2git multiple session for repository migration...
-Date: Sat, 25 Feb 2012 16:14:20 +0100
-Message-ID: <4F48FACC.30800@alum.mit.edu>
-References: <1330092524040-7314909.post@n2.nabble.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: sha-1 check in rev-list --verify-objects redundant?
+Date: Sun, 26 Feb 2012 00:15:19 +0700
+Message-ID: <CACsJy8D_BdV14dGc2YsK91FrX8S=70DJOY3cU=oH3y41N2Ar0w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: supadhyay <supadhyay@imany.com>
-X-From: git-owner@vger.kernel.org Sat Feb 25 16:14:36 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 25 18:16:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S1JKT-0004SK-Bv
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 16:14:33 +0100
+	id 1S1LEQ-0006XA-8f
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 18:16:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756725Ab2BYPO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Feb 2012 10:14:27 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:42210 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756691Ab2BYPO1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Feb 2012 10:14:27 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.134] (p54BECD5E.dip.t-dialin.net [84.190.205.94])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q1PFEKep000700
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 25 Feb 2012 16:14:21 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.27) Gecko/20120216 Lightning/1.0b2 Thunderbird/3.1.19
-In-Reply-To: <1330092524040-7314909.post@n2.nabble.com>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1756879Ab2BYRPw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Feb 2012 12:15:52 -0500
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:61472 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756840Ab2BYRPv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Feb 2012 12:15:51 -0500
+Received: by wibhm11 with SMTP id hm11so541692wib.19
+        for <git@vger.kernel.org>; Sat, 25 Feb 2012 09:15:50 -0800 (PST)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.180.99.65 as permitted sender) client-ip=10.180.99.65;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.180.99.65 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
+Received: from mr.google.com ([10.180.99.65])
+        by 10.180.99.65 with SMTP id eo1mr5376558wib.13.1330190150256 (num_hops = 1);
+        Sat, 25 Feb 2012 09:15:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=w7JsD4NLWbs/6621qrNrM50TNaq4anj5OpBznrmZYVk=;
+        b=jGPORteIPJaWGp08D88BbvP4wVXQorZhbgjubUE9AQFufHj5GQsvX1+BHtV9lU+sPb
+         CMFfhtWwXAzMaPLosMYeAlwlITbhWrg9i3H89Vboit6gVsI62TXTvGQ5gql2E6KKGozt
+         +DqhCrQRRtSJXtwcYBZJhTJmGWzxFMPqRKysE=
+Received: by 10.180.99.65 with SMTP id eo1mr4245314wib.13.1330190150196; Sat,
+ 25 Feb 2012 09:15:50 -0800 (PST)
+Received: by 10.223.13.5 with HTTP; Sat, 25 Feb 2012 09:15:19 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191538>
 
-On 02/24/2012 03:08 PM, supadhyay wrote:
-> I am migrating my CVS repository to GIt. As I have multiple repository I
-> want to start multiple session for cvs2git,but it failed to start. I
-> received cvs2svn.lock file error ? Is there any workaround to start multiple
-> cvs2git session (which migrate the CVS directory) ??
-> 
-> Thanks in advance...
+Hi,
 
-Didn't I already mention that cvs2git questions should go to the cvs2svn
-mailing list?
-
-You can run cvs2git multiple times simultaneously; you just need to
-ensure that each one has its own temporary directory.  You can do this
-either with the --tmpdir=PATH option or by starting the instances in
-separate directories.
-
-Michael
-
+"git rev-list --verify-objects" calls parse_object() on all except
+commits. This function in turn does check_sha1_signature() which
+rehashes object content to verify the content matches its sha-1
+signature. This is an expensive operation. I wonder if this is a
+redundant check. --verify-objects is called to verify new packs.
+index-pack is also (always?) called on new packs, and index-pack
+hashes all object content, saves the hashes as signature in pack index
+file. So they must match. Am I missing something here?
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Duy
