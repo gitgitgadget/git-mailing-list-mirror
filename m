@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v6 02/11] Add git-column and column mode parsing
-Date: Sat, 25 Feb 2012 18:41:09 +0700
-Message-ID: <1330170078-29353-3-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v6 04/11] column: add columnar layout
+Date: Sat, 25 Feb 2012 18:41:11 +0700
+Message-ID: <1330170078-29353-5-git-send-email-pclouds@gmail.com>
 References: <1330170078-29353-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,463 +11,272 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 25 12:39:29 2012
+X-From: git-owner@vger.kernel.org Sat Feb 25 12:39:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S1FyF-0001sw-LF
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 12:39:24 +0100
+	id 1S1FyP-000213-Lc
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 12:39:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756386Ab2BYLjQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Feb 2012 06:39:16 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:44098 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756378Ab2BYLjO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Feb 2012 06:39:14 -0500
-Received: by mail-pz0-f46.google.com with SMTP id d14so3436768dae.19
-        for <git@vger.kernel.org>; Sat, 25 Feb 2012 03:39:13 -0800 (PST)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.68.225.73 as permitted sender) client-ip=10.68.225.73;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.68.225.73 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
-Received: from mr.google.com ([10.68.225.73])
-        by 10.68.225.73 with SMTP id ri9mr18305698pbc.70.1330169953790 (num_hops = 1);
-        Sat, 25 Feb 2012 03:39:13 -0800 (PST)
+	id S1756424Ab2BYLj2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Feb 2012 06:39:28 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:52288 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756411Ab2BYLj1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Feb 2012 06:39:27 -0500
+Received: by mail-pw0-f46.google.com with SMTP id up15so414856pbc.19
+        for <git@vger.kernel.org>; Sat, 25 Feb 2012 03:39:26 -0800 (PST)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.68.135.71 as permitted sender) client-ip=10.68.135.71;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.68.135.71 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
+Received: from mr.google.com ([10.68.135.71])
+        by 10.68.135.71 with SMTP id pq7mr18483129pbb.27.1330169966962 (num_hops = 1);
+        Sat, 25 Feb 2012 03:39:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=JbN8477PTi5F1JCenYp4ItaGm39SV7C0MldEu8BAzpE=;
-        b=lkBRAr8M/D1zEDUh5L+TxNs0MLgm1cW24SmsZbospPaIDdQa9LNtX5PoDiGb44Cc+e
-         dZtoA70TKflDnbzsPMBz4B3fi7KB0Y3bcF1O4D9I0T5CLrJpN8YhIFxHSbeYkNOvdqrj
-         j/3efGNWXYrj6l4CRR7MwZsZY9u5Hc8PAtoQ0=
-Received: by 10.68.225.73 with SMTP id ri9mr15216089pbc.70.1330169953713;
-        Sat, 25 Feb 2012 03:39:13 -0800 (PST)
+        bh=NV90ic9k55OB2Y/eRwJE+rFqsNa3ybONWXdfpsFuecs=;
+        b=DfIl6JowP2jlJz2k5dadDjnfeQjcBDyFLHFbAdgIDdA79BkVEN+g3rI0v7wo0OimtX
+         I3GqwlE2HJKGo+ZbhAQTHaSSXdyWJd/dNt4EetR0Yco+bZyQtuPp0aZm8xGTmYFbK2Dn
+         8xIEI5GW2LtqmHqHaXR59fKnlmJrMLK0awRzI=
+Received: by 10.68.135.71 with SMTP id pq7mr15336828pbb.27.1330169966909;
+        Sat, 25 Feb 2012 03:39:26 -0800 (PST)
 Received: from tre ([115.74.53.120])
-        by mx.google.com with ESMTPS id b4sm7018066pbc.7.2012.02.25.03.39.09
+        by mx.google.com with ESMTPS id x6sm476803pbu.67.2012.02.25.03.39.23
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 25 Feb 2012 03:39:12 -0800 (PST)
-Received: by tre (sSMTP sendmail emulation); Sat, 25 Feb 2012 18:41:31 +0700
+        Sat, 25 Feb 2012 03:39:25 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Sat, 25 Feb 2012 18:41:45 +0700
 X-Mailer: git-send-email 1.7.8.36.g69ee2
 In-Reply-To: <1330170078-29353-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191526>
 
-A column option string consists of many token separated by either
-space of commas. A token belongs to one of three groups:
+COL_MODE_COLUMN and COL_MODE_ROW fill column by column (or row by row
+respectively), given the terminal width and how many space between
+columns.
 
- - enabling: always, never and auto
- - layout mode: to be implemented
- - other tuning, which could be negated be prefix 'no'
+Strings are supposed to be in UTF-8. If strings contain ANSI escape
+strings, COL_ANSI must be specified for correct length calculation.
 
-A command line option without argument (e.g. --column) will enable
-column output and reuse existing settings (layout mode and options..).
---no-column disables columnar output.
-
-Thanks-to: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- .gitignore                   |    1 +
- Documentation/git-column.txt |   49 +++++++++++++++
- Makefile                     |    1 +
- builtin.h                    |    1 +
- builtin/column.c             |   41 +++++++++++++
- column.c                     |  133 ++++++++++++++++++++++++++++++++++=
-++++++++
- column.h                     |   11 ++++
- command-list.txt             |    1 +
- git.c                        |    1 +
- parse-options.h              |    2 +
- t/t9002-column.sh            |   27 +++++++++
- 11 files changed, 268 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/git-column.txt
- create mode 100644 builtin/column.c
- create mode 100755 t/t9002-column.sh
+ column.c          |  131 +++++++++++++++++++++++++++++++++++++++++++++=
++++++++-
+ column.h          |    3 +
+ t/t9002-column.sh |   86 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 219 insertions(+), 1 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 87fcc5f..2540264 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -26,6 +26,7 @@
- /git-cherry-pick
- /git-clean
- /git-clone
-+/git-column
- /git-commit
- /git-commit-tree
- /git-config
-diff --git a/Documentation/git-column.txt b/Documentation/git-column.tx=
-t
-new file mode 100644
-index 0000000..508b85f
---- /dev/null
-+++ b/Documentation/git-column.txt
-@@ -0,0 +1,49 @@
-+git-column(1)
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+
-+NAME
-+----
-+git-column - Display data in columns
-+
-+SYNOPSIS
-+--------
-+[verse]
-+'git column' [--mode=3D<mode> | --rawmode=3D<n>] [--width=3D<width>]
-+	     [--indent=3D<string>] [--nl=3D<string>] [--pading=3D<n>]
-+
-+DESCRIPTION
-+-----------
-+This command formats its input into multiple columns.
-+
-+OPTIONS
-+-------
-+--mode=3D<mode>::
-+	Specify layout mode. See configuration variable column.ui for option
-+	syntax.
-+
-+--rawmode=3D<n>::
-+	Same as --mode but take mode encoded as a number. This is mainly used
-+	by other commands that have already parsed layout mode.
-+
-+--width=3D<width>::
-+	Specify the terminal width. By default 'git column' will detect the
-+	terminal width, or fall back to 80 if it is unable to do so.
-+
-+--indent=3D<string>::
-+	String to be printed at the beginning of each line.
-+
-+--nl=3D<N>::
-+	String to be printed at the end of each line,
-+	including newline character.
-+
-+--padding=3D<N>::
-+	The number of spaces between columns. One space by default.
-+
-+
-+Author
-+------
-+Written by Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Makefile b/Makefile
-index 4e9501b..0998f0d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -775,6 +775,7 @@ BUILTIN_OBJS +=3D builtin/checkout-index.o
- BUILTIN_OBJS +=3D builtin/checkout.o
- BUILTIN_OBJS +=3D builtin/clean.o
- BUILTIN_OBJS +=3D builtin/clone.o
-+BUILTIN_OBJS +=3D builtin/column.o
- BUILTIN_OBJS +=3D builtin/commit-tree.o
- BUILTIN_OBJS +=3D builtin/commit.o
- BUILTIN_OBJS +=3D builtin/config.o
-diff --git a/builtin.h b/builtin.h
-index 857b9c8..338f540 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -61,6 +61,7 @@ extern int cmd_cherry(int argc, const char **argv, co=
-nst char *prefix);
- extern int cmd_cherry_pick(int argc, const char **argv, const char *pr=
-efix);
- extern int cmd_clone(int argc, const char **argv, const char *prefix);
- extern int cmd_clean(int argc, const char **argv, const char *prefix);
-+extern int cmd_column(int argc, const char **argv, const char *prefix)=
-;
- extern int cmd_commit(int argc, const char **argv, const char *prefix)=
-;
- extern int cmd_commit_tree(int argc, const char **argv, const char *pr=
-efix);
- extern int cmd_config(int argc, const char **argv, const char *prefix)=
-;
-diff --git a/builtin/column.c b/builtin/column.c
-new file mode 100644
-index 0000000..3b0f74e
---- /dev/null
-+++ b/builtin/column.c
-@@ -0,0 +1,41 @@
-+#include "builtin.h"
-+#include "cache.h"
-+#include "strbuf.h"
-+#include "parse-options.h"
-+#include "string-list.h"
-+#include "column.h"
-+
-+static const char * const builtin_column_usage[] =3D {
-+	"git column [options]",
-+	NULL
-+};
-+static unsigned int colopts;
-+
-+int cmd_column(int argc, const char **argv, const char *prefix)
-+{
-+	struct string_list list =3D STRING_LIST_INIT_DUP;
-+	struct strbuf sb =3D STRBUF_INIT;
-+	struct column_options copts;
-+	struct option options[] =3D {
-+		OPT_COLUMN(0, "mode", &colopts, "layout to use"),
-+		OPT_INTEGER(0, "rawmode", &colopts, "layout to use"),
-+		OPT_INTEGER(0, "width", &copts.width, "Maximum width"),
-+		OPT_STRING(0, "indent", &copts.indent, "string", "Padding space on l=
-eft border"),
-+		OPT_INTEGER(0, "nl", &copts.nl, "Padding space on right border"),
-+		OPT_INTEGER(0, "padding", &copts.padding, "Padding space between col=
-umns"),
-+		OPT_END()
-+	};
-+
-+	memset(&copts, 0, sizeof(copts));
-+	copts.width =3D term_columns();
-+	copts.padding =3D 1;
-+	argc =3D parse_options(argc, argv, "", options, builtin_column_usage,=
- 0);
-+	if (argc)
-+		usage_with_options(builtin_column_usage, options);
-+
-+	while (!strbuf_getline(&sb, stdin, '\n'))
-+		string_list_append(&list, sb.buf);
-+
-+	print_columns(&list, colopts, &copts);
-+	return 0;
-+}
 diff --git a/column.c b/column.c
-index 742ae18..e62edf7 100644
+index e62edf7..6dca3b8 100644
 --- a/column.c
 +++ b/column.c
-@@ -1,6 +1,7 @@
- #include "cache.h"
+@@ -2,8 +2,66 @@
  #include "column.h"
  #include "string-list.h"
-+#include "parse-options.h"
+ #include "parse-options.h"
++#include "utf8.h"
 =20
  #define MODE(mode) ((mode) & COL_MODE)
-=20
-@@ -37,3 +38,135 @@ void print_columns(const struct string_list *list, =
-unsigned int mode,
- 	}
- 	die("BUG: invalid mode %d", MODE(mode));
- }
++#define XY2LINEAR(d, x, y) (MODE((d)->mode) =3D=3D COL_MODE_COLUMN ? \
++			    (x) * (d)->rows + (y) : \
++			    (y) * (d)->cols + (x))
 +
-+struct colopt {
-+	enum {
-+		ENABLE,
-+		MODE,
-+		OPTION
-+	} type;
-+	const char *name;
-+	int value;
++struct column_data {
++	const struct string_list *list; /* list of all cells */
++	int mode;			/* COL_MODE */
++	int total_width;		/* terminal width */
++	int padding;			/* cell padding */
++	const char *indent;		/* left most column indentation */
++	const char *nl;
++
++	int rows, cols;
++	int *len;			/* cell length */
 +};
 +
-+/*
-+ * Set COL_ENABLED and COL_ENABLED_SET. If 'set' is -1, check if
-+ * stdout is tty.
-+ */
-+static int set_enable_bit(unsigned int *mode, int set, int stdout_is_t=
-ty)
++/* return length of 's' in letters, ANSI escapes stripped */
++static int item_length(int mode, const char *s)
 +{
-+	if (set < 0) {	/* auto */
-+		if (stdout_is_tty < 0)
-+			stdout_is_tty =3D isatty(1);
-+		set =3D stdout_is_tty || (pager_in_use() && pager_use_color);
++	int len, i =3D 0;
++	struct strbuf str =3D STRBUF_INIT;
++
++	if (!(mode & COL_ANSI))
++		return utf8_strwidth(s);
++
++	strbuf_addstr(&str, s);
++	while ((s =3D strstr(str.buf + i, "\033[")) !=3D NULL) {
++		int len =3D strspn(s + 2, "0123456789;");
++		i =3D s - str.buf;
++		strbuf_remove(&str, i, len + 3); /* \033[<len><func char> */
 +	}
-+	if (set)
-+		*mode =3D *mode | COL_ENABLED | COL_ENABLED_SET;
-+	else
-+		*mode =3D (*mode & ~COL_ENABLED) | COL_ENABLED_SET;
-+	return 0;
++	len =3D utf8_strwidth(str.buf);
++	strbuf_release(&str);
++	return len;
 +}
 +
 +/*
-+ * Set COL_MODE_*. mode is intially copied from column.ui. If
-+ * COL_ENABLED_SET is not set, then neither 'always', 'never' nor
-+ * 'auto' has been used. Default to 'always'.
++ * Calculate cell width, rows and cols for a table of equal cells, giv=
+en
++ * table width and how many spaces between cells.
 + */
-+static int set_mode(unsigned int *mode, unsigned int value)
++static void layout(struct column_data *data, int *width)
 +{
-+	*mode =3D (*mode & ~COL_MODE) | value;
-+	if (!(*mode & COL_ENABLED_SET))
-+		*mode |=3D COL_ENABLED | COL_ENABLED_SET;
-+
-+	return 0;
-+}
-+
-+/* Set or unset other COL_* */
-+static int set_option(unsigned int *mode, unsigned int opt, int set)
-+{
-+	if (set)
-+		*mode |=3D opt;
-+	else
-+		*mode &=3D ~opt;
-+	return 0;
-+}
-+
-+static int parse_option(const char *arg, int len,
-+			unsigned int *mode, int stdout_is_tty)
-+{
-+	struct colopt opts[] =3D {
-+		{ ENABLE, "always",  1 },
-+		{ ENABLE, "never",   0 },
-+		{ ENABLE, "auto",   -1 },
-+	};
 +	int i;
 +
-+	for (i =3D 0; i < ARRAY_SIZE(opts); i++) {
-+		int set =3D 1, arg_len =3D len, name_len;
-+		const char *arg_str =3D arg;
++	*width =3D 0;
++	for (i =3D 0; i < data->list->nr; i++)
++		if (*width < data->len[i])
++			*width =3D data->len[i];
 +
-+		if (opts[i].type =3D=3D OPTION) {
-+			if (arg_len > 2 && !strncmp(arg_str, "no", 2)) {
-+				arg_str +=3D 2;
-+				arg_len -=3D 2;
-+				set =3D 0;
-+			} else {
-+				set =3D 1;
-+			}
-+		}
++	*width +=3D data->padding;
 +
-+		name_len =3D strlen(opts[i].name);
-+		if (arg_len !=3D name_len ||
-+		    strncmp(arg_str, opts[i].name, name_len))
-+			continue;
++	data->cols =3D (data->total_width - strlen(data->indent)) / *width;
++	if (data->cols =3D=3D 0)
++		data->cols =3D 1;
 +
-+		switch (opts[i].type) {
-+		case ENABLE:
-+			return set_enable_bit(mode, opts[i].value,
-+					      stdout_is_tty);
-+		case MODE:
-+			return set_mode(mode, opts[i].value);
-+		case OPTION:
-+			return set_option(mode, opts[i].value, set);
-+		default:
-+			die("BUG: Unknown option type %d", opts[i].type);
-+		}
-+	}
-+
-+	return error("unsupported style '%s'", arg);
++	data->rows =3D DIV_ROUND_UP(data->list->nr, data->cols);
 +}
-+
-+int git_config_column(unsigned int *mode, const char *value,
-+		      int stdout_is_tty)
+=20
+ /* Display without layout when COL_ENABLED is not set */
+ static void display_plain(const struct string_list *list,
+@@ -15,6 +73,65 @@ static void display_plain(const struct string_list *=
+list,
+ 		printf("%s%s%s", indent, list->items[i].string, nl);
+ }
+=20
++/* Print a cell to stdout with all necessary leading/traling space */
++static int display_cell(struct column_data *data, int initial_width,
++			const char *empty_cell, int x, int y)
 +{
-+	const char *sep =3D " ,";
++	int i, len, newline;
 +
-+	while (*value) {
-+		int len =3D strcspn(value, sep);
-+		if (len) {
-+			if (parse_option(value, len, mode, stdout_is_tty))
-+				return -1;
++	i =3D XY2LINEAR(data, x, y);
++	if (i >=3D data->list->nr)
++		return -1;
++	len =3D data->len[i];
++	if (MODE(data->mode) =3D=3D COL_MODE_COLUMN)
++		newline =3D i + data->rows >=3D data->list->nr;
++	else
++		newline =3D x =3D=3D data->cols - 1 || i =3D=3D data->list->nr - 1;
 +
-+			value +=3D len;
-+		}
-+		value +=3D strspn(value, sep);
-+	}
++	printf("%s%s%s",
++			x =3D=3D 0 ? data->indent : "",
++			data->list->items[i].string,
++			newline ? data->nl : empty_cell + len);
 +	return 0;
 +}
 +
-+int parseopt_column_callback(const struct option *opt,
-+			     const char *arg, int unset)
++/* Display COL_MODE_COLUMN or COL_MODE_ROW */
++static void display_table(const struct string_list *list,
++			  int mode, int total_width,
++			  int padding, const char *indent,
++			  const char *nl)
 +{
-+	unsigned int *mode =3D opt->value;
-+	*mode |=3D COL_PARSEOPT;
-+	if (unset) {
-+		*mode =3D (*mode & ~COL_ENABLED) | COL_ENABLED_SET;
-+		return 0;
-+	}
-+	if (arg)
-+		return git_config_column(mode, arg, -1);
++	struct column_data data;
++	int x, y, i, initial_width;
++	char *empty_cell;
 +
-+	/* no arg, turn it on */
-+	*mode |=3D COL_ENABLED | COL_ENABLED_SET;
-+	return 0;
++	memset(&data, 0, sizeof(data));
++	data.list =3D list;
++	data.mode =3D mode;
++	data.total_width =3D total_width;
++	data.padding =3D padding;
++	data.indent =3D indent;
++	data.nl =3D nl;
++
++	data.len =3D xmalloc(sizeof(*data.len) * list->nr);
++	for (i =3D 0; i < list->nr; i++)
++		data.len[i] =3D item_length(mode, list->items[i].string);
++
++	layout(&data, &initial_width);
++
++	empty_cell =3D xmalloc(initial_width + 1);
++	memset(empty_cell, ' ', initial_width);
++	empty_cell[initial_width] =3D '\0';
++	for (y =3D 0; y < data.rows; y++) {
++		for (x =3D 0; x < data.cols; x++)
++			if (display_cell(&data, initial_width, empty_cell, x, y))
++				break;
++	}
++
++	free(data.len);
++	free(empty_cell);
 +}
++
+ void print_columns(const struct string_list *list, unsigned int mode,
+ 		   struct column_options *opts)
+ {
+@@ -36,7 +153,16 @@ void print_columns(const struct string_list *list, =
+unsigned int mode,
+ 		display_plain(list, indent, nl);
+ 		return;
+ 	}
+-	die("BUG: invalid mode %d", MODE(mode));
++
++	switch (MODE(mode)) {
++	case COL_MODE_ROW:
++	case COL_MODE_COLUMN:
++		display_table(list, mode, width, padding, indent, nl);
++		break;
++
++	default:
++		die("BUG: invalid mode %d", MODE(mode));
++	}
+ }
+=20
+ struct colopt {
+@@ -98,6 +224,9 @@ static int parse_option(const char *arg, int len,
+ 		{ ENABLE, "always",  1 },
+ 		{ ENABLE, "never",   0 },
+ 		{ ENABLE, "auto",   -1 },
++		{ MODE,   "column", COL_MODE_COLUMN },
++		{ MODE,   "row",    COL_MODE_ROW },
++		{ OPTION, "color",  COL_ANSI },
+ 	};
+ 	int i;
+=20
 diff --git a/column.h b/column.h
-index 8e4fdaa..67b1c4f 100644
+index 67b1c4f..d9d27c6 100644
 --- a/column.h
 +++ b/column.h
-@@ -3,6 +3,11 @@
+@@ -2,8 +2,11 @@
+ #define COLUMN_H
 =20
  #define COL_MODE          0x000F
++#define COL_MODE_COLUMN        0   /* Fill columns before rows */
++#define COL_MODE_ROW           1   /* Fill rows before columns */
  #define COL_ENABLED      (1 << 4)
-+#define COL_ENABLED_SET  (1 << 5)  /* Has COL_ENABLED been set by conf=
+ #define COL_ENABLED_SET  (1 << 5)  /* Has COL_ENABLED been set by conf=
 ig? */
-+#define COL_PARSEOPT     (1 << 8)  /* --column is given */
-+
-+#define explicitly_enable_column(c) \
-+	(((c) & (COL_PARSEOPT | COL_ENABLED)) =3D=3D (COL_PARSEOPT | COL_ENAB=
-LED))
++#define COL_ANSI         (1 << 6)  /* Remove ANSI escapes from string =
+length */
+ #define COL_PARSEOPT     (1 << 8)  /* --column is given */
 =20
- struct column_options {
- 	int width;
-@@ -15,5 +20,11 @@ extern int term_columns(void);
- extern void print_columns(const struct string_list *list,
- 			  unsigned int mode,
- 			  struct column_options *opts);
-+extern int git_config_column(unsigned int *mode, const char *value,
-+			     int stdout_is_tty);
-+
-+struct option;
-+extern int parseopt_column_callback(const struct option *opt,
-+				    const char *arg, int unset);
-=20
- #endif
-diff --git a/command-list.txt b/command-list.txt
-index a36ee9b..fe06f15 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -20,6 +20,7 @@ git-cherry-pick                         mainporcelain
- git-citool                              mainporcelain
- git-clean                               mainporcelain
- git-clone                               mainporcelain common
-+git-column                              purehelpers
- git-commit                              mainporcelain common
- git-commit-tree                         plumbingmanipulators
- git-config                              ancillarymanipulators
-diff --git a/git.c b/git.c
-index 3805616..419e3cc 100644
---- a/git.c
-+++ b/git.c
-@@ -348,6 +348,7 @@ static void handle_internal_command(int argc, const=
- char **argv)
- 		{ "cherry-pick", cmd_cherry_pick, RUN_SETUP | NEED_WORK_TREE },
- 		{ "clean", cmd_clean, RUN_SETUP | NEED_WORK_TREE },
- 		{ "clone", cmd_clone },
-+		{ "column", cmd_column },
- 		{ "commit", cmd_commit, RUN_SETUP | NEED_WORK_TREE },
- 		{ "commit-tree", cmd_commit_tree, RUN_SETUP },
- 		{ "config", cmd_config, RUN_SETUP_GENTLY },
-diff --git a/parse-options.h b/parse-options.h
-index 2e811dc..56fcafd 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -238,5 +238,7 @@ extern int parse_opt_noop_cb(const struct option *,=
- const char *, int);
- 	  PARSE_OPT_OPTARG, &parse_opt_abbrev_cb, 0 }
- #define OPT__COLOR(var, h) \
- 	OPT_COLOR_FLAG(0, "color", (var), (h))
-+#define OPT_COLUMN(s, l, v, h) \
-+	{ OPTION_CALLBACK, (s), (l), (v), "style", (h), PARSE_OPT_OPTARG, par=
-seopt_column_callback }
-=20
- #endif
+ #define explicitly_enable_column(c) \
 diff --git a/t/t9002-column.sh b/t/t9002-column.sh
-new file mode 100755
-index 0000000..b0b6d62
---- /dev/null
+index b0b6d62..cffb029 100755
+--- a/t/t9002-column.sh
 +++ b/t/t9002-column.sh
-@@ -0,0 +1,27 @@
-+#!/bin/sh
+@@ -24,4 +24,90 @@ test_expect_success 'never' '
+ 	test_cmp lista actual
+ '
+=20
++test_expect_success '80 columns' '
++	cat >expected <<\EOF &&
++one    two    three  four   five   six    seven  eight  nine   ten    =
+eleven
++EOF
++	COLUMNS=3D80 git column --mode=3Dcolumn <lista >actual &&
++	test_cmp expected actual
++'
 +
-+test_description=3D'git column'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	cat >lista <<\EOF
++test_expect_success 'COLUMNS =3D 1' '
++	cat >expected <<\EOF &&
 +one
 +two
 +three
@@ -480,13 +289,70 @@ index 0000000..b0b6d62
 +ten
 +eleven
 +EOF
++	COLUMNS=3D1 git column --mode=3Dcolumn <lista >actual &&
++	test_cmp expected actual
 +'
 +
-+test_expect_success 'never' '
-+	git column --mode=3Dnever <lista >actual &&
-+	test_cmp lista actual
++test_expect_success 'width =3D 1' '
++	git column --mode=3Dcolumn --width=3D1 <lista >actual &&
++	test_cmp expected actual
 +'
 +
-+test_done
++COLUMNS=3D20
++export COLUMNS
++
++test_expect_success '20 columns' '
++	cat >expected <<\EOF &&
++one    seven
++two    eight
++three  nine
++four   ten
++five   eleven
++six
++EOF
++	git column --mode=3Dcolumn <lista >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success '20 columns, padding 2' '
++	cat >expected <<\EOF &&
++one     seven
++two     eight
++three   nine
++four    ten
++five    eleven
++six
++EOF
++	git column --mode=3Dcolumn --padding 2 <lista >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success '20 columns, indented' '
++	cat >expected <<\EOF &&
++  one    seven
++  two    eight
++  three  nine
++  four   ten
++  five   eleven
++  six
++EOF
++	git column --mode=3Dcolumn --indent=3D"  " <lista >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success '20 columns, row first' '
++	cat >expected <<\EOF &&
++one    two
++three  four
++five   six
++seven  eight
++nine   ten
++eleven
++EOF
++	git column --mode=3Drow <lista >actual &&
++	test_cmp expected actual
++'
++
+ test_done
 --=20
 1.7.8.36.g69ee2
