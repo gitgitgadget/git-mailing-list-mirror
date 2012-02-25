@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v6 05/11] column: support columns with different widths
-Date: Sat, 25 Feb 2012 18:41:12 +0700
-Message-ID: <1330170078-29353-6-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v6 07/11] help: reuse print_columns() for help -a
+Date: Sat, 25 Feb 2012 18:41:14 +0700
+Message-ID: <1330170078-29353-8-git-send-email-pclouds@gmail.com>
 References: <1330170078-29353-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,270 +11,147 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 25 12:39:51 2012
+X-From: git-owner@vger.kernel.org Sat Feb 25 12:39:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S1Fyh-00029c-8e
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 12:39:51 +0100
+	id 1S1Fyi-00029c-BW
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 12:39:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756543Ab2BYLjf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Feb 2012 06:39:35 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:44098 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756541Ab2BYLje (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Feb 2012 06:39:34 -0500
-Received: by mail-pz0-f46.google.com with SMTP id d14so3436768dae.19
-        for <git@vger.kernel.org>; Sat, 25 Feb 2012 03:39:33 -0800 (PST)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.68.204.7 as permitted sender) client-ip=10.68.204.7;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.68.204.7 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
-Received: from mr.google.com ([10.68.204.7])
-        by 10.68.204.7 with SMTP id ku7mr18021568pbc.45.1330169973937 (num_hops = 1);
-        Sat, 25 Feb 2012 03:39:33 -0800 (PST)
+	id S1756556Ab2BYLjt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Feb 2012 06:39:49 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:52288 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756485Ab2BYLjr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Feb 2012 06:39:47 -0500
+Received: by mail-pw0-f46.google.com with SMTP id up15so414856pbc.19
+        for <git@vger.kernel.org>; Sat, 25 Feb 2012 03:39:46 -0800 (PST)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.68.72.9 as permitted sender) client-ip=10.68.72.9;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.68.72.9 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
+Received: from mr.google.com ([10.68.72.9])
+        by 10.68.72.9 with SMTP id z9mr18523707pbu.124.1330169986950 (num_hops = 1);
+        Sat, 25 Feb 2012 03:39:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=aGU5eAVvE3g1eAt5m2ySe4Xzjs/UQmArwC5bsjuMCzA=;
-        b=PQ1Eg3SvmfXIO70YsS+OS1UN27QEcGSVTJ7qLx2uTQFkJM1BnrJF5TFkSKthF25ifI
-         TGSISXFoil6KB/U5//wH88TCDoMMO6TKZl+PuuJzbY6WAo3uczBAvhC6IAzcC0j1cAZb
-         nGjXVOJ1WDoFU+o3AjwhuO1yklA0mWNw3w4LQ=
-Received: by 10.68.204.7 with SMTP id ku7mr14952800pbc.45.1330169973901;
-        Sat, 25 Feb 2012 03:39:33 -0800 (PST)
+        bh=JaLUT7raOgO+rn+svpInfljWg44WWKBgJyoP3FHQxks=;
+        b=qU3zc+PzO3tp4FOopmYvwUw4h4bg6v2A2MopQ1/M3COWHR1QEjZdNPhUjI345KJB8R
+         h1Ae/6253EpZSMm1B30Q8M9NoDXPbxoxP/2xR6gDjkMxEL6mAp9wRW4c+sIeOVULFwOT
+         e/Fzs7dQ4DkNFoApJbTiRJGvMTDvOzcFcJeqE=
+Received: by 10.68.72.9 with SMTP id z9mr15406379pbu.124.1330169986901;
+        Sat, 25 Feb 2012 03:39:46 -0800 (PST)
 Received: from tre ([115.74.53.120])
-        by mx.google.com with ESMTPS id o2sm1847965pbn.59.2012.02.25.03.39.29
+        by mx.google.com with ESMTPS id l8sm6994928pbd.62.2012.02.25.03.39.43
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 25 Feb 2012 03:39:32 -0800 (PST)
-Received: by tre (sSMTP sendmail emulation); Sat, 25 Feb 2012 18:41:51 +0700
+        Sat, 25 Feb 2012 03:39:46 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Sat, 25 Feb 2012 18:42:05 +0700
 X-Mailer: git-send-email 1.7.8.36.g69ee2
 In-Reply-To: <1330170078-29353-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191528>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- column.c          |   80 +++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- column.h          |    2 +
- t/t9002-column.sh |   48 +++++++++++++++++++++++++++++++
- 3 files changed, 130 insertions(+), 0 deletions(-)
+ help.c |   48 ++++++++++++++----------------------------------
+ 1 files changed, 14 insertions(+), 34 deletions(-)
 
-diff --git a/column.c b/column.c
-index 6dca3b8..3c77997 100644
---- a/column.c
-+++ b/column.c
-@@ -19,6 +19,7 @@ struct column_data {
+diff --git a/help.c b/help.c
+index 14eefc9..d6d2e19 100644
+--- a/help.c
++++ b/help.c
+@@ -4,6 +4,8 @@
+ #include "levenshtein.h"
+ #include "help.h"
+ #include "common-cmds.h"
++#include "string-list.h"
++#include "column.h"
 =20
- 	int rows, cols;
- 	int *len;			/* cell length */
-+	int *width;			/* index to the longest row in column */
- };
-=20
- /* return length of 's' in letters, ANSI escapes stripped */
-@@ -63,6 +64,69 @@ static void layout(struct column_data *data, int *wi=
-dth)
- 	data->rows =3D DIV_ROUND_UP(data->list->nr, data->cols);
+ void add_cmdname(struct cmdnames *cmds, const char *name, int len)
+ {
+@@ -70,31 +72,18 @@ void exclude_cmds(struct cmdnames *cmds, struct cmd=
+names *excludes)
+ 	cmds->cnt =3D cj;
  }
 =20
-+static void compute_column_width(struct column_data *data)
-+{
-+	int i, x, y;
-+	for (x =3D 0; x < data->cols; x++) {
-+		data->width[x] =3D XY2LINEAR(data, x, 0);
-+		for (y =3D 0; y < data->rows; y++) {
-+			i =3D XY2LINEAR(data, x, y);
-+			if (i >=3D data->list->nr)
-+				continue;
-+			if (data->len[data->width[x]] < data->len[i])
-+				data->width[x] =3D i;
-+		}
-+	}
-+}
-+
-+/*
-+ * Shrink all columns by shortening them one row each time (and adding
-+ * more columns along the way). Hopefully the longest cell will be
-+ * moved to the next column, column is shrunk so we have more space
-+ * for new columns. The process ends when the whole thing no longer
-+ * fits in data->total_width.
-+ */
-+static void shrink_columns(struct column_data *data)
-+{
-+	int x, y, total_width, cols, rows;
-+
-+	data->width =3D xrealloc(data->width,
-+			       sizeof(*data->width) * data->cols);
-+	for (x =3D 0; x < data->cols; x++) {
-+		data->width[x] =3D 0;
-+		for (y =3D 0; y < data->rows; y++) {
-+			int len1 =3D data->len[data->width[x]];
-+			int len2 =3D data->len[XY2LINEAR(data, x, y)];
-+			if (len1 < len2)
-+				data->width[x] =3D y;
-+		}
-+	}
-+
-+	while (data->rows > 1) {
-+		rows =3D data->rows;
-+		cols =3D data->cols;
-+
-+		data->rows--;
-+		data->cols =3D DIV_ROUND_UP(data->list->nr, data->rows);
-+		if (data->cols !=3D cols)
-+			data->width =3D xrealloc(data->width, sizeof(*data->width) * data->=
-cols);
-+
-+		compute_column_width(data);
-+
-+		total_width =3D strlen(data->indent);
-+		for (x =3D 0; x < data->cols; x++) {
-+			total_width +=3D data->len[data->width[x]];
-+			total_width +=3D data->padding;
-+		}
-+		if (total_width > data->total_width) {
-+			data->rows =3D rows;
-+			data->cols =3D cols;
-+			compute_column_width(data);
-+			break;
-+		}
-+	}
-+}
-+
- /* Display without layout when COL_ENABLED is not set */
- static void display_plain(const struct string_list *list,
- 			  const char *indent, const char *nl)
-@@ -82,7 +146,18 @@ static int display_cell(struct column_data *data, i=
-nt initial_width,
- 	i =3D XY2LINEAR(data, x, y);
- 	if (i >=3D data->list->nr)
- 		return -1;
-+
- 	len =3D data->len[i];
-+	if (data->width && data->len[data->width[x]] < initial_width) {
-+		/*
-+		 * empty_cell has initial_width chars, if real column
-+		 * is narrower, increase len a bit so we fill less
-+		 * space.
-+		 */
-+		len +=3D initial_width - data->len[data->width[x]];
-+		len -=3D data->padding;
-+	}
-+
- 	if (MODE(data->mode) =3D=3D COL_MODE_COLUMN)
- 		newline =3D i + data->rows >=3D data->list->nr;
- 	else
-@@ -119,6 +194,9 @@ static void display_table(const struct string_list =
-*list,
+-static void pretty_print_string_list(struct cmdnames *cmds, int longes=
+t)
++static void pretty_print_string_list(struct cmdnames *cmds)
+ {
+-	int cols =3D 1, rows;
+-	int space =3D longest + 1; /* min 1 SP between words */
+-	int max_cols =3D term_columns() - 1; /* don't print *on* the edge */
+-	int i, j;
+-
+-	if (space < max_cols)
+-		cols =3D max_cols / space;
+-	rows =3D DIV_ROUND_UP(cmds->cnt, cols);
+-
+-	for (i =3D 0; i < rows; i++) {
+-		printf("  ");
++	struct string_list list =3D STRING_LIST_INIT_NODUP;
++	struct column_options copts;
++	int i;
 =20
- 	layout(&data, &initial_width);
+-		for (j =3D 0; j < cols; j++) {
+-			int n =3D j * rows + i;
+-			int size =3D space;
+-			if (n >=3D cmds->cnt)
+-				break;
+-			if (j =3D=3D cols-1 || n + rows >=3D cmds->cnt)
+-				size =3D 1;
+-			printf("%-*s", size, cmds->names[n]->name);
+-		}
+-		putchar('\n');
+-	}
++	for (i =3D 0; i < cmds->cnt; i++)
++		string_list_append(&list, cmds->names[i]->name);
++	memset(&copts, 0, sizeof(copts));
++	copts.indent =3D "  ";
++	print_columns(&list, COL_MODE_COLUMN | COL_ENABLED, &copts);
++	string_list_clear(&list, 0);
+ }
 =20
-+	if (mode & COL_DENSE)
-+		shrink_columns(&data);
-+
- 	empty_cell =3D xmalloc(initial_width + 1);
- 	memset(empty_cell, ' ', initial_width);
- 	empty_cell[initial_width] =3D '\0';
-@@ -129,6 +207,7 @@ static void display_table(const struct string_list =
-*list,
+ static int is_executable(const char *name)
+@@ -206,22 +195,13 @@ void load_command_list(const char *prefix,
+ void list_commands(const char *title, struct cmdnames *main_cmds,
+ 		   struct cmdnames *other_cmds)
+ {
+-	int i, longest =3D 0;
+-
+-	for (i =3D 0; i < main_cmds->cnt; i++)
+-		if (longest < main_cmds->names[i]->len)
+-			longest =3D main_cmds->names[i]->len;
+-	for (i =3D 0; i < other_cmds->cnt; i++)
+-		if (longest < other_cmds->names[i]->len)
+-			longest =3D other_cmds->names[i]->len;
+-
+ 	if (main_cmds->cnt) {
+ 		const char *exec_path =3D git_exec_path();
+ 		printf("available %s in '%s'\n", title, exec_path);
+ 		printf("----------------");
+ 		mput_char('-', strlen(title) + strlen(exec_path));
+ 		putchar('\n');
+-		pretty_print_string_list(main_cmds, longest);
++		pretty_print_string_list(main_cmds);
+ 		putchar('\n');
  	}
 =20
- 	free(data.len);
-+	free(data.width);
- 	free(empty_cell);
+@@ -230,7 +210,7 @@ void list_commands(const char *title, struct cmdnam=
+es *main_cmds,
+ 		printf("---------------------------------------");
+ 		mput_char('-', strlen(title));
+ 		putchar('\n');
+-		pretty_print_string_list(other_cmds, longest);
++		pretty_print_string_list(other_cmds);
+ 		putchar('\n');
+ 	}
  }
-=20
-@@ -227,6 +306,7 @@ static int parse_option(const char *arg, int len,
- 		{ MODE,   "column", COL_MODE_COLUMN },
- 		{ MODE,   "row",    COL_MODE_ROW },
- 		{ OPTION, "color",  COL_ANSI },
-+		{ OPTION, "dense",  COL_DENSE },
- 	};
- 	int i;
-=20
-diff --git a/column.h b/column.h
-index d9d27c6..eb03c6c 100644
---- a/column.h
-+++ b/column.h
-@@ -7,6 +7,8 @@
- #define COL_ENABLED      (1 << 4)
- #define COL_ENABLED_SET  (1 << 5)  /* Has COL_ENABLED been set by conf=
-ig? */
- #define COL_ANSI         (1 << 6)  /* Remove ANSI escapes from string =
-length */
-+#define COL_DENSE        (1 << 7)  /* Shrink columns when possible,
-+				      making space for more columns */
- #define COL_PARSEOPT     (1 << 8)  /* --column is given */
-=20
- #define explicitly_enable_column(c) \
-diff --git a/t/t9002-column.sh b/t/t9002-column.sh
-index cffb029..fe7a30e 100755
---- a/t/t9002-column.sh
-+++ b/t/t9002-column.sh
-@@ -71,6 +71,30 @@ EOF
- 	test_cmp expected actual
- '
-=20
-+test_expect_success '20 columns, nodense' '
-+	cat >expected <<\EOF &&
-+one    seven
-+two    eight
-+three  nine
-+four   ten
-+five   eleven
-+six
-+EOF
-+	git column --mode=3Dcolumn,nodense < lista > actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success '20 columns, dense' '
-+	cat >expected <<\EOF &&
-+one   five  nine
-+two   six   ten
-+three seven eleven
-+four  eight
-+EOF
-+	git column --mode=3Dcolumn,dense < lista > actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success '20 columns, padding 2' '
- 	cat >expected <<\EOF &&
- one     seven
-@@ -110,4 +134,28 @@ EOF
- 	test_cmp expected actual
- '
-=20
-+test_expect_success '20 columns, row first, nodense' '
-+	cat >expected <<\EOF &&
-+one    two
-+three  four
-+five   six
-+seven  eight
-+nine   ten
-+eleven
-+EOF
-+	git column --mode=3Drow,nodense <lista >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success '20 columns, row first, dense' '
-+	cat >expected <<\EOF &&
-+one   two    three
-+four  five   six
-+seven eight  nine
-+ten   eleven
-+EOF
-+	git column --mode=3Drow,dense <lista >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
 --=20
 1.7.8.36.g69ee2
