@@ -1,58 +1,79 @@
-From: greened@obbligato.org (David A. Greene)
-Subject: send-email SMTP/TLS Debugging
-Date: Fri, 24 Feb 2012 23:54:08 -0600
-Message-ID: <874nufv4ov.fsf@smith.obbligato.org>
+From: =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+Subject: [PATCH] pack-objects: Fix compilation with NO_PTHREDS
+Date: Sat, 25 Feb 2012 09:16:09 +0100
+Message-ID: <1330157769-7884-1-git-send-email-michal.kiedrowicz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>,
+	=?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 25 06:56:53 2012
+X-From: git-owner@vger.kernel.org Sat Feb 25 09:16:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S1Acm-0005i2-PG
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 06:56:53 +0100
+	id 1S1Cnv-00035y-VZ
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 09:16:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751546Ab2BYF4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Feb 2012 00:56:47 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:51779 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750860Ab2BYF4r (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Feb 2012 00:56:47 -0500
-Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=smith.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.77)
-	(envelope-from <greened@obbligato.org>)
-	id 1S1AdM-0004Jq-Vr
-	for git@vger.kernel.org; Fri, 24 Feb 2012 23:57:29 -0600
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
- identified this incoming email as possible spam.  The original message
- has been attached to this so you can view it (if it isn't spam) or label
- similar future email.  If you have any questions, see
- @@CONTACT_ADDRESS@@ for details.
- Content preview:  Is there some way to turn on TLS authentication debugging
-   using git-send-mail? I'm trying to send a patch but git (or the mail server,
-    I suppose) keeps telling me I have "Incorrect authentication data." I've
-   checked the settings in .git/config multiple times and they look correct.
-   How can I debug this further? [...] 
- Content analysis details:   (-1.0 points, 5.0 required)
-  pts rule name              description
- ---- ---------------------- --------------------------------------------------
- -1.0 ALL_TRUSTED            Passed th 
+	id S1755389Ab2BYIQ0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Feb 2012 03:16:26 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:53080 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755345Ab2BYIQW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Feb 2012 03:16:22 -0500
+Received: by eekc4 with SMTP id c4so1237268eek.19
+        for <git@vger.kernel.org>; Sat, 25 Feb 2012 00:16:21 -0800 (PST)
+Received-SPF: pass (google.com: domain of michal.kiedrowicz@gmail.com designates 10.213.25.215 as permitted sender) client-ip=10.213.25.215;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of michal.kiedrowicz@gmail.com designates 10.213.25.215 as permitted sender) smtp.mail=michal.kiedrowicz@gmail.com; dkim=pass header.i=michal.kiedrowicz@gmail.com
+Received: from mr.google.com ([10.213.25.215])
+        by 10.213.25.215 with SMTP id a23mr1701288ebc.60.1330157781465 (num_hops = 1);
+        Sat, 25 Feb 2012 00:16:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=NT4WyjU0jz3qn58vdzcMLSeDVZ1EiyvErNI6SCLcT/0=;
+        b=otCIToe+l0/BTNvLm5Vpzs7d1520TvcqSxM9/jbnbikpMQwk5cAJFET2F8sV94ODHa
+         DymZFKyEJgfzDeyAMAw5LjJsoBQnEdKTH+tFO+aWy9r1/bNBfMOQosmHBeNeFm5Q6uHN
+         aAYvrD8Yld8BVOtwj9fMTzoupWBSkUFUfSJnc=
+Received: by 10.213.25.215 with SMTP id a23mr1292854ebc.60.1330157781328;
+        Sat, 25 Feb 2012 00:16:21 -0800 (PST)
+Received: from localhost (77-177-78-94.net.stream.pl. [94.78.177.77])
+        by mx.google.com with ESMTPS id n17sm28416983eei.3.2012.02.25.00.16.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 25 Feb 2012 00:16:20 -0800 (PST)
+X-Mailer: git-send-email 1.7.8.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191507>
 
-Is there some way to turn on TLS authentication debugging using
-git-send-mail?  I'm trying to send a patch but git (or the mail server,
-I suppose) keeps telling me I have "Incorrect authentication data."
-I've checked the settings in .git/config multiple times and they look
-correct.  How can I debug this further?
+It looks like commit 99fb6e04 (pack-objects: convert to use
+parse_options(), 2012-02-01) moved the #ifdef NO_PTHREDS around but
+hasn't noticed that the 'arg' variable no longer is available.
 
-Thanks!
+Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
+---
+ builtin/pack-objects.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-                          -Dave
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index db09cf7..71af246 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2449,7 +2449,7 @@ int cmd_pack_objects(int argc, const char **argv,=
+ const char *prefix)
+ 		die("bad pack compression level %d", pack_compression_level);
+ #ifdef NO_PTHREADS
+ 	if (delta_search_threads !=3D 1)
+-		warning("no threads support, ignoring %s", arg);
++		warning("no threads support, ignoring --threads");
+ #endif
+ 	if (!pack_to_stdout && !pack_size_limit)
+ 		pack_size_limit =3D pack_size_limit_cfg;
+--=20
+1.7.8.4
