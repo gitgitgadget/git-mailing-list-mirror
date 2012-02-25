@@ -1,122 +1,79 @@
-From: Ian Kumlien <pomac@vapor.com>
-Subject: Re: [PATCH 2/2] index-pack: reduce memory usage when the pack has
- large blobs
-Date: Sat, 25 Feb 2012 14:17:08 +0100
-Message-ID: <20120225131708.GI9526@pomac.netswarm.net>
-References: <1330086201-13916-1-git-send-email-pclouds@gmail.com>
- <1330086201-13916-2-git-send-email-pclouds@gmail.com>
- <20120224161613.GH9526@pomac.netswarm.net>
- <CACsJy8C-8dvXpNTU=JpdupSpS8OuqqTpGvDs6s1ASeKdk9d5Dg@mail.gmail.com>
+From: greened@obbligato.org (David A. Greene)
+Subject: Re: git-subtree Ready #2
+Date: Sat, 25 Feb 2012 09:00:37 -0600
+Message-ID: <87ty2ft0tm.fsf@smith.obbligato.org>
+References: <877gztmfwy.fsf@smith.obbligato.org>
+	<8739acra5j.fsf@smith.obbligato.org>
+	<20120215050855.GB29902@sigill.intra.peff.net>
+	<87sjicpsr1.fsf@smith.obbligato.org>
+	<87ty2ro1zf.fsf@smith.obbligato.org>
+	<20120220205346.GA6335@sigill.intra.peff.net>
+	<7vd399jdwc.fsf@alter.siamese.dyndns.org>
+	<CAHqTa-2s1xbAfNvjD7cXBe2TBMs1985nag1NOYVfE+dATvfEWA@mail.gmail.com>
+	<7vobsox84l.fsf@alter.siamese.dyndns.org>
+	<CAHqTa-1fbi5W7R2fLu3bp7Yuv_ZB9nxhgjHkLGuU8-V4016+JA@mail.gmail.com>
+	<87hayfv75y.fsf@smith.obbligato.org>
+	<7vy5rrfft2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 25 14:17:42 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Avery Pennarun <apenwarr@gmail.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 25 16:04:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S1HVI-0007kr-Vu
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 14:17:37 +0100
+	id 1S1JAW-0005vj-Bx
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Feb 2012 16:04:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755342Ab2BYNRR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Feb 2012 08:17:17 -0500
-Received: from mail.vapor.com ([83.220.149.2]:43733 "EHLO nitrogen.vapor.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753416Ab2BYNRQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Feb 2012 08:17:16 -0500
-Received: from twilight.demius.net (c-387a71d5.013-195-6c756e10.cust.bredbandsbolaget.se [213.113.122.56])
-	by nitrogen.vapor.com (Postfix) with ESMTPSA id A92B92B6005;
-	Sat, 25 Feb 2012 14:17:09 +0100 (CET)
-Received: by twilight.demius.net (Postfix, from userid 1000)
-	id B01FC8E6935; Sat, 25 Feb 2012 14:17:08 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <CACsJy8C-8dvXpNTU=JpdupSpS8OuqqTpGvDs6s1ASeKdk9d5Dg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756715Ab2BYPDn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Feb 2012 10:03:43 -0500
+Received: from li209-253.members.linode.com ([173.255.199.253]:51856 "EHLO
+	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756697Ab2BYPDm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Feb 2012 10:03:42 -0500
+Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=smith.obbligato.org)
+	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.77)
+	(envelope-from <greened@obbligato.org>)
+	id 1S1JAL-0004XB-6E; Sat, 25 Feb 2012 09:04:05 -0600
+In-Reply-To: <7vy5rrfft2.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sat, 25 Feb 2012 01:00:41 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Filter-Spam-Score: ()
+X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
+ identified this incoming email as possible spam.  The original message
+ has been attached to this so you can view it (if it isn't spam) or label
+ similar future email.  If you have any questions, see
+ @@CONTACT_ADDRESS@@ for details.
+ Content preview:  Junio C Hamano <gitster@pobox.com> writes: >> I'm happy to
+    do either (rebase or filter-branch). Just let me know. > > I would understand
+    Avery's "should we filter-branch/rebase, or is it OK > as-is?", but I do
+   not understand what you mean by "either rebase or > filter-branch is fine".
+    [...] 
+ Content analysis details:   (-1.0 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+ -1.0 ALL_TRUSTED            Passed through trusted hosts only 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191535>
 
-On Sat, Feb 25, 2012 at 08:49:55AM +0700, Nguyen Thai Ngoc Duy wrote:
-> 2012/2/24 Ian Kumlien <pomac@vapor.com>:
-> > Writing objects: 100% (1425/1425), 56.06 MiB | 4.62 MiB/s, done.
-> > Total 1425 (delta 790), reused 1425 (delta 790)
-> > fatal: Out of memory, malloc failed (tried to allocate 3310214315 b=
-ytes)
-> > fatal: Out of memory, malloc failed (tried to allocate 3310214315 b=
-ytes)
-> > fatal: Out of memory, malloc failed (tried to allocate 3310214315 b=
-ytes)
-> > fatal: Out of memory, malloc failed (tried to allocate 3310214315 b=
-ytes)
-> > To ../test_data/
-> > =A0! [remote rejected] master -> master (missing necessary objects)
-> > =A0! [remote rejected] origin/HEAD -> origin/HEAD (missing necessar=
-y objects)
-> > =A0! [remote rejected] origin/master -> origin/master (missing nece=
-ssary objects)
-> > error: failed to push some refs to '../test_data/'
-> >
-> > So there are additional code paths to look at... =3D(
->=20
-> I can't say where that came from. Does this help? (Space damaged, may
-> need manual application)
+Junio C Hamano <gitster@pobox.com> writes:
 
-Everything has so far, since i'm using mainline to get the gzip fixes i=
-n
-;)
+>> I'm happy to do either (rebase or filter-branch).  Just let me know.
+>
+> I would understand Avery's "should we filter-branch/rebase, or is it OK
+> as-is?", but I do not understand what you mean by "either rebase or
+> filter-branch is fine".
 
-Anyway, with:
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 264e3ae..533081d 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -183,7 +183,8 @@ static void show_object(struct object *obj,
-        struct rev_list_info *info =3D cb_data;
+Sorry, got mixed up there.  I'm not that familiar with filter-branch.
+Now I understand you do both.  :)
 
-        finish_object(obj, path, component, cb_data);
--       if (info->revs->verify_objects && !obj->parsed && obj->type !=3D=
- OBJ_COMMIT)
-+       if (info->revs->verify_objects && !obj->parsed
-+                       && obj->type !=3D OBJ_COMMIT && obj->type !=3D =
-OBJ_BLOB)
-                parse_object(obj->sha1);
-        show_object_with_name(stdout, obj, path, component);
- }
----
+So have we decided to keep the history?
 
-I get:
-=2E./git/git push --mirror ../test_data/
-Counting objects: 1425, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (617/617), done.
-Writing objects: 100% (1425/1425), 56.06 MiB | 4.22 MiB/s, done.
-Total 1425 (delta 790), reused 1425 (delta 790)
-error: index-pack died of signal 11
-error: unpack failed: index-pack abnormal exit
-To ../test_data/
- ! [remote rejected] master -> master (n/a (unpacker error))
- ! [remote rejected] origin/HEAD -> origin/HEAD (n/a (unpacker error))
- ! [remote rejected] origin/master -> origin/master (n/a (unpacker erro=
-r))
-error: failed to push some refs to '../test_data/'
-
-Which, to me, means that the installed git is now the problem - it can'=
-t verify=20
-the pack and say that it's all ok ;)
-
-I'll have to look some more at this on monday, or during the weekend if=
- i get too curious =3D)
-
-=46or now, thank $deity that $company i work for allows VPN from Linux =
-machines! It looks
-really good, i wonder if there is further tests i should do - any clues=
-?
-
-
-> --=20
-> Duy
+                                 -Dave
