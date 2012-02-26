@@ -1,131 +1,152 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: Stash during incomplete merge
-Date: Sun, 26 Feb 2012 13:36:55 -0500
-Message-ID: <4F4A7BC7.5010702@cisco.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 0/2] submodules: Use relative paths to gitdir and work
+ tree
+Date: Sun, 26 Feb 2012 20:58:42 +0100
+Message-ID: <4F4A8EF2.3020901@web.de>
+References: <4F32F252.7050105@web.de> <4F4A6DFA.5080709@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Phil Hord <phil.hord@gmail.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Feb 26 19:37:31 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Antony Male <antony.male@gmail.com>,
+	Phil Hord <phil.hord@gmail.com>,
+	msysGit <msysgit@googlegroups.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sun Feb 26 20:58:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S1iyM-0005lI-HY
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Feb 2012 19:37:26 +0100
+	id 1S1kF9-0003Q7-5C
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Feb 2012 20:58:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752593Ab2BZSg4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Feb 2012 13:36:56 -0500
-Received: from rcdn-iport-5.cisco.com ([173.37.86.76]:18153 "EHLO
-	rcdn-iport-5.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752406Ab2BZSgz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Feb 2012 13:36:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=hordp@cisco.com; l=2325; q=dns/txt;
-  s=iport; t=1330281415; x=1331491015;
-  h=message-id:date:from:mime-version:to:cc:subject:
-   content-transfer-encoding;
-  bh=ozTWnoKPEyLf2ASjIxB87/vNMwXxtfGJlB/Qrl9AkQw=;
-  b=W3EZL2PeS7B/GBZzJLzq7Y9Q+2UgBJgfTQJGEMEq2nbdfRinyemgfFsg
-   Kqld3KUjOI06CTiO0xCmjWI+oUufJ4WCDGsn3paczmtEX9GyfG/9BvFqG
-   mDRNokVuT/GXuZuE41sCPtR6fE5zD/rucWHR4qvZwwhBsX4lTuJg9dday
-   k=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AoEGAIJ6Sk+tJV2a/2dsb2JhbABDgxOwHoEHggwBYQQBPBYYAwIBAgFLDQEHAQEeh2QLoE4BlgSNDQYTARsCAgcGBAMEAwgECggOAQkBCQKFCjYHAQ4HBw8Ggy8EiE+MboVdjS8
-X-IronPort-AV: E=Sophos;i="4.73,486,1325462400"; 
-   d="scan'208";a="61904979"
-Received: from rcdn-core-3.cisco.com ([173.37.93.154])
-  by rcdn-iport-5.cisco.com with ESMTP; 26 Feb 2012 18:36:55 +0000
-Received: from [10.117.80.99] (rtp-hordp-8912.cisco.com [10.117.80.99])
-	by rcdn-core-3.cisco.com (8.14.3/8.14.3) with ESMTP id q1QIas2N022792;
-	Sun, 26 Feb 2012 18:36:54 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:9.0) Gecko/20111229 Thunderbird/9.0
-X-Enigmail-Version: 1.3.5
+	id S1752710Ab2BZT6q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Feb 2012 14:58:46 -0500
+Received: from fmmailgate06.web.de ([217.72.192.247]:35388 "EHLO
+	fmmailgate06.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752550Ab2BZT6p (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Feb 2012 14:58:45 -0500
+Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
+	by fmmailgate06.web.de (Postfix) with ESMTP id 3C21BD05B5E
+	for <git@vger.kernel.org>; Sun, 26 Feb 2012 20:58:44 +0100 (CET)
+Received: from [192.168.178.48] ([91.3.204.203]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0M9Xfb-1S9Boz2BGp-00C8YM; Sun, 26 Feb 2012 20:58:43
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <4F4A6DFA.5080709@kdbg.org>
+X-Provags-ID: V02:K0:yVBoPtIvXmP0dRBGSmZdm+gAWQ8kFag6j+JhHEkC/5D
+ w8qw1RBaKeIc2TYWWy1tFy6rl8Bx+n+zQ/S921c+Kn47R2H7oY
+ 2jl1OA0hJ2rsB5GsAMs1bErtsv8YTVr84CisOWRJIdUlBITNEt
+ nASoUPl7AHiWZlVnQDQnuKLluBHc0XjoccK/GHCUhy1S0WLQ7O
+ 0Wbq2YdRXFOgEcY/qiqFg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191573>
 
-Hi list,
+Am 26.02.2012 18:38, schrieb Johannes Sixt:
+> Am 08.02.2012 23:08, schrieb Jens Lehmann:
+>> This patch series replaces all absolute paths pointing from submodule work
+>> trees to its gitdir and back with relative paths as discussed in $gmane/187785.
+>>
+>> The motivation is to make superprojects movable again. They lost this ability
+>> with the move of the git directory of submodules into the .git/modules directory
+>> of the superproject. While fixing that a bug which would hit when moving the
+>> submodule inside the superproject was also fixed.
+>>
+>> Jens Lehmann (2):
+>>   submodules: always use a relative path to gitdir
+>>   submodules: always use a relative path from gitdir to work tree
+> 
+> This series, with the tip at e3307adaba in Junio's repo causes major
+> headaches on Windows.
+>
+> First, a check for an absolute path must be extended to take
+> Windows-style paths into account.
 
-I was cherry-picking changes from an old branch recently when I ran into
-unexpected behavior with git stash pop.  When I git-stash-save after
-resolving a  merge-conflict, the subsequent git-stash-pop does not
-restore my index.
+Okay, but that check is not part of my series (it was introduced by 501770e1
+"Move git-dir for submodules", which is in Git since 1.7.8), so that looks
+like it would need to be fixed for msysgit even without my patches, right?
 
-I think it is the same problem being asked about here:
-http://stackoverflow.com/questions/9009354/git-stash-during-a-merge-conflict
+But I'm not so happy about the two code paths there anyway, so I prepared a
+patch to replace them with a single code path based upon the paths computed
+in the last patch of this series. Please see the always-use-relative-gitdir
+branch in my github repo https://github.com/jlehmann/git-submod-enhancements
 
-Is this expected behavior or a bug?
+> Second, the a's and b's are filled with different forms of absolute
+> paths (/c/there vs. c:/there), and as a consequence the subsequent loops
+> do not find a suitable relative path.
+> 
+> The below is a minimal hack that passes all t/*submod* tests, but it
+> works only on Windows, where the pwd utility has an option -W that
+> prints a Windows style absolute path.
+> 
+> How would you have this solved? One option would be to introduce a function
+> 
+>   pwd() { builtin pwd -W "$@"; }
+> 
+> in git-sh-setup conditionally on Windows (but that would affect other
+> shell scripts, too).
 
-<http://stackoverflow.com/questions/9009354/git-stash-during-a-merge-conflict>Here's
-a script the demonstrates the anomaly, but my actual encounter involved
-more files, some of which I added to the index and some I did not:
+I suspect other shell scripts might be less affected when non-Windows
+paths are forced (at least when they aren't developed under Windows
+only). What about something like this:
 
-# Create a sample merge-conflict
-git init  tmp-repo && cd tmp-repo
-echo foo > foo.txt && git add foo.txt && git commit -m "foo"
-git checkout -b A master && echo foo-A > foo.txt && git commit -am "foo-A"
-git checkout -b B master && echo foo-B > foo.txt && git commit -am "foo-B"
-git merge A
-git status
-# Resolve the conflict
-echo foo-AB > foo.txt && git add foo.txt
-git status
-git stash
-# test test test...  Resume...
-git stash pop
+  pwd() { builtin pwd -W "$@" | sed -e 's,^\([a-z]\):/,/\1/,'; }
 
+> Any other ideas?
+> 
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 3463d6d..f37745e 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -139,8 +139,8 @@ module_clone()
+>  	gitdir="$gitdir/modules/$path"
+>
+>  	case $gitdir in
+> -	/*)
+> -		a="$(cd_to_toplevel && pwd)/"
+> +	/* | [a-z]:/*)
+> +		a="$(cd_to_toplevel && pwd -W)/"
+>  		b=$gitdir
+>  		while [ "$b" ] && [ "${a%%/*}" = "${b%%/*}" ]
+>  		do
 
+Hmm, here the path which starts with "c:/" is returned by the "git
+rev-parse --git-dir" which is used to initialize the $gitdir variable
+a few lines up.
 
+> @@ -170,8 +170,8 @@ module_clone()
+>
+>  	echo "gitdir: $rel_gitdir" >"$path/.git"
+>
+> -	a=$(cd "$gitdir" && pwd)
+> -	b=$(cd "$path" && pwd)
+> +	a=$(cd "$gitdir" && pwd -W)
+> +	b=$(cd "$path" && pwd -W)
+>  	while [ "$b" ] && [ "${a%%/*}" = "${b%%/*}" ]
+>  	do
+>  		a=${a#*/} b=${b#*/};
 
+I don't understand why you need this. Does "pwd" sometimes return a
+path starting with "c:/" and sometimes "/c/" depending on what form
+you use when you cd into that directory? If not, does the following
+help you on windows? (If that is the case, you might need the pwd
+redefinition too to make that work)
 
+-----------------8<--------------------
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 5deabf6..5bb8109 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -134,7 +134,7 @@ module_clone()
+        test -n "$name" || name="$path"
+        base_path=$(dirname "$path")
 
-Here's some of the final output:
-
-$ git merge A
-Auto-merging foo.txt
-CONFLICT (content): Merge conflict in foo.txt
-Recorded preimage for 'foo.txt'
-Automatic merge failed; fix conflicts and then commit the result.
-
-$ git status
-# On branch B
-# Unmerged paths:
-#   (use "git add/rm <file>..." as appropriate to mark resolution)
-#
-#       both modified:      foo.txt
-#
-no changes added to commit (use "git add" and/or "git commit -a")
-
-$ # Resolve the conflict
-$ echo foo-AB > foo.txt && git add foo.txt
-$ git status
-# On branch B
-# Changes to be committed:
-#
-#       modified:   foo.txt
-#
-
-$ # Now foo.txt is in my index.  But I have to test something before I
-commit.
-$ git stash
-Saved working directory and index state WIP on B: 80f2a13 foo-B
-HEAD is now at 80f2a13 foo-B
-
-$ # test test test...  Resume...
-$ git stash pop
-
-# On branch B
-# Changes not staged for commit:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working
-directory)
-#
-#       modified:   foo.txt
-#
-no changes added to commit (use "git add" and/or "git commit -a")
-Dropped refs/stash@{0} (460a6d5c67a3db613fd27f1854ecc7b89eeaa207)
+-       gitdir=$(git rev-parse --git-dir)
++       gitdir=$(git rev-parse --git-dir | sed -e 's,^\([a-z]\):/,/\1/,')
+        gitdir_base="$gitdir/modules/$base_path"
+        gitdir="$gitdir/modules/$path"
