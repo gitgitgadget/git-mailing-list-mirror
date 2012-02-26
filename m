@@ -1,62 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: sha-1 check in rev-list --verify-objects redundant?
-Date: Sun, 26 Feb 2012 01:11:52 -0800
-Message-ID: <7v8vjqez6v.fsf@alter.siamese.dyndns.org>
+Date: Sun, 26 Feb 2012 18:11:30 +0700
+Message-ID: <CACsJy8BUeedTZSq_ay=JmqUt3wrnm6n1eOcFt0WPkEo2B-1zwA@mail.gmail.com>
 References: <CACsJy8D_BdV14dGc2YsK91FrX8S=70DJOY3cU=oH3y41N2Ar0w@mail.gmail.com>
  <7vk43af14m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 26 10:12:38 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 26 12:12:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S1a9i-0004RR-TS
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Feb 2012 10:12:35 +0100
+	id 1S1c21-000881-BP
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Feb 2012 12:12:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752198Ab2BZJL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Feb 2012 04:11:57 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43220 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751311Ab2BZJLy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Feb 2012 04:11:54 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C992499F;
-	Sun, 26 Feb 2012 04:11:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=35Y0N+pkflzlRP3FeQIfCiYN0ow=; b=VRzcb9
-	zONAXQUiuNQPe41yGzXHsSyyYM+woVsCd/Xxz7tZKsyyzQbyCV6zaoLdc8Mce3F0
-	z7/ACdgJIUi09xX0L0JxPjQJqZYq6CVf20ckjzx/Mk8CDnwCKuLAf8hdnNMr5D4I
-	eEt7I24EAv+TgDeDdWfokEioT5trb05dvyugM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xVlhC5xCOaUK8xMp9gvh37x2wyC8ChwL
-	TOgQbe5U24W7JO0C5xjOT4HplPjXo35aVkbkgLVz+qNNxNfM3sOr/oZOrGdqN12v
-	DCA20a3Q79UOZ0GwSuwvu+T3WyQQHIk/gcD6TheUFcXbUaAOn6jahqRtmvcKsHVB
-	K6cDZvyGWdM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5452E499E;
-	Sun, 26 Feb 2012 04:11:54 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DD7D6499D; Sun, 26 Feb 2012
- 04:11:53 -0500 (EST)
-In-Reply-To: <7vk43af14m.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 26 Feb 2012 00:30:01 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: ECCF121C-6059-11E1-BA30-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751250Ab2BZLMD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Feb 2012 06:12:03 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:42174 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750846Ab2BZLMC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Feb 2012 06:12:02 -0500
+Received: by werb13 with SMTP id b13so2252228wer.19
+        for <git@vger.kernel.org>; Sun, 26 Feb 2012 03:12:00 -0800 (PST)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.180.86.230 as permitted sender) client-ip=10.180.86.230;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.180.86.230 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
+Received: from mr.google.com ([10.180.86.230])
+        by 10.180.86.230 with SMTP id s6mr9843379wiz.16.1330254720434 (num_hops = 1);
+        Sun, 26 Feb 2012 03:12:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=7GUQAjYzu5B5VMZdmL9euOxfzC0koR8246xYdTLlQ0k=;
+        b=Fbgk+qSjoL1i5mkzBrzC/huKCGhxzNSjuFTHs6WaEjUVI9czeGH41ogXmN5YukDv9e
+         zWeiBajjh214rB26eXPv75fNiAoCWl7HOhesoVPsWQt6DaVKjdbSZ5857NjPiQT7RwuP
+         dNrrYXJFR//ohnx04XuDuf8j/m+yU4VNCaxiY=
+Received: by 10.180.86.230 with SMTP id s6mr7786153wiz.16.1330254720325; Sun,
+ 26 Feb 2012 03:12:00 -0800 (PST)
+Received: by 10.223.13.5 with HTTP; Sun, 26 Feb 2012 03:11:30 -0800 (PST)
+In-Reply-To: <7vk43af14m.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191559>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
+On Sun, Feb 26, 2012 at 3:30 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
 > Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 >
 >> ... I wonder if this is a
@@ -64,6 +58,59 @@ Junio C Hamano <gitster@pobox.com> writes:
 >
 > I do not think --verify-objects does not have anything to do with
 > verifying the integrity of packs, whether new or old.
+>
+> The check is about the integrity of the *history* we _might_ already =
+have
+> on our side, when we find ourselves wanting to fetch up to a commit $=
+X,
+> whose reachability from the tips of our refs (i.e. the objects that a=
+re
+> guaranteed to be present in our repository) is unknown, and we someho=
+w
+> already have the commit $X itself in the repository.
+>
+> We cannot just declare victory upon seeing commit $X and omit fetchin=
+g the
+> history leading to the commit, because we may or may not have its par=
+ent
+> commit object, or the tree object that is recorded in it (it may be t=
+hat
+> we killed an HTTP walker after we fetched $X but not its parents or
+> trees). =C2=A0We need to walk back from $X until we hit one of the ti=
+ps of our
+> refs, and while doing so, we also need to make sure the trees and blo=
+bs
+> referenced from the walked commits are also healthy.
+>
+> As 5a48d24 (rev-list --verify-object, 2011-09-01) explains, we used t=
+o do
+> this with --objects instead, but that check does not even make sure b=
+lobs
+> exist [*1*] let alone checking to see if these blobs were healthy. =C2=
+=A0The
+> whole point of using --verify-objects instead of --objects is to make=
+ sure
+> that we do not miss blob objects.
 
-A typo/grammo that should be obvious from the context, sorry.  The above
-should be "I do not think --verify-objects has anything to do with ..."
+"rev-list --objects" does check for blob existence, in finish_object().
+
+On the well-formedness, unless I'm mistaken, --verify-objects is
+_always_ used in conjunction with index-pack. --verify-object is not
+even documented. index-pack makes sure all (new) object signatures
+reflect their content. Commit and tree content are validated by
+rev-list walking them. So at least when --verify-objects is used with
+index-pack, I don't see the point rehashing every new object _again_.
+
+> [Footnote]
+>
+> *1* The --objects code reads the commits and trees in order to _list_
+> objects to the blob level, so implicitly, it validates that commits a=
+nd
+> trees reachable from the commit $X we happened to have in our reposit=
+ory,
+> relying on the fact that we would error out if we fail to read them.
+
+
+
+--=20
+Duy
