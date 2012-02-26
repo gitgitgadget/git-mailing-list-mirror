@@ -1,83 +1,100 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 2/2] index-pack: reduce memory usage when the pack has
- large blobs
-Date: Sun, 26 Feb 2012 11:10:14 +0700
-Message-ID: <CACsJy8Cncs8RYiSB0N20vy9zu2NRTTHpfw3rSfmW64i-4_wxSw@mail.gmail.com>
-References: <1330086201-13916-1-git-send-email-pclouds@gmail.com>
- <1330086201-13916-2-git-send-email-pclouds@gmail.com> <20120224161613.GH9526@pomac.netswarm.net>
- <CACsJy8C-8dvXpNTU=JpdupSpS8OuqqTpGvDs6s1ASeKdk9d5Dg@mail.gmail.com> <20120225224533.GJ9526@pomac.netswarm.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: 4-way diff (base,ours,theirs,merged) to review merge results
+Date: Sun, 26 Feb 2012 00:12:07 -0800
+Message-ID: <7vpqd2f1yg.fsf@alter.siamese.dyndns.org>
+References: <jicafn$gnj$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Ian Kumlien <pomac@vapor.com>
-X-From: git-owner@vger.kernel.org Sun Feb 26 05:10:51 2012
+To: "Neal Kreitzinger" <neal@rsss.com>
+X-From: git-owner@vger.kernel.org Sun Feb 26 09:12:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S1VRi-0002dC-SO
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Feb 2012 05:10:51 +0100
+	id 1S1ZDM-00068c-Fv
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Feb 2012 09:12:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752781Ab2BZEKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Feb 2012 23:10:46 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:42101 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752674Ab2BZEKp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Feb 2012 23:10:45 -0500
-Received: by wgbdr13 with SMTP id dr13so749837wgb.1
-        for <git@vger.kernel.org>; Sat, 25 Feb 2012 20:10:44 -0800 (PST)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.180.99.65 as permitted sender) client-ip=10.180.99.65;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.180.99.65 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
-Received: from mr.google.com ([10.180.99.65])
-        by 10.180.99.65 with SMTP id eo1mr7976535wib.13.1330229444465 (num_hops = 1);
-        Sat, 25 Feb 2012 20:10:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=ZcmKrQK0XFtOvjXFw/NRTRj7LnQZ8/arRVWQNRk9QSs=;
-        b=pWkya1+Z5JmZ6yhwFhS8K972W7goiCDcggfKUyqsbraIvKRd0whKFZy3ZOwS61nqF4
-         ZYu5jPonK1CSUWv+TzxIfDwztxivnHjfaYVDcMddfm3JI8Ro6JtZe4YrvMIz5yUCU2La
-         jxmZ3H/vzBOViXMH7ZyDdIE7YwmrJAuG0W9Yc=
-Received: by 10.180.99.65 with SMTP id eo1mr6281917wib.13.1330229444386; Sat,
- 25 Feb 2012 20:10:44 -0800 (PST)
-Received: by 10.223.13.5 with HTTP; Sat, 25 Feb 2012 20:10:14 -0800 (PST)
-In-Reply-To: <20120225224533.GJ9526@pomac.netswarm.net>
+	id S1751306Ab2BZIML (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Feb 2012 03:12:11 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57519 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751074Ab2BZIMK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Feb 2012 03:12:10 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6EE5C421A;
+	Sun, 26 Feb 2012 03:12:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=M/NErtncK+4X8AdHno9vVoZG7bg=; b=rclI1M
+	+RAp71yzg7h5i2bijxFXGJDZmjaIqdBCDE4jqx130tUdc9y5qfqcN/kMcdxTZp43
+	8HnjYW5jcst1v12gNAw6AxhvJwdHb8Nq6cJxoXz3RVC1BUfu58vLh/4rBTrjwihT
+	gCMuxdz4h600MjAj480y8cS+Qd8GHZ9hIpHAQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pUm6yIoUbMypY+EXPaPH2wp1EIQi6e3V
+	F4k1G12nUVRHTTlXbAS1mCskUSDYcGHmTuovkvJPH+k0jrp8nj/E1CRNUirwAZy1
+	0NrNm8p5MPRH2VPdh5PVqRI+du6rpXTjZoTIk1OtdaaCTmFL32USvxHJWX4ddsaR
+	8Of2JJILH8Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 663194219;
+	Sun, 26 Feb 2012 03:12:09 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E2D554217; Sun, 26 Feb 2012
+ 03:12:08 -0500 (EST)
+In-Reply-To: <jicafn$gnj$1@dough.gmane.org> (Neal Kreitzinger's message of
+ "Sat, 25 Feb 2012 21:55:37 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 93FEE840-6051-11E1-8B00-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191555>
 
-On Sun, Feb 26, 2012 at 5:45 AM, Ian Kumlien <pomac@vapor.com> wrote:
-> Actually, i added a backtrace and used addr2line to confirm my
-> suspicion... which is:
-> builtin/index-pack.c:414
->
-> ie get_data_from_pack...
+"Neal Kreitzinger" <neal@rsss.com> writes:
 
-That function should only be called when objects are deltified, which
-should _not_ happen for large blobs. What is its caller?
+> (Combined diff)
+> ours:  has line-x
+> theirs (master):  does not have line-x
+> merged:  has line-x
+> merge-base (older master):  *may-or-may-not* have line-x
+> conclusion:  I'm not very sure if "merged" should have line-x or not...
 
->
-> It looks to me like, if we are to support this kind of things, we need a
-> slightly different approach - instead of passing the data around, it
-> feels like passing a function pointer around would be beneficial.
->
-> Looking at the code i see alot of places where this would be a issue,
-> just the fact that get_data_from_pack is used in several functions that
-> might do some small operation and then just free it.
->
-> I understand and recognize that my "problem" is not what git was
-> designed for; it was designed for small files, which is very evident in
-> how it approaches the data... And I'd most definetly have to look alot
-> closer to this code... =)
->
->> --
->> Duy
+When I need this information to resolve a merge in an area of the code
+that I am not very familiar with, the first thing I do is this:
 
+  $ git merge $other
+  $ git diff
+  ... yikes, that is a complex conflict!
 
+  $ git checkout --conflict=diff3 $the_path_with_difficult_conflict
+  $ git diff
 
--- 
-Duy
+The output will also show the lines from the merge base.
+
+The default style of showing the conflict we use is called the "merge"
+style (it originally came from the "merge" program of the RCS suite), and
+it only gives the two sides without the base version.  It is sufficient
+when the person who is making the merge is familiar with the baseline
+history of the code (e.g. in a contributor-to-integrator pull based
+workflow, especially when contributors are encouraged to keep their topics
+focused and short). The "diff3" style that also gives the base version is
+needed less often in such a setting. That, and also the resulting output
+is much shorter, is the reason why "merge" style is the default.
+
+When the person who is making the merge is not very familiar with the
+baseline history (e.g. when using Git as an improved CVS and a contributor
+pulls the updated upstream into his history), however, "diff3" style may
+be more often helpful---as you mentioned, "merge" style requires that you
+know your code well enough to either already know or be able to guess how
+the version in the merge base looked like, but by definition, pulling the
+updated upstream into your work will pull more stuff (because many other
+people are working on the code on the other side) than pulling one topic
+from a contributor into the integrator tree, so there may be more need to
+see the version from the merge base in such a workflow.
+
+By setting the configuration variable "merge.conflictstyle" to "diff3",
+you would get the base version by default whenever there is a conflict.
