@@ -1,94 +1,96 @@
-From: "David A. Greene" <greened@obbligato.org>
-Subject: [PATCH] Allow Overriding GIT_BUILD_DIR
-Date: Sun, 5 Feb 2012 16:28:06 -0600
-Message-ID: <87vcmu5psm.fsf@smith.obbligato.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: "Neal Kreitzinger" <neal@rsss.com>
+Subject: 4-way diff (base,ours,theirs,merged) to review merge results
+Date: Sat, 25 Feb 2012 21:55:37 -0600
+Message-ID: <jicafn$gnj$1@dough.gmane.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 26 02:50:15 2012
+X-From: git-owner@vger.kernel.org Sun Feb 26 04:56:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S1TFe-0002l1-Pc
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Feb 2012 02:50:15 +0100
+	id 1S1VDm-0003dC-2j
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Feb 2012 04:56:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752312Ab2BZBuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Feb 2012 20:50:08 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:51997 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752080Ab2BZBuH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Feb 2012 20:50:07 -0500
-Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=smith.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.77)
-	(envelope-from <greened@obbligato.org>)
-	id 1S1TGD-0005kL-NO
-	for git@vger.kernel.org; Sat, 25 Feb 2012 19:50:51 -0600
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
- identified this incoming email as possible spam.  The original message
- has been attached to this so you can view it (if it isn't spam) or label
- similar future email.  If you have any questions, see
- @@CONTACT_ADDRESS@@ for details.
- Content preview:  Let tests override GIT_BUILD_DIR so git will work if tests
-    are not at the same directory level as standard git tests. Prior to this
-   change, GIT_BUILD_DIR is hardwired to be exactly one directory above where
-    the test lives. A test within contrib/, for example, can now use test-lib.sh
-    and set an appropriate value for GIT_BUILD_DIR. [...] 
- Content analysis details:   (1.1 points, 5.0 required)
-  pts rule name              description
- ---- ---------------------- --------------------------------------------------
- -1.0 ALL_TRUSTED 
+	id S1752680Ab2BZDzv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Feb 2012 22:55:51 -0500
+Received: from plane.gmane.org ([80.91.229.3]:53088 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752667Ab2BZDzu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Feb 2012 22:55:50 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1S1VD8-0003I0-45
+	for git@vger.kernel.org; Sun, 26 Feb 2012 04:55:46 +0100
+Received: from 67.63.162.200 ([67.63.162.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 26 Feb 2012 04:55:46 +0100
+Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 26 Feb 2012 04:55:46 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 67.63.162.200
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-RFC2646: Format=Flowed; Original
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191553>
 
+Combined diff only tells you what the merge result auto-resolved (with 
+rerere turned off and no merge-conflicts) in comparison to "ours" and 
+"theirs".  That only tells you what "ours" and "theirs" *had*, not what they 
+*did* (or were trying to do).  You need the merge-base version to see what 
+"ours" and "theirs" did.  Seeing what "ours" and "theirs" did will 
+much-better tell you if "merged" did-the-right-thing or not.  What is the 
+best way to display a 4-way diff of merge-base, "ours", "theirs", and 
+"merged" after a merge completes so you can review the "merged" results for 
+correctness?
 
-Let tests override GIT_BUILD_DIR so git will work if tests are not at
-the same directory level as standard git tests.  Prior to this change,
-GIT_BUILD_DIR is hardwired to be exactly one directory above where the
-test lives.  A test within contrib/, for example, can now use
-test-lib.sh and set an appropriate value for GIT_BUILD_DIR.
+Before I try writing a script to dump the object-contents of the merge-base, 
+"ours", "theirs", and "merged" versions of the-file-in-question to 
+work-files and then feed them to a 4-way diff for review, I would like to 
+see if someone already has a script or better-idea for this, or if git has 
+something more straight-forward that already does-this-for-you.
 
-Signed-off-by: David A. Greene <greened@obbligato.org>
----
- t/test-lib.sh |   10 +++++++++-
- 1 files changed, 9 insertions(+), 1 deletions(-)
+Reason for this:
+If "ours" has line-x and "theirs" does not have line-x, and "merged" does 
+have line-x you still have a mystery on your hands:
 
+(Combined diff)
+ours:  has line-x
+theirs (master):  does not have line-x
+merged:  has line-x
+merge-base (older master):  *may-or-may-not* have line-x
+conclusion:  I'm not very sure if "merged" should have line-x or not...
 
-------------------
+Based on the combined-diff only, I don't know if "merged" should have line-x 
+or not because I don't know if "ours" *added* line-x to the merge-base or if 
+"theirs" *removed* line-x from the merge-base.  IOW, if "theirs" is master 
+and "ours" is way-behind master then I pretty-much know I probably need to 
+take "theirs" because it has the latest-stuff.  However, I don't know if 
+"theirs" took line-x out of master (and "ours" just has line-x because its 
+old), or if line-x was never in master and "ours" really-needed to add it. 
+Having merge-base context allows for more accurate conclusions like this:
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index a65dfc7..4585138 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -55,6 +55,7 @@ unset $(perl -e '
- 		.*_TEST
- 		PROVE
- 		VALGRIND
-+                BUILD_DIR
- 	));
- 	my @vars = grep(/^GIT_/ && !/^GIT_($ok)/o, @env);
- 	print join("\n", @vars);
-@@ -901,7 +902,14 @@ then
- 	# itself.
- 	TEST_DIRECTORY=$(pwd)
- fi
--GIT_BUILD_DIR="$TEST_DIRECTORY"/..
-+
-+if test -z "$GIT_BUILD_DIR"
-+then
-+	# We allow tests to override this, in case they want to run tests
-+	# outside of t/, e.g. for running tests on the test library
-+	# itself.
-+        GIT_BUILD_DIR="$TEST_DIRECTORY"/..
-+fi
- 
- if test -n "$valgrind"
- then
+ours:  has line-x
+theirs (master):  does not have line-x
+merged:  has line-x
+merge-base (older master):  has line-x
+conclusion:  I should probably take line-x out of "merged"
 
---------------------
+ours:  has line-x
+theirs (master):  does not have line-x
+merged:  has line-x
+merge-base:  does not have line-x
+conclusion:  I should probably keep line-x in "merged"
+
+Thanks in advance for you feedback.
+
+v/r,
+neal 
