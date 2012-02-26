@@ -1,106 +1,108 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: [gitolite] denying access by factors other than ref/path names
-Date: Sun, 26 Feb 2012 21:20:41 +0530
-Message-ID: <20120226155041.GA28032@sita-lt.atc.tcs.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 0/2] submodules: Use relative paths to gitdir and work
+ tree
+Date: Sun, 26 Feb 2012 18:38:02 +0100
+Message-ID: <4F4A6DFA.5080709@kdbg.org>
+References: <4F32F252.7050105@web.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="IS0zKkzwUGydFO0o"
-To: gitolite <gitolite@googlegroups.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Feb 26 16:51:10 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Antony Male <antony.male@gmail.com>,
+	Phil Hord <phil.hord@gmail.com>,
+	msysGit <msysgit@googlegroups.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sun Feb 26 18:38:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S1gNR-00041b-Fx
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Feb 2012 16:51:09 +0100
+	id 1S1i34-0006U7-M0
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Feb 2012 18:38:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751387Ab2BZPuz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Feb 2012 10:50:55 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:57000 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750899Ab2BZPuy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Feb 2012 10:50:54 -0500
-Received: by pbcup15 with SMTP id up15so1206951pbc.19
-        for <git@vger.kernel.org>; Sun, 26 Feb 2012 07:50:54 -0800 (PST)
-Received-SPF: pass (google.com: domain of sitaramc@gmail.com designates 10.68.191.71 as permitted sender) client-ip=10.68.191.71;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of sitaramc@gmail.com designates 10.68.191.71 as permitted sender) smtp.mail=sitaramc@gmail.com; dkim=pass header.i=sitaramc@gmail.com
-Received: from mr.google.com ([10.68.191.71])
-        by 10.68.191.71 with SMTP id gw7mr17360068pbc.6.1330271454364 (num_hops = 1);
-        Sun, 26 Feb 2012 07:50:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=YeXsJGjj+uk8YQ/UPrwcGoK1t4mYAR/gVYNo6u61RZE=;
-        b=ckczUPaUwaP3FjOJ+WyBJ4FlfXgFVwIffvTB0r+C+r43wzanGdjA1NL0bWTjb4pilU
-         DNSe+8ldUCV3klQBjI+8itHrrk+OlgdEFGKZ1InNNFc5mmGQocfLkImfRlBaJaFeG5q5
-         +UG+P71sjYqkWUCjA9EEdQH1af5SLRfvoW/Qc=
-Received: by 10.68.191.71 with SMTP id gw7mr15008513pbc.6.1330271454313;
-        Sun, 26 Feb 2012 07:50:54 -0800 (PST)
-Received: from sita-lt.atc.tcs.com ([117.195.191.194])
-        by mx.google.com with ESMTPS id m5sm10112398pbo.69.2012.02.26.07.50.51
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 26 Feb 2012 07:50:53 -0800 (PST)
-Content-Disposition: inline
-Received: by 10.182.76.100 with HTTP; Sun, 26 Feb 2012 07:49:32 -0800 (PST)
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752125Ab2BZRiI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Feb 2012 12:38:08 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:6876 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751838Ab2BZRiH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Feb 2012 12:38:07 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 373BA13004E;
+	Sun, 26 Feb 2012 18:35:21 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 006A619F604;
+	Sun, 26 Feb 2012 18:38:02 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.27) Gecko/20120215 SUSE/3.1.19 Thunderbird/3.1.19
+In-Reply-To: <4F32F252.7050105@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191568>
 
+Am 08.02.2012 23:08, schrieb Jens Lehmann:
+> This patch series replaces all absolute paths pointing from submodule work
+> trees to its gitdir and back with relative paths as discussed in $gmane/187785.
+> 
+> The motivation is to make superprojects movable again. They lost this ability
+> with the move of the git directory of submodules into the .git/modules directory
+> of the superproject. While fixing that a bug which would hit when moving the
+> submodule inside the superproject was also fixed.
+> 
+> Jens Lehmann (2):
+>   submodules: always use a relative path to gitdir
+>   submodules: always use a relative path from gitdir to work tree
 
---IS0zKkzwUGydFO0o
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This series, with the tip at e3307adaba in Junio's repo causes major
+headaches on Windows.
 
-Gitolite now allows you to deny access using data other than ref
-names or path names.
+First, a check for an absolute path must be extended to take
+Windows-style paths into account.
 
-For example, you can deny a push if:
+Second, the a's and b's are filled with different forms of absolute
+paths (/c/there vs. c:/there), and as a consequence the subsequent loops
+do not find a suitable relative path.
 
-  * it adds more then N new files (or variations, like changed
-    files, binary files, new binary files...)
-  * it contains autogenerated files that can't be caught by
-    gitignore
-  * it fails a "no non-merge first-parents" rule
-  * you don't like the phase of the moon :)
+The below is a minimal hack that passes all t/*submod* tests, but it
+works only on Windows, where the pwd utility has an option -W that
+prints a Windows style absolute path.
 
-Since the actual decision is done by a script you write, you can
-enforce pretty much any site-specific stupi^Wstandards, (like
-ensuring that junior developers push only their own commits).
+How would you have this solved? One option would be to introduce a function
 
-http://sitaramc.github.com/gitolite/vref.html has all the gory
-details for anyone interested, and contrib/VREF in the latest pu
-branch has example code.
+  pwd() { builtin pwd -W "$@"; }
 
---=20
-Sitaram
+in git-sh-setup conditionally on Windows (but that would affect other
+shell scripts, too).
 
+Any other ideas?
 
---IS0zKkzwUGydFO0o
-Content-Type: application/pgp-signature
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 3463d6d..f37745e 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -139,8 +139,8 @@ module_clone()
+ 	gitdir="$gitdir/modules/$path"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+ 	case $gitdir in
+-	/*)
+-		a="$(cd_to_toplevel && pwd)/"
++	/* | [a-z]:/*)
++		a="$(cd_to_toplevel && pwd -W)/"
+ 		b=$gitdir
+ 		while [ "$b" ] && [ "${a%%/*}" = "${b%%/*}" ]
+ 		do
+@@ -170,8 +170,8 @@ module_clone()
 
-iQIcBAEBAgAGBQJPSlTRAAoJEKRCkIUIgjeleywP/Am3/IGWxvM2SyjI+rysHN4V
-lsg847FSx8djOaJRGgiY3Ub18XShlhjrlPxRc5ZDRdSqHd9u4BNEbYdAUC80t/jJ
-zvkubCySHEyZXZF0GR0I43cGG/IvlAAFXShskUUo2d7WBRgfvQWZWHzvJJ23XavL
-5LbAc9oQNQ0ajcV84CcatP73pZKquUQXm/td+zqxdow90FseH+zWBugqwSbSHYsq
-8LXNzsJfcL/h7qt6CrI81KNSa+uSXOBRJ2QQnccNZKUVZ3GXD/IFKTnxJVty5n1a
-bmPOnkIyQTsMN/WkrsG0chy0prUBDx1ebrrV0UBrnlykp2/j9BK9uUwQ74kcKaVv
-mQJpl4Zoc2vHttcmJPArQgUghSY1bOqq6N2hjKDnCn6wYrwHgG6/+7S2aXkarkuq
-LeP7CAcvSa4pGWiJ0eTELfj6Im+waGkOgj41S9oHWUWK8opeo61/e0PkEvSRrtRU
-V0hI53sT8QJntXzqeFVx9ksiGYazFbGCx9e9MsO/aNvtFIKBgveQiyOy8em8hD1j
-FPCJA0OetGFzDyoZr7D4qDuFYEVpoHk1AijiQtHkFmqbzF4VufTXo+qOG41kgUqM
-0HD4AGEZfYLToz2blURji94WK556zK5i1kUcsGC0lWs7Wn96pb/civQ24bjc/cvh
-k6sJ6MUTuixWxxnQ3YKp
-=SPz+
------END PGP SIGNATURE-----
+ 	echo "gitdir: $rel_gitdir" >"$path/.git"
 
---IS0zKkzwUGydFO0o--
+-	a=$(cd "$gitdir" && pwd)
+-	b=$(cd "$path" && pwd)
++	a=$(cd "$gitdir" && pwd -W)
++	b=$(cd "$path" && pwd -W)
+ 	while [ "$b" ] && [ "${a%%/*}" = "${b%%/*}" ]
+ 	do
+ 		a=${a#*/} b=${b#*/};
+-- 
+1.7.8.216.g2e426
