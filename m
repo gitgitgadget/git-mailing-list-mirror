@@ -1,82 +1,200 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Question about your comment on the git parable
-Date: Sun, 26 Feb 2012 15:10:32 +0100
-Message-ID: <201202261510.32978.jnareb@gmail.com>
-References: <A98A438D-76DD-41B5-B8E1-6FA170B00801@gmail.com> <201202261303.38957.jnareb@gmail.com> <4B4C5353-9820-4068-92DA-50665B1011E1@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Federico Galassi <federico.galassi@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 26 15:11:02 2012
+From: Pete Wyckoff <pw@padd.com>
+Subject: [PATCH] git-p4: submit files with wildcards
+Date: Sun, 26 Feb 2012 09:55:00 -0500
+Message-ID: <1330268100-29630-1-git-send-email-pw@padd.com>
+Cc: Luke Diamand <luke@diamand.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 26 15:55:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S1eoY-0000Op-BD
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Feb 2012 15:11:02 +0100
+	id 1S1fVv-0000zj-Un
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Feb 2012 15:55:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752028Ab2BZOKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Feb 2012 09:10:30 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:64219 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751862Ab2BZOK3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Feb 2012 09:10:29 -0500
-Received: by eaah12 with SMTP id h12so1819652eaa.19
-        for <git@vger.kernel.org>; Sun, 26 Feb 2012 06:10:28 -0800 (PST)
-Received-SPF: pass (google.com: domain of jnareb@gmail.com designates 10.213.32.133 as permitted sender) client-ip=10.213.32.133;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of jnareb@gmail.com designates 10.213.32.133 as permitted sender) smtp.mail=jnareb@gmail.com; dkim=pass header.i=jnareb@gmail.com
-Received: from mr.google.com ([10.213.32.133])
-        by 10.213.32.133 with SMTP id c5mr2929282ebd.119.1330265428495 (num_hops = 1);
-        Sun, 26 Feb 2012 06:10:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=345eq+o4K/A/PRUKG+3HvTvDW4m1Q9RToU0NCHpRiTU=;
-        b=KR3S7Ol+DrbIPod/fD4S/9GoCXSf6j3nwfiHBylJW9N7DWTO7I8xErZJmZ2iGU/EMB
-         e8etXf34haR/HKNiTiwPLE4MK3G4I8/XO8RMK0jjyiKVHyBodn0OlXVg7/GlO+/DR5rt
-         UsG7TMqGlN5lDEoxytpHVNMAjJwP+geyDLM54=
-Received: by 10.213.32.133 with SMTP id c5mr2199708ebd.119.1330265428376;
-        Sun, 26 Feb 2012 06:10:28 -0800 (PST)
-Received: from [192.168.1.13] (abwe206.neoplus.adsl.tpnet.pl. [83.8.228.206])
-        by mx.google.com with ESMTPS id v51sm45479521eef.2.2012.02.26.06.10.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 26 Feb 2012 06:10:27 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4B4C5353-9820-4068-92DA-50665B1011E1@gmail.com>
-Content-Disposition: inline
+	id S1752415Ab2BZOzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Feb 2012 09:55:35 -0500
+Received: from honk.padd.com ([74.3.171.149]:47073 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751666Ab2BZOzF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Feb 2012 09:55:05 -0500
+Received: from arf.padd.com (unknown [50.55.145.32])
+	by honk.padd.com (Postfix) with ESMTPSA id 4561D24A6;
+	Sun, 26 Feb 2012 06:55:03 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id BECB1313D8; Sun, 26 Feb 2012 09:55:00 -0500 (EST)
+X-Mailer: git-send-email 1.7.9.2.285.gbece5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191562>
 
-Federico Galassi wrote:
-> On 26/feb/2012, at 13:03, Jakub Narebski wrote:
->> Jakub Narebski wrote:
+There are four wildcard characters in p4.  Files with these
+characters can be added to p4 repos using the "-f" option.  They
+are stored in %xx notation, and when checked out, p4 converts
+them back to normal.
 
-[...]
->>> Note also that the staging area is also a performance hack (perhaps it
->>> began as such; I am not sure about this aspect of git history).  Git uses
->>> it to be able to _cheaply_ check which files were changed.
->> 
->> The first name for staging area, _dircache_, hints at this.
-> 
-> Unfortunately, i'm not into git development. Do you have a clue on why
-> the index, apparently a tree referring to objects, is much faster than
-> reading that stuff right from the database?  
+When adding files with wildcards in git, the submit path must
+be careful to use the encoded names in some places, and it
+must use "-f" to add them.
 
-The index (at the very beginning "dircache"), or the staging area, stores
-more information that are saved in object database, for example stat
-information (file metadata).  Most of file metadata is highly local, so
-it doesn't make sense to save it in object database of repository, but
-it is used to avoid a file read: usually stat-ing a file, which is much
-more cheap, is enough to notice that the file did not change.
+Support for wildcards in the clone/sync path was added in
+084f630 (git-p4: decode p4 wildcard characters, 2011-02-19),
+but that change did not handle the submit path.
 
+Reported-by: Luke Diamand <luke@diamand.org>
+Signed-off-by: Pete Wyckoff <pw@padd.com>
+---
+ contrib/fast-import/git-p4 |   64 ++++++++++++++++++++++++++++---------------
+ t/t9800-git-p4-basic.sh    |   23 ++++++++++++++++
+ 2 files changed, 65 insertions(+), 22 deletions(-)
+
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index 0539553..bd89402 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -136,8 +136,8 @@ def p4_integrate(src, dest):
+ def p4_sync(path):
+     p4_system(["sync", path])
+ 
+-def p4_add(f):
+-    p4_system(["add", f])
++def p4_add(path, *options):
++    p4_system(["add"] + list(options) + [path])
+ 
+ def p4_delete(f):
+     p4_system(["delete", f])
+@@ -232,8 +232,12 @@ def setP4ExecBit(file, mode):
+     # Reopens an already open file and changes the execute bit to match
+     # the execute bit setting in the passed in mode.
+ 
+-    p4Type = "+x"
++    # Since this is working on already opened files, any with wildcards
++    # in the name have been encoded already, and must be referred to
++    # with the encoded name.
++    file = wildcard_encode(file)
+ 
++    p4Type = "+x"
+     if not isModeExec(mode):
+         p4Type = getP4OpenedType(file)
+         p4Type = re.sub('^([cku]?)x(.*)', '\\1\\2', p4Type)
+@@ -596,6 +600,34 @@ def p4PathStartsWith(path, prefix):
+         return path.lower().startswith(prefix.lower())
+     return path.startswith(prefix)
+ 
++#
++# P4 wildcards are not allowed in filenames.  P4 complains
++# if you simply add them, but you can force it with "-f", in
++# which case it translates them into %xx encoding internally.
++#
++def wildcard_decode(path):
++    # Search for and fix just these four characters.  Do % last so
++    # that fixing it does not inadvertently create new %-escapes.
++    # Cannot have * in a filename in windows; untested as to
++    # what p4 would do in such a case.
++    if not platform.system() == "Windows":
++        path = path.replace("%2A", "*")
++    path = path.replace("%23", "#") \
++               .replace("%40", "@") \
++               .replace("%25", "%")
++    return path
++
++def wildcard_encode(path):
++    # do % first to avoid double-encoding the %s introduced here
++    path = path.replace("%", "%25") \
++               .replace("*", "%2A") \
++               .replace("#", "%23") \
++               .replace("@", "%40")
++    return path
++
++def wildcard_present(path):
++    return path.translate(None, "*#@%") != path
++
+ class Command:
+     def __init__(self):
+         self.usage = "usage: %prog [options]"
+@@ -1099,7 +1131,12 @@ class P4Submit(Command, P4UserMap):
+         system(applyPatchCmd)
+ 
+         for f in filesToAdd:
+-            p4_add(f)
++            # forcibly add file names with wildcards; see also
++            # wildcard_decode() in the sync path
++            if wildcard_present(f):
++                p4_add(f, "-f")
++            else:
++                p4_add(f)
+         for f in filesToDelete:
+             p4_revert(f)
+             p4_delete(f)
+@@ -1537,23 +1574,6 @@ class P4Sync(Command, P4UserMap):
+         if gitConfig("git-p4.syncFromOrigin") == "false":
+             self.syncWithOrigin = False
+ 
+-    #
+-    # P4 wildcards are not allowed in filenames.  P4 complains
+-    # if you simply add them, but you can force it with "-f", in
+-    # which case it translates them into %xx encoding internally.
+-    # Search for and fix just these four characters.  Do % last so
+-    # that fixing it does not inadvertently create new %-escapes.
+-    #
+-    def wildcard_decode(self, path):
+-        # Cannot have * in a filename in windows; untested as to
+-        # what p4 would do in such a case.
+-        if not self.isWindows:
+-            path = path.replace("%2A", "*")
+-        path = path.replace("%23", "#") \
+-                   .replace("%40", "@") \
+-                   .replace("%25", "%")
+-        return path
+-
+     # Force a checkpoint in fast-import and wait for it to finish
+     def checkpoint(self):
+         self.gitStream.write("checkpoint\n\n")
+@@ -1638,7 +1658,7 @@ class P4Sync(Command, P4UserMap):
+ 
+     def streamOneP4File(self, file, contents):
+         relPath = self.stripRepoPath(file['depotFile'], self.branchPrefixes)
+-        relPath = self.wildcard_decode(relPath)
++        relPath = wildcard_decode(relPath)
+         if verbose:
+             sys.stderr.write("%s\n" % relPath)
+ 
+diff --git a/t/t9800-git-p4-basic.sh b/t/t9800-git-p4-basic.sh
+index 04ee20e..22669df 100755
+--- a/t/t9800-git-p4-basic.sh
++++ b/t/t9800-git-p4-basic.sh
+@@ -163,6 +163,29 @@ test_expect_success 'wildcard files git-p4 clone' '
+ 	)
+ '
+ 
++test_expect_success 'wildcard files submit back to p4' '
++	"$GITP4" clone --dest="$git" //depot &&
++	test_when_finished cleanup_git &&
++	(
++		cd "$git" &&
++		echo git-wild-hash >git-wild#hash &&
++		echo git-wild-star >git-wild\*star &&
++		echo git-wild-at >git-wild@at &&
++		echo git-wild-percent >git-wild%percent &&
++		git add git-wild* &&
++		git commit -m "add some wildcard filenames" &&
++		git config git-p4.skipSubmitEditCheck true &&
++		"$GITP4" submit
++	) &&
++	(
++		cd "$cli" &&
++		test_path_is_file git-wild#hash &&
++		test_path_is_file git-wild\*star &&
++		test_path_is_file git-wild@at &&
++		test_path_is_file git-wild%percent
++	)
++'
++
+ test_expect_success 'clone bare' '
+ 	"$GITP4" clone --dest="$git" --bare //depot &&
+ 	test_when_finished cleanup_git &&
 -- 
-Jakub Narebski
-Poland
+1.7.9.220.g4b839
