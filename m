@@ -1,152 +1,209 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 0/2] submodules: Use relative paths to gitdir and work
- tree
-Date: Sun, 26 Feb 2012 20:58:42 +0100
-Message-ID: <4F4A8EF2.3020901@web.de>
-References: <4F32F252.7050105@web.de> <4F4A6DFA.5080709@kdbg.org>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH] fsck: do not print dangling objects by default
+Date: Sun, 26 Feb 2012 21:43:57 +0100
+Message-ID: <20120226204357.GA26088@ecki>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Antony Male <antony.male@gmail.com>,
-	Phil Hord <phil.hord@gmail.com>,
-	msysGit <msysgit@googlegroups.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun Feb 26 20:58:51 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 26 21:52:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S1kF9-0003Q7-5C
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Feb 2012 20:58:51 +0100
+	id 1S1l53-0001cM-56
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Feb 2012 21:52:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752710Ab2BZT6q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Feb 2012 14:58:46 -0500
-Received: from fmmailgate06.web.de ([217.72.192.247]:35388 "EHLO
-	fmmailgate06.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752550Ab2BZT6p (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Feb 2012 14:58:45 -0500
-Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
-	by fmmailgate06.web.de (Postfix) with ESMTP id 3C21BD05B5E
-	for <git@vger.kernel.org>; Sun, 26 Feb 2012 20:58:44 +0100 (CET)
-Received: from [192.168.178.48] ([91.3.204.203]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0M9Xfb-1S9Boz2BGp-00C8YM; Sun, 26 Feb 2012 20:58:43
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <4F4A6DFA.5080709@kdbg.org>
-X-Provags-ID: V02:K0:yVBoPtIvXmP0dRBGSmZdm+gAWQ8kFag6j+JhHEkC/5D
- w8qw1RBaKeIc2TYWWy1tFy6rl8Bx+n+zQ/S921c+Kn47R2H7oY
- 2jl1OA0hJ2rsB5GsAMs1bErtsv8YTVr84CisOWRJIdUlBITNEt
- nASoUPl7AHiWZlVnQDQnuKLluBHc0XjoccK/GHCUhy1S0WLQ7O
- 0Wbq2YdRXFOgEcY/qiqFg==
+	id S1753005Ab2BZUwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Feb 2012 15:52:25 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:40765 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752913Ab2BZUwY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Feb 2012 15:52:24 -0500
+Received: from localhost (p5B22E044.dip.t-dialin.net [91.34.224.68])
+	by bsmtp.bon.at (Postfix) with ESMTP id 514F7CDF82;
+	Sun, 26 Feb 2012 21:52:27 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191575>
 
-Am 26.02.2012 18:38, schrieb Johannes Sixt:
-> Am 08.02.2012 23:08, schrieb Jens Lehmann:
->> This patch series replaces all absolute paths pointing from submodule work
->> trees to its gitdir and back with relative paths as discussed in $gmane/187785.
->>
->> The motivation is to make superprojects movable again. They lost this ability
->> with the move of the git directory of submodules into the .git/modules directory
->> of the superproject. While fixing that a bug which would hit when moving the
->> submodule inside the superproject was also fixed.
->>
->> Jens Lehmann (2):
->>   submodules: always use a relative path to gitdir
->>   submodules: always use a relative path from gitdir to work tree
-> 
-> This series, with the tip at e3307adaba in Junio's repo causes major
-> headaches on Windows.
->
-> First, a check for an absolute path must be extended to take
-> Windows-style paths into account.
+Every reference to git fsck that I could find in the documentation or on
+the web is followed by the some kind of assurance that dangling objects
+are "not a problem", "nothing to worry about" or "not at all
+interesting".
 
-Okay, but that check is not part of my series (it was introduced by 501770e1
-"Move git-dir for submodules", which is in Git since 1.7.8), so that looks
-like it would need to be fixed for msysgit even without my patches, right?
+Instead of telling the user everywhere to ignore those messages, let's
+not print them in the first place. The --dangling flag can be used to
+explicitly enable printing dangling objects.
 
-But I'm not so happy about the two code paths there anyway, so I prepared a
-patch to replace them with a single code path based upon the paths computed
-in the last patch of this series. Please see the always-use-relative-gitdir
-branch in my github repo https://github.com/jlehmann/git-submod-enhancements
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+---
+ Documentation/git-fsck.txt    |    3 +++
+ Documentation/git-repack.txt  |    2 +-
+ Documentation/user-manual.txt |   20 ++------------------
+ builtin/fsck.c                |    7 +++++--
+ t/t1410-reflog.sh             |    2 +-
+ t/t1450-fsck.sh               |    6 +-----
+ t/t6050-replace.sh            |    2 +-
+ 7 files changed, 14 insertions(+), 28 deletions(-)
 
-> Second, the a's and b's are filled with different forms of absolute
-> paths (/c/there vs. c:/there), and as a consequence the subsequent loops
-> do not find a suitable relative path.
-> 
-> The below is a minimal hack that passes all t/*submod* tests, but it
-> works only on Windows, where the pwd utility has an option -W that
-> prints a Windows style absolute path.
-> 
-> How would you have this solved? One option would be to introduce a function
-> 
->   pwd() { builtin pwd -W "$@"; }
-> 
-> in git-sh-setup conditionally on Windows (but that would affect other
-> shell scripts, too).
-
-I suspect other shell scripts might be less affected when non-Windows
-paths are forced (at least when they aren't developed under Windows
-only). What about something like this:
-
-  pwd() { builtin pwd -W "$@" | sed -e 's,^\([a-z]\):/,/\1/,'; }
-
-> Any other ideas?
-> 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 3463d6d..f37745e 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -139,8 +139,8 @@ module_clone()
->  	gitdir="$gitdir/modules/$path"
->
->  	case $gitdir in
-> -	/*)
-> -		a="$(cd_to_toplevel && pwd)/"
-> +	/* | [a-z]:/*)
-> +		a="$(cd_to_toplevel && pwd -W)/"
->  		b=$gitdir
->  		while [ "$b" ] && [ "${a%%/*}" = "${b%%/*}" ]
->  		do
-
-Hmm, here the path which starts with "c:/" is returned by the "git
-rev-parse --git-dir" which is used to initialize the $gitdir variable
-a few lines up.
-
-> @@ -170,8 +170,8 @@ module_clone()
->
->  	echo "gitdir: $rel_gitdir" >"$path/.git"
->
-> -	a=$(cd "$gitdir" && pwd)
-> -	b=$(cd "$path" && pwd)
-> +	a=$(cd "$gitdir" && pwd -W)
-> +	b=$(cd "$path" && pwd -W)
->  	while [ "$b" ] && [ "${a%%/*}" = "${b%%/*}" ]
->  	do
->  		a=${a#*/} b=${b#*/};
-
-I don't understand why you need this. Does "pwd" sometimes return a
-path starting with "c:/" and sometimes "/c/" depending on what form
-you use when you cd into that directory? If not, does the following
-help you on windows? (If that is the case, you might need the pwd
-redefinition too to make that work)
-
------------------8<--------------------
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 5deabf6..5bb8109 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -134,7 +134,7 @@ module_clone()
-        test -n "$name" || name="$path"
-        base_path=$(dirname "$path")
-
--       gitdir=$(git rev-parse --git-dir)
-+       gitdir=$(git rev-parse --git-dir | sed -e 's,^\([a-z]\):/,/\1/,')
-        gitdir_base="$gitdir/modules/$base_path"
-        gitdir="$gitdir/modules/$path"
+diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
+index 6c47395..199c5a0 100644
+--- a/Documentation/git-fsck.txt
++++ b/Documentation/git-fsck.txt
+@@ -30,6 +30,9 @@ index file, all SHA1 references in .git/refs/*, and all reflogs (unless
+ 	Print out objects that exist but that aren't reachable from any
+ 	of the reference nodes.
+ 
++--dangling::
++	Print objects that exist but that are never 'directly' used.
++
+ --root::
+ 	Report root nodes.
+ 
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index 40af321..4c1aff6 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -34,7 +34,7 @@ OPTIONS
+ 	Especially useful when packing a repository that is used
+ 	for private development. Use
+ 	with '-d'.  This will clean up the objects that `git prune`
+-	leaves behind, but `git fsck --full` shows as
++	leaves behind, but `git fsck --full --dangling` shows as
+ 	dangling.
+ +
+ Note that users fetching over dumb protocols will have to fetch the
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index f13a846..09ffbcc 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -1582,25 +1582,12 @@ Checking the repository for corruption
+ 
+ The linkgit:git-fsck[1] command runs a number of self-consistency checks
+ on the repository, and reports on any problems.  This may take some
+-time.  The most common warning by far is about "dangling" objects:
++time.
+ 
+ -------------------------------------------------
+ $ git fsck
+-dangling commit 7281251ddd2a61e38657c827739c57015671a6b3
+-dangling commit 2706a059f258c6b245f298dc4ff2ccd30ec21a63
+-dangling commit 13472b7c4b80851a1bc551779171dcb03655e9b5
+-dangling blob 218761f9d90712d37a9c5e36f406f92202db07eb
+-dangling commit bf093535a34a4d35731aa2bd90fe6b176302f14f
+-dangling commit 8e4bec7f2ddaa268bef999853c25755452100f8e
+-dangling tree d50bb86186bf27b681d25af89d3b5b68382e4085
+-dangling tree b24c2473f1fd3d91352a624795be026d64c8841f
+-...
+ -------------------------------------------------
+ 
+-Dangling objects are not a problem.  At worst they may take up a little
+-extra disk space.  They can sometimes provide a last-resort method for
+-recovering lost work--see <<dangling-objects>> for details.
+-
+ [[recovering-lost-changes]]
+ Recovering lost changes
+ ~~~~~~~~~~~~~~~~~~~~~~~
+@@ -1665,7 +1652,7 @@ commits in the dangling objects that `git fsck` reports.  See
+ <<dangling-objects>> for the details.
+ 
+ -------------------------------------------------
+-$ git fsck
++$ git fsck --dangling
+ dangling commit 7281251ddd2a61e38657c827739c57015671a6b3
+ dangling commit 2706a059f258c6b245f298dc4ff2ccd30ec21a63
+ dangling commit 13472b7c4b80851a1bc551779171dcb03655e9b5
+@@ -3301,9 +3288,6 @@ broken link from    tree 2d9263c6d23595e7cb2a21e5ebbb53655278dff8
+ missing blob 4b9458b3786228369c63936db65827de3cc06200
+ ------------------------------------------------
+ 
+-(Typically there will be some "dangling object" messages too, but they
+-aren't interesting.)
+-
+ Now you know that blob 4b9458b3 is missing, and that the tree 2d9263c6
+ points to it.  If you could find just one copy of that missing blob
+ object, possibly in some other repository, you could move it into
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 8c479a7..0745535 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -29,6 +29,7 @@ static int errors_found;
+ static int write_lost_and_found;
+ static int verbose;
+ static int show_progress = -1;
++static int show_dangling;
+ #define ERROR_OBJECT 01
+ #define ERROR_REACHABLE 02
+ #define ERROR_PACK 04
+@@ -221,8 +222,9 @@ static void check_unreachable_object(struct object *obj)
+ 	 * start looking at, for example.
+ 	 */
+ 	if (!obj->used) {
+-		printf("dangling %s %s\n", typename(obj->type),
+-		       sha1_to_hex(obj->sha1));
++		if (show_dangling)
++			printf("dangling %s %s\n", typename(obj->type),
++			       sha1_to_hex(obj->sha1));
+ 		if (write_lost_and_found) {
+ 			char *filename = git_path("lost-found/%s/%s",
+ 				obj->type == OBJ_COMMIT ? "commit" : "other",
+@@ -614,6 +616,7 @@ static char const * const fsck_usage[] = {
+ static struct option fsck_opts[] = {
+ 	OPT__VERBOSE(&verbose, "be verbose"),
+ 	OPT_BOOLEAN(0, "unreachable", &show_unreachable, "show unreachable objects"),
++	OPT_BOOLEAN(0, "dangling", &show_dangling, "show dangling objects"),
+ 	OPT_BOOLEAN(0, "tags", &show_tags, "report tags"),
+ 	OPT_BOOLEAN(0, "root", &show_root, "report root nodes"),
+ 	OPT_BOOLEAN(0, "cache", &keep_cache_objects, "make index objects head nodes"),
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index 252fc82..12441c5 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -20,7 +20,7 @@ check_have () {
+ }
+ 
+ check_fsck () {
+-	output=$(git fsck --full)
++	output=$(git fsck --full --dangling)
+ 	case "$1" in
+ 	'')
+ 		test -z "$output" ;;
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 523ce9c..78bfbc3 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -27,12 +27,8 @@ test_expect_success 'loose objects borrowed from alternate are not missing' '
+ 		git init &&
+ 		echo ../../../.git/objects >.git/objects/info/alternates &&
+ 		test_commit C fileC one &&
+-		git fsck >../out 2>&1
++		git fsck >../actual 2>&1
+ 	) &&
+-	{
+-		grep -v dangling out >actual ||
+-		:
+-	} &&
+ 	test_cmp empty actual
+ '
+ 
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index 5c87f28..5b36ee3 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -95,7 +95,7 @@ test_expect_success 'tag replaced commit' '
+ '
+ 
+ test_expect_success '"git fsck" works' '
+-     git fsck master > fsck_master.out &&
++     git fsck --dangling master > fsck_master.out &&
+      grep "dangling commit $R" fsck_master.out &&
+      grep "dangling tag $(cat .git/refs/tags/mytag)" fsck_master.out &&
+      test -z "$(git fsck)"
+-- 
+1.7.9.1
