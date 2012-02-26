@@ -1,126 +1,106 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH 2/2] git-p4: remove bash-ism in t9800
-Date: Sun, 26 Feb 2012 10:37:27 -0500
-Message-ID: <1330270647-8817-3-git-send-email-pw@padd.com>
-References: <1330270647-8817-1-git-send-email-pw@padd.com>
-Cc: Vitor Antunes <vitor.hda@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 26 16:38:16 2012
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: [gitolite] denying access by factors other than ref/path names
+Date: Sun, 26 Feb 2012 21:20:41 +0530
+Message-ID: <20120226155041.GA28032@sita-lt.atc.tcs.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="IS0zKkzwUGydFO0o"
+To: gitolite <gitolite@googlegroups.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Feb 26 16:51:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S1gAy-0004z1-C2
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Feb 2012 16:38:16 +0100
+	id 1S1gNR-00041b-Fx
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Feb 2012 16:51:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751421Ab2BZPiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Feb 2012 10:38:11 -0500
-Received: from honk.padd.com ([74.3.171.149]:41132 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751159Ab2BZPiK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Feb 2012 10:38:10 -0500
-Received: from arf.padd.com (unknown [50.55.145.32])
-	by honk.padd.com (Postfix) with ESMTPSA id C46F824A6;
-	Sun, 26 Feb 2012 07:38:09 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id AAC7F313D8; Sun, 26 Feb 2012 10:38:07 -0500 (EST)
-X-Mailer: git-send-email 1.7.9.2.288.g74b75
-In-Reply-To: <1330270647-8817-1-git-send-email-pw@padd.com>
+	id S1751387Ab2BZPuz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Feb 2012 10:50:55 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:57000 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750899Ab2BZPuy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Feb 2012 10:50:54 -0500
+Received: by pbcup15 with SMTP id up15so1206951pbc.19
+        for <git@vger.kernel.org>; Sun, 26 Feb 2012 07:50:54 -0800 (PST)
+Received-SPF: pass (google.com: domain of sitaramc@gmail.com designates 10.68.191.71 as permitted sender) client-ip=10.68.191.71;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of sitaramc@gmail.com designates 10.68.191.71 as permitted sender) smtp.mail=sitaramc@gmail.com; dkim=pass header.i=sitaramc@gmail.com
+Received: from mr.google.com ([10.68.191.71])
+        by 10.68.191.71 with SMTP id gw7mr17360068pbc.6.1330271454364 (num_hops = 1);
+        Sun, 26 Feb 2012 07:50:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=YeXsJGjj+uk8YQ/UPrwcGoK1t4mYAR/gVYNo6u61RZE=;
+        b=ckczUPaUwaP3FjOJ+WyBJ4FlfXgFVwIffvTB0r+C+r43wzanGdjA1NL0bWTjb4pilU
+         DNSe+8ldUCV3klQBjI+8itHrrk+OlgdEFGKZ1InNNFc5mmGQocfLkImfRlBaJaFeG5q5
+         +UG+P71sjYqkWUCjA9EEdQH1af5SLRfvoW/Qc=
+Received: by 10.68.191.71 with SMTP id gw7mr15008513pbc.6.1330271454313;
+        Sun, 26 Feb 2012 07:50:54 -0800 (PST)
+Received: from sita-lt.atc.tcs.com ([117.195.191.194])
+        by mx.google.com with ESMTPS id m5sm10112398pbo.69.2012.02.26.07.50.51
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 26 Feb 2012 07:50:53 -0800 (PST)
+Content-Disposition: inline
+Received: by 10.182.76.100 with HTTP; Sun, 26 Feb 2012 07:49:32 -0800 (PST)
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191567>
 
-This works in both bash and dash:
 
-    arf$ bash -c 'VAR=1 env' | grep VAR
-    VAR=1
-    arf$ dash -c 'VAR=1 env' | grep VAR
-    VAR=1
+--IS0zKkzwUGydFO0o
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-But the variables are not propagated through a function
-in dash:
+Gitolite now allows you to deny access using data other than ref
+names or path names.
 
-    arf$ bash -c 'f() { "$@"
-    }; VAR=1 f "env"' | grep VAR
-    VAR=1
-    arf$ dash -c 'f() { "$@"
-    }; VAR=1 f "env"' | grep VAR
+For example, you can deny a push if:
 
-Fix constructs like this, in particular, setting variables
-through test_must_fail.
+  * it adds more then N new files (or variations, like changed
+    files, binary files, new binary files...)
+  * it contains autogenerated files that can't be caught by
+    gitignore
+  * it fails a "no non-merge first-parents" rule
+  * you don't like the phase of the moon :)
 
-Based-on-patch-by: Vitor Antunes <vitor.hda@gmail.com>
-Signed-off-by: Pete Wyckoff <pw@padd.com>
----
- t/t9800-git-p4-basic.sh |   25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+Since the actual decision is done by a script you write, you can
+enforce pretty much any site-specific stupi^Wstandards, (like
+ensuring that junior developers push only their own commits).
 
-diff --git a/t/t9800-git-p4-basic.sh b/t/t9800-git-p4-basic.sh
-index 04ee20e..9f17cdb 100755
---- a/t/t9800-git-p4-basic.sh
-+++ b/t/t9800-git-p4-basic.sh
-@@ -234,8 +234,11 @@ test_expect_success 'refuse to preserve users without perms' '
- 		git config git-p4.skipSubmitEditCheck true &&
- 		echo "username-noperms: a change by alice" >>file1 &&
- 		git commit --author "Alice <alice@localhost>" -m "perms: a change by alice" file1 &&
--		P4EDITOR=touch P4USER=bob P4PASSWD=secret test_must_fail "$GITP4" commit --preserve-user &&
--		test_must_fail git diff --exit-code HEAD..p4/master
-+		# dashism: test_must_fail does not propagate variables
-+		P4EDITOR=touch P4USER=bob P4PASSWD=secret &&
-+		export P4EDITOR P4USER P4PASSWD &&
-+		test_must_fail "$GITP4" commit --preserve-user &&
-+		! git diff --exit-code HEAD..p4/master
- 	)
- '
- 
-@@ -250,13 +253,15 @@ test_expect_success 'preserve user where author is unknown to p4' '
- 		git commit --author "Bob <bob@localhost>" -m "preserve: a change by bob" file1 &&
- 		echo "username-unknown: a change by charlie" >>file1 &&
- 		git commit --author "Charlie <charlie@localhost>" -m "preserve: a change by charlie" file1 &&
--		P4EDITOR=touch P4USER=alice P4PASSWD=secret test_must_fail "$GITP4" commit --preserve-user &&
--		test_must_fail git diff --exit-code HEAD..p4/master &&
-+		P4EDITOR=touch P4USER=alice P4PASSWD=secret &&
-+		export P4EDITOR P4USER P4PASSWD &&
-+		test_must_fail "$GITP4" commit --preserve-user &&
-+		! git diff --exit-code HEAD..p4/master &&
- 
- 		echo "$0: repeat with allowMissingP4Users enabled" &&
- 		git config git-p4.allowMissingP4Users true &&
- 		git config git-p4.preserveUser true &&
--		P4EDITOR=touch P4USER=alice P4PASSWD=secret "$GITP4" commit &&
-+		"$GITP4" commit &&
- 		git diff --exit-code HEAD..p4/master &&
- 		p4_check_commit_author file1 alice
- 	)
-@@ -275,20 +280,22 @@ test_expect_success 'not preserving user with mixed authorship' '
- 		p4_add_user derek Derek &&
- 
- 		make_change_by_user usernamefile3 Derek derek@localhost &&
--		P4EDITOR=cat P4USER=alice P4PASSWD=secret "$GITP4" commit |\
-+		P4EDITOR=cat P4USER=alice P4PASSWD=secret &&
-+		export P4EDITOR P4USER P4PASSWD &&
-+		"$GITP4" commit |\
- 		grep "git author derek@localhost does not match" &&
- 
- 		make_change_by_user usernamefile3 Charlie charlie@localhost &&
--		P4EDITOR=cat P4USER=alice P4PASSWD=secret "$GITP4" commit |\
-+		"$GITP4" commit |\
- 		grep "git author charlie@localhost does not match" &&
- 
- 		make_change_by_user usernamefile3 alice alice@localhost &&
--		P4EDITOR=cat P4USER=alice P4PASSWD=secret "$GITP4" |\
-+		"$GITP4" commit |\
- 		test_must_fail grep "git author.*does not match" &&
- 
- 		git config git-p4.skipUserNameCheck true &&
- 		make_change_by_user usernamefile3 Charlie charlie@localhost &&
--		P4EDITOR=cat P4USER=alice P4PASSWD=secret "$GITP4" commit |\
-+		"$GITP4" commit |\
- 		test_must_fail grep "git author.*does not match" &&
- 
- 		p4_check_commit_author usernamefile3 alice
--- 
-1.7.9.2.288.g74b75
+http://sitaramc.github.com/gitolite/vref.html has all the gory
+details for anyone interested, and contrib/VREF in the latest pu
+branch has example code.
+
+--=20
+Sitaram
+
+
+--IS0zKkzwUGydFO0o
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIcBAEBAgAGBQJPSlTRAAoJEKRCkIUIgjeleywP/Am3/IGWxvM2SyjI+rysHN4V
+lsg847FSx8djOaJRGgiY3Ub18XShlhjrlPxRc5ZDRdSqHd9u4BNEbYdAUC80t/jJ
+zvkubCySHEyZXZF0GR0I43cGG/IvlAAFXShskUUo2d7WBRgfvQWZWHzvJJ23XavL
+5LbAc9oQNQ0ajcV84CcatP73pZKquUQXm/td+zqxdow90FseH+zWBugqwSbSHYsq
+8LXNzsJfcL/h7qt6CrI81KNSa+uSXOBRJ2QQnccNZKUVZ3GXD/IFKTnxJVty5n1a
+bmPOnkIyQTsMN/WkrsG0chy0prUBDx1ebrrV0UBrnlykp2/j9BK9uUwQ74kcKaVv
+mQJpl4Zoc2vHttcmJPArQgUghSY1bOqq6N2hjKDnCn6wYrwHgG6/+7S2aXkarkuq
+LeP7CAcvSa4pGWiJ0eTELfj6Im+waGkOgj41S9oHWUWK8opeo61/e0PkEvSRrtRU
+V0hI53sT8QJntXzqeFVx9ksiGYazFbGCx9e9MsO/aNvtFIKBgveQiyOy8em8hD1j
+FPCJA0OetGFzDyoZr7D4qDuFYEVpoHk1AijiQtHkFmqbzF4VufTXo+qOG41kgUqM
+0HD4AGEZfYLToz2blURji94WK556zK5i1kUcsGC0lWs7Wn96pb/civQ24bjc/cvh
+k6sJ6MUTuixWxxnQ3YKp
+=SPz+
+-----END PGP SIGNATURE-----
+
+--IS0zKkzwUGydFO0o--
