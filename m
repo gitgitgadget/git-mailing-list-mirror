@@ -1,58 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] CodingGuidelines: Add a note about spaces after
- redirection
-Date: Mon, 27 Feb 2012 12:55:44 -0800
-Message-ID: <7vvcms573j.fsf@alter.siamese.dyndns.org>
-References: <1330125178-9194-1-git-send-email-tim.henigan@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Announcing nntpgit
+Date: Mon, 27 Feb 2012 22:02:31 +0100
+Message-ID: <4F4BEF67.1070609@alum.mit.edu>
+References: <20120224133942.49a7a420@dt> <7v62evykrq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Tim Henigan <tim.henigan@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 27 21:55:53 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Corbet <corbet@lwn.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 27 22:02:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S27bt-0001DL-7s
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 21:55:53 +0100
+	id 1S27iW-0004wD-LI
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 22:02:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755045Ab2B0Uzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Feb 2012 15:55:48 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56246 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754703Ab2B0Uzr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2012 15:55:47 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 81AE067DC;
-	Mon, 27 Feb 2012 15:55:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=F9TbBcSx8TNN6R4ea8d/ypXTeQ0=; b=hMPoN0
-	Jb7ib1rtFAViWYsfbCbJxaKcirJ6FNwz+r72c7AzODR3tSbhWCyiy9tWjsvkklAJ
-	NmSMlOpsxePLF6Mr3YySxj3GbHW7skgzlQdZxfAmqo06yKOz1VjozIwofM8x9FjA
-	2Uinqcn1ciEodP9/Mu/NDS4BTq4UVMmJgCee0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=X+0DJk+ck9+0L0U8H2nS+kDQ3NcAjH/3
-	C38qjKayDhkahpUwaeRmrc15giuvXO/9hIdNrVjXi57P6J5K2/K+Kh18skYUXRSj
-	I8Mas8PPuY/qlub4ohS6Hf45pZzxggWeRBLp/9LWv/9jC23PcKhPRHPkJGsjGe++
-	wu94tkoZ7TY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 79DE467DB;
-	Mon, 27 Feb 2012 15:55:46 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 134D067DA; Mon, 27 Feb 2012
- 15:55:45 -0500 (EST)
-In-Reply-To: <1330125178-9194-1-git-send-email-tim.henigan@gmail.com> (Tim
- Henigan's message of "Fri, 24 Feb 2012 18:12:57 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6B8EE682-6185-11E1-8019-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754840Ab2B0VCk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Feb 2012 16:02:40 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:35869 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754615Ab2B0VCj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Feb 2012 16:02:39 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q1RL2VeL004695
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 27 Feb 2012 22:02:32 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.27) Gecko/20120216 Lightning/1.0b2 Thunderbird/3.1.19
+In-Reply-To: <7v62evykrq.fsf@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191670>
 
-Thanks; will apply both.
+On 02/24/2012 10:38 PM, Junio C Hamano wrote:
+> This is something I wanted to write (or see somebody write so that I can
+> use it ;-)) even before I became the maintainer of this project, as I
+> practically live inside GNUS, but never got around to go beyond the design
+> phase.
+> 
+> How do you handle message threading (References: and In-Reply-To:)?
+> 
+> Would a commit on the "mainline" (a rough approximation of it would be
+> "log --first-parent" starting from the tip) form the discussion starter
+> article, and any side branch that fork from them would be a discussion
+> thread starting at the commit?
+
+>From contrib/hooks/post-receive-email I've locally derived a Python
+version that sends one email message per commit.  It generates a thread
+of messages for each reference that was pushed, starting with a summary
+of how the reference was changed, and one followup email for each new
+commit added to that reference.  In a threaded mail reader, this groups
+all of the changes to a reference due to a particular push in a thread
+that can easily be expanded, collapsed, or deleted as a group.  I find
+this a convenient workflow.
+
+I believe that NNTP threading works much the same way as email
+threading, so probably the same style could be used there.  My script is
+still not published, though.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
