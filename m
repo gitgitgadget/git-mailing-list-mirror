@@ -1,119 +1,112 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git 1.7.8.5
-Date: Sun, 26 Feb 2012 18:51:12 -0800
-Message-ID: <7v399xc7kv.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v6 06/11] column: add column.ui for default column output
+ settings
+Date: Sun, 26 Feb 2012 22:20:32 -0800
+Message-ID: <7vvcmsbxvz.fsf@alter.siamese.dyndns.org>
+References: <1330170078-29353-1-git-send-email-pclouds@gmail.com>
+ <1330170078-29353-7-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 27 03:51:42 2012
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 27 07:20:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S1qgd-0003AE-Nx
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 03:51:40 +0100
+	id 1S1twx-0007OB-3i
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 07:20:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753569Ab2B0CvQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Feb 2012 21:51:16 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38157 "EHLO
+	id S1753977Ab2B0GUi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Feb 2012 01:20:38 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48115 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753417Ab2B0CvP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Feb 2012 21:51:15 -0500
+	id S1753454Ab2B0GUh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Feb 2012 01:20:37 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 502CE78FB;
-	Sun, 26 Feb 2012 21:51:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=vXBLo7Xs8EV48pyj+5uFVvnd0
-	OM=; b=KQv4VyhNcYkf9Wh7nL5mRzswmTO0jmz7w9l38i88whbNHpwqy1XdMYzAU
-	+C+8oeRNIPXva/m5MYJnLAj8bToXz1+z77BlrrpoVQaaoS1jgPTB3OUzyluC+XKs
-	zUatbFD3oOY/h1RkEvYPLxOlSfL/A/BHkOamNQiD7Zn+75Pi+4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=TnS8oE3+c/FVPE19yfw
-	gv4i0MPYbTgYIBcV0n0LGPltAIwOg4LPu64BzsZLUCEJcjgxogLD37zGrOTp5Xba
-	aY9LxEoWX1L1v2BKb4KjH+MihibKmXk6QiinY90hAxatfJS+XvyqipGLjtElCb2j
-	5U1f14Ta71FMI4M0MVCVAeak=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA9BB7A82;
+	Mon, 27 Feb 2012 01:20:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=4XN9y5FJ11je
+	WKkdTXFkvwFxUJw=; b=frwlxVCtXs+9WyopAQKFMh8zN4Akuwf750TajHiY7v4A
+	zOaTtJZOlR5F7dNI1CLp0vWUt33nS0SFBOABp3UOcx3mhpKL6jFJWtujCEAgih8B
+	6S9DgqNx1Ontpv50eR/WNULQ7Wws+7nZ6fQ37/zpu0WHQS2mC1+hxlX3Q1ZEAsQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=x3hpEG
+	AxCtOHFtVpIL3UAUa5Gwy+ZYcUIXkNC01PLm6WsvzOA/Yfe3/Ok7tZYPozr9jqJU
+	TAkaC56c2DayAg8eGsA7O1Sjk6QiRbw7HArP+i02H8QoNBLeK1qzL2hnUv7PupwZ
+	5BsbYSV+5oZ7+6FLNrkLyVKsaNiANf1XIJ8hk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 48D1C78FA;
-	Sun, 26 Feb 2012 21:51:14 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C17E97A81;
+	Mon, 27 Feb 2012 01:20:34 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BB4A878F9; Sun, 26 Feb 2012
- 21:51:13 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 444287A80; Mon, 27 Feb 2012
+ 01:20:34 -0500 (EST)
+In-Reply-To: <1330170078-29353-7-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sat, 25 Feb
+ 2012 18:41:13 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E96FFDAE-60ED-11E1-8408-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 28162A0C-610B-11E1-84F9-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191600>
 
-A maintenance release Git 1.7.8.5 is now available at the usual
-places.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-The release tarballs are found at:
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  Documentation/config.txt     |   26 ++++++++++++++++++++++++++
+>  Documentation/git-column.txt |    6 +++++-
+>  builtin/column.c             |   21 +++++++++++++++++++++
+>  column.c                     |   28 ++++++++++++++++++++++++++++
+>  column.h                     |    2 ++
+>  5 files changed, 82 insertions(+), 1 deletions(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index abeb82b..5216598 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -821,6 +821,32 @@ color.ui::
+>  	`never` if you prefer git commands not to use color unless enabled
+>  	explicitly with some other configuration or the `--color` option.
+> =20
+> +column.ui::
+> +	Specify whether supported commands should output in columns.
+> +	This variable consists of a list of tokens separated by spaces
+> +	or commas:
+> ++
+> +--
+> +`always`;;
+> +	always show in columns
+> +`never`;;
+> +	never show in columns
+> +`auto`;;
+> +	show in columns if the output is to the terminal
+> +`column`;;
+> +	fill columns before rows (default)
+> +`row`;;
+> +	fill rows before columns
+> +`dense`;;
+> +	make unequal size columns to utilize more space
+> +`nodense`;;
+> +	make equal size columns
+> +`color`;;
+> +	input contains ANSI escape sequence for coloring
+> +--
+> ++
+> +	This option defaults to 'never'.
 
-    http://code.google.com/p/git-core/downloads/list
+I tried comparing output from=20
 
-and their SHA-1 checksums are:
+    $ git help -a
+    $ git -c column.ui=3Drow help -a
 
-bb3d715437a4751f7de0c89156bf97dae7c6049a  git-1.7.8.5.tar.gz
-71cf25158ae3499e33327fa9469279771429f9f7  git-htmldocs-1.7.8.5.tar.gz
-ce327331973b6e100b6a69ab8f9c526690260e92  git-manpages-1.7.8.5.tar.gz
-
-Also the following public repositories all have a copy of the v1.7.8.5
-tag and the maint-1.7.8 branch that the tag points at:
-
-  url =3D git://repo.or.cz/alt-git.git
-  url =3D https://code.google.com/p/git-core/
-  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
-  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url =3D https://github.com/gitster/git
-
-Git v1.7.8.5 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
-
-=46ixes since v1.7.8.4
---------------------
-
- * Dependency on our thread-utils.h header file was missing for
-   objects that depend on it in the Makefile.
-
- * "git am" when fed an empty file did not correctly finish reading it
-   when it attempts to guess the input format.
-
- * "git grep -P" (when PCRE is enabled in the build) did not match the
-   beginning and the end of the line correctly with ^ and $.
-
- * "git rebase -m" tried to run "git notes copy" needlessly when
-   nothing was rewritten.
-
-Also contains minor fixes and documentation updates.
-
-----------------------------------------------------------------
-
-Changes since v1.7.8.4 are as follows:
-
-Andrew Wong (1):
-      rebase -m: only call "notes copy" when rewritten exists and is no=
-n-empty
-
-Dmitry V. Levin (1):
-      Makefile: add thread-utils.h to LIB_H
-
-Jeff King (1):
-      imap-send: remove dead code
-
-Jim Meyering (1):
-      am: don't infloop for an empty input file
-
-Junio C Hamano (2):
-      Git 1.7.6.6
-      Git 1.7.8.5
-
-Micha=C5=82 Kiedrowicz (1):
-      grep -P: Fix matching ^ and $
+but did not spot differences.  What am I doing wrong?
