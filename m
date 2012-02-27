@@ -1,131 +1,121 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 2/3] parse-options: allow positivation of options starting,
- with no-
-Date: Mon, 27 Feb 2012 18:56:03 +0100
-Message-ID: <4F4BC3B3.7080000@lsrfire.ath.cx>
-References: <4F49317A.3080809@lsrfire.ath.cx> <4F49332E.7070003@lsrfire.ath.cx> <7vy5rpcgrk.fsf@alter.siamese.dyndns.org> <87d390smpa.fsf@thomas.inf.ethz.ch> <7v8vjob3ff.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 05/11] show: use streaming interface for showing blobs
+Date: Mon, 27 Feb 2012 10:00:57 -0800
+Message-ID: <7vvcms9mw6.fsf@alter.siamese.dyndns.org>
+References: <1330329315-11407-1-git-send-email-pclouds@gmail.com>
+ <1330329315-11407-6-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
-	Bert Wesarg <bert.wesarg@googlemail.com>,
-	Geoffrey Irving <irving@naml.us>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Pierre Habouzit <madcoder@debian.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 27 18:56:22 2012
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 27 19:01:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S24o4-0000Bi-F5
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 18:56:16 +0100
+	id 1S24sl-0002f9-PL
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 19:01:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753985Ab2B0R4M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Feb 2012 12:56:12 -0500
-Received: from india601.server4you.de ([85.25.151.105]:38189 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753590Ab2B0R4L (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2012 12:56:11 -0500
-Received: from [192.168.2.105] (p579BEC29.dip.t-dialin.net [87.155.236.41])
-	by india601.server4you.de (Postfix) with ESMTPSA id 559952F804A;
-	Mon, 27 Feb 2012 18:56:09 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <7v8vjob3ff.fsf@alter.siamese.dyndns.org>
+	id S1754069Ab2B0SBC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Feb 2012 13:01:02 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37252 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753354Ab2B0SBA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Feb 2012 13:01:00 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B1CC672FF;
+	Mon, 27 Feb 2012 13:00:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=+mDvFrCyZxFd
+	ly6LW8Jxf+9qAbg=; b=BFclrmjEDO+ntFvzuh1SzZkBJ8M+CAJUWn8miQm8S5Cs
+	T9fKmf4PyWs9T1d2uJNq+CFScGcU34l3XWwAFtbjjIAmGN50Bp+p/AnG8JnR674r
+	OzKAq/6uEPxGgyeaH7loRk6pzV7i+rkhjCD/PlcY2ptF3RMHsUiXh6BrwpRhWgA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=dlFAJN
+	29iRsX7aqbMxTH+JqXfGAUVEjQ7mqFkZ8+lkM95nETouTVWN9tmPMVo0PKP78czn
+	RJ07NxslPhC3WB5I6ooZ7sWJ+9V/3Jhr8oZDOAkLaGbBVgOWy2ssQvxMzzLQQG/S
+	Cpbsv9lOGD0TIyvDvfSgaDMLlRtuRLEBpD47w=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A90A272FE;
+	Mon, 27 Feb 2012 13:00:59 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0818072FD; Mon, 27 Feb 2012
+ 13:00:58 -0500 (EST)
+In-Reply-To: <1330329315-11407-6-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 27 Feb
+ 2012 14:55:09 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 00D03548-616D-11E1-9060-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191639>
 
-Am 27.02.2012 18:18, schrieb Junio C Hamano:
-> Thomas Rast<trast@inf.ethz.ch>  writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  builtin/log.c    |    9 ++++++++-
+>  t/t1050-large.sh |    2 +-
+>  2 files changed, 9 insertions(+), 2 deletions(-)
 >
->> Junio C Hamano<gitster@pobox.com>  writes:
->>
->>> I would na=C3=AFvely expect that it would be sufficient to update a=
-n existing
->>> definition for "--no-frotz" that uses PARSE_OPT_NONEG to instead de=
-fine
->>> "--frotz" that by itself is a no-op, and "--no-frotz" would cause w=
-hatever
->>> the option currently means, with an update to the help text that sa=
-ys
->>> something to the effect that "--frotz by itself is meaningless and =
-is
->>> always used as --no-frotz".
->>
->> Doesn't that last quote already answer your question?
->
-> Yes, but only partly.  I would agree with the awkwardness in
->
->> It would be rather awkward to see, in 'git apply -h',
->>
->>    --add                 Also apply additions in the patch.  This is=
- the
->>                          default; use --no-add to disable it.
->
-> but it feeels somewhat questionable that the solution to get this:
->
->>
->> Compare to the current concise wording
->>
->>    --no-add              ignore additions made by the patch
->
-> is to define OPT_BOOL("no-add") that does not have any hint (other th=
-an
-> the fact that the option name begins with 3 character "no-") that thi=
-s is
-> an already negated boolean and the "no-" negation can be removed.
+> diff --git a/builtin/log.c b/builtin/log.c
+> index 7d1f6f8..4c4b17a 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -386,13 +386,20 @@ static int show_object(const unsigned char *sha=
+1, int show_tag_object,
+>  {
+>  	unsigned long size;
+>  	enum object_type type;
+> -	char *buf =3D read_sha1_file(sha1, &type, &size);
+> +	char *buf;
+>  	int offset =3D 0;
+> =20
+> +	if (!show_tag_object) {
+> +		fflush(stdout);
+> +		return streaming_write_sha1(1, 0, sha1, OBJ_ANY, NULL);
+> +	}
+> +
+> +	buf =3D read_sha1_file(sha1, &type, &size);
+>  	if (!buf)
+>  		return error(_("Could not read object %s"), sha1_to_hex(sha1));
+> =20
+>  	if (show_tag_object)
+> +		assert(type =3D=3D OBJ_TAG);
+>  		while (offset < size && buf[offset] !=3D '\n') {
+>  			int new_offset =3D offset + 1;
+>  			while (new_offset < size && buf[new_offset++] !=3D '\n')
 
-The parser already knows that the prefix "no-" negates an option.  It=20
-currenmtly only applies this knowledge if that prefix is added, but not=
-=20
-if it is removed, which is inconsistent.
+Yuck.
 
-> This means an option "no-$foo" can never mean anything but "not foo".=
-  Not
-> that we would have to or necessarily want to support an option to giv=
-e the
-> number of foo as --no-foo=3D47, as --num-foo=3D47 is a perfectly good=
- spelling
-> for such an option.
+The two callsites to this static function are to do BLOB to do TAG.  An=
+d
+after you start handing all the blob handling to streaming_write_sha1()=
+,
+there is no shared code between the two callers for this function.
 
-With the patch, you can define a --no-foo option that doesn't accept=20
---foo as its negation by specifying PARSE_OPT_NONEG.  That would also=20
-forbid --no-no-foo, though, but that's probably a good thing.
+So why not remove this function, create one show_blob_object() and the
+other show_tag_object(), and update the callers to call the appropriate
+one?
 
-> If it were OPT_BOOL("no-foo", OPT_ISNEG | ...) that signals the parse=
-r
-> that:
->
->   - the option name is already negative;
->   - the leading "no-" is to be removed to negate it; and
->   - no extra leading "no-", i.e. "--no-no-foo", is accepted.
->
-> I probably wouldn't have felt this uneasy iffiness.
-
-Teaching the parser to understand that removal of the prefix "no-"=20
-negates an option on top of its existing knowledge that adding it does=20
-the same just adds the other side of the same coin, which was curiously=
-=20
-missing.
-
-The patch does not forbid adding "no-" to an option that already starts=
-=20
-with "no-".  This stricter rule would be easy to add, but since that is=
-=20
-currently the only way to negate such options, it would break backwards=
-=20
-compatibility and thus should be added in a separate patch, if at all.
-
-With the patch, the following guidelines are followed:
-
-	- "no-" means no, for both developers and users.
-	- The user doesn't have to to say "no-no-".
-
-The results feels simpler to me.
-
-Ren=C3=A9
+> diff --git a/t/t1050-large.sh b/t/t1050-large.sh
+> index 39a3e77..66acb3b 100755
+> --- a/t/t1050-large.sh
+> +++ b/t/t1050-large.sh
+> @@ -118,7 +118,7 @@ test_expect_success 'cat-file a large file' '
+>  	git cat-file blob :large1 >/dev/null
+>  '
+> =20
+> -test_expect_failure 'git-show a large file' '
+> +test_expect_success 'git-show a large file' '
+>  	git show :large1 >/dev/null
+> =20
+>  '
