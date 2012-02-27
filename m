@@ -1,77 +1,106 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC/PATCH] Make git-{pull,rebase} no-tracking message friendlier
-Date: Mon, 27 Feb 2012 23:06:31 +0100
-Message-ID: <vpq399wc4ns.fsf@bauges.imag.fr>
-References: <1330013115-26355-1-git-send-email-cmn@elego.de>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH v6 02/11] Add git-column and column mode parsing
+Date: Mon, 27 Feb 2012 20:09:36 +0000
+Message-ID: <4F4BE300.2060302@ramsay1.demon.co.uk>
+References: <1330170078-29353-1-git-send-email-pclouds@gmail.com> <1330170078-29353-3-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Mon Feb 27 23:07:14 2012
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 27 23:08:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S28iv-0007e9-AI
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 23:07:13 +0100
+	id 1S28k9-0008L9-VW
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 23:08:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755748Ab2B0WHG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Feb 2012 17:07:06 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:36461 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754085Ab2B0WHF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2012 17:07:05 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q1RM2Tjh010453
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 27 Feb 2012 23:02:29 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1S28iG-0002wY-6O; Mon, 27 Feb 2012 23:06:32 +0100
-In-Reply-To: <1330013115-26355-1-git-send-email-cmn@elego.de> ("Carlos
- =?iso-8859-1?Q?Mart=EDn?=
-	Nieto"'s message of "Thu, 23 Feb 2012 17:05:15 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 27 Feb 2012 23:02:29 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q1RM2Tjh010453
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1330984954.48086@S1uW60eVCbuW2aMXtSB/Hg
+	id S1755779Ab2B0WIZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Feb 2012 17:08:25 -0500
+Received: from anchor-post-2.mail.demon.net ([195.173.77.133]:52546 "EHLO
+	anchor-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755404Ab2B0WIY (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Feb 2012 17:08:24 -0500
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-2.mail.demon.net with esmtp (Exim 4.69)
+	id 1S28k2-00015r-lJ; Mon, 27 Feb 2012 22:08:23 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <1330170078-29353-3-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191681>
 
-Carlos Mart=EDn Nieto <cmn@elego.de> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+[...]
+> +static int parse_option(const char *arg, int len,
+> +			unsigned int *mode, int stdout_is_tty)
+> +{
+> +	struct colopt opts[] =3D {
+> +		{ ENABLE, "always",  1 },
+> +		{ ENABLE, "never",   0 },
+> +		{ ENABLE, "auto",   -1 },
+> +	};
 
-> -		echo "You asked me to $cmd without telling me which branch you
-> -want to $op_type $op_prep, and 'branch.${branch_name#refs/heads/}.me=
-rge' in
-> -your configuration file does not tell me, either. Please
-> -specify which branch you want to use on the command line and
-> +		echo "You asked me to $cmd without telling me which branch you wan=
-t to
-> +$op_type $op_prep, and there is no tracking information for the curr=
-ent branch.
-> +Please specify which branch you want to use on the command line and
->  try again (e.g. '$example').
+Hmm, I don't recognise this table from last time ...
 
-At this point, it may be better to actually give the full command
-instead of just this "(e.g. '$example')", i.e. stg like
+> +	int i;
+> +
+> +	for (i =3D 0; i < ARRAY_SIZE(opts); i++) {
+> +		int set =3D 1, arg_len =3D len, name_len;
 
-  git $op_type <remote> $example
+set is initialised here (mainly to silence the compiler) in each
+loop, but then ...
 
-I also saw users confused by the message (indeed without reading it,
-but ...). Giving them something as close as possible to
-cut-and-paste-able command should help.
+> +		const char *arg_str =3D arg;
+> +
+> +		if (opts[i].type =3D=3D OPTION) {
+> +			if (arg_len > 2 && !strncmp(arg_str, "no", 2)) {
+> +				arg_str +=3D 2;
+> +				arg_len -=3D 2;
+> +				set =3D 0;
+> +			} else {
+> +				set =3D 1;
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+=2E.. this else clause is no longer required.
+
+> +			}
+> +		}
+> +
+> +		name_len =3D strlen(opts[i].name);
+> +		if (arg_len !=3D name_len ||
+> +		    strncmp(arg_str, opts[i].name, name_len))
+> +			continue;
+> +
+> +		switch (opts[i].type) {
+> +		case ENABLE:
+> +			return set_enable_bit(mode, opts[i].value,
+> +					      stdout_is_tty);
+
+given the above table, can the following case limbs ever be reached?
+(the "no" prefix is only applied to the OPTION type, so most of the
+above code seems to be useless now ...)
+
+> +		case MODE:
+> +			return set_mode(mode, opts[i].value);
+> +		case OPTION:
+> +			return set_option(mode, opts[i].value, set);
+> +		default:
+> +			die("BUG: Unknown option type %d", opts[i].type);
+> +		}
+> +	}
+> +
+> +	return error("unsupported style '%s'", arg);
+> +}
+> +
+[...]
+
+Note, I only skimmed the patch text, I haven't applied it or tested it =
+=2E..
+
+ATB,
+Ramsay Jones
