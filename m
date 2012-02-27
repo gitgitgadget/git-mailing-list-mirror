@@ -1,79 +1,87 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH] fsck: do not print dangling objects by default
-Date: Mon, 27 Feb 2012 22:13:16 +0100
-Message-ID: <20120227211316.GA29081@ecki>
-References: <20120226204357.GA26088@ecki>
- <7vty2ddzqj.fsf@alter.siamese.dyndns.org>
- <7vhayddxgp.fsf@alter.siamese.dyndns.org>
- <20120227191846.GB1600@sigill.intra.peff.net>
- <7vr4xg6pn2.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-subtree Ready #2
+Date: Mon, 27 Feb 2012 16:21:57 -0500
+Message-ID: <20120227212157.GA19779@sigill.intra.peff.net>
+References: <87ty2ro1zf.fsf@smith.obbligato.org>
+ <20120220205346.GA6335@sigill.intra.peff.net>
+ <7vd399jdwc.fsf@alter.siamese.dyndns.org>
+ <CAHqTa-2s1xbAfNvjD7cXBe2TBMs1985nag1NOYVfE+dATvfEWA@mail.gmail.com>
+ <7vobsox84l.fsf@alter.siamese.dyndns.org>
+ <CAHqTa-1fbi5W7R2fLu3bp7Yuv_ZB9nxhgjHkLGuU8-V4016+JA@mail.gmail.com>
+ <87hayfv75y.fsf@smith.obbligato.org>
+ <7vy5rrfft2.fsf@alter.siamese.dyndns.org>
+ <87ty2ft0tm.fsf@smith.obbligato.org>
+ <7vobsk56md.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: "David A. Greene" <greened@obbligato.org>,
+	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 27 22:21:59 2012
+X-From: git-owner@vger.kernel.org Mon Feb 27 22:22:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S280z-00074Y-Bl
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 22:21:49 +0100
+	id 1S281a-0007a6-8j
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 22:22:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755241Ab2B0VVn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Feb 2012 16:21:43 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:31277 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754565Ab2B0VVl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2012 16:21:41 -0500
-Received: from localhost (p5B22E80B.dip.t-dialin.net [91.34.232.11])
-	by bsmtp.bon.at (Postfix) with ESMTP id 6C610A7EB9;
-	Mon, 27 Feb 2012 22:22:26 +0100 (CET)
+	id S1755351Ab2B0VWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Feb 2012 16:22:00 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59046
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755339Ab2B0VV7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Feb 2012 16:21:59 -0500
+Received: (qmail 32382 invoked by uid 107); 27 Feb 2012 21:22:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 27 Feb 2012 16:22:02 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Feb 2012 16:21:57 -0500
 Content-Disposition: inline
-In-Reply-To: <7vr4xg6pn2.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <7vobsk56md.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191674>
 
-On Mon, Feb 27, 2012 at 11:29:53AM -0800, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
-> >> Given that, isn't it not just sufficient but actually better to instead
-> >> add a new --no-dangling option and keep the default unchanged?
+On Mon, Feb 27, 2012 at 01:06:02PM -0800, Junio C Hamano wrote:
+
+> >>> I'm happy to do either (rebase or filter-branch).  Just let me know.
+> >>
+> >> I would understand Avery's "should we filter-branch/rebase, or is it OK
+> >> as-is?", but I do not understand what you mean by "either rebase or
+> >> filter-branch is fine".
 > >
-> > ... Of course, it is fsck, so I wonder how often clueless people are
-> > really running it in the first place (i.e., it is not and should not be
-> > part of most users' typical workflows). If it is simply the case that
-> > they are being told to run "git fsck" by more expert users without
-> > understanding what it does, then I could buy the argument that those
-> > expert users could just as easily say "git fsck --no-dangling".
+> > Sorry, got mixed up there.  I'm not that familiar with filter-branch.
+> > Now I understand you do both.  :)
+> >
+> > So have we decided to keep the history?
 > 
-> Yes, that was certainly part of my pros-and-cons analysis.  If you run
-> "git fsck" without "--no-dangling" without reading the manual, you may
-> get confused, but that is *not* the primary audience.
+> I think the discussion so far was:
+> 
+>  - Peff suggested to keep the history with a true merge;
+> 
+>  - I said the history before the final commit in Avery's tree did not look
+>    so useful for future archaeology; and then
+> 
+>  - Avery corrected me that there are contributions by other people and the
+>    credits will be lost if we discarded the history;
+> 
+> and everybody (including me) now favors to have the history.
+> 
+> So the answer to your question is yes, but I do not think we heard opinion
+> from anybody regarding the question by Avery yet.  I personally do not see
+> how it would help us if the old history is rewritten at this point.
 
-It is not my only concern that users might be confused. I believe the
-command prints a lot of useless messages, which is by itself a UI
-deficiency. But even worse, those numerous messages tend to hide an
-actual problem in a long scrollback buffer. Sometimes my scrollback
-buffer is not even large enough and I have to re-run fsck (which is not
-exactly a fast command), just so I can grep out the dangling blobs.
+Yeah, I don't see much point in rewriting. If parts of the history suck,
+then so be it.  It's probably not that big to store. And while it's
+sometimes easier to fix bad commit messages when they are recent and in
+your memory (rather than trying to remember later what you meant to
+say), I think it is already too late for that. Any archaeology you do
+now to make good commit messages could probably just as easily be done
+if and when somebody actually needs the commit message later (emphasis
+on the "if" -- it's likely that nobody will care about most of the
+commit messages later at all).
 
-> People who are curious can read the manual and figure it out, and the
-> need for "fsck" is much rarer these days, compared to 2005 ;-)
-
-In my opinion, the need for fsck is much more common these days. With
-the alternates feature, it happens all the time that a repository breaks
-if one is not extremely careful.
-
-> In that context, only large downsides of potentially breaking and having
-> to adjust existing scripts remains without much upsides, if we were to
-> switch the default.
-
-There is something wrong with weighting a UI improvement against
-convenient use in scripts. If that were the issue, then we should add a
-plumbing version for all commands, like we do for git status
---porcelain. Otherwise we can never change anything any more.
+-Peff
