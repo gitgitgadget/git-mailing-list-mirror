@@ -1,103 +1,93 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: sha-1 check in rev-list --verify-objects redundant?
-Date: Mon, 27 Feb 2012 20:01:41 +0700
-Message-ID: <20120227130141.GA8980@do>
-References: <CACsJy8D_BdV14dGc2YsK91FrX8S=70DJOY3cU=oH3y41N2Ar0w@mail.gmail.com>
- <7vk43af14m.fsf@alter.siamese.dyndns.org>
- <CACsJy8BUeedTZSq_ay=JmqUt3wrnm6n1eOcFt0WPkEo2B-1zwA@mail.gmail.com>
+From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>
+Subject: [PATCH] branch: don't assume the merge filter ref exists
+Date: Mon, 27 Feb 2012 16:11:53 +0100
+Message-ID: <1330355513-22351-1-git-send-email-cmn@elego.de>
+References: <20120227122609.GA26981@mx.loc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 27 14:03:08 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Bernhard Reutner-Fischer <rep.dot.nop@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 27 16:11:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S20EO-0006yc-Eb
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 14:03:08 +0100
+	id 1S22Ec-000489-4K
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 16:11:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752198Ab2B0NCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Feb 2012 08:02:36 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:53998 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751886Ab2B0NCf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2012 08:02:35 -0500
-Received: by daed14 with SMTP id d14so1086425dae.19
-        for <git@vger.kernel.org>; Mon, 27 Feb 2012 05:02:35 -0800 (PST)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.68.213.73 as permitted sender) client-ip=10.68.213.73;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.68.213.73 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
-Received: from mr.google.com ([10.68.213.73])
-        by 10.68.213.73 with SMTP id nq9mr31131291pbc.17.1330347755525 (num_hops = 1);
-        Mon, 27 Feb 2012 05:02:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=PkFAI3j+LDpW38kpdRYJnn+pgLmEfkngz/cCDUN36gM=;
-        b=FFsHm+4UIuMROVdgHT7056oCKcp/6Z33fry6qj4TFd4+YvsLECzUuDs1UOmm6V5SZq
-         q5UZvBtR8M14OOoMG6UwtUBqlvZ2XI8dB2j+/St7S0MCmIbBmisXAXOBCgX0HHC6kN/U
-         lW+ibMwsinI09dYEcNB12JwsUscW1YHMCkCw0=
-Received: by 10.68.213.73 with SMTP id nq9mr26689527pbc.17.1330347755054;
-        Mon, 27 Feb 2012 05:02:35 -0800 (PST)
-Received: from pclouds@gmail.com ([115.74.56.186])
-        by mx.google.com with ESMTPS id s1sm12678275pbs.21.2012.02.27.05.02.30
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 27 Feb 2012 05:02:33 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 27 Feb 2012 20:01:41 +0700
-Content-Disposition: inline
-In-Reply-To: <CACsJy8BUeedTZSq_ay=JmqUt3wrnm6n1eOcFt0WPkEo2B-1zwA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753134Ab2B0PLY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Feb 2012 10:11:24 -0500
+Received: from kimmy.cmartin.tk ([91.121.65.165]:38767 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753053Ab2B0PLY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Feb 2012 10:11:24 -0500
+Received: from centaur.lab.cmartin.tk (brln-4db9ac75.pool.mediaWays.net [77.185.172.117])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id 98EB846057;
+	Mon, 27 Feb 2012 16:11:17 +0100 (CET)
+Received: (nullmailer pid 22385 invoked by uid 1000);
+	Mon, 27 Feb 2012 15:11:53 -0000
+X-Mailer: git-send-email 1.7.9.rc0
+In-Reply-To: <20120227122609.GA26981@mx.loc>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191624>
 
-On Sun, Feb 26, 2012 at 06:11:30PM +0700, Nguyen Thai Ngoc Duy wrote:
-> "rev-list --objects" does check for blob existence, in finish_object().
+print_ref_list looks up the merge_filter_ref and assumes that a valid
+pointer is returned. When the object doesn't exist, it tries to
+dereference a NULL pointer. This can be the case when git branch
+--merged is given an argument that isn't a valid commit name.
 
-Eck.. I think "--quiet --verify-objects" becomes "--quiet --objects"
-because of this code:
+Check whether the lookup returns a NULL pointer and die with an error
+if it does. Add a test, while we're at it.
 
--- 8< --
-	traverse_commit_list(&revs,
-			     quiet ? finish_commit : show_commit,
-			     quiet ? finish_object : show_object,
-			     &info);
--- 8< --
+Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+---
 
-Unless that's intentional, shouldn't we apply this patch? --quiet's
-interfering with rev-list's business sounds weird to me.
+It certainly looks like --merged was only ever supposed to be used
+with branch names, as it assumed that get_sha1() would catch the
+errors.
 
--- 8< --
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 264e3ae..95fb605 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -172,19 +172,18 @@ static void finish_object(struct object *obj,
- 			  const struct name_path *path, const char *name,
- 			  void *cb_data)
- {
-+	struct rev_list_info *info = cb_data;
- 	if (obj->type == OBJ_BLOB && !has_sha1_file(obj->sha1))
- 		die("missing blob object '%s'", sha1_to_hex(obj->sha1));
-+	if (info->revs->verify_objects && !obj->parsed && obj->type != OBJ_COMMIT)
-+		parse_object(obj->sha1);
- }
- 
- static void show_object(struct object *obj,
- 			const struct name_path *path, const char *component,
- 			void *cb_data)
- {
--	struct rev_list_info *info = cb_data;
--
- 	finish_object(obj, path, component, cb_data);
--	if (info->revs->verify_objects && !obj->parsed && obj->type != OBJ_COMMIT)
--		parse_object(obj->sha1);
- 	show_object_with_name(stdout, obj, path, component);
- } 
--- 8< --
--- 
-Duy
+I'm not sure if "bad object" or "invalid object" fits better. "bad
+object" might have a stronger implication that it exists but is
+corrupt.
+
+ builtin/branch.c  |    3 +++
+ t/t3200-branch.sh |    4 ++++
+ 2 files changed, 7 insertions(+), 0 deletions(-)
+
+diff --git a/builtin/branch.c b/builtin/branch.c
+index cb17bc3..b63d5fe 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -530,6 +530,9 @@ static int print_ref_list(int kinds, int detached, =
+int verbose, int abbrev, stru
+ 	if (merge_filter !=3D NO_FILTER) {
+ 		struct commit *filter;
+ 		filter =3D lookup_commit_reference_gently(merge_filter_ref, 0);
++		if (!filter)
++			die("bad object %s", sha1_to_hex(merge_filter_ref));
++
+ 		filter->object.flags |=3D UNINTERESTING;
+ 		add_pending_object(&ref_list.revs,
+ 				   (struct object *) filter, "");
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index dd1aceb..9fe1d8f 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -653,4 +653,8 @@ test_expect_success 'refuse --edit-description on u=
+nborn branch for now' '
+ 	)
+ '
+=20
++test_expect_success '--merged catches invalid object names' '
++	test_must_fail git branch --merged 0000000000000000000000000000000000=
+000000
++'
++
+ test_done
+--=20
+1.7.9.rc0
