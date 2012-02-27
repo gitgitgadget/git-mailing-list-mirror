@@ -1,60 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-cherries
-Date: Mon, 27 Feb 2012 14:27:46 -0500
-Message-ID: <20120227192746.GC1600@sigill.intra.peff.net>
-References: <874nucee98.fsf@gnuvola.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fsck: do not print dangling objects by default
+Date: Mon, 27 Feb 2012 11:29:53 -0800
+Message-ID: <7vr4xg6pn2.fsf@alter.siamese.dyndns.org>
+References: <20120226204357.GA26088@ecki>
+ <7vty2ddzqj.fsf@alter.siamese.dyndns.org>
+ <7vhayddxgp.fsf@alter.siamese.dyndns.org>
+ <20120227191846.GB1600@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Thien-Thi Nguyen <ttn@gnuvola.org>
-X-From: git-owner@vger.kernel.org Mon Feb 27 20:27:53 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 27 20:30:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S26Ej-0008MW-EL
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 20:27:53 +0100
+	id 1S26Gm-00012f-MX
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 20:30:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752936Ab2B0T1t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Feb 2012 14:27:49 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58941
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751738Ab2B0T1s (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2012 14:27:48 -0500
-Received: (qmail 29667 invoked by uid 107); 27 Feb 2012 19:27:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 27 Feb 2012 14:27:51 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Feb 2012 14:27:46 -0500
-Content-Disposition: inline
-In-Reply-To: <874nucee98.fsf@gnuvola.org>
+	id S1754084Ab2B0T35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Feb 2012 14:29:57 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48788 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753996Ab2B0T34 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Feb 2012 14:29:56 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A92B6E83;
+	Mon, 27 Feb 2012 14:29:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=orkaUlpVEbHIVQ/nvp2UmopWcuk=; b=kZsYOb
+	gSMsLjNjAE7XDaEpk+6p8BTjmdA5LsIE32vInSwFrrSHRrRXkxM86x34eWIPkpoY
+	UPm/wJzPtvMmoAyy8Kzq5wUpljYb3qmU0uwB0LPc/7i5zQgzPJW/nRFR8cAjV1zC
+	OteczeLxQkSXBVzddqQxxhPmDG4U76NsrQNXc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DupgFZH3j3VAWWaPW+6r8/Z1gCa+uKs2
+	3h8WHw0GLvl7JkzFmySbibFzGmDj+ywcx/w0Agp4IIst8rajsUpRR4FRxEs0rgU/
+	z9TawY5RokHLNLDKTZk3uJjEvT604VzDeduC17mstWJ5nhf5syBRtkj1botq//7s
+	UL83iqWarsk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 707206E82;
+	Mon, 27 Feb 2012 14:29:55 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CAE1A6E7D; Mon, 27 Feb 2012
+ 14:29:54 -0500 (EST)
+In-Reply-To: <20120227191846.GB1600@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 27 Feb 2012 14:18:46 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6D2CE48C-6179-11E1-9482-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191656>
 
-On Mon, Feb 27, 2012 at 11:56:19AM +0100, Thien-Thi Nguyen wrote:
+Jeff King <peff@peff.net> writes:
 
-> For my personal use, i wrote git-cherries, attached.
-> It commits each hunk of every modified file separately
-> (creating cherries to cherry-pick later, you see).
-> 
-> I am writing to ask if this is already in Git somewhere,
-> and if not, for tips on how to make it faster / more elegant.
+>> Given that, isn't it not just sufficient but actually better to instead
+>> add a new --no-dangling option and keep the default unchanged?
+>
+> ... Of course, it is fsck, so I wonder how often clueless people are
+> really running it in the first place (i.e., it is not and should not be
+> part of most users' typical workflows). If it is simply the case that
+> they are being told to run "git fsck" by more expert users without
+> understanding what it does, then I could buy the argument that those
+> expert users could just as easily say "git fsck --no-dangling".
 
-So if I understand correctly, this just creates a series of commits, one
-per hunk, of what's in your working tree. And the commit messages won't
-be useful, so this is really about recording the work somewhere so that
-you can pick it out later using "git cherry-pick --no-commit", make a
-real commit from some subset of the cherries, and then throw away the
-cherries?
+Yes, that was certainly part of my pros-and-cons analysis.  If you run
+"git fsck" without "--no-dangling" without reading the manual, you may
+get confused, but that is *not* the primary audience.  People who are
+curious can read the manual and figure it out, and the need for "fsck" is
+much rarer these days, compared to 2005 ;-)
 
-I think you could do this more simply by putting everything in a single
-throw-away commit, then using "git checkout -p $throwaway" to pick the
-individual cherries from the single commit. You don't grab the commit
-message from $throwaway as you might with cherry-pick, but by definition
-it's not a very good commit message anyway.
-
--Peff
+In that context, only large downsides of potentially breaking and having
+to adjust existing scripts remains without much upsides, if we were to
+switch the default.
