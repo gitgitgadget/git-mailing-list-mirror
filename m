@@ -1,72 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] grep -P: add tests for matching ^ and $
-Date: Mon, 27 Feb 2012 12:21:22 -0800
-Message-ID: <7v4nuc6n99.fsf@alter.siamese.dyndns.org>
-References: <7vlinpdxsu.fsf@alter.siamese.dyndns.org>
- <1330361149-26741-1-git-send-email-zbyszek@in.waw.pl>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Bug: post-receive-email sometimes misses commits
+Date: Mon, 27 Feb 2012 21:39:37 +0100
+Message-ID: <4F4BEA09.90600@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com, michal.kiedrowicz@gmail.com
-To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Mon Feb 27 21:21:39 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Andy Parkins <andyparkins@gmail.com>
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 27 21:39:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S274c-00064V-Kd
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 21:21:30 +0100
+	id 1S27MR-0000D1-KD
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 21:39:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754251Ab2B0UVZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Feb 2012 15:21:25 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39965 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754134Ab2B0UVY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Feb 2012 15:21:24 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 48B657D7D;
-	Mon, 27 Feb 2012 15:21:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=iOuQguZ1Wv0I
-	8uYzrhDAJNz03es=; b=wgaZvRXc3yWKvHPlt8XhU6QMym5FJzWqMj9KNjXl4nea
-	mruk1E9NagWGHCK9roZFFVBzzNQEYkLH74gkL3ADn6Zn9ztu1QCMjBuwh5H1fJrK
-	66MULY2uJw6/U5RWo0igiM142ZHYCCDesTZrIy/szPycOFwnIFfpb77N/sZ5qFo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=xKGGC0
-	XFzeQCN3+AM4AlZqKhUGV3T7Vp6R2fUjhJ+9EcBx9cK8K8VTPNlUEk3cxxhiMLR1
-	jM03TTZMrqX81z4bTAqEmcVlggqueNpD8mLmL9OENP7ZFVIp/W+TBlefWkBSDRB0
-	FmJPbRuzZxUx/+CPnT++hWrMKYOja2uc/OsIo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3FE837D7B;
-	Mon, 27 Feb 2012 15:21:24 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C86087D7A; Mon, 27 Feb 2012
- 15:21:23 -0500 (EST)
-In-Reply-To: <1330361149-26741-1-git-send-email-zbyszek@in.waw.pl> ("Zbigniew
- =?utf-8?Q?J=C4=99drzejewski-Szmek=22's?= message of "Mon, 27 Feb 2012
- 17:45:49 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9E5B5032-6180-11E1-A7F7-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754605Ab2B0Ujv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Feb 2012 15:39:51 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:35607 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754343Ab2B0Uju (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Feb 2012 15:39:50 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q1RKdcW7029034
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 27 Feb 2012 21:39:48 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.27) Gecko/20120216 Lightning/1.0b2 Thunderbird/3.1.19
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191666>
 
-Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
+In the following scenario, suppose that commit X is already in the
+repository (referenced by master), and I push references A and B at the
+same time:
 
-> From: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
->
-> When a fix for matching ^ and $ with -P was commited to master in
-> fba4f1 (grep -P: Fix matching ^ and $), the tests were missing the
-> LIBPCRE prerequisite check and were dropped from the patch. Here are
-> the tests guarded with LIBPCRE.
 
-Thanks.
+       -- master
+     /
+o---X---*'--*'--*   A
+             \
+              *---*   B
 
-The real reason I separated it was because I didn't want to worry about
-the test part when merging this down to older maintenance releases.
+The commits marked with "*" are new to the repository, and therefore the
+emails generated by post-receive-email should summarize all five of
+them.  But in fact the commits marked with a prime (i.e., A^ and A^^)
+are NOT included in any email.
+
+The problem is that post-receive-email operates on one reference update
+at a time, *after* the references have been updated.  It generates the
+"new" commits for A using the equivalent of
+
+    git rev-list ^master ^B A
+
+and it generates the "new" commits for B using the equivalent of
+
+    git rev-list ^master ^B A
+
+Neither of these ranges includes the commits common to branches A and B
+and therefore those commits do not appear in any of the email notifications.
+
+I first observed this problem in a slightly more complicated scenario
+where a bugfix branch was merged to two release branches, then the two
+release branches (but not the bugfix reference) were pushed:
+
+          o---o-------* release-A
+         /           /
+o---o---o---*'--*'--*' bugfix
+         \           \
+          o---o-------* release-B
+
+In this case only the merge commits were included in the commit emails;
+the bugfixes commits themselves were never mentioned.
+
+It seems like this problem can only be fixed by having
+post-receive-email process all of the reference updates at once so that
+the email generation for one reference update can take into account the
+other references that were updated at the same time.
+
+I don't plan to work on this problem; locally, we are using a Python
+script that was derived from post-receive-email and enhanced in several
+ways rather than using the Shell-script original.  So when I have fixed
+our Python script my own itch will have been scratched.  If there is
+interest in the Python email-notification script please let me know and
+there is a chance I might clean it up enough to be released.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
