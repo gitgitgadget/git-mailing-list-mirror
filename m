@@ -1,72 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 00/11] Column display
-Date: Sun, 26 Feb 2012 17:37:52 -0800
-Message-ID: <7v8vjpcaz3.fsf@alter.siamese.dyndns.org>
-References: <1330170078-29353-1-git-send-email-pclouds@gmail.com>
- <7vaa45dwq7.fsf@alter.siamese.dyndns.org>
- <CACsJy8AyZcNSPEY8S0WczVu0ychGKr61BoBm0iy39ZsVM=zHpA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 27 02:37:59 2012
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCHv3 0/4] gitweb: Match highlighting in project search
+Date: Mon, 27 Feb 2012 02:55:18 +0100
+Message-ID: <1330307722-25351-1-git-send-email-jnareb@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 27 02:56:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S1pXL-00010H-IT
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 02:37:59 +0100
+	id 1S1por-0007pJ-RT
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 02:56:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753369Ab2B0Bhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Feb 2012 20:37:55 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45180 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753336Ab2B0Bhy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Feb 2012 20:37:54 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 303EF6C3A;
-	Sun, 26 Feb 2012 20:37:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3HHEX0YIuZqip0xvhyHhPSOKVjc=; b=Ov53jj
-	CBQchMlLro7O0pDNMbkPQvFb1i6iCbapCUDCJ9I3IjwwW3vEV4xsIMkDN9Ljf2kE
-	s4vRvyaWxVOS4lDrcWlwmE2Kpnk+8SK/W1UhcRfupcG5m32540ypNMnZXXyWP6CJ
-	A++aaWyj8ksdo564XFekZs1Kx8d53yN8ZQn1I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ObPgtZ4Vs0bwoQ1TaS5Yt5IASqzzlVwP
-	OeL+COwLdmfL4hCyqKDpTvpayoDJZzWB5QI4+akLnCylYWgVXGGw2BWIVJBRrbyG
-	V6hDsQM1DsGkH/knhxj0hp2uac/enb/wKpUHqGeinBwtrrx0310RflF1dI522flB
-	/BUqH4zKkJc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 28ACC6C39;
-	Sun, 26 Feb 2012 20:37:54 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B47A76C38; Sun, 26 Feb 2012
- 20:37:53 -0500 (EST)
-In-Reply-To: <CACsJy8AyZcNSPEY8S0WczVu0ychGKr61BoBm0iy39ZsVM=zHpA@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Mon, 27 Feb 2012 07:40:03 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AAD119AC-60E3-11E1-835E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753462Ab2B0Bze (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Feb 2012 20:55:34 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:63081 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753305Ab2B0Bzd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Feb 2012 20:55:33 -0500
+Received: by eaah12 with SMTP id h12so2006941eaa.19
+        for <git@vger.kernel.org>; Sun, 26 Feb 2012 17:55:32 -0800 (PST)
+Received-SPF: pass (google.com: domain of jnareb@gmail.com designates 10.14.28.134 as permitted sender) client-ip=10.14.28.134;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of jnareb@gmail.com designates 10.14.28.134 as permitted sender) smtp.mail=jnareb@gmail.com; dkim=pass header.i=jnareb@gmail.com
+Received: from mr.google.com ([10.14.28.134])
+        by 10.14.28.134 with SMTP id g6mr6977241eea.15.1330307732463 (num_hops = 1);
+        Sun, 26 Feb 2012 17:55:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=Lrxy7ZfH7ndbmYw138Uc8eNzCsnG/uyX6sQe9S3Xim0=;
+        b=nt1Rqcql1w6dw9k3BuoG/s+efiaVuw+QOFoBc+bscP09BjXA93uq8iYsu/zcdBHz0k
+         jTJ3aXGEtgN4ZI4go8h6SSY+kedyZN90w/eklSGVU5Zex4xl0YZGzn6JXeR9XVFXRoAe
+         /XqahlznTKqi0VEHOyUGjxk2Xdkzg48CfJwQs=
+Received: by 10.14.28.134 with SMTP id g6mr5208673eea.15.1330307732328;
+        Sun, 26 Feb 2012 17:55:32 -0800 (PST)
+Received: from localhost.localdomain (abvv154.neoplus.adsl.tpnet.pl. [83.8.219.154])
+        by mx.google.com with ESMTPS id n17sm52112996eei.3.2012.02.26.17.55.31
+        (version=SSLv3 cipher=OTHER);
+        Sun, 26 Feb 2012 17:55:31 -0800 (PST)
+X-Mailer: git-send-email 1.7.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191594>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+These patches are separated from second part of previous version of
+this series
 
-> It used to be test-column. But we would need an external program to
-> pipe through to minimize changing display code, especially when
-> display code can get complicated (e.g. git-tag for example).
+  "[PATCHv2 0/8] gitweb: Faster and improved project search"
+  http://thread.gmane.org/gmane.comp.version-control.git/190852
 
-Hrm, I was hoping that we don't have to resort to a hacky implementation
-like that; upload-pack/receive-pack that are not run directly by the end
-users but having to be somewhere in path were bad enough, but they were
-very much about git.
+It is meant to replace 'jn/gitweb-hilite-regions' in pu.
 
-But at least with your series, "git column" is as invisible as git-sh-setup
-and git-stripspace by being marked as purehelpers, so your patch may be
-the best we could do.  I dunno.
+This series adds highlighting of matching string to project search.
+The per-project 'commit' and 'grep' search already implement match
+highlighting.  Additional goal is to provide beginnings of match
+highlighting framework, to be used thorough gitweb, reducing code
+duplication and unifying handling of match highlighting, improving
+it.
+
+The implementation of match highlighting in this series can highlight
+correctly multiple matches in single line, as opposed to hand-rolled
+code for highlighting in 'grep' and 'commit' search types for 'search'
+action.
+
+
+Previous version of this series had as a last patch proof-of-concept
+of using match highlighting infrastructure for per-project search,
+namely 'grep' search:
+
+  gitweb: Use esc_html_match_hl() in 'grep' search
+  http://thread.gmane.org/gmane.comp.version-control.git/190852/focus=190860
+
+This version does not include it, among others because of question
+on how to implement -nbsp=>1 version of match highlighting (see first
+patch in series for comments).  It would be as a separate patch series.
+
+
+Jakub Narebski (4):
+  gitweb: Introduce esc_html_match_hl and esc_html_hl_regions
+  gitweb: Highlight matched part of project name when searching
+    projects
+  gitweb: Highlight matched part of project description when searching
+    projects
+  gitweb: Highlight matched part of shortened project description
+
+ gitweb/gitweb.perl |   95 ++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 92 insertions(+), 3 deletions(-)
+
+-- 
+1.7.9
