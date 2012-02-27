@@ -1,96 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 02/11] Factor out and export large blob writing code to
- arbitrary file handle
-Date: Mon, 27 Feb 2012 09:29:10 -0800
-Message-ID: <7v4nucb2xl.fsf@alter.siamese.dyndns.org>
-References: <1330329315-11407-1-git-send-email-pclouds@gmail.com>
- <1330329315-11407-3-git-send-email-pclouds@gmail.com>
+From: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+Subject: [PATCH] git-p4: missing she-bang line in t9804 confuses prove
+Date: Mon, 27 Feb 2012 18:40:14 +0100
+Message-ID: <1330364414-29332-1-git-send-email-zbyszek@in.waw.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 27 18:29:19 2012
+Cc: luke@diamand.org,
+	=?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Feb 27 18:40:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S24Ny-0000X0-WA
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 18:29:19 +0100
+	id 1S24Yr-0007aw-JE
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 18:40:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753561Ab2B0R3N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Feb 2012 12:29:13 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54013 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753004Ab2B0R3N convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Feb 2012 12:29:13 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7FA6368D4;
-	Mon, 27 Feb 2012 12:29:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=0bi/uFrzUaZr
-	ytm9wpfDatm+lCw=; b=XInk4FCIk2IUmGjm4fbXTTwJ7WLMoy+wKvDEjTLlyH39
-	BPFVZiFUj6wT+2ObeqSEZVQ2L8fNvOEACj2Tkye1tkEtKKjJdfaHxv7zXsKREpGN
-	yupTXIR3aJr99a0eslNC42/lhHiIXZCpUpbRUrrBcrv8Y+dhSDeenefsS3As7KU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=dAju1r
-	CMJsysCVLPDet+85Yyqg5yrpAs9iiL0CyiYgLcuimx93AFsjvI4gqiKbt3Xmg+F9
-	eD0c4bCRDTu7jbkDSdGcriRaWjJADfyxSmSMMLe/Dsnb2hqwk6t/Fk7if+sl06J6
-	HAPM3hwRZY+6GNgzNTun6cxEA3qJzFm4OBZiY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 787FD68D3;
-	Mon, 27 Feb 2012 12:29:12 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D21B868D2; Mon, 27 Feb 2012
- 12:29:11 -0500 (EST)
-In-Reply-To: <1330329315-11407-3-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 27 Feb
- 2012 14:55:06 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9007381A-6168-11E1-9E97-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753690Ab2B0Rk3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Feb 2012 12:40:29 -0500
+Received: from kawka.in.waw.pl ([178.63.212.103]:55269 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753519Ab2B0Rk2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Feb 2012 12:40:28 -0500
+Received: from optyk25.fuw.edu.pl ([193.0.81.79] helo=ameba.fuw.edu.pl)
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1S24Yk-0007jI-Sb; Mon, 27 Feb 2012 18:40:27 +0100
+X-Mailer: git-send-email 1.7.9.2.396.ga883d.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191633>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Without the magic line, prove shows lots and lots of errors:
+% prove ./t9804-git-p4-label.sh
+=2E/t9804-git-p4-label.sh .. syntax error at ./t9804-git-p4-label.sh li=
+ne 3, near ". ."
+=2E..
 
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  cache.h |    3 +++
->  entry.c |   39 ++++++++++++++++++++++++++-------------
->  2 files changed, 29 insertions(+), 13 deletions(-)
+When #!/bin/sh is added, tests are skipped (I have no p4d).
 
-It was the goal of the original streaming output topic to helping more
-callers stream the data out directly from the object store in order to
-reduce memory pressure, and this series is very much in line with its
-spirit.
+Signed-off-by: Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl>
+---
+ t/t9804-git-p4-label.sh |    2 ++
+ 1 file changed, 2 insertions(+)
 
-The static version of streaming_write_entry() in entry.c was very speci=
-fic
-to writing out an index entry out to the working tree, and it made perf=
-ect
-sense to have the function in that file, but its interface was limited =
-to
-the original context the function was used in.
-
-The whole point of your refactoring in this patch is to make it availab=
-le
-for callers outside that original context; e.g. archive that finds blob
-SHA-1 from a tree and writes the blob out to its standard output.  They
-should not have to work with an API that takes a cache-entry and writes=
- to
-a working tree file.  And your result is much more generic.
-
-So I think the external declaration and the definition should move to a
-more generic place, namely streaming.[ch].  It does not belong to entry=
-=2Ec
-anymore.
-
-Thanks for working on this.
+diff --git a/t/t9804-git-p4-label.sh b/t/t9804-git-p4-label.sh
+index 80d01ea..a9e04ef 100755
+--- a/t/t9804-git-p4-label.sh
++++ b/t/t9804-git-p4-label.sh
+@@ -1,3 +1,5 @@
++#!/bin/sh
++
+ test_description=3D'git-p4 p4 label tests'
+=20
+ . ./lib-git-p4.sh
+--=20
+1.7.9.2.396.ga883d.dirty
