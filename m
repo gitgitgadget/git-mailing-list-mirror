@@ -1,83 +1,66 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: sha-1 check in rev-list --verify-objects redundant?
-Date: Mon, 27 Feb 2012 10:41:41 -0800
-Message-ID: <7vehtg9l0a.fsf@alter.siamese.dyndns.org>
-References: <CACsJy8D_BdV14dGc2YsK91FrX8S=70DJOY3cU=oH3y41N2Ar0w@mail.gmail.com>
- <7vk43af14m.fsf@alter.siamese.dyndns.org>
- <CACsJy8BUeedTZSq_ay=JmqUt3wrnm6n1eOcFt0WPkEo2B-1zwA@mail.gmail.com>
- <20120227130141.GA8980@do>
+Subject: Re: [PATCH 00/11] Large blob fixes
+Date: Mon, 27 Feb 2012 10:43:47 -0800
+Message-ID: <7v7gz89kws.fsf@alter.siamese.dyndns.org>
+References: <1330329315-11407-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 27 19:41:51 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 27 19:43:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S25W9-000080-Sb
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 19:41:50 +0100
+	id 1S25YB-0001W0-Vn
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 19:43:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754410Ab2B0Slp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Feb 2012 13:41:45 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59509 "EHLO
+	id S1754671Ab2B0Snv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Feb 2012 13:43:51 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60418 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753899Ab2B0Slo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2012 13:41:44 -0500
+	id S1754543Ab2B0Snv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Feb 2012 13:43:51 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B95C5611C;
-	Mon, 27 Feb 2012 13:41:43 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C896861A9;
+	Mon, 27 Feb 2012 13:43:50 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RcQvEazqx1o1zRvbM6qYhHEWtG0=; b=rTiV2l
-	3ZubJnolLLsJNd72l2HG0qWViV/gN/UJ3ejmgMqNU8Q5xQ+DMHpPwduTFTbn55Qn
-	u9LdcQ4SY9hiX9dKp9amqCdTQyaHBbSuzhFBu+8pEYYUWA0gONNCI4gxlZf7QvhQ
-	ijLUZxoGtPI7E+zkEzX8uGT7Yo888EsNhhKtE=
+	:content-type:content-transfer-encoding; s=sasl; bh=8WXjYB8Ib8GQ
+	zUMn0VHCoiNRr7o=; b=UIOV5+dcB+4NZ2UIqeztiTItSbmEnpbYJEQRxk6Sl9hp
+	uAU4YrWPhO1xi9GWsKToScjLFVzKybGXfikkRSfcN7TNWVlSgDBN2FMsXIll0AYq
+	lOO7+gg1iZBzKU5eNygDUTf2ByJdM5LX0xEpc+j8YyHsjUggSbcdNPSnknRf7WU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=elI4DaAjwn3WzU6oNlrMUNrY0el403gE
-	jBNNtIMjI5l32P/7l20uofS2kzj2XINHMqev3BUDvl1uoRXz/E3buDA2d2fCWNBs
-	6nSpB/sMzX/9C+JCGuYQfsHYxVosd+EWrwWtEQkeIS6mh5amMvMGldFb6ztmxfti
-	BHT37RgaQkk=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=DNNtRy
+	2VNXNxnHmqidL1oSC8BHH7cO4arrirHs9I7OZF6J08A+/68dTekjJagbBtSfbYtH
+	MnpGutEVd+oLW7fQ42S0ojbwIqEndJqvPK/C0G+j0hRTDg+tTosLXGTezzcSxc/8
+	jo+YuWQlvHXAYm0reF52voKHvdZT2Ch/LVzLc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0F9B611B;
-	Mon, 27 Feb 2012 13:41:43 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C01EE61A7;
+	Mon, 27 Feb 2012 13:43:50 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 435AD611A; Mon, 27 Feb 2012
- 13:41:43 -0500 (EST)
-In-Reply-To: <20120227130141.GA8980@do> (Nguyen Thai Ngoc Duy's message of
- "Mon, 27 Feb 2012 20:01:41 +0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 05D0F61A4; Mon, 27 Feb 2012
+ 13:43:48 -0500 (EST)
+In-Reply-To: <1330329315-11407-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 27 Feb
+ 2012 14:55:04 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B1AC9000-6172-11E1-B11C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: FCA007AE-6172-11E1-878C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191648>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> On Sun, Feb 26, 2012 at 06:11:30PM +0700, Nguyen Thai Ngoc Duy wrote:
->> "rev-list --objects" does check for blob existence, in finish_object().
->
-> Eck.. I think "--quiet --verify-objects" becomes "--quiet --objects"
-> because of this code:
->
-> -- 8< --
-> 	traverse_commit_list(&revs,
-> 			     quiet ? finish_commit : show_commit,
-> 			     quiet ? finish_object : show_object,
-> 			     &info);
-> -- 8< --
->
-> Unless that's intentional, shouldn't we apply this patch? --quiet's
-> interfering with rev-list's business sounds weird to me.
+> These patches make sure we avoid keeping whole blob in memory, at
+> least in common cases. Blob-only streaming code paths are opened to
+> accomplish that.
 
-Good thinking.  Anything we are missing by calling finish_* other than
-printing is a similar bug waiting to happen.
-
-Can't we push the quiet bit in the info structure and have a single pair
-of callback functions, so that we can make sure this kind of glitch would
-never happen?
+Some in the series seem to be unrelated to the above, namely, the
+index-pack ones.
