@@ -1,131 +1,96 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: sha-1 check in rev-list --verify-objects redundant?
-Date: Mon, 27 Feb 2012 07:48:11 +0700
-Message-ID: <CACsJy8C9=BJvKvFB3XrSqNXV-y3=o1pTJPtFBXK3jSheBff3Uw@mail.gmail.com>
+Date: Sun, 26 Feb 2012 17:23:42 -0800
+Message-ID: <7vd391cbmp.fsf@alter.siamese.dyndns.org>
 References: <CACsJy8D_BdV14dGc2YsK91FrX8S=70DJOY3cU=oH3y41N2Ar0w@mail.gmail.com>
- <7vk43af14m.fsf@alter.siamese.dyndns.org> <CACsJy8BUeedTZSq_ay=JmqUt3wrnm6n1eOcFt0WPkEo2B-1zwA@mail.gmail.com>
+ <7vk43af14m.fsf@alter.siamese.dyndns.org>
+ <CACsJy8BUeedTZSq_ay=JmqUt3wrnm6n1eOcFt0WPkEo2B-1zwA@mail.gmail.com>
  <7v1uphff8o.fsf@alter.siamese.dyndns.org>
+ <CACsJy8C9=BJvKvFB3XrSqNXV-y3=o1pTJPtFBXK3jSheBff3Uw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 27 01:49:14 2012
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 27 02:23:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S1omA-0007gt-4o
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 01:49:14 +0100
+	id 1S1pJf-0004AJ-FC
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 02:23:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753245Ab2B0Asn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Feb 2012 19:48:43 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:47960 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753126Ab2B0Asm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Feb 2012 19:48:42 -0500
-Received: by wibhm11 with SMTP id hm11so975063wib.19
-        for <git@vger.kernel.org>; Sun, 26 Feb 2012 16:48:41 -0800 (PST)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.216.134.74 as permitted sender) client-ip=10.216.134.74;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.216.134.74 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
-Received: from mr.google.com ([10.216.134.74])
-        by 10.216.134.74 with SMTP id r52mr5734033wei.19.1330303721261 (num_hops = 1);
-        Sun, 26 Feb 2012 16:48:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Xpja4jwuwmcU+dTGUyTatSKOjO0SQS6qrEltZNN1q9A=;
-        b=BExHbjUB3Ai+7WlmhSEl+pe1DzAXj0tJxoQ1LLeXJq5SzJJL9hpHmChamEKyuEL87j
-         55+Kk94fn/eF9PVCarCysl0UJJ0535SebkqTlIsmCU3pgN3URV84Um0hw7va+dkHpDkH
-         GphE86MNazTj1vNQkNAKRxse2azxULcTbjGko=
-Received: by 10.216.134.74 with SMTP id r52mr4578306wei.19.1330303721208; Sun,
- 26 Feb 2012 16:48:41 -0800 (PST)
-Received: by 10.223.13.5 with HTTP; Sun, 26 Feb 2012 16:48:11 -0800 (PST)
-In-Reply-To: <7v1uphff8o.fsf@alter.siamese.dyndns.org>
+	id S1753404Ab2B0BXq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Feb 2012 20:23:46 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40445 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752381Ab2B0BXp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Feb 2012 20:23:45 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B62C66A03;
+	Sun, 26 Feb 2012 20:23:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/yaRLfL+YpMB4gRb2AGMycUKy90=; b=cjw+ma
+	TvhCO0PTl31f6w/RXFQX0sxNTt14GRgAQMoVsUBQkTC1V4u+4FKPQM4yndkvFOaz
+	ChYCjTh6MeHaLozu4JytdS8kEAahTgi4FrI0HRVqXUwy9vKh/XqQTu5OPSGkPfFZ
+	KN3PX/DlcZ1+fR3HjERla+ElKbjaKR3nvcOKg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=i+XHsp/es/7lxNZXMnRItDWJaX8JExog
+	OCLT29bFTpC/dCWiLlW5PrfQhDICC6iL7ERgeDIdYUeUAhws89+isx35b+/zXO2D
+	QBgIiBY12S4LZ7WRAEyJiKqZKX13Etr2ObPGsB69bB64g81xnkLYDsfp+YhGWTVh
+	E5tvJLraK9o=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADE446A02;
+	Sun, 26 Feb 2012 20:23:44 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 423C66A01; Sun, 26 Feb 2012
+ 20:23:44 -0500 (EST)
+In-Reply-To: <CACsJy8C9=BJvKvFB3XrSqNXV-y3=o1pTJPtFBXK3jSheBff3Uw@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Mon, 27 Feb 2012 07:48:11 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B07E8C06-60E1-11E1-B4F8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191591>
 
-On Mon, Feb 27, 2012 at 4:37 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->
->> On the well-formedness, unless I'm mistaken, --verify-objects is
->> _always_ used in conjunction with index-pack.
->
-> Hmm, you are making my head hurt. =C2=A0Is the above "always" a typo =
-of
-> "never"?
->
-> The static check_everything_connected() function in builtin/fetch.c i=
-s a
-> direct callsite of "rev-list --verify-objects", and the function is u=
-sed
-> in two codepaths:
->
-> =C2=A0* store_updated_refs() that is used after we receive and store =
-objects
-> =C2=A0 from the other end. =C2=A0We may or may not have run index-pac=
-k in this
-> =C2=A0 codepath; in either case we need to make sure the other side d=
-id send
-> =C2=A0 everything that is needed to complete the history between what=
- we used
-> =C2=A0 to have and what they claimed to supply us, to protect us from=
- a broken
-> =C2=A0 remote side.
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-I stand corrected. --verify-objects is _usually_ used in conjunction
-with index-pack, when the media is a pack (i.e. no remote helpers)
-
-> =C2=A0* quickfetch() that is called even before we get any object fro=
-m the
-> =C2=A0 other end, to optimize the transfer when we already have what =
-we need.
+>>  * quickfetch() that is called even before we get any object from the
+>>   other end, to optimize the transfer when we already have what we need.
+>>
+>> The latter is the original use to protect against unconnected island of
+>> chain I explained in the previous message, but the former is also abot the
+>> same protection, in a different callchain.
 >
-> The latter is the original use to protect against unconnected island =
-of
-> chain I explained in the previous message, but the former is also abo=
-t the
-> same protection, in a different callchain.
+> I think we can trust what we already have, so in the latter case (and
+> the former when the medium is a pack), --objects should suffice.
 
-I think we can trust what we already have, so in the latter case (and
-the former when the medium is a pack), --objects should suffice.
+Hrm, what you seem to be missing is that in the latter case, the objects
+we are walking to make sure the connectivity are *not* yet considered as
+part of "what we already have" (hence we can trust).  The whole point of
+quickfetch is to turn these untrustworthy bits that happen to exist in our
+repository into a part of trustable history without having to fetch from
+the other side to complete them.  In the former case, when we know that
+pack has been indexed with recent index-pack/unpack-objects that are more
+picky (didn't Shawn and I recently tighten them?), we may be able to do
+without object integrity checks.
 
-> In both cases, the check by --verify-objects is about completeness of=
- the
-> history (is everything connected to the tips of refs we have?), and i=
-s
-> different from integrity of individual objects (is each individual ob=
-ject
-> well formed and hash correctly?). =C2=A0Both kinds of sanity need to =
-be
-> checked, as they are orthogonal concepts.
+>> If we _know_ that we have checked the integrity of all the necessary
+>> individual objects before we start reading them in order to check the
+>> completeness of the history, there is an opportunity to optimize by
+>> teaching --verify-objects paths to optionally be looser than it currently
+>> is, to avoid checking the object integrity twice.
 >
-> In order to check the history completeness, we need to read the objec=
-ts
-> that we walk during the check. I wouldn't be surprised if the codepat=
-h to
-> do this is written overly defensive, taking a belt-and-suspender appr=
-oach,
-> and check the well-formedness of an object before it reads it to find=
- out
-> the other objects pointed by it.
->
-> If we _know_ that we have checked the integrity of all the necessary
-> individual objects before we start reading them in order to check the
-> completeness of the history, there is an opportunity to optimize by
-> teaching --verify-objects paths to optionally be looser than it curre=
-ntly
-> is, to avoid checking the object integrity twice.
+> Ok, will cook something. The reason I raised it is because
+> --verify-objects --all on git.git could take ~1m10s, but if we assume
+> object integrity is fine and skip it, it could drop to 10s (I suspect
+> --objects gives the same number).
 
-Ok, will cook something. The reason I raised it is because
---verify-objects --all on git.git could take ~1m10s, but if we assume
-object integrity is fine and skip it, it could drop to 10s (I suspect
---objects gives the same number).
---=20
-Duy
+That is a big assumption that I personally do not want to sacrifice the
+integrity of my history on.  I would 100% agree with the above with s/if
+we assume/if we know/, though.
