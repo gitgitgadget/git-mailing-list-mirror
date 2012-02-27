@@ -1,76 +1,64 @@
-From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>
-Subject: Re: [PATCH] fsck: do not print dangling objects by default
-Date: Mon, 27 Feb 2012 07:42:32 +0100
-Message-ID: <4F4B25D8.8040803@in.waw.pl>
-References: <20120226204357.GA26088@ecki> <7vty2ddzqj.fsf@alter.siamese.dyndns.org> <7vhayddxgp.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v6 06/11] column: add column.ui for default column output settings
+Date: Mon, 27 Feb 2012 14:04:51 +0700
+Message-ID: <CACsJy8DNiCfk44rQ-VWs6zzS7EYkO66baqwTUg5pL3WH6MK8Zw@mail.gmail.com>
+References: <1330170078-29353-1-git-send-email-pclouds@gmail.com>
+ <1330170078-29353-7-git-send-email-pclouds@gmail.com> <7vvcmsbxvz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Clemens Buchacher <drizzd@aon.at>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 27 07:42:49 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 27 08:05:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S1uII-0008Rz-4h
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 07:42:46 +0100
+	id 1S1ueL-0001HR-Oy
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Feb 2012 08:05:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751311Ab2B0Gmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Feb 2012 01:42:40 -0500
-Received: from kawka.in.waw.pl ([178.63.212.103]:55206 "EHLO kawka.in.waw.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750918Ab2B0Gmk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2012 01:42:40 -0500
-Received: from 89-78-221-60.dynamic.chello.pl ([89.78.221.60] helo=[192.168.0.12])
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1S1uIA-0004vi-9l; Mon, 27 Feb 2012 07:42:38 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20120104 Icedove/8.0
-In-Reply-To: <7vhayddxgp.fsf@alter.siamese.dyndns.org>
+	id S1754126Ab2B0HFX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Feb 2012 02:05:23 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:40985 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753151Ab2B0HFW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Feb 2012 02:05:22 -0500
+Received: by wgbdr13 with SMTP id dr13so1388298wgb.1
+        for <git@vger.kernel.org>; Sun, 26 Feb 2012 23:05:21 -0800 (PST)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.180.99.65 as permitted sender) client-ip=10.180.99.65;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.180.99.65 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
+Received: from mr.google.com ([10.180.99.65])
+        by 10.180.99.65 with SMTP id eo1mr15782456wib.13.1330326321314 (num_hops = 1);
+        Sun, 26 Feb 2012 23:05:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=4qTaddcaOgqmdSyabr8Uaq/lSCBCblZk4uiE5KUP3l0=;
+        b=oIdR9q3VRb+qIt8IQG4mmYbGWT8ojX/CqoooWFN+lyjOumcyFFYnOPAbzm9xlpFn2I
+         WKlGxqfzFVL/75z0Ac452f6OZkShqeayQyzY01k6ZKRVEu83GAndXYRUBzxXNlbKVJd1
+         xJP2Z/XbzgdRGMqTCPovzncFvXL45y2YFb99U=
+Received: by 10.180.99.65 with SMTP id eo1mr12425989wib.13.1330326321232; Sun,
+ 26 Feb 2012 23:05:21 -0800 (PST)
+Received: by 10.223.13.5 with HTTP; Sun, 26 Feb 2012 23:04:51 -0800 (PST)
+In-Reply-To: <7vvcmsbxvz.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191602>
 
-On 02/26/2012 11:46 PM, Junio C Hamano wrote:
-> Junio C Hamano<gitster@pobox.com>  writes:
+2012/2/27 Junio C Hamano <gitster@pobox.com>:
+> I tried comparing output from
 >
->> I think that both the ultimate goal explained above, and the direction in
->> which the documentation updates tries to move us, are good.  I only gave a
->> cursory look at the code changes, but what they implement seems to match
->> the intention.
->>
->> Of course I may be missing something, so objections from others to argue
->> why we shouldn't do this is very much welcomed to stop me and Clemens ;-).
+> =C2=A0 =C2=A0$ git help -a
+> =C2=A0 =C2=A0$ git -c column.ui=3Drow help -a
 >
-> Let's start with the obvious.
->
-> It is much easier for a user to use a new option on the command line when
-> he wants to use an improved behaviour when he runs the command manually.
-> Having to update scripts that run the command to act on its output, on the
-> other hand, is much more painful to the users.
->
-> And the intended audience for this change clearly is interactive users
-> that follow the user-manual to try things out.
->
-> Given that, isn't it not just sufficient but actually better to instead
-> add a new --no-dangling option and keep the default unchanged?
+> but did not spot differences. =C2=A0What am I doing wrong?
 
-I understood the goal of this change as "modify fsck output to not show 
-confusing 'dangling' messages by default. Not when running the tutorial 
-and having the output explained in parallel, but when someone runs 
-git-fsck to clean up the repository. In that situation, if somebody 
-knows enough to run --no-dangling, than they know enough to ignore the 
-'dangling' messages in the output.
-
-For the knowledgeable user, --no-dangling could be useful to avoid 
-uninteresting messages which usually dwarf the rest of output, but this 
-would be less important.
-
-Zbyszek
+Config does not affect "help -a". It has always been sorted column
+first. But yeah if you prefer row-first, then it should probably
+follow that too.
+--=20
+Duy
