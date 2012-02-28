@@ -1,67 +1,84 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH 2/3] http: try standard proxy env vars when http.proxy
- config option is not set
-Date: Tue, 28 Feb 2012 11:27:41 -0800
-Message-ID: <4F4D2AAD.3040107@vilain.net>
-References: <4F4CCE8A.4010800@seap.minhap.es> <20120228191514.GD11260@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] http: when proxy url has username but no password,
+ ask for password
+Date: Tue, 28 Feb 2012 14:31:25 -0500
+Message-ID: <20120228193125.GA11725@sigill.intra.peff.net>
+References: <4F4CCEFD.90402@seap.minhap.es>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>,
-	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
-	sam.vilain@catalyst.net.nz
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 28 20:27:51 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, sam@vilain.net
+To: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
+X-From: git-owner@vger.kernel.org Tue Feb 28 20:31:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2SiE-0004m6-Op
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 20:27:51 +0100
+	id 1S2Slo-0007f4-Vz
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 20:31:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030191Ab2B1T1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Feb 2012 14:27:46 -0500
-Received: from uk.vilain.net ([92.48.122.123]:57385 "EHLO uk.vilain.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965989Ab2B1T1p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Feb 2012 14:27:45 -0500
-Received: by uk.vilain.net (Postfix, from userid 1001)
-	id 62FB18278; Tue, 28 Feb 2012 19:27:44 +0000 (GMT)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on uk.vilain.net
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=unavailable version=3.3.1
-Received: from [IPv6:::1] (localhost [127.0.0.1])
-	by uk.vilain.net (Postfix) with ESMTP id 6D9FA820C;
-	Tue, 28 Feb 2012 19:27:42 +0000 (GMT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <20120228191514.GD11260@sigill.intra.peff.net>
+	id S1030346Ab2B1Tb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Feb 2012 14:31:28 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60417
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030303Ab2B1Tb1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2012 14:31:27 -0500
+Received: (qmail 13696 invoked by uid 107); 28 Feb 2012 19:31:31 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 28 Feb 2012 14:31:31 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Feb 2012 14:31:25 -0500
+Content-Disposition: inline
+In-Reply-To: <4F4CCEFD.90402@seap.minhap.es>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191772>
 
-On 2/28/12 11:15 AM, Jeff King wrote:
-> Usually we would prefer environment variables to config. So that:
->
->    $ git config http.proxy foo
->    $ HTTP_PROXY=bar git fetch
->
-> would use "bar" as the proxy, not "foo". But your code above would
-> prefer "foo", right?
+On Tue, Feb 28, 2012 at 01:56:29PM +0100, Nelson Benitez Leon wrote:
 
-Apparently I'm the author of the http.proxy feature, though I barely 
-remember what problem I was actually solving at the time.  At the time I 
-justified it on the grounds that a user might want to use a different 
-proxy for git and/or a particular remote.  The "http_proxy" environment 
-variable is likely to be a global system default, or perhaps a desktop 
-setting, and therefore I'd say probably less and not more specific than 
-a git configuration variable.
+> diff --git a/http.c b/http.c
+> index 79cbe50..68e3f7d 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -306,7 +306,41 @@ static CURL *get_curl_handle(void)
+>  		}
+>  	}
+>  	if (curl_http_proxy) {
+> -		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
+> +		char *at, *colon, *proxyuser;
+> +		const char *cp;
+> +		cp = strstr(curl_http_proxy, "://");
+> +		if (cp == NULL) {
+> +			cp = curl_http_proxy;
+> +		} else {
+> +			cp += 3;
+> +		}
+> +		at = strchr(cp, '@');
+> +		colon = strchr(cp, ':');
+> +		if (at && (!colon || at < colon)) {
+> +			/* proxy string has username but no password, ask for password */
 
-As to this matter of "HTTP_PROXY", I'm not sure about whether that helps 
-or confuses matters to support.  I must admit I'm still confused by the 
-motivation of this patch series.
+Don't parse the URL by hand. Use credential_from_url, which will do it
+for you (and will properly handle things like unquoting the various
+components).
 
-Sam
+> +			char *ask_str, *proxyuser, *proxypass;
+
+Shouldn't these be static globals? If we have multiple curl handles, you
+would want them to share the authentication information we collect here,
+and not have to ask the user again, no?
+
+> +			strbuf_addf(&pbuf, "Enter password for proxy %s...", at+1);
+> +			ask_str = strbuf_detach(&pbuf, NULL);
+> +			proxypass = xstrdup(git_getpass(ask_str));
+
+And this should be using credential_fill(), which will let it use
+credential helpers to save passwords, give it the same type of prompt as
+elsewhere, etc.
+
+See Documentation/technical/api-credential.txt, and see how regular http
+auth is handled for an example.
+
+-Peff
