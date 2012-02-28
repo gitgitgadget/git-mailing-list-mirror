@@ -1,85 +1,154 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Tilde spec - befuzzled
-Date: Tue, 28 Feb 2012 10:50:12 +0100
-Message-ID: <4F4CA354.2070503@op5.se>
-References: <4F4C995D.9000504@diamand.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH v2] commit: allow {--amend|-c foo} when {HEAD|foo} has empty message
+Date: Tue, 28 Feb 2012 11:36:59 +0100
+Message-ID: <010901fbfffe0f806bb19d556ebc1e512a4697f4.1330425111.git.trast@student.ethz.ch>
+References: <20120228091422.GC5757@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Tue Feb 28 10:50:24 2012
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 28 11:37:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2JhP-00040t-J9
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 10:50:23 +0100
+	id 1S2KQn-0007aX-Uo
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 11:37:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756275Ab2B1JuS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Feb 2012 04:50:18 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:48495 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756115Ab2B1JuQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Feb 2012 04:50:16 -0500
-Received: by lahj13 with SMTP id j13so1983644lah.19
-        for <git@vger.kernel.org>; Tue, 28 Feb 2012 01:50:15 -0800 (PST)
-Received-SPF: pass (google.com: domain of exon@op5.com designates 10.152.102.145 as permitted sender) client-ip=10.152.102.145;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of exon@op5.com designates 10.152.102.145 as permitted sender) smtp.mail=exon@op5.com
-Received: from mr.google.com ([10.152.102.145])
-        by 10.152.102.145 with SMTP id fo17mr14985389lab.2.1330422615200 (num_hops = 1);
-        Tue, 28 Feb 2012 01:50:15 -0800 (PST)
-Received: by 10.152.102.145 with SMTP id fo17mr12496691lab.2.1330422615110;
-        Tue, 28 Feb 2012 01:50:15 -0800 (PST)
-Received: from vix.int.op5.se (sth-vpn1.op5.com. [193.201.96.49])
-        by mx.google.com with ESMTPS id fl2sm21261639lbb.4.2012.02.28.01.50.13
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 28 Feb 2012 01:50:14 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.24) Gecko/20111108 Fedora/3.1.16-1.fc14 Thunderbird/3.1.16 ThunderGit/0.1a
-In-Reply-To: <4F4C995D.9000504@diamand.org>
-X-Gm-Message-State: ALoCoQktcs/sa/y1gsBOeBZphFFkQUc3Ksnb6kITaOsDsPidkw7QAm4PoySIUKSP9bYd8rNM43Ks
+	id S1755357Ab2B1KhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Feb 2012 05:37:06 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:27110 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752271Ab2B1KhF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2012 05:37:05 -0500
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 28 Feb
+ 2012 11:37:01 +0100
+Received: from thomas.inf.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 28 Feb
+ 2012 11:37:01 +0100
+X-Mailer: git-send-email 1.7.9.2.467.g7fee4
+In-Reply-To: <20120228091422.GC5757@sigill.intra.peff.net>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191707>
 
-On 02/28/2012 10:07 AM, Luke Diamand wrote:
-> The documentation for caret and tilde specs is making my head hurt, even though they always _do_ exactly what I want. And I thought I understood them until I read more carefully.
-> 
-> A suffix '{caret}' to a revision parameter means the first parent of
-> that commit object. '{caret}<n>' means the <n>th parent (i.e.
-> '<rev>{caret}'
-> 
-> So far, so good.
-> 
-> '<rev>{tilde}<n>', e.g. 'master{tilde}3'::
-> A suffix '{tilde}<n>' to a revision parameter means the commit
-> object that is the <n>th generation grand-parent of the named
-> commit object, following only the first parents.
-> 
-> Hang on, *grand*-parents?
-> 
+Because --amend (-c foo) internally load the message from HEAD (foo,
+resp.) using the same code paths as -C, they erroneously refuse to
+work at all when the message of HEAD (foo) is empty.
 
-Replace "grand-parent" with "ancestor" and your head might hurt a
-little less. Caret only ever describes parent, while tilde can
-describe either parent or n'th generation grand-parent. Since parent
-and grand-parent are all ancestors, that would be a better term.
+Remove the corresponding check under --amend and -c.
 
-I believe this stems from the fact that most git-gurus use a single
-caret to specify 'parent' and only go to the tilde when they want
-grandparents. It might be because caret was implemented first, or
-because of english keyboard layout. On swedish keyboards, using tilde
-is far more convenient than using caret, so that's what I mostly use
-when I want the parent of a single-parent commit (it requires only
-one hand and no thumb-acrobatics even on my laptop).
+None of this behavior was ever tested (not even for -C empty_message),
+so we add a whole batch of new tests.
 
+Reported-by: Lazar Florentin <florentin.lazar@gmail.com>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
+
+Like the last version, plus Peff's guard for the invalid commit
+format.  I also received Lazar (starlay) 's identity for the
+attribution.
+
+
+ builtin/commit.c  |    4 +++-
+ t/t7501-commit.sh |   66 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 69 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 3714582..5e9a832 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -690,7 +690,9 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		hook_arg1 = "message";
+ 	} else if (use_message) {
+ 		buffer = strstr(use_message_buffer, "\n\n");
+-		if (!buffer || buffer[2] == '\0')
++		if (!buffer)
++			die(_("commit object has invalid format"));
++		if (!amend && !edit_message && buffer[2] == '\0')
+ 			die(_("commit has empty message"));
+ 		strbuf_add(&sb, buffer + 2, strlen(buffer + 2));
+ 		hook_arg1 = "commit";
+diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
+index 8bb3833..6ab7712 100755
+--- a/t/t7501-commit.sh
++++ b/t/t7501-commit.sh
+@@ -473,4 +473,70 @@ test_expect_success 'amend can copy notes' '
+ 
+ '
+ 
++test_expect_success 'amend on empty commit message' '
++
++	echo bar > bar &&
++	git add bar &&
++	test_tick &&
++	git commit --allow-empty-message -m "" &&
++	git tag empty_message &&
++	git commit --amend -mnonempty &&
++	git cat-file commit HEAD | grep nonempty
++
++'
++
++test_expect_success 'amend with editor on empty commit message' '
++
++	git reset --hard empty_message &&
++	cat >editor <<-\EOF &&
++	#!/bin/sh
++	echo nonempty_one >"$1"
++	EOF
++	chmod 755 editor &&
++	EDITOR=./editor git commit --amend &&
++	git cat-file commit HEAD | grep nonempty_one
++
++'
++
++test_expect_success '--amend -C empty_message fails' '
++
++	test_commit nonempty &&
++	test_must_fail git commit --amend -C empty_message
++
++'
++
++test_expect_success '-C empty_message fails' '
++
++	echo 1 > bar &&
++	git add bar &&
++	test_must_fail git commit --amend -C empty_message
++
++'
++
++test_expect_success '--amend -c empty_message works' '
++
++	cat >editor <<-\EOF &&
++	#!/bin/sh
++	echo nonempty_two >"$1"
++	EOF
++	chmod 755 editor &&
++	EDITOR=./editor git commit --amend -c empty_message &&
++	git cat-file commit HEAD | grep nonempty_two
++
++'
++
++test_expect_success '-c empty_message works' '
++
++	echo 2 > bar &&
++	git add bar &&
++	cat >editor <<-\EOF &&
++	#!/bin/sh
++	echo nonempty_three >"$1"
++	EOF
++	chmod 755 editor &&
++	EDITOR=./editor git commit -c empty_message &&
++	git cat-file commit HEAD | grep nonempty_three
++
++'
++
+ test_done
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+1.7.9.2.467.g7fee4
