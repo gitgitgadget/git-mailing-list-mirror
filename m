@@ -1,68 +1,91 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH] Documentation: use {asterisk} in rev-list-options.txt when needed
-Date: Wed, 29 Feb 2012 00:03:53 +0100
-Message-ID: <87hayar25i.fsf@thomas.inf.ethz.ch>
-References: <1330443348-5742-1-git-send-email-cmn@elego.de>
-	<20120228194551.GC11725@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	<git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 29 00:04:09 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2] am -3: allow nonstandard -p<num> option
+Date: Tue, 28 Feb 2012 15:24:54 -0800
+Message-ID: <1330471495-12013-2-git-send-email-gitster@pobox.com>
+References: <1330471495-12013-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 29 00:25:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2W5Y-0003hb-L9
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Feb 2012 00:04:08 +0100
+	id 1S2WQ3-0002CE-FP
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Feb 2012 00:25:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757430Ab2B1XD6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Feb 2012 18:03:58 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:50670 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754175Ab2B1XD5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Feb 2012 18:03:57 -0500
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 29 Feb
- 2012 00:03:53 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (188.155.176.28) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.355.2; Wed, 29 Feb
- 2012 00:03:54 +0100
-In-Reply-To: <20120228194551.GC11725@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 28 Feb 2012 14:45:51 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [188.155.176.28]
+	id S965320Ab2B1XZB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Feb 2012 18:25:01 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42751 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754703Ab2B1XY7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2012 18:24:59 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA1327A1C
+	for <git@vger.kernel.org>; Tue, 28 Feb 2012 18:24:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=cfMW
+	99B3rfk/QBvWe4cgiOp+V3k=; b=tLneSzWiFKXqRYABpapk+kVaVxE1OfpoS4Z2
+	69/TU2EIgApzMyZlmA40oSKb+6v1Vz3U5K1CbLRoDBW0JqXlMSTiHDkN2HJbD6XQ
+	byUNuUwuq5D9YI8k6FFysbn7oV41VR53wZhU4s+cGjRGWxIQKLRHHIiyxeWQcp/I
+	1J/jZBo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=cCyzOb
+	qXjp3ufiMP26U5DSPleORXMamDYVfn+he/wY/b10E4t56BqmT3YGzKSstoOyn9jD
+	QiWsn4r19fP4hIjRFXK+n1ihcm3CNlb81R6JmeMgFOSAClX6U7ON2fF/pGbhK8hu
+	vOXod8U8zIhixAUeuGE64rxH1INF9miZVansU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D1C0B7A1B
+	for <git@vger.kernel.org>; Tue, 28 Feb 2012 18:24:58 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5D88E7A1A for
+ <git@vger.kernel.org>; Tue, 28 Feb 2012 18:24:58 -0500 (EST)
+X-Mailer: git-send-email 1.7.9.2.344.g3e8c86
+In-Reply-To: <1330471495-12013-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 6DF59BC6-6263-11E1-9E94-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191791>
 
-Jeff King <peff@peff.net> writes:
+When falling back to 3-way merge, we run "git apply" to synthesize the
+fake ancestor tree by parsing the incoming patch, and another "git apply"
+to apply the patch to the fake ancestor tree.  Both invocation need to
+be aware of the custom -p<num> setting to parse patches that were prepared
+with non-standard src/dst prefix.
 
-> Anyway, that is not a problem with your patch. :) I confirmed that the
-> bug happens in my version of the toolchain, and your fix works (I also
-> tried using `*`, but backtick does not suppress markup.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ git-am.sh |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-Actually it would, if it weren't for our use of '-a no-inline-literal'.
-Which we are using because the "backticks do not interpret {stuff}"
-feature was introduced in a backwards-incompatible way in asciidoc
-8.4.1, see 71c020c (Disable asciidoc 8.4.1+ semantics for `{plus}` and
-friends, 2009-07-25).
-
-Some googling tells me the distros are currently at
-
-  openSuSE         8.4.5   (local)
-  Debian (stable)  8.5.2   packages.debian.org
-  Fedora           8.4.5   admin.fedoraproject.org/pkgdb/
-                           (but I can't discern whether it's actually in there...)
-  Arch             8.6.6   www.archlinux.org/packages/
-  Ubuntu 11.10     8.6.4   packages.ubuntu.com
-
-so perhaps the time has come to remove that switch?
-
+diff --git a/git-am.sh b/git-am.sh
+index 1c13b13..d5d168f 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -127,15 +127,18 @@ fall_back_3way () {
+     mkdir "$dotest/patch-merge-tmp-dir"
+ 
+     # First see if the patch records the index info that we can use.
+-    git apply --build-fake-ancestor "$dotest/patch-merge-tmp-index" \
+-	"$dotest/patch" &&
++    cmd="git apply $git_apply_opt --build-fake-ancestor" &&
++    cmd="$cmd "'"$dotest/patch-merge-tmp-index" "$dotest/patch"' &&
++    eval "$cmd" &&
+     GIT_INDEX_FILE="$dotest/patch-merge-tmp-index" \
+     git write-tree >"$dotest/patch-merge-base+" ||
+     cannot_fallback "$(gettext "Repository lacks necessary blobs to fall back on 3-way merge.")"
+ 
+     say Using index info to reconstruct a base tree...
+-    if GIT_INDEX_FILE="$dotest/patch-merge-tmp-index" \
+-	git apply --cached <"$dotest/patch"
++
++    cmd='GIT_INDEX_FILE="$dotest/patch-merge-tmp-index"'
++    cmd="$cmd git apply --cached $git_apply_opt"' <"$dotest/patch"'
++    if eval "$cmd"
+     then
+ 	mv "$dotest/patch-merge-base+" "$dotest/patch-merge-base"
+ 	mv "$dotest/patch-merge-tmp-index" "$dotest/patch-merge-index"
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+1.7.9.2.344.g3e8c86
