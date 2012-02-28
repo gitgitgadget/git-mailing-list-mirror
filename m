@@ -1,76 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Sam Vilain <sam@vilain.net>
 Subject: Re: [PATCH 2/3] http: try standard proxy env vars when http.proxy
  config option is not set
-Date: Tue, 28 Feb 2012 11:24:01 -0800
-Message-ID: <7v62eqzrqm.fsf@alter.siamese.dyndns.org>
-References: <4F4CCE8A.4010800@seap.minhap.es>
- <878vjn8823.fsf@thomas.inf.ethz.ch>
+Date: Tue, 28 Feb 2012 11:27:41 -0800
+Message-ID: <4F4D2AAD.3040107@vilain.net>
+References: <4F4CCE8A.4010800@seap.minhap.es> <20120228191514.GD11260@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>,
-	<git@vger.kernel.org>, <peff@peff.net>,
-	<sam.vilain@catalyst.net.nz>, <sam@vilain.net>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Feb 28 20:24:13 2012
+	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
+	sam.vilain@catalyst.net.nz
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 28 20:27:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2Seh-0001bn-7M
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 20:24:11 +0100
+	id 1S2SiE-0004m6-Op
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 20:27:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964782Ab2B1TYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Feb 2012 14:24:05 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59575 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966053Ab2B1TYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Feb 2012 14:24:03 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 53F1D61DE;
-	Tue, 28 Feb 2012 14:24:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aV0kxzRGRnoJaQY4MncfjtiH++g=; b=G3OlY6
-	X/GHZZ0LqadK5yqsjpwC95FIteUC/KsXZmLAcU/Agh6v2eRboNY5lELw9uzW1AlK
-	/BUQLDztLg01BXZ76LPay9JVW1s7Kid4rx+VKzeiVknDRxDnJGH7E2I54ADZ00st
-	YxaS9VzJo6rDKe6qKb+O9kEtUjnNV7hFG6bcs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=M/rWjZW3cfjeWFcHO+FAQllmWEDWkgGV
-	+ZSuGsaX3n0v/IMA/cjP/A8vFAYOBNPcj2t7cL80RiE8rxEogaO7+aEHvxs14lnk
-	c+cp6bNLQJiNMJm5f18j67G9uj+DdPe5R32UgLz4SFkQqjGFjWLkUGbmkfm9L37L
-	plDByqwo5MU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 49DCF61DD;
-	Tue, 28 Feb 2012 14:24:03 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9791A61DC; Tue, 28 Feb 2012
- 14:24:02 -0500 (EST)
-In-Reply-To: <878vjn8823.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
- "Tue, 28 Feb 2012 13:19:00 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C5AC89C8-6241-11E1-BE70-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1030191Ab2B1T1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Feb 2012 14:27:46 -0500
+Received: from uk.vilain.net ([92.48.122.123]:57385 "EHLO uk.vilain.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965989Ab2B1T1p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2012 14:27:45 -0500
+Received: by uk.vilain.net (Postfix, from userid 1001)
+	id 62FB18278; Tue, 28 Feb 2012 19:27:44 +0000 (GMT)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on uk.vilain.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=unavailable version=3.3.1
+Received: from [IPv6:::1] (localhost [127.0.0.1])
+	by uk.vilain.net (Postfix) with ESMTP id 6D9FA820C;
+	Tue, 28 Feb 2012 19:27:42 +0000 (GMT)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <20120228191514.GD11260@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191771>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
-
-> Which raises the questions:
+On 2/28/12 11:15 AM, Jeff King wrote:
+> Usually we would prefer environment variables to config. So that:
 >
-> * Why is this needed?  Does git's use of libcurl ignore http_proxy?  [1]
->   seems to indicate that libcurl respects <protocol>_proxy
->   automatically.
+>    $ git config http.proxy foo
+>    $ HTTP_PROXY=bar git fetch
 >
-> * Why do you (need to?) support HTTP_PROXY when curl doesn't?
+> would use "bar" as the proxy, not "foo". But your code above would
+> prefer "foo", right?
 
-Let me add a third bullet point.
+Apparently I'm the author of the http.proxy feature, though I barely 
+remember what problem I was actually solving at the time.  At the time I 
+justified it on the grounds that a user might want to use a different 
+proxy for git and/or a particular remote.  The "http_proxy" environment 
+variable is likely to be a global system default, or perhaps a desktop 
+setting, and therefore I'd say probably less and not more specific than 
+a git configuration variable.
 
-I've heard rumors that libcurl on some versions/installations of Mac OS X
-deliberately ignores the environment. For those who agree with Apple, it
-would be a regression if we suddenly start the environment ourselves and
-using it.
+As to this matter of "HTTP_PROXY", I'm not sure about whether that helps 
+or confuses matters to support.  I must admit I'm still confused by the 
+motivation of this patch series.
+
+Sam
