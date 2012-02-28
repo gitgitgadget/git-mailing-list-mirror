@@ -1,98 +1,555 @@
-From: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
-Subject: [PATCH 3/3] http: when proxy url has username but no password, ask
- for password
-Date: Tue, 28 Feb 2012 13:56:29 +0100
-Message-ID: <4F4CCEFD.90402@seap.minhap.es>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v7 01/10] Add git-column for columnar display
+Date: Tue, 28 Feb 2012 18:58:42 +0700
+Message-ID: <1330430331-19945-2-git-send-email-pclouds@gmail.com>
+References: <1330170078-29353-1-git-send-email-pclouds@gmail.com>
+ <1330430331-19945-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: peff@peff.net, sam@vilain.net, sam.vilain@catalyst.net.nz
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 28 12:58:10 2012
+X-From: git-owner@vger.kernel.org Tue Feb 28 12:59:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2Lh3-0004eI-AI
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 12:58:09 +0100
+	id 1S2Lhu-00056W-Tx
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 12:59:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756150Ab2B1L6E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Feb 2012 06:58:04 -0500
-Received: from luthien1.map.es ([213.9.211.102]:16299 "EHLO luthien2.map.es"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754314Ab2B1L6D (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Feb 2012 06:58:03 -0500
-Received: from correo.map.es (unknown [10.1.24.76])
-	by luthien2.map.es (Postfix) with ESMTP id 45F87F8732;
-	Tue, 28 Feb 2012 12:57:55 +0100 (CET)
-Received: from [10.47.128.147] (unknown [10.1.29.79])
-	by correo.map.es (Postfix) with ESMTP id 83B752C364;
-	Tue, 28 Feb 2012 12:57:47 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0.1) Gecko/20120216 Thunderbird/10.0.1
-X-map-MapScanner: Libre de virus, Libre de virus
-X-Spam-Status: No, No
-X-map-MapScanner-Information: 
-X-map-MapScanner-ID: 45F87F8732.027C2
-X-map-MapScanner-From: nelsonjesus.benitez@seap.minhap.es
-X-map-MailScanner-Watermark: 1331035076.1531@rLnsQEjvq9NGQ1UYXc+f1A
+	id S965451Ab2B1L6y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Feb 2012 06:58:54 -0500
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:53635 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965344Ab2B1L6x (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2012 06:58:53 -0500
+Received: by mail-pz0-f46.google.com with SMTP id d14so2265513dae.19
+        for <git@vger.kernel.org>; Tue, 28 Feb 2012 03:58:52 -0800 (PST)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.68.222.39 as permitted sender) client-ip=10.68.222.39;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.68.222.39 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
+Received: from mr.google.com ([10.68.222.39])
+        by 10.68.222.39 with SMTP id qj7mr51208086pbc.114.1330430332923 (num_hops = 1);
+        Tue, 28 Feb 2012 03:58:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=KQxir9WTW0FrGjseH3CIuk0y7Bqj/2/VAHoHUCVyA4k=;
+        b=lTGl4pRj2kvNg5ATwa+jQwmfqdyNCiHL7zQ+0/MIzH5bFCPfe+qEdLJdJmz/CBApH2
+         cZKl92NHsYXdWbO1SLMoXyAt5uQNZ8mhhPcfZ6g2kfeJ3Lkp6WP0AdOlzDzygpc+H1dc
+         1csVa4gHCbGHhTotxtdumEtn4U470fhQ5EtNk=
+Received: by 10.68.222.39 with SMTP id qj7mr43263814pbc.114.1330430332739;
+        Tue, 28 Feb 2012 03:58:52 -0800 (PST)
+Received: from tre ([115.74.56.186])
+        by mx.google.com with ESMTPS id w8sm15520433pbo.23.2012.02.28.03.58.48
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 28 Feb 2012 03:58:51 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Tue, 28 Feb 2012 18:58:59 +0700
+X-Mailer: git-send-email 1.7.8.36.g69ee2
+In-Reply-To: <1330430331-19945-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191714>
 
-Signed-off-by: Nelson Benitez Leon <nbenitezl@gmail.com>
+This command is not particularly tied to anything specific to git. The
+command is added for supporting column display in various commands,
+either by reusing code or piping output to this command for layour.
+The command at this stage is just a skeleton, no layout code yet.
+
+A column option string consists of many token separated by either
+space of commas. A token belongs to one of three groups:
+
+ - enabling: always, never and auto
+ - layout mode: to be implemented
+ - other tuning, which could be negated be prefix 'no'
+
+A command line option without argument (e.g. --column) will enable
+column output and reuse existing settings (layout mode and options..).
+--no-column disables columnar output.
+
+Thanks-to: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
- http.c |   36 +++++++++++++++++++++++++++++++++++-
- 1 files changed, 35 insertions(+), 1 deletions(-)
+ .gitignore                   |    1 +
+ Documentation/git-column.txt |   49 ++++++++++++
+ Makefile                     |    3 +
+ builtin.h                    |    1 +
+ builtin/column.c             |   41 ++++++++++
+ column.c                     |  170 ++++++++++++++++++++++++++++++++++=
+++++++++
+ column.h                     |   30 ++++++++
+ command-list.txt             |    1 +
+ git.c                        |    1 +
+ parse-options.h              |    2 +
+ t/t9002-column.sh            |   27 +++++++
+ 11 files changed, 326 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/git-column.txt
+ create mode 100644 builtin/column.c
+ create mode 100644 column.c
+ create mode 100644 column.h
+ create mode 100755 t/t9002-column.sh
 
-diff --git a/http.c b/http.c
-index 79cbe50..68e3f7d 100644
---- a/http.c
-+++ b/http.c
-@@ -306,7 +306,41 @@ static CURL *get_curl_handle(void)
- 		}
- 	}
- 	if (curl_http_proxy) {
--		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
-+		char *at, *colon, *proxyuser;
-+		const char *cp;
-+		cp = strstr(curl_http_proxy, "://");
-+		if (cp == NULL) {
-+			cp = curl_http_proxy;
-+		} else {
-+			cp += 3;
+diff --git a/.gitignore b/.gitignore
+index 87fcc5f..2540264 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -26,6 +26,7 @@
+ /git-cherry-pick
+ /git-clean
+ /git-clone
++/git-column
+ /git-commit
+ /git-commit-tree
+ /git-config
+diff --git a/Documentation/git-column.txt b/Documentation/git-column.tx=
+t
+new file mode 100644
+index 0000000..508b85f
+--- /dev/null
++++ b/Documentation/git-column.txt
+@@ -0,0 +1,49 @@
++git-column(1)
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++
++NAME
++----
++git-column - Display data in columns
++
++SYNOPSIS
++--------
++[verse]
++'git column' [--mode=3D<mode> | --rawmode=3D<n>] [--width=3D<width>]
++	     [--indent=3D<string>] [--nl=3D<string>] [--pading=3D<n>]
++
++DESCRIPTION
++-----------
++This command formats its input into multiple columns.
++
++OPTIONS
++-------
++--mode=3D<mode>::
++	Specify layout mode. See configuration variable column.ui for option
++	syntax.
++
++--rawmode=3D<n>::
++	Same as --mode but take mode encoded as a number. This is mainly used
++	by other commands that have already parsed layout mode.
++
++--width=3D<width>::
++	Specify the terminal width. By default 'git column' will detect the
++	terminal width, or fall back to 80 if it is unable to do so.
++
++--indent=3D<string>::
++	String to be printed at the beginning of each line.
++
++--nl=3D<N>::
++	String to be printed at the end of each line,
++	including newline character.
++
++--padding=3D<N>::
++	The number of spaces between columns. One space by default.
++
++
++Author
++------
++Written by Nguyen Thai Ngoc Duy <pclouds@gmail.com>
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Makefile b/Makefile
+index a0de4e9..0998f0d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -646,6 +646,7 @@ LIB_OBJS +=3D bulk-checkin.o
+ LIB_OBJS +=3D bundle.o
+ LIB_OBJS +=3D cache-tree.o
+ LIB_OBJS +=3D color.o
++LIB_OBJS +=3D column.o
+ LIB_OBJS +=3D combine-diff.o
+ LIB_OBJS +=3D commit.o
+ LIB_OBJS +=3D compat/obstack.o
+@@ -774,6 +775,7 @@ BUILTIN_OBJS +=3D builtin/checkout-index.o
+ BUILTIN_OBJS +=3D builtin/checkout.o
+ BUILTIN_OBJS +=3D builtin/clean.o
+ BUILTIN_OBJS +=3D builtin/clone.o
++BUILTIN_OBJS +=3D builtin/column.o
+ BUILTIN_OBJS +=3D builtin/commit-tree.o
+ BUILTIN_OBJS +=3D builtin/commit.o
+ BUILTIN_OBJS +=3D builtin/config.o
+@@ -2166,6 +2168,7 @@ builtin/prune.o builtin/reflog.o reachable.o: rea=
+chable.h
+ builtin/commit.o builtin/revert.o wt-status.o: wt-status.h
+ builtin/tar-tree.o archive-tar.o: tar.h
+ connect.o transport.o url.o http-backend.o: url.h
++column.o help.o pager.o: column.h
+ http-fetch.o http-walker.o remote-curl.o transport.o walker.o: walker.=
+h
+ http.o http-walker.o http-push.o http-fetch.o remote-curl.o: http.h ur=
+l.h
+=20
+diff --git a/builtin.h b/builtin.h
+index 857b9c8..338f540 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -61,6 +61,7 @@ extern int cmd_cherry(int argc, const char **argv, co=
+nst char *prefix);
+ extern int cmd_cherry_pick(int argc, const char **argv, const char *pr=
+efix);
+ extern int cmd_clone(int argc, const char **argv, const char *prefix);
+ extern int cmd_clean(int argc, const char **argv, const char *prefix);
++extern int cmd_column(int argc, const char **argv, const char *prefix)=
+;
+ extern int cmd_commit(int argc, const char **argv, const char *prefix)=
+;
+ extern int cmd_commit_tree(int argc, const char **argv, const char *pr=
+efix);
+ extern int cmd_config(int argc, const char **argv, const char *prefix)=
+;
+diff --git a/builtin/column.c b/builtin/column.c
+new file mode 100644
+index 0000000..3b0f74e
+--- /dev/null
++++ b/builtin/column.c
+@@ -0,0 +1,41 @@
++#include "builtin.h"
++#include "cache.h"
++#include "strbuf.h"
++#include "parse-options.h"
++#include "string-list.h"
++#include "column.h"
++
++static const char * const builtin_column_usage[] =3D {
++	"git column [options]",
++	NULL
++};
++static unsigned int colopts;
++
++int cmd_column(int argc, const char **argv, const char *prefix)
++{
++	struct string_list list =3D STRING_LIST_INIT_DUP;
++	struct strbuf sb =3D STRBUF_INIT;
++	struct column_options copts;
++	struct option options[] =3D {
++		OPT_COLUMN(0, "mode", &colopts, "layout to use"),
++		OPT_INTEGER(0, "rawmode", &colopts, "layout to use"),
++		OPT_INTEGER(0, "width", &copts.width, "Maximum width"),
++		OPT_STRING(0, "indent", &copts.indent, "string", "Padding space on l=
+eft border"),
++		OPT_INTEGER(0, "nl", &copts.nl, "Padding space on right border"),
++		OPT_INTEGER(0, "padding", &copts.padding, "Padding space between col=
+umns"),
++		OPT_END()
++	};
++
++	memset(&copts, 0, sizeof(copts));
++	copts.width =3D term_columns();
++	copts.padding =3D 1;
++	argc =3D parse_options(argc, argv, "", options, builtin_column_usage,=
+ 0);
++	if (argc)
++		usage_with_options(builtin_column_usage, options);
++
++	while (!strbuf_getline(&sb, stdin, '\n'))
++		string_list_append(&list, sb.buf);
++
++	print_columns(&list, colopts, &copts);
++	return 0;
++}
+diff --git a/column.c b/column.c
+new file mode 100644
+index 0000000..d61da81
+--- /dev/null
++++ b/column.c
+@@ -0,0 +1,170 @@
++#include "cache.h"
++#include "column.h"
++#include "string-list.h"
++#include "parse-options.h"
++
++#define MODE(mode) ((mode) & COL_MODE)
++
++/* Display without layout when COL_ENABLED is not set */
++static void display_plain(const struct string_list *list,
++			  const char *indent, const char *nl)
++{
++	int i;
++
++	for (i =3D 0; i < list->nr; i++)
++		printf("%s%s%s", indent, list->items[i].string, nl);
++}
++
++void print_columns(const struct string_list *list, unsigned int mode,
++		   struct column_options *opts)
++{
++	const char *indent =3D "", *nl =3D "\n";
++	int padding =3D 1, width =3D term_columns();
++
++	if (!list->nr)
++		return;
++	if (opts) {
++		if (opts->indent)
++			indent =3D opts->indent;
++		if (opts->nl)
++			nl =3D opts->nl;
++		if (opts->width)
++			width =3D opts->width;
++		padding =3D opts->padding;
++	}
++	if (width <=3D 1 || !(mode & COL_ENABLED)) {
++		display_plain(list, indent, nl);
++		return;
++	}
++	die("BUG: invalid mode %d", MODE(mode));
++}
++
++struct colopt {
++	enum {
++		ENABLE,
++		MODE,
++		OPTION
++	} type;
++	const char *name;
++	int value;
++};
++
++/*
++ * Set COL_ENABLED and COL_ENABLED_SET. If 'set' is -1, check if
++ * stdout is tty.
++ */
++static int set_enable_bit(unsigned int *mode, int set, int stdout_is_t=
+ty)
++{
++	if (set < 0) {	/* auto */
++		if (stdout_is_tty < 0)
++			stdout_is_tty =3D isatty(1);
++		set =3D stdout_is_tty || (pager_in_use() && pager_use_color);
++	}
++	if (set)
++		*mode =3D *mode | COL_ENABLED | COL_ENABLED_SET;
++	else
++		*mode =3D (*mode & ~COL_ENABLED) | COL_ENABLED_SET;
++	return 0;
++}
++
++/*
++ * Set COL_MODE_*. mode is intially copied from column.ui. If
++ * COL_ENABLED_SET is not set, then neither 'always', 'never' nor
++ * 'auto' has been used. Default to 'always'.
++ */
++static int set_mode(unsigned int *mode, unsigned int value)
++{
++	*mode =3D (*mode & ~COL_MODE) | value;
++	if (!(*mode & COL_ENABLED_SET))
++		*mode |=3D COL_ENABLED | COL_ENABLED_SET;
++
++	return 0;
++}
++
++/* Set or unset other COL_* */
++static int set_option(unsigned int *mode, unsigned int opt, int set)
++{
++	if (set)
++		*mode |=3D opt;
++	else
++		*mode &=3D ~opt;
++	return 0;
++}
++
++static int parse_option(const char *arg, int len,
++			unsigned int *mode, int stdout_is_tty)
++{
++	struct colopt opts[] =3D {
++		{ ENABLE, "always",  1 },
++		{ ENABLE, "never",   0 },
++		{ ENABLE, "auto",   -1 },
++	};
++	int i;
++
++	for (i =3D 0; i < ARRAY_SIZE(opts); i++) {
++		int set =3D 1, arg_len =3D len, name_len;
++		const char *arg_str =3D arg;
++
++		if (opts[i].type =3D=3D OPTION) {
++			if (arg_len > 2 && !strncmp(arg_str, "no", 2)) {
++				arg_str +=3D 2;
++				arg_len -=3D 2;
++				set =3D 0;
++			}
 +		}
-+		at = strchr(cp, '@');
-+		colon = strchr(cp, ':');
-+		if (at && (!colon || at < colon)) {
-+			/* proxy string has username but no password, ask for password */
-+			char *ask_str, *proxyuser, *proxypass;
-+			int len;
-+			struct strbuf pbuf = STRBUF_INIT;
-+			len = at - cp;
-+			proxyuser = xmalloc(len + 1);
-+			memcpy(proxyuser, cp, len);
-+			proxyuser[len] = '\0';
-+			
-+			strbuf_addf(&pbuf, "Enter password for proxy %s...", at+1);
-+			ask_str = strbuf_detach(&pbuf, NULL);
-+			proxypass = xstrdup(git_getpass(ask_str));
-+			
-+			strbuf_insert(&pbuf, 0, curl_http_proxy, cp - curl_http_proxy);
-+			strbuf_addf(&pbuf, "%s:%s", proxyuser, proxypass);
-+			strbuf_add(&pbuf, at, strlen(at));
-+			curl_easy_setopt(result, CURLOPT_PROXY, strbuf_detach(&pbuf, NULL));
-+			
-+			free(ask_str);
-+			free(proxyuser);
-+			free(proxypass);
-+		} else {
-+			curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
++
++		name_len =3D strlen(opts[i].name);
++		if (arg_len !=3D name_len ||
++		    strncmp(arg_str, opts[i].name, name_len))
++			continue;
++
++		switch (opts[i].type) {
++		case ENABLE:
++			return set_enable_bit(mode, opts[i].value,
++					      stdout_is_tty);
++		case MODE:
++			return set_mode(mode, opts[i].value);
++		case OPTION:
++			return set_option(mode, opts[i].value, set);
++		default:
++			die("BUG: Unknown option type %d", opts[i].type);
 +		}
- 		curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
- 	}
- 
--- 
-1.7.7.6
++	}
++
++	return error("unsupported style '%s'", arg);
++}
++
++int git_config_column(unsigned int *mode, const char *value,
++		      int stdout_is_tty)
++{
++	const char *sep =3D " ,";
++
++	while (*value) {
++		int len =3D strcspn(value, sep);
++		if (len) {
++			if (parse_option(value, len, mode, stdout_is_tty))
++				return -1;
++
++			value +=3D len;
++		}
++		value +=3D strspn(value, sep);
++	}
++	return 0;
++}
++
++int parseopt_column_callback(const struct option *opt,
++			     const char *arg, int unset)
++{
++	unsigned int *mode =3D opt->value;
++	*mode |=3D COL_PARSEOPT;
++	if (unset) {
++		*mode =3D (*mode & ~COL_ENABLED) | COL_ENABLED_SET;
++		return 0;
++	}
++	if (arg)
++		return git_config_column(mode, arg, -1);
++
++	/* no arg, turn it on */
++	*mode |=3D COL_ENABLED | COL_ENABLED_SET;
++	return 0;
++}
+diff --git a/column.h b/column.h
+new file mode 100644
+index 0000000..67b1c4f
+--- /dev/null
++++ b/column.h
+@@ -0,0 +1,30 @@
++#ifndef COLUMN_H
++#define COLUMN_H
++
++#define COL_MODE          0x000F
++#define COL_ENABLED      (1 << 4)
++#define COL_ENABLED_SET  (1 << 5)  /* Has COL_ENABLED been set by conf=
+ig? */
++#define COL_PARSEOPT     (1 << 8)  /* --column is given */
++
++#define explicitly_enable_column(c) \
++	(((c) & (COL_PARSEOPT | COL_ENABLED)) =3D=3D (COL_PARSEOPT | COL_ENAB=
+LED))
++
++struct column_options {
++	int width;
++	int padding;
++	const char *indent;
++	const char *nl;
++};
++
++extern int term_columns(void);
++extern void print_columns(const struct string_list *list,
++			  unsigned int mode,
++			  struct column_options *opts);
++extern int git_config_column(unsigned int *mode, const char *value,
++			     int stdout_is_tty);
++
++struct option;
++extern int parseopt_column_callback(const struct option *opt,
++				    const char *arg, int unset);
++
++#endif
+diff --git a/command-list.txt b/command-list.txt
+index a36ee9b..fe06f15 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -20,6 +20,7 @@ git-cherry-pick                         mainporcelain
+ git-citool                              mainporcelain
+ git-clean                               mainporcelain
+ git-clone                               mainporcelain common
++git-column                              purehelpers
+ git-commit                              mainporcelain common
+ git-commit-tree                         plumbingmanipulators
+ git-config                              ancillarymanipulators
+diff --git a/git.c b/git.c
+index 3805616..419e3cc 100644
+--- a/git.c
++++ b/git.c
+@@ -348,6 +348,7 @@ static void handle_internal_command(int argc, const=
+ char **argv)
+ 		{ "cherry-pick", cmd_cherry_pick, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "clean", cmd_clean, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "clone", cmd_clone },
++		{ "column", cmd_column },
+ 		{ "commit", cmd_commit, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "commit-tree", cmd_commit_tree, RUN_SETUP },
+ 		{ "config", cmd_config, RUN_SETUP_GENTLY },
+diff --git a/parse-options.h b/parse-options.h
+index 2e811dc..56fcafd 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -238,5 +238,7 @@ extern int parse_opt_noop_cb(const struct option *,=
+ const char *, int);
+ 	  PARSE_OPT_OPTARG, &parse_opt_abbrev_cb, 0 }
+ #define OPT__COLOR(var, h) \
+ 	OPT_COLOR_FLAG(0, "color", (var), (h))
++#define OPT_COLUMN(s, l, v, h) \
++	{ OPTION_CALLBACK, (s), (l), (v), "style", (h), PARSE_OPT_OPTARG, par=
+seopt_column_callback }
+=20
+ #endif
+diff --git a/t/t9002-column.sh b/t/t9002-column.sh
+new file mode 100755
+index 0000000..b0b6d62
+--- /dev/null
++++ b/t/t9002-column.sh
+@@ -0,0 +1,27 @@
++#!/bin/sh
++
++test_description=3D'git column'
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	cat >lista <<\EOF
++one
++two
++three
++four
++five
++six
++seven
++eight
++nine
++ten
++eleven
++EOF
++'
++
++test_expect_success 'never' '
++	git column --mode=3Dnever <lista >actual &&
++	test_cmp lista actual
++'
++
++test_done
+--=20
+1.7.8.36.g69ee2
