@@ -1,84 +1,88 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: Stash during incomplete merge
-Date: Tue, 28 Feb 2012 16:24:08 -0600
-Message-ID: <4F4D5408.3060505@gmail.com>
-References: <4F4A7BC7.5010702@cisco.com> <4F4D377B.2000206@gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: git-subtree Ready #2
+Date: Tue, 28 Feb 2012 17:42:45 -0500
+Message-ID: <CAHqTa-2An1Vge-_Zjc8f0ZdgNo3Yd72YxEMSAKQkRaHfJ65n+A@mail.gmail.com>
+References: <87ty2ro1zf.fsf@smith.obbligato.org> <20120220205346.GA6335@sigill.intra.peff.net>
+ <7vd399jdwc.fsf@alter.siamese.dyndns.org> <CAHqTa-2s1xbAfNvjD7cXBe2TBMs1985nag1NOYVfE+dATvfEWA@mail.gmail.com>
+ <7vobsox84l.fsf@alter.siamese.dyndns.org> <CAHqTa-1fbi5W7R2fLu3bp7Yuv_ZB9nxhgjHkLGuU8-V4016+JA@mail.gmail.com>
+ <87hayfv75y.fsf@smith.obbligato.org> <7vy5rrfft2.fsf@alter.siamese.dyndns.org>
+ <87ty2ft0tm.fsf@smith.obbligato.org> <7vobsk56md.fsf@alter.siamese.dyndns.org>
+ <20120227212157.GA19779@sigill.intra.peff.net> <m3ehtfvhkv.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Phil Hord <hordp@cisco.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Phil Hord <phil.hord@gmail.com>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Tue Feb 28 23:24:21 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	"David A. Greene" <greened@obbligato.org>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 28 23:43:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2VT1-0007im-R2
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 23:24:20 +0100
+	id 1S2VlJ-0004yc-Hm
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 23:43:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757100Ab2B1WYI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Feb 2012 17:24:08 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:64872 "EHLO
+	id S965907Ab2B1WnI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Feb 2012 17:43:08 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:55920 "EHLO
 	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755282Ab2B1WYH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Feb 2012 17:24:07 -0500
-Received: by ggnh1 with SMTP id h1so2872790ggn.19
-        for <git@vger.kernel.org>; Tue, 28 Feb 2012 14:24:06 -0800 (PST)
-Received-SPF: pass (google.com: domain of nkreitzinger@gmail.com designates 10.101.20.1 as permitted sender) client-ip=10.101.20.1;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of nkreitzinger@gmail.com designates 10.101.20.1 as permitted sender) smtp.mail=nkreitzinger@gmail.com; dkim=pass header.i=nkreitzinger@gmail.com
-Received: from mr.google.com ([10.101.20.1])
-        by 10.101.20.1 with SMTP id x1mr8947135ani.36.1330467846304 (num_hops = 1);
-        Tue, 28 Feb 2012 14:24:06 -0800 (PST)
+	with ESMTP id S1754703Ab2B1WnG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Feb 2012 17:43:06 -0500
+Received: by ggnh1 with SMTP id h1so2880332ggn.19
+        for <git@vger.kernel.org>; Tue, 28 Feb 2012 14:43:06 -0800 (PST)
+Received-SPF: pass (google.com: domain of apenwarr@gmail.com designates 10.236.79.202 as permitted sender) client-ip=10.236.79.202;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of apenwarr@gmail.com designates 10.236.79.202 as permitted sender) smtp.mail=apenwarr@gmail.com; dkim=pass header.i=apenwarr@gmail.com
+Received: from mr.google.com ([10.236.79.202])
+        by 10.236.79.202 with SMTP id i50mr31915109yhe.61.1330468986479 (num_hops = 1);
+        Tue, 28 Feb 2012 14:43:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=lhcF5KFcywf/whldal5BZGiIWU2qT/8OGpB5IgEn7rw=;
-        b=hz06/AFkd1vge9P4pWYmZoaw1xTiHkI/EyzL//zUxBt3Rp6+r0V6k7qJ+PWqdOUov1
-         nQ4qtzIWB97zCOvwbstwV8e9gy1QGzu3Aue947cQ/oNYFOR496eYNL4i/U/0gWTGwQ3q
-         M8bJ4vNTfwLJ2MTmMAeUwuz9MJioGxvid6m3w=
-Received: by 10.101.20.1 with SMTP id x1mr6768001ani.36.1330467846257;
-        Tue, 28 Feb 2012 14:24:06 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id 32sm31086420anu.14.2012.02.28.14.24.05
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 28 Feb 2012 14:24:05 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.27) Gecko/20120216 Thunderbird/3.1.19
-In-Reply-To: <4F4D377B.2000206@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=7S1r89Uvacgu45RMdAC3fY+uYo99oAmU2dnpdKr9tOc=;
+        b=fIpjv+NRQYXwomphbOpIyc/1L55S5vUcXudSjokIizhvNUece5FH2xTC9FDDJlNZbr
+         SXQ3rpIsTmmfxLsd1WeeUAVDMkEiXGYV/g9jpTRyMbAauO1VINb2N+mKHPYD9q9jaeIa
+         OyMAIwoc4z1cL0mSeUYc3Kx/A6lAzxsMYGxF0=
+Received: by 10.236.79.202 with SMTP id i50mr24148932yhe.61.1330468986428;
+ Tue, 28 Feb 2012 14:43:06 -0800 (PST)
+Received: by 10.147.182.2 with HTTP; Tue, 28 Feb 2012 14:42:45 -0800 (PST)
+In-Reply-To: <m3ehtfvhkv.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191788>
 
-On 2/28/2012 2:22 PM, Neal Kreitzinger wrote:
+On Mon, Feb 27, 2012 at 9:04 PM, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
+> Jeff King <peff@peff.net> writes:
+>> Yeah, I don't see much point in rewriting. If parts of the history s=
+uck,
+>> then so be it. =A0It's probably not that big to store. And while it'=
+s
+>> sometimes easier to fix bad commit messages when they are recent and=
+ in
+>> your memory (rather than trying to remember later what you meant to
+>> say), I think it is already too late for that. Any archaeology you d=
+o
+>> now to make good commit messages could probably just as easily be do=
+ne
+>> if and when somebody actually needs the commit message later (emphas=
+is
+>> on the "if" -- it's likely that nobody will care about most of the
+>> commit messages later at all).
 >
-> You may also want to consider the --keep-index option on your "git
-> stash save" if your "testing" workflow doesn't involve adds or
-> commits before the git stash apply/pop.
->
-the very limited case I had in mind (and probably incorrect assumption)
-about your "testing" workflow was:
+> Anyway we already have subtree merges if subsystem with bad error
+> messages -- see gitweb.
 
-hack merge-conflicts
-$ git add conflict-resolution  (conflict-resolution is in worktree and
-index)
-hack conflict-resolution with extra stuff (original conflict-resolution
-is still in index)
-uh-oh, i got carried away and started doing extra stuff (evil merge) and
-forgot to finish testing just the conflict-resolutions (pure merge-commit)
-$ git stash --keep-index (conflict-resolution is still in index and now
-back in wokrtree)
-finish testing just the conflict-resolutions (merge-commit-to-be)
-(conflict resolutions worked (I knew they would))
-$ git stash pop (original conflict resolution is still in index, but
-extra-stuff is back in worktree)
-$ git commit (commit the conflict-resolutions/merge-commit)
-$ git add foo
-$ git commit (new foo stuff committed after merge commit)
+So be it then!  May my lame commit messages persist forever!  As if I
+don't have enough embarrassing stuff on the Internet.
 
-v/r,
-neal
+(Personally I think the vast majority of the commit messages are
+perfectly fine, and the ones that aren't generally describe boring
+commits anyway, like changes to the 'todo' file.)
+
+Have fun,
+
+Avery
