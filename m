@@ -1,65 +1,114 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [RFC PATCH 2a] pretty: detect missing \n\n in commit message
-Date: Tue, 28 Feb 2012 19:56:30 +0700
-Message-ID: <CACsJy8Cj477QnMz5ZD=i7FcFV15__zP9S-kt81pmZ2=opPBi5w@mail.gmail.com>
-References: <010901fbfffe0f806bb19d556ebc1e512a4697f4.1330425111.git.trast@student.ethz.ch>
- <5234ba4babd28d9430750d227d629b4d4386b131.1330425111.git.trast@student.ethz.ch>
+From: Seth Robertson <in-gitvger@baka.org>
+Subject: Announcing 3 git docs: Best Practices, fixing mistakes, post-production editing
+Date: Tue, 28 Feb 2012 08:04:30 -0500
+Message-ID: <201202281304.q1SD4U8W018223@no.baka.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Feb 28 13:57:19 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 28 14:04:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2McJ-0000qN-9x
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 13:57:19 +0100
+	id 1S2MjQ-000750-M7
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 14:04:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757209Ab2B1M5G convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Feb 2012 07:57:06 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:54670 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756119Ab2B1M5E convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Feb 2012 07:57:04 -0500
-Received: by lahj13 with SMTP id j13so2184449lah.19
-        for <git@vger.kernel.org>; Tue, 28 Feb 2012 04:57:02 -0800 (PST)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.112.103.8 as permitted sender) client-ip=10.112.103.8;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.112.103.8 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
-Received: from mr.google.com ([10.112.103.8])
-        by 10.112.103.8 with SMTP id fs8mr7748169lbb.39.1330433822923 (num_hops = 1);
-        Tue, 28 Feb 2012 04:57:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Q2a+IxkiuTI3OP+KLlBmQFOE3ZHBgoiCLGkmLvYFcDU=;
-        b=xtV1B9z6ord8THdZtXj/qOzESEf/6BWGAmkGP2k42wdqFggcIuA+ZbegSAIIljuu+z
-         scgKi/8EYFHICxTo0ikOPYkmC7Qjz0U//VCydztxataorJBqmzoa10NmdqlJWqfLOOlM
-         ReA9Xwabe/8nHZbi7YCuD0vTDy1ROJYZreTqE=
-Received: by 10.112.103.8 with SMTP id fs8mr6397741lbb.39.1330433822855; Tue,
- 28 Feb 2012 04:57:02 -0800 (PST)
-Received: by 10.152.111.34 with HTTP; Tue, 28 Feb 2012 04:56:30 -0800 (PST)
-In-Reply-To: <5234ba4babd28d9430750d227d629b4d4386b131.1330425111.git.trast@student.ethz.ch>
+	id S1756888Ab2B1NEc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Feb 2012 08:04:32 -0500
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: from tsutomu.baka.org ([66.114.72.182]:46706 "EHLO tsutomu.baka.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754444Ab2B1NEb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2012 08:04:31 -0500
+Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
+	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id q1SD4U6s029793
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Tue, 28 Feb 2012 08:04:30 -0500
+Received: from no.baka.org (localhost [127.0.0.1])
+	by no.baka.org (8.14.4/8.14.0) with ESMTP id q1SD4U8W018223
+	for <git@vger.kernel.org>; Tue, 28 Feb 2012 08:04:30 -0500
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191728>
 
-On Tue, Feb 28, 2012 at 5:37 PM, Thomas Rast <trast@student.ethz.ch> wr=
-ote:
-> get_header()'s exit condition is finding the \n\n that separates the
-> commit header from its message. =C2=A0If such a double newline is not
-> present, it segfaults. =C2=A0Catch this case and die().
 
-I'd prefer a gentler approach: if there's no \n\n, accept that this
-commit has no body. I think I encountered such commits in the test
-suite when I tried to convert commit encoding partially and made the
-assumption that \n\n must exist.
---=20
-Duy
+I would like to announce three git documents I have written which
+others (primarily on #git) have thought to be very useful, and so I
+would like to share them with the wider community.
+
+
+Commit Often, Perfect Later, Publish Once: Git Best Practices
+----------------------------------------------------------------------
+http://sethrobertson.github.com/GitBestPractices
+
+This first document covers a variety of topics, providing references
+and recommendations for using git.  These best practices have been
+built up through decades of professional software management and
+development, years of git usage, and countless hours helping people on
+#git.
+
+Table of Contents:
+
+Do read about git                  On Sausage Making
+Do commit early and often	   Do keep up to date
+Don't panic			   Do periodic maintenance
+Do backups			   Do enforce Standards
+Don't change published history	   Do use useful tools
+Do choose a workflow		   Do integrate with external tools
+Do divide work into repositories   Miscellaneous "Do"s
+Do make useful commit messages	   Miscellaneous "Don't"s
+
+
+
+On undoing, fixing, or removing commits or mistakes in git
+----------------------------------------------------------------------
+http://sethrobertson.github.com/GitFixUm
+
+This next document covers the process of recovering from mistakes made
+either while or when using git.  It is a choose-your-own-adventure(1)
+style document which asks a series of questions to try and understand
+exactly what you did and what you want to do.  Currently it provides
+twenty different solutions to various problems I have seen people
+have.  This was primarily developed to stop answering the same
+questions over and over again in #git, and worse, providing the wrong
+answers when questioners either failed to provide critical information
+or totally misunderstood what was going on.
+
+
+
+Post-Production Editing using Git
+----------------------------------------------------------------------
+http://sethrobertson.github.com/GitPostProduction
+
+This most recent document covers the topic of how to use git to make
+your commits appear like they were made perfectly to the outside
+world.  Doing so is something which is required by some projects, is
+recommended in gitworkflows(7) and the best practices document (On
+Sausage Making), and is a major feature of git.  However, I have not
+found good documentation on exactly how to use git to accomplish this.
+The git-rebase man page is quite extensive, but also fairly confusing
+to the uninitiated.
+
+
+I would appreciate comments, suggestions, or contributions for all
+three documents.
+
+
+                                        -Seth Robertson
+
+(1) Not affiliated with Chooseco, LLC's "Choose Your Own
+Adventure"=E2=93=A1. Good books, but a little light on the details of
+recovering from git merge errors.
