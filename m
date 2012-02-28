@@ -1,82 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/3] http: try standard proxy env vars when http.proxy
- config option is not set
-Date: Tue, 28 Feb 2012 14:15:14 -0500
-Message-ID: <20120228191514.GD11260@sigill.intra.peff.net>
-References: <4F4CCE8A.4010800@seap.minhap.es>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Tilde spec - befuzzled
+Date: Tue, 28 Feb 2012 11:20:39 -0800
+Message-ID: <7vaa42zrw8.fsf@alter.siamese.dyndns.org>
+References: <4F4C995D.9000504@diamand.org> <4F4CA354.2070503@op5.se>
+ <87zkc38a3v.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
-	sam.vilain@catalyst.net.nz, sam@vilain.net
-To: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
-X-From: git-owner@vger.kernel.org Tue Feb 28 20:15:27 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>, Luke Diamand <luke@diamand.org>,
+	Git List <git@vger.kernel.org>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Feb 28 20:20:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2SWB-0003q3-FU
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 20:15:23 +0100
+	id 1S2SbQ-0007ev-A8
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 20:20:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966019Ab2B1TPR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Feb 2012 14:15:17 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60387
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964956Ab2B1TPR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Feb 2012 14:15:17 -0500
-Received: (qmail 13179 invoked by uid 107); 28 Feb 2012 19:15:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 28 Feb 2012 14:15:20 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Feb 2012 14:15:14 -0500
-Content-Disposition: inline
-In-Reply-To: <4F4CCE8A.4010800@seap.minhap.es>
+	id S966004Ab2B1TUn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Feb 2012 14:20:43 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58171 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964997Ab2B1TUm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2012 14:20:42 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A902611B;
+	Tue, 28 Feb 2012 14:20:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=e+CU9JIWyZkfuyJHIwBV9iD2Lt8=; b=Rg8OeF
+	7/DcNOp6JSlXjUIfN2tv2wzthFar6U2VdQxnFGyn5ivatZbl5GpOUcelku4qJxlg
+	vFpoYjla4UDaS3SnuNE7hMVYOL5xHNXn0nIJHsG82+Z/PqN+l0s3t949jM3V1LOK
+	mszN+NcU2hXvWdwna/iSybSaVTwnsO7tZ4Qss=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lVTPdv/LmQnNAmdMUIEhme0JEiqXzZ4H
+	lbEdd0nTAVYoKrYGWz7O6/xpqlRt4QihdxfDN+Ri1hDS89wVcJ3BaH0agazJoEFh
+	F4WWOZtPDo2DleE9+8I0Ws20waxNAIPxCAI8xs6KI/eMTGN8pzPTC3HfeMtuqAMR
+	/njdugLgIJc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 41F16611A;
+	Tue, 28 Feb 2012 14:20:41 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CDAA46117; Tue, 28 Feb 2012
+ 14:20:40 -0500 (EST)
+In-Reply-To: <87zkc38a3v.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Tue, 28 Feb 2012 12:34:44 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4D62F862-6241-11E1-9F4F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191768>
 
-On Tue, Feb 28, 2012 at 01:54:34PM +0100, Nelson Benitez Leon wrote:
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-> diff --git a/http.c b/http.c
-> index 8ac8eb6..79cbe50 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -295,6 +295,16 @@ static CURL *get_curl_handle(void)
->  	if (curl_ftp_no_epsv)
->  		curl_easy_setopt(result, CURLOPT_FTP_USE_EPSV, 0);
->  
-> +	if (!curl_http_proxy) {
-> +		const char *env_proxy;
-> +		env_proxy = getenv("HTTP_PROXY");
-> +		if (!env_proxy) {
-> +			env_proxy = getenv("http_proxy");
-> +		}
-> +		if (env_proxy) {
-> +			curl_http_proxy = xstrdup(env_proxy);
-> +		}
-> +	}
+>>> '<rev>{tilde}<n>', e.g. 'master{tilde}3'::
+>>> A suffix '{tilde}<n>' to a revision parameter means the commit
+>>> object that is the <n>th generation grand-parent of the named
+>>> commit object, following only the first parents.
+>>> 
+>>> Hang on, *grand*-parents?
+>>> ...
+>
+> Perhaps we should reword it as "n-th first-parent ancestor"?  Barring
+> confusion about the position of the dashes, that leaves little room for
+> error.
 
-Usually we would prefer environment variables to config. So that:
+I think we could either go "easier to read but not precise"
 
-  $ git config http.proxy foo
-  $ HTTP_PROXY=bar git fetch
+	... that is the <n>th generation (grand-)parent of ...
 
-would use "bar" as the proxy, not "foo". But your code above would
-prefer "foo", right?
+or "may sound scary but correct"
 
->From reading Thomas's messages, I think there is a slight complication
-in that right now curl is respecting $http_proxy, and it is probably
-letting git's http.proxy overwrite (though I didn't check). If that is
-the case, then that is IMHO a bug that should be fixed. So the rationale
-for this patch would be three-fold:
+	the ancestor reached by walking the first-parent chain <n> times
 
-  1. Support HTTP_PROXY, which curl does not accept.
-
-  2. Fix the precedence of environment variables over config.
-
-  3. By handling the proxy variables ourselves, we have more flexibility
-     in handling the authentication.
-
--Peff
+I am not sure which bucket "n-th first-parent ancestor" falls into.
