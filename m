@@ -1,64 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH (BUGFIX)] gitweb: Handle invalid regexp in regexp search
-Date: Tue, 28 Feb 2012 11:45:11 -0800
-Message-ID: <7vwr76yc6w.fsf@alter.siamese.dyndns.org>
-References: <20120228183919.26435.86795.stgit@localhost.localdomain>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Documentation: use {asterisk} in rev-list-options.txt
+ when needed
+Date: Tue, 28 Feb 2012 14:45:51 -0500
+Message-ID: <20120228194551.GC11725@sigill.intra.peff.net>
+References: <1330443348-5742-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 28 20:45:37 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Tue Feb 28 20:46:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2SzK-000203-J2
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 20:45:30 +0100
+	id 1S2Szs-0002Un-4m
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 20:46:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757314Ab2B1TpO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Feb 2012 14:45:14 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36982 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755041Ab2B1TpN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Feb 2012 14:45:13 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 057016842;
-	Tue, 28 Feb 2012 14:45:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Qtd3AOvl4RTf2SfJYkrEkpqYliE=; b=vUjMYk
-	lT3BcbJEi6aGK7LdX6U1ntr90/TAdxcGnRp8x3NxPKLMHpXzqVs7adN6VbO5UiY7
-	q+h7x5e9QIiYTt+R6X05qABVkDBLyoHrSEOjM7Ho1DKJ1rJKh1/qraD9e/hdufLw
-	f7HXtBi4KLV6xt98aZZFP16J//avtUMizpXB0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=M6zBWZTNuppcwG/KQQQmbvHqAaSP0ZiQ
-	g4h5svzQwl8dG8qFoPU1y3UAwZ/LhZEu2y4Ia0vYHNF+WGeK8vp0HG6MyKctdzxs
-	/hQgRx4nJsM0fzcy9A1DfmIP/i/S7TaSrGj4UqmpOIEhSo6/9ielKQy0FTZiQeXA
-	ExjIviXBOj0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F12BB6838;
-	Tue, 28 Feb 2012 14:45:12 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8A7856837; Tue, 28 Feb 2012
- 14:45:12 -0500 (EST)
-In-Reply-To: <20120228183919.26435.86795.stgit@localhost.localdomain> (Jakub
- Narebski's message of "Tue, 28 Feb 2012 19:41:47 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BA9A2056-6244-11E1-BDB8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1030303Ab2B1Tpz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Feb 2012 14:45:55 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60442
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030299Ab2B1Tpy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2012 14:45:54 -0500
+Received: (qmail 13994 invoked by uid 107); 28 Feb 2012 19:45:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 28 Feb 2012 14:45:57 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Feb 2012 14:45:51 -0500
+Content-Disposition: inline
+In-Reply-To: <1330443348-5742-1-git-send-email-cmn@elego.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191777>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Tue, Feb 28, 2012 at 04:35:48PM +0100, Carlos Mart=C3=ADn Nieto wrot=
+e:
 
-> When using regexp search ('sr' parameter / $search_use_regexp variable
-> is true), check first that regexp is valid.
+> Text between to '*' is emphasized in AsciiDoc which made the
 
-Thanks.
+s/to/two/
 
-How old is this bug?  Should it go to older maitenance tracks like 1.7.6?
+> glob-related explanations in rev-list-options.txt very confusing, as
+> the rendered text would be missing two asterisks and the text between
+> them would be emphasized instead.
+>=20
+> Use '{asterisk}' where needed to make them show up as asterisks in th=
+e
+> rendered text.
+> [...]
+> -	'*', or '[', '/*' at the end is implied.
+> +	'{asterisk}', or '[', '/{asterisk}' at the end is implied.
+
+Ugh. I hate asciidoc more with each passing year. Readable source
+documents are such a wonderful idea, but the markup makes it less and
+less readable as we accumulate fixes like this.  I wonder if this has
+always been a bug, or something that appeared in more recent versions o=
+f
+the toolchain.
+
+Anyway, that is not a problem with your patch. :) I confirmed that the
+bug happens in my version of the toolchain, and your fix works (I also
+tried using `*`, but backtick does not suppress markup. It would be nic=
+e
+if there was an easy marker for "this is a literal name: no markup, tt
+font, etc", but I don't think that exists).
+
+Acked-by: Jeff King <peff@peff.net>
+
+-Peff
