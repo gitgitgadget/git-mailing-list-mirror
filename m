@@ -1,112 +1,85 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH] commit: allow {--amend|-c foo} when {HEAD|foo} has empty message
-Date: Tue, 28 Feb 2012 10:20:08 +0100
-Message-ID: <87haybco1j.fsf@thomas.inf.ethz.ch>
-References: <8529824c8569a8a0b4c4caf3a562750925758e74.1330419275.git.trast@student.ethz.ch>
-	<20120228090540.GB5757@sigill.intra.peff.net>
-	<20120228091422.GC5757@sigill.intra.peff.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Tilde spec - befuzzled
+Date: Tue, 28 Feb 2012 10:50:12 +0100
+Message-ID: <4F4CA354.2070503@op5.se>
+References: <4F4C995D.9000504@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 28 10:20:20 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Tue Feb 28 10:50:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2JEJ-0002h2-Mb
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 10:20:20 +0100
+	id 1S2JhP-00040t-J9
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 10:50:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754289Ab2B1JUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Feb 2012 04:20:13 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:7533 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753784Ab2B1JUL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Feb 2012 04:20:11 -0500
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 28 Feb
- 2012 10:20:07 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
- (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 28 Feb
- 2012 10:20:08 +0100
-In-Reply-To: <20120228091422.GC5757@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 28 Feb 2012 04:14:22 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1756275Ab2B1JuS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Feb 2012 04:50:18 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:48495 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756115Ab2B1JuQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Feb 2012 04:50:16 -0500
+Received: by lahj13 with SMTP id j13so1983644lah.19
+        for <git@vger.kernel.org>; Tue, 28 Feb 2012 01:50:15 -0800 (PST)
+Received-SPF: pass (google.com: domain of exon@op5.com designates 10.152.102.145 as permitted sender) client-ip=10.152.102.145;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of exon@op5.com designates 10.152.102.145 as permitted sender) smtp.mail=exon@op5.com
+Received: from mr.google.com ([10.152.102.145])
+        by 10.152.102.145 with SMTP id fo17mr14985389lab.2.1330422615200 (num_hops = 1);
+        Tue, 28 Feb 2012 01:50:15 -0800 (PST)
+Received: by 10.152.102.145 with SMTP id fo17mr12496691lab.2.1330422615110;
+        Tue, 28 Feb 2012 01:50:15 -0800 (PST)
+Received: from vix.int.op5.se (sth-vpn1.op5.com. [193.201.96.49])
+        by mx.google.com with ESMTPS id fl2sm21261639lbb.4.2012.02.28.01.50.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 28 Feb 2012 01:50:14 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.24) Gecko/20111108 Fedora/3.1.16-1.fc14 Thunderbird/3.1.16 ThunderGit/0.1a
+In-Reply-To: <4F4C995D.9000504@diamand.org>
+X-Gm-Message-State: ALoCoQktcs/sa/y1gsBOeBZphFFkQUc3Ksnb6kITaOsDsPidkw7QAm4PoySIUKSP9bYd8rNM43Ks
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191706>
 
-Jeff King <peff@peff.net> writes:
+On 02/28/2012 10:07 AM, Luke Diamand wrote:
+> The documentation for caret and tilde specs is making my head hurt, even though they always _do_ exactly what I want. And I thought I understood them until I read more carefully.
+> 
+> A suffix '{caret}' to a revision parameter means the first parent of
+> that commit object. '{caret}<n>' means the <n>th parent (i.e.
+> '<rev>{caret}'
+> 
+> So far, so good.
+> 
+> '<rev>{tilde}<n>', e.g. 'master{tilde}3'::
+> A suffix '{tilde}<n>' to a revision parameter means the commit
+> object that is the <n>th generation grand-parent of the named
+> commit object, following only the first parents.
+> 
+> Hang on, *grand*-parents?
+> 
 
-> On Tue, Feb 28, 2012 at 04:05:40AM -0500, Jeff King wrote:
->
->> >  	} else if (use_message) {
->> >  		buffer = strstr(use_message_buffer, "\n\n");
->> > -		if (!buffer || buffer[2] == '\0')
->> > +		if (!amend && !edit_message && (!buffer || buffer[2] == '\0'))
->> >  			die(_("commit has empty message"));
->> 
->> Hmm. So "buffer" used to never be NULL (because we would die if it is),
->> and now we might not die if we are doing an amend, no? And the next line
->> is:
->> 
->> >  		strbuf_add(&sb, buffer + 2, strlen(buffer + 2));
->> 
->> Doesn't this need to handle the case of NULL buffer (i.e., when it does
->> not already have "\n\n" in it)?
->
-> I wrote that after looking at just your patch. Looking at
-> builtin/commit.c, I think use_message_buffer will always be a re-encoded
-> commit object. So that strstr should _never_ fail unless the commit
-> object is corrupt. So the right thing is probably:
->
->   buffer = strstr(use_message_buffer, "\n\n");
->   if (!buffer)
->           die(_("commit object has invalid format"));
->   if (!amend && !edit_message && buffer[2] == '\0))
->           die(_("commit has empty message"));
+Replace "grand-parent" with "ancestor" and your head might hurt a
+little less. Caret only ever describes parent, while tilde can
+describe either parent or n'th generation grand-parent. Since parent
+and grand-parent are all ancestors, that would be a better term.
 
-Interesting.  After I got your mail, I started poking around, and it
-turns out we're in a funny situation here.  I did this:
-
-  $ git cat-file commit HEAD
-  tree 205f6b799e7d5c2524468ca006a0131aa57ecce7
-  parent c4938d8e6d23e3a8fe10e6466ecd827662c14846
-  author Thomas Rast <trast@student.ethz.ch> 1330417798 +0100
-  committer Thomas Rast <trast@student.ethz.ch> 1330417798 +0100
-
-  $ git cat-file commit HEAD | grep -v '^$' | git hash-object -w -t commit --stdin
-  f68fcc1996173a9e04bd45d42abbb7c85c79546d
-  $ git reset --hard f68fcc1996173a9e04bd45d42abbb7c85c79546d
-
-So now I'm at a commit which does not have that \n\n.  And poking around
-gives a very confusing picture:
-
-  $ git fsck
-  Checking object directories: 100% (256/256), done.
-  $ git show
-  Segmentation fault
-  $ git log
-  Segmentation fault
-  $ git format-patch -1
-  0001-.txt
-  $ cat 0001-.txt  # no output!
-  $ git bundle create test.bdl HEAD
-  error: rev-list died of signal 11
-  error: rev-list died
-  $ git rev-list HEAD
-  f68fcc1996173a9e04bd45d42abbb7c85c79546d
-  c4938d8e6d23e3a8fe10e6466ecd827662c14846
-  $ git rev-list --pretty=oneline HEAD
-  Segmentation fault
-
-So either there's a lot to be fixed, or fsck needs to catch this.
+I believe this stems from the fact that most git-gurus use a single
+caret to specify 'parent' and only go to the tilde when they want
+grandparents. It might be because caret was implemented first, or
+because of english keyboard layout. On swedish keyboards, using tilde
+is far more convenient than using caret, so that's what I mostly use
+when I want the parent of a single-parent commit (it requires only
+one hand and no thumb-acrobatics even on my laptop).
 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
