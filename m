@@ -1,75 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/3] parse-options: disallow --no-no-sth
-Date: Tue, 28 Feb 2012 13:15:10 -0800
-Message-ID: <7vlinmy80x.fsf@alter.siamese.dyndns.org>
-References: <4F49317A.3080809@lsrfire.ath.cx>
- <4F49332E.7070003@lsrfire.ath.cx> <7vy5rpcgrk.fsf@alter.siamese.dyndns.org>
- <87d390smpa.fsf@thomas.inf.ethz.ch> <7v8vjob3ff.fsf@alter.siamese.dyndns.org>
- <4F4BC3B3.7080000@lsrfire.ath.cx> <7vzkc457g3.fsf@alter.siamese.dyndns.org>
- <4F4D3545.6060704@lsrfire.ath.cx>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: Stash during incomplete merge
+Date: Tue, 28 Feb 2012 16:24:08 -0600
+Message-ID: <4F4D5408.3060505@gmail.com>
+References: <4F4A7BC7.5010702@cisco.com> <4F4D377B.2000206@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
-	Bert Wesarg <bert.wesarg@googlemail.com>,
-	Geoffrey Irving <irving@naml.us>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Jeff King <peff@peff.net>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Feb 28 22:20:40 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Phil Hord <hordp@cisco.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Phil Hord <phil.hord@gmail.com>
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Tue Feb 28 23:24:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2UTP-0000Am-OQ
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 22:20:40 +0100
+	id 1S2VT1-0007im-R2
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 23:24:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965113Ab2B1VPP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Feb 2012 16:15:15 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50710 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965001Ab2B1VPN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Feb 2012 16:15:13 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A9317E5B;
-	Tue, 28 Feb 2012 16:15:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=KW1PPTtnHIo+
-	CXO3vWjD5R/f7qA=; b=btvbH4n5QGp/SiM04qACcB7g3ClX7/B8nxa1FaWXUQQn
-	wi411Mld2vBGTqTJ17o7rDS2KOQHZq89VEx6f3Qx2/2Yz6F67NGY44taqexWM8W4
-	rAvYeGrOyQ4qfwfsPEI6S6uPFYolLdrXgRDxftvvNCXFhqACRZRG/AsUgnWRE3E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=qQNIfi
-	pCr6olthPOd9CzR5yd9rEYvUeoE6j4GGUDCqmbR5EG3fNI42T8QI+wWNeTn734B6
-	2M0rH0Y6r05oWQCI/d+UQKvuSMoiUnRInBN9JW6r+Nvbo+8+7c6gZYMAHac1zvVY
-	Si7O81aBExU0sUq+dWWauhsqvtAuydGNX4IrQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 40E3B7E5A;
-	Tue, 28 Feb 2012 16:15:13 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C5E0B7E59; Tue, 28 Feb 2012
- 16:15:11 -0500 (EST)
-In-Reply-To: <4F4D3545.6060704@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Tue, 28 Feb 2012 21:12:53 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4CD2F716-6251-11E1-A703-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757100Ab2B1WYI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Feb 2012 17:24:08 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:64872 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755282Ab2B1WYH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2012 17:24:07 -0500
+Received: by ggnh1 with SMTP id h1so2872790ggn.19
+        for <git@vger.kernel.org>; Tue, 28 Feb 2012 14:24:06 -0800 (PST)
+Received-SPF: pass (google.com: domain of nkreitzinger@gmail.com designates 10.101.20.1 as permitted sender) client-ip=10.101.20.1;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of nkreitzinger@gmail.com designates 10.101.20.1 as permitted sender) smtp.mail=nkreitzinger@gmail.com; dkim=pass header.i=nkreitzinger@gmail.com
+Received: from mr.google.com ([10.101.20.1])
+        by 10.101.20.1 with SMTP id x1mr8947135ani.36.1330467846304 (num_hops = 1);
+        Tue, 28 Feb 2012 14:24:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=lhcF5KFcywf/whldal5BZGiIWU2qT/8OGpB5IgEn7rw=;
+        b=hz06/AFkd1vge9P4pWYmZoaw1xTiHkI/EyzL//zUxBt3Rp6+r0V6k7qJ+PWqdOUov1
+         nQ4qtzIWB97zCOvwbstwV8e9gy1QGzu3Aue947cQ/oNYFOR496eYNL4i/U/0gWTGwQ3q
+         M8bJ4vNTfwLJ2MTmMAeUwuz9MJioGxvid6m3w=
+Received: by 10.101.20.1 with SMTP id x1mr6768001ani.36.1330467846257;
+        Tue, 28 Feb 2012 14:24:06 -0800 (PST)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id 32sm31086420anu.14.2012.02.28.14.24.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 28 Feb 2012 14:24:05 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.27) Gecko/20120216 Thunderbird/3.1.19
+In-Reply-To: <4F4D377B.2000206@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191787>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+On 2/28/2012 2:22 PM, Neal Kreitzinger wrote:
+>
+> You may also want to consider the --keep-index option on your "git
+> stash save" if your "testing" workflow doesn't involve adds or
+> commits before the git stash apply/pop.
+>
+the very limited case I had in mind (and probably incorrect assumption)
+about your "testing" workflow was:
 
-> Now that options whose definition starts with "no-" can be negated
-> by removing said "no-", there is no need anymore to allow them to
-> be negated by adding a second "no-", which just looks silly.
+hack merge-conflicts
+$ git add conflict-resolution  (conflict-resolution is in worktree and
+index)
+hack conflict-resolution with extra stuff (original conflict-resolution
+is still in index)
+uh-oh, i got carried away and started doing extra stuff (evil merge) and
+forgot to finish testing just the conflict-resolutions (pure merge-commit)
+$ git stash --keep-index (conflict-resolution is still in index and now
+back in wokrtree)
+finish testing just the conflict-resolutions (merge-commit-to-be)
+(conflict resolutions worked (I knew they would))
+$ git stash pop (original conflict resolution is still in index, but
+extra-stuff is back in worktree)
+$ git commit (commit the conflict-resolutions/merge-commit)
+$ git add foo
+$ git commit (new foo stuff committed after merge commit)
 
-Thanks.  But accepting them silently and do what the user would have
-expected, especially if we do not advertise it, would not hurt anybody,
-no?
+v/r,
+neal
