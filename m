@@ -1,71 +1,73 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: Tilde spec - befuzzled
-Date: Tue, 28 Feb 2012 12:34:44 +0100
-Message-ID: <87zkc38a3v.fsf@thomas.inf.ethz.ch>
-References: <4F4C995D.9000504@diamand.org> <4F4CA354.2070503@op5.se>
+From: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
+Subject: [PATCH 2/3] http: try standard proxy env vars when http.proxy config
+ option is not set
+Date: Tue, 28 Feb 2012 13:54:34 +0100
+Message-ID: <4F4CCE8A.4010800@seap.minhap.es>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Luke Diamand <luke@diamand.org>, Git List <git@vger.kernel.org>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Feb 28 12:34:53 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: peff@peff.net, sam.vilain@catalyst.net.nz, sam@vilain.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 28 12:57:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2LKX-0005TB-9O
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 12:34:53 +0100
+	id 1S2Lgf-0004Od-7Y
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 12:57:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965287Ab2B1Ler (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Feb 2012 06:34:47 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:31945 "EHLO edge10.ethz.ch"
+	id S1752189Ab2B1L5G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Feb 2012 06:57:06 -0500
+Received: from luthien2.mpt.es ([213.9.211.102]:4401 "EHLO luthien2.map.es"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965053Ab2B1Ler (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Feb 2012 06:34:47 -0500
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 28 Feb
- 2012 12:34:44 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
- (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 28 Feb
- 2012 12:34:44 +0100
-In-Reply-To: <4F4CA354.2070503@op5.se> (Andreas Ericsson's message of "Tue, 28
-	Feb 2012 10:50:12 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1750705Ab2B1L5F (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2012 06:57:05 -0500
+X-Greylist: delayed 306 seconds by postgrey-1.27 at vger.kernel.org; Tue, 28 Feb 2012 06:57:05 EST
+Received: from correo.map.es (unknown [10.1.31.68])
+	by luthien2.map.es (Postfix) with ESMTP id 43CA224EAB;
+	Tue, 28 Feb 2012 12:55:56 +0100 (CET)
+Received: from [10.47.128.147] (unknown [10.1.29.79])
+	by correo.map.es (Postfix) with ESMTP id 2A84A1800D2;
+	Tue, 28 Feb 2012 12:55:52 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0.1) Gecko/20120216 Thunderbird/10.0.1
+X-map-MapScanner: Libre de virus, Libre de virus
+X-Spam-Status: No, No
+X-map-MapScanner-Information: 
+X-map-MapScanner-ID: 43CA224EAB.97758
+X-map-MapScanner-From: nelsonjesus.benitez@seap.minhap.es
+X-map-MailScanner-Watermark: 1331034956.65507@0tZ6JQR8oDyhD4WA+6u81A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191712>
 
-Andreas Ericsson <ae@op5.se> writes:
+Signed-off-by: Nelson Benitez Leon <nbenitezl@gmail.com>
+---
+ http.c |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
 
-> On 02/28/2012 10:07 AM, Luke Diamand wrote:
->> The documentation for caret and tilde specs is making my head hurt, even though they always _do_ exactly what I want. And I thought I understood them until I read more carefully.
->> 
->> A suffix '{caret}' to a revision parameter means the first parent of
->> that commit object. '{caret}<n>' means the <n>th parent (i.e.
->> '<rev>{caret}'
->> 
->> So far, so good.
->> 
->> '<rev>{tilde}<n>', e.g. 'master{tilde}3'::
->> A suffix '{tilde}<n>' to a revision parameter means the commit
->> object that is the <n>th generation grand-parent of the named
->> commit object, following only the first parents.
->> 
->> Hang on, *grand*-parents?
->> 
->
-> Replace "grand-parent" with "ancestor" and your head might hurt a
-> little less. Caret only ever describes parent, while tilde can
-> describe either parent or n'th generation grand-parent. Since parent
-> and grand-parent are all ancestors, that would be a better term.
-
-Perhaps we should reword it as "n-th first-parent ancestor"?  Barring
-confusion about the position of the dashes, that leaves little room for
-error.
-
+diff --git a/http.c b/http.c
+index 8ac8eb6..79cbe50 100644
+--- a/http.c
++++ b/http.c
+@@ -295,6 +295,16 @@ static CURL *get_curl_handle(void)
+ 	if (curl_ftp_no_epsv)
+ 		curl_easy_setopt(result, CURLOPT_FTP_USE_EPSV, 0);
+ 
++	if (!curl_http_proxy) {
++		const char *env_proxy;
++		env_proxy = getenv("HTTP_PROXY");
++		if (!env_proxy) {
++			env_proxy = getenv("http_proxy");
++		}
++		if (env_proxy) {
++			curl_http_proxy = xstrdup(env_proxy);
++		}
++	}
+ 	if (curl_http_proxy) {
+ 		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
+ 		curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+1.7.7.6
