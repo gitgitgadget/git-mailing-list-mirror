@@ -1,9 +1,10 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v7 00/10] Column display
-Date: Tue, 28 Feb 2012 18:58:41 +0700
-Message-ID: <1330430331-19945-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v7 02/10] Stop starting pager recursively
+Date: Tue, 28 Feb 2012 18:58:43 +0700
+Message-ID: <1330430331-19945-3-git-send-email-pclouds@gmail.com>
 References: <1330170078-29353-1-git-send-email-pclouds@gmail.com>
+ <1330430331-19945-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -12,106 +13,80 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 28 12:59:05 2012
+X-From: git-owner@vger.kernel.org Tue Feb 28 12:59:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2Lhj-00050Y-3P
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 12:58:51 +0100
+	id 1S2Li0-0005Cx-7I
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 12:59:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965405Ab2B1L6q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Feb 2012 06:58:46 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:53635 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965344Ab2B1L6p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Feb 2012 06:58:45 -0500
-Received: by daed14 with SMTP id d14so2265513dae.19
-        for <git@vger.kernel.org>; Tue, 28 Feb 2012 03:58:45 -0800 (PST)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.68.197.134 as permitted sender) client-ip=10.68.197.134;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.68.197.134 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
-Received: from mr.google.com ([10.68.197.134])
-        by 10.68.197.134 with SMTP id iu6mr50673077pbc.81.1330430325308 (num_hops = 1);
-        Tue, 28 Feb 2012 03:58:45 -0800 (PST)
+	id S965457Ab2B1L7D convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Feb 2012 06:59:03 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:46462 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965344Ab2B1L7B (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2012 06:59:01 -0500
+Received: by pbcup15 with SMTP id up15so3213892pbc.19
+        for <git@vger.kernel.org>; Tue, 28 Feb 2012 03:59:00 -0800 (PST)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.68.130.131 as permitted sender) client-ip=10.68.130.131;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.68.130.131 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
+Received: from mr.google.com ([10.68.130.131])
+        by 10.68.130.131 with SMTP id oe3mr35857954pbb.60.1330430340550 (num_hops = 1);
+        Tue, 28 Feb 2012 03:59:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=w5cELpO57+jvrxKK6Ngh9TzV+qFfWOivL4RKbzAa/Sk=;
-        b=vwU/nftXAyzJvi2JGCh54RuUsCrhxzgqpYn3stC1ZGEKNNGii137YkogykRdGudE4Y
-         p5AAerZoxP9XH0zBbAh8+IsNAqAYuiQBJQWQ3GmxEd2cBvAVk1x+7p/Vu2T25avU9kFF
-         zVgcbPoZDxZVDYqJjavBto6g2n+ugzOv1flTg=
-Received: by 10.68.197.134 with SMTP id iu6mr42772966pbc.81.1330430325261;
-        Tue, 28 Feb 2012 03:58:45 -0800 (PST)
+        bh=bJTq6C1hzvr0vItmwGaCJSFuR6sljeuRvUlS21mCgVs=;
+        b=nbMxni44JUUb15TIFNROqJicM1JMDm9TxD1yijfhB9cVYe4l9p+zUbmWL1uulQWdeM
+         a26eDThqgwIRhkXHPzLjGUp7I3aORdIqeRExSFl5nBni8+weCskT76BhVPdTo8ToC/lO
+         u3q/grgSfckWcQ3UdkaMtoj12/pFtexsNbgYI=
+Received: by 10.68.130.131 with SMTP id oe3mr30565877pbb.60.1330430340426;
+        Tue, 28 Feb 2012 03:59:00 -0800 (PST)
 Received: from tre ([115.74.56.186])
-        by mx.google.com with ESMTPS id h3sm15499491pbr.75.2012.02.28.03.58.41
+        by mx.google.com with ESMTPS id i3sm6553641pbe.33.2012.02.28.03.58.56
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 28 Feb 2012 03:58:43 -0800 (PST)
-Received: by tre (sSMTP sendmail emulation); Tue, 28 Feb 2012 18:58:51 +0700
+        Tue, 28 Feb 2012 03:58:59 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Tue, 28 Feb 2012 18:59:06 +0700
 X-Mailer: git-send-email 1.7.8.36.g69ee2
-In-Reply-To: <1330170078-29353-1-git-send-email-pclouds@gmail.com>
+In-Reply-To: <1330430331-19945-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191716>
 
-Changes from v6 [1]:
+git-column can be used as a pager for other git commands, something
+like this:
 
- - Merge the first two patches into one
- - Make "help -a" support column.ui
- - Remove redundant code Ramsay pointed out in 01/10
- - Reword COL_DENSE commit message, 04/10
+    GIT_PAGER=3D"git -p column --mode=3D'dense color'" git -p branch
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/191522
+The problem with this is that "git -p column" also has $GIT_PAGER
+set so the pager runs itself again as a pager, then again and again.
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (10):
-  Add git-column for columnar display
-  Stop starting pager recursively
-  column: add columnar layout
-  column: add dense layout support
-  column: add column.ui for default column output settings
-  help: reuse print_columns() for help -a
-  branch: add --column
-  status: add --column
-  column: support piping stdout to external git-column process
-  tag: add --column
+Stop this.
 
- .gitignore                   |    1 +
- Documentation/config.txt     |   38 ++++
- Documentation/git-branch.txt |    9 +
- Documentation/git-column.txt |   53 +++++
- Documentation/git-status.txt |    7 +
- Documentation/git-tag.txt    |    9 +
- Makefile                     |    3 +
- builtin.h                    |    1 +
- builtin/branch.c             |   32 +++-
- builtin/column.c             |   62 ++++++
- builtin/commit.c             |    6 +
- builtin/help.c               |    7 +-
- builtin/tag.c                |   26 ++-
- column.c                     |  476 ++++++++++++++++++++++++++++++++++=
-++++++++
- column.h                     |   40 ++++
- command-list.txt             |    1 +
- git.c                        |    1 +
- help.c                       |   54 ++----
- help.h                       |    2 +-
- pager.c                      |    2 +-
- parse-options.h              |    2 +
- t/t3200-branch.sh            |   77 +++++++
- t/t7004-tag.sh               |   44 ++++
- t/t7508-status.sh            |   24 ++
- t/t9002-column.sh            |  161 ++++++++++++++
- wt-status.c                  |   28 +++-
- wt-status.h                  |    1 +
- 27 files changed, 1119 insertions(+), 48 deletions(-)
- create mode 100644 Documentation/git-column.txt
- create mode 100644 builtin/column.c
- create mode 100644 column.c
- create mode 100644 column.h
- create mode 100755 t/t9002-column.sh
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ pager.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
+diff --git a/pager.c b/pager.c
+index 05584de..4dcb08d 100644
+--- a/pager.c
++++ b/pager.c
+@@ -73,7 +73,7 @@ void setup_pager(void)
+ {
+ 	const char *pager =3D git_pager(isatty(1));
+=20
+-	if (!pager)
++	if (!pager || pager_in_use())
+ 		return;
+=20
+ 	/*
 --=20
 1.7.8.36.g69ee2
