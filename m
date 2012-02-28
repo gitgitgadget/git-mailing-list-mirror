@@ -1,70 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] commit: allow {--amend|-c foo} when {HEAD|foo} has empty
- message
-Date: Tue, 28 Feb 2012 14:59:32 -0500
-Message-ID: <20120228195931.GE11260@sigill.intra.peff.net>
-References: <8529824c8569a8a0b4c4caf3a562750925758e74.1330419275.git.trast@student.ethz.ch>
- <20120228090540.GB5757@sigill.intra.peff.net>
- <20120228091422.GC5757@sigill.intra.peff.net>
- <87haybco1j.fsf@thomas.inf.ethz.ch>
- <7vr4xe27sq.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH 4/3] parse-options: disallow --no-no-sth
+Date: Tue, 28 Feb 2012 21:12:53 +0100
+Message-ID: <4F4D3545.6060704@lsrfire.ath.cx>
+References: <4F49317A.3080809@lsrfire.ath.cx> <4F49332E.7070003@lsrfire.ath.cx> <7vy5rpcgrk.fsf@alter.siamese.dyndns.org> <87d390smpa.fsf@thomas.inf.ethz.ch> <7v8vjob3ff.fsf@alter.siamese.dyndns.org> <4F4BC3B3.7080000@lsrfire.ath.cx> <7vzkc457g3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Rast <trast@inf.ethz.ch>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
+	Bert Wesarg <bert.wesarg@googlemail.com>,
+	Geoffrey Irving <irving@naml.us>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 28 20:59:41 2012
+X-From: git-owner@vger.kernel.org Tue Feb 28 21:13:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2TD2-0004mX-Ow
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 20:59:41 +0100
+	id 1S2TPy-00074G-Kw
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 21:13:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965990Ab2B1T7e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Feb 2012 14:59:34 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60458
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965145Ab2B1T7e (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Feb 2012 14:59:34 -0500
-Received: (qmail 14166 invoked by uid 107); 28 Feb 2012 19:59:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 28 Feb 2012 14:59:37 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Feb 2012 14:59:32 -0500
-Content-Disposition: inline
-In-Reply-To: <7vr4xe27sq.fsf@alter.siamese.dyndns.org>
+	id S1753903Ab2B1UM6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Feb 2012 15:12:58 -0500
+Received: from india601.server4you.de ([85.25.151.105]:38279 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751448Ab2B1UM5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2012 15:12:57 -0500
+Received: from [192.168.2.105] (p4FFDAFAB.dip.t-dialin.net [79.253.175.171])
+	by india601.server4you.de (Postfix) with ESMTPSA id 2FF362F8039;
+	Tue, 28 Feb 2012 21:12:56 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <7vzkc457g3.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191780>
 
-On Tue, Feb 28, 2012 at 09:21:09AM -0800, Junio C Hamano wrote:
+Now that options whose definition starts with "no-" can be negated
+by removing said "no-", there is no need anymore to allow them to
+be negated by adding a second "no-", which just looks silly.
 
-> Thomas Rast <trast@inf.ethz.ch> writes:
-> 
-> > So either there's a lot to be fixed, or fsck needs to catch this.
-> 
-> Your experiment with hash-object aside (that is like saying "I can write
-> garbage with a disk editor, and now OS cannot read from that directory"),
+The following thirteen options are affected:
 
-Yes, but the difference between "OS cannot read from that directory" and
-"OS segfaults" might be worth noticing. :)
+	apply          --no-add
+	bisect--helper --no-checkout
+	checkout-index --no-create
+	clone          --no-checkout --no-hardlinks
+	commit         --no-verify   --no-post-rewrite
+	format-patch   --no-binary
+	hash-object    --no-filters
+	read-tree      --no-sparse-checkout
+	revert         --no-commit
+	show-branch    --no-name
+	update-ref     --no-deref
 
-> if somebody manages to create a commit without any body, it is clear that
-> the user wanted to record no body.  I think all code that tries to run
-> strstr("\n\n") and increment the resulting pointer by two to find the
-> beginning of the body should behave as if it found one and the result
-> pointed at a NUL.  Rejecting with fsck does not help anybody, as it
-> happens after the fact.
+E.g., with this patch --no-add and --add (its reverse) are still
+accepted by git apply, but --no-no-add isn't anymore.
 
-Yeah, I agree that treating it like an empty body is reasonable
-(possibly with a warning). But given that nobody has actually seen this
-in the wild, maybe it is simpler to mark it with fsck, and to just die()
-when we see it. That would hopefully alert the author of the broken tool
-early, before the tools is made public. If it turns out that such
-commits do end up in the wild, then we can relax the behavior then.
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ parse-options.c          |    3 +++
+ t/t0040-parse-options.sh |    4 ++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
--Peff
+diff --git a/parse-options.c b/parse-options.c
+index 1908996..dc59bba 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -248,6 +248,9 @@ is_abbreviated:
+ 				}
+ 				continue;
+ 			}
++			/* double negation? */
++			if (!prefixcmp(long_name, "no-"))
++				continue;
+ 			flags |= OPT_UNSET;
+ 			rest = skip_prefix(arg + 3, long_name);
+ 			/* abbreviated and negated? */
+diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+index a44bcb9..b124f3c 100755
+--- a/t/t0040-parse-options.sh
++++ b/t/t0040-parse-options.sh
+@@ -101,11 +101,11 @@ test_expect_success 'OPT_BOOL() #5' 'check boolean: 1 -B'
+ test_expect_success 'OPT_BOOL() is idempotent #1' 'check boolean: 1 --yes --yes'
+ test_expect_success 'OPT_BOOL() is idempotent #2' 'check boolean: 1 -DB'
+ 
+-test_expect_success 'OPT_BOOL() negation #1' 'check boolean: 0 -D --no-yes'
+-test_expect_success 'OPT_BOOL() negation #2' 'check boolean: 0 -D --no-no-doubt'
++test_expect_success 'OPT_BOOL() negation' 'check boolean: 0 -D --no-yes'
+ 
+ test_expect_success 'OPT_BOOL() no negation #1' 'check_unknown --fear'
+ test_expect_success 'OPT_BOOL() no negation #2' 'check_unknown --no-no-fear'
++test_expect_success 'OPT_BOOL() no negation #3' 'check_unknown --no-no-doubt'
+ 
+ test_expect_success 'OPT_BOOL() positivation' 'check boolean: 0 -D --doubt'
+ 
+-- 
+1.7.9.2
