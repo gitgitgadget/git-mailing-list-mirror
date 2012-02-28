@@ -1,89 +1,170 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git-subtree Ready #2
-Date: Mon, 27 Feb 2012 18:04:51 -0800 (PST)
-Message-ID: <m3ehtfvhkv.fsf@localhost.localdomain>
-References: <87ty2ro1zf.fsf@smith.obbligato.org>
-	<20120220205346.GA6335@sigill.intra.peff.net>
-	<7vd399jdwc.fsf@alter.siamese.dyndns.org>
-	<CAHqTa-2s1xbAfNvjD7cXBe2TBMs1985nag1NOYVfE+dATvfEWA@mail.gmail.com>
-	<7vobsox84l.fsf@alter.siamese.dyndns.org>
-	<CAHqTa-1fbi5W7R2fLu3bp7Yuv_ZB9nxhgjHkLGuU8-V4016+JA@mail.gmail.com>
-	<87hayfv75y.fsf@smith.obbligato.org>
-	<7vy5rrfft2.fsf@alter.siamese.dyndns.org>
-	<87ty2ft0tm.fsf@smith.obbligato.org>
-	<7vobsk56md.fsf@alter.siamese.dyndns.org>
-	<20120227212157.GA19779@sigill.intra.peff.net>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: Question about your comment on the git parable
+Date: Mon, 27 Feb 2012 20:41:45 -0600
+Message-ID: <4F4C3EE9.60709@gmail.com>
+References: <A98A438D-76DD-41B5-B8E1-6FA170B00801@gmail.com> <201202261229.51199.jnareb@gmail.com> <1E5ECB5A-595A-4B04-8269-6E35BF3FEA1A@gmail.com> <201202261606.25599.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"David A. Greene" <greened@obbligato.org>,
-	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 28 03:05:37 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Federico Galassi <federico.galassi@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 28 03:41:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2CRb-0001PU-IW
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 03:05:35 +0100
+	id 1S2D0h-0002kq-OR
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 03:41:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754213Ab2B1CFQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Feb 2012 21:05:16 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:64823 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753502Ab2B1CEy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Feb 2012 21:04:54 -0500
-Received: by eaah12 with SMTP id h12so2422562eaa.19
-        for <git@vger.kernel.org>; Mon, 27 Feb 2012 18:04:52 -0800 (PST)
-Received-SPF: pass (google.com: domain of jnareb@gmail.com designates 10.14.202.130 as permitted sender) client-ip=10.14.202.130;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of jnareb@gmail.com designates 10.14.202.130 as permitted sender) smtp.mail=jnareb@gmail.com; dkim=pass header.i=jnareb@gmail.com
-Received: from mr.google.com ([10.14.202.130])
-        by 10.14.202.130 with SMTP id d2mr9627199eeo.83.1330394692845 (num_hops = 1);
-        Mon, 27 Feb 2012 18:04:52 -0800 (PST)
+	id S1756711Ab2B1Clq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Feb 2012 21:41:46 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:48338 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755203Ab2B1Clp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Feb 2012 21:41:45 -0500
+Received: by yenl12 with SMTP id l12so543361yen.19
+        for <git@vger.kernel.org>; Mon, 27 Feb 2012 18:41:44 -0800 (PST)
+Received-SPF: pass (google.com: domain of nkreitzinger@gmail.com designates 10.236.145.230 as permitted sender) client-ip=10.236.145.230;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of nkreitzinger@gmail.com designates 10.236.145.230 as permitted sender) smtp.mail=nkreitzinger@gmail.com; dkim=pass header.i=nkreitzinger@gmail.com
+Received: from mr.google.com ([10.236.145.230])
+        by 10.236.145.230 with SMTP id p66mr25382527yhj.27.1330396904496 (num_hops = 1);
+        Mon, 27 Feb 2012 18:41:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=0TmOpqqVau1JgKAllZQ97pllwmieLzFwqDYvn/ZMm/c=;
-        b=DweOyVqVatzqn7hFgmi1XDBv5LPvEQGYAjUR0AwgpI+mMHYQGU8gIN+GTM+1OkhFGa
-         Y2tyAfqMoUGrQebQEm4tzhO3UGTOw4Dqkn4BS9dKeE0jvC/mWI13JeXOmS3R5aZaimA7
-         Ig1TJfW+fliPVaRMvpH8cDpXpmslWi8TC917I=
-Received: by 10.14.202.130 with SMTP id d2mr7173837eeo.83.1330394692694;
-        Mon, 27 Feb 2012 18:04:52 -0800 (PST)
-Received: from localhost.localdomain (abwi97.neoplus.adsl.tpnet.pl. [83.8.232.97])
-        by mx.google.com with ESMTPS id s48sm64679923eem.0.2012.02.27.18.04.51
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=v3rBQhn1XB2srXQwz/fIzSvOmBz6nW/ch/O+AX4vTGY=;
+        b=daJZ4AKY95ACgu6pybdZR6nGrw9IbTgoeY9Ey1wM6sFaBdhgU3cEqLkeJhixlafJBV
+         wEQfWPdHkfdBw21DPUplfACIHx9RGrKgx55MkeDNEgdUB5203YSz7WsA4aKDa6p6ZHBv
+         vRifl9QmnX7Ky/18nCKthlEDKgzLH7o5V5glU=
+Received: by 10.236.145.230 with SMTP id p66mr19066287yhj.27.1330396904341;
+        Mon, 27 Feb 2012 18:41:44 -0800 (PST)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id n72sm43266392yhh.21.2012.02.27.18.41.42
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 27 Feb 2012 18:04:51 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q1S24qDZ010995;
-	Tue, 28 Feb 2012 03:04:53 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q1S24neL010992;
-	Tue, 28 Feb 2012 03:04:49 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20120227212157.GA19779@sigill.intra.peff.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Mon, 27 Feb 2012 18:41:43 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.27) Gecko/20120216 Thunderbird/3.1.19
+In-Reply-To: <201202261606.25599.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191696>
 
-Jeff King <peff@peff.net> writes:
+On 2/26/2012 9:06 AM, Jakub Narebski wrote:
+> On Sun, 26 Feb 2012, Federico Galassi wrote:
+>> On 26/feb/2012, at 12:29, Jakub Narebski wrote:
+>>
+>>> Would you mind if this discussion was moved to git mailing
+>>> list (git@vger.kernel.org), of course always with copy directly
+>>> to you?  There are people there that can answer your questions
+>>> better.
+>>
+>> No problem.
+>>
+>>> On Sun, 26 Feb 2012, Federico Galassi wrote:
+>>>> Hello, i think you're the author of these comments:
+>>>> http://news.ycombinator.com/item?id=616610
+>>>>
+>>>> I'm doing educational work on git based on the parable (talks,
+>>>> articles, etc..) and i'd like to improve on the real reason
+>>>> for a staging area.
+>>>>
+>>>> My question basically is: why is it really needed for merging?
+>>>> I mean, given the fictional git-like system of the parable,
+>>>> if I need to merge 2 snapshots i could:
+>>>>
+>>>> 1) search the commit tree for a base point
+> [...]
+>>>> 2) compare the diffs between the snapshots and the base point snapshot
+>>>> 3) if a conflict happens (change in the same line), just leave
+>>>>    something in the working dir to mark the conflict. For example,
+>>>>    keeping it simple, the system could reject a new commit until
+>>>>    the markers of the conflict are removed from the conflicting file.
+>>>>
+>>>> Couldn't it just work this way?
+>>>
+>>> Well, it could; that is how many if not most of other version control
+>>> systems work.
+>>>
+>>>
+>>> There are (at least!) three problems with that approach.  First, sometimes
+>>> it is not possible to "leave something in the working dir to mark the
+>>> conflict".  Take for example case where binary file (e.g. image) was
+>>> changed, and textual 3-way diff file-merge algorithm wouldn't work.
+>>>
+>>> Second, what to do in the case of *tree-level* conflict, for example
+>>> rename/rename conflict, where one side renamed file to different
+>>> name (moved to different place) than the other side.  There are no
+>>> conflict markers for this...
+>>>
+>>> Third, what about false positives with detecting conflict markers,
+>>> i.e. the case where "rejecting new commit until conflict markers are
+>>> removed", for example AsciiDoc files can be falsely detected as having
+>>> partial conflict markers, and of course test vectors for testing conflict
+>>> would have to have conflict markers in them.
+>>
+>> Ok, it's clear to me that the markers in file approach is just a little
+>> bit too simple. Do you see any concrete advantage in the staging area
+>> compared to, say, tree conflict metadata in the working dir and maybe
+>> a dedicated smart "resolve conflict" command?
+>
+> First, for such _local_ information working directory isn't the best place.
+> What if you accidentally delete this?  It is not and should not be
+> committed to repository,so there is no way to undelete it, except redoing
+> merge and losing all your progress so far in resolving merge conflicts.
+> It is much better to put such information somewhere in administrative
+> area[1] of repository.
+>
+> Second, if we have staging area where we store information about which
+> files are tracked, and a bunch of per-file metadata like modification time
+> for better performance, why not use it also for storing information about
+> merge in progress?
+>
+> [1]: Name taken from "Version Control by Example" (free e-book) by
+>       Eric Sink.
+>
+>
+> There is also a thing very specific to Git, namely that "git add" adds
+> a current content of a file to object database of a repository (though
+> with modern git there is also "git add --intent-to-add" which works
+> like add-ing file in other version control systems)... and you have to
+> store reference to newly created object somewhere so that it doesn't get
+> garbage-collected.
+>
+>>>> Can you mention other situations in which the pattern "files to be added"
+>>>> is either mandatory or really helpful?
+>>>
+>>> Note that any version control system must have a kind of proto-staging
+>>> area to know which files are to be added in next commit.
+>>>
+>>> If you do
+>>>
+>>>   $ scm add file.c
+>>>
+>>> then version control system must save somewhere that 'file.c' is to be
+>>> tracked (to be added in next commit).
+>>
+>> Yes, the fictional vcs just tracked all the files in the working dir.
+>> Being selective on which file to track is of course another interesting
+>> feature.
+>
+> IRL it is a _necessary_ feature.  One of more common, if not most common
+> application of version control system is to manage source files for a
+> computer program.  And there you have object files, executables and other
+> _generated_ files which shouldn't be put in version control, not to
+> mention backups created by your editor / IDE (e.g. "*~" files in Unix
+> world, "*.bak" files in MS Windows world).
+>
+> Not to mention files which you have added to working directory, but are
+> not ready to be added to new commit.
+>
+In the google tech talk "Contributing to Git": 
+http://www.youtube.com/watch?v=j45cs5_nY2k , at the 44:00 min mark the 
+index is discussed.  It notes that many scm's have an "index" but hide 
+it from you.  Some of the advantages of git giving you access to the 
+index are also discussed.
 
-> 
-> Yeah, I don't see much point in rewriting. If parts of the history suck,
-> then so be it.  It's probably not that big to store. And while it's
-> sometimes easier to fix bad commit messages when they are recent and in
-> your memory (rather than trying to remember later what you meant to
-> say), I think it is already too late for that. Any archaeology you do
-> now to make good commit messages could probably just as easily be done
-> if and when somebody actually needs the commit message later (emphasis
-> on the "if" -- it's likely that nobody will care about most of the
-> commit messages later at all).
-
-Anyway we already have subtree merges if subsystem with bad error
-messages -- see gitweb.
--- 
-Jakub Narebski
+v/r,
+neal
