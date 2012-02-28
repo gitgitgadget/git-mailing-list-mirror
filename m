@@ -1,82 +1,71 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v6 02/11] Add git-column and column mode parsing
-Date: Tue, 28 Feb 2012 18:00:08 +0700
-Message-ID: <CACsJy8AAi7N39a1zrKpTGoFJbySxUZvh2JZRyhyE-0tXk3-sGA@mail.gmail.com>
-References: <1330170078-29353-1-git-send-email-pclouds@gmail.com>
- <1330170078-29353-3-git-send-email-pclouds@gmail.com> <4F4BE300.2060302@ramsay1.demon.co.uk>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: Tilde spec - befuzzled
+Date: Tue, 28 Feb 2012 12:34:44 +0100
+Message-ID: <87zkc38a3v.fsf@thomas.inf.ethz.ch>
+References: <4F4C995D.9000504@diamand.org> <4F4CA354.2070503@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Tue Feb 28 12:00:48 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Luke Diamand <luke@diamand.org>, Git List <git@vger.kernel.org>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Feb 28 12:34:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2KnW-0006kE-BR
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 12:00:46 +0100
+	id 1S2LKX-0005TB-9O
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 12:34:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753386Ab2B1LAk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Feb 2012 06:00:40 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:33126 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752872Ab2B1LAj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Feb 2012 06:00:39 -0500
-Received: by wejx9 with SMTP id x9so882020wej.19
-        for <git@vger.kernel.org>; Tue, 28 Feb 2012 03:00:38 -0800 (PST)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.180.107.6 as permitted sender) client-ip=10.180.107.6;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.180.107.6 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
-Received: from mr.google.com ([10.180.107.6])
-        by 10.180.107.6 with SMTP id gy6mr19464565wib.16.1330426838425 (num_hops = 1);
-        Tue, 28 Feb 2012 03:00:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=zpN2qWN9m05dtj9OeRBiFADaEwl1MvX1XvXoqWjFsm8=;
-        b=rLQctiBAS00ZsU2nsgDG3xWFYctTNIKyzpr8J1gKZtc50WAzCHrl/dSrtKB3EclQ2A
-         P52EAMt8NOVoGWXeq1V1AsSs+oGYTU6Cp4LWDiM0BOYh2nlglJLvAIVArWblaiGk+CMf
-         iofHR0j5JMU3orfQootiAjYO4DKflhhceWTkg=
-Received: by 10.180.107.6 with SMTP id gy6mr15271484wib.16.1330426838330; Tue,
- 28 Feb 2012 03:00:38 -0800 (PST)
-Received: by 10.223.13.5 with HTTP; Tue, 28 Feb 2012 03:00:08 -0800 (PST)
-In-Reply-To: <4F4BE300.2060302@ramsay1.demon.co.uk>
+	id S965287Ab2B1Ler (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Feb 2012 06:34:47 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:31945 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965053Ab2B1Ler (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2012 06:34:47 -0500
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 28 Feb
+ 2012 12:34:44 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 28 Feb
+ 2012 12:34:44 +0100
+In-Reply-To: <4F4CA354.2070503@op5.se> (Andreas Ericsson's message of "Tue, 28
+	Feb 2012 10:50:12 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191711>
 
-MjAxMi8yLzI4IFJhbXNheSBKb25lcyA8cmFtc2F5QHJhbXNheTEuZGVtb24uY28udWs+Ogo+IE5n
-dXnhu4VuIFRow6FpIE5n4buNYyBEdXkgd3JvdGU6Cj4gWy4uLl0KPj4gK3N0YXRpYyBpbnQgcGFy
-c2Vfb3B0aW9uKGNvbnN0IGNoYXIgKmFyZywgaW50IGxlbiwKPj4gKyDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCB1bnNpZ25lZCBpbnQgKm1vZGUsIGludCBzdGRvdXRfaXNfdHR5KQo+PiAr
-ewo+PiArIMKgIMKgIHN0cnVjdCBjb2xvcHQgb3B0c1tdID0gewo+PiArIMKgIMKgIMKgIMKgIMKg
-IMKgIHsgRU5BQkxFLCAiYWx3YXlzIiwgwqAxIH0sCj4+ICsgwqAgwqAgwqAgwqAgwqAgwqAgeyBF
-TkFCTEUsICJuZXZlciIsIMKgIDAgfSwKPj4gKyDCoCDCoCDCoCDCoCDCoCDCoCB7IEVOQUJMRSwg
-ImF1dG8iLCDCoCAtMSB9LAo+PiArIMKgIMKgIH07Cj4KPiBIbW0sIEkgZG9uJ3QgcmVjb2duaXNl
-IHRoaXMgdGFibGUgZnJvbSBsYXN0IHRpbWUgLi4uCj4KPj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCB9Cj4+ICsgwqAgwqAgwqAgwqAgwqAgwqAgfQo+PiArCj4+ICsgwqAgwqAgwqAg
-wqAgwqAgwqAgbmFtZV9sZW4gPSBzdHJsZW4ob3B0c1tpXS5uYW1lKTsKPj4gKyDCoCDCoCDCoCDC
-oCDCoCDCoCBpZiAoYXJnX2xlbiAhPSBuYW1lX2xlbiB8fAo+PiArIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIHN0cm5jbXAoYXJnX3N0ciwgb3B0c1tpXS5uYW1lLCBuYW1lX2xlbikpCj4+ICsgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgY29udGludWU7Cj4+ICsKPj4gKyDCoCDCoCDCoCDC
-oCDCoCDCoCBzd2l0Y2ggKG9wdHNbaV0udHlwZSkgewo+PiArIMKgIMKgIMKgIMKgIMKgIMKgIGNh
-c2UgRU5BQkxFOgo+PiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHJldHVybiBzZXRf
-ZW5hYmxlX2JpdChtb2RlLCBvcHRzW2ldLnZhbHVlLAo+PiArIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHN0ZG91dF9pc190dHkp
-Owo+Cj4gZ2l2ZW4gdGhlIGFib3ZlIHRhYmxlLCBjYW4gdGhlIGZvbGxvd2luZyBjYXNlIGxpbWJz
-IGV2ZXIgYmUgcmVhY2hlZD8KPiAodGhlICJubyIgcHJlZml4IGlzIG9ubHkgYXBwbGllZCB0byB0
-aGUgT1BUSU9OIHR5cGUsIHNvIG1vc3Qgb2YgdGhlCj4gYWJvdmUgY29kZSBzZWVtcyB0byBiZSB1
-c2VsZXNzIG5vdyAuLi4pCgpOb3QgaW4gdGhpcyBwYXRjaCwgbm8uIFRoZSB0YWJsZSBpcyBleHRl
-bmRlZCBsYXRlciBvbiB3aXRoIG1vcmUgbW9kZXMKYW5kIG9wdGlvbnMuCgo+Cj4+ICsgwqAgwqAg
-wqAgwqAgwqAgwqAgY2FzZSBNT0RFOgo+PiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IHJldHVybiBzZXRfbW9kZShtb2RlLCBvcHRzW2ldLnZhbHVlKTsKPj4gKyDCoCDCoCDCoCDCoCDC
-oCDCoCBjYXNlIE9QVElPTjoKPj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCByZXR1
-cm4gc2V0X29wdGlvbihtb2RlLCBvcHRzW2ldLnZhbHVlLCBzZXQpOwo+PiArIMKgIMKgIMKgIMKg
-IMKgIMKgIGRlZmF1bHQ6Cj4+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgZGllKCJC
-VUc6IFVua25vd24gb3B0aW9uIHR5cGUgJWQiLCBvcHRzW2ldLnR5cGUpOwo+PiArIMKgIMKgIMKg
-IMKgIMKgIMKgIH0KPj4gKyDCoCDCoCB9Cj4+ICsKPj4gKyDCoCDCoCByZXR1cm4gZXJyb3IoInVu
-c3VwcG9ydGVkIHN0eWxlICclcyciLCBhcmcpOwo+PiArfQo+PiArCgotLSAKRHV5Cg==
+Andreas Ericsson <ae@op5.se> writes:
+
+> On 02/28/2012 10:07 AM, Luke Diamand wrote:
+>> The documentation for caret and tilde specs is making my head hurt, even though they always _do_ exactly what I want. And I thought I understood them until I read more carefully.
+>> 
+>> A suffix '{caret}' to a revision parameter means the first parent of
+>> that commit object. '{caret}<n>' means the <n>th parent (i.e.
+>> '<rev>{caret}'
+>> 
+>> So far, so good.
+>> 
+>> '<rev>{tilde}<n>', e.g. 'master{tilde}3'::
+>> A suffix '{tilde}<n>' to a revision parameter means the commit
+>> object that is the <n>th generation grand-parent of the named
+>> commit object, following only the first parents.
+>> 
+>> Hang on, *grand*-parents?
+>> 
+>
+> Replace "grand-parent" with "ancestor" and your head might hurt a
+> little less. Caret only ever describes parent, while tilde can
+> describe either parent or n'th generation grand-parent. Since parent
+> and grand-parent are all ancestors, that would be a better term.
+
+Perhaps we should reword it as "n-th first-parent ancestor"?  Barring
+confusion about the position of the dashes, that leaves little room for
+error.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
