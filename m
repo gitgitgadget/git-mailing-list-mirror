@@ -1,88 +1,216 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: git-subtree Ready #2
-Date: Tue, 28 Feb 2012 17:42:45 -0500
-Message-ID: <CAHqTa-2An1Vge-_Zjc8f0ZdgNo3Yd72YxEMSAKQkRaHfJ65n+A@mail.gmail.com>
-References: <87ty2ro1zf.fsf@smith.obbligato.org> <20120220205346.GA6335@sigill.intra.peff.net>
- <7vd399jdwc.fsf@alter.siamese.dyndns.org> <CAHqTa-2s1xbAfNvjD7cXBe2TBMs1985nag1NOYVfE+dATvfEWA@mail.gmail.com>
- <7vobsox84l.fsf@alter.siamese.dyndns.org> <CAHqTa-1fbi5W7R2fLu3bp7Yuv_ZB9nxhgjHkLGuU8-V4016+JA@mail.gmail.com>
- <87hayfv75y.fsf@smith.obbligato.org> <7vy5rrfft2.fsf@alter.siamese.dyndns.org>
- <87ty2ft0tm.fsf@smith.obbligato.org> <7vobsk56md.fsf@alter.siamese.dyndns.org>
- <20120227212157.GA19779@sigill.intra.peff.net> <m3ehtfvhkv.fsf@localhost.localdomain>
+From: Jeff King <peff@peff.net>
+Subject: Re: Announcing 3 git docs: Best Practices, fixing mistakes,
+ post-production editing
+Date: Tue, 28 Feb 2012 17:52:05 -0500
+Message-ID: <20120228225205.GA23804@sigill.intra.peff.net>
+References: <201202281304.q1SD4U8W018223@no.baka.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	"David A. Greene" <greened@obbligato.org>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 28 23:43:14 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Seth Robertson <in-gitvger@baka.org>
+X-From: git-owner@vger.kernel.org Tue Feb 28 23:52:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2VlJ-0004yc-Hm
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 23:43:13 +0100
+	id 1S2Vu5-0003G2-NK
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Feb 2012 23:52:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965907Ab2B1WnI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Feb 2012 17:43:08 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:55920 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754703Ab2B1WnG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Feb 2012 17:43:06 -0500
-Received: by ggnh1 with SMTP id h1so2880332ggn.19
-        for <git@vger.kernel.org>; Tue, 28 Feb 2012 14:43:06 -0800 (PST)
-Received-SPF: pass (google.com: domain of apenwarr@gmail.com designates 10.236.79.202 as permitted sender) client-ip=10.236.79.202;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of apenwarr@gmail.com designates 10.236.79.202 as permitted sender) smtp.mail=apenwarr@gmail.com; dkim=pass header.i=apenwarr@gmail.com
-Received: from mr.google.com ([10.236.79.202])
-        by 10.236.79.202 with SMTP id i50mr31915109yhe.61.1330468986479 (num_hops = 1);
-        Tue, 28 Feb 2012 14:43:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=7S1r89Uvacgu45RMdAC3fY+uYo99oAmU2dnpdKr9tOc=;
-        b=fIpjv+NRQYXwomphbOpIyc/1L55S5vUcXudSjokIizhvNUece5FH2xTC9FDDJlNZbr
-         SXQ3rpIsTmmfxLsd1WeeUAVDMkEiXGYV/g9jpTRyMbAauO1VINb2N+mKHPYD9q9jaeIa
-         OyMAIwoc4z1cL0mSeUYc3Kx/A6lAzxsMYGxF0=
-Received: by 10.236.79.202 with SMTP id i50mr24148932yhe.61.1330468986428;
- Tue, 28 Feb 2012 14:43:06 -0800 (PST)
-Received: by 10.147.182.2 with HTTP; Tue, 28 Feb 2012 14:42:45 -0800 (PST)
-In-Reply-To: <m3ehtfvhkv.fsf@localhost.localdomain>
+	id S966119Ab2B1WwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Feb 2012 17:52:09 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60602
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754129Ab2B1WwI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2012 17:52:08 -0500
+Received: (qmail 15658 invoked by uid 107); 28 Feb 2012 22:52:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 28 Feb 2012 17:52:11 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Feb 2012 17:52:05 -0500
+Content-Disposition: inline
+In-Reply-To: <201202281304.q1SD4U8W018223@no.baka.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191789>
 
-On Mon, Feb 27, 2012 at 9:04 PM, Jakub Narebski <jnareb@gmail.com> wrot=
-e:
-> Jeff King <peff@peff.net> writes:
->> Yeah, I don't see much point in rewriting. If parts of the history s=
-uck,
->> then so be it. =A0It's probably not that big to store. And while it'=
-s
->> sometimes easier to fix bad commit messages when they are recent and=
- in
->> your memory (rather than trying to remember later what you meant to
->> say), I think it is already too late for that. Any archaeology you d=
-o
->> now to make good commit messages could probably just as easily be do=
-ne
->> if and when somebody actually needs the commit message later (emphas=
-is
->> on the "if" -- it's likely that nobody will care about most of the
->> commit messages later at all).
+On Tue, Feb 28, 2012 at 08:04:30AM -0500, Seth Robertson wrote:
+
+> Commit Often, Perfect Later, Publish Once: Git Best Practices
+> ----------------------------------------------------------------------
+> http://sethrobertson.github.com/GitBestPractices
+
+I have only read the first of the three so far, but it looks very nice.
+I did notice a few things which were worth commenting on (I'll quote
+directly from the page in question below).
+
+> [section Don't Panic, subsection Lost and Found]
 >
-> Anyway we already have subtree merges if subsystem with bad error
-> messages -- see gitweb.
+> Dangling Commit
+>
+> These are the most likely candidates for finding lost data. A dangling
+> commit is a commit no longer reachable by any branch or tag. This can
+> happen due to resets and rebases and are normal. git show SHA will let
+> you inspect them.
 
-So be it then!  May my lame commit messages persist forever!  As if I
-don't have enough embarrassing stuff on the Internet.
+Resets and rebases record the commits in the reflog (at the very least
+in the HEAD reflog), and should generally not be the cause of dangling
+commits (the objects should usually expire in the same "git gc" that
+expires the reflog entries). I suspect a more common cause is deleting
+branches, which leaves no reflog (the commits may be in the HEAD reflog
+if they were ever checked out, though).
 
-(Personally I think the vast majority of the commit messages are
-perfectly fine, and the ones that aren't generally describe boring
-commits anyway, like changes to the 'todo' file.)
+It's somewhat minor; the overall advice ("do not worry about dangling
+commits") holds. But it might be worth pointing out that the method for
+recovering an accidentally deleted branch is usually:
 
-Have fun,
+  1. look in the HEAD reflog
 
-Avery
+  2. if you can't find it there, try dangling commits
+
+> [section Do make useful commit messages]
+
+This talks about formatting, but not about content. I have long wanted
+to write a nice essay on what should go into a good commit message, but
+when I've tried it ends up very specific to the project, the type of
+commit, and the individual change. I wonder if anybody knows of
+something good you could link to.
+
+> [section On Sausage Making]
+>
+> Some people like to hide the sausage making, or in other words pretend to
+> the outside world that their commits sprung full-formed in utter
+> perfection into their git repository. Certain large public projects
+> demand this, others demand smushing all work into one large commit, and
+> still others do not care.
+>
+> A good reason to hide the sausage making is if you feel you may be
+> cherry-picking commits a lot (though this too is often a sign of bad
+> workflow). Having one or a small number of commits to pick is much
+> easier than having to find one commit here, one there, and half of this
+> other one. The latter approach makes your problem much much harder and
+> typically will lead to merge conflicts when the donor branch is finally
+> merged in.
+>
+> Another good reason is to ensure each commit compiles and/or passes
+> regression tests, and represents a different easily understood concept
+> (important for archeology). The former allows git-bisect to chose any
+> commit and have a good chance of that commit doing something useful, and
+> the latter allows for easy change review, understanding, and
+> cherry-picking.
+
+This is a nice overview of the motivation, but I think it misses one
+of the main reasons we clean up patches in git.git: code review. When
+you publish patches, you have several audiences. One of those audiences
+is the end user who will compile release v1.5. They only care about the
+end result of the patches. Another is people bisecting, who care that
+everything intermediate builds and is reasonable; you can satisfy that
+by checking each commit against a test suite. Another is people reading
+the logs later to find out what happened; it's OK for them to see that a
+bug was in the initial version, and then fixed 5 minutes later.
+
+But yet another audience is reviewers who will read your changes and
+decide they should be applied, rejected, or re-worked. For those people,
+it is much harder to review a series that introduces a bug in patch 1,
+but fixes it in patch 5. The reviewer may also notice the bug, take time
+thinking about and writing an analysis, and then get frustrated to find
+that their work was wasted when they get to patch 5.
+
+The alternative is that they stop thinking about individual patches and
+consider the whole series (e.g., when they see patch 1 has a bug, stop
+reading and look through the other patches for a fix). But that makes
+review much harder, because you have to think about a much larger series
+of changes.
+
+By cleaning up patches into single, logical changes that build on one
+another, and which don't individually regress (i.e., they are always
+moving towards some desirable common endpoint), the author is writing a
+chronological story not of what happened, but what _should_ happen, with
+the intent that the audience (i.e., reviewers) are convinced that the
+change is the right thing to do.
+
+I really liked your movie analogy. Patch series are really just
+documentaries about a change, arranged for greatest impact on the
+viewer. :)
+
+> [Do periodic maintenance]
+>
+> Compact your repo (git gc --aggressive)
+>
+> This will removed outdated dangling objects (after the two+ week grace
+> period). It will also compress any loose objects git has added since
+> your last gc. git will run gc automatically after certain commands, but
+> doing a manual --aggressive will save space and speed git operations.
+
+Most people shouldn't be using "--aggressive". Unless you have an
+existing pack that is poorly packed (e.g., because you did a
+fast-import that did not do much delta searching), you are not going to
+see much benefit, and it will take a lot longer. Basically the three
+levels of "gc" are:
+
+  1. git gc --auto; if there are too many loose objects, they will all
+     go into a new incremental pack. If there are already too many
+     packs, all of the existing packs will get re-packed together.
+
+     If we are making an incremental pack, this is by far the fastest,
+     because the speed is independent of the existing history. If we
+     pack everything together, it should be more or less the same as (2)
+     below.
+
+  2. git gc; this packs everything into a single pack. It does not use
+     high window and depth parameters, but more importantly, it reuses
+     existing deltas. That makes the delta compression phase _much_
+     faster, and it often makes the writing phase faster (because for
+     older objects, we are primarily streaming them right out of the
+     existing pack). On a big repo, though, it does do a lot of I/O,
+     because it has to rewrite the whole pack.
+
+  3. git gc --aggressive; this is often way slower than the above
+     because we throw out all of the existing deltas and recompute them
+     from scratch. The higher window parameter means it will spend a bit
+     more time computing, and it may end up with a smaller pack.
+
+In practical applications, I would expect (2) to achieve similar results to (3). If
+that isn't the case, then I think we should be tuning up the default
+window and depth parameters for non-aggressive "git gc" a bit.
+
+> [section Miscellaneous "don't"s]
+>
+> create very large repositories (when possible)
+>
+> Git can be slow in the face of large repositories. There are
+> git-config options that can help. pack.threads=1 pack.deltaCacheSize=1
+> pack.windowMemory=512m core.packedGitWindowSize=16m
+> core.packedGitLimit=128m. Other likely ones exist.
+
+It might help to qualify "big" here. To some people, 10,000 files,
+50,000 commits, and a 200M packfile is big. But that's a fraction of
+linux-2.6, which most people use. I think big here is probably getting
+into 100K-200K files (where the time to stat() files becomes noticeable,
+commits are probably not relevant (because git is usually good at only
+looking at recent bits of history for most operations), and packfiles
+above 1G or so start to get cumbersome (mostly because of the I/O on a
+full repack; but then you should consider marking a pack as .keep).
+
+But those numbers are just pulled out of a hat based on the last few
+years. Your OS, your hardware, and your expectations make a huge
+difference in what seems reasonable.
+
+Your config recommendations seem mostly related to relieving memory
+pressure for packing (at the expense of making the pack a lot slower).
+Dropping --aggressive from your gc might help a lot with that, too. It
+might be worth noting that you should only start twiddling these options
+if you are running out of memory during a repack. They will not affect
+git performance for day-to-day commands.
+
+I don't think you should need to adjust core.packedGitWindowSize or
+core.packedGitLimit at all. Those files are mmap'd, so it is up to the
+OS to be reasonable about faulting in or releasing the memory. The main
+motivation of pack windows is not memory _usage_, but rather getting a
+large contiguous chunk of the address space. mmap-ing a 4G packfile on a
+32-bit system just doesn't work. But the defaults are set to reasonable
+values for each architecture.
+
+-Peff
