@@ -1,161 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: l10n: the maintaince of git-po repo
-Date: Tue, 28 Feb 2012 21:34:03 -0800
-Message-ID: <7v1upew6d0.fsf@alter.siamese.dyndns.org>
-References: <CANYiYbGS_cFTHT1Pkafi9dmzedqezTq8k1tPkYur0b2St_c43Q@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] am -3: allow nonstandard -p<num> option
+Date: Wed, 29 Feb 2012 02:27:42 -0500
+Message-ID: <20120229072742.GA11896@sigill.intra.peff.net>
+References: <1330471495-12013-1-git-send-email-gitster@pobox.com>
+ <1330471495-12013-2-git-send-email-gitster@pobox.com>
+ <20120229025842.GA3585@sigill.intra.peff.net>
+ <7vvcmqwbto.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= Bjarmason 
-	<avarab@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 29 06:34:16 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 29 08:27:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2cB4-0002lh-RI
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Feb 2012 06:34:15 +0100
+	id 1S2dx1-0002Or-Bw
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Feb 2012 08:27:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751640Ab2B2FeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Feb 2012 00:34:08 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57526 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750773Ab2B2FeG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Feb 2012 00:34:06 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AFFD77C3C;
-	Wed, 29 Feb 2012 00:34:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LClEAeNiwHuMkA5FhnUBZFShXNo=; b=oiVLfw
-	Srk0oKDmJrpYsPmRu0IiUCpH8YxKVsoqcBPDzI/LVVimNph0AhPyaawDGgBYw+tN
-	lYlxFFooBVaVIoq3z789xA85POjiRiG2KTH/Ly36rXlklUoYem6PGlJE9MSSn9KG
-	OpKpOCf3gh6erFP5EhMxCbSRrD8hX4iNXzvKg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SFj6y8eGkZZNMbWnXLQ4ug9/VyAarAi+
-	SylByIs4EYr9a3ukFeJRq7VYgrkUyE3v/e8X21cBLIVxAp1dYPj/YpuQGpd5Jbhb
-	eUmOUBQQoKhiKD8PyAxHlKqjUC6pP303c0OMlpR+ybkW7cPJyj29wui6d0+hKp0O
-	LvoCsxbkUd8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A6C377C3B;
-	Wed, 29 Feb 2012 00:34:05 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0630E7C3A; Wed, 29 Feb 2012
- 00:34:04 -0500 (EST)
-In-Reply-To: <CANYiYbGS_cFTHT1Pkafi9dmzedqezTq8k1tPkYur0b2St_c43Q@mail.gmail.com> (Jiang
- Xin's message of "Wed, 29 Feb 2012 01:40:09 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FE6433B0-6296-11E1-A619-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1030801Ab2B2H1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Feb 2012 02:27:46 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60953
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030751Ab2B2H1p (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Feb 2012 02:27:45 -0500
+Received: (qmail 19762 invoked by uid 107); 29 Feb 2012 07:27:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 29 Feb 2012 02:27:49 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Feb 2012 02:27:42 -0500
+Content-Disposition: inline
+In-Reply-To: <7vvcmqwbto.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191812>
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+On Tue, Feb 28, 2012 at 07:36:03PM -0800, Junio C Hamano wrote:
 
-> I'm looking forward to the next git release with Chinese l10n, so that
-> I can start to rewrite my book on Git. ;-)
-
-For people who don't know, Jiang kindly sent me an autographed copy of his
-book https://plus.google.com/u/0/108182106411180467879/posts/XX2CewgxSAb I
-can only read the command examples, but the book seems to have a good
-coverage of modern Git, judging from the table of contents.
-
-> The maintaince of the git-po and git-po-zh_CN repositories so far:
->
-> git-po repository
-> -----------------
-> Location   : https://github.com/gotgit/git-po
-> Fork from  : https://github.com/git/git
-> Description: This is the Git l10n master repo, and is used to coordinate
->              works of l10n teams. L10n team leaders send pull requests
->              to this repo, while other l10n contributors should wok on
->              the language specified repository created by the l10n team
->              leader.
-
-Thanks.  I took a look.
-
-I'll comment on the changes as if they came in the patch form here, to ask
-for sanity checks from the list members.
-
->  Makefile      |    1 -
->  po/.gitignore |    1 -
->  po/git.pot    | 3494 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  po/zh_CN.po   | 3671 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  4 files changed, 7165 insertions(+), 2 deletions(-)
->  create mode 100644 po/git.pot
->  create mode 100644 po/zh_CN.po
+> > $git_apply_opt can have other stuff in it, too (from my cursory reading,
+> > it looks like --whitespace, --directory, --exclude, -C, --reject,
+> > --ignore-whitespace, and --ignore-space-change).  Those options are now
+> > passed, too.
+> >
+> > Naively, I don't think it should be a problem. Many of them will do
+> > nothing (because the patch _should_ apply cleanly to the blobs it
+> > mentions). Some seem like an obvious improvement (e.g., "--directory"
+> > should be just as necessary as "-p", I would think). For something like
+> > "--whitespace=error", I would think we would have errored out already
+> > when we first tried to apply the patch. Or maybe not. I didn't test.
 > 
-> 
-> diff --git a/Makefile b/Makefile
-> index cf2c40b..be1957a 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2635,7 +2635,6 @@ dist-doc:
->  
->  distclean: clean
->  	$(RM) configure
-> -	$(RM) po/git.pot
->  
->  profile-clean:
->  	$(RM) $(addsuffix *.gcda,$(addprefix $(PROFILE_DIR)/, $(object_dirs)))
+> An honest answer is that I didn't think deeply if they matter ;-).
 
-The file is no longer a generated file but is tracked, and should not be
-removed upon distclean.  Good.
+I figured. But once in a while it is good to hold you to the same
+standard that we do of other contributors. :)
 
-> diff --git a/po/.gitignore b/po/.gitignore
-> index 4caa631..796b96d 100644
-> --- a/po/.gitignore
-> +++ b/po/.gitignore
-> @@ -1,2 +1 @@
-> -/git.pot
->  /build
+> Certainly we would want to honor the original settings for whitespace
+> errors by propagating the option, so that we would reject or adjust when
+> synthesizing the fake ancestor tree the same way as we deal with them when
+> apply the patch for real.
 
-Likewise, it is not ignored anymore. Good.
+I did a quick test, and yes, your patch is an improvement for the other
+options, too. Though it's still not perfect. My test was:
 
-> diff --git a/po/git.pot b/po/git.pot
-> new file mode 100644
-> index 0000000..efcda39
-> --- /dev/null
-> +++ b/po/git.pot
-> @@ -0,0 +1,3494 @@
-> +# SOME DESCRIPTIVE TITLE.
-> +# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-> +# This file is distributed under the same license as the PACKAGE package.
+  # make a repo with a simple file
+  git init -q repo && cd repo &&
+  perl -le 'print for(1..10)' >foo && git add foo && git commit -qm base &&
 
-Should the above placeholder lines left as they are, or should they be
-updated to name "Git" as the "PACKAGE" with "SOME DESCRIPTIVE TITLE"?
+  # now make a whitespace-damaged patch
+  sed -i 's/3/trailing whitespace  /' foo && git commit -qam ws &&
+  git format-patch -1 --stdout >patch &&
+  git reset -q --hard HEAD^ &&
 
-If the answer is "latter", I think we would need to apply a similar update
-to po/git-gui.pot for git-gui package.
+  # now make a change that needs a 3-way merge
+  sed -i 's/5/conflicting context/' foo && git commit -qam conflict &&
 
-On the other hand, I think the placeholder lines below should stay as they
-are.
+  # and then apply our patch with 3-way fallback, erroring out on
+  # whitespace
+  git am --whitespace=error -3 patch
 
-> +# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-> +#
-> +#, fuzzy
-> +msgid ""
-> +msgstr ""
-> +"Project-Id-Version: PACKAGE VERSION\n"
-> +"Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
-> +"POT-Creation-Date: 2012-02-28 09:17+0800\n"
-> +"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-> +"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-> +"Language-Team: LANGUAGE <LL@li.org>\n"
-> +"Language: \n"
-> +"MIME-Version: 1.0\n"
-> +"Content-Type: text/plain; charset=CHARSET\n"
-> +"Content-Transfer-Encoding: 8bit\n"
-> +"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-> +
-> +#: advice.c:34
-> +#, c-format
-> +msgid "hint: %.*s\n"
-> +msgstr ""
-> ...
+which does indeed apply the patch with the wrong whitespace settings.
+With your patch, it correctly refuses to apply. Though the output is:
+
+  Applying: ws
+  /home/peff/foo/am/repo/.git/rebase-apply/patch:13: trailing whitespace.
+  trailing whitespace  
+  fatal: 1 line adds whitespace errors.
+  Repository lacks necessary blobs to fall back on 3-way merge.
+  Cannot fall back to three-way merge.
+  Patch failed at 0001 ws
+
+which is misleading. We do not lack the necessary blobs, but rather
+git-apply failed for a different reason. However, git-apply doesn't
+differentiate the situations by exit code, so git-am is left to guess.
+
+So I think the unintended side effects of your patch are likely to be a
+good thing and fix bugs. Possibly the commit message should explain
+that, but as it is already in next, I'm content to leave this thread in
+the list archive as a footnote.
+
+We could assign a special exit code to git-apply to allow git-am to
+produce a better error message. I don't know if it's worth the effort.
+
+-Peff
