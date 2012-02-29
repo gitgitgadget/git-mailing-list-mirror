@@ -1,119 +1,69 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: [RFC/PATCH] Make git-{pull,rebase} no-tracking message
- friendlier
-Date: Wed, 29 Feb 2012 18:34:03 +0100
-Message-ID: <1330536843.22763.19.camel@beez.lab.cmartin.tk>
-References: <1330013115-26355-1-git-send-email-cmn@elego.de>
-	 <vpq399wc4ns.fsf@bauges.imag.fr>
-	 <1330487854.691.24.camel@centaur.lab.cmartin.tk>
-	 <vpqbooit61u.fsf@bauges.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] pickaxe: allow -i to search in patch
+ case-insensitively
+Date: Wed, 29 Feb 2012 10:05:34 -0800
+Message-ID: <7vpqcxtt01.fsf@alter.siamese.dyndns.org>
+References: <1330474831-9030-1-git-send-email-gitster@pobox.com>
+ <1330474831-9030-3-git-send-email-gitster@pobox.com>
+ <20120229083534.GC14181@sigill.intra.peff.net>
+ <7vy5rmt3w8.fsf@alter.siamese.dyndns.org>
+ <20120229091855.GE14181@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-rLYu/6akRs3BWrW+TpXd"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Feb 29 18:35:28 2012
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 29 19:05:44 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2nR1-0002LU-Nn
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Feb 2012 18:35:28 +0100
+	id 1S2nuJ-0006Fp-Cz
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Feb 2012 19:05:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031241Ab2B2RfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Feb 2012 12:35:22 -0500
-Received: from kimmy.cmartin.tk ([91.121.65.165]:40664 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030904Ab2B2RfW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Feb 2012 12:35:22 -0500
-Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 1634546057;
-	Wed, 29 Feb 2012 18:35:15 +0100 (CET)
-In-Reply-To: <vpqbooit61u.fsf@bauges.imag.fr>
-X-Mailer: Evolution 3.2.2-1 
+	id S1757679Ab2B2SFi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Feb 2012 13:05:38 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43808 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757503Ab2B2SFh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Feb 2012 13:05:37 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A34787A5D;
+	Wed, 29 Feb 2012 13:05:36 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6u+pZhhTn7Lu5quVl8Ta4bT5LN0=; b=o4tPm3
+	dsnjgpdbWnLsZxgOVZCAQaMmHrYyiFFCEyWX7Bu5GwZxFLh/AB7Q445jDfuEpoqP
+	bVrhwi3cBtZeTqPrh7Hnh1kFTQpcrzzdTuG4M+g8lZJPHXCyxuRha3YQ4/w70qNq
+	OpJlEikug00YENxWUMIWMfwpKP/qDRdtVFS6Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dzMp69jeTZOlsJHhbEcWvLc3RJ5tSmC/
+	IVkjGfJYVNwYeOUNRWRXw1EDptSpljIffZEk2XPlkWe12eY6N2qDDXelMaVMDYK1
+	NKI7IsEzGEu6z1Pvzjklv1wkuOtBgcaOQHwK6nmrQmAXeirvG2dA93n55JJ3ni/z
+	iyq1nOcI3+g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9AD9D7A5C;
+	Wed, 29 Feb 2012 13:05:36 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 313C47A5B; Wed, 29 Feb 2012
+ 13:05:36 -0500 (EST)
+In-Reply-To: <20120229091855.GE14181@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 29 Feb 2012 04:18:55 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FAD2B6D6-62FF-11E1-9C6E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191837>
 
+Jeff King <peff@peff.net> writes:
 
---=-rLYu/6akRs3BWrW+TpXd
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> Hmm. So there are actually three potential options to flip. However, I
+> think the reasoning above is still sound.
 
-On Wed, 2012-02-29 at 09:09 +0100, Matthieu Moy wrote:
-> Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
->=20
-> > $example is a caller-given string which already contains the whole
-> > command (i.e. it's already 'git rebase <upstream branch>' or 'git pull
-> > <repository> <branch>').
->=20
-> OK, I didn't remember the exact message.
->=20
-> > In this patch I've moved that command to its own paragraph so the
-> > usage part of the output gets more visibility.
->=20
-> I prefer this, yes.
->=20
-> Perhaps we could go further and try to guess a remote and a branch name
-> to give in the example. "git push" already does that to some extend:
->=20
->   $ git -c push.default=3Dtracking push
->   fatal: The current branch my-branch has no upstream branch.
->   To push the current branch and set the remote as upstream, use
->  =20
->       git push --set-upstream origin my-branch
->=20
-> i.e. if there's a remote configured, then using it in the example makes
-> sense. I'm not sure if using the current branch name in the example
-> would also be a good thing (it usually is for "push" because most users
-> would push to a branch with the same name on the remote end).
-
-We do show the branch name in the 'remote add' text at the end, so we
-should probably try to use it here as well. What I'm assuming is the
-most usual case of one remote called 'origin' shouldn't be a problem. I
-think I'll suppress the last part of the output when there are remotes
-configured, as we can probably assume that the user is aware of them.
-
-I'm tempted to throw out the second block and say to use either 'git
-pull $remote $branch' or 'git branch --set-upstream $branch
-$remote/$branch' and refer to the documentation for more. After all,
-this is an error message, not a man page.
-
->=20
-> It may also make sense not to suggest "git remote add" if there's
-> already a remote configured. Otherwise, the case, which is probably the
-> most common, of:
->=20
->   git clone http://example.com/repo
->   cd repo
->   git checkout -b new-branch
->   git pull
->=20
-> is made far more complex than it should for the newcommer.
-
-Indeed. Removing the last part is probably better for everyone.
-
-   cmn
-
-
---=-rLYu/6akRs3BWrW+TpXd
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAABAgAGBQJPTmGLAAoJEHKRP1jG7ZzTYo4H/RhpDxZJeiRBsvqQDD8ElblS
-0oucBDUaoZgm9KP2c1xpbk+ZNV6JlqpOqn8jkn/B8WSzSKl68dA1n8qFtVCtRc/F
-duXEJ9M4vnAbxX3rcTiPNO613d3w50/kRU/R8w2vokzmIOT3Xhfr4kVTuySKK+G9
-P7dIXBA3mZXEAV6J62gDjVTPRduBxNPg7hUW4NygVKqnw6HMHoedrTSVC3QDUz5V
-SI1KEBI+wHjGJJWF9EZM+CpBcqpb9SvSGCjrF5cgZq8ZhxnrPh/GBDC2br5idyp5
-7MTgHIrU0ir1pnMUMH5quvLIDdq5jFZslLF08ELnBmd9zq4qY1FB4ugy9F7xoRY=
-=eLYs
------END PGP SIGNATURE-----
-
---=-rLYu/6akRs3BWrW+TpXd--
+Yes, the grep side of the things is easier to understand and explain if
+only one option controlled the case insensitivity or whatever aspect of
+the search: "It is like searching things in 'log -p' output!"
