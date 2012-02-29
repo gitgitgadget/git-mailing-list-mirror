@@ -1,67 +1,95 @@
-From: Zdenek Crha <zdenek.crha@gmail.com>
-Subject: git archive invocation using sha1 to specify commit
-Date: Wed, 29 Feb 2012 08:45:55 +0100
-Message-ID: <CA+OUE96-mLc0RJZz0g0oBWxdZKeCMQ9xJbg6DjCacN119TFY+A@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH] Make git-{pull,rebase} no-tracking message friendlier
+Date: Wed, 29 Feb 2012 09:09:01 +0100
+Message-ID: <vpqbooit61u.fsf@bauges.imag.fr>
+References: <1330013115-26355-1-git-send-email-cmn@elego.de>
+	<vpq399wc4ns.fsf@bauges.imag.fr>
+	<1330487854.691.24.camel@centaur.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 29 08:46:02 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Wed Feb 29 09:09:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2eEb-0008FT-Kx
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Feb 2012 08:46:02 +0100
+	id 1S2ebQ-0002VL-1s
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Feb 2012 09:09:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966138Ab2B2Hp5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Feb 2012 02:45:57 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:40325 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966122Ab2B2Hp4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Feb 2012 02:45:56 -0500
-Received: by qcqw6 with SMTP id w6so1941639qcq.19
-        for <git@vger.kernel.org>; Tue, 28 Feb 2012 23:45:56 -0800 (PST)
-Received-SPF: pass (google.com: domain of zdenek.crha@gmail.com designates 10.224.111.142 as permitted sender) client-ip=10.224.111.142;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of zdenek.crha@gmail.com designates 10.224.111.142 as permitted sender) smtp.mail=zdenek.crha@gmail.com; dkim=pass header.i=zdenek.crha@gmail.com
-Received: from mr.google.com ([10.224.111.142])
-        by 10.224.111.142 with SMTP id s14mr1188763qap.78.1330501556010 (num_hops = 1);
-        Tue, 28 Feb 2012 23:45:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=ygU0kVVbQMxKx54/y6u4xnGikTN4IOZ1As6+FPlo7+o=;
-        b=UrexE1Xgk2SuoW0GvTsuZAfQrV7Ds+APyZvzgjvGFIZl2NAmR8oC3EV1rfZgsMxUzY
-         VsUGhjxAkzuyfHeAr8yZsyKcFq1JS6XlI0Vkj4ZHyjK5fE9aeWrgNhDXsuU+pLLc/aO8
-         D6n87unMjL9iv4W+4EMofJ8NCwnw4hSQqty64=
-Received: by 10.224.111.142 with SMTP id s14mr969507qap.78.1330501555868; Tue,
- 28 Feb 2012 23:45:55 -0800 (PST)
-Received: by 10.224.120.145 with HTTP; Tue, 28 Feb 2012 23:45:55 -0800 (PST)
+	id S1756115Ab2B2IJb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Feb 2012 03:09:31 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:57919 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753191Ab2B2IJa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Feb 2012 03:09:30 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q1T84tA4002689
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 29 Feb 2012 09:04:55 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1S2eas-0006Qe-I0; Wed, 29 Feb 2012 09:09:02 +0100
+In-Reply-To: <1330487854.691.24.camel@centaur.lab.cmartin.tk> ("Carlos
+ =?iso-8859-1?Q?Mart=EDn?=
+	Nieto"'s message of "Wed, 29 Feb 2012 04:57:34 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 29 Feb 2012 09:04:55 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q1T84tA4002689
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1331107498.4142@rZLoPeLCn6P78rbP+KOR8Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191816>
 
-CC me on answers please, since I'm not subscribed to the list
+Carlos Mart=EDn Nieto <cmn@elego.de> writes:
 
-Hello,
+> $example is a caller-given string which already contains the whole
+> command (i.e. it's already 'git rebase <upstream branch>' or 'git pul=
+l
+> <repository> <branch>').
 
-I would like to ask a question about commit restriction added to git
-archive by commit (ee27ca4a: archive: don't let remote clients get
-unreachable commits, 2011-11-17) and following efforts to loosen them
-a bit.
+OK, I didn't remember the exact message.
 
-In out company we are using git together with source indexing. We
-store a git command for retrieval of source code file that was used
-for building into pdb file(s). Currently, we are using an invocation
-of git archive with --remote parameter and commit sha1 to export
-exactly the source code that was used for build.
+> In this patch I've moved that command to its own paragraph so the
+> usage part of the output gets more visibility.
 
-The above mentioned commit removed possibility to do that. I have read
-about efforts to loosen the restrictions,
-but I'm not sure whenever ability to export arbitrary sha1 will be
-allowed too. Can anybody clarify that for me please?
+I prefer this, yes.
 
-Regards,
-Zdenek Crha
+Perhaps we could go further and try to guess a remote and a branch name
+to give in the example. "git push" already does that to some extend:
+
+  $ git -c push.default=3Dtracking push
+  fatal: The current branch my-branch has no upstream branch.
+  To push the current branch and set the remote as upstream, use
+ =20
+      git push --set-upstream origin my-branch
+
+i.e. if there's a remote configured, then using it in the example makes
+sense. I'm not sure if using the current branch name in the example
+would also be a good thing (it usually is for "push" because most users
+would push to a branch with the same name on the remote end).
+
+It may also make sense not to suggest "git remote add" if there's
+already a remote configured. Otherwise, the case, which is probably the
+most common, of:
+
+  git clone http://example.com/repo
+  cd repo
+  git checkout -b new-branch
+  git pull
+
+is made far more complex than it should for the newcommer.
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
