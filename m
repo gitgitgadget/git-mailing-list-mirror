@@ -1,85 +1,104 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: Stash during incomplete merge
-Date: Wed, 29 Feb 2012 13:34:25 -0600
-Message-ID: <4F4E7DC1.1050700@gmail.com>
-References: <4F4A7BC7.5010702@cisco.com> <4F4D377B.2000206@gmail.com> <4F4D5408.3060505@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: filtering out mode-change-only changes
+Date: Wed, 29 Feb 2012 11:52:13 -0800
+Message-ID: <7vsjhts9hu.fsf@alter.siamese.dyndns.org>
+References: <jik2le$2lb$1@dough.gmane.org>
+ <7vmx82wbmr.fsf@alter.siamese.dyndns.org>
+ <7vipiqwb2g.fsf@alter.siamese.dyndns.org> <4F4E7847.9030402@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Phil Hord <phil.hord@gmail.com>
-To: Phil Hord <hordp@cisco.com>
-X-From: git-owner@vger.kernel.org Wed Feb 29 20:34:31 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 29 20:52:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2pIC-00088p-TB
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Feb 2012 20:34:29 +0100
+	id 1S2pZW-0003UY-CW
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Feb 2012 20:52:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756569Ab2B2TeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Feb 2012 14:34:23 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:64165 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754837Ab2B2TeW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Feb 2012 14:34:22 -0500
-Received: by yenl12 with SMTP id l12so1514031yen.19
-        for <git@vger.kernel.org>; Wed, 29 Feb 2012 11:34:21 -0800 (PST)
-Received-SPF: pass (google.com: domain of nkreitzinger@gmail.com designates 10.236.186.1 as permitted sender) client-ip=10.236.186.1;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of nkreitzinger@gmail.com designates 10.236.186.1 as permitted sender) smtp.mail=nkreitzinger@gmail.com; dkim=pass header.i=nkreitzinger@gmail.com
-Received: from mr.google.com ([10.236.186.1])
-        by 10.236.186.1 with SMTP id v1mr2761571yhm.4.1330544061994 (num_hops = 1);
-        Wed, 29 Feb 2012 11:34:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=8S/IqKphcAkxwOgZEdc09G+5FYuhjGubHK4Z9NehBZc=;
-        b=TuHt4qlHbISnS9thQx04sU8Njxyn6qt0oZxFQM66kb0fWFhF/aNvXCMuCJtqkOUQLf
-         8R0F4T5wl5Z2Xo0K5LsYGTCqg1AlUCZ8nJSthvYRoYakCjODPMkx2zK/EJK1adfpAcC3
-         8rVaW0CpIie/wx7IDqDB/pRqZhiBgP3L6Nwss=
-Received: by 10.236.186.1 with SMTP id v1mr2194727yhm.4.1330544061955;
-        Wed, 29 Feb 2012 11:34:21 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id r68sm58256745yhm.18.2012.02.29.11.34.20
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 29 Feb 2012 11:34:21 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.27) Gecko/20120216 Thunderbird/3.1.19
-In-Reply-To: <4F4D5408.3060505@gmail.com>
+	id S1753465Ab2B2TwR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Feb 2012 14:52:17 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64424 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751897Ab2B2TwQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Feb 2012 14:52:16 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 57F3A7708;
+	Wed, 29 Feb 2012 14:52:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VkACNWyvR071HKnSFc+D/9SeDSU=; b=i78BBV
+	pYjf+3uh+0WPwrts7Ubn4c/2IpojqQKnAVKif9hySg7ZNDoSM7ILktA86zCA8Jfc
+	D3C65hfN6wWkKrq6mRJgsT1KW6Gbdzrso6tjj3QPQolweXBMbSfXXBskiebXEZoy
+	6U7eOCOY6XcxgbgEapkfaRruZxcvbPvZNMDTQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VbSh6p5EAXO3slK28wDOME8m9thpr6BN
+	VNxlZZURPT/NsJIfEgXs1Ynhxf1mwMBFRKqJc4sVYkaQ56To9WGLJGMBg6uOhOtE
+	i8bQxMQOqcef3JLtLhZ03DcdBv6fj6euwqm0J8lwUbnzprP7VJrDVbzn9m1NOLeE
+	FVWGiLcsT64=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4ECCD7707;
+	Wed, 29 Feb 2012 14:52:15 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C980D7704; Wed, 29 Feb 2012
+ 14:52:14 -0500 (EST)
+In-Reply-To: <4F4E7847.9030402@gmail.com> (Neal Kreitzinger's message of
+ "Wed, 29 Feb 2012 13:11:03 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E0B34C70-630E-11E1-ADC0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191849>
 
-On 2/28/2012 4:24 PM, Neal Kreitzinger wrote:
-> On 2/28/2012 2:22 PM, Neal Kreitzinger wrote:
->>
->> You may also want to consider the --keep-index option on your "git
->>  stash save" if your "testing" workflow doesn't involve adds or
->> commits before the git stash apply/pop.
->>
-> the very limited case I had in mind (and probably incorrect
-> assumption) about your "testing" workflow was:
->
-> hack merge-conflicts $ git add conflict-resolution
-> (conflict-resolution is in worktree and index) hack
-> conflict-resolution with extra stuff (original conflict-resolution
-> is still in index) uh-oh, i got carried away and started doing extra
-> stuff (evil merge) and forgot to finish testing just the
-> conflict-resolutions (pure merge-commit) $ git stash --keep-index
-> (conflict-resolution is still in index and now back in wokrtree)
-> finish testing just the conflict-resolutions (merge-commit-to-be)
-> (conflict resolutions worked (I knew they would)) $ git stash pop
-> (original conflict resolution is still in index, but extra-stuff is
-> back in worktree) $ git commit (commit the
-> conflict-resolutions/merge-commit) $ git add foo $ git commit (new
-> foo stuff committed after merge commit)
->
-This imaginary scenario I proposed for --keep-index can get a
-merge-conflict on the pop so its invalid.  Please disregard it.  Sorry
-for the bum scoop.
+Neal Kreitzinger <nkreitzinger@gmail.com> writes:
 
-v/r,
-neal
+> A3-2: (Some Desired Options)
+> --name-status learns a new status for file-mode-only changes (ie, "P"
+> for "P"ermissions).
+
+After reading everything above I omitted from your response in my quote, I
+still do not get the feeling that these willy-nilly mode changes that you
+are suffering from is a problem that is general enough to warrant such a
+change, even if such a change is done as an optional feature.
+
+Calling our executable bits "Permission" is a misnomer, by the way. It is
+more about "is this an executable file?" attribute, and is not "are you
+allowed to execute this?" permission.
+
+> --raw learns "P+x" and "P-x" in the status column to tell you if the
+> executable bit was added or removed.
+
+As --raw output by definition is designed to be read by scripts that can
+and do parse its output, I do not see how this can be a useful addition at
+all. The same information is available in the separate mode column already.
+
+> I wonder if filemode tracking was somewhat of an afterthought of the
+> content-is-king design of git and that is why it is semi-opaque.
+
+Our blobs represent contents.  Whether your shell script has or does not
+have executable bits, the file has the same contents.
+
+The executable-ness of a particular file starts to matter only when you
+extract it to your working tree.  The executable-ness matters equally as
+its contents, and as the path at which it is extracted.  All three are
+recorded in an entry in a tree object and in an entry in the index, as a
+<mode, object name, path> tuple.
+
+At the end-user level, you seldom use the blob contents (identified by the
+object name in the three tuple explained above) alone without the
+surrounding context (the other two members of the three tuple) the blob
+appears in.  Especially in "diff", you not only want to view the content
+change, but also need to know the change of the context in which the blobs
+appear in.  And that is why we show "This content, or a related old
+version of it, appeared at this old path, but now it appears at this new
+path with the following change, and it lost the executable bit during the
+change."
+
+I do see nothing afterthought about the design at the storage or at the
+presentation level.
