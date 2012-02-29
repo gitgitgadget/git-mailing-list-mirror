@@ -1,73 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Incremental updates to What's cooking
-Date: Wed, 29 Feb 2012 11:28:52 -0800
-Message-ID: <7v1updtp57.fsf@alter.siamese.dyndns.org>
-References: <7vy5rn1mar.fsf@alter.siamese.dyndns.org>
- <4F4DD5C1.60604@in.waw.pl> <7vbooiuj6z.fsf@alter.siamese.dyndns.org>
- <4F4E2D32.9030209@in.waw.pl>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: Stash during incomplete merge
+Date: Wed, 29 Feb 2012 13:34:25 -0600
+Message-ID: <4F4E7DC1.1050700@gmail.com>
+References: <4F4A7BC7.5010702@cisco.com> <4F4D377B.2000206@gmail.com> <4F4D5408.3060505@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Wed Feb 29 20:29:01 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Phil Hord <phil.hord@gmail.com>
+To: Phil Hord <hordp@cisco.com>
+X-From: git-owner@vger.kernel.org Wed Feb 29 20:34:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2pCt-0002aH-Sx
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Feb 2012 20:29:00 +0100
+	id 1S2pIC-00088p-TB
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Feb 2012 20:34:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754351Ab2B2T24 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Feb 2012 14:28:56 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53489 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753503Ab2B2T24 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Feb 2012 14:28:56 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 306F170DD;
-	Wed, 29 Feb 2012 14:28:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=v8bYgCcktNQFlKhJNT/Q2YQW1
-	4o=; b=o2EUbYy10U6AsNVWxTSUsNgt0UGde+XxQX+L6zmodEsjRAWA0qu5iqHwk
-	CgOX4LPIHIaNSB3ehh6iDJT6c5y1x8JMjHBOt0LZOeKZ2xky1zo66EU1p6U4JI+j
-	u3j9xQueQNh3LiohA3Ov/8o6UvFnUQjuGraZBogSPOQ+kdtbSc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=w6KHmIthe70owvKxux6
-	ereS++9hithActGhbED+pDp3NHLwSLAEAKdcjuZoXkfOXS9jYMzV84ZBR1L0O9cU
-	qzetsQj65qexaziduSrPAYn1rJ3+T0TVGEO5gvF+Xf0hHbzd2NFNQ5xvGN7rhyJv
-	vGXpZva5Y1IDNnsl6ShrzvFk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2740E70DC;
-	Wed, 29 Feb 2012 14:28:55 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9A1D270DB; Wed, 29 Feb 2012
- 14:28:54 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9E1EAD6C-630B-11E1-95B6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756569Ab2B2TeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Feb 2012 14:34:23 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:64165 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754837Ab2B2TeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Feb 2012 14:34:22 -0500
+Received: by yenl12 with SMTP id l12so1514031yen.19
+        for <git@vger.kernel.org>; Wed, 29 Feb 2012 11:34:21 -0800 (PST)
+Received-SPF: pass (google.com: domain of nkreitzinger@gmail.com designates 10.236.186.1 as permitted sender) client-ip=10.236.186.1;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of nkreitzinger@gmail.com designates 10.236.186.1 as permitted sender) smtp.mail=nkreitzinger@gmail.com; dkim=pass header.i=nkreitzinger@gmail.com
+Received: from mr.google.com ([10.236.186.1])
+        by 10.236.186.1 with SMTP id v1mr2761571yhm.4.1330544061994 (num_hops = 1);
+        Wed, 29 Feb 2012 11:34:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=8S/IqKphcAkxwOgZEdc09G+5FYuhjGubHK4Z9NehBZc=;
+        b=TuHt4qlHbISnS9thQx04sU8Njxyn6qt0oZxFQM66kb0fWFhF/aNvXCMuCJtqkOUQLf
+         8R0F4T5wl5Z2Xo0K5LsYGTCqg1AlUCZ8nJSthvYRoYakCjODPMkx2zK/EJK1adfpAcC3
+         8rVaW0CpIie/wx7IDqDB/pRqZhiBgP3L6Nwss=
+Received: by 10.236.186.1 with SMTP id v1mr2194727yhm.4.1330544061955;
+        Wed, 29 Feb 2012 11:34:21 -0800 (PST)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id r68sm58256745yhm.18.2012.02.29.11.34.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 29 Feb 2012 11:34:21 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.27) Gecko/20120216 Thunderbird/3.1.19
+In-Reply-To: <4F4D5408.3060505@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191848>
 
-Zbigniew J=C4=99drzejewski-Szmek  <zbyszek@in.waw.pl> writes:
+On 2/28/2012 4:24 PM, Neal Kreitzinger wrote:
+> On 2/28/2012 2:22 PM, Neal Kreitzinger wrote:
+>>
+>> You may also want to consider the --keep-index option on your "git
+>>  stash save" if your "testing" workflow doesn't involve adds or
+>> commits before the git stash apply/pop.
+>>
+> the very limited case I had in mind (and probably incorrect
+> assumption) about your "testing" workflow was:
+>
+> hack merge-conflicts $ git add conflict-resolution
+> (conflict-resolution is in worktree and index) hack
+> conflict-resolution with extra stuff (original conflict-resolution
+> is still in index) uh-oh, i got carried away and started doing extra
+> stuff (evil merge) and forgot to finish testing just the
+> conflict-resolutions (pure merge-commit) $ git stash --keep-index
+> (conflict-resolution is still in index and now back in wokrtree)
+> finish testing just the conflict-resolutions (merge-commit-to-be)
+> (conflict resolutions worked (I knew they would)) $ git stash pop
+> (original conflict resolution is still in index, but extra-stuff is
+> back in worktree) $ git commit (commit the
+> conflict-resolutions/merge-commit) $ git add foo $ git commit (new
+> foo stuff committed after merge commit)
+>
+This imaginary scenario I proposed for --keep-index can get a
+merge-conflict on the pop so its invalid.  Please disregard it.  Sorry
+for the bum scoop.
 
-> t4052 tests show, log, merge, diff and format-patch with basically th=
-e
-> same commands. Separating the tests into different files would requir=
-e
-> duplicating a lot of setup code. OTOH, t4014 is only about
-> format-patch, so the other ones don't fit. I thought it would be
-> better to create a new file.
-
-OK, then perhaps we want to move the versions of duplicated one them fr=
-om
-4014 to 4052?
-
-Thanks.
+v/r,
+neal
