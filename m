@@ -1,269 +1,139 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] t4011: modernise style
-Date: Wed, 29 Feb 2012 15:45:26 -0800
-Message-ID: <7vipipqk4p.fsf@alter.siamese.dyndns.org>
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: Why Is There No Bug Tracker And Why Are Patches Sent Instead Of
+ Pull Requests
+Date: Thu, 1 Mar 2012 10:58:56 +1100
+Message-ID: <CAH5451miv_Mo_9tZV+mfDEHuEX0491duqAYh66aOzLsMLTNkaA@mail.gmail.com>
+References: <CAM=oOO2i-9zraF-YG5YzvZEmN1eXTnQfhJ-eMF04NP7HGtf41w@mail.gmail.com>
+ <7vhay9tqs6.fsf@alter.siamese.dyndns.org> <20120229225304.GA9099@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 01 00:45:37 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	opticyclic <opticyclic@gmail.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 00:59:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2tDD-000728-E7
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 00:45:35 +0100
+	id 1S2tQb-0007Lv-AU
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 00:59:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753110Ab2B2Xpa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Feb 2012 18:45:30 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55681 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752413Ab2B2Xp3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Feb 2012 18:45:29 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 49DB7688A;
-	Wed, 29 Feb 2012 18:45:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=a
-	BbFSxdNgKo14S9ve7LoHjtP6VE=; b=ILKV4jTKY64mEsiJEVdcdRzD1P4LaCB1S
-	WjtprO9w5nZ8DWw99LMykziEVdFHCcOrJwJFY09YFDvPovGEQzk5ORd2NN0H/5v3
-	2dkqOutpekftoIb6uSef08NDX80RfRROF5imdbJkjC2IxRZSIpB6SeKJ/K/itpZV
-	zA8TPSu7Wo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=WWy
-	/XEJFIGJUkXUr4N08qUPePDZ7/2jGbGwTCQ/2e2NysZ72WY+MOgt06YyVF0UsbM5
-	6mMGqt3vQULpF2dH1UQqH3hx09WFSgXZ7rwYBvsYNH9lK4b1MrMsi0PS+zhXtWkd
-	tqJBO3E49cSslLiGmY6PySMmTzv5f+du6hJlZ+OU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 425F46889;
-	Wed, 29 Feb 2012 18:45:28 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7638A6888; Wed, 29 Feb 2012
- 18:45:27 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 74F9766E-632F-11E1-A56A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757242Ab2B2X7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Feb 2012 18:59:19 -0500
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:62858 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754162Ab2B2X7S (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Feb 2012 18:59:18 -0500
+Received: by wibhm11 with SMTP id hm11so6729wib.19
+        for <git@vger.kernel.org>; Wed, 29 Feb 2012 15:59:16 -0800 (PST)
+Received-SPF: pass (google.com: domain of andrew.ardill@gmail.com designates 10.180.104.4 as permitted sender) client-ip=10.180.104.4;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of andrew.ardill@gmail.com designates 10.180.104.4 as permitted sender) smtp.mail=andrew.ardill@gmail.com; dkim=pass header.i=andrew.ardill@gmail.com
+Received: from mr.google.com ([10.180.104.4])
+        by 10.180.104.4 with SMTP id ga4mr21357009wib.17.1330559956873 (num_hops = 1);
+        Wed, 29 Feb 2012 15:59:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=kZx5sagUM6YOajAK5EbAy9dttOd/JM205N2RfLTs7Ho=;
+        b=gvwevdx4fT4wVhAJsZpGY05NE6p/EPasZXz8odnnUxsVk5s4lQOw4VCGwfamt4kPSq
+         9u2EDoJn2EMGh4DYcDvsE55+hR2jin4DixZ+37Fli2MGnDjpiOTiufU25Lz1Q8C6osQV
+         mytdoOJzBYX5WGfr3B1pEXKyGWPwhj3pjnptw=
+Received: by 10.180.104.4 with SMTP id ga4mr17095562wib.17.1330559956769; Wed,
+ 29 Feb 2012 15:59:16 -0800 (PST)
+Received: by 10.223.96.133 with HTTP; Wed, 29 Feb 2012 15:58:56 -0800 (PST)
+In-Reply-To: <20120229225304.GA9099@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191864>
 
-Match the style to more modern test scripts, namely:
+On 1 March 2012 09:53, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Junio C Hamano wrote:
+>> opticyclic <opticyclic@gmail.com> writes:
+>
+>>> Firstly, why is there no Bug Tracker such as JIRA for the git project?
+>>
+>> Probably because nobody volunteered to set-up, actively de-dupe, triage
+>> and maintain it in general.
+>
+> By the way, my usual offer/shameless plug[*] still stands: anyone who
+> can stand the interface is welcome to file, triage, and work on bugs
+> in the bugtracker at <http://bugs.debian.org/src:git>, as long as it
+> seems possible that your bugs might also affect Debian.
+>
+> "Work on" usually means "forward to the git mailing list", but maybe
+> having a bug number is a comfort to some people. ;-) See
+> <http://www.debian.org/Bugs/Reporting> for instructions.
+>
+> All that said, that is still not The Bug Tracker for the git project.
+> I would not want it advertised on git-scm.com until we have had some
+> more practice dealing with outside bugs, and maybe more contributors
+> sorting through them.
+>
+> It may be that others provide a similar service.
+>
+> Hope that clarifies a little,
+> Jonathan
+>
+> [*] http://thread.gmane.org/gmane.comp.version-control.git/181336/focus=181402
 
- - The first line of each test has prereq, title and opening sq for the
-   script body.  This makes the test shorter while reducing the need for
-   backquotes.
+I mentioned I was going to do this a while ago, but decided to bite
+the bullet and actually do it.
 
- - Be prepared for the case the previous test may have failed.  If a test
-   wants to start from not having 'frotz' that the previous test may have
-   created, write "rm -f frotz", not "rm frotz".
+I have set up a JIRA instance using Atlassian's OnDemand service,
+available at https://git-scm.atlassian.net/
 
- - Prepare the expected output inside your own test.
+The set-up is a work in progress, so don't be surprised if you log in
+and it is not brimming with content!
 
- - The order of comparison to check the result is "diff expected actual",
-   so that the output will show how the output from the git you just broke
-   is different from what is expected.
+For now I have locked it down so that anyone can sign up and log in,
+but only approved users can create issues. I imagine this restriction
+will be loosened down the track, but for now if you would like to
+contribute please email me directly with your username and I will add
+you as a 'Trusted User' (you will need to sign up first). For now,
+normal users and trusted users are identical except that trusted can
+create new issues.
+If you want to update issues you will need to be a 'Developer' - if
+you think you fall into this category please tell me and I will add
+you to it as well (this is the role I think most people active on this
+list will need to be)! This will allow you to edit issues, be assigned
+issues and resolve them.
 
- - Write no SP between redirection '>' (or '<' for that matter) and the
-   filename.
+If anyone has experience administrating JIRA and want to help out
+_please_ let me know as I know how quickly these things can grow and
+become unmanageable. Additionally, if anyone has any ideas, or thinks
+we should throw the gates open now (as opposed to locking it down for
+a time) comment here and we can make it happen.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- * Just what I happened to have noticed today.
+As I see it (and Junio has mentioned before) we are going to need
+people who are able to manage the issues in this system, ensuring that
+stale issues are closed out and progress matches what is happening on
+the list. There is no intention to replace the list as a place where
+issues are reported and discussed, however that may happen to some
+degree anyhow. We should consider how a dedicated bug tracker like
+this might impact the community and design for that.
+For my mind, if JIRA was to become a 'mirror' of what goes on here in
+the list that is ok - perhaps a duplication of efforts, but ok. If
+nothing else, we will have a structured store of information keeping
+track of issues that is very easy to access and work with.
 
- t/t4011-diff-symlink.sh |  168 +++++++++++++++++++++++------------------------
- 1 file changed, 82 insertions(+), 86 deletions(-)
+I don't think I have enough context on all that is going on on the
+list to be able to keep everything up-to-date myself, so if you think
+you can assist in this capacity, again please contact me.
 
-diff --git a/t/t4011-diff-symlink.sh b/t/t4011-diff-symlink.sh
-index 408a19c..0e1216f 100755
---- a/t/t4011-diff-symlink.sh
-+++ b/t/t4011-diff-symlink.sh
-@@ -9,85 +9,81 @@ test_description='Test diff of symlinks.
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/diff-lib.sh
- 
--cat > expected << EOF
--diff --git a/frotz b/frotz
--new file mode 120000
--index 0000000..7c465af
----- /dev/null
--+++ b/frotz
--@@ -0,0 +1 @@
--+xyzzy
--\ No newline at end of file
--EOF
--
--test_expect_success SYMLINKS \
--    'diff new symlink' \
--    'ln -s xyzzy frotz &&
--    git update-index &&
--    tree=$(git write-tree) &&
--    git update-index --add frotz &&
--    GIT_DIFF_OPTS=--unified=0 git diff-index -M -p $tree > current &&
--    compare_diff_patch current expected'
--
--test_expect_success SYMLINKS \
--    'diff unchanged symlink' \
--    'tree=$(git write-tree) &&
--    git update-index frotz &&
--    test -z "$(git diff-index --name-only $tree)"'
--
--cat > expected << EOF
--diff --git a/frotz b/frotz
--deleted file mode 120000
--index 7c465af..0000000
----- a/frotz
--+++ /dev/null
--@@ -1 +0,0 @@
---xyzzy
--\ No newline at end of file
--EOF
--
--test_expect_success SYMLINKS \
--    'diff removed symlink' \
--    'mv frotz frotz2 &&
--    git diff-index -M -p $tree > current &&
--    compare_diff_patch current expected'
-+test_expect_success SYMLINKS 'diff new symlink' '
-+	cat >expected <<-\EOF &&
-+	diff --git a/frotz b/frotz
-+	new file mode 120000
-+	index 0000000..7c465af
-+	--- /dev/null
-+	+++ b/frotz
-+	@@ -0,0 +1 @@
-+	+xyzzy
-+	\ No newline at end of file
-+	EOF
-+	ln -s xyzzy frotz &&
-+	git update-index &&
-+	tree=$(git write-tree) &&
-+	git update-index --add frotz &&
-+	GIT_DIFF_OPTS=--unified=0 git diff-index -M -p $tree >current &&
-+	compare_diff_patch expected current
-+'
- 
--cat > expected << EOF
--diff --git a/frotz b/frotz
--EOF
-+test_expect_success SYMLINKS 'diff unchanged symlink'  '
-+	cat >expected <<-\EOF &&
-+	diff --git a/frotz b/frotz
-+	deleted file mode 120000
-+	index 7c465af..0000000
-+	--- a/frotz
-+	+++ /dev/null
-+	@@ -1 +0,0 @@
-+	-xyzzy
-+	\ No newline at end of file
-+	EOF
-+	tree=$(git write-tree) &&
-+	git update-index frotz &&
-+	test -z "$(git diff-index --name-only $tree)"
-+'
- 
--test_expect_success SYMLINKS \
--    'diff identical, but newly created symlink' \
--    'ln -s xyzzy frotz &&
--    git diff-index -M -p $tree > current &&
--    compare_diff_patch current expected'
-+test_expect_success SYMLINKS 'diff removed symlink' '
-+	mv frotz frotz2 &&
-+	git diff-index -M -p $tree >current &&
-+	compare_diff_patch expected current
-+'
- 
--cat > expected << EOF
--diff --git a/frotz b/frotz
--index 7c465af..df1db54 120000
----- a/frotz
--+++ b/frotz
--@@ -1 +1 @@
---xyzzy
--\ No newline at end of file
--+yxyyz
--\ No newline at end of file
--EOF
-+test_expect_success SYMLINKS 'diff identical, but newly created symlink' '
-+	cat >expected <<-\EOF &&
-+	diff --git a/frotz b/frotz
-+	EOF
-+	ln -s xyzzy frotz &&
-+	git diff-index -M -p $tree >current &&
-+	compare_diff_patch expected current
-+'
- 
--test_expect_success SYMLINKS \
--    'diff different symlink' \
--    'rm frotz &&
--    ln -s yxyyz frotz &&
--    git diff-index -M -p $tree > current &&
--    compare_diff_patch current expected'
-+test_expect_success SYMLINKS 'diff different symlink' '
-+	cat >expected <<-\EOF &&
-+	diff --git a/frotz b/frotz
-+	index 7c465af..df1db54 120000
-+	--- a/frotz
-+	+++ b/frotz
-+	@@ -1 +1 @@
-+	-xyzzy
-+	\ No newline at end of file
-+	+yxyyz
-+	\ No newline at end of file
-+	EOF
-+	rm -f frotz &&
-+	ln -s yxyyz frotz &&
-+	git diff-index -M -p $tree >current &&
-+	compare_diff_patch expected current
-+'
- 
--test_expect_success SYMLINKS \
--    'diff symlinks with non-existing targets' \
--    'ln -s narf pinky &&
--    ln -s take\ over brain &&
--    test_must_fail git diff --no-index pinky brain > output 2> output.err &&
--    grep narf output &&
--    ! grep error output.err'
-+test_expect_success SYMLINKS 'diff symlinks with non-existing targets' '
-+	ln -s narf pinky &&
-+	ln -s take\ over brain &&
-+	test_must_fail git diff --no-index pinky brain >output 2>output.err &&
-+	grep narf output &&
-+	! test -s output.err
-+'
- 
- test_expect_success SYMLINKS 'setup symlinks with attributes' '
- 	echo "*.bin diff=bin" >>.gitattributes &&
-@@ -96,19 +92,19 @@ test_expect_success SYMLINKS 'setup symlinks with attributes' '
- 	git add -N file.bin link.bin
- '
- 
--cat >expect <<'EOF'
--diff --git a/file.bin b/file.bin
--index e69de29..d95f3ad 100644
--Binary files a/file.bin and b/file.bin differ
--diff --git a/link.bin b/link.bin
--index e69de29..dce41ec 120000
----- a/link.bin
--+++ b/link.bin
--@@ -0,0 +1 @@
--+file.bin
--\ No newline at end of file
--EOF
- test_expect_success SYMLINKS 'symlinks do not respect userdiff config by path' '
-+	cat >expect <<-\EOF &&
-+	diff --git a/file.bin b/file.bin
-+	index e69de29..d95f3ad 100644
-+	Binary files a/file.bin and b/file.bin differ
-+	diff --git a/link.bin b/link.bin
-+	index e69de29..dce41ec 120000
-+	--- a/link.bin
-+	+++ b/link.bin
-+	@@ -0,0 +1 @@
-+	+file.bin
-+	\ No newline at end of file
-+	EOF
- 	git config diff.bin.binary true &&
- 	git diff file.bin link.bin >actual &&
- 	test_cmp expect actual
+In case you were interested, some information on me:
+I am a keen git user of who-knows-how-many years, and have been
+following the list for the last 12 months or so. My day job is as a
+JIRA Consultant (and everything else!) with the premier Atlassian
+services partner [1].
+
+Regards,
+
+Andrew Ardill
+
+[1] customware.net - we also work with Zendesk, and offer custom
+plugins, customisations, theming, training and support packages as
+well
