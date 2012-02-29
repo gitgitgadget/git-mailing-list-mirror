@@ -1,164 +1,188 @@
-From: Tim Schumacher <schumact@gmail.com>
-Subject: Re: Building GIT on older systems.
-Date: Wed, 29 Feb 2012 15:17:24 -0700
-Message-ID: <4F4EA3F4.7040501@gmail.com>
-References: <CAFqtsHfrk89qHexg8VwMZnKwgWDqbseJNNKFSUkwDtVKX_t=5g@mail.gmail.com> <CAFqtsHd=b=Ey8j1zTCC4-fut7rno3daQ2Q3HMs3k2SHFvE4dSQ@mail.gmail.com> <20120229205510.GA628@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: filtering out mode-change-only changes
+Date: Wed, 29 Feb 2012 14:17:39 -0800
+Message-ID: <7v7gz5s2rg.fsf@alter.siamese.dyndns.org>
+References: <jik2le$2lb$1@dough.gmane.org>
+ <7vmx82wbmr.fsf@alter.siamese.dyndns.org>
+ <7vipiqwb2g.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 29 23:18:05 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "Neal Kreitzinger" <neal@rsss.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 29 23:18:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2rqT-00021s-MO
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Feb 2012 23:18:02 +0100
+	id 1S2rqV-00021s-18
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Feb 2012 23:18:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756291Ab2B2WR2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Feb 2012 17:17:28 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:47407 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751810Ab2B2WR1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Feb 2012 17:17:27 -0500
-Received: by yhmm54 with SMTP id m54so1912418yhm.19
-        for <git@vger.kernel.org>; Wed, 29 Feb 2012 14:17:26 -0800 (PST)
-Received-SPF: pass (google.com: domain of schumact@gmail.com designates 10.236.201.232 as permitted sender) client-ip=10.236.201.232;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of schumact@gmail.com designates 10.236.201.232 as permitted sender) smtp.mail=schumact@gmail.com; dkim=pass header.i=schumact@gmail.com
-Received: from mr.google.com ([10.236.201.232])
-        by 10.236.201.232 with SMTP id b68mr3296582yho.129.1330553846891 (num_hops = 1);
-        Wed, 29 Feb 2012 14:17:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=atCfUbyFBXy4Yx/QJ3d78iixE1SWXcjDQpV8ghrCh5o=;
-        b=xzt/qbZZsDdOgjE8EateuTSF5ijgaI9KqtNQ/NMr+FbZg0wbG/CSIJg9L6P8eqqA9o
-         wgdLApOPjQ2m9aKxO1ghl9HoRtnmw2bfRdaksrwfQaycAWmLJji8vOVfP4Djud4W48s/
-         wwDBBvdj9fToye83rPBgXkmt+a8IejRrlSlMg=
-Received: by 10.236.201.232 with SMTP id b68mr2602911yho.129.1330553846832;
-        Wed, 29 Feb 2012 14:17:26 -0800 (PST)
-Received: from [192.168.100.110] ([69.15.86.83])
-        by mx.google.com with ESMTPS id g21sm32176416ani.13.2012.02.29.14.17.25
-        (version=SSLv3 cipher=OTHER);
-        Wed, 29 Feb 2012 14:17:26 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <20120229205510.GA628@sigill.intra.peff.net>
+	id S932257Ab2B2WR6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Feb 2012 17:17:58 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40758 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932240Ab2B2WRo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Feb 2012 17:17:44 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D875865E8;
+	Wed, 29 Feb 2012 17:17:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vLWydWvKZ3NUj993G7fnzrqtU6Y=; b=Ln5cf5
+	BUOgNg1ZaoruWAbycPkOAhVfSUQk3LzHHx+igCl3tzTv7U4BgN4W/4FWiHG8rc9H
+	dqZF2NVSPlXmS8qzrTTpdcevcV5dwJZ+4T2UKTBqwbA4DiyxTMLhSluSLsm9IxVH
+	T9nJZ0RO+byk6fEmYfAj+MY+6Egk6y64Cf7KE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nfESXkVlabqL4RTnIDshRpK7yzJAeyIE
+	Zlhp2E0GorlJkmmha5w3cWwtX3/HF2+WDkWnCqcM4YuV8R9rbQUa6ptOWVGlZe5a
+	elteb3WGit+qPCRB9mpDgFgbae7GJx15/w8YtMU00lEnaU1O+qE+wLbCXrjR7zMu
+	MygURFN5ebU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D116A65E7;
+	Wed, 29 Feb 2012 17:17:42 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ECDDD65E1; Wed, 29 Feb 2012
+ 17:17:40 -0500 (EST)
+In-Reply-To: <7vipiqwb2g.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 28 Feb 2012 19:52:23 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 31E3629C-6323-11E1-8A03-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191861>
 
-Hi Peff, thanks!
+Junio C Hamano <gitster@pobox.com> writes:
 
-Comments in-line below.
+> Having said that, if we _were_ to do this built-in, an obvious logical
+> place to do so is to define a new DIFF_OPT_IGNORE_EXECUTABLE_BIT, teach
+> "--ignore-executable-bit" command line option to diff_opt_parse(), and
+> then teach diff_resolve_rename_copy() to consider this bit when the code
+> originally set DIFF_STATUS_MODIFIED.  Instead, the updated code that is
+> working under --ignore-executable-bit option would drop such a filepair
+> from diff_queued_diff.
 
--Tim
+A patch to do so may look like this (untested, of course).  A few things
+to note on the changes:
 
-On 2/29/2012 1:55 PM, Jeff King wrote:
-> On Wed, Feb 29, 2012 at 01:22:21PM -0700, Tim Schumacher wrote:
->
->> After a long battle trying to get git to compile on my dev boxes I am
->> seeking help from the gurus...  I have an old system, redhat linux
->> 7.3, with a 2.4.18 kernel with gcc 2.96 toolchain.  Unfortuneatly,
->> upgrading is not currently an option.
-> That's pretty old, but I would think git should be build-able on it with
-> the right Makefile flags set. We build on even older versions of
-> Solaris.
->
->> I have figured out so far that I can run the command
->>
->> make NO_NSEC=true
->>
->> to get past the time struct compile error.
-> As an aside, you can put definitions like this into config.mak, which is
-> read automatically by the Makefile. Then you don't have to specify them
-> on the command line for each 'make' invocation.
->
->> After that, I was able to hand edit the Makefile to set
->>
->> BASIC_LDFLAGS = -ldl
->>
->> so linking the git-imap-send program succeeds (was failing to link
->> against this library for some reason...).
-> What was the link error? I don't know why imap-send would need to link
-> against -ldl. However, you should be able to just put -ldl into the
-> LDFLAGS on the command-line or in config.mak.
+ - The "header" strbuf holds the lines starting from "diff --git" and the
+   meta-information lines such as mode change, similarity, etc.  It is
+   passed to the the interface code fn_out_consume() via the xdiff
+   machinery when an actual diff is found and emitted before the first
+   hunk of the diff.
 
-The actual link errors were unresolved references to the dl* family of 
-functions: dlopen, dlsym, etc.
+ - The must_show_header toggle is set at the strategic places when
+   information is added to the "header" strbuf that makes the output for
+   this filepair a must, even if it turns out that xdiff machinery does
+   not find any content changes.  Before this patch, we flipped this
+   toggle when we noticed a mode change, so that the header is shown even
+   if there is no content change. The patch has to make make it
+   conditional, which is what the first hunk is about.
 
->> I tried to run configure with these options, but it did not seem to
->> take, only setting NO_NSEC=true to the make command line seems to
->> work.
-> Was NO_NSEC set in the resulting config.mak.autogen?
-Not sure.  I set up the config.mak though so it is sticking with that.
->
->> Anyway, now I get to the point in the build where it goes into the
->> perl subdir and fails with:
->>
->>     SUBDIR perl
->> /bin/sh: -c: line 3: syntax error near unexpected token
->> `"s<\Q++LOCALEDIR++\E></'
->> /bin/sh: -c: line 3: `        -e "pm_to_blib({qw{Git/I18N.pm
->> blib/lib/Git/I18N.pm private-Error.pm blib/lib/Error.pm Git.pm
->> blib/lib/Git.pm}},'blib/lib/auto','/usr/bin/perl -pe
->> "s<\Q++LOCALEDIR++\E></usr/local/git-1.7.9.2/share/locale>"')"'
->> make[2]: *** [pm_to_blib] Error 2
->> make[1]: *** [all] Error 2
->> make: *** [all] Error 2
-> I haven't seen that before. The snippet mentioned in the error message
-> is actually written to the Makefile by Makefile.PL. Can you show us the
-> relevant part of the Makefile (i.e., the command that contains
-> "++LOCALEDIR++") so we can see if it's broken? My suspicion is that
-> there is an error in the generation of the Makefile by Makefile.PL.
+ - The second hunk is not related but I think it is a worthy bit-rot fix.
+   The original code before "must_show_header" was introduced showed the
+   header upfront unless we are ignoring any whitespace changes, the
+   reasoning behind it being that two different blobs may produce no patch
+   under --ignore-space-change and in such a case we do not want to show
+   anything for the filepair.  When 296c6bb (diff: fix "git show -C -C"
+   output when renaming a binary file, 2010-05-26) introduced
+   "must_show_header", it retained that logic.
 
-Around line 108 in my GIT_HOME/perl/perl.mak I have this:  (line numbers 
-are from VI)
-
-     108 PM_FILTER = $(PERL) -pe 
-"s<\Q++LOCALEDIR++\E></home/tschumacher/share/locale>"
-
-and later PM_FILTER is used as:
-
-     713
-     714 # --- MakeMaker pm_to_blib section:
-     715
-     716 pm_to_blib: $(TO_INST_PM)
-     717     @$(PERL) "-I$(INST_ARCHLIB)" "-I$(INST_LIB)" \
-     718     "-I$(PERL_ARCHLIB)" "-I$(PERL_LIB)" -MExtUtils::Install \
-     719         -e 
-"pm_to_blib({qw{$(PM_TO_BLIB)}},'$(INST_LIB)/auto','$(PM_FILTER)')"
-     720     @$(TOUCH) $@
-     721
+   But I think it was a mistake.  If xdiff machinery decides there is no
+   patch to show, taking the --ignore-space-change into account, our
+   fn_out_consume() won't be called so we won't show the header
+   unnecessarily.  And when we do see a line of patch, fn_out_consume()
+   will show the header.
 
 
-> Although your perl is so old the first step may be either to turn off
-> perl or upgrade to a newer version (see below).
->
->> A couple questions I have so far:
->> (1)  how can I make make output the actual command it is executing so
->> I can try to debug things more quickly?
-> Doing "make V=1" will be more verbose. You can also use "make -d" to get
-> more output about which rules and commands are being followed, but its
-> output can be a bit overwhelming (and I don't think you have a make
-> problem, exactly).
->
->> (2)  how can I configure the Makefile to automatically set -ldl as
->> well as the NO_NSEC flag?
-> Put it in LDFLAGS.
->
->> (3)  My perl -v output: This is perl, v5.6.1 built for i386-linux.  Is
->> this sufficient?
-> These days we require at least 5.8, mostly because no developers are using 5.6
-> and support for it is bit-rotting. If your perl is that old, probably
-> setting NO_PERL is the best option. You will lose a few perl features
-> like interactive patch selection ("git add -p") and git-svn.
->
-> -Peff
 
-I am trying to install a newer version of perl on this box and will 
-retry the configure adding --with-perl option and see how it goes.
+ diff.c |   31 +++++++++++++++++++++++++++++--
+ diff.h |    1 +
+ 2 files changed, 30 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+old mode 100644
+new mode 100755
+diff --git a/diff.c b/diff.c
+index a1c06b5..acf7232 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2152,7 +2152,8 @@ static void builtin_diff(const char *name_a,
+ 		if (one->mode != two->mode) {
+ 			strbuf_addf(&header, "%s%sold mode %06o%s\n", line_prefix, set, one->mode, reset);
+ 			strbuf_addf(&header, "%s%snew mode %06o%s\n", line_prefix, set, two->mode, reset);
+-			must_show_header = 1;
++			if (!DIFF_OPT_TST(o, IGNORE_MODE_CHANGE))
++				must_show_header = 1;
+ 		}
+ 		if (xfrm_msg)
+ 			strbuf_addstr(&header, xfrm_msg);
+@@ -2207,7 +2208,7 @@ static void builtin_diff(const char *name_a,
+ 		struct emit_callback ecbdata;
+ 		const struct userdiff_funcname *pe;
+ 
+-		if (!DIFF_XDL_TST(o, WHITESPACE_FLAGS) || must_show_header) {
++		if (must_show_header) {
+ 			fprintf(o->file, "%s", header.buf);
+ 			strbuf_reset(&header);
+ 		}
+@@ -3446,6 +3447,8 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 	}
+ 	else if (!strcmp(arg, "--no-renames"))
+ 		options->detect_rename = 0;
++	else if (!strcmp(arg, "--ignore-mode-change"))
++		DIFF_OPT_SET(options, IGNORE_MODE_CHANGE);
+ 	else if (!strcmp(arg, "--relative"))
+ 		DIFF_OPT_SET(options, RELATIVE_NAME);
+ 	else if (!prefixcmp(arg, "--relative=")) {
+@@ -4509,10 +4512,34 @@ void diffcore_fix_diff_index(struct diff_options *options)
+ 	qsort(q->queue, q->nr, sizeof(q->queue[0]), diffnamecmp);
+ }
+ 
++static void diffcore_ignore_mode_change(struct diff_options *diffopt)
++{
++	int i;
++	struct diff_queue_struct *q = &diff_queued_diff;
++	struct diff_queue_struct outq;
++	DIFF_QUEUE_CLEAR(&outq);
++
++	for (i = 0; i < q->nr; i++) {
++		struct diff_filepair *p = q->queue[i];
++
++		if (DIFF_FILE_VALID(p->one) &&
++		    DIFF_FILE_VALID(p->two) &&
++		    (p->one->sha1_valid && p->two->sha1_valid) &&
++		    !hashcmp(p->one->sha1, p->two->sha1))
++			diff_free_filepair(p); /* skip this */
++		else
++			diff_q(&outq, p);
++	}
++	free(q->queue);
++	*q = outq;
++}
++
+ void diffcore_std(struct diff_options *options)
+ {
+ 	if (options->skip_stat_unmatch)
+ 		diffcore_skip_stat_unmatch(options);
++	if (DIFF_OPT_TST(options, IGNORE_MODE_CHANGE))
++		diffcore_ignore_mode_change(options);
+ 	if (!options->found_follow) {
+ 		/* See try_to_follow_renames() in tree-diff.c */
+ 		if (options->break_opt != -1)
+diff --git a/diff.h b/diff.h
+index 7af5f1e..fabcc96 100644
+--- a/diff.h
++++ b/diff.h
+@@ -82,6 +82,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
+ #define DIFF_OPT_OVERRIDE_SUBMODULE_CONFIG (1 << 27)
+ #define DIFF_OPT_DIRSTAT_BY_LINE     (1 << 28)
+ #define DIFF_OPT_FUNCCONTEXT         (1 << 29)
++#define DIFF_OPT_IGNORE_MODE_CHANGE  (1 << 30)
+ 
+ #define DIFF_OPT_TST(opts, flag)    ((opts)->flags & DIFF_OPT_##flag)
+ #define DIFF_OPT_SET(opts, flag)    ((opts)->flags |= DIFF_OPT_##flag)
