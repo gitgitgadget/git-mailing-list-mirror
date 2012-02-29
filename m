@@ -1,66 +1,82 @@
-From: Dan Johnson <computerdruid@gmail.com>
-Subject: Re: Building GIT on older systems.
-Date: Wed, 29 Feb 2012 15:35:24 -0500
-Message-ID: <CAPBPrnvFv4-r0m7-A5q5Lt7V5Ym2hEJaiNONBcUC=cxs6WuPxg@mail.gmail.com>
-References: <CAFqtsHfrk89qHexg8VwMZnKwgWDqbseJNNKFSUkwDtVKX_t=5g@mail.gmail.com>
-	<CAFqtsHd=b=Ey8j1zTCC4-fut7rno3daQ2Q3HMs3k2SHFvE4dSQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Incremental updates to What's cooking
+Date: Wed, 29 Feb 2012 12:48:12 -0800
+Message-ID: <7vfwdts6wj.fsf@alter.siamese.dyndns.org>
+References: <7vy5rn1mar.fsf@alter.siamese.dyndns.org>
+ <4F4DD5C1.60604@in.waw.pl> <7vbooiuj6z.fsf@alter.siamese.dyndns.org>
+ <4F4E2D32.9030209@in.waw.pl> <7v1updtp57.fsf@alter.siamese.dyndns.org>
+ <4F4E8846.6030203@in.waw.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Tim Schumacher <schumact@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 29 21:35:32 2012
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+X-From: git-owner@vger.kernel.org Wed Feb 29 21:48:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2qFH-0007u7-QZ
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Feb 2012 21:35:32 +0100
+	id 1S2qRh-0008Ff-Ut
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Feb 2012 21:48:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755022Ab2B2Uf0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Feb 2012 15:35:26 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:41989 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754501Ab2B2UfZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Feb 2012 15:35:25 -0500
-Received: by vbbff1 with SMTP id ff1so3073941vbb.19
-        for <git@vger.kernel.org>; Wed, 29 Feb 2012 12:35:24 -0800 (PST)
-Received-SPF: pass (google.com: domain of computerdruid@gmail.com designates 10.52.22.166 as permitted sender) client-ip=10.52.22.166;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of computerdruid@gmail.com designates 10.52.22.166 as permitted sender) smtp.mail=computerdruid@gmail.com; dkim=pass header.i=computerdruid@gmail.com
-Received: from mr.google.com ([10.52.22.166])
-        by 10.52.22.166 with SMTP id e6mr2674565vdf.5.1330547724760 (num_hops = 1);
-        Wed, 29 Feb 2012 12:35:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=18VXBAXDRffDVclzz3IFdBksvMtjAHewddmgShfiAXY=;
-        b=erEkZYaL6bPx6R4dESHgayb35sZxH6lrpmMIe/S0VhrVO5NPoV7EgqD5XbumxXQfY7
-         igkw2oWWjSJrrx/QS1kKL26FlMJCKqmVPG2lFY+TXcZl8m6jnUyLGE1N25a/eHuMNQEX
-         PjOoNEAEZtZIzBMcWUNOIiO8xMYllRMpuOUbo=
-Received: by 10.52.22.166 with SMTP id e6mr2292561vdf.5.1330547724716; Wed, 29
- Feb 2012 12:35:24 -0800 (PST)
-Received: by 10.220.188.138 with HTTP; Wed, 29 Feb 2012 12:35:24 -0800 (PST)
-In-Reply-To: <CAFqtsHd=b=Ey8j1zTCC4-fut7rno3daQ2Q3HMs3k2SHFvE4dSQ@mail.gmail.com>
+	id S1755859Ab2B2UsR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Feb 2012 15:48:17 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56985 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755760Ab2B2UsP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Feb 2012 15:48:15 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D0E0163C9;
+	Wed, 29 Feb 2012 15:48:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=TJiykT4nmNHx
+	B1MPMEDoJTKrze0=; b=xEJZTdH3vOvK/iQcEOISDod2m6+zJ0XeHwJGb+S1aCtO
+	siQdabL1v8+Y9tkVGyCZC6uwUQIR8OIunXYisn+5QskyyT8WCgF0eYtT+PtOI5G5
+	r5oeVzJfwkP3sOLZ70RF/RjNHDd4ugdnKLlEApzWBlRe/6+AglApocNw4Uqo1wc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=mfPKG2
+	nodYYydfOHm0zTCzv5jBp8rCvwlbc1nm284vzooKLBAzCD5Lw3YH0uSa83u70N8J
+	q7/oXEpaH0CNR9PHj/FOuH30ymoGPH84UjkwpejGqNKYn/wE3UtfLcuVtzWwVo6D
+	KTrnaKljUx3PVjQjBOrnzHoG+4Pzrrhcd2d+Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C81B263C8;
+	Wed, 29 Feb 2012 15:48:14 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3AA6363C7; Wed, 29 Feb 2012
+ 15:48:14 -0500 (EST)
+In-Reply-To: <4F4E8846.6030203@in.waw.pl> ("Zbigniew =?utf-8?Q?J=C4=99drze?=
+ =?utf-8?Q?jewski-Szmek=22's?= message of "Wed, 29 Feb 2012 21:19:18 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B311304A-6316-11E1-9752-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191854>
 
-On Wed, Feb 29, 2012 at 3:22 PM, Tim Schumacher <schumact@gmail.com> wr=
-ote:
-> [snip]
-> A couple questions I have so far:
-> (1)=C2=A0 how can I make make output the actual command it is executi=
-ng so
-> I can try to debug things more quickly?
+Zbigniew J=C4=99drzejewski-Szmek  <zbyszek@in.waw.pl> writes:
 
-Try running "make V=3D1".
+> Do you mean move a version of non-duplicated ones from t4014 to t4052
+> and remove the duplicated ones?
 
-I'm not knowledgeable enough about the makefile or the perl
-requirements of git to help with the other problems, though, so
-someone else will have to step up for that.
+Err, non-duplicated ones do not have anything to do with your series, n=
+o?
+They are good copies you inherited from people who touched the file bef=
+ore
+you, and we can leave the file in the state before this series.
 
-Good luck!
+Among the ones added to t4014, there are ones that have moral equivalen=
+t
+in t4052.  These in t4052 are however less nice.  So I was suggesting t=
+o
+replace these less nice ones in t4052 with their equivalents in t4014.
+With such an update to t4052, the ones in t4014 that are duplicates in =
+the
+today's code can be removed, as we would have identical copies of them =
+in
+t4052.
