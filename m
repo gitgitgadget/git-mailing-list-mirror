@@ -1,163 +1,85 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: [RFC/PATCH] Make git-{pull,rebase} no-tracking message
- friendlier
-Date: Wed, 29 Feb 2012 04:57:34 +0100
-Message-ID: <1330487854.691.24.camel@centaur.lab.cmartin.tk>
-References: <1330013115-26355-1-git-send-email-cmn@elego.de>
-	 <vpq399wc4ns.fsf@bauges.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v7 02/10] Stop starting pager recursively
+Date: Tue, 28 Feb 2012 20:51:29 -0800
+Message-ID: <7vaa42w8by.fsf@alter.siamese.dyndns.org>
+References: <1330170078-29353-1-git-send-email-pclouds@gmail.com>
+ <1330430331-19945-1-git-send-email-pclouds@gmail.com>
+ <1330430331-19945-3-git-send-email-pclouds@gmail.com>
+ <7v4nua25cz.fsf@alter.siamese.dyndns.org>
+ <7vipiqzsd8.fsf@alter.siamese.dyndns.org>
+ <CACsJy8DJM5hwWnTs2rkhCa7a=vKRRsLMjZGBotmDDpAaGG+Sxw@mail.gmail.com>
+ <7vr4xewbrz.fsf@alter.siamese.dyndns.org>
+ <CACsJy8BfBP9m8rdEY3mk6g4G7n5LyFPvvNgNK2bkwC6L7qTDCg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Feb 29 04:57:14 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 29 05:51:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2af7-0001xw-FE
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Feb 2012 04:57:09 +0100
+	id 1S2bVp-0006rE-Uq
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Feb 2012 05:51:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030669Ab2B2D5D convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Feb 2012 22:57:03 -0500
-Received: from kimmy.cmartin.tk ([91.121.65.165]:33107 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757610Ab2B2D5B (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Feb 2012 22:57:01 -0500
-Received: from [192.168.1.17] (brln-4db9f055.pool.mediaWays.net [77.185.240.85])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id AE23346057;
-	Wed, 29 Feb 2012 04:56:54 +0100 (CET)
-In-Reply-To: <vpq399wc4ns.fsf@bauges.imag.fr>
-X-Mailer: Evolution 3.2.2-1 
+	id S966006Ab2B2Evc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Feb 2012 23:51:32 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42205 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965942Ab2B2Evc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Feb 2012 23:51:32 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 676D375D5;
+	Tue, 28 Feb 2012 23:51:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=JUosxsnOXzNXPJ4eJJeEFDUbuMc=; b=qmaXzU
+	v/blHCSt9s4LwALR+JP29d2AnT3jxzeaWcoFMmEYJmsVVvwTiti/s4pwecbutB/B
+	KpyXv0h0vH+GOwXZ+eqnY00ZImZkHRtthW7GZ5ystKgaR81GC1xhm5ue8c27eFle
+	lMus+ZwVzpKXT/u5z1GofqMrxWOF2V2XhCVkg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=w3HCuKpcxjMLtr0A22M7aMfDWOaVzaz+
+	Q9lHTTZTGBewlKv2bGKlJ5FBQ6SHe/iq7pwrNZKSmW0ckFpM8WiE3t4aLcEprTcu
+	8siikYLhYlCaNrXV+hT96t6KgtyaGe/bLieNgVB5FGeb85+hDh941PK06qai0UnZ
+	xvSE7z+bNUA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E9B675D4;
+	Tue, 28 Feb 2012 23:51:31 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E593075D3; Tue, 28 Feb 2012
+ 23:51:30 -0500 (EST)
+In-Reply-To: <CACsJy8BfBP9m8rdEY3mk6g4G7n5LyFPvvNgNK2bkwC6L7qTDCg@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Wed, 29 Feb 2012 10:40:40 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0C08F39E-6291-11E1-8D5D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191810>
 
-On Mon, 2012-02-27 at 23:06 +0100, Matthieu Moy wrote:
-> Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
->=20
-> > -		echo "You asked me to $cmd without telling me which branch you
-> > -want to $op_type $op_prep, and 'branch.${branch_name#refs/heads/}.=
-merge' in
-> > -your configuration file does not tell me, either. Please
-> > -specify which branch you want to use on the command line and
-> > +		echo "You asked me to $cmd without telling me which branch you w=
-ant to
-> > +$op_type $op_prep, and there is no tracking information for the cu=
-rrent branch.
-> > +Please specify which branch you want to use on the command line an=
-d
-> >  try again (e.g. '$example').
->=20
-> At this point, it may be better to actually give the full command
-> instead of just this "(e.g. '$example')", i.e. stg like
->=20
->   git $op_type <remote> $example
->=20
-> I also saw users confused by the message (indeed without reading it,
-> but ...). Giving them something as close as possible to
-> cut-and-paste-able command should help.
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
+> On Wed, Feb 29, 2012 at 10:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+>>
+>>> It does improve that situation, or at least it stops git from forking
+>>> frantically.
+>>
+>> That "at least" sounds suspicious ;-) Do you mean that there is other
+>> breakages in that mode of operation?
+>
+> Well, "shortlog -p" did not run $PAGER (i.e. less). I haven't had time
+> to dig further.
 
-$example is a caller-given string which already contains the whole
-command (i.e. it's already 'git rebase <upstream branch>' or 'git pull
-<repository> <branch>').  In this patch I've moved that command to its
-own paragraph so the usage part of the output gets more visibility.
+Ok. for that matter,
 
-Another version of the patch, this one somewhat more intrusive,
-hopefully easier to digest.
+    $ GIT_PAGER="git -p column" git tag --list
 
----8<---
-Subject: [PATCH] Make git-{pull,rebase} message without tracking inform=
-ation
- friendlier
-
-The current message is too long and at too low a level for anybody to
-understand it if they don't know about the configuration format
-already.
-
-Reformat it to show the commands a user would be expected to use,
-instead of the contents of the configuration file. Use <branch>
-instead of <refspec> or <upstream branch> as they're bound to consfuse
-new users more than help them. Use <remote> instead of <repository> in
-the pull message.
----
- git-parse-remote.sh |   26 ++++++++++----------------
- git-pull.sh         |    2 +-
- git-rebase.sh       |    2 +-
- 3 files changed, 12 insertions(+), 18 deletions(-)
-
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index b24119d..bcb75a0 100644
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -66,25 +66,19 @@ line and try again (e.g. '$example').
- See git-${cmd}(1) for details."
- 	else
- 		echo "You asked me to $cmd without telling me which branch you
--want to $op_type $op_prep, and 'branch.${branch_name#refs/heads/}.merg=
-e' in
--your configuration file does not tell me, either. Please
--specify which branch you want to use on the command line and
--try again (e.g. '$example').
--See git-${cmd}(1) for details.
-+want to $op_type $op_prep, and the current branch doesn't have
-+tracking information. Please specify which branch you want to
-+use on the command line and try again. See git-${cmd}(1) for details.
-+
-+    $example
-=20
- If you often $op_type $op_prep the same branch, you may want to
--use something like the following in your configuration file:
--    [branch \"${branch_name#refs/heads/}\"]
--    remote =3D <nickname>
--    merge =3D <remote-ref>"
--		test rebase =3D "$op_type" &&
--		echo "    rebase =3D true"
--		echo "
--    [remote \"<nickname>\"]
--    url =3D <url>
--    fetch =3D <refspec>
-+run something like:
-=20
--See git-config(1) for details."
-+    git remote add <remote> <url>
-+    git branch --set-upstream ${branch_name#refs/heads/} <remote>/<bra=
-nch>"
-+		test rebase =3D "$op_type" &&
-+		echo "    git config branch.${branch_name#refs/heads/}.rebase true"
- 	fi
- 	exit 1
- }
-diff --git a/git-pull.sh b/git-pull.sh
-index d8b64d7..309c7db 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -176,7 +176,7 @@ error_on_no_merge_candidates () {
- 	elif [ -z "$curr_branch" -o -z "$upstream" ]; then
- 		. git-parse-remote
- 		error_on_missing_default_upstream "pull" $op_type $op_prep \
--			"git pull <repository> <refspec>"
-+			"git pull <remote> <branch>"
- 	else
- 		echo "Your configuration specifies to $op_type $op_prep the ref '${u=
-pstream#refs/heads/}'"
- 		echo "from the remote, but no such ref was fetched."
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 00ca7b9..69c1374 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -380,7 +380,7 @@ then
- 		then
- 			. git-parse-remote
- 			error_on_missing_default_upstream "rebase" "rebase" \
--				"against" "git rebase <upstream branch>"
-+				"against" "git rebase <branch>"
- 		fi
- 		;;
- 	*)	upstream_name=3D"$1"
---=20
-1.7.9.2.3.g4346f
+does not seem to use pager, either, so that may not be limited to
+shortlog, but in any case, I can see how the current code without your
+patch can fall into a fork loop, and your patch is an improvement, even if
+it may not yet be the whole solution.
