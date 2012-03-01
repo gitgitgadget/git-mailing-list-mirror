@@ -1,7 +1,7 @@
 From: Tom Grennan <tmgrennan@gmail.com>
-Subject: [PATCH 3/5] t3200 (branch): modernize style
-Date: Wed, 29 Feb 2012 17:45:19 -0800
-Message-ID: <1330566326-26075-4-git-send-email-tmgrennan@gmail.com>
+Subject: [PATCH-w 103/105] t3200 (branch): modernize style
+Date: Wed, 29 Feb 2012 17:45:24 -0800
+Message-ID: <1330566326-26075-9-git-send-email-tmgrennan@gmail.com>
 References: <1330566326-26075-1-git-send-email-tmgrennan@gmail.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Carlos Rica <jasampler@gmail.com>,
@@ -10,42 +10,42 @@ Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Amos Waterland <apw@rossby.metr.ou.edu>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 01 02:46:18 2012
+X-From: git-owner@vger.kernel.org Thu Mar 01 02:46:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2v60-00046e-FV
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 02:46:17 +0100
+	id 1S2v62-00046e-SL
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 02:46:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030290Ab2CABqA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Feb 2012 20:46:00 -0500
+	id S1030562Ab2CABqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Feb 2012 20:46:10 -0500
 Received: from mail-vw0-f46.google.com ([209.85.212.46]:52025 "EHLO
 	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757499Ab2CABpx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Feb 2012 20:45:53 -0500
+	with ESMTP id S1030526Ab2CABqH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Feb 2012 20:46:07 -0500
 Received: by mail-vw0-f46.google.com with SMTP id ff1so74765vbb.19
-        for <git@vger.kernel.org>; Wed, 29 Feb 2012 17:45:52 -0800 (PST)
-Received-SPF: pass (google.com: domain of tmgrennan@gmail.com designates 10.52.21.168 as permitted sender) client-ip=10.52.21.168;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of tmgrennan@gmail.com designates 10.52.21.168 as permitted sender) smtp.mail=tmgrennan@gmail.com; dkim=pass header.i=tmgrennan@gmail.com
-Received: from mr.google.com ([10.52.21.168])
-        by 10.52.21.168 with SMTP id w8mr4169649vde.77.1330566352988 (num_hops = 1);
-        Wed, 29 Feb 2012 17:45:52 -0800 (PST)
+        for <git@vger.kernel.org>; Wed, 29 Feb 2012 17:46:07 -0800 (PST)
+Received-SPF: pass (google.com: domain of tmgrennan@gmail.com designates 10.52.92.140 as permitted sender) client-ip=10.52.92.140;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of tmgrennan@gmail.com designates 10.52.92.140 as permitted sender) smtp.mail=tmgrennan@gmail.com; dkim=pass header.i=tmgrennan@gmail.com
+Received: from mr.google.com ([10.52.92.140])
+        by 10.52.92.140 with SMTP id cm12mr4108225vdb.115.1330566367180 (num_hops = 1);
+        Wed, 29 Feb 2012 17:46:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :in-reply-to:references;
-        bh=b9vdilE7vLqCJas0e65Ut2I6qUy1i5DuMqZjjopvthA=;
-        b=wV3NQHps40ZGJQton1+D5C+36OkWp1YoTJXMmzE3OOtXmqq5yU9fOOg+2/2Q27VhZ0
-         StVXyZ8YL6WNMIOfyA8jj4QkYKVuc15lrx8xPhjwPR7T+36vOZvpJFUG8q8Zij+x35BQ
-         tClOJvQ2BY605ZlZBsS2DiGpYrY6FERLIDjf0=
-Received: by 10.52.21.168 with SMTP id w8mr3562086vde.77.1330566352930;
-        Wed, 29 Feb 2012 17:45:52 -0800 (PST)
+        bh=wyVyJozlqj4sw6Pzq7C/L7GSgjG+D65H816+CpwbCIc=;
+        b=XeiILknHc1BqKKHIR3pcilJ99ZpKtkFw34xY5+qMMiMhGe/xYQqAnEQHVFbGkwz1Qc
+         qxskSdKiR1GtFs7awCnO7Q+wH5ci5hctRWsOwfgpwyTHcKSlxD4Ms4LIWiXAEnyP1CHl
+         odOXCuchHP2cJ60xCh26S+fMB7sEo879+cGUo=
+Received: by 10.52.92.140 with SMTP id cm12mr3521432vdb.115.1330566367119;
+        Wed, 29 Feb 2012 17:46:07 -0800 (PST)
 Received: from tgrennan-laptop.lab.redback.com ([129.192.185.163])
-        by mx.google.com with ESMTPS id n14sm502335vdj.22.2012.02.29.17.45.50
+        by mx.google.com with ESMTPS id n14sm502335vdj.22.2012.02.29.17.46.04
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 29 Feb 2012 17:45:52 -0800 (PST)
+        Wed, 29 Feb 2012 17:46:06 -0800 (PST)
 X-Mailer: git-send-email 1.7.8
 In-Reply-To: <1330566326-26075-1-git-send-email-tmgrennan@gmail.com>
 In-Reply-To: <20120223002215.GE2410@tgrennan-laptop>
@@ -54,7 +54,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191878>
 
 - Guard setup with test_expect_success
 - Single-quoted, tab prefaced test blocks of < 80 cols
@@ -63,8 +63,8 @@ Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191877>
 
 Signed-off-by: Tom Grennan <tmgrennan@gmail.com>
 ---
- t/t3200-branch.sh |  593 +++++++++++++++++++++++++++--------------------------
- 1 files changed, 304 insertions(+), 289 deletions(-)
+ t/t3200-branch.sh |  457 +++++++++++++++++++++++++++--------------------------
+ 1 files changed, 236 insertions(+), 221 deletions(-)
 
 diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
 index dd1aceb..93c35cd 100755
@@ -84,22 +84,19 @@ index dd1aceb..93c35cd 100755
 -test_expect_success \
 -    'prepare a trivial repository' \
 -    'echo Hello > A &&
--     git update-index --add A &&
--     git commit -m "Initial commit." &&
--     echo World >> A &&
--     git update-index --add A &&
--     git commit -m "Second commit." &&
--     HEAD=$(git rev-parse --verify HEAD)'
 +quiet () { "$@" >/dev/null; }
 +silent () { "$@" >/dev/null 2>&1; }
 +here () { sed 's/\\s/ /g; s/\\t/\t/g; s/\\n/\n/g' $@; }
 +
 +test_expect_success 'prepare a trivial repository' '
 +	echo Hello >A &&
-+	git update-index --add A &&
+      git update-index --add A &&
+-     git commit -m "Initial commit." &&
 +	git commit -q -m "Initial commit." &&
-+	echo World >>A &&
-+	git update-index --add A &&
+      echo World >> A &&
+      git update-index --add A &&
+-     git commit -m "Second commit." &&
+-     HEAD=$(git rev-parse --verify HEAD)'
 +	git commit -q -m "Second commit." &&
 +	HEAD=$(git rev-parse --verify HEAD)
 +'
@@ -107,10 +104,9 @@ index dd1aceb..93c35cd 100755
 -test_expect_success \
 -    'git branch --help should not have created a bogus branch' '
 -     test_might_fail git branch --help </dev/null >/dev/null 2>/dev/null &&
--     test_path_is_missing .git/refs/heads/--help
 +test_expect_success 'git branch --help should not have created a bogus branch' '
 +	silent test_might_fail git branch --help </dev/null &&
-+	test_path_is_missing .git/refs/heads/--help
+      test_path_is_missing .git/refs/heads/--help
  '
  
  test_expect_success 'branch -h in broken repository' '
@@ -122,31 +118,53 @@ index dd1aceb..93c35cd 100755
 -		test_expect_code 129 git branch -h >usage 2>&1
 -	) &&
 -	grep "[Uu]sage" broken/usage
--'
--
++	git init -q broken &&
++	test_when_finished rm -rf broken usage &&
++	>broken/.git/refs/heads/master &&
++	>usage 2>&1 test_expect_code 129 git --git-dir=broken/.git branch -h &&
++	grep -q "[Uu]sage" usage
+ '
+ 
 -test_expect_success \
 -    'git branch abc should create a branch' \
 -    'git branch abc && test_path_is_file .git/refs/heads/abc'
--
++test_expect_success 'git branch abc should create a branch' '
++	git branch abc && test_path_is_file .git/refs/heads/abc
++'
+ 
 -test_expect_success \
 -    'git branch a/b/c should create a branch' \
 -    'git branch a/b/c && test_path_is_file .git/refs/heads/a/b/c'
--
++test_expect_success 'git branch a/b/c should create a branch' '
++	git branch a/b/c && test_path_is_file .git/refs/heads/a/b/c
++'
+ 
 -cat >expect <<EOF
 -$_z40 $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	branch: Created from master
--EOF
++test_expect_success 'git branch -l d/e/f should create a branch and a log' '
++	id="$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
++	date="1117150200 +0000"
++	msg="branch: Created from master"
++	here >expect <<-EOF
++		$_z40 $HEAD $id $date\t$msg
+ EOF
 -test_expect_success \
 -    'git branch -l d/e/f should create a branch and a log' \
 -	'GIT_COMMITTER_DATE="2005-05-26 23:30" \
 -     git branch -l d/e/f &&
--	 test_path_is_file .git/refs/heads/d/e/f &&
--	 test_path_is_file .git/logs/refs/heads/d/e/f &&
++	GIT_COMMITTER_DATE="2005-05-26 23:30" git branch -l d/e/f &&
+ 	 test_path_is_file .git/refs/heads/d/e/f &&
+ 	 test_path_is_file .git/logs/refs/heads/d/e/f &&
 -	 test_cmp expect .git/logs/refs/heads/d/e/f'
--
++	test_cmp expect .git/logs/refs/heads/d/e/f
++'
+ 
 -test_expect_success \
 -    'git branch -d d/e/f should delete a branch and a log' \
 -	'git branch -d d/e/f &&
--	 test_path_is_missing .git/refs/heads/d/e/f &&
++test_expect_success 'git branch -d d/e/f should delete a branch and a log' '
++	quiet git branch -d d/e/f &&
+ 	 test_path_is_missing .git/refs/heads/d/e/f &&
 -	 test_path_is_missing .git/logs/refs/heads/d/e/f'
 -
 -test_expect_success \
@@ -169,43 +187,6 @@ index dd1aceb..93c35cd 100755
 -test_expect_success \
 -    'git branch -m m m/m should work' \
 -       'git branch -l m &&
--        git branch -m m m/m &&
--	test_path_is_file .git/logs/refs/heads/m/m'
--
--test_expect_success \
--    'git branch -m n/n n should work' \
--       'git branch -l n/n &&
-+	git init -q broken &&
-+	test_when_finished rm -rf broken usage &&
-+	>broken/.git/refs/heads/master &&
-+	>usage 2>&1 test_expect_code 129 git --git-dir=broken/.git branch -h &&
-+	grep -q "[Uu]sage" usage
-+'
-+
-+test_expect_success 'git branch abc should create a branch' '
-+	git branch abc && test_path_is_file .git/refs/heads/abc
-+'
-+
-+test_expect_success 'git branch a/b/c should create a branch' '
-+	git branch a/b/c && test_path_is_file .git/refs/heads/a/b/c
-+'
-+
-+test_expect_success 'git branch -l d/e/f should create a branch and a log' '
-+	id="$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
-+	date="1117150200 +0000"
-+	msg="branch: Created from master"
-+	here >expect <<-EOF
-+		$_z40 $HEAD $id $date\t$msg
-+	EOF
-+	GIT_COMMITTER_DATE="2005-05-26 23:30" git branch -l d/e/f &&
-+	test_path_is_file .git/refs/heads/d/e/f &&
-+	test_path_is_file .git/logs/refs/heads/d/e/f &&
-+	test_cmp expect .git/logs/refs/heads/d/e/f
-+'
-+
-+test_expect_success 'git branch -d d/e/f should delete a branch and a log' '
-+	quiet git branch -d d/e/f &&
-+	test_path_is_missing .git/refs/heads/d/e/f &&
 +	test_path_is_missing .git/logs/refs/heads/d/e/f
 +'
 +
@@ -228,10 +209,14 @@ index dd1aceb..93c35cd 100755
 +
 +test_expect_success 'git branch -m m m/m should work' '
 +	git branch -l m &&
-+	git branch -m m m/m &&
+         git branch -m m m/m &&
+-	test_path_is_file .git/logs/refs/heads/m/m'
 +	test_path_is_file .git/logs/refs/heads/m/m
 +'
-+
+ 
+-test_expect_success \
+-    'git branch -m n/n n should work' \
+-       'git branch -l n/n &&
 +test_expect_success 'git branch -m n/n n should work' '
 +	git branch -l n/n &&
  	git branch -m n/n n &&
@@ -241,9 +226,8 @@ index dd1aceb..93c35cd 100755
  
  test_expect_success 'git branch -m o/o o should fail when o/p exists' '
  	git branch o/o &&
--        git branch o/p &&
+         git branch o/p &&
 -	test_must_fail git branch -m o/o o
-+	git branch o/p &&
 +	silent test_must_fail git branch -m o/o o
  '
  
@@ -335,27 +319,24 @@ index dd1aceb..93c35cd 100755
  
 -mv .git/config-saved .git/config
 -
--git config branch.s/s.dummy Hello
++test_expect_success 'git branch -m s/s s should work when s/t is deleted' '
+ git config branch.s/s.dummy Hello
 -
 -test_expect_success \
 -    'git branch -m s/s s should work when s/t is deleted' \
 -       'git branch -l s/s &&
-+test_expect_success 'git branch -m s/s s should work when s/t is deleted' '
-+	git config branch.s/s.dummy Hello
 +	git branch -l s/s &&
  	test_path_is_file .git/logs/refs/heads/s/s &&
--        git branch -l s/t &&
-+	git branch -l s/t &&
+         git branch -l s/t &&
  	test_path_is_file .git/logs/refs/heads/s/t &&
 -        git branch -d s/t &&
--        git branch -m s/s s &&
++	quiet git branch -d s/t &&
+         git branch -m s/s s &&
 -	test_path_is_file .git/logs/refs/heads/s'
 -
 -test_expect_success 'config information was renamed, too' \
 -	"test $(git config branch.s.dummy) = Hello &&
 -	 test_must_fail git config branch.s/s/dummy"
-+	quiet git branch -d s/t &&
-+	git branch -m s/s s &&
 +	test_path_is_file .git/logs/refs/heads/s
 +'
  
@@ -377,204 +358,158 @@ index dd1aceb..93c35cd 100755
  
 -test_expect_success SYMLINKS \
 -    'git branch -m u v should fail when the reflog for u is a symlink' '
--     git branch -l u &&
--     mv .git/logs/refs/heads/u real-u &&
--     ln -s real-u .git/logs/refs/heads/u &&
++test_expect_success SYMLINKS 'git branch -m u v should fail when the reflog for u is a symlink' '
+      git branch -l u &&
+      mv .git/logs/refs/heads/u real-u &&
+      ln -s real-u .git/logs/refs/heads/u &&
 -     test_must_fail git branch -m u v
--'
--
++	silent test_must_fail git branch -m u v
+ '
+ 
 -test_expect_success 'test tracking setup via --track' \
 -    'git config remote.local.url . &&
--     git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
++test_expect_success 'test tracking setup via --track' '
++	git config remote.local.url . &&
+      git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
 -     (git show-ref -q refs/remotes/local/master || git fetch local) &&
 -     git branch --track my1 local/master &&
--     test $(git config branch.my1.remote) = local &&
++	(git show-ref -q refs/remotes/local/master || git fetch -q local) &&
++	quiet git branch --track my1 local/master &&
+      test $(git config branch.my1.remote) = local &&
 -     test $(git config branch.my1.merge) = refs/heads/master'
--
++	test $(git config branch.my1.merge) = refs/heads/master
++'
+ 
 -test_expect_success 'test tracking setup (non-wildcard, matching)' \
 -    'git config remote.local.url . &&
 -     git config remote.local.fetch refs/heads/master:refs/remotes/local/master &&
--     (git show-ref -q refs/remotes/local/master || git fetch local) &&
--     git branch --track my4 local/master &&
--     test $(git config branch.my4.remote) = local &&
--     test $(git config branch.my4.merge) = refs/heads/master'
--
--test_expect_success 'test tracking setup (non-wildcard, not matching)' \
--    'git config remote.local.url . &&
--     git config remote.local.fetch refs/heads/s:refs/remotes/local/s &&
--     (git show-ref -q refs/remotes/local/master || git fetch local) &&
--     git branch --track my5 local/master &&
--     ! test "$(git config branch.my5.remote)" = local &&
--     ! test "$(git config branch.my5.merge)" = refs/heads/master'
--
--test_expect_success 'test tracking setup via config' \
--    'git config branch.autosetupmerge true &&
--     git config remote.local.url . &&
--     git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
--     (git show-ref -q refs/remotes/local/master || git fetch local) &&
--     git branch my3 local/master &&
--     test $(git config branch.my3.remote) = local &&
--     test $(git config branch.my3.merge) = refs/heads/master'
--
--test_expect_success 'test overriding tracking setup via --no-track' \
--    'git config branch.autosetupmerge true &&
--     git config remote.local.url . &&
--     git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
--     (git show-ref -q refs/remotes/local/master || git fetch local) &&
--     git branch --no-track my2 local/master &&
--     git config branch.autosetupmerge false &&
--     ! test "$(git config branch.my2.remote)" = local &&
--     ! test "$(git config branch.my2.merge)" = refs/heads/master'
--
--test_expect_success 'no tracking without .fetch entries' \
--    'git config branch.autosetupmerge true &&
--     git branch my6 s &&
--     git config branch.automsetupmerge false &&
--     test -z "$(git config branch.my6.remote)" &&
--     test -z "$(git config branch.my6.merge)"'
--
--test_expect_success 'test tracking setup via --track but deeper' \
--    'git config remote.local.url . &&
--     git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
--     (git show-ref -q refs/remotes/local/o/o || git fetch local) &&
--     git branch --track my7 local/o/o &&
--     test "$(git config branch.my7.remote)" = local &&
--     test "$(git config branch.my7.merge)" = refs/heads/o/o'
--
--test_expect_success 'test deleting branch deletes branch config' \
--    'git branch -d my7 &&
--     test -z "$(git config branch.my7.remote)" &&
--     test -z "$(git config branch.my7.merge)"'
--
--test_expect_success 'test deleting branch without config' \
--    'git branch my7 s &&
--     sha1=$(git rev-parse my7 | cut -c 1-7) &&
--     echo "Deleted branch my7 (was $sha1)." >expect &&
--     git branch -d my7 >actual 2>&1 &&
--     test_i18ncmp expect actual'
--
--test_expect_success 'test --track without .fetch entries' \
--    'git branch --track my8 &&
--     test "$(git config branch.my8.remote)" &&
--     test "$(git config branch.my8.merge)"'
--
--test_expect_success \
--    'branch from non-branch HEAD w/autosetupmerge=always' \
--    'git config branch.autosetupmerge always &&
--     git branch my9 HEAD^ &&
--     git config branch.autosetupmerge false'
--
--test_expect_success \
--    'branch from non-branch HEAD w/--track causes failure' \
--    'test_must_fail git branch --track my10 HEAD^'
--
--test_expect_success \
--    'branch from tag w/--track causes failure' \
--    'git tag foobar &&
--     test_must_fail git branch --track my11 foobar'
-+test_expect_success SYMLINKS 'git branch -m u v should fail when the reflog for u is a symlink' '
-+	git branch -l u &&
-+	mv .git/logs/refs/heads/u real-u &&
-+	ln -s real-u .git/logs/refs/heads/u &&
-+	silent test_must_fail git branch -m u v
-+'
-+
-+test_expect_success 'test tracking setup via --track' '
-+	git config remote.local.url . &&
-+	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
-+	(git show-ref -q refs/remotes/local/master || git fetch -q local) &&
-+	quiet git branch --track my1 local/master &&
-+	test $(git config branch.my1.remote) = local &&
-+	test $(git config branch.my1.merge) = refs/heads/master
-+'
-+
 +test_expect_success 'test tracking setup (non-wildcard, matching)' '
 +	git config remote.local.url . &&
 +	git config remote.local.fetch \
 +		refs/heads/master:refs/remotes/local/master &&
-+	(git show-ref -q refs/remotes/local/master || git fetch local) &&
+      (git show-ref -q refs/remotes/local/master || git fetch local) &&
+-     git branch --track my4 local/master &&
 +	quiet git branch --track my4 local/master &&
-+	test $(git config branch.my4.remote) = local &&
+      test $(git config branch.my4.remote) = local &&
+-     test $(git config branch.my4.merge) = refs/heads/master'
 +	test $(git config branch.my4.merge) = refs/heads/master
 +'
-+
+ 
+-test_expect_success 'test tracking setup (non-wildcard, not matching)' \
+-    'git config remote.local.url . &&
 +test_expect_success 'test tracking setup (non-wildcard, not matching)' '
 +	git config remote.local.url . &&
-+	git config remote.local.fetch refs/heads/s:refs/remotes/local/s &&
-+	(git show-ref -q refs/remotes/local/master || git fetch local) &&
+      git config remote.local.fetch refs/heads/s:refs/remotes/local/s &&
+      (git show-ref -q refs/remotes/local/master || git fetch local) &&
+-     git branch --track my5 local/master &&
 +	quiet git branch --track my5 local/master &&
-+	! test "$(git config branch.my5.remote)" = local &&
+      ! test "$(git config branch.my5.remote)" = local &&
+-     ! test "$(git config branch.my5.merge)" = refs/heads/master'
 +	! test "$(git config branch.my5.merge)" = refs/heads/master
 +'
-+
+ 
+-test_expect_success 'test tracking setup via config' \
+-    'git config branch.autosetupmerge true &&
 +test_expect_success 'test tracking setup via config' '
 +	git config branch.autosetupmerge true &&
-+	git config remote.local.url . &&
-+	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
-+	(git show-ref -q refs/remotes/local/master || git fetch local) &&
+      git config remote.local.url . &&
+      git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+      (git show-ref -q refs/remotes/local/master || git fetch local) &&
+-     git branch my3 local/master &&
 +	quiet git branch my3 local/master &&
-+	test $(git config branch.my3.remote) = local &&
+      test $(git config branch.my3.remote) = local &&
+-     test $(git config branch.my3.merge) = refs/heads/master'
 +	test $(git config branch.my3.merge) = refs/heads/master
 +'
-+
+ 
+-test_expect_success 'test overriding tracking setup via --no-track' \
+-    'git config branch.autosetupmerge true &&
 +test_expect_success 'test overriding tracking setup via --no-track' '
 +	git config branch.autosetupmerge true &&
-+	git config remote.local.url . &&
-+	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
-+	(git show-ref -q refs/remotes/local/master || git fetch local) &&
-+	git branch --no-track my2 local/master &&
-+	git config branch.autosetupmerge false &&
-+	! test "$(git config branch.my2.remote)" = local &&
+      git config remote.local.url . &&
+      git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+      (git show-ref -q refs/remotes/local/master || git fetch local) &&
+      git branch --no-track my2 local/master &&
+      git config branch.autosetupmerge false &&
+      ! test "$(git config branch.my2.remote)" = local &&
+-     ! test "$(git config branch.my2.merge)" = refs/heads/master'
 +	! test "$(git config branch.my2.merge)" = refs/heads/master
 +'
-+
+ 
+-test_expect_success 'no tracking without .fetch entries' \
+-    'git config branch.autosetupmerge true &&
 +test_expect_success 'no tracking without .fetch entries' '
 +	git config branch.autosetupmerge true &&
-+	git branch my6 s &&
-+	git config branch.automsetupmerge false &&
-+	test -z "$(git config branch.my6.remote)" &&
+      git branch my6 s &&
+      git config branch.automsetupmerge false &&
+      test -z "$(git config branch.my6.remote)" &&
+-     test -z "$(git config branch.my6.merge)"'
 +	test -z "$(git config branch.my6.merge)"
 +'
-+
+ 
+-test_expect_success 'test tracking setup via --track but deeper' \
+-    'git config remote.local.url . &&
 +test_expect_success 'test tracking setup via --track but deeper' '
 +	git config remote.local.url . &&
-+	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
-+	(git show-ref -q refs/remotes/local/o/o || git fetch local) &&
+      git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+      (git show-ref -q refs/remotes/local/o/o || git fetch local) &&
+-     git branch --track my7 local/o/o &&
 +	quiet git branch --track my7 local/o/o &&
-+	test "$(git config branch.my7.remote)" = local &&
+      test "$(git config branch.my7.remote)" = local &&
+-     test "$(git config branch.my7.merge)" = refs/heads/o/o'
 +	test "$(git config branch.my7.merge)" = refs/heads/o/o
 +'
-+
+ 
+-test_expect_success 'test deleting branch deletes branch config' \
+-    'git branch -d my7 &&
 +test_expect_success 'test deleting branch deletes branch config' '
 +	quiet git branch -d my7 &&
-+	test -z "$(git config branch.my7.remote)" &&
+      test -z "$(git config branch.my7.remote)" &&
+-     test -z "$(git config branch.my7.merge)"'
 +	test -z "$(git config branch.my7.merge)"
 +'
-+
+ 
+-test_expect_success 'test deleting branch without config' \
+-    'git branch my7 s &&
 +test_expect_success 'test deleting branch without config' '
 +	git branch my7 s &&
-+	sha1=$(git rev-parse my7 | cut -c 1-7) &&
-+	echo "Deleted branch my7 (was $sha1)." >expect &&
-+	git branch -d my7 >actual 2>&1 &&
+      sha1=$(git rev-parse my7 | cut -c 1-7) &&
+      echo "Deleted branch my7 (was $sha1)." >expect &&
+      git branch -d my7 >actual 2>&1 &&
+-     test_i18ncmp expect actual'
 +	test_i18ncmp expect actual
 +'
-+
+ 
+-test_expect_success 'test --track without .fetch entries' \
+-    'git branch --track my8 &&
 +test_expect_success 'test --track without .fetch entries' '
 +	quiet git branch --track my8 &&
-+	test "$(git config branch.my8.remote)" &&
+      test "$(git config branch.my8.remote)" &&
+-     test "$(git config branch.my8.merge)"'
 +	test "$(git config branch.my8.merge)"
 +'
-+
+ 
+-test_expect_success \
+-    'branch from non-branch HEAD w/autosetupmerge=always' \
+-    'git config branch.autosetupmerge always &&
 +test_expect_success 'branch from non-branch HEAD w/autosetupmerge=always' '
 +	git config branch.autosetupmerge always &&
-+	git branch my9 HEAD^ &&
+      git branch my9 HEAD^ &&
+-     git config branch.autosetupmerge false'
 +	git config branch.autosetupmerge false
 +'
-+
+ 
+-test_expect_success \
+-    'branch from non-branch HEAD w/--track causes failure' \
+-    'test_must_fail git branch --track my10 HEAD^'
 +test_expect_success 'branch from non-branch HEAD w/--track causes failure' '
 +	silent test_must_fail git branch --track my10 HEAD^
 +'
-+
+ 
+-test_expect_success \
+-    'branch from tag w/--track causes failure' \
+-    'git tag foobar &&
+-     test_must_fail git branch --track my11 foobar'
 +test_expect_success 'branch from tag w/--track causes failure' '
 +	git tag foobar &&
 +	silent test_must_fail git branch --track my11 foobar
@@ -583,25 +518,22 @@ index dd1aceb..93c35cd 100755
  # Keep this test last, as it changes the current branch
 -cat >expect <<EOF
 -$_z40 $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	branch: Created from master
--EOF
--test_expect_success \
--    'git checkout -b g/h/i -l should create a branch and a log' \
--	'GIT_COMMITTER_DATE="2005-05-26 23:30" \
--     git checkout -b g/h/i -l master &&
--	 test_path_is_file .git/refs/heads/g/h/i &&
--	 test_path_is_file .git/logs/refs/heads/g/h/i &&
--	 test_cmp expect .git/logs/refs/heads/g/h/i'
 +test_expect_success 'git checkout -b g/h/i -l should create a branch and a log' '
 +	id="$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
 +	date="1117150200 +0000"
 +	msg="branch: Created from master"
 +	here >expect <<-EOF
 +		$_z40 $HEAD $id $date\t$msg
-+	EOF
+ EOF
+-test_expect_success \
+-    'git checkout -b g/h/i -l should create a branch and a log' \
+-	'GIT_COMMITTER_DATE="2005-05-26 23:30" \
+-     git checkout -b g/h/i -l master &&
 +	GIT_COMMITTER_DATE="2005-05-26 23:30" \
 +		git checkout -q -b g/h/i -l master &&
-+	test_path_is_file .git/refs/heads/g/h/i &&
-+	test_path_is_file .git/logs/refs/heads/g/h/i &&
+ 	 test_path_is_file .git/refs/heads/g/h/i &&
+ 	 test_path_is_file .git/logs/refs/heads/g/h/i &&
+-	 test_cmp expect .git/logs/refs/heads/g/h/i'
 +	test_cmp expect .git/logs/refs/heads/g/h/i
 +'
  
