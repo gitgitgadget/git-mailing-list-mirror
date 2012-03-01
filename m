@@ -1,93 +1,75 @@
-From: Andrew Ardill <andrew.ardill@gmail.com>
-Subject: Re: Running git on ARM systems
-Date: Thu, 1 Mar 2012 16:47:42 +1100
-Message-ID: <CAH5451=bQ=_Bn2tLRM5mBRSHA3BqMU7S=V1DxNaUeKxZ1G1XsA@mail.gmail.com>
-References: <CAH5451=ngnGxpSd4+8xg1PwTSPOJ0napS+Y9KNVE_82a+n+GQQ@mail.gmail.com>
- <CAKbGBLj5EcQ=DLqhTO9FPKJGyP-tw=HyGYEgAv_7vz_0erSDMA@mail.gmail.com>
+From: Tom Grennan <tmgrennan@gmail.com>
+Subject: Re: [PATCH-w 101/105] t6300 (for-each-ref): modernize style
+Date: Wed, 29 Feb 2012 21:57:41 -0800
+Message-ID: <20120301055741.GF2572@tgrennan-laptop>
+References: <1330566326-26075-1-git-send-email-tmgrennan@gmail.com>
+ <1330566326-26075-7-git-send-email-tmgrennan@gmail.com>
+ <7v62epqd9a.fsf@alter.siamese.dyndns.org>
+ <20120301032053.GD2572@tgrennan-laptop>
+ <7vty29ovcd.fsf@alter.siamese.dyndns.org>
+ <20120301051010.GE2572@tgrennan-laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Steven Noonan <steven@uplinklabs.net>
-X-From: git-owner@vger.kernel.org Thu Mar 01 06:48:35 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Carlos Rica <jasampler@gmail.com>,
+	Andy Parkins <andyparkins@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Amos Waterland <apw@rossby.metr.ou.edu>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 06:57:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2ysU-0000ZD-DB
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 06:48:34 +0100
+	id 1S2z1U-0006HH-R0
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 06:57:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754471Ab2CAFsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Mar 2012 00:48:06 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:56747 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753226Ab2CAFsE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2012 00:48:04 -0500
-Received: by wejx9 with SMTP id x9so110035wej.19
-        for <git@vger.kernel.org>; Wed, 29 Feb 2012 21:48:02 -0800 (PST)
-Received-SPF: pass (google.com: domain of andrew.ardill@gmail.com designates 10.216.135.102 as permitted sender) client-ip=10.216.135.102;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of andrew.ardill@gmail.com designates 10.216.135.102 as permitted sender) smtp.mail=andrew.ardill@gmail.com; dkim=pass header.i=andrew.ardill@gmail.com
-Received: from mr.google.com ([10.216.135.102])
-        by 10.216.135.102 with SMTP id t80mr1697431wei.59.1330580882959 (num_hops = 1);
-        Wed, 29 Feb 2012 21:48:02 -0800 (PST)
+	id S1755242Ab2CAF5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Mar 2012 00:57:47 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:41134 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754653Ab2CAF5r (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2012 00:57:47 -0500
+Received: by vcqp1 with SMTP id p1so200736vcq.19
+        for <git@vger.kernel.org>; Wed, 29 Feb 2012 21:57:46 -0800 (PST)
+Received-SPF: pass (google.com: domain of tmgrennan@gmail.com designates 10.52.88.212 as permitted sender) client-ip=10.52.88.212;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of tmgrennan@gmail.com designates 10.52.88.212 as permitted sender) smtp.mail=tmgrennan@gmail.com; dkim=pass header.i=tmgrennan@gmail.com
+Received: from mr.google.com ([10.52.88.212])
+        by 10.52.88.212 with SMTP id bi20mr5337130vdb.2.1330581466656 (num_hops = 1);
+        Wed, 29 Feb 2012 21:57:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=IOHNG3O6y9gEjIL6PmkjJrjByfTrvQ8dGMQNqyWWzdg=;
-        b=jcgGBTYOrrREhsP5J1/ln4teqeezUj4GNKlVa+1wSDCB+MwR8yf2MdZtSaEr5kNIFJ
-         2b2YnuB/nYhtWCtWm+4zFAJqX7axVOY+JscdO+t2eMVSHKbwJk5PF+m+KuCDBKXPhBza
-         ec8eYHm+36YjepMUNCW6zhhsO0i+OTgVeYth8=
-Received: by 10.216.135.102 with SMTP id t80mr1363402wei.59.1330580882861;
- Wed, 29 Feb 2012 21:48:02 -0800 (PST)
-Received: by 10.223.96.133 with HTTP; Wed, 29 Feb 2012 21:47:42 -0800 (PST)
-In-Reply-To: <CAKbGBLj5EcQ=DLqhTO9FPKJGyP-tw=HyGYEgAv_7vz_0erSDMA@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=ST73ENM1KuylFJhJfks7ipG1RVP6EK1Y3h5XEIClypM=;
+        b=Hk90hof036QEV/m0GcioV/3ECScVmAFRyk2UaP98gznJT7K9e63RYywYxVJKrdaXwg
+         ntW5lmIS5AGxQRWiRB3T6+hiUE65nvsiflS6sfM2ZrcPWieQopLrBFQ72ajPx0eZQfs9
+         NsP0BhZgs88DW7NAOAzkTfNHewJIr1YmCrTLo=
+Received: by 10.52.88.212 with SMTP id bi20mr4524059vdb.2.1330581466241;
+        Wed, 29 Feb 2012 21:57:46 -0800 (PST)
+Received: from localhost (c-98-207-169-74.hsd1.ca.comcast.net. [98.207.169.74])
+        by mx.google.com with ESMTPS id gz4sm1493200vdb.19.2012.02.29.21.57.43
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 29 Feb 2012 21:57:45 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20120301051010.GE2572@tgrennan-laptop>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191900>
 
-On 1 March 2012 16:31, Steven Noonan <steven@uplinklabs.net> wrote:
-> I've been using git on three different ARM boxes (TrimSlice,
-> PandaBoard, i.MX53 Quick Start Board). It works okay, if a bit slow.
-> Even on a small repository (< 1MB), git is a bit laggy, but that's
-> true of most everything on those devices. It would be nice if they had
-> decent SATA controllers so I could attach some small SSDs or something
-> instead of relying on MicroSD or SD. I think you'll find the biggest
-> problem you will run into is memory usage when repacking or garbage
-> collecting, but you probably wouldn't really want to anyway (and if
-> you do, move the whole .git dir to something that can handle a proper
-> repack).
->
-> I've never used the ARM11 processor though. My experience has been
-> with the ARM7 and ARM9, where I was -extremely- memory constrained
-> (4MB of RAM if I recall) and couldn't really build anything on the
-> device itself, as well as the Cortex-A8 and Cortex-A9 -- which was a
-> huge leap compared to the ARM7/ARM9, particularly since the newer
-> devices have a couple orders of magnitude more memory.
->
-> Would be curious to see how one of the Raspberry Pi devices does
-> running my incomplete and silly microbenchmarking tool
-> (https://github.com/tycho/cpu-test-arm)... Perhaps I'll order one when
-> they're back in stock. :)
->
-> Is there anything specific you wanted to know about git on such devices?
+On Wed, Feb 29, 2012 at 09:10:10PM -0800, Tom Grennan wrote:
+>On Wed, Feb 29, 2012 at 07:26:10PM -0800, Junio C Hamano wrote:
+>>Tom Grennan <tmgrennan@gmail.com> writes:
+>>
+>For example, try this w/ and w/o the above change.
+>	(cd t && ./t5512-ls-remote.sh) | less
 
-It's good to hear that git has worked on these devices. Did you
-compile it for them especially, and if so what did you have to do?
+	(cd t && ./t5512-ls-remote.sh -v) | less
 
-The RPi will have 256M ram, which is significantly better than what
-you have been working with. I think my first real goal will be to
-compile git on it. Hopefully it will be flawless!
-
-In terms of running git on these devices, are there any limitations to
-the functionality, barring memory constraints?
-
-The device will also have USB ports, and I imagine the two most common
-use cases will have the working directory on SD card and on USB hard
-drive. I wonder how git will perform comparatively on each.
-
-Regards,
-
-Andrew Ardill
+-- 
+TomG
