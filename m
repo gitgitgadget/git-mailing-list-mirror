@@ -1,85 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] bundle: keep around names passed to
- add_pending_object()
-Date: Thu, 01 Mar 2012 14:05:13 -0800
-Message-ID: <7vehtckmee.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH 3/4] t5510: ensure we stay in the toplevel test dir
+Date: Thu, 1 Mar 2012 23:09:26 +0100
+Message-ID: <871upcht2h.fsf@thomas.inf.ethz.ch>
 References: <cover.1330637923.git.trast@student.ethz.ch>
- <6fba13f255f76481dc9098b5e8fbb33bd10735cb.1330637923.git.trast@student.ethz.ch>
+	<80204781996b200d08b73cf61fa50df468e4b51d.1330637923.git.trast@student.ethz.ch>
+	<7vipiokmrz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Mar 01 23:05:25 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Thomas Rast <trast@student.ethz.ch>, <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 23:09:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3E7o-0005gz-Ru
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 23:05:25 +0100
+	id 1S3EBs-0008KH-8f
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 23:09:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755915Ab2CAWFS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Mar 2012 17:05:18 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63517 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755528Ab2CAWFQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2012 17:05:16 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 48B137E1D;
-	Thu,  1 Mar 2012 17:05:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rnCQ2yeC9mX6sDkyWmGEEyaEoR0=; b=QIt85M
-	ZlseNkbtV6BULlVAGH4YaH0jlBqRAP78XRfe8Cw/DpQTDaW4vRWgWfpk2CbjzKyV
-	qlTqpWsCPbvRsNPpH7O/XbEwfmF1eVNFKOGT3NWlPQVio+xqJlEQq1TVZWxDRPEi
-	GiKVKpPdv35X9VPceedpwT5o0ISCL9vEoIhxE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=THNpK9rl9r3gsrxL3cubVLtBcu497Ziq
-	TlZ/aDNswsuZ+NwW0MFM0VSqdd28xUdiDWNTl66srTKmtM86qftuNtAvyWXmoO3S
-	iKRsQSTr8G8GTOzzFp4stOV53tKQHfYOSiBhR9n1496J1t5Fep22QKXtBD2opgLb
-	cEzk3wT986E=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3690D7E1B;
-	Thu,  1 Mar 2012 17:05:15 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8EA287E18; Thu,  1 Mar 2012
- 17:05:14 -0500 (EST)
-In-Reply-To: <6fba13f255f76481dc9098b5e8fbb33bd10735cb.1330637923.git.trast@student.ethz.ch> (Thomas Rast's message of "Thu, 1 Mar 2012 22:40:51 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9F6B8F16-63EA-11E1-A497-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758058Ab2CAWJa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Mar 2012 17:09:30 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:25641 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758025Ab2CAWJ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2012 17:09:29 -0500
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 1 Mar
+ 2012 23:09:25 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.210.31) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 1 Mar
+ 2012 23:09:26 +0100
+In-Reply-To: <7vipiokmrz.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 01 Mar 2012 13:57:04 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.210.31]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191982>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> The 'name' field passed to add_pending_object() is used to later
-> deduplicate in object_array_remove_duplicates().
+> Thomas Rast <trast@student.ethz.ch> writes:
 >
-> git-bundle had a bug in this area since 18449ab (git-bundle: avoid
-> packing objects which are in the prerequisites, 2007-03-08): it passed
-> the name of each boundary object in a static buffer.  In other words,
-> all that object_array_remove_duplicates() saw was the name of the
-> *last* added boundary object.
+>> The last test descended into a subdir without ever re-emerging, which
+>> is not so nice to the next test writer.
+>
+> True.  Making the test suite more robust like this patch does is very much
+> appreciated.
+>
+> Is there a reason why we shouldn't be sticking to the more usual
+>
+> 	mkdir dups &&
+>         (
+>         	cd dups &&
+>                 do whatever in dups
+> 	)
+>
+> pattern?
 
-Ouch.
+None in particular.  It would also perhaps reduce the churn since (as it
+touches every line anyway) it could be squashed with 2/4.  Should I reroll?
 
-> diff --git a/bundle.c b/bundle.c
-> index 7a760db..d9cfd90 100644
-> --- a/bundle.c
-> +++ b/bundle.c
-> @@ -273,7 +273,7 @@ int create_bundle(struct bundle_header *header, const char *path,
->  			if (!get_sha1_hex(buf.buf + 1, sha1)) {
->  				struct object *object = parse_object(sha1);
->  				object->flags |= UNINTERESTING;
-> -				add_pending_object(&revs, object, buf.buf);
-> +				add_pending_object(&revs, object, xstrdup(buf.buf));
-
-We'll release &buf after the loop but the elements in the pending object
-array will keep their own copies, so now we would be safe.
-
-Thanks for fixing this.
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
