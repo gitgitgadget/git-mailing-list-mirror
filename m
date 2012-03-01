@@ -1,178 +1,131 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/4] t4011: illustrate "diff-index -p" on stat-dirty paths
-Date: Wed, 29 Feb 2012 18:14:15 -0800
-Message-ID: <1330568057-27304-3-git-send-email-gitster@pobox.com>
-References: <1330568057-27304-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 01 03:14:44 2012
+From: Tom Grennan <tmgrennan@gmail.com>
+Subject: Re: [PATCH-w 101/105] t6300 (for-each-ref): modernize style
+Date: Wed, 29 Feb 2012 19:20:53 -0800
+Message-ID: <20120301032053.GD2572@tgrennan-laptop>
+References: <1330566326-26075-1-git-send-email-tmgrennan@gmail.com>
+ <1330566326-26075-7-git-send-email-tmgrennan@gmail.com>
+ <7v62epqd9a.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Carlos Rica <jasampler@gmail.com>,
+	Andy Parkins <andyparkins@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Amos Waterland <apw@rossby.metr.ou.edu>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 04:21:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2vXX-00040Z-1x
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 03:14:43 +0100
+	id 1S2wZn-0001Zr-1Z
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 04:21:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757441Ab2CACO0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Feb 2012 21:14:26 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63745 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757239Ab2CACOY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Feb 2012 21:14:24 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E7A67D58
-	for <git@vger.kernel.org>; Wed, 29 Feb 2012 21:14:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=ReLL
-	XUcWPt7ljcj76xf9dLajKZA=; b=ueYvG9g0k3R0NizX2Kb/mct9CHyhn812OIfX
-	mJRsGtk1ieYaq44rvWEqdOSyPQQQuEwUu1OdUFucN8Eox+Wex2Axp7mw8XcHKxl9
-	IqrPXtKffuQie/gDptsnkCsPPD/+vXB3zewT+NtKj/3kzR3wavNYfdZamGn9Ch1V
-	c0CAid0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=tE5kZG
-	AQGCLMctA257JsmMsfxccjfkIsIY1ktpGbY88OTREbPZzPxTOgxU80VsSELqvoLq
-	v9KF1BRuIuUR3fknLqpRXbqVHMUCyEluKESGhv1ZWVXellPddpUE1NNph+b/lE9F
-	wAmTOVWcqWCLrkQ9bpVtJplYi1Xah/H9oQ27Q=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 851757D57
-	for <git@vger.kernel.org>; Wed, 29 Feb 2012 21:14:23 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C491C7D55 for
- <git@vger.kernel.org>; Wed, 29 Feb 2012 21:14:22 -0500 (EST)
-X-Mailer: git-send-email 1.7.9.2.350.g74d65
-In-Reply-To: <1330568057-27304-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 42D770EA-6344-11E1-9ADD-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754323Ab2CADVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Feb 2012 22:21:00 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:59645 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753116Ab2CADU7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Feb 2012 22:20:59 -0500
+Received: by vbbff1 with SMTP id ff1so130136vbb.19
+        for <git@vger.kernel.org>; Wed, 29 Feb 2012 19:20:59 -0800 (PST)
+Received-SPF: pass (google.com: domain of tmgrennan@gmail.com designates 10.52.93.74 as permitted sender) client-ip=10.52.93.74;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of tmgrennan@gmail.com designates 10.52.93.74 as permitted sender) smtp.mail=tmgrennan@gmail.com; dkim=pass header.i=tmgrennan@gmail.com
+Received: from mr.google.com ([10.52.93.74])
+        by 10.52.93.74 with SMTP id cs10mr4581655vdb.42.1330572059105 (num_hops = 1);
+        Wed, 29 Feb 2012 19:20:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=sk5vHRZKzVVasBhEzPtpcuv0pc6xKD1l+Nreoo1Sqnk=;
+        b=rNjDHoja7E+a5yKfqXUujCGNxor7Cv5mWn0lsxvrKL/qznOR4LH4qy0aJLOycKL3Bf
+         VbgtvAphev1ZAYu3T9GZ5EptUCns5K5lUpFekvu3K9UTbrIlhLNw/z+EmRoxHtm18BLE
+         K5e0jN3IsqUIunyDp2v1J1r4+fDQqgnJZ//Z8=
+Received: by 10.52.93.74 with SMTP id cs10mr3920328vdb.42.1330572059024;
+        Wed, 29 Feb 2012 19:20:59 -0800 (PST)
+Received: from localhost (c-98-207-169-74.hsd1.ca.comcast.net. [98.207.169.74])
+        by mx.google.com with ESMTPS id ew2sm910368vdc.16.2012.02.29.19.20.55
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 29 Feb 2012 19:20:57 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7v62epqd9a.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191890>
 
-The plumbing that looks at the working tree, i.e. "diff-index" and
-"diff-files", always emit the "diff --git a/path b/path" header lines
-without anything else for paths that are only stat-dirty (i.e. different
-only because the cached stat information in the index no longer matches
-that of the working tree, but the real contents are the same), when
-these commands are run with "-p" option to produce patches.
+On Wed, Feb 29, 2012 at 06:13:53PM -0800, Junio C Hamano wrote:
+>Tom Grennan <tmgrennan@gmail.com> writes:
+>
+>> +if ! test -r test-lib.sh ; then
+>> +	(cd ${0%/*} && ./${0##*/} $@)
+>> +	exit $?
+>> +fi
+>
+>Not very nice; why is this an improvement?
 
-Illustrate this current behaviour.  The new part that uses "-w" option
-demonstrates that we do not show any "diff --git" header for blobs whose
-true contents are different but compares the same when whitespaces are
-ignored, which is inconsistent with the behaviour for stat-dirty paths.
+I liked being able to,
+	t/t1234-frotz.sh [-q|-v]
+in addition to,
+	cd t && sh ./t1234-frotz.sh
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t4011-diff-symlink.sh |   47 ++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 40 insertions(+), 7 deletions(-)
+>>  . ./test-lib.sh
+>>  . "$TEST_DIRECTORY"/lib-gpg.sh
+>>  
+>> +quiet () { "$@" >/dev/null; }
+>> +silent () { "$@" >/dev/null 2>&1; }
+>
+>Not nice, either.
 
-diff --git a/t/t4011-diff-symlink.sh b/t/t4011-diff-symlink.sh
-index cb47ec1..6097e19 100755
---- a/t/t4011-diff-symlink.sh
-+++ b/t/t4011-diff-symlink.sh
-@@ -9,7 +9,7 @@ test_description='Test diff of symlinks.
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/diff-lib.sh
- 
--test_expect_success SYMLINKS 'diff new symlink' '
-+test_expect_success SYMLINKS 'diff new symlink and file' '
- 	cat >expected <<-\EOF &&
- 	diff --git a/frotz b/frotz
- 	new file mode 120000
-@@ -19,22 +19,30 @@ test_expect_success SYMLINKS 'diff new symlink' '
- 	@@ -0,0 +1 @@
- 	+xyzzy
- 	\ No newline at end of file
-+	diff --git a/nitfol b/nitfol
-+	new file mode 100644
-+	index 0000000..7c465af
-+	--- /dev/null
-+	+++ b/nitfol
-+	@@ -0,0 +1 @@
-+	+xyzzy
- 	EOF
- 	ln -s xyzzy frotz &&
-+	echo xyzzy >nitfol &&
- 	git update-index &&
- 	tree=$(git write-tree) &&
--	git update-index --add frotz &&
-+	git update-index --add frotz nitfol &&
- 	GIT_DIFF_OPTS=--unified=0 git diff-index -M -p $tree >current &&
- 	compare_diff_patch expected current
- '
- 
--test_expect_success SYMLINKS 'diff unchanged symlink'  '
-+test_expect_success SYMLINKS 'diff unchanged symlink and file'  '
- 	tree=$(git write-tree) &&
--	git update-index frotz &&
-+	git update-index frotz nitfol &&
- 	test -z "$(git diff-index --name-only $tree)"
- '
- 
--test_expect_success SYMLINKS 'diff removed symlink' '
-+test_expect_success SYMLINKS 'diff removed symlink and file' '
- 	cat >expected <<-\EOF &&
- 	diff --git a/frotz b/frotz
- 	deleted file mode 120000
-@@ -44,22 +52,39 @@ test_expect_success SYMLINKS 'diff removed symlink' '
- 	@@ -1 +0,0 @@
- 	-xyzzy
- 	\ No newline at end of file
-+	diff --git a/nitfol b/nitfol
-+	deleted file mode 100644
-+	index 7c465af..0000000
-+	--- a/nitfol
-+	+++ /dev/null
-+	@@ -1 +0,0 @@
-+	-xyzzy
- 	EOF
- 	mv frotz frotz2 &&
-+	mv nitfol nitfol2 &&
- 	git diff-index -M -p $tree >current &&
- 	compare_diff_patch expected current
- '
- 
--test_expect_success SYMLINKS 'diff identical, but newly created symlink' '
-+test_expect_success SYMLINKS 'diff identical, but newly created symlink and file' '
- 	cat >expected <<-\EOF &&
- 	diff --git a/frotz b/frotz
-+	diff --git a/nitfol b/nitfol
- 	EOF
-+	sleep 3 &&
-+	rm -f frotz &&
-+	echo xyzzy >nitfol3 &&
-+	mv nitfol3 nitfol &&
- 	ln -s xyzzy frotz &&
- 	git diff-index -M -p $tree >current &&
-+	compare_diff_patch expected current &&
-+
-+	>expected &&
-+	git diff-index -M -p -w $tree >current &&
- 	compare_diff_patch expected current
- '
- 
--test_expect_success SYMLINKS 'diff different symlink' '
-+test_expect_success SYMLINKS 'diff different symlink and file' '
- 	cat >expected <<-\EOF &&
- 	diff --git a/frotz b/frotz
- 	index 7c465af..df1db54 120000
-@@ -70,9 +95,17 @@ test_expect_success SYMLINKS 'diff different symlink' '
- 	\ No newline at end of file
- 	+yxyyz
- 	\ No newline at end of file
-+	diff --git a/nitfol b/nitfol
-+	index 7c465af..df1db54 100644
-+	--- a/nitfol
-+	+++ b/nitfol
-+	@@ -1 +1 @@
-+	-xyzzy
-+	+yxyyz
- 	EOF
- 	rm -f frotz &&
- 	ln -s yxyyz frotz &&
-+	echo yxyyz >nitfol &&
- 	git diff-index -M -p $tree >current &&
- 	compare_diff_patch expected current
- '
+"Not nice" b/c they're on one line?
+I like simple things compressed so I quickly glance pass them.
+Sort of forest through the trees.
+
+>>  # Mon Jul 3 15:18:43 2006 +0000
+>>  datestamp=1151939923
+>>  setdate_and_increment () {
+>> @@ -22,9 +30,9 @@ test_expect_success 'Create sample commit with known timestamp' '
+>>  	setdate_and_increment &&
+>>  	echo "Using $datestamp" > one &&
+>>  	git add one &&
+>> -	git commit -m "Initial" &&
+>> +	git commit -q -m "Initial" &&
+>>  	setdate_and_increment &&
+>> -	git tag -a -m "Tagging at $datestamp" testtag
+>> +	quiet git tag -a -m "Tagging at $datestamp" testtag
+>
+>Why? Why? Why?
+>
+>	cd t && sh ./t1234-frotz.sh
+>
+>would be silent enough and suppressing the output from the commands like
+>this patch does makes it _harder_ for people to debug their changes to the
+>script with
+>
+>	sh ./t1234-frotz.sh -v
+
+Hmm, I found the noise distracting.  For example, w/o redirecting
+stderr, most of the test_must_fail puke as expected.  If it's expected,
+why show it?  BTW since it's a different stream, to get the error near
+the exec log one has to:
+
+	sh ./t1234-frotz.sh -v |& less
+
+Otherwise it's challenging to separate the expected vs unexpected failures.
+
+Most of the "quiet's"  are with git-tag and git-branch.  I'd prefer
+--quiet and --silent options to these commands like git-init, git-commit, etc.
+
+>Most of the change in this patch does nothing to do with "modernize style".
+
+It's trivial to remove these "quiet" and "silent", but to me that's the
+only value added by these patches.  More seriously, the remaining
+modernization still seems much larger than its value.
+
 -- 
-1.7.9.2.350.g74d65
+TomG
