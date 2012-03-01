@@ -1,53 +1,71 @@
-From: solo-git@goeswhere.com
-Subject: Re: Running git on ARM systems
-Date: Thu, 1 Mar 2012 11:12:19 +0000
-Message-ID: <20120301111219.GA1379@goeswhere.com>
-References: <CAH5451=ngnGxpSd4+8xg1PwTSPOJ0napS+Y9KNVE_82a+n+GQQ@mail.gmail.com>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: Why Is There No Bug Tracker And Why Are Patches Sent Instead Of Pull Requests
+Date: Thu, 1 Mar 2012 12:29:31 +0100
+Message-ID: <8762eoimp0.fsf@thomas.inf.ethz.ch>
+References: <CAM=oOO2i-9zraF-YG5YzvZEmN1eXTnQfhJ-eMF04NP7HGtf41w@mail.gmail.com>
+	<7vhay9tqs6.fsf@alter.siamese.dyndns.org>
+	<20120229225304.GA9099@burratino>
+	<CAH5451miv_Mo_9tZV+mfDEHuEX0491duqAYh66aOzLsMLTNkaA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 01 12:20:16 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	opticyclic <opticyclic@gmail.com>, <git@vger.kernel.org>
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 12:29:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S343T-0002iz-Ef
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 12:20:15 +0100
+	id 1S34Cb-0000cL-Bs
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 12:29:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757545Ab2CALUI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Mar 2012 06:20:08 -0500
-Received: from fau.xxx ([78.47.200.108]:46884 "EHLO reg.goeswhere.com"
+	id S1758149Ab2CAL3f convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Mar 2012 06:29:35 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:11387 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753888Ab2CALUH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2012 06:20:07 -0500
-X-Greylist: delayed 466 seconds by postgrey-1.27 at vger.kernel.org; Thu, 01 Mar 2012 06:20:07 EST
-Received: by reg.goeswhere.com (Postfix, from userid 1000)
-	id 82AE32E1C51; Thu,  1 Mar 2012 11:12:19 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <CAH5451=ngnGxpSd4+8xg1PwTSPOJ0napS+Y9KNVE_82a+n+GQQ@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754046Ab2CAL3e convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Mar 2012 06:29:34 -0500
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 1 Mar
+ 2012 12:29:30 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 1 Mar
+ 2012 12:29:31 +0100
+In-Reply-To: <CAH5451miv_Mo_9tZV+mfDEHuEX0491duqAYh66aOzLsMLTNkaA@mail.gmail.com>
+	(Andrew Ardill's message of "Thu, 1 Mar 2012 10:58:56 +1100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191916>
 
-On Thu, Mar 01, 2012 at 04:11:16PM +1100, Andrew Ardill wrote:
-> Hi everyone,
-> 
-> You may have heard of the Raspberry Pi [1], a fully programmable
-> computer the size of a credit card for $25-$35. It will run a linux
-> (debian/fedora/arch) distribution on a 700 MHz ARM1176JZF-S core
-> (ARM11 family) [2].
+Andrew Ardill <andrew.ardill@gmail.com> writes:
 
-Then there's things like the Nokia n900 / n950 devices; 'phones with
-Maemo (~= Debian) on them.  I've been using the git-core (installed via.
-apt-get) on my n900 for backups and lightweight development for ages.
+> I have set up a JIRA instance using Atlassian's OnDemand service,
+> available at https://git-scm.atlassian.net/
+[...]
+> As I see it (and Junio has mentioned before) we are going to need
+> people who are able to manage the issues in this system
 
-The main problem is the IO, in my experience, the device has 256MB of ram,
-but only SD-card grade storage (like the Rasberry).
+Note that you are not the first one to try.  The most elaborate plan an=
+d
+writeup that I know of sits at
 
-ARMv7, according to /proc/cpuinfo.
+  http://article.gmane.org/gmane.comp.version-control.git/136500  [1]
 
-Package: http://maemo.org/packages/view/git-core/
+Jan "jast" Kr=C3=BCger also mentioned server issues today, so *.jk.gs i=
+s
+presumably down because of that, not because gitbugs.jk.gs is no longer
+valid.
+
+Nevertheless, AFAIK it has never been used for "real work", so you may
+want to look into why that happened, and do something different.
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
