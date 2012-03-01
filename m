@@ -1,72 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/3] http: try http_proxy env var when http.proxy
- config option is not set
-Date: Thu, 01 Mar 2012 10:33:37 -0800
-Message-ID: <7v7gz4npby.fsf@alter.siamese.dyndns.org>
-References: <4F4FBE0F.6020004@seap.minhap.es> <4F4FB5BF.8000904@vilain.net>
+From: Luiz-Otavio Zorzella <zorzella@gmail.com>
+Subject: Bug: no-op "rebase -i" failures (easily reproduceable)
+Date: Thu, 1 Mar 2012 10:47:08 -0800
+Message-ID: <CAFjr8EukvC6zsa2vzUWL+YDNLMUh5apmwGQZ1s5WkHg-bC17Kw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>,
-	git@vger.kernel.org, peff@peff.net
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Thu Mar 01 19:33:50 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 01 19:47:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3Aoz-0002I8-AJ
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 19:33:45 +0100
+	id 1S3B2N-0002ph-J6
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 19:47:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756024Ab2CASdk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Mar 2012 13:33:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42768 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755035Ab2CASdj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2012 13:33:39 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 091CA7A01;
-	Thu,  1 Mar 2012 13:33:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=oCX3g9WhpxXhfMPrLhbQxFx81uU=; b=wXGb+P
-	/w+8OfEyJkf+U76dt9RDV3Psz7EKmUJnG90QpyFAhYLf4drGcfIMrTKuKwn07023
-	N7PlCFzLmm3aXiSPEjV64ys7gWNq1xHVru6T9i/YtCq20aQUiob2QFwKa5RjO/sK
-	fI81/3KH7iD3fef1s3MBlRmw4Is87dbuG+jRo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NZFfToBmkyeyu9lwTILIYlXnDk19FcEI
-	m4O2Vwk5NIlhVSmLRGniKv7xZjjaXX80ypAtzT93WSrwc0KrDohad2jPp1WQtXV7
-	Maqpaww0Yq4QQInCWbRMTOgmgxzALKLXf3a+Q+U/fDv4ndKkkoFQk2CYsVZ3e67v
-	JW55MVQ0VjM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F1ECB79FF;
-	Thu,  1 Mar 2012 13:33:38 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6E73479FD; Thu,  1 Mar 2012
- 13:33:38 -0500 (EST)
-In-Reply-To: <4F4FB5BF.8000904@vilain.net> (Sam Vilain's message of "Thu, 01
- Mar 2012 09:45:35 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0FEFB9EC-63CD-11E1-BAA4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755914Ab2CASra (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Mar 2012 13:47:30 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:56476 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755520Ab2CASr3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2012 13:47:29 -0500
+Received: by wejx9 with SMTP id x9so561930wej.19
+        for <git@vger.kernel.org>; Thu, 01 Mar 2012 10:47:28 -0800 (PST)
+Received-SPF: pass (google.com: domain of zorzella@gmail.com designates 10.216.144.138 as permitted sender) client-ip=10.216.144.138;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of zorzella@gmail.com designates 10.216.144.138 as permitted sender) smtp.mail=zorzella@gmail.com; dkim=pass header.i=zorzella@gmail.com
+Received: from mr.google.com ([10.216.144.138])
+        by 10.216.144.138 with SMTP id n10mr3965892wej.56.1330627648459 (num_hops = 1);
+        Thu, 01 Mar 2012 10:47:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=TFyB5lpkaJKiELfr1dV/m1JTNLV9hA94fz2L/yKqygQ=;
+        b=cnMYzuIYmW9cOWTtrRCEDetHawXyvjvjOMJIBk3m/v+yLjoTb8T7NzyGdHiGbIGOqm
+         iBEVF/sdOhvG8nzLiE04AFknxG7t4GLbsUeMwTuImUJFXVBIwOZAJjhq8u359qWTIuqI
+         s0bcM+jAeqQ6Ch8KxnW/KYijJkgadbSAiIesI=
+Received: by 10.216.144.138 with SMTP id n10mr3197848wej.56.1330627648342;
+ Thu, 01 Mar 2012 10:47:28 -0800 (PST)
+Received: by 10.216.3.9 with HTTP; Thu, 1 Mar 2012 10:47:08 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191956>
 
-Sam Vilain <sam@vilain.net> writes:
+I'm having problems with running commands like "git rebase -i HEAD~40"
+in my codebase. With git's own git repo, and I got a different error,
+but I think it's related: I start with a clean tree and issue a no-op
+git rebase which fails.
 
-> On 3/1/12 10:21 AM, Nelson Benitez Leon wrote:
->> CuRL already reads it, but if $http_proxy has username but no password
->> curl will not ask you for the password.. so we read it ourselves to
->> detect that and ask for the password.
->
-> That's not what this change does.  This change explicitly loads from
-> the environment the 'http_proxy' variable and sets up curl to use it.
-> As Junio said, this is (on its own) a regression.
+$ git --version
+git version 1.7.7.3
 
-Just to make sure there is no understanding down the road, I only
-expressed a concern that this _might_ be a regression. That Mac OS X
-behaviour is not something I observed first-hand.
+$ git clone git://github.com/gitster/git.git
+Cloning into 'git'...
+remote: Counting objects: 129018, done.
+remote: Compressing objects: 100% (41859/41859), done.
+remote: Total 129018 (delta 94779), reused 118799 (delta 85455)
+Receiving objects: 100% (129018/129018), 28.21 MiB | 252 KiB/s, done.
+Resolving deltas: 100% (94779/94779), done.
+
+$ cd git
+
+$ git checkout -b blow
+Switched to a new branch 'blow'
+
+$ git branch
+* blow
+  master
+
+$ EDITOR=echo git rebase -i HEAD~40
+/usr/local/google/z/gitblow/git/.git/rebase-merge/git-rebase-todo
+error: could not apply ec7ff5b... make lineno_width() from blame
+reusable for others
+
+When you have resolved this problem run "git rebase --continue".
+If you would prefer to skip this patch, instead run "git rebase --skip".
+To check out the original branch and stop rebasing run "git rebase --abort".
+Could not apply ec7ff5b... make lineno_width() from blame reusable for others
+
+******************************************
+
+Zorzella
