@@ -1,91 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] t5510: ensure we stay in the toplevel test dir
-Date: Thu, 01 Mar 2012 13:57:04 -0800
-Message-ID: <7vipiokmrz.fsf@alter.siamese.dyndns.org>
-References: <cover.1330637923.git.trast@student.ethz.ch>
- <80204781996b200d08b73cf61fa50df468e4b51d.1330637923.git.trast@student.ethz.ch>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 3/3] http: when proxy url has username but no
+ password, ask for password
+Date: Thu, 1 Mar 2012 16:58:12 -0500
+Message-ID: <20120301215812.GG17631@sigill.intra.peff.net>
+References: <4F4FBE6C.5050507@seap.minhap.es>
+ <4F4FB69C.7000708@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Mar 01 22:57:22 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>,
+	git@vger.kernel.org
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Thu Mar 01 22:58:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3E02-0000Re-6q
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 22:57:22 +0100
+	id 1S3E11-00012t-Iy
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 22:58:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965393Ab2CAV5K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Mar 2012 16:57:10 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57443 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965317Ab2CAV5G (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2012 16:57:06 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 77AE37A1E;
-	Thu,  1 Mar 2012 16:57:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=b6vQiA8Q8T32qPlU1Q7oZZRwfsY=; b=XFdEpS
-	vsYwNYlJ7ve72L0mCNP1bEc0y1Wf+hcOuZzs6OpvjUl5e6x1qzzMS5i6SoDZO2l1
-	a7IZRWlZ4yCu12gCxx7xyFXOJvODfKijCBlBdGtCQHQr5E2/VCb5EQpmA5KWhGlT
-	LEihC84feaRvMsAkKvBBaye07EhjRvOqNpAcM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cw7MhQQWTuXHtUCG+aeS2Pv6wHR4ag6g
-	d0ggCe3Ne2y5myHkGD2bC4QlkTBpwnaZZLrDzeVddoH1WGizbyOVqvjIlPacQ4FC
-	mZuscxyS7e1M8WTOzT4+/lMXA3FcR1zoGSuiXVRnqkK3QFZh/hwb3ykqJk5Jwk8g
-	1K+f69um3sQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 668657A1D;
-	Thu,  1 Mar 2012 16:57:06 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D6C707A1C; Thu,  1 Mar 2012
- 16:57:05 -0500 (EST)
-In-Reply-To: <80204781996b200d08b73cf61fa50df468e4b51d.1330637923.git.trast@student.ethz.ch> (Thomas Rast's message of "Thu, 1 Mar 2012 22:40:50 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7C2157EE-63E9-11E1-A79B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S965338Ab2CAV6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Mar 2012 16:58:18 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34618
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965262Ab2CAV6P (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2012 16:58:15 -0500
+Received: (qmail 9563 invoked by uid 107); 1 Mar 2012 21:58:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 01 Mar 2012 16:58:19 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Mar 2012 16:58:12 -0500
+Content-Disposition: inline
+In-Reply-To: <4F4FB69C.7000708@vilain.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191980>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+On Thu, Mar 01, 2012 at 09:49:16AM -0800, Sam Vilain wrote:
 
-> The last test descended into a subdir without ever re-emerging, which
-> is not so nice to the next test writer.
+> >  	if (curl_http_proxy) {
+> >-		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
+> >+		credential_from_url(&proxy_auth, curl_http_proxy);
+> >+		if (proxy_auth.username != NULL&&  proxy_auth.password == NULL) {
+> >+			/* proxy string has username but no password, ask for password */
+> >+			struct strbuf pbuf = STRBUF_INIT;
+> >+			credential_fill(&proxy_auth);
+> 
+> Wouldn't it be better to wait until the proxy returns a 403 before
+> assuming that the proxy setting is incorrect/missing a password?
+> What if the administrator expects the user to fill in both the
+> username and password?  That is the behaviour of a web browser.
+> 
+> Also, I think you should wait until that 403 to detect whether the
+> proxy setting came from the environment, and only load it explicitly
+> then.
 
-True.  Making the test suite more robust like this patch does is very much
-appreciated.
+It's worth looking at what the http auth code does here.
 
-Is there a reason why we shouldn't be sticking to the more usual
+In the beginning (2005), git saw that there was a username in the URL
+and prompted for a password unconditionally before making a request. If
+you didn't have a username, you didn't do auth, period.
 
-	mkdir dups &&
-        (
-        	cd dups &&
-                do whatever in dups
-	)
+Later, 42653c0 (Prompt for a username when an HTTP request 401s,
+2010-04-01) taught git to handle 401s, for when the URL does not contain
+a username. We kept the unconditional pre-prompt, though; it has the
+nice side effect of avoiding a round-trip to the server.
 
-pattern?
+Then, in 986bbc0 (http: don't always prompt for password, 2011-11-04),
+the unconditional pre-prompt was taken away. While avoiding the
+round-trip is nice, it circumvented curl's reading of the .netrc file,
+which means git would prompt unnecessarily, even when curl could
+eventually read out of the netrc.
 
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-> ---
->  t/t5510-fetch.sh |    1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-> index 8827828..dd035bf 100755
-> --- a/t/t5510-fetch.sh
-> +++ b/t/t5510-fetch.sh
-> @@ -431,6 +431,7 @@ test_expect_success 'fetch --dry-run' '
->  test_expect_success "should be able to fetch with duplicate refspecs" '
->  	mkdir dups &&
->  	cd dups &&
-> +	test_when_finished "cd .." &&
->  	git init &&
->  	git config branch.master.remote three &&
->  	git config remote.three.url ../three/.git &&
+However, the code for dumb http push-over-dav doesn't handle the 401
+properly. As a work-around, a4ddbc3 (http-push: enable "proactive auth",
+2011-12-13) re-enabled the pre-prompt, but only for the code paths that
+need it (and those code paths are now broken for .netrc, as everything
+was before 986bbc0). This is a hack, and in the long run it would be
+nice to have everything handle 401s properly, but the dav code is
+somewhat obsolete these days, and I suspect nobody really wants to
+overhaul it.
+
+Complicating all of this is the fact that I think Nelson's original
+patch was based on an older, pre-986bbc0 version of git, which is why he
+followed the pre-prompt route, copying the style of regular http auth.
+
+So there's the history lesson. What should proxy auth do?
+
+  1. Definitely respond to HTTP 407 by prompting on the fly; this code
+     should go along-side the HTTP 401 code in http.c.
+
+  2. Definitely do the pre-prompt thing when http_proactive_auth is set
+     (which is used only by http-push). Unless somebody really feels
+     like re-writing http-push to handle retries for authentication.
+
+  3. Consider doing the pre-prompt thing when http_proactive_auth is not
+     set. This can save a round-trip, but we should not do it if there
+     is a good reason not to. The two possible reasons I can think of
+     are:
+
+       a. Like http auth, if curl will read the proxy credentials from
+          .netrc, then we should not do it for the same reasons
+          mentioned in 986bbc0.
+
+       b. If people realistically have proxy URLs with usernames but do
+          _not_ want to ask for a password, then the prompt will be
+          annoying. I'm not sure that anybody expects that.
+
+I consider (3) to be a "meh, if you are really interested in looking
+into this" step, as it is really just a possible optimization (and I
+suspect curl _does_ use netrc for proxy credentials, but I haven't
+checked). But we definitely want to get (1) and (2) right.
+
+-Peff
