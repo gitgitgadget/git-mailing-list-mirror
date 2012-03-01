@@ -1,7 +1,7 @@
 From: Tom Grennan <tmgrennan@gmail.com>
-Subject: [PATCH 1/5] t6300 (for-each-ref): modernize style
-Date: Wed, 29 Feb 2012 17:45:17 -0800
-Message-ID: <1330566326-26075-2-git-send-email-tmgrennan@gmail.com>
+Subject: [PATCH-w 101/105] t6300 (for-each-ref): modernize style
+Date: Wed, 29 Feb 2012 17:45:22 -0800
+Message-ID: <1330566326-26075-7-git-send-email-tmgrennan@gmail.com>
 References: <1330566326-26075-1-git-send-email-tmgrennan@gmail.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Carlos Rica <jasampler@gmail.com>,
@@ -10,42 +10,42 @@ Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Amos Waterland <apw@rossby.metr.ou.edu>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 01 02:46:01 2012
+X-From: git-owner@vger.kernel.org Thu Mar 01 02:46:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2v5l-0003zH-1o
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 02:46:01 +0100
+	id 1S2v61-00046e-KO
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 02:46:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757341Ab2CABpt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Feb 2012 20:45:49 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:52025 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755140Ab2CABpr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Feb 2012 20:45:47 -0500
-Received: by mail-vw0-f46.google.com with SMTP id ff1so74765vbb.19
-        for <git@vger.kernel.org>; Wed, 29 Feb 2012 17:45:47 -0800 (PST)
-Received-SPF: pass (google.com: domain of tmgrennan@gmail.com designates 10.52.88.235 as permitted sender) client-ip=10.52.88.235;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of tmgrennan@gmail.com designates 10.52.88.235 as permitted sender) smtp.mail=tmgrennan@gmail.com; dkim=pass header.i=tmgrennan@gmail.com
-Received: from mr.google.com ([10.52.88.235])
-        by 10.52.88.235 with SMTP id bj11mr4287762vdb.119.1330566347457 (num_hops = 1);
-        Wed, 29 Feb 2012 17:45:47 -0800 (PST)
+	id S1030537Ab2CABqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Feb 2012 20:46:04 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:64394 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030316Ab2CABqB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Feb 2012 20:46:01 -0500
+Received: by mail-vx0-f174.google.com with SMTP id p1so74233vcq.19
+        for <git@vger.kernel.org>; Wed, 29 Feb 2012 17:46:01 -0800 (PST)
+Received-SPF: pass (google.com: domain of tmgrennan@gmail.com designates 10.52.67.203 as permitted sender) client-ip=10.52.67.203;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of tmgrennan@gmail.com designates 10.52.67.203 as permitted sender) smtp.mail=tmgrennan@gmail.com; dkim=pass header.i=tmgrennan@gmail.com
+Received: from mr.google.com ([10.52.67.203])
+        by 10.52.67.203 with SMTP id p11mr4249532vdt.13.1330566361602 (num_hops = 1);
+        Wed, 29 Feb 2012 17:46:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :in-reply-to:references;
-        bh=xA5DMKwNwK6boQWVBBWpwpxPQfSOYF+eG5Y8M9m5D08=;
-        b=OK2JcPcWABgPUj855HWcapBHPafAgwA72Ix+bJMCuJnsGvu4EcXRdTtv9Js0uPVKVs
-         l/EnroDl8gn0DptaoKeHFYzSy8dokOqvSmtbDmga7ELT8ppbFYNDgtdqxhox78swleWr
-         yBhIBqCiH5croxMIPJl9oUmPskz9zqA5Jfcbs=
-Received: by 10.52.88.235 with SMTP id bj11mr3656133vdb.119.1330566347399;
-        Wed, 29 Feb 2012 17:45:47 -0800 (PST)
+        bh=uKWEZveQau9SODJe8Lledru8SlZDbV0Z4WFQF5zZPsI=;
+        b=TVLZFyxA6WRSxdXOIPrmBOCuiwHha2YLBnEjLyv6XJhthz8Je4qZxZA5fRkjfoO9+L
+         nV8KtpxNR75K/XBSoEKdq4K1ZuDjl3K7Iq/vrFAF/KgXEX1/UG+yhRDV7LdoFvp8KLnQ
+         jiT+1JTsTy8FuCzsGvW55qhDh3VWyGLo9Bvuk=
+Received: by 10.52.67.203 with SMTP id p11mr3631376vdt.13.1330566361555;
+        Wed, 29 Feb 2012 17:46:01 -0800 (PST)
 Received: from tgrennan-laptop.lab.redback.com ([129.192.185.163])
-        by mx.google.com with ESMTPS id n14sm502335vdj.22.2012.02.29.17.45.44
+        by mx.google.com with ESMTPS id n14sm502335vdj.22.2012.02.29.17.45.58
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 29 Feb 2012 17:45:46 -0800 (PST)
+        Wed, 29 Feb 2012 17:46:00 -0800 (PST)
 X-Mailer: git-send-email 1.7.8
 In-Reply-To: <1330566326-26075-1-git-send-email-tmgrennan@gmail.com>
 In-Reply-To: <20120223002215.GE2410@tgrennan-laptop>
@@ -54,7 +54,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191875>
 
 - Guard setup with test_expect_success
 - Single-quoted, tab prefaced test blocks of < 80 cols
@@ -62,8 +62,8 @@ Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191874>
 
 Signed-off-by: Tom Grennan <tmgrennan@gmail.com>
 ---
- t/t6300-for-each-ref.sh |  364 +++++++++++++++++++++++++----------------------
- 1 files changed, 191 insertions(+), 173 deletions(-)
+ t/t6300-for-each-ref.sh |  296 +++++++++++++++++++++++++----------------------
+ 1 files changed, 157 insertions(+), 139 deletions(-)
 
 diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
 index 1721784..12916b2 100755
@@ -144,19 +144,17 @@ index 1721784..12916b2 100755
  '
  
 -cat >expected <<\EOF
--'refs/heads/master' 'Mon Jul 3 17:18:43 2006 +0200' 'Mon Jul 3 17:18:44 2006 +0200'
--'refs/tags/testtag' 'Mon Jul 3 17:18:45 2006 +0200'
--EOF
++test_expect_success 'Check unformatted date fields output' '
++	'"
++	cat >expect <<-EOF &&
+ 'refs/heads/master' 'Mon Jul 3 17:18:43 2006 +0200' 'Mon Jul 3 17:18:44 2006 +0200'
+ 'refs/tags/testtag' 'Mon Jul 3 17:18:45 2006 +0200'
+ EOF
 -
- test_expect_success 'Check unformatted date fields output' '
+-test_expect_success 'Check unformatted date fields output' '
 -	(git for-each-ref --shell --format="%(refname) %(committerdate) %(authordate)" refs/heads &&
 -	git for-each-ref --shell --format="%(refname) %(taggerdate)" refs/tags) >actual &&
 -	test_cmp expected actual
-+	'"
-+	cat >expect <<-EOF &&
-+		'refs/heads/master' 'Mon Jul 3 17:18:43 2006 +0200' 'Mon Jul 3 17:18:44 2006 +0200'
-+		'refs/tags/testtag' 'Mon Jul 3 17:18:45 2006 +0200'
-+	EOF
 +	"'
 +	h="%(refname) %(committerdate) %(authordate)" &&
 +	t="%(refname) %(taggerdate)" &&
@@ -203,20 +201,18 @@ index 1721784..12916b2 100755
  '
  
 -cat >expected <<\EOF
--'refs/heads/master' '2006-07-03' '2006-07-03'
--'refs/tags/testtag' '2006-07-03'
--EOF
++test_expect_success 'Check format "short" date fields output' '
++	'"
++	cat >expect <<-EOF
+ 'refs/heads/master' '2006-07-03' '2006-07-03'
+ 'refs/tags/testtag' '2006-07-03'
+ EOF
 -
- test_expect_success 'Check format "short" date fields output' '
+-test_expect_success 'Check format "short" date fields output' '
 -	f=short &&
 -	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
 -	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual &&
 -	test_cmp expected actual
-+	'"
-+	cat >expect <<-EOF
-+		'refs/heads/master' '2006-07-03' '2006-07-03'
-+		'refs/tags/testtag' '2006-07-03'
-+	EOF
 +	"'
 +	h="%(refname) %(committerdate:short) %(authordate:short)" &&
 +	t="%(refname) %(taggerdate:short)" &&
@@ -226,20 +222,18 @@ index 1721784..12916b2 100755
  '
  
 -cat >expected <<\EOF
--'refs/heads/master' 'Mon Jul 3 15:18:43 2006' 'Mon Jul 3 15:18:44 2006'
--'refs/tags/testtag' 'Mon Jul 3 15:18:45 2006'
--EOF
++test_expect_success 'Check format "local" date fields output' '
++	'"
++	cat >expect <<-EOF
+ 'refs/heads/master' 'Mon Jul 3 15:18:43 2006' 'Mon Jul 3 15:18:44 2006'
+ 'refs/tags/testtag' 'Mon Jul 3 15:18:45 2006'
+ EOF
 -
- test_expect_success 'Check format "local" date fields output' '
+-test_expect_success 'Check format "local" date fields output' '
 -	f=local &&
 -	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
 -	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual &&
 -	test_cmp expected actual
-+	'"
-+	cat >expect <<-EOF
-+		'refs/heads/master' 'Mon Jul 3 15:18:43 2006' 'Mon Jul 3 15:18:44 2006'
-+		'refs/tags/testtag' 'Mon Jul 3 15:18:45 2006'
-+	EOF
 +	"'
 +	h="%(refname) %(committerdate:local) %(authordate:local)" &&
 +	t="%(refname) %(taggerdate:local)" &&
@@ -249,20 +243,18 @@ index 1721784..12916b2 100755
  '
  
 -cat >expected <<\EOF
--'refs/heads/master' '2006-07-03 17:18:43 +0200' '2006-07-03 17:18:44 +0200'
--'refs/tags/testtag' '2006-07-03 17:18:45 +0200'
--EOF
++test_expect_success 'Check format "iso8601" date fields output' '
++	'"
++	cat >expect <<-EOF
+ 'refs/heads/master' '2006-07-03 17:18:43 +0200' '2006-07-03 17:18:44 +0200'
+ 'refs/tags/testtag' '2006-07-03 17:18:45 +0200'
+ EOF
 -
- test_expect_success 'Check format "iso8601" date fields output' '
+-test_expect_success 'Check format "iso8601" date fields output' '
 -	f=iso8601 &&
 -	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
 -	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual &&
 -	test_cmp expected actual
-+	'"
-+	cat >expect <<-EOF
-+		'refs/heads/master' '2006-07-03 17:18:43 +0200' '2006-07-03 17:18:44 +0200'
-+		'refs/tags/testtag' '2006-07-03 17:18:45 +0200'
-+	EOF
 +	"'
 +	h="%(refname) %(committerdate:iso8601) %(authordate:iso8601)" &&
 +	t="%(refname) %(taggerdate:iso8601)" &&
@@ -272,20 +264,18 @@ index 1721784..12916b2 100755
  '
  
 -cat >expected <<\EOF
--'refs/heads/master' 'Mon, 3 Jul 2006 17:18:43 +0200' 'Mon, 3 Jul 2006 17:18:44 +0200'
--'refs/tags/testtag' 'Mon, 3 Jul 2006 17:18:45 +0200'
--EOF
++test_expect_success 'Check format "rfc2822" date fields output' '
++	'"
++	cat >expect <<-EOF
+ 'refs/heads/master' 'Mon, 3 Jul 2006 17:18:43 +0200' 'Mon, 3 Jul 2006 17:18:44 +0200'
+ 'refs/tags/testtag' 'Mon, 3 Jul 2006 17:18:45 +0200'
+ EOF
 -
- test_expect_success 'Check format "rfc2822" date fields output' '
+-test_expect_success 'Check format "rfc2822" date fields output' '
 -	f=rfc2822 &&
 -	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
 -	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual &&
 -	test_cmp expected actual
-+	'"
-+	cat >expect <<-EOF
-+		'refs/heads/master' 'Mon, 3 Jul 2006 17:18:43 +0200' 'Mon, 3 Jul 2006 17:18:44 +0200'
-+		'refs/tags/testtag' 'Mon, 3 Jul 2006 17:18:45 +0200'
-+	EOF
 +	"'
 +	h="%(refname) %(committerdate:rfc2822) %(authordate:rfc2822)" &&
 +	t="%(refname) %(taggerdate:rfc2822)" &&
@@ -295,57 +285,48 @@ index 1721784..12916b2 100755
  '
  
 -cat >expected <<\EOF
--refs/heads/master
--refs/remotes/origin/master
--refs/tags/testtag
--EOF
++test_expect_success 'Verify ascending sort' '
++	cat >expect <<-EOF
+ refs/heads/master
+ refs/remotes/origin/master
+ refs/tags/testtag
+ EOF
 -
- test_expect_success 'Verify ascending sort' '
+-test_expect_success 'Verify ascending sort' '
 -	git for-each-ref --format="%(refname)" --sort=refname >actual &&
 -	test_cmp expected actual
-+	cat >expect <<-EOF
-+		refs/heads/master
-+		refs/remotes/origin/master
-+		refs/tags/testtag
-+	EOF
 +	git for-each-ref --format="%(refname)" --sort=refname |
 +		test_cmp expect -
  '
  
 -
 -cat >expected <<\EOF
--refs/tags/testtag
--refs/remotes/origin/master
--refs/heads/master
--EOF
++test_expect_success 'Verify descending sort' '
++	cat >expect <<-EOF
+ refs/tags/testtag
+ refs/remotes/origin/master
+ refs/heads/master
+ EOF
 -
- test_expect_success 'Verify descending sort' '
+-test_expect_success 'Verify descending sort' '
 -	git for-each-ref --format="%(refname)" --sort=-refname >actual &&
 -	test_cmp expected actual
-+	cat >expect <<-EOF
-+		refs/tags/testtag
-+		refs/remotes/origin/master
-+		refs/heads/master
-+	EOF
 +	git for-each-ref --format="%(refname)" --sort=-refname |
 +		test_cmp expect -
  '
  
 -cat >expected <<\EOF
--'refs/heads/master'
--'refs/remotes/origin/master'
--'refs/tags/testtag'
--EOF
--
- test_expect_success 'Quoting style: shell' '
--	git for-each-ref --shell --format="%(refname)" >actual &&
--	test_cmp expected actual
++test_expect_success 'Quoting style: shell' '
 +	'"
 +	cat >expect <<-EOF
-+		'refs/heads/master'
-+		'refs/remotes/origin/master'
-+		'refs/tags/testtag'
-+	EOF
+ 'refs/heads/master'
+ 'refs/remotes/origin/master'
+ 'refs/tags/testtag'
+ EOF
+-
+-test_expect_success 'Quoting style: shell' '
+-	git for-each-ref --shell --format="%(refname)" >actual &&
+-	test_cmp expected actual
 +	"'
 +	git for-each-ref --shell --format="%(refname)" |
 +		test_cmp expect -
@@ -366,19 +347,16 @@ index 1721784..12916b2 100755
  '
  
 -cat >expected <<\EOF
--"refs/heads/master"
--"refs/remotes/origin/master"
--"refs/tags/testtag"
--EOF
++test_expect_success 'Quoting style: tcl' '
++	cat >expect <<-EOF
+ "refs/heads/master"
+ "refs/remotes/origin/master"
+ "refs/tags/testtag"
+ EOF
 -
- test_expect_success 'Quoting style: tcl' '
+-test_expect_success 'Quoting style: tcl' '
 -	git for-each-ref --tcl --format="%(refname)" >actual &&
 -	test_cmp expected actual
-+	cat >expect <<-EOF
-+		"refs/heads/master"
-+		"refs/remotes/origin/master"
-+		"refs/tags/testtag"
-+	EOF
 +	git for-each-ref --tcl --format="%(refname)" |
 +		test_cmp expect -
  '
@@ -394,10 +372,6 @@ index 1721784..12916b2 100755
 -done
 -
 -cat >expected <<\EOF
--master
--testtag
--EOF
--
 +test_expect_success 'more than one quoting styles' '
 +	cat >expect <<-EOF
 +		error: more than one quoting style?
@@ -411,42 +385,42 @@ index 1721784..12916b2 100755
 +	git for-each-ref --tcl --perl 2>&1 | head -n 1 |
 +		test_cmp expect -
 +'
- test_expect_success 'Check short refname format' '
++test_expect_success 'Check short refname format' '
++	cat >expect <<-EOF
+ master
+ testtag
+ EOF
+-
+-test_expect_success 'Check short refname format' '
 -	(git for-each-ref --format="%(refname:short)" refs/heads &&
 -	git for-each-ref --format="%(refname:short)" refs/tags) >actual &&
 -	test_cmp expected actual
-+	cat >expect <<-EOF
-+		master
-+		testtag
-+	EOF
 +	git for-each-ref --format="%(refname:short)" refs/heads refs/tags |
 +		test_cmp expect -
  '
  
 -cat >expected <<EOF
--origin/master
--EOF
++test_expect_success 'Check short upstream format' '
++	cat >expect <<-EOF
+ origin/master
+ EOF
 -
- test_expect_success 'Check short upstream format' '
+-test_expect_success 'Check short upstream format' '
 -	git for-each-ref --format="%(upstream:short)" refs/heads >actual &&
 -	test_cmp expected actual
-+	cat >expect <<-EOF
-+		origin/master
-+	EOF
 +	git for-each-ref --format="%(upstream:short)" refs/heads |
 +		test_cmp expect -
  '
  
 -cat >expected <<EOF
--67a36f1
--EOF
++test_expect_success 'Check short objectname format' '
++	cat >expect <<-EOF
+ 67a36f1
+ EOF
 -
- test_expect_success 'Check short objectname format' '
+-test_expect_success 'Check short objectname format' '
 -	git for-each-ref --format="%(objectname:short)" refs/heads >actual &&
 -	test_cmp expected actual
-+	cat >expect <<-EOF
-+		67a36f1
-+	EOF
 +	git for-each-ref --format="%(objectname:short)" refs/heads |
 +		test_cmp expect -
  '
@@ -457,15 +431,13 @@ index 1721784..12916b2 100755
  '
  
 -cat >expected <<\EOF
--heads/master
--tags/master
--EOF
--
- test_expect_success 'Check ambiguous head and tag refs (strict)' '
++test_expect_success 'Check ambiguous head and tag refs (strict)' '
 +	cat >expect <<-EOF
-+		heads/master
-+		tags/master
-+	EOF
+ heads/master
+ tags/master
+ EOF
+-
+-test_expect_success 'Check ambiguous head and tag refs (strict)' '
  	git config --bool core.warnambiguousrefs true &&
 -	git checkout -b newtag &&
 +	git checkout -q -b newtag &&
@@ -484,15 +456,13 @@ index 1721784..12916b2 100755
  '
  
 -cat >expected <<\EOF
--heads/master
--master
--EOF
--
- test_expect_success 'Check ambiguous head and tag refs (loose)' '
++test_expect_success 'Check ambiguous head and tag refs (loose)' '
 +	cat >expect <<-EOF
-+		heads/master
-+		master
-+	EOF
+ heads/master
+ master
+ EOF
+-
+-test_expect_success 'Check ambiguous head and tag refs (loose)' '
  	git config --bool core.warnambiguousrefs false &&
 -	git for-each-ref --format "%(refname:short)" refs/heads/master refs/tags/master >actual &&
 -	test_cmp expected actual
@@ -502,16 +472,14 @@ index 1721784..12916b2 100755
  '
  
 -cat >expected <<\EOF
--heads/ambiguous
--ambiguous
--EOF
--
- test_expect_success 'Check ambiguous head and tag refs II (loose)' '
--	git checkout master &&
++test_expect_success 'Check ambiguous head and tag refs II (loose)' '
 +	cat >expect <<-EOF
-+		heads/ambiguous
-+		ambiguous
-+	EOF
+ heads/ambiguous
+ ambiguous
+ EOF
+-
+-test_expect_success 'Check ambiguous head and tag refs II (loose)' '
+-	git checkout master &&
 +	git checkout -q master &&
  	git tag ambiguous testtag^0 &&
  	git branch ambiguous testtag^0 &&
@@ -549,17 +517,5 @@ index 1721784..12916b2 100755
  test_atom refs/tags/multiline subject 'first subject line second subject line'
  test_atom refs/tags/multiline contents:subject 'first subject line second subject line'
  test_atom refs/tags/multiline body 'first body line
-@@ -417,9 +435,9 @@ test_expect_success GPG 'create signed tags' '
- 	git tag -s -m "" signed-empty &&
- 	git tag -s -m "subject line" signed-short &&
- 	cat >msg <<-\EOF &&
--	subject line
-+		subject line
- 
--	body contents
-+		body contents
- 	EOF
- 	git tag -s -F msg signed-long
- '
 -- 
 1.7.8
