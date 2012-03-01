@@ -1,90 +1,102 @@
-From: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
-Subject: Re: [PATCH 2/3] http: try standard proxy env vars when http.proxy
- config option is not set
-Date: Thu, 01 Mar 2012 10:57:03 +0100
-Message-ID: <4F4F47EF.40405@seap.minhap.es>
-References: <4F4CCE8A.4010800@seap.minhap.es><20120228191514.GD11260@sigill.intra.peff.net><4F4D2AAD.3040107@vilain.net><20120228193443.GB11725@sigill.intra.peff.net><4F4E01EB.3070707@seap.minhap.es> <20120229210816.GB628@sigill.intra.peff.net>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH 2/4] t4011: illustrate "diff-index -p" on stat-dirty paths
+Date: Thu, 1 Mar 2012 10:05:59 +0100
+Message-ID: <87399slmh4.fsf@thomas.inf.ethz.ch>
+References: <1330568057-27304-1-git-send-email-gitster@pobox.com>
+	<1330568057-27304-3-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Sam Vilain <sam@vilain.net>, Thomas Rast <trast@inf.ethz.ch>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 01 09:59:31 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 10:06:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S31rG-0006LG-W8
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 09:59:31 +0100
+	id 1S31xq-0002n9-Vy
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 10:06:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932206Ab2CAI70 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Mar 2012 03:59:26 -0500
-Received: from luthien1.mpt.es ([82.150.0.102]:26760 "EHLO luthien2.map.es"
+	id S965121Ab2CAJGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Mar 2012 04:06:11 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:10287 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758686Ab2CAI70 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2012 03:59:26 -0500
-Received: from correo.map.es (unknown [10.1.31.23])
-	by luthien2.map.es (Postfix) with ESMTP id D12F4B70DD;
-	Thu,  1 Mar 2012 09:58:24 +0100 (CET)
-Received: from [10.47.128.147] (unknown [10.1.29.79])
-	by correo.map.es (Postfix) with ESMTP id 1B6E9203900;
-	Thu,  1 Mar 2012 09:58:20 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0.1) Gecko/20120216 Thunderbird/10.0.1
-In-Reply-To: <20120229210816.GB628@sigill.intra.peff.net>
-X-map-MapScanner: Libre de virus, Libre de virus
-X-Spam-Status: No, No
-X-map-MapScanner-Information: 
-X-map-MapScanner-ID: D12F4B70DD.DB760
-X-map-MapScanner-From: nelsonjesus.benitez@seap.minhap.es
-X-map-MailScanner-Watermark: 1331197105.99469@Ss37Rvx9DltcOWOpDtYcrQ
+	id S965119Ab2CAJGF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2012 04:06:05 -0500
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 1 Mar
+ 2012 10:05:56 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 1 Mar
+ 2012 10:06:00 +0100
+In-Reply-To: <1330568057-27304-3-git-send-email-gitster@pobox.com> (Junio
+	C. Hamano's message of "Wed, 29 Feb 2012 18:14:15 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191908>
 
-On 02/29/2012 10:08 PM, Jeff King wrote:
-> On Wed, Feb 29, 2012 at 11:46:03AM +0100, Nelson Benitez Leon wrote:
-> 
->>> Good point. We sometimes follow this order:
->>>
->>>   1. git-specific environment variables (i.e., $GIT_HTTP_PROXY, if
->>>      it existed)
->>>   2. git config files (i.e., http.proxy)
->>>   3. generic system environment (i.e., $http_proxy).
->>>
->>> So thinking about it that way, the original patch makes more sense.
->>
->> So, in PATCH 2/3, apart from expanding the commit message.. do we want
->> to support HTTP_PROXY or only http_proxy ? HTTP_PROXY seems to not be
->> very used by existent programs, but support it it's only a gentenv call..
-> 
-> If HTTP_PROXY is not in wide use, I don't see a reason to support it.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Ok
+> The plumbing that looks at the working tree, i.e. "diff-index" and
+> "diff-files", always emit the "diff --git a/path b/path" header lines
+> without anything else for paths that are only stat-dirty (i.e. different
+> only because the cached stat information in the index no longer matches
+> that of the working tree, but the real contents are the same), when
+> these commands are run with "-p" option to produce patches.
+>
+> Illustrate this current behaviour.  The new part that uses "-w" option
+> demonstrates that we do not show any "diff --git" header for blobs whose
+> true contents are different but compares the same when whitespaces are
+> ignored, which is inconsistent with the behaviour for stat-dirty paths.
+[...]
+> -test_expect_success SYMLINKS 'diff identical, but newly created symlink' '
+> +test_expect_success SYMLINKS 'diff identical, but newly created symlink and file' '
+>  	cat >expected <<-\EOF &&
+>  	diff --git a/frotz b/frotz
+> +	diff --git a/nitfol b/nitfol
+>  	EOF
+> +	sleep 3 &&
+> +	rm -f frotz &&
+> +	echo xyzzy >nitfol3 &&
+> +	mv nitfol3 nitfol &&
+>  	ln -s xyzzy frotz &&
+>  	git diff-index -M -p $tree >current &&
+> +	compare_diff_patch expected current &&
+> +
+> +	>expected &&
+> +	git diff-index -M -p -w $tree >current &&
+>  	compare_diff_patch expected current
+>  '
 
-> And I take back what I said about environment precedence, based on the
-> discussion. Also, I don't think there is a need to strdup the results of
-> getenv here, is there? So I think the code you want is just:
-> 
->   if (!curl_http_proxy)
->           curl_http_proxy = getenv("http_proxy");
+I find the last bit of the commit message rather confusing.  You appear
+to be using -w here to diff the stat-dirty worktree nitfol 'xyzzy\n'
+against the $tree:nitfol which is also 'xyzzy\n'.
 
-but curl_http_proxy gets freed in http_cleanup as follows:
+If that analysis is correct, then
 
-free((void *)curl_http_proxy);
+  we do not show any "diff --git" header for blobs whose true contents
+  are different but compares the same when whitespaces are ignored
 
-Is it ok to free strings returned by getenv() ? I thought nope, so I
-used strdup which existent code was already using..
-> 
-> and the justification for the commit message is that we need to know the
-> proxy value outside of curl, because the next patch will do some
-> extra processing on the value.
-> 
-> -Peff
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+is not what is going on here; the blobs have exactly the same content.
+The difference is that
+
+* without -w, the code "knows" from the lstat() data that the files are
+  different, prints a header, and then fails to find any differences;
+
+* with -w, the code correctly holds off on printing anything since it
+  will invariably have to inspect the contents beforehand.
+
+So perhaps you can say
+
+  Illustrate this current behaviour.  Also demonstrate that with the
+  "-w" option, we (correctly) hold off showing a "diff --git" header
+  until actual differences have been found.  This also suppresses the
+  header for merely stat-dirty files, which is inconsistent.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
