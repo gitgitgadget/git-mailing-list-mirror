@@ -1,121 +1,135 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/4] diff -p: squelch "diff --git" header for stat-dirty
- paths
-Date: Wed, 29 Feb 2012 18:14:16 -0800
-Message-ID: <1330568057-27304-4-git-send-email-gitster@pobox.com>
+Subject: [PATCH 4/4] diff --ignore-mode-change
+Date: Wed, 29 Feb 2012 18:14:17 -0800
+Message-ID: <1330568057-27304-5-git-send-email-gitster@pobox.com>
 References: <1330568057-27304-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 01 03:14:35 2012
+X-From: git-owner@vger.kernel.org Thu Mar 01 03:14:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2vXO-0003tv-DY
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 03:14:34 +0100
+	id 1S2vXO-0003tv-VX
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 03:14:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757508Ab2CACO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Feb 2012 21:14:28 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63776 "EHLO
+	id S1757568Ab2CACO3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Feb 2012 21:14:29 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63822 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756530Ab2CACOZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Feb 2012 21:14:25 -0500
+	id S1757239Ab2CACO2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Feb 2012 21:14:28 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 59A187D5F
-	for <git@vger.kernel.org>; Wed, 29 Feb 2012 21:14:25 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 777E47D6A
+	for <git@vger.kernel.org>; Wed, 29 Feb 2012 21:14:27 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=0wOv
-	XY3Qo1fZVGSxtrzJYrAuK90=; b=P5iE68v0poY+av2YX64hmeTiR73g9eU3OU3L
-	FUB36js2+ARLGtWJTTez8iIbzlIKEkHn4Z0n3jKHD5Riw8g2bbtZU+j5mrkNsuV8
-	K4lPLxtX4Z+aqCGPS/76Alfu8wi9XFfvzNQG41jV5WgmV+G/wYoniiddZ+Cbl5dk
-	Kc6E6q0=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Kt8p
+	nEvy9SJglF0aSQzPven/yWI=; b=KVcLSYPYdT63sK2zeVw8OI6Vp2wlxpkAxF7k
+	iEWs6ribPTDugtPWgQsxVscNUJh+thMBOz3GGZAxULbt7E1oqjcfB3q9EDPfBZYy
+	a+19i03lp/Yvl7oDWxzwIJHaaIi2j67YGSSq64el8WUGLmT5P8BTy6Lz9lSGvoqW
+	ma8dozU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=Ej+YOZ
-	J4nsEATaY5+oY2pWVUwV2bLobYlyexY5scPmcYlYhKXFKijROPpxjAtG7/7n8+0S
-	aCXnfXtLFNerAIyRIvRMa/bu4AJwFk5B+8PZLV/8FJoBWi1GX87hU/MOfd2Qg5ON
-	Gwc/YXiV2GNXeuitz0B7TqcvwO+cYWFGI8DOs=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=QRig4d
+	KGnrnzUjVy/fXzpyntm7KZFQRdwP5y99wlmy1BcXAHSPwv66Us1ejXpJOBfssaIR
+	XV9hWWvRTHojXJmS9qY0VkRwDxwbdqmXW5om5c/ahT8PvNYzK9iu/Samb3YgBd4C
+	8nSfKDg3C0SEwzcuRgiYjvL7+uc/Ev+N94H1c=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E6ED7D5E
-	for <git@vger.kernel.org>; Wed, 29 Feb 2012 21:14:25 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 47C307D66
+	for <git@vger.kernel.org>; Wed, 29 Feb 2012 21:14:27 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C6AFC7D5D for
- <git@vger.kernel.org>; Wed, 29 Feb 2012 21:14:24 -0500 (EST)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 994907D63 for
+ <git@vger.kernel.org>; Wed, 29 Feb 2012 21:14:26 -0500 (EST)
 X-Mailer: git-send-email 1.7.9.2.350.g74d65
 In-Reply-To: <1330568057-27304-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 4409DBF6-6344-11E1-8705-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 451E8DF2-6344-11E1-BCF8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191888>
 
-The plumbing "diff" commands look at the working tree files without
-refreshing the index themselves for performance reasons (the calling
-script is expected to do that upfront just once, before calling one or
-more of them).  In the early days of git, they showed the "diff --git"
-header before they actually ask the xdiff machinery to produce patches,
-and ended up showing only these headers if the real contents are the same
-and the difference they noticed was only because the stat info cached in
-the index did not match that of the working tree. It was too late for the
-implementation to take the header that it already emitted back.
-
-But 3e97c7c (No diff -b/-w output for all-whitespace changes, 2009-11-19)
-introduced necessary logic to keep the meta-information headers in a
-strbuf and delay their output until the xdiff machinery noticed actual
-changes. This was primarily in order to generate patches that ignore
-whitespaces. When operating under "-w" mode, we wouldn't know if the
-header is needed until we actually look at the resulting patch, so it was
-a sensible thing to do, but we did not realize that the same reasoning
-applies to stat-dirty paths.
-
-Later, 296c6bb2 generalized this machinery and introduced must_show_header
-toggle.  This is turned on when the header must be shown even when there
-is no patch to be produced, e.g. only the mode was changed, or the path
-was renamed, without changing the contents.  However, when it did so, it
-still kept the special case for the "-w" mode, which meant that the
-plumbing would keep showing these phantom changes.
-
-This corrects this historical inconsistency by allowing the plumbing to
-omit paths that are only stat-dirty from its output in the same way as it
-handles whitespace only changes under "-w" option.
-
-The change in the behaviour can be seen in the updated test.
+It may be useful if you can view the diff while ignoring changes that only
+touch the executable bit without changing the contents (e.g. a careless
+imports of vendor drop from tarballs), and this teaches the diff machinery
+to ignore them. A change that touches both contents and the executable bit
+is not ignored.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff.c                  |    2 +-
- t/t4011-diff-symlink.sh |    5 +----
- 2 files changed, 2 insertions(+), 5 deletions(-)
+ diff.c |   29 ++++++++++++++++++++++++++++-
+ diff.h |    1 +
+ 2 files changed, 29 insertions(+), 1 deletion(-)
 
 diff --git a/diff.c b/diff.c
-index c8e4366..0ecbf32 100644
+index 0ecbf32..62fefba 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -1972,7 +1972,7 @@ static void builtin_diff(const char *name_a,
- 		struct emit_callback ecbdata;
- 		const struct userdiff_funcname *pe;
- 
--		if (!DIFF_XDL_TST(o, WHITESPACE_FLAGS) || must_show_header) {
-+		if (must_show_header) {
- 			fprintf(o->file, "%s", header.buf);
- 			strbuf_reset(&header);
+@@ -1920,7 +1920,8 @@ static void builtin_diff(const char *name_a,
+ 		if (one->mode != two->mode) {
+ 			strbuf_addf(&header, "%s%sold mode %06o%s\n", line_prefix, set, one->mode, reset);
+ 			strbuf_addf(&header, "%s%snew mode %06o%s\n", line_prefix, set, two->mode, reset);
+-			must_show_header = 1;
++			if (!DIFF_OPT_TST(o, IGNORE_MODE_CHANGE))
++				must_show_header = 1;
  		}
-diff --git a/t/t4011-diff-symlink.sh b/t/t4011-diff-symlink.sh
-index 6097e19..7547c6d 100755
---- a/t/t4011-diff-symlink.sh
-+++ b/t/t4011-diff-symlink.sh
-@@ -67,10 +67,7 @@ test_expect_success SYMLINKS 'diff removed symlink and file' '
- '
+ 		if (xfrm_msg)
+ 			strbuf_addstr(&header, xfrm_msg);
+@@ -3166,6 +3167,8 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 	}
+ 	else if (!strcmp(arg, "--no-renames"))
+ 		options->detect_rename = 0;
++	else if (!strcmp(arg, "--ignore-mode-change"))
++		DIFF_OPT_SET(options, IGNORE_MODE_CHANGE);
+ 	else if (!strcmp(arg, "--relative"))
+ 		DIFF_OPT_SET(options, RELATIVE_NAME);
+ 	else if (!prefixcmp(arg, "--relative=")) {
+@@ -4191,10 +4194,34 @@ void diffcore_fix_diff_index(struct diff_options *options)
+ 	qsort(q->queue, q->nr, sizeof(q->queue[0]), diffnamecmp);
+ }
  
- test_expect_success SYMLINKS 'diff identical, but newly created symlink and file' '
--	cat >expected <<-\EOF &&
--	diff --git a/frotz b/frotz
--	diff --git a/nitfol b/nitfol
--	EOF
-+	>expected &&
- 	sleep 3 &&
- 	rm -f frotz &&
- 	echo xyzzy >nitfol3 &&
++static void diffcore_ignore_mode_change(struct diff_options *diffopt)
++{
++	int i;
++	struct diff_queue_struct *q = &diff_queued_diff;
++	struct diff_queue_struct outq;
++	DIFF_QUEUE_CLEAR(&outq);
++
++	for (i = 0; i < q->nr; i++) {
++		struct diff_filepair *p = q->queue[i];
++
++		if (DIFF_FILE_VALID(p->one) &&
++		    DIFF_FILE_VALID(p->two) &&
++		    (p->one->sha1_valid && p->two->sha1_valid) &&
++		    !hashcmp(p->one->sha1, p->two->sha1))
++			diff_free_filepair(p); /* skip this */
++		else
++			diff_q(&outq, p);
++	}
++	free(q->queue);
++	*q = outq;
++}
++
+ void diffcore_std(struct diff_options *options)
+ {
+ 	if (options->skip_stat_unmatch)
+ 		diffcore_skip_stat_unmatch(options);
++	if (DIFF_OPT_TST(options, IGNORE_MODE_CHANGE))
++		diffcore_ignore_mode_change(options);
+ 	if (!options->found_follow) {
+ 		/* See try_to_follow_renames() in tree-diff.c */
+ 		if (options->break_opt != -1)
+diff --git a/diff.h b/diff.h
+index 0083d92..9f10f72 100644
+--- a/diff.h
++++ b/diff.h
+@@ -78,6 +78,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
+ #define DIFF_OPT_IGNORE_UNTRACKED_IN_SUBMODULES (1 << 25)
+ #define DIFF_OPT_IGNORE_DIRTY_SUBMODULES (1 << 26)
+ #define DIFF_OPT_OVERRIDE_SUBMODULE_CONFIG (1 << 27)
++#define DIFF_OPT_IGNORE_MODE_CHANGE  (1 << 30)
+ 
+ #define DIFF_OPT_TST(opts, flag)    ((opts)->flags & DIFF_OPT_##flag)
+ #define DIFF_OPT_SET(opts, flag)    ((opts)->flags |= DIFF_OPT_##flag)
 -- 
 1.7.9.2.350.g74d65
