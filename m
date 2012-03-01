@@ -1,121 +1,277 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Why Is There No Bug Tracker And Why Are Patches Sent Instead Of
- Pull Requests
-Date: Thu, 1 Mar 2012 12:54:21 +0100
-Message-ID: <CACBZZX4T28m6k7A53Zc32Aquk-jh7_R0KPeq983bSQ3B-r27cA@mail.gmail.com>
-References: <CAM=oOO2i-9zraF-YG5YzvZEmN1eXTnQfhJ-eMF04NP7HGtf41w@mail.gmail.com>
- <7vhay9tqs6.fsf@alter.siamese.dyndns.org> <20120229225304.GA9099@burratino>
- <CAH5451miv_Mo_9tZV+mfDEHuEX0491duqAYh66aOzLsMLTNkaA@mail.gmail.com> <8762eoimp0.fsf@thomas.inf.ethz.ch>
+From: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+Subject: [PATCH v7a 1/9] diff --stat: tests for long filenames and big change counts
+Date: Thu,  1 Mar 2012 13:26:38 +0100
+Message-ID: <1330604806-30288-1-git-send-email-zbyszek@in.waw.pl>
+References: <7vfwdts6wj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andrew Ardill <andrew.ardill@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	opticyclic <opticyclic@gmail.com>, git@vger.kernel.org
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Mar 01 12:54:51 2012
+Cc: pclouds@gmail.com, j.sixt@viscovery.net,
+	=?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Mar 01 13:27:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S34ax-0000TM-6q
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 12:54:51 +0100
+	id 1S356N-0004OF-3y
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 13:27:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753450Ab2CALyp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Mar 2012 06:54:45 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:59580 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751014Ab2CALym convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Mar 2012 06:54:42 -0500
-Received: by wejx9 with SMTP id x9so291413wej.19
-        for <git@vger.kernel.org>; Thu, 01 Mar 2012 03:54:41 -0800 (PST)
-Received-SPF: pass (google.com: domain of avarab@gmail.com designates 10.180.107.169 as permitted sender) client-ip=10.180.107.169;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of avarab@gmail.com designates 10.180.107.169 as permitted sender) smtp.mail=avarab@gmail.com; dkim=pass header.i=avarab@gmail.com
-Received: from mr.google.com ([10.180.107.169])
-        by 10.180.107.169 with SMTP id hd9mr9922328wib.0.1330602881455 (num_hops = 1);
-        Thu, 01 Mar 2012 03:54:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=H8L8pvw0jM2ScTdHYgIOaj9p5vj+JRulWacTThcGNCE=;
-        b=HaDnPo34pitPbWdvf3pqnBZDoXtaN++bfjOCbJFDqB6skvMgRlyk/nSSGKEapPpOIw
-         0EHONaoHlsO2BQI3tIx09FqQ9CuShPihkINtVj6ai/s8Os9RVSL7Nw3q1i9E7oLqF6AN
-         guwh7hKdsS+B6KVghUazEP/ZOVlpwrzB6PG6w=
-Received: by 10.180.107.169 with SMTP id hd9mr7921514wib.0.1330602881293; Thu,
- 01 Mar 2012 03:54:41 -0800 (PST)
-Received: by 10.223.69.133 with HTTP; Thu, 1 Mar 2012 03:54:21 -0800 (PST)
-In-Reply-To: <8762eoimp0.fsf@thomas.inf.ethz.ch>
+	id S1030758Ab2CAM1F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Mar 2012 07:27:05 -0500
+Received: from kawka.in.waw.pl ([178.63.212.103]:55367 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030483Ab2CAM1B (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2012 07:27:01 -0500
+Received: from optyk25.fuw.edu.pl ([193.0.81.79] helo=ameba.fuw.edu.pl)
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1S3561-00026K-UI; Thu, 01 Mar 2012 13:26:58 +0100
+X-Mailer: git-send-email 1.7.9.2.399.gdf4d.dirty
+In-Reply-To: <7vfwdts6wj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191918>
 
-On Thu, Mar 1, 2012 at 12:29, Thomas Rast <trast@inf.ethz.ch> wrote:
-> Andrew Ardill <andrew.ardill@gmail.com> writes:
->
->> I have set up a JIRA instance using Atlassian's OnDemand service,
->> available at https://git-scm.atlassian.net/
-> [...]
->> As I see it (and Junio has mentioned before) we are going to need
->> people who are able to manage the issues in this system
->
-> Note that you are not the first one to try. =C2=A0The most elaborate =
-plan and
-> writeup that I know of sits at
->
-> =C2=A0http://article.gmane.org/gmane.comp.version-control.git/136500 =
-=C2=A0[1]
->
-> Jan "jast" Kr=C3=BCger also mentioned server issues today, so *.jk.gs=
- is
-> presumably down because of that, not because gitbugs.jk.gs is no long=
-er
-> valid.
->
-> Nevertheless, AFAIK it has never been used for "real work", so you ma=
-y
-> want to look into why that happened, and do something different.
+=46rom: Junio C Hamano <gitster@pobox.com>
 
-As someone who submits patches every once in a while I can echo other
-sentiments in this thread, just because you have a list of issues that
-doesn't mean anyone is working on them.
+In preparation for updates to the "diff --stat" that updates the logic
+to split the allotted columns into the name part and the graph part to
+make the output more readable, add a handful of tests to document the
+corner case behaviour in which long filenames and big changes are shown=
+=2E
 
-However I'd also sometimes like to work on some random issue because
-I'm bored, and having a collection of issues ordered by priority (or
-popularity) would be useful when that happens.
+When a pathname is so long that it cannot fit on the column, the curren=
+t
+code truncates it to make sure that the graph part has enough room to s=
+how
+a meaningful graph.  If the actual change is small (e.g. only one line
+changed), this results in the final output that is shorter than the wid=
+th
+we aim for.
 
-But I think any proposal to set up a wholly external system is going
-to fail, we do most of our bug submission / commenting etc. on this
-mailing list, and that isn't going to change, so there's always going
-to be a large chasm between the list and any external system.
+Signed-off-by: Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+v7a:
 
-What I think *would* work however is a system that feeds off the
-mailing list. This could be as simple as a mailing list aggregator
-that allowed you to star certain messages, and the most starred
-messages would be the popular issues.
+De-decuplicate new tests added in t4014 and t4052. Test descriptions
+are taken from t4014, but the tests are all added in t4052.
 
-A more fancy solution would:
+This patch is a merge of 't4014: addtional format-patch test vectors'
+from Junio C Hamano and v7 of my 'diff --stat: tests for long filenames
+and big change counts'.
 
- * Consume every single message that gets sent to the list
- * Group each thread and allow it to be categorized as a
-   bug/issue/enhancement/complaint
- * Allow you to mark a collection of threads as describing the same
-   issue, so you'd have duplicates marked & the full history of a
-   discussion on some issue.
- * Allow you to mark an issue as outstanding / resolved / allow voting
-   on it.
+The rest of the series is only updated to apply cleanly after the chang=
+es
+to tests.
 
-Thus you'd automatically build up an issue database without anyone
-going out of their way, all it would need is the same people who
-complain that they can't file bugs either categorizing existing posts,
-or categorizing a post they just made.
+[This patch series does not include the additional patches to minimize
+the number of columns used for the change count number.]
 
-Many bug trackers can be made to work with E-Mail (e.g. Jira, RT
-etc.), although I don't know if they're well set up to follow a
-mailing list like this. I think e.g. Jira assumes that you have a the
-bug id in the subject, and might not be smart enough to group things
-by In-Reply-To headers.
+ t/t4052-stat-output.sh |  182 ++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ 1 file changed, 182 insertions(+)
+ create mode 100755 t/t4052-stat-output.sh
+
+diff --git a/t/t4052-stat-output.sh b/t/t4052-stat-output.sh
+new file mode 100755
+index 0000000..f766c47
+--- /dev/null
++++ b/t/t4052-stat-output.sh
+@@ -0,0 +1,182 @@
++#!/bin/sh
++#
++# Copyright (c) 2012 Zbigniew J=C4=99drzejewski-Szmek
++#
++
++test_description=3D'test --stat output of various commands'
++
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-terminal.sh
++
++# 120 character name
++name=3Daaaaaaaaaa
++name=3D$name$name$name$name$name$name$name$name$name$name$name$name
++test_expect_success 'preparation' '
++	>"$name" &&
++	git add "$name" &&
++	git commit -m message &&
++	echo a >"$name" &&
++	git commit -m message "$name"
++'
++
++while read cmd args
++do
++	cat >expect <<-'EOF'
++	 ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa |    1 +
++	EOF
++	test_expect_success "$cmd: a short graph bar does not extend to the f=
+ull width" '
++		git $cmd $args >output &&
++		grep " | " output >actual &&
++		test_cmp expect actual
++	'
++
++	cat >expect <<-'EOF'
++	 ...aaaaaaaaaaaaaaaaaaaaaa |    1 +
++	EOF
++	test_expect_success "$cmd --stat=3Dwidth: name is chopped to leave ro=
+om to the right of a short bar" '
++		git $cmd $args --stat=3D40 >output &&
++		grep " | " output >actual &&
++		test_cmp expect actual
++	'
++
++	test_expect_success "$cmd --stat-width=3Dwidth with long name" '
++		git $cmd $args --stat-width=3D40 >output &&
++		grep " | " output >actual &&
++		test_cmp expect actual
++	'
++
++	cat >expect <<-'EOF'
++	 ...aaaaaaaaaaaaaaaaaaaaaaaaaaa |    1 +
++	EOF
++	test_expect_success "$cmd --stat=3D...,name-width with long name" '
++		git $cmd $args --stat=3D60,30 >output &&
++		grep " | " output >actual &&
++		test_cmp expect actual
++	'
++
++	test_expect_success "$cmd --stat-name-width with long name" '
++		git $cmd $args --stat-name-width=3D30 >output &&
++		grep " | " output >actual &&
++		test_cmp expect actual
++	'
++done <<\EOF
++format-patch -1 --stdout
++diff HEAD^ HEAD --stat
++show --stat
++log -1 --stat
++EOF
++
++
++test_expect_success 'preparation for big change tests' '
++	>abcd &&
++	git add abcd &&
++	git commit -m message &&
++	i=3D0 &&
++	while test $i -lt 1000
++	do
++		echo $i && i=3D$(($i + 1))
++	done >abcd &&
++	git commit -m message abcd
++'
++
++cat >expect80 <<'EOF'
++ abcd | 1000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
++++++++++
++EOF
++
++while read verb expect cmd args
++do
++	test_expect_success "$cmd $verb COLUMNS (big change)" '
++		COLUMNS=3D200 git $cmd $args >output
++		grep " | " output >actual &&
++		test_cmp "$expect" actual
++	'
++done <<\EOF
++ignores expect80 format-patch -1 --stdout
++ignores expect80 diff HEAD^ HEAD --stat
++ignores expect80 show --stat
++ignores expect80 log -1 --stat
++EOF
++
++cat >expect <<'EOF'
++ abcd | 1000 ++++++++++++++++++++++++++
++EOF
++while read cmd args
++do
++	test_expect_success "$cmd --stat=3Dwidth with big change" '
++		git $cmd $args --stat=3D40 >output
++		grep " | " output >actual &&
++		test_cmp expect actual
++	'
++
++	test_expect_success "$cmd --stat-width=3Dwidth with big change" '
++		git $cmd $args --stat-width=3D40 >output
++		grep " | " output >actual &&
++		test_cmp expect actual
++	'
++done <<\EOF
++format-patch -1 --stdout
++diff HEAD^ HEAD --stat
++show --stat
++log -1 --stat
++EOF
++
++test_expect_success 'preparation for long filename tests' '
++	cp abcd aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa &&
++	git add aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa &&
++	git commit -m message
++'
++
++cat >expect <<'EOF'
++ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++
++EOF
++while read cmd args
++do
++	test_expect_success "$cmd --stat=3Dwidth with big change and long nam=
+e favors name part" '
++		git $cmd $args --stat-width=3D60 >output &&
++		grep " | " output >actual &&
++		test_cmp expect actual
++	'
++done <<\EOF
++format-patch -1 --stdout
++diff HEAD^ HEAD --stat
++show --stat
++log -1 --stat
++EOF
++
++cat >expect80 <<'EOF'
++ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++=
++++++++++
++EOF
++while read verb expect cmd args
++do
++	test_expect_success "$cmd $verb COLUMNS (long filename)" '
++		COLUMNS=3D200 git $cmd $args >output
++		grep " | " output >actual &&
++		test_cmp "$expect" actual
++	'
++done <<\EOF
++ignores expect80 format-patch -1 --stdout
++ignores expect80 diff HEAD^ HEAD --stat
++ignores expect80 show --stat
++ignores expect80 log -1 --stat
++EOF
++
++cat >expect <<'EOF'
++ abcd | 1000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
++++++++++
++EOF
++test_expect_success 'merge --stat ignores COLUMNS (big change)' '
++	git checkout -b branch HEAD^^ &&
++	COLUMNS=3D100 git merge --stat --no-ff master^ >output &&
++	grep " | " output >actual
++	test_cmp expect actual
++'
++
++cat >expect <<'EOF'
++ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++=
++++++++++
++EOF
++test_expect_success 'merge --stat ignores COLUMNS (long filename)' '
++	COLUMNS=3D100 git merge --stat --no-ff master >output &&
++	grep " | " output >actual
++	test_cmp expect actual
++'
++
++test_done
+--=20
+1.7.9.2.399.gdf4d.dirty
