@@ -1,88 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] t5510: ensure we stay in the toplevel test dir
-Date: Thu, 01 Mar 2012 14:33:31 -0800
-Message-ID: <7v8vjkkl38.fsf@alter.siamese.dyndns.org>
-References: <cover.1330637923.git.trast@student.ethz.ch>
- <80204781996b200d08b73cf61fa50df468e4b51d.1330637923.git.trast@student.ethz.ch> <7vipiokmrz.fsf@alter.siamese.dyndns.org> <871upcht2h.fsf@thomas.inf.ethz.ch>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Google Summer of Code 2012... and git wiki
+Date: Fri, 2 Mar 2012 00:27:40 +0100
+Message-ID: <201203020027.41016.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, <git@vger.kernel.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Mar 01 23:33:41 2012
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 02 00:27:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3EZ9-0007Dw-TU
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 23:33:40 +0100
+	id 1S3FPe-00007M-R8
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 00:27:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758159Ab2CAWdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Mar 2012 17:33:35 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52915 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755999Ab2CAWde (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2012 17:33:34 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A5C069D4;
-	Thu,  1 Mar 2012 17:33:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=5MWCQnBm3mYbmOHofTAv3kbUKHc=; b=DcXRtL
-	4tz3TYeJ8cg2Ggm7tacbEYqMKYlpRGfQAvbjuhbBdnV13FF6NO9NwZT7iJr2hkRd
-	GGqVFKg7atpr3jhFjw3aI3RG+M0bFgjV+LKbICcmDhcNIt8Wnzjt+e7MTUUeeBmH
-	T6po0A+SN3xWS/dWPu0n8JJCZzKazfjBQdtuE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qeop2iLyhnto7rsGINHH4r5LGECJbWot
-	CLRLkYrlJz4qbhepWYCLCs36bFSYv/fOKbrUIUBriBDTFUI7coJPqOQKblQNU5LW
-	nHtLzCGENOIAcFeemfDQSMISs5ukikkpIfymzK/t/MWIPCankdPKk5vRqX/Yckvm
-	kxquH7EnvjM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2BF669D3;
-	Thu,  1 Mar 2012 17:33:33 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 506E469D1; Thu,  1 Mar 2012
- 17:33:33 -0500 (EST)
-In-Reply-To: <871upcht2h.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
- "Thu, 1 Mar 2012 23:09:26 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 93F3AD04-63EE-11E1-9AED-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752846Ab2CAX1n convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Mar 2012 18:27:43 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:34178 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752380Ab2CAX1m (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2012 18:27:42 -0500
+Received: by eaaq12 with SMTP id q12so417922eaa.19
+        for <git@vger.kernel.org>; Thu, 01 Mar 2012 15:27:41 -0800 (PST)
+Received-SPF: pass (google.com: domain of jnareb@gmail.com designates 10.14.47.8 as permitted sender) client-ip=10.14.47.8;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of jnareb@gmail.com designates 10.14.47.8 as permitted sender) smtp.mail=jnareb@gmail.com; dkim=pass header.i=jnareb@gmail.com
+Received: from mr.google.com ([10.14.47.8])
+        by 10.14.47.8 with SMTP id s8mr4324264eeb.91.1330644461523 (num_hops = 1);
+        Thu, 01 Mar 2012 15:27:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:user-agent:mime-version:content-disposition
+         :content-type:content-transfer-encoding:message-id;
+        bh=ODR16d690KA2GmkE9XCHUrsZqj/JDsxuFAHAACQs2Yk=;
+        b=j7jnG+JvurBAAtrmna6RrQIAPuAQetJvI8qHMUfbS0Pkre0J7dsV6dTrX8BDXOHpHv
+         2UV4goixhJ5TzR2eQJUS7Z1Ng+772CTPOzZMBZcDdnLe9r7JK8zuDnDnteclN2q0RkM4
+         tfRthiQywxJI40cCCb0ZJGweu2ofBlUOLtkaR9tgicpIMNNGWPB9jr1o661aWqoz/2Jh
+         r3e6vMFC3JCgSabOHGW3Z3GmrqFV5unQ1I+SqbTeoEoqVX/JRbFpVUxXOBegAitPAIHp
+         0aG/3EYXJxerKFUg+dyPg60Bq+nZLzULCSzoamFKlZ2eTIwV1tV6giH2uNVXiIpH8PME
+         IjXQ==
+Received: by 10.14.47.8 with SMTP id s8mr3319302eeb.91.1330644461378;
+        Thu, 01 Mar 2012 15:27:41 -0800 (PST)
+Received: from [192.168.1.13] (abvz178.neoplus.adsl.tpnet.pl. [83.8.223.178])
+        by mx.google.com with ESMTPS id u9sm12853607eem.11.2012.03.01.15.27.39
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 01 Mar 2012 15:27:40 -0800 (PST)
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191986>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+Google Summer of Code 2012 has started. =A0The Git Development Communit=
+y=20
+has time till March 9 to submit organization application.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Thomas Rast <trast@student.ethz.ch> writes:
->>
->>> The last test descended into a subdir without ever re-emerging, which
->>> is not so nice to the next test writer.
->>
->> True.  Making the test suite more robust like this patch does is very much
->> appreciated.
->>
->> Is there a reason why we shouldn't be sticking to the more usual
->>
->> 	mkdir dups &&
->>         (
->>         	cd dups &&
->>                 do whatever in dups
->> 	)
->>
->> pattern?
->
-> None in particular.  It would also perhaps reduce the churn since (as it
-> touches every line anyway) it could be squashed with 2/4.  Should I reroll?
+The problem (beside finding volunteer for the position of GSoC=20
+administrator) is that both GSoC application and ideas for GSoC=20
+projects were hosted on Git Wiki... but Git Wiki is still only parially=
+=20
+functional, available only as static pages under changed URLs.
 
-I was just curious.
+I guess we can get by without having fully functional wiki for creating=
+=20
+application (if we decide to apply), but it would need a forum to send=20
+ideas for GSoC projects and some place to publish them.  Editable wiki=20
+can work as both, though git mailing list and some static page (perhaps=
+=20
+home pages for git project on GitHub?) could also work.
 
-But it does sound like squashing the two may make sense.  I can manage
-locally.
 
-Thanks.
+I don't know what are ETA on bringing Git Wiki fully up, but I doubt it=
+=20
+would be possible at http://git.wiki.kernel.org -- it is more than two=20
+months since the event and wiki is not functional yet.  Perhaps it=20
+could be hosted at git-scm.com somewhere -  but it really should be=20
+true wiki, editable without need to use git.
+
+--=20
+Jakub Narebski
+Poland
