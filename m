@@ -1,102 +1,100 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH 2/4] t4011: illustrate "diff-index -p" on stat-dirty paths
-Date: Thu, 1 Mar 2012 10:05:59 +0100
-Message-ID: <87399slmh4.fsf@thomas.inf.ethz.ch>
-References: <1330568057-27304-1-git-send-email-gitster@pobox.com>
-	<1330568057-27304-3-git-send-email-gitster@pobox.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3] Documentation fixes in git-config
+Date: Thu, 1 Mar 2012 04:08:28 -0500
+Message-ID: <20120301090828.GA16033@sigill.intra.peff.net>
+References: <20110108144644.GA11019@localhost.suse.cz>
+ <20110111055922.GD10094@sigill.intra.peff.net>
+ <20110119100105.GB8034@fm.suse.cz>
+ <20110119141401.GE8034@fm.suse.cz>
+ <20110121002716.GC9442@sigill.intra.peff.net>
+ <20110121102048.GF19715@fm.suse.cz>
+ <20110121102537.GH19715@fm.suse.cz>
+ <20120301081941.GA31079@fm.suse.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 01 10:06:25 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Libor Pechacek <lpechacek@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Mar 01 10:08:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S31xq-0002n9-Vy
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 10:06:19 +0100
+	id 1S320F-0004k6-CL
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 10:08:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965121Ab2CAJGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Mar 2012 04:06:11 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:10287 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965119Ab2CAJGF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2012 04:06:05 -0500
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 1 Mar
- 2012 10:05:56 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 1 Mar
- 2012 10:06:00 +0100
-In-Reply-To: <1330568057-27304-3-git-send-email-gitster@pobox.com> (Junio
-	C. Hamano's message of "Wed, 29 Feb 2012 18:14:15 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1758744Ab2CAJIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Mar 2012 04:08:36 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33994
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965066Ab2CAJIb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2012 04:08:31 -0500
+Received: (qmail 2608 invoked by uid 107); 1 Mar 2012 09:08:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 01 Mar 2012 04:08:35 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Mar 2012 04:08:28 -0500
+Content-Disposition: inline
+In-Reply-To: <20120301081941.GA31079@fm.suse.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191909>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Mar 01, 2012 at 09:19:42AM +0100, Libor Pechacek wrote:
 
-> The plumbing that looks at the working tree, i.e. "diff-index" and
-> "diff-files", always emit the "diff --git a/path b/path" header lines
-> without anything else for paths that are only stat-dirty (i.e. different
-> only because the cached stat information in the index no longer matches
-> that of the working tree, but the real contents are the same), when
-> these commands are run with "-p" option to produce patches.
->
-> Illustrate this current behaviour.  The new part that uses "-w" option
-> demonstrates that we do not show any "diff --git" header for blobs whose
-> true contents are different but compares the same when whitespaces are
-> ignored, which is inconsistent with the behaviour for stat-dirty paths.
-[...]
-> -test_expect_success SYMLINKS 'diff identical, but newly created symlink' '
-> +test_expect_success SYMLINKS 'diff identical, but newly created symlink and file' '
->  	cat >expected <<-\EOF &&
->  	diff --git a/frotz b/frotz
-> +	diff --git a/nitfol b/nitfol
->  	EOF
-> +	sleep 3 &&
-> +	rm -f frotz &&
-> +	echo xyzzy >nitfol3 &&
-> +	mv nitfol3 nitfol &&
->  	ln -s xyzzy frotz &&
->  	git diff-index -M -p $tree >current &&
-> +	compare_diff_patch expected current &&
-> +
-> +	>expected &&
-> +	git diff-index -M -p -w $tree >current &&
->  	compare_diff_patch expected current
->  '
+> Variable names must start with an alphabetic character, regexp config key
+> matching has its limits.
+> [...]
+> This patch has fallen through the cracks, therefore I re-send it.  Previous
+> discussion about this patch is at http://www.spinics.net/lists/git/msg149593.html.
+> The only change I've done since version 2 of this patch is replacing
+> apostrophes with backticks in the first hunk.
 
-I find the last bit of the commit message rather confusing.  You appear
-to be using -w here to diff the stat-dirty worktree nitfol 'xyzzy\n'
-against the $tree:nitfol which is also 'xyzzy\n'.
+Wow, it's been a while. :)
 
-If that analysis is correct, then
+Generally it looks OK to me, but I have two comments:
 
-  we do not show any "diff --git" header for blobs whose true contents
-  are different but compares the same when whitespaces are ignored
+>  Syntax
+>  ~~~~~~
+> @@ -54,9 +55,10 @@ All the other lines (and the remainder of the line after the section
+>  header) are recognized as setting variables, in the form
+>  'name = value'.  If there is no equal sign on the line, the entire line
+>  is taken as 'name' and the variable is recognized as boolean "true".
+> -The variable names are case-insensitive and only alphanumeric
+> -characters and `-` are allowed.  There can be more than one value
+> -for a given variable; we say then that variable is multivalued.
+> +The variable names are case-insensitive, allow only alphanumeric characters
+> +and `-`, and must start with an alphabetic character.  There can be more
+> +than one value for a given variable; we say then that variable is
+> +multivalued.
 
-is not what is going on here; the blobs have exactly the same content.
-The difference is that
+Not an error you introduced, but should it be "...we say then that _the_
+variable is multivalued".
 
-* without -w, the code "knows" from the lstat() data that the files are
-  different, prints a header, and then fails to find any differences;
+> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+> index aa8303b..a54fee8 100644
+> --- a/Documentation/git-config.txt
+> +++ b/Documentation/git-config.txt
+> @@ -85,8 +85,13 @@ OPTIONS
+>  	is not exactly one.
+>  
+>  --get-regexp::
+> -	Like --get-all, but interprets the name as a regular expression.
+> -	Also outputs the key names.
+> +	Like --get-all, but interprets the name as a regular expression and
+> +	writes out the key names.  Regular expression matching is currently
+> +	case-sensitive and done against a canonicalized version of the key
+> +	in which section and variable names are lowercased, but subsection
+> +	names are not.  Regular expressions are partially lower-cased
+> +	before matching (everything before the first dot and after the last
+> +	dot), which makes things like "Core.*' work.
 
-* with -w, the code correctly holds off on printing anything since it
-  will invariably have to inspect the contents beforehand.
+I know I ack'ed this last time around, but reading it fresh, I think we
+are probably better off to just not mention the down-casing at all. It's
+just confusing, and people shouldn't depend on it. They should know that
+they are comparing against the canonical name, and should use lowercase
+in their regex. I.e., just cut out the last sentence from there.
 
-So perhaps you can say
-
-  Illustrate this current behaviour.  Also demonstrate that with the
-  "-w" option, we (correctly) hold off showing a "diff --git" header
-  until actual differences have been found.  This also suppresses the
-  header for merely stat-dirty files, which is inconsistent.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+-Peff
