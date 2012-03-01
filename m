@@ -1,104 +1,69 @@
-From: Carsten Fuchs <carsten.fuchs@cafu.de>
-Subject: How to use subtrees when importing SVN repository with "vendor" branches?
-Date: Thu, 01 Mar 2012 01:35:36 +0100
-Message-ID: <4F4EC458.8090808@cafu.de>
+From: Greg Troxel <gdt@ir.bbn.com>
+Subject: Re: Why Is There No Bug Tracker And Why Are Patches Sent Instead Of Pull Requests
+Date: Wed, 29 Feb 2012 19:37:50 -0500
+Message-ID: <rmifwdti2ap.fsf@fnord.ir.bbn.com>
+References: <CAM=oOO2i-9zraF-YG5YzvZEmN1eXTnQfhJ-eMF04NP7HGtf41w@mail.gmail.com>
+	<7vhay9tqs6.fsf@alter.siamese.dyndns.org>
+	<20120229225304.GA9099@burratino>
+	<CAH5451miv_Mo_9tZV+mfDEHuEX0491duqAYh66aOzLsMLTNkaA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 01 01:35:45 2012
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	opticyclic <opticyclic@gmail.com>, git@vger.kernel.org
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 01:37:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2tzk-0004Ix-CP
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 01:35:44 +0100
+	id 1S2u1r-0005Xg-GI
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 01:37:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757767Ab2CAAfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Feb 2012 19:35:39 -0500
-Received: from moutng.kundenserver.de ([212.227.126.171]:64413 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756901Ab2CAAfj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Feb 2012 19:35:39 -0500
-Received: from [192.168.1.73] (p5B0C701A.dip.t-dialin.net [91.12.112.26])
-	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
-	id 0M4Vjc-1SLPsL1LMy-00ykaD; Thu, 01 Mar 2012 01:35:37 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-X-Provags-ID: V02:K0:2aegmqyvj7rfZ+eAf71yo/RLMqC/071NHXBnL3uQTJg
- VgJkkzN4y6pEhCpmf7pJF/UOsKesybnWQyvSZdqyqqvVFLK539
- o6oFQkiGPtwjWs65Q8hAeAFHEZlRKqnIHA55Vz5+fIeHT1rfOm
- 7actijfUHfoFIGw3sSamv5k9QBZSMus0UlGjZiTNHTx1yIU9Qw
- CJ4JJjoksTrlg0MaDByJL6cyiGgm8mXUBcx2coJO3A4NxGyGio
- 0DErHuZA0M9HCpjFCSsksHAGDOecSzoL29EU8NZ9Mg3WtLJhhQ
- rJb/qpFvz0SK2uiOJ7HLz4u5oqF2pYYBgVCMZzZzE8ouEQznMu
- /NHus148wKAfE41znSTw=
+	id S1757877Ab2CAAhv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Feb 2012 19:37:51 -0500
+Received: from fnord.ir.bbn.com ([192.1.100.210]:61381 "EHLO fnord.ir.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757795Ab2CAAhu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Feb 2012 19:37:50 -0500
+Received: by fnord.ir.bbn.com (Postfix, from userid 10853)
+	id 12B1352F8; Wed, 29 Feb 2012 19:37:50 -0500 (EST)
+OpenPGP: id=32611E25
+X-Hashcash: 1:20:120301:jrnieder@gmail.com::B0H09JFbo9yCuL0s:00000000000000000000000000000000000000000002Psv
+X-Hashcash: 1:20:120301:andrew.ardill@gmail.com::ksTfV1H0XZGBK7s3:000000000000000000000000000000000000003oy+
+X-Hashcash: 1:20:120301:opticyclic@gmail.com::TpLMCDAnFAHeNKCG:000000000000000000000000000000000000000003s2I
+X-Hashcash: 1:20:120301:gitster@pobox.com::xo2rUTofZHOX/2rn:0000000000000000000000000000000000000000000051SG
+X-Hashcash: 1:20:120301:git@vger.kernel.org::ksTfV1H0XZGBK7s3:000000000000000000000000000000000000000000EGNJ
+In-Reply-To: <CAH5451miv_Mo_9tZV+mfDEHuEX0491duqAYh66aOzLsMLTNkaA@mail.gmail.com>
+	(Andrew Ardill's message of "Thu, 1 Mar 2012 10:58:56 +1100")
+User-Agent: Gnus/5.130004 (Ma Gnus v0.4) Emacs/23.3 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191867>
 
-Hi all,
-
-using git-svn, I've been converting our old SVN repositories to git with great success, 
-but I don't know how to deal with our biggest and most important one.
-The SVN repository structure is like this:
-
-	branches/
-	tags/
-	trunk/
-		ExtLibs/
-			libpng/
-			zlib/
-			...
-		some_dir_a/
-		some_dir_b/
-	vendor/
-		libpng/
-		zlib/
-		...
-
-The key problem is that we used to use the SVN "vendor branches" strategy: When a new 
-version of libpng or zlib or ... is released, we update the vendor/ directory 
-appropriately (essentially: delete the old files of the library, extract the tarball of 
-the new release, commit).
-Then we "SVN merged" the vendor/ directory into trunk/ExtLibs/.
-This way, we were able to preserve our occasional customizations to the libraries in 
-ExtLibs/ while updating to new vendor releases.
-
-Using something like
-	git svn init "svn://.../project_root" --trunk "trunk" git_test_project
-it would be easy to fetch the projects trunk (never mind the branches and tags, we never 
-used them much and are happy to ignore them). This properly converts the whole trunk to 
-git, including subdirectory trunk/ExtLibs/, but with no notion of vendor/.
-
-In contrast, using something like
-	git svn init "svn://.../project_root" --trunk "trunk/ExtLibs" git_test_ExtLibs
-	git config --add svn-remote.svn.fetch "vendor:refs/remotes/vendor"
-	git svn fetch
-yields a new clean "ExtLibs-only" git repository with the two branches trunk and vendor, 
-and proper merge history (helped with grafting, where necessary), but is so far entirely 
-unrelated to the main project repository.
-
-Well... it seems like subtrees and subtree merging is a good way to proceed, but even 
-though I've read everything I could find about the subject, I don't quite see how I can 
-employ it in the case above, where ExtLibs/ isn't newly created, but history already exists.
-
-Could you please give me an idea how I properly merge ExtLibs as a subdirectory into the 
-main repository, including the history? I can add the ExtLibs repository (created as 
-shown above) as a remote reference to the main repository, yielding a multi-root 
-repository, but what then? Or should I rather convert only vendor/ and use that as a 
-remote for merging? (Can grafting put to work in the subtrees context?)
-
-I'd be very grateful for your help!
-
-Best regards,
-Carsten
+--=-=-=
+Content-Type: text/plain
 
 
+  I have set up a JIRA instance using Atlassian's OnDemand service,
+  available at https://git-scm.atlassian.net/
 
--- 
-    Cafu - the open-source Game and Graphics Engine
-for multiplayer, cross-platform, real-time 3D Action
-           Learn more at http://www.cafu.de
+Do people really think it's reasonable to use non-Free tools to develop
+git?  That seems surprising to me.
+
+
+--=-=-=
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (NetBSD)
+
+iEYEARECAAYFAk9OxN4ACgkQ+vesoDJhHiUhNACfS6DJL3fV/vaa5t3O+c9YiZNa
+UekAn1riz6+6m9GxRbJLF5i7Ex/3CW26
+=lcb4
+-----END PGP SIGNATURE-----
+--=-=-=--
