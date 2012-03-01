@@ -1,78 +1,104 @@
-From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
-Subject: Re: What's cooking in git.git (Feb 2012, #09; Sun, 26)
-Date: Thu, 1 Mar 2012 01:11:50 +0100
-Message-ID: <CAA787rkZKxYk_+WGD7_EhqxouzT=nhUEG0nn8KpZLSJskKiJdA@mail.gmail.com>
-References: <7vd390btrf.fsf@alter.siamese.dyndns.org>
+From: Carsten Fuchs <carsten.fuchs@cafu.de>
+Subject: How to use subtrees when importing SVN repository with "vendor" branches?
+Date: Thu, 01 Mar 2012 01:35:36 +0100
+Message-ID: <4F4EC458.8090808@cafu.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 01 01:11:59 2012
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 01 01:35:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2tcj-0006Uv-DG
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 01:11:57 +0100
+	id 1S2tzk-0004Ix-CP
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 01:35:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754035Ab2CAALw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Feb 2012 19:11:52 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:61788 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753839Ab2CAALw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Feb 2012 19:11:52 -0500
-Received: by qaeb19 with SMTP id b19so2352448qae.19
-        for <git@vger.kernel.org>; Wed, 29 Feb 2012 16:11:51 -0800 (PST)
-Received-SPF: pass (google.com: domain of sunny256@gmail.com designates 10.224.196.66 as permitted sender) client-ip=10.224.196.66;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of sunny256@gmail.com designates 10.224.196.66 as permitted sender) smtp.mail=sunny256@gmail.com; dkim=pass header.i=sunny256@gmail.com
-Received: from mr.google.com ([10.224.196.66])
-        by 10.224.196.66 with SMTP id ef2mr4497520qab.64.1330560711642 (num_hops = 1);
-        Wed, 29 Feb 2012 16:11:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Q6fXJ0EWUINuDFilXxohECpYnUKm0ylQgkYdgZfvi9s=;
-        b=NSc45JAYKHy3dPSdtJrIGrubKmhYeyV4qzllXnMEuD81MnCZayMOoHhUMFzX1l3atD
-         Gk1Ip8RFoiW4byT7CuW6b9ZHf1d8ronb9Rxn4l4fosAHcbLGMjDgrdQYZP/6/m/mZGdu
-         MNk+kiigf90/enUgcYyawEy1G/O5qti9/cS6Q=
-Received: by 10.224.196.66 with SMTP id ef2mr3754500qab.64.1330560711049; Wed,
- 29 Feb 2012 16:11:51 -0800 (PST)
-Received: by 10.229.240.134 with HTTP; Wed, 29 Feb 2012 16:11:50 -0800 (PST)
-In-Reply-To: <7vd390btrf.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: JlPBMjyMiBseHawGsPZa_k-3GaE
+	id S1757767Ab2CAAfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Feb 2012 19:35:39 -0500
+Received: from moutng.kundenserver.de ([212.227.126.171]:64413 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756901Ab2CAAfj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Feb 2012 19:35:39 -0500
+Received: from [192.168.1.73] (p5B0C701A.dip.t-dialin.net [91.12.112.26])
+	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
+	id 0M4Vjc-1SLPsL1LMy-00ykaD; Thu, 01 Mar 2012 01:35:37 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+X-Provags-ID: V02:K0:2aegmqyvj7rfZ+eAf71yo/RLMqC/071NHXBnL3uQTJg
+ VgJkkzN4y6pEhCpmf7pJF/UOsKesybnWQyvSZdqyqqvVFLK539
+ o6oFQkiGPtwjWs65Q8hAeAFHEZlRKqnIHA55Vz5+fIeHT1rfOm
+ 7actijfUHfoFIGw3sSamv5k9QBZSMus0UlGjZiTNHTx1yIU9Qw
+ CJ4JJjoksTrlg0MaDByJL6cyiGgm8mXUBcx2coJO3A4NxGyGio
+ 0DErHuZA0M9HCpjFCSsksHAGDOecSzoL29EU8NZ9Mg3WtLJhhQ
+ rJb/qpFvz0SK2uiOJ7HLz4u5oqF2pYYBgVCMZzZzE8ouEQznMu
+ /NHus148wKAfE41znSTw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191866>
 
-On 27 February 2012 08:49, Junio C Hamano <gitster@pobox.com> wrote:
-> * cb/fsck-squelch-dangling (2012-02-26) 1 commit
-> =C2=A0- fsck: do not print dangling objects by default
->
-> Introduces "fsck --dangling" and removes the output for dangling obje=
-cts
-> from the default output.
->
-> I personally do not think it is worth risking backward compatibility =
-in
-> the way this patch implements the squelching of the output. =C2=A0An =
-approach
-> to add --no-dangling option without changing the default would be OK,
-> though.
+Hi all,
 
-Agree. I use this functionality a lot, and this change would break a
-script I use to restore dangling commits. There's probably some
-(dirty) way around it, but I'd prefer if the backwards compatibility
-is retained.
+using git-svn, I've been converting our old SVN repositories to git with great success, 
+but I don't know how to deal with our biggest and most important one.
+The SVN repository structure is like this:
 
-BTW, the script I use is located at
-<https://github.com/sunny256/utils/blob/master/git-dangling> and I
-find it quite useful. Do you think it could be a contrib/ candidate?
+	branches/
+	tags/
+	trunk/
+		ExtLibs/
+			libpng/
+			zlib/
+			...
+		some_dir_a/
+		some_dir_b/
+	vendor/
+		libpng/
+		zlib/
+		...
 
-Cheers,
-=C3=98yvind
+The key problem is that we used to use the SVN "vendor branches" strategy: When a new 
+version of libpng or zlib or ... is released, we update the vendor/ directory 
+appropriately (essentially: delete the old files of the library, extract the tarball of 
+the new release, commit).
+Then we "SVN merged" the vendor/ directory into trunk/ExtLibs/.
+This way, we were able to preserve our occasional customizations to the libraries in 
+ExtLibs/ while updating to new vendor releases.
+
+Using something like
+	git svn init "svn://.../project_root" --trunk "trunk" git_test_project
+it would be easy to fetch the projects trunk (never mind the branches and tags, we never 
+used them much and are happy to ignore them). This properly converts the whole trunk to 
+git, including subdirectory trunk/ExtLibs/, but with no notion of vendor/.
+
+In contrast, using something like
+	git svn init "svn://.../project_root" --trunk "trunk/ExtLibs" git_test_ExtLibs
+	git config --add svn-remote.svn.fetch "vendor:refs/remotes/vendor"
+	git svn fetch
+yields a new clean "ExtLibs-only" git repository with the two branches trunk and vendor, 
+and proper merge history (helped with grafting, where necessary), but is so far entirely 
+unrelated to the main project repository.
+
+Well... it seems like subtrees and subtree merging is a good way to proceed, but even 
+though I've read everything I could find about the subject, I don't quite see how I can 
+employ it in the case above, where ExtLibs/ isn't newly created, but history already exists.
+
+Could you please give me an idea how I properly merge ExtLibs as a subdirectory into the 
+main repository, including the history? I can add the ExtLibs repository (created as 
+shown above) as a remote reference to the main repository, yielding a multi-root 
+repository, but what then? Or should I rather convert only vendor/ and use that as a 
+remote for merging? (Can grafting put to work in the subtrees context?)
+
+I'd be very grateful for your help!
+
+Best regards,
+Carsten
+
+
+
+-- 
+    Cafu - the open-source Game and Graphics Engine
+for multiplayer, cross-platform, real-time 3D Action
+           Learn more at http://www.cafu.de
