@@ -1,75 +1,57 @@
-From: Tom Grennan <tmgrennan@gmail.com>
-Subject: Re: [PATCH-w 101/105] t6300 (for-each-ref): modernize style
-Date: Wed, 29 Feb 2012 21:57:41 -0800
-Message-ID: <20120301055741.GF2572@tgrennan-laptop>
-References: <1330566326-26075-1-git-send-email-tmgrennan@gmail.com>
- <1330566326-26075-7-git-send-email-tmgrennan@gmail.com>
- <7v62epqd9a.fsf@alter.siamese.dyndns.org>
- <20120301032053.GD2572@tgrennan-laptop>
- <7vty29ovcd.fsf@alter.siamese.dyndns.org>
- <20120301051010.GE2572@tgrennan-laptop>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 1/5] t6300 (for-each-ref): modernize style
+Date: Thu, 01 Mar 2012 07:53:11 +0100
+Message-ID: <4F4F1CD7.4060403@viscovery.net>
+References: <1330566326-26075-1-git-send-email-tmgrennan@gmail.com> <1330566326-26075-2-git-send-email-tmgrennan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Carlos Rica <jasampler@gmail.com>,
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Carlos Rica <jasampler@gmail.com>,
 	Andy Parkins <andyparkins@gmail.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Amos Waterland <apw@rossby.metr.ou.edu>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 01 06:57:53 2012
+To: Tom Grennan <tmgrennan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 07:53:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2z1U-0006HH-R0
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 06:57:53 +0100
+	id 1S2ztK-0006gt-Ux
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 07:53:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755242Ab2CAF5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Mar 2012 00:57:47 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:41134 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754653Ab2CAF5r (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2012 00:57:47 -0500
-Received: by vcqp1 with SMTP id p1so200736vcq.19
-        for <git@vger.kernel.org>; Wed, 29 Feb 2012 21:57:46 -0800 (PST)
-Received-SPF: pass (google.com: domain of tmgrennan@gmail.com designates 10.52.88.212 as permitted sender) client-ip=10.52.88.212;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of tmgrennan@gmail.com designates 10.52.88.212 as permitted sender) smtp.mail=tmgrennan@gmail.com; dkim=pass header.i=tmgrennan@gmail.com
-Received: from mr.google.com ([10.52.88.212])
-        by 10.52.88.212 with SMTP id bi20mr5337130vdb.2.1330581466656 (num_hops = 1);
-        Wed, 29 Feb 2012 21:57:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ST73ENM1KuylFJhJfks7ipG1RVP6EK1Y3h5XEIClypM=;
-        b=Hk90hof036QEV/m0GcioV/3ECScVmAFRyk2UaP98gznJT7K9e63RYywYxVJKrdaXwg
-         ntW5lmIS5AGxQRWiRB3T6+hiUE65nvsiflS6sfM2ZrcPWieQopLrBFQ72ajPx0eZQfs9
-         NsP0BhZgs88DW7NAOAzkTfNHewJIr1YmCrTLo=
-Received: by 10.52.88.212 with SMTP id bi20mr4524059vdb.2.1330581466241;
-        Wed, 29 Feb 2012 21:57:46 -0800 (PST)
-Received: from localhost (c-98-207-169-74.hsd1.ca.comcast.net. [98.207.169.74])
-        by mx.google.com with ESMTPS id gz4sm1493200vdb.19.2012.02.29.21.57.43
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 29 Feb 2012 21:57:45 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20120301051010.GE2572@tgrennan-laptop>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754918Ab2CAGxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Mar 2012 01:53:17 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:59305 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752810Ab2CAGxQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2012 01:53:16 -0500
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1S2zt1-0001Wf-QG; Thu, 01 Mar 2012 07:53:11 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 7BDA51660F;
+	Thu,  1 Mar 2012 07:53:11 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <1330566326-26075-2-git-send-email-tmgrennan@gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191901>
 
-On Wed, Feb 29, 2012 at 09:10:10PM -0800, Tom Grennan wrote:
->On Wed, Feb 29, 2012 at 07:26:10PM -0800, Junio C Hamano wrote:
->>Tom Grennan <tmgrennan@gmail.com> writes:
->>
->For example, try this w/ and w/o the above change.
->	(cd t && ./t5512-ls-remote.sh) | less
+Am 3/1/2012 2:45, schrieb Tom Grennan:
+> +	git for-each-ref --format="%(refname)" --sort=refname |
+> +		test_cmp expect -
 
-	(cd t && ./t5512-ls-remote.sh -v) | less
+DON'T DO THIS. It loses the exit code of the git invocation.
 
--- 
-TomG
+(And it is contrary to my effort to move all test_cmp away from being used
+in a pipeline because I want to use a comparator tool that does not
+understand '-' as stdin.)
+
+-- Hannes
