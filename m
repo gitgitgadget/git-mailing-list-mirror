@@ -1,72 +1,108 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t4011: modernise style
-Date: Thu, 01 Mar 2012 11:59:09 -0800
-Message-ID: <7v7gz4m6sy.fsf@alter.siamese.dyndns.org>
-References: <7vipipqk4p.fsf@alter.siamese.dyndns.org>
- <4F4FD21C.9060403@gmail.com>
+Subject: Re: Bug: no-op "rebase -i" failures (easily reproduceable)
+Date: Thu, 01 Mar 2012 12:18:28 -0800
+Message-ID: <7v399sm5wr.fsf@alter.siamese.dyndns.org>
+References: <CAFjr8EukvC6zsa2vzUWL+YDNLMUh5apmwGQZ1s5WkHg-bC17Kw@mail.gmail.com>
+ <7vboogm7g3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Stefano Lattarini <stefano.lattarini@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 01 20:59:17 2012
+Cc: Luiz-Otavio Zorzella <zorzella@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 01 21:18:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3C9l-0007va-BF
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 20:59:17 +0100
+	id 1S3CST-0003ki-5n
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 21:18:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754762Ab2CAT7M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Mar 2012 14:59:12 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36787 "EHLO
+	id S1754841Ab2CAUSc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Mar 2012 15:18:32 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53542 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751347Ab2CAT7L (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2012 14:59:11 -0500
+	id S1752573Ab2CAUSb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2012 15:18:31 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 135BD622F;
-	Thu,  1 Mar 2012 14:59:11 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 94C696D8E;
+	Thu,  1 Mar 2012 15:18:30 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QFOhnqqBnpOybOigi4rUofbKDVA=; b=MTfNjh
-	MFZ0lmDWEwGXlaHYpm9ICD0qoyzJArNvhKV/qb04vnJEUVnM5ij2Sz+SwZVX0ZLi
-	jH7jGvTYkt02EC1lYTkVmrYjiY4vJHcOZsICn5tfLRq7nWoghQTRBVQeOSnXe33a
-	cyUr8LLpns4zO8rHcsdb+zY4w+33zDX6YNMjE=
+	:content-type; s=sasl; bh=3z/bdv+a760XdkucTnUDX+jEcrg=; b=qRQFJ4
+	neeagdLTlM87LNd3vAR+Gb73kpD+2IJOtRHN8ATtaRwq9pD8NPyIviQoA7jGKARk
+	JUZwvkf+im5sPDsML0TRT12mBErJ3V95giD2YZ0jJsEi6nsjBRu0gAZvXHbAY6dq
+	hQu0RpOsJw/KtKYLvqq3CbhCaErlxrjbwoid4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LJQ+u+Z+TXvo5JX/n4KeV1cMcNp1f7Ha
-	yuuwGUWK7k2eeUAnSoB5sfk9F0CP/XzU084BtAa+CbCQZKpue3SfhEhqVAsr3I2y
-	uChK7sg8M+k2zmsCw2slHYnvJZEUX1ftkEQhjpgbRQz0803wZzfuJ1uGw9D3T3XU
-	Qj9/LDltjHA=
+	:content-type; q=dns; s=sasl; b=guwsEV5D5MGe1+ETzAv0aPBlenR8AsrI
+	V4W94buwoj5RviFK70g+h1n/ugyfcU7JIfao2fKMq19MpthUOHbNCwPvPrAYr17v
+	XzSETwe6zdpXQ3k81jKWpFDxg2W6Kz9uHq6TnIE8n9HXXHCgImMFYdQTsy17MeFA
+	EIeLYMLmjSw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A25F622C;
-	Thu,  1 Mar 2012 14:59:11 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C6BA6D8D;
+	Thu,  1 Mar 2012 15:18:30 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7D21B6229; Thu,  1 Mar 2012
- 14:59:10 -0500 (EST)
-In-Reply-To: <4F4FD21C.9060403@gmail.com> (Stefano Lattarini's message of
- "Thu, 01 Mar 2012 20:46:36 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E645C6D89; Thu,  1 Mar 2012
+ 15:18:29 -0500 (EST)
+In-Reply-To: <7vboogm7g3.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 01 Mar 2012 11:45:16 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 02E20596-63D9-11E1-952A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B5F53E08-63DB-11E1-A142-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191967>
 
-Stefano Lattarini <stefano.lattarini@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On 03/01/2012 12:45 AM, Junio C Hamano wrote:
->> Match the style to more modern test scripts, namely:
->> 
->>  - The first line of each test has prereq, title and opening sq for the
->>    script body.  This makes the test shorter while reducing the need for
->>    backquotes.
+> Luiz-Otavio Zorzella <zorzella@gmail.com> writes:
+>
+>> $ EDITOR=echo git rebase -i HEAD~40
+>> /usr/local/google/z/gitblow/git/.git/rebase-merge/git-rebase-todo
+>> error: could not apply ec7ff5b... make lineno_width() from blame
+>> reusable for others
 >>
-> Did you intend "backslashes" instead of "backquotes" here?
+>> When you have resolved this problem run "git rebase --continue".
+>> If you would prefer to skip this patch, instead run "git rebase --skip".
+>> To check out the original branch and stop rebasing run "git rebase --abort".
+>> Could not apply ec7ff5b... make lineno_width() from blame reusable for others
+>
+> That is hardly surprising, given that you asked to flatten the history
+> since the 40 commits before the tip of your history, and it is done out of
+> a history that is full of merges from side branches.
+>
+> And it is not even an error, let alone a bug.  The command is asking you
+> to resolve conflict it cannot resolve mechanically.  If you do as you are
+> asked, you will do just fine.
+>
+> It is expected that you will see conflicts in such a rebase, because by
+> attempting to flatten the history you are telling Git to replay a commit
+> to a context that is different from its original context.
 
-Thanks.  I did have this funny feeling in my butt while writing it, but
-didn't quite realize what was wrong ;-)
+Just for fun, I tried this experiment to completion, starting at f051ad6
+(Update draft release notes to 1.7.10, 2012-02-28)
 
-Will fix.
+    $ git checkout f051ad6
+    $ git rebase -i HEAD~40
+
+which pulls in 89 commits to be rebased (that is the number of commits not
+in HEAD~40 and in HEAD).  After resolving and issuing "rebase --continue"
+several times [*1*], the resulting tree mostly matched the tree I started
+from.
+
+An interesting thing to notice is that I just said "mostly".  It misses
+the change made with an evil merge at 8080906 (Merge branch 'maint',
+2012-02-26) that removes a couple of items out of the "fixed bugs" section
+in the 1.7.10 draft release notes, as they already appear in the 1.7.9.x
+release notes.  Perhaps I should try to refrain from making these "Sync
+with maint, its release notes have "fixed" items that we have in 1.7.10
+release notes so remove them from the latter" evil merges.
+
+
+[Footnote]
+
+*1* This is fairly easy for me to do, as my rerere database already knows
+most of the conflicts this rebase would see---they are the ones I resolved
+manually when the topics first hit 'next' or even 'pu'.
