@@ -1,10 +1,11 @@
-From: Tom Grennan <tmgrennan@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH-w 101/105] t6300 (for-each-ref): modernize style
-Date: Wed, 29 Feb 2012 19:20:53 -0800
-Message-ID: <20120301032053.GD2572@tgrennan-laptop>
+Date: Wed, 29 Feb 2012 19:26:10 -0800
+Message-ID: <7vty29ovcd.fsf@alter.siamese.dyndns.org>
 References: <1330566326-26075-1-git-send-email-tmgrennan@gmail.com>
  <1330566326-26075-7-git-send-email-tmgrennan@gmail.com>
  <7v62epqd9a.fsf@alter.siamese.dyndns.org>
+ <20120301032053.GD2572@tgrennan-laptop>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -13,119 +14,63 @@ Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Amos Waterland <apw@rossby.metr.ou.edu>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 01 04:21:10 2012
+To: Tom Grennan <tmgrennan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 04:26:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2wZn-0001Zr-1Z
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 04:21:07 +0100
+	id 1S2weo-00043U-86
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 04:26:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754323Ab2CADVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Feb 2012 22:21:00 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:59645 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753116Ab2CADU7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Feb 2012 22:20:59 -0500
-Received: by vbbff1 with SMTP id ff1so130136vbb.19
-        for <git@vger.kernel.org>; Wed, 29 Feb 2012 19:20:59 -0800 (PST)
-Received-SPF: pass (google.com: domain of tmgrennan@gmail.com designates 10.52.93.74 as permitted sender) client-ip=10.52.93.74;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of tmgrennan@gmail.com designates 10.52.93.74 as permitted sender) smtp.mail=tmgrennan@gmail.com; dkim=pass header.i=tmgrennan@gmail.com
-Received: from mr.google.com ([10.52.93.74])
-        by 10.52.93.74 with SMTP id cs10mr4581655vdb.42.1330572059105 (num_hops = 1);
-        Wed, 29 Feb 2012 19:20:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=sk5vHRZKzVVasBhEzPtpcuv0pc6xKD1l+Nreoo1Sqnk=;
-        b=rNjDHoja7E+a5yKfqXUujCGNxor7Cv5mWn0lsxvrKL/qznOR4LH4qy0aJLOycKL3Bf
-         VbgtvAphev1ZAYu3T9GZ5EptUCns5K5lUpFekvu3K9UTbrIlhLNw/z+EmRoxHtm18BLE
-         K5e0jN3IsqUIunyDp2v1J1r4+fDQqgnJZ//Z8=
-Received: by 10.52.93.74 with SMTP id cs10mr3920328vdb.42.1330572059024;
-        Wed, 29 Feb 2012 19:20:59 -0800 (PST)
-Received: from localhost (c-98-207-169-74.hsd1.ca.comcast.net. [98.207.169.74])
-        by mx.google.com with ESMTPS id ew2sm910368vdc.16.2012.02.29.19.20.55
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 29 Feb 2012 19:20:57 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7v62epqd9a.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757195Ab2CAD0N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Feb 2012 22:26:13 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35095 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757186Ab2CAD0M (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Feb 2012 22:26:12 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E78E781B;
+	Wed, 29 Feb 2012 22:26:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5wrDtZ8l/Jy2ClVDBA78clP7LTk=; b=bSlLYx
+	gMJS09O4mP5wa/S28gc3/k44urvdtT2VwlmngIhR1TkPUSLQ4ASWMlY9AhC18qSR
+	kx6sS+4HWM3m1+/gePK29pnV6T9SkBwo+a3z3xoET5IPhcaait1iqapA3kbaDZCW
+	FiQ1IaMSaLlkyPENxwTEZdx374EdJ+fuX5W6A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bsmMP+83VG/jmtWzIMh8EXhz51QOXNVo
+	gM2MoH48cCKFi72PKO5728zeKgs8fsTS4qSO1tr3xw08lmsprfcgsM5lmn0lch2h
+	sEdnQEzhFIC+srESDkIR7cljv5PqHJ770PdFEsG7L0b+4nuaI1vNNR2i5skCab7I
+	zVFo6f/ClwA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 05A9A781A;
+	Wed, 29 Feb 2012 22:26:12 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 802D87814; Wed, 29 Feb 2012
+ 22:26:11 -0500 (EST)
+In-Reply-To: <20120301032053.GD2572@tgrennan-laptop> (Tom Grennan's message
+ of "Wed, 29 Feb 2012 19:20:53 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4B110D7A-634E-11E1-A2AC-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191891>
 
-On Wed, Feb 29, 2012 at 06:13:53PM -0800, Junio C Hamano wrote:
->Tom Grennan <tmgrennan@gmail.com> writes:
->
->> +if ! test -r test-lib.sh ; then
->> +	(cd ${0%/*} && ./${0##*/} $@)
->> +	exit $?
->> +fi
->
->Not very nice; why is this an improvement?
+Tom Grennan <tmgrennan@gmail.com> writes:
 
-I liked being able to,
-	t/t1234-frotz.sh [-q|-v]
-in addition to,
-	cd t && sh ./t1234-frotz.sh
+> It's trivial to remove these "quiet" and "silent", but to me that's the
+> only value added by these patches.  More seriously, the remaining
+> modernization still seems much larger than its value.
 
->>  . ./test-lib.sh
->>  . "$TEST_DIRECTORY"/lib-gpg.sh
->>  
->> +quiet () { "$@" >/dev/null; }
->> +silent () { "$@" >/dev/null 2>&1; }
->
->Not nice, either.
+Don't do that, then ;-).
 
-"Not nice" b/c they're on one line?
-I like simple things compressed so I quickly glance pass them.
-Sort of forest through the trees.
-
->>  # Mon Jul 3 15:18:43 2006 +0000
->>  datestamp=1151939923
->>  setdate_and_increment () {
->> @@ -22,9 +30,9 @@ test_expect_success 'Create sample commit with known timestamp' '
->>  	setdate_and_increment &&
->>  	echo "Using $datestamp" > one &&
->>  	git add one &&
->> -	git commit -m "Initial" &&
->> +	git commit -q -m "Initial" &&
->>  	setdate_and_increment &&
->> -	git tag -a -m "Tagging at $datestamp" testtag
->> +	quiet git tag -a -m "Tagging at $datestamp" testtag
->
->Why? Why? Why?
->
->	cd t && sh ./t1234-frotz.sh
->
->would be silent enough and suppressing the output from the commands like
->this patch does makes it _harder_ for people to debug their changes to the
->script with
->
->	sh ./t1234-frotz.sh -v
-
-Hmm, I found the noise distracting.  For example, w/o redirecting
-stderr, most of the test_must_fail puke as expected.  If it's expected,
-why show it?  BTW since it's a different stream, to get the error near
-the exec log one has to:
-
-	sh ./t1234-frotz.sh -v |& less
-
-Otherwise it's challenging to separate the expected vs unexpected failures.
-
-Most of the "quiet's"  are with git-tag and git-branch.  I'd prefer
---quiet and --silent options to these commands like git-init, git-commit, etc.
-
->Most of the change in this patch does nothing to do with "modernize style".
-
-It's trivial to remove these "quiet" and "silent", but to me that's the
-only value added by these patches.  More seriously, the remaining
-modernization still seems much larger than its value.
-
--- 
-TomG
+Some older scripts do redirect the output from the commands to /dev/null
+but that dates back before we made the default reasonably silent, and in
+"modern" style we tend to keep them sent to their standard output to help
+debuggability. These quiet/silent takes us to the prehistoric times.
