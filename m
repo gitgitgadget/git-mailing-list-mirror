@@ -1,95 +1,90 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH-w 101/105] t6300 (for-each-ref): modernize style
-Date: Thu, 1 Mar 2012 09:42:51 +0100
-Message-ID: <87ty28n244.fsf@thomas.inf.ethz.ch>
-References: <1330566326-26075-1-git-send-email-tmgrennan@gmail.com>
-	<1330566326-26075-7-git-send-email-tmgrennan@gmail.com>
-	<7v62epqd9a.fsf@alter.siamese.dyndns.org>
-	<20120301032053.GD2572@tgrennan-laptop>
-	<7vty29ovcd.fsf@alter.siamese.dyndns.org>
-	<20120301051010.GE2572@tgrennan-laptop>
+From: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
+Subject: Re: [PATCH 2/3] http: try standard proxy env vars when http.proxy
+ config option is not set
+Date: Thu, 01 Mar 2012 10:57:03 +0100
+Message-ID: <4F4F47EF.40405@seap.minhap.es>
+References: <4F4CCE8A.4010800@seap.minhap.es><20120228191514.GD11260@sigill.intra.peff.net><4F4D2AAD.3040107@vilain.net><20120228193443.GB11725@sigill.intra.peff.net><4F4E01EB.3070707@seap.minhap.es> <20120229210816.GB628@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Carlos Rica <jasampler@gmail.com>,
-	Andy Parkins <andyparkins@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Amos Waterland <apw@rossby.metr.ou.edu>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Tom Grennan <tmgrennan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 01 09:43:01 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Sam Vilain <sam@vilain.net>, Thomas Rast <trast@inf.ethz.ch>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 01 09:59:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S31bG-0002qa-V3
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 09:42:59 +0100
+	id 1S31rG-0006LG-W8
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 09:59:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932415Ab2CAIm4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Mar 2012 03:42:56 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:55594 "EHLO edge10.ethz.ch"
+	id S932206Ab2CAI70 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Mar 2012 03:59:26 -0500
+Received: from luthien1.mpt.es ([82.150.0.102]:26760 "EHLO luthien2.map.es"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932379Ab2CAImy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2012 03:42:54 -0500
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 1 Mar
- 2012 09:42:51 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 1 Mar
- 2012 09:42:52 +0100
-In-Reply-To: <20120301051010.GE2572@tgrennan-laptop> (Tom Grennan's message of
-	"Wed, 29 Feb 2012 21:10:10 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1758686Ab2CAI70 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2012 03:59:26 -0500
+Received: from correo.map.es (unknown [10.1.31.23])
+	by luthien2.map.es (Postfix) with ESMTP id D12F4B70DD;
+	Thu,  1 Mar 2012 09:58:24 +0100 (CET)
+Received: from [10.47.128.147] (unknown [10.1.29.79])
+	by correo.map.es (Postfix) with ESMTP id 1B6E9203900;
+	Thu,  1 Mar 2012 09:58:20 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0.1) Gecko/20120216 Thunderbird/10.0.1
+In-Reply-To: <20120229210816.GB628@sigill.intra.peff.net>
+X-map-MapScanner: Libre de virus, Libre de virus
+X-Spam-Status: No, No
+X-map-MapScanner-Information: 
+X-map-MapScanner-ID: D12F4B70DD.DB760
+X-map-MapScanner-From: nelsonjesus.benitez@seap.minhap.es
+X-map-MailScanner-Watermark: 1331197105.99469@Ss37Rvx9DltcOWOpDtYcrQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191907>
 
-I sent out a reply to the same effect as Junio's longer one in this
-side-thread.  You can disregard that.  Sorry for not first reading the
-whole thread.
-
-Tom Grennan <tmgrennan@gmail.com> writes:
-
-> On Wed, Feb 29, 2012 at 07:26:10PM -0800, Junio C Hamano wrote:
->>Tom Grennan <tmgrennan@gmail.com> writes:
+On 02/29/2012 10:08 PM, Jeff King wrote:
+> On Wed, Feb 29, 2012 at 11:46:03AM +0100, Nelson Benitez Leon wrote:
+> 
+>>> Good point. We sometimes follow this order:
+>>>
+>>>   1. git-specific environment variables (i.e., $GIT_HTTP_PROXY, if
+>>>      it existed)
+>>>   2. git config files (i.e., http.proxy)
+>>>   3. generic system environment (i.e., $http_proxy).
+>>>
+>>> So thinking about it that way, the original patch makes more sense.
 >>
->>> It's trivial to remove these "quiet" and "silent", but to me that's the
->>> only value added by these patches.  More seriously, the remaining
->>> modernization still seems much larger than its value.
->>
->>Don't do that, then ;-).
->>
->>Some older scripts do redirect the output from the commands to /dev/null
->>but that dates back before we made the default reasonably silent, and in
->>"modern" style we tend to keep them sent to their standard output to help
->>debuggability. These quiet/silent takes us to the prehistoric times.
->
-> Hey! I am prehistoric:-)
->
-> Like I said, I think there is currently a debug distraction with verbose
-> mode.  However, rather than hiding expected failures and diverting other
-> output as I had, perhaps we should dup stderr to stdout in verbose mode
-> so error messages show up near the logged invocation when piped through
-> a pager (i.e. mimic "|&").  With this, one can quickly scan past the
-> noise to focus on the broken cases.
+>> So, in PATCH 2/3, apart from expanding the commit message.. do we want
+>> to support HTTP_PROXY or only http_proxy ? HTTP_PROXY seems to not be
+>> very used by existent programs, but support it it's only a gentenv call..
+> 
+> If HTTP_PROXY is not in wide use, I don't see a reason to support it.
 
-If you have trouble finding the broken case, you can run with -v -i.
+Ok
 
-I also think you are making an argument for a different feature (which
-does not rob us of having all the debug output): test-lib.sh could
-perhaps redirect the test output to a file, and dump the file to stdout
-only if the test failed.  Perhaps --verbose-failing or something like
-that.
+> And I take back what I said about environment precedence, based on the
+> discussion. Also, I don't think there is a need to strdup the results of
+> getenv here, is there? So I think the code you want is just:
+> 
+>   if (!curl_http_proxy)
+>           curl_http_proxy = getenv("http_proxy");
 
-Otherwise, your proposal is restricting us to having only an "easily
-scannable" amount of output per test, perhaps 5-15 lines.  Which I
-personally think is an insane restriction for something that was
-intended for debugging in the first place.
+but curl_http_proxy gets freed in http_cleanup as follows:
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+free((void *)curl_http_proxy);
+
+Is it ok to free strings returned by getenv() ? I thought nope, so I
+used strdup which existent code was already using..
+> 
+> and the justification for the commit message is that we need to know the
+> proxy value outside of curl, because the next patch will do some
+> extra processing on the value.
+> 
+> -Peff
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
