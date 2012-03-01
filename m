@@ -1,138 +1,104 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH] Update l10n guide
-Date: Thu, 1 Mar 2012 12:05:19 +0800
-Message-ID: <CANYiYbE5rcnD_VGJyL2CjS-R5E0pyNSd5TetvH849W6wC5JiAA@mail.gmail.com>
-References: <CANYiYbGS_cFTHT1Pkafi9dmzedqezTq8k1tPkYur0b2St_c43Q@mail.gmail.com>
-	<7v1upew6d0.fsf@alter.siamese.dyndns.org>
-	<7vfwduujxw.fsf_-_@alter.siamese.dyndns.org>
+From: Tom Grennan <tmgrennan@gmail.com>
+Subject: Re: [PATCH-w 101/105] t6300 (for-each-ref): modernize style
+Date: Wed, 29 Feb 2012 21:10:10 -0800
+Message-ID: <20120301051010.GE2572@tgrennan-laptop>
+References: <1330566326-26075-1-git-send-email-tmgrennan@gmail.com>
+ <1330566326-26075-7-git-send-email-tmgrennan@gmail.com>
+ <7v62epqd9a.fsf@alter.siamese.dyndns.org>
+ <20120301032053.GD2572@tgrennan-laptop>
+ <7vty29ovcd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Carlos Rica <jasampler@gmail.com>,
+	Andy Parkins <andyparkins@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Amos Waterland <apw@rossby.metr.ou.edu>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 01 05:05:28 2012
+X-From: git-owner@vger.kernel.org Thu Mar 01 06:10:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S2xGh-0002kk-4f
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 05:05:27 +0100
+	id 1S2yI0-0001tz-G0
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Mar 2012 06:10:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754613Ab2CAEFV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Feb 2012 23:05:21 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:59740 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754175Ab2CAEFU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Feb 2012 23:05:20 -0500
-Received: by yenl12 with SMTP id l12so57459yen.19
-        for <git@vger.kernel.org>; Wed, 29 Feb 2012 20:05:20 -0800 (PST)
-Received-SPF: pass (google.com: domain of worldhello.net@gmail.com designates 10.236.181.193 as permitted sender) client-ip=10.236.181.193;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of worldhello.net@gmail.com designates 10.236.181.193 as permitted sender) smtp.mail=worldhello.net@gmail.com; dkim=pass header.i=worldhello.net@gmail.com
-Received: from mr.google.com ([10.236.181.193])
-        by 10.236.181.193 with SMTP id l41mr4575893yhm.38.1330574720254 (num_hops = 1);
-        Wed, 29 Feb 2012 20:05:20 -0800 (PST)
+	id S1751200Ab2CAFKg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Mar 2012 00:10:36 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:36967 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750772Ab2CAFKQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2012 00:10:16 -0500
+Received: by mail-vx0-f174.google.com with SMTP id p1so180394vcq.19
+        for <git@vger.kernel.org>; Wed, 29 Feb 2012 21:10:16 -0800 (PST)
+Received-SPF: pass (google.com: domain of tmgrennan@gmail.com designates 10.52.28.167 as permitted sender) client-ip=10.52.28.167;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of tmgrennan@gmail.com designates 10.52.28.167 as permitted sender) smtp.mail=tmgrennan@gmail.com; dkim=pass header.i=tmgrennan@gmail.com
+Received: from mr.google.com ([10.52.28.167])
+        by 10.52.28.167 with SMTP id c7mr5110479vdh.96.1330578616367 (num_hops = 1);
+        Wed, 29 Feb 2012 21:10:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=yXo2hDPKaxOoSwE03ZcdMncFOc2tzcOBTo6ZTYR0I2E=;
-        b=lZRgx0qxbBV77ZfvP/IhFogU88TluBxGm0C1hWRAJEsH87wUmLtiZ1VlggJI4ZcnOe
-         AcBE8b3IVNJ450I4ReS+/N1VuUQhgzU8ERWTT7a2i5l/+jiUfLM+A6xOshlHyOtw1JH/
-         t81x7EVYJnP8PzE8llqjFryIbnSkGSyyqWqwo=
-Received: by 10.236.181.193 with SMTP id l41mr3592705yhm.38.1330574720003;
- Wed, 29 Feb 2012 20:05:20 -0800 (PST)
-Received: by 10.236.182.5 with HTTP; Wed, 29 Feb 2012 20:05:19 -0800 (PST)
-In-Reply-To: <7vfwduujxw.fsf_-_@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=KdDNdD6Mwu48CclmvUHb7GHPFlEKK79Eq7Ln2V6GDSk=;
+        b=WDM+KHC1FapuJ7w+iIO3JtgxxLomeKzZlhB9u3kGIuT69Q96+1h5nD7bU4JTLhJLYB
+         lptOE89cL6Y85sqkGQKBw+qAsoX9HoVdyWdMXkAVsSQeKLTaakM9alAUtodR/pdmltN7
+         QUhnucyMb/5nrG4WXL3vINMkdKYSwrORnbuyQ=
+Received: by 10.52.28.167 with SMTP id c7mr4336146vdh.96.1330578616134;
+        Wed, 29 Feb 2012 21:10:16 -0800 (PST)
+Received: from localhost (c-98-207-169-74.hsd1.ca.comcast.net. [98.207.169.74])
+        by mx.google.com with ESMTPS id fd10sm1367205vdc.1.2012.02.29.21.10.12
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 29 Feb 2012 21:10:15 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vty29ovcd.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191893>
 
-2012/2/29 Junio C Hamano <gitster@pobox.com>:
+On Wed, Feb 29, 2012 at 07:26:10PM -0800, Junio C Hamano wrote:
+>Tom Grennan <tmgrennan@gmail.com> writes:
+>
+>> It's trivial to remove these "quiet" and "silent", but to me that's the
+>> only value added by these patches.  More seriously, the remaining
+>> modernization still seems much larger than its value.
+>
+>Don't do that, then ;-).
+>
+>Some older scripts do redirect the output from the commands to /dev/null
+>but that dates back before we made the default reasonably silent, and in
+>"modern" style we tend to keep them sent to their standard output to help
+>debuggability. These quiet/silent takes us to the prehistoric times.
 
-> @@ -1,33 +1,78 @@
-> +The localization (l10n) coordinator, Jiang Xin <worldhello.net@gmail=
-=2Ecom>,
-> +coordinates our localization effort in his repository:
-> +
-> + =A0 =A0 =A0 =A0https://github.com/gotgit/git-po/
+Hey! I am prehistoric:-)
 
-I create a new dedicated team, named git-l10n, and transfer this repo t=
-o the
-new place: https://github.com/git-l10n/git-po/ for the following reason=
-s:
+Like I said, I think there is currently a debug distraction with verbose
+mode.  However, rather than hiding expected failures and diverting other
+output as I had, perhaps we should dup stderr to stdout in verbose mode
+so error messages show up near the logged invocation when piped through
+a pager (i.e. mimic "|&").  With this, one can quickly scan past the
+noise to focus on the broken cases.
 
- - git-po is a long-term repo, so has a dedicated, stabilized URL is be=
-tter.
-   The repo URL may not change if l10n coordinator change.
+  exec 5>&1
+  exec 6<&0
+  if test "$verbose" = "t"
+  then
+- 	exec 4>&2 3>&1
++ 	exec 4>&1 3>&1
+  else
+  	exec 4>/dev/null 3>/dev/null
+  fi
 
- - git-l10n is a github organization account, and has a dedicated owner=
-s
-   group, who can assign new l10n coordinator.
+For example, try this w/ and w/o the above change.
+	(cd t && ./t5512-ls-remote.sh) | less
 
- - Owners group of git-l10n organization will not receive pull requests=
- to
-   git-po. I add gister, avar to the owners team.
+I still think git-branch and git-tag should have a -q option; better
+yet, the wrapper itself (i.e. git --quiet/--silent XXX).
 
- - Members of the git-l10n-coordinators team of git-l10n organization
-   will receive pull requests.
-
- - Some Chinese guys used to send pull request to gotgit/git-po, so you
-   can find some closed pull requests written in Chinese. It won't happ=
-en
-   after the repo transfer to git-l10n/git-po.
-
-> +As a contributor for a language XX, you would fork this repository,
-
-As a contributor for a language XX, you should first check TEAMS file i=
-n
-this directory to see whether a dedicated repository for your language =
-XX
-exists. Fork the dedicated repository and start to work if it exists.
-
-If you are the first contributor for the language XX, please fork this
-repository,
-
-> +prepare and/or update the translated message file po/XX.po (describe=
-d
-> +later), and ask the l10n coordinator to pull your work.
-
-Shall we remind the contributors for l10n to write commit log in Englis=
-h,
-but not language XX? It's a common mistake for translators.
-
-> diff --git a/po/TEAMS b/po/TEAMS
-> new file mode 100644
-> index 0000000..8ee6199
-> --- /dev/null
-> +++ b/po/TEAMS
-> @@ -0,0 +1,10 @@
-> +Core Git translation language teams
-> +(please keep the list sorted alphabetically on language field)
-> +
-> +Language: =A0 =A0 =A0is (Icelandic)
-> +Leader: =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=C6var Arnfj=F6r=F0 Bjarmason=
- <avarab@gmail.com>
-> +
-
-I think we should add the URL of the dedicated repository for language =
-XX here.
-Example:
-
-Language: =A0 =A0 =A0zh_CN (Simplified Chinese)
-Leader: =A0 =A0 =A0 =A0 =A0 Jiang Xin <worldhello.net@gmail.com>
-Homepage:     https://github.com/jiangxin/git-po-zh_CN/
-
-
-> +Members: =A0 =A0 =A0 Yichao Yu <yyc1992@gmail.com>
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 Riku <lu.riku@gmail.com>
-
-Contributors and members can add to the header of the XX.po file.
-Add here may cause the TEAMS file grows rapidly.
-
-
---=20
-Jiang Xin
+-- 
+TomG
