@@ -1,59 +1,63 @@
-From: =?utf-8?b?Wm9sdMOhbg==?= =?utf-8?b?RsO8emVzaQ==?= 
-	<zfuzesi@eaglet.hu>
-Subject: Re: [ANNOUNCE] Git 1.7.9.2
-Date: Fri, 2 Mar 2012 06:09:19 +0000 (UTC)
-Message-ID: <loom.20120302T070513-878@post.gmane.org>
-References: <7vbooq6zq2.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] index-pack: support multithreaded delta resolving
+Date: Thu, 01 Mar 2012 22:09:45 -0800
+Message-ID: <7v4nu7ilee.fsf@alter.siamese.dyndns.org>
+References: <1330403813-2770-1-git-send-email-pclouds@gmail.com>
+ <1330403813-2770-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 02 07:09:39 2012
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 02 07:09:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3LgQ-0007AU-AW
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 07:09:38 +0100
+	id 1S3Lgi-0007LG-5A
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 07:09:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756738Ab2CBGJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Mar 2012 01:09:32 -0500
-Received: from plane.gmane.org ([80.91.229.3]:41842 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756152Ab2CBGJb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2012 01:09:31 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1S3LgH-00074m-Ab
-	for git@vger.kernel.org; Fri, 02 Mar 2012 07:09:29 +0100
-Received: from catv-89-132-132-95.catv.broadband.hu ([89.132.132.95])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 02 Mar 2012 07:09:29 +0100
-Received: from zfuzesi by catv-89-132-132-95.catv.broadband.hu with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 02 Mar 2012 07:09:29 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 89.132.132.95 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20120131 Iceweasel/3.5.16 (like Firefox/3.5.16))
+	id S1756791Ab2CBGJv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Mar 2012 01:09:51 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48825 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756754Ab2CBGJv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2012 01:09:51 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 030776D28;
+	Fri,  2 Mar 2012 01:09:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=DAEPq7HF8POqjBnHQN6FzFNsmS0=; b=XFD9Z+7r4lKYViQlKWw3
+	NHcd+Gui4Ni1iirFKOyZCHpjpKcKnBDtBxyVHXvChZxrOl1EmPvsdIT4jdCmeMDi
+	tJ9keymNHxV9ovxeQ0fcJOWoCI8X2mbEld+wKO9FS9/yJVGkltyd3MfD+EguYSxk
+	dumQ94+Cx7wijVcAjeYImKk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=Np0gse3weqjzVSER2LsfiL+n2Kzu/2gXqzrMDDoh7E8jYU
+	EQG0GXLj/TCip7QT3CKU1iTfyns66Am4jmXJW0UibyrDHGIHk+sA8iMKYPS9KRnQ
+	eG4WFxUQaVQc7qST4lgaecXEbRTFCbBbqd6YM40rc33C6eIS6evnQBWr4sOSU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE2C76D27;
+	Fri,  2 Mar 2012 01:09:47 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7CEA66D26; Fri,  2 Mar 2012
+ 01:09:47 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 503C4A54-642E-11E1-B991-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192003>
 
-Junio C Hamano <gitster <at> pobox.com> writes:
+When applied to 25a7850 and then merged to 'pu', the result fails to
+correctly produce pack .idx file.
 
-> 
->   url = git://repo.or.cz/alt-git.git
->   url = https://code.google.com/p/git-core/
->   url = git://git.sourceforge.jp/gitroot/git-core/git.git
->   url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
->   url = https://github.com/gitster/git
+I spent an hour or so this afternoon, scratching my head, staring at the
+output from tests added to t5510 by today's tr/maint-bundle-boundary topic
+to see where it breaks.  Its last test creates a bundle that has three
+objects, extracts a pack from it, and runs "index-pack --fix-thin" on it.
 
-Hi All,
-although https://github.com/git/git is not in the list above, I've just noticed,
-that v1.7.9.2 tag is missing from that repo.
+This topic makes it fail with "fatal: pack has 1 unresolved deltas".
