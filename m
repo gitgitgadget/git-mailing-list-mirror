@@ -1,10 +1,10 @@
 From: Rune Schjellerup Philosof <rune@philosof.dk>
-Subject: [PATCH 2/2] Complain in tests about aliases not working for, alternative
- config files
-Date: Fri, 02 Mar 2012 12:00:12 +0100
-Message-ID: <4F50A83C.9090407@philosof.dk>
+Subject: [PATCH 1/2] Complain in the tests about git config not failing with,
+ keys without a section
+Date: Fri, 02 Mar 2012 11:57:34 +0100
+Message-ID: <4F50A79E.5060206@philosof.dk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha1; boundary="------------ms070002000204010105050504"
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha1; boundary="------------ms070300000406060303040709"
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Fri Mar 02 12:06:14 2012
 Return-path: <git-owner@vger.kernel.org>
@@ -12,80 +12,74 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3QJQ-0001Rg-C5
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 12:06:12 +0100
+	id 1S3QJQ-0001Rg-Sh
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 12:06:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932277Ab2CBLGB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Mar 2012 06:06:01 -0500
-Received: from mailout-limhamn.gigahost.dk ([94.246.99.122]:45361 "EHLO
+	id S932281Ab2CBLGD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Mar 2012 06:06:03 -0500
+Received: from mailout-limhamn.gigahost.dk ([94.246.99.122]:45377 "EHLO
 	mailout-limhamn.gigahost.dk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932087Ab2CBLF7 (ORCPT
+	by vger.kernel.org with ESMTP id S932260Ab2CBLF7 (ORCPT
 	<rfc822;git@vger.kernel.org>); Fri, 2 Mar 2012 06:05:59 -0500
-X-Greylist: delayed 498 seconds by postgrey-1.27 at vger.kernel.org; Fri, 02 Mar 2012 06:05:59 EST
 Received: from mailout.gigahost.dk (mailout.gigahost.dk [217.116.232.226])
-	by mailout-limhamn.gigahost.dk (Postfix) with ESMTP id 98B2118820F7
-	for <git@vger.kernel.org>; Fri,  2 Mar 2012 11:00:14 +0000 (UTC)
+	by mailout-limhamn.gigahost.dk (Postfix) with ESMTP id 911A118820BF
+	for <git@vger.kernel.org>; Fri,  2 Mar 2012 10:57:36 +0000 (UTC)
 Received: from smtp.gigahost.dk (unknown [89.186.169.107])
-	by mailout.gigahost.dk (Postfix) with ESMTP id 6A55A1D702BB
-	for <git@vger.kernel.org>; Fri,  2 Mar 2012 12:00:14 +0100 (CET)
+	by mailout.gigahost.dk (Postfix) with ESMTP id 6AC1B1D702BE
+	for <git@vger.kernel.org>; Fri,  2 Mar 2012 11:57:36 +0100 (CET)
 Received: from [192.168.1.36] (unknown [89.186.169.85])
-	by smtp.gigahost.dk (Postfix) with ESMTPSA id 26B94F4A5C4
-	for <git@vger.kernel.org>; Fri,  2 Mar 2012 12:00:13 +0100 (CET)
+	by smtp.gigahost.dk (Postfix) with ESMTPSA id 364DCF4A5C9
+	for <git@vger.kernel.org>; Fri,  2 Mar 2012 11:57:36 +0100 (CET)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192027>
 
 Dette er en meddelelse med en digital signatur i MIME-format.
 
---------------ms070002000204010105050504
+--------------ms070300000406060303040709
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: quoted-printable
 
-=46rom c412e07ba45be32f2158c5668752354a979734d6 Mon Sep 17 00:00:00 2001
+=46rom c4fc13a5a1e8c1eab9873232e6e8b7e0523cd6ea Mon Sep 17 00:00:00 2001
 From: Rune Philosof <rune.git@philosof.dk>
-Date: Fri, 2 Mar 2012 11:13:55 +0100
-Subject: [PATCH 2/2] Complain in tests about aliases not working for
- alternative config files
+Date: Fri, 2 Mar 2012 10:42:23 +0100
+Subject: [PATCH 1/2] Complain in the tests about git config not failing w=
+ith
+ keys without a section
 
-Aliases does not work when set in a configuration file specified by the
-GIT_CONFIG variable.
+git is supposed to fail when having a key without a section, but does not=
+=2E
 
 Signed-off-by: Rune Philosof <rune.git@philosof.dk>
 ---
- t/t1300-repo-config.sh |   11 +++++++++++
- 1 files changed, 11 insertions(+), 0 deletions(-)
+ t/t1300-repo-config.sh |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
 diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 81ccad5..433ef94 100755
+index 5f249f6..81ccad5 100755
 --- a/t/t1300-repo-config.sh
 +++ b/t/t1300-repo-config.sh
-@@ -955,6 +955,17 @@ test_expect_success 'git -c works with aliases of
-builtins' '
- 	test_cmp expect actual
+@@ -928,6 +928,11 @@ test_expect_success 'git -c "key=3Dvalue" support' '=
+
+ 	test_must_fail git -c name=3Dvalue config core.name
  '
 
-+test_expect_failure 'aliases work with alternative config' '
-+	(
-+		GIT_CONFIG=3Dalias &&
-+		export GIT_CONFIG &&
-+		git config alias.altconfig "-c foo.check=3Dbar config foo.check" &&
-+		echo bar >expect &&
-+		git altconfig >actual &&
-+		test_cmp expect actual
-+	)
++test_expect_failure 'No section' '
++	echo "fail=3Dtrue" > failconf &&
++	test_must_fail git config --file failconf --list
 +'
 +
- test_expect_success 'git -c does not split values on equals' '
- 	echo "value with =3D in it" >expect &&
- 	git -c core.foo=3D"value with =3D in it" config core.foo >actual &&
+ test_expect_success 'key sanity-checking' '
+ 	test_must_fail git config foo=3Dbar &&
+ 	test_must_fail git config foo=3D.bar &&
 --=20
 1.7.5.4
 
 
---------------ms070002000204010105050504
+--------------ms070300000406060303040709
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -120,13 +114,13 @@ HcsY28HmerehGZinNaoegg9qvI5CQ1n+tvJYTrs9svzTYx6yxUCNXIJO5SIpAvBB3HhUgs3I
 Y92OuIAoSoSUSGgEn2sWDKyrLp+BPHXlZ1bQcLNR91qFSLgZ6PAxmU1D5OF0G28pb/0QGjGC
 AjcwggIzAgEBMDkwMTELMAkGA1UEBhMCREsxDDAKBgNVBAoTA1REQzEUMBIGA1UEAxMLVERD
 IE9DRVMgQ0ECBEWs2tMwCQYFKw4DAhoFAKCCAVQwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEH
-ATAcBgkqhkiG9w0BCQUxDxcNMTIwMzAyMTEwMDEyWjAjBgkqhkiG9w0BCQQxFgQUSGHmRgjd
-OBl2y4FvY+9vlbWYWHAwSAYJKwYBBAGCNxAEMTswOTAxMQswCQYDVQQGEwJESzEMMAoGA1UE
+ATAcBgkqhkiG9w0BCQUxDxcNMTIwMzAyMTA1NzM0WjAjBgkqhkiG9w0BCQQxFgQUBv7iBPxl
+vNxPNvKvI70P7rqRsC0wSAYJKwYBBAGCNxAEMTswOTAxMQswCQYDVQQGEwJESzEMMAoGA1UE
 ChMDVERDMRQwEgYDVQQDEwtUREMgT0NFUyBDQQIERaza0zBKBgsqhkiG9w0BCRACCzE7oDkw
 MTELMAkGA1UEBhMCREsxDDAKBgNVBAoTA1REQzEUMBIGA1UEAxMLVERDIE9DRVMgQ0ECBEWs
 2tMwXwYJKoZIhvcNAQkPMVIwUDALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwDgYIKoZIhvcN
 AwICAgCAMA0GCCqGSIb3DQMCAgFAMAcGBSsOAwIHMA0GCCqGSIb3DQMCAgEoMA0GCSqGSIb3
-DQEBAQUABIGAqUe4ub6In0STCFk8cmthygKysG60eslDaJ9O5ZsYzD2nkiVvzVu6ErmqaZF8
-QHvVq48AoEK+n7aQqNL6FuMkBcZPKL3K06e5imzLFE4/YKBaswEpKmKRZo6pRNc1rW8ql844
-jhTKNTPv6Bvh4umfxogsVxAyVjxenJwvGF9c4IkAAAAAAAA=
---------------ms070002000204010105050504--
+DQEBAQUABIGAJcbKRs6l4dsPetfP768qz+MlwPneYHqk/NdsUC3ZR/3fOmAZ4RXQpjLOB88p
+H/M53t+p4LzcPPzQ+/AeE8w30CAkooRTpPssY4/3o88NgcinLJVQngKbQXHm938AS3ghV6Ya
+HiwycGJY7lD1Zu+bc7BHsspngey3NN+/s0c6hnQAAAAAAAA=
+--------------ms070300000406060303040709--
