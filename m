@@ -1,76 +1,68 @@
-From: James Pickens <jepicken@gmail.com>
-Subject: Re: [git wiki PATCH 1/3] "Improving parallelism in various commands" project
-Date: Fri, 2 Mar 2012 10:35:24 -0700
-Message-ID: <CAJMEqRAXa+qdXa_6S1PieD2SwcSDo5kkCwe3_PedTRet-vk-Fw@mail.gmail.com>
-References: <20120302091114.GA3984@sigill.intra.peff.net> <57e8b4eb7a98af33982c2f3a763e18f62b1d6d6d.1330686331.git.trast@student.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v7 04/10] column: add dense layout support
+Date: Fri, 02 Mar 2012 09:37:17 -0800
+Message-ID: <7vwr72ewfm.fsf@alter.siamese.dyndns.org>
+References: <1330170078-29353-1-git-send-email-pclouds@gmail.com>
+ <1330430331-19945-1-git-send-email-pclouds@gmail.com>
+ <1330430331-19945-5-git-send-email-pclouds@gmail.com>
+ <7vty2azudf.fsf@alter.siamese.dyndns.org>
+ <CACsJy8CdmK0827qjiW6-tCkhpGK5Prkhb=bt7wPgAuSsf1qpDw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Mar 02 18:35:52 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 02 18:37:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3WOU-0001ON-Pa
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 18:35:51 +0100
+	id 1S3WQ2-0002Lo-KD
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 18:37:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030188Ab2CBRfq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Mar 2012 12:35:46 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:48061 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750885Ab2CBRfp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2012 12:35:45 -0500
-Received: by wgbdr13 with SMTP id dr13so1789075wgb.1
-        for <git@vger.kernel.org>; Fri, 02 Mar 2012 09:35:44 -0800 (PST)
-Received-SPF: pass (google.com: domain of jepicken@gmail.com designates 10.180.103.35 as permitted sender) client-ip=10.180.103.35;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of jepicken@gmail.com designates 10.180.103.35 as permitted sender) smtp.mail=jepicken@gmail.com; dkim=pass header.i=jepicken@gmail.com
-Received: from mr.google.com ([10.180.103.35])
-        by 10.180.103.35 with SMTP id ft3mr7405183wib.0.1330709744406 (num_hops = 1);
-        Fri, 02 Mar 2012 09:35:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=R8xdc/C3eY+OnK1EFjoVsLIQxHlEKP5LbYXvfuLADC8=;
-        b=ZqNZWKShMKeidaSEWkz6iNozyqrRw7BJ3X1yRfsI7+Y7X84WvqWu1hjFDd0Defz87r
-         cDJITU2gR5s3ZkYidnPespXmghsNIZBpetMROmclq+o9pGdkdlkjJRC4tPbph043u3a2
-         7xUIII2ezr7KgMnDPOGJOPJJSzWPNtLKVsRrt7q1b3MLGRsQFsasEfNqkjZk5JpBWKwd
-         TXYuZlAFSXXAgBcMY7a78AKxXF3A+0QhKipyKgOP0MFGEQwDo3m0/DvnntiZAbfIUCkQ
-         RIbfEHyL67DUn2VGwV9m0GPtP0xP7rUfnp9BvKY3lcGschH3X2CyiKUtKqCuxy9kKrSo
-         XCTQ==
-Received: by 10.180.103.35 with SMTP id ft3mr5937466wib.0.1330709744245; Fri,
- 02 Mar 2012 09:35:44 -0800 (PST)
-Received: by 10.223.109.82 with HTTP; Fri, 2 Mar 2012 09:35:24 -0800 (PST)
-In-Reply-To: <57e8b4eb7a98af33982c2f3a763e18f62b1d6d6d.1330686331.git.trast@student.ethz.ch>
+	id S1757265Ab2CBRhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Mar 2012 12:37:21 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60071 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752351Ab2CBRhT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2012 12:37:19 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B8207623;
+	Fri,  2 Mar 2012 12:37:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=leQFoYJAdK1bK1UOizlQM+u6e2w=; b=TAKhOE
+	8TlglLbyd3lV4tWL6fw7tR2GCDETjs/D6uVY+a+J4QJr5KbfXRytXTMzrFARUW8/
+	4S00Vnl6NYoAnaWgGYQJDM+R4GnI0QgkhitwRJ2a3+ri6aM5x7xY6EEpR8R/o0iE
+	SCYgRKkGQRSCWArTRDhA6yqTiOn+3oqtBZDAw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fWvKGG2ELFlj8KQTzNief12vWFBWP2M0
+	G4MpZ1HBeWYBTfrjFP5kjAJNZfBdPTCAqFoh1rb98MJj64P2ikJUVh8fMn8YTOsr
+	USQGZFP7w4N5YNlgFwXVE3xr0Q1S0xUCFAqSBkf/kb2kY+rMJrL4yziS9YehFo64
+	Fj+hKhVbLgM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 526C17622;
+	Fri,  2 Mar 2012 12:37:19 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DD4287621; Fri,  2 Mar 2012
+ 12:37:18 -0500 (EST)
+In-Reply-To: <CACsJy8CdmK0827qjiW6-tCkhpGK5Prkhb=bt7wPgAuSsf1qpDw@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Fri, 2 Mar 2012 19:47:37 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5BFBA3F2-648E-11E1-A041-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192054>
 
-[Resend since the first try had HTML and the list rejected it]
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-On Fri, Mar 2, 2012, Thomas Rast <trast@student.ethz.ch> wrote:
-+ * In preparation (the half-step): identify commands that could
-+   benefit from parallelism.  `git grep --cached` and `git grep
-+   COMMIT` come to mind, but most likely also `git diff` and `git log
-+   -p`.  You can probably find more.
+> I reserve the 4 bits for strategies to fill the layout.
+> ... Maybe
+> COL_LAYOUT_COLUMN, COL_LAYOUT_ROW, COL_WIDTH_DENSE (and
+> COL_WIDTH_EQUAL) would be better names
 
-For those of us who must work on NFS for various reasons, it would help
-tremendously to write out work tree files in parallel, during 'git clone',
-'git reset --hard', and any other command that writes lots of files to the
-work tree.  You can get a huge speedup (benchmarked at ~3.5x) without even
-unpacking those files in parallel; unpacking them serially and writing them
-to disk in parallel is sufficient.
-
-I submitted a patch [1] ~2 years ago that added that capability.  It was
-not accepted, but it did demonstrate the huge potential speedup on NFS, and
-the pitfall of degrading performance on a local drive.  The patch itself is
-probably not useful any more, but it includes some benchmarks, and the
-discussion may be helpful.
-
-James
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/103489
+OK, so these 4-bits are more like layout-bits?  That makes sense.
