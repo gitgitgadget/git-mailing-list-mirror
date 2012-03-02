@@ -1,102 +1,100 @@
-From: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
-Subject: Re: [PATCH v2 3/3] http: when proxy url has username but no password,
- ask for password
-Date: Fri, 02 Mar 2012 15:05:17 +0100
-Message-ID: <4F50D39D.5040806@seap.minhap.es>
-References: <4F4FBE6C.5050507@seap.minhap.es><4F4FB69C.7000708@vilain.net><20120301215812.GG17631@sigill.intra.peff.net><4F50CC41.5020307@seap.minhap.es> <20120302124538.GA10637@sigill.intra.peff.net>
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: Re: [PATCH] mergetools: add support for DeltaWalker
+Date: Fri, 2 Mar 2012 08:22:09 -0500
+Message-ID: <CAFouethVURpXFDkm8N=riCQDaOYAXYg3VpwKRFaHMftNWr9=dw@mail.gmail.com>
+References: <1330652872-916-1-git-send-email-tim.henigan@gmail.com>
+	<7vpqcvk496.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 02 14:07:59 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, davvid@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 02 14:22:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3SDG-0004v5-Qc
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 14:07:59 +0100
+	id 1S3SR8-00056k-2m
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 14:22:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757762Ab2CBNHw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Mar 2012 08:07:52 -0500
-Received: from luthien1.map.es ([82.150.0.102]:34097 "EHLO luthien2.map.es"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756894Ab2CBNHv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2012 08:07:51 -0500
-Received: from correo.map.es (unknown [10.1.24.76])
-	by luthien2.map.es (Postfix) with ESMTP id AC35188058;
-	Fri,  2 Mar 2012 14:06:50 +0100 (CET)
-Received: from [10.47.128.147] (unknown [10.1.29.79])
-	by correo.map.es (Postfix) with ESMTP id 8369F2C4F4;
-	Fri,  2 Mar 2012 14:06:34 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0.1) Gecko/20120216 Thunderbird/10.0.1
-In-Reply-To: <20120302124538.GA10637@sigill.intra.peff.net>
-X-map-MapScanner: Libre de virus, Libre de virus
-X-Spam-Status: No, No
-X-map-MapScanner-Information: 
-X-map-MapScanner-ID: AC35188058.0A3AE
-X-map-MapScanner-From: nelsonjesus.benitez@seap.minhap.es
-X-map-MailScanner-Watermark: 1331298413.15244@I0qLgo+NMSzrsgIYlbOcWQ
+	id S1754342Ab2CBNWL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Mar 2012 08:22:11 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:46427 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751982Ab2CBNWJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Mar 2012 08:22:09 -0500
+Received: by iagz16 with SMTP id z16so2281356iag.19
+        for <git@vger.kernel.org>; Fri, 02 Mar 2012 05:22:09 -0800 (PST)
+Received-SPF: pass (google.com: domain of tim.henigan@gmail.com designates 10.50.186.161 as permitted sender) client-ip=10.50.186.161;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of tim.henigan@gmail.com designates 10.50.186.161 as permitted sender) smtp.mail=tim.henigan@gmail.com; dkim=pass header.i=tim.henigan@gmail.com
+Received: from mr.google.com ([10.50.186.161])
+        by 10.50.186.161 with SMTP id fl1mr1661601igc.44.1330694529193 (num_hops = 1);
+        Fri, 02 Mar 2012 05:22:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=TY/XRiDvYElk1HOMzac/IM0UsCAWqwwUecN3vYDIOYU=;
+        b=Tfq1Ezs4A2TTbGDAhJFmNzHlFOg0QkOAM6GapS6EAtjTRX1sGU7Bv2cjqsXrnI+sH9
+         6MuaRlDZL9fDHRDOw7DfHG24SIqpIPNZGHQTL0icvrNr54P0eJ8m+h9TSv2YWktFZcf3
+         M9R3E+1OfnjDQ44rr9HROrXHeTvnjp25f97n2m0FEaPSYXWqenkBpISf1GvF3jg+gqY3
+         ik0yTyRnucpIc5tc31RFKbareFRJVJq1ewmNXpQv/t5A8tfNsWJ72M0WDiPnchTit0i3
+         X0zuo9Sc2el/Y6QhpaohfoJNSrrY9ODuvhxIB0cofRLPqQb+fDEfBYXLjGJt0tHGdjky
+         fWMQ==
+Received: by 10.50.186.161 with SMTP id fl1mr1378419igc.44.1330694529152; Fri,
+ 02 Mar 2012 05:22:09 -0800 (PST)
+Received: by 10.42.218.65 with HTTP; Fri, 2 Mar 2012 05:22:09 -0800 (PST)
+In-Reply-To: <7vpqcvk496.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192039>
 
-On 03/02/2012 01:45 PM, Jeff King wrote:
-> On Fri, Mar 02, 2012 at 02:33:53PM +0100, Nelson Benitez Leon wrote:
-> 
->>> So there's the history lesson. What should proxy auth do?
->>>
->>>   1. Definitely respond to HTTP 407 by prompting on the fly; this code
->>>      should go along-side the HTTP 401 code in http.c.
->>>
->>>   2. Definitely do the pre-prompt thing when http_proactive_auth is set
->>>      (which is used only by http-push). Unless somebody really feels
->>>      like re-writing http-push to handle retries for authentication.
->>>
->>>   3. Consider doing the pre-prompt thing when http_proactive_auth is not
->>>      set. This can save a round-trip, but we should not do it if there
->>>      is a good reason not to. The two possible reasons I can think of
->>>      are:
->>>
->>>        a. Like http auth, if curl will read the proxy credentials from
->>>           .netrc, then we should not do it for the same reasons
->>>           mentioned in 986bbc0.
->>>
->>>        b. If people realistically have proxy URLs with usernames but do
->>>           _not_ want to ask for a password, then the prompt will be
->>>           annoying. I'm not sure that anybody expects that.
->>
->> So, trying to sum up, I will try to redo patch-set as follows:
->> - Ignore PATCH 2/3 , that is, we won't read any env var.
->> - Let cURL try to connect and if that fails with 407 , then do a credential_fill
->> and try to reconnect.
->>
->> Is that ok? or do I need to do something more?
-> 
-> I think you'll still need to read the env var, because you'll need to
-> know the proxy URL when getting the password (to ask credential helpers
-> properly, and to prompt the user).
+On Thu, Mar 1, 2012 at 11:37 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Tim Henigan <tim.henigan@gmail.com> writes:
+>
+> I see that the earlier refactoring to make mergetool backend pluggabl=
+e is
+> starting to pay off rather nicely. =C2=A0It is not "since ..., requir=
+es ...",
+> but "thanks to ..., adding a random new tool is just a matter of drop=
+ping
+> a trivial shell snippet in the directory".
 
-Ok, but I can read it after receiving the 407 (and in case we were not
-using http.proxy) so discarding PATCH 2/3 still applies, ok? or we need
-to read it first-hand for the http_proactive_auth you mention below?
-
-> 
-> Also, I think you'll need to call credential_fill() when
-> http_proactive_auth is set. Otherwise http-push will not be able to do
-> proxy auth.
-
-I still don't get what proactive_auth is about, will ask you when I get
-to that part of the patch.
-
-Thank you,
+I will reword the commit message in v2.
 
 
-> -Peff
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Perhaps doing the above like this might make it a bit less of an eye-=
+sore.
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if $base_present
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0then
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0"$merge_tool_p=
+ath" "$LOCAL" "$REMOTE" "$BASE" -merged=3D"$PWD/$MERGED"
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0else
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0"$merge_tool_p=
+ath" "$LOCAL" "$REMOTE" -merged=3D"$PWD/$MERGED"
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0fi >/dev/null 2>&1
+
+Will update in v2.
+
+
+>> + =C2=A0 =C2=A0 =C2=A0 status=3D$?
+>
+> This is highly dubious. =C2=A0Looking at existing mergetools/*, I thi=
+nk the
+> caller expects merge_cmd to signal success or failure with $?, so you
+> probably just want to drop this line; the caller will then get the $?
+> that was set by the "$merge_tool_path" command.
+>
+> That is how your diff_cmd is communicating with its caller after all,=
+ no?
+
+It seems that only two of the existing scripts use this 'status=3D$?'
+line (emerge and kdiff3).  I used the 'kdiff3' file as my starting
+point without actually trying to understand why that line was present.
+ Local testing shows that I don't need this line for DeltaWalker, so
+it will be removed in v2.
