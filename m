@@ -1,79 +1,88 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH (bugfix)] gitweb: Fix passing parameters to git_project_search_form
-Date: Fri,  2 Mar 2012 23:50:01 +0100
-Message-ID: <1330728601-27124-1-git-send-email-jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 02 23:50:17 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH (bugfix)] gitweb: Fix passing parameters to
+ git_project_search_form
+Date: Fri, 02 Mar 2012 15:55:22 -0800
+Message-ID: <7v1upablsl.fsf@alter.siamese.dyndns.org>
+References: <1330728601-27124-1-git-send-email-jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 03 00:56:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3bIn-00065d-4B
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 23:50:17 +0100
+	id 1S3cKL-0004zM-0L
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 00:55:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965442Ab2CBWuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Mar 2012 17:50:07 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:55947 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965425Ab2CBWuF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2012 17:50:05 -0500
-Received: by eekc41 with SMTP id c41so784412eek.19
-        for <git@vger.kernel.org>; Fri, 02 Mar 2012 14:50:04 -0800 (PST)
-Received-SPF: pass (google.com: domain of jnareb@gmail.com designates 10.213.15.144 as permitted sender) client-ip=10.213.15.144;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of jnareb@gmail.com designates 10.213.15.144 as permitted sender) smtp.mail=jnareb@gmail.com; dkim=pass header.i=jnareb@gmail.com
-Received: from mr.google.com ([10.213.15.144])
-        by 10.213.15.144 with SMTP id k16mr1309328eba.10.1330728604865 (num_hops = 1);
-        Fri, 02 Mar 2012 14:50:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=CWYKfIu4TdCJRM84HRPjfPhPELkPJVUhKboeMoc67Js=;
-        b=mDSpH+mYW5V8HvCsEcSAe6bYFLCMwormtZy48xQlb6w4FcL5j5h4inv+0qPFvAGc5p
-         M9OtrtmeQcd+wS7f+XoAO1tzHqq5xUaghEB6DvIDZnjlsqzSTOSyixJAxoLxFWBrBdz2
-         hQiLo2MuP9RWRDLrqBh/8OPhVdmbVUDNhdEt9o1IUy2jNZyFsaoM8fvgPcBzXEEXPL5M
-         IxO+P7PCTmbMzEJOM6SS91LkBoGmNJtsf1rUvZQRM4PoNSlIP33hPKPSRN5VfFL1Wqa3
-         a/AbU9861aYnlG9QxfCJcq4vUvUGFPq1027o6BCEJBDuCKc8OiPW8auHU0mjQdsUu1/R
-         YhuA==
-Received: by 10.213.15.144 with SMTP id k16mr1007662eba.10.1330728604754;
-        Fri, 02 Mar 2012 14:50:04 -0800 (PST)
-Received: from localhost.localdomain (abvt148.neoplus.adsl.tpnet.pl. [83.8.217.148])
-        by mx.google.com with ESMTPS id r5sm25774866eef.6.2012.03.02.14.50.03
-        (version=SSLv3 cipher=OTHER);
-        Fri, 02 Mar 2012 14:50:04 -0800 (PST)
-X-Mailer: git-send-email 1.7.9
+	id S965604Ab2CBXz0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Mar 2012 18:55:26 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33335 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755107Ab2CBXzZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2012 18:55:25 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8162763E1;
+	Fri,  2 Mar 2012 18:55:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=h8Jxit2AbiSltM7wcuETFqTuj1w=; b=sysDWY
+	vESZ0lGtiVUWSWzACzk+7Wt1zAjZNOY9yBGiCufUMalDBnOzOYNY3C2fhy8sNaVK
+	ZK3nac8Yfh8DBb7e+0KhRvC1qqzjMsZE+f/P4iOMY2oYCHd3ENoN9sWbE6tVnlcX
+	J48CaWkI2kGtenZWetvZHHH1XJwuKFUFk4j9c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=We+0ZxvsQATk00mZSoqx//irEDP5YnPp
+	AuK/JTp+fFn6KmkFSrH6l7gZw7KKYqDRLO/u0+CQobjeoNG/cvLpmgLX0G1jhdwF
+	NCSAj8YBWsSRwbdxBkX+3DrVoCHNPjjlwU4y8yCM2SIqAIuLcIZ/cp12vZjliiJG
+	1bkXpMNHwck=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 784C463E0;
+	Fri,  2 Mar 2012 18:55:24 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0D3E163DF; Fri,  2 Mar 2012
+ 18:55:23 -0500 (EST)
+In-Reply-To: <1330728601-27124-1-git-send-email-jnareb@gmail.com> (Jakub
+ Narebski's message of "Fri, 2 Mar 2012 23:50:01 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2D627072-64C3-11E1-87D7-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192073>
 
-The git_project_search_form() subroutine, introduced in a1e1b2d
-(gitweb: improve usability of projects search form, 2012-01-31) didn't
-get its arguments from caller correctly.  Gitweb worked correctly
-thanks to sticky-ness of form fields in CGI.pm... but it make UTF-8
-fix for project search not working.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Brown paper bug (a1e1b2d is in master).  I am extremly sorry about that.
+> The git_project_search_form() subroutine, introduced in a1e1b2d
+> (gitweb: improve usability of projects search form, 2012-01-31) didn't
+> get its arguments from caller correctly.  Gitweb worked correctly
+> thanks to sticky-ness of form fields in CGI.pm... but it make UTF-8
+> fix for project search not working.
+>
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+> ---
+> Brown paper bug (a1e1b2d is in master).  I am extremly sorry about that.
 
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Heh, mistakes happen.  Thanks for taking care of this.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 7398be1..e2e6a73 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -5263,7 +5263,7 @@ sub git_patchset_body {
- # . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
- 
- sub git_project_search_form {
--	my ($searchtext, $search_use_regexp);
-+	my ($searchtext, $search_use_regexp) = @_;
- 
- 	my $limit = '';
- 	if ($project_filter) {
--- 
-1.7.9
+>
+>  gitweb/gitweb.perl |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 7398be1..e2e6a73 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -5263,7 +5263,7 @@ sub git_patchset_body {
+>  # . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+>  
+>  sub git_project_search_form {
+> -	my ($searchtext, $search_use_regexp);
+> +	my ($searchtext, $search_use_regexp) = @_;
+>  
+>  	my $limit = '';
+>  	if ($project_filter) {
