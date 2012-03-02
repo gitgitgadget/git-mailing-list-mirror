@@ -1,68 +1,94 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Update l10n guide
-Date: Fri, 02 Mar 2012 11:47:58 +0100
-Message-ID: <4F50A55E.8040705@viscovery.net>
-References: <CANYiYbGS_cFTHT1Pkafi9dmzedqezTq8k1tPkYur0b2St_c43Q@mail.gmail.com> <7v1upew6d0.fsf@alter.siamese.dyndns.org> <7vfwduujxw.fsf_-_@alter.siamese.dyndns.org> <CANYiYbE5rcnD_VGJyL2CjS-R5E0pyNSd5TetvH849W6wC5JiAA@mail.gmail.com> <7vk434q4eg.fsf@alter.siamese.dyndns.org> <CANYiYbE7bxz5=h9gaKf6+N6k5cn6mEKnuf_7KPFAnDrC31UL_w@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [git wiki PATCH 3/3] "Improving the `git add -p` interface" project
+Date: Fri, 2 Mar 2012 12:05:47 +0100
+Message-ID: <544c3150818d928e14f40b362feb6dbabb348c9f.1330686331.git.trast@student.ethz.ch>
+References: <57e8b4eb7a98af33982c2f3a763e18f62b1d6d6d.1330686331.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 02 11:48:16 2012
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 02 12:05:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3Q20-00043s-6z
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 11:48:12 +0100
+	id 1S3QJA-0001E5-42
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 12:05:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755523Ab2CBKsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Mar 2012 05:48:06 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:39580 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750708Ab2CBKsE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2012 05:48:04 -0500
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1S3Q1m-000381-NW; Fri, 02 Mar 2012 11:47:58 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 5151E1660F;
-	Fri,  2 Mar 2012 11:47:58 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <CANYiYbE7bxz5=h9gaKf6+N6k5cn6mEKnuf_7KPFAnDrC31UL_w@mail.gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S932218Ab2CBLFx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Mar 2012 06:05:53 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:18526 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932087Ab2CBLFv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2012 06:05:51 -0500
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 2 Mar
+ 2012 12:05:44 +0100
+Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 2 Mar
+ 2012 12:05:47 +0100
+X-Mailer: git-send-email 1.7.9.2.467.g7fee4
+In-Reply-To: <57e8b4eb7a98af33982c2f3a763e18f62b1d6d6d.1330686331.git.trast@student.ethz.ch>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192023>
 
-Am 3/2/2012 8:30, schrieb Jiang Xin:
-> Git does not handle multi-bytes character well. Multi-bytes characters
-> not convert to UTF-8 when git write tree objects and commit objects.
+---
+ SoC-2012-Ideas.md |   41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
-It does not convert, but it records which encoding the text has. If you
-don't specify anything, UTF-8 is assumed, and if your text is actually not
-UTF-8, the result is necessarily garbage.
-
-> I think allow multi-bytes characters in commit log would hurt git.git until
-> git gives full support UTF-8 (are there any plans for this?).
-> I just tested several versions of msysgit:
-> 
->  - Only Git-1.7.8-preview20111229-unicode.exe saves commit objects
->    with utf-8 encode.
-> 
->  - Other versions such as Git-1.7.9-preview20120201.exe and
->    Git-1.7.8-preview20111206.exe will not convert multi-bytes characters
->    in commit log into UTF-8.
-
-Then you haven't set i18n.commitEncoding. Try this:
-
-   git config i18n.commitEncoding CP936
-
-(substitute whatever Windows codepage you are using).
-
--- Hannes
+diff --git a/SoC-2012-Ideas.md b/SoC-2012-Ideas.md
+index 59d1baf..b2cc475 100644
+--- a/SoC-2012-Ideas.md
++++ b/SoC-2012-Ideas.md
+@@ -140,3 +140,44 @@ The programming work will be in C, as it replaces a core part of git.
+ 
+ Proposed by: Thomas Rast
+ Possible mentor(s): Thomas Rast
++
++Improving the `git add -p` interface
++------------------------------------
++
++The interface behind `git {add|commit|stash|reset} {-p|-i}` is shared
++and called `git-add--interactive.perl`.    This project would mostly
++focus on the `--patch` side, as that seems to be much more widely
++used; however, improvements to `--interactive` would probably also be
++welcome.
++
++The `--patch` interface suffers from some design flaws caused largely
++by how the script grew:
++
++ * Application is not atomic: hitting Ctrl-C midway through patching
++   may still touch files.
++
++ * The terminal/line-based interface becomes a problem if diff hunks
++   are too long to fit in your terminal.
++
++ * Cannot go back and forth between files.
++
++ * Cannot reverse the direction of the patch.
++
++ * Cannot look at the diff in word-diff mode (and apply it normally).
++
++Due to the current design it is also pretty hard to add these features
++without adding to the mess.  Thus the project consists of:
++
++ * Come up with more ideas for features/improvements and discuss them
++   with users.
++
++ * Cleanly redesigning the main interface loop to allow for the above
++   features.
++
++ * Implement the new features.
++
++As the existing code is written in Perl, that is what you will use for
++this project.
++
++Proposed by: Thomas Rast
++Possible mentor(s): Thomas Rast
+-- 
+1.7.9.2.467.g7fee4
