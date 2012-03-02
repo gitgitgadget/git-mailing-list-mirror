@@ -1,166 +1,91 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH (BUGFIX)] gitweb: Fix fixed string (non-regexp) project search
-Date: Fri, 2 Mar 2012 23:34:24 +0100
-Message-ID: <201203022334.25544.jnareb@gmail.com>
-References: <20120228183919.26435.86795.stgit@localhost.localdomain> <4F512327.3050504@ramsay1.demon.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] mergetools: add support for DeltaWalker
+Date: Fri, 02 Mar 2012 14:39:38 -0800
+Message-ID: <7vaa3ybpat.fsf@alter.siamese.dyndns.org>
+References: <1330694867-7601-1-git-send-email-tim.henigan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Fri Mar 02 23:34:40 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, davvid@gmail.com
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 02 23:39:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3b3f-0006So-P2
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 23:34:40 +0100
+	id 1S3b8e-0000wi-Rr
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 23:39:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964930Ab2CBWee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Mar 2012 17:34:34 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:62258 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964842Ab2CBWed (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2012 17:34:33 -0500
-Received: by eekc41 with SMTP id c41so781852eek.19
-        for <git@vger.kernel.org>; Fri, 02 Mar 2012 14:34:31 -0800 (PST)
-Received-SPF: pass (google.com: domain of jnareb@gmail.com designates 10.213.25.68 as permitted sender) client-ip=10.213.25.68;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of jnareb@gmail.com designates 10.213.25.68 as permitted sender) smtp.mail=jnareb@gmail.com; dkim=pass header.i=jnareb@gmail.com
-Received: from mr.google.com ([10.213.25.68])
-        by 10.213.25.68 with SMTP id y4mr126907ebb.281.1330727671785 (num_hops = 1);
-        Fri, 02 Mar 2012 14:34:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=6MfGXnaydN66MHKa5/kXbD3YOaqOIjmpGcljWVriNx4=;
-        b=ClnqdXJNVPhCfyWpyM9MhI5VtV3wBDh0t0rJiXoDzS9dBK9Ph3RyjKlIYN7QRfLZ2u
-         LGIy35r810vRL2ewb94NqKbImkCsdrZvVUdE53i+yIeGmyD8fx8RGsgqedQ58zqVakxk
-         6TRVM3E2ILIpXUKfAfg5SPoIDIksD3xIrS0Qheh+o8XAcPtd65389BmBZ3icvN26iTtr
-         pUeFRCUJt/V/ImulEJCUGt3suJ0qYG10zLbohDKsz4yxNKIsDg9GxQSbiLAguZ6PH5GM
-         zPuwazibHRg5ml21q947d42LsUQTVgqDhWwImEVHLbIIUyei5Rhhic52vHNxVA25VeOD
-         3CoA==
-Received: by 10.213.25.68 with SMTP id y4mr96928ebb.281.1330727671615;
-        Fri, 02 Mar 2012 14:34:31 -0800 (PST)
-Received: from [192.168.1.13] (abvt148.neoplus.adsl.tpnet.pl. [83.8.217.148])
-        by mx.google.com with ESMTPS id u9sm25575493eem.11.2012.03.02.14.34.30
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 02 Mar 2012 14:34:30 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4F512327.3050504@ramsay1.demon.co.uk>
-Content-Disposition: inline
+	id S965402Ab2CBWjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Mar 2012 17:39:43 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36406 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965331Ab2CBWjl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2012 17:39:41 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BE741766C;
+	Fri,  2 Mar 2012 17:39:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DLzKqtfbFKK7jf0NqgGPcbUIDfg=; b=nhHCmY
+	eB51xWHSE+n2OheNY4jhQMGtqNcWGHZhO/bCEdHy6E73zEwYd+bEzAgO7S1anfxK
+	QV3PSQ8qTGYOYs386qPOrN/ml6hvcnsaGmAhJGtRcTY4c8Xw3vi+JcetGwb0bMho
+	5shiuH4/PdHTrAbM9fc0t/Mw8ifn37zxCzB5A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=S3Q8lLACw2RDIQtiWPa6QGWrwWVByOkI
+	Z0LKhlMwHsrA03DuSq7bdiovX5+eAGbpqw8JpPDDUpNd+cB1OvLJvRC7Lf6dZopV
+	Udr9X4+Xrc7javqhccafqwJFwoYIq+1WhVqyZr8DNlS0U5u78ELlgMoBSekaJhNj
+	NVXyfzawzUg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B6291766B;
+	Fri,  2 Mar 2012 17:39:40 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 42BFC766A; Fri,  2 Mar 2012
+ 17:39:40 -0500 (EST)
+In-Reply-To: <1330694867-7601-1-git-send-email-tim.henigan@gmail.com> (Tim
+ Henigan's message of "Fri, 2 Mar 2012 08:27:47 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 99149454-64B8-11E1-96EC-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192070>
 
-Use $search_regexp, where regex metacharacters are quoted, for
-searching projects list, rather than $searchtext, which contains
-original search term.
+Tim Henigan <tim.henigan@gmail.com> writes:
 
-Reported-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-I think this bug was here from the very beginning of adding project
-search, i.e. from  v1.6.0.2-446-g0d1d154 (gitweb: Support for simple
-project search form, 2008-10-03)  which was present since 1.6.1
+>  mergetools/DeltaWalker |   12 ++++++++++++
 
-On Fri, 2 Mar 2012, Ramsay Jones wrote:
-> Jakub Narebski wrote:
+How does an end user choose to use this backend?  Perhaps like this?
 
-> > When using regexp search ('sr' parameter / $search_use_regexp variable
-> > is true), check first that regexp is valid.
-> > 
-> > Without this patch we would get an error from Perl during search (if
-> > searching is performed by gitweb), or highlighting matches substring
-> > (if applicable), if user provided invalid regexp... which means broken
-> > HTML, with error page (including HTTP headers) generated after gitweb
-> > already produced some output.
-> > 
-> > Add test that illustrates such error: for example for regexp "*\.git"
-> > we would get the following error:
-> > 
-> >   Quantifier follows nothing in regex; marked by <-- HERE in m/* <-- HERE \.git/
-> >   at /var/www/cgi-bin/gitweb.cgi line 3084.
-> > 
-> > Reported-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-> > Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-> > ---
-> > See "Re: gitweb: (potential) problems with new installation"
-> > http://thread.gmane.org/gmane.comp.version-control.git/191746
-> 
-> This patch solves the problem for me when using a regex search
-> (re checkbox checked), but *not* for a non-regex search.
-> 
-> If you have a leading '*' or '+', in the non-regex case, then you
-> still get the above complaint (and xml error page etc.), although
-> the line number has changed slightly from that given above.
+    $ git mergetool --tool=DeltaWalker
 
-Ramsay, please provide those line number in the future, together with
-line and if possible some context.
+All the other files in mergetools/ are in lower case, and I _strongly_
+prefer to have this new file also be in lower case.
 
-The line is different because it is different bug: this is about not
-using quotemeta'ed string for search for fixed-string search.
+Such a change may mean you may have to override translate_merge_tool_path
+in this file, like some other backends seem to do.
 
- gitweb/gitweb.perl |   22 +++++++++++-----------
- 1 files changed, 11 insertions(+), 11 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 22ad279..7398be1 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3072,16 +3072,16 @@ sub filter_forks_from_projects_list {
- # for 'descr_long' and 'ctags' to be filled
- sub search_projects_list {
- 	my ($projlist, %opts) = @_;
--	my $tagfilter  = $opts{'tagfilter'};
--	my $searchtext = $opts{'searchtext'};
-+	my $tagfilter = $opts{'tagfilter'};
-+	my $search_re = $opts{'search_regexp'};
- 
- 	return @$projlist
--		unless ($tagfilter || $searchtext);
-+		unless ($tagfilter || $search_re);
- 
- 	# searching projects require filling to be run before it;
- 	fill_project_list_info($projlist,
--	                       $tagfilter  ? 'ctags' : (),
--	                       $searchtext ? ('path', 'descr') : ());
-+	                       $tagfilter ? 'ctags' : (),
-+	                       $search_re ? ('path', 'descr') : ());
- 	my @projects;
-  PROJECT:
- 	foreach my $pr (@$projlist) {
-@@ -3092,10 +3092,10 @@ sub search_projects_list {
- 				grep { lc($_) eq lc($tagfilter) } keys %{$pr->{'ctags'}};
- 		}
- 
--		if ($searchtext) {
-+		if ($search_re) {
- 			next unless
--				$pr->{'path'} =~ /$searchtext/ ||
--				$pr->{'descr_long'} =~ /$searchtext/;
-+				$pr->{'path'} =~ /$search_re/ ||
-+				$pr->{'descr_long'} =~ /$search_re/;
- 		}
- 
- 		push @projects, $pr;
-@@ -5498,9 +5498,9 @@ sub git_project_list_body {
- 		if ($check_forks);
- 	# search_projects_list pre-fills required info
- 	@projects = search_projects_list(\@projects,
--	                                 'searchtext' => $searchtext,
--	                                 'tagfilter'  => $tagfilter)
--		if ($tagfilter || $searchtext);
-+	                                 'search_regexp' => $search_regexp,
-+	                                 'tagfilter' => $tagfilter)
-+		if ($tagfilter || $search_regexp);
- 	# fill the rest
- 	@projects = fill_project_list_info(\@projects);
- 
--- 
-1.7.9
+>  1 file changed, 12 insertions(+)
+>  create mode 100644 mergetools/DeltaWalker
+>
+> diff --git a/mergetools/DeltaWalker b/mergetools/DeltaWalker
+> new file mode 100644
+> index 0000000..b9e6618
+> --- /dev/null
+> +++ b/mergetools/DeltaWalker
+> @@ -0,0 +1,12 @@
+> +diff_cmd () {
+> +	"$merge_tool_path" "$LOCAL" "$REMOTE" >/dev/null 2>&1
+> +}
+> +
+> +merge_cmd () {
+> +	if $base_present
+> +	then
+> +		"$merge_tool_path" "$LOCAL" "$REMOTE" "$BASE" -merged="$PWD/$MERGED"
+> +	else
+> +		"$merge_tool_path" "$LOCAL" "$REMOTE" -merged="$PWD/$MERGED"
+> +	fi >/dev/null 2>&1
+> +}
