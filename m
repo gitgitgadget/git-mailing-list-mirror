@@ -1,70 +1,121 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 3/3] http: when proxy url has username but no
- password, ask for password
-Date: Fri, 2 Mar 2012 08:52:37 -0500
-Message-ID: <20120302135237.GB23846@sigill.intra.peff.net>
-References: <4F4FBE6C.5050507@seap.minhap.es>
- <4F4FB69C.7000708@vilain.net>
- <20120301215812.GG17631@sigill.intra.peff.net>
- <4F50CC41.5020307@seap.minhap.es>
- <20120302124538.GA10637@sigill.intra.peff.net>
- <4F50D39D.5040806@seap.minhap.es>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v2] Perform cheaper connectivity check when pack is used
+ as medium
+Date: Fri, 2 Mar 2012 21:05:09 +0700
+Message-ID: <CACsJy8D7JB9bzOvammGAx1rW04DEUCVzvfp-_Q1KtE9G00rZVQ@mail.gmail.com>
+References: <7vmx849ma8.fsf@alter.siamese.dyndns.org> <1330435109-4437-1-git-send-email-pclouds@gmail.com>
+ <7vwr73h6td.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org
-To: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
-X-From: git-owner@vger.kernel.org Fri Mar 02 14:52:46 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 02 15:05:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3Sua-0006nP-Im
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 14:52:44 +0100
+	id 1S3T7I-00068T-Bv
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 15:05:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756344Ab2CBNwk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Mar 2012 08:52:40 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35404
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753368Ab2CBNwj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2012 08:52:39 -0500
-Received: (qmail 24363 invoked by uid 107); 2 Mar 2012 13:52:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Mar 2012 08:52:44 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Mar 2012 08:52:37 -0500
-Content-Disposition: inline
-In-Reply-To: <4F50D39D.5040806@seap.minhap.es>
+	id S1756726Ab2CBOFm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Mar 2012 09:05:42 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:62562 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756474Ab2CBOFl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Mar 2012 09:05:41 -0500
+Received: by wejx9 with SMTP id x9so1059505wej.19
+        for <git@vger.kernel.org>; Fri, 02 Mar 2012 06:05:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=3PFmfQP66RrO9thUoXn9+HijrKIu0kei7xx39zIgIz4=;
+        b=z+4eLI425Q7H6BYyJKUcysZJM/VpQXc1Q/RnJlwVDZwbymA6SowgDMGRW7LOcQHINV
+         pFr7yEChbu2WLKQj2yInlBdQB9E8GCcIzjkRfE2XOQF9O0/3vHdurYaublS3tA04P5e8
+         ozR9+YUc79tXnYsxtyIAJOpeeAyFLU1BPE6Jd1t81XVSauCayjydKPR2orSmE61wvg2f
+         SGoLzV3exjhLeXaATlCV+4ZZYoQa53Jvsa7mIcG7EdxS/wag1/NSd6SnGUdXV6s7T5mV
+         CTIZcBaHXbZfzDkI4oSbIpeuBXfftsQ/nXVglwgqTxWCiudb2O1IE9ljFxy+5fJJPgt+
+         i8Dw==
+Received: by 10.180.99.65 with SMTP id eo1mr4532429wib.13.1330697140343; Fri,
+ 02 Mar 2012 06:05:40 -0800 (PST)
+Received: by 10.223.13.5 with HTTP; Fri, 2 Mar 2012 06:05:09 -0800 (PST)
+In-Reply-To: <7vwr73h6td.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192043>
 
-On Fri, Mar 02, 2012 at 03:05:17PM +0100, Nelson Benitez Leon wrote:
+2012/3/2 Junio C Hamano <gitster@pobox.com>:
+> Consider a case where you have this history
+>
+>
+> =C2=A0 =C2=A0---T =C2=A0 =C2=A0 =C2=A0 o---o---o
+>
+> where 'T' is the tip of your ref (everything reachable from it is kno=
+wn to
+> be good), and 'o' are "isolated islands" commits that somehow exist i=
+n
+> your repository but are not complete for whatever reason.
+>
+> The global history may look like this, where 'X' is the tip the other=
+ end
+> advertised, and '.' are commits that are new to your repository.
+>
+> =C2=A0 =C2=A0---T---.---o---o---o---.---X
+>
+> Upon seeing 'X' advertised and noticing 'T' is the current tip, you w=
+ould
+> ask for everything that is needed, i.e. "rev-list --objects T..X", to=
+ be
+> sent to you.
+>
+> But the other end could send all the trees and commits for 'X' and '.=
+' but
+> nothing for 'o'. =C2=A0You will end up with a corrupt history but the=
+ loosened
+> "rev-list --objects T..X" you run after the object transfer will not =
+catch
+> it. =C2=A0You need --verify-objects if you want to catch this mode of=
+ attack.
 
-> > I think you'll still need to read the env var, because you'll need to
-> > know the proxy URL when getting the password (to ask credential helpers
-> > properly, and to prompt the user).
-> 
-> Ok, but I can read it after receiving the 407 (and in case we were not
-> using http.proxy) so discarding PATCH 2/3 still applies, ok? or we need
-> to read it first-hand for the http_proactive_auth you mention below?
+OK I think I get what you are trying to say. With "rev-list --objects
+T..X" we could check commit connectivity from X to T fine. But some
+trees in those 'o' commits are bad, but well-formed. As a result,
+rev-list goes well and we blindly accept bad trees/blobs. By checking
+for tree and blob integrity, we would catch these bad guys. Is that
+correct?
 
-You will need it for proactive_auth.
+The bad islands may be injected from somewhere and cannot be trusted
+until they get connectivity with the main DAG.
 
-> > Also, I think you'll need to call credential_fill() when
-> > http_proactive_auth is set. Otherwise http-push will not be able to do
-> > proxy auth.
-> 
-> I still don't get what proactive_auth is about, will ask you when I get
-> to that part of the patch.
+> Admittedly, in order to mount such an attack successfully, the attack=
+er
+> needs to know what "isolated islands" you happen to have in the recei=
+ving
+> repository, which makes it much harder than a simpler attack (e.g. se=
+nding
+> only X but nothing else) that would have worked before we introduced =
+the
+> connectivity check after object transfer.
+>
+> But we need to realize that the reasoning expressed in your log messa=
+ge
+> "we received new objects by pack, so everything must validate fine" i=
+s not
+> valid, and we are loosening ourselves to new attacks when we evaluate=
+ this
+> patch. =C2=A0This is because the completion of the history may be usi=
+ng objects
+> that did not come from the other side (i.e. commits 'o' and all the t=
+rees
+> necessary for them, but their blobs may be corrupt).
 
-It is a flag that, when true, instructs the http code to do auth if we
-have a non-NULL username, even before we get an http 401. It is only set
-for http-push, because the http-push-over-dav code does not properly
-detect and retry on a 401 (and I don't expect it will be easy to
-properly detect and retry on a 407, either). Whereas the smart-http code
-and the dumb http fetch code properly detect the 401.
-
--Peff
+Not everything is valid, then. Objects from new packs are, existing
+ones may be guilty. If there is a way to mark new packs trusted, then
+we only need to validate the other objects, which should be the
+minority or even empty unless an attack is mounted.
+--=20
+Duy
