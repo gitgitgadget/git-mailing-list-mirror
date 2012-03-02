@@ -1,77 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Complain in the tests about git config not failing
- with, keys without a section
-Date: Fri, 02 Mar 2012 10:40:58 -0800
-Message-ID: <7v8vjiethh.fsf@alter.siamese.dyndns.org>
-References: <4F50A79E.5060206@philosof.dk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Rune Schjellerup Philosof <rune@philosof.dk>
-X-From: git-owner@vger.kernel.org Fri Mar 02 19:41:08 2012
+From: Stefano Lattarini <stefano.lattarini@gmail.com>
+Subject: [PATCH v2] tests: fix spurious error when run directly with Solaris /usr/xpg4/bin/sh
+Date: Fri,  2 Mar 2012 19:48:36 +0100
+Message-ID: <f2243a179ce49eed668341a6c0e3a452bf7ae79f.1330713761.git.stefano.lattarini@gmail.com>
+References: <7vd38uetls.fsf@alter.siamese.dyndns.org>
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 02 19:49:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3XPf-0007aC-RJ
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 19:41:08 +0100
+	id 1S3XXH-0004Mi-51
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 19:48:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756791Ab2CBSlC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Mar 2012 13:41:02 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62918 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755745Ab2CBSlB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2012 13:41:01 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BBCEA64C9;
-	Fri,  2 Mar 2012 13:41:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+OX93J1KaZcKH8gQOYWIEgPoWIY=; b=vd13nl
-	Jrx63TQc11EG5bQc+KppYj+ifHzgR4pma/X35qnOV8Nmxqk9u22haekDonvdvPo2
-	vatdkYJURcTwP9tnYzHStkP1L5YphKrq7AiFyLrqWNzdB8wgiiPV7a+ehfr2sff3
-	2Abavm6Ou2bV7RxHwDd6YcYrQXIL8q7Am9ck4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=izdsZBlNy84xqg0BPWTG5k5dQKdY/C4X
-	99B9mxOlJngKwb6O0ftdNsjGnNTy7r0fB4iVywoetQ0y4tp8ofK4Zr1wY9AIe/EI
-	EsJ+cZDppMFURx2EZLFz4vdV9m2X0BcSZNe7qxs2z7NSBgM6tSRxLAFF3XNPFQzi
-	TJOAloGQCjo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B244864C8;
-	Fri,  2 Mar 2012 13:41:00 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3E81564C6; Fri,  2 Mar 2012
- 13:41:00 -0500 (EST)
-In-Reply-To: <4F50A79E.5060206@philosof.dk> (Rune Schjellerup Philosof's
- message of "Fri, 02 Mar 2012 11:57:34 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 41AF1EDA-6497-11E1-89C6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S965103Ab2CBSsx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Mar 2012 13:48:53 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:46799 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758748Ab2CBSsw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2012 13:48:52 -0500
+Received: by eekc41 with SMTP id c41so730693eek.19
+        for <git@vger.kernel.org>; Fri, 02 Mar 2012 10:48:51 -0800 (PST)
+Received-SPF: pass (google.com: domain of stefano.lattarini@gmail.com designates 10.14.120.74 as permitted sender) client-ip=10.14.120.74;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of stefano.lattarini@gmail.com designates 10.14.120.74 as permitted sender) smtp.mail=stefano.lattarini@gmail.com; dkim=pass header.i=stefano.lattarini@gmail.com
+Received: from mr.google.com ([10.14.120.74])
+        by 10.14.120.74 with SMTP id o50mr6742440eeh.18.1330714131515 (num_hops = 1);
+        Fri, 02 Mar 2012 10:48:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=eLbqd6jGNrn+YsxTK+X7snn9khMxlyOmNwG67oHmgJc=;
+        b=bJgsOEgKtKjChYkqDIiqduHRXjK2qhN1WbEUEyJFsY+XTUQ3Xi2r9gaJK0wCQBnDCN
+         q1PhX5+dBelhT7LEmdT6KpGjhNHjCWX5EulXDRdo1H+V3gICsjeXb3Oxq/WnRt0Q5FFc
+         mdoa9m4GgctYTmk8NtKWZ6oUuO677Gbq8/OUZyjsbg1wfGvDAWvjVH5MJcASd5Zt/t1N
+         EgHSGeuJx0sphPzGaeGPXX41vFxI4vZqwxFtlrg3slbxcIxhV4RTgWeHhM4PXQWhOmMX
+         iCN78aMY5+YgosOc44AiegwNZgkDhp6rLwkbdJED43Q2yYHbCOphecT8DvARfUdgUTvu
+         RNYg==
+Received: by 10.14.120.74 with SMTP id o50mr5180157eeh.18.1330714131417;
+        Fri, 02 Mar 2012 10:48:51 -0800 (PST)
+Received: from localhost.localdomain (host100-93-dynamic.7-79-r.retail.telecomitalia.it. [79.7.93.100])
+        by mx.google.com with ESMTPS id u11sm23389250eeb.1.2012.03.02.10.48.48
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 02 Mar 2012 10:48:50 -0800 (PST)
+X-Mailer: git-send-email 1.7.9
+In-Reply-To: <7vd38uetls.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192059>
 
-Rune Schjellerup Philosof <rune@philosof.dk> writes:
+If any test script is run directly with Solaris 10 /usr/xpg4/bin/sh or
+/bin/ksh, it fails spuriously with a message like:
 
-> From c4fc13a5a1e8c1eab9873232e6e8b7e0523cd6ea Mon Sep 17 00:00:00 2001
-> From: Rune Philosof <rune.git@philosof.dk>
-> Date: Fri, 2 Mar 2012 10:42:23 +0100
-> Subject: [PATCH 1/2] Complain in the tests about git config not failing with
->  keys without a section
+  t0000-basic.sh[31]: unset: bad argument count
 
-What are these lines?
+This happens because those shells bail out when encountering a call to
+"unset" with no arguments, and such unset call could take place in
+'test-lib.sh'.  Fix that issue, and add a proper comment to ensure we
+don't regress in this respect.
 
->
-> git is supposed to fail when having a key without a section, but does not.
+Signed-off-by: Stefano Lattarini <stefano.lattarini@gmail.com>
+---
 
-I do not think anybody said it is supposed to fail in this case.
+ Changes from the previous version: add a proper "Signed-off-by" line,
+ which I had forgotten in the previous version.  Sorry for the confusion.
 
-Historically, we always allowed single level names in our configuration
-parser, at least for reading, from pretty much day one, I think.  The
-documentation only talks about two and three level names, because we do
-not use such a name ourselves in the code, and the behaviour for a single
-level name is just "undefined", which is very different from "must fail".
+ t/test-lib.sh |    9 +++++----
+ 1 files changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index a089a18..c0d04c4 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -42,10 +42,11 @@ TZ=UTC
+ TERM=dumb
+ export LANG LC_ALL PAGER TERM TZ
+ EDITOR=:
+-unset VISUAL
+-unset EMAIL
+-unset LANGUAGE
+-unset $(perl -e '
++# A call to "unset" with no arguments causes at least Solaris 10
++# /usr/xpg4/bin/sh and /bin/ksh to bail out.  So keep the unsets
++# deriving from the command substitution clustered with the other
++# ones.
++unset VISUAL EMAIL LANGUAGE $(perl -e '
+ 	my @env = keys %ENV;
+ 	my $ok = join("|", qw(
+ 		TRACE
+-- 
+1.7.9
