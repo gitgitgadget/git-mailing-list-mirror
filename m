@@ -1,96 +1,83 @@
-From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: Re: [RFC/PATCH] build: avoid possible confusion between GNU/XPG4
- make on Solaris
-Date: Fri, 02 Mar 2012 20:00:31 +0100
-Message-ID: <4F5118CF.6030402@gmail.com>
-References: <df98ed215324f521f3aaff7fa4ba41ba2a1894dc.1330679536.git.stefano.lattarini@gmail.com> <7vhay6etqc.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFH] unpack-trees: cache_entry lifetime issue?
+Date: Fri, 02 Mar 2012 11:17:26 -0800
+Message-ID: <7vk432dd89.fsf@alter.siamese.dyndns.org>
+References: <4F5102A2.70303@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 02 20:00:48 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Fri Mar 02 20:17:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3Xii-0003az-Bx
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 20:00:48 +0100
+	id 1S3Xyx-0005hl-B9
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 20:17:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759085Ab2CBTAn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Mar 2012 14:00:43 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:45348 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759034Ab2CBTAm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2012 14:00:42 -0500
-Received: by wejx9 with SMTP id x9so1239352wej.19
-        for <git@vger.kernel.org>; Fri, 02 Mar 2012 11:00:41 -0800 (PST)
-Received-SPF: pass (google.com: domain of stefano.lattarini@gmail.com designates 10.180.24.7 as permitted sender) client-ip=10.180.24.7;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of stefano.lattarini@gmail.com designates 10.180.24.7 as permitted sender) smtp.mail=stefano.lattarini@gmail.com; dkim=pass header.i=stefano.lattarini@gmail.com
-Received: from mr.google.com ([10.180.24.7])
-        by 10.180.24.7 with SMTP id q7mr7965578wif.14.1330714841683 (num_hops = 1);
-        Fri, 02 Mar 2012 11:00:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=zsejb1SR1Er/JWrM/GlAVJMRq4VCHkIxh6x0rDdpYRU=;
-        b=cb7cZ8c4i5fktd5Jo8LA4h7/Ext8lFgnrNwI22n2BWFt5BWmz71bLFGtlowBo1AQVf
-         YfxIkBn51CBo625Lx1iMchM0N3T5hG1QCk5cfz1TUIMWNFdh4+vN2SD/BIHz7k2jMc8h
-         srl1ZTrS6j9aGwbcEfmEQB9vtE+6HRjFhLdO7t6kFhDk6zE9HX69TnAVAkn/or2GqpeD
-         fJdMGu+iQuFf8g4tMVDFZL+zQm/gvhaUHxJBQpxhYq0jm5JMzfVKDFUKUvcQ/zpzl5pR
-         smMNaDFSiW/s9REzVazaI54a2PoCPcrs/1p8K9kzOc7yQEInfrwFPVr/Ao356PRcA+Yi
-         PwwA==
-Received: by 10.180.24.7 with SMTP id q7mr6390237wif.14.1330714841582;
-        Fri, 02 Mar 2012 11:00:41 -0800 (PST)
-Received: from [79.7.93.100] (host100-93-dynamic.7-79-r.retail.telecomitalia.it. [79.7.93.100])
-        by mx.google.com with ESMTPS id hb10sm14174872wib.10.2012.03.02.11.00.39
-        (version=SSLv3 cipher=OTHER);
-        Fri, 02 Mar 2012 11:00:40 -0800 (PST)
-In-Reply-To: <7vhay6etqc.fsf@alter.siamese.dyndns.org>
+	id S1759084Ab2CBTR3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Mar 2012 14:17:29 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47670 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753273Ab2CBTR2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Mar 2012 14:17:28 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 755CF6D21;
+	Fri,  2 Mar 2012 14:17:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=d9OB5sRT8FWAgfmSSj9kk4pd3
+	xI=; b=TQhv3u4NkVldRFKFvS9laVxRfbgzj1ygjnEebNEToAFHuxaSEzA8nHJ/W
+	w9GNGRdsKb2jLHxk83H0FfKNWOWwzSnAwoBbWwtVzUF+wZppD0uaW91e1fCc/kCr
+	OUpdLXB3uVEC8UDHORLL1lTCZ4LMOcnrbd7X4AuwuMY9wl33iw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=b1+0jv8VcXVKTWFsAGp
+	NXY4LJ8z18argWkNvsoMig+m9lFqnWIC60i+bB5g9i3Lip2YkIzBNRNmb8P6O8Y1
+	uIi6H5BBc6s48Ncq612hlevt9ryE3g9n2qL1Rt/OhVuFqP27P/0iHeqyPFFIhznR
+	4Cp86zWjZE42mK47BMbUiPeo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6BFAB6D20;
+	Fri,  2 Mar 2012 14:17:28 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 017F66D1F; Fri,  2 Mar 2012
+ 14:17:27 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 59AF8268-649C-11E1-987E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192064>
 
-On 03/02/2012 07:35 PM, Junio C Hamano wrote:
-> Stefano Lattarini <stefano.lattarini@gmail.com> writes:
-> 
->> On a Solaris 10 system with Solaris XPG4 make installed as /usr/xpg4/bin/make,
->> GNU make installed as /usr/local/bin/make, and with /usr/local/bin appearing
->> in $PATH *before* /usr/xpg4/bin, I was seeing errors like this upon invoking
->> "make all":
-> 
-> After reading this explanation, my first reaction is that the prefixing of
-> path _is_ what is wrong.  The prefixing is done to help a subset of
-> Solaris users who are unaware of /usr/xpg4/bin that are more POSIX than
-> what they have in /usr/bin, and that is what is hurting people like you
-> who know what you are doing and have suitable tools in other places, like
-> you do in /usr/local/bin.
-> 
-> And the real fix for your problem is _not_ an ugly override of $(MAKE)
-> like you do in this patch, I think.  After all, somebody else who have a
-> tool in /usr/local/bin that is saner than what is in /usr/xpg4/bin may
-> suffer from the same issue for commands other than "make".
-> 
-> So the real solution would probably be to let you override how the
-> BROKEN_PATH_FIX works, no?
-> 
-> Ah... and I think we already have such a solution in our Makefile.  Can't
-> you override SANE_TOOL_PATH in your config.mak instead?
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+
+> which shows some parts of unpack-trees.c that I use as context to
+> ask: Should we check for o->merge in line 775, before using src[0]?
 >
-Yes and no.  While in hindsight I agree that using this already-provided
-solution is much better than my ugly automatic munging of $(MAKE) (so yes,
-let's scrap the present patch), I also think that if one is setting up the
-configuration of the Git tree using the the autoconf-generated configure
-script (as I do), he wants configure to Do The Right Thing automatically
-in this regard too -- thus recognizing that /usr/xpg4/bin is already in
-$PATH before /bin and /usr/bin, and setting up an appropriate default for
-SANE_TOOL_PATH in 'config.make.autogen' accordingly.
+> If o->merge is 0, the src[0] will be NULL right up to the call of
+> unpack_nondirectories() in line 772.  There it may be set (in line
+> 582).  In that case we'll end up at line 779, where mark_ce_used()
+> is applied to it.
+>
+> I suspect that this is unintended and that line 775 should rather
+> read "if (o->merge && src[0]) {".  Can someone with a better
+> understanding of unpack-trees confirm or refute that suspicion?
 
-What would you think of a patch in this direction?
+Yeah, src[0] is meant to hold the entry from the current index to take =
+it
+as well as our tree into account during o->merge, and I do not think it
+should affect when we are only reading tree(s) into the index.
 
-Thanks,
-  Stefano
+I think da165f4 (unpack-trees.c: prepare for looking ahead in the index=
+,
+2010-01-07) simply forgot that the codepath also has to work when it is
+not merging.
+
+Having said that, I do not know offhand if we just should nothing in
+no-merge case, or we should be doing something else instead, without
+thinking a bit more.
