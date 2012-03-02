@@ -1,68 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Mar 2012, #01; Thu, 1)
-Date: Thu, 01 Mar 2012 22:10:12 -0800
-Message-ID: <7vpqcvh6t7.fsf@alter.siamese.dyndns.org>
-References: <7vy5rjkgxa.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Why Is There No Bug Tracker And Why Are Patches Sent Instead Of
+ Pull Requests
+Date: Fri, 2 Mar 2012 00:25:24 -0600
+Message-ID: <20120302062524.GI5248@burratino>
+References: <CAM=oOO2i-9zraF-YG5YzvZEmN1eXTnQfhJ-eMF04NP7HGtf41w@mail.gmail.com>
+ <7vhay9tqs6.fsf@alter.siamese.dyndns.org>
+ <20120229225304.GA9099@burratino>
+ <CAH5451miv_Mo_9tZV+mfDEHuEX0491duqAYh66aOzLsMLTNkaA@mail.gmail.com>
+ <8762eoimp0.fsf@thomas.inf.ethz.ch>
+ <7vmx80nt68.fsf@alter.siamese.dyndns.org>
+ <4F504699.3070406@gmail.com>
+ <20120302041924.GG5248@burratino>
+ <4F505F8C.70802@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 02 07:10:28 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Andrew Ardill <andrew.ardill@gmail.com>,
+	opticyclic <opticyclic@gmail.com>, git@vger.kernel.org
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 02 07:25:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3LhD-0007eG-9X
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 07:10:27 +0100
+	id 1S3Lvr-0008P2-Q3
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 07:25:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757194Ab2CBGKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Mar 2012 01:10:18 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49084 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756754Ab2CBGKP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2012 01:10:15 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 29AC66D41;
-	Fri,  2 Mar 2012 01:10:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=Wr/GgFtFvAIibn1Ug/foigW1j6o=; b=cbMVKLlmTbrzeevKCk0O
-	Ekk/680T3G7XN6ZDiuayGa081MNW6c/2YA8hqmbixBN1PukrKUQ12vVYsa6pF2eB
-	eXfSUA8UCirhnSBiV2aopjcFnt853lVNLdG3XeP8g8nCP8TLuxcodBD6xeErTb3M
-	d0w29VakvfC9Y9BUyC1PLgw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=FZ74Cex6I4tmOfoIbqdP/cLMx5Yu1FZiYKAcS0nbA35ODc
-	mrPlCwwe3Fv7nipjK6et8iCw2FB6x0NND9W3tJ3LTlgjR0vFTED8b0n8VnzeF6oY
-	3CY6HLkX914l88xPo/GclYoXo+0ycGrhuyWk7FJdiyugVe461PLxE5mGueVqo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21C376D40;
-	Fri,  2 Mar 2012 01:10:15 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B61E06D3F; Fri,  2 Mar 2012
- 01:10:13 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5FDF2EFE-642E-11E1-BA32-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755802Ab2CBGZb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Mar 2012 01:25:31 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:54533 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750949Ab2CBGZa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2012 01:25:30 -0500
+Received: by iagz16 with SMTP id z16so1881501iag.19
+        for <git@vger.kernel.org>; Thu, 01 Mar 2012 22:25:30 -0800 (PST)
+Received-SPF: pass (google.com: domain of jrnieder@gmail.com designates 10.42.140.199 as permitted sender) client-ip=10.42.140.199;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of jrnieder@gmail.com designates 10.42.140.199 as permitted sender) smtp.mail=jrnieder@gmail.com; dkim=pass header.i=jrnieder@gmail.com
+Received: from mr.google.com ([10.42.140.199])
+        by 10.42.140.199 with SMTP id l7mr6022591icu.28.1330669530250 (num_hops = 1);
+        Thu, 01 Mar 2012 22:25:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=F+dZeK++/qllj6qYdBnvDxoNYBEl/2s/rxUNC8djBpA=;
+        b=Q0HMSpuygDS4J8QF74uhy0NmZPj6wIgWuFEuyem679YFGVBSWmoZRVjLhh/THzNhLd
+         Z8Ce7wgb7ppxIiAiXSkZou/VrAofb7iXvIk9XieZCwUfwnxSXKeF4vFKwdIa72hfRy6y
+         puYIqm4a7rw7Bf3vSijN7SUfVcTJ0t94WSmVdygEb4R0gRqZETzb8ctyWjhjdMRCLeyp
+         bincC1I9p6xsxmokR+ii5Mb356Poljyl6aNvif4KswzVFS8h4ZaBJLrE9Ay2MX29w6qf
+         xD5TyhREtSH39qTikxyKqIlOiJ/c4cYo3NasUNvimfGgXAhrCbPwlsOzLMbam4CcyuZx
+         GR9Q==
+Received: by 10.42.140.199 with SMTP id l7mr4932825icu.28.1330669530192;
+        Thu, 01 Mar 2012 22:25:30 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id eo1sm666519igc.17.2012.03.01.22.25.29
+        (version=SSLv3 cipher=OTHER);
+        Thu, 01 Mar 2012 22:25:29 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <4F505F8C.70802@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192006>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Neal Kreitzinger wrote:
 
-> What's cooking in git.git (Mar 2012, #01; Thu, 1)
-> --------------------------------------------------
->
-> * nd/threaded-index-pack (2012-02-28) 2 commits
->  . index-pack: support multithreaded delta resolving
->  . index-pack: split second pass obj handling into own function
->
-> Produces a corrupt pack.  Will discard.
+> Please let me know what else is a "hard social problem".  I'm not a
+> bug-tracker expert but I've used a few bug-tracking systems and
+> worked plenty of bugs though never on an opensource project so maybe
+> I'm not aware of the "hard social problems".
 
-This was a copy-and-paste error.  The correct commentary should read:
-
-  Fails to create correct pack .idx file (breakage can be seen in t5510 from
-  tr/maint-bundle-bondary topic).  Kept out of 'pu' to avoid damages.
+I was not alluding to bug ping-pong (which is a security or discipline
+problem) but the task of reconciling independent good-faith updates
+(which is a coordination problem).
