@@ -1,100 +1,95 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH v7 00/10] Column display
-Date: Fri, 2 Mar 2012 12:25:56 +0100
-Message-ID: <87ehtbb5x7.fsf@thomas.inf.ethz.ch>
-References: <1330170078-29353-1-git-send-email-pclouds@gmail.com>
-	<1330430331-19945-1-git-send-email-pclouds@gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH] Update l10n guide
+Date: Fri, 2 Mar 2012 20:18:36 +0800
+Message-ID: <CANYiYbG-Gp0cELF7_CxT1veRod+ookBaucfjCpWZjK1kTC0sAQ@mail.gmail.com>
+References: <CANYiYbGS_cFTHT1Pkafi9dmzedqezTq8k1tPkYur0b2St_c43Q@mail.gmail.com>
+	<7v1upew6d0.fsf@alter.siamese.dyndns.org>
+	<7vfwduujxw.fsf_-_@alter.siamese.dyndns.org>
+	<CANYiYbE5rcnD_VGJyL2CjS-R5E0pyNSd5TetvH849W6wC5JiAA@mail.gmail.com>
+	<7vk434q4eg.fsf@alter.siamese.dyndns.org>
+	<CANYiYbE7bxz5=h9gaKf6+N6k5cn6mEKnuf_7KPFAnDrC31UL_w@mail.gmail.com>
+	<4F50A55E.8040705@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 02 12:26:07 2012
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Mar 02 13:18:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3Qch-0000ih-26
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 12:26:07 +0100
+	id 1S3RRa-0005cq-IZ
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 13:18:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964955Ab2CBL0B convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Mar 2012 06:26:01 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:2350 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964792Ab2CBL0A convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Mar 2012 06:26:00 -0500
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 2 Mar
- 2012 12:25:55 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Fri, 2 Mar
- 2012 12:25:57 +0100
-In-Reply-To: <1330430331-19945-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 28
- Feb 2012 18:58:41 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1756888Ab2CBMSi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Mar 2012 07:18:38 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:46325 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754697Ab2CBMSh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Mar 2012 07:18:37 -0500
+Received: by yenl12 with SMTP id l12so717746yen.19
+        for <git@vger.kernel.org>; Fri, 02 Mar 2012 04:18:36 -0800 (PST)
+Received-SPF: pass (google.com: domain of worldhello.net@gmail.com designates 10.236.181.193 as permitted sender) client-ip=10.236.181.193;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of worldhello.net@gmail.com designates 10.236.181.193 as permitted sender) smtp.mail=worldhello.net@gmail.com; dkim=pass header.i=worldhello.net@gmail.com
+Received: from mr.google.com ([10.236.181.193])
+        by 10.236.181.193 with SMTP id l41mr12982210yhm.38.1330690716875 (num_hops = 1);
+        Fri, 02 Mar 2012 04:18:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=AwjjiCOeFKFIDc3K34fFpk8X8THXioGXdaFSPgEVw3s=;
+        b=PtvW4RW/UW+jLtXgOCa5FhvtU7LtFzOmjbCreiix43NZzKY2DX9GgegPLFFsNZ24ye
+         HctACPdAsbZGNMPZseHqUmRj2l2UsiCU/DXTX5Cye1MdX2eNB+z38+0mrg+AlXdVJiP+
+         D9aqz/eEPA4qv+akIiUv08YOJrlqYScfU/s2rMZKFoywflzsVuMFsAx0fcHUkkXDfCYC
+         EVapRp4+rahXTIqiZP7GIohmEqDkJNwEMbKwQgPFahAYG0gn7ZSOLspoILaByv2WPyVt
+         bNYYf6BhmvHOkSLRUAcfbijSV4OvXPYYHCp5nmOSb2OgsgseXSsRexcU0fAlcp402LjT
+         n56g==
+Received: by 10.236.181.193 with SMTP id l41mr10277304yhm.38.1330690716737;
+ Fri, 02 Mar 2012 04:18:36 -0800 (PST)
+Received: by 10.236.182.5 with HTTP; Fri, 2 Mar 2012 04:18:36 -0800 (PST)
+In-Reply-To: <4F50A55E.8040705@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192031>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+2012/3/2 Johannes Sixt <j.sixt@viscovery.net>:
+> It does not convert, but it records which encoding the text has. If y=
+ou
+> don't specify anything, UTF-8 is assumed, and if your text is actuall=
+y not
+> UTF-8, the result is necessarily garbage.
+>
+> Then you haven't set i18n.commitEncoding. Try this:
+>
+> =A0 git config i18n.commitEncoding CP936
 
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (10):
->   Add git-column for columnar display
->   Stop starting pager recursively
->   column: add columnar layout
->   column: add dense layout support
->   column: add column.ui for default column output settings
->   help: reuse print_columns() for help -a
->   branch: add --column
->   status: add --column
->   column: support piping stdout to external git-column process
->   tag: add --column
+I know there are two config variables. i18n.commitEncoding will insert
+a "encoding XX" line to the commit object, while i18n.logOutputEncoding
+will set the default output encoding. But this implementation seems lik=
+e
+a workaround.
 
-I ran valgrind over the tests in pu, and I'm seeing these errors
-presumably coming from this series:
+* Tree objects do not have such implementation, so multibyte characters
+   can not be used as filenames.
 
-t3200-branch.out:=3D=3D340=3D=3D Invalid read of size 4
-t3200-branch.out:=3D=3D340=3D=3D    at 0x48E676: shrink_columns (column=
-=2Ec:101)
-t3200-branch.out:=3D=3D340=3D=3D    by 0x48EB76: display_table (column.=
-c:200)
-t3200-branch.out:=3D=3D340=3D=3D    by 0x48ED1B: print_columns (column.=
-c:241)
-t3200-branch.out:=3D=3D340=3D=3D    by 0x41967F: cmd_branch (branch.c:7=
-93)
-t3200-branch.out:=3D=3D340=3D=3D    by 0x40550B: run_builtin (git.c:308=
-)
-t3200-branch.out:=3D=3D340=3D=3D    by 0x4056A6: handle_internal_comman=
-d (git.c:468)
-t3200-branch.out:=3D=3D340=3D=3D    by 0x4057C0: run_argv (git.c:514)
-t3200-branch.out:=3D=3D340=3D=3D    by 0x40594D: main (git.c:589)
-t3200-branch.out:=3D=3D340=3D=3D  Address 0x57023ac is 0 bytes after a =
-block of size 60 alloc'd
-t3200-branch.out:=3D=3D340=3D=3D    at 0x4C226FA: malloc (vg_replace_ma=
-lloc.c:263)
-t3200-branch.out:=3D=3D340=3D=3D    by 0x521A11: xmalloc (wrapper.c:35)
-t3200-branch.out:=3D=3D340=3D=3D    by 0x48EAE8: display_table (column.=
-c:193)
-t3200-branch.out:=3D=3D340=3D=3D    by 0x48ED1B: print_columns (column.=
-c:241)
-t3200-branch.out:=3D=3D340=3D=3D    by 0x41967F: cmd_branch (branch.c:7=
-93)
-t3200-branch.out:=3D=3D340=3D=3D    by 0x40550B: run_builtin (git.c:308=
-)
-t3200-branch.out:=3D=3D340=3D=3D    by 0x4056A6: handle_internal_comman=
-d (git.c:468)
-t3200-branch.out:=3D=3D340=3D=3D    by 0x4057C0: run_argv (git.c:514)
-t3200-branch.out:=3D=3D340=3D=3D    by 0x40594D: main (git.c:589)
+* Commit object without "encoding" instruction will be used as it is. S=
+o
+  people under the same non-utf8 locale may not notice that they
+  have not set the proper i18n.commitEncoding, until one day they
+  need accross platform development.
 
-and very similar errors in t7004-tag.out, t9002-column.out and
-t7508-status.out.  Can you look into it?
+* As raw commit log alway used as fallback, sometimes it is hard to fin=
+d
+  commit objects with wrong encoding instructions.
+
+I think save commit object, tree object, packed-refs in UTF-8 is
+a better implementation.
 
 --=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Jiang Xin
