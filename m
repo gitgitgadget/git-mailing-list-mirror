@@ -1,95 +1,103 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH] Update l10n guide
-Date: Fri, 2 Mar 2012 20:18:36 +0800
-Message-ID: <CANYiYbG-Gp0cELF7_CxT1veRod+ookBaucfjCpWZjK1kTC0sAQ@mail.gmail.com>
-References: <CANYiYbGS_cFTHT1Pkafi9dmzedqezTq8k1tPkYur0b2St_c43Q@mail.gmail.com>
-	<7v1upew6d0.fsf@alter.siamese.dyndns.org>
-	<7vfwduujxw.fsf_-_@alter.siamese.dyndns.org>
-	<CANYiYbE5rcnD_VGJyL2CjS-R5E0pyNSd5TetvH849W6wC5JiAA@mail.gmail.com>
-	<7vk434q4eg.fsf@alter.siamese.dyndns.org>
-	<CANYiYbE7bxz5=h9gaKf6+N6k5cn6mEKnuf_7KPFAnDrC31UL_w@mail.gmail.com>
-	<4F50A55E.8040705@viscovery.net>
+From: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
+Subject: Re: [PATCH v2 3/3] http: when proxy url has username but no password,
+ ask for password
+Date: Fri, 02 Mar 2012 14:33:53 +0100
+Message-ID: <4F50CC41.5020307@seap.minhap.es>
+References: <4F4FBE6C.5050507@seap.minhap.es><4F4FB69C.7000708@vilain.net> <20120301215812.GG17631@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Mar 02 13:18:43 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 02 13:36:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3RRa-0005cq-IZ
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 13:18:42 +0100
+	id 1S3Ril-0000UA-KY
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 13:36:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756888Ab2CBMSi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Mar 2012 07:18:38 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:46325 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754697Ab2CBMSh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Mar 2012 07:18:37 -0500
-Received: by yenl12 with SMTP id l12so717746yen.19
-        for <git@vger.kernel.org>; Fri, 02 Mar 2012 04:18:36 -0800 (PST)
-Received-SPF: pass (google.com: domain of worldhello.net@gmail.com designates 10.236.181.193 as permitted sender) client-ip=10.236.181.193;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of worldhello.net@gmail.com designates 10.236.181.193 as permitted sender) smtp.mail=worldhello.net@gmail.com; dkim=pass header.i=worldhello.net@gmail.com
-Received: from mr.google.com ([10.236.181.193])
-        by 10.236.181.193 with SMTP id l41mr12982210yhm.38.1330690716875 (num_hops = 1);
-        Fri, 02 Mar 2012 04:18:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=AwjjiCOeFKFIDc3K34fFpk8X8THXioGXdaFSPgEVw3s=;
-        b=PtvW4RW/UW+jLtXgOCa5FhvtU7LtFzOmjbCreiix43NZzKY2DX9GgegPLFFsNZ24ye
-         HctACPdAsbZGNMPZseHqUmRj2l2UsiCU/DXTX5Cye1MdX2eNB+z38+0mrg+AlXdVJiP+
-         D9aqz/eEPA4qv+akIiUv08YOJrlqYScfU/s2rMZKFoywflzsVuMFsAx0fcHUkkXDfCYC
-         EVapRp4+rahXTIqiZP7GIohmEqDkJNwEMbKwQgPFahAYG0gn7ZSOLspoILaByv2WPyVt
-         bNYYf6BhmvHOkSLRUAcfbijSV4OvXPYYHCp5nmOSb2OgsgseXSsRexcU0fAlcp402LjT
-         n56g==
-Received: by 10.236.181.193 with SMTP id l41mr10277304yhm.38.1330690716737;
- Fri, 02 Mar 2012 04:18:36 -0800 (PST)
-Received: by 10.236.182.5 with HTTP; Fri, 2 Mar 2012 04:18:36 -0800 (PST)
-In-Reply-To: <4F50A55E.8040705@viscovery.net>
+	id S964818Ab2CBMgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Mar 2012 07:36:22 -0500
+Received: from luthien2.map.es ([213.9.211.102]:54920 "EHLO luthien2.map.es"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756115Ab2CBMgV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2012 07:36:21 -0500
+Received: from correo.map.es (unknown [10.1.24.31])
+	by luthien2.map.es (Postfix) with ESMTP id DE419B7223;
+	Fri,  2 Mar 2012 13:35:16 +0100 (CET)
+Received: from [10.47.128.147] (unknown [10.1.29.79])
+	by correo.map.es (Postfix) with ESMTP id 6737DD4BFE;
+	Fri,  2 Mar 2012 13:35:10 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0.1) Gecko/20120216 Thunderbird/10.0.1
+In-Reply-To: <20120301215812.GG17631@sigill.intra.peff.net>
+X-map-MapScanner: Libre de virus, Libre de virus
+X-Spam-Status: No, No
+X-map-MapScanner-Information: 
+X-map-MapScanner-ID: DE419B7223.6343D
+X-map-MapScanner-From: nelsonjesus.benitez@seap.minhap.es
+X-map-MailScanner-Watermark: 1331296517.19428@G76wVAfNp/t083HlvM/l5A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192032>
 
-2012/3/2 Johannes Sixt <j.sixt@viscovery.net>:
-> It does not convert, but it records which encoding the text has. If y=
-ou
-> don't specify anything, UTF-8 is assumed, and if your text is actuall=
-y not
-> UTF-8, the result is necessarily garbage.
->
-> Then you haven't set i18n.commitEncoding. Try this:
->
-> =A0 git config i18n.commitEncoding CP936
+On 03/01/2012 10:58 PM, Jeff King wrote:
+> On Thu, Mar 01, 2012 at 09:49:16AM -0800, Sam Vilain wrote:
+> 
+>>>  	if (curl_http_proxy) {
+>>> -		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
+>>> +		credential_from_url(&proxy_auth, curl_http_proxy);
+>>> +		if (proxy_auth.username != NULL&&  proxy_auth.password == NULL) {
+>>> +			/* proxy string has username but no password, ask for password */
+>>> +			struct strbuf pbuf = STRBUF_INIT;
+>>> +			credential_fill(&proxy_auth);
+>>
+>> Wouldn't it be better to wait until the proxy returns a 403 before
+>> assuming that the proxy setting is incorrect/missing a password?
+>> What if the administrator expects the user to fill in both the
+>> username and password?  That is the behaviour of a web browser.
+>>
+>> Also, I think you should wait until that 403 to detect whether the
+>> proxy setting came from the environment, and only load it explicitly
+>> then.
+> 
+> It's worth looking at what the http auth code does here.
+> 
+[snip]
+> overhaul it.
+> 
+> Complicating all of this is the fact that I think Nelson's original
+> patch was based on an older, pre-986bbc0 version of git, which is why he
+> followed the pre-prompt route, copying the style of regular http auth.
+> 
+> So there's the history lesson. What should proxy auth do?
+> 
+>   1. Definitely respond to HTTP 407 by prompting on the fly; this code
+>      should go along-side the HTTP 401 code in http.c.
+> 
+>   2. Definitely do the pre-prompt thing when http_proactive_auth is set
+>      (which is used only by http-push). Unless somebody really feels
+>      like re-writing http-push to handle retries for authentication.
+> 
+>   3. Consider doing the pre-prompt thing when http_proactive_auth is not
+>      set. This can save a round-trip, but we should not do it if there
+>      is a good reason not to. The two possible reasons I can think of
+>      are:
+> 
+>        a. Like http auth, if curl will read the proxy credentials from
+>           .netrc, then we should not do it for the same reasons
+>           mentioned in 986bbc0.
+> 
+>        b. If people realistically have proxy URLs with usernames but do
+>           _not_ want to ask for a password, then the prompt will be
+>           annoying. I'm not sure that anybody expects that.
 
-I know there are two config variables. i18n.commitEncoding will insert
-a "encoding XX" line to the commit object, while i18n.logOutputEncoding
-will set the default output encoding. But this implementation seems lik=
-e
-a workaround.
+So, trying to sum up, I will try to redo patch-set as follows:
+- Ignore PATCH 2/3 , that is, we won't read any env var.
+- Let cURL try to connect and if that fails with 407 , then do a credential_fill
+and try to reconnect.
 
-* Tree objects do not have such implementation, so multibyte characters
-   can not be used as filenames.
-
-* Commit object without "encoding" instruction will be used as it is. S=
-o
-  people under the same non-utf8 locale may not notice that they
-  have not set the proper i18n.commitEncoding, until one day they
-  need accross platform development.
-
-* As raw commit log alway used as fallback, sometimes it is hard to fin=
-d
-  commit objects with wrong encoding instructions.
-
-I think save commit object, tree object, packed-refs in UTF-8 is
-a better implementation.
-
---=20
-Jiang Xin
+Is that ok? or do I need to do something more?
