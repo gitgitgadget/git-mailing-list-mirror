@@ -1,90 +1,76 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Why Is There No Bug Tracker And Why Are Patches Sent Instead Of
  Pull Requests
-Date: Thu, 1 Mar 2012 22:19:24 -0600
-Message-ID: <20120302041924.GG5248@burratino>
+Date: Thu, 01 Mar 2012 20:21:53 -0800
+Message-ID: <7vty27k4ym.fsf@alter.siamese.dyndns.org>
 References: <CAM=oOO2i-9zraF-YG5YzvZEmN1eXTnQfhJ-eMF04NP7HGtf41w@mail.gmail.com>
- <7vhay9tqs6.fsf@alter.siamese.dyndns.org>
- <20120229225304.GA9099@burratino>
+ <7vhay9tqs6.fsf@alter.siamese.dyndns.org> <20120229225304.GA9099@burratino>
  <CAH5451miv_Mo_9tZV+mfDEHuEX0491duqAYh66aOzLsMLTNkaA@mail.gmail.com>
- <8762eoimp0.fsf@thomas.inf.ethz.ch>
- <7vmx80nt68.fsf@alter.siamese.dyndns.org>
- <4F504699.3070406@gmail.com>
+ <8762eoimp0.fsf@thomas.inf.ethz.ch> <7vmx80nt68.fsf@alter.siamese.dyndns.org>
+ <4F504699.3070406@gmail.com> <20120302041924.GG5248@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
+Cc: Neal Kreitzinger <nkreitzinger@gmail.com>,
 	Thomas Rast <trast@inf.ethz.ch>,
 	Andrew Ardill <andrew.ardill@gmail.com>,
 	opticyclic <opticyclic@gmail.com>, git@vger.kernel.org
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 02 05:20:06 2012
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 02 05:22:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3JyO-0001fk-1r
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 05:20:04 +0100
+	id 1S3K0I-0002qf-0j
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 05:22:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754797Ab2CBETb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Mar 2012 23:19:31 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:43237 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754539Ab2CBETa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2012 23:19:30 -0500
-Received: by iagz16 with SMTP id z16so1776211iag.19
-        for <git@vger.kernel.org>; Thu, 01 Mar 2012 20:19:30 -0800 (PST)
-Received-SPF: pass (google.com: domain of jrnieder@gmail.com designates 10.50.186.198 as permitted sender) client-ip=10.50.186.198;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of jrnieder@gmail.com designates 10.50.186.198 as permitted sender) smtp.mail=jrnieder@gmail.com; dkim=pass header.i=jrnieder@gmail.com
-Received: from mr.google.com ([10.50.186.198])
-        by 10.50.186.198 with SMTP id fm6mr348805igc.40.1330661970387 (num_hops = 1);
-        Thu, 01 Mar 2012 20:19:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=s5eIWilaL2l61CDiSDMsbuk6+Eq4HeG/DrUU8u3/56U=;
-        b=fcvbFrMStdjuWTSvuIQMIl7amrXbXiHNQEOebDAYZsEKQxTR406BXRLIAH7dFhoXZd
-         nU/DOcLZIHv+lxBmF6kcmwZhstRqivOi2HRBgIMxhE76HFBclW1edMdF59x+rvcM+s7y
-         FoL6aIJY2MNkvVCE8rzc/LNA1B06mBACcOE1y8QOIVvplg2iSl7Qfj+sAudki5VsIZuQ
-         ZnAEqns3aqseMByRPf55pmTzsivdZTdfIOiqFeNGx7GIHiwktHf2JKqVyoLxqeC0Fyul
-         /cX+mn5IQs/jcFrIDs+wkUPvwMrthz8mLPGi2Sa/XxkIxU/Cl8cLyDQOvn9ogt2GVLal
-         tVjQ==
-Received: by 10.50.186.198 with SMTP id fm6mr290589igc.40.1330661970326;
-        Thu, 01 Mar 2012 20:19:30 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id df2sm491564igb.10.2012.03.01.20.19.29
-        (version=SSLv3 cipher=OTHER);
-        Thu, 01 Mar 2012 20:19:29 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4F504699.3070406@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754830Ab2CBEV5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Mar 2012 23:21:57 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42964 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753914Ab2CBEV4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2012 23:21:56 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 057777D24;
+	Thu,  1 Mar 2012 23:21:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kwhWQgDLp+8jFRbHHe4cvJXzZ08=; b=mv/IZR
+	9gEPq7Ljwd7A4IncaB6e6cXqeW2CxCxSuwTf2Qsqysp1pKTm/GLYNhuOnjlLVoiq
+	Duji9OpSflrE8c4lQD8DTYty2IE6OoSsvfv8wSnyroIgEXrCQ2N/9bXPNsWkFxYx
+	ieFpejE31M2xKUeMCIVnPJpBplg1r8Wr/rcT4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ljWAB518rXGp5a/qTBneM/5+MaYOhoLD
+	Qgchk3z+Gp1gstP1tIZ01TyX8/oSZzWAz0mXnm/1020YmR/YjUsZ/wZl0GL4iZET
+	v854KBavAKM3iTETQjZVL048HdWJ+F6KqxTY3KB6+XYaIvWtxCnD7S/d2pjfyaHQ
+	AVQ6G7hWGGg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F05D37D23;
+	Thu,  1 Mar 2012 23:21:55 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6BCCB7D22; Thu,  1 Mar 2012
+ 23:21:55 -0500 (EST)
+In-Reply-To: <20120302041924.GG5248@burratino> (Jonathan Nieder's message of
+ "Thu, 1 Mar 2012 22:19:24 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3E9CAFBE-641F-11E1-B315-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/191999>
 
-Neal Kreitzinger wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Why don't you just use git for your bug-tracking?
-[...]
-> I think git people in general would be enthusiastic about this
+> That said, a good distributed bugtracker (which implies solving hard
+> social problems like "what to do if different contributors disagree on
+> severity" and simple technical problems like "how to present a
+> coherent conversation based on threads by people who might not have
+> been aware of each other") would be a very nice thing to see,
+> regardless of the choice of storage and network protocol used to back
+> it.
 
-Not this git person. ;-)  I think there is a pretty major mismatch
-between most VCSen's features and what a bugtracker needs.
-
-That said, a good distributed bugtracker (which implies solving hard
-social problems like "what to do if different contributors disagree on
-severity" and simple technical problems like "how to present a
-coherent conversation based on threads by people who might not have
-been aware of each other") would be a very nice thing to see,
-regardless of the choice of storage and network protocol used to back
-it.
-
-> git-err-done
-
-Heh.
-
-Thanks for some food for thought,
-Jonathan
+Exactly. In the discussion of the "tracker" context, the choice of storage
+medium is secondary.
