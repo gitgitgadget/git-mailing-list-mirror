@@ -1,152 +1,166 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: GSoC 2012 application process
-Date: Fri, 02 Mar 2012 13:48:31 -0800
-Message-ID: <7vipimbro0.fsf@alter.siamese.dyndns.org>
-References: <20120302091114.GA3984@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH (BUGFIX)] gitweb: Fix fixed string (non-regexp) project search
+Date: Fri, 2 Mar 2012 23:34:24 +0100
+Message-ID: <201203022334.25544.jnareb@gmail.com>
+References: <20120228183919.26435.86795.stgit@localhost.localdomain> <4F512327.3050504@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 02 22:48:45 2012
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Fri Mar 02 23:34:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3aLA-0007J3-CR
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 22:48:40 +0100
+	id 1S3b3f-0006So-P2
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 23:34:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757830Ab2CBVsf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Mar 2012 16:48:35 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48243 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757676Ab2CBVse (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2012 16:48:34 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68BA76C6F;
-	Fri,  2 Mar 2012 16:48:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p0X7pBH+vXnn5faSqqxyPe4iPnQ=; b=CwQSYB
-	xEq7WyuftcWtcpcxRpJe+3V4q8DDKG02rlhURH6KZhxVwM6zxXejr6dKEI4U+lkI
-	jTXrNz9l170oy1Eza3VIRIJL1xhpCxc3maBYTyNSHCBwm2DRqUqkmBJ4638dK3Lb
-	56oYFHhwSbHbIISfK0ZvaOKain8aC9BqKkWT0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SN4z+dMsgqgYtDPhfHYR+bpvcjAeY8YH
-	yRfLgMq3HDzbyhd8VV50B9KI/48q6qm/RCMMDa4G0aEdtZQiL+bQhguAq0chOLsV
-	LScHoiEwqrTQ3DfO4n1jXHqQA0HPDeYy1zk/VBSnot75yAJ9fGugHhWP/21T4hsp
-	iLndgZDMCVA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 58FE46C6E;
-	Fri,  2 Mar 2012 16:48:33 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ABBA96C6D; Fri,  2 Mar 2012
- 16:48:32 -0500 (EST)
-In-Reply-To: <20120302091114.GA3984@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 2 Mar 2012 04:11:14 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 74AA7A54-64B1-11E1-9FDF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S964930Ab2CBWee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Mar 2012 17:34:34 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:62258 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964842Ab2CBWed (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2012 17:34:33 -0500
+Received: by eekc41 with SMTP id c41so781852eek.19
+        for <git@vger.kernel.org>; Fri, 02 Mar 2012 14:34:31 -0800 (PST)
+Received-SPF: pass (google.com: domain of jnareb@gmail.com designates 10.213.25.68 as permitted sender) client-ip=10.213.25.68;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of jnareb@gmail.com designates 10.213.25.68 as permitted sender) smtp.mail=jnareb@gmail.com; dkim=pass header.i=jnareb@gmail.com
+Received: from mr.google.com ([10.213.25.68])
+        by 10.213.25.68 with SMTP id y4mr126907ebb.281.1330727671785 (num_hops = 1);
+        Fri, 02 Mar 2012 14:34:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=6MfGXnaydN66MHKa5/kXbD3YOaqOIjmpGcljWVriNx4=;
+        b=ClnqdXJNVPhCfyWpyM9MhI5VtV3wBDh0t0rJiXoDzS9dBK9Ph3RyjKlIYN7QRfLZ2u
+         LGIy35r810vRL2ewb94NqKbImkCsdrZvVUdE53i+yIeGmyD8fx8RGsgqedQ58zqVakxk
+         6TRVM3E2ILIpXUKfAfg5SPoIDIksD3xIrS0Qheh+o8XAcPtd65389BmBZ3icvN26iTtr
+         pUeFRCUJt/V/ImulEJCUGt3suJ0qYG10zLbohDKsz4yxNKIsDg9GxQSbiLAguZ6PH5GM
+         zPuwazibHRg5ml21q947d42LsUQTVgqDhWwImEVHLbIIUyei5Rhhic52vHNxVA25VeOD
+         3CoA==
+Received: by 10.213.25.68 with SMTP id y4mr96928ebb.281.1330727671615;
+        Fri, 02 Mar 2012 14:34:31 -0800 (PST)
+Received: from [192.168.1.13] (abvt148.neoplus.adsl.tpnet.pl. [83.8.217.148])
+        by mx.google.com with ESMTPS id u9sm25575493eem.11.2012.03.02.14.34.30
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 02 Mar 2012 14:34:30 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4F512327.3050504@ramsay1.demon.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192069>
 
-Jeff King <peff@peff.net> writes:
+Use $search_regexp, where regex metacharacters are quoted, for
+searching projects list, rather than $searchtext, which contains
+original search term.
 
-> ... a wiki page for
-> project ideas:
->
->   https://github.com/peff/git/wiki/SoC-2012-Application
->   https://github.com/peff/git/wiki/SoC-2012-Ideas
->
-> The application is due March 9th (next Friday).
+Reported-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+I think this bug was here from the very beginning of adding project
+search, i.e. from  v1.6.0.2-446-g0d1d154 (gitweb: Support for simple
+project search form, 2008-10-03)  which was present since 1.6.1
 
-Thanks for getting the ball rolling.
+On Fri, 2 Mar 2012, Ramsay Jones wrote:
+> Jakub Narebski wrote:
 
-One thing unrelated to the proposal I have been wondering about was how
-well our release cycles mesh with the GSoC timeline.
+> > When using regexp search ('sr' parameter / $search_use_regexp variable
+> > is true), check first that regexp is valid.
+> > 
+> > Without this patch we would get an error from Perl during search (if
+> > searching is performed by gitweb), or highlighting matches substring
+> > (if applicable), if user provided invalid regexp... which means broken
+> > HTML, with error page (including HTTP headers) generated after gitweb
+> > already produced some output.
+> > 
+> > Add test that illustrates such error: for example for regexp "*\.git"
+> > we would get the following error:
+> > 
+> >   Quantifier follows nothing in regex; marked by <-- HERE in m/* <-- HERE \.git/
+> >   at /var/www/cgi-bin/gitweb.cgi line 3084.
+> > 
+> > Reported-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+> > Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+> > ---
+> > See "Re: gitweb: (potential) problems with new installation"
+> > http://thread.gmane.org/gmane.comp.version-control.git/191746
+> 
+> This patch solves the problem for me when using a regex search
+> (re checkbox checked), but *not* for a non-regex search.
+> 
+> If you have a leading '*' or '+', in the non-regex case, then you
+> still get the above complaint (and xml error page etc.), although
+> the line number has changed slightly from that given above.
 
-Comparing the GSoC timeline and the Git Calendar:
+Ramsay, please provide those line number in the future, together with
+line and if possible some context.
 
-    http://www.google-melange.com/gsoc/events/google/gsoc2012
-    http://tinyurl.com/gitcal
+The line is different because it is different bug: this is about not
+using quotemeta'ed string for search for fixed-string search.
 
-Some basics to consider:
+ gitweb/gitweb.perl |   22 +++++++++++-----------
+ 1 files changed, 11 insertions(+), 11 deletions(-)
 
- - Typically one cycle of our development lasts for 8 to 10 weeks, and at
-   around its 5th or 6th week, the major changes for the next release are
-   expected to be more or less ready.
-
- - As we have about 20 weeks between the beginning of post-1.7.10 cycle
-   and pencils-down time for GSoC, and also people tend to slow down or
-   stop late June to early July for summer holidays, I am planning to make
-   these cycles last a bit longer for 10 weeks.
-
-The way I envision the experience for this year's students would go are
-like this:
-
- * GSoC student proposal acceptance (April 23rd)
-   The students are expected to start "bonding" with the community.
-
-   This is at the beginning of week #4 of the post-1.7.10 cycle.  Students
-   have a chance to observe and learn how a change is proposed, its design
-   debated and patchset polished from beginning to end, even if they wait
-   before joining the mailing list until this date.
-
- * GSoC student first day of business (May 21st)
-   The students are expected to start coding.
-
-   This is at the beginning of week #8 of the post-1.7.10 cycle,
-   1.7.11-rc0 should have been tagged several days before, and 1.7.11-rc1
-   is scheduled to be tagged in a few days.  Once we hit this point, we
-   usually do not queue anything large even to 'pu' until the final
-   release to encourage people to concentrate on the upcoming release,
-   which may be OK for the first couple of weeks for GSoC students (they
-   won't have anything to show that early).
-
-   The final batches of large changes that were previously discussed and
-   polished would still be graduating to 'master', whose earlier parts of
-   lifecycle the students may not have seen, but smaller and more obvious
-   changes proposed after they joined the community would go their full
-   lifecycle from 'pu' thru 'next' down to 'master', and the students can
-   learn from these topics how the development process works.
-
- * Beginning of post 1.7.11 cycle (June 11th)
-   The students would be working furiously for midterm.
-
-   At this point, the students have worked for 3 weeks with their mentors.
-   Good students may at least have design sketches ready to be presented
-   at this point, if not a working code.
-
- * GSoC midterm evaluation (July 9th)
-
-   This is at the beginning of week #5 of the post-1.7.11 cycle.  The
-   student's changes should at be ready for 'pu' by this time, or there is
-   no chance of them being in the upcoming release.
-
-   The students would have had 7 weeks to work up to this point, and they
-   have 4 more weeks to polish their work to 'next' and to 'master' until
-   1.7.12-rc1, and another 2 weeks to further fix late bugs in 'master'.
-
- * GSoC pencils down (Aug 20th)
-
-   This is at the end of week #10 of the post-1.7.11 cycle, and 1.7.12
-   should be already out the day before.
-
-
-Our release cycle was never scheduled around GSoC timeline for the past
-GSoC students, so I do not know what effect, if any, our pre-release
-freeze period had on our past students' work (I would appreciate hearing
-from past student about their experiences).
-
-In any case, it seems that they coincide fairly well for this year's
-students.
-
-By the way, I also considered splitting the 20-week period into two and a
-half cycles, coinciding -rc1 of the third cycle after the upcoming 1.7.10
-release and GSoC pencils down date. It would make the student success
-criteria "Is it in 'master'?" instead of "Is it in a release?", but the
-overall schedule did not work as well as the above.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 22ad279..7398be1 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3072,16 +3072,16 @@ sub filter_forks_from_projects_list {
+ # for 'descr_long' and 'ctags' to be filled
+ sub search_projects_list {
+ 	my ($projlist, %opts) = @_;
+-	my $tagfilter  = $opts{'tagfilter'};
+-	my $searchtext = $opts{'searchtext'};
++	my $tagfilter = $opts{'tagfilter'};
++	my $search_re = $opts{'search_regexp'};
+ 
+ 	return @$projlist
+-		unless ($tagfilter || $searchtext);
++		unless ($tagfilter || $search_re);
+ 
+ 	# searching projects require filling to be run before it;
+ 	fill_project_list_info($projlist,
+-	                       $tagfilter  ? 'ctags' : (),
+-	                       $searchtext ? ('path', 'descr') : ());
++	                       $tagfilter ? 'ctags' : (),
++	                       $search_re ? ('path', 'descr') : ());
+ 	my @projects;
+  PROJECT:
+ 	foreach my $pr (@$projlist) {
+@@ -3092,10 +3092,10 @@ sub search_projects_list {
+ 				grep { lc($_) eq lc($tagfilter) } keys %{$pr->{'ctags'}};
+ 		}
+ 
+-		if ($searchtext) {
++		if ($search_re) {
+ 			next unless
+-				$pr->{'path'} =~ /$searchtext/ ||
+-				$pr->{'descr_long'} =~ /$searchtext/;
++				$pr->{'path'} =~ /$search_re/ ||
++				$pr->{'descr_long'} =~ /$search_re/;
+ 		}
+ 
+ 		push @projects, $pr;
+@@ -5498,9 +5498,9 @@ sub git_project_list_body {
+ 		if ($check_forks);
+ 	# search_projects_list pre-fills required info
+ 	@projects = search_projects_list(\@projects,
+-	                                 'searchtext' => $searchtext,
+-	                                 'tagfilter'  => $tagfilter)
+-		if ($tagfilter || $searchtext);
++	                                 'search_regexp' => $search_regexp,
++	                                 'tagfilter' => $tagfilter)
++		if ($tagfilter || $search_regexp);
+ 	# fill the rest
+ 	@projects = fill_project_list_info(\@projects);
+ 
+-- 
+1.7.9
