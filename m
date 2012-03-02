@@ -1,92 +1,72 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Why Is There No Bug Tracker And Why Are Patches Sent Instead
- Of Pull Requests
-Date: Fri, 02 Mar 2012 15:18:46 +0100
-Message-ID: <4F50D6C6.3080909@op5.se>
-References: <CAM=oOO2i-9zraF-YG5YzvZEmN1eXTnQfhJ-eMF04NP7HGtf41w@mail.gmail.com> <7vhay9tqs6.fsf@alter.siamese.dyndns.org> <20120229225304.GA9099@burratino> <CAH5451miv_Mo_9tZV+mfDEHuEX0491duqAYh66aOzLsMLTNkaA@mail.gmail.com> <8762eoimp0.fsf@thomas.inf.ethz.ch> <7vmx80nt68.fsf@alter.siamese.dyndns.org> <4F504699.3070406@gmail.com> <20120302041924.GG5248@burratino> <4F505F8C.70802@gmail.com> <7vsjhrfprz.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [git wiki PATCH 1/3] "Improving parallelism in various commands" project
+Date: Fri, 2 Mar 2012 21:29:22 +0700
+Message-ID: <CACsJy8APtrw-6umkr3=yrG3wfye96=z=CvfWj0tnghfDcDWFzg@mail.gmail.com>
+References: <20120302091114.GA3984@sigill.intra.peff.net> <57e8b4eb7a98af33982c2f3a763e18f62b1d6d6d.1330686331.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Neal Kreitzinger <nkreitzinger@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Andrew Ardill <andrew.ardill@gmail.com>,
-	opticyclic <opticyclic@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 02 15:18:52 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Mar 02 15:30:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3TJr-0005TW-Gy
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 15:18:51 +0100
+	id 1S3TUf-0004Ua-Q4
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Mar 2012 15:30:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752991Ab2CBOSr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Mar 2012 09:18:47 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:44191 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751283Ab2CBOSq (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Mar 2012 09:18:46 -0500
-Received: by lahj13 with SMTP id j13so2084697lah.19
-        for <git@vger.kernel.org>; Fri, 02 Mar 2012 06:18:45 -0800 (PST)
-Received-SPF: pass (google.com: domain of exon@op5.com designates 10.152.131.9 as permitted sender) client-ip=10.152.131.9;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of exon@op5.com designates 10.152.131.9 as permitted sender) smtp.mail=exon@op5.com
-Received: from mr.google.com ([10.152.131.9])
-        by 10.152.131.9 with SMTP id oi9mr8867711lab.6.1330697925230 (num_hops = 1);
-        Fri, 02 Mar 2012 06:18:45 -0800 (PST)
-Received: by 10.152.131.9 with SMTP id oi9mr7271318lab.6.1330697925148;
-        Fri, 02 Mar 2012 06:18:45 -0800 (PST)
-Received: from vix.int.op5.se (sth-vpn1.op5.com. [193.201.96.49])
-        by mx.google.com with ESMTPS id hv2sm8228036lbb.9.2012.03.02.06.18.43
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 02 Mar 2012 06:18:44 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.24) Gecko/20111108 Fedora/3.1.16-1.fc14 Thunderbird/3.1.16 ThunderGit/0.1a
-In-Reply-To: <7vsjhrfprz.fsf@alter.siamese.dyndns.org>
-X-Gm-Message-State: ALoCoQk8vC7Q4TquJ/v8SwPay2hV8n149TMqtcKO1LML5rKDqCEH61l8LW4YIDHZVR06hPS2kRut
+	id S964847Ab2CBO3y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Mar 2012 09:29:54 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:45257 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751274Ab2CBO3x convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Mar 2012 09:29:53 -0500
+Received: by wejx9 with SMTP id x9so1075662wej.19
+        for <git@vger.kernel.org>; Fri, 02 Mar 2012 06:29:52 -0800 (PST)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.180.81.37 as permitted sender) client-ip=10.180.81.37;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.180.81.37 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
+Received: from mr.google.com ([10.180.81.37])
+        by 10.180.81.37 with SMTP id w5mr3386729wix.16.1330698592466 (num_hops = 1);
+        Fri, 02 Mar 2012 06:29:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=E4Xu1Hkb3aPIgb4hUdNxSqdHL3C3h7yDHEdpw7uHOPM=;
+        b=0PGcvqWRDjprMT669nakGau5h5z4lwhM2WjnKON0FijidmryrkPmwks28eVreHVNki
+         Q6UNXgviYuINWU8EjeleWdrvK3RaSK7ZExXpaCh7ebu+kbUH2+hRo5WxTBGiqy9ZtbBq
+         2Gbo9O/KT8/3dv3clgM17Y/eL61zcSGCOVYRh2eBHCuC4ivPuRStkg3dBsQFHO5+fnuR
+         0qQBm0SUKBHJ8UMVoQPfMmI6zOUpex590xxBtF8n1YdkuQA2fZOzJtVGxEE5g4owi+u8
+         pg31ifnHw2Ap5IIElt3qnKB9tLBwFYtlgfjaSO8DCnkRvh7jEPYe0TzEIPfk2evgB0i7
+         Bmcw==
+Received: by 10.180.81.37 with SMTP id w5mr2705917wix.16.1330698592302; Fri,
+ 02 Mar 2012 06:29:52 -0800 (PST)
+Received: by 10.223.13.5 with HTTP; Fri, 2 Mar 2012 06:29:22 -0800 (PST)
+In-Reply-To: <57e8b4eb7a98af33982c2f3a763e18f62b1d6d6d.1330686331.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192045>
 
-On 03/02/2012 08:03 AM, Junio C Hamano wrote:
+On Fri, Mar 2, 2012 at 6:05 PM, Thomas Rast <trast@student.ethz.ch> wro=
+te:
+> + * In preparation (the half-step): identify commands that could
+> + =C2=A0 benefit from parallelism. =C2=A0`git grep --cached` and `git=
+ grep
+> + =C2=A0 COMMIT` come to mind, but most likely also `git diff` and `g=
+it log
+> + =C2=A0 -p`. =C2=A0You can probably find more.
 
-... a very concise and exact response.
+I just had a thought this afternoon whether "git add" may benefit from
+parallelism. It's most likely I/O-bound, although I think if we add a
+bunch of large files, it might become CPU-bound. To generalize,
+anything that calls hash_sha1_file() might benefit from parallelism.
 
-> 
-> In any case, any solution that demands more things to be done by people
-> near the core developers than they currently are already doing will make
-> things worse by exacerbating the problem that comes from a bottleneck in
-> the process.  I do not think your "The maintainer triages and assigns
-> issues to other developers" or "The assigned developer marks the issue as
-> 'done' after fixing it" will fly very well, regardless of the use of any
-> bug tracker.
-> 
-
-It works very well when there's the incentive of roof over one's head
-and food on one's table to take care of the assigned issues. However,
-nothing stops a git developer from saying "sorry, I'm busy" when being
-assigned really, really boring tasks that they really don't feel like
-doing.
-
-One thing I could see a bugtracker would be good for is to get companies
-that use git to vote on issues or features using real money. Developers
-can then pick up the issue and do something with them.
-
-Apart from that, I doubt there's much incentive for the people who do
-any of the work to pick up issues nobody cares about. The number of bugs
-falling through the cracks is too small to go through a lot of work just
-to keep track of them, and the ones that do are ones that are primarily
-of the bikeshedding variant or such weird corner-cases that they don't
-happen in 99.999% of all use-cases git was designed for and is bid to
-handle.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Another candidate may be git-apply. Actually I just want to speed up
+git-rebase and think git-apply may be the culprit. Or it could be
+unpack-trees code..
+--=20
+Duy
