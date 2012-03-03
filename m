@@ -1,170 +1,85 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [RFH] unpack-trees: cache_entry lifetime issue?
-Date: Sat, 03 Mar 2012 15:14:48 +0100
-Message-ID: <4F522758.9050205@lsrfire.ath.cx>
-References: <4F5102A2.70303@lsrfire.ath.cx> <7vk432dd89.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 03 15:15:02 2012
+From: Jared Hance <jaredhance@gmail.com>
+Subject: [PATCH v2 0/3] Fix a few documents fixmes
+Date: Sat,  3 Mar 2012 09:40:27 -0500
+Message-ID: <cover.1330785363.git.jaredhance@gmail.com>
+References: <cover.1330740964.git.jaredhance@gmail.com>
+Cc: gitster@pobox.com, Jared Hance <jaredhance@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 03 15:41:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3pjh-00006p-Le
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 15:15:02 +0100
+	id 1S3q8y-0000Sv-2K
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 15:41:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753355Ab2CCOO5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Mar 2012 09:14:57 -0500
-Received: from india601.server4you.de ([85.25.151.105]:38683 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753077Ab2CCOO4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Mar 2012 09:14:56 -0500
-Received: from [192.168.2.105] (p579BED61.dip.t-dialin.net [87.155.237.97])
-	by india601.server4you.de (Postfix) with ESMTPSA id D22642F8030;
-	Sat,  3 Mar 2012 15:14:54 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <7vk432dd89.fsf@alter.siamese.dyndns.org>
+	id S1752981Ab2CCOlC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Mar 2012 09:41:02 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:38321 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752572Ab2CCOlA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Mar 2012 09:41:00 -0500
+Received: by iagz16 with SMTP id z16so3544384iag.19
+        for <git@vger.kernel.org>; Sat, 03 Mar 2012 06:41:00 -0800 (PST)
+Received-SPF: pass (google.com: domain of jaredhance@gmail.com designates 10.42.19.5 as permitted sender) client-ip=10.42.19.5;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of jaredhance@gmail.com designates 10.42.19.5 as permitted sender) smtp.mail=jaredhance@gmail.com; dkim=pass header.i=jaredhance@gmail.com
+Received: from mr.google.com ([10.42.19.5])
+        by 10.42.19.5 with SMTP id z5mr9194944ica.51.1330785660263 (num_hops = 1);
+        Sat, 03 Mar 2012 06:41:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=c6UzAxVRBAM++AcXBERUHpecpvyFXbl4TUtqQMwyblA=;
+        b=n89bgj0NdA8oDWmxAWTJOhp4GHjtGUgEdgqzbSusq2rgmjw9c5G1+inVLl0+quWsYo
+         7MSMeucvFIrKx3yYvGM6MZwvqu1xM6hAlEfvDCqi3S4/HduVlXz0vB76wtmUdazau2+U
+         1Dz1huruAVNnjbszSYRRv8uSc01RG2YQ+S5Cbj1V3W1AFHg4gM88BTkRGnToJ7kzPkmP
+         6houpLQrm7+Xx/bGsTA8k9pDRvVviH58ylbKOksQTKGDgaFJ0ftQhSllLpoGd9JHp97d
+         7zuiAYjhVg9UEG3xldkdj29tpL/3qJW8EnPT9GfqCXqbLmzBEngjA24Chz69uSIM2q8X
+         mQLw==
+Received: by 10.42.19.5 with SMTP id z5mr7559929ica.51.1330785660217;
+        Sat, 03 Mar 2012 06:41:00 -0800 (PST)
+Received: from localhost.localdomain (cpe-174-101-220-163.cinci.res.rr.com. [174.101.220.163])
+        by mx.google.com with ESMTPS id b6sm5212250igj.7.2012.03.03.06.40.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 03 Mar 2012 06:40:57 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.4
+In-Reply-To: <cover.1330740964.git.jaredhance@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192110>
 
-Am 02.03.2012 20:17, schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe<rene.scharfe@lsrfire.ath.cx>  writes:
->=20
->> which shows some parts of unpack-trees.c that I use as context to
->> ask: Should we check for o->merge in line 775, before using src[0]?
->>
->> If o->merge is 0, the src[0] will be NULL right up to the call of
->> unpack_nondirectories() in line 772.  There it may be set (in line
->> 582).  In that case we'll end up at line 779, where mark_ce_used()
->> is applied to it.
->>
->> I suspect that this is unintended and that line 775 should rather
->> read "if (o->merge&&  src[0]) {".  Can someone with a better
->> understanding of unpack-trees confirm or refute that suspicion?
->=20
-> Yeah, src[0] is meant to hold the entry from the current index to tak=
-e it
-> as well as our tree into account during o->merge, and I do not think =
-it
-> should affect when we are only reading tree(s) into the index.
->=20
-> I think da165f4 (unpack-trees.c: prepare for looking ahead in the ind=
-ex,
-> 2010-01-07) simply forgot that the codepath also has to work when it =
-is
-> not merging.
->=20
-> Having said that, I do not know offhand if we just should nothing in
-> no-merge case, or we should be doing something else instead, without
-> thinking a bit more.
+A few patches that (hopefully) don't change the behavior of git except to
+rectify a memory error. Also, this should ever so slightly help with
+the parallelism of git (a GSoC proposal). All of these were found with
+commented FIXME and git grep.
 
-Thanks.
+Jared Hance (3):
+  Use startup_info->prefix rather than prefix.
+  Fix memory leak in apply_patch in apply.c.
+  Add threaded versions of functions in symlinks.c.
 
-Next question: Should the function fn() in struct unpack_trees_options
-be able to replace src[0], and unpack_callback() is then supposed to
-use the new pointer after calling unpack_nondirectories()?  If not
-then we can clean up things a bit by moving the src array into
-unpack_nondirectories().
+ builtin/apply.c |   30 +++++++++++++++++++++++++++---
+ cache.h         |    4 +++-
+ git.c           |    2 +-
+ symlinks.c      |   28 ++++++++++++++++++++++++++--
+ trace.c         |   10 +++++-----
+ 5 files changed, 62 insertions(+), 12 deletions(-)
 
-=46or now, just this patch, which cleans up memory, but not the code:
+-- 
 
--- >8 --
-Subject: unpack-trees: plug minor memory leak
+Changelog since last series submission:
+    - Whitespace fixes that I should have checked for before
+    - Typo fix
+    - Completely redo my fix to the memory leak to address issues pointed
+      out by Junio.
 
-The allocations made by unpack_nondirectories() using create_ce_entry()
-are never freed.  In the case of a merge, we hand them to
-call_unpack_fn() and never look at them again.  In the non-merge case,
-we duplicate them using add_entry() and later only look at the first
-allocated element (src[0]), perhaps even only by mistake.
+Note: I'm not quite sure if I actually agree with the first change. It makes
+sense right now if git.c is the only caller, but in the future, it might become
+less flexible. It might be wise to actually make startup_info static to git.c
+for protection in the future. They should be relatively independent, though,
+so the 2nd and 3rd which are probably less controversal can easily be applied.
 
-To clean up after ourselves, explicitly loop through the entries and
-free their memory for merges.  For non-merges, split out the actual
-addition from add_entry() into the new helper do_add_entry().  Then
-call that non-duplicating function instead of add_entry() to avoid the
-leak.
-
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- unpack-trees.c |   35 ++++++++++++++++++++++++-----------
- 1 file changed, 24 insertions(+), 11 deletions(-)
-
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 7c9ecf6..c594e4a 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -102,21 +102,28 @@ void setup_unpack_trees_porcelain(struct unpack_t=
-rees_options *opts,
- 		opts->unpack_rejects[i].strdup_strings =3D 1;
- }
-=20
--static void add_entry(struct unpack_trees_options *o, struct cache_ent=
-ry *ce,
--	unsigned int set, unsigned int clear)
-+static void do_add_entry(struct unpack_trees_options *o, struct cache_=
-entry *ce,
-+			 unsigned int set, unsigned int clear)
- {
--	unsigned int size =3D ce_size(ce);
--	struct cache_entry *new =3D xmalloc(size);
--
- 	clear |=3D CE_HASHED | CE_UNHASHED;
-=20
- 	if (set & CE_REMOVE)
- 		set |=3D CE_WT_REMOVE;
-=20
-+	ce->next =3D NULL;
-+	ce->ce_flags =3D (ce->ce_flags & ~clear) | set;
-+	add_index_entry(&o->result, ce,
-+			ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE);
-+}
-+
-+static void add_entry(struct unpack_trees_options *o, struct cache_ent=
-ry *ce,
-+	unsigned int set, unsigned int clear)
-+{
-+	unsigned int size =3D ce_size(ce);
-+	struct cache_entry *new =3D xmalloc(size);
-+
- 	memcpy(new, ce, size);
--	new->next =3D NULL;
--	new->ce_flags =3D (new->ce_flags & ~clear) | set;
--	add_index_entry(&o->result, new, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_=
-REPLACE);
-+	do_add_entry(o, new, set, clear);
- }
-=20
- /*
-@@ -582,12 +589,18 @@ static int unpack_nondirectories(int n, unsigned =
-long mask,
- 		src[i + o->merge] =3D create_ce_entry(info, names + i, stage);
- 	}
-=20
--	if (o->merge)
--		return call_unpack_fn(src, o);
-+	if (o->merge) {
-+		int rc =3D call_unpack_fn(src, o);
-+		for (i =3D 0; i < n; i++) {
-+			if (src[i + 1] !=3D o->df_conflict_entry)
-+				free(src[i + 1]);
-+		}
-+		return rc;
-+	}
-=20
- 	for (i =3D 0; i < n; i++)
- 		if (src[i] && src[i] !=3D o->df_conflict_entry)
--			add_entry(o, src[i], 0, 0);
-+			do_add_entry(o, src[i], 0, 0);
- 	return 0;
- }
-=20
---=20
-1.7.9.2
+1.7.3.4
