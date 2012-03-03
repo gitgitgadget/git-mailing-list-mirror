@@ -1,119 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/3] Fix memory leak in apply_patch in apply.c.
-Date: Sat, 03 Mar 2012 13:51:51 -0800
-Message-ID: <7v7gz173pk.fsf@alter.siamese.dyndns.org>
-References: <cover.1330740964.git.jaredhance@gmail.com>
- <cover.1330785363.git.jaredhance@gmail.com>
- <e631bb2059c800f9d49eed51cfa5ba4d04106a2e.1330785363.git.jaredhance@gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v2] mergetools: add support for DeltaWalker
+Date: Sat, 3 Mar 2012 14:00:17 -0800
+Message-ID: <CAJDDKr4q7gmFeHuGM5hFruduHw-3mGa+CMU=U6X0jjXUsJLsvw@mail.gmail.com>
+References: <1330694867-7601-1-git-send-email-tim.henigan@gmail.com>
+	<7vaa3ybpat.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jared Hance <jaredhance@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 03 22:52:28 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 03 23:00:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3wsN-0002e5-Vc
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 22:52:28 +0100
+	id 1S3x0B-0005C2-Ph
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 23:00:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753641Ab2CCVvy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Mar 2012 16:51:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59977 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753360Ab2CCVvy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Mar 2012 16:51:54 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FB1B7CE3;
-	Sat,  3 Mar 2012 16:51:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bA2sC1y0Edvzsnv5NcaRhoTYZps=; b=fPiWmk
-	xiINPf0m+nu8e6DNNxNd93uI90L/NustseNP3dzQfWOmoFr9cum9pcDfKXvt9Utu
-	ct+WPs+eT03wKCLTHBM7bPtaToNpUmEQeX9YATEB9om146dQIOOjLWeACGq/ekCV
-	v/FOD06x5GwRF+GbISy2m/Mitljp+MWQRXWKQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=x2z5Y5zO1P9qN5NX+uqQMPM6NQEIG/TS
-	5LIufrFccLIPn0wZpB7zl1J1edF56ux+6zi8Z/o35ZoNCOYsh1SV+N5TK+jibyMt
-	T7Scs3uV2lf1rRWIdeiHjb3kC5p4BLMPa8//ECp4sFkWksBGjrbIk4e4W5LzqbnL
-	yhbWBlkwLiA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 879E27CE2;
-	Sat,  3 Mar 2012 16:51:53 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DF48C7CE0; Sat,  3 Mar 2012
- 16:51:52 -0500 (EST)
-In-Reply-To: <e631bb2059c800f9d49eed51cfa5ba4d04106a2e.1330785363.git.jaredhance@gmail.com> (Jared Hance's message of "Sat, 3 Mar 2012 09:40:29 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 166A011A-657B-11E1-B235-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753688Ab2CCWAT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Mar 2012 17:00:19 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:47920 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751164Ab2CCWAS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 3 Mar 2012 17:00:18 -0500
+Received: by yhmm54 with SMTP id m54so1260997yhm.19
+        for <git@vger.kernel.org>; Sat, 03 Mar 2012 14:00:17 -0800 (PST)
+Received-SPF: pass (google.com: domain of davvid@gmail.com designates 10.236.116.66 as permitted sender) client-ip=10.236.116.66;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of davvid@gmail.com designates 10.236.116.66 as permitted sender) smtp.mail=davvid@gmail.com; dkim=pass header.i=davvid@gmail.com
+Received: from mr.google.com ([10.236.116.66])
+        by 10.236.116.66 with SMTP id f42mr20611222yhh.70.1330812017862 (num_hops = 1);
+        Sat, 03 Mar 2012 14:00:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Gc7IdyCaiSjs0eqJycNbsvW9KIfV0058I4Uv7hR6xZ8=;
+        b=WK8T/KG6j3Dq/I9KuOWkXG2mznj9tg8DyaQj8YHSJRw9rRNbQlwvVk/SaBVUswrVyH
+         i+liFKg3fpdOx07PWhebc9DLnBVEOpgvGOGOEXn9wses+gWUm4zhUUGP6ToJveoR6qc/
+         guQZuTVbvdZ2myv8Y7tS5NSSP+ghP+ynLYTAPM4qMm1B9mY8kMiE/Q53wItJWQf3DDmR
+         uAO3jfxkWSmnP3MJKbC2HgmNwRTuMiio3jN982wnwtWaKljLR3xe4jlCCgIzTiuxUiKH
+         qfg/Y+jmrfnwlfLFM0xk7BXy52KKAoYxJH0flc7wrQEY4Dt1g/SpM2yD9SxfeGopjgO0
+         vcOA==
+Received: by 10.236.116.66 with SMTP id f42mr16344896yhh.70.1330812017823;
+ Sat, 03 Mar 2012 14:00:17 -0800 (PST)
+Received: by 10.146.205.20 with HTTP; Sat, 3 Mar 2012 14:00:17 -0800 (PST)
+In-Reply-To: <7vaa3ybpat.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192138>
 
-Jared Hance <jaredhance@gmail.com> writes:
-
-> In addition, the list of fragments should be free'd. To fix this, the
-> utility function free_patch has been implemented. It loops over the
-> entire patch list, and in each patch, loops over the fragment list,
-> freeing the fragments, followed by the patch in the list. It frees both
-> patch and patch->next.
-
-Right encapsulation and abstraction. Good.
-
+On Fri, Mar 2, 2012 at 2:39 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Tim Henigan <tim.henigan@gmail.com> writes:
 >
-> The main caveat is that the text in a fragment, ie,
-> patch->fragments->patch, may or may not need to be free'd. The text is
-> dynamically allocated and needs to be freed iff the patch is a binary
-> patch, as allocation occurs in inflate_it.
-
-Can't we do better than "is this for a binary patch"?  I find this part
-not very forward-thinking implementation that relies on an implementation
-detail that happens to hold true for today's code.
-
-At least
-
-        if ((buf.buf <= fragment->patch &&
-            (fragment->patch < buf.buf + buf.len))
-		; /* this is inside the original buffer */
-	else
-		free(fragment->patch);
-
-or something?
-
-Strictly speaking, even the above is not forward-thinking enough, as the
-code deep in the callchain is free to replace ->patch with an unfreeable
-string.  I think the right way to handle this is to add a single bitfield
-"should_free" to the struct fragment and default it to 'false', and make
-the place that replace the patch field with different string responsible
-for flipping the bit to 'true'.  Your "free_patch()" can then rely on that
-bit to make the decision.
-
-> Signed-off-by: Jared Hance <jaredhance@gmail.com>
-> ---
->  builtin/apply.c |   30 +++++++++++++++++++++++++++---
->  1 files changed, 27 insertions(+), 3 deletions(-)
+>> =C2=A0mergetools/DeltaWalker | =C2=A0 12 ++++++++++++
 >
-> diff --git a/builtin/apply.c b/builtin/apply.c
-> index 389898f..a73d339 100644
-> --- a/builtin/apply.c
-> +++ b/builtin/apply.c
-> @@ -196,6 +196,30 @@ struct patch {
->  	struct patch *next;
->  };
->  
-> +static void free_patch(struct patch *patch) {
-> +    while(patch != NULL) {
+> How does an end user choose to use this backend? =C2=A0Perhaps like t=
+his?
+>
+> =C2=A0 =C2=A0$ git mergetool --tool=3DDeltaWalker
+>
+> All the other files in mergetools/ are in lower case, and I _strongly=
+_
+> prefer to have this new file also be in lower case.
 
-Style:
+I agree.
 
-	static void free_patch(struct patch *patch)
-	{
-		while (patch) {
-			...
+> Such a change may mean you may have to override translate_merge_tool_=
+path
+> in this file, like some other backends seem to do.
+>
+>> =C2=A01 file changed, 12 insertions(+)
+>> =C2=A0create mode 100644 mergetools/DeltaWalker
+>>
+>> diff --git a/mergetools/DeltaWalker b/mergetools/DeltaWalker
+>> new file mode 100644
+>> index 0000000..b9e6618
+>> --- /dev/null
+>> +++ b/mergetools/DeltaWalker
+>> @@ -0,0 +1,12 @@
+>> +diff_cmd () {
+>> + =C2=A0 =C2=A0 "$merge_tool_path" "$LOCAL" "$REMOTE" >/dev/null 2>&=
+1
+>> +}
+>> +
+>> +merge_cmd () {
+>> + =C2=A0 =C2=A0 if $base_present
+>> + =C2=A0 =C2=A0 then
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "$merge_tool_path" "$LOC=
+AL" "$REMOTE" "$BASE" -merged=3D"$PWD/$MERGED"
+>> + =C2=A0 =C2=A0 else
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "$merge_tool_path" "$LOC=
+AL" "$REMOTE" -merged=3D"$PWD/$MERGED"
+>> + =C2=A0 =C2=A0 fi >/dev/null 2>&1
+>> +}
 
-Thanks.
+Is the $PWD/ prefix strictly needed?  The rest of the mergetools use
+$MERGED as-is.  Does it work without it?
+--=20
+David
