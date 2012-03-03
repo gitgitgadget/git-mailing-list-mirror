@@ -1,7 +1,7 @@
 From: Tom Grennan <tmgrennan@gmail.com>
-Subject: [PATCHv2 4/5] t0040 (parse-options): modernize style
-Date: Fri,  2 Mar 2012 18:15:36 -0800
-Message-ID: <1330740942-25130-5-git-send-email-tmgrennan@gmail.com>
+Subject: [PATCHv2 5/5] t6300 (for-each-ref): modernize style
+Date: Fri,  2 Mar 2012 18:15:37 -0800
+Message-ID: <1330740942-25130-6-git-send-email-tmgrennan@gmail.com>
 References: <1330740942-25130-1-git-send-email-tmgrennan@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Carlos Rica <jasampler@gmail.com>,
@@ -15,39 +15,39 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3eX2-00026b-6V
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 03:17:12 +0100
+	id 1S3eX2-00026b-O5
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 03:17:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751166Ab2CCCQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Mar 2012 21:16:36 -0500
+	id S1751169Ab2CCCQh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Mar 2012 21:16:37 -0500
 Received: from mail-vx0-f174.google.com ([209.85.220.174]:48188 "EHLO
 	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750806Ab2CCCQF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2012 21:16:05 -0500
+	with ESMTP id S1750837Ab2CCCQI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2012 21:16:08 -0500
 Received: by mail-vx0-f174.google.com with SMTP id p1so2024061vcq.19
-        for <git@vger.kernel.org>; Fri, 02 Mar 2012 18:16:05 -0800 (PST)
-Received-SPF: pass (google.com: domain of tmgrennan@gmail.com designates 10.52.90.111 as permitted sender) client-ip=10.52.90.111;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of tmgrennan@gmail.com designates 10.52.90.111 as permitted sender) smtp.mail=tmgrennan@gmail.com; dkim=pass header.i=tmgrennan@gmail.com
-Received: from mr.google.com ([10.52.90.111])
-        by 10.52.90.111 with SMTP id bv15mr21104698vdb.34.1330740965183 (num_hops = 1);
-        Fri, 02 Mar 2012 18:16:05 -0800 (PST)
+        for <git@vger.kernel.org>; Fri, 02 Mar 2012 18:16:07 -0800 (PST)
+Received-SPF: pass (google.com: domain of tmgrennan@gmail.com designates 10.52.30.98 as permitted sender) client-ip=10.52.30.98;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of tmgrennan@gmail.com designates 10.52.30.98 as permitted sender) smtp.mail=tmgrennan@gmail.com; dkim=pass header.i=tmgrennan@gmail.com
+Received: from mr.google.com ([10.52.30.98])
+        by 10.52.30.98 with SMTP id r2mr20604190vdh.8.1330740967659 (num_hops = 1);
+        Fri, 02 Mar 2012 18:16:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :in-reply-to:references;
-        bh=lmrO5jD/imghBPX5kVi+n88A+2fuOdwWCXME70EahJ4=;
-        b=FYukqc7bRmdGIzDu0xVvSN7K7jn6yKJ8x/fLc8KFb7rhTYPFMYZdtPi6UI3wfcMnaU
-         vNbz1cd93SuBUunSsuE8ppWXoE7qXO6cmnkqr4wfSRnqbW82LzmIZUyqyFvbhfdYt/hK
-         k8gA+Uud9gkdJtRnWUWBKee8n0Y8/m0RjQZm3Sf40kHdU5OCVrgH/y9VurhHszDFlB9z
-         wkT6t07zcW9rpTT8mWTHKeIoswJ3wgGOWbZCGahPFk3FAcbmA+uJmvCSOaneFYEqBzO9
-         UwZSjeIIES8dRq1UvHosbGmDjqBcEsh1w3Gryw2XeXORgkGmo1RJEeECH6u+T81Ffmrf
-         1GXg==
-Received: by 10.52.90.111 with SMTP id bv15mr17997052vdb.34.1330740965130;
-        Fri, 02 Mar 2012 18:16:05 -0800 (PST)
+        bh=aGuok9MPrJdi9jey7zPyJp4TmmkGtW9vCZE+BU2e9U4=;
+        b=mt3vKRkzXvdKd75Y+0nDkpJO0ppO9vPdmNwEWpot0xsQwsum9/Pzk7EgAZ4vpASbBA
+         YZi6xuvEVqy/BECK09ZoJJZ1ue2pt5Vt2flIr3g2fMnce7WIpUs5VXewunnhkk1tPNop
+         T19JKs5ISDikt/DAWxMVmA+6Npw0zZYLXmi3Lgz9HABFw/9zGabIVKiftshX3XK4/ETZ
+         fSK+pBbRw2675SIo9tK1CLowDIN/JjTTUxS3VCDuyYCRqCGZPxiLRs2PfMidiOXiCnlP
+         id8slsm7scv+hk3SRY7OC7wzng6UUSqb+qVBGOtZJxrjduWhuL9PGlbEDh5ymJp50NQg
+         IlTA==
+Received: by 10.52.30.98 with SMTP id r2mr17623801vdh.8.1330740967598;
+        Fri, 02 Mar 2012 18:16:07 -0800 (PST)
 Received: from tgrennan-laptop.lab.redback.com ([129.192.185.163])
-        by mx.google.com with ESMTPS id e10sm11763981vdj.21.2012.03.02.18.16.02
+        by mx.google.com with ESMTPS id e10sm11763981vdj.21.2012.03.02.18.16.05
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 02 Mar 2012 18:16:04 -0800 (PST)
+        Fri, 02 Mar 2012 18:16:06 -0800 (PST)
 X-Mailer: git-send-email 1.7.8
 In-Reply-To: <1330740942-25130-1-git-send-email-tmgrennan@gmail.com>
 In-Reply-To: <1330566326-26075-1-git-send-email-tmgrennan@gmail.com>
@@ -56,566 +56,317 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192087>
 
 - Guard setup with test_expect_success
+- Unwound one loop to stay within the test_expect_success guard
 
 Signed-off-by: Tom Grennan <tmgrennan@gmail.com>
 ---
- t/t0040-parse-options.sh |  438 ++++++++++++++++++++++------------------------
- 1 files changed, 212 insertions(+), 226 deletions(-)
+ t/t6300-for-each-ref.sh |  186 +++++++++++++++++++++++------------------------
+ 1 files changed, 92 insertions(+), 94 deletions(-)
 
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index a1e4616..4a0b991 100755
---- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -7,87 +7,83 @@ test_description='our own option parser'
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 1721784..ebba7d1 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -138,12 +138,13 @@ test_expect_success 'Check invalid format specifiers are errors' '
+ 	test_must_fail git for-each-ref --format="%(authordate:INVALID)" refs/heads
+ '
  
- . ./test-lib.sh
- 
--cat > expect << EOF
--usage: test-parse-options <options>
--
--    -b, --boolean         get a boolean
--    -4, --or4             bitwise-or boolean with ...0100
--    --neg-or4             same as --no-or4
--
--    -i, --integer <n>     get a integer
--    -j <n>                get a integer, too
--    --set23               set integer to 23
--    -t <time>             get timestamp of <time>
--    -L, --length <str>    get length of <str>
--    -F, --file <file>     set file to <file>
--
--String options
--    -s, --string <string>
--                          get a string
--    --string2 <str>       get another string
--    --st <st>             get another string (pervert ordering)
--    -o <str>              get another string
--    --default-string      set string to default
--    --list <str>          add str to list
--
--Magic arguments
--    --quux                means --quux
--    -NUM                  set integer to NUM
--    +                     same as -b
--    --ambiguous           positive ambiguity
--    --no-ambiguous        negative ambiguity
--
--Standard options
--    --abbrev[=<n>]        use <n> digits to display SHA-1s
--    -v, --verbose         be verbose
--    -n, --dry-run         dry run
--    -q, --quiet           be quiet
--
+-cat >expected <<\EOF
+-'refs/heads/master' 'Mon Jul 3 17:18:43 2006 +0200' 'Mon Jul 3 17:18:44 2006 +0200'
+-'refs/tags/testtag' 'Mon Jul 3 17:18:45 2006 +0200'
 -EOF
 -
- test_expect_success 'test help' '
--	test_must_fail test-parse-options -h > output 2> output.err &&
-+	cat >expect <<-EOF &&
-+		usage: test-parse-options <options>
-+
-+		    -b, --boolean         get a boolean
-+		    -4, --or4             bitwise-or boolean with ...0100
-+		    --neg-or4             same as --no-or4
-+
-+		    -i, --integer <n>     get a integer
-+		    -j <n>                get a integer, too
-+		    --set23               set integer to 23
-+		    -t <time>             get timestamp of <time>
-+		    -L, --length <str>    get length of <str>
-+		    -F, --file <file>     set file to <file>
-+
-+		String options
-+		    -s, --string <string>
-+		''                          get a string
-+		    --string2 <str>       get another string
-+		    --st <st>             get another string (pervert ordering)
-+		    -o <str>              get another string
-+		    --default-string      set string to default
-+		    --list <str>          add str to list
-+
-+		Magic arguments
-+		    --quux                means --quux
-+		    -NUM                  set integer to NUM
-+		    +                     same as -b
-+		    --ambiguous           positive ambiguity
-+		    --no-ambiguous        negative ambiguity
-+
-+		Standard options
-+		    --abbrev[=<n>]        use <n> digits to display SHA-1s
-+		    -v, --verbose         be verbose
-+		    -n, --dry-run         dry run
-+		    -q, --quiet           be quiet
-+
+ test_expect_success 'Check unformatted date fields output' '
++	'"
++	cat >expected <<-EOF &&
++		'refs/heads/master' 'Mon Jul 3 17:18:43 2006 +0200' 'Mon Jul 3 17:18:44 2006 +0200'
++		'refs/tags/testtag' 'Mon Jul 3 17:18:45 2006 +0200'
 +	EOF
-+	cp expect expect.err &&
-+	test_must_fail test-parse-options -h >output 2>output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
++	"'
+ 	(git for-each-ref --shell --format="%(refname) %(committerdate) %(authordate)" refs/heads &&
+ 	git for-each-ref --shell --format="%(refname) %(taggerdate)" refs/tags) >actual &&
+ 	test_cmp expected actual
+@@ -171,84 +172,85 @@ test_expect_success 'Check format "relative" date fields output' '
+ 	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual
  '
  
--mv expect expect.err
--
--cat > expect << EOF
--boolean: 2
--integer: 1729
--timestamp: 0
--string: 123
--abbrev: 7
--verbose: 2
--quiet: no
--dry run: yes
--file: prefix/my.file
+-cat >expected <<\EOF
+-'refs/heads/master' '2006-07-03' '2006-07-03'
+-'refs/tags/testtag' '2006-07-03'
 -EOF
 -
- test_expect_success 'short options' '
-+	cat >expect <<-\EOF &&
-+		boolean: 2
-+		integer: 1729
-+		timestamp: 0
-+		string: 123
-+		abbrev: 7
-+		verbose: 2
-+		quiet: no
-+		dry run: yes
-+		file: prefix/my.file
+ test_expect_success 'Check format "short" date fields output' '
++	'"
++	cat >expected <<-EOF
++		'refs/heads/master' '2006-07-03' '2006-07-03'
++		'refs/tags/testtag' '2006-07-03'
 +	EOF
- 	test-parse-options -s123 -b -i 1729 -b -vv -n -F my.file \
--	> output 2> output.err &&
-+		>output 2>output.err &&
- 	test_cmp expect output &&
- 	test ! -s output.err
++	"'
+ 	f=short &&
+ 	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
+ 	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual &&
+ 	test_cmp expected actual
  '
  
--cat > expect << EOF
--boolean: 2
--integer: 1729
--timestamp: 0
--string: 321
--abbrev: 10
--verbose: 2
--quiet: no
--dry run: no
--file: prefix/fi.le
+-cat >expected <<\EOF
+-'refs/heads/master' 'Mon Jul 3 15:18:43 2006' 'Mon Jul 3 15:18:44 2006'
+-'refs/tags/testtag' 'Mon Jul 3 15:18:45 2006'
 -EOF
 -
- test_expect_success 'long options' '
-+	cat >expect <<-\EOF &&
-+		boolean: 2
-+		integer: 1729
-+		timestamp: 0
-+		string: 321
-+		abbrev: 10
-+		verbose: 2
-+		quiet: no
-+		dry run: no
-+		file: prefix/fi.le
+ test_expect_success 'Check format "local" date fields output' '
+-	f=local &&
+-	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
+-	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual &&
++	'"
++	cat >expected <<-EOF
++		'refs/heads/master' 'Mon Jul 3 15:18:43 2006' 'Mon Jul 3 15:18:44 2006'
++		'refs/tags/testtag' 'Mon Jul 3 15:18:45 2006'
 +	EOF
- 	test-parse-options --boolean --integer 1729 --boolean --string2=321 \
--		--verbose --verbose --no-dry-run --abbrev=10 --file fi.le\
--		--obsolete > output 2> output.err &&
-+		--verbose --verbose --no-dry-run --abbrev=10 --file fi.le \
-+		--obsolete >output 2>output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
- '
-@@ -101,48 +97,46 @@ test_expect_success 'missing required value' '
- 	test $? = 129
++	"'
++	(git for-each-ref --shell --format="%(refname) %(committerdate:local) %(authordate:local)" refs/heads &&
++	 git for-each-ref --shell --format="%(refname) %(taggerdate:local)" refs/tags) >actual &&
+ 	test_cmp expected actual
  '
  
--cat > expect << EOF
--boolean: 1
--integer: 13
--timestamp: 0
--string: 123
--abbrev: 7
--verbose: 0
--quiet: no
--dry run: no
--file: (not set)
--arg 00: a1
--arg 01: b1
--arg 02: --boolean
+-cat >expected <<\EOF
+-'refs/heads/master' '2006-07-03 17:18:43 +0200' '2006-07-03 17:18:44 +0200'
+-'refs/tags/testtag' '2006-07-03 17:18:45 +0200'
 -EOF
 -
- test_expect_success 'intermingled arguments' '
-+	cat >expect <<-\EOF &&
-+		boolean: 1
-+		integer: 13
-+		timestamp: 0
-+		string: 123
-+		abbrev: 7
-+		verbose: 0
-+		quiet: no
-+		dry run: no
-+		file: (not set)
-+		arg 00: a1
-+		arg 01: b1
-+		arg 02: --boolean
+ test_expect_success 'Check format "iso8601" date fields output' '
++	'"
++	cat >expected <<-EOF
++		'refs/heads/master' '2006-07-03 17:18:43 +0200' '2006-07-03 17:18:44 +0200'
++		'refs/tags/testtag' '2006-07-03 17:18:45 +0200'
 +	EOF
- 	test-parse-options a1 --string 123 b1 --boolean -j 13 -- --boolean \
--		> output 2> output.err &&
-+		>output 2>output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
++	"'
+ 	f=iso8601 &&
+ 	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
+ 	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual &&
+ 	test_cmp expected actual
  '
  
--cat > expect << EOF
--boolean: 0
--integer: 2
--timestamp: 0
--string: (not set)
--abbrev: 7
--verbose: 0
--quiet: no
--dry run: no
--file: (not set)
+-cat >expected <<\EOF
+-'refs/heads/master' 'Mon, 3 Jul 2006 17:18:43 +0200' 'Mon, 3 Jul 2006 17:18:44 +0200'
+-'refs/tags/testtag' 'Mon, 3 Jul 2006 17:18:45 +0200'
 -EOF
 -
- test_expect_success 'unambiguously abbreviated option' '
--	test-parse-options --int 2 --boolean --no-bo > output 2> output.err &&
-+	cat >expect <<-\EOF &&
-+		boolean: 0
-+		integer: 2
-+		timestamp: 0
-+		string: (not set)
-+		abbrev: 7
-+		verbose: 0
-+		quiet: no
-+		dry run: no
-+		file: (not set)
+ test_expect_success 'Check format "rfc2822" date fields output' '
++	'"
++	cat >expected <<-EOF
++		'refs/heads/master' 'Mon, 3 Jul 2006 17:18:43 +0200' 'Mon, 3 Jul 2006 17:18:44 +0200'
++		'refs/tags/testtag' 'Mon, 3 Jul 2006 17:18:45 +0200'
 +	EOF
-+	test-parse-options --int 2 --boolean --no-bo >output 2>output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
++	"'
+ 	f=rfc2822 &&
+ 	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
+ 	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual &&
+ 	test_cmp expected actual
  '
  
- test_expect_success 'unambiguously abbreviated option with "="' '
--	test-parse-options --int=2 > output 2> output.err &&
-+	test-parse-options --int=2 >output 2>output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
- '
-@@ -152,198 +146,190 @@ test_expect_success 'ambiguously abbreviated option' '
- 	test $? = 129
- '
- 
--cat > expect << EOF
--boolean: 0
--integer: 0
--timestamp: 0
--string: 123
--abbrev: 7
--verbose: 0
--quiet: no
--dry run: no
--file: (not set)
+-cat >expected <<\EOF
+-refs/heads/master
+-refs/remotes/origin/master
+-refs/tags/testtag
 -EOF
 -
- test_expect_success 'non ambiguous option (after two options it abbreviates)' '
--	test-parse-options --st 123 > output 2> output.err &&
-+	cat >expect <<-\EOF &&
-+		boolean: 0
-+		integer: 0
-+		timestamp: 0
-+		string: 123
-+		abbrev: 7
-+		verbose: 0
-+		quiet: no
-+		dry run: no
-+		file: (not set)
+ test_expect_success 'Verify ascending sort' '
++	cat >expected <<-EOF
++		refs/heads/master
++		refs/remotes/origin/master
++		refs/tags/testtag
 +	EOF
-+	test-parse-options --st 123 >output 2>output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
+ 	git for-each-ref --format="%(refname)" --sort=refname >actual &&
+ 	test_cmp expected actual
  '
  
--cat > typo.err << EOF
--error: did you mean \`--boolean\` (with two dashes ?)
+-
+-cat >expected <<\EOF
+-refs/tags/testtag
+-refs/remotes/origin/master
+-refs/heads/master
 -EOF
 -
- test_expect_success 'detect possible typos' '
--	test_must_fail test-parse-options -boolean > output 2> output.err &&
--	test ! -s output &&
--	test_cmp typo.err output.err
-+	cat >typo.err <<-\EOF &&
-+		error: did you mean `--boolean` (with two dashes ?)
+ test_expect_success 'Verify descending sort' '
++	cat >expected <<-EOF
++		refs/tags/testtag
++		refs/remotes/origin/master
++		refs/heads/master
 +	EOF
-+	>expect
-+	test_must_fail test-parse-options -boolean >output 2>output.err &&
-+	test_cmp typo.err output.err &&
-+	test_cmp expect output
+ 	git for-each-ref --format="%(refname)" --sort=-refname >actual &&
+ 	test_cmp expected actual
  '
  
--cat > expect <<EOF
--boolean: 0
--integer: 0
--timestamp: 0
--string: (not set)
--abbrev: 7
--verbose: 0
--quiet: no
--dry run: no
--file: (not set)
--arg 00: --quux
+-cat >expected <<\EOF
+-'refs/heads/master'
+-'refs/remotes/origin/master'
+-'refs/tags/testtag'
 -EOF
 -
- test_expect_success 'keep some options as arguments' '
--	test-parse-options --quux > output 2> output.err &&
--        test ! -s output.err &&
--        test_cmp expect output
-+	cat >expect <<-\EOF &&
-+		boolean: 0
-+		integer: 0
-+		timestamp: 0
-+		string: (not set)
-+		abbrev: 7
-+		verbose: 0
-+		quiet: no
-+		dry run: no
-+		file: (not set)
-+		arg 00: --quux
+ test_expect_success 'Quoting style: shell' '
++	'"
++	cat >expected <<-EOF
++		'refs/heads/master'
++		'refs/remotes/origin/master'
++		'refs/tags/testtag'
 +	EOF
-+	test-parse-options --quux >output 2>output.err &&
-+	test ! -s output.err &&
-+	test_cmp expect output
++	"'
+ 	git for-each-ref --shell --format="%(refname)" >actual &&
+ 	test_cmp expected actual
+ '
+@@ -263,52 +265,51 @@ test_expect_success 'Quoting style: python' '
+ 	test_cmp expected actual
  '
  
--cat > expect <<EOF
--boolean: 0
--integer: 0
--timestamp: 1
--string: default
--abbrev: 7
--verbose: 0
--quiet: yes
--dry run: no
--file: (not set)
--arg 00: foo
+-cat >expected <<\EOF
+-"refs/heads/master"
+-"refs/remotes/origin/master"
+-"refs/tags/testtag"
 -EOF
 -
- test_expect_success 'OPT_DATE() and OPT_SET_PTR() work' '
--	test-parse-options -t "1970-01-01 00:00:01 +0000" --default-string \
--		foo -q > output 2> output.err &&
-+	cat >expect <<-\EOF &&
-+		boolean: 0
-+		integer: 0
-+		timestamp: 1
-+		string: default
-+		abbrev: 7
-+		verbose: 0
-+		quiet: yes
-+		dry run: no
-+		file: (not set)
-+		arg 00: foo
+ test_expect_success 'Quoting style: tcl' '
++	cat >expected <<-EOF
++		"refs/heads/master"
++		"refs/remotes/origin/master"
++		"refs/tags/testtag"
 +	EOF
-+	test-parse-options -t "1970-01-01 00:00:01 +0000" \
-+		--default-string foo -q >output 2>output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
+ 	git for-each-ref --tcl --format="%(refname)" >actual &&
+ 	test_cmp expected actual
  '
  
--cat > expect <<EOF
--Callback: "four", 0
--boolean: 5
--integer: 4
--timestamp: 0
--string: (not set)
--abbrev: 7
--verbose: 0
--quiet: no
--dry run: no
--file: (not set)
+-for i in "--perl --shell" "-s --python" "--python --tcl" "--tcl --perl"; do
+-	test_expect_success "more than one quoting style: $i" "
+-		git for-each-ref $i 2>&1 | (read line &&
+-		case \$line in
+-		\"error: more than one quoting style\"*) : happy;;
+-		*) false
+-		esac)
+-	"
+-done
+-
+-cat >expected <<\EOF
+-master
+-testtag
 -EOF
 -
- test_expect_success 'OPT_CALLBACK() and OPT_BIT() work' '
--	test-parse-options --length=four -b -4 > output 2> output.err &&
-+	cat >expect <<-\EOF &&
-+		Callback: "four", 0
-+		boolean: 5
-+		integer: 4
-+		timestamp: 0
-+		string: (not set)
-+		abbrev: 7
-+		verbose: 0
-+		quiet: no
-+		dry run: no
-+		file: (not set)
++test_expect_success 'more than one quoting styles' '
++	cat >expected <<-EOF
++		error: more than one quoting style?
 +	EOF
-+	test-parse-options --length=four -b -4 >output 2>output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
++	git for-each-ref --perl --shell 2>&1 | head -n 1 >actual &&
++	test_cmp expected actual &&
++	git for-each-ref -s --python 2>&1 | head -n 1 >actual &&
++	test_cmp expected actual &&
++	git for-each-ref --python --tcl 2>&1 | head -n 1 >actual &&
++	test_cmp expected actual &&
++	git for-each-ref --tcl --perl 2>&1 | head -n 1 >actual &&
++	test_cmp expected actual
++'
+ test_expect_success 'Check short refname format' '
++	cat >expected <<-EOF
++		master
++		testtag
++	EOF
+ 	(git for-each-ref --format="%(refname:short)" refs/heads &&
+ 	git for-each-ref --format="%(refname:short)" refs/tags) >actual &&
+ 	test_cmp expected actual
  '
  
--cat > expect <<EOF
--Callback: "not set", 1
+-cat >expected <<EOF
+-origin/master
 -EOF
 -
- test_expect_success 'OPT_CALLBACK() and callback errors work' '
--	test_must_fail test-parse-options --no-length > output 2> output.err &&
-+	cat >expect <<-\EOF &&
-+		Callback: "not set", 1
+ test_expect_success 'Check short upstream format' '
++	cat >expected <<-EOF
++		origin/master
 +	EOF
-+	test_must_fail test-parse-options --no-length >output 2>output.err &&
- 	test_cmp expect output &&
- 	test_cmp expect.err output.err
+ 	git for-each-ref --format="%(upstream:short)" refs/heads >actual &&
+ 	test_cmp expected actual
  '
  
--cat > expect <<EOF
--boolean: 1
--integer: 23
--timestamp: 0
--string: (not set)
--abbrev: 7
--verbose: 0
--quiet: no
--dry run: no
--file: (not set)
+-cat >expected <<EOF
+-67a36f1
 -EOF
 -
- test_expect_success 'OPT_BIT() and OPT_SET_INT() work' '
--	test-parse-options --set23 -bbbbb --no-or4 > output 2> output.err &&
-+	cat >expect <<-\EOF &&
-+		boolean: 1
-+		integer: 23
-+		timestamp: 0
-+		string: (not set)
-+		abbrev: 7
-+		verbose: 0
-+		quiet: no
-+		dry run: no
-+		file: (not set)
+ test_expect_success 'Check short objectname format' '
++	cat >expected <<-EOF
++		67a36f1
 +	EOF
-+	test-parse-options --set23 -bbbbb --no-or4 >output 2>output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
+ 	git for-each-ref --format="%(objectname:short)" refs/heads >actual &&
+ 	test_cmp expected actual
+ '
+@@ -317,12 +318,11 @@ test_expect_success 'Check for invalid refname format' '
+ 	test_must_fail git for-each-ref --format="%(refname:INVALID)"
  '
  
- test_expect_success 'OPT_NEGBIT() and OPT_SET_INT() work' '
--	test-parse-options --set23 -bbbbb --neg-or4 > output 2> output.err &&
-+	test-parse-options --set23 -bbbbb --neg-or4 >output 2>output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
- '
- 
--cat > expect <<EOF
--boolean: 6
--integer: 0
--timestamp: 0
--string: (not set)
--abbrev: 7
--verbose: 0
--quiet: no
--dry run: no
--file: (not set)
+-cat >expected <<\EOF
+-heads/master
+-tags/master
 -EOF
 -
- test_expect_success 'OPT_BIT() works' '
--	test-parse-options -bb --or4 > output 2> output.err &&
-+	cat >expect <<-\EOF &&
-+		boolean: 6
-+		integer: 0
-+		timestamp: 0
-+		string: (not set)
-+		abbrev: 7
-+		verbose: 0
-+		quiet: no
-+		dry run: no
-+		file: (not set)
+ test_expect_success 'Check ambiguous head and tag refs (strict)' '
++	cat >expected <<-EOF
++		heads/master
++		tags/master
 +	EOF
-+	test-parse-options -bb --or4 >output 2>output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
+ 	git config --bool core.warnambiguousrefs true &&
+ 	git checkout -b newtag &&
+ 	echo "Using $datestamp" > one &&
+@@ -334,23 +334,21 @@ test_expect_success 'Check ambiguous head and tag refs (strict)' '
+ 	test_cmp expected actual
  '
  
- test_expect_success 'OPT_NEGBIT() works' '
--	test-parse-options -bb --no-neg-or4 > output 2> output.err &&
-+	test-parse-options -bb --no-neg-or4 >output 2>output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
- '
- 
- test_expect_success 'OPT_BOOLEAN() with PARSE_OPT_NODASH works' '
--	test-parse-options + + + + + + > output 2> output.err &&
-+	test-parse-options + + + + + + >output 2>output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
- '
- 
--cat > expect <<EOF
--boolean: 0
--integer: 12345
--timestamp: 0
--string: (not set)
--abbrev: 7
--verbose: 0
--quiet: no
--dry run: no
--file: (not set)
--EOF
- 
- test_expect_success 'OPT_NUMBER_CALLBACK() works' '
--	test-parse-options -12345 > output 2> output.err &&
-+	cat >expect <<-\EOF &&
-+		boolean: 0
-+		integer: 12345
-+		timestamp: 0
-+		string: (not set)
-+		abbrev: 7
-+		verbose: 0
-+		quiet: no
-+		dry run: no
-+		file: (not set)
-+	EOF
-+	test-parse-options -12345 >output 2>output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
- '
- 
--cat >expect <<EOF
--boolean: 0
--integer: 0
--timestamp: 0
--string: (not set)
--abbrev: 7
--verbose: 0
--quiet: no
--dry run: no
--file: (not set)
+-cat >expected <<\EOF
+-heads/master
+-master
 -EOF
 -
- test_expect_success 'negation of OPT_NONEG flags is not ambiguous' '
-+	cat >expect <<-\EOF &&
-+		boolean: 0
-+		integer: 0
-+		timestamp: 0
-+		string: (not set)
-+		abbrev: 7
-+		verbose: 0
-+		quiet: no
-+		dry run: no
-+		file: (not set)
+ test_expect_success 'Check ambiguous head and tag refs (loose)' '
++	cat >expected <<-EOF
++		heads/master
++		master
 +	EOF
- 	test-parse-options --no-ambig >output 2>output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
+ 	git config --bool core.warnambiguousrefs false &&
+ 	git for-each-ref --format "%(refname:short)" refs/heads/master refs/tags/master >actual &&
+ 	test_cmp expected actual
  '
  
--cat >>expect <<'EOF'
--list: foo
--list: bar
--list: baz
+-cat >expected <<\EOF
+-heads/ambiguous
+-ambiguous
 -EOF
- test_expect_success '--list keeps list of strings' '
-+	cat >>expect <<-\EOF &&
-+		list: foo
-+		list: bar
-+		list: baz
+-
+ test_expect_success 'Check ambiguous head and tag refs II (loose)' '
++	cat >expected <<-EOF
++		heads/ambiguous
++		ambiguous
 +	EOF
- 	test-parse-options --list foo --list=bar --list=baz >output &&
- 	test_cmp expect output
+ 	git checkout master &&
+ 	git tag ambiguous testtag^0 &&
+ 	git branch ambiguous testtag^0 &&
+@@ -369,7 +367,7 @@ test_expect_success 'an unusual tag with an incomplete line' '
+ '
+ 
+ test_expect_success 'create tag with subject and body content' '
+-	cat >>msg <<-\EOF &&
++	cat >msg <<-\EOF &&
+ 		the subject line
+ 
+ 		first body line
+@@ -417,9 +415,9 @@ test_expect_success GPG 'create signed tags' '
+ 	git tag -s -m "" signed-empty &&
+ 	git tag -s -m "subject line" signed-short &&
+ 	cat >msg <<-\EOF &&
+-	subject line
++		subject line
+ 
+-	body contents
++		body contents
+ 	EOF
+ 	git tag -s -F msg signed-long
  '
 -- 
 1.7.8
