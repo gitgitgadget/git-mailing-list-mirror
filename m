@@ -1,127 +1,93 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: [PATCH] git-svn: Simplify calculation of GIT_DIR
-Date: Sat, 03 Mar 2012 19:27:13 +0100
-Message-ID: <1330799233.691.40.camel@centaur.lab.cmartin.tk>
-References: <1330798107-33561-1-git-send-email-barry.wardell@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFH] 'man:' macro for asciidoc
+Date: Sat, 03 Mar 2012 10:33:36 -0800 (PST)
+Message-ID: <m31up9v8jo.fsf_-_@localhost.localdomain>
+References: <20120303145053.GA29948@ecki>
+	<20120303174252.GC28602@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-/oAJmVES1xv0M8TB2VCy"
-Cc: git@vger.kernel.org
-To: Barry Wardell <barry.wardell@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 03 19:27:25 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Mar 03 19:33:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3tfw-0004n1-JW
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 19:27:24 +0100
+	id 1S3tmA-0006qC-Dy
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 19:33:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751693Ab2CCS0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Mar 2012 13:26:49 -0500
-Received: from kimmy.cmartin.tk ([91.121.65.165]:58287 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751147Ab2CCS0t (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Mar 2012 13:26:49 -0500
-Received: from [192.168.1.17] (brln-4db9cfc3.pool.mediaWays.net [77.185.207.195])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 2AB7246082;
-	Sat,  3 Mar 2012 19:26:39 +0100 (CET)
-In-Reply-To: <1330798107-33561-1-git-send-email-barry.wardell@gmail.com>
-X-Mailer: Evolution 3.2.2-1 
+	id S1752398Ab2CCSdi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Mar 2012 13:33:38 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:63449 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751790Ab2CCSdh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Mar 2012 13:33:37 -0500
+Received: by eaaq12 with SMTP id q12so952251eaa.19
+        for <git@vger.kernel.org>; Sat, 03 Mar 2012 10:33:36 -0800 (PST)
+Received-SPF: pass (google.com: domain of jnareb@gmail.com designates 10.213.8.79 as permitted sender) client-ip=10.213.8.79;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of jnareb@gmail.com designates 10.213.8.79 as permitted sender) smtp.mail=jnareb@gmail.com; dkim=pass header.i=jnareb@gmail.com
+Received: from mr.google.com ([10.213.8.79])
+        by 10.213.8.79 with SMTP id g15mr314331ebg.108.1330799616637 (num_hops = 1);
+        Sat, 03 Mar 2012 10:33:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=wHPqHtMnjoOvTB7a3q7CI+wUGGF9wGIPJyLssdR/chw=;
+        b=oKcTpP61qNxSR7yiPlzp5pylJRZfUSse0bJdfouqo7POQ4FyaMVUTyoaGOJcbm2MA4
+         idmzqTI1zwUbadibNRdFT8VoR0kdaL3LmCrr6SFHadL4MJD3TNiRBHueij+Dcy2GPZ8L
+         nK5zyScIZReozGlgZ6jkyd8T1zPxLlAiYmNNPUvmqnDZwP3oaexAvTmf4c/s/ZftNsJJ
+         JqwOQceJwqrfBuRnlEFj80tgPHKELgs6VrWrhdcH3WTq8rkyZhhXKzE4BvsJ6E89RbQB
+         vwMW0dHFP2GOYjsfQsSIPsg5yfR2gmhlIsUx9FuDUe4WIaPmEGPBiu/4zfqe8D/aGpVh
+         ZklA==
+Received: by 10.213.8.79 with SMTP id g15mr229001ebg.108.1330799616515;
+        Sat, 03 Mar 2012 10:33:36 -0800 (PST)
+Received: from localhost.localdomain (abwo91.neoplus.adsl.tpnet.pl. [83.8.238.91])
+        by mx.google.com with ESMTPS id n17sm37331077eei.3.2012.03.03.10.33.35
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 03 Mar 2012 10:33:36 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q23IXX1f023426;
+	Sat, 3 Mar 2012 19:33:34 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id q23IXVKj023423;
+	Sat, 3 Mar 2012 19:33:31 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20120303174252.GC28602@sigill.intra.peff.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192129>
+
+Jeff King <peff@peff.net> writes:
+> On Sat, Mar 03, 2012 at 03:50:53PM +0100, Clemens Buchacher wrote:
+
+> >  http.proxy::
+> > -	Override the HTTP proxy, normally configured using the 'http_proxy'
+> > -	environment variable (see linkgit:curl[1]).  This can be overridden
+> > -	on a per-remote basis; see remote.<name>.proxy
+> > +	Override the HTTP proxy, normally configured using the 'http_proxy',
+> > +	'https_proxy', and 'all_proxy' environment variables (see
+> > +	linkgit:curl[1]).  This can be overridden on a per-remote basis; see
+> > +	remote.<name>.proxy
+> 
+> Text looks OK. I think this linkgit:curl is wrong, though. In the
+> manpages, it formats as simply curl(1), but in the HTML pages, it
+> creates a link to curl.html, which does not exist. This is not a problem
+> introduced by your patch, obviously, but maybe it is worth cleaning up.
+> I think just using:
+> 
+>   `curl(1)`
+> 
+> might be sufficient.
+
+BTW it wouldreally be nice be able to use simply  man:curl[1]  instead
+of worrying if it shoudl be `curl(1)`, or *curl*(1), or curl(1)
 
 
---=-/oAJmVES1xv0M8TB2VCy
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Sat, 2012-03-03 at 18:08 +0000, Barry Wardell wrote:
-> Since git-rev-parse already checks for the $GIT_DIR environment
-> variable and that it returns an actual git repository, there is no
-> need to repeat the checks again here.
->=20
-> This also fixes a problem where git-svn did not work in cases where
-> .git was a file with a gitdir: link.
-> ---
->  git-svn.perl |   25 ++-----------------------
->  1 file changed, 2 insertions(+), 23 deletions(-)
->=20
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 4334b95..cf2cef8 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -15,8 +15,6 @@ my $cmd_dir_prefix =3D eval {
->  	command_oneline([qw/rev-parse --show-prefix/], STDERR =3D> 0)
->  } || '';
-> =20
-> -my $git_dir_user_set =3D 1 if defined $ENV{GIT_DIR};
-> -$ENV{GIT_DIR} ||=3D '.git';
->  $Git::SVN::default_repo_id =3D 'svn';
->  $Git::SVN::default_ref_id =3D $ENV{GIT_SVN_ID} || 'git-svn';
->  $Git::SVN::Ra::_log_window_size =3D 100;
-> @@ -290,28 +288,9 @@ for (my $i =3D 0; $i < @ARGV; $i++) {
->  	}
->  };
-> =20
-> -# make sure we're always running at the top-level working directory
-> +# Access an existing repository
-
-Is there a reason making sure we're at the top-level dir isn't necessary
-anymore?
-
->  unless ($cmd && $cmd =3D~ /(?:clone|init|multi-init)$/) {
-> -	unless (-d $ENV{GIT_DIR}) {
-> -		if ($git_dir_user_set) {
-> -			die "GIT_DIR=3D$ENV{GIT_DIR} explicitly set, ",
-> -			    "but it is not a directory\n";
-> -		}
-> -		my $git_dir =3D delete $ENV{GIT_DIR};
-> -		my $cdup =3D undef;
-> -		git_cmd_try {
-> -			$cdup =3D command_oneline(qw/rev-parse --show-cdup/);
-> -			$git_dir =3D '.' unless ($cdup);
-> -			chomp $cdup if ($cdup);
-> -			$cdup =3D "." unless ($cdup && length $cdup);
-> -		} "Already at toplevel, but $git_dir not found\n";
-> -		chdir $cdup or die "Unable to chdir up to '$cdup'\n";
-
-Here you delete a chdir to the top-level directory, just as you deleted
-the comment above, yet in the commit message you don't explain why this
-isn't necessary anymore. Doesn't the rest of the code still assume that
-it's running at the top-level dir?
-
-> -		unless (-d $git_dir) {
-> -			die "$git_dir still not found after going to ",
-> -			    "'$cdup'\n";
-> -		}
-> -		$ENV{GIT_DIR} =3D $git_dir;
-> -	}
-> +	$ENV{GIT_DIR} =3D command_oneline([qw/rev-parse --git-dir/]);
->  	$_repository =3D Git->repository(Repository =3D> $ENV{GIT_DIR});
->  }
-> =20
-
-
-
---=-/oAJmVES1xv0M8TB2VCy
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAABAgAGBQJPUmKBAAoJEHKRP1jG7ZzTsEoIAIMqFpEQNmpItcHqQWP9uNcB
-mN14SCA1KAfM5jUo2BZ/dXXl3ZOvPGeK7xwpvjQp9mj8Cy0Im3Q0zAWGd3AEAV7u
-N/iFyKJJ/MlqcoWqoIsrMFssL0OhlntzlI4IZlcMMID7IUGzmDw10KUkT7HsOnfz
-gwghNpz6xX17e8rsJ2BbZWiOQ2sIj5xBYHBaU5dNMjOyfACOA/A1mDKhh80WPdua
-pz8bovS0faQR4HZaHpdyXpUeZDd4w4wbGTQFDTxQ0QIb+0I3u2LjTKNHYXbXb1EH
-/RYisQSPrGxbGF8cZ18DOobJINnfU9oyhjXekGINP3J8LTFSfmeClhtwDkusOak=
-=Ejrm
------END PGP SIGNATURE-----
-
---=-/oAJmVES1xv0M8TB2VCy--
+-- 
+Jakub Narebski
