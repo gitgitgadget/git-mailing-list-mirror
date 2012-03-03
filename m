@@ -1,124 +1,109 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v2] Perform cheaper connectivity check when pack is used
- as medium
-Date: Sat, 3 Mar 2012 17:09:05 +0700
-Message-ID: <CACsJy8ANF+tqMzXrYamSHv0N==6Wc2sVbQwJO40+=f+R+HMnbA@mail.gmail.com>
-References: <7vmx849ma8.fsf@alter.siamese.dyndns.org> <1330435109-4437-1-git-send-email-pclouds@gmail.com>
- <7vwr73h6td.fsf@alter.siamese.dyndns.org> <CACsJy8D7JB9bzOvammGAx1rW04DEUCVzvfp-_Q1KtE9G00rZVQ@mail.gmail.com>
- <7v1upagb8z.fsf@alter.siamese.dyndns.org> <CACsJy8B7u-rvnFZKi4t2CoB=J3Ra8pWxK4439NTdnHQDhm2ibQ@mail.gmail.com>
- <7vfwdq8914.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH (BUGFIX)] gitweb: Fix fixed string (non-regexp) project search
+Date: Sat, 3 Mar 2012 11:55:59 +0100
+Message-ID: <201203031156.00948.jnareb@gmail.com>
+References: <20120228183919.26435.86795.stgit@localhost.localdomain> <201203022334.25544.jnareb@gmail.com> <7vwr72a6m6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 03 11:09:49 2012
+X-From: git-owner@vger.kernel.org Sat Mar 03 11:56:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3luI-0000O3-Ta
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 11:09:43 +0100
+	id 1S3mdm-0004ph-VR
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 11:56:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752030Ab2CCKJh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Mar 2012 05:09:37 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:51347 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751897Ab2CCKJg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 3 Mar 2012 05:09:36 -0500
-Received: by wejx9 with SMTP id x9so1494516wej.19
-        for <git@vger.kernel.org>; Sat, 03 Mar 2012 02:09:35 -0800 (PST)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.180.24.7 as permitted sender) client-ip=10.180.24.7;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.180.24.7 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
-Received: from mr.google.com ([10.180.24.7])
-        by 10.180.24.7 with SMTP id q7mr3102412wif.14.1330769375467 (num_hops = 1);
-        Sat, 03 Mar 2012 02:09:35 -0800 (PST)
+	id S1752355Ab2CCK4J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Mar 2012 05:56:09 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:58663 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751216Ab2CCK4H (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Mar 2012 05:56:07 -0500
+Received: by eekc41 with SMTP id c41so896769eek.19
+        for <git@vger.kernel.org>; Sat, 03 Mar 2012 02:56:05 -0800 (PST)
+Received-SPF: pass (google.com: domain of jnareb@gmail.com designates 10.213.108.201 as permitted sender) client-ip=10.213.108.201;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of jnareb@gmail.com designates 10.213.108.201 as permitted sender) smtp.mail=jnareb@gmail.com; dkim=pass header.i=jnareb@gmail.com
+Received: from mr.google.com ([10.213.108.201])
+        by 10.213.108.201 with SMTP id g9mr1693439ebp.86.1330772165572 (num_hops = 1);
+        Sat, 03 Mar 2012 02:56:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=+Yt6LSOfSb48G44XaK7SVA1dp9mAtLhANpoeCs16CFU=;
-        b=imeLYi0BR4fDtogYrYmjgGMd7IY3TCMmQTSS7fJTk/q9Zuc4Py1r0ntNS55vlFs/fQ
-         emT+pgeYZLGDNazQ6ciTcR8GdP9O+EU8ivDZ/6Y/Xx499/d4tthG1aQLB9vABiv7la/v
-         fYrSnTlwzWa4pTLxYZGmik3Ku/hWs0Vu0ExIzdE4deZsx4WgfuCEX1yP5yX2WRdDV86K
-         T9eJAbFlLVogpSuiKNOFmTKy3lpAdeLbarjIBMPTA9wl/Wblv5n+MJ7x3Ld2pscUeoDa
-         VRHi4ZwD7ypnPO6VJ9M/VFjLGISX8IlMGzAxVETmDRtUrPDgAoan1wDxlnUwJ+PW2JwH
-         bVNg==
-Received: by 10.180.24.7 with SMTP id q7mr2455136wif.14.1330769375285; Sat, 03
- Mar 2012 02:09:35 -0800 (PST)
-Received: by 10.223.13.5 with HTTP; Sat, 3 Mar 2012 02:09:05 -0800 (PST)
-In-Reply-To: <7vfwdq8914.fsf@alter.siamese.dyndns.org>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=NUCAf/BxmqJ3nBXvVeJTU35Iu6xGb3Z3akg8cHTDb4Y=;
+        b=lYmtJAst/yE1OkuGE78zMo6qneDzV+rI/S7TZ6ZEGnJpnHJpjvVXyPvs6BxUR9y0OJ
+         O9eZPd7Gz9Qzu6fsdydj7bSGD9wnXhwMKb0+djUy3kQIPuE07E6Ap4aiahKOu818YyJC
+         yAQK1N0sU7xtDE0aexm3FwOMkJMXaR6qkCwo6289kJ8yZMDyL+9HeNMXNTFDMkgp0NzV
+         4j9m24VXSqYHsq3MWIzcTbmAKUMECrKzRMlg6TqCCs0gh2klaOerNbS0rIK7Ux1NiSlK
+         tSx/ObuJ7YPHBQaJZ3AsImHi1q4amIo1OG6FAkvV4UsAqRROybmrQz3f69npOLCW+Npn
+         /Omg==
+Received: by 10.213.108.201 with SMTP id g9mr1306958ebp.86.1330772165462;
+        Sat, 03 Mar 2012 02:56:05 -0800 (PST)
+Received: from [192.168.1.13] (abwo91.neoplus.adsl.tpnet.pl. [83.8.238.91])
+        by mx.google.com with ESMTPS id v51sm32510722eef.2.2012.03.03.02.56.03
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 03 Mar 2012 02:56:04 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vwr72a6m6.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192103>
 
-On Sat, Mar 3, 2012 at 1:59 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
->>> I also suspect that more than trivial amount of computation is need=
-ed to
->>> determine if a given object exists only in a single pack, so the en=
-d
->>> result may not be that much cheaper than the current --verify-objec=
-t code.
+On Sat, 3 Mar 2012, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> Use $search_regexp, where regex metacharacters are quoted, for
+>> searching projects list, rather than $searchtext, which contains
+>> original search term.
 >>
->> Objects can exist in multiple packs right now if they are base
->> objects. I'm not sure why you need to check for object existence in =
-a
->> single pack.
->
-> What I meant to say was not "it is in this pack and nowhere else", bu=
-t
-> about a check like this:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0static void finish_object(struct object *o=
-bj, ...)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0{
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0struct packed_=
-git *fetched_pack =3D cb_data->fetched_pack;
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (obj->type =
-=3D=3D OBJ_BLOB && !has_sha1_file(obj->sha1))
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0die("missing");
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!info->rev=
-s->verify_objects)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0return;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (find_pack_=
-entry_one(obj->sha1, fetched_pack))
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0return; /* we just fetched and ran index-pack on it */
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!obj->pars=
-ed && obj->type !=3D OBJ_COMMIT)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0parse_object(obj->sha1);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
->
-> I think this is the kind of "passing identity down the callchain" bot=
-h of
-> us have in mind. =C2=A0I was trying to say that find_pack_entry() may=
- not be
-> trivially cheap. =C2=A0But probably I am being worried too much.
+>> Reported-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+>> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+>> ---
+>> I think this bug was here from the very beginning of adding project
+>> search, i.e. from  v1.6.0.2-446-g0d1d154 (gitweb: Support for simple
+>> project search form, 2008-10-03)  which was present since 1.6.1
+>>
+>> On Fri, 2 Mar 2012, Ramsay Jones wrote:
+>> 
+>>> This patch solves the problem for me when using a regex search
+>>> (re checkbox checked), but *not* for a non-regex search.
+>>> 
+> 
+> This patch depends on the more recent changes than the regexp fix, no?  I
+> was hoping that we could merge the earlier fix for the regexp case to
+> older maintenance tracks later, but if we were going to do so, we would
+> want to do the same for a fix for fixed-string case.
 
-This is after index-pack is run and .idx file created, I think
-determining object's storage type should be relatively cheap compared
-to rehashing. We'll know when I update the patch.
+The regexp and non-regexp bugs and fixes are different.
 
-> But now you brought it up, I think we may also need to worry about a
-> corrupt pre-existing loose blob object. =C2=A0In general, we tend to =
-always
-> favor reading objects from packs over loose objects, but I do not kno=
-w
-> offhand what repacking would do when there are two places it can read=
- the
-> same object from (it should be allowed to pick whichever is easier to
-> read).
+The regexp "bug" was just us forgetting that regexp is provided by user
+input, and should be validated.  The bug as reported by Ramsay was here
+from the very beginning, i.e. commit 0e55991 (gitweb: Clearly distinguish
+regexp / exact match searches, 2008-02-26), which was present in v1.5.1
+if I have checked correctly.  The fix is about adding new code and should
+apply cleanly to 'maint' and even to older versions; the only trouble
+with older version might be whitespace issue related to refactoring
+code into subroutines.
 
-=2E. which should be pack for pack-objects/repack because they can do a
-straight copy from pack to pack. --no-reuse-objects delegates object
-reading back to read_sha1_file(), and this one prefers packs too.
---=20
-Duy
+The non-regexp project search bug was using $searchtext instead of
+$search_regexp as search regexp in gitweb.  The bug was present from
+the very addition of project search, namely commit 0d1d154 (gitweb:
+Support for simple project search form, 2008-10-03), which was present
+in v1.5.1 if I have checked correctly.  Unfortunately the fix affects
+code that was changed recently in a1e1b2d (gitweb: improve usability
+of projects search form, 2012-01-31); I'll try to come up with equivalent
+patch to 'maint' soon (if the current one does not apply, and I guess it
+doesn't).
+
+-- 
+Jakub Narebski
+Poland
