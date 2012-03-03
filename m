@@ -1,81 +1,76 @@
-From: Tom Grennan <tmgrennan@gmail.com>
-Subject: Re: [PATCHv2 0/5] modernize test style
-Date: Sat, 3 Mar 2012 09:42:06 -0800
-Message-ID: <20120303174206.GM2572@tgrennan-laptop>
-References: <1330566326-26075-1-git-send-email-tmgrennan@gmail.com>
- <1330740942-25130-1-git-send-email-tmgrennan@gmail.com>
- <7vpqcu6rfd.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] http.proxy: also mention https_proxy and all_proxy
+Date: Sat, 3 Mar 2012 12:42:52 -0500
+Message-ID: <20120303174252.GC28602@sigill.intra.peff.net>
+References: <20120303145053.GA29948@ecki>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Carlos Rica <jasampler@gmail.com>,
-	Andy Parkins <andyparkins@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 03 18:42:17 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Sat Mar 03 18:42:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3syF-0006EJ-Iq
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 18:42:15 +0100
+	id 1S3syx-0006Wn-6K
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 18:42:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753569Ab2CCRmL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Mar 2012 12:42:11 -0500
-Received: from mail-pz0-f52.google.com ([209.85.210.52]:36996 "EHLO
-	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751014Ab2CCRmK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Mar 2012 12:42:10 -0500
-Received: by dadp12 with SMTP id p12so3175186dad.11
-        for <git@vger.kernel.org>; Sat, 03 Mar 2012 09:42:10 -0800 (PST)
-Received-SPF: pass (google.com: domain of tmgrennan@gmail.com designates 10.68.224.230 as permitted sender) client-ip=10.68.224.230;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of tmgrennan@gmail.com designates 10.68.224.230 as permitted sender) smtp.mail=tmgrennan@gmail.com; dkim=pass header.i=tmgrennan@gmail.com
-Received: from mr.google.com ([10.68.224.230])
-        by 10.68.224.230 with SMTP id rf6mr29641579pbc.48.1330796530204 (num_hops = 1);
-        Sat, 03 Mar 2012 09:42:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=I1KM7pxS2SwHdPJPMyV91XprSiK77mmyiRROvJkGpfE=;
-        b=QYUeWqLougHGXlDdwaD19TuAv3kt93Oax6NpIdOy+mct/1UVGURJ1aq+qV0imxwgPU
-         +agr7sa4XOgDfISkFxtfg92kMTf6cOCfQ5Yf8zpgnfqg+rsi/VOq/Q67FCn6bL95rjNv
-         X3BmzUu/9IiMhOLkL5Z2GnbWuRiqYMwaZnx+DbKTNSE0rrFSFxwnKZgbeVnouciSBQXH
-         HVzJIEXrmju2HKATAfN/GnbeRScPw3QhoiqBdYdHY1VxNtLeesB8PwozA+Pl7Pp7xbNO
-         oSPVAe8+pXAS9iqK1yT/xiB2HgSv5/VdnCsYOX3SuSk/LI7WDepx2Y/p8ybDigwYabmQ
-         +bvQ==
-Received: by 10.68.224.230 with SMTP id rf6mr25135032pbc.48.1330796530083;
-        Sat, 03 Mar 2012 09:42:10 -0800 (PST)
-Received: from localhost (c-69-181-129-72.hsd1.ca.comcast.net. [69.181.129.72])
-        by mx.google.com with ESMTPS id e6sm8265885pbr.74.2012.03.03.09.42.07
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 03 Mar 2012 09:42:08 -0800 (PST)
+	id S1753867Ab2CCRmz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Mar 2012 12:42:55 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36104
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751032Ab2CCRmy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Mar 2012 12:42:54 -0500
+Received: (qmail 8094 invoked by uid 107); 3 Mar 2012 17:43:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 03 Mar 2012 12:43:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 03 Mar 2012 12:42:52 -0500
 Content-Disposition: inline
-In-Reply-To: <7vpqcu6rfd.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20120303145053.GA29948@ecki>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192120>
 
-On Sat, Mar 03, 2012 at 12:04:54AM -0800, Junio C Hamano wrote:
->
->On the other hand, we can see that 5512 has been dormant for quite a
->while.  Note that the latter diff is against 3 cycles ago:
->
->$ git diff --stat v1.7.6..pu --  t/t{7004,5512,3200,0040,6300}-*.sh
-> t/t0040-parse-options.sh |   79 +++++++++++++++-
-> t/t3200-branch.sh        |  236 +++++++++++++++++++++++++++++++++++++++++-----
-> t/t6300-for-each-ref.sh  |  101 +++++++++++++++++++-
-> t/t7004-tag.sh           |  128 +++++++++++++++++++------
-> 4 files changed, 490 insertions(+), 54 deletions(-)
->
->so 5512 and possibly 6300 may be worth reviewing.
+On Sat, Mar 03, 2012 at 03:50:53PM +0100, Clemens Buchacher wrote:
 
-Ack, I'll hold the others until each are quiescent for a few cycles.
+> The current wording of the http.proxy documentation suggests that
+> http_proxy is somehow equivalent to http.proxy. However, while
+> http.proxy (by the means of curl's CURLOPT_PROXY option) overrides the
+> proxy for both HTTP and HTTPS protocols, the http_proxy environment
+> variable is used only for HTTP. But since the docs mention only
+> http_proxy, a user might expect it to apply to all HTTP-like protocols.
 
-Thanks.
-TomG
+Hmm, I didn't know that. This certainly adds an interesting twist to the
+patch in a nearby thread to start reading http_proxy ourselves.
+
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index abeb82b..7d197bb 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1258,9 +1258,10 @@ help.autocorrect::
+>  	This is the default.
+>  
+>  http.proxy::
+> -	Override the HTTP proxy, normally configured using the 'http_proxy'
+> -	environment variable (see linkgit:curl[1]).  This can be overridden
+> -	on a per-remote basis; see remote.<name>.proxy
+> +	Override the HTTP proxy, normally configured using the 'http_proxy',
+> +	'https_proxy', and 'all_proxy' environment variables (see
+> +	linkgit:curl[1]).  This can be overridden on a per-remote basis; see
+> +	remote.<name>.proxy
+
+Text looks OK. I think this linkgit:curl is wrong, though. In the
+manpages, it formats as simply curl(1), but in the HTML pages, it
+creates a link to curl.html, which does not exist. This is not a problem
+introduced by your patch, obviously, but maybe it is worth cleaning up.
+I think just using:
+
+  `curl(1)`
+
+might be sufficient.
+
+-Peff
