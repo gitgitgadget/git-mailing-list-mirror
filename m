@@ -1,57 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [git wiki PATCH] "Modernizing and expanding Git.pm" project
-Date: Sat, 3 Mar 2012 17:23:47 -0500
-Message-ID: <20120303222347.GA29839@sigill.intra.peff.net>
-References: <20120302091114.GA3984@sigill.intra.peff.net>
- <1330809281-25774-1-git-send-email-jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] mergetools: add support for DeltaWalker
+Date: Sat, 03 Mar 2012 14:47:07 -0800
+Message-ID: <7vmx7x5ml0.fsf@alter.siamese.dyndns.org>
+References: <1330694867-7601-1-git-send-email-tim.henigan@gmail.com>
+ <7vaa3ybpat.fsf@alter.siamese.dyndns.org>
+ <CAJDDKr4q7gmFeHuGM5hFruduHw-3mGa+CMU=U6X0jjXUsJLsvw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 03 23:23:55 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Tim Henigan <tim.henigan@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 03 23:47:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3xMo-0003vX-Ck
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 23:23:54 +0100
+	id 1S3xjR-0002V8-AM
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 23:47:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753934Ab2CCWXu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Mar 2012 17:23:50 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36220
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752892Ab2CCWXt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Mar 2012 17:23:49 -0500
-Received: (qmail 10284 invoked by uid 107); 3 Mar 2012 22:23:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 03 Mar 2012 17:23:55 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 03 Mar 2012 17:23:47 -0500
-Content-Disposition: inline
-In-Reply-To: <1330809281-25774-1-git-send-email-jnareb@gmail.com>
+	id S1754022Ab2CCWrL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Mar 2012 17:47:11 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45853 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752179Ab2CCWrK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 3 Mar 2012 17:47:10 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A46CE5336;
+	Sat,  3 Mar 2012 17:47:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=P7M647uOLScd
+	xXnEWwOrPZ4xA1k=; b=EAfedDoPMezUrF9IoFfFrYnW3JkhLPfcLbFSGNMSVeT2
+	MwBYRFhf/Y0rAE38OH9czKCe5efN30KRodg3IqYQLziL7elgCZdS1bTAhpnsrRhX
+	QcYcwSyw3hsatLq/FoWtnktXI6IUzgRLQRoU7WBZZfz7G+aDJuhB7PvXW90PYfE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=vsDsKI
+	dvTg/t5ohnxtNOFCzA5O0FltagPfoNbxSrwCP8iLeq2H8iDlEGR22+hE0wla67EI
+	OmZ0wG8WvGZwBxD37YlkYA9QyW35VgghLiwSTnVmPEQzVMaO0mDKJZ7OlpFhknRz
+	Paoxc4lLvHBeXkp1QolHpI4JcH8EWP+MySEbk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9BA045334;
+	Sat,  3 Mar 2012 17:47:09 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F0F445333; Sat,  3 Mar 2012
+ 17:47:08 -0500 (EST)
+In-Reply-To: <CAJDDKr4q7gmFeHuGM5hFruduHw-3mGa+CMU=U6X0jjXUsJLsvw@mail.gmail.com> (David
+ Aguilar's message of "Sat, 3 Mar 2012 14:00:17 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CEF280DE-6582-11E1-8424-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192142>
 
-On Sat, Mar 03, 2012 at 10:14:41PM +0100, Jakub Narebski wrote:
+David Aguilar <davvid@gmail.com> writes:
 
-> ---
-> I'm not sure if my Markdown is entirely correct.
-> 
->  SoC-2012-Ideas.md |   41 +++++++++++++++++++++++++++++++++++++++++
->  1 files changed, 41 insertions(+), 0 deletions(-)
+>>> +merge_cmd () {
+>>> + =C2=A0 =C2=A0 if $base_present
+>>> + =C2=A0 =C2=A0 then
+>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "$merge_tool_path" "$LO=
+CAL" "$REMOTE" "$BASE" -merged=3D"$PWD/$MERGED"
+>>> + =C2=A0 =C2=A0 else
+>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "$merge_tool_path" "$LO=
+CAL" "$REMOTE" -merged=3D"$PWD/$MERGED"
+>>> + =C2=A0 =C2=A0 fi >/dev/null 2>&1
+>>> +}
+>
+> Is the $PWD/ prefix strictly needed?  The rest of the mergetools use
+> $MERGED as-is.  Does it work without it?
 
-Thanks, applied. Your markdown looks fine, though I dropped the quoted
-heading line here:
+Hrm, I didn't notice it but they do look fishy.  Thanks for good eyes.
 
-> +> WARNING
-> +> -------
-
-As it was difficult to tell that that large text was part of a quoted
-bit (probably there is some quoting mode that does not expand such
-things, but I didn't think it was worth fiddling with too much).
-
--Peff
+Tim?
