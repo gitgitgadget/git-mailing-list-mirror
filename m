@@ -1,96 +1,100 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: preserve permissions?
-Date: Sat, 03 Mar 2012 11:15:58 -0800 (PST)
-Message-ID: <m3wr71ts0i.fsf@localhost.localdomain>
-References: <C1288762-C750-4919-A853-5E3229870A59@btinternet.com>
-	<m3fx27g6i8.fsf@localhost.localdomain>
-	<1330801530552-7340464.post@n2.nabble.com>
+From: Barry Wardell <barry.wardell@gmail.com>
+Subject: Re: [PATCH] git-svn: Simplify calculation of GIT_DIR
+Date: Sat, 3 Mar 2012 19:45:47 +0000
+Message-ID: <CAHrK+Z9fRQqLSY=3kc+8WkifTy1mJoA5ZFyGjXbdS8SXg9v=9w@mail.gmail.com>
+References: <1330798107-33561-1-git-send-email-barry.wardell@gmail.com> <1330799233.691.40.camel@centaur.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: snk <shank76@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 03 20:16:23 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Mar 03 20:46:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3uRE-00031Q-W3
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 20:16:17 +0100
+	id 1S3uuF-0004DW-Pg
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 20:46:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752899Ab2CCTQC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Mar 2012 14:16:02 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:33879 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751051Ab2CCTQA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Mar 2012 14:16:00 -0500
-Received: by eaaq12 with SMTP id q12so959534eaa.19
-        for <git@vger.kernel.org>; Sat, 03 Mar 2012 11:15:59 -0800 (PST)
-Received-SPF: pass (google.com: domain of jnareb@gmail.com designates 10.14.101.141 as permitted sender) client-ip=10.14.101.141;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of jnareb@gmail.com designates 10.14.101.141 as permitted sender) smtp.mail=jnareb@gmail.com; dkim=pass header.i=jnareb@gmail.com
-Received: from mr.google.com ([10.14.101.141])
-        by 10.14.101.141 with SMTP id b13mr8402315eeg.92.1330802159595 (num_hops = 1);
-        Sat, 03 Mar 2012 11:15:59 -0800 (PST)
+	id S1752344Ab2CCTqL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Mar 2012 14:46:11 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:34015 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752137Ab2CCTqJ convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 3 Mar 2012 14:46:09 -0500
+Received: by lahj13 with SMTP id j13so3250113lah.19
+        for <git@vger.kernel.org>; Sat, 03 Mar 2012 11:46:08 -0800 (PST)
+Received-SPF: pass (google.com: domain of barry.wardell@gmail.com designates 10.112.85.233 as permitted sender) client-ip=10.112.85.233;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of barry.wardell@gmail.com designates 10.112.85.233 as permitted sender) smtp.mail=barry.wardell@gmail.com; dkim=pass header.i=barry.wardell@gmail.com
+Received: from mr.google.com ([10.112.85.233])
+        by 10.112.85.233 with SMTP id k9mr6473764lbz.56.1330803968372 (num_hops = 1);
+        Sat, 03 Mar 2012 11:46:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=k9Bx848+rkGYwwbzV901nHHZA59I/KY37FogGqzXKHk=;
-        b=TJgnbVTCbOHW/vH6bTIEiibNBCXTlh5j1zkFrwkJ/nqWhQI0bcYdL//Ou/zi0xvSXq
-         nRowuLeomJLx1XgdDkWQz2pVGdVffXJ1yGOMP8OfDp2AxipdN5/8aUb0Lft91kMOMDEE
-         3yTj53GgrY5EWGotGkI4ys6Oq1AefhdWNKJHpRXG5aJWf6G9adN8wJ4/QCTPlkhT8qK2
-         xGnFT5TAaRu1eD+U7UQ79dJuPWlT5/HX7DtHVWF0+mxRXreyNTa1XMn5SuzTbbPEFiBZ
-         4hI5Hev0F1AziTCIl9IlMxXAKZsGmrn/zeDYwQk5PU28W4kF6OSpHMr6HQlt1pdeeN5X
-         zMkw==
-Received: by 10.14.101.141 with SMTP id b13mr6420935eeg.92.1330802159444;
-        Sat, 03 Mar 2012 11:15:59 -0800 (PST)
-Received: from localhost.localdomain (abwo91.neoplus.adsl.tpnet.pl. [83.8.238.91])
-        by mx.google.com with ESMTPS id r5sm37750860eef.6.2012.03.03.11.15.57
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 03 Mar 2012 11:15:58 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q23JFvqM024041;
-	Sat, 3 Mar 2012 20:15:58 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q23JFvtj024038;
-	Sat, 3 Mar 2012 20:15:57 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1330801530552-7340464.post@n2.nabble.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        bh=nLSspblKD3kV1xMQKorpQNQtWGOxxDqpj3BJ8lPvQyU=;
+        b=SnEuqgH5/aMptXTkPD9i0BGbo1KvPfwwHvSzgU74PMQBxaWbr8t5iQOxM5TAViamNF
+         WSHWs0GPVQVyx/YWuhvbVTO8OjpwxcrNuPP5ignV44+NDG/gPuaxAXXdIbK0pDaPQ0Fy
+         RtDAGfxCMN8JJnP8XFkMgJ9Y+sNwycM8CFzjGCRRp3Uu44sv+M7lVjg5SnmhL90lUwwq
+         RN7O6r0fMfHPlNKBEZvpn21dmMwhg6Y4Y+AoM0N4v4eUg0EUAvKA+dA/LgzBIMQ8wy7Y
+         GC+cQKzjsXYzjk7F5lKal64cXEZxKtvx1g6/J9pWaASkkLduXwAPNjB0nqotLHFm5vTu
+         vvQQ==
+Received: by 10.112.85.233 with SMTP id k9mr5324295lbz.56.1330803968322; Sat,
+ 03 Mar 2012 11:46:08 -0800 (PST)
+Received: by 10.112.11.67 with HTTP; Sat, 3 Mar 2012 11:45:47 -0800 (PST)
+In-Reply-To: <1330799233.691.40.camel@centaur.lab.cmartin.tk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192132>
 
-snk <shank76@gmail.com> writes:
+On Sat, Mar 3, 2012 at 6:27 PM, Carlos Mart=EDn Nieto <cmn@elego.de> wr=
+ote:
+>
+> > -# make sure we're always running at the top-level working director=
+y
+> > +# Access an existing repository
+>
+> Is there a reason making sure we're at the top-level dir isn't necess=
+ary
+> anymore?
 
-> > Therefore git does not store ownership, and only basic permissions 
-> > (only executable bit for ordinary files, and the symlink bit). 
-> 
-> Fine.  "git diff" reports wrong new permissions though: 755 instead of 764. 
+No, in fact it is still necessary.
 
-"Executable bit" is not "executable permissions"
- 
-> shanker@linux-0tix:~/test/play2> git reset --hard HEAD
-> HEAD is now at 85d4483 test
-> shanker@linux-0tix:~/test/play2> git config core.filemode
-> true
-> shanker@linux-0tix:~/test/play2> ls -l x
-> -rw-rw-r-- 1 shanker users 0 Mar  3 11:00 x
-> shanker@linux-0tix:~/test/play2> chmod u+x x
-> shanker@linux-0tix:~/test/play2> git diff x
-> diff --git a/x b/x
-> old mode 100644
-> new mode 100755
-> shanker@linux-0tix:~/test/play2> ls -l x
-> -rwxrw-r-- 1 shanker users 0 Mar  3 11:00 x
-> shanker@linux-0tix:~/test/play2> 
+> > =A0unless ($cmd && $cmd =3D~ /(?:clone|init|multi-init)$/) {
+> > - =A0 =A0 unless (-d $ENV{GIT_DIR}) {
+> > - =A0 =A0 =A0 =A0 =A0 =A0 if ($git_dir_user_set) {
+> > - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 die "GIT_DIR=3D$ENV{GIT_D=
+IR} explicitly set, ",
+> > - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "but it is not a =
+directory\n";
+> > - =A0 =A0 =A0 =A0 =A0 =A0 }
+> > - =A0 =A0 =A0 =A0 =A0 =A0 my $git_dir =3D delete $ENV{GIT_DIR};
+> > - =A0 =A0 =A0 =A0 =A0 =A0 my $cdup =3D undef;
+> > - =A0 =A0 =A0 =A0 =A0 =A0 git_cmd_try {
+> > - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $cdup =3D command_oneline=
+(qw/rev-parse --show-cdup/);
+> > - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $git_dir =3D '.' unless (=
+$cdup);
+> > - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 chomp $cdup if ($cdup);
+> > - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $cdup =3D "." unless ($cd=
+up && length $cdup);
+> > - =A0 =A0 =A0 =A0 =A0 =A0 } "Already at toplevel, but $git_dir not =
+found\n";
+> > - =A0 =A0 =A0 =A0 =A0 =A0 chdir $cdup or die "Unable to chdir up to=
+ '$cdup'\n";
+>
+> Here you delete a chdir to the top-level directory, just as you delet=
+ed
+> the comment above, yet in the commit message you don't explain why th=
+is
+> isn't necessary anymore. Doesn't the rest of the code still assume th=
+at
+> it's running at the top-level dir?
 
-Git stores only whether file is executable or not.  To be more exact
-git uses only a few modes: one for submodule (commit), one for
-directory, one for symbolic link, one for ordinary executable file,
-and one for ordinary file (non-executable).
 
--- 
-Jakub Narebski
+Yes, you're right. I will restore the chdir and submit a new patch.
+
+Barry
