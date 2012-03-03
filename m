@@ -1,106 +1,105 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] t0300: work around bug in dash 0.5.6
-Date: Fri, 2 Mar 2012 19:37:35 -0500
-Message-ID: <20120303003735.GA804@sigill.intra.peff.net>
-References: <93904081120af9a646b8bda96aa2da8e85cc063d.1330700524.git.git@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>
+From: Tom Grennan <tmgrennan@gmail.com>
+Subject: [PATCHv2 0/5] modernize test style
+Date: Fri,  2 Mar 2012 18:15:32 -0800
+Message-ID: <1330740942-25130-1-git-send-email-tmgrennan@gmail.com>
+References: <1330566326-26075-1-git-send-email-tmgrennan@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Carlos Rica <jasampler@gmail.com>,
+	Andy Parkins <andyparkins@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 03 01:37:56 2012
+X-From: git-owner@vger.kernel.org Sat Mar 03 03:16:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3cyx-000851-Jy
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 01:37:55 +0100
+	id 1S3eWO-0001oY-Sn
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 03:16:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758405Ab2CCAhi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Mar 2012 19:37:38 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35700
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751664Ab2CCAhi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2012 19:37:38 -0500
-Received: (qmail 32728 invoked by uid 107); 3 Mar 2012 00:37:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 02 Mar 2012 19:37:43 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Mar 2012 19:37:35 -0500
-Content-Disposition: inline
-In-Reply-To: <93904081120af9a646b8bda96aa2da8e85cc063d.1330700524.git.git@drmicha.warpmail.net>
+	id S1750775Ab2CCCP4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Mar 2012 21:15:56 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:48188 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750755Ab2CCCPz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2012 21:15:55 -0500
+Received: by vcqp1 with SMTP id p1so2024061vcq.19
+        for <git@vger.kernel.org>; Fri, 02 Mar 2012 18:15:55 -0800 (PST)
+Received-SPF: pass (google.com: domain of tmgrennan@gmail.com designates 10.52.23.199 as permitted sender) client-ip=10.52.23.199;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of tmgrennan@gmail.com designates 10.52.23.199 as permitted sender) smtp.mail=tmgrennan@gmail.com; dkim=pass header.i=tmgrennan@gmail.com
+Received: from mr.google.com ([10.52.23.199])
+        by 10.52.23.199 with SMTP id o7mr21108358vdf.79.1330740955167 (num_hops = 1);
+        Fri, 02 Mar 2012 18:15:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=E6G62Z0EhBDczGJ0gEA4jU4enumkxG9ogjvblXYPcCY=;
+        b=uRfPmaqT//Pw0PaTJIqeqOTZE8DdohUnHPRSNo7HwnUSPVg8B6ZiemmCwBB+zQqv7o
+         ZvUjmJKtwRbH+uO/Nvz2c4IJUWJLfoMkA16cURPQ+UJ70fQw95uor9ZvZSw5OvDXrMVu
+         wydON54WYJoKI1DQUs09ATYGssDyu4rlpBl3BqzzNj3CyRZCWAEQ4sjrrUoOPjPs+7yH
+         JVSzlbX0F70bc0e0EP1tf8Rl6fNMguV4dGhS833H4ioTJag+Ee2JapBPKfIdxWZ9xrOn
+         xqW5aokPrcXbWQ+8Xjugy8afn8Utls4PpGMTzYMl/Ws1JG+XIP4j1clxvhzP+ikbQQ0j
+         /oTQ==
+Received: by 10.52.23.199 with SMTP id o7mr17996363vdf.79.1330740955122;
+        Fri, 02 Mar 2012 18:15:55 -0800 (PST)
+Received: from tgrennan-laptop.lab.redback.com ([129.192.185.163])
+        by mx.google.com with ESMTPS id e10sm11763981vdj.21.2012.03.02.18.15.52
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 02 Mar 2012 18:15:54 -0800 (PST)
+X-Mailer: git-send-email 1.7.8
+In-Reply-To: <1330566326-26075-1-git-send-email-tmgrennan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192078>
 
-From: Michael J Gruber <git@drmicha.warpmail.net>
+I <tmgrennan@gmail.com> wrote:
+>Per request, the following series modernize the style of the respective
+>test scripts.  The common themes are:
+>	- Guard setup with test_expect_success
+>	- Single-quoted, tab prefaced test blocks of < 80 cols
+>	- Redirect unwanted output
+>	- Use a "here" filter for some expect generation
+>
+>I also used pipelines to validate expected results rather than temporary
+>files, i.e.
+>	TEST | test_cmp expect -
+>vs.	TEST >actual && test_cmp expect actual
+>
+>Since the later three patches have a lot of whitespace change, I've included an
+>alternate, PATCH-w series that filters these for more substantive review.
+>However, even the filtered series is very large causing me to second guess
+>whether such style modernization should be pursued; so, I look forward to your
+>input.
 
-The construct 'while IFS== read' makes dash 0.5.6 execute
-read without changing IFS, which results in test breakages
-all over the place in t0300.  Neither dash 0.5.5.1 and older
-nor dash 0.5.7 and newer are affected: The problem was
-introduded resp. fixed by the commits
+The following series is a much less ambitious modernization of these tests.
+This version does NOT:
+	- Support running with t/TEST.sh vs. (cd t && ./TEST.sh)
+	- Redirect unwanted output
+	- Pipeline test_cmp
+	- Rewrite blocks to be less than 80 columns 
 
-  55c46b7 ([BUILTIN] Honor tab as IFS whitespace when
-           splitting fields in readcmd, 2009-08-11)
+This version DOES:
+	- Guard setup with test_expect_success
+	  (in one case, a shell loop was unwound to facilitate this)
+	- Single-quoted, tab prefaced test blocks
+	- >FILE instead of > FILE redirection style
+	- Use a sed filter to process formatted whitespace test cases
 
-  1d806ac ([VAR] Do not poplocalvars prematurely on regular
-           utilities, 2010-05-27)
+I've also included PATCHv2-w for review alternatives.
 
-in http://git.kernel.org/?p=utils/dash/dash.git
+Thanks,
+Tom Grennan (5):
+  t7004 (tag): modernize style
+  t5512 (ls-remote): modernize style
+  t3200 (branch): modernize style
+  t0040 (parse-options): modernize style
+  t6300 (for-each-ref): modernize style
 
-Putting 'IFS==' before that line makes all versions of dash
-work.
+ t/t7004-tag.sh |  828 ++++++++++++++++++++++++++++++--------------------------
+ 1 files changed, 447 insertions(+), 381 deletions(-)
 
-This looks like a dash bug, not a misinterpretation of the
-standard. However, it's worth working around for two
-reasons. One, this version of dash was released in Fedora
-14-16, so the bug is found in the wild. And two, at least
-one other shell, Solaris /bin/sh, choked on this by
-persisting IFS after the read invocation. That is not a
-shell we usually care about, and I think this use of IFS is
-acceptable by POSIX (which allows other behavior near
-"special builtins", but "read" is not one of those). But it
-seems that this may be a subtle, not-well-tested case for
-some shells. Given that the workaround is so simple, it's
-worth just being defensive.
-
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-Signed-off-by: Jeff King <peff@peff.net>
----
-Michael and I discussed this off-list. The patch is his, but I've
-rewritten much of the commit message to incorporate the recent thread
-over this exact same bit of code on Solaris:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/189680
-
-This patch is basically the same as Ben Walton's from that thread, but
-we ended up creating and using the write_script function to avoid using
-Solaris /bin/sh at all.
-
- t/t0300-credentials.sh |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
-index 8621ab0..20e28e3 100755
---- a/t/t0300-credentials.sh
-+++ b/t/t0300-credentials.sh
-@@ -8,10 +8,13 @@ test_expect_success 'setup helper scripts' '
- 	cat >dump <<-\EOF &&
- 	whoami=`echo $0 | sed s/.*git-credential-//`
- 	echo >&2 "$whoami: $*"
--	while IFS== read key value; do
-+	OIFS=$IFS
-+	IFS==
-+	while read key value; do
- 		echo >&2 "$whoami: $key=$value"
- 		eval "$key=$value"
- 	done
-+	IFS=$OIFS
- 	EOF
- 
- 	write_script git-credential-useless <<-\EOF &&
 -- 
-1.7.6.6.7.g65e2
+1.7.8
