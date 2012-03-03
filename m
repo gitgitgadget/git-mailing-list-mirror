@@ -1,83 +1,124 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 1/3] Use startup_info->prefix rather than prefix.
-Date: Sat, 3 Mar 2012 16:50:33 +0700
-Message-ID: <CACsJy8DtZLCLfeHNP_eq9kVZxjV3xh3gs6pgQCi=FDZ_Je7_Gw@mail.gmail.com>
-References: <cover.1330740964.git.jaredhance@gmail.com> <b564d95b1efcd91874beb6d410253f86617f8fa6.1330740964.git.jaredhance@gmail.com>
- <7v8vji87kg.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v2] Perform cheaper connectivity check when pack is used
+ as medium
+Date: Sat, 3 Mar 2012 17:09:05 +0700
+Message-ID: <CACsJy8ANF+tqMzXrYamSHv0N==6Wc2sVbQwJO40+=f+R+HMnbA@mail.gmail.com>
+References: <7vmx849ma8.fsf@alter.siamese.dyndns.org> <1330435109-4437-1-git-send-email-pclouds@gmail.com>
+ <7vwr73h6td.fsf@alter.siamese.dyndns.org> <CACsJy8D7JB9bzOvammGAx1rW04DEUCVzvfp-_Q1KtE9G00rZVQ@mail.gmail.com>
+ <7v1upagb8z.fsf@alter.siamese.dyndns.org> <CACsJy8B7u-rvnFZKi4t2CoB=J3Ra8pWxK4439NTdnHQDhm2ibQ@mail.gmail.com>
+ <7vfwdq8914.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jared Hance <jaredhance@gmail.com>,
-	Jeff King <peff@peff.net>
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 03 10:51:18 2012
+X-From: git-owner@vger.kernel.org Sat Mar 03 11:09:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3lcT-0008Ee-21
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 10:51:17 +0100
+	id 1S3luI-0000O3-Ta
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 11:09:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751673Ab2CCJvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Mar 2012 04:51:07 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:61079 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751538Ab2CCJvG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Mar 2012 04:51:06 -0500
-Received: by wgbdr13 with SMTP id dr13so2212214wgb.1
-        for <git@vger.kernel.org>; Sat, 03 Mar 2012 01:51:04 -0800 (PST)
+	id S1752030Ab2CCKJh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Mar 2012 05:09:37 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:51347 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751897Ab2CCKJg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 3 Mar 2012 05:09:36 -0500
+Received: by wejx9 with SMTP id x9so1494516wej.19
+        for <git@vger.kernel.org>; Sat, 03 Mar 2012 02:09:35 -0800 (PST)
 Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.180.24.7 as permitted sender) client-ip=10.180.24.7;
 Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.180.24.7 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
 Received: from mr.google.com ([10.180.24.7])
-        by 10.180.24.7 with SMTP id q7mr3015607wif.14.1330768264845 (num_hops = 1);
-        Sat, 03 Mar 2012 01:51:04 -0800 (PST)
+        by 10.180.24.7 with SMTP id q7mr3102412wif.14.1330769375467 (num_hops = 1);
+        Sat, 03 Mar 2012 02:09:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=FKwr08jFwstqGOuJ9TTN3M0IyWORacvzwGyPe+Wxdfw=;
-        b=K9jivQri3hH3fnO8uzI6iQZunVJ+3v/efZf+2D3BPU8T0uLm5bc2SDaYtNJUP1S7Ch
-         6BEA8yo+Vi0DexdgRQLI2XLyyigXLisMsL1OD/qZCs94FVw7EN1Tsghgj6wcdaDoh2br
-         IMwDx/2/xdXbczfAD9oZPLjrh4vBTqCWmpalZFv9AjySGMCP/mYKD5vjkOAPG5mDCZL/
-         c9LlcjjbgPzKyMXltEXMALXplCBeKqh+7ku9owoxViSOVxccjshwV/NT3XM1lDrsGRaR
-         RCv3bibBv9F2vewwEW2gmqFV2y9dtCPlGGGA6RBZr4jtCA6tZy/nt314tVR8pLbKkLWP
-         HN9g==
-Received: by 10.180.24.7 with SMTP id q7mr2385247wif.14.1330768263194; Sat, 03
- Mar 2012 01:51:03 -0800 (PST)
-Received: by 10.223.13.5 with HTTP; Sat, 3 Mar 2012 01:50:33 -0800 (PST)
-In-Reply-To: <7v8vji87kg.fsf@alter.siamese.dyndns.org>
+         :cc:content-type:content-transfer-encoding;
+        bh=+Yt6LSOfSb48G44XaK7SVA1dp9mAtLhANpoeCs16CFU=;
+        b=imeLYi0BR4fDtogYrYmjgGMd7IY3TCMmQTSS7fJTk/q9Zuc4Py1r0ntNS55vlFs/fQ
+         emT+pgeYZLGDNazQ6ciTcR8GdP9O+EU8ivDZ/6Y/Xx499/d4tthG1aQLB9vABiv7la/v
+         fYrSnTlwzWa4pTLxYZGmik3Ku/hWs0Vu0ExIzdE4deZsx4WgfuCEX1yP5yX2WRdDV86K
+         T9eJAbFlLVogpSuiKNOFmTKy3lpAdeLbarjIBMPTA9wl/Wblv5n+MJ7x3Ld2pscUeoDa
+         VRHi4ZwD7ypnPO6VJ9M/VFjLGISX8IlMGzAxVETmDRtUrPDgAoan1wDxlnUwJ+PW2JwH
+         bVNg==
+Received: by 10.180.24.7 with SMTP id q7mr2455136wif.14.1330769375285; Sat, 03
+ Mar 2012 02:09:35 -0800 (PST)
+Received: by 10.223.13.5 with HTTP; Sat, 3 Mar 2012 02:09:05 -0800 (PST)
+In-Reply-To: <7vfwdq8914.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192102>
 
-2012/3/3 Junio C Hamano <gitster@pobox.com>:
-> Jared Hance <jaredhance@gmail.com> writes:
->
->> In trace_repo_setup, prefix is passed in as startup_info->prefix. But, as
->> indicated but a FIXME comment, trace_repo_setup has access to
->> startup_info. The prefix parameter has therefor been eliminated.
+On Sat, Mar 3, 2012 at 1:59 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+>>> I also suspect that more than trivial amount of computation is need=
+ed to
+>>> determine if a given object exists only in a single pack, so the en=
+d
+>>> result may not be that much cheaper than the current --verify-objec=
+t code.
 >>
->> Signed-off-by: Jared Hance <jaredhance@gmail.com>
->> ---
+>> Objects can exist in multiple packs right now if they are base
+>> objects. I'm not sure why you need to check for object existence in =
+a
+>> single pack.
 >
-> This comes from a9ca8a8 (builtins: print setup info if repo is found,
-> 2010-11-26) and hasn't ever changed over time, even across f07d6a1 (setup:
-> save prefix (original cwd relative to toplevel) in startup_info,
-> 2010-12-01) that did add the necessary "prefix" field to the startup_info
-> and was done reasonably close to the patch that wanted to have the field
-> in the first place.
+> What I meant to say was not "it is in this pack and nowhere else", bu=
+t
+> about a check like this:
 >
-> The fix looks too easy to be correct X-<; in other words, I find it hard
-> to believe that such a triviality was left without a good reason, but I do
-> not think of any.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0static void finish_object(struct object *o=
+bj, ...)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0{
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0struct packed_=
+git *fetched_pack =3D cb_data->fetched_pack;
 >
-> Well, but perhaps something too good to be true is indeed true sometimes.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (obj->type =
+=3D=3D OBJ_BLOB && !has_sha1_file(obj->sha1))
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0die("missing");
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!info->rev=
+s->verify_objects)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0return;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (find_pack_=
+entry_one(obj->sha1, fetched_pack))
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0return; /* we just fetched and ran index-pack on it */
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!obj->pars=
+ed && obj->type !=3D OBJ_COMMIT)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0parse_object(obj->sha1);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+>
+> I think this is the kind of "passing identity down the callchain" bot=
+h of
+> us have in mind. =C2=A0I was trying to say that find_pack_entry() may=
+ not be
+> trivially cheap. =C2=A0But probably I am being worried too much.
 
-This patch makes this function only usable when startup_info pointer
-is initialized. As "git" binary is the only caller, the change is ok.
-If non-builtin commands want to use this function, they need to
-initialize startup_info first.
--- 
+This is after index-pack is run and .idx file created, I think
+determining object's storage type should be relatively cheap compared
+to rehashing. We'll know when I update the patch.
+
+> But now you brought it up, I think we may also need to worry about a
+> corrupt pre-existing loose blob object. =C2=A0In general, we tend to =
+always
+> favor reading objects from packs over loose objects, but I do not kno=
+w
+> offhand what repacking would do when there are two places it can read=
+ the
+> same object from (it should be allowed to pick whichever is easier to
+> read).
+
+=2E. which should be pack for pack-objects/repack because they can do a
+straight copy from pack to pack. --no-reuse-objects delegates object
+reading back to read_sha1_file(), and this one prefers packs too.
+--=20
 Duy
