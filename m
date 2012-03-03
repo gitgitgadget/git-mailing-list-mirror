@@ -1,80 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 2/5] t5512 (ls-remote): modernize style
-Date: Sat, 03 Mar 2012 00:05:05 -0800
-Message-ID: <7vipim6rf2.fsf@alter.siamese.dyndns.org>
-References: <1330740942-25130-1-git-send-email-tmgrennan@gmail.com>
- <1330566326-26075-1-git-send-email-tmgrennan@gmail.com>
- <1330740942-25130-3-git-send-email-tmgrennan@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 1/3] Use startup_info->prefix rather than prefix.
+Date: Sat, 3 Mar 2012 16:50:33 +0700
+Message-ID: <CACsJy8DtZLCLfeHNP_eq9kVZxjV3xh3gs6pgQCi=FDZ_Je7_Gw@mail.gmail.com>
+References: <cover.1330740964.git.jaredhance@gmail.com> <b564d95b1efcd91874beb6d410253f86617f8fa6.1330740964.git.jaredhance@gmail.com>
+ <7v8vji87kg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Carlos Rica <jasampler@gmail.com>,
-	Andy Parkins <andyparkins@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Tom Grennan <tmgrennan@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 03 09:05:17 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jared Hance <jaredhance@gmail.com>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 03 10:51:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3jxs-0007TX-6u
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 09:05:16 +0100
+	id 1S3lcT-0008Ee-21
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 10:51:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753116Ab2CCIFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Mar 2012 03:05:09 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41614 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752727Ab2CCIFI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Mar 2012 03:05:08 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E8A32376E;
-	Sat,  3 Mar 2012 03:05:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=CFNiqPnnabbQ7SwN51IDRhvO8Pw=; b=Lk6ShKoGhvraZfDw1VGV
-	rJWUcgwxDJ5dT0WvqimNchtQLz9fw5kvhwLemk5hj14l/jykiJZOuTEcAKSS2YkO
-	itddVMtIjwlWiPWiaKy/dOZEGSobalx+Sa6M+f6GMnL1dFYuWKUEH4A6+pEJiAF8
-	3vK+y7XWLQSUWpJtrUZdodQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=Z2nqim83RHnFx5KRggUq01r/JT2vup9B9vwD3OsSlB9yTd
-	MvAg9egV5TA5f2JwqujH+VsJW81sRQan2FLKggOPrzOg3BYh0YwwDZOi34rPGDRY
-	RFFGCrLTq3s3jPJusKTp/e/tkjK+PmZKVRAR7atdFD2mfMBpxrCqrH2O7YDGM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF4FD376D;
-	Sat,  3 Mar 2012 03:05:07 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7AF25376C; Sat,  3 Mar 2012
- 03:05:06 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 96B070EE-6507-11E1-87E6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751673Ab2CCJvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Mar 2012 04:51:07 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:61079 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751538Ab2CCJvG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Mar 2012 04:51:06 -0500
+Received: by wgbdr13 with SMTP id dr13so2212214wgb.1
+        for <git@vger.kernel.org>; Sat, 03 Mar 2012 01:51:04 -0800 (PST)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.180.24.7 as permitted sender) client-ip=10.180.24.7;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.180.24.7 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
+Received: from mr.google.com ([10.180.24.7])
+        by 10.180.24.7 with SMTP id q7mr3015607wif.14.1330768264845 (num_hops = 1);
+        Sat, 03 Mar 2012 01:51:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=FKwr08jFwstqGOuJ9TTN3M0IyWORacvzwGyPe+Wxdfw=;
+        b=K9jivQri3hH3fnO8uzI6iQZunVJ+3v/efZf+2D3BPU8T0uLm5bc2SDaYtNJUP1S7Ch
+         6BEA8yo+Vi0DexdgRQLI2XLyyigXLisMsL1OD/qZCs94FVw7EN1Tsghgj6wcdaDoh2br
+         IMwDx/2/xdXbczfAD9oZPLjrh4vBTqCWmpalZFv9AjySGMCP/mYKD5vjkOAPG5mDCZL/
+         c9LlcjjbgPzKyMXltEXMALXplCBeKqh+7ku9owoxViSOVxccjshwV/NT3XM1lDrsGRaR
+         RCv3bibBv9F2vewwEW2gmqFV2y9dtCPlGGGA6RBZr4jtCA6tZy/nt314tVR8pLbKkLWP
+         HN9g==
+Received: by 10.180.24.7 with SMTP id q7mr2385247wif.14.1330768263194; Sat, 03
+ Mar 2012 01:51:03 -0800 (PST)
+Received: by 10.223.13.5 with HTTP; Sat, 3 Mar 2012 01:50:33 -0800 (PST)
+In-Reply-To: <7v8vji87kg.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192101>
 
-Tom Grennan <tmgrennan@gmail.com> writes:
+2012/3/3 Junio C Hamano <gitster@pobox.com>:
+> Jared Hance <jaredhance@gmail.com> writes:
+>
+>> In trace_repo_setup, prefix is passed in as startup_info->prefix. But, as
+>> indicated but a FIXME comment, trace_repo_setup has access to
+>> startup_info. The prefix parameter has therefor been eliminated.
+>>
+>> Signed-off-by: Jared Hance <jaredhance@gmail.com>
+>> ---
+>
+> This comes from a9ca8a8 (builtins: print setup info if repo is found,
+> 2010-11-26) and hasn't ever changed over time, even across f07d6a1 (setup:
+> save prefix (original cwd relative to toplevel) in startup_info,
+> 2010-12-01) that did add the necessary "prefix" field to the startup_info
+> and was done reasonably close to the patch that wanted to have the field
+> in the first place.
+>
+> The fix looks too easy to be correct X-<; in other words, I find it hard
+> to believe that such a triviality was left without a good reason, but I do
+> not think of any.
+>
+> Well, but perhaps something too good to be true is indeed true sometimes.
 
->  test_expect_success 'confuses pattern as remote when no remote specified' '
-> +	'"
-> +	cat >exp <<-EOF
-> +		fatal: 'refs*master' does not appear to be a git repository
-> +		fatal: The remote end hung up unexpectedly
-> +	EOF
-> +	"'
-
-Please make it a habit to make your test script a cascade of &&, i.e.
-
-	... remote specified' '
-	cat >exp <<-\EOF &&
-        fatal: '\''refs*master'\'' does not ...
-	...
-        EOF
-
-No need to resend; I'll fix it up locally.        
-
-Thanks.
+This patch makes this function only usable when startup_info pointer
+is initialized. As "git" binary is the only caller, the change is ok.
+If non-builtin commands want to use this function, they need to
+initialize startup_info first.
+-- 
+Duy
