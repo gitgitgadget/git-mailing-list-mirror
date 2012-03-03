@@ -1,85 +1,105 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] parse-options: typo check for unknown switches
-Date: Sat, 03 Mar 2012 12:00:29 +0100
-Message-ID: <4F51F9CD.9010904@lsrfire.ath.cx>
+From: David Barr <davidbarr@google.com>
+Subject: [RFC] "Remote helper for Subversion" project
+Date: Sat,  3 Mar 2012 23:27:26 +1100
+Message-ID: <1330777646-28381-1-git-send-email-davidbarr@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 03 12:00:43 2012
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	David Barr <davidbarr@google.com>,
+	Dmitry Ivankov <divanorama@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Mar 03 13:29:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3mhd-0006F0-Ag
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 12:00:41 +0100
+	id 1S3o5d-000578-JA
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 13:29:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752827Ab2CCLAh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Mar 2012 06:00:37 -0500
-Received: from india601.server4you.de ([85.25.151.105]:38672 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752806Ab2CCLAg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Mar 2012 06:00:36 -0500
-Received: from [192.168.2.105] (p579BED61.dip.t-dialin.net [87.155.237.97])
-	by india601.server4you.de (Postfix) with ESMTPSA id 308AB2F8030
-	for <git@vger.kernel.org>; Sat,  3 Mar 2012 12:00:35 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+	id S1751437Ab2CCM3A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Mar 2012 07:29:00 -0500
+Received: from mail-pz0-f52.google.com ([209.85.210.52]:61737 "EHLO
+	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751166Ab2CCM27 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Mar 2012 07:28:59 -0500
+Received: by dadp12 with SMTP id p12so2963763dad.11
+        for <git@vger.kernel.org>; Sat, 03 Mar 2012 04:28:58 -0800 (PST)
+Received-SPF: pass (google.com: domain of davidbarr@google.com designates 10.68.134.33 as permitted sender) client-ip=10.68.134.33;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of davidbarr@google.com designates 10.68.134.33 as permitted sender) smtp.mail=davidbarr@google.com; dkim=pass header.i=davidbarr@google.com
+Received: from mr.google.com ([10.68.134.33])
+        by 10.68.134.33 with SMTP id ph1mr10516606pbb.81.1330777738756 (num_hops = 1);
+        Sat, 03 Mar 2012 04:28:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:from:to:cc:subject:date:message-id:x-mailer;
+        bh=pGnvwSKbYf0p+SvFegnXddm3eaDShtQj1HF0vFzaAeQ=;
+        b=PoFVvgcSnbbM0IpqZ/ApwUOoUf0LHS2T3D+pUITSOtJRhnpFqC3gSaXYwnZuS/dkuI
+         3kLXeLSKOivoZHdCfHPiJPzF7tcLWrZ/I/05tE81cDKE+lRh7oS/3XDNp1DleVcbSvEC
+         3ZFAsaDvVEFdouADaQcGxJGQ9Pbetxd/1zuzYrubcdGUkyCo+OPZ3WDUdkTnD0Blk1OQ
+         BgBHerGIqrNVD5s+PCEO5CVK5EW15tZ2Q4XR6egVBVVY3kL724/qUK2zqPsi7HeKIf41
+         GkPSjBb7R8zJV/AZfOU20mOI5O2tD2/w6D1N7dx3YV+0uNdjyg8dBEMcBEbLw53m6j1e
+         K9mQ==
+Received: by 10.68.134.33 with SMTP id ph1mr8965520pbb.81.1330777738715;
+        Sat, 03 Mar 2012 04:28:58 -0800 (PST)
+Received: by 10.68.134.33 with SMTP id ph1mr8965470pbb.81.1330777738475;
+        Sat, 03 Mar 2012 04:28:58 -0800 (PST)
+Received: from localhost.localdomain (c122-107-58-35.blktn5.nsw.optusnet.com.au. [122.107.58.35])
+        by mx.google.com with ESMTPS id m5sm7698671pbo.69.2012.03.03.04.28.55
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 03 Mar 2012 04:28:57 -0800 (PST)
+X-Mailer: git-send-email 1.7.9
+X-Gm-Message-State: ALoCoQmnoUDY8p4xWPTmDyUcZHluH2rbYnusrg66W2wL7JnQrN/ac2NepR5eLoHZQaBV1kLWqS+/Isb/nQ99oUV42hiy0RCZ/FqtOTaXKV+lIA5sJo84ZZCa3KHPw2IRZiCXFsMA7D9kpXU0XV6zNYDi8sJ1Q2VoZy/ZLyKUeiZZqHbxP4uVHdw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192106>
 
-The user specifies a long option but forgets to type the second
-leading dash, we currently detect and report that fact if its first
-letter is a valid short option. This is done for safety, to avoid
-ambiguity between short options (and their arguments) and a long
-option with a missing dash.
-
-This diagnostic message is also helpful for long options whose first
-letter is not a valid short option, however. Print it in that case,
-too, as a courtesy.
-
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 ---
- parse-options.c          |    2 ++
- t/t0040-parse-options.sh |   10 ++++++++++
- 2 files changed, 12 insertions(+)
+ SoC-2012-Ideas.md |   26 ++++++++++++++++++++++++++
+ 1 files changed, 26 insertions(+), 0 deletions(-)
 
-diff --git a/parse-options.c b/parse-options.c
-index 1908996..850cfa7 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -393,6 +393,8 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
- 			case -1:
- 				return parse_options_usage(ctx, usagestr, options, 1);
- 			case -2:
-+				if (ctx->opt)
-+					check_typos(arg + 1, options);
- 				goto unknown;
- 			}
- 			if (ctx->opt)
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index a44bcb9..e3f354a 100755
---- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -236,6 +236,16 @@ test_expect_success 'detect possible typos' '
- 	test_cmp typo.err output.err
- '
+ This is simply the direct translation of last year's project idea.
+ This project make significant incremental progess each year.
+ I'm seeking feedback from all involved on setting the direction.
+
+ --
+ David Barr
+
+diff --git a/SoC-2012-Ideas.md b/SoC-2012-Ideas.md
+index 5e83342..4c2ab05 100644
+--- a/SoC-2012-Ideas.md
++++ b/SoC-2012-Ideas.md
+@@ -182,3 +182,29 @@ this project.
  
-+cat > typo.err << EOF
-+error: did you mean \`--ambiguous\` (with two dashes ?)
-+EOF
+ Proposed by: Thomas Rast  
+ Possible mentor(s): Thomas Rast
 +
-+test_expect_success 'detect possible typos' '
-+	test_must_fail test-parse-options -ambiguous > output 2> output.err &&
-+	test ! -s output &&
-+	test_cmp typo.err output.err
-+'
++Remote helper for Subversion
++------------------------------------
 +
- cat > expect <<EOF
- boolean: 0
- integer: 0
++Write a remote helper for Subversion. While a lot of the underlying
++infrastructure work was completed last year, the remote helper itself
++is essentially incomplete. Major work includes:
++
++* Understanding revision mapping and building a revision-commit mapper.
++
++* Working through transport and fast-import related plumbing, changing
++  whatever is necessary.
++
++* Getting an Git-to-SVN converter merged.
++
++* Building the remote helper itself.
++
++Goal: Build a full-featured bi-directional `git-remote-svn` and get it
++      merged into upstream Git.  
++Language: C  
++See: [A note on SVN history][SVN history], [svnrdump][].  
++Proposed by: David Barr  
++Possible mentors: Jonathan Nieder, Sverre Rabbelier, David Barr
++
++[SVN history]: http://article.gmane.org/gmane.comp.version-control.git/150007
++[svnrdump]: http://svn.apache.org/repos/asf/subversion/trunk/subversion/svnrdump
 -- 
-1.7.9.2
+1.7.9
