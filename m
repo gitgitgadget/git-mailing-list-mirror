@@ -1,116 +1,79 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: =?UTF-8?q?=5Bgit=20wiki=20PATCH=5D=20=22Modernizing=20and=20expanding=20Git=2Epm=22=20project?=
-Date: Sat,  3 Mar 2012 22:14:41 +0100
-Message-ID: <1330809281-25774-1-git-send-email-jnareb@gmail.com>
-References: <20120302091114.GA3984@sigill.intra.peff.net>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCHv2 1/5] t7004 (tag): modernize style
+Date: Sat, 03 Mar 2012 22:31:52 +0100
+Message-ID: <4F528DC8.7010102@kdbg.org>
+References: <1330740942-25130-1-git-send-email-tmgrennan@gmail.com> <1330740942-25130-2-git-send-email-tmgrennan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Mar 03 22:15:01 2012
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Carlos Rica <jasampler@gmail.com>,
+	Andy Parkins <andyparkins@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Tom Grennan <tmgrennan@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 03 22:32:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3wI4-0006hl-TY
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 22:14:57 +0100
+	id 1S3wYc-0003zV-FT
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 22:32:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752713Ab2CCVOv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Mar 2012 16:14:51 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:52819 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752136Ab2CCVOu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Mar 2012 16:14:50 -0500
-Received: by eaaq12 with SMTP id q12so978461eaa.19
-        for <git@vger.kernel.org>; Sat, 03 Mar 2012 13:14:49 -0800 (PST)
-Received-SPF: pass (google.com: domain of jnareb@gmail.com designates 10.213.4.131 as permitted sender) client-ip=10.213.4.131;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of jnareb@gmail.com designates 10.213.4.131 as permitted sender) smtp.mail=jnareb@gmail.com; dkim=pass header.i=jnareb@gmail.com
-Received: from mr.google.com ([10.213.4.131])
-        by 10.213.4.131 with SMTP id 3mr2015611ebr.22.1330809289849 (num_hops = 1);
-        Sat, 03 Mar 2012 13:14:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=Z2W5WX4rjYEv9Dbm3v+CI7jvigJU2R5NFvrFhhMcvbE=;
-        b=npr6u/bxE3n5pJBVglnQSlFjIJpFTl6XRJ+RfpP4fXFR3z3+FfDfaL2NkFYLUXgLqC
-         e6BkTwFSx4AFMSy/aMz3VfE65CpXq7qIqSWiRl4hlPkujHAM77d2BB7hyu+xFrU/QsWN
-         JPxMafy+u7XO4o149FcZLdO8bgza//CKRECLLQWZr762/8xbIa9Qb1hXn6AUq1pUcdv7
-         miM2rykzTJaoKUqFyx6gVvUA7JqAbsSvRXsHZ0dw3iOFB4Io4ieyhGzImkE7LI70ioLC
-         unEttXDOlBUKwDGjU6grpQ53QYU9fL3gYzAb0fmWDe8C6vgM7ITDMj5hq5vixt+Io6D6
-         MwEg==
-Received: by 10.213.4.131 with SMTP id 3mr1538598ebr.22.1330809289734;
-        Sat, 03 Mar 2012 13:14:49 -0800 (PST)
-Received: from localhost.localdomain (abwo91.neoplus.adsl.tpnet.pl. [83.8.238.91])
-        by mx.google.com with ESMTPS id r5sm38983625eef.6.2012.03.03.13.14.48
-        (version=SSLv3 cipher=OTHER);
-        Sat, 03 Mar 2012 13:14:49 -0800 (PST)
-X-Mailer: git-send-email 1.7.9
-In-Reply-To: <20120302091114.GA3984@sigill.intra.peff.net>
+	id S1752843Ab2CCVb6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Mar 2012 16:31:58 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:14561 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752476Ab2CCVb5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Mar 2012 16:31:57 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id F1370130054;
+	Sat,  3 Mar 2012 22:29:05 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id A96F419F399;
+	Sat,  3 Mar 2012 22:31:52 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.27) Gecko/20120215 SUSE/3.1.19 Thunderbird/3.1.19
+In-Reply-To: <1330740942-25130-2-git-send-email-tmgrennan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192135>
 
----
-I'm not sure if my Markdown is entirely correct.
+Am 03.03.2012 03:15, schrieb Tom Grennan:
+> -test_expect_success 'trying to delete an already deleted tag should fail' \
+> -	'test_must_fail git tag -d mytag'
+> +test_expect_success \
+> +	'trying to delete an already deleted tag should fail' '
+> +	test_must_fail git tag -d mytag
+> +'
 
- SoC-2012-Ideas.md |   41 +++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 41 insertions(+), 0 deletions(-)
+Personally, I prefer lines with 80+ chars over lines broken with a
+backslash. So, while I can understand that you do not always remove a
+backslash to avoid churn, I think it is not warranted to *introduce* one
+to shorten a line below 80 chars. But that's really just a matter of taste.
 
-diff --git a/SoC-2012-Ideas.md b/SoC-2012-Ideas.md
-index 02a8fc7..f56b601 100644
---- a/SoC-2012-Ideas.md
-+++ b/SoC-2012-Ideas.md
-@@ -181,3 +181,44 @@ this project.
-=20
- Proposed by: Thomas Rast =20
- Possible mentor(s): Thomas Rast
-+
-+Modernizing and expanding Git.pm
-+--------------------------------
-+
-+Git.pm was created in 2006 to make it easy to call git commands from
-+Perl scripts safely, in a portable way (including workarounds required
-+for ActiveState Perl on MS Windows).  Its error handling via exception=
-s
-+also comes from that year.
-+
-+Git.pm module uses Error (and Error::Simple) for its exception handlin=
-g.
-+Unfortunately, while it might looked like a good choice in 2006, Error
-+module is deprecated:
-+
-+> WARNING
-+> -------
-+>
-+> Using the "Error" module is **no longer recommended** due to the
-+> black-magical nature of its syntactic sugar, which often tends to
-+> break. Its maintainers have stopped actively writing code that uses
-+> it, and discourage people from doing so. See the "SEE ALSO" section
-+> below for better recommendations.
-+
-+Nowadays the recommended solution to exception handling in Perl are
-+Try::Tiny (or TryCatch, but I don't think Git.pm would need this more
-+heavyweight module) for capturing and handling exceptions, and
-+Exception::Class (or Throwable, but that requires heavyweight Moose
-+object system) for throwing OO exceptions.
-+
-+The major goal would be to update Git.pm to modern Perl conventions,
-+amon others moving from Error / Error::Simple to Try::Tiny and
-+Exception::Class, preserving backwards compatibility, but perhaps also
-+adding a better interface and using it in git commands implemented in
-+Perl.
-+
-+Other optional goals would be to extend Git.pm, for example adding
-+Git::Config module which would read git configuration once like gitweb
-+does, or Git::Commit module for parsing commit objects, etc.
-+
-+Programming language: Perl =20
-+Proposed by: Jakub Nar=C4=99bski =20
-+Possible mentor(s): Jakub Nar=C4=99bski (?)
---=20
-1.7.9
+>  test_expect_success GPG \
+>  	'creating a signed tag with -F messagefile should succeed' '
+> +	cat >sigmsgfile <<-EOF
+> +		Another signed tag
+> +		message in a file.
+> +	EOF
+> +	get_tag_header file-signed-tag $commit commit $time >expect <sigmsgfile
+> +	echo "-----BEGIN PGP SIGNATURE-----" >>expect
+
+
+Several && missing here and later in the file.
+
+I stopped reading here. This is too much to read in one go. This should
+really be broken into several parts. For example, you changed
+get_tag_header and added several <emptyfile redirections (which should
+be /dev/null IMO); that has not a lot to do with "modernize style".
+
+>  	git tag -s -F sigmsgfile file-signed-tag &&
+>  	get_tag_msg file-signed-tag >actual &&
+>  	test_cmp expect actual
+>  '
+
+-- Hannes
