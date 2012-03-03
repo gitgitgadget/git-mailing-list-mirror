@@ -1,7 +1,7 @@
 From: Tom Grennan <tmgrennan@gmail.com>
-Subject: [PATCHv2-w 104/105] t0040 (parse-options): modernize style
-Date: Fri,  2 Mar 2012 18:15:41 -0800
-Message-ID: <1330740942-25130-10-git-send-email-tmgrennan@gmail.com>
+Subject: [PATCHv2 3/5] t3200 (branch): modernize style
+Date: Fri,  2 Mar 2012 18:15:35 -0800
+Message-ID: <1330740942-25130-4-git-send-email-tmgrennan@gmail.com>
 References: <1330740942-25130-1-git-send-email-tmgrennan@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Carlos Rica <jasampler@gmail.com>,
@@ -9,45 +9,45 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 03 03:16:54 2012
+X-From: git-owner@vger.kernel.org Sat Mar 03 03:17:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3eWg-0001tn-In
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 03:16:50 +0100
+	id 1S3eX1-00026b-6A
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 03:17:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751230Ab2CCCQn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Mar 2012 21:16:43 -0500
+	id S1751160Ab2CCCQe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Mar 2012 21:16:34 -0500
 Received: from mail-vw0-f46.google.com ([209.85.212.46]:37868 "EHLO
 	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750982Ab2CCCQR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2012 21:16:17 -0500
+	with ESMTP id S1750803Ab2CCCQD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2012 21:16:03 -0500
 Received: by mail-vw0-f46.google.com with SMTP id ff1so2055487vbb.19
-        for <git@vger.kernel.org>; Fri, 02 Mar 2012 18:16:17 -0800 (PST)
-Received-SPF: pass (google.com: domain of tmgrennan@gmail.com designates 10.52.28.76 as permitted sender) client-ip=10.52.28.76;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of tmgrennan@gmail.com designates 10.52.28.76 as permitted sender) smtp.mail=tmgrennan@gmail.com; dkim=pass header.i=tmgrennan@gmail.com
-Received: from mr.google.com ([10.52.28.76])
-        by 10.52.28.76 with SMTP id z12mr13867184vdg.81.1330740977322 (num_hops = 1);
-        Fri, 02 Mar 2012 18:16:17 -0800 (PST)
+        for <git@vger.kernel.org>; Fri, 02 Mar 2012 18:16:02 -0800 (PST)
+Received-SPF: pass (google.com: domain of tmgrennan@gmail.com designates 10.52.28.200 as permitted sender) client-ip=10.52.28.200;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of tmgrennan@gmail.com designates 10.52.28.200 as permitted sender) smtp.mail=tmgrennan@gmail.com; dkim=pass header.i=tmgrennan@gmail.com
+Received: from mr.google.com ([10.52.28.200])
+        by 10.52.28.200 with SMTP id d8mr20792615vdh.38.1330740962822 (num_hops = 1);
+        Fri, 02 Mar 2012 18:16:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :in-reply-to:references;
-        bh=jopztqyHZ16UKDXBzaMgBpHEY0uKevaydGoxIOSqHQY=;
-        b=jD4mEQuVTHdOEHOASL6WCTJLdtCXLDCRBjsDosMkONCqfVnVM+7wURcYwzXvqvwpBw
-         hDu9XdmWL56J27EV0o6PMbEiJ6FLEdLnMKpc4h/NE1QoH8LZdFa+7cfwjao5msyBC6vI
-         2py8ARs7YbuR5ORWs6B5cdX5SZh24kKqh7CZ29SUk/TXMcXeBl3dgZHao1CN3GsV3REg
-         vQ6EoKgU1xwu5BWoRF/M1hZgYPeDuLsnlW/80BFYQ1i8sE1QDFs/D0LmG1Y6+TWpxj0x
-         kPWXH1vjWblFfvNcWj63fzB28aSayH9w56DLMBKW8f0b1H4ciPzvXH3LOp58L1rhOGnQ
-         hUFQ==
-Received: by 10.52.28.76 with SMTP id z12mr11920586vdg.81.1330740977266;
-        Fri, 02 Mar 2012 18:16:17 -0800 (PST)
+        bh=siTEumhjQfezP/oiCvJV6CUoOtsWt1JdzhrYQAIXRkA=;
+        b=l9EHGXGy+wyuvYAK2MSaiwxZNhQfj3ujBhJsb4k7sVr438Kp24jolocymf46HAmuEt
+         SHLELvwrczL2i8pIYaFiGPW8maKNMyMb6752cw/onNCKWSXzghZyJI3C32RQHF1uYP2P
+         wO/ofgwedI9Il0T+HJStpOlRqi2ZV80j2fM6U5y/vXRGPNsf+yhaIgRlC47ILlxQW4FT
+         6z2H4p8vRacQ6YK5nkPAaf1VYArwf1Qp2jtaEXWidBGdicP//Tbte44GcTxBXYZXQhUG
+         hkvjRBPfaGH05IJNyT6ua6yMDgD2Yb37+r78BNgbvHPuMg9U7zPqjPjQoAANWcRIPJy1
+         t2zw==
+Received: by 10.52.28.200 with SMTP id d8mr17729016vdh.38.1330740962692;
+        Fri, 02 Mar 2012 18:16:02 -0800 (PST)
 Received: from tgrennan-laptop.lab.redback.com ([129.192.185.163])
-        by mx.google.com with ESMTPS id e10sm11763981vdj.21.2012.03.02.18.16.14
+        by mx.google.com with ESMTPS id e10sm11763981vdj.21.2012.03.02.18.16.00
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 02 Mar 2012 18:16:16 -0800 (PST)
+        Fri, 02 Mar 2012 18:16:01 -0800 (PST)
 X-Mailer: git-send-email 1.7.8
 In-Reply-To: <1330740942-25130-1-git-send-email-tmgrennan@gmail.com>
 In-Reply-To: <1330566326-26075-1-git-send-email-tmgrennan@gmail.com>
@@ -56,308 +56,440 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192085>
 
 - Guard setup with test_expect_success
+- Single-quoted, tab prefaced test blocks
 
 Signed-off-by: Tom Grennan <tmgrennan@gmail.com>
 ---
- t/t0040-parse-options.sh |   96 +++++++++++++++++++--------------------------
- 1 files changed, 41 insertions(+), 55 deletions(-)
+ t/t3200-branch.sh |  365 +++++++++++++++++++++++++++--------------------------
+ 1 files changed, 186 insertions(+), 179 deletions(-)
 
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index a1e4616..4a0b991 100755
---- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -7,7 +7,8 @@ test_description='our own option parser'
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index dd1aceb..7191b89 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -7,20 +7,20 @@ test_description='git branch assorted tests'
  
  . ./test-lib.sh
  
--cat > expect << EOF
-+test_expect_success 'test help' '
-+	cat >expect <<-EOF &&
- usage: test-parse-options <options>
+-test_expect_success \
+-    'prepare a trivial repository' \
+-    'echo Hello > A &&
+-     git update-index --add A &&
+-     git commit -m "Initial commit." &&
+-     echo World >> A &&
+-     git update-index --add A &&
+-     git commit -m "Second commit." &&
+-     HEAD=$(git rev-parse --verify HEAD)'
++test_expect_success 'prepare a trivial repository' '
++	echo Hello >A &&
++	git update-index --add A &&
++	git commit -m "Initial commit." &&
++	echo World >>A &&
++	git update-index --add A &&
++	git commit -m "Second commit." &&
++	HEAD=$(git rev-parse --verify HEAD)
++'
  
-     -b, --boolean         get a boolean
-@@ -23,7 +24,7 @@ usage: test-parse-options <options>
- 
- String options
-     -s, --string <string>
--                          get a string
-+		''                          get a string
-     --string2 <str>       get another string
-     --st <st>             get another string (pervert ordering)
-     -o <str>              get another string
-@@ -44,16 +45,14 @@ Standard options
-     -q, --quiet           be quiet
- 
- EOF
--
--test_expect_success 'test help' '
-+	cp expect expect.err &&
- 	test_must_fail test-parse-options -h > output 2> output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
+ test_expect_success \
+-    'git branch --help should not have created a bogus branch' '
+-     test_might_fail git branch --help </dev/null >/dev/null 2>/dev/null &&
+-     test_path_is_missing .git/refs/heads/--help
++	'git branch --help should not have created a bogus branch' '
++	test_might_fail git branch --help </dev/null >/dev/null 2>/dev/null &&
++	test_path_is_missing .git/refs/heads/--help
  '
  
--mv expect expect.err
--
--cat > expect << EOF
-+test_expect_success 'short options' '
-+	cat >expect <<-\EOF &&
- boolean: 2
- integer: 1729
- timestamp: 0
-@@ -64,15 +63,14 @@ quiet: no
- dry run: yes
- file: prefix/my.file
- EOF
--
--test_expect_success 'short options' '
- 	test-parse-options -s123 -b -i 1729 -b -vv -n -F my.file \
- 	> output 2> output.err &&
- 	test_cmp expect output &&
- 	test ! -s output.err
+ test_expect_success 'branch -h in broken repository' '
+@@ -34,63 +34,63 @@ test_expect_success 'branch -h in broken repository' '
+ 	grep "[Uu]sage" broken/usage
  '
  
--cat > expect << EOF
-+test_expect_success 'long options' '
-+	cat >expect <<-\EOF &&
- boolean: 2
- integer: 1729
- timestamp: 0
-@@ -83,8 +81,6 @@ quiet: no
- dry run: no
- file: prefix/fi.le
- EOF
--
--test_expect_success 'long options' '
- 	test-parse-options --boolean --integer 1729 --boolean --string2=321 \
- 		--verbose --verbose --no-dry-run --abbrev=10 --file fi.le\
- 		--obsolete > output 2> output.err &&
-@@ -101,7 +97,8 @@ test_expect_success 'missing required value' '
- 	test $? = 129
- '
+-test_expect_success \
+-    'git branch abc should create a branch' \
+-    'git branch abc && test_path_is_file .git/refs/heads/abc'
++test_expect_success 'git branch abc should create a branch' '
++	git branch abc && test_path_is_file .git/refs/heads/abc
++'
  
--cat > expect << EOF
-+test_expect_success 'intermingled arguments' '
-+	cat >expect <<-\EOF &&
- boolean: 1
- integer: 13
- timestamp: 0
-@@ -115,15 +112,14 @@ arg 00: a1
- arg 01: b1
- arg 02: --boolean
- EOF
--
--test_expect_success 'intermingled arguments' '
- 	test-parse-options a1 --string 123 b1 --boolean -j 13 -- --boolean \
- 		> output 2> output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
- '
- 
--cat > expect << EOF
-+test_expect_success 'unambiguously abbreviated option' '
-+	cat >expect <<-\EOF &&
- boolean: 0
- integer: 2
- timestamp: 0
-@@ -134,8 +130,6 @@ quiet: no
- dry run: no
- file: (not set)
- EOF
--
--test_expect_success 'unambiguously abbreviated option' '
- 	test-parse-options --int 2 --boolean --no-bo > output 2> output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
-@@ -152,7 +146,8 @@ test_expect_success 'ambiguously abbreviated option' '
- 	test $? = 129
- '
- 
--cat > expect << EOF
-+test_expect_success 'non ambiguous option (after two options it abbreviates)' '
-+	cat >expect <<-\EOF &&
- boolean: 0
- integer: 0
- timestamp: 0
-@@ -163,24 +158,23 @@ quiet: no
- dry run: no
- file: (not set)
- EOF
--
--test_expect_success 'non ambiguous option (after two options it abbreviates)' '
- 	test-parse-options --st 123 > output 2> output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
- '
- 
--cat > typo.err << EOF
--error: did you mean \`--boolean\` (with two dashes ?)
--EOF
--
- test_expect_success 'detect possible typos' '
-+	cat >typo.err <<-\EOF &&
-+		error: did you mean `--boolean` (with two dashes ?)
-+	EOF
-+	>expect
- 	test_must_fail test-parse-options -boolean > output 2> output.err &&
--	test ! -s output &&
--	test_cmp typo.err output.err
-+	test_cmp typo.err output.err &&
-+	test_cmp expect output
- '
- 
--cat > expect <<EOF
-+test_expect_success 'keep some options as arguments' '
-+	cat >expect <<-\EOF &&
- boolean: 0
- integer: 0
- timestamp: 0
-@@ -192,14 +186,13 @@ dry run: no
- file: (not set)
- arg 00: --quux
- EOF
--
--test_expect_success 'keep some options as arguments' '
- 	test-parse-options --quux > output 2> output.err &&
-         test ! -s output.err &&
-         test_cmp expect output
- '
- 
--cat > expect <<EOF
-+test_expect_success 'OPT_DATE() and OPT_SET_PTR() work' '
-+	cat >expect <<-\EOF &&
- boolean: 0
- integer: 0
- timestamp: 1
-@@ -211,15 +204,14 @@ dry run: no
- file: (not set)
- arg 00: foo
- EOF
--
--test_expect_success 'OPT_DATE() and OPT_SET_PTR() work' '
--	test-parse-options -t "1970-01-01 00:00:01 +0000" --default-string \
--		foo -q > output 2> output.err &&
-+	test-parse-options -t "1970-01-01 00:00:01 +0000" \
-+		--default-string foo -q >output 2>output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
- '
- 
--cat > expect <<EOF
-+test_expect_success 'OPT_CALLBACK() and OPT_BIT() work' '
-+	cat >expect <<-\EOF &&
- Callback: "four", 0
- boolean: 5
- integer: 4
-@@ -231,24 +223,22 @@ quiet: no
- dry run: no
- file: (not set)
- EOF
--
--test_expect_success 'OPT_CALLBACK() and OPT_BIT() work' '
- 	test-parse-options --length=four -b -4 > output 2> output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
- '
- 
--cat > expect <<EOF
-+test_expect_success 'OPT_CALLBACK() and callback errors work' '
-+	cat >expect <<-\EOF &&
- Callback: "not set", 1
- EOF
--
--test_expect_success 'OPT_CALLBACK() and callback errors work' '
- 	test_must_fail test-parse-options --no-length > output 2> output.err &&
- 	test_cmp expect output &&
- 	test_cmp expect.err output.err
- '
- 
--cat > expect <<EOF
-+test_expect_success 'OPT_BIT() and OPT_SET_INT() work' '
-+	cat >expect <<-\EOF &&
- boolean: 1
- integer: 23
- timestamp: 0
-@@ -259,8 +249,6 @@ quiet: no
- dry run: no
- file: (not set)
- EOF
--
--test_expect_success 'OPT_BIT() and OPT_SET_INT() work' '
- 	test-parse-options --set23 -bbbbb --no-or4 > output 2> output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
-@@ -272,7 +260,8 @@ test_expect_success 'OPT_NEGBIT() and OPT_SET_INT() work' '
- 	test_cmp expect output
- '
- 
--cat > expect <<EOF
-+test_expect_success 'OPT_BIT() works' '
-+	cat >expect <<-\EOF &&
- boolean: 6
- integer: 0
- timestamp: 0
-@@ -283,8 +272,6 @@ quiet: no
- dry run: no
- file: (not set)
- EOF
--
--test_expect_success 'OPT_BIT() works' '
- 	test-parse-options -bb --or4 > output 2> output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
-@@ -302,7 +289,9 @@ test_expect_success 'OPT_BOOLEAN() with PARSE_OPT_NODASH works' '
- 	test_cmp expect output
- '
- 
--cat > expect <<EOF
-+
-+test_expect_success 'OPT_NUMBER_CALLBACK() works' '
-+	cat >expect <<-\EOF &&
- boolean: 0
- integer: 12345
- timestamp: 0
-@@ -313,14 +302,13 @@ quiet: no
- dry run: no
- file: (not set)
- EOF
--
--test_expect_success 'OPT_NUMBER_CALLBACK() works' '
- 	test-parse-options -12345 > output 2> output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
- '
+-test_expect_success \
+-    'git branch a/b/c should create a branch' \
+-    'git branch a/b/c && test_path_is_file .git/refs/heads/a/b/c'
++test_expect_success 'git branch a/b/c should create a branch' '
++	git branch a/b/c && test_path_is_file .git/refs/heads/a/b/c
++'
  
 -cat >expect <<EOF
-+test_expect_success 'negation of OPT_NONEG flags is not ambiguous' '
-+	cat >expect <<-\EOF &&
- boolean: 0
- integer: 0
- timestamp: 0
-@@ -331,19 +319,17 @@ quiet: no
- dry run: no
- file: (not set)
- EOF
--
--test_expect_success 'negation of OPT_NONEG flags is not ambiguous' '
- 	test-parse-options --no-ambig >output 2>output.err &&
- 	test ! -s output.err &&
- 	test_cmp expect output
+-$_z40 $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	branch: Created from master
+-EOF
+-test_expect_success \
+-    'git branch -l d/e/f should create a branch and a log' \
+-	'GIT_COMMITTER_DATE="2005-05-26 23:30" \
+-     git branch -l d/e/f &&
+-	 test_path_is_file .git/refs/heads/d/e/f &&
+-	 test_path_is_file .git/logs/refs/heads/d/e/f &&
+-	 test_cmp expect .git/logs/refs/heads/d/e/f'
++test_expect_success 'git branch -l d/e/f should create a branch and a log' '
++	cat >expect <<-EOF
++		$_z40 $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	branch: Created from master
++	EOF
++	GIT_COMMITTER_DATE="2005-05-26 23:30" \
++		git branch -l d/e/f &&
++	test_path_is_file .git/refs/heads/d/e/f &&
++	test_path_is_file .git/logs/refs/heads/d/e/f &&
++	test_cmp expect .git/logs/refs/heads/d/e/f
++'
+ 
+-test_expect_success \
+-    'git branch -d d/e/f should delete a branch and a log' \
+-	'git branch -d d/e/f &&
+-	 test_path_is_missing .git/refs/heads/d/e/f &&
+-	 test_path_is_missing .git/logs/refs/heads/d/e/f'
++test_expect_success 'git branch -d d/e/f should delete a branch and a log' '
++	git branch -d d/e/f &&
++	test_path_is_missing .git/refs/heads/d/e/f &&
++	test_path_is_missing .git/logs/refs/heads/d/e/f
++'
+ 
+-test_expect_success \
+-    'git branch j/k should work after branch j has been deleted' \
+-       'git branch j &&
+-        git branch -d j &&
+-        git branch j/k'
++test_expect_success 'git branch j/k should work after branch j has been deleted' '
++	git branch j &&
++	git branch -d j &&
++	git branch j/k
++'
+ 
+-test_expect_success \
+-    'git branch l should work after branch l/m has been deleted' \
+-       'git branch l/m &&
+-        git branch -d l/m &&
+-        git branch l'
++test_expect_success 'git branch l should work after branch l/m has been deleted' '
++	git branch l/m &&
++	git branch -d l/m &&
++	git branch l
++'
+ 
+-test_expect_success \
+-    'git branch -m dumps usage' \
+-       'test_expect_code 129 git branch -m 2>err &&
+-	grep "[Uu]sage: git branch" err'
++test_expect_success 'git branch -m dumps usage' '
++	test_expect_code 129 git branch -m 2>err &&
++	grep "[Uu]sage: git branch" err
++'
+ 
+-test_expect_success \
+-    'git branch -m m m/m should work' \
+-       'git branch -l m &&
+-        git branch -m m m/m &&
+-	test_path_is_file .git/logs/refs/heads/m/m'
++test_expect_success 'git branch -m m m/m should work' '
++	git branch -l m &&
++	git branch -m m m/m &&
++	test_path_is_file .git/logs/refs/heads/m/m
++'
+ 
+-test_expect_success \
+-    'git branch -m n/n n should work' \
+-       'git branch -l n/n &&
++test_expect_success 'git branch -m n/n n should work' '
++	git branch -l n/n &&
+ 	git branch -m n/n n &&
+-	test_path_is_file .git/logs/refs/heads/n'
++	test_path_is_file .git/logs/refs/heads/n
++'
+ 
+ test_expect_success 'git branch -m o/o o should fail when o/p exists' '
+ 	git branch o/o &&
+-        git branch o/p &&
++	git branch o/p &&
+ 	test_must_fail git branch -m o/o o
  '
  
--cat >>expect <<'EOF'
-+test_expect_success '--list keeps list of strings' '
-+	cat >>expect <<-\EOF &&
- list: foo
- list: bar
- list: baz
- EOF
--test_expect_success '--list keeps list of strings' '
- 	test-parse-options --list foo --list=bar --list=baz >output &&
- 	test_cmp expect output
+@@ -160,33 +160,30 @@ test_expect_success 'git branch --list -d t should fail' '
+ 	test_path_is_missing .git/refs/heads/t
  '
+ 
+-mv .git/config .git/config-saved
+-
+ test_expect_success 'git branch -m q q2 without config should succeed' '
++	mv .git/config .git/config-saved &&
++	test_when_finished mv .git/config-saved .git/config &&
+ 	git branch -m q q2 &&
+ 	git branch -m q2 q
+ '
+ 
+-mv .git/config-saved .git/config
+-
+-git config branch.s/s.dummy Hello
+-
+-test_expect_success \
+-    'git branch -m s/s s should work when s/t is deleted' \
+-       'git branch -l s/s &&
++test_expect_success 'git branch -m s/s s should work when s/t is deleted' '
++	git config branch.s/s.dummy Hello
++	git branch -l s/s &&
+ 	test_path_is_file .git/logs/refs/heads/s/s &&
+-        git branch -l s/t &&
++	git branch -l s/t &&
+ 	test_path_is_file .git/logs/refs/heads/s/t &&
+-        git branch -d s/t &&
+-        git branch -m s/s s &&
+-	test_path_is_file .git/logs/refs/heads/s'
+-
+-test_expect_success 'config information was renamed, too' \
+-	"test $(git config branch.s.dummy) = Hello &&
+-	 test_must_fail git config branch.s/s/dummy"
++	git branch -d s/t &&
++	git branch -m s/s s &&
++	test_path_is_file .git/logs/refs/heads/s
++'
+ 
+-test_expect_success 'renaming a symref is not allowed' \
++test_expect_success 'config information was renamed, too' '
++	test $(git config branch.s.dummy) = Hello &&
++	test_must_fail git config branch.s/s/dummy
+ '
++
++test_expect_success 'renaming a symref is not allowed' '
+ 	git symbolic-ref refs/heads/master2 refs/heads/master &&
+ 	test_must_fail git branch -m master2 master3 &&
+ 	git symbolic-ref refs/heads/master2 &&
+@@ -194,115 +191,125 @@ test_expect_success 'renaming a symref is not allowed' \
+ 	test_path_is_missing .git/refs/heads/master3
+ '
+ 
+-test_expect_success SYMLINKS \
+-    'git branch -m u v should fail when the reflog for u is a symlink' '
+-     git branch -l u &&
+-     mv .git/logs/refs/heads/u real-u &&
+-     ln -s real-u .git/logs/refs/heads/u &&
+-     test_must_fail git branch -m u v
+-'
+-
+-test_expect_success 'test tracking setup via --track' \
+-    'git config remote.local.url . &&
+-     git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+-     (git show-ref -q refs/remotes/local/master || git fetch local) &&
+-     git branch --track my1 local/master &&
+-     test $(git config branch.my1.remote) = local &&
+-     test $(git config branch.my1.merge) = refs/heads/master'
+-
+-test_expect_success 'test tracking setup (non-wildcard, matching)' \
+-    'git config remote.local.url . &&
+-     git config remote.local.fetch refs/heads/master:refs/remotes/local/master &&
+-     (git show-ref -q refs/remotes/local/master || git fetch local) &&
+-     git branch --track my4 local/master &&
+-     test $(git config branch.my4.remote) = local &&
+-     test $(git config branch.my4.merge) = refs/heads/master'
+-
+-test_expect_success 'test tracking setup (non-wildcard, not matching)' \
+-    'git config remote.local.url . &&
+-     git config remote.local.fetch refs/heads/s:refs/remotes/local/s &&
+-     (git show-ref -q refs/remotes/local/master || git fetch local) &&
+-     git branch --track my5 local/master &&
+-     ! test "$(git config branch.my5.remote)" = local &&
+-     ! test "$(git config branch.my5.merge)" = refs/heads/master'
+-
+-test_expect_success 'test tracking setup via config' \
+-    'git config branch.autosetupmerge true &&
+-     git config remote.local.url . &&
+-     git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+-     (git show-ref -q refs/remotes/local/master || git fetch local) &&
+-     git branch my3 local/master &&
+-     test $(git config branch.my3.remote) = local &&
+-     test $(git config branch.my3.merge) = refs/heads/master'
+-
+-test_expect_success 'test overriding tracking setup via --no-track' \
+-    'git config branch.autosetupmerge true &&
+-     git config remote.local.url . &&
+-     git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+-     (git show-ref -q refs/remotes/local/master || git fetch local) &&
+-     git branch --no-track my2 local/master &&
+-     git config branch.autosetupmerge false &&
+-     ! test "$(git config branch.my2.remote)" = local &&
+-     ! test "$(git config branch.my2.merge)" = refs/heads/master'
+-
+-test_expect_success 'no tracking without .fetch entries' \
+-    'git config branch.autosetupmerge true &&
+-     git branch my6 s &&
+-     git config branch.automsetupmerge false &&
+-     test -z "$(git config branch.my6.remote)" &&
+-     test -z "$(git config branch.my6.merge)"'
+-
+-test_expect_success 'test tracking setup via --track but deeper' \
+-    'git config remote.local.url . &&
+-     git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+-     (git show-ref -q refs/remotes/local/o/o || git fetch local) &&
+-     git branch --track my7 local/o/o &&
+-     test "$(git config branch.my7.remote)" = local &&
+-     test "$(git config branch.my7.merge)" = refs/heads/o/o'
+-
+-test_expect_success 'test deleting branch deletes branch config' \
+-    'git branch -d my7 &&
+-     test -z "$(git config branch.my7.remote)" &&
+-     test -z "$(git config branch.my7.merge)"'
+-
+-test_expect_success 'test deleting branch without config' \
+-    'git branch my7 s &&
+-     sha1=$(git rev-parse my7 | cut -c 1-7) &&
+-     echo "Deleted branch my7 (was $sha1)." >expect &&
+-     git branch -d my7 >actual 2>&1 &&
+-     test_i18ncmp expect actual'
+-
+-test_expect_success 'test --track without .fetch entries' \
+-    'git branch --track my8 &&
+-     test "$(git config branch.my8.remote)" &&
+-     test "$(git config branch.my8.merge)"'
++test_expect_success SYMLINKS 'git branch -m u v should fail when the reflog for u is a symlink' '
++	git branch -l u &&
++	mv .git/logs/refs/heads/u real-u &&
++	ln -s real-u .git/logs/refs/heads/u &&
++	test_must_fail git branch -m u v
++'
+ 
+-test_expect_success \
+-    'branch from non-branch HEAD w/autosetupmerge=always' \
+-    'git config branch.autosetupmerge always &&
+-     git branch my9 HEAD^ &&
+-     git config branch.autosetupmerge false'
++test_expect_success 'test tracking setup via --track' '
++	git config remote.local.url . &&
++	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
++	(git show-ref -q refs/remotes/local/master || git fetch local) &&
++	git branch --track my1 local/master &&
++	test $(git config branch.my1.remote) = local &&
++	test $(git config branch.my1.merge) = refs/heads/master
++'
+ 
+-test_expect_success \
+-    'branch from non-branch HEAD w/--track causes failure' \
+-    'test_must_fail git branch --track my10 HEAD^'
++test_expect_success 'test tracking setup (non-wildcard, matching)' '
++	git config remote.local.url . &&
++	git config remote.local.fetch \
++		refs/heads/master:refs/remotes/local/master &&
++	(git show-ref -q refs/remotes/local/master || git fetch local) &&
++	git branch --track my4 local/master &&
++	test $(git config branch.my4.remote) = local &&
++	test $(git config branch.my4.merge) = refs/heads/master
++'
+ 
+-test_expect_success \
+-    'branch from tag w/--track causes failure' \
+-    'git tag foobar &&
+-     test_must_fail git branch --track my11 foobar'
++test_expect_success 'test tracking setup (non-wildcard, not matching)' '
++	git config remote.local.url . &&
++	git config remote.local.fetch refs/heads/s:refs/remotes/local/s &&
++	(git show-ref -q refs/remotes/local/master || git fetch local) &&
++	git branch --track my5 local/master &&
++	! test "$(git config branch.my5.remote)" = local &&
++	! test "$(git config branch.my5.merge)" = refs/heads/master
++'
++
++test_expect_success 'test tracking setup via config' '
++	git config branch.autosetupmerge true &&
++	git config remote.local.url . &&
++	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
++	(git show-ref -q refs/remotes/local/master || git fetch local) &&
++	git branch my3 local/master &&
++	test $(git config branch.my3.remote) = local &&
++	test $(git config branch.my3.merge) = refs/heads/master
++'
++
++test_expect_success 'test overriding tracking setup via --no-track' '
++	git config branch.autosetupmerge true &&
++	git config remote.local.url . &&
++	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
++	(git show-ref -q refs/remotes/local/master || git fetch local) &&
++	git branch --no-track my2 local/master &&
++	git config branch.autosetupmerge false &&
++	! test "$(git config branch.my2.remote)" = local &&
++	! test "$(git config branch.my2.merge)" = refs/heads/master
++'
++
++test_expect_success 'no tracking without .fetch entries' '
++	git config branch.autosetupmerge true &&
++	git branch my6 s &&
++	git config branch.automsetupmerge false &&
++	test -z "$(git config branch.my6.remote)" &&
++	test -z "$(git config branch.my6.merge)"
++'
++
++test_expect_success 'test tracking setup via --track but deeper' '
++	git config remote.local.url . &&
++	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
++	(git show-ref -q refs/remotes/local/o/o || git fetch local) &&
++	git branch --track my7 local/o/o &&
++	test "$(git config branch.my7.remote)" = local &&
++	test "$(git config branch.my7.merge)" = refs/heads/o/o
++'
++
++test_expect_success 'test deleting branch deletes branch config' '
++	git branch -d my7 &&
++	test -z "$(git config branch.my7.remote)" &&
++	test -z "$(git config branch.my7.merge)"
++'
++
++test_expect_success 'test deleting branch without config' '
++	git branch my7 s &&
++	sha1=$(git rev-parse my7 | cut -c 1-7) &&
++	echo "Deleted branch my7 (was $sha1)." >expect &&
++	git branch -d my7 >actual 2>&1 &&
++	test_i18ncmp expect actual
++'
++
++test_expect_success 'test --track without .fetch entries' '
++	git branch --track my8 &&
++	test "$(git config branch.my8.remote)" &&
++	test "$(git config branch.my8.merge)"
++'
++
++test_expect_success 'branch from non-branch HEAD w/autosetupmerge=always' '
++	git config branch.autosetupmerge always &&
++	git branch my9 HEAD^ &&
++	git config branch.autosetupmerge false
++'
++
++test_expect_success 'branch from non-branch HEAD w/--track causes failure' '
++	test_must_fail git branch --track my10 HEAD^
++'
++
++test_expect_success 'branch from tag w/--track causes failure' '
++	git tag foobar &&
++	test_must_fail git branch --track my11 foobar
++'
+ 
+ # Keep this test last, as it changes the current branch
+-cat >expect <<EOF
+-$_z40 $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	branch: Created from master
+-EOF
+-test_expect_success \
+-    'git checkout -b g/h/i -l should create a branch and a log' \
+-	'GIT_COMMITTER_DATE="2005-05-26 23:30" \
+-     git checkout -b g/h/i -l master &&
+-	 test_path_is_file .git/refs/heads/g/h/i &&
+-	 test_path_is_file .git/logs/refs/heads/g/h/i &&
+-	 test_cmp expect .git/logs/refs/heads/g/h/i'
++test_expect_success 'git checkout -b g/h/i -l should create a branch and a log' '
++	cat >expect <<-EOF
++		$_z40 $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	branch: Created from master
++	EOF
++	GIT_COMMITTER_DATE="2005-05-26 23:30" \
++		git checkout -b g/h/i -l master &&
++	test_path_is_file .git/refs/heads/g/h/i &&
++	test_path_is_file .git/logs/refs/heads/g/h/i &&
++	test_cmp expect .git/logs/refs/heads/g/h/i
++'
+ 
+ test_expect_success 'checkout -b makes reflog by default' '
+ 	git checkout master &&
 -- 
 1.7.8
