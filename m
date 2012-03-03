@@ -1,104 +1,85 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v2] mergetools: add support for DeltaWalker
-Date: Sat, 3 Mar 2012 14:00:17 -0800
-Message-ID: <CAJDDKr4q7gmFeHuGM5hFruduHw-3mGa+CMU=U6X0jjXUsJLsvw@mail.gmail.com>
-References: <1330694867-7601-1-git-send-email-tim.henigan@gmail.com>
-	<7vaa3ybpat.fsf@alter.siamese.dyndns.org>
+From: Pete Harlan <pgit@pcharlan.com>
+Subject: Re: filtering out mode-change-only changes
+Date: Sat, 03 Mar 2012 14:16:43 -0800
+Message-ID: <4F52984B.5050805@pcharlan.com>
+References: <jik2le$2lb$1@dough.gmane.org> <7vmx82wbmr.fsf@alter.siamese.dyndns.org> <7vipiqwb2g.fsf@alter.siamese.dyndns.org> <4F4E7847.9030402@gmail.com> <7vsjhts9hu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Tim Henigan <tim.henigan@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 03 23:00:32 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Neal Kreitzinger <nkreitzinger@gmail.com>,
+	Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 03 23:17:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S3x0B-0005C2-Ph
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 23:00:32 +0100
+	id 1S3xGx-00023W-FR
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Mar 2012 23:17:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753688Ab2CCWAT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Mar 2012 17:00:19 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:47920 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751164Ab2CCWAS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 3 Mar 2012 17:00:18 -0500
-Received: by yhmm54 with SMTP id m54so1260997yhm.19
-        for <git@vger.kernel.org>; Sat, 03 Mar 2012 14:00:17 -0800 (PST)
-Received-SPF: pass (google.com: domain of davvid@gmail.com designates 10.236.116.66 as permitted sender) client-ip=10.236.116.66;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of davvid@gmail.com designates 10.236.116.66 as permitted sender) smtp.mail=davvid@gmail.com; dkim=pass header.i=davvid@gmail.com
-Received: from mr.google.com ([10.236.116.66])
-        by 10.236.116.66 with SMTP id f42mr20611222yhh.70.1330812017862 (num_hops = 1);
-        Sat, 03 Mar 2012 14:00:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Gc7IdyCaiSjs0eqJycNbsvW9KIfV0058I4Uv7hR6xZ8=;
-        b=WK8T/KG6j3Dq/I9KuOWkXG2mznj9tg8DyaQj8YHSJRw9rRNbQlwvVk/SaBVUswrVyH
-         i+liFKg3fpdOx07PWhebc9DLnBVEOpgvGOGOEXn9wses+gWUm4zhUUGP6ToJveoR6qc/
-         guQZuTVbvdZ2myv8Y7tS5NSSP+ghP+ynLYTAPM4qMm1B9mY8kMiE/Q53wItJWQf3DDmR
-         uAO3jfxkWSmnP3MJKbC2HgmNwRTuMiio3jN982wnwtWaKljLR3xe4jlCCgIzTiuxUiKH
-         qfg/Y+jmrfnwlfLFM0xk7BXy52KKAoYxJH0flc7wrQEY4Dt1g/SpM2yD9SxfeGopjgO0
-         vcOA==
-Received: by 10.236.116.66 with SMTP id f42mr16344896yhh.70.1330812017823;
- Sat, 03 Mar 2012 14:00:17 -0800 (PST)
-Received: by 10.146.205.20 with HTTP; Sat, 3 Mar 2012 14:00:17 -0800 (PST)
-In-Reply-To: <7vaa3ybpat.fsf@alter.siamese.dyndns.org>
+	id S1753825Ab2CCWRn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Mar 2012 17:17:43 -0500
+Received: from hapkido.dreamhost.com ([66.33.216.122]:38428 "EHLO
+	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753792Ab2CCWRc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Mar 2012 17:17:32 -0500
+Received: from homiemail-a49.g.dreamhost.com (caibbdcaaaaf.dreamhost.com [208.113.200.5])
+	by hapkido.dreamhost.com (Postfix) with ESMTP id 49A8C179163
+	for <git@vger.kernel.org>; Sat,  3 Mar 2012 14:17:30 -0800 (PST)
+Received: from homiemail-a49.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a49.g.dreamhost.com (Postfix) with ESMTP id BF74E5E0058;
+	Sat,  3 Mar 2012 14:16:42 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pcharlan.com; h=message-id:date
+	:from:mime-version:to:cc:subject:references:in-reply-to
+	:content-type:content-transfer-encoding; q=dns; s=pcharlan.com;
+	 b=X5J86b8x/W4d7ufIcywmq70qgTkI2TpXPRsTbm6L3liVgtO1P1jmZlQco01qh
+	grroBQsUqcufoyzWVgy8WOH5srSryynTymyhbOgJSFtfj1XCLFYCMsZn3H3H7dEW
+	vru/WV+RNRTRjJmX3HoC99n/3Jty70VOI+MaoxXWxpNr/c=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pcharlan.com; h=message-id
+	:date:from:mime-version:to:cc:subject:references:in-reply-to
+	:content-type:content-transfer-encoding; s=pcharlan.com; bh=9Eyp
+	btIH0ENO7mHE74NtWZcgY1Y=; b=iXb59ePaSWVv1sbsO4JQVz/l6HrY/qWiKwBu
+	t9wKw5SfVTHITXWiSkhnneZxU647Jhul7l8wcoTNDkHpuUVUw/sV8/jHkdXxyVrn
+	5QKOk9nDfEw8HjDKZ4c4muqQPz4y4tdGznZzDG+XDe+EtCRiP91zsbOfuqwGfA1g
+	36CZsUc=
+Received: from [192.168.0.106] (185.132-78-65.ftth.swbr.surewest.net [65.78.132.185])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: pete@tento.net)
+	by homiemail-a49.g.dreamhost.com (Postfix) with ESMTPSA id 964AA5E0057;
+	Sat,  3 Mar 2012 14:16:42 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <7vsjhts9hu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192139>
 
-On Fri, Mar 2, 2012 at 2:39 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Tim Henigan <tim.henigan@gmail.com> writes:
+On 2/29/2012 11:52 AM, Junio C Hamano wrote:
+> Neal Kreitzinger<nkreitzinger@gmail.com>  writes:
 >
->> =C2=A0mergetools/DeltaWalker | =C2=A0 12 ++++++++++++
+>> A3-2: (Some Desired Options)
+>> --name-status learns a new status for file-mode-only changes (ie, "P"
+>> for "P"ermissions).
 >
-> How does an end user choose to use this backend? =C2=A0Perhaps like t=
-his?
->
-> =C2=A0 =C2=A0$ git mergetool --tool=3DDeltaWalker
->
-> All the other files in mergetools/ are in lower case, and I _strongly=
-_
-> prefer to have this new file also be in lower case.
+> After reading everything above I omitted from your response in my quote, I
+> still do not get the feeling that these willy-nilly mode changes that you
+> are suffering from is a problem that is general enough to warrant such a
+> change, even if such a change is done as an optional feature.
 
-I agree.
+I'll add a vote for the usefulness of the option.
 
-> Such a change may mean you may have to override translate_merge_tool_=
-path
-> in this file, like some other backends seem to do.
->
->> =C2=A01 file changed, 12 insertions(+)
->> =C2=A0create mode 100644 mergetools/DeltaWalker
->>
->> diff --git a/mergetools/DeltaWalker b/mergetools/DeltaWalker
->> new file mode 100644
->> index 0000000..b9e6618
->> --- /dev/null
->> +++ b/mergetools/DeltaWalker
->> @@ -0,0 +1,12 @@
->> +diff_cmd () {
->> + =C2=A0 =C2=A0 "$merge_tool_path" "$LOCAL" "$REMOTE" >/dev/null 2>&=
-1
->> +}
->> +
->> +merge_cmd () {
->> + =C2=A0 =C2=A0 if $base_present
->> + =C2=A0 =C2=A0 then
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "$merge_tool_path" "$LOC=
-AL" "$REMOTE" "$BASE" -merged=3D"$PWD/$MERGED"
->> + =C2=A0 =C2=A0 else
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "$merge_tool_path" "$LOC=
-AL" "$REMOTE" -merged=3D"$PWD/$MERGED"
->> + =C2=A0 =C2=A0 fi >/dev/null 2>&1
->> +}
+I'm dealing with a repo whose history occasionally has commits that do a 
+handful of real changes mixed in with tens of thousands of mistaken mode 
+changes.  (New workflow is fixed but it is infeasible to fix history at 
+this point.)  It's cumbersome filtering away the noise.
 
-Is the $PWD/ prefix strictly needed?  The rest of the mergetools use
-$MERGED as-is.  Does it work without it?
---=20
-David
+If Git's diff engine could ignore mode changes that would be a big help.
+
+Regards,
+
+--
+Pete Harlan
+pgit@pcharlan.com
