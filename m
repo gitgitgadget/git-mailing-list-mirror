@@ -1,99 +1,174 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v2 10/10] fsck: use streaming interface for writing lost-found blobs
-Date: Sun,  4 Mar 2012 19:59:56 +0700
-Message-ID: <1330865996-2069-11-git-send-email-pclouds@gmail.com>
-References: <1330329315-11407-1-git-send-email-pclouds@gmail.com>
- <1330865996-2069-1-git-send-email-pclouds@gmail.com>
+From: Andrew Sayers <andrew-git@pileofstuff.org>
+Subject: Re: [RFC] "Remote helper for Subversion" project
+Date: Sun, 04 Mar 2012 13:36:41 +0000
+Message-ID: <4F536FE9.1050000@pileofstuff.org>
+References: <1330777646-28381-1-git-send-email-davidbarr@google.com>	<CAFfmPPMPDCKjAmZ85Cj1cdT2yAUykm9sV6a66zXeFRmYfrmtjg@mail.gmail.com>	<20120304075424.GI14725@burratino> <CAFfmPPPs0FRbT-i+ZwBLNSca330Eo7thjNxDt3hJf0yUATthtQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 04 14:03:48 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>
+To: David Barr <davidbarr@google.com>
+X-From: git-owner@vger.kernel.org Sun Mar 04 16:36:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4B6C-0003vL-K6
-	for gcvg-git-2@plane.gmane.org; Sun, 04 Mar 2012 14:03:40 +0100
+	id 1S4DUA-00079v-8m
+	for gcvg-git-2@plane.gmane.org; Sun, 04 Mar 2012 16:36:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754043Ab2CDNDg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Mar 2012 08:03:36 -0500
-Received: from mail-pz0-f52.google.com ([209.85.210.52]:48065 "EHLO
-	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753864Ab2CDNDf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Mar 2012 08:03:35 -0500
-Received: by dadp12 with SMTP id p12so3848457dad.11
-        for <git@vger.kernel.org>; Sun, 04 Mar 2012 05:03:35 -0800 (PST)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.68.191.230 as permitted sender) client-ip=10.68.191.230;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.68.191.230 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
-Received: from mr.google.com ([10.68.191.230])
-        by 10.68.191.230 with SMTP id hb6mr36350750pbc.87.1330866215562 (num_hops = 1);
-        Sun, 04 Mar 2012 05:03:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=0X15X4VjzbtB5ja1b/td8t+tOl22WVvsptXhWQUGQW4=;
-        b=GGPQyl3fub04Ev8YkyNLbN3bCTcePFwNksgMH7aPUbaNw8WESCeAyOMGPlUFAZkbi0
-         8183Ey11SDPopDH7xGc5XBv7IW81Ra9DNLOhUd9j/7Zso7mJJlFZLowGPFiDIRNHPNut
-         7ihipTW2PkDej/extH4xZV24eSOOqPgS9ykP+QFgBje0SFYhCpGPepzmQglcyMisIQaV
-         toRK8t5Qr7Bgmq73kVwGylmnQF3w0YDCZcbN00qx/wdVe7KvKQ0hCAm5Ao3Y7CAVDlGk
-         +NLrdjpyQ8VPwmGAuHvxkz9gTPPKOYLlzXKGSMgNuThCCNHV2dAkS53knZ2fXc508KT3
-         SQ7Q==
-Received: by 10.68.191.230 with SMTP id hb6mr30991551pbc.87.1330866215516;
-        Sun, 04 Mar 2012 05:03:35 -0800 (PST)
-Received: from pclouds@gmail.com ([115.74.34.94])
-        by mx.google.com with ESMTPS id z10sm10429263pbq.55.2012.03.04.05.03.31
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 04 Mar 2012 05:03:34 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 04 Mar 2012 20:01:28 +0700
-X-Mailer: git-send-email 1.7.8.36.g69ee2
-In-Reply-To: <1330865996-2069-1-git-send-email-pclouds@gmail.com>
+	id S1754516Ab2CDPf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Mar 2012 10:35:57 -0500
+Received: from queueout02-winn.ispmail.ntl.com ([81.103.221.56]:48205 "EHLO
+	queueout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754511Ab2CDPf4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Mar 2012 10:35:56 -0500
+Received: from aamtaout04-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout03-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20120304133645.MATC14668.mtaout03-winn.ispmail.ntl.com@aamtaout04-winn.ispmail.ntl.com>;
+          Sun, 4 Mar 2012 13:36:45 +0000
+Received: from [192.168.0.2] (really [94.170.150.126])
+          by aamtaout04-winn.ispmail.ntl.com
+          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
+          id <20120304133645.KFZA23925.aamtaout04-winn.ispmail.ntl.com@[192.168.0.2]>;
+          Sun, 4 Mar 2012 13:36:45 +0000
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.27) Gecko/20120216 Thunderbird/3.1.19
+In-Reply-To: <CAFfmPPPs0FRbT-i+ZwBLNSca330Eo7thjNxDt3hJf0yUATthtQ@mail.gmail.com>
+X-Cloudmark-Analysis: v=1.1 cv=R50lirqlHffDPPkwUlkuVa99MrvKdVWo//yz83qex8g= c=1 sm=0 a=pFZ1vDXyzkQA:10 a=YrhZU85TnncA:10 a=u4BGzq-dJbcA:10 a=8nJEP1OIZ-IA:10 a=TSbVqHtbAAAA:8 a=NEAV23lmAAAA:8 a=-AnQz9JOAAAA:8 a=-xmi1OVxAAAA:8 a=eNcD7ojaAAAA:8 a=1U_43K6y99R-t97Ld1cA:9 a=-hlDDWHv_VOfI2XT5z4A:7 a=wPNLvfGTeEIA:10 a=UU5_C3s6GftthX9h:21 a=UdCLglNcVWrWSbcR:21 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192163>
+
+Hi guys,
+
+I made a few little git contributions a couple of years back, before
+being swallowed up by my old job.  I've become quite interested in
+svn->git translation since starting a new job, but I'm delurking earlier
+than planned so please bear with me as all I have right now is an
+interesting proof of concept and the possibility of some free time some
+day.  If things go well, I hope to help out with the
+branching-and-merging part of the problem, so I'll describe what I've
+done and how it might affect SoC projects.  Apologies in advance for
+hijacking the thread :)
+
+I mentioned proof-of-concept code for the work I've done - I'd like to
+get confirmation from my new employer before putting it all online, so
+hopefully I can make it available in a few days.
+
+While researching the problem, I found Stephen Bash's original
+proposal[1] and snerp-vortex[2] quite inspiring, but wasn't able to find
+any details on SoC-related work in the branching-and-merging department
+- hopefully the following isn't just a retread of ideas developed since
+then.  I've concentrated on importing from SVN so far, but have kept an
+eye on update and half an eye on bi-direction in the hopes of being
+useful there some day.
+
+It seems to me the "svn export" and "git import" steps make most sense
+as two unrelated projects.  Snerp-vortex and Stephen's scripts both cut
+the history import problem at that point, as do svn-fe/git-fast-import
+with code import.  Exporting SVN history is a messy and sometimes
+project-specific job, so allowing a project to concentrate on that part
+makes it possible for SVN experts to use all their skills without having
+to learn git plumbing before they make their first commit (much respect
+to Stephen for managing that feat BTW).
 
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- builtin/fsck.c |    8 ++------
- 1 files changed, 2 insertions(+), 6 deletions(-)
+I've written a proof-of-concept history converter that can be split into
+three parts: a format for describing SVN history; a large, often messy
+Perl program that writes files in that format; and a small Perl program
+that reads the format and translates it into git.  With hindsight, Perl
+is the right language for the SVN exporter, but the git importer would
+have been better written in C.
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 8c479a7..7fcb33e 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -12,6 +12,7 @@
- #include "parse-options.h"
- #include "dir.h"
- #include "progress.h"
-+#include "streaming.h"
-=20
- #define REACHABLE 0x0001
- #define SEEN      0x0002
-@@ -236,13 +237,8 @@ static void check_unreachable_object(struct object=
- *obj)
- 			if (!(f =3D fopen(filename, "w")))
- 				die_errno("Could not open '%s'", filename);
- 			if (obj->type =3D=3D OBJ_BLOB) {
--				enum object_type type;
--				unsigned long size;
--				char *buf =3D read_sha1_file(obj->sha1,
--						&type, &size);
--				if (buf && fwrite(buf, 1, size, f) !=3D size)
-+				if (stream_blob_to_fd(fileno(f), obj->sha1, NULL, 1))
- 					die_errno("Could not write '%s'", filename);
--				free(buf);
- 			} else
- 				fprintf(f, "%s\n", sha1_to_hex(obj->sha1));
- 			if (fclose(f))
---=20
-1.7.8.36.g69ee2
+
+Personally, I think SVN export will always need a strong manual
+component to get the best results, so I've put quite a bit of work into
+designing a good SVN history format.  Like git-fast-import, it's an
+ASCII format designed both for human and machine consumption:
+
+In r1, create branch "trunk"
+In r10, create branch "branches/foo" as "foo" from "trunk" r9
+In r12, create tag "tags/version1" as "version1" from "trunk" r11
+In r12, deactivate "tags/version1"
+# blank lines and lines beginning with a '#' are ignored
+In r15, merge "branches/foo" r14 into "trunk"
+In r15, delete "branches/foo"
+
+The above has been designed as an abstract representation of SVN
+history, with as little git-specific content as possible.  This turns
+out to make the problem a bit easier to think about, a bit easier to
+implement, and potentially useful to other DVCSs some day.  I wanted to
+enable svn-merge2git[3]-style extraction of merge info from logs, but
+found that even a message as clear as "merge r123 from trunk" could mean
+"cherry-pick revision 123", "merge everything up to revision 123",
+"merge everything up to the last revision that touched trunk before
+123", "merge everything up to 132", or any number of other things.  As
+such, the format is designed to allow copious comments and ease of
+bulk-editing with regexps and a powerful editor.
+
+The format feels relatively complete to me, and in any case not a good
+candidate for an SoC project because it's all about experience and
+nothing to do with raw talent.
+
+
+Once the format is defined, git import is fairly straightforward.
+Proof-of-concept code to follow, but it's really just a wrapper around
+git-commit-tree, git-mktag etc.  I wrote this in Perl thinking it would
+relate somehow to git-svn, but eventually realised it didn't and that a
+few hundred calls to (plumbing) processes per second isn't so good for
+performance.  The only interesting part of the problem is how to tackle
+SVN tags.  I went for an ambitious approach, making normal tags where
+possible and downgrading them to lightweight tags when necessary.  This
+does involve managing something that is effectively a branch in
+refs/tags/, but what else is an SVN tag but a branch in the wrong namespace?
+
+I'm afraid I don't know enough about SoC to say whether rewriting git
+import in C would make a good project - on the one hand, it's a smallish
+bit of work that would make a student learn a lot of good git code, on
+the other hand it would mostly just involve fixing up a bit of ugly Perl
+with little chance to show any creativity.
+
+
+SVN export is much more complicated, and has taken most of my time.
+Although there's no way to tell automatically which directories are
+branches, I realised you can detect trunks automatically about 90% of
+the time by looking for where files/directories are first created, and
+can detect non-trunk branches at least 99% of the time once you know the
+trunks.  Trunk detection is normally just a convenience, but can be a
+lifesaver when importing from a sufficiently messy repository.  There's
+a lot you can do with merge detection, but between svn:mergeinfo,
+svnmerge.py[4], svk[5] and log messages I realise I've only scratched
+the surface.  In many ways, this is a classic Perl problem - take a
+bunch of messy textual input, string it all together and make some neat
+textual output.  The code I've got right now seems fine for anything up
+to about 20,000 commits, but eats way too much memory for huge repos.
+Depending on how much time I get, I might have tackled that problem by
+the time I put this code online.
+
+Assuming I have enough time to work on SVN export, I would be loathed to
+put it on anyone else in the near future.  I could see endless
+optimisations being spun off once the code is mature, but right now it's
+an idiosyncratic collection of untested mostly-working bits that need
+serious attention before I'd be happy warping a young mind on it.
+
+
+I hope this information dump explains where I am and how I can help.  As
+I say, I can't yet promise how much (if any) time I'll get to work on
+this in future, but I hope to help with the history translation process
+if circumstances allow.  More importantly to this thread, I hope this
+gives some ideas about SoC projects and places (not) to put attention.
+
+	- Andrew Sayers
+
+[1] http://comments.gmane.org/gmane.comp.version-control.git/158940
+[2] https://github.com/rcaputo/snerp-vortex
+[3] http://repo.or.cz/w/svn-merge2git.git
+[4] http://www.orcaware.com/svn/wiki/Svnmerge.py
+[5] http://search.cpan.org/dist/SVK/
