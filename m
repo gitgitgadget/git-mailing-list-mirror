@@ -1,63 +1,97 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: A possible fmt-merge-msg update?
-Date: Mon, 5 Mar 2012 12:33:42 -0800
-Message-ID: <CA+55aFw-sS_p7JXNXbSbpiwh9_bZhSrTtC3is4NtLa_n9Hzk5A@mail.gmail.com>
-References: <7vvcmj68iz.fsf@alter.siamese.dyndns.org> <CA+55aFzQ3+EFBVyE9PWOyH0XEC_oW+kUaBTYfixmi2wgMmiZvw@mail.gmail.com>
- <7vipii27ka.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] Change t0204-gettext-reencode-sanity.sh to pass
+ under Mac OSX
+Date: Mon, 05 Mar 2012 12:39:36 -0800
+Message-ID: <7vzkbuzss7.fsf@alter.siamese.dyndns.org>
+References: <201203052039.16893.tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 05 21:34:18 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 05 21:39:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4ebk-0001yh-NI
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 21:34:13 +0100
+	id 1S4eh6-0006yp-Dx
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 21:39:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932430Ab2CEUeF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Mar 2012 15:34:05 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:37078 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932332Ab2CEUeD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2012 15:34:03 -0500
-Received: by wejx9 with SMTP id x9so2606887wej.19
-        for <git@vger.kernel.org>; Mon, 05 Mar 2012 12:34:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=X7VGLZuunWmT1ak7stjha4jHo4rl+fgaBpO3yHnzbbE=;
-        b=ExznOa6RJ253SJ/IEYnM2+pUWDWbTRLS2NciOVYH5eAlU9aVVGDkIoROMwhX3YY+oe
-         wIo4TxTd9fYxkS74IR7LgB/iN3DDnVkxomkk44KsT2GwINfjX+Rg0H/uR+V2qfmOqvsr
-         JwethqZoj7HCWPtFon6vyEdN5f/bcfY3ICpcmWoUujrBOssxHw8/5T2JxJbNu6y3yQpn
-         6CZfvYGUbwjajqYdoKLTR3jUbnDtbX3HSjE2GymbkWU1Q7H2PnOhOvXw/wBxTGOFjRSh
-         J8QtrCSzsc+ZYB9z72iDy5YZ9wcEpbJx3QPaXr5Bj0twBnMTklV7ya4pNrR+YZ0rMTPt
-         5Pvg==
-Received: by 10.180.85.35 with SMTP id e3mr14210252wiz.6.1330979642243; Mon,
- 05 Mar 2012 12:34:02 -0800 (PST)
-Received: by 10.180.81.166 with HTTP; Mon, 5 Mar 2012 12:33:42 -0800 (PST)
-In-Reply-To: <7vipii27ka.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: gO2ddzbRn9CYFUQo_4V18Ev9H-Y
+	id S965104Ab2CEUjk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Mar 2012 15:39:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61974 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965039Ab2CEUjj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Mar 2012 15:39:39 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6821172D8;
+	Mon,  5 Mar 2012 15:39:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=ivaKgFMLUSVC
+	fLopCo3sx4sjr2o=; b=dZmgQH/ZRt+yN7boASlJhs6r5HmJCHaxiaSrvGwfmoxp
+	xxIWUooucSdc0ldoEh3elrzifwjzwD7MfxNGjIebd3DRSVUy6bMjeE34E4FZQU2O
+	MzMR/DAIYm2QFTOutJ71hKcCbl2qQIv8jgbSDTIsANOk5sXHrjiH62IrFgXurEo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=xm9x1j
+	X5ByOWQtQQr+gF4+EjxsOTkIvgmggR33mbdp0za7iRWFuMxP7dkW2WSZj2n8oBc8
+	EDIBiDVRdE7qGGp/6ro1G1s37z/PvDMQwJLqlr7h7Xk1fFUOA8zaGMKeNyY5yQ0l
+	mBJ12fipQGW6+8gX32+DzjWQbSlbhumeSefYI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5FF7872D7;
+	Mon,  5 Mar 2012 15:39:38 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DB42F72D5; Mon,  5 Mar 2012
+ 15:39:37 -0500 (EST)
+In-Reply-To: <201203052039.16893.tboegi@web.de> ("Torsten =?utf-8?Q?B?=
+ =?utf-8?Q?=C3=B6gershausen=22's?= message of "Mon, 5 Mar 2012 20:39:15
+ +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 535E7A9A-6703-11E1-A307-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192272>
 
-On Mon, Mar 5, 2012 at 11:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+
+Swapping to: and cc: as Torsten is not the primary "guilty party" on
+this one.
+
+> t0204 tries to use a ISO-8859-1 locale and expects that characters
+> outside the ISO-8859-1 code range are converted in "question marks".
 >
-> The attached would give me:
+> The gettext under Mac OS X ignores the ISO-8859-1 locale and uses
+> UTF-8 anyway.
+> ...
+> Let the test pass when UTF-8 is returned.
 
-So this isn't interesting to me.
+This is insane.  Is passing this test *that* important to the point
+that you would need to change the passing criteria, instead of
+fixing the behaviour of the code being tested?
 
-Authorship is less relevant than submaintainership. So I'm more
-interested in *committer* information than authorship information.
+It looks like these tests prepare *.mo files based on UTF-8 *.po
+files, and ask the system iconv machinery to show them in UTF-8 and
+non UTF-8 locales.  And the conversion is an impossible one in this
+case, as the messages won't fit in iso-8859-1.
 
-Of course, since you do it in branches that you maintain, to you
-committer information is pointless. But I pull from submaintainers,
-and then it really is the committer part that is way more relevant.
+Some platforms may be capable of noticing that and fill them with
+question marks, and some others may notice the impossible request
+but do something other than "question marks", and yet some others
+may not even notice iso-8859-1 is requested and spit out the
+original UTF-8 verbatim.
 
-                          Linus
+I do not see any reason to insist that their fallback behaviour must
+be to fill them with question marks.  In other words, I simply do
+not see the point of this test and the original "pass runs of
+question" to begin with, and this patch makes things even worse.
+
+Why not get rid of this single test that only tries to check the
+output for an impossible request?
+
+=C3=86var, am I missing something?
