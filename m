@@ -1,78 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] Complain in the tests about git config not failing
- with, keys without a section
-Date: Mon, 5 Mar 2012 05:37:14 -0500
-Message-ID: <20120305103714.GA30463@sigill.intra.peff.net>
-References: <4F50A79E.5060206@philosof.dk>
- <7v8vjiethh.fsf@alter.siamese.dyndns.org>
- <4F547261.7000506@philosof.dk>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: Bug: pull --rebase with =?utf-8?Q?=C3=A9?= in name
+Date: Mon, 5 Mar 2012 11:37:35 +0100
+Message-ID: <87399nqqog.fsf@thomas.inf.ethz.ch>
+References: <FECFDD4D-6EC3-4DE1-8A08-B4477345C4AA@habr.de>
+	<20120305102657.GB29061@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Rune Philosof <rune@philosof.dk>
-X-From: git-owner@vger.kernel.org Mon Mar 05 11:37:26 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?Q?Ren=C3=A9?= Haber <rene@habr.de>, <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 05 11:37:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4VIB-0007oJ-Uy
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 11:37:24 +0100
+	id 1S4VIW-00083n-28
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 11:37:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756795Ab2CEKhS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Mar 2012 05:37:18 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37620
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756418Ab2CEKhR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2012 05:37:17 -0500
-Received: (qmail 28287 invoked by uid 107); 5 Mar 2012 10:37:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 05 Mar 2012 05:37:23 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Mar 2012 05:37:14 -0500
-Content-Disposition: inline
-In-Reply-To: <4F547261.7000506@philosof.dk>
+	id S1756811Ab2CEKhk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Mar 2012 05:37:40 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:16716 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756418Ab2CEKhj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Mar 2012 05:37:39 -0500
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 5 Mar
+ 2012 11:37:35 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 5 Mar
+ 2012 11:37:36 +0100
+In-Reply-To: <20120305102657.GB29061@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 5 Mar 2012 05:26:57 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192224>
 
-On Mon, Mar 05, 2012 at 08:59:29AM +0100, Rune Philosof wrote:
+Jeff King <peff@peff.net> writes:
 
-> On 02-03-2012 19:40, Junio C Hamano wrote:
-> >>git is supposed to fail when having a key without a section, but does not.
-> >I do not think anybody said it is supposed to fail in this case.
-> >
-> >the behaviour for a single level name is just "undefined", which is very different from "must fail".
-> 
-> Quoting from `git help config`:
-> This command will fail if:
->  3. no section was provided,
+> On Mon, Mar 05, 2012 at 10:59:16AM +0100, Ren=C3=A9 Haber wrote:
+>
+>> I'm having trouble with the following scenario:
+>> My name contains an =C3=A9 with accent. Having set
+>> git config --global user.name "Ren=C3=A9 Haber"
+>> and several commits with that name in a project.
+>
+> That should work in general, but...
+>
+>> git pull --rebase
+>> [...]
+>> /sw/lib/git-core/git-am: line 675: Haber: command not found
+>>=20
+>> The problem lies in .git/rebase-apply/author-script :
+>>=20
+>> GIT_AUTHOR_NAME=3D'Rene'=CC=81 Haber
+>> GIT_AUTHOR_EMAIL=3D'rene@habr.de'
+>> GIT_AUTHOR_DATE=3D'@1330931169 +0100'
+>
+> That's definitely not right.
+>
+> I can't seem to reproduce it here with a simple test (neither with
+> "Ren=C3=A9" in the author name, nor with an author name containing
+> single-quote). What version of git are you using (it looks like a rec=
+ent
+> one, as it has the magic @-date syntax). Have you set
+> i18n.commitencoding, or are otherwise using an encoding besides utf8?=
+ Is
+> it possible to share the commits that trigger this bug?
 
-The text you are quoting is not about what is in the config file, but
-rather the config name given on the command line (which we would be
-trying to look up). And we do correctly complain about that:
+Also, can you post a hex dump of the config that defines user.name (try
+'xxd ~/.gitconfig'), so we can see the encoding of Ren=C3=A9?
 
-  $ git config foo
-  error: key does not contain a section: foo
+I find it pretty odd that Git manages to split the =C2=B4 from the e, s=
+o I'm
+wondering if perhaps you are using UTF-8 in NFD or similar.
 
-But:
-
-> under SYNTAX
->  Each variable must belong to some section, which means that there
-> must be a section header before the first
->        setting of a variable.
-
-Yes, everything is supposed to be in a section.  Historically we have
-not complained, but instead just treated it as a single-level variable.
-For internal git use this never mattered, as git only looked at
-variables with section names. For "git config foo", it also does not
-matter, since we will notice the lack of section before even doing a
-lookup.
-
-For "git config --list", as you noticed, we include it in the output. I
-suspect we should simply omit it as cruft. But we could also issue a
-warning, and/or die.
-
--Peff
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
