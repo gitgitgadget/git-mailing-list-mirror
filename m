@@ -1,112 +1,79 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: gitweb: (potential) problems with new installation
-Date: Mon, 05 Mar 2012 19:39:48 +0000
-Message-ID: <4F551684.8020701@ramsay1.demon.co.uk>
-References: <201202281825.03904.jnareb@gmail.com> <4F51211C.2090201@ramsay1.demon.co.uk> <201203030055.34912.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Allow Overriding GIT_BUILD_DIR
+Date: Mon, 05 Mar 2012 12:08:11 -0800
+Message-ID: <7vaa3u24lw.fsf@alter.siamese.dyndns.org>
+References: <1330903437-31386-1-git-send-email-greened@obbligato.org>
+ <7vaa3v4kwo.fsf@alter.siamese.dyndns.org>
+ <nng399m3om6.fsf@transit.us.cray.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 05 20:42:52 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: greened@obbligato.org, git@vger.kernel.org
+To: dag@cray.com (David A. Greene)
+X-From: git-owner@vger.kernel.org Mon Mar 05 21:08:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4dny-00078R-PE
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 20:42:47 +0100
+	id 1S4eCl-000569-Rz
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 21:08:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757434Ab2CETmi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Mar 2012 14:42:38 -0500
-Received: from anchor-post-1.mail.demon.net ([195.173.77.132]:47125 "EHLO
-	anchor-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751563Ab2CETmg (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Mar 2012 14:42:36 -0500
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-1.mail.demon.net with esmtp (Exim 4.69)
-	id 1S4dnm-0003Fl-iq; Mon, 05 Mar 2012 19:42:35 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <201203030055.34912.jnareb@gmail.com>
+	id S1757642Ab2CEUIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Mar 2012 15:08:18 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42565 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757633Ab2CEUIO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2012 15:08:14 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 59F516BAF;
+	Mon,  5 Mar 2012 15:08:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1tJ1x8+Ti/gQlt3h0i4Gady5Q3Q=; b=dXW2eu
+	lLL2nsxkwogwKkEaCOtC59HGKlrieHZTCe1/8gsmhzQ/AaYG94jqC/tJaPUeKZkl
+	7innUo1cni/Zo5uIFRPFeHlqtkNz8t9A3k1ItJK7FiSaORhZjceF6mu36Il4ftI3
+	fBhURXw2+D84bo/o870fl8ivdtar68zITvvwI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mtaiP9YSTd2U1zuAW369CrN9sgx8G6wP
+	BUVP8gKNsb/1AFVYi8Q9U5OuZQM/0flQ8RpyQBHvplWE0vfGTVWTiISl6oHrPIRv
+	JTyoSw0YkXEIYDXELeIY/Qf2RPrtccWLIzc1GFp+d2S62Irb1EADA3V89Bfsxz+H
+	2obzpciPX9c=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 506676BAE;
+	Mon,  5 Mar 2012 15:08:13 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C20156BA7; Mon,  5 Mar 2012
+ 15:08:12 -0500 (EST)
+In-Reply-To: <nng399m3om6.fsf@transit.us.cray.com> (David A. Greene's message
+ of "Mon, 05 Mar 2012 12:10:41 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EFC28A70-66FE-11E1-B3B7-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192269>
 
-Jakub Narebski wrote:
-> Do you use CGI (mod_cgi or mod_cgid), or mod_perl?
+dag@cray.com (David A. Greene) writes:
 
-mod_cgid although mod_perl is also available (and *is* used by git-instaweb).
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Both of your changes seem to have broken indentation to use 8-SP at
+>> the beginning of some (but not all) lines instead 1-HT.  I'll queue
+>> a fixed up version and push the result out in 'pu' later, so please
+>> double check to make sure I didn't screw up.
+>
+> Right.  This is because you flagged an indentation issue with the
+> previous version of the patch.  I think what happened is that the
+> previous version included the 1-HT (what is HT - half-tab?) spacing but
+> it "looked funny" with the additional "+" from the diff line.
 
->>> You can move to using "AddHandler cgi-script .cgi" instead.
->> I remember having tried that as well - without success.
-> 
-> This must be done _instead_ of ScriptAlias directive and/or ExecCGI option.
-
-Indeed :-D
-
-I had another quick look at this and (I now remember) the AddHandler approach
-actually *did* work. However, I already had some other (perl, shell) scripts
-in cgi-bin and would have had to add file extensions ('.pl' or '.sh') in order
-for them to keep working.
-
-The relevant part of httpd.conf looks like this:
-
-<Directory /var/www/>
-        Options Indexes FollowSymLinks MultiViews
-        AllowOverride None
-        Order allow,deny
-        allow from all
-        # This directive allows us to have apache2's default start page
-        # in /apache2-default/, but still have / go to the right place
-        #RedirectMatch ^/$ /apache2-default/
-</Directory>
-
-ScriptAlias /cgi-bin/ /var/www/cgi-bin/
-<Directory "/var/www/cgi-bin">
-       Options +ExecCGI
-</Directory>
-<Directory "/var/www/cgi-bin/static">
-       Options -ExecCGI
-</Directory>
-
-#<Directory "/var/www/cgi-bin">
-#        Options +ExecCGI
-#        AddHandler cgi-script .cgi .pl .sh
-#</Directory>
-
-Note that the "/var/www/cgi-bin/static" directory entry *should* have solved
-the problem, but it does not make any difference at all!
-
-BTW, the error.log entries look like:
-
-[Sun Mar 04 15:06:03 2012] [error] (13)Permission denied: exec of '/var/www/cgi-bin/static/gitweb.css' failed
-[Sun Mar 04 15:06:03 2012] [error] [client 127.0.0.1] Premature end of script headers: gitweb.css, referer: http://localhost/cgi-bin/gitweb.cgi
-
-with similar entries for git-logo.png and gitweb.js. The access log show
-"500 Internal Server error" responses for gitweb.css, git-logo.png and gitweb.js.
-
-Maybe I should re-visit the decision and swap over to using the AddHadler
-approach - adding file extensions is not that hard! ;-)
-
-Anyway, the above should work as-is, and I'm somewhat puzzled that it doesn't.
-However, as I said before, it's not a gitweb fault.
-
->>> Could you at minimum check for JavaScript errors using JavaScript Console
->>> (clearing it and reloading gitweb page if needed)?  Please provide line
->>> where error is with a bit of context (around 3 lines).
->> I don't have a JavaScript Console. (I suppose that is an add-on? Hmm, I don't
->> have internet access from Linux... ).
-> 
-> JavaScript Console is built in, though there are plugins like Console^2
-> that extend it.
-> 
-> In Mozilla 1.7.12 it is "Tools > Web Development > JavaScript Console"
-> It is "Tools > Errors Console" or "Tools > Web Console" in modern Firefox.
-
-Ah, OK. I thought you meant something other than the "Error Console".
-In that case, *no* javascript errors appear in the error console.
-
-ATB,
-Ramsay Jones
+No, with your earlier patch, all the existing lines used horizontal
+tabs for indenting, and the line you added used runs of spaces.
+When such a hunk is shown in diff output, "+" will make it obvious
+that only the new line you added is wrong (because the initial "+"
+and " " is absorbed in the first horizontal tab for Tab-indented
+lines) and that is how I noticed and pointed out "a funny
+indentation" to you.
