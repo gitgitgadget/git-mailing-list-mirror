@@ -1,95 +1,73 @@
-From: David Barr <davidbarr@google.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: What's cooking in git.git (Mar 2012, #02; Sun, 4)
-Date: Tue, 6 Mar 2012 10:11:35 +1100
-Message-ID: <CAFfmPPPa=s8NAYDxoSa5SR91Y_tgRLUVo_bzgViE0wV5g0Ld3g@mail.gmail.com>
+Date: Mon, 05 Mar 2012 15:17:13 -0800
+Message-ID: <7vsjhmy6x2.fsf@alter.siamese.dyndns.org>
 References: <7vk42z32jo.fsf@alter.siamese.dyndns.org>
-	<CAFfmPPNWXG2iP4jg0v0EoMuGb6eNoEvFuserc7vtP9EeLFp1CA@mail.gmail.com>
-	<7v1up6zmwr.fsf@alter.siamese.dyndns.org>
+ <CAFfmPPNWXG2iP4jg0v0EoMuGb6eNoEvFuserc7vtP9EeLFp1CA@mail.gmail.com>
+ <7v1up6zmwr.fsf@alter.siamese.dyndns.org>
+ <CAFfmPPPa=s8NAYDxoSa5SR91Y_tgRLUVo_bzgViE0wV5g0Ld3g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 06 00:11:44 2012
+To: David Barr <davidbarr@google.com>
+X-From: git-owner@vger.kernel.org Tue Mar 06 00:17:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4h4A-0002xV-Kx
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 00:11:42 +0100
+	id 1S4h9d-0007ZC-J5
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 00:17:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757604Ab2CEXLi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Mar 2012 18:11:38 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:47735 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757590Ab2CEXLg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Mar 2012 18:11:36 -0500
-Received: by yenl12 with SMTP id l12so1981235yen.19
-        for <git@vger.kernel.org>; Mon, 05 Mar 2012 15:11:36 -0800 (PST)
-Received-SPF: pass (google.com: domain of davidbarr@google.com designates 10.236.173.195 as permitted sender) client-ip=10.236.173.195;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of davidbarr@google.com designates 10.236.173.195 as permitted sender) smtp.mail=davidbarr@google.com; dkim=pass header.i=davidbarr@google.com
-Received: from mr.google.com ([10.236.173.195])
-        by 10.236.173.195 with SMTP id v43mr30321846yhl.40.1330989096041 (num_hops = 1);
-        Mon, 05 Mar 2012 15:11:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding:x-system-of-record;
-        bh=eFRxg+Cpfe8xcpm9RicgPoQubLwzE6pc6jxz+TX95r0=;
-        b=nnPORxD9LUh0KBl6kbrZlfZ+s5KgYdpKX+LdVcxVwSGYh7NYfJ0dV2BA3zambfvELL
-         uzVooc0ri9FI1kS2ZvSF1eFo+GdWef87lf79JtRQ1c6NYVP3WoYLRAUqAW8i9c/Sz1tV
-         n9Pq75pOBTJKIQhR94PUreBvoCOWZ59C09AGEH+4yjaUrDge6OpAwBMINzLRTN9L4Sx9
-         90FVC9WkdufJuzE/e5/MiQwu4yoMmtXje7NZ7cVq+JT6CMVDU+W80J4023lnIwu4cskF
-         vs+qrLhawWyAwtHteBzvT3g0u0OhkqKM0G8yrGh4Dm7sfogBnTufOr7ta/Cas3feH3dx
-         BloQ==
-Received: by 10.236.173.195 with SMTP id v43mr23920300yhl.40.1330989095987;
-        Mon, 05 Mar 2012 15:11:35 -0800 (PST)
-Received: by 10.236.173.195 with SMTP id v43mr23920289yhl.40.1330989095870;
- Mon, 05 Mar 2012 15:11:35 -0800 (PST)
-Received: by 10.101.154.34 with HTTP; Mon, 5 Mar 2012 15:11:35 -0800 (PST)
-In-Reply-To: <7v1up6zmwr.fsf@alter.siamese.dyndns.org>
-X-System-Of-Record: true
-X-Gm-Message-State: ALoCoQkl4f83rqMude/dm9E2Dr9Gm78Fm0tL1lRhWQkCVcxPX2g6Vu8lT5xPaxwWEhOrQG1s1MGhEW+RdwajTUPeV3GRPl5KZ/uNctYvRgWpTaw+CErpJCfKTgsZ9qq3EMR9WqbQw3/AtMFCrFXEOl22jI87bnwh5A==
+	id S1757592Ab2CEXRR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Mar 2012 18:17:17 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51172 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757559Ab2CEXRQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2012 18:17:16 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B38BD686D;
+	Mon,  5 Mar 2012 18:17:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=q2no4dVlDVF4ub+L1fAx2VPklfM=; b=GTZ8g7
+	92r4u7TxZIuuvvKugCqCKLJdWlHMWQyTo5yv4hMVixKfzrpAOMNo4FY9o0mZ85/z
+	x3Xk6OpC3iXZCTyIw8Q4Gt+WlDoOSBIB2beTByxTC7ENDZ5g90XoUhwEHmtugxeU
+	FvVJ4HtUf1HTGGndvalLf2qoh2DrkIWxRnKIs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZMwYctNxcADtR9eRVAPm2SbjFxlmn+i4
+	MVvJXwYzI5lXzJ/fLYWMRQ25ePC2WaIApFxvxdJhs47AMIa/9eW6YMgNAzPH6nJs
+	zHKTDZygXiJhVECq6j/snfEfuZGoqxiFv2rBUUPd6drho2aeC3tjsN/gOX+l18DG
+	6MrdjsiOjVM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB4CE686C;
+	Mon,  5 Mar 2012 18:17:15 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 449DC686B; Mon,  5 Mar 2012
+ 18:17:15 -0500 (EST)
+In-Reply-To: <CAFfmPPPa=s8NAYDxoSa5SR91Y_tgRLUVo_bzgViE0wV5g0Ld3g@mail.gmail.com> (David
+ Barr's message of "Tue, 6 Mar 2012 10:11:35 +1100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5868900A-6719-11E1-AE78-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192284>
 
-On Tue, Mar 6, 2012 at 9:46 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> David Barr <davidbarr@google.com> writes:
->
->> On Mon, Mar 5, 2012 at 6:55 PM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->>> You can find the changes described here in the integration branches=
- of the
->>> repositories listed at
->>>
->>> =A0 http://git-blame.blogspot.com/p/git-public-repositories.html
->>
->> Just a note that the htmldocs are readable at:
->> =A0 http://git-htmldocs.googlecode.com/git/git.html
->
-> That's good to know. =A0Even the cross reference links work ;-)
->
-> It is different from the URL of the document that lists repositories
-> I gave above, though.
+David Barr <davidbarr@google.com> writes:
 
-I meant it as a potential addendum for that document.
+> GitHub has a different mechanism for publishing project content.
+> They expect a special named branch, gh-pages.
 
->> Also, they would be readable at:
->> =A0 http://gitster.github.com/git-htmldocs/git.html
->> If the branch gh-pages existed and mirrored master.
->
-> I have no idea what you are talking about here, sorry.
+Hrm, so if they add a mechanism to name what branch to show the
+content from, I could set it from gh-pages to master and we will
+have an online HTML pages.  Nice.
 
-GitHub has a different mechanism for publishing project content.
-They expect a special named branch, gh-pages.
+I wonder if they can also do historical documents (e.g. manual pages
+for release 1.7.0) that way.
 
-  http://pages.github.com/#project_pages
-
-I thought it might be of interest that both Google Code and GitHub
-provide git-friendly means of publishing project content.
---
+> I thought it might be of interest that both Google Code and GitHub
+> provide git-friendly means of publishing project content.
