@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 00/11] Large blob fixes
-Date: Mon,  5 Mar 2012 10:43:37 +0700
-Message-ID: <1330919028-6611-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 01/11] Add more large blob test cases
+Date: Mon,  5 Mar 2012 10:43:38 +0700
+Message-ID: <1330919028-6611-2-git-send-email-pclouds@gmail.com>
 References: <1330865996-2069-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,100 +11,211 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 05 04:44:26 2012
+X-From: git-owner@vger.kernel.org Mon Mar 05 04:44:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4OqS-0003PI-Ks
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 04:44:21 +0100
+	id 1S4Oqa-0003U1-Hj
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 04:44:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755368Ab2CEDoQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Mar 2012 22:44:16 -0500
-Received: from mail-pz0-f52.google.com ([209.85.210.52]:52615 "EHLO
-	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754920Ab2CEDoP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Mar 2012 22:44:15 -0500
-Received: by dadp12 with SMTP id p12so4472065dad.11
-        for <git@vger.kernel.org>; Sun, 04 Mar 2012 19:44:15 -0800 (PST)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.68.238.136 as permitted sender) client-ip=10.68.238.136;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.68.238.136 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
-Received: from mr.google.com ([10.68.238.136])
-        by 10.68.238.136 with SMTP id vk8mr44413969pbc.143.1330919055560 (num_hops = 1);
-        Sun, 04 Mar 2012 19:44:15 -0800 (PST)
+	id S1755383Ab2CEDoY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Mar 2012 22:44:24 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:41418 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754920Ab2CEDoX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Mar 2012 22:44:23 -0500
+Received: by pbcun15 with SMTP id un15so2292252pbc.19
+        for <git@vger.kernel.org>; Sun, 04 Mar 2012 19:44:23 -0800 (PST)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.68.238.227 as permitted sender) client-ip=10.68.238.227;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.68.238.227 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
+Received: from mr.google.com ([10.68.238.227])
+        by 10.68.238.227 with SMTP id vn3mr23834912pbc.123.1330919063029 (num_hops = 1);
+        Sun, 04 Mar 2012 19:44:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=YMiWYh5JNhg9CQauYbInJECq+szVTKJ0B5wTAyoXY84=;
-        b=dwFEWMLyUAwiggSnf0wB7f+/gWPBD8IZ+1Y35Kte2VSwKwffeORJUVBO0MZmqu8fuD
-         3N6N+3OYk7Rlq62Le/aNPWmoMr+eWdhxW6MM/otB9vwgq7ggw8pd7rWvyPrixgVHiF2L
-         5yXqdEbVVi87+uBGsvSEjezycKb3HPRJdhUEVZtBD4wOrW63pJsn42e4yyemLlSUhbGB
-         RYrbpsVpcAmaGZ5Kgc1wHtxgS4vg7+1hWDbOWGfB9U+UodBb9lbKxy32KscG+NE2wr59
-         45ebTEoJitJ1uKj/YNiklseY7Vt/gYrUvvfArhGkk+Ryog+AeBLhZg4V2dHJzq+NbTM0
-         Y+Ag==
-Received: by 10.68.238.136 with SMTP id vk8mr38007613pbc.143.1330919055509;
-        Sun, 04 Mar 2012 19:44:15 -0800 (PST)
+        bh=0q398h7B6z/H6OmlCnDV47WzzIhl6j/taADhpbquE/c=;
+        b=WxGqe2XJ6o61wbODdy0MAI+h5ZRB5/I+OAv66jikdE1Eu6SqRgBKNgXoXDeK4g5xTa
+         17/M/5C9xFnRRweNga7AEQQYJBApjXJ/uEfRd2+aRa4PeAzqrOE0uK837MUPASdlQOaQ
+         R/3Z48W9vynhz0+lnG/l1CA6LSaYNkPx9M2lvggVizLfiQ1AfTwVFADdPG/WGXXF24l5
+         ixSx4QruIoyhJIzWZPLjjTK5Az+hAffrBBlXIIVdnzuUFVAqwpetXfw6uPdtenNZcCp9
+         MqXgseSL1YY2ihYYrc/Sq1yyCauDpwiZP69TIZ1KW81shUfRwCfRlAQPkPq3bMmmdofE
+         TT3Q==
+Received: by 10.68.238.227 with SMTP id vn3mr20807705pbc.123.1330919062958;
+        Sun, 04 Mar 2012 19:44:22 -0800 (PST)
 Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id q1sm12085810pbq.68.2012.03.04.19.44.11
+        by mx.google.com with ESMTPS id m7sm12111866pba.30.2012.03.04.19.44.18
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 04 Mar 2012 19:44:14 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 05 Mar 2012 10:43:49 +0700
+        Sun, 04 Mar 2012 19:44:21 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 05 Mar 2012 10:43:57 +0700
 X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
 In-Reply-To: <1330865996-2069-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192194>
 
-Changes from v2:
+New test cases list commands that should work when memory is
+limited. All memory allocation functions (*) learn to reject any
+allocation larger than $GIT_ALLOC_LIMIT if set.
 
- - set core.bigfilethreshold globally in t1050 to make git-clone happy
-   because there's currently no way to specify this in git-clone (or
-   is there?)
- - fix the bad coding taste in builtin/cat-file.c
- - make update-server-info respect core.bigfilethreshold,
-   which makes repack pass on repositories that have tags
+(*) Not exactly all. Some places do not use x* functions, but
+malloc/calloc directly, notably diff-delta. These code path should
+never be run on large blobs.
 
-Junio C Hamano (1):
-  streaming: make streaming-write-entry to be more reusable
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ t/t1050-large.sh |   63 ++++++++++++++++++++++++++++++++++++++++++++++=
+++++++-
+ wrapper.c        |   27 ++++++++++++++++++++--
+ 2 files changed, 85 insertions(+), 5 deletions(-)
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (10):
-  Add more large blob test cases
-  cat-file: use streaming interface to print blobs
-  parse_object: special code path for blobs to avoid putting whole
-    object in memory
-  show: use streaming interface for showing blobs
-  index-pack: split second pass obj handling into own function
-  index-pack: reduce memory usage when the pack has large blobs
-  pack-check: do not unpack blobs
-  archive: support streaming large files to a tar archive
-  fsck: use streaming interface for writing lost-found blobs
-  update-server-info: respect core.bigfilethreshold
-
- archive-tar.c                |   35 ++++++++++++---
- archive-zip.c                |    9 ++--
- archive.c                    |   51 +++++++++++++++-------
- archive.h                    |   11 ++++-
- builtin/cat-file.c           |   24 +++++++++++
- builtin/fsck.c               |    8 +---
- builtin/index-pack.c         |   95 ++++++++++++++++++++++++++++++----=
--------
- builtin/log.c                |   34 +++++++++------
- builtin/update-server-info.c |    1 +
- cache.h                      |    2 +-
- entry.c                      |   53 ++---------------------
- fast-import.c                |    2 +-
- object.c                     |   11 +++++
- pack-check.c                 |   21 +++++++++-
- sha1_file.c                  |   78 +++++++++++++++++++++++++++++-----
- streaming.c                  |   55 ++++++++++++++++++++++++
- streaming.h                  |    2 +
- t/t1050-large.sh             |   63 +++++++++++++++++++++++++++-
- wrapper.c                    |   27 +++++++++++-
- 19 files changed, 439 insertions(+), 143 deletions(-)
-
+diff --git a/t/t1050-large.sh b/t/t1050-large.sh
+index 29d6024..80f157a 100755
+--- a/t/t1050-large.sh
++++ b/t/t1050-large.sh
+@@ -6,11 +6,15 @@ test_description=3D'adding and checking out large blo=
+bs'
+ . ./test-lib.sh
+=20
+ test_expect_success setup '
+-	git config core.bigfilethreshold 200k &&
++	# clone does not allow us to pass core.bigfilethreshold to
++	# new repos, so set core.bigfilethreshold globally
++	git config --global core.bigfilethreshold 200k &&
+ 	echo X | dd of=3Dlarge1 bs=3D1k seek=3D2000 &&
+ 	echo X | dd of=3Dlarge2 bs=3D1k seek=3D2000 &&
+ 	echo X | dd of=3Dlarge3 bs=3D1k seek=3D2000 &&
+-	echo Y | dd of=3Dhuge bs=3D1k seek=3D2500
++	echo Y | dd of=3Dhuge bs=3D1k seek=3D2500 &&
++	GIT_ALLOC_LIMIT=3D1500 &&
++	export GIT_ALLOC_LIMIT
+ '
+=20
+ test_expect_success 'add a large file or two' '
+@@ -100,4 +104,59 @@ test_expect_success 'packsize limit' '
+ 	)
+ '
+=20
++test_expect_success 'diff --raw' '
++	git commit -q -m initial &&
++	echo modified >>large1 &&
++	git add large1 &&
++	git commit -q -m modified &&
++	git diff --raw HEAD^
++'
++
++test_expect_success 'hash-object' '
++	git hash-object large1
++'
++
++test_expect_failure 'cat-file a large file' '
++	git cat-file blob :large1 >/dev/null
++'
++
++test_expect_failure 'cat-file a large file from a tag' '
++	git tag -m largefile largefiletag :large1 &&
++	git cat-file blob largefiletag >/dev/null
++'
++
++test_expect_failure 'git-show a large file' '
++	git show :large1 >/dev/null
++
++'
++
++test_expect_failure 'clone' '
++	git clone file://"$PWD"/.git new
++'
++
++test_expect_failure 'fetch updates' '
++	echo modified >> large1 &&
++	git commit -q -a -m updated &&
++	(
++	cd new &&
++	git fetch --keep # FIXME should not need --keep
++	)
++'
++
++test_expect_failure 'fsck' '
++	git fsck --full
++'
++
++test_expect_failure 'repack' '
++	git repack -ad
++'
++
++test_expect_failure 'tar achiving' '
++	git archive --format=3Dtar HEAD >/dev/null
++'
++
++test_expect_failure 'zip achiving' '
++	git archive --format=3Dzip HEAD >/dev/null
++'
++
+ test_done
+diff --git a/wrapper.c b/wrapper.c
+index 85f09df..d4c0972 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -9,6 +9,18 @@ static void do_nothing(size_t size)
+=20
+ static void (*try_to_free_routine)(size_t size) =3D do_nothing;
+=20
++static void memory_limit_check(size_t size)
++{
++	static int limit =3D -1;
++	if (limit =3D=3D -1) {
++		const char *env =3D getenv("GIT_ALLOC_LIMIT");
++		limit =3D env ? atoi(env) * 1024 : 0;
++	}
++	if (limit && size > limit)
++		die("attempting to allocate %d over limit %d",
++		    size, limit);
++}
++
+ try_to_free_t set_try_to_free_routine(try_to_free_t routine)
+ {
+ 	try_to_free_t old =3D try_to_free_routine;
+@@ -32,7 +44,10 @@ char *xstrdup(const char *str)
+=20
+ void *xmalloc(size_t size)
+ {
+-	void *ret =3D malloc(size);
++	void *ret;
++
++	memory_limit_check(size);
++	ret =3D malloc(size);
+ 	if (!ret && !size)
+ 		ret =3D malloc(1);
+ 	if (!ret) {
+@@ -79,7 +94,10 @@ char *xstrndup(const char *str, size_t len)
+=20
+ void *xrealloc(void *ptr, size_t size)
+ {
+-	void *ret =3D realloc(ptr, size);
++	void *ret;
++
++	memory_limit_check(size);
++	ret =3D realloc(ptr, size);
+ 	if (!ret && !size)
+ 		ret =3D realloc(ptr, 1);
+ 	if (!ret) {
+@@ -95,7 +113,10 @@ void *xrealloc(void *ptr, size_t size)
+=20
+ void *xcalloc(size_t nmemb, size_t size)
+ {
+-	void *ret =3D calloc(nmemb, size);
++	void *ret;
++
++	memory_limit_check(size * nmemb);
++	ret =3D calloc(nmemb, size);
+ 	if (!ret && (!nmemb || !size))
+ 		ret =3D calloc(1, 1);
+ 	if (!ret) {
 --=20
 1.7.3.1.256.g2539c.dirty
