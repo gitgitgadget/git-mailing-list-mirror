@@ -1,68 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] i18n: Not add stripped contents for translation
-Date: Mon, 05 Mar 2012 12:08:37 -0800
-Message-ID: <7v62ei24l6.fsf@alter.siamese.dyndns.org>
-References: <1330910494-17216-1-git-send-email-worldhello.net@gmail.com>
- <7v7gyz7pei.fsf@alter.siamese.dyndns.org>
- <CANYiYbGdJ0yFmPnsK_JdABwmFraVdNi08QgFKRmGzJt-DA9tBw@mail.gmail.com>
- <7vobsb67dn.fsf@alter.siamese.dyndns.org> <4F55155A.3050309@web.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: A possible fmt-merge-msg update?
+Date: Mon, 5 Mar 2012 12:33:42 -0800
+Message-ID: <CA+55aFw-sS_p7JXNXbSbpiwh9_bZhSrTtC3is4NtLa_n9Hzk5A@mail.gmail.com>
+References: <7vvcmj68iz.fsf@alter.siamese.dyndns.org> <CA+55aFzQ3+EFBVyE9PWOyH0XEC_oW+kUaBTYfixmi2wgMmiZvw@mail.gmail.com>
+ <7vipii27ka.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Mar 05 21:08:51 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 05 21:34:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4eD7-0005QG-Q6
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 21:08:46 +0100
+	id 1S4ebk-0001yh-NI
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 21:34:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757615Ab2CEUIk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Mar 2012 15:08:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42717 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757536Ab2CEUIj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2012 15:08:39 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4BA346BD9;
-	Mon,  5 Mar 2012 15:08:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XkNf4vh+hk0rVFDZiZUKMHhkhPs=; b=mluKRv
-	WgINf15sGRwxgmpm3MkpgMZabpPntzqnxwW5v3LKX2wOqc5Wwg7FMFs9vk1NwCZL
-	zxqy7expwch8b4Qfi6tyED/NVD+pjJBqSbv9Rlj/rDFD3E+VWzxO9gpWTVJ3F23o
-	1oJl+iMJhAnFrO9wPQSKSYM/RMXcnujMkPFoY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Po7MDcrU7zF0cJNbNT4OqwKpxZ3xuk+2
-	R79F9lyDjEv0EX8e90puJN45fWAbxKLGjs/SDqOQyZ4qt/Az5HCd3smwAmpv6OND
-	dDmG3gxoM2K6mE259Wt5//TfcJ80373bE9WjBPGBJr92RTA9AkjXhE8pZRxzaoiQ
-	GAMojBNi5vg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 435006BD8;
-	Mon,  5 Mar 2012 15:08:39 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B51996BD6; Mon,  5 Mar 2012
- 15:08:38 -0500 (EST)
-In-Reply-To: <4F55155A.3050309@web.de> (Jens Lehmann's message of "Mon, 05
- Mar 2012 20:34:50 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FF39B9D8-66FE-11E1-B3AF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932430Ab2CEUeF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Mar 2012 15:34:05 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:37078 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932332Ab2CEUeD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2012 15:34:03 -0500
+Received: by wejx9 with SMTP id x9so2606887wej.19
+        for <git@vger.kernel.org>; Mon, 05 Mar 2012 12:34:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=X7VGLZuunWmT1ak7stjha4jHo4rl+fgaBpO3yHnzbbE=;
+        b=ExznOa6RJ253SJ/IEYnM2+pUWDWbTRLS2NciOVYH5eAlU9aVVGDkIoROMwhX3YY+oe
+         wIo4TxTd9fYxkS74IR7LgB/iN3DDnVkxomkk44KsT2GwINfjX+Rg0H/uR+V2qfmOqvsr
+         JwethqZoj7HCWPtFon6vyEdN5f/bcfY3ICpcmWoUujrBOssxHw8/5T2JxJbNu6y3yQpn
+         6CZfvYGUbwjajqYdoKLTR3jUbnDtbX3HSjE2GymbkWU1Q7H2PnOhOvXw/wBxTGOFjRSh
+         J8QtrCSzsc+ZYB9z72iDy5YZ9wcEpbJx3QPaXr5Bj0twBnMTklV7ya4pNrR+YZ0rMTPt
+         5Pvg==
+Received: by 10.180.85.35 with SMTP id e3mr14210252wiz.6.1330979642243; Mon,
+ 05 Mar 2012 12:34:02 -0800 (PST)
+Received: by 10.180.81.166 with HTTP; Mon, 5 Mar 2012 12:33:42 -0800 (PST)
+In-Reply-To: <7vipii27ka.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: gO2ddzbRn9CYFUQo_4V18Ev9H-Y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192271>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+On Mon, Mar 5, 2012 at 11:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> The attached would give me:
 
-> I have no objections at all against changing the code that way to make it
-> possible to translate it in a sane way. This code predates the i18n effort
-> by a few months, so it didn't take this kind of problem into account.
+So this isn't interesting to me.
 
-Ah, Ok, that explains it.
+Authorship is less relevant than submaintainership. So I'm more
+interested in *committer* information than authorship information.
+
+Of course, since you do it in branches that you maintain, to you
+committer information is pointless. But I pull from submaintainers,
+and then it really is the committer part that is way more relevant.
+
+                          Linus
