@@ -1,86 +1,59 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: A possible fmt-merge-msg update?
-Date: Sun, 4 Mar 2012 21:24:41 -0800
-Message-ID: <CA+55aFzQ3+EFBVyE9PWOyH0XEC_oW+kUaBTYfixmi2wgMmiZvw@mail.gmail.com>
-References: <7vvcmj68iz.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [git wiki PATCH] Teaching "--3way" to "git apply"
+Date: Mon, 5 Mar 2012 00:33:43 -0500
+Message-ID: <20120305053343.GA25373@sigill.intra.peff.net>
+References: <20120302091114.GA3984@sigill.intra.peff.net>
+ <7vbooc6isi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 05 06:25:10 2012
+X-From: git-owner@vger.kernel.org Mon Mar 05 06:34:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4QQ1-0002nX-Pv
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 06:25:10 +0100
+	id 1S4QYZ-00073e-Me
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 06:34:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751508Ab2CEFZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Mar 2012 00:25:04 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:65128 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751267Ab2CEFZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2012 00:25:03 -0500
-Received: by wgbdr13 with SMTP id dr13so3148666wgb.1
-        for <git@vger.kernel.org>; Sun, 04 Mar 2012 21:25:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=LsjsZXO9vP7+xxJEgYt7/x48dAyQuWE31wlO1cagMhI=;
-        b=nvwVhMWPczJdTex5LxLPhD49wdW5TT6a2eGC1l4kAU9xx5tjuLbRcflhw4begzEBES
-         emWmLSyla1vfo09LBR8d1dIgADIEOt0VPC4BA1FR/RuwBOPJmp7W4OKzbTM3/kpF2qbt
-         I2vgrif8ay5A3pgM/kBQ9CYZfm7TzIiObjBaarFtvNoxm2TNwK2Vg45IoS2WyuchNLA3
-         iragNQdsFUnFaUWZOqXwUmd6tdxthOrylTE1oyMJhpI5OfGJlvK+5tGpi0tB349srzL1
-         8/Tn3948t5keCypDTbNjMWHK+7r79t7ScUHooEu3pVIHUcnX+wEUoP3PJ6dnfhr+TWFv
-         OWSQ==
-Received: by 10.180.85.35 with SMTP id e3mr9935605wiz.6.1330925101224; Sun, 04
- Mar 2012 21:25:01 -0800 (PST)
-Received: by 10.180.81.166 with HTTP; Sun, 4 Mar 2012 21:24:41 -0800 (PST)
-In-Reply-To: <7vvcmj68iz.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: dL1ApWyHn-AHKsVSQgOpjIaI3nE
+	id S1751454Ab2CEFdq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Mar 2012 00:33:46 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37498
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750887Ab2CEFdp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2012 00:33:45 -0500
+Received: (qmail 26635 invoked by uid 107); 5 Mar 2012 05:33:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 05 Mar 2012 00:33:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Mar 2012 00:33:43 -0500
+Content-Disposition: inline
+In-Reply-To: <7vbooc6isi.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192208>
 
-On Sun, Mar 4, 2012 at 7:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Having observed a handful of your recent merge messages, I am wondering if
-> it would help to teach fmt-merge-msg to include "from Wim Van Sebroeck" in
-> its output by taking the committer of the MERGE_HEAD into account.
->
-> Not worth the trouble?
+On Sun, Mar 04, 2012 at 03:35:57PM -0800, Junio C Hamano wrote:
 
-Hmm. Maybe worth it.
+> I am a bit reluctant to be the one who suggests this, as I do not want to
+> be in the mentoring business, given that as the maintainer, I am by
+> definition a large part of the process to grade the success of student
+> projects.
 
-So the reason I've started to try to do it is that I had a person
-email me about appreciating the new merge messages, but he also said
-he wanted to know who I pulled from. And I agree that that makes sense
-as a real piece of information.
+I don't think there is any commitment to mentor, or for us to even do a
+project that is on the list. The intent of the idea list is to get
+students thinking about their proposals, and hopefully discussing and
+exploring the ideas with us on the list. It is only when it comes time
+to read and rank student proposals that we make a commitment to an idea.
 
-It's not *necessarily* the same person as the committer info, though.
-It probably matches a very high percentage of the time, but the pull
-request doesn't always come from the person doing the commits. The x86
-people have this "tip" thing, and while branches tend to be owned by
-the people doing the pull request, it's not a given. And sometimes you
-have a submaintainer who pulled from *his* submaintainer, and didn't
-have any work of his own, so he asks me to pull something where the
-top is not him, but his submaintainer.
+> But I think I should mention this, as it is a reasonable bite-size task
+> for a student project that is to be completed inside one release cycle.
 
-So I really dunno.
+I actually think it may be a little bit too small for a whole summer
+project. But I pushed it to the wiki for the reasons above; this is just
+an ideas page, not a solid list of proposals.
 
-It might be interesting if the pre-written commit message had the top
-committer in a comment (the same way pulling a tag has the tag author
-in the comment about the tag verification). That way the information
-would be right there when I edit the message, and since it's correct
-99% of the time it would make it easier to just edit it in the editor
-than have to cut-and-paste it from the email. But because it's not a
-sure thing, it would be a comment-only thing where I can choose to
-remove the '# ' in front of it. Maybe that would be the best of both
-worlds - helping write a merge message without assuming it has to be
-that way..
-
-                       Linus
+-Peff
