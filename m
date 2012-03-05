@@ -1,97 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] Change t0204-gettext-reencode-sanity.sh to pass
- under Mac OSX
-Date: Mon, 05 Mar 2012 12:39:36 -0800
-Message-ID: <7vzkbuzss7.fsf@alter.siamese.dyndns.org>
-References: <201203052039.16893.tboegi@web.de>
+From: Paul Betts <paul@paulbetts.org>
+Subject: Path character encodings
+Date: Mon, 5 Mar 2012 13:26:57 -0800
+Message-ID: <20120305212657.GA17903@jupiter.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 05 21:39:45 2012
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 05 22:27:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4eh6-0006yp-Dx
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 21:39:44 +0100
+	id 1S4fQz-0006Ul-H2
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 22:27:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965104Ab2CEUjk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Mar 2012 15:39:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61974 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965039Ab2CEUjj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Mar 2012 15:39:39 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6821172D8;
-	Mon,  5 Mar 2012 15:39:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=ivaKgFMLUSVC
-	fLopCo3sx4sjr2o=; b=dZmgQH/ZRt+yN7boASlJhs6r5HmJCHaxiaSrvGwfmoxp
-	xxIWUooucSdc0ldoEh3elrzifwjzwD7MfxNGjIebd3DRSVUy6bMjeE34E4FZQU2O
-	MzMR/DAIYm2QFTOutJ71hKcCbl2qQIv8jgbSDTIsANOk5sXHrjiH62IrFgXurEo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=xm9x1j
-	X5ByOWQtQQr+gF4+EjxsOTkIvgmggR33mbdp0za7iRWFuMxP7dkW2WSZj2n8oBc8
-	EDIBiDVRdE7qGGp/6ro1G1s37z/PvDMQwJLqlr7h7Xk1fFUOA8zaGMKeNyY5yQ0l
-	mBJ12fipQGW6+8gX32+DzjWQbSlbhumeSefYI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5FF7872D7;
-	Mon,  5 Mar 2012 15:39:38 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DB42F72D5; Mon,  5 Mar 2012
- 15:39:37 -0500 (EST)
-In-Reply-To: <201203052039.16893.tboegi@web.de> ("Torsten =?utf-8?Q?B?=
- =?utf-8?Q?=C3=B6gershausen=22's?= message of "Mon, 5 Mar 2012 20:39:15
- +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 535E7A9A-6703-11E1-A307-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753427Ab2CEV1E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Mar 2012 16:27:04 -0500
+Received: from mail-pz0-f52.google.com ([209.85.210.52]:61921 "EHLO
+	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751846Ab2CEV1C (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2012 16:27:02 -0500
+Received: by dadp12 with SMTP id p12so5632460dad.11
+        for <git@vger.kernel.org>; Mon, 05 Mar 2012 13:27:02 -0800 (PST)
+Received-SPF: pass (google.com: domain of paul@paulbetts.org designates 10.68.230.229 as permitted sender) client-ip=10.68.230.229;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of paul@paulbetts.org designates 10.68.230.229 as permitted sender) smtp.mail=paul@paulbetts.org
+Received: from mr.google.com ([10.68.230.229])
+        by 10.68.230.229 with SMTP id tb5mr41093590pbc.0.1330982822089 (num_hops = 1);
+        Mon, 05 Mar 2012 13:27:02 -0800 (PST)
+Received: by 10.68.230.229 with SMTP id tb5mr35548570pbc.0.1330982821921;
+        Mon, 05 Mar 2012 13:27:01 -0800 (PST)
+Received: from localhost (c-67-169-43-61.hsd1.ca.comcast.net. [67.169.43.61])
+        by mx.google.com with ESMTPS id g4sm14288142pbs.17.2012.03.05.13.26.59
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 05 Mar 2012 13:27:00 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Gm-Message-State: ALoCoQlVvBJNBEmG3PHZoiUfvowU/pdvWNyH0u95gTZXQK4N0dZybOsPlZgCCQjaZZDbffKBHF4Y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192273>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Hi guys,
 
-Swapping to: and cc: as Torsten is not the primary "guilty party" on
-this one.
+As part of trying to fix the problems in MSysGit around tree encodings, I
+would like to start a discussion on mitigating the backwards compatibility
+problems associated with tree path encodings being unspecified.
 
-> t0204 tries to use a ISO-8859-1 locale and expects that characters
-> outside the ISO-8859-1 code range are converted in "question marks".
->
-> The gettext under Mac OS X ignores the ISO-8859-1 locale and uses
-> UTF-8 anyway.
-> ...
-> Let the test pass when UTF-8 is returned.
+## History
 
-This is insane.  Is passing this test *that* important to the point
-that you would need to change the passing criteria, instead of
-fixing the behaviour of the code being tested?
+For those folks unfamiliar with the issue, I'll provide a quick refresh - Git
+has traditionally not specified the string encoding of paths inside the tree
+object - whatever strings the OS provided from the readdir syscall was used
+verbatim to write out tree objects. For most operating systems, this was UTF-8
+(though even on certain POSIX OS's there are some caveats with normalized
+sequence points, such as OS X).
 
-It looks like these tests prepare *.mo files based on UTF-8 *.po
-files, and ask the system iconv machinery to show them in UTF-8 and
-non UTF-8 locales.  And the conversion is an impossible one in this
-case, as the messages won't fit in iso-8859-1.
+However, on Windows until *very* recently (and on non-Unicode Linux locales),
+the strings returned by the OS are from a locale-specific OEM Code Page (i.e.
+Shift-JIS, Windows-1252, etc) and *not* Unicode. These repositories are
+currently incorrectly interpreted on other OSs (or even the same OS with a
+different locale configured).
 
-Some platforms may be capable of noticing that and fill them with
-question marks, and some others may notice the impossible request
-but do something other than "question marks", and yet some others
-may not even notice iso-8859-1 is requested and spit out the
-original UTF-8 verbatim.
+Note that *blob* (i.e. content) encoding is a separate issue and is
+out-of-scope at the moment.
 
-I do not see any reason to insist that their fallback behaviour must
-be to fill them with question marks.  In other words, I simply do
-not see the point of this test and the original "pass runs of
-question" to begin with, and this patch makes things even worse.
+This will become a bigger problem in the near future , because MSysGit is
+seeking to fix this mistake on Windows by explicitly writing all tree objects
+in UTF-8. While this is great for new repositories, this will create a
+compatibility problem: people who upgrade their Git installation on their
+local machine will now have issues with their existing repos.
 
-Why not get rid of this single test that only tries to check the
-output for an impossible request?
+## Proposed Mitigation
 
-=C3=86var, am I missing something?
+For an initial mitigation plan, I'd like to propose adding a warning to either
+git clone or git checkout, that if invalid UTF-8 strings are detected, a
+warning is printed to the user.
+
+However, without an actionable solution, it's not much of a help other than to
+suggest that they downgrade to a lower version of Git. Possible solutions that
+we've discussed are:
+
+  * Add a git-config setting to explicitly set the code-page, defaulted to
+    UTF-8. With this, the error message could instruct them to set this
+    config locally. This has the additional benefit of enabling Linux users
+    to use these existing Windows repositories.
+
+  * Creating a conversion utility to rewrite all trees to use UTF-8. This is
+    problematic for obvious reasons, even disregarding the fact that the
+    result will be incompatible with the original repo - mainly that it may be
+    non-trivial to detect which encoding the strings were originally written
+    in. libicu (http://site.icu-project.org/) has code to do this.
+
+-- 
+Paul Betts <paul@paulbetts.org>
