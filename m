@@ -1,96 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH (for maint)] gitweb: Fix fixed string (non-regexp)
- project search
-Date: Mon, 05 Mar 2012 15:27:50 -0800
-Message-ID: <7vhay2y6fd.fsf@alter.siamese.dyndns.org>
-References: <20120228183919.26435.86795.stgit@localhost.localdomain>
- <201203041035.03133.jnareb@gmail.com>
- <7vfwdn631i.fsf@alter.siamese.dyndns.org>
- <201203050959.47966.jnareb@gmail.com>
- <7vd38r2d8y.fsf@alter.siamese.dyndns.org>
+From: Scott Chacon <schacon@gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2012, #02; Sun, 4)
+Date: Mon, 5 Mar 2012 15:30:50 -0800
+Message-ID: <CAP2yMa+GgRV3W7FcRhVrpRTRfWrDxKhWgbkWVdzCyyN-zgcifA@mail.gmail.com>
+References: <7vk42z32jo.fsf@alter.siamese.dyndns.org> <CAFfmPPNWXG2iP4jg0v0EoMuGb6eNoEvFuserc7vtP9EeLFp1CA@mail.gmail.com>
+ <7v1up6zmwr.fsf@alter.siamese.dyndns.org> <CAFfmPPPa=s8NAYDxoSa5SR91Y_tgRLUVo_bzgViE0wV5g0Ld3g@mail.gmail.com>
+ <7vsjhmy6x2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 06 00:27:58 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Barr <davidbarr@google.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 06 00:31:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4hJt-0007y2-LP
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 00:27:57 +0100
+	id 1S4hN7-0002Ef-Bf
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 00:31:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757703Ab2CEX1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Mar 2012 18:27:53 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56184 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757472Ab2CEX1w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2012 18:27:52 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 857996BE0;
-	Mon,  5 Mar 2012 18:27:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=k6u9wa+zQ/15I7PnrzTfwgX4MW0=; b=OTVlOX
-	HTZfcSi3PKL8e2yXcathf/yob47RdKJgVhb9YHT/0n/HB+scRdvE6T8xfOePu+TT
-	HCYC2MYsBSxjDOX/wC/mqKh0smbj97Xd7cRlk7n28SD8FvVEte0qnbE3VtwNEFFE
-	6WxH9yIeDkjOjAwxUyUd4ahuYrbug0g16E+Gk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uAvVh0yYK0sCxMsRaVu3KZplx2f6scjQ
-	kiy8DovygFZPeDsep1abyV8Goow4/rQlTiDYs+6FxXs1qeuHEr6X24IdfdUD8x+2
-	AECXaa9Ddt2ktDx7nUu2OYnczL3GEe6zet/36rDbZe3ha3voktaXAlb3VMLbsPHa
-	xG2+l8B5Aqg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CB376BDF;
-	Mon,  5 Mar 2012 18:27:52 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 107B66BDE; Mon,  5 Mar 2012
- 18:27:51 -0500 (EST)
-In-Reply-To: <7vd38r2d8y.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 05 Mar 2012 09:01:33 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D3F66020-671A-11E1-8FE3-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757747Ab2CEXbM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Mar 2012 18:31:12 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:53699 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757671Ab2CEXbM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Mar 2012 18:31:12 -0500
+Received: by pbcun15 with SMTP id un15so3340511pbc.19
+        for <git@vger.kernel.org>; Mon, 05 Mar 2012 15:31:11 -0800 (PST)
+Received-SPF: pass (google.com: domain of schacon@gmail.com designates 10.68.232.169 as permitted sender) client-ip=10.68.232.169;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of schacon@gmail.com designates 10.68.232.169 as permitted sender) smtp.mail=schacon@gmail.com; dkim=pass header.i=schacon@gmail.com
+Received: from mr.google.com ([10.68.232.169])
+        by 10.68.232.169 with SMTP id tp9mr20733966pbc.79.1330990271517 (num_hops = 1);
+        Mon, 05 Mar 2012 15:31:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=4X/vuAqgSpxBEVTHbXbATUAMiiLPtnk35/kSnYpCXKs=;
+        b=uQtF4ZMrEMZzSDv6RVKqKJ5f3bYLT5uNvWDaib9L5n42kBX01sPcpnPoqW5Mc+W5Ir
+         qGr8PH+wlr7hsQ7iPkMsxkYxRtIVm4disbpdxrd4ckiyoqo55/KFiNrGsa5i/xAr9ULr
+         qUjeVuSOL58rr3YS2oo9CigiS2TLZSmH8zTbZAduTudcrfZ76Mzdkb4eZ6v0cmwdMVyq
+         YerLql5CHgcplCW9QVmmvttJ/ttBHA1qJ/1T7z3d1Zl8Z4IgDZjJK1Can+SrfWAvnBnq
+         5tAALhwaArRJyVwb9ENDYtqDMz9Eo9cjPsv7nyFZSSnad4EesI+qT5dYakwc0p7bVBvT
+         rPmw==
+Received: by 10.68.232.169 with SMTP id tp9mr17976373pbc.79.1330990271471;
+ Mon, 05 Mar 2012 15:31:11 -0800 (PST)
+Received: by 10.68.41.230 with HTTP; Mon, 5 Mar 2012 15:30:50 -0800 (PST)
+In-Reply-To: <7vsjhmy6x2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192288>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hey,
 
-> Jakub Narebski <jnareb@gmail.com> writes:
+On Mon, Mar 5, 2012 at 3:17 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> David Barr <davidbarr@google.com> writes:
 >
->>> Hmph, didn't you already call fill_project_list_info(\@projects) before
->>> search_projects_list() already?
->>
->> True.  Sorry about that. 
->>
->> Can you fix that, or should I resend?
+>> GitHub has a different mechanism for publishing project content.
+>> They expect a special named branch, gh-pages.
 >
-> Could you check the following two diffs?
+> Hrm, so if they add a mechanism to name what branch to show the
+> content from, I could set it from gh-pages to master and we will
+> have an online HTML pages. =C2=A0Nice.
 >
-> $ git show debd1c2
->
-> This is jn/maint-do-not-match-with-unsanitized-searchtext that
-> should be merged to maintenance track that lack the lazy filling.
->
-> And then
->
-> $ git show --first-parent d4b52c2
->
-> This is how the above was merged to 'pu' and the conflict resolution
-> should be the same when we merge it to 'master'. As our @projects may
-> still be only sparsely filled when search_projects_list() returns,
-> we do call fill_project_list_info(\@projects) ourselves with the
-> lazy filling codebase.
+> I wonder if they can also do historical documents (e.g. manual pages
+> for release 1.7.0) that way.
 
-The latter is now
+So, gh-pages is how you can publish project pages for a project.  If
+you don't want to push to the gh-pages branch, you can just name the
+repository 'gitster.github.com' and push to the master branch there
+and that static content will be available at that url.
 
-$ git show --first-parent 657c6d0
+It just serves static content, so we won't serve older content automati=
+cally.
 
-on today's 'pu'.
+I am also working on parsing the content automatically and hosting it,
+including all older versions, under the git-scm.com domain. - also
+making it searchable and whatnot, FYI.  This won't be done for a
+little while, but I am working on it.
 
-Thanks.
+Scott
