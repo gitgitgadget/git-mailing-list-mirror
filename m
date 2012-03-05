@@ -1,92 +1,67 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Bug: pull --rebase with =?utf-8?B?w6kg?= =?utf-8?Q?in?= name
-Date: Mon, 5 Mar 2012 08:50:10 -0500
-Message-ID: <20120305135010.GA17189@sigill.intra.peff.net>
-References: <FECFDD4D-6EC3-4DE1-8A08-B4477345C4AA@habr.de>
- <20120305102657.GB29061@sigill.intra.peff.net>
- <87399nqqog.fsf@thomas.inf.ethz.ch>
- <F5A485EA-7EAD-4D8B-87C4-7185F713318C@habr.de>
- <20120305115815.GA4550@sigill.intra.peff.net>
- <0E2B8DE3-1ABD-453F-BCAA-0D693ECA5987@habr.de>
- <87ipijkxlm.fsf@thomas.inf.ethz.ch>
- <20120305132913.GA15004@sigill.intra.peff.net>
- <87r4x7jhd9.fsf@thomas.inf.ethz.ch>
+Subject: Re: GSoC 2012 application process
+Date: Mon, 5 Mar 2012 08:58:35 -0500
+Message-ID: <20120305135835.GB17189@sigill.intra.peff.net>
+References: <20120302091114.GA3984@sigill.intra.peff.net>
+ <vpqipijjhh5.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?UmVuw6k=?= Haber <rene@habr.de>, git@vger.kernel.org,
-	Will Palmer <wmpalmer@gmail.com>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Mar 05 14:50:27 2012
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Mar 05 14:59:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4YJ0-0005kI-BT
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 14:50:26 +0100
+	id 1S4YRI-0004RV-E7
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 14:59:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932292Ab2CENuS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Mar 2012 08:50:18 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37715
+	id S964862Ab2CEN6j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Mar 2012 08:58:39 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37722
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932246Ab2CENuM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2012 08:50:12 -0500
-Received: (qmail 30605 invoked by uid 107); 5 Mar 2012 13:50:18 -0000
+	id S964773Ab2CEN6h (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2012 08:58:37 -0500
+Received: (qmail 30680 invoked by uid 107); 5 Mar 2012 13:58:43 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 05 Mar 2012 08:50:18 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Mar 2012 08:50:10 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 05 Mar 2012 08:58:43 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Mar 2012 08:58:35 -0500
 Content-Disposition: inline
-In-Reply-To: <87r4x7jhd9.fsf@thomas.inf.ethz.ch>
+In-Reply-To: <vpqipijjhh5.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192240>
 
-On Mon, Mar 05, 2012 at 02:40:34PM +0100, Thomas Rast wrote:
+On Mon, Mar 05, 2012 at 02:38:14PM +0100, Matthieu Moy wrote:
 
-> > It would be nice if the --pretty format placeholders had a "shell-q=
-uote"
-> > modifier, and we could just do:
-> >
-> >   git show --format=3D'GIT_AUTHOR_NAME=3D%(an:shell)'
-> >
-> > or something similar. for-each-ref knows about shell-quoting, but w=
-e
-> > can't use it here, because we are looking at arbitrary commits, not=
- just
-> > ones pointed to by refs.
->=20
-> Perhaps by using %an etc., line numbers and --sq-quote:
->=20
->   $ git rev-list --no-walk --date=3Draw --format=3D"%an%n%ae%n%ad" --=
-encoding=3DUTF-8 HEAD |
->     while read -r s; do git rev-parse --sq-quote "$s"; done |
->     sed -n -e '2s/^ /GIT_AUTHOR_NAME=3D/p' -e '3s/^ /GIT_AUTHOR_EMAIL=
-=3D/p' -e '4s/^ /GIT_AUTHOR_DATE=3D/p'
->   GIT_AUTHOR_NAME=3D'Thom'\''as R=C3=A0st'
->   GIT_AUTHOR_EMAIL=3D'trast@inf.ethz.ch'
->   GIT_AUTHOR_DATE=3D'1330935546 +0100'
+> They're not really SoC project ideas, but if you're interested in
+> smaller project ideas, I had gathered some last year on Git's wiki
+> (originally as suggestion to students as a school project):
+> 
+>   https://git.wiki.kernel.org/articles/s/m/a/SmallProjectsIdeas_00e5.html
 
-Yeah, that works. It's a little harder to read than would be ideal, but
-should produce the right results (I was initially hesitant to use "read=
-"
-because I was worried about newlines in the input. But of course, that'=
-s
-a non-issue since author ident by definition cannot have newlines in
-it).
+I do think they're interesting, though probably not a good fit for the
+SoC ideas page because of their size.
 
-I think this is a good direction regardless of the sed issue. We end up
-parsing ident lines like this in a lot of different places, and I would
-not be surprised if they do not all behave exactly the same. Eliminatin=
-g
-one such parser in favor of the standard one in pretty.c seems like a
-good thing.
+> I can either add a link to this page on the ideas list, or convert this
+> page to markdown syntax to add it to the wiki.
+
+I'd rather have them on a separate page. Which brings up the question of
+whether they should be moved at all. I had never intended for this wiki
+to be the official git wiki. I just wanted a convenient place to stick
+GSoC stuff, and I didn't want to deal with the official wiki question.
+
+So where do people want the wiki? It would be easy to host it somewhere
+more official looking, like https://github.com/git/git/wiki. David
+mentioned that Google Code has wikis which are backed by git now. I have
+no idea if kernel.org is ever planning on bringing back an editable
+wiki.
+
+Wherever the actual hosting occurs, we could also probably get a nicer
+name like wiki.git-scm.com.
 
 -Peff
-
-PS If you are going to turn that into a real patch, note that your date
-   field accidentally drops the "@" specifier that unambiguously marks
-   the number as an epoch timestamp.
