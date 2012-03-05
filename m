@@ -1,61 +1,71 @@
-From: Rune Philosof <rune@philosof.dk>
-Subject: Re: [PATCH 1/2] Complain in the tests about git config not failing
- with, keys without a section
-Date: Mon, 05 Mar 2012 08:59:29 +0100
-Message-ID: <4F547261.7000506@philosof.dk>
-References: <4F50A79E.5060206@philosof.dk> <7v8vjiethh.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [git wiki PATCH] Teaching "--3way" to "git apply"
+Date: Mon, 5 Mar 2012 09:05:54 +0100
+Message-ID: <87vcmjxyjh.fsf@thomas.inf.ethz.ch>
+References: <20120302091114.GA3984@sigill.intra.peff.net>
+	<7vbooc6isi.fsf@alter.siamese.dyndns.org>
+	<20120305053343.GA25373@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 05 08:59:43 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 05 09:06:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4Spa-000478-Tz
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 08:59:43 +0100
+	id 1S4Svm-0007MV-DI
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 09:06:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756340Ab2CEH7i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Mar 2012 02:59:38 -0500
-Received: from mailout-limhamn.gigahost.dk ([94.246.99.122]:58801 "EHLO
-	mailout-limhamn.gigahost.dk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755914Ab2CEH7h (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Mar 2012 02:59:37 -0500
-Received: from mailout.gigahost.dk (mailout.gigahost.dk [217.116.232.226])
-	by mailout-limhamn.gigahost.dk (Postfix) with ESMTP id 795D71882138;
-	Mon,  5 Mar 2012 07:59:30 +0000 (UTC)
-Received: from smtp.gigahost.dk (unknown [89.186.169.107])
-	by mailout.gigahost.dk (Postfix) with ESMTP id 5BE6D1D70257;
-	Mon,  5 Mar 2012 08:59:30 +0100 (CET)
-Received: from [10.101.85.57] (pc.tv2.dk [193.88.88.10])
-	by smtp.gigahost.dk (Postfix) with ESMTPSA id 48FD823408C;
-	Mon,  5 Mar 2012 08:59:30 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <7v8vjiethh.fsf@alter.siamese.dyndns.org>
+	id S1756244Ab2CEIF7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Mar 2012 03:05:59 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:3468 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756044Ab2CEIF7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2012 03:05:59 -0500
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 5 Mar
+ 2012 09:05:56 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 5 Mar
+ 2012 09:05:56 +0100
+In-Reply-To: <20120305053343.GA25373@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 5 Mar 2012 00:33:43 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192214>
 
-On 02-03-2012 19:40, Junio C Hamano wrote:
->> git is supposed to fail when having a key without a section, but does not.
-> I do not think anybody said it is supposed to fail in this case.
+Jeff King <peff@peff.net> writes:
+
+> I don't think there is any commitment to mentor, or for us to even do a
+> project that is on the list. The intent of the idea list is to get
+> students thinking about their proposals, and hopefully discussing and
+> exploring the ideas with us on the list. It is only when it comes time
+> to read and rank student proposals that we make a commitment to an idea.
 >
-> the behaviour for a single level name is just "undefined", which is very different from "must fail".
+>> But I think I should mention this, as it is a reasonable bite-size task
+>> for a student project that is to be completed inside one release cycle.
+>
+> I actually think it may be a little bit too small for a whole summer
+> project. But I pushed it to the wiki for the reasons above; this is just
+> an ideas page, not a solid list of proposals.
 
-Quoting from `git help config`:
-This command will fail if:
-  3. no section was provided,
-...
-under SYNTAX
-  Each variable must belong to some section, which means that there must 
-be a section header before the first
-        setting of a variable.
+Perhaps we should spell this out in the leading text?  I was going to
+send a patch, but got stuck rewording at
 
---
-Greeting
-Rune Philosof
+  Note that these are ideas, not project proposals.  As stated, they may
+  not be of the right difficulty or size to be solved within one Summer
+  of Code.
+
+Maybe you can find a nicer way to write the "as stated" (I want it to
+say "in the form they currently have") and put that before the first
+title.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
