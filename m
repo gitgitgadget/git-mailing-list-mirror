@@ -1,128 +1,116 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v2] mergetools: add support for DeltaWalker
-Date: Sun, 4 Mar 2012 18:10:30 -0800
-Message-ID: <CAJDDKr6toChs8KpnAbjxeemBZT1AT1Uk9Ajk7DWBREuM6yFMzg@mail.gmail.com>
-References: <1330694867-7601-1-git-send-email-tim.henigan@gmail.com>
-	<7vaa3ybpat.fsf@alter.siamese.dyndns.org>
-	<CAJDDKr4q7gmFeHuGM5hFruduHw-3mGa+CMU=U6X0jjXUsJLsvw@mail.gmail.com>
-	<7vmx7x5ml0.fsf@alter.siamese.dyndns.org>
-	<CAFouetjZ0kQMnAPdNey5kSEmq+fmQqq+fC51hcT+9k6T8c6uOw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] i18n: Not add stripped contents for translation
+Date: Sun, 04 Mar 2012 18:27:49 -0800
+Message-ID: <7v7gyz7pei.fsf@alter.siamese.dyndns.org>
+References: <1330910494-17216-1-git-send-email-worldhello.net@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Tim Henigan <tim.henigan@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 05 03:10:41 2012
+Cc: Git List <git@vger.kernel.org>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 05 03:28:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4NNl-0001NR-Ox
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 03:10:38 +0100
+	id 1S4Nf4-0001zj-2F
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 03:28:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751647Ab2CECKc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Mar 2012 21:10:32 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:57934 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750795Ab2CECKb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Mar 2012 21:10:31 -0500
-Received: by vcqp1 with SMTP id p1so2989934vcq.19
-        for <git@vger.kernel.org>; Sun, 04 Mar 2012 18:10:30 -0800 (PST)
-Received-SPF: pass (google.com: domain of davvid@gmail.com designates 10.52.99.169 as permitted sender) client-ip=10.52.99.169;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of davvid@gmail.com designates 10.52.99.169 as permitted sender) smtp.mail=davvid@gmail.com; dkim=pass header.i=davvid@gmail.com
-Received: from mr.google.com ([10.52.99.169])
-        by 10.52.99.169 with SMTP id er9mr31370367vdb.126.1330913430854 (num_hops = 1);
-        Sun, 04 Mar 2012 18:10:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=irIkEFk6BJMIelRxScXw+UujKyABcWQ6Q5rZz+lkpX0=;
-        b=iLmOVtaQMhffBqxpxa5sNJgha8AFCDOyi0xnQw3735nsxlZ8PBlJZrNUk2GnqGV6MF
-         plyR31Kiyw+g+a2JapJx8SDUgmtUrxFTOsDPF5wLEsUJpSenbfdn6fINiDA4DxGPCXz4
-         ghX4Pqb6+zjZJoRfUshq1J79LWeWuP1JqUsp9hlAvLBbmBVnQmA7qoLHRcnCgWqFlBg4
-         ovL/FZfAKdlsMFY2UMB5KSAW8NQq9xAt1LgY9U0NLxPNLzeAERxlImszWvzgaPbRgL50
-         9g8qxi1pg3IMZS6FRuDgijqZUKj8T+EtYk/bZ26Tn0THnKrPOUapixtYC2s/Ie6i4wZu
-         Ifqw==
-Received: by 10.52.99.169 with SMTP id er9mr26953381vdb.126.1330913430805;
- Sun, 04 Mar 2012 18:10:30 -0800 (PST)
-Received: by 10.220.230.200 with HTTP; Sun, 4 Mar 2012 18:10:30 -0800 (PST)
-In-Reply-To: <CAFouetjZ0kQMnAPdNey5kSEmq+fmQqq+fC51hcT+9k6T8c6uOw@mail.gmail.com>
+	id S1755855Ab2CEC1x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Mar 2012 21:27:53 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43450 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755611Ab2CEC1x convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Mar 2012 21:27:53 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B297606B;
+	Sun,  4 Mar 2012 21:27:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=fhB82lSnm9+f
+	gTHbRFHO/8fD1l0=; b=xrnkA4zcvX97AMt2HQ7fYLz3M09heaYtc2BznRXR+gO/
+	TcHYrBF5qNgcsCVG4o7ItHkWmDDlEpqrN4T9H5CBEpNjt1knimGWtq/VUlqbo7UQ
+	Yelkb+gd2uH8FdF4xQbIdvkvKtvRbd3tOE04e/HnEhyTbEHyAKLov7h3Wev7UFk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=qkPhpz
+	4FDgysA/xNYkwCJR3rxGnh6ahZ8efza36sPfCLiWvJbjFVGvScUVaYWIzSrbWcgu
+	E+TRvQFJTdWLDZurwGkDXY4wvsy35JplBXU5Vf+XaTo0wjzQKFSDijqpGHmlIewp
+	flNuwOORo5cbbOgqLl7LH6EyDq9sJ/09DEFHU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F501606A;
+	Sun,  4 Mar 2012 21:27:52 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 84E9B6068; Sun,  4 Mar 2012
+ 21:27:51 -0500 (EST)
+In-Reply-To: <1330910494-17216-1-git-send-email-worldhello.net@gmail.com>
+ (Jiang Xin's message of "Mon, 5 Mar 2012 09:21:34 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CE8A488C-666A-11E1-AF40-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192187>
 
-On Sat, Mar 3, 2012 at 7:50 PM, Tim Henigan <tim.henigan@gmail.com> wro=
-te:
-> On Sat, Mar 3, 2012 at 5:47 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->> David Aguilar <davvid@gmail.com> writes:
->>
->>>>> +merge_cmd () {
->>>>> + =C2=A0 =C2=A0 if $base_present
->>>>> + =C2=A0 =C2=A0 then
->>>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "$merge_tool_path" "$=
-LOCAL" "$REMOTE" "$BASE" -merged=3D"$PWD/$MERGED"
->>>>> + =C2=A0 =C2=A0 else
->>>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "$merge_tool_path" "$=
-LOCAL" "$REMOTE" -merged=3D"$PWD/$MERGED"
->>>>> + =C2=A0 =C2=A0 fi >/dev/null 2>&1
->>>>> +}
->>>
->>> Is the $PWD/ prefix strictly needed? =C2=A0The rest of the mergetoo=
-ls use
->>> $MERGED as-is. =C2=A0Does it work without it?
->>
->> Hrm, I didn't notice it but they do look fishy. =C2=A0Thanks for goo=
-d eyes.
->>
->> Tim?
+Jiang Xin <worldhello.net@gmail.com> writes:
+
+> The last two chars of the concatenate str from the i18n marked string=
+s
+> (", ") will be stripped out by strbuf_setlen.
 >
-> I ran a quick test using msysgit v1.7.9 on Win7 64-bit and found that
-> it fails without '$PWD'.
+>         before: "new commits, modified content, "
+>         end:    "new commits, modified content"
 >
-> When '$PWD/' is removed from the '-merged' option, it results in a
-> Java JRE crash and the conflict resolutions entered by the user are
-> not written to the file.
->
-> The JRE exception is 'EXCEPTION_ACCESS_VIOLATION (0xc0000005)'. =C2=A0=
-I
-> posted the full text of the exception to a public location, in case
-> anyone is interested [1].
->
-> The format of the '-merged' option was copied directly from the
-> DeltaWalker manual. =C2=A0There was no explanation why '$PWD' is need=
-ed.
->
-> [1]: https://gist.github.com/1970590
+> If the translations won't end with COMMA+SPACE, will break the integr=
+ity
+> of the concatenate string. As for Chinese, COMMA+SPACE may translated=
+ to
+> "=EF=BC=8C" -- a 3-byte UTF-8 Chinese comma character.
 
-Thanks, that makes a lot of sense.  It looks like they have a bug.  Do
-they know about it?
+Hmph.  Why would that be a bad thing in the first place?
+=46or example, for the diff.c::print_stat_summary() message, you have t=
+his
+translation:
 
-My naive guess is that they are using some inotify-like thing and
-subscribing to a directory (per the stack trace).  Since
-dirname("relative") is "" they crash.
+>  1 =E4=B8=AA=E6=96=87=E4=BB=B6=E8=A2=AB=E4=BF=AE=E6=94=B9=EF=BC=8C=E6=
+=8F=92=E5=85=A5 3 =E8=A1=8C(+)=EF=BC=8C=E5=88=A0=E9=99=A4 3 =E8=A1=8C(-=
+)
 
-So this bug probably wouldn't be present when merging a file in a
-sub-directory, or ../ relative path.  Is this the case?
+where the original would be:
 
-Can you mention this in a comment so that someone doesn't copy/paste
-it into another tool in the future?
+   %d file changed, %d insertions(+), %d deletions(-).
 
-If they fix it then we may want to consider only supporting the newer
-version and remove the $PWD.  Does the OS X version have this bug too?
+and I would imagine that it entirely is plausible if a native reader wo=
+uld
+wish to read a Japanese translation like this:
 
-I didn't notice any other production shell scripts in git using $PWD.
-There is one use of `pwd` in git-stash.sh and it's used in a few
-tests, as is $PWD, but $(pwd) is the most prevalent overall.  I don't
-know the reason $PWD is avoided in the git shell scripts (though
-portability is often the reason).
+   1=E5=80=8B=E3=81=AE=E3=83=95=E3=82=A1=E3=82=A4=E3=83=AB=E3=82=92=E5=A4=
+=89=E6=9B=B4=E3=80=81=E6=8C=BF=E5=85=A5 3 =E8=A1=8C(+)=E3=80=81=E5=89=8A=
+=E9=99=A4 3 =E8=A1=8C(-)
 
-Deltawalker is not currently available on any of the platforms where
-this would be a concern, but we may still want to use $(pwd) for
-consistency with the other commands.  Does that work instead?
---=20
-David
+without using ASCII comma, but using "=E3=80=81" instead.
+
+> diff --git a/wt-status.c b/wt-status.c
+> index 9ffc535..0042dbc 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -245,11 +245,11 @@ static void wt_status_print_change_data(struct =
+wt_status *s,
+>  		if (d->new_submodule_commits || d->dirty_submodule) {
+>  			strbuf_addstr(&extra, " (");
+>  			if (d->new_submodule_commits)
+> -				strbuf_addf(&extra, _("new commits, "));
+> +				strbuf_addf(&extra, "%s, ", _("new commits"));
+>  			if (d->dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
+> -				strbuf_addf(&extra, _("modified content, "));
+> +				strbuf_addf(&extra, "%s, ", _("modified content"));
+>  			if (d->dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
+> -				strbuf_addf(&extra, _("untracked content, "));
+> +				strbuf_addf(&extra, "%s, ", _("untracked content"));
+>  			strbuf_setlen(&extra, extra.len - 2);
+>  			strbuf_addch(&extra, ')');
+>  		}
