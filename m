@@ -1,59 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [git wiki PATCH] Teaching "--3way" to "git apply"
-Date: Mon, 5 Mar 2012 00:33:43 -0500
-Message-ID: <20120305053343.GA25373@sigill.intra.peff.net>
-References: <20120302091114.GA3984@sigill.intra.peff.net>
- <7vbooc6isi.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Allow Overriding GIT_BUILD_DIR
+Date: Sun, 04 Mar 2012 22:33:11 -0800
+Message-ID: <7vaa3v4kwo.fsf@alter.siamese.dyndns.org>
+References: <1330903437-31386-1-git-send-email-greened@obbligato.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 05 06:34:00 2012
+To: greened@obbligato.org
+X-From: git-owner@vger.kernel.org Mon Mar 05 07:33:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4QYZ-00073e-Me
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 06:34:00 +0100
+	id 1S4RU7-0002OQ-85
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 07:33:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751454Ab2CEFdq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Mar 2012 00:33:46 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37498
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750887Ab2CEFdp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2012 00:33:45 -0500
-Received: (qmail 26635 invoked by uid 107); 5 Mar 2012 05:33:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 05 Mar 2012 00:33:51 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Mar 2012 00:33:43 -0500
-Content-Disposition: inline
-In-Reply-To: <7vbooc6isi.fsf@alter.siamese.dyndns.org>
+	id S1755172Ab2CEGdU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Mar 2012 01:33:20 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62202 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754916Ab2CEGdP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2012 01:33:15 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EF3945C8;
+	Mon,  5 Mar 2012 01:33:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=qvV3j4FbLyXmQNWG8kCnVIteajY=; b=s69ZxAN8vi58rl43fq7z
+	A7fiUh8yxhzwyKIpKJ+hIypuM2O4vJbjIQNNyoROwjPhZGfnH3Lqf0SBTP2J7t+7
+	7HRLD/j3JJqFejFSe4LZzMhIJXfYE9cS/RITAHpGlCO7gsc0iOx9lmW6GgilpDQG
+	0YzZj6e14LZFthj1D6K2Mt4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=kv+LZwgJOTG+rfi+zCORKodhD5IGy803XzcZ1DgfYOv9hd
+	hzJsaesOssDxna8rBZmSf2OJdWfX2a2oQABTunWTjd8EDkjHwcqR5pSXLcpY3uGg
+	xlJ20rhCuqFUxoXV2lmHveER7lOW2vYXWRLgk91BGnNUrfEgcSaOHUf6QQNNw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7746B45C7;
+	Mon,  5 Mar 2012 01:33:14 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 17DE645C5; Mon,  5 Mar 2012
+ 01:33:12 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1544E38C-668D-11E1-B914-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192209>
 
-On Sun, Mar 04, 2012 at 03:35:57PM -0800, Junio C Hamano wrote:
+Both of your changes seem to have broken indentation to use 8-SP at
+the beginning of some (but not all) lines instead 1-HT.  I'll queue
+a fixed up version and push the result out in 'pu' later, so please
+double check to make sure I didn't screw up.
 
-> I am a bit reluctant to be the one who suggests this, as I do not want to
-> be in the mentoring business, given that as the maintainer, I am by
-> definition a large part of the process to grade the success of student
-> projects.
-
-I don't think there is any commitment to mentor, or for us to even do a
-project that is on the list. The intent of the idea list is to get
-students thinking about their proposals, and hopefully discussing and
-exploring the ideas with us on the list. It is only when it comes time
-to read and rank student proposals that we make a commitment to an idea.
-
-> But I think I should mention this, as it is a reasonable bite-size task
-> for a student project that is to be completed inside one release cycle.
-
-I actually think it may be a little bit too small for a whole summer
-project. But I pushed it to the wiki for the reasons above; this is just
-an ideas page, not a solid list of proposals.
-
--Peff
+Thanks.
