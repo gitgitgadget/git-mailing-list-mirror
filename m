@@ -1,73 +1,233 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Mar 2012, #02; Sun, 4)
-Date: Mon, 05 Mar 2012 15:17:13 -0800
-Message-ID: <7vsjhmy6x2.fsf@alter.siamese.dyndns.org>
-References: <7vk42z32jo.fsf@alter.siamese.dyndns.org>
- <CAFfmPPNWXG2iP4jg0v0EoMuGb6eNoEvFuserc7vtP9EeLFp1CA@mail.gmail.com>
- <7v1up6zmwr.fsf@alter.siamese.dyndns.org>
- <CAFfmPPPa=s8NAYDxoSa5SR91Y_tgRLUVo_bzgViE0wV5g0Ld3g@mail.gmail.com>
+Subject: [ANNOUNCE] Git 1.7.9.3
+Date: Mon, 05 Mar 2012 15:24:56 -0800
+Message-ID: <7vliney6k7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Barr <davidbarr@google.com>
-X-From: git-owner@vger.kernel.org Tue Mar 06 00:17:28 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Tue Mar 06 00:25:16 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4h9d-0007ZC-J5
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 00:17:21 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1S4hHF-0005fY-RA
+	for glk-linux-kernel-3@plane.gmane.org; Tue, 06 Mar 2012 00:25:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757592Ab2CEXRR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Mar 2012 18:17:17 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51172 "EHLO
+	id S1757913Ab2CEXZB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Mon, 5 Mar 2012 18:25:01 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54801 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757559Ab2CEXRQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2012 18:17:16 -0500
+	id S1757810Ab2CEXY7 convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 5 Mar 2012 18:24:59 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B38BD686D;
-	Mon,  5 Mar 2012 18:17:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=q2no4dVlDVF4ub+L1fAx2VPklfM=; b=GTZ8g7
-	92r4u7TxZIuuvvKugCqCKLJdWlHMWQyTo5yv4hMVixKfzrpAOMNo4FY9o0mZ85/z
-	x3Xk6OpC3iXZCTyIw8Q4Gt+WlDoOSBIB2beTByxTC7ENDZ5g90XoUhwEHmtugxeU
-	FvVJ4HtUf1HTGGndvalLf2qoh2DrkIWxRnKIs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZMwYctNxcADtR9eRVAPm2SbjFxlmn+i4
-	MVvJXwYzI5lXzJ/fLYWMRQ25ePC2WaIApFxvxdJhs47AMIa/9eW6YMgNAzPH6nJs
-	zHKTDZygXiJhVECq6j/snfEfuZGoqxiFv2rBUUPd6drho2aeC3tjsN/gOX+l18DG
-	6MrdjsiOjVM=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC44D6AD8;
+	Mon,  5 Mar 2012 18:24:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:cc:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=ogH7zifJSInjJ1rur41W2Z43O
+	Kg=; b=I89h2+EDBmc1+EqQyP+IB8L0RVCn+ys763a+8J5Zua4Y623aubq8JO6Sy
+	Y6J9qSDSKveIhMnEh3gW4D1BnukmBSHbeb8mPGa0qqSCMvnp3EqCZJzVd6a/sfzh
+	vrGrzfJZRNLTYC5F5lcQGIrsm1syiuJVkrL+C1g03z/7xoEqVQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:cc:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=DnjhG/MutMUuoiwNCfn
+	7yHTk6JCaEo6j9CShDOq2LVmzYRmBnNxHsh42XVSB7RPjELTmi4/YW7JQX90+USu
+	fZMT3FRkyVDZ9rY3Brpco5wV7rYSAVSQotFHFuSJ85KeZws/bAIN6vTnVEblCSiJ
+	kXvPV+1Hg7Pczgt+L7B0YWeA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB4CE686C;
-	Mon,  5 Mar 2012 18:17:15 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C26D16AD7;
+	Mon,  5 Mar 2012 18:24:58 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 449DC686B; Mon,  5 Mar 2012
- 18:17:15 -0500 (EST)
-In-Reply-To: <CAFfmPPPa=s8NAYDxoSa5SR91Y_tgRLUVo_bzgViE0wV5g0Ld3g@mail.gmail.com> (David
- Barr's message of "Tue, 6 Mar 2012 10:11:35 +1100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0D2C76AD6; Mon,  5 Mar 2012
+ 18:24:57 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5868900A-6719-11E1-AE78-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
+X-Pobox-Relay-ID: 6C3E1748-671A-11E1-BEDF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192284>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192285>
 
-David Barr <davidbarr@google.com> writes:
+The latest maintenance release Git 1.7.9.3 is now available at the
+usual places.  Time to upgrade.
 
-> GitHub has a different mechanism for publishing project content.
-> They expect a special named branch, gh-pages.
+The release tarballs are found at:
 
-Hrm, so if they add a mechanism to name what branch to show the
-content from, I could set it from gh-pages to master and we will
-have an online HTML pages.  Nice.
+    http://code.google.com/p/git-core/downloads/list
 
-I wonder if they can also do historical documents (e.g. manual pages
-for release 1.7.0) that way.
+and their SHA-1 checksums are:
 
-> I thought it might be of interest that both Google Code and GitHub
-> provide git-friendly means of publishing project content.
+6216153da1139c25cb96cfb4441eff327013ec4f  git-1.7.9.3.tar.gz
+2d488c3975da1c2ea90965b82233a986c498a8c2  git-htmldocs-1.7.9.3.tar.gz
+223daa871a64facc60bdf643c50c78eac21c88f4  git-manpages-1.7.9.3.tar.gz
+
+Also the following public repositories all have a copy of the v1.7.9.3
+tag and the maint branch that the tag points at:
+
+  url =3D git://repo.or.cz/alt-git.git
+  url =3D https://code.google.com/p/git-core/
+  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
+  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url =3D https://github.com/gitster/git
+
+
+Git v1.7.9.3 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
+
+=46ixes since v1.7.9.2
+--------------------
+
+ * "git p4" (in contrib/) submit the changes to a wrong place when the
+   "--use-client-spec" option is set.
+
+ * The config.mak.autogen generated by optional autoconf support tried
+   to link the binary with -lintl even when libintl.h is missing from
+   the system.
+
+ * When the filter driver exits before reading the content before the
+   main git process writes the contents to be filtered to the pipe to
+   it, the latter could be killed with SIGPIPE instead of ignoring
+   such an event as an error.
+
+ * "git add --refresh <pathspec>" used to warn about unmerged paths
+   outside the given pathspec.
+
+ * The bulk check-in codepath in "git add" streamed contents that
+   needs smudge/clean filters without running them, instead of punting
+   and delegating to the codepath to run filters after slurping
+   everything to core.
+
+ * "git branch --with $that" assumed incorrectly that the user will nev=
+er
+   ask the question with nonsense value in $that.
+
+ * "git bundle create" produced a corrupt bundle file upon seeing
+   commits with excessively long subject line.
+
+ * When a remote helper exits before reading the blank line from the
+   main git process to signal the end of commands, the latter could be
+   killed with SIGPIPE. Instead we should ignore such event as a
+   non-error.
+
+ * The commit log template given with "git merge --edit" did not have
+   a short instructive text like what "git commit" gives.
+
+ * "git rev-list --verify-objects -q" omitted the extra verification
+   it needs to do over "git rev-list --objects -q" by mistake.
+
+ * "gitweb" used to drop warnings in the log file when "heads" view is
+   accessed in a repository whose HEAD does not point at a valid
+   branch.
+
+ * An invalid regular expression pattern given by an end user made
+   "gitweb" to return garbled response.
+
+Also contains minor fixes and documentation updates.
+
+
+----------------------------------------------------------------
+
+Changes since v1.7.9.2 are as follows:
+
+Andrew Wong (1):
+      rebase -m: only call "notes copy" when rewritten exists and is no=
+n-empty
+
+Carlos Mart=C3=ADn Nieto (2):
+      branch: don't assume the merge filter ref exists
+      Documentation: use {asterisk} in rev-list-options.txt when needed
+
+Clemens Buchacher (1):
+      http.proxy: also mention https_proxy and all_proxy
+
+Dmitry V. Levin (1):
+      Makefile: add thread-utils.h to LIB_H
+
+Jakub Narebski (2):
+      gitweb: Fix "heads" view when there is no current branch
+      gitweb: Handle invalid regexp in regexp search
+
+Jeff King (4):
+      disconnect from remote helpers more gently
+      teach convert_to_git a "dry run" mode
+      teach dry-run convert_to_git not to require a src buffer
+      do not stream large files to pack when filters are in use
+
+Jehan Bing (1):
+      Ignore SIGPIPE when running a filter driver
+
+Jim Meyering (1):
+      am: don't infloop for an empty input file
+
+John Szakmeister (1):
+      configure: don't use -lintl when there is no gettext support
+
+Jonathan Nieder (1):
+      mergetools/meld: Use --help output to detect --output support
+
+Junio C Hamano (9):
+      refresh_index: do not show unmerged path that is outside pathspec
+      Documentation/merge-options.txt: group "ff" related options toget=
+her
+      Document merge.branchdesc configuration variable
+      Git 1.7.8.5
+      Document accumulated fixes since 1.7.9.2
+      Update draft release notes to 1.7.9.3
+      Documentation: do not assume that n > 1 in <rev>~$n
+      Update draft release notes to 1.7.9.3 for the last time
+      Git 1.7.9.3
+
+Libor Pechacek (1):
+      Documentation fixes in git-config
+
+Matthieu Moy (1):
+      README: point to Documentation/SubmittingPatches
+
+Michael Haggerty (2):
+      post-receive-email: remove unused variable
+      post-receive-email: match up $LOGBEGIN..$LOGEND pairs correctly
+
+Michael J Gruber (1):
+      t0300: work around bug in dash 0.5.6
+
+Micha=C5=82 Kiedrowicz (1):
+      grep -P: Fix matching ^ and $
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (2):
+      rev-list: remove BISECT_SHOW_TRIED flag
+      rev-list: fix --verify-objects --quiet becoming --objects
+
+Pete Wyckoff (4):
+      git-p4: set useClientSpec variable on initial clone
+      git-p4: fix submit regression with clientSpec and subdir clone
+      git-p4: remove bash-ism in t9809
+      git-p4: remove bash-ism in t9800
+
+Philip J=C3=A4genstedt (1):
+      remote: fix set-branches usage and documentation
+
+Stefano Lattarini (1):
+      tests: fix spurious error when run directly with Solaris /usr/xpg=
+4/bin/sh
+
+Thomas Rast (6):
+      merge: add instructions to the commit message when editing
+      bundle: put strbuf_readline_fd in strbuf.c with adjustments
+      bundle: use a strbuf to scan the log for boundary commits
+      strbuf: improve strbuf_get*line documentation
+      t5704: match tests to modern style
+      fast-import: zero all of 'struct tag' to silence valgrind
+
+Tim Henigan (2):
+      CodingGuidelines: Add a note about spaces after redirection
+      CodingGuidelines: do not use 'which' in shell scripts
+
+Tom Grennan (1):
+      t5512 (ls-remote): modernize style
