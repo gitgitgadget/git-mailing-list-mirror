@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 08/11] pack-check: do not unpack blobs
-Date: Mon,  5 Mar 2012 10:43:45 +0700
-Message-ID: <1330919028-6611-9-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 09/11] archive: support streaming large files to a tar archive
+Date: Mon,  5 Mar 2012 10:43:46 +0700
+Message-ID: <1330919028-6611-10-git-send-email-pclouds@gmail.com>
 References: <1330865996-2069-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,262 +11,355 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 05 04:45:27 2012
+X-From: git-owner@vger.kernel.org Mon Mar 05 04:45:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4OrW-00044n-BA
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 04:45:26 +0100
+	id 1S4Orc-000485-LY
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 04:45:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755448Ab2CEDpT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Mar 2012 22:45:19 -0500
+	id S1755451Ab2CEDp0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Mar 2012 22:45:26 -0500
 Received: from mail-pz0-f52.google.com ([209.85.210.52]:52615 "EHLO
 	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755103Ab2CEDpR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Mar 2012 22:45:17 -0500
+	with ESMTP id S1755089Ab2CEDpZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Mar 2012 22:45:25 -0500
 Received: by mail-pz0-f52.google.com with SMTP id p12so4472065dad.11
-        for <git@vger.kernel.org>; Sun, 04 Mar 2012 19:45:17 -0800 (PST)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.68.234.71 as permitted sender) client-ip=10.68.234.71;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.68.234.71 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
-Received: from mr.google.com ([10.68.234.71])
-        by 10.68.234.71 with SMTP id uc7mr41202872pbc.6.1330919117623 (num_hops = 1);
-        Sun, 04 Mar 2012 19:45:17 -0800 (PST)
+        for <git@vger.kernel.org>; Sun, 04 Mar 2012 19:45:24 -0800 (PST)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.68.211.168 as permitted sender) client-ip=10.68.211.168;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.68.211.168 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
+Received: from mr.google.com ([10.68.211.168])
+        by 10.68.211.168 with SMTP id nd8mr43932898pbc.25.1330919124980 (num_hops = 1);
+        Sun, 04 Mar 2012 19:45:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=PnxSv566AvSFK5wF1O+YVlNFt2xZCEkxOlWGYBzkWxQ=;
-        b=jtdzqAnEIoxF5cyveyF8riSNO0gBTG592FjKRfoV0WivbUGZPIAunypXZiaF2XS+E+
-         8npso+03fDC5jt632YC+q7jcC4dauIywGrrj/CPTi+gX5ybHlBDHipRXB7Vmc51Q73Jm
-         TdSXicNXWfqwYqYK3JRL0g7FE3XSPnZavV2VZbawwwUnA0Ob5UJSTNe2JjWGCUonPsO4
-         UcAT8a35J38nPpiRfEsxUErnC6iL247cAzGJIpiraN6nHA3d7mAIeqM5fmjdintQv/cp
-         9fu4oXahE0uhSjV/QHdzpfObj9/gYOA2aHfDX2qUBZXL2EhaSxGCHtKlo2/MfvtWSMDV
-         q9eA==
-Received: by 10.68.234.71 with SMTP id uc7mr35254756pbc.6.1330919117499;
-        Sun, 04 Mar 2012 19:45:17 -0800 (PST)
+        bh=meVRQQnfbJzIWaRf8WvCocXk8rqGruiSCstSgqeQkW4=;
+        b=xTdQPpKIgJR7HfWJNx1ohwnrc1pr3LumONQ2y8ikZl7ukJIyeiCfIiz5USbBg2UX/X
+         K4qHscSVbN20weUm/2RzOedOsRba6soFdqKACbpCRoPuZ3pZLUor0vP1/ixBoyIInGwA
+         RwSmpHcGFS3WCbzmauUrZsJsvmmse5f6kbT8Wwzyh8NPKMmXq833tW2uHVWHJRfhz8h3
+         RioVfFbRiF4trynlu0mHNQEiLqF70uFvo/jfnz7BzrwfqrFWuHBJb8gLvL5XkHGtgTmm
+         KKAyvCiiLdSPTOGfc/4cvLQrLmaXjs2SzDdUKP6+XJfaYdOmzPApCopl2GpJJxnVaHxv
+         DXUg==
+Received: by 10.68.211.168 with SMTP id nd8mr37654767pbc.25.1330919124932;
+        Sun, 04 Mar 2012 19:45:24 -0800 (PST)
 Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id n3sm7187906pbe.47.2012.03.04.19.45.13
+        by mx.google.com with ESMTPS id d6sm596872pbi.23.2012.03.04.19.45.20
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 04 Mar 2012 19:45:16 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 05 Mar 2012 10:44:51 +0700
+        Sun, 04 Mar 2012 19:45:23 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 05 Mar 2012 10:44:59 +0700
 X-Mailer: git-send-email 1.7.3.1.256.g2539c.dirty
 In-Reply-To: <1330865996-2069-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192202>
 
-blob content is not used by verify_pack caller (currently only fsck),
-we only need to make sure blob sha-1 signature matches its
-content. unpack_entry() is taught to hash pack entry as it is
-unpacked, eliminating the need to keep whole blob in memory.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- cache.h          |    2 +-
- fast-import.c    |    2 +-
- pack-check.c     |   21 ++++++++++++++++++++-
- sha1_file.c      |   45 +++++++++++++++++++++++++++++++++++----------
+ archive-tar.c    |   35 ++++++++++++++++++++++++++++-------
+ archive-zip.c    |    9 +++++----
+ archive.c        |   51 ++++++++++++++++++++++++++++++++++------------=
+-----
+ archive.h        |   11 +++++++++--
  t/t1050-large.sh |    2 +-
- 5 files changed, 58 insertions(+), 14 deletions(-)
+ 5 files changed, 77 insertions(+), 31 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index e12b15f..3365f89 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1062,7 +1062,7 @@ extern const unsigned char *nth_packed_object_sha=
-1(struct packed_git *, uint32_t
- extern off_t nth_packed_object_offset(const struct packed_git *, uint3=
-2_t);
- extern off_t find_pack_entry_one(const unsigned char *, struct packed_=
-git *);
- extern int is_pack_valid(struct packed_git *);
--extern void *unpack_entry(struct packed_git *, off_t, enum object_type=
- *, unsigned long *);
-+extern void *unpack_entry(struct packed_git *, off_t, enum object_type=
- *, unsigned long *, unsigned char *);
- extern unsigned long unpack_object_header_buffer(const unsigned char *=
-buf, unsigned long len, enum object_type *type, unsigned long *sizep);
- extern unsigned long get_size_from_delta(struct packed_git *, struct p=
-ack_window **, off_t);
- extern int unpack_object_header(struct packed_git *, struct pack_windo=
-w **, off_t *, unsigned long *);
-diff --git a/fast-import.c b/fast-import.c
-index 6cd19e5..5e94a64 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1303,7 +1303,7 @@ static void *gfi_unpack_entry(
- 		 */
- 		p->pack_size =3D pack_size + 20;
- 	}
--	return unpack_entry(p, oe->idx.offset, &type, sizep);
-+	return unpack_entry(p, oe->idx.offset, &type, sizep, NULL);
+diff --git a/archive-tar.c b/archive-tar.c
+index 20af005..5bffe49 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -5,6 +5,7 @@
+ #include "tar.h"
+ #include "archive.h"
+ #include "run-command.h"
++#include "streaming.h"
+=20
+ #define RECORDSIZE	(512)
+ #define BLOCKSIZE	(RECORDSIZE * 20)
+@@ -123,9 +124,29 @@ static size_t get_path_prefix(const char *path, si=
+ze_t pathlen, size_t maxlen)
+ 	return i;
  }
 =20
- static const char *get_mode(const char *str, uint16_t *modep)
-diff --git a/pack-check.c b/pack-check.c
-index 63a595c..1920bdb 100644
---- a/pack-check.c
-+++ b/pack-check.c
-@@ -105,6 +105,7 @@ static int verify_packfile(struct packed_git *p,
- 		void *data;
- 		enum object_type type;
- 		unsigned long size;
-+		off_t curpos =3D entries[i].offset;
++static void write_file(struct git_istream *stream, const void *buffer,
++		       unsigned long size)
++{
++	if (!stream) {
++		write_blocked(buffer, size);
++		return;
++	}
++	for (;;) {
++		char buf[1024 * 16];
++		ssize_t readlen;
++
++		readlen =3D read_istream(stream, buf, sizeof(buf));
++
++		if (!readlen)
++			break;
++		write_blocked(buf, readlen);
++	}
++}
++
+ static int write_tar_entry(struct archiver_args *args,
+-		const unsigned char *sha1, const char *path, size_t pathlen,
+-		unsigned int mode, void *buffer, unsigned long size)
++			   const unsigned char *sha1, const char *path,
++			   size_t pathlen, unsigned int mode, void *buffer,
++			   struct git_istream *stream, unsigned long size)
+ {
+ 	struct ustar_header header;
+ 	struct strbuf ext_header =3D STRBUF_INIT;
+@@ -200,14 +221,14 @@ static int write_tar_entry(struct archiver_args *=
+args,
 =20
- 		if (p->index_version > 1) {
- 			off_t offset =3D entries[i].offset;
-@@ -116,7 +117,25 @@ static int verify_packfile(struct packed_git *p,
- 					    sha1_to_hex(entries[i].sha1),
- 					    p->pack_name, (uintmax_t)offset);
- 		}
--		data =3D unpack_entry(p, entries[i].offset, &type, &size);
-+		type =3D unpack_object_header(p, w_curs, &curpos, &size);
-+		unuse_pack(w_curs);
-+		if (type =3D=3D OBJ_BLOB) {
-+			unsigned char sha1[20];
-+			data =3D unpack_entry(p, entries[i].offset, &type, &size, sha1);
-+			if (!data) {
-+				if (hashcmp(entries[i].sha1, sha1))
-+					err =3D error("packed %s from %s is corrupt",
-+						    sha1_to_hex(entries[i].sha1), p->pack_name);
-+				else if (fn) {
-+					int eaten =3D 0;
-+					fn(entries[i].sha1, type, size, NULL, &eaten);
-+				}
-+				if (((base_count + i) & 1023) =3D=3D 0)
-+					display_progress(progress, base_count + i);
-+				continue;
-+			}
-+		}
-+		data =3D unpack_entry(p, entries[i].offset, &type, &size, NULL);
- 		if (!data)
- 			err =3D error("cannot unpack %s from %s at offset %"PRIuMAX"",
- 				    sha1_to_hex(entries[i].sha1), p->pack_name,
-diff --git a/sha1_file.c b/sha1_file.c
-index a77ef0a..d68a5b0 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1653,28 +1653,51 @@ static int packed_object_info(struct packed_git=
- *p, off_t obj_offset,
+ 	if (ext_header.len > 0) {
+ 		err =3D write_tar_entry(args, sha1, NULL, 0, 0, ext_header.buf,
+-				ext_header.len);
++				      NULL, ext_header.len);
+ 		if (err)
+ 			return err;
+ 	}
+ 	strbuf_release(&ext_header);
+ 	write_blocked(&header, sizeof(header));
+-	if (S_ISREG(mode) && buffer && size > 0)
+-		write_blocked(buffer, size);
++	if (S_ISREG(mode) && size > 0)
++		write_file(stream, buffer, size);
+ 	return err;
  }
 =20
- static void *unpack_compressed_entry(struct packed_git *p,
--				    struct pack_window **w_curs,
--				    off_t curpos,
--				    unsigned long size)
-+				     struct pack_window **w_curs,
-+				     off_t curpos,
-+				     unsigned long size,
-+				     enum object_type type,
-+				     unsigned char *sha1)
+@@ -219,7 +240,7 @@ static int write_global_extended_header(struct arch=
+iver_args *args)
+=20
+ 	strbuf_append_ext_header(&ext_header, "comment", sha1_to_hex(sha1), 4=
+0);
+ 	err =3D write_tar_entry(args, NULL, NULL, 0, 0, ext_header.buf,
+-			ext_header.len);
++			      NULL, ext_header.len);
+ 	strbuf_release(&ext_header);
+ 	return err;
+ }
+@@ -308,7 +329,7 @@ static int write_tar_archive(const struct archiver =
+*ar,
+ 	if (args->commit_sha1)
+ 		err =3D write_global_extended_header(args);
+ 	if (!err)
+-		err =3D write_archive_entries(args, write_tar_entry);
++		err =3D write_archive_entries(args, write_tar_entry, 1);
+ 	if (!err)
+ 		write_trailer();
+ 	return err;
+diff --git a/archive-zip.c b/archive-zip.c
+index 02d1f37..4a1e917 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -120,9 +120,10 @@ static void *zlib_deflate(void *data, unsigned lon=
+g size,
+ 	return buffer;
+ }
+=20
+-static int write_zip_entry(struct archiver_args *args,
+-		const unsigned char *sha1, const char *path, size_t pathlen,
+-		unsigned int mode, void *buffer, unsigned long size)
++int write_zip_entry(struct archiver_args *args,
++			   const unsigned char *sha1, const char *path,
++			   size_t pathlen, unsigned int mode, void *buffer,
++			   struct git_istream *stream, unsigned long size)
  {
-+	static unsigned char fixed_buf[8192];
- 	int st;
- 	git_zstream stream;
- 	unsigned char *buffer, *in;
-+	git_SHA_CTX c;
-+
-+	if (sha1) {		/* do hash_sha1_file internally */
-+		char hdr[32];
-+		int hdrlen =3D sprintf(hdr, "%s %lu", typename(type), size)+1;
-+		git_SHA1_Init(&c);
-+		git_SHA1_Update(&c, hdr, hdrlen);
-+
-+		buffer =3D fixed_buf;
-+	} else {
-+		buffer =3D xmallocz(size);
-+	}
+ 	struct zip_local_header header;
+ 	struct zip_dir_header dirent;
+@@ -271,7 +272,7 @@ static int write_zip_archive(const struct archiver =
+*ar,
+ 	zip_dir =3D xmalloc(ZIP_DIRECTORY_MIN_SIZE);
+ 	zip_dir_size =3D ZIP_DIRECTORY_MIN_SIZE;
 =20
--	buffer =3D xmallocz(size);
- 	memset(&stream, 0, sizeof(stream));
- 	stream.next_out =3D buffer;
--	stream.avail_out =3D size + 1;
-+	stream.avail_out =3D buffer =3D=3D fixed_buf ? sizeof(fixed_buf) : si=
-ze + 1;
+-	err =3D write_archive_entries(args, write_zip_entry);
++	err =3D write_archive_entries(args, write_zip_entry, 0);
+ 	if (!err)
+ 		write_zip_trailer(args->commit_sha1);
 =20
- 	git_inflate_init(&stream);
- 	do {
- 		in =3D use_pack(p, w_curs, curpos, &stream.avail_in);
- 		stream.next_in =3D in;
- 		st =3D git_inflate(&stream, Z_FINISH);
--		if (!stream.avail_out)
-+		if (sha1) {
-+			git_SHA1_Update(&c, buffer, stream.next_out - (unsigned char *)buff=
-er);
-+			stream.next_out =3D buffer;
-+			stream.avail_out =3D sizeof(fixed_buf);
+diff --git a/archive.c b/archive.c
+index 1ee837d..257eadf 100644
+--- a/archive.c
++++ b/archive.c
+@@ -5,6 +5,7 @@
+ #include "archive.h"
+ #include "parse-options.h"
+ #include "unpack-trees.h"
++#include "streaming.h"
+=20
+ static char const * const archive_usage[] =3D {
+ 	"git archive [options] <tree-ish> [<path>...]",
+@@ -59,26 +60,35 @@ static void format_subst(const struct commit *commi=
+t,
+ 	free(to_free);
+ }
+=20
+-static void *sha1_file_to_archive(const char *path, const unsigned cha=
+r *sha1,
+-		unsigned int mode, enum object_type *type,
+-		unsigned long *sizep, const struct commit *commit)
++void sha1_file_to_archive(void **buffer, struct git_istream **stream,
++			  const char *path, const unsigned char *sha1,
++			  unsigned int mode, enum object_type *type,
++			  unsigned long *sizep,
++			  const struct commit *commit)
+ {
+-	void *buffer;
++	if (stream) {
++		struct stream_filter *filter;
++		filter =3D get_stream_filter(path, sha1);
++		if (!commit && S_ISREG(mode) && is_null_stream_filter(filter)) {
++			*buffer =3D NULL;
++			*stream =3D open_istream(sha1, type, sizep, NULL);
++			return;
 +		}
-+		else if (!stream.avail_out)
- 			break; /* the payload is larger than it should be */
- 		curpos +=3D stream.next_in - in;
- 	} while (st =3D=3D Z_OK || st =3D=3D Z_BUF_ERROR);
-+	if (sha1) {
-+		git_SHA1_Final(sha1, &c);
-+		buffer =3D NULL;
++		*stream =3D NULL;
 +	}
- 	git_inflate_end(&stream);
- 	if ((st !=3D Z_STREAM_END) || stream.total_out !=3D size) {
- 		free(buffer);
-@@ -1727,7 +1750,7 @@ static void *cache_or_unpack_entry(struct packed_=
-git *p, off_t base_offset,
 =20
- 	ret =3D ent->data;
- 	if (!ret || ent->p !=3D p || ent->base_offset !=3D base_offset)
--		return unpack_entry(p, base_offset, type, base_size);
-+		return unpack_entry(p, base_offset, type, base_size, NULL);
+-	buffer =3D read_sha1_file(sha1, type, sizep);
+-	if (buffer && S_ISREG(mode)) {
++	*buffer =3D read_sha1_file(sha1, type, sizep);
++	if (*buffer && S_ISREG(mode)) {
+ 		struct strbuf buf =3D STRBUF_INIT;
+ 		size_t size =3D 0;
 =20
- 	if (!keep_cache) {
- 		ent->data =3D NULL;
-@@ -1844,7 +1867,7 @@ static void *unpack_delta_entry(struct packed_git=
- *p,
- 			return NULL;
+-		strbuf_attach(&buf, buffer, *sizep, *sizep + 1);
++		strbuf_attach(&buf, *buffer, *sizep, *sizep + 1);
+ 		convert_to_working_tree(path, buf.buf, buf.len, &buf);
+ 		if (commit)
+ 			format_subst(commit, buf.buf, buf.len, &buf);
+-		buffer =3D strbuf_detach(&buf, &size);
++		*buffer =3D strbuf_detach(&buf, &size);
+ 		*sizep =3D size;
+ 	}
+-
+-	return buffer;
+ }
+=20
+ static void setup_archive_check(struct git_attr_check *check)
+@@ -97,6 +107,7 @@ static void setup_archive_check(struct git_attr_chec=
+k *check)
+ struct archiver_context {
+ 	struct archiver_args *args;
+ 	write_archive_entry_fn_t write_entry;
++	int stream_ok;
+ };
+=20
+ static int write_archive_entry(const unsigned char *sha1, const char *=
+base,
+@@ -109,6 +120,7 @@ static int write_archive_entry(const unsigned char =
+*sha1, const char *base,
+ 	write_archive_entry_fn_t write_entry =3D c->write_entry;
+ 	struct git_attr_check check[2];
+ 	const char *path_without_prefix;
++	struct git_istream *stream =3D NULL;
+ 	int convert =3D 0;
+ 	int err;
+ 	enum object_type type;
+@@ -133,25 +145,29 @@ static int write_archive_entry(const unsigned cha=
+r *sha1, const char *base,
+ 		strbuf_addch(&path, '/');
+ 		if (args->verbose)
+ 			fprintf(stderr, "%.*s\n", (int)path.len, path.buf);
+-		err =3D write_entry(args, sha1, path.buf, path.len, mode, NULL, 0);
++		err =3D write_entry(args, sha1, path.buf, path.len, mode, NULL, NULL=
+, 0);
+ 		if (err)
+ 			return err;
+ 		return (S_ISDIR(mode) ? READ_TREE_RECURSIVE : 0);
  	}
 =20
--	delta_data =3D unpack_compressed_entry(p, w_curs, curpos, delta_size)=
-;
-+	delta_data =3D unpack_compressed_entry(p, w_curs, curpos, delta_size,=
- OBJ_NONE, NULL);
- 	if (!delta_data) {
- 		error("failed to unpack compressed delta "
- 		      "at offset %"PRIuMAX" from %s",
-@@ -1883,7 +1906,8 @@ static void write_pack_access_log(struct packed_g=
-it *p, off_t obj_offset)
- int do_check_packed_object_crc;
+-	buffer =3D sha1_file_to_archive(path_without_prefix, sha1, mode,
+-			&type, &size, convert ? args->commit : NULL);
+-	if (!buffer)
++	sha1_file_to_archive(&buffer, c->stream_ok ? &stream : NULL,
++			     path_without_prefix, sha1, mode,
++			     &type, &size, convert ? args->commit : NULL);
++	if (!buffer && !stream)
+ 		return error("cannot read %s", sha1_to_hex(sha1));
+ 	if (args->verbose)
+ 		fprintf(stderr, "%.*s\n", (int)path.len, path.buf);
+-	err =3D write_entry(args, sha1, path.buf, path.len, mode, buffer, siz=
+e);
++	err =3D write_entry(args, sha1, path.buf, path.len, mode, buffer, str=
+eam, size);
++	if (stream)
++		close_istream(stream);
+ 	free(buffer);
+ 	return err;
+ }
 =20
- void *unpack_entry(struct packed_git *p, off_t obj_offset,
--		   enum object_type *type, unsigned long *sizep)
-+		   enum object_type *type, unsigned long *sizep,
-+		   unsigned char *sha1)
+ int write_archive_entries(struct archiver_args *args,
+-		write_archive_entry_fn_t write_entry)
++			  write_archive_entry_fn_t write_entry,
++			  int stream_ok)
  {
- 	struct pack_window *w_curs =3D NULL;
- 	off_t curpos =3D obj_offset;
-@@ -1917,7 +1941,8 @@ void *unpack_entry(struct packed_git *p, off_t ob=
-j_offset,
- 	case OBJ_TREE:
- 	case OBJ_BLOB:
- 	case OBJ_TAG:
--		data =3D unpack_compressed_entry(p, &w_curs, curpos, *sizep);
-+		data =3D unpack_compressed_entry(p, &w_curs, curpos,
-+					       *sizep, *type, sha1);
- 		break;
- 	default:
- 		data =3D NULL;
+ 	struct archiver_context context;
+ 	struct unpack_trees_options opts;
+@@ -167,13 +183,14 @@ int write_archive_entries(struct archiver_args *a=
+rgs,
+ 		if (args->verbose)
+ 			fprintf(stderr, "%.*s\n", (int)len, args->base);
+ 		err =3D write_entry(args, args->tree->object.sha1, args->base,
+-				len, 040777, NULL, 0);
++				  len, 040777, NULL, NULL, 0);
+ 		if (err)
+ 			return err;
+ 	}
+=20
+ 	context.args =3D args;
+ 	context.write_entry =3D write_entry;
++	context.stream_ok =3D stream_ok;
+=20
+ 	/*
+ 	 * Setup index and instruct attr to read index only
+diff --git a/archive.h b/archive.h
+index 2b0884f..370cca9 100644
+--- a/archive.h
++++ b/archive.h
+@@ -27,9 +27,16 @@ extern void register_archiver(struct archiver *);
+ extern void init_tar_archiver(void);
+ extern void init_zip_archiver(void);
+=20
+-typedef int (*write_archive_entry_fn_t)(struct archiver_args *args, co=
+nst unsigned char *sha1, const char *path, size_t pathlen, unsigned int=
+ mode, void *buffer, unsigned long size);
++struct git_istream;
++typedef int (*write_archive_entry_fn_t)(struct archiver_args *args,
++					const unsigned char *sha1,
++					const char *path, size_t pathlen,
++					unsigned int mode,
++					void *buffer,
++					struct git_istream *stream,
++					unsigned long size);
+=20
+-extern int write_archive_entries(struct archiver_args *args, write_arc=
+hive_entry_fn_t write_entry);
++extern int write_archive_entries(struct archiver_args *args, write_arc=
+hive_entry_fn_t write_entry, int stream_ok);
+ extern int write_archive(int argc, const char **argv, const char *pref=
+ix, int setup_prefix, const char *name_hint, int remote);
+=20
+ const char *archive_format_from_filename(const char *filename);
 diff --git a/t/t1050-large.sh b/t/t1050-large.sh
-index e4b77a2..52acae5 100755
+index 52acae5..5336eb8 100755
 --- a/t/t1050-large.sh
 +++ b/t/t1050-large.sh
-@@ -143,7 +143,7 @@ test_expect_success 'fetch updates' '
- 	)
+@@ -151,7 +151,7 @@ test_expect_failure 'repack' '
+ 	git repack -ad
  '
 =20
--test_expect_failure 'fsck' '
-+test_expect_success 'fsck' '
- 	git fsck --full
+-test_expect_failure 'tar achiving' '
++test_expect_success 'tar achiving' '
+ 	git archive --format=3Dtar HEAD >/dev/null
  '
 =20
 --=20
