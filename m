@@ -1,66 +1,100 @@
-From: Antony Male <antony.male@gmail.com>
-Subject: Suggestion: git fetch <remote> <branch> to update remote-tracking
- branch
-Date: Mon, 05 Mar 2012 16:45:53 +0000
-Message-ID: <4F54EDC1.80608@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH (for maint)] gitweb: Fix fixed string (non-regexp)
+ project search
+Date: Mon, 05 Mar 2012 09:01:33 -0800
+Message-ID: <7vd38r2d8y.fsf@alter.siamese.dyndns.org>
+References: <20120228183919.26435.86795.stgit@localhost.localdomain>
+ <201203041035.03133.jnareb@gmail.com>
+ <7vfwdn631i.fsf@alter.siamese.dyndns.org>
+ <201203050959.47966.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 05 17:52:14 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 05 18:01:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4b8p-0006pg-2f
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 17:52:07 +0100
+	id 1S4bI6-0006wk-MJ
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 18:01:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755170Ab2CEQwB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Mar 2012 11:52:01 -0500
-Received: from woodbine.london.02.net ([87.194.255.145]:46760 "EHLO
-	woodbine.london.02.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754106Ab2CEQwA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2012 11:52:00 -0500
-X-Greylist: delayed 364 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Mar 2012 11:52:00 EST
-Received: from [192.168.1.71] (87.194.161.58) by woodbine.london.02.net (8.5.140)
-        id 4EEB6474051FE0A5 for git@vger.kernel.org; Mon, 5 Mar 2012 16:45:55 +0000
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+	id S1755537Ab2CERBi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Mar 2012 12:01:38 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42961 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750963Ab2CERBh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2012 12:01:37 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4ED0D6E00;
+	Mon,  5 Mar 2012 12:01:36 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xrHDI9KoqcwJUfugaqetCmwrhg0=; b=r3KYJ7
+	JYWvwkCCqpZLBTRodhFTxuiCmyKQGKCRY1UiwyRLtv65h2YpcGKhcIJE6NmrLEJI
+	qNjkIRZgPbOoh0fvYV6XiS13+ttliQhbDIWKhwE4sBABvS8xValh8Z6crVbs5iPp
+	kNWqzGDngWUrqaq7pWSN3av3oKlxGerKzOJcg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QvonASnPZQQ7fAo0mvS+RAYxKhttfUgO
+	ug1B44YSW50Py7n3TcqmuexEG5Ktfrv206IMOSVAAp5tTBwBEoejO/RLZ9if4DcE
+	fvnl90alv+14VT+1z26Y9slz4Kwgs1f+0aeJrRPQqVIGnUpK+Cp5IxXnDKg9lFk6
+	CVQ8jqpFMVI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 46A046DFF;
+	Mon,  5 Mar 2012 12:01:36 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CC5886DFE; Mon,  5 Mar 2012
+ 12:01:35 -0500 (EST)
+In-Reply-To: <201203050959.47966.jnareb@gmail.com> (Jakub Narebski's message
+ of "Mon, 5 Mar 2012 09:59:47 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DDDA5DD4-66E4-11E1-A448-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192253>
 
-Hi all,
+Jakub Narebski <jnareb@gmail.com> writes:
 
-First off, this is a very tentative suggestion.  It would result in a 
-slight change to established behaviour, which I'm well aware could be a 
-Bad Thing(tm).  However, I was encouraged by a number of people on #git 
-to make it anyway, so here goes.
+> Junio C Hamano wrote:
+>> Jakub Narebski <jnareb@gmail.com> writes:
+>> 
+>> > And here is the patch for maint
+>> ...
+>> > +		if ($tagfilter || $search_regexp);
+>> > +	# fill the rest
+>> > +	@projects = fill_project_list_info(\@projects);
+>> 
+>> Hmph, didn't you already call fill_project_list_info(\@projects) before
+>> search_projects_list() already?
+>
+> True.  Sorry about that. 
+>
+> Can you fix that, or should I resend?
 
-The issue is this: the two-argument form of 'git fetch' (e.g. 'git fetch 
-<remote> <branch>') fetches the named ref into FETCH_HEAD, but does not 
-update the related remote-tracking branch.  While this is intuitive 
-behaviour when <remote> is a URL, we see a lot of git beginners 
-attempting to run 'git fetch origin branch' and being confused when 
-origin/branch isn't updated.  Similarly, 'git pull origin master' will, 
-in a simple case, fast-forward the local master but not origin/master.
+Could you check the following two diffs?
 
-My suggestion, therefore, is to modify the behaviour of 'git fetch' such 
-that 'git fetch <remote> <branch>' will update both FETCH_HEAD and the 
-relevant remote-tracking branch, when <remote> is the name of a 
-configured remote and <branch> contains only the src part of the 
-refspec.  The behaviour would not change when <remote> was a URL or 
-path, or when a <src>:<dst> refspec was used.
+$ git show debd1c2
 
-Of course, it would be desirable to be able to replicate the existing 
-behaviour.  Currently, I don't have any good suggestions, although there 
-may be an existing trick I'm missing.  Possible suggestions might be 
-'git fetch <remote> <branch>:FETCH_HEAD' or 'git fetch <remote> 
-<branch>:', or maybe a new flag?
+This is jn/maint-do-not-match-with-unsanitized-searchtext that
+should be merged to maintenance track that lack the lazy filling.
 
-What do people think?
+And then
 
-Many thanks for your time and consideration,
-Antony Male
+$ git show --first-parent d4b52c2
+
+This is how the above was merged to 'pu' and the conflict resolution
+should be the same when we merge it to 'master'. As our @projects may
+still be only sparsely filled when search_projects_list() returns,
+we do call fill_project_list_info(\@projects) ourselves with the
+lazy filling codebase.
+
+There are a few places I noticed that check $searchtext to see if we
+are running a search, and techinically $search_regexp might be a
+more correct thing to use, but I do not think it matters that much.
+
+Thanks.
