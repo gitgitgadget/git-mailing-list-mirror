@@ -1,79 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Allow Overriding GIT_BUILD_DIR
-Date: Mon, 05 Mar 2012 12:08:11 -0800
-Message-ID: <7vaa3u24lw.fsf@alter.siamese.dyndns.org>
-References: <1330903437-31386-1-git-send-email-greened@obbligato.org>
- <7vaa3v4kwo.fsf@alter.siamese.dyndns.org>
- <nng399m3om6.fsf@transit.us.cray.com>
+Subject: Re: [PATCH] i18n: Not add stripped contents for translation
+Date: Mon, 05 Mar 2012 12:08:37 -0800
+Message-ID: <7v62ei24l6.fsf@alter.siamese.dyndns.org>
+References: <1330910494-17216-1-git-send-email-worldhello.net@gmail.com>
+ <7v7gyz7pei.fsf@alter.siamese.dyndns.org>
+ <CANYiYbGdJ0yFmPnsK_JdABwmFraVdNi08QgFKRmGzJt-DA9tBw@mail.gmail.com>
+ <7vobsb67dn.fsf@alter.siamese.dyndns.org> <4F55155A.3050309@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: greened@obbligato.org, git@vger.kernel.org
-To: dag@cray.com (David A. Greene)
-X-From: git-owner@vger.kernel.org Mon Mar 05 21:08:24 2012
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Mar 05 21:08:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4eCl-000569-Rz
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 21:08:24 +0100
+	id 1S4eD7-0005QG-Q6
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 21:08:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757642Ab2CEUIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Mar 2012 15:08:18 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42565 "EHLO
+	id S1757615Ab2CEUIk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Mar 2012 15:08:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42717 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757633Ab2CEUIO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2012 15:08:14 -0500
+	id S1757536Ab2CEUIj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2012 15:08:39 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 59F516BAF;
-	Mon,  5 Mar 2012 15:08:13 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4BA346BD9;
+	Mon,  5 Mar 2012 15:08:39 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1tJ1x8+Ti/gQlt3h0i4Gady5Q3Q=; b=dXW2eu
-	lLL2nsxkwogwKkEaCOtC59HGKlrieHZTCe1/8gsmhzQ/AaYG94jqC/tJaPUeKZkl
-	7innUo1cni/Zo5uIFRPFeHlqtkNz8t9A3k1ItJK7FiSaORhZjceF6mu36Il4ftI3
-	fBhURXw2+D84bo/o870fl8ivdtar68zITvvwI=
+	:content-type; s=sasl; bh=XkNf4vh+hk0rVFDZiZUKMHhkhPs=; b=mluKRv
+	WgINf15sGRwxgmpm3MkpgMZabpPntzqnxwW5v3LKX2wOqc5Wwg7FMFs9vk1NwCZL
+	zxqy7expwch8b4Qfi6tyED/NVD+pjJBqSbv9Rlj/rDFD3E+VWzxO9gpWTVJ3F23o
+	1oJl+iMJhAnFrO9wPQSKSYM/RMXcnujMkPFoY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mtaiP9YSTd2U1zuAW369CrN9sgx8G6wP
-	BUVP8gKNsb/1AFVYi8Q9U5OuZQM/0flQ8RpyQBHvplWE0vfGTVWTiISl6oHrPIRv
-	JTyoSw0YkXEIYDXELeIY/Qf2RPrtccWLIzc1GFp+d2S62Irb1EADA3V89Bfsxz+H
-	2obzpciPX9c=
+	:content-type; q=dns; s=sasl; b=Po7MDcrU7zF0cJNbNT4OqwKpxZ3xuk+2
+	R79F9lyDjEv0EX8e90puJN45fWAbxKLGjs/SDqOQyZ4qt/Az5HCd3smwAmpv6OND
+	dDmG3gxoM2K6mE259Wt5//TfcJ80373bE9WjBPGBJr92RTA9AkjXhE8pZRxzaoiQ
+	GAMojBNi5vg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 506676BAE;
-	Mon,  5 Mar 2012 15:08:13 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 435006BD8;
+	Mon,  5 Mar 2012 15:08:39 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C20156BA7; Mon,  5 Mar 2012
- 15:08:12 -0500 (EST)
-In-Reply-To: <nng399m3om6.fsf@transit.us.cray.com> (David A. Greene's message
- of "Mon, 05 Mar 2012 12:10:41 -0600")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B51996BD6; Mon,  5 Mar 2012
+ 15:08:38 -0500 (EST)
+In-Reply-To: <4F55155A.3050309@web.de> (Jens Lehmann's message of "Mon, 05
+ Mar 2012 20:34:50 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EFC28A70-66FE-11E1-B3B7-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: FF39B9D8-66FE-11E1-B3AF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192270>
 
-dag@cray.com (David A. Greene) writes:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Both of your changes seem to have broken indentation to use 8-SP at
->> the beginning of some (but not all) lines instead 1-HT.  I'll queue
->> a fixed up version and push the result out in 'pu' later, so please
->> double check to make sure I didn't screw up.
->
-> Right.  This is because you flagged an indentation issue with the
-> previous version of the patch.  I think what happened is that the
-> previous version included the 1-HT (what is HT - half-tab?) spacing but
-> it "looked funny" with the additional "+" from the diff line.
+> I have no objections at all against changing the code that way to make it
+> possible to translate it in a sane way. This code predates the i18n effort
+> by a few months, so it didn't take this kind of problem into account.
 
-No, with your earlier patch, all the existing lines used horizontal
-tabs for indenting, and the line you added used runs of spaces.
-When such a hunk is shown in diff output, "+" will make it obvious
-that only the new line you added is wrong (because the initial "+"
-and " " is absorbed in the first horizontal tab for Tab-indented
-lines) and that is how I noticed and pointed out "a funny
-indentation" to you.
+Ah, Ok, that explains it.
