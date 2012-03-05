@@ -1,77 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Path character encodings
-Date: Mon, 05 Mar 2012 13:40:32 -0800
-Message-ID: <7vipiizpyn.fsf@alter.siamese.dyndns.org>
-References: <20120305212657.GA17903@jupiter.local>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] fmt-merge-msg: show those involved in a merged series
+Date: Mon, 5 Mar 2012 13:46:58 -0800
+Message-ID: <CA+55aFzuCJWfzp2ROxvMY78NZWb3ofYWOebfPfPba9kypyytKA@mail.gmail.com>
+References: <7vvcmj68iz.fsf@alter.siamese.dyndns.org> <CA+55aFzQ3+EFBVyE9PWOyH0XEC_oW+kUaBTYfixmi2wgMmiZvw@mail.gmail.com>
+ <7vipii27ka.fsf@alter.siamese.dyndns.org> <CA+55aFw-sS_p7JXNXbSbpiwh9_bZhSrTtC3is4NtLa_n9Hzk5A@mail.gmail.com>
+ <7vmx7uzq8h.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Paul Betts <paul@paulbetts.org>
-X-From: git-owner@vger.kernel.org Mon Mar 05 22:40:42 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 05 22:47:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4fe5-000134-1c
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 22:40:41 +0100
+	id 1S4fka-0006Y5-Pk
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 22:47:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753964Ab2CEVkg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Mar 2012 16:40:36 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61200 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753860Ab2CEVkf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2012 16:40:35 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D3D436508;
-	Mon,  5 Mar 2012 16:40:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SV9Xz5FNUCMES+sTh+vh9osWV/Y=; b=LVQNl/
-	UE1M1YQEHc+rWKgDWAmrhqebAjQZ7EFihs7i/kJ1Tq6EQ/sdRN5pCCsCKr58IORF
-	pwFQZPHj0v62fsmW4XLxd5zu2ObugcuWoP/t5KkEOJRTMvSu86cblX6x0kyAL3fK
-	yMF1qluwtoufbbahLUWSe+2RQM53EnHyxHy5E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=F9+wZgA70v6fQ+aNBoyuIIsFsLOOMXvw
-	MbOJesXJZqF9GmSTbnQNNzw+KhX39vaWMdtPa+X20K3FlfTKgdXkZnH7E5yaPpEN
-	bbnOui9dMRlYN2/dKMqdsP9SvHcovdUk+MbE+UcHokUVBnFcYl8OQObFO04Xbx6g
-	cqT/x9hfvD4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C5DF86507;
-	Mon,  5 Mar 2012 16:40:34 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 41CBF6505; Mon,  5 Mar 2012
- 16:40:34 -0500 (EST)
-In-Reply-To: <20120305212657.GA17903@jupiter.local> (Paul Betts's message of
- "Mon, 5 Mar 2012 13:26:57 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D6BC8334-670B-11E1-8AE9-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754478Ab2CEVrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Mar 2012 16:47:20 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:64393 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754239Ab2CEVrT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2012 16:47:19 -0500
+Received: by wejx9 with SMTP id x9so2645699wej.19
+        for <git@vger.kernel.org>; Mon, 05 Mar 2012 13:47:18 -0800 (PST)
+Received-SPF: pass (google.com: domain of linus971@gmail.com designates 10.216.135.141 as permitted sender) client-ip=10.216.135.141;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of linus971@gmail.com designates 10.216.135.141 as permitted sender) smtp.mail=linus971@gmail.com; dkim=pass header.i=linus971@gmail.com
+Received: from mr.google.com ([10.216.135.141])
+        by 10.216.135.141 with SMTP id u13mr4715517wei.79.1330984038351 (num_hops = 1);
+        Mon, 05 Mar 2012 13:47:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=eFxcUTrHb0OF9ZKbKV10oBbbSYyk0qK4CanTI0315g8=;
+        b=jmzgVt87XMC0KX1uGoaucRt1egT0AnHbSXODsgFNbhJO/Ner0IaG/GF1r2DkAND3gz
+         6aJDMrTYB/JXQiOutzDAqtskTfIEyUxhQUCa+G8rIvf8JYiKhg4SJ+LPpNBiwVAePonN
+         Zk89ygXmWRakR/kwgsuOAKmKvMpzpNNvaoCXGWF0cNG/NP/kijv0HHFfHgk8JznqU0rk
+         ezyYn3WNgWK75B80ctjgZdnGviPZrd2nwsps9CckTaavT55lWeWo5+8iNVJklhIN9L1N
+         JA8J5RLW1A2aJwLupalmMSZSm9Ep9nOGfA2L4Ujf1ZCzicOep9VUrGEEPtnT4q55KkT9
+         LMFg==
+Received: by 10.216.135.141 with SMTP id u13mr3817963wei.79.1330984038273;
+ Mon, 05 Mar 2012 13:47:18 -0800 (PST)
+Received: by 10.180.106.164 with HTTP; Mon, 5 Mar 2012 13:46:58 -0800 (PST)
+In-Reply-To: <7vmx7uzq8h.fsf_-_@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: DahhCweynZ4FjOYHEBEBkC02G80
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192276>
 
-Paul Betts <paul@paulbetts.org> writes:
-
-> ## Proposed Mitigation
+On Mon, Mar 5, 2012 at 1:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> For an initial mitigation plan, I'd like to propose adding a warning to either
-> git clone or git checkout, that if invalid UTF-8 strings are detected, a
-> warning is printed to the user.
->
-> However, without an actionable solution, it's not much of a help other than to
-> suggest that they downgrade to a lower version of Git.
+> This patch punts the deep thinking part and just picks the tip
+> committer and counts only merges in the history you are pulling in.
+> It may not be a very good heuristics, but the code structure should
+> be a good place to start.
 
-Hmph, I do not see a reason to make a huge molehill in this. The
-pathnames are of unspecified encoding, and if a project declares
-that they always use UTF-8, that would be great. Older history may
-need to be rewritten but that is a given.
+Yeah, this looks good to me (but I didn't actually *test* it, so
+that's just from looking at the patch).
 
-Wouldn't a flag day event per project that runs filter-branch and
-have participants restart their repositories be sufficient?  Why
-does git itself have to do anything about it, and how would it help
-users without hurting other git users who are not involved in such a
-project?
+                 Linus
