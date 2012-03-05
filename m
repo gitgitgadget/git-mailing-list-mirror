@@ -1,72 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Suggestion: git fetch <remote> <branch> to update
- remote-tracking branch
-Date: Mon, 05 Mar 2012 09:42:43 -0800
-Message-ID: <7vmx7v0wrw.fsf@alter.siamese.dyndns.org>
-References: <4F54EDC1.80608@gmail.com>
+From: dag@cray.com (David A. Greene)
+Subject: Re: [PATCH 1/2] Allow Overriding GIT_BUILD_DIR
+Date: Mon, 05 Mar 2012 12:10:41 -0600
+Message-ID: <nng399m3om6.fsf@transit.us.cray.com>
+References: <1330903437-31386-1-git-send-email-greened@obbligato.org>
+	<7vaa3v4kwo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Antony Male <antony.male@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 05 18:42:53 2012
+Cc: greened@obbligato.org, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 05 19:11:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4bvv-0000FZ-0U
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 18:42:51 +0100
+	id 1S4cNY-0006Uj-W3
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Mar 2012 19:11:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757201Ab2CERmq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Mar 2012 12:42:46 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61343 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756605Ab2CERmp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2012 12:42:45 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E39B27892;
-	Mon,  5 Mar 2012 12:42:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VR5HAw8JG1dGH8zBHYcqN/Ub2rQ=; b=op9IZ7
-	yWVXgqn1AQbfQxOs744BQkKlI1Y85hT0XPBUbpMzoMx17LnhbhSBJh6YDGZ0as34
-	Lz+b3dwavn7nd7y+ZpeBnb6hNMgdsOaPhns3n+tVNF6lObUZx7qDsxDoquq3um7V
-	7RDhEuHux11d0Ssqgos9CfEAj/TCYrhS99JQs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VypGenGCvNK0tXlghfQz4oj+leDXITZl
-	grXgnmHBE9owIvMNhKnxAfD9BtJwaP4utetH2EJUtqUmhGwieguizXs3MdAQi1MJ
-	hEXZN6hRx3wxsBOKZRrRvVIkUOZDCDp5zecEI9T/lvupu17nHPrtl2GBrkE4ekJI
-	vDZxPFA+q/0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC4637891;
-	Mon,  5 Mar 2012 12:42:44 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5AA13788A; Mon,  5 Mar 2012
- 12:42:44 -0500 (EST)
-In-Reply-To: <4F54EDC1.80608@gmail.com> (Antony Male's message of "Mon, 05
- Mar 2012 16:45:53 +0000")
+	id S1757360Ab2CESLN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Mar 2012 13:11:13 -0500
+Received: from exprod6og108.obsmtp.com ([64.18.1.21]:39114 "EHLO
+	exprod6og108.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756199Ab2CESLK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2012 13:11:10 -0500
+Received: from stplmr01.us.cray.com ([136.162.34.13]) (using TLSv1) by exprod6ob108.postini.com ([64.18.5.12]) with SMTP
+	ID DSNKT1UBoptukY+s/5OIX/73XdyEohmDxFyV@postini.com; Mon, 05 Mar 2012 10:11:10 PST
+Received: from transit.us.cray.com (transit.us.cray.com [172.31.17.53])
+	by stplmr01.us.cray.com (8.14.3/8.13.8/hubv2-LastChangedRevision: 12441) with ESMTP id q25IAg3T017569;
+	Mon, 5 Mar 2012 12:10:42 -0600
+Received: from transit.us.cray.com (localhost [127.0.0.1])
+	by transit.us.cray.com (8.14.3/8.13.6/client-5260) with ESMTP id q25IAfx2030537;
+	Mon, 5 Mar 2012 12:10:41 -0600
+Received: (from dag@localhost)
+	by transit.us.cray.com (8.14.3/8.12.8/Submit) id q25IAfjk030536;
+	Mon, 5 Mar 2012 12:10:41 -0600
+In-Reply-To: <7vaa3v4kwo.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 04 Mar 2012 22:33:11 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9D36BBAA-66EA-11E1-9FAD-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192260>
 
-Antony Male <antony.male@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> What do people think?
+> Both of your changes seem to have broken indentation to use 8-SP at
+> the beginning of some (but not all) lines instead 1-HT.  I'll queue
+> a fixed up version and push the result out in 'pu' later, so please
+> double check to make sure I didn't screw up.
 
-I think this was discussed number of times here, and my vague
-recollection of the conclusion last time is that it would be OK to
-change the behaviour of single-shot fetch "fetch <remote> <branch>"
-against a remote where there is already a default fetch refspec that
-covers the <branch> so that such a fetch will update the remote
-tracking branch that usually copies from <branch> (and only that
-one).
+Right.  This is because you flagged an indentation issue with the
+previous version of the patch.  I think what happened is that the
+previous version included the 1-HT (what is HT - half-tab?) spacing but
+it "looked funny" with the additional "+" from the diff line.
 
-We might need a proper deprecation and migration plan, though.  I
-say "might" because offhand I don't know what the extent of damages
-to existing users' habits will be if we didn't offer any.
+So in some way this was deliberate to make the patch look better.  I
+have no problem with you (or me!) changing it back.
+
+Thanks for taking these up!
+
+                          -Dave
