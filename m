@@ -1,90 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH (BUGFIX)] gitweb: Fix fixed string (non-regexp) project search
-Date: Tue, 6 Mar 2012 13:40:19 +0100
-Message-ID: <201203061340.19547.jnareb@gmail.com>
-References: <20120228183919.26435.86795.stgit@localhost.localdomain> <201203022334.25544.jnareb@gmail.com> <4F550EAE.5030006@ramsay1.demon.co.uk>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH] config: Introduce --patience config variable
+Date: Tue, 6 Mar 2012 14:01:42 +0100
+Message-ID: <87pqcp6fyh.fsf@thomas.inf.ethz.ch>
+References: <a87ed689ddfb06601dd639541199fc72d829bdaf.1331031473.git.mprivozn@redhat.com>
+	<20120306114914.GB6733@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Tue Mar 06 13:40:33 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Michal Privoznik <mprivozn@redhat.com>, <git@vger.kernel.org>,
+	<gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 06 14:01:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4tgq-0002P4-Kn
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 13:40:28 +0100
+	id 1S4u1X-0000qf-DJ
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 14:01:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030463Ab2CFMkY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 07:40:24 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:42369 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030426Ab2CFMkX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 07:40:23 -0500
-Received: by eekc41 with SMTP id c41so1866511eek.19
-        for <git@vger.kernel.org>; Tue, 06 Mar 2012 04:40:22 -0800 (PST)
-Received-SPF: pass (google.com: domain of jnareb@gmail.com designates 10.213.10.196 as permitted sender) client-ip=10.213.10.196;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of jnareb@gmail.com designates 10.213.10.196 as permitted sender) smtp.mail=jnareb@gmail.com; dkim=pass header.i=jnareb@gmail.com
-Received: from mr.google.com ([10.213.10.196])
-        by 10.213.10.196 with SMTP id q4mr1394275ebq.294.1331037622544 (num_hops = 1);
-        Tue, 06 Mar 2012 04:40:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=1aKNZLmZ2es/l7q27XhfqePr1vzB5RuoLWcZCAZr+jw=;
-        b=EdOITJIsela8zRDceufQSIQZfB7rEY7a26tp+Z/3WgnR/BbqCMoSm+HiLf5Xbz88tS
-         QQzJ8+e4v8t2+tJzd1ro90GOCC4v1HeaqJBudrtku9FgOHn5VSj2Y05/2RE1Gvn6IGA1
-         AhRy61Qp4iaSVUl/rnYwHAVQqiFk8WZMM8g7Yp7pPhQYFOx5VYoKx+rTuNaE2Vy3NPvl
-         WrUVuQanbFdWMB/a9Fj++fd7raodqeEYqRU3T2fXBOIMKs4PtWONvroiHdMPeTINojve
-         CJMmHM5poJ3R14ErVuRoyPY6YhaqpZsKlBrbX7+Td5k5KdNHKqjnCU85kYnFKmVGZ8eF
-         r1vA==
-Received: by 10.213.10.196 with SMTP id q4mr1059077ebq.294.1331037622401;
-        Tue, 06 Mar 2012 04:40:22 -0800 (PST)
-Received: from [192.168.1.13] (abwf76.neoplus.adsl.tpnet.pl. [83.8.229.76])
-        by mx.google.com with ESMTPS id s48sm74119706eem.0.2012.03.06.04.40.20
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 06 Mar 2012 04:40:21 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4F550EAE.5030006@ramsay1.demon.co.uk>
-Content-Disposition: inline
+	id S1030322Ab2CFNBq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 08:01:46 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:26003 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751757Ab2CFNBq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 08:01:46 -0500
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 6 Mar
+ 2012 14:01:43 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 6 Mar
+ 2012 14:01:43 +0100
+In-Reply-To: <20120306114914.GB6733@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 6 Mar 2012 06:49:14 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192341>
 
-Ramsay Jones wrote:
-> Jakub Narebski wrote:
+Jeff King <peff@peff.net> writes:
 
->>> This patch solves the problem for me when using a regex search
->>> (re checkbox checked), but *not* for a non-regex search.
->>>
->>> If you have a leading '*' or '+', in the non-regex case, then you
->>> still get the above complaint (and xml error page etc.), although
->>> the line number has changed slightly from that given above.
->> 
->> Ramsay, please provide those line number in the future, together with
->> line and if possible some context.
-> 
-> Yeah, sorry about that; when I wrote that I didn't have the information
-> readily available (I would have had to shutdown Windows, boot Linux, ...)
-> and I was about to go out.
+> On Tue, Mar 06, 2012 at 11:59:42AM +0100, Michal Privoznik wrote:
+>
+>> --- a/Documentation/diff-config.txt
+>> +++ b/Documentation/diff-config.txt
+>> @@ -86,6 +86,9 @@ diff.mnemonicprefix::
+>>  diff.noprefix::
+>>  	If set, 'git diff' does not show any source or destination prefix.
+>>  
+>> +diff.patience:
+>> +    If set, 'git diff' will use patience algorithm.
+>> +
+>
+> Should this be a boolean? Or should we actually have a diff.algorithm
+> option where you specify the algorithm you want (e.g., "diff.algorithm =
+> patience")? That would free us up later to more easily add new values.
+>
+> In particular, I am thinking about --minimal. It is mutually exclusive
+> with --patience, and is simply ignored if you use patience diff.
+> we perhaps have "diff.algorithm" which can be one of "myers", "minimal"
+> (which is really myers + the minimal flag), and "patience".
 
-You could have told us _that_...
-
-> So, the choice was to wait about 24hrs to report 
-> with full info, or provide the feedback earlier; I chose the latter. ;-)
-
-That's understandable.
-
-
-Thanks again for reporting these issues.
+Don't forget "histogram".  I have no idea why it's not documented
+(evidently 8c912eea slipped through the review cracks) but --histogram
+is supported since 1.7.7.
 
 -- 
-Jakub Narebski
-Poland
+Thomas Rast
+trast@{inf,student}.ethz.ch
