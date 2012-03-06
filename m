@@ -1,90 +1,65 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: git push from client is not updating files on server
-Date: Tue, 06 Mar 2012 15:12:38 -0600
-Message-ID: <4F567DC6.4070903@gmail.com>
-References: <CAC0z1F-bGikXZtLnd8d=3G+4okvNqZaxyrLjh4G3YzPpmqyxQA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jerome Yanga <jerome.yanga@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 06 22:12:48 2012
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: t5704: problem with OS X sed
+Date: Tue, 6 Mar 2012 16:18:07 -0500
+Message-ID: <9980BCE6-7933-40A5-BA96-5B93B553E666@silverinsanity.com>
+References: <E40E6E02-8960-4A10-9E71-28F9CDB120F8@silverinsanity.com> <m362ehtpgp.fsf@localhost.localdomain>
+Mime-Version: 1.0 (Apple Message framework v1257)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Git List <git@vger.kernel.org>, Thomas Rast <trast@inf.ethz.ch>,
+	BJ Hargrave <bj@bjhargrave.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 06 22:18:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S51gd-0002k3-Aa
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 22:12:47 +0100
+	id 1S51lx-0001UR-IG
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 22:18:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031310Ab2CFVMl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 16:12:41 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:35417 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031152Ab2CFVMk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 16:12:40 -0500
-Received: by yhmm54 with SMTP id m54so2540208yhm.19
-        for <git@vger.kernel.org>; Tue, 06 Mar 2012 13:12:40 -0800 (PST)
-Received-SPF: pass (google.com: domain of nkreitzinger@gmail.com designates 10.236.190.5 as permitted sender) client-ip=10.236.190.5;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of nkreitzinger@gmail.com designates 10.236.190.5 as permitted sender) smtp.mail=nkreitzinger@gmail.com; dkim=pass header.i=nkreitzinger@gmail.com
-Received: from mr.google.com ([10.236.190.5])
-        by 10.236.190.5 with SMTP id d5mr37446891yhn.13.1331068360077 (num_hops = 1);
-        Tue, 06 Mar 2012 13:12:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=gPYybDCFQeEzLlbnnq3e8DUwkSQD+UDCfqE4haw6i50=;
-        b=ji3nMNu4EBpWLG+meIoGrN495bPqeUwQsu+scxDnE4pSzhzL5KSNQRV3e4PmPwvDsR
-         a4NP7yN7oLfhFk95mh4PhIgSiNeMLowwRrMRX1Rzoh/lQg9fDAXHllab4W1ql4C2l/kg
-         hwrD6GesUJf2tFgm8OVJuAgqEorfxC7U8izZDt3UrQeJpMHnntqcGJCZ4fadsp0sr805
-         maH3ES+fLWHSWgOFVH9ZYMBujm7uOZiNcNytniyL1/2OuUCWtmIgSD5YfaQ2PR5IJe4Z
-         KnGu4v9iK2gSSawqxCkf+9MXvdJKagTYHJ7QuoPbO1vUiC/7ziLZto/M06bTJjLsaDZj
-         tg7w==
-Received: by 10.236.190.5 with SMTP id d5mr29673644yhn.13.1331068360025;
-        Tue, 06 Mar 2012 13:12:40 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id i4sm32562992anm.5.2012.03.06.13.12.38
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 06 Mar 2012 13:12:39 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.27) Gecko/20120216 Thunderbird/3.1.19
-In-Reply-To: <CAC0z1F-bGikXZtLnd8d=3G+4okvNqZaxyrLjh4G3YzPpmqyxQA@mail.gmail.com>
+	id S1031102Ab2CFVSN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 16:18:13 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:33355 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752592Ab2CFVSM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Mar 2012 16:18:12 -0500
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id A6D501FFC008; Tue,  6 Mar 2012 21:18:05 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-5.1 required=3.5 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [192.168.5.89] (unknown [64.134.102.20])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id C3FEE1FFC006;
+	Tue,  6 Mar 2012 21:18:02 +0000 (UTC)
+In-Reply-To: <m362ehtpgp.fsf@localhost.localdomain>
+X-Mailer: Apple Mail (2.1257)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192395>
 
-On 3/6/2012 10:52 AM, Jerome Yanga wrote:
-> My main objective is to create a central public Git server.  I had
-> followed the instructions in the URL below to make it public.
->
-> http://book.git-scm.com/4_setting_up_a_public_repository.html
->
-> From the git client server, I can successfully clone projects in
-> from the central public Git server using the command below.
->
-> git clone
-> http://<hostname_of_central_public_git_server>/<Project_name>.git
->
-> My push seems to be successful too using the command below as I get
-> the message "Everything up-to-date".
->
-> git push
->
-> However, when I log into the central public Git server and look at
-> the files in the project, none of them have change.  I can only see
-> the changes from the client via Gitweb.
->
-Gitweb and gitk know how to look at .git (bare) repo and display the 
-contents.  (I use gitk to verify that a push did what I wanted.)  There 
-is no work-tree for a .git repo to do linux "ls" on.  If you really want 
-to use commandline you would have to use git commands like git-show, 
-git-ls-files, git-cat-file, git-log, etc., to display and interrogate 
-the contents of git objects (tags, commits, trees, blobs) in a .git repo.
 
-I suspect reviewing it in gitweb is sufficient to verify that the push 
-did what you wanted.  (I don't use gitwet, yet.)
+On Mar 6, 2012, at 4:01 PM, Jakub Narebski wrote:
 
-v/r,
-neal
+> Thomas Rast proposed a patch to fix this issue, as reported by
+> BJ Hargrave, in
+> 
+>  Re: [ANNOUNCE] Git 1.7.9.3
+>  Message-ID: <87y5rd4wci.fsf@thomas.inf.ethz.ch>
+>  http://thread.gmane.org/gmane.linux.kernel/1262318/focus=192355
+> 
+> as
+> 
+>  [PATCH] t5704: fix nonportable sed/grep usages
+
+Ah, reported and fixed in an announce e-mail while I was working on it myself.
+
+Unsurprisingly, the patch also works for me.
+
+Thanks Thomas and Jakub,
+~~ Brian G
