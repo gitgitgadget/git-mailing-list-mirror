@@ -1,126 +1,133 @@
-From: vfr@lyx.org
-Subject: [PATCH] Documentation update for 'git branch'
-Date: Tue,  6 Mar 2012 09:51:06 +0100
-Message-ID: <1331023866-5658-1-git-send-email-vfr@lyx.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 4/4] http: handle proxy authentication failure (error
+ 407)
+Date: Tue, 6 Mar 2012 03:54:45 -0500
+Message-ID: <20120306085445.GE21199@sigill.intra.peff.net>
+References: <4F54D9F8.2010401@seap.minhap.es>
 Mime-Version: 1.0
-Cc: gitster@pobox.com, Vincent van Ravesteijn <vfr@lyx.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 06 09:51:31 2012
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, sam@vilain.net
+To: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
+X-From: git-owner@vger.kernel.org Tue Mar 06 09:55:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4q7D-0003lE-EY
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 09:51:27 +0100
+	id 1S4qAe-0007Ku-Hs
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 09:55:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758766Ab2CFIvT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 03:51:19 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:44291 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758365Ab2CFIvS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 03:51:18 -0500
-Received: by eaaq12 with SMTP id q12so1729829eaa.19
-        for <git@vger.kernel.org>; Tue, 06 Mar 2012 00:51:17 -0800 (PST)
-Received-SPF: pass (google.com: domain of vfr@lyx.org designates 10.213.9.204 as permitted sender) client-ip=10.213.9.204;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of vfr@lyx.org designates 10.213.9.204 as permitted sender) smtp.mail=vfr@lyx.org
-Received: from mr.google.com ([10.213.9.204])
-        by 10.213.9.204 with SMTP id m12mr4256198ebm.97.1331023877004 (num_hops = 1);
-        Tue, 06 Mar 2012 00:51:17 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:from:to:cc:subject:date:message-id:x-mailer
-         :x-gm-message-state;
-        bh=Cso3dT5oRzjCacunNwxdy8umh/T2N6IIRzcG6JWxG8A=;
-        b=DQRQPyc8FPYLyV45XJDK1vje+Zb3kGM3Vy+2cBwBWDV6MgBewPQhLmo+4fkgQkwIX7
-         2DqaOSSSgRv8O0v1dMnbkdRTPDdDo8ceJ9dB9nNK7KYZiiOLppu7sPoMPQPN1pR2DdFJ
-         SVCRnKzIb3aEfEZa5nyQth3WtRcR9+R2wjmOL74aOKUbfajTIon5kwMVyDBRiwv8ekcb
-         YsY+80D+EXz8bBmGZzwGTj9G1FxCoxCcgtSfzqOqRQv/Y/Zxqq+PHdG38D/N024ftkG9
-         tU5+OCkoLB/1BXwjeOmhS3meblv8KCmJrdXtcMdGwVrX0h40gTQZk6UEKw406ZrlC7zt
-         Xm3g==
-Received: by 10.213.9.204 with SMTP id m12mr3214632ebm.97.1331023876777;
-        Tue, 06 Mar 2012 00:51:16 -0800 (PST)
-Received: from localhost.localdomain (wlan-145-94-169-074.wlan.tudelft.nl. [145.94.169.74])
-        by mx.google.com with ESMTPS id h47sm7890370eea.10.2012.03.06.00.51.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 06 Mar 2012 00:51:16 -0800 (PST)
-X-Mailer: git-send-email 1.7.5.4
-X-Gm-Message-State: ALoCoQmh4aKWLRyFXmyvj+6vs41K/QXHjXdmtXhM0AFUtLSIdPB9p3GZSVxA9omjOs420jBxk5wB
+	id S1758840Ab2CFIyt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 03:54:49 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38276
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758803Ab2CFIys (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 03:54:48 -0500
+Received: (qmail 5682 invoked by uid 107); 6 Mar 2012 08:54:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 06 Mar 2012 03:54:55 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Mar 2012 03:54:45 -0500
+Content-Disposition: inline
+In-Reply-To: <4F54D9F8.2010401@seap.minhap.es>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192316>
 
-From: Vincent van Ravesteijn <vfr@lyx.org>
+On Mon, Mar 05, 2012 at 04:21:28PM +0100, Nelson Benitez Leon wrote:
 
-Changes:
-- add a period to a sentence,
-- correct 'tag' into 'branch',
-- unify the use of backticks,
-- indicate that the commit parameter of --contains defaults to HEAD.
+> Handle http 407 error code by asking for credentials and
+> retrying request in case credentials were not present, or
+> marking credentials as rejected if they were already provided.
+> 
+> Signed-off-by: Nelson Benitez Leon <nbenitezl@gmail.com>
+> ---
+>  http.c |   16 ++++++++++++++++
+>  1 files changed, 16 insertions(+), 0 deletions(-)
 
-Signed-off-by: Vincent van Ravesteijn <vfr@lyx.org>
----
- Documentation/git-branch.txt |   19 ++++++++++---------
- 1 files changed, 10 insertions(+), 9 deletions(-)
+No tests. I wonder how hard it would be to set up an apache proxy for
+automated testing, just as we set one up as a git server in
+t/lib-httpd.sh. It should be basically the same process, but with a
+different config file, I would think.
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 0427e80..6410c3d 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -24,8 +24,8 @@ be highlighted with an asterisk.  Option `-r` causes the remote-tracking
- branches to be listed, and option `-a` shows both. This list mode is also
- activated by the `--list` option (see below).
- <pattern> restricts the output to matching branches, the pattern is a shell
--wildcard (i.e., matched using fnmatch(3))
--Multiple patterns may be given; if any of them matches, the tag is shown.
-+wildcard (i.e., matched using fnmatch(3)).
-+Multiple patterns may be given; if any of them matches, the branch is shown.
+> diff --git a/http.c b/http.c
+> index b0b4362..5fffa47 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -812,6 +812,22 @@ static int http_request(const char *url, void *result, int target, int options)
+>  				init_curl_http_auth(slot->curl);
+>  				ret = HTTP_REAUTH;
+>  			}
+> +		} else if (results.http_code == 407) { /* Proxy authentication failure */
+> +			if (proxy_auth.username && proxy_auth.password) {
+> +				credential_reject(&proxy_auth);
+> +				ret = HTTP_NOAUTH;
+> +			} else {
+> +				struct strbuf pbuf = STRBUF_INIT;
+> +				credential_from_url(&proxy_auth, curl_http_proxy);
+> +				credential_fill(&proxy_auth);
+> +				strbuf_addf(&pbuf, "%s://%s:%s@%s",proxy_auth.protocol,
+> +			    			proxy_auth.username, proxy_auth.password,
+> +			    			proxy_auth.host);
+> +				free ((void *)curl_http_proxy);
+> +				curl_http_proxy =  strbuf_detach(&pbuf, NULL);
+> +				curl_easy_setopt(slot->curl, CURLOPT_PROXY, curl_http_proxy);
+> +				ret = HTTP_REAUTH;
+> +			}
+
+Hmm. So HTTP_REAUTH used to mean "try again, we got new http
+credentials". And in http_request_reauth, we recognized the REAUTH flag,
+and tried again. Now it also means "try again, we got new proxy
+credentials". But what happens if you need to retry twice? That is, the
+following sequence:
+
+  1. We make a request; proxy returns 407, because we didn't give it a
+     password. We ask for the password and return REAUTH.
+
+  2. We make another request; the proxy passes it to the actual server,
+     who returns 401, because we didn't give an http password. We ask
+     for the password and return REAUTH.
+
+  3. We make a third request, but this time everybody is happy.
+
+I don't think step (3) actually happens with your code. We don't
+actually look for REAUTH on the second step.
+
+We need to actually loop, retrying if we get reauth (and arguably REAUTH
+should simply be called RETRY). Like this:
+
+diff --git a/http.c b/http.c
+index e4afbe5..c325b00 100644
+--- a/http.c
++++ b/http.c
+@@ -810,10 +810,13 @@ static int http_request(const char *url, curl_write_callback cb, void *result,
+ static int http_request_reauth(const char *url, curl_write_callback cb,
+ 			       void *result, unsigned long offset, int options)
+ {
+-	int ret = http_request(url, cb, result, offset, options);
+-	if (ret != HTTP_REAUTH)
+-		return ret;
+-	return http_request(url, cb, result, offset, options);
++	int ret;
++
++	do {
++		ret = http_request(url, cb, result, offset, options);
++	} while (ret == HTTP_REAUTH);
++
++	return ret;
+ }
  
- With `--contains`, shows only the branches that contain the named commit
- (in other words, the branches whose tip commits are descendants of the
-@@ -49,7 +49,7 @@ the remote-tracking branch. This behavior may be changed via the global
- overridden by using the `--track` and `--no-track` options, and
- changed later using `git branch --set-upstream`.
- 
--With a '-m' or '-M' option, <oldbranch> will be renamed to <newbranch>.
-+With a `-m` or `-M` option, <oldbranch> will be renamed to <newbranch>.
- If <oldbranch> had a corresponding reflog, it is renamed to match
- <newbranch>, and a reflog entry is created to remember the branch
- renaming. If <newbranch> exists, -M must be used to force the rename
-@@ -59,7 +59,7 @@ With a `-d` or `-D` option, `<branchname>` will be deleted.  You may
- specify more than one branch for deletion.  If the branch currently
- has a reflog then the reflog will also be deleted.
- 
--Use -r together with -d to delete remote-tracking branches. Note, that it
-+Use `-r` together with `-d` to delete remote-tracking branches. Note, that it
- only makes sense to delete remote-tracking branches if they no longer exist
- in the remote repository or if 'git fetch' was configured not to fetch
- them again. See also the 'prune' subcommand of linkgit:git-remote[1] for a
-@@ -154,17 +154,18 @@ start-point is either a local or remote-tracking branch.
- 	branch.autosetupmerge configuration variable is true.
- 
- --set-upstream::
--	If specified branch does not exist yet or if '--force' has been
--	given, acts exactly like '--track'. Otherwise sets up configuration
--	like '--track' would when creating the branch, except that where
-+	If specified branch does not exist yet or if `--force` has been
-+	given, acts exactly like `--track`. Otherwise sets up configuration
-+	like `--track` would when creating the branch, except that where
- 	branch points to is not changed.
- 
- --edit-description::
- 	Open an editor and edit the text to explain what the branch is
- 	for, to be used by various other commands (e.g. `request-pull`).
- 
----contains <commit>::
--	Only list branches which contain the specified commit.
-+--contains [<commit>]::
-+	Only list branches which contain the specified commit (HEAD
-+	if not specified).
- 
- --merged [<commit>]::
- 	Only list branches whose tips are reachable from the
--- 
-1.7.5.4
+ int http_get_strbuf(const char *url, struct strbuf *result, int options)
+
+
+I think the whole thing would be a bit easier to read if
+http_request_reauth actually handled the 401 and 407 itself, but
+unfortunately we need to access the curl handle. Arguably http_request
+should just be setting the auth from the http_auth struct itself each
+time it is called (the http_auth struct is what caches the password, so
+it's not like we would prompt the user again). But that refactoring is
+unrelated to what you're doing, I think, so we can leave it.
+
+-Peff
