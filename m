@@ -1,234 +1,86 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH] configure.ac: Add --with-gcc-warnings configure option
-Date: Tue,  6 Mar 2012 09:33:05 -0500
-Message-ID: <1331044385-14796-1-git-send-email-gitter.spiros@gmail.com>
-Cc: jnareb@gmail.com, Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 06 15:33:21 2012
+From: BJ Hargrave <bj@bjhargrave.com>
+Subject: Re: [ANNOUNCE] Git 1.7.9.3
+Date: Tue, 6 Mar 2012 09:35:48 -0500
+Message-ID: <A518E7E7-25D5-429C-A1C1-35F94EC8F043@bjhargrave.com>
+References: <7vliney6k7.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1257)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org, trast@student.ethz.ch
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 06 15:36:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4vS3-00061l-EX
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 15:33:20 +0100
+	id 1S4vUb-0000sM-Pc
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 15:35:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030753Ab2CFOdN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 09:33:13 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:41783 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030694Ab2CFOdM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 09:33:12 -0500
-Received: by iagz16 with SMTP id z16so7128595iag.19
-        for <git@vger.kernel.org>; Tue, 06 Mar 2012 06:33:11 -0800 (PST)
-Received-SPF: pass (google.com: domain of gitter.spiros@gmail.com designates 10.50.216.231 as permitted sender) client-ip=10.50.216.231;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of gitter.spiros@gmail.com designates 10.50.216.231 as permitted sender) smtp.mail=gitter.spiros@gmail.com; dkim=pass header.i=gitter.spiros@gmail.com
-Received: from mr.google.com ([10.50.216.231])
-        by 10.50.216.231 with SMTP id ot7mr12953299igc.8.1331044391719 (num_hops = 1);
-        Tue, 06 Mar 2012 06:33:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=q7/+PN9mFKWwCSHZuQzg46HIuD86SObpjdvhea4kAE4=;
-        b=GLedvegJ4+ej8LbVkHXZ6y8tTh3FNwFBV5WdqKPjlEygjN9EBudRk/BIr+oRIaJcP6
-         /qAtXQpg8k1ojcOnX70yNKG2SWc6V5dk91G4Yv9l99PwaS/KTmZvpcfnQnwjg44Ve3HH
-         JdBKLU0gobJCsAp/IOhBNoig/+qC0iZ6uxlG6UwiwNS9I9t/8nfkflQsmh7u/y0icbI/
-         hSmFmHqM55AgvrpRhaKau2hLOPD3cMB1qJYQbmLlE3WsyjSxyApvmZ+PQ1H8XjRKnwoX
-         vReJJRWILbbH7pnA9zOI3zus/M92mmO8rFVuRihtPLmhJ4haRUXi3kvm59VcIFIZXy5T
-         LL8w==
-Received: by 10.50.216.231 with SMTP id ot7mr10799923igc.8.1331044391645;
-        Tue, 06 Mar 2012 06:33:11 -0800 (PST)
-Received: from localhost.localdomain (vm049244212.pmman.net. [198.49.244.212])
-        by mx.google.com with ESMTPS id eo1sm10208007igc.17.2012.03.06.06.33.10
+	id S1030771Ab2CFOfx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 09:35:53 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:46269 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030750Ab2CFOfw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Mar 2012 09:35:52 -0500
+Received: by ghrr11 with SMTP id r11so2234491ghr.19
+        for <git@vger.kernel.org>; Tue, 06 Mar 2012 06:35:51 -0800 (PST)
+Received-SPF: pass (google.com: domain of bj@bjhargrave.com designates 10.236.170.198 as permitted sender) client-ip=10.236.170.198;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of bj@bjhargrave.com designates 10.236.170.198 as permitted sender) smtp.mail=bj@bjhargrave.com
+Received: from mr.google.com ([10.236.170.198])
+        by 10.236.170.198 with SMTP id p46mr34009174yhl.63.1331044551635 (num_hops = 1);
+        Tue, 06 Mar 2012 06:35:51 -0800 (PST)
+Received: by 10.236.170.198 with SMTP id p46mr26876710yhl.63.1331044551558;
+        Tue, 06 Mar 2012 06:35:51 -0800 (PST)
+Received: from macbookpro2.hargrave.local ([68.205.24.12])
+        by mx.google.com with ESMTPS id l2sm30573450anq.12.2012.03.06.06.35.49
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 06 Mar 2012 06:33:11 -0800 (PST)
-X-Mailer: git-send-email 1.7.1
+        Tue, 06 Mar 2012 06:35:50 -0800 (PST)
+In-Reply-To: <7vliney6k7.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1257)
+X-Gm-Message-State: ALoCoQkmiqwhzz2AAACMqLn8n3g/r8E31Dz8r+mCgSRcXVlV7bffSWGBb8rsqfG7YeaMdiW6vPaI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192351>
-
-Introduce a new --with-gcc-warnings configure option
-using a new autoconf macro that check if the compiler
-know the option passed or not in a portable way, as
-it not depends from the gcc version or from the
-other compiler used.
-
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
-This is the version 2 of the patch, in which i have
-slightly changed the commit message for
-clarify the purpose. To activate the
-patch is of course necessary to do a autoreconf -vfi after
-applying the patch.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192352>
 
 
- Makefile      |    2 +-
- config.mak.in |    1 +
- configure.ac  |  118 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 120 insertions(+), 1 deletions(-)
+On Mar 5, 2012, at 18:24 , Junio C Hamano wrote:
 
-diff --git a/Makefile b/Makefile
-index be1957a..d0aef0f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -310,7 +310,7 @@ endif
- 
- CFLAGS = -g -O2 -Wall
- LDFLAGS =
--ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
-+ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS) $(AM_CFLAGS)
- ALL_LDFLAGS = $(LDFLAGS)
- STRIP ?= strip
- 
-diff --git a/config.mak.in b/config.mak.in
-index b2ba710..5b7dbfd 100644
---- a/config.mak.in
-+++ b/config.mak.in
-@@ -2,6 +2,7 @@
- # @configure_input@
- 
- CC = @CC@
-+AM_CFLAGS = @GIT_CFLAGS@
- CFLAGS = @CFLAGS@
- CPPFLAGS = @CPPFLAGS@
- LDFLAGS = @LDFLAGS@
-diff --git a/configure.ac b/configure.ac
-index 8bb0f44..dba42a9 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -14,6 +14,34 @@ echo "# ${config_append}.  Generated by configure." > "${config_append}"
- 
- 
- ## Definitions of macros
-+# git_AS_VAR_APPEND(VAR, VALUE)
-+# ----------------------------
-+# Provide the functionality of AS_VAR_APPEND if Autoconf does not have it.
-+m4_ifdef([AS_VAR_APPEND],
-+[m4_copy([AS_VAR_APPEND], [git_AS_VAR_APPEND])],
-+[m4_define([git_AS_VAR_APPEND],
-+[AS_VAR_SET([$1], [AS_VAR_GET([$1])$2])])])
-+
-+# GIT_CFLAGS_ADD(PARAMETER, [VARIABLE = GIT_CFLAGS])
-+# ------------------------------------------------
-+# Adds parameter to GIT_CFLAGS if the compiler supports it.  For example,
-+# GIT_CFLAGS_ADD([-Wall],[GIT_CFLAGS]).
-+AC_DEFUN([GIT_CFLAGS_ADD],
-+[AS_VAR_PUSHDEF([git_my_cflags], [git_cv_warn_$1])dnl
-+AC_CACHE_CHECK([whether compiler handles $1], [git_my_cflags], [
-+  save_CFLAGS="$CFLAGS"
-+  CFLAGS="${CFLAGS} $1"
-+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([])],
-+                    [AS_VAR_SET([git_my_cflags], [yes])],
-+                    [AS_VAR_SET([git_my_cflags], [no])])
-+  CFLAGS="$save_CFLAGS"
-+])
-+AS_VAR_PUSHDEF([git_cflags], m4_if([$2], [], [[GIT_CFLAGS]], [[$2]]))dnl
-+AS_VAR_IF([git_my_cflags], [yes], [git_AS_VAR_APPEND([git_cflags], [" $1"])])
-+AS_VAR_POPDEF([git_cflags])dnl
-+AS_VAR_POPDEF([git_my_cflags])dnl
-+m4_ifval([$2], [AS_LITERAL_IF([$2], [AC_SUBST([$2])], [])])dnl
-+])
- # GIT_CONF_APPEND_LINE(LINE)
- # --------------------------
- # Append LINE to file ${config_append}
-@@ -158,6 +186,96 @@ if test -z "$lib"; then
-    lib=lib
- fi
- 
-+# Turn gcc warning
-+
-+AC_ARG_ENABLE([gcc-warnings],
-+  [AS_HELP_STRING([--enable-gcc-warnings],
-+                  [turn on GCC warnings (for developers)@<:@default=no@:>@])],
-+  [case $enableval in
-+     yes|no) ;;
-+     *)      AC_MSG_ERROR([bad value $enableval for gcc-warnings option]) ;;
-+   esac
-+   git_gcc_warnings=$enableval],
-+  [git_gcc_warnings=no]
-+)
-+
-+AS_IF([test "x$git_gcc_warnings" = xyes],
-+  [ # Add/Delete as needed
-+  MAX_STACK_SIZE=32768
-+  GIT_CFLAGS_ADD([-Wall], [GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-pedantic], [GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wextra], [GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wformat-y2k], [GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-fdiagnostics-show-option],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-funit-at-a-time],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-fstrict-aliasing],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wstrict-overflow],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-fstrict-overflow],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wpointer-arith],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wundef],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wformat-security],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Winit-self],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wmissing-include-dirs],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wunused],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wunknown-pragmas],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wstrict-aliasing],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wshadow],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wbad-function-cast],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wcast-align],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wwrite-strings],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wlogical-op],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Waggregate-return],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wstrict-prototypes],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wold-style-definition],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wmissing-prototypes],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wmissing-declarations],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wmissing-noreturn],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wmissing-format-attribute],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wredundant-decls],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wnested-externs],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Winline],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Winvalid-pch],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wvolatile-register-var],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wdisabled-optimization],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wbuiltin-macro-redefined],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wmudflap],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wpacked-bitfield-compat],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wsync-nand],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wattributes],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wcoverage-mismatch],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wmultichar],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wcpp],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wdeprecated-declarations],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wdiv-by-zero],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wdouble-promotion],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wendif-labels],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wformat-contains-nul],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wformat-extra-args],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wformat-zero-length],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wformat=2],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wmultichar],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wnormalized=nfc],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Woverflow],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wpointer-to-int-cast],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wpragmas],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wsuggest-attribute=const],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wsuggest-attribute=noreturn],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wsuggest-attribute=pure],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wtrampolines],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wno-missing-field-initializers],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wno-sign-compare],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wjump-misses-init],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wno-format-nonliteral],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wframe-larger-than=$MAX_STACK_SIZE],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-fstack-protector-all],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-fasynchronous-unwind-tables],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-fdiagnostics-show-option],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-funit-at-a-time],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-fipa-pure-const],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wno-aggregate-return],[GIT_CFLAGS])
-+  GIT_CFLAGS_ADD([-Wno-redundant-decls],[GIT_CFLAGS])
-+  AC_SUBST([GIT_CFLAGS])
-+  ])
- AC_ARG_ENABLE([pthreads],
-  [AS_HELP_STRING([--enable-pthreads=FLAGS],
-   [FLAGS is the value to pass to the compiler to enable POSIX Threads.]
+> Thomas Rast (6):
+>      bundle: use a strbuf to scan the log for boundary commits
+
+This fix (bc2fed496baa54ae99dede7da23dec938adbf0eb) modified test t5704 which now fails on my Mac (10.7.3)
+
+*** t5704-bundle.sh ***
+ok 1 - setup
+ok 2 - tags can be excluded by rev-list options
+ok 3 - die if bundle file cannot be created
+not ok 4 - bundle --stdin # TODO known breakage
+not ok 5 - bundle --stdin <rev-list options> # TODO known breakage
+ok 6 - empty bundle file is rejected
+not ok - 7 ridiculously long subject in boundary
+#	
+#		: >file4 &&
+#		test_tick &&
+#		git add file4 &&
+#		printf "%01200d
+#	" 0 | git commit -F - &&
+#		test_commit fifth &&
+#		git bundle create long-subject-bundle.bdl HEAD^..HEAD &&
+#		git bundle list-heads long-subject-bundle.bdl >heads &&
+#		test -s heads &&
+#		git fetch long-subject-bundle.bdl &&
+#		sed -n "/^-/{p;q}" long-subject-bundle.bdl >boundary &&
+#		grep "^-$_x40 " boundary
+#	
+# still have 2 known breakage(s)
+# failed 1 among remaining 5 test(s)
+1..7
+make[3]: *** [t5704-bundle.sh] Error 1
+
+
 -- 
-1.7.8.rc3.31.g017d1
+
+BJ Hargrave
