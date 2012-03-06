@@ -1,69 +1,76 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: t5704: problem with OS X sed
-Date: Tue, 6 Mar 2012 13:10:24 -0500
-Message-ID: <E40E6E02-8960-4A10-9E71-28F9CDB120F8@silverinsanity.com>
-Mime-Version: 1.0 (Apple Message framework v1257)
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Mar 2012, #03; Mon, 5)
+Date: Tue, 06 Mar 2012 10:23:07 -0800
+Message-ID: <7vty21twqc.fsf@alter.siamese.dyndns.org>
+References: <7vmx7uurnj.fsf@alter.siamese.dyndns.org>
+ <CACsJy8BRQ63hV5e63yoMVykOMZS3u-VrdCQtvgRGBji4Yzpi4A@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 06 19:10:49 2012
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 06 19:23:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4yqW-0006vN-TW
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 19:10:49 +0100
+	id 1S4z2c-0004ae-Tv
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 19:23:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757066Ab2CFSKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 13:10:43 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:49630 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756413Ab2CFSKm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Mar 2012 13:10:42 -0500
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 1DB941FFC008; Tue,  6 Mar 2012 18:10:37 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.5 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.5.89] (unknown [64.134.102.20])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id 90E371FFC006
-	for <git@vger.kernel.org>; Tue,  6 Mar 2012 18:10:35 +0000 (UTC)
-X-Mailer: Apple Mail (2.1257)
+	id S932451Ab2CFSXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 13:23:14 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42011 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932148Ab2CFSXN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 13:23:13 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 03D7F7DD4;
+	Tue,  6 Mar 2012 13:23:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VF0MTKreOM25N3hLsIwls1kZGbQ=; b=fgld9c
+	52qZVE5PSMB9TFoKKV2HskzcMF9aBJPst0lhTarpTqd0zV4REZi5sMOiYiYP6Hmc
+	AD4U6WW2VlgvZ76H1yxdryYmjJzMUt/z99YD84hJoB81uQh16jeopDjznOKmjGeN
+	MbZQcuZKqhAliR/gfsvLpGRypjjdXRoPixlZA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=G0DRO48oCPEIgTj83vafBgr7w/TuMiII
+	lRGX73nleMxE6wK2WqlPDD3QXy5owBER/aFsoEnbGRFiWH+jJsjwuXVAE/4gz4C2
+	Q+6bxccPbtfit1XZ9lV6c7ZctbXIELgDHmDhXhzFRk0SrYPwrqGaZnyy0SLEMuhM
+	UZsr3fJFdm4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EFE777DD3;
+	Tue,  6 Mar 2012 13:23:11 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A3D367DD1; Tue,  6 Mar 2012
+ 13:23:08 -0500 (EST)
+In-Reply-To: <CACsJy8BRQ63hV5e63yoMVykOMZS3u-VrdCQtvgRGBji4Yzpi4A@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Tue, 6 Mar 2012 16:40:11 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6C9F5806-67B9-11E1-8B9F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192369>
 
-t5704's newest test has always failed for my on OS X.  It's taken a little while for me to find the time to try to fix it.  Unfortunately, my sed-fu has proven not up to the task:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-sed: 1: "/^-/{p;q}": extra characters at the end of q command
-not ok - 7 ridiculously long subject in boundary
-#	
-#		: >file4 &&
-#		test_tick &&
-#		git add file4 &&
-#		printf "%01200d
-#	" 0 | git commit -F - &&
-#		test_commit fifth &&
-#		git bundle create long-subject-bundle.bdl HEAD^..HEAD &&
-#		git bundle list-heads long-subject-bundle.bdl >heads &&
-#		test -s heads &&
-#		git fetch long-subject-bundle.bdl &&
-#		sed -n "/^-/{p;q}" long-subject-bundle.bdl >boundary &&
-#		grep "^-$_x40 " boundary
-#	
+>> I've picked up only bits that deal with "use streaming API instead
+>> of reading things in core" and minimally fixed them up.  These we
+>> should be able to polish in time.
+>
+> 11/11 should be safe to go too. It simply reads config files so that
+> parse_object() respects core.bigfilethreshold.
 
-I've tried various bits of whitespace or splitting the commands in two, but haven't hit on the proper combination of commands.
+Ok.
 
-Of course, if I remove the sed invocation, I get the following error from grep: "Regular expression too big"
+> I'd rather leave it as is. All new test cases are test_expect_failure,
+> they should not interrupt "make test". If I slack off, somebody may be
+> annoyed enough with those known breakages to give me a little push.
 
-It seems to me that using sed to find a single line and then grepping for it is somewhat redundant.
-
-If someone else has suggestions on how to make this test work on OS X, I'm happy to help test them.
-
-~~ Brian Gernhardt
+That requires us to vet and agree that the conditions marked with
+expect_failure are indeed breakages, which I would want avoid. It is
+frustrating for people who has to later "fix" things and find out
+that the original "bug" was marked without thinking things through.
