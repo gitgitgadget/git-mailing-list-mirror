@@ -1,112 +1,134 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/git-rerere: document 'remaining' command
-Date: Tue, 06 Mar 2012 11:24:28 -0800
-Message-ID: <7vwr6xsfbn.fsf@alter.siamese.dyndns.org>
-References: <1331036512-7626-1-git-send-email-vfr@lyx.org>
+From: Nathan Gray <n8gray@n8gray.org>
+Subject: Re: Approaches to SVN to Git conversion (was: Re: [RFC] "Remote
+ helper for Subversion" project)
+Date: Tue, 6 Mar 2012 11:29:59 -0800
+Message-ID: <CA+7g9Jwb=7wH7R3=ShhOGMdHXWmq4ZahocpaEuJdf+yBfCpA8A@mail.gmail.com>
+References: <4F536FE9.1050000@pileofstuff.org>
+	<3c2ab05e-b2af-4df4-bca6-ff5512b0c73e@mail>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, martin.von.zweigbergk@gmail.com
-To: Vincent van Ravesteijn <vfr@lyx.org>
-X-From: git-owner@vger.kernel.org Tue Mar 06 20:24:39 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Andrew Sayers <andrew-git@pileofstuff.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sam Vilain <sam@vilain.net>, David Barr <davidbarr@google.com>
+To: Stephen Bash <bash@genarts.com>
+X-From: git-owner@vger.kernel.org Tue Mar 06 20:30:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4zzx-0004fn-Tp
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 20:24:38 +0100
+	id 1S505J-0003Yj-OA
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 20:30:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758350Ab2CFTYb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 14:24:31 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41084 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758133Ab2CFTYb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 14:24:31 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D03D5E5C;
-	Tue,  6 Mar 2012 14:24:30 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bz0qtAmX/1qhBYQXrED3ioAXmjg=; b=S8PyW1
-	nZPrVQpTT+cvpvXTUfBDN9ak6VIUAm1Cn2KMVCqJif+bCdaHNt+LrquMJzfawwG3
-	LfMAXjm1HXH3dnUXELGwCqRpH9AemogkUPlqUcJPBR6bO7XzWO7JC5kNtNnldQar
-	pWJAS5qAMuCQ7eRBip1vqxvGhqoFjNaTq1bOw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=isBsfRmsfy1Mqbmw8mhWFIa+eMV377be
-	HRNonJWRaohkFhJ8Lrjc1HcROomxxLzDK/B5WTb3Gm7sQ9/N2MtMo7tF4eWrMMHG
-	mY3yYrMJWLc8w6ggoT3KCbBCZe4w9+PLcOK0m5i01K4QQjBBq40RmbUFb/2U3NkR
-	yKr4NbYHagg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 54A915E5B;
-	Tue,  6 Mar 2012 14:24:30 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DA4BD5E5A; Tue,  6 Mar 2012
- 14:24:29 -0500 (EST)
-In-Reply-To: <1331036512-7626-1-git-send-email-vfr@lyx.org> (Vincent van
- Ravesteijn's message of "Tue, 6 Mar 2012 13:21:52 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FECD811E-67C1-11E1-BD6B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S965077Ab2CFTaD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Mar 2012 14:30:03 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:63421 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932555Ab2CFTaB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Mar 2012 14:30:01 -0500
+Received: by bkcik5 with SMTP id ik5so4553648bkc.19
+        for <git@vger.kernel.org>; Tue, 06 Mar 2012 11:29:59 -0800 (PST)
+Received-SPF: pass (google.com: domain of n8gray@n8gray.org designates 10.204.156.90 as permitted sender) client-ip=10.204.156.90;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of n8gray@n8gray.org designates 10.204.156.90 as permitted sender) smtp.mail=n8gray@n8gray.org
+Received: from mr.google.com ([10.204.156.90])
+        by 10.204.156.90 with SMTP id v26mr3600683bkw.132.1331062199897 (num_hops = 1);
+        Tue, 06 Mar 2012 11:29:59 -0800 (PST)
+Received: by 10.204.156.90 with SMTP id v26mr2690834bkw.132.1331062199613;
+ Tue, 06 Mar 2012 11:29:59 -0800 (PST)
+Received: by 10.205.43.137 with HTTP; Tue, 6 Mar 2012 11:29:59 -0800 (PST)
+X-Originating-IP: [184.182.186.242]
+In-Reply-To: <3c2ab05e-b2af-4df4-bca6-ff5512b0c73e@mail>
+X-Gm-Message-State: ALoCoQkw4wtkbeAQpD1zfD3qfocsRJXUDX3Bi/7LYzZJsE7LiAaGGcvNE+oLtKejeK3kLfHAzH23
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192378>
 
-Vincent van Ravesteijn <vfr@lyx.org> writes:
+Hi everyone,
 
-> From: Vincent van Ravesteijn <vfr@lyx.org>
+Soon I'm going to be undertaking a migration of a subproject from a
+very messy multiproject SVN repo to git, so this is a topic that's
+quite near to my heart at the moment.  More inline...
+
+On Mon, Mar 5, 2012 at 7:27 AM, Stephen Bash <bash@genarts.com> wrote:
 >
-> This adds the 'remaining' command to the documentation of
-> 'git rerere'. This command was added in ac49f5ca (Feb 16 2011;
-> Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>) but
-> it was never documented.
+> ----- Original Message -----
+>> From: "Andrew Sayers" <andrew-git@pileofstuff.org>
+>> Sent: Sunday, March 4, 2012 8:36:41 AM
+>> Subject: Re: [RFC] "Remote helper for Subversion" project
+>>
+
+[snip]
+
+>> Personally, I think SVN export will always need a strong manual
+>> component to get the best results, so I've put quite a bit of work
+>> into designing a good SVN history format. =A0Like git-fast-import, i=
+t's
+>> an ASCII format designed both for human and machine consumption...
 >
-> Signed-off-by: Vincent van Ravesteijn <vfr@lyx.org>
-> ---
->  Documentation/git-rerere.txt |   10 +++++++++-
->  1 files changed, 9 insertions(+), 1 deletions(-)
+> First, I'm very impressed that you managed to get a language like thi=
+s up and working. =A0It could prove very useful going forward. =A0On th=
+e flip side, from my experiments over the last year I've actually been =
+leaning toward a solution that is more implicit than explicit. =A0Takin=
+g git-svn as a model, I've been trying to define a mapping system (in P=
+erl):
 >
-> diff --git a/Documentation/git-rerere.txt b/Documentation/git-rerere.txt
-> index a6253ba..b75d34b 100644
-> --- a/Documentation/git-rerere.txt
-> +++ b/Documentation/git-rerere.txt
-> @@ -8,7 +8,7 @@ git-rerere - Reuse recorded resolution of conflicted merges
->  SYNOPSIS
->  --------
->  [verse]
-> -'git rerere' ['clear'|'forget' <pathspec>|'diff'|'status'|'gc']
-> +'git rerere' ['clear'|'forget' <pathspec>|'diff'|'remaining'|'status'|'gc']
->  
->  DESCRIPTION
->  -----------
-> @@ -53,6 +53,14 @@ useful for tracking what has changed while the user is resolving
->  conflicts.  Additional arguments are passed directly to the system
->  'diff' command installed in PATH.
->  
-> +'remaining'::
-> +
-> +Like 'diff', but this only prints the unresolved filenames. This
+> =A0my %branch_spec =3D { '/trunk/projname' =3D> 'master',
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0'/branches/*/projname' =3D=
+> '/refs/heads/*' };
+> =A0my %tag_spec =3D { '/tags/*/projname' =3D> '/refs/tags/*' };
 
-What aspect of 'rerere remaining' is like 'rerere diff'?
+The problem of specifying and detecting branches is a major problem in
+my upcoming conversion.  We've got toplevel trunk/branches/tags
+directories but underneath "branches" it's a free-for-all:
 
-In general, people should think twice after writing "Like X, but Y"
-and try to come up with a more clear description that does not have
-to force the user to read about X and then selectively forget what
-he just read and replace it with Y. This is especially true when the
-Y part is significantly different from what X does.
+/branches/codenameA/{projectA,projectB,projectC}
+/branches/codenameB   (actually a branch of projectA)
+/branches/developers/joe/frobnicator-experiment (also a branch of proje=
+ctA)
 
-Another phrase to watch out for when writing documentation is "X. In
-other words, Y."  People do this after writing X and finding it hard
-to understand and necessary to explain in easier terms.  Reading it
-again without "X. In other words, " often yields a better description.
+Clearly there's no simple regex that's going to capture this, so I'm
+reduced to listing every branch of projectA, which is tedious and
+error-prone.  However, what *would* work fabulously well for me is
+"marker file" detection.  Every copy of projectA has a certain file at
+it's root.  Let's call it "markerFile.txt".  What I'd really love is a
+way to say:
 
-	'remaining'::
+my %branch_markers =3D {'/branches/**/markerFile.txt' =3D> '/refs/heads=
+/**'}
 
-        Print paths with conflicts that are not resolved.
+I'm using ** to signify that this may match multiple path components
+(sorry, I don't know perl glob syntax).  A branch point is any
+revision that creates a new file that matches the marker pattern.
 
-Should be sufficient, I think.
+Ideally one could use logical connectives like AND and OR to specify a
+set of patterns that could account for marker files changing over the
+history of the project, but for my purposes that wouldn't be necessary
+-- we've got a well-defined marker that's always present.
 
-In fact, wouldn't this be more or less equivalent to "ls-files -u"
-without anything other than name part?
+=46or bonus points I'd like to be able to speed things up by excluding
+known-bad markers.  Say projectB has a file "badMarker.txt" at its
+root and I don't want to import projectB into my new repo.  Maybe I
+could specify:
+
+my %branch_spec =3D {
+        '/branches/**/markerFile.txt' =3D> '/refs/heads/**',
+        '/branches/**/badMarker.txt' =3D> '!'}
+
+I'm assuming that it would be helpful for the script to have this
+information (e.g. it could stop recursive searches when badMarker.txt
+is found), but maybe that's not the case.
+
+I'd welcome any comments or (especially!) code to try out.  ;^)
+
+Cheers,
+-Nathan
+
+--=20
+http://n8gray.org
