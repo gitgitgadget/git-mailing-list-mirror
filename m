@@ -1,84 +1,97 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: What's cooking in git.git (Mar 2012, #03; Mon, 5)
-Date: Tue, 6 Mar 2012 16:40:11 +0700
-Message-ID: <CACsJy8BRQ63hV5e63yoMVykOMZS3u-VrdCQtvgRGBji4Yzpi4A@mail.gmail.com>
-References: <7vmx7uurnj.fsf@alter.siamese.dyndns.org>
+From: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
+Subject: Re: [PATCH v3 3/4] http: handle proxy proactive authentication
+Date: Tue, 06 Mar 2012 11:58:59 +0100
+Message-ID: <4F55EDF3.2030201@seap.minhap.es>
+References: <4F54D98C.2070909@seap.minhap.es> <20120306083052.GD21199@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 06 10:40:53 2012
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, sam@vilain.net
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 06 11:00:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4qt1-0006DZ-7F
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 10:40:51 +0100
+	id 1S4rCN-00010t-37
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 11:00:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757201Ab2CFJkp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Mar 2012 04:40:45 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:39606 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751844Ab2CFJkn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Mar 2012 04:40:43 -0500
-Received: by wibhm2 with SMTP id hm2so2491275wib.19
-        for <git@vger.kernel.org>; Tue, 06 Mar 2012 01:40:42 -0800 (PST)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.216.134.200 as permitted sender) client-ip=10.216.134.200;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.216.134.200 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
-Received: from mr.google.com ([10.216.134.200])
-        by 10.216.134.200 with SMTP id s50mr5526321wei.116.1331026842406 (num_hops = 1);
-        Tue, 06 Mar 2012 01:40:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=mfK3L6/v6L+VB1k6UgoAMYHU/ZZnb51A4mXf2PfuP/g=;
-        b=xUVm/JDQhUX8bW/Ws5QptHZqFzDNMIjkenj5ekVeqT7ZysalcLDFuEREuSTW4t2B2p
-         mblZkDoLMkStqG/NZ9yOxsSol5Y135TFly/6hSJcLTtCy/HzHWF45fDasuSqHGmSHH7o
-         CC3EddDC3Qfyv0FdjBkQThkqxbX6lc3f2xzxjboWEM5U6e1vi2tMReNFVwdNXRpUlvOt
-         x/sMdJVcZQGEk0/ajJo2jRHuVkVTUuWtWURhwfV9gdavJV26/4mOuLdBdq5ar90Itj35
-         Csq47Rh7oaup54TE83tKh0h85pXbazf5jB9LkaRLWqioKJveAxAobwKHfGx50qA4Jf1D
-         i6sg==
-Received: by 10.216.134.200 with SMTP id s50mr4443911wei.116.1331026842299;
- Tue, 06 Mar 2012 01:40:42 -0800 (PST)
-Received: by 10.223.13.5 with HTTP; Tue, 6 Mar 2012 01:40:11 -0800 (PST)
-In-Reply-To: <7vmx7uurnj.fsf@alter.siamese.dyndns.org>
+	id S965121Ab2CFKAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 05:00:45 -0500
+Received: from luthien1.mpt.es ([82.150.0.102]:52139 "EHLO luthien2.map.es"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758660Ab2CFKAo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 05:00:44 -0500
+Received: from correo.map.es (unknown [10.1.31.23])
+	by luthien2.map.es (Postfix) with ESMTP id 9F6A6F84F9;
+	Tue,  6 Mar 2012 11:00:29 +0100 (CET)
+Received: from [10.47.128.147] (unknown [10.1.29.79])
+	by correo.map.es (Postfix) with ESMTP id 1E6F8203815;
+	Tue,  6 Mar 2012 11:00:21 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0.1) Gecko/20120216 Thunderbird/10.0.1
+In-Reply-To: <20120306083052.GD21199@sigill.intra.peff.net>
+X-map-MapScanner: Libre de virus, Libre de virus
+X-Spam-Status: No, No
+X-map-MapScanner-Information: 
+X-map-MapScanner-ID: 9F6A6F84F9.4AF35
+X-map-MapScanner-From: nelsonjesus.benitez@seap.minhap.es
+X-map-MailScanner-Watermark: 1331632830.9032@T2ULvxdhVkjtXpEOBnd77Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192327>
 
-On Tue, Mar 6, 2012 at 2:15 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> * nd/stream-more (2012-03-05) 6 commits
-> =C2=A0- fsck: use streaming API for writing lost-found blobs
-> =C2=A0- show: use streaming API for showing blobs
-> =C2=A0- parse_object: avoid putting whole blob in core
-> =C2=A0- cat-file: use streaming API to print blobs
-> =C2=A0- Add more large blob test cases
-> =C2=A0- streaming: make streaming-write-entry to be more reusable
->
-> As I do not think changes in the original larger series that touch
-> index-pack and unpack-objects will be ready for the upcoming 1.7.10,
-> I've picked up only bits that deal with "use streaming API instead
-> of reading things in core" and minimally fixed them up. =C2=A0These w=
-e
-> should be able to polish in time.
+On 03/06/2012 09:30 AM, Jeff King wrote:
+> On Mon, Mar 05, 2012 at 04:19:40PM +0100, Nelson Benitez Leon wrote:
+> 
+>> diff --git a/http.c b/http.c
+>> index 8932da5..b0b4362 100644
+>> --- a/http.c
+>> +++ b/http.c
+>> @@ -43,6 +43,7 @@ static int curl_ftp_no_epsv;
+>>  static const char *curl_http_proxy;
+>>  static const char *curl_cookie_file;
+>>  static struct credential http_auth = CREDENTIAL_INIT;
+>> +static struct credential proxy_auth = CREDENTIAL_INIT;
+>>  static int http_proactive_auth;
+>>  static const char *user_agent;
+>>  
+>> @@ -303,6 +304,17 @@ static CURL *get_curl_handle(void)
+>>  		}
+>>  	}
+>>  	if (curl_http_proxy) {
+>> +		credential_from_url(&proxy_auth, curl_http_proxy);
+>> +		if (http_proactive_auth && proxy_auth.username && !proxy_auth.password) {
+>> +			/* proxy string has username but no password, ask for password */
+>> +			struct strbuf pbuf = STRBUF_INIT;
+>> +			credential_fill(&proxy_auth);
+>> +			strbuf_addf(&pbuf, "%s://%s:%s@%s",proxy_auth.protocol,
+>> +			    	proxy_auth.username, proxy_auth.password,
+>> +			    	proxy_auth.host);
+> 
+> Can we pull this out into a helper function, since the next patch will
+> need to do the exact same thing in the 407 case?
 
-11/11 should be safe to go too. It simply reads config files so that
-parse_object() respects core.bigfilethreshold.
+Ok.
 
-http://mid.gmane.org/1330919028-6611-12-git-send-email-pclouds@gmail.co=
-m
+> Also, when turning it back into a URL to hand to curl, should we be
+> percent-encoding the items we put in? If my password has an "@" in it,
+> wouldn't we generate a bogus URL? Although looking at how the http auth
+> code handles this, we set CURLOPT_USERPWD directly. Should you be
+> setting CURLOPT_PROXYUSERPWD instead of munging the proxy URL?
 
-> The "test cases" patch needs to be trimmed to cover only these, I
-> would think.
+Ok, but it seems is CURLOPT_PROXYUSERNAME and CURLOPT_PROXYPASSWORD what
+we need here as per documentation[1]
 
-I'd rather leave it as is. All new test cases are test_expect_failure,
-they should not interrupt "make test". If I slack off, somebody may be
-annoyed enough with those known breakages to give me a little push.
---=20
-Duy
+[1] http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTPROXYUSERNAME
+
+>> +			free ((void *)curl_http_proxy);
+> 
+> Please don't cast to void. This is C, not C++, and casts to void
+> pointers are implicit.  They can never help, and might cover up an
+> actual type error (e.g., casting a non-pointer type).
+
+Ok, will remove it, I copy/paste it from the http code and I must admit
+I didn't understand why this was needed.
