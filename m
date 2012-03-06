@@ -1,134 +1,89 @@
-From: Nathan Gray <n8gray@n8gray.org>
-Subject: Re: Approaches to SVN to Git conversion (was: Re: [RFC] "Remote
- helper for Subversion" project)
-Date: Tue, 6 Mar 2012 11:29:59 -0800
-Message-ID: <CA+7g9Jwb=7wH7R3=ShhOGMdHXWmq4ZahocpaEuJdf+yBfCpA8A@mail.gmail.com>
-References: <4F536FE9.1050000@pileofstuff.org>
-	<3c2ab05e-b2af-4df4-bca6-ff5512b0c73e@mail>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git push from client is not updating files on server
+Date: Tue, 06 Mar 2012 11:35:16 -0800
+Message-ID: <7vsjhlsetn.fsf@alter.siamese.dyndns.org>
+References: <CAC0z1F-bGikXZtLnd8d=3G+4okvNqZaxyrLjh4G3YzPpmqyxQA@mail.gmail.com>
+ <jj5ih2$f0m$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andrew Sayers <andrew-git@pileofstuff.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sam Vilain <sam@vilain.net>, David Barr <davidbarr@google.com>
-To: Stephen Bash <bash@genarts.com>
-X-From: git-owner@vger.kernel.org Tue Mar 06 20:30:18 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ben Tebulin <nntp.20.jexpert@spamgourmet.com>
+To: Jerome Yanga <jerome.yanga@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 06 20:35:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S505J-0003Yj-OA
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 20:30:10 +0100
+	id 1S50AU-0002Lb-LH
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 20:35:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965077Ab2CFTaD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Mar 2012 14:30:03 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:63421 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932555Ab2CFTaB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Mar 2012 14:30:01 -0500
-Received: by bkcik5 with SMTP id ik5so4553648bkc.19
-        for <git@vger.kernel.org>; Tue, 06 Mar 2012 11:29:59 -0800 (PST)
-Received-SPF: pass (google.com: domain of n8gray@n8gray.org designates 10.204.156.90 as permitted sender) client-ip=10.204.156.90;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of n8gray@n8gray.org designates 10.204.156.90 as permitted sender) smtp.mail=n8gray@n8gray.org
-Received: from mr.google.com ([10.204.156.90])
-        by 10.204.156.90 with SMTP id v26mr3600683bkw.132.1331062199897 (num_hops = 1);
-        Tue, 06 Mar 2012 11:29:59 -0800 (PST)
-Received: by 10.204.156.90 with SMTP id v26mr2690834bkw.132.1331062199613;
- Tue, 06 Mar 2012 11:29:59 -0800 (PST)
-Received: by 10.205.43.137 with HTTP; Tue, 6 Mar 2012 11:29:59 -0800 (PST)
-X-Originating-IP: [184.182.186.242]
-In-Reply-To: <3c2ab05e-b2af-4df4-bca6-ff5512b0c73e@mail>
-X-Gm-Message-State: ALoCoQkw4wtkbeAQpD1zfD3qfocsRJXUDX3Bi/7LYzZJsE7LiAaGGcvNE+oLtKejeK3kLfHAzH23
+	id S965250Ab2CFTfY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 14:35:24 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45974 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758586Ab2CFTfU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 14:35:20 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 36E856141;
+	Tue,  6 Mar 2012 14:35:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BgbYiqEkhn9e97SE8awEy96Itek=; b=tVljOK
+	0/8eHjiH7Q/qtEMPzWUc1YHI3rP1p+W8JYGnngq9HQkKbiAqWLIhOLPTZSRJEMYN
+	Kjphid8hDYBC/caDoIGzqeKEvCKl37RDxw2Stx7iaIj6fS187GUSW5JjH4T6TpbB
+	eT1c0qV44ASOvVD3tU+bKi2dldBvTtn0oQB88=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Fqb9NIYzdXy9khU8rZVRue6LWhU+S+0j
+	zR/QmXASlXcCVEILIJP4vr9YuCyvtEvNB3LcjNurmTUFIkPb7URcjOj6OPFm+8df
+	3q4IiLZYVDC9ZWaGzRXtpNS1P7c94HevqteFTJHK+iuPTVDL+cOe4t/CS3T3zYus
+	O2oVca7NpaM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E1646140;
+	Tue,  6 Mar 2012 14:35:18 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B66F2613F; Tue,  6 Mar 2012
+ 14:35:17 -0500 (EST)
+In-Reply-To: <jj5ih2$f0m$1@dough.gmane.org> (Ben Tebulin's message of "Tue,
+ 06 Mar 2012 18:46:26 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 80F41FEE-67C3-11E1-9242-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192379>
 
-Hi everyone,
+[jc: resurrected JY as recipient]
 
-Soon I'm going to be undertaking a migration of a subproject from a
-very messy multiproject SVN repo to git, so this is a topic that's
-quite near to my heart at the moment.  More inline...
+Ben Tebulin <nntp.20.jexpert@spamgourmet.com> writes:
 
-On Mon, Mar 5, 2012 at 7:27 AM, Stephen Bash <bash@genarts.com> wrote:
->
-> ----- Original Message -----
->> From: "Andrew Sayers" <andrew-git@pileofstuff.org>
->> Sent: Sunday, March 4, 2012 8:36:41 AM
->> Subject: Re: [RFC] "Remote helper for Subversion" project
->>
+> You can only push to "bare-only repositories". These do not contain a
+> working tree but only a .git directory.
 
-[snip]
+That's a bit too strong. You do not have to limit your "push" into
+"bare repositories" (drop "-only", there is no such word), but it is
+perfectly fine to use "push" as a way to emulate a "fetch" that you
+would wish you could but you cannot in the opposite direction.
 
->> Personally, I think SVN export will always need a strong manual
->> component to get the best results, so I've put quite a bit of work
->> into designing a good SVN history format. =A0Like git-fast-import, i=
-t's
->> an ASCII format designed both for human and machine consumption...
->
-> First, I'm very impressed that you managed to get a language like thi=
-s up and working. =A0It could prove very useful going forward. =A0On th=
-e flip side, from my experiments over the last year I've actually been =
-leaning toward a solution that is more implicit than explicit. =A0Takin=
-g git-svn as a model, I've been trying to define a mapping system (in P=
-erl):
->
-> =A0my %branch_spec =3D { '/trunk/projname' =3D> 'master',
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0'/branches/*/projname' =3D=
-> '/refs/heads/*' };
-> =A0my %tag_spec =3D { '/tags/*/projname' =3D> '/refs/tags/*' };
+What "push" does not do is to touch the working tree, and this is
+intuitively understandable once you realize that "push" is an
+opposite of "fetch".
 
-The problem of specifying and detecting branches is a major problem in
-my upcoming conversion.  We've got toplevel trunk/branches/tags
-directories but underneath "branches" it's a free-for-all:
+> My push seems to be successful too using the command below as I get
+> the message "Everything up-to-date".
+> 
+> git push
 
-/branches/codenameA/{projectA,projectB,projectC}
-/branches/codenameB   (actually a branch of projectA)
-/branches/developers/joe/frobnicator-experiment (also a branch of proje=
-ctA)
+It is somewhat strange that this _succeeded_.
 
-Clearly there's no simple regex that's going to capture this, so I'm
-reduced to listing every branch of projectA, which is tedious and
-error-prone.  However, what *would* work fabulously well for me is
-"marker file" detection.  Every copy of projectA has a certain file at
-it's root.  Let's call it "markerFile.txt".  What I'd really love is a
-way to say:
-
-my %branch_markers =3D {'/branches/**/markerFile.txt' =3D> '/refs/heads=
-/**'}
-
-I'm using ** to signify that this may match multiple path components
-(sorry, I don't know perl glob syntax).  A branch point is any
-revision that creates a new file that matches the marker pattern.
-
-Ideally one could use logical connectives like AND and OR to specify a
-set of patterns that could account for marker files changing over the
-history of the project, but for my purposes that wouldn't be necessary
--- we've got a well-defined marker that's always present.
-
-=46or bonus points I'd like to be able to speed things up by excluding
-known-bad markers.  Say projectB has a file "badMarker.txt" at its
-root and I don't want to import projectB into my new repo.  Maybe I
-could specify:
-
-my %branch_spec =3D {
-        '/branches/**/markerFile.txt' =3D> '/refs/heads/**',
-        '/branches/**/badMarker.txt' =3D> '!'}
-
-I'm assuming that it would be helpful for the script to have this
-information (e.g. it could stop recursive searches when badMarker.txt
-is found), but maybe that's not the case.
-
-I'd welcome any comments or (especially!) code to try out.  ;^)
-
-Cheers,
--Nathan
-
---=20
-http://n8gray.org
+When pushing into a repository with a working tree (i.e. "a non-bare
+repository") and especially when trying to update its current branch
+with such a push, "git push" would by default be refused, unless you
+tweak a configuration variable or two on the receiving end.  That is
+an expert feature and I do not think that is being in use in this
+particular scenario, so perhaps the push did _not_ succeed to update
+the branch Jerome thought it updated, but instead updated a branch
+that is _not_ the one that is checked out in the repository on the
+receiving end of this push.
