@@ -1,82 +1,84 @@
-From: Vincent van Ravesteijn <vfr@lyx.org>
-Subject: [PATCHv2 2/3] Documentation/git-branch: fix a typo
-Date: Tue,  6 Mar 2012 10:32:44 +0100
-Message-ID: <1331026365-7044-2-git-send-email-user@vincent-VirtualBox>
-References: <1331023866-5658-1-git-send-email-vfr@lyx.org>
- <1331026365-7044-1-git-send-email-user@vincent-VirtualBox>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2012, #03; Mon, 5)
+Date: Tue, 6 Mar 2012 16:40:11 +0700
+Message-ID: <CACsJy8BRQ63hV5e63yoMVykOMZS3u-VrdCQtvgRGBji4Yzpi4A@mail.gmail.com>
+References: <7vmx7uurnj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Cc: trast@inf.ethz.ch, gitster@pobox.com,
-	Vincent van Ravesteijn <vfr@lyx.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 06 10:34:20 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 06 10:40:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4qmc-0007ZC-To
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 10:34:15 +0100
+	id 1S4qt1-0006DZ-7F
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 10:40:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758317Ab2CFJeB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 04:34:01 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:35114 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758181Ab2CFJd3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 04:33:29 -0500
-Received: by mail-ee0-f46.google.com with SMTP id c41so1810023eek.19
-        for <git@vger.kernel.org>; Tue, 06 Mar 2012 01:33:28 -0800 (PST)
-Received-SPF: pass (google.com: domain of  designates 10.213.13.72 as permitted sender) client-ip=10.213.13.72;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of  designates 10.213.13.72 as permitted sender) smtp.mail=
-Received: from mr.google.com ([10.213.13.72])
-        by 10.213.13.72 with SMTP id b8mr3028598eba.182.1331026408456 (num_hops = 1);
-        Tue, 06 Mar 2012 01:33:28 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references:x-gm-message-state;
-        bh=hVkD9M7vNurQAnsq8vmG6CAHZMVpBVkUKxAk2UdGEZg=;
-        b=MS2Fa9J7ASZ8Dgm8iebzYlJigYtEtzUjXJo6wJ3Nrx3ZEcysiRCYTZHqxhVTgP0SJC
-         YJjVVRE710i7WTjmKNOGSCSj2euuAuPZ6dP1rOu9KDQ45BDoQhzvygVoL7ZNs02KcZid
-         qNNauvycaELNgHDQ29Q+4XRKXXGQV/RF/W9IpkvnJPc7rSuxTzgoCtBuLFdrrUcDmvop
-         XrdyS324EtwS/5KTC3viKZEXmgEJAuhvyoY5PpCE+ZA7MOJlz8JzSPUswu+FffTUwHY+
-         iT43Ttxkn4iHJ8adppb7/BYYGBIQyRP+x+u1rfbHi3/sWE7FMuMQ1M/h+g5KEOfwJ+rP
-         unDA==
-Received: by 10.213.13.72 with SMTP id b8mr2304148eba.182.1331026408267;
-        Tue, 06 Mar 2012 01:33:28 -0800 (PST)
-Received: from localhost.localdomain (wlan-145-94-169-074.wlan.tudelft.nl. [145.94.169.74])
-        by mx.google.com with ESMTPS id d54sm26363433eei.9.2012.03.06.01.33.27
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 06 Mar 2012 01:33:27 -0800 (PST)
-X-Mailer: git-send-email 1.7.5.4
-In-Reply-To: <1331026365-7044-1-git-send-email-user@vincent-VirtualBox>
-X-Gm-Message-State: ALoCoQn8PTKEVOkUjLFBzzFUPI/OezcmkhsvNeLeI5MzovCAbRO1OlDi44fNKm7H91rvoviddRnI
+	id S1757201Ab2CFJkp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Mar 2012 04:40:45 -0500
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:39606 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751844Ab2CFJkn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Mar 2012 04:40:43 -0500
+Received: by wibhm2 with SMTP id hm2so2491275wib.19
+        for <git@vger.kernel.org>; Tue, 06 Mar 2012 01:40:42 -0800 (PST)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 10.216.134.200 as permitted sender) client-ip=10.216.134.200;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of pclouds@gmail.com designates 10.216.134.200 as permitted sender) smtp.mail=pclouds@gmail.com; dkim=pass header.i=pclouds@gmail.com
+Received: from mr.google.com ([10.216.134.200])
+        by 10.216.134.200 with SMTP id s50mr5526321wei.116.1331026842406 (num_hops = 1);
+        Tue, 06 Mar 2012 01:40:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=mfK3L6/v6L+VB1k6UgoAMYHU/ZZnb51A4mXf2PfuP/g=;
+        b=xUVm/JDQhUX8bW/Ws5QptHZqFzDNMIjkenj5ekVeqT7ZysalcLDFuEREuSTW4t2B2p
+         mblZkDoLMkStqG/NZ9yOxsSol5Y135TFly/6hSJcLTtCy/HzHWF45fDasuSqHGmSHH7o
+         CC3EddDC3Qfyv0FdjBkQThkqxbX6lc3f2xzxjboWEM5U6e1vi2tMReNFVwdNXRpUlvOt
+         x/sMdJVcZQGEk0/ajJo2jRHuVkVTUuWtWURhwfV9gdavJV26/4mOuLdBdq5ar90Itj35
+         Csq47Rh7oaup54TE83tKh0h85pXbazf5jB9LkaRLWqioKJveAxAobwKHfGx50qA4Jf1D
+         i6sg==
+Received: by 10.216.134.200 with SMTP id s50mr4443911wei.116.1331026842299;
+ Tue, 06 Mar 2012 01:40:42 -0800 (PST)
+Received: by 10.223.13.5 with HTTP; Tue, 6 Mar 2012 01:40:11 -0800 (PST)
+In-Reply-To: <7vmx7uurnj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192326>
 
-From: Vincent van Ravesteijn <vfr@lyx.org>
+On Tue, Mar 6, 2012 at 2:15 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> * nd/stream-more (2012-03-05) 6 commits
+> =C2=A0- fsck: use streaming API for writing lost-found blobs
+> =C2=A0- show: use streaming API for showing blobs
+> =C2=A0- parse_object: avoid putting whole blob in core
+> =C2=A0- cat-file: use streaming API to print blobs
+> =C2=A0- Add more large blob test cases
+> =C2=A0- streaming: make streaming-write-entry to be more reusable
+>
+> As I do not think changes in the original larger series that touch
+> index-pack and unpack-objects will be ready for the upcoming 1.7.10,
+> I've picked up only bits that deal with "use streaming API instead
+> of reading things in core" and minimally fixed them up. =C2=A0These w=
+e
+> should be able to polish in time.
 
-Fix a typo by replacing 'tag' with 'branch'.
+11/11 should be safe to go too. It simply reads config files so that
+parse_object() respects core.bigfilethreshold.
 
-Signed-off-by: Vincent van Ravesteijn <vfr@lyx.org>
----
- Documentation/git-branch.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+http://mid.gmane.org/1330919028-6611-12-git-send-email-pclouds@gmail.co=
+m
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index d3a923a..cfceac5 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -25,7 +25,7 @@ branches to be listed, and option `-a` shows both. This list mode is also
- activated by the `--list` option (see below).
- <pattern> restricts the output to matching branches, the pattern is a shell
- wildcard (i.e., matched using fnmatch(3)).
--Multiple patterns may be given; if any of them matches, the tag is shown.
-+Multiple patterns may be given; if any of them matches, the branch is shown.
- 
- With `--contains`, shows only the branches that contain the named commit
- (in other words, the branches whose tip commits are descendants of the
--- 
-1.7.5.4
+> The "test cases" patch needs to be trimmed to cover only these, I
+> would think.
+
+I'd rather leave it as is. All new test cases are test_expect_failure,
+they should not interrupt "make test". If I slack off, somebody may be
+annoyed enough with those known breakages to give me a little push.
+--=20
+Duy
