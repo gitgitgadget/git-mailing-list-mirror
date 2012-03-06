@@ -1,138 +1,103 @@
-From: karsten.blees@dcon.de
-Subject: [PATCH] fix deletion of .git/objects sub-directories in git-prune/repack
-Date: Tue, 6 Mar 2012 10:18:41 +0100
-Message-ID: <OF93114E93.E64C1F7D-ONC12579B9.0032A592-C12579B9.00332D78@dcon.de>
-References: <CABPQNSbo5yEosEid_SKoiCS4c8eYAaOHy4skSOBJsef+E6H6Sw@mail.gmail.com>
+From: Vincent van Ravesteijn <vfr@lyx.org>
+Subject: [PATCHv2 1/3] Documentation/git-branch: cleanups
+Date: Tue,  6 Mar 2012 10:32:43 +0100
+Message-ID: <1331026365-7044-1-git-send-email-user@vincent-VirtualBox>
+References: <1331023866-5658-1-git-send-email-vfr@lyx.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	msysGit <msysgit@googlegroups.com>,
-	Pat Thoyts <patthoyts@gmail.com>,
-	Stefan Naewe <stefan.naewe@gmail.com>
-To: kusmabite@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 06 10:19:14 2012
+Cc: trast@inf.ethz.ch, gitster@pobox.com,
+	Vincent van Ravesteijn <vfr@lyx.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 06 10:34:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4qY5-00080D-EY
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 10:19:13 +0100
+	id 1S4qmb-0007ZC-SI
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 10:34:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757258Ab2CFJTE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 04:19:04 -0500
-Received: from mail.dcon.de ([77.244.111.98]:8548 "EHLO MAIL.DCON.DE"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754964Ab2CFJTB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 04:19:01 -0500
-In-Reply-To: <CABPQNSbo5yEosEid_SKoiCS4c8eYAaOHy4skSOBJsef+E6H6Sw@mail.gmail.com>
-X-Mailer: Lotus Notes Release 7.0.3 September 26, 2007
-X-MIMETrack: Serialize by Router on DCON14/DCon(Release 7.0.3FP1|February 24, 2008) at
- 06.03.2012 10:18:44,
-	Serialize complete at 06.03.2012 10:18:44
+	id S1758395Ab2CFJdz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 04:33:55 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:35114 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758083Ab2CFJdP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 04:33:15 -0500
+Received: by eekc41 with SMTP id c41so1810023eek.19
+        for <git@vger.kernel.org>; Tue, 06 Mar 2012 01:33:14 -0800 (PST)
+Received-SPF: pass (google.com: domain of  designates 10.14.28.16 as permitted sender) client-ip=10.14.28.16;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of  designates 10.14.28.16 as permitted sender) smtp.mail=
+Received: from mr.google.com ([10.14.28.16])
+        by 10.14.28.16 with SMTP id f16mr13139494eea.121.1331026394547 (num_hops = 1);
+        Tue, 06 Mar 2012 01:33:14 -0800 (PST)
+Received: by 10.14.28.16 with SMTP id f16mr9982601eea.121.1331026394408;
+        Tue, 06 Mar 2012 01:33:14 -0800 (PST)
+Received: from localhost.localdomain (wlan-145-94-169-074.wlan.tudelft.nl. [145.94.169.74])
+        by mx.google.com with ESMTPS id d54sm26363433eei.9.2012.03.06.01.33.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 06 Mar 2012 01:33:14 -0800 (PST)
+X-Mailer: git-send-email 1.7.5.4
+In-Reply-To: <1331023866-5658-1-git-send-email-vfr@lyx.org>
+X-Gm-Message-State: ALoCoQkcIPFqnQaOZFrlS9bYroY76sivwVYb7zEPupCM/TpYZ/fpqb2QYIZZopYsm9BG9wL8e124
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192323>
 
-On some systems (e.g. Windows XP), directories cannot be deleted while
-they're open. Both git-prune and git-repack (and thus, git-gc) try to
-rmdir while holding a DIR* handle on the directory, leaving dangling
-empty directories in the .git/objects store.
+From: Vincent van Ravesteijn <vfr@lyx.org>
 
-Fix it by swapping the rmdir / closedir calls.
+Changes:
+- add a period to a sentence,
+- unify the use of backticks.
 
-Reported-by: John Chen <john0312@gmail.com>
-Reported-by: Stefan Naewe <stefan.naewe@gmail.com>
-Signed-off-by: Karsten Blees <blees@dcon.de>
+Signed-off-by: Vincent van Ravesteijn <vfr@lyx.org>
 ---
+ Documentation/git-branch.txt |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
 
-Erik Faye-Lund <kusmabite@gmail.com> wrote on 05.03.2012 11:26:08:
-> On Mon, Mar 5, 2012 at 10:57 AM,  <karsten.blees@dcon.de> wrote:
-[...]
-> > I thought the delete / rename problems were a Windows illness (at
-> > least the retry-ask-user-yes-no logic is exclusive to mingw.c)?
-> 
-> POSIX allows for this behavior:
-> 
-> http://pubs.opengroup.org/onlinepubs/009695399/functions/rmdir.html
-> 
-> (EBUSY: "The directory to be removed is currently in use by the system
-> or some process and the implementation considers this to be an
-> error.")
-> 
-> I've found traces of similar issues on exotic unices, so I don't think
-> it's completely hypothetical either...
-> 
-> > And as all mingw stuff
-> > is eventually sent upstream (I hope :-)), I don't see a particular
-> > reason to rush this one.
-> >
-> 
-> There's no automatic system for this. I tend to send all my patches
-> that cleanly fix problems present in git.git directly upstream, so
-> people on Windows who doesn't use our branch can benefit from them as
-> well.
-
-So what about this one? It applies cleanly to git master, and when
-merged / cherry-picked to msysgit devel, the prune-packed.c fix we
-already have in b4cb824d is silently ignored.
-
-Note: the is_dir_empty() function in mingw.c is broken in upstream git
-as well, but I'm reluctant to backport this as it will clash with the
-Unicode patches.
-
-The upstream patch can be pulled from here:
-https://github.com/kblees/git/commit/56e1bc62
-
-And cherry-picked to msysgit devel from here:
-https://github.com/kblees/git/commit/b07bfd51
-
-Regards,
-Karsten
-
-
- builtin/prune-packed.c |    2 +-
- builtin/prune.c        |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
-index f9463de..a834417 100644
---- a/builtin/prune-packed.c
-+++ b/builtin/prune-packed.c
-@@ -36,7 +36,6 @@ static void prune_dir(int i, DIR *dir, char *pathname, 
-int len, int opts)
-                display_progress(progress, i + 1);
-        }
-        pathname[len] = 0;
--       rmdir(pathname);
- }
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index 0427e80..d3a923a 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -24,7 +24,7 @@ be highlighted with an asterisk.  Option `-r` causes the remote-tracking
+ branches to be listed, and option `-a` shows both. This list mode is also
+ activated by the `--list` option (see below).
+ <pattern> restricts the output to matching branches, the pattern is a shell
+-wildcard (i.e., matched using fnmatch(3))
++wildcard (i.e., matched using fnmatch(3)).
+ Multiple patterns may be given; if any of them matches, the tag is shown.
  
- void prune_packed_objects(int opts)
-@@ -65,6 +64,7 @@ void prune_packed_objects(int opts)
-                        continue;
-                prune_dir(i, d, pathname, len + 3, opts);
-                closedir(d);
-+               rmdir(pathname);
-        }
-        stop_progress(&progress);
- }
-diff --git a/builtin/prune.c b/builtin/prune.c
-index 58d7cb8..b99b635 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -85,9 +85,9 @@ static int prune_dir(int i, char *path)
-                }
-                fprintf(stderr, "bad sha1 file: %s/%s\n", path, 
-de->d_name);
-        }
-+       closedir(dir);
-        if (!show_only)
-                rmdir(path);
--       closedir(dir);
-        return 0;
- }
+ With `--contains`, shows only the branches that contain the named commit
+@@ -49,7 +49,7 @@ the remote-tracking branch. This behavior may be changed via the global
+ overridden by using the `--track` and `--no-track` options, and
+ changed later using `git branch --set-upstream`.
  
+-With a '-m' or '-M' option, <oldbranch> will be renamed to <newbranch>.
++With a `-m` or `-M` option, <oldbranch> will be renamed to <newbranch>.
+ If <oldbranch> had a corresponding reflog, it is renamed to match
+ <newbranch>, and a reflog entry is created to remember the branch
+ renaming. If <newbranch> exists, -M must be used to force the rename
+@@ -59,7 +59,7 @@ With a `-d` or `-D` option, `<branchname>` will be deleted.  You may
+ specify more than one branch for deletion.  If the branch currently
+ has a reflog then the reflog will also be deleted.
+ 
+-Use -r together with -d to delete remote-tracking branches. Note, that it
++Use `-r` together with `-d` to delete remote-tracking branches. Note, that it
+ only makes sense to delete remote-tracking branches if they no longer exist
+ in the remote repository or if 'git fetch' was configured not to fetch
+ them again. See also the 'prune' subcommand of linkgit:git-remote[1] for a
+@@ -154,9 +154,9 @@ start-point is either a local or remote-tracking branch.
+ 	branch.autosetupmerge configuration variable is true.
+ 
+ --set-upstream::
+-	If specified branch does not exist yet or if '--force' has been
+-	given, acts exactly like '--track'. Otherwise sets up configuration
+-	like '--track' would when creating the branch, except that where
++	If specified branch does not exist yet or if `--force` has been
++	given, acts exactly like `--track`. Otherwise sets up configuration
++	like `--track` would when creating the branch, except that where
+ 	branch points to is not changed.
+ 
+ --edit-description::
 -- 
-1.7.9.msysgit.1.364.g3e2096
+1.7.5.4
