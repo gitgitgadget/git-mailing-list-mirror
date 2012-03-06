@@ -1,76 +1,89 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: git push from client is not updating files on server
-Date: Tue, 06 Mar 2012 15:21:51 -0600
-Message-ID: <4F567FEF.5000105@gmail.com>
-References: <CAC0z1F-bGikXZtLnd8d=3G+4okvNqZaxyrLjh4G3YzPpmqyxQA@mail.gmail.com> <4F567DC6.4070903@gmail.com>
+From: karsten.blees@dcon.de
+Subject: Re: [msysGit] [PATCH] fix deletion of .git/objects sub-directories in
+ git-prune/repack
+Date: Tue, 6 Mar 2012 22:30:40 +0100
+Message-ID: <OFBC9E02C9.526DB40C-ONC12579B9.00726ECA-C12579B9.00763181@dcon.de>
+References: <7v4nu1scsl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jerome Yanga <jerome.yanga@gmail.com>, git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Tue Mar 06 22:22:04 2012
+Content-Type: text/plain; charset="US-ASCII"
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	kusmabite@gmail.com, msysGit <msysgit@googlegroups.com>,
+	Pat Thoyts <patthoyts@gmail.com>,
+	Stefan Naewe <stefan.naewe@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 06 22:31:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S51pY-0006AL-86
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 22:22:00 +0100
+	id 1S51yK-0001QT-71
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 22:31:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756160Ab2CFVVz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 16:21:55 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:61199 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754910Ab2CFVVx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 16:21:53 -0500
-Received: by ghrr11 with SMTP id r11so2557073ghr.19
-        for <git@vger.kernel.org>; Tue, 06 Mar 2012 13:21:53 -0800 (PST)
-Received-SPF: pass (google.com: domain of nkreitzinger@gmail.com designates 10.236.80.39 as permitted sender) client-ip=10.236.80.39;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of nkreitzinger@gmail.com designates 10.236.80.39 as permitted sender) smtp.mail=nkreitzinger@gmail.com; dkim=pass header.i=nkreitzinger@gmail.com
-Received: from mr.google.com ([10.236.80.39])
-        by 10.236.80.39 with SMTP id j27mr37136721yhe.92.1331068913062 (num_hops = 1);
-        Tue, 06 Mar 2012 13:21:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=GL3/stNYKpo2xgaGu3DVlLabtsZDkgMcfF+2EyoE5jA=;
-        b=m/EeU0mEXBbLBl58Wn2K6mdgNWZUIxWvu1tuCL/OYXer+r2Vda0yZ7zu257rzKZogo
-         EUrDYfeuCa9+ioQ9iNzcq5M7sUAAvPlYkMqsjeOK+N6f0GWss4HRqqBQiIuuoxIt1CAL
-         EYXWLeIo/qexoi6XuobMwS0dHwrixUa7vqNPJ7JkEe03xseoKUgCiBAyzziTuNLbaB06
-         ov4vwahw7nKKovHz4nOxElVjM0G2Jb9kFqvlU6v6zJiNAyDNJPVSkIVukFWPj2pIrXrZ
-         +2OMy5+nrDX83zh9Hfsiq9okfeS8wQJD3DQsY6hZSZmfP5QvduP9zW9qic0wi+CuRq8F
-         cD2w==
-Received: by 10.236.80.39 with SMTP id j27mr29435548yhe.92.1331068912984;
-        Tue, 06 Mar 2012 13:21:52 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id n72sm52141639yhh.21.2012.03.06.13.21.52
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 06 Mar 2012 13:21:52 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.27) Gecko/20120216 Thunderbird/3.1.19
-In-Reply-To: <4F567DC6.4070903@gmail.com>
+	id S1756752Ab2CFVa7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 16:30:59 -0500
+Received: from mail.dcon.de ([77.244.111.98]:14361 "EHLO MAIL.DCON.DE"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755550Ab2CFVa6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 16:30:58 -0500
+In-Reply-To: <7v4nu1scsl.fsf@alter.siamese.dyndns.org>
+X-Mailer: Lotus Notes Release 7.0.3 September 26, 2007
+X-MIMETrack: Serialize by Router on DCON14/DCon(Release 7.0.3FP1|February 24, 2008) at
+ 06.03.2012 22:30:35,
+	Serialize complete at 06.03.2012 22:30:35
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192399>
 
-On 3/6/2012 3:12 PM, Neal Kreitzinger wrote:
-> On 3/6/2012 10:52 AM, Jerome Yanga wrote:
->>
->> However, when I log into the central public Git server and look at
->> the files in the project, none of them have change. I can only see
->> the changes from the client via Gitweb.
->>
-> Gitweb and gitk know how to look at .git (bare) repo and display the
-> contents. (I use gitk to verify that a push did what I wanted.) There is
-> no work-tree for a .git repo to do linux "ls" on. If you really want to
-> use commandline you would have to use git commands like git-show,
-> git-ls-files, git-cat-file, git-log, etc., to display and interrogate
-> the contents of git objects (tags, commits, trees, blobs) in a .git repo.
+Junio C Hamano <gitster@pobox.com> wrote on 06.03.2012 21:19:06:
+> Johannes Sixt <j6t@kdbg.org> writes:
+> 
+> >> diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
+> >> index f9463de..a834417 100644
+> >> --- a/builtin/prune-packed.c
+> >> +++ b/builtin/prune-packed.c
+> >> @@ -36,7 +36,6 @@ static void prune_dir(int i, DIR *dir, char 
+*pathname, 
+> >> int len, int opts)
+> >>                 display_progress(progress, i + 1);
+> >>         }
+> >>         pathname[len] = 0;
+> >> -       rmdir(pathname);
+> >
+> > After moving the rmdir() away from prune_dir(), the truncation of the
+> > pathname does not logically belong here anymore. It should be moved 
+with
+> > the rmdir(). Looks good otherwise.
+> 
+> I agree that it is better to have the NUL termination close to where
+> it actually matters.
+> 
 
-scratch git-ls-files from that list.  Its not much use for bare repos, 
-either.
+The pathname is extended in prune_dir, so I think it should be reset there
+as well; moving it to prune_packed_objects would be quite obscure:
 
-v/r,
-neal
+d = opendir(pathname);
+prune_dir(d, pathname);
+pathname[len] = 0;
+rmdir(pathname);
+
+
+OT: While looking at the code I just stumbled across this immediately
+above the patch (prune-packed.c line 32ff):
+
+                memcpy(pathname + len, de->d_name, 38);
+                if (opts & DRY_RUN)
+                        printf("rm -f %s\n", pathname);
+                else
+                        unlink_or_warn(pathname);
+
+Shouldn't this be memcpy(..., 39) (i.e. including '\0')?
+
+> Do you want me to take it after locally fixing it up, or do you
+> prefer to feed this as part of msysgit related updates to me later?
+
+The msysgit queue is quite long, and I think it makes sense to fast-track 
+this one.
