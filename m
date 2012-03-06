@@ -1,112 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] Git 1.7.9.3
-Date: Tue, 06 Mar 2012 12:08:19 -0800
-Message-ID: <7v8vjdsdak.fsf@alter.siamese.dyndns.org>
-References: <7vliney6k7.fsf@alter.siamese.dyndns.org>
- <A518E7E7-25D5-429C-A1C1-35F94EC8F043@bjhargrave.com>
- <87y5rd4wci.fsf@thomas.inf.ethz.ch>
+Subject: Re: [msysGit] [PATCH] fix deletion of .git/objects sub-directories
+ in git-prune/repack
+Date: Tue, 06 Mar 2012 12:19:06 -0800
+Message-ID: <7v4nu1scsl.fsf@alter.siamese.dyndns.org>
+References: <OF93114E93.E64C1F7D-ONC12579B9.0032A592-C12579B9.00332D78@dcon.de>
+ <4F565849.80303@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: BJ Hargrave <bj@bjhargrave.com>,
-	Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
-	<trast@student.ethz.ch>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Mar 06 21:08:31 2012
+Cc: karsten.blees@dcon.de, kusmabite@gmail.com, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	msysGit <msysgit@googlegroups.com>,
+	Pat Thoyts <patthoyts@gmail.com>,
+	Stefan Naewe <stefan.naewe@gmail.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue Mar 06 21:19:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S50gO-0003ZL-QP
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 21:08:29 +0100
+	id 1S50qq-00016l-5P
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 21:19:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030374Ab2CFUIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 15:08:23 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61058 "EHLO
+	id S1030973Ab2CFUTL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 15:19:11 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33898 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030369Ab2CFUIW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 15:08:22 -0500
+	id S1030950Ab2CFUTJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 15:19:09 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 65F1F6A27;
-	Tue,  6 Mar 2012 15:08:21 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E7A556CD7;
+	Tue,  6 Mar 2012 15:19:08 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=n1mYGV7IfGlmhUhtJf2XGOu+DiE=; b=UuYNJA
-	LtCJjMb7psbY4Ok75+uff09kp8WE9+mleMl0Uk/e2z/jNtWwhNDUqcM+sHF2THNZ
-	yrdh2RQnvDhKl56BXf13sOO+dHufvLGxtoh36NYSgXKhW7fATbvZg55G7iuQveoP
-	a0cA7crk9HjLJo/P2CMY5JzYRc5XqkaLz+NFs=
+	:content-type; s=sasl; bh=3+vr1edjkd+L8O0xOPbginWIpHQ=; b=FxjgNC
+	6bj7kNPzi+Z4tKLeImC82JU4zTaHkgmeqnrhhZhBIsH44snnmn/rhNCoJn1ZS93h
+	d8DzL3Ip/3aOf0My64z9Nq+V+XDQXMsb/XNPwQhE0x1FbgrmFsx9Ep/2oyaM/15q
+	3HbrwLXAIDIP0zMmFMn71wTzybCUEYPONljio=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LEwMejNXRI5Q2j2GQPiHiSIxAEWeD/nO
-	5hIOnbMizQfvjBoBlJV7BLHGwyjkd3BJh4qVvp2hUeXnwFKzGrPD5ho77eizWa83
-	K0giOxXfev0N+JzQQ+rm0omUR2JgrAPebShGFs9ePwq6xM/HLT2weHytqR+Hb9ml
-	e/4LvOLyws4=
+	:content-type; q=dns; s=sasl; b=HMFdVo9hYPuNvQ7VJpqXNSYvhAhUmaEh
+	/Fgc6s+yb4bo7TXThb85XyrZdB842MtzwJmkDrkB5orIgCuSiP++eW4/DaW9ytlb
+	ElzwTwWFHeNoLcsQc0I/VZPnPVoOiRiYpq0hRaS50Ha02lOgkZSx8d28RF7QwXyU
+	TCxTbO/hDso=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D8026A26;
-	Tue,  6 Mar 2012 15:08:21 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DDFC36CD6;
+	Tue,  6 Mar 2012 15:19:08 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D966A6A25; Tue,  6 Mar 2012
- 15:08:20 -0500 (EST)
-In-Reply-To: <87y5rd4wci.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
- "Tue, 6 Mar 2012 15:50:37 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 558AF6CD5; Tue,  6 Mar 2012
+ 15:19:08 -0500 (EST)
+In-Reply-To: <4F565849.80303@kdbg.org> (Johannes Sixt's message of "Tue, 06
+ Mar 2012 19:32:41 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1EFFBBCC-67C8-11E1-98ED-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A0EE5DC2-67C9-11E1-BA61-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192385>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> This can be fixed with the change below, which then gets us into the
-> next one
+>> diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
+>> index f9463de..a834417 100644
+>> --- a/builtin/prune-packed.c
+>> +++ b/builtin/prune-packed.c
+>> @@ -36,7 +36,6 @@ static void prune_dir(int i, DIR *dir, char *pathname, 
+>> int len, int opts)
+>>                 display_progress(progress, i + 1);
+>>         }
+>>         pathname[len] = 0;
+>> -       rmdir(pathname);
 >
->   grep: Regular expression too big
->
-> Sheesh, Apple, are you kidding me?!  So we also need to change the grep
-> expression.
->
-> ----- 8< -----
-> Subject: [PATCH] t5704: fix nonportable sed/grep usages
->
-> OS X's sed and grep would complain with (respectively)
->
->   sed: 1: "/^-/{p;q}": extra characters at the end of q command
->   grep: Regular expression too big
->
-> For sed, use an explicit ; to terminate the q command.
->
-> For grep, spell the "40 hex digits" explicitly in the regex, instead
-> of being lazy with the shell pattern $_x40.
-> ---
+> After moving the rmdir() away from prune_dir(), the truncation of the
+> pathname does not logically belong here anymore. It should be moved with
+> the rmdir(). Looks good otherwise.
 
-Actually the shell pattern $_x40 was invented so that it can be used
-in both shell, grep and sed; there is nothing *lazy* about it.
+I agree that it is better to have the NUL termination close to where
+it actually matters.
 
-I share the "are you kidding me?!" with you.  I cannot fathom which
-part of that regular expression is too big for them to swallow.
-
-In any case, thanks for a quick fix; can I consider it as signed-off?
-
->  t/t5704-bundle.sh |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t5704-bundle.sh b/t/t5704-bundle.sh
-> index a51c8b0..9e43731 100755
-> --- a/t/t5704-bundle.sh
-> +++ b/t/t5704-bundle.sh
-> @@ -54,8 +54,8 @@ test_expect_success 'ridiculously long subject in boundary' '
->  	git bundle list-heads long-subject-bundle.bdl >heads &&
->  	test -s heads &&
->  	git fetch long-subject-bundle.bdl &&
-> -	sed -n "/^-/{p;q}" long-subject-bundle.bdl >boundary &&
-> -	grep "^-$_x40 " boundary
-> +	sed -n "/^-/{p;q;}" long-subject-bundle.bdl >boundary &&
-> +	grep "^-[0-9a-f]\\{40\\} " boundary
->  '
->  
->  test_done
-> -- 
-> 1.7.6.557.gcee4
+Do you want me to take it after locally fixing it up, or do you
+prefer to feed this as part of msysgit related updates to me later?
