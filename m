@@ -1,113 +1,111 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 1/2] perf: compare diff algorithms
-Date: Tue, 06 Mar 2012 13:41:30 -0800 (PST)
-Message-ID: <m31up5tnjw.fsf@localhost.localdomain>
-References: <87pqcp6fyh.fsf@thomas.inf.ethz.ch>
-	<f113867bcf2fec3210cd1a997e1398903b3bdd76.1331039505.git.trast@student.ethz.ch>
-	<7vhay1se0g.fsf@alter.siamese.dyndns.org>
-	<87y5rdzbpb.fsf@thomas.inf.ethz.ch>
-	<7vr4x5qvgd.fsf@alter.siamese.dyndns.org>
+From: karsten.blees@dcon.de
+Subject: Re: [PATCH] fix deletion of .git/objects sub-directories in git-prune/repack
+Date: Tue, 6 Mar 2012 22:47:19 +0100
+Message-ID: <OF619F6614.68A2AA34-ONC12579B9.00763235-C12579B9.0077B76F@dcon.de>
+References: <4F565849.80303@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@inf.ethz.ch>,
-	Thomas Rast <trast@student.ethz.ch>, <git@vger.kernel.org>,
-	Michal Privoznik <mprivozn@redhat.com>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 06 22:41:47 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	kusmabite@gmail.com,
+	msysGit <msysgit@googlegroups.com>,
+	Pat Thoyts <patthoyts@gmail.com>,
+	Stefan Naewe <stefan.naewe@gmail.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: msysgit+bncCN2Jst6HAhD5i9r6BBoElEwCqA@googlegroups.com Tue Mar 06 22:48:04 2012
+Return-path: <msysgit+bncCN2Jst6HAhD5i9r6BBoElEwCqA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-bk0-f58.google.com ([209.85.214.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S528d-0006kG-0V
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 22:41:43 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964948Ab2CFVld (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 16:41:33 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:47189 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932318Ab2CFVlc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 16:41:32 -0500
-Received: by eekc41 with SMTP id c41so2077631eek.19
-        for <git@vger.kernel.org>; Tue, 06 Mar 2012 13:41:31 -0800 (PST)
+	(envelope-from <msysgit+bncCN2Jst6HAhD5i9r6BBoElEwCqA@googlegroups.com>)
+	id 1S52El-0006IS-Ri
+	for gcvm-msysgit@m.gmane.org; Tue, 06 Mar 2012 22:48:03 +0100
+Received: by bkwq16 with SMTP id q16sf4783153bkw.3
+        for <gcvm-msysgit@m.gmane.org>; Tue, 06 Mar 2012 13:48:03 -0800 (PST)
+Received-SPF: pass (google.com: domain of msysgit+bncCN2Jst6HAhD5i9r6BBoElEwCqA@googlegroups.com designates 10.180.90.201 as permitted sender) client-ip=10.180.90.201;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of msysgit+bncCN2Jst6HAhD5i9r6BBoElEwCqA@googlegroups.com designates 10.180.90.201 as permitted sender) smtp.mail=msysgit+bncCN2Jst6HAhD5i9r6BBoElEwCqA@googlegroups.com; dkim=pass header.i=msysgit+bncCN2Jst6HAhD5i9r6BBoElEwCqA@googlegroups.com
+Received: from mr.google.com ([10.180.90.201])
+        by 10.180.90.201 with SMTP id by9mr12226393wib.1.1331070483521 (num_hops = 1);
+        Tue, 06 Mar 2012 13:48:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=8ESX0D73g2tW2PJBNgmusJ85X6FZiuc2z6EWLnXfRxA=;
-        b=PhviqktF9stPURamwwTEAisx30dVfd/3Bha6x4mPPuogy/pBoddGsuQuX7InS8/Zkz
-         8gZVVnLYpqBrVPGMia+MrkAStVoJk7dlWr+LfRFp0HDFHH1JFa8kwYtSSh0qiHoZhx1w
-         PU0isEowVVWFYxQbz+vgNS276EJgvD6F3y3eflkoSbZRkESIBqetNSxDAMsiH7rhMGph
-         vXKiIU5bvlPXCGi7ihOucUhdc59MnuCqEO5RUox+DXcZeT0quNc0Fp6w9Maib8EunVU6
-         /2wnAcxPDVaa0e8J6al+UnUfkIRMfjVLmRReyy1Tt2Rpqp9XQuTar9OIbol3ghemR5U1
-         GIfQ==
-Received: by 10.213.35.65 with SMTP id o1mr32091ebd.128.1331070091507;
-        Tue, 06 Mar 2012 13:41:31 -0800 (PST)
-Received: from localhost.localdomain (abwf76.neoplus.adsl.tpnet.pl. [83.8.229.76])
-        by mx.google.com with ESMTPS id y11sm17908816eem.3.2012.03.06.13.41.28
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 06 Mar 2012 13:41:30 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q26LfQg6008335;
-	Tue, 6 Mar 2012 22:41:26 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q26LfNHk008329;
-	Tue, 6 Mar 2012 22:41:23 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7vr4x5qvgd.fsf@alter.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192400>
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:in-reply-to:from:to:cc:subject
+         :mime-version:x-mailer:message-id:sender:date:x-mimetrack
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:x-google-group-id:list-post:list-help
+         :list-archive:list-subscribe:list-unsubscribe:content-type;
+        bh=g6/3dYs7JesUhqfpQDfddn8Kw9JKZRQ3uh1sq5e0Lhc=;
+        b=52nOhAbpdzXgwdX4umPiqX1F8ZstOdOX8opE7m3Mo5F5rThkvyp5EozrHzTHAbpsMM
+         9kfF2GuFyB96CMk4SIRV1CHXPcSCRDeraPuxE1SbkIR3W6WGvuhL3Bae9G2nkLs7MjPs
+         Wypum+GMnPIZDwtvePU2BcWTw4fLKam4fjVdY=
+Received: by 10.180.90.201 with SMTP id by9mr3593791wib.1.1331070457221;
+        Tue, 06 Mar 2012 13:47:37 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.14.203.132 with SMTP id f4ls612467eeo.4.gmail; Tue, 06 Mar
+ 2012 13:47:36 -0800 (PST)
+Received: by 10.14.199.133 with SMTP id x5mr1659025een.7.1331070456370;
+        Tue, 06 Mar 2012 13:47:36 -0800 (PST)
+Received: by 10.14.199.133 with SMTP id x5mr1659024een.7.1331070456359;
+        Tue, 06 Mar 2012 13:47:36 -0800 (PST)
+Received: from MAIL.DCON.DE (mail.dcon.de. [77.244.111.98])
+        by gmr-mx.google.com with ESMTP id f9si14786336eea.2.2012.03.06.13.47.36;
+        Tue, 06 Mar 2012 13:47:36 -0800 (PST)
+Received-SPF: pass (google.com: domain of karsten.blees@dcon.de designates 77.244.111.98 as permitted sender) client-ip=77.244.111.98;
+In-Reply-To: <4F565849.80303@kdbg.org>
+X-Mailer: Lotus Notes Release 7.0.3 September 26, 2007
+Sender: msysgit@googlegroups.com
+X-MIMETrack: Serialize by Router on DCON14/DCon(Release 7.0.3FP1|February 24, 2008) at
+ 06.03.2012 22:47:08,
+	Serialize complete at 06.03.2012 22:47:08
+X-Original-Sender: karsten.blees@dcon.de
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of karsten.blees@dcon.de designates 77.244.111.98 as permitted sender) smtp.mail=karsten.blees@dcon.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192401>
 
-Junio C Hamano <gitster@pobox.com> writes:
-> Thomas Rast <trast@inf.ethz.ch> writes:
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>>
->>> I am getting this (probably unrelated to this patch), by the way:
->>>
->>> $ make perf
->>> make -C t/perf/ all
->>> make[1]: Entering directory `/srv/project/git/git.git/t/perf'
->>> rm -rf test-results
->>> ./run
->>> ...
->>> perf 4 - grep --cached, expensive regex: 1 2 3 ok
->>> # passed all 4 test(s)
->>> 1..4
->>> Can't locate Git.pm in @INC (@INC contains: /etc/perl ...) at ./aggregate.perl line 5.
->>> BEGIN failed--compilation aborted at ./aggregate.perl line 5.
->>
->> It would seem that you are not installing Git.pm as part of your normal
->> installation?
+Johannes Sixt <j6t@kdbg.org> wrote on 06.03.2012 19:32:41:
+> Am 06.03.2012 10:18, schrieb karsten.blees@dcon.de:
+> > On some systems (e.g. Windows XP), directories cannot be deleted while
+> > they're open. Both git-prune and git-repack (and thus, git-gc) try to
+> > rmdir while holding a DIR* handle on the directory, leaving dangling
+> > empty directories in the .git/objects store.
+> > 
+> > Fix it by swapping the rmdir / closedir calls.
 > 
-> I actually am installing it in a quite vanilla way.
+> The reasoning makes a lot of sense. I wonder why object directories are
+> pruned nevertheless when I run git gc --prune (I run git master plus a
+> few topics from pu).
 > 
-> I think our installation procedure places Git.pm in git specific
-> perl library path where a simple invocation of "perl" that is
-> git-unaware will not look into, and we make sure that our scripts
-> still find the matching version of Git.pm by having "use lib" at the
-> beginning that points at the right directory.
-> 
-> But of course, this from a command line would not work:
-> 
-> 	$ perl -MGit
-> 
-> I do not expect it to, and for the ease of testing new versions, I
-> prefer it not to work.
-> 
-> In any case, you should be able to do anything under t/ _before_
-> installing, so relying on having Git.pm in normal @INC is a double
-> no-no.
 
-Thomas, take a look at how it is solved in 't/t9700/test.pl', used by
-'t/t9700-perl-git.sh':
+You're right...in upstream git, closedir() is essentially a NOOP. The OS
+handle is closed in readdir() on reading the last entry. The dirent.c
+'improvements' that move FindFirstFile() to opendir() and FindClose() to
+closedir() are in the msysgit fork only [1] (and entirely my fault, I
+guess :-)).
 
-  use lib (split(/:/, $ENV{GITPERLLIB}));
+So this patch actually isn't currently required for Windows XP (probably
+other platforms, I don't know).
+
+[1] https://github.com/msysgit/git/commit/e2b3f70b
 
 -- 
-Jakub Narebski
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+
+*** Please avoid top-posting. ***
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
