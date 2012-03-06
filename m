@@ -1,64 +1,78 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH] Documentation update for 'git branch'
-Date: Tue, 6 Mar 2012 10:00:42 +0100
-Message-ID: <871up66r45.fsf@thomas.inf.ethz.ch>
-References: <1331023866-5658-1-git-send-email-vfr@lyx.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Bug: pull --rebase with =?utf-8?B?w6kg?= =?utf-8?Q?in?= name
+Date: Tue, 6 Mar 2012 04:02:18 -0500
+Message-ID: <20120306090218.GG21199@sigill.intra.peff.net>
+References: <FECFDD4D-6EC3-4DE1-8A08-B4477345C4AA@habr.de>
+ <20120305102657.GB29061@sigill.intra.peff.net>
+ <87399nqqog.fsf@thomas.inf.ethz.ch>
+ <F5A485EA-7EAD-4D8B-87C4-7185F713318C@habr.de>
+ <20120305115815.GA4550@sigill.intra.peff.net>
+ <0E2B8DE3-1ABD-453F-BCAA-0D693ECA5987@habr.de>
+ <87ipijkxlm.fsf@thomas.inf.ethz.ch>
+ <20120305132913.GA15004@sigill.intra.peff.net>
+ <7v8vjf2c8o.fsf@alter.siamese.dyndns.org>
+ <87399mazxs.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <git@vger.kernel.org>, <gitster@pobox.com>
-To: <vfr@lyx.org>
-X-From: git-owner@vger.kernel.org Tue Mar 06 10:00:52 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?UmVuw6k=?= Haber <rene@habr.de>, git@vger.kernel.org,
+	Will Palmer <wmpalmer@gmail.com>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Mar 06 10:02:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4qGI-00057S-3b
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 10:00:50 +0100
+	id 1S4qHs-0006tG-7r
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 10:02:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965027Ab2CFJAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 04:00:45 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:6708 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964952Ab2CFJAo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 04:00:44 -0500
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 6 Mar
- 2012 10:00:45 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 6 Mar
- 2012 10:00:42 +0100
-In-Reply-To: <1331023866-5658-1-git-send-email-vfr@lyx.org> (vfr@lyx.org's
-	message of "Tue, 6 Mar 2012 09:51:06 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S965122Ab2CFJCW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Mar 2012 04:02:22 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38293
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964952Ab2CFJCU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 04:02:20 -0500
+Received: (qmail 5874 invoked by uid 107); 6 Mar 2012 09:02:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 06 Mar 2012 04:02:27 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Mar 2012 04:02:18 -0500
+Content-Disposition: inline
+In-Reply-To: <87399mazxs.fsf@thomas.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192321>
 
-Hi Vincent,
+On Tue, Mar 06, 2012 at 09:36:31AM +0100, Thomas Rast wrote:
 
-vfr@lyx.org writes:
+> > You guys seem to have been having a lot of fun overnight. Perhaps I
+> > should live on European time?
+>=20
+> IIUC Peff just got up at an unreasonably early time to have fun with =
+us
+> Europeans?
 
-> Changes:
-> - add a period to a sentence,
-> - correct 'tag' into 'branch',
-> - unify the use of backticks,
-> - indicate that the commit parameter of --contains defaults to HEAD.
+Er...got up? Yeeeeeah, that's what happened. I would never stay up unti=
+l
+6am local time hacking on git. ;)
 
-First off, please read Documentation/SubmittingPatches.  I think this
-should be split into at least two commits, one for the cleanups and one
-for the actual change.
+> This is the second "victim" of this broken install of sed, however.  =
+I
+> wonder where Ren=C3=A9 and Will got it from?  Perhaps this is "the" c=
+ommon
+> way of getting GNU sed on OS X, and thus more widespread than we migh=
+t
+> think.
 
-As for
+That's worth looking into, but the answer may still be "this common sed
+is broken, and we should tell the people who are packaging it to unbrea=
+k
+it". I'm worried that there really isn't a workaround (we are already
+trying LC_ALL and LANG; is there something else we can do short of not
+using sed at all?).
 
-> - unify the use of backticks,
-
-nice catch, and note that this is a pretty common problem across the
-docs.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+-Peff
