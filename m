@@ -1,99 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] perf: compare diff algorithms
-Date: Tue, 06 Mar 2012 13:18:58 -0800
-Message-ID: <7vr4x5qvgd.fsf@alter.siamese.dyndns.org>
-References: <87pqcp6fyh.fsf@thomas.inf.ethz.ch>
- <f113867bcf2fec3210cd1a997e1398903b3bdd76.1331039505.git.trast@student.ethz.ch> <7vhay1se0g.fsf@alter.siamese.dyndns.org> <87y5rdzbpb.fsf@thomas.inf.ethz.ch>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [msysGit] [PATCH] fix deletion of .git/objects sub-directories
+ in git-prune/repack
+Date: Tue, 06 Mar 2012 22:19:10 +0100
+Message-ID: <4F567F4E.5020501@kdbg.org>
+References: <OF93114E93.E64C1F7D-ONC12579B9.0032A592-C12579B9.00332D78@dcon.de> <4F565849.80303@kdbg.org> <7v4nu1scsl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, <git@vger.kernel.org>,
-	Michal Privoznik <mprivozn@redhat.com>,
-	Jeff King <peff@peff.net>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Mar 06 22:19:08 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: karsten.blees@dcon.de, kusmabite@gmail.com, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	msysGit <msysgit@googlegroups.com>,
+	Pat Thoyts <patthoyts@gmail.com>,
+	Stefan Naewe <stefan.naewe@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 06 22:19:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S51mm-0002Wf-AG
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 22:19:08 +0100
+	id 1S51mx-0002lI-It
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 22:19:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753920Ab2CFVTD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 16:19:03 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61345 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752604Ab2CFVTB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 16:19:01 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 670197B3E;
-	Tue,  6 Mar 2012 16:19:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rX7jqXX3lrvtSKYga1W/6ymLGng=; b=e840QF
-	BKobAA9j2ouE5NzWag7mQUCTd+ZQtoena2hkqtXFL0pTFUpF9Mk1XZEKV6GH66u+
-	oVPppx72/9H9xgSoS5H7LAgWGaYRmsQnJtsd3eqAoLGiiRCtLwFNinrSxXjsDBJ0
-	qbacTCs3r0fWg++quwtS175XUeceNDWI99GrM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BTtwsrlmgacuKhYXq+31FwbiNumdkND0
-	5+8X/qQ72TRQ3D/fUHQFDzOv9WcrW4Tjh7hZr/HbezB3o54VD5Z0EOKH5aeAO3t5
-	Ne7pjDELThv/ixAb4CeEo3Bm2eSpeEssMBOfKH3aEEnNDQUZJO8BTi7T3l9K7Ooc
-	B7NPR2gAQTU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E1FB7B3D;
-	Tue,  6 Mar 2012 16:19:00 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DAE017B3C; Tue,  6 Mar 2012
- 16:18:59 -0500 (EST)
-In-Reply-To: <87y5rdzbpb.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
- "Tue, 6 Mar 2012 22:00:48 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FDA4AEC4-67D1-11E1-8197-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754524Ab2CFVTO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 16:19:14 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:65176 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752604Ab2CFVTN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 16:19:13 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 6884113004E;
+	Tue,  6 Mar 2012 22:19:11 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 92B1119F681;
+	Tue,  6 Mar 2012 22:19:10 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.27) Gecko/20120215 SUSE/3.1.19 Thunderbird/3.1.19
+In-Reply-To: <7v4nu1scsl.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192397>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
-
-> Junio C Hamano <gitster@pobox.com> writes:
->
+Am 06.03.2012 21:19, schrieb Junio C Hamano:
+> Johannes Sixt <j6t@kdbg.org> writes:
+> 
+>>> diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
+>>> index f9463de..a834417 100644
+>>> --- a/builtin/prune-packed.c
+>>> +++ b/builtin/prune-packed.c
+>>> @@ -36,7 +36,6 @@ static void prune_dir(int i, DIR *dir, char *pathname, 
+>>> int len, int opts)
+>>>                 display_progress(progress, i + 1);
+>>>         }
+>>>         pathname[len] = 0;
+>>> -       rmdir(pathname);
 >>
->> I am getting this (probably unrelated to this patch), by the way:
->>
->> $ make perf
->> make -C t/perf/ all
->> make[1]: Entering directory `/srv/project/git/git.git/t/perf'
->> rm -rf test-results
->> ./run
->> ...
->> perf 4 - grep --cached, expensive regex: 1 2 3 ok
->> # passed all 4 test(s)
->> 1..4
->> Can't locate Git.pm in @INC (@INC contains: /etc/perl ...) at ./aggregate.perl line 5.
->> BEGIN failed--compilation aborted at ./aggregate.perl line 5.
->
-> It would seem that you are not installing Git.pm as part of your normal
-> installation?
+>> After moving the rmdir() away from prune_dir(), the truncation of the
+>> pathname does not logically belong here anymore. It should be moved with
+>> the rmdir(). Looks good otherwise.
+> 
+> I agree that it is better to have the NUL termination close to where
+> it actually matters.
+> 
+> Do you want me to take it after locally fixing it up, or do you
+> prefer to feed this as part of msysgit related updates to me later?
 
-I actually am installing it in a quite vanilla way.
+This patch is fairly independent from other topics that are queued in
+msysgit, IIRC. Please take it with the mentioned fixup.
 
-I think our installation procedure places Git.pm in git specific
-perl library path where a simple invocation of "perl" that is
-git-unaware will not look into, and we make sure that our scripts
-still find the matching version of Git.pm by having "use lib" at the
-beginning that points at the right directory.
-
-But of course, this from a command line would not work:
-
-	$ perl -MGit
-
-I do not expect it to, and for the ease of testing new versions, I
-prefer it not to work.
-
-In any case, you should be able to do anything under t/ _before_
-installing, so relying on having Git.pm in normal @INC is a double
-no-no.
+Thanks,
+-- Hannes
