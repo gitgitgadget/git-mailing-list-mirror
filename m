@@ -1,81 +1,234 @@
-From: greened@obbligato.org (David A. Greene)
-Subject: Re: [PATCH 1/2] Allow Overriding GIT_BUILD_DIR
-Date: Tue, 06 Mar 2012 08:21:39 -0600
-Message-ID: <87r4x5izd8.fsf@smith.obbligato.org>
-References: <1330903437-31386-1-git-send-email-greened@obbligato.org>
-	<7vaa3v4kwo.fsf@alter.siamese.dyndns.org>
-	<nng399m3om6.fsf@transit.us.cray.com>
-	<7vaa3u24lw.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: dag@cray.com (David A. Greene), git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 06 15:24:55 2012
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH] configure.ac: Add --with-gcc-warnings configure option
+Date: Tue,  6 Mar 2012 09:33:05 -0500
+Message-ID: <1331044385-14796-1-git-send-email-gitter.spiros@gmail.com>
+Cc: jnareb@gmail.com, Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 06 15:33:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4vJp-0003uf-2w
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 15:24:49 +0100
+	id 1S4vS3-00061l-EX
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 15:33:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030698Ab2CFOYn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 09:24:43 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:55444 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S965183Ab2CFOYm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 09:24:42 -0500
-Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=smith.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.77)
-	(envelope-from <greened@obbligato.org>)
-	id 1S4vL4-0000S2-PC; Tue, 06 Mar 2012 08:26:07 -0600
-In-Reply-To: <7vaa3u24lw.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 05 Mar 2012 12:08:11 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
- identified this incoming email as possible spam.  The original message
- has been attached to this so you can view it (if it isn't spam) or label
- similar future email.  If you have any questions, see
- @@CONTACT_ADDRESS@@ for details.
- Content preview:  Junio C Hamano <gitster@pobox.com> writes: >> Right. This
-   is because you flagged an indentation issue with the >> previous version of
-    the patch. I think what happened is that the >> previous version included
-    the 1-HT (what is HT - half-tab?) spacing but >> it "looked funny" with the
-    additional "+" from the diff line. > > No, with your earlier patch, all the
-    existing lines used horizontal > tabs for indenting, and the line you added
-    used runs of spaces. > When such a hunk is shown in diff output, "+" will
-    make it obv 
+	id S1030753Ab2CFOdN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 09:33:13 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:41783 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030694Ab2CFOdM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 09:33:12 -0500
+Received: by iagz16 with SMTP id z16so7128595iag.19
+        for <git@vger.kernel.org>; Tue, 06 Mar 2012 06:33:11 -0800 (PST)
+Received-SPF: pass (google.com: domain of gitter.spiros@gmail.com designates 10.50.216.231 as permitted sender) client-ip=10.50.216.231;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of gitter.spiros@gmail.com designates 10.50.216.231 as permitted sender) smtp.mail=gitter.spiros@gmail.com; dkim=pass header.i=gitter.spiros@gmail.com
+Received: from mr.google.com ([10.50.216.231])
+        by 10.50.216.231 with SMTP id ot7mr12953299igc.8.1331044391719 (num_hops = 1);
+        Tue, 06 Mar 2012 06:33:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=q7/+PN9mFKWwCSHZuQzg46HIuD86SObpjdvhea4kAE4=;
+        b=GLedvegJ4+ej8LbVkHXZ6y8tTh3FNwFBV5WdqKPjlEygjN9EBudRk/BIr+oRIaJcP6
+         /qAtXQpg8k1ojcOnX70yNKG2SWc6V5dk91G4Yv9l99PwaS/KTmZvpcfnQnwjg44Ve3HH
+         JdBKLU0gobJCsAp/IOhBNoig/+qC0iZ6uxlG6UwiwNS9I9t/8nfkflQsmh7u/y0icbI/
+         hSmFmHqM55AgvrpRhaKau2hLOPD3cMB1qJYQbmLlE3WsyjSxyApvmZ+PQ1H8XjRKnwoX
+         vReJJRWILbbH7pnA9zOI3zus/M92mmO8rFVuRihtPLmhJ4haRUXi3kvm59VcIFIZXy5T
+         LL8w==
+Received: by 10.50.216.231 with SMTP id ot7mr10799923igc.8.1331044391645;
+        Tue, 06 Mar 2012 06:33:11 -0800 (PST)
+Received: from localhost.localdomain (vm049244212.pmman.net. [198.49.244.212])
+        by mx.google.com with ESMTPS id eo1sm10208007igc.17.2012.03.06.06.33.10
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 06 Mar 2012 06:33:11 -0800 (PST)
+X-Mailer: git-send-email 1.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192351>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Introduce a new --with-gcc-warnings configure option
+using a new autoconf macro that check if the compiler
+know the option passed or not in a portable way, as
+it not depends from the gcc version or from the
+other compiler used.
 
->> Right.  This is because you flagged an indentation issue with the
->> previous version of the patch.  I think what happened is that the
->> previous version included the 1-HT (what is HT - half-tab?) spacing but
->> it "looked funny" with the additional "+" from the diff line.
->
-> No, with your earlier patch, all the existing lines used horizontal
-> tabs for indenting, and the line you added used runs of spaces.
-> When such a hunk is shown in diff output, "+" will make it obvious
-> that only the new line you added is wrong (because the initial "+"
-> and " " is absorbed in the first horizontal tab for Tab-indented
-> lines) and that is how I noticed and pointed out "a funny
-> indentation" to you.
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+This is the version 2 of the patch, in which i have
+slightly changed the commit message for
+clarify the purpose. To activate the
+patch is of course necessary to do a autoreconf -vfi after
+applying the patch.
 
-Hmm...when I went back to the file it indeed had horizontal tabs.  Ah, I
-think I know what happened.  I had to cut-n-paste into an e-mail because
-I couldn't get git send-email to work at the time (it apparently gives
-up after failing to authenticate even if the server presents more than
-one authentication method).  So I think the mailer might have replaced
-tabs with spaces.  I don't know.  In any case, it's moot.
 
-You indicated you'd fix up the patch.  I am happy to do that as well if
-you want a proper re-submission.  Just let me know.
+ Makefile      |    2 +-
+ config.mak.in |    1 +
+ configure.ac  |  118 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 120 insertions(+), 1 deletions(-)
 
-                                    -Dave
+diff --git a/Makefile b/Makefile
+index be1957a..d0aef0f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -310,7 +310,7 @@ endif
+ 
+ CFLAGS = -g -O2 -Wall
+ LDFLAGS =
+-ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
++ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS) $(AM_CFLAGS)
+ ALL_LDFLAGS = $(LDFLAGS)
+ STRIP ?= strip
+ 
+diff --git a/config.mak.in b/config.mak.in
+index b2ba710..5b7dbfd 100644
+--- a/config.mak.in
++++ b/config.mak.in
+@@ -2,6 +2,7 @@
+ # @configure_input@
+ 
+ CC = @CC@
++AM_CFLAGS = @GIT_CFLAGS@
+ CFLAGS = @CFLAGS@
+ CPPFLAGS = @CPPFLAGS@
+ LDFLAGS = @LDFLAGS@
+diff --git a/configure.ac b/configure.ac
+index 8bb0f44..dba42a9 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -14,6 +14,34 @@ echo "# ${config_append}.  Generated by configure." > "${config_append}"
+ 
+ 
+ ## Definitions of macros
++# git_AS_VAR_APPEND(VAR, VALUE)
++# ----------------------------
++# Provide the functionality of AS_VAR_APPEND if Autoconf does not have it.
++m4_ifdef([AS_VAR_APPEND],
++[m4_copy([AS_VAR_APPEND], [git_AS_VAR_APPEND])],
++[m4_define([git_AS_VAR_APPEND],
++[AS_VAR_SET([$1], [AS_VAR_GET([$1])$2])])])
++
++# GIT_CFLAGS_ADD(PARAMETER, [VARIABLE = GIT_CFLAGS])
++# ------------------------------------------------
++# Adds parameter to GIT_CFLAGS if the compiler supports it.  For example,
++# GIT_CFLAGS_ADD([-Wall],[GIT_CFLAGS]).
++AC_DEFUN([GIT_CFLAGS_ADD],
++[AS_VAR_PUSHDEF([git_my_cflags], [git_cv_warn_$1])dnl
++AC_CACHE_CHECK([whether compiler handles $1], [git_my_cflags], [
++  save_CFLAGS="$CFLAGS"
++  CFLAGS="${CFLAGS} $1"
++  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([])],
++                    [AS_VAR_SET([git_my_cflags], [yes])],
++                    [AS_VAR_SET([git_my_cflags], [no])])
++  CFLAGS="$save_CFLAGS"
++])
++AS_VAR_PUSHDEF([git_cflags], m4_if([$2], [], [[GIT_CFLAGS]], [[$2]]))dnl
++AS_VAR_IF([git_my_cflags], [yes], [git_AS_VAR_APPEND([git_cflags], [" $1"])])
++AS_VAR_POPDEF([git_cflags])dnl
++AS_VAR_POPDEF([git_my_cflags])dnl
++m4_ifval([$2], [AS_LITERAL_IF([$2], [AC_SUBST([$2])], [])])dnl
++])
+ # GIT_CONF_APPEND_LINE(LINE)
+ # --------------------------
+ # Append LINE to file ${config_append}
+@@ -158,6 +186,96 @@ if test -z "$lib"; then
+    lib=lib
+ fi
+ 
++# Turn gcc warning
++
++AC_ARG_ENABLE([gcc-warnings],
++  [AS_HELP_STRING([--enable-gcc-warnings],
++                  [turn on GCC warnings (for developers)@<:@default=no@:>@])],
++  [case $enableval in
++     yes|no) ;;
++     *)      AC_MSG_ERROR([bad value $enableval for gcc-warnings option]) ;;
++   esac
++   git_gcc_warnings=$enableval],
++  [git_gcc_warnings=no]
++)
++
++AS_IF([test "x$git_gcc_warnings" = xyes],
++  [ # Add/Delete as needed
++  MAX_STACK_SIZE=32768
++  GIT_CFLAGS_ADD([-Wall], [GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-pedantic], [GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wextra], [GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wformat-y2k], [GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-fdiagnostics-show-option],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-funit-at-a-time],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-fstrict-aliasing],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wstrict-overflow],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-fstrict-overflow],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wpointer-arith],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wundef],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wformat-security],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Winit-self],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wmissing-include-dirs],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wunused],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wunknown-pragmas],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wstrict-aliasing],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wshadow],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wbad-function-cast],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wcast-align],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wwrite-strings],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wlogical-op],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Waggregate-return],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wstrict-prototypes],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wold-style-definition],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wmissing-prototypes],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wmissing-declarations],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wmissing-noreturn],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wmissing-format-attribute],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wredundant-decls],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wnested-externs],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Winline],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Winvalid-pch],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wvolatile-register-var],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wdisabled-optimization],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wbuiltin-macro-redefined],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wmudflap],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wpacked-bitfield-compat],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wsync-nand],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wattributes],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wcoverage-mismatch],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wmultichar],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wcpp],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wdeprecated-declarations],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wdiv-by-zero],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wdouble-promotion],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wendif-labels],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wformat-contains-nul],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wformat-extra-args],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wformat-zero-length],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wformat=2],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wmultichar],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wnormalized=nfc],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Woverflow],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wpointer-to-int-cast],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wpragmas],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wsuggest-attribute=const],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wsuggest-attribute=noreturn],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wsuggest-attribute=pure],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wtrampolines],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wno-missing-field-initializers],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wno-sign-compare],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wjump-misses-init],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wno-format-nonliteral],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wframe-larger-than=$MAX_STACK_SIZE],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-fstack-protector-all],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-fasynchronous-unwind-tables],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-fdiagnostics-show-option],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-funit-at-a-time],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-fipa-pure-const],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wno-aggregate-return],[GIT_CFLAGS])
++  GIT_CFLAGS_ADD([-Wno-redundant-decls],[GIT_CFLAGS])
++  AC_SUBST([GIT_CFLAGS])
++  ])
+ AC_ARG_ENABLE([pthreads],
+  [AS_HELP_STRING([--enable-pthreads=FLAGS],
+   [FLAGS is the value to pass to the compiler to enable POSIX Threads.]
+-- 
+1.7.8.rc3.31.g017d1
