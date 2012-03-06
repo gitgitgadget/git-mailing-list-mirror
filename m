@@ -1,103 +1,175 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Bug: pull --rebase with =?utf-8?B?w6kg?= =?utf-8?Q?in?= name
-Date: Tue, 6 Mar 2012 03:23:03 -0500
-Message-ID: <20120306082303.GC21199@sigill.intra.peff.net>
-References: <FECFDD4D-6EC3-4DE1-8A08-B4477345C4AA@habr.de>
- <20120305102657.GB29061@sigill.intra.peff.net>
- <87399nqqog.fsf@thomas.inf.ethz.ch>
- <F5A485EA-7EAD-4D8B-87C4-7185F713318C@habr.de>
- <20120305115815.GA4550@sigill.intra.peff.net>
- <0E2B8DE3-1ABD-453F-BCAA-0D693ECA5987@habr.de>
- <87ipijkxlm.fsf@thomas.inf.ethz.ch>
- <20120305132913.GA15004@sigill.intra.peff.net>
- <7v8vjf2c8o.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: [RFC HACK] refresh_index: lstat() in inode order
+Date: Tue, 6 Mar 2012 09:27:50 +0100
+Message-ID: <871up6cewp.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Rast <trast@inf.ethz.ch>,
-	=?utf-8?B?UmVuw6k=?= Haber <rene@habr.de>, git@vger.kernel.org,
-	Will Palmer <wmpalmer@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 06 09:23:12 2012
+Content-Type: text/plain; charset="us-ascii"
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 06 09:28:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4pfs-0000gs-DA
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 09:23:12 +0100
+	id 1S4pkU-0005Uh-FL
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 09:27:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758336Ab2CFIXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 03:23:07 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38252
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755353Ab2CFIXG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 03:23:06 -0500
-Received: (qmail 5363 invoked by uid 107); 6 Mar 2012 08:23:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 06 Mar 2012 03:23:12 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Mar 2012 03:23:03 -0500
-Content-Disposition: inline
-In-Reply-To: <7v8vjf2c8o.fsf@alter.siamese.dyndns.org>
+	id S1758633Ab2CFI1y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 03:27:54 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:8765 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758512Ab2CFI1x (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 03:27:53 -0500
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 6 Mar
+ 2012 09:27:51 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 6 Mar
+ 2012 09:27:50 +0100
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192311>
 
-On Mon, Mar 05, 2012 at 09:23:19AM -0800, Junio C Hamano wrote:
+Hi,
 
-> I think there were talks about cross pollinating and eventually
-> unifying the placeholder languages of pretty and for-each-ref, and
-> if we were to do so, I agree that --pretty definitely should learn
-> to do --sq. But I do not think we want to teach everything :shell;
-> following the style of %w(), something more generic that would apply
-> to any payload would be preferred, perhaps giving an end result like
-> this:
-> 
-> 	git show -s --format='
-> 		GIT_AUTHOR_NAME=%(sq-begin)%an%(sq-end)
->                 GIT_AUTHOR_EMAIL=%(sq-begin)%ae%(sq-end)
->         '
-> 
-> which would be immediately `eval`-able.
+This is prompted by a recent lkml discussion[1] which is also backed up
+by old stuff threads like[2] where Theodore Ts'o writes about
+spd_readdir.
 
-Yeah, that could work. I didn't want to teach everything :shell
-individually. I was hoping eventually for a world where
-"%(foo:one:two=bar)" was internally parsed into "the foo item, with
-attribute one set, and attribute two set to bar". And then the "shell"
-attribute would have a particular meaning for everything, whereas
-in "%(authordate:format=short)", the "format" attribute would be
-specific to that item.
+As explained at the links, ext3&4 seem to show suboptimal performance if
+you do the common pattern of lstat()'ing everything returned by
+readdir() and the corresponding inodes must be fetched from disk.  They
+suggest (and spd_readdir does just this, in an LD_PRELOADable format)
+sorting the entries by inode.
 
-I think that makes for a more readable syntax. However, your proposal
-does allow quoting multiple entities at a time, like:
+Let me emphasise: inodes fetched from disk.  This does not matter at all
+for the cached case.
 
-  IDENT=%(sq-begin)%an <%ae>%(sq-end)
+Probably this also applies to us in the search for untracked files, but
+right now I don't care about that too much because I have git-status
+configured not to show them.
 
-which could be useful.
+However, a similar trick could be applied to lstat() across the index,
+which *is* a big part of the work required to accurately display
+repository status in git-status and git-diff.
 
-Anyway, there is not much point in discussing hypothetical syntaxes. I
-think we agree that some form of this feature would be an ideal way
-forward in the long term, but specifics can wait until somebody shows up
-with patches.
+The dirty hack below uses the inode field in the index to sort the index
+entries prior to the real work of refresh_index.  I have been able to
+measure a significant (in the statistical sense) speedup using
+measurements like
 
-> In any case, my reading of the conclusion you guys have already
-> reached in this thread is that the issue is not even a bug in Git,
-> but is a broken build/installation of sed by a third-party.  I am
-> inclined to suggest any change to get_author_ident_from_commit
-> helper backburnered before we teach --sq to --pretty machinery.
+  ( for i in $(seq 1 30); do
+      sudo sh -c 'echo 3 >/proc/sys/vm/drop_caches'
+      /usr/bin/time -f "time %U %S %E" ~/dev/git/git-status 2>&1 | grep time
+    done ) | tee results-patched
 
-I think that is true. It could be considered a bug in git if we were
-relying on an unportable sed construct. But it works everywhere else,
-and we already go to the effort to set LANG and LC_ALL, so I am inclined
-to say that it is not a portability issue in git, but a crappy sed
-implementation, and the right solution is to use a better one.
+In numbers, across 30 trials for unpatched and patched git, my time
+needed to get a cache-cold 'git status' went from 4.24s to 3.97s on
+average, at p=0.006.
 
-We could switch the use of sed to perl (even just using 5.005-ish
-features, which are pretty portable), but until now, users of
-git-sh-setup don't need to rely on having perl at all.
+Note that this only has an effect if your directory has the inodes all
+jumbled.  I tried doing bigger trials, but I do not have a realistic
+work repository bigger than git.git.  You can look at the lstat() order
+you are currently getting with
 
-So I'm fine with leaving it for now and telling people to fix their sed.
+  strace -e lstat -v git status 2>&1 | egrep -o 'st_ino=[0-9]+'
 
--Peff
+With the patch it should be in good sorted order.  Note, however, that
+at the very end it also runs lstat() on .git/refs/*; those will still be
+out of order.
+
+So I'd be interested to hear success (or non-success) stories from
+people who are actively working with larger repos, perhaps linux-2.6 or
+your favourite corporate repo.  The lkml posts also seem to say that it
+only matters on ext3&4, not on btrfs, but perhaps other FSes also suffer
+in this area.
+
+I'd also be interested to hear from the refresh_index experts whether my
+change works in principle, or is already flawed in some major way.  You
+will note I sort by (inode,stage) to handle the search forward for the
+highest stage entry, but maybe this is not the only twist.  (As written
+it is also not thread-safe.)
+
+I did run the test suite and it passes, so it can't be *that* bad.
+
+
+Footnotes: 
+[1]  https://lkml.org/lkml/2012/2/29/210
+
+[2]  http://lkml.indiana.edu/hypermail/linux/kernel/0802.2/1076.html
+
+
+---- 8< ----
+diff --git i/read-cache.c w/read-cache.c
+index 274e54b..b0d1942 100644
+--- i/read-cache.c
++++ w/read-cache.c
+@@ -1092,10 +1092,28 @@ static void show_file(const char * fmt, const char * name, int in_porcelain,
+ 	printf(fmt, name);
+ }
+ 
++static struct index_state *istate_for_cmp;
++
++int cmp_by_inode(const void *a, const void *b)
++{
++	struct cache_entry *ca, *cb;
++
++	ca = istate_for_cmp->cache[*(const int *)a];
++	cb = istate_for_cmp->cache[*(const int *)b];
++
++	if (ca->ce_ino < cb->ce_ino)
++		return -1;
++	if (ca->ce_ino > cb->ce_ino)
++		return 1;
++	if (ce_stage(ca) < ce_stage(cb))
++		return -1;
++	return 1;
++}
++
+ int refresh_index(struct index_state *istate, unsigned int flags, const char **pathspec,
+ 		  char *seen, const char *header_msg)
+ {
+-	int i;
++	int i, j;
+ 	int has_errors = 0;
+ 	int really = (flags & REFRESH_REALLY) != 0;
+ 	int allow_unmerged = (flags & REFRESH_UNMERGED) != 0;
+@@ -1110,18 +1128,28 @@ int refresh_index(struct index_state *istate, unsigned int flags, const char **p
+ 	const char *typechange_fmt;
+ 	const char *added_fmt;
+ 	const char *unmerged_fmt;
++	int *by_inode_idx;
+ 
+ 	modified_fmt = (in_porcelain ? "M\t%s\n" : "%s: needs update\n");
+ 	deleted_fmt = (in_porcelain ? "D\t%s\n" : "%s: needs update\n");
+ 	typechange_fmt = (in_porcelain ? "T\t%s\n" : "%s needs update\n");
+ 	added_fmt = (in_porcelain ? "A\t%s\n" : "%s needs update\n");
+ 	unmerged_fmt = (in_porcelain ? "U\t%s\n" : "%s: needs merge\n");
+-	for (i = 0; i < istate->cache_nr; i++) {
++
++	by_inode_idx = xmalloc(istate->cache_nr * sizeof(int));
++	for (i = 0; i < istate->cache_nr; i++)
++		by_inode_idx[i] = i;
++	istate_for_cmp = istate;
++	qsort(by_inode_idx, istate->cache_nr, sizeof(int), cmp_by_inode);
++
++	for (j = 0; j < istate->cache_nr; j++) {
+ 		struct cache_entry *ce, *new;
+ 		int cache_errno = 0;
+ 		int changed = 0;
+ 		int filtered = 0;
+ 
++		i = by_inode_idx[j];
++
+ 		ce = istate->cache[i];
+ 		if (ignore_submodules && S_ISGITLINK(ce->ce_mode))
+ 			continue;
+
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
