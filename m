@@ -1,76 +1,68 @@
-From: Michal Privoznik <mprivozn@redhat.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCH] config: Introduce --patience config variable
-Date: Tue, 06 Mar 2012 14:32:33 +0100
-Message-ID: <4F5611F1.4020309@redhat.com>
-References: <a87ed689ddfb06601dd639541199fc72d829bdaf.1331031473.git.mprivozn@redhat.com> <20120306114914.GB6733@sigill.intra.peff.net> <87pqcp6fyh.fsf@thomas.inf.ethz.ch>
+Date: Tue, 06 Mar 2012 14:38:16 +0100
+Message-ID: <vpqr4x5hmt3.fsf@bauges.imag.fr>
+References: <a87ed689ddfb06601dd639541199fc72d829bdaf.1331031473.git.mprivozn@redhat.com>
+	<20120306114914.GB6733@sigill.intra.peff.net>
+	<87pqcp6fyh.fsf@thomas.inf.ethz.ch> <4F5611F1.4020309@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Mar 06 14:33:52 2012
+Content-Type: text/plain
+Cc: Thomas Rast <trast@inf.ethz.ch>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org, gitster@pobox.com
+To: Michal Privoznik <mprivozn@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Mar 06 14:39:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4uWQ-0005G8-7h
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 14:33:46 +0100
+	id 1S4ubk-0004H6-O3
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 14:39:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030682Ab2CFNdl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 08:33:41 -0500
-Received: from mx1.redhat.com ([209.132.183.28]:8231 "EHLO mx1.redhat.com"
+	id S1758258Ab2CFNjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 08:39:11 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:35293 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030378Ab2CFNdk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 08:33:40 -0500
-Received: from int-mx09.intmail.prod.int.phx2.redhat.com (int-mx09.intmail.prod.int.phx2.redhat.com [10.5.11.22])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id q26DWa9d008820
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Tue, 6 Mar 2012 08:32:37 -0500
-Received: from [10.34.27.226] (dhcp-27-226.brq.redhat.com [10.34.27.226])
-	by int-mx09.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id q26DWX04000585;
-	Tue, 6 Mar 2012 08:32:35 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.1) Gecko/20120302 Thunderbird/10.0.1
-In-Reply-To: <87pqcp6fyh.fsf@thomas.inf.ethz.ch>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+	id S1030406Ab2CFNjK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 08:39:10 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q26DYcC2023041
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 6 Mar 2012 14:34:38 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1S4uan-00085J-0T; Tue, 06 Mar 2012 14:38:17 +0100
+In-Reply-To: <4F5611F1.4020309@redhat.com> (Michal Privoznik's message of
+	"Tue, 06 Mar 2012 14:32:33 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 06 Mar 2012 14:34:39 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q26DYcC2023041
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1331645681.39458@xzvxrKWWMAwrmh6SYwa36A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192348>
 
-On 06.03.2012 14:01, Thomas Rast wrote:
-> Jeff King <peff@peff.net> writes:
-> 
->> On Tue, Mar 06, 2012 at 11:59:42AM +0100, Michal Privoznik wrote:
->>
->>> --- a/Documentation/diff-config.txt
->>> +++ b/Documentation/diff-config.txt
->>> @@ -86,6 +86,9 @@ diff.mnemonicprefix::
->>>  diff.noprefix::
->>>  	If set, 'git diff' does not show any source or destination prefix.
->>>  
->>> +diff.patience:
->>> +    If set, 'git diff' will use patience algorithm.
->>> +
->>
->> Should this be a boolean? Or should we actually have a diff.algorithm
->> option where you specify the algorithm you want (e.g., "diff.algorithm =
->> patience")? That would free us up later to more easily add new values.
->>
->> In particular, I am thinking about --minimal. It is mutually exclusive
->> with --patience, and is simply ignored if you use patience diff.
->> we perhaps have "diff.algorithm" which can be one of "myers", "minimal"
->> (which is really myers + the minimal flag), and "patience".
-> 
-> Don't forget "histogram".  I have no idea why it's not documented
-> (evidently 8c912eea slipped through the review cracks) but --histogram
-> is supported since 1.7.7.
-> 
+Michal Privoznik <mprivozn@redhat.com> writes:
 
-Okay guys. I'll got with diff.algorithm = [patience | minimal |
-histogram | myers] then. What I am not sure about is how to threat case
-when user have say algorithm = patience set in config but want to use
-myers. I guess we need --myers option then, don't we?
+> Okay guys. I'll got with diff.algorithm = [patience | minimal |
+> histogram | myers] then. What I am not sure about is how to threat case
+> when user have say algorithm = patience set in config but want to use
+> myers. I guess we need --myers option then, don't we?
 
-Michal
+At this point, maybe it's time to have
+--diff-algorithm=[patience|minimal|histogram|myers], and keep
+--patience, --minimal and --histogram just as compatibility aliases.
+
+Having one option per algorithm feels wrong ...
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
