@@ -1,60 +1,69 @@
-From: Ben Tebulin <nntp.20.jexpert@spamgourmet.com>
-Subject: Re: git push from client is not updating files on server
-Date: Tue, 06 Mar 2012 18:46:26 +0100
-Message-ID: <jj5ih2$f0m$1@dough.gmane.org>
-References: <CAC0z1F-bGikXZtLnd8d=3G+4okvNqZaxyrLjh4G3YzPpmqyxQA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 06 18:46:33 2012
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: t5704: problem with OS X sed
+Date: Tue, 6 Mar 2012 13:10:24 -0500
+Message-ID: <E40E6E02-8960-4A10-9E71-28F9CDB120F8@silverinsanity.com>
+Mime-Version: 1.0 (Apple Message framework v1257)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 06 19:10:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4yT0-0003dQ-F9
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 18:46:30 +0100
+	id 1S4yqW-0006vN-TW
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 19:10:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932550Ab2CFRqZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 12:46:25 -0500
-Received: from plane.gmane.org ([80.91.229.3]:36330 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932522Ab2CFRqZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 12:46:25 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1S4ySs-0003SY-Tb
-	for git@vger.kernel.org; Tue, 06 Mar 2012 18:46:22 +0100
-Received: from 217.6.238.194 ([217.6.238.194])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 06 Mar 2012 18:46:22 +0100
-Received: from nntp.20.jexpert by 217.6.238.194 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 06 Mar 2012 18:46:22 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 217.6.238.194
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <CAC0z1F-bGikXZtLnd8d=3G+4okvNqZaxyrLjh4G3YzPpmqyxQA@mail.gmail.com>
+	id S1757066Ab2CFSKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 13:10:43 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:49630 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756413Ab2CFSKm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Mar 2012 13:10:42 -0500
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 1DB941FFC008; Tue,  6 Mar 2012 18:10:37 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.2 required=3.5 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [192.168.5.89] (unknown [64.134.102.20])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id 90E371FFC006
+	for <git@vger.kernel.org>; Tue,  6 Mar 2012 18:10:35 +0000 (UTC)
+X-Mailer: Apple Mail (2.1257)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192368>
 
-You can only push to "bare-only repositories". These do not contain a 
-working tree but only a .git directory.
+t5704's newest test has always failed for my on OS X.  It's taken a little while for me to find the time to try to fix it.  Unfortunately, my sed-fu has proven not up to the task:
 
-You can only see changes changes in Git repository on the file system if 
-you clone & pull this bare-only repository to a regular repository.
+sed: 1: "/^-/{p;q}": extra characters at the end of q command
+not ok - 7 ridiculously long subject in boundary
+#	
+#		: >file4 &&
+#		test_tick &&
+#		git add file4 &&
+#		printf "%01200d
+#	" 0 | git commit -F - &&
+#		test_commit fifth &&
+#		git bundle create long-subject-bundle.bdl HEAD^..HEAD &&
+#		git bundle list-heads long-subject-bundle.bdl >heads &&
+#		test -s heads &&
+#		git fetch long-subject-bundle.bdl &&
+#		sed -n "/^-/{p;q}" long-subject-bundle.bdl >boundary &&
+#		grep "^-$_x40 " boundary
+#	
 
-It seems you looking for the wrong thing in the wrong place...
+I've tried various bits of whitespace or splitting the commands in two, but haven't hit on the proper combination of commands.
 
-Am 06.03.2012 17:52, schrieb Jerome Yanga:
-> My main objective is to create a central public Git server.
- > [...]
-> However, when I log into the central public Git server and look at the
-> files in the project, none of them have change.  I can only see the
-> changes from the client via Gitweb.
+Of course, if I remove the sed invocation, I get the following error from grep: "Regular expression too big"
+
+It seems to me that using sed to find a single line and then grepping for it is somewhat redundant.
+
+If someone else has suggestions on how to make this test work on OS X, I'm happy to help test them.
+
+~~ Brian Gernhardt
