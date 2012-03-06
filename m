@@ -1,175 +1,59 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [RFH] unpack-trees: cache_entry lifetime issue?
-Date: Tue, 06 Mar 2012 20:37:23 +0100
-Message-ID: <4F566773.5060005@lsrfire.ath.cx>
-References: <4F5102A2.70303@lsrfire.ath.cx> <7vk432dd89.fsf@alter.siamese.dyndns.org> <4F522758.9050205@lsrfire.ath.cx> <7vaa3uzozy.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 1/3] Documentation/git-branch: cleanups
+Date: Tue, 06 Mar 2012 11:43:41 -0800
+Message-ID: <7vobs9sefm.fsf@alter.siamese.dyndns.org>
+References: <1331023866-5658-1-git-send-email-vfr@lyx.org>
+ <1331026365-7044-1-git-send-email-user@vincent-VirtualBox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 06 20:37:38 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, trast@inf.ethz.ch
+To: Vincent van Ravesteijn <vfr@lyx.org>
+X-From: git-owner@vger.kernel.org Tue Mar 06 20:43:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S50CX-0004ty-Q3
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 20:37:38 +0100
+	id 1S50IX-0004iH-7d
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 20:43:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965258Ab2CFThc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Mar 2012 14:37:32 -0500
-Received: from india601.server4you.de ([85.25.151.105]:38956 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965160Ab2CFThc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 14:37:32 -0500
-Received: from [192.168.2.105] (p4FFDA8C5.dip.t-dialin.net [79.253.168.197])
-	by india601.server4you.de (Postfix) with ESMTPSA id 1AB6F2F803B;
-	Tue,  6 Mar 2012 20:37:30 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <7vaa3uzozy.fsf@alter.siamese.dyndns.org>
+	id S965232Ab2CFTno (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 14:43:44 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49705 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965176Ab2CFTno (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 14:43:44 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9380963B4;
+	Tue,  6 Mar 2012 14:43:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7dtypmHRfcO3M1zX+6EWmN9tksk=; b=KflHef
+	rYCAJxKCGXknT8DHjmzHKpjHSM0y6WAwTp59S9SWZ9VKpveO1zMiNsimHPK/LiqF
+	QfwUSdFrgmjEQt8i8ZAET0WfUMeEucvM1e1GRLEQPUgL3pPiSpihBoQhxV2B2BRm
+	HNOihfw0CqwJWwCxncp0d3vlAygKuDt/Qevt4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KIi/tY7xKY3u7OoHDnZXAVWZx7MZAjJk
+	cAPMT/QRlbVWja/v+8Xc7CTgUKEbDUdnTY91IQyzZoXbbUMiEnVU85Vi36O9xwWG
+	MU3KLbzxg1C0lymFaBNy6x34zGdXO3L1TvBMyy5YUJz9XCd9o4PzPQixfwCd/sUe
+	2YoHwGf45sY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8AD8263AF;
+	Tue,  6 Mar 2012 14:43:43 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2233163AE; Tue,  6 Mar 2012
+ 14:43:43 -0500 (EST)
+In-Reply-To: <1331026365-7044-1-git-send-email-user@vincent-VirtualBox>
+ (Vincent van Ravesteijn's message of "Tue, 6 Mar 2012 10:32:43 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AE30CB50-67C4-11E1-89F1-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192381>
 
-Am 05.03.2012 23:01, schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe<rene.scharfe@lsrfire.ath.cx>  writes:
->=20
->> Next question: Should the function fn() in struct unpack_trees_optio=
-ns
->> be able to replace src[0], and unpack_callback() is then supposed to
->> use the new pointer after calling unpack_nondirectories()?  If not
->> then we can clean up things a bit by moving the src array into
->> unpack_nondirectories().
->=20
-> Sorry, I have no idea.  What kind of usage pattern do you have in
-> mind?
-
-Well, I can't imagine a merge callback that needs this ability, but
-that really doesn't mean much.  Just want to avoid taking away options
-that turn out to be useful later.
-
->> For now, just this patch, which cleans up memory, but not the code:
->>
->> -- >8 --
->> Subject: unpack-trees: plug minor memory leak
->>
->> The allocations made by unpack_nondirectories() using create_ce_entr=
-y()
->> are never freed.  In the case of a merge, we hand them to
->> call_unpack_fn() and never look at them again.
->=20
-> That assumes that whatever callbacks that are called will only look
-> at but never takes ownership of the cache entry given to them.  I
-> *think* everybody eventually calls "add_entry()" that duplicates the
-> cache entry before storing it to the index, but I didn't go through
-> all the codepaths.  Assuming you did, I think this is a good change.
-
-I did that a while back and while doing that again just now with
-tired eyes after a day's work noticed how deep the call chains are
-and that it's certainly possible that I missed a place that assumed
-it owned the cache entry.
-
-=46or increased confidence, perhaps it's better to first patch the
-non-merge leak, then clean up and const'ify the merge case and only
-then free().  Or to declare that merge functions can take ownership
-of the cache entries.  Timid patch for the first part below.
-
--- >8 --
-Subject: unpack-trees: plug minor memory leak
-
-The allocations made by unpack_nondirectories() using create_ce_entry()
-are never freed.
-
-In the non-merge case, we duplicate them using add_entry() and later
-only look at the first allocated element (src[0]), perhaps even only
-by mistake.  Split out the actual addition from add_entry() into the
-new helper do_add_entry() and call this non-duplicating function
-instead of add_entry() to avoid the leak.
-
-Valgrind reports this for the command "git archive v1.7.9" without
-the patch:
-
-  =3D=3D13372=3D=3D LEAK SUMMARY:
-  =3D=3D13372=3D=3D    definitely lost: 230,986 bytes in 2,325 blocks
-  =3D=3D13372=3D=3D    indirectly lost: 0 bytes in 0 blocks
-  =3D=3D13372=3D=3D      possibly lost: 98 bytes in 1 blocks
-  =3D=3D13372=3D=3D    still reachable: 2,259,198 bytes in 3,243 blocks
-  =3D=3D13372=3D=3D         suppressed: 0 bytes in 0 blocks
-
-And with the patch applied:
-
-  =3D=3D13375=3D=3D LEAK SUMMARY:
-  =3D=3D13375=3D=3D    definitely lost: 65 bytes in 1 blocks
-  =3D=3D13375=3D=3D    indirectly lost: 0 bytes in 0 blocks
-  =3D=3D13375=3D=3D      possibly lost: 0 bytes in 0 blocks
-  =3D=3D13375=3D=3D    still reachable: 2,364,417 bytes in 3,245 blocks
-  =3D=3D13375=3D=3D         suppressed: 0 bytes in 0 blocks
-
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- unpack-trees.c |   25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
-
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 7c9ecf6..f9c74bd 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -102,21 +102,28 @@ void setup_unpack_trees_porcelain(struct unpack_t=
-rees_options *opts,
- 		opts->unpack_rejects[i].strdup_strings =3D 1;
- }
-=20
--static void add_entry(struct unpack_trees_options *o, struct cache_ent=
-ry *ce,
--	unsigned int set, unsigned int clear)
-+static void do_add_entry(struct unpack_trees_options *o, struct cache_=
-entry *ce,
-+			 unsigned int set, unsigned int clear)
- {
--	unsigned int size =3D ce_size(ce);
--	struct cache_entry *new =3D xmalloc(size);
--
- 	clear |=3D CE_HASHED | CE_UNHASHED;
-=20
- 	if (set & CE_REMOVE)
- 		set |=3D CE_WT_REMOVE;
-=20
-+	ce->next =3D NULL;
-+	ce->ce_flags =3D (ce->ce_flags & ~clear) | set;
-+	add_index_entry(&o->result, ce,
-+			ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE);
-+}
-+
-+static void add_entry(struct unpack_trees_options *o, struct cache_ent=
-ry *ce,
-+	unsigned int set, unsigned int clear)
-+{
-+	unsigned int size =3D ce_size(ce);
-+	struct cache_entry *new =3D xmalloc(size);
-+
- 	memcpy(new, ce, size);
--	new->next =3D NULL;
--	new->ce_flags =3D (new->ce_flags & ~clear) | set;
--	add_index_entry(&o->result, new, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_=
-REPLACE);
-+	do_add_entry(o, new, set, clear);
- }
-=20
- /*
-@@ -587,7 +594,7 @@ static int unpack_nondirectories(int n, unsigned lo=
-ng mask,
-=20
- 	for (i =3D 0; i < n; i++)
- 		if (src[i] && src[i] !=3D o->df_conflict_entry)
--			add_entry(o, src[i], 0, 0);
-+			do_add_entry(o, src[i], 0, 0);
- 	return 0;
- }
-=20
---=20
-1.7.9.2
+Thanks, both.
+Will queue.
