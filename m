@@ -1,72 +1,70 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [PATCH] config: Introduce --patience config variable
-Date: Tue, 6 Mar 2012 14:01:42 +0100
-Message-ID: <87pqcp6fyh.fsf@thomas.inf.ethz.ch>
-References: <a87ed689ddfb06601dd639541199fc72d829bdaf.1331031473.git.mprivozn@redhat.com>
-	<20120306114914.GB6733@sigill.intra.peff.net>
+From: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
+Subject: Re: [PATCH v3 2/4] http: try http_proxy env var when http.proxy config
+ option is not set
+Date: Tue, 06 Mar 2012 15:08:47 +0100
+Message-ID: <4F561A6F.2040206@seap.minhap.es>
+References: <4F54D91C.6080905@seap.minhap.es><7v4nu32bwp.fsf@alter.siamese.dyndns.org><4F560196.8070500@seap.minhap.es> <20120306112745.GA6733@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Michal Privoznik <mprivozn@redhat.com>, <git@vger.kernel.org>,
-	<gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	sam@vilain.net
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 06 14:01:53 2012
+X-From: git-owner@vger.kernel.org Tue Mar 06 14:11:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4u1X-0000qf-DJ
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 14:01:51 +0100
+	id 1S4uAh-0003EW-K7
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 14:11:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030322Ab2CFNBq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 08:01:46 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:26003 "EHLO edge20.ethz.ch"
+	id S1758217Ab2CFNLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 08:11:12 -0500
+Received: from luthien2.mpt.es ([82.150.0.102]:9009 "EHLO luthien2.map.es"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751757Ab2CFNBq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 08:01:46 -0500
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 6 Mar
- 2012 14:01:43 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
- (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 6 Mar
- 2012 14:01:43 +0100
-In-Reply-To: <20120306114914.GB6733@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 6 Mar 2012 06:49:14 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1752264Ab2CFNLL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 08:11:11 -0500
+Received: from correo.map.es (unknown [10.1.31.23])
+	by luthien2.map.es (Postfix) with ESMTP id 7333824E98;
+	Tue,  6 Mar 2012 14:10:12 +0100 (CET)
+Received: from [10.47.128.147] (unknown [10.1.29.79])
+	by correo.map.es (Postfix) with ESMTP id 846E520386F;
+	Tue,  6 Mar 2012 14:10:08 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0.1) Gecko/20120216 Thunderbird/10.0.1
+In-Reply-To: <20120306112745.GA6733@sigill.intra.peff.net>
+X-map-MapScanner: Libre de virus, Libre de virus
+X-Spam-Status: No, No
+X-map-MapScanner-Information: 
+X-map-MapScanner-ID: 7333824E98.17D17
+X-map-MapScanner-From: nelsonjesus.benitez@seap.minhap.es
+X-map-MailScanner-Watermark: 1331644214.18025@0lP4JLoBCxbCC0JmLcvcsQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192342>
 
-Jeff King <peff@peff.net> writes:
+On 03/06/2012 12:27 PM, Jeff King wrote:
+> On Tue, Mar 06, 2012 at 01:22:46PM +0100, Nelson Benitez Leon wrote:
+> 
+>>> Also I thought the conclusion from the other thread was that even if
+>>> we were to do this, we should apply the http_proxy environment only
+>>> when we are talking to http:// and for https:// we would instead
+>>> read HTTPS_PROXY or something?
+>>
+>> Ok I completely miss this, can this be added in a later patch?
+> 
+> Hmm. Your current series munges the curl_http_proxy variable in order to
+> put the username and password in, and therefore needs to know what is in
+> the proxy variable.
+> 
+> But if you switch patch 4/4 to set CURLOPT_PROXYUSERPWD, then we won't
+> need to care what's in curl_http_proxy, no? We will get a 407 from curl
+> because curl detected the proxy (either from the environment, or because
+> we actually told it via curl_http_proxy), and then we will fill in the
+> username and password without touching the actual proxy URL.
+> 
+> So this patch can just be dropped at that point, right?
 
-> On Tue, Mar 06, 2012 at 11:59:42AM +0100, Michal Privoznik wrote:
->
->> --- a/Documentation/diff-config.txt
->> +++ b/Documentation/diff-config.txt
->> @@ -86,6 +86,9 @@ diff.mnemonicprefix::
->>  diff.noprefix::
->>  	If set, 'git diff' does not show any source or destination prefix.
->>  
->> +diff.patience:
->> +    If set, 'git diff' will use patience algorithm.
->> +
->
-> Should this be a boolean? Or should we actually have a diff.algorithm
-> option where you specify the algorithm you want (e.g., "diff.algorithm =
-> patience")? That would free us up later to more easily add new values.
->
-> In particular, I am thinking about --minimal. It is mutually exclusive
-> with --patience, and is simply ignored if you use patience diff.
-> we perhaps have "diff.algorithm" which can be one of "myers", "minimal"
-> (which is really myers + the minimal flag), and "patience".
-
-Don't forget "histogram".  I have no idea why it's not documented
-(evidently 8c912eea slipped through the review cracks) but --histogram
-is supported since 1.7.7.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+I think so, I will try 4/4 using proxyuserpwd.
