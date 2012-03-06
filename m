@@ -1,90 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Suggestion: git fetch <remote> <branch> to update
- remote-tracking branch
-Date: Tue, 6 Mar 2012 03:59:19 -0500
-Message-ID: <20120306085919.GF21199@sigill.intra.peff.net>
-References: <4F54EDC1.80608@gmail.com>
- <7vmx7v0wrw.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH] Documentation update for 'git branch'
+Date: Tue, 6 Mar 2012 10:00:42 +0100
+Message-ID: <871up66r45.fsf@thomas.inf.ethz.ch>
+References: <1331023866-5658-1-git-send-email-vfr@lyx.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Antony Male <antony.male@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 06 09:59:37 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: <git@vger.kernel.org>, <gitster@pobox.com>
+To: <vfr@lyx.org>
+X-From: git-owner@vger.kernel.org Tue Mar 06 10:00:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4qF6-0003oO-4n
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 09:59:36 +0100
+	id 1S4qGI-00057S-3b
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 10:00:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932292Ab2CFI7X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 03:59:23 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38283
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758862Ab2CFI7W (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 03:59:22 -0500
-Received: (qmail 5778 invoked by uid 107); 6 Mar 2012 08:59:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 06 Mar 2012 03:59:29 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Mar 2012 03:59:19 -0500
-Content-Disposition: inline
-In-Reply-To: <7vmx7v0wrw.fsf@alter.siamese.dyndns.org>
+	id S965027Ab2CFJAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 04:00:45 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:6708 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964952Ab2CFJAo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 04:00:44 -0500
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 6 Mar
+ 2012 10:00:45 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 6 Mar
+ 2012 10:00:42 +0100
+In-Reply-To: <1331023866-5658-1-git-send-email-vfr@lyx.org> (vfr@lyx.org's
+	message of "Tue, 6 Mar 2012 09:51:06 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192320>
 
-On Mon, Mar 05, 2012 at 09:42:43AM -0800, Junio C Hamano wrote:
+Hi Vincent,
 
-> > What do people think?
-> 
-> I think this was discussed number of times here, and my vague
-> recollection of the conclusion last time is that it would be OK to
-> change the behaviour of single-shot fetch "fetch <remote> <branch>"
-> against a remote where there is already a default fetch refspec that
-> covers the <branch> so that such a fetch will update the remote
-> tracking branch that usually copies from <branch> (and only that
-> one).
-> 
-> We might need a proper deprecation and migration plan, though.  I
-> say "might" because offhand I don't know what the extent of damages
-> to existing users' habits will be if we didn't offer any.
+vfr@lyx.org writes:
 
-If you (or somebody else) wants to look into it, I've had this patch
-hanging around in my repo since 2009, but it does cause a bunch of
-failures in the test suite. I don't think I ever investigated whether
-the test failures were bad assumptions in the tests, or signs of a real
-problem. Those test failures may also give a clue about how unwitting
-users would be affected.
+> Changes:
+> - add a period to a sentence,
+> - correct 'tag' into 'branch',
+> - unify the use of backticks,
+> - indicate that the commit parameter of --contains defaults to HEAD.
 
----
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 65f5f9b..409c86c 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -156,6 +156,9 @@ static struct ref *get_ref_map(struct transport *transport,
- 	const struct ref *remote_refs = transport_get_remote_refs(transport);
- 
- 	if (ref_count || tags == TAGS_SET) {
-+		struct ref *tracking_refs = NULL;
-+		struct ref **tracking_tail = &tracking_refs;
-+
- 		for (i = 0; i < ref_count; i++) {
- 			get_fetch_map(remote_refs, &refs[i], &tail, 0);
- 			if (refs[i].dst && refs[i].dst[0])
-@@ -166,6 +169,12 @@ static struct ref *get_ref_map(struct transport *transport,
- 			rm->merge = 1;
- 		if (tags == TAGS_SET)
- 			get_fetch_map(remote_refs, tag_refspec, &tail, 0);
-+
-+		for (i = 0; i < transport->remote->fetch_refspec_nr; i++)
-+			get_fetch_map(ref_map, &transport->remote->fetch[i],
-+					&tracking_tail, 0);
-+		*tail = tracking_refs;
-+		tail = tracking_tail;
- 	} else {
- 		/* Use the defaults */
- 		struct remote *remote = transport->remote;
+First off, please read Documentation/SubmittingPatches.  I think this
+should be split into at least two commits, one for the cleanups and one
+for the actual change.
+
+As for
+
+> - unify the use of backticks,
+
+nice catch, and note that this is a pretty common problem across the
+docs.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
