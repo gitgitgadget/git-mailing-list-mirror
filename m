@@ -1,218 +1,153 @@
-From: Benjamin Kerensa <bkerensa@ubuntu.com>
-Subject: [PATCH] git-gui: fix a typo in po/ files
-Date: Mon, 5 Mar 2012 17:53:23 -0800
-Message-ID: <CAGOdq5kmVr7AFYLa6by37h6q4AaHHx7EVMb5ijNc=wQv=mZWTg@mail.gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH] i18n: Not add stripped contents for translation
+Date: Tue, 6 Mar 2012 12:16:06 +0800
+Message-ID: <CANYiYbHGAG5ijeL3yW5SKYAfMNwtme5ELPeGNPhNyKBPGTONMg@mail.gmail.com>
+References: <1330910494-17216-1-git-send-email-worldhello.net@gmail.com>
+	<7v7gyz7pei.fsf@alter.siamese.dyndns.org>
+	<CANYiYbGdJ0yFmPnsK_JdABwmFraVdNi08QgFKRmGzJt-DA9tBw@mail.gmail.com>
+	<7vobsb67dn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=GB2312
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: jrnieder@gmail.com, git@vger.kernel.org,
-	patthoyts@users.sourceforge.net, worldhello.net@gmail.com
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Mar 06 02:54:15 2012
+Cc: Git List <git@vger.kernel.org>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 06 05:16:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4jbP-0008WB-UU
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 02:54:12 +0100
+	id 1S4lot-00026m-8Z
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 05:16:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758189Ab2CFByG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Mar 2012 20:54:06 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:35655 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758066Ab2CFByF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Mar 2012 20:54:05 -0500
-Received: by eekc41 with SMTP id c41so1710912eek.19
-        for <git@vger.kernel.org>; Mon, 05 Mar 2012 17:54:03 -0800 (PST)
-Received-SPF: pass (google.com: domain of bkerensa@gmail.com designates 10.213.108.77 as permitted sender) client-ip=10.213.108.77;
-Authentication-Results: mr.google.com; spf=pass (google.com: domain of bkerensa@gmail.com designates 10.213.108.77 as permitted sender) smtp.mail=bkerensa@gmail.com; dkim=pass header.i=bkerensa@gmail.com
-Received: from mr.google.com ([10.213.108.77])
-        by 10.213.108.77 with SMTP id e13mr4025046ebp.11.1330998843364 (num_hops = 1);
-        Mon, 05 Mar 2012 17:54:03 -0800 (PST)
+	id S1030235Ab2CFEQI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Mar 2012 23:16:08 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:63368 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964934Ab2CFEQH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Mar 2012 23:16:07 -0500
+Received: by gghe5 with SMTP id e5so1281270ggh.19
+        for <git@vger.kernel.org>; Mon, 05 Mar 2012 20:16:06 -0800 (PST)
+Received-SPF: pass (google.com: domain of worldhello.net@gmail.com designates 10.236.181.193 as permitted sender) client-ip=10.236.181.193;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of worldhello.net@gmail.com designates 10.236.181.193 as permitted sender) smtp.mail=worldhello.net@gmail.com; dkim=pass header.i=worldhello.net@gmail.com
+Received: from mr.google.com ([10.236.181.193])
+        by 10.236.181.193 with SMTP id l41mr30402913yhm.38.1331007366246 (num_hops = 1);
+        Mon, 05 Mar 2012 20:16:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:x-google-sender-auth:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=nIfNYAdIhOVCTxKkqeuMAr3CdFkpy5zr4A39GQQFM2o=;
-        b=gyy0gDZI+X9oHsJ2JLff3JNucpxcCdmiN93XgydhSNhdXCoK9lKCmJO3zQSK/Ds/H2
-         5irXN0mH/tBIX+TP6buaA49PwaVhP26EU4Da7dqgS4+RhHdawfy2XwZCz9XADd6rcr5t
-         qF3DyRAxluzttPoq6t6nId3Y2rRR69momUkep2nfNaDwKifwtFxJx7QVa356Ugev3OPB
-         PvNo7bXOMAH/5ilMuWqhDyixVDsXjeaTNexu4bhG88tUxhiCU4pkn5TTHX9AX2kJXs2K
-         IaIf4Ovtyma61j8f3iuOBuUkIbX1aHR9GSkDbGd3AL8BuC1JAe8n6VNef+yUWHT/+r+a
-         UfWQ==
-Received: by 10.213.108.77 with SMTP id e13mr3028794ebp.11.1330998843268; Mon,
- 05 Mar 2012 17:54:03 -0800 (PST)
-Received: by 10.213.34.200 with HTTP; Mon, 5 Mar 2012 17:53:23 -0800 (PST)
-X-Google-Sender-Auth: YNAxIzaYEb4kV_ce5kFpm_Sh9SM
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=irIxuQ08flkrbtv5OBxXcWkM1McFCwJSr0CT/CAwJK4=;
+        b=c0fOzbphS51CBcR8Z+jKHNhmSCRll4NaNHX//YNB/3nQ/U5R8TG/yWMXl7naeZLRnG
+         uhgNvUFogOtsQohMMzNev032h0GPLs78Us0bkBsWDhnw5lzFsUHTGcLn+RtOXGok8ZyB
+         l4KD9t1pFOd9bg9ie3jHqsEbv3Y9++ZeSLqwHjDwy8+ve4GrOyvjDNW9RXikHZNw5z44
+         zkVSXjPNXkkz+TiejdtGocb/TGIdlCIb8DYLtDugEFyl6vWKziNCWz1DNGl5ls+8NrAf
+         3xGddEU46eoVaP/6mbym1ncf+7Mdb0M3l/JNte2wfWTdo6T9qHN4bP7xe6NaJRG+hXsw
+         KnzA==
+Received: by 10.236.181.193 with SMTP id l41mr24013007yhm.38.1331007366177;
+ Mon, 05 Mar 2012 20:16:06 -0800 (PST)
+Received: by 10.236.182.5 with HTTP; Mon, 5 Mar 2012 20:16:06 -0800 (PST)
+In-Reply-To: <7vobsb67dn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192301>
 
-"succeeded" was misspelled in the code, which propagated throughout the
- translations.
+2012/3/5 Junio C Hamano <gitster@pobox.com>:
+> This is a tangent and I am just showing aloud my ignorance, but I won=
+der
+> if there is a reasonably generic and "best current practice" way to
+> structure code to show an enumeration in human languages, for example=
+,
+>
+>        A, B, C and D.
+>
+> in an easier-to-translate way.
+>
+> I suspect that it might be sufficiently generic if we can make it pos=
+sible
+> to allow the first and the last inter-word-separation and the token a=
+fter
+> all the items to be different from other inter-word-separation tokens=
+=2E
+>
+> E.g. in English, the first one and all the "other" are ", ", the last
+> inter-word token is " and ", and the token at the very end is ".". In
+> Japanese some translators may want to say "A=A4=E4B=A4=C8C=A4=C8D=A1=A3=
+", meaning the
+> first one is "=A4=E4", "=A1=A3" is used at the very end, and all the =
+others may be
+> "=A4=C8".
 
-=46ixed all of them.
+I write a function for this.
 
-Signed-off-by: Benjamin Kerensa <bkerensa <at> ubuntu.com>
+/*
+ * Make list of items easy for l10n translation.
+ *
+ *   1. Input list of items one by one through the 2nd argument,
+ *      but leave the 1st argument as NULL.
+ *
+ *   2. Get the output joint string from the 1st argument.
+ *
+ * According to the number of items input. The joint string maybe:
+ *
+ *   a
+ *   a and b
+ *   a, b and c
+ *   a, b, c and d
+ *
+ */
+#define MAX_L10N_LIST_ITEMS_COUNT  128
+void append_l10n_list_items(struct strbuf *ret, const char *item)
+{
+    static const char **itemlist =3D NULL;
+    static int  count =3D 0;
+    int i =3D 0;
 
----
- po/de.po       |    2 +-
- po/fr.po       |    2 +-
- po/git-gui.pot |    2 +-
- po/hu.po       |    2 +-
- po/it.po       |    2 +-
- po/ja.po       |    2 +-
- po/nb.po       |    2 +-
- po/pt_br.po    |    2 +-
- po/ru.po       |    2 +-
- po/sv.po       |    2 +-
- 10 files changed, 10 insertions(+), 10 deletions(-)
+    if (itemlist =3D=3D NULL)
+        itemlist =3D xmalloc(MAX_L10N_LIST_ITEMS_COUNT * sizeof(char*))=
+;
 
-diff --git a/po/de.po b/po/de.po
-index 44c5ddc..d9a9ebd 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -2397,7 +2397,7 @@ msgid "Generation failed."
- msgstr "Schl=C3=BCsselerzeugung fehlgeschlagen."
+    if(item !=3D NULL && count < MAX_L10N_LIST_ITEMS_COUNT )
+        itemlist[count++] =3D item;
 
- #: lib/sshkey.tcl:118
--msgid "Generation succeded, but no keys found."
-+msgid "Generation succeeded, but no keys found."
- msgstr "Schl=C3=BCsselerzeugung erfolgreich, aber keine Schl=C3=BCssel=
- gefunden."
+    if (ret !=3D NULL) {
+        if (count =3D=3D 1) {
+            strbuf_addstr(ret, itemlist[0]);
+        }
+        else if (count =3D=3D 2) {
+            strbuf_addf(ret, _("%s and %s"), itemlist[0], itemlist[1]);
+        }
+        else if (count > 2) {
+            strbuf_addf(ret, _("%s, "), itemlist[0]);
+            for (i=3D1; i<count-2; i++) {
+                strbuf_addstr(ret, itemlist[i]);
+                strbuf_addstr(ret, _(", "));
+            }
+            strbuf_addf(ret, _("%s and %s"), itemlist[count-2],
+itemlist[count-1]);
+        }
+        free(itemlist);
+        itemlist =3D NULL;
+        count =3D 0;
+    }
+}
 
- #: lib/sshkey.tcl:121
-diff --git a/po/fr.po b/po/fr.po
-index 8170696..40441db 100644
---- a/po/fr.po
-+++ b/po/fr.po
-@@ -2399,7 +2399,7 @@ msgid "Generation failed."
- msgstr "La g=C3=A9n=C3=A9ration a =C3=A9chou=C3=A9."
 
- #: lib/sshkey.tcl:118
--msgid "Generation succeded, but no keys found."
-+msgid "Generation succeeded, but no keys found."
- msgstr "La g=C3=A9n=C3=A9ration a r=C3=A9ussi, mais aucune cl=C3=A9 n'=
-a =C3=A9t=C3=A9 trouv=C3=A9e."
+=2E..
+       strbuf_addstr(&extra, " ("))
+       if (a)
+               append_l10n_list_items(NULL, _("msg a"));
+       if (b)
+               append_l10n_list_items(NULL, _("msg b"));
+       if (c)
+               append_l10n_list_items(NULL, _("msg c"));
 
- #: lib/sshkey.tcl:121
-diff --git a/po/git-gui.pot b/po/git-gui.pot
-index 1ae2aaa..0c94f9c 100644
---- a/po/git-gui.pot
-+++ b/po/git-gui.pot
-@@ -2203,7 +2203,7 @@ msgid "Generation failed."
- msgstr ""
+       append_l10n_list_items(&extra, NULL);
+=2E..
 
- #: lib/sshkey.tcl:118
--msgid "Generation succeded, but no keys found."
-+msgid "Generation succeeded, but no keys found."
- msgstr ""
-
- #: lib/sshkey.tcl:121
-diff --git a/po/hu.po b/po/hu.po
-index 0f87bc1..d106dad 100644
---- a/po/hu.po
-+++ b/po/hu.po
-@@ -2354,7 +2354,7 @@ msgid "Generation failed."
- msgstr "A gener=C3=A1l=C3=A1s nem siker=C3=BClt."
-
- #: lib/sshkey.tcl:118
--msgid "Generation succeded, but no keys found."
-+msgid "Generation succeeded, but no keys found."
- msgstr "A gener=C3=A1l=C3=A1s sikeres, de egy kulcs se tal=C3=A1lhat=C3=
-=B3."
-
- #: lib/sshkey.tcl:121
-diff --git a/po/it.po b/po/it.po
-index aa15a20..1bd8b8e 100644
---- a/po/it.po
-+++ b/po/it.po
-@@ -2397,7 +2397,7 @@ msgid "Generation failed."
- msgstr "Errore durante la creazione della chiave."
-
- #: lib/sshkey.tcl:118
--msgid "Generation succeded, but no keys found."
-+msgid "Generation succeeded, but no keys found."
- msgstr "La chiave =C3=A8 stata creata con successo, ma non =C3=A8 stat=
-a trovata."
-
- #: lib/sshkey.tcl:121
-diff --git a/po/ja.po b/po/ja.po
-index 1501798..9aff249 100644
---- a/po/ja.po
-+++ b/po/ja.po
-@@ -2362,7 +2362,7 @@ msgid "Generation failed."
- msgstr "=E7=94=9F=E6=88=90=E3=81=AB=E5=A4=B1=E6=95=97=E3=81=97=E3=81=BE=
-=E3=81=97=E3=81=9F=E3=80=82"
-
- #: lib/sshkey.tcl:118
--msgid "Generation succeded, but no keys found."
-+msgid "Generation succeeded, but no keys found."
- msgstr "=E7=94=9F=E6=88=90=E3=81=AB=E3=81=AF=E6=88=90=E5=8A=9F=E3=81=97=
-=E3=81=BE=E3=81=97=E3=81=9F=E3=81=8C=E3=80=81=E9=8D=B5=E3=81=8C=E8=A6=8B=
-=E3=81=A4=E3=81=8B=E3=82=8A=E3=81=BE=E3=81=9B=E3=82=93=E3=80=82"
-
- #: lib/sshkey.tcl:121
-diff --git a/po/nb.po b/po/nb.po
-index 6de93c2..d66aa50 100644
---- a/po/nb.po
-+++ b/po/nb.po
-@@ -2286,7 +2286,7 @@ msgid "Generation failed."
- msgstr "Generering feilet."
-
- #: lib/sshkey.tcl:118
--msgid "Generation succeded, but no keys found."
-+msgid "Generation succeeded, but no keys found."
- msgstr "Generering vellykket, men ingen n=C3=B8kler er funnet."
-
- #: lib/sshkey.tcl:121
-diff --git a/po/pt_br.po b/po/pt_br.po
-index b175b97..bad116c 100644
---- a/po/pt_br.po
-+++ b/po/pt_br.po
-@@ -2375,7 +2375,7 @@ msgid "Generation failed."
- msgstr "A gera=C3=A7=C3=A3o da chave falhou."
-
- #: lib/sshkey.tcl:118
--msgid "Generation succeded, but no keys found."
-+msgid "Generation succeeded, but no keys found."
- msgstr "A gera=C3=A7=C3=A3o da chave foi bem-sucedida, mas nenhuma cha=
-ve foi encontrada."
-
- #: lib/sshkey.tcl:121
-diff --git a/po/ru.po b/po/ru.po
-index 30f4b77..ca4343b 100644
---- a/po/ru.po
-+++ b/po/ru.po
-@@ -2370,7 +2370,7 @@ msgid "Generation failed."
- msgstr "=D0=9A=D0=BB=D1=8E=D1=87 =D0=BD=D0=B5 =D1=81=D0=BE=D0=B7=D0=B4=
-=D0=B0=D0=BD."
-
- #: lib/sshkey.tcl:118
--msgid "Generation succeded, but no keys found."
-+msgid "Generation succeeded, but no keys found."
- msgstr "=D0=A1=D0=BE=D0=B7=D0=B4=D0=B0=D0=BD=D0=B8=D0=B5 =D0=BA=D0=BB=D1=
-=8E=D1=87=D0=B0 =D0=B7=D0=B0=D0=B2=D0=B5=D1=80=D1=88=D0=B8=D0=BB=D0=BE=D1=
-=81=D1=8C, =D0=BD=D0=BE =D1=80=D0=B5=D0=B7=D1=83=D0=BB=D1=8C=D1=82=D0=B0=
-=D1=82 =D0=BD=D0=B5 =D0=B1=D1=8B=D0=BB =D0=BD=D0=B0=D0=B9=D0=B4=D0=B5=D0=
-=BD"
-
- #: lib/sshkey.tcl:121
-diff --git a/po/sv.po b/po/sv.po
-index 24cc4e3..fcb063f 100644
---- a/po/sv.po
-+++ b/po/sv.po
-@@ -2382,7 +2382,7 @@ msgid "Generation failed."
- msgstr "Misslyckades med att skapa."
-
- #: lib/sshkey.tcl:120
--msgid "Generation succeded, but no keys found."
-+msgid "Generation succeeded, but no keys found."
- msgstr "Lyckades skapa nyckeln, men hittar inte n=C3=A5gon nyckel."
-
- #: lib/sshkey.tcl:123
 --=20
-1.7.9
+Jiang Xin
