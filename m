@@ -1,86 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Support Out-Of-Tree Valgrind Tests
-Date: Tue, 06 Mar 2012 15:12:02 -0800
-Message-ID: <7v399lqq7x.fsf@alter.siamese.dyndns.org>
-References: <1330903437-31386-1-git-send-email-greened@obbligato.org>
- <1330903437-31386-2-git-send-email-greened@obbligato.org>
- <87aa3vzdoc.fsf@thomas.inf.ethz.ch> <nngy5re29zn.fsf@transit.us.cray.com>
- <878vje86cy.fsf@thomas.inf.ethz.ch> <87mx7tiyhh.fsf@smith.obbligato.org>
- <7vaa3ttvj1.fsf@alter.siamese.dyndns.org>
- <87hay1fkfk.fsf@smith.obbligato.org>
- <7vboo9qskb.fsf@alter.siamese.dyndns.org>
- <7v7gyxqrty.fsf@alter.siamese.dyndns.org>
- <87mx7te3ng.fsf@smith.obbligato.org>
+From: Arya Irani <arya.irani@gmail.com>
+Subject: bug report? fatal: Ambiguous object name: 'xxx' during branch operation
+Date: Tue, 6 Mar 2012 18:18:40 -0500
+Message-ID: <CAB1hNr8-iPbXD-7eEOxZtrJWO78V8sDmwWWQRMMExvtGtpPrhw@mail.gmail.com>
+References: <CAB1hNr8itJV1-pzWxUo1KPsZNivg+KuRq_5jUwLUyCUpk7k=4w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, Thomas Rast <trast@inf.ethz.ch>
-To: "David A. Greene" <dag@cray.com>
-X-From: git-owner@vger.kernel.org Wed Mar 07 00:12:14 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 07 00:18:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S53YD-0002lV-0c
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 00:12:13 +0100
+	id 1S53eY-0002Y6-Fx
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 00:18:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031564Ab2CFXMH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 18:12:07 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51129 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1031544Ab2CFXMF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 18:12:05 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A5946675;
-	Tue,  6 Mar 2012 18:12:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=oDXpSPaSaVDCiMUJLMLEX+8vW3E=; b=GqzOaX
-	daGqWAUK/pBFMvnVO54AY7q/NSuGKUT01cxbewbc50KIsMFSwbtiC630h5ivxVsy
-	UjidBwMBOkPW79Tc5gymVqR8uZPO+t4PE9wsJ86Sj3HGVVFakwEaZ7Mo2jf0Awvm
-	uCi+feTgXmo0g4ourZHHpil4jhcsSE98iCrks=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rPGtGm5MmD1u6xXCX5UlcwuSydFoJ857
-	YcqMTQVyeTMSrKgNPmi7k06+9YwRULHKcEZoPgn6tpahXDhnf/h+S+2fL8dux2PT
-	y2M+2EYMI9EVc2EJPRkj8ZxJJUhrHxtvIexOmOxIFdgb9jS27N82c0fJt/5ogrXS
-	7hea0DMu4D0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 72D386674;
-	Tue,  6 Mar 2012 18:12:04 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0691F6673; Tue,  6 Mar 2012
- 18:12:03 -0500 (EST)
-In-Reply-To: <87mx7te3ng.fsf@smith.obbligato.org> (David A. Greene's message
- of "Tue, 6 Mar 2012 17:00:19 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C94CC142-67E1-11E1-8E0C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1031568Ab2CFXSm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Mar 2012 18:18:42 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:45120 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031454Ab2CFXSl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Mar 2012 18:18:41 -0500
+Received: by vbbff1 with SMTP id ff1so4989510vbb.19
+        for <git@vger.kernel.org>; Tue, 06 Mar 2012 15:18:40 -0800 (PST)
+Received-SPF: pass (google.com: domain of arya.irani@gmail.com designates 10.52.26.65 as permitted sender) client-ip=10.52.26.65;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of arya.irani@gmail.com designates 10.52.26.65 as permitted sender) smtp.mail=arya.irani@gmail.com; dkim=pass header.i=arya.irani@gmail.com
+Received: from mr.google.com ([10.52.26.65])
+        by 10.52.26.65 with SMTP id j1mr44936924vdg.113.1331075920978 (num_hops = 1);
+        Tue, 06 Mar 2012 15:18:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=5jqyfM1lpL9qGUjkoG653HstRufH1UDxoY73ghs89Ys=;
+        b=QYK51s29C21aWnLnxhz6oiNj8/rUjMxVu0cYzTqINutLLFnP5gJ/tJ/c1nq7GZwLEP
+         oQrbCdfq23ZQEDmbVpScyPoTx7y3GItNeA7W2VhMUcgP6vgaSTjGL5w/O2T0XSEH7me9
+         gOUg9/yDf250oAegjHvv3Fvt30ryCys14NCjfBT9nopYUJpQua/HWv3wMxoM8erKOiTF
+         eVpH0y7DjLquMQ7vOYJcf8V5gz36w6oEWhSepJZphG1rOUGuy8JPltoXs4ntdbQbd1u0
+         Wtt8Bi0uz9j7virrOmPkX9Hu/s9rBoXKU1L4vBUe7cKumRwxommyQjfG3RX0TxvNjiDP
+         cvBw==
+Received: by 10.52.26.65 with SMTP id j1mr38458475vdg.113.1331075920942; Tue,
+ 06 Mar 2012 15:18:40 -0800 (PST)
+Received: by 10.52.67.79 with HTTP; Tue, 6 Mar 2012 15:18:40 -0800 (PST)
+In-Reply-To: <CAB1hNr8itJV1-pzWxUo1KPsZNivg+KuRq_5jUwLUyCUpk7k=4w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192415>
 
-"David A. Greene" <dag@cray.com> writes:
+If the default start-point for a branch is HEAD, then how can it fail
+due to ambiguity? =A0Or what the heck is going on here? :-)
 
-> Ok, I see.  So TEST_DIRECTORY is supposed to point to the "official"
-> location of git's tests and testing support files.  That wasn't clear to
-> me.
+$ git branch -a
+* 1.1-SNAPSHOT
+=A0 master
+=A0 remotes/1.1-SNAPSHOT
+=A0 remotes/trunk
+$
 
-That is how I read the intent of what test-lib.sh does. I do not
-think it has much to do with official-ness, but more about where you
-find pieces of the framework from (e.g. diff-lib.sh, lib-gpg.sh,
-etc.)
+$ git branch getProviders
+warning: refname '1.1-SNAPSHOT' is ambiguous.
+fatal: Ambiguous object name: '1.1-SNAPSHOT'.
+$
 
-> I think naming is a big issue here.  Perhaps TEST_DIRECTORY needs a
-> better name, something like GIT_TEST_SUPPORT or such?
+$ cat .git/HEAD
+ref: refs/heads/1.1-SNAPSHOT
+$
 
-I do not think so; the biggest problem I see is that nobody
-documented these variables like Thomas did in the previous message
-we saw in this thread (and Thomas knew more about them than all
-because he added t/perf/ recently and had to play with these
-variables).
+$ git branch getProviders refs/heads/1.1-SNAPSHOT
+$
+success!
 
-Once the roles of variables are well understood, I do not think it
-is worth renaming the existing uses.
+
+[svn-remote "svn"]
+url =3D https://host/svn/all
+fetch =3D GHIE/maven-projects/hie-util/trunk:refs/remotes/trunk
+branches =3D GHIE/maven-projects/hie-util/branches/*:refs/remotes/*
+tags =3D GHIE/maven-projects/hie-util/tags/*:refs/remotes/tags/*
+
+Thanks,
+Arya
+
+P.S. =A0I'll use --prefix for svn to avoid this in the future!
