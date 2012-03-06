@@ -1,68 +1,63 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] config: Introduce --patience config variable
-Date: Tue, 06 Mar 2012 14:38:16 +0100
-Message-ID: <vpqr4x5hmt3.fsf@bauges.imag.fr>
+Date: Tue, 6 Mar 2012 09:09:11 -0500
+Message-ID: <20120306140911.GA22329@sigill.intra.peff.net>
 References: <a87ed689ddfb06601dd639541199fc72d829bdaf.1331031473.git.mprivozn@redhat.com>
-	<20120306114914.GB6733@sigill.intra.peff.net>
-	<87pqcp6fyh.fsf@thomas.inf.ethz.ch> <4F5611F1.4020309@redhat.com>
+ <20120306114914.GB6733@sigill.intra.peff.net>
+ <87pqcp6fyh.fsf@thomas.inf.ethz.ch>
+ <4F5611F1.4020309@redhat.com>
+ <vpqr4x5hmt3.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Thomas Rast <trast@inf.ethz.ch>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org, gitster@pobox.com
-To: Michal Privoznik <mprivozn@redhat.com>
-X-From: git-owner@vger.kernel.org Tue Mar 06 14:39:24 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Michal Privoznik <mprivozn@redhat.com>,
+	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Mar 06 15:09:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4ubk-0004H6-O3
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 14:39:17 +0100
+	id 1S4v4s-0001W7-B9
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 15:09:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758258Ab2CFNjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 08:39:11 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:35293 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030406Ab2CFNjK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 08:39:10 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q26DYcC2023041
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 6 Mar 2012 14:34:38 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1S4uan-00085J-0T; Tue, 06 Mar 2012 14:38:17 +0100
-In-Reply-To: <4F5611F1.4020309@redhat.com> (Michal Privoznik's message of
-	"Tue, 06 Mar 2012 14:32:33 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 06 Mar 2012 14:34:39 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q26DYcC2023041
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1331645681.39458@xzvxrKWWMAwrmh6SYwa36A
+	id S1758831Ab2CFOJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 09:09:15 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42182
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758591Ab2CFOJO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 09:09:14 -0500
+Received: (qmail 11342 invoked by uid 107); 6 Mar 2012 14:09:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 06 Mar 2012 09:09:21 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Mar 2012 09:09:11 -0500
+Content-Disposition: inline
+In-Reply-To: <vpqr4x5hmt3.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192349>
 
-Michal Privoznik <mprivozn@redhat.com> writes:
+On Tue, Mar 06, 2012 at 02:38:16PM +0100, Matthieu Moy wrote:
 
-> Okay guys. I'll got with diff.algorithm = [patience | minimal |
-> histogram | myers] then. What I am not sure about is how to threat case
-> when user have say algorithm = patience set in config but want to use
-> myers. I guess we need --myers option then, don't we?
+> Michal Privoznik <mprivozn@redhat.com> writes:
+> 
+> > Okay guys. I'll got with diff.algorithm = [patience | minimal |
+> > histogram | myers] then. What I am not sure about is how to threat case
+> > when user have say algorithm = patience set in config but want to use
+> > myers. I guess we need --myers option then, don't we?
+> 
+> At this point, maybe it's time to have
+> --diff-algorithm=[patience|minimal|histogram|myers], and keep
+> --patience, --minimal and --histogram just as compatibility aliases.
+> 
+> Having one option per algorithm feels wrong ...
 
-At this point, maybe it's time to have
---diff-algorithm=[patience|minimal|histogram|myers], and keep
---patience, --minimal and --histogram just as compatibility aliases.
+Yeah, that was going to be my suggestion, too. And explaining it that
+way in the docs will make it clear that "--histogram" overrides
+"--patience" and so forth.
 
-Having one option per algorithm feels wrong ...
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-Peff
