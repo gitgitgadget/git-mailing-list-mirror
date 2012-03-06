@@ -1,98 +1,68 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [msysGit] [PATCH] fix deletion of .git/objects sub-directories
- in git-prune/repack
-Date: Tue, 06 Mar 2012 19:32:41 +0100
-Message-ID: <4F565849.80303@kdbg.org>
-References: <OF93114E93.E64C1F7D-ONC12579B9.0032A592-C12579B9.00332D78@dcon.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC HACK] refresh_index: lstat() in inode order
+Date: Tue, 06 Mar 2012 10:37:30 -0800
+Message-ID: <7vipihtw2d.fsf@alter.siamese.dyndns.org>
+References: <871up6cewp.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: kusmabite@gmail.com, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	msysGit <msysgit@googlegroups.com>,
-	Pat Thoyts <patthoyts@gmail.com>,
-	Stefan Naewe <stefan.naewe@gmail.com>
-To: karsten.blees@dcon.de
-X-From: git-owner@vger.kernel.org Tue Mar 06 19:33:04 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Mar 06 19:37:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4zBs-0007QM-Tk
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 19:32:53 +0100
+	id 1S4zGc-00054V-WC
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 19:37:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964939Ab2CFScr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 13:32:47 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:12627 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S964785Ab2CFScq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 13:32:46 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 8CFD1A7EB9;
-	Tue,  6 Mar 2012 19:33:35 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 6608719F604;
-	Tue,  6 Mar 2012 19:32:42 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.27) Gecko/20120215 SUSE/3.1.19 Thunderbird/3.1.19
-In-Reply-To: <OF93114E93.E64C1F7D-ONC12579B9.0032A592-C12579B9.00332D78@dcon.de>
+	id S964785Ab2CFShe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 13:37:34 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50855 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757774Ab2CFShd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 13:37:33 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B2B6651CC;
+	Tue,  6 Mar 2012 13:37:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tDwQuS8jy7d4AHSr69nkqTPJwlI=; b=p0jVnn
+	Czz17SF4oxQb0f0jzQIheQ8CX1xC77ev1jlPu6z1BEvgfVAg7iYukyMtn7d6Y+l4
+	dL12Fo5MnsD91ILPKjitZjoEkIpd1Dm3HkeNv6j3ZZX2yn0MvPzjOnWIc0vhO2nv
+	Ewu8VIqBaVbRl244lUm1rnEv+epbon12gmqFE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BZ9JUtnefkDa3w0YTAfVxmi6AyEc3vNh
+	N0X8EqWBeYqvdhWhJjWyBKMol2LcqdDIJMYUZ728Lz1SBqfT/azv7ea0irAK5cTa
+	s12mws4mkIQHXcvfQ4r9FffFzjmoi/h+OUsvIfMW9XdeZ5Y/PglI7e6OoM5eEfOm
+	69JZsv1gIxs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AAA7451CB;
+	Tue,  6 Mar 2012 13:37:32 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 431A251CA; Tue,  6 Mar 2012
+ 13:37:32 -0500 (EST)
+In-Reply-To: <871up6cewp.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Tue, 6 Mar 2012 09:27:50 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6F5EC49E-67BB-11E1-9892-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192372>
 
-Am 06.03.2012 10:18, schrieb karsten.blees@dcon.de:
-> On some systems (e.g. Windows XP), directories cannot be deleted while
-> they're open. Both git-prune and git-repack (and thus, git-gc) try to
-> rmdir while holding a DIR* handle on the directory, leaving dangling
-> empty directories in the .git/objects store.
-> 
-> Fix it by swapping the rmdir / closedir calls.
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-The reasoning makes a lot of sense. I wonder why object directories are
-pruned nevertheless when I run git gc --prune (I run git master plus a
-few topics from pu).
+> The dirty hack below uses the inode field in the index to sort the index
+> entries prior to the real work of refresh_index.
 
-> diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
-> index f9463de..a834417 100644
-> --- a/builtin/prune-packed.c
-> +++ b/builtin/prune-packed.c
-> @@ -36,7 +36,6 @@ static void prune_dir(int i, DIR *dir, char *pathname, 
-> int len, int opts)
->                 display_progress(progress, i + 1);
->         }
->         pathname[len] = 0;
-> -       rmdir(pathname);
+I think we do something similar in fsck to touch loose object files
+in clusters, and would not be surprised if you see performance boost
+by running lstat(2) in clusters for the purpose of refresh_index().
 
-After moving the rmdir() away from prune_dir(), the truncation of the
-pathname does not logically belong here anymore. It should be moved with
-the rmdir(). Looks good otherwise.
-
->  }
->  
->  void prune_packed_objects(int opts)
-> @@ -65,6 +64,7 @@ void prune_packed_objects(int opts)
->                         continue;
->                 prune_dir(i, d, pathname, len + 3, opts);
->                 closedir(d);
-> +               rmdir(pathname);
->         }
->         stop_progress(&progress);
->  }
-> diff --git a/builtin/prune.c b/builtin/prune.c
-> index 58d7cb8..b99b635 100644
-> --- a/builtin/prune.c
-> +++ b/builtin/prune.c
-> @@ -85,9 +85,9 @@ static int prune_dir(int i, char *path)
->                 }
->                 fprintf(stderr, "bad sha1 file: %s/%s\n", path, 
-> de->d_name);
->         }
-> +       closedir(dir);
->         if (!show_only)
->                 rmdir(path);
-> -       closedir(dir);
->         return 0;
->  }
->  
+Right now, preload_index() partitions the index entries by offset
+and hands them out to worker threads, but it _might_ make sense to
+use fewer number of threads and give them entries sorted by the inum.
