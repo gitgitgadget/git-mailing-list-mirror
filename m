@@ -1,93 +1,81 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 2/2] Support Out-Of-Tree Valgrind Tests
-Date: Tue, 06 Mar 2012 10:43:25 -0800
-Message-ID: <7veht5tvsi.fsf@alter.siamese.dyndns.org>
+Date: Tue, 06 Mar 2012 10:49:06 -0800
+Message-ID: <7vaa3ttvj1.fsf@alter.siamese.dyndns.org>
 References: <1330903437-31386-1-git-send-email-greened@obbligato.org>
  <1330903437-31386-2-git-send-email-greened@obbligato.org>
  <87aa3vzdoc.fsf@thomas.inf.ethz.ch> <nngy5re29zn.fsf@transit.us.cray.com>
- <878vje86cy.fsf@thomas.inf.ethz.ch>
+ <878vje86cy.fsf@thomas.inf.ethz.ch> <87mx7tiyhh.fsf@smith.obbligato.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "David A. Greene" <dag@cray.com>, <greened@obbligato.org>,
+Cc: Thomas Rast <trast@inf.ethz.ch>, "David A. Greene" <dag@cray.com>,
 	<git@vger.kernel.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Mar 06 19:43:49 2012
+To: greened@obbligato.org (David A. Greene)
+X-From: git-owner@vger.kernel.org Tue Mar 06 19:49:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4zMM-0003dy-Pu
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 19:43:43 +0100
+	id 1S4zRk-0001bR-8o
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 19:49:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758342Ab2CFSn3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 13:43:29 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54014 "EHLO
+	id S965025Ab2CFStK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 13:49:10 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56964 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755210Ab2CFSn2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 13:43:28 -0500
+	id S965017Ab2CFStJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 13:49:09 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C70953BF;
-	Tue,  6 Mar 2012 13:43:27 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E2645552B;
+	Tue,  6 Mar 2012 13:49:08 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4mYMyXz4iPUT1Uq080+nw8dFC68=; b=JFoDBC
-	TcJxUf/mIDKkNhcA8axUJkJnCVQMkT+CYBB0gMDNFg9dhtXkD5uNM0KYe1MQJ8+2
-	Vng9col6cX/pTkSIwY3GCIezVJuY2cvMaxikz0THBg8069IjPpCo6+W7/TCdXD1e
-	Tbby+Ej1al9J/mTo2feUFpyTOP7A43mU/TYlM=
+	:content-type; s=sasl; bh=jcqZIccMtdEYykf/qXggavB8edw=; b=e9vRbn
+	2esWzXat1KBjEhGcacZAbG+qbjCLpep9om6Dm3WkOBQSeIpGCSrMzVGKarG9Xbr4
+	FwLOkSX2iHB10vOjsLhXhe7jTfchWeWlXDCDOx65vhTN3Y541AcUMCRTqYRwp4si
+	QZXWrcBUsZrJ3EqqkQPi0458aIMTEI+3kd0/Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sc1JADQ8G+hMWXrbdvwPC4ZhVzkItpCQ
-	9JIo0gWkPqnhS5r3fJy7vESgMHEVVIlTD8TPFOjXLj8M6DT5EYtqGGQvfNGNX8lO
-	fZa5TyPJkm7d1fQlxydtzJ3qW0ya69pdi6ZqnALZrJhiAG9ARbnpxbA4fTAdWK7q
-	ss9ajmAaaS8=
+	:content-type; q=dns; s=sasl; b=dvxOlkAuMuGWh9vAOKQObu0+Nb7UFw3l
+	JYwGwaRFtViOUYGu43rXRsqqyqOx5LqayyHv7l4FwxEA4vgcBGNOkAxLqlvibOME
+	0jd84ZVhMozuHvhw3l4PmmB1gwpgqec5lq/MRxTPRz8S/a6uL0LYQq2JHgZ32qah
+	nJSwqZSYCoA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 73CA453BE;
-	Tue,  6 Mar 2012 13:43:27 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D6D71552A;
+	Tue,  6 Mar 2012 13:49:08 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D09A553BD; Tue,  6 Mar 2012
- 13:43:26 -0500 (EST)
-In-Reply-To: <878vje86cy.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
- "Tue, 6 Mar 2012 09:46:05 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1A15B5529; Tue,  6 Mar 2012
+ 13:49:07 -0500 (EST)
+In-Reply-To: <87mx7tiyhh.fsf@smith.obbligato.org> (David A. Greene's message
+ of "Tue, 06 Mar 2012 08:40:42 -0600")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 42B76CB0-67BC-11E1-8FC4-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0E1E648A-67BD-11E1-A660-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192374>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+greened@obbligato.org (David A. Greene) writes:
 
-> Don't we, right now, get stuff as follows:
+>> Don't we, right now, get stuff as follows:
+>>
+>>   item                   path
+>>   --------------------------------------------
+>>   test-lib.sh            $TEST_DIRECTORY
 >
->   item                   path
->   --------------------------------------------
->   test-lib.sh            $TEST_DIRECTORY
->   git                    $GIT_BUILD_DIR/bin-wrappers
->   valgrind.sh            $TEST_DIRECTORY/valgrind
->   git (with --valgrind)  $TEST_DIRECTORY/valgrind/bin
->
-> You are saying this must change to an entirely new path
->
->   valgrind.sh            $GIT_VALGRIND_TOOLS
->   git (with --valgrind)  $GIT_VALGRIND_TOOLS/bin
->
-> but what's wrong with simply
->
->   valgrind.sh            $GIT_BUILD_DIR/t/valgrind
->   git (with --valgrind)  $TEST_DIRECTORY/valgrind/bin
->
-> In the common case of t/, these just map to what we had before.  In the
-> out-of-tree case, we'd create valgrind/bin in the test directory for the
-> *temporary* stuff, and still look for the wrapping valgrind.sh in the
-> git tree.
+> Right now, yes, but it breaks for out-of-tree tests.  In the out-of-tree
+> case, TEST_DIRECTORY doesn't contain test-lib.sh.  For exmaple, in
 
-Sounds sane.  Simple is good.
+Could it be that the reason for the breakage is because you are
+setting TEST_DIRECTORY to the directory that contains out-of-tree
+tests, instead of $GIT_BUILD_DIR/t/ directory?
 
-No matter what happens to this particular patch, could we have the
-above table (the final version of it, that is) in t/README or
-something, please?
+The place you perform your operations are relative to $TRASH_DIRECTORY,
+and you would still find the main git relative to $GIT_BUILD_DIR.
 
-Thanks.
+Shouldn't TEST_DIRECTORY merely a short-hand for GIT_BUILD_DIR/t?
+What do you find relative to $TEST_DIRECTORY that cannot be found
+relative to GIT_BUILD_DIR/t?
