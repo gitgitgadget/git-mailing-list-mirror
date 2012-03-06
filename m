@@ -1,134 +1,112 @@
-From: greened@obbligato.org (David A. Greene)
-Subject: Re: [PATCH 2/2] Support Out-Of-Tree Valgrind Tests
-Date: Tue, 06 Mar 2012 08:40:42 -0600
-Message-ID: <87mx7tiyhh.fsf@smith.obbligato.org>
-References: <1330903437-31386-1-git-send-email-greened@obbligato.org>
-	<1330903437-31386-2-git-send-email-greened@obbligato.org>
-	<87aa3vzdoc.fsf@thomas.inf.ethz.ch>
-	<nngy5re29zn.fsf@transit.us.cray.com>
-	<878vje86cy.fsf@thomas.inf.ethz.ch>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [ANNOUNCE] Git 1.7.9.3
+Date: Tue, 6 Mar 2012 15:50:37 +0100
+Message-ID: <87y5rd4wci.fsf@thomas.inf.ethz.ch>
+References: <7vliney6k7.fsf@alter.siamese.dyndns.org>
+	<A518E7E7-25D5-429C-A1C1-35F94EC8F043@bjhargrave.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "David A. Greene" <dag@cray.com>, <git@vger.kernel.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Mar 06 15:44:04 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
+	<trast@student.ethz.ch>
+To: BJ Hargrave <bj@bjhargrave.com>
+X-From: git-owner@vger.kernel.org Tue Mar 06 15:50:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S4vcM-0002Bt-Tj
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 15:43:59 +0100
+	id 1S4viw-0001i3-7x
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Mar 2012 15:50:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030797Ab2CFOnx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 09:43:53 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:55456 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1030784Ab2CFOnw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 09:43:52 -0500
-Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=smith.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.77)
-	(envelope-from <greened@obbligato.org>)
-	id 1S4vdY-0000Sn-IR; Tue, 06 Mar 2012 08:45:14 -0600
-In-Reply-To: <878vje86cy.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
-	"Tue, 6 Mar 2012 09:46:05 +0100")
+	id S1030801Ab2CFOul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 09:50:41 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:32403 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030789Ab2CFOul (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 09:50:41 -0500
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 6 Mar
+ 2012 15:50:38 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 6 Mar
+ 2012 15:50:38 +0100
+In-Reply-To: <A518E7E7-25D5-429C-A1C1-35F94EC8F043@bjhargrave.com> (BJ
+	Hargrave's message of "Tue, 6 Mar 2012 09:35:48 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
- identified this incoming email as possible spam.  The original message
- has been attached to this so you can view it (if it isn't spam) or label
- similar future email.  If you have any questions, see
- @@CONTACT_ADDRESS@@ for details.
- Content preview:  Thomas Rast <trast@inf.ethz.ch> writes: >>> I'm a bit curious:
-    why isn't it enough to spell that path >>> $GIT_BUILD_DIR/t/valgrind instead
-    of making it fully configurable? >> >> For the same reason that TEST_DIRECTORY
-    is different and unrelated from >> GIT_BUILD_DIR. It's my understanding that
-    GIT_BUILD_DIR could end up >> being somewhere compeltely unrelated to where
-    TOP_SRC/t/valgrind is. >> At least that's why I introduced a new parameter.
-    > > I'm just worried that for such a fringe use-case, the maintainer of the
- 
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192355>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
+BJ Hargrave <bj@bjhargrave.com> writes:
 
->>> I'm a bit curious: why isn't it enough to spell that path
->>> $GIT_BUILD_DIR/t/valgrind instead of making it fully configurable?
->>
->> For the same reason that TEST_DIRECTORY is different and unrelated from
->> GIT_BUILD_DIR.  It's my understanding that GIT_BUILD_DIR could end up
->> being somewhere compeltely unrelated to where TOP_SRC/t/valgrind is.
->> At least that's why I introduced a new parameter.
->
-> I'm just worried that for such a fringe use-case, the maintainer of the
-> out-of-tree tests will never notice that he missed to customize *this*
-> particular parameter.  So I'd rather have it spelled in terms of the
-> existing two (?).
+> ok 6 - empty bundle file is rejected
+> not ok - 7 ridiculously long subject in boundary
+> #	
+> #		: >file4 &&
+> #		test_tick &&
+> #		git add file4 &&
+> #		printf "%01200d
+> #	" 0 | git commit -F - &&
+> #		test_commit fifth &&
+> #		git bundle create long-subject-bundle.bdl HEAD^..HEAD &&
+> #		git bundle list-heads long-subject-bundle.bdl >heads &&
+> #		test -s heads &&
+> #		git fetch long-subject-bundle.bdl &&
+> #		sed -n "/^-/{p;q}" long-subject-bundle.bdl >boundary &&
+> #		grep "^-$_x40 " boundary
 
-I understand your concern.  Perhaps it could be mitigated with some
-"HOWTO" comments at the top of the script.  I'm nervous about basing the
-value on other variables because that's what limited the script to such
-a narrow scope in the first place.
+I can reproduce this.  The failure (to be seen from -v, which would have
+been really nice to have in the original mail):
 
-> Don't we, right now, get stuff as follows:
->
->   item                   path
->   --------------------------------------------
->   test-lib.sh            $TEST_DIRECTORY
+  sed: 1: "/^-/{p;q}": extra characters at the end of q command
 
-Right now, yes, but it breaks for out-of-tree tests.  In the out-of-tree
-case, TEST_DIRECTORY doesn't contain test-lib.sh.  For exmaple, in
-t7900-subtree.sh, I do this:
+This can be fixed with the change below, which then gets us into the
+next one
 
-. ../../../t/test-lib.sh
+  grep: Regular expression too big
 
-because TEST_DIRECTORY is set to some directory under contrib/subtree.
+Sheesh, Apple, are you kidding me?!  So we also need to change the grep
+expression.
 
->   git                    $GIT_BUILD_DIR/bin-wrappers
+----- 8< -----
+Subject: [PATCH] t5704: fix nonportable sed/grep usages
 
-I think so.
+OS X's sed and grep would complain with (respectively)
 
->   valgrind.sh            $TEST_DIRECTORY/valgrind
+  sed: 1: "/^-/{p;q}": extra characters at the end of q command
+  grep: Regular expression too big
 
-That's what it is now and it's wrong for out-of-tree tests.
+For sed, use an explicit ; to terminate the q command.
 
->   git (with --valgrind)  $TEST_DIRECTORY/valgrind/bin
+For grep, spell the "40 hex digits" explicitly in the regex, instead
+of being lazy with the shell pattern $_x40.
+---
+ t/t5704-bundle.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-Yep.  This is ok.
+diff --git a/t/t5704-bundle.sh b/t/t5704-bundle.sh
+index a51c8b0..9e43731 100755
+--- a/t/t5704-bundle.sh
++++ b/t/t5704-bundle.sh
+@@ -54,8 +54,8 @@ test_expect_success 'ridiculously long subject in boundary' '
+ 	git bundle list-heads long-subject-bundle.bdl >heads &&
+ 	test -s heads &&
+ 	git fetch long-subject-bundle.bdl &&
+-	sed -n "/^-/{p;q}" long-subject-bundle.bdl >boundary &&
+-	grep "^-$_x40 " boundary
++	sed -n "/^-/{p;q;}" long-subject-bundle.bdl >boundary &&
++	grep "^-[0-9a-f]\\{40\\} " boundary
+ '
+ 
+ test_done
+-- 
+1.7.6.557.gcee4
 
-> You are saying this must change to an entirely new path
->
->   valgrind.sh            $GIT_VALGRIND_TOOLS
->   git (with --valgrind)  $GIT_VALGRIND_TOOLS/bin
 
-The first, yes.  The second, no.  We can leave that alone.
 
-> but what's wrong with simply
->
->   valgrind.sh            $GIT_BUILD_DIR/t/valgrind
->   git (with --valgrind)  $TEST_DIRECTORY/valgrind/bin
-
-These are two separate issues.
-
-GIT_BUILD_DIR may not be anywhere within the source tree, right?  If so,
-t/valgrind may not have any relation whatsoever to GIT_BUILD_DIR.  Hence
-GIT_VALGRIND_TOOLS.
-
-The second part is correct.  test-lib.sh sets it up that way (~line 983)
-and it works fine for out-of-tree tests.
-
-> In the common case of t/, these just map to what we had before.  In the
-> out-of-tree case, we'd create valgrind/bin in the test directory for the
-> *temporary* stuff, and still look for the wrapping valgrind.sh in the
-> git tree.
-
-Putting valgrind/bin in the test directory is fine.  There's no change
-there.  It's this looking for the wrapping valgrind.sh that fails in the
-current scheme.  We cannot rely on GIT_BUILD_DIR to find it as noted
-above.
-
-                              -Dave
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
