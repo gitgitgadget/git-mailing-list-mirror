@@ -1,136 +1,55 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 3/7] cat-file: use streaming API to print blobs
-Date: Wed,  7 Mar 2012 17:54:17 +0700
-Message-ID: <1331117661-19378-4-git-send-email-pclouds@gmail.com>
-References: <7vty21twqc.fsf@alter.siamese.dyndns.org>
- <1331117661-19378-1-git-send-email-pclouds@gmail.com>
+From: Holger Hellmuth <hellmuth@ira.uka.de>
+Subject: Re: git push from client is not updating files on server
+Date: Wed, 07 Mar 2012 12:04:13 +0100
+Message-ID: <4F5740AD.9080306@ira.uka.de>
+References: <CAC0z1F-bGikXZtLnd8d=3G+4okvNqZaxyrLjh4G3YzPpmqyxQA@mail.gmail.com>	<4F567DC6.4070903@gmail.com>	<4F567FEF.5000105@gmail.com>	<CAC0z1F_eyMo4D8E2j15dOFhp-6tZ_ixacB6XcKfNpJategcsXQ@mail.gmail.com>	<CAC0z1F_LYRkReO1qqcjkWy6Vb3E0_oNo-0kSf15nGfQFAtXpdg@mail.gmail.com>	<CAC0z1F87ORZQmrZeMGo2suV1fAt-5mAwwpkkV3ZTx0US3AjM8Q@mail.gmail.com>	<4F569EA8.4050907@gmail.com> <CAC0z1F9sBYCuv_HMCx1ryWLvxZKUcLPS1UUj80ihEesje+SKzg@mail.gmail.com> <4F56C946.8080601@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 07 11:54:06 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jerome Yanga <jerome.yanga@gmail.com>, git@vger.kernel.org
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 07 12:03:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5EVQ-0003ls-No
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 11:54:05 +0100
+	id 1S5Eee-0006cK-JJ
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 12:03:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755330Ab2CGKxT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Mar 2012 05:53:19 -0500
-Received: from mail-pz0-f52.google.com ([209.85.210.52]:64743 "EHLO
-	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752408Ab2CGKxS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2012 05:53:18 -0500
-Received: by mail-pz0-f52.google.com with SMTP id p12so7761663dad.11
-        for <git@vger.kernel.org>; Wed, 07 Mar 2012 02:53:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=6zBm0bbDJiSPRrnTaXdz6c7Hmr8LLfM0aejOprtt3+w=;
-        b=LdabuHvDdHyFc/Kriss1Yr/jbEk4uTGn6yIr4alIrcqZiYY5zECYOIxyVNkk8AT8xZ
-         gRm6qYd6YfqJl0C8Gz29K4SAd9ukLnkdQywLwCenINfiKks1FYAMdL03yZNF2hfQp/Pw
-         46u0ptwkudARwhbH+gJYRJcWf7FSnxnAanQo60M/wX50CK7AdbOYEF9zhELB29vvvwdo
-         wiAkYojHJzT2sj/jNEb3MQyqWQT8QAIYq7uTiwdfkBDDskBcmuAujUMBOM3xpw7ARB2e
-         ejqgtKxpnx5GxUP98HxANsoN8B4B/GmMEAyFaA4cfh/+AxtE/V8TlrRnq/OhcK/Lf1nN
-         C5jw==
-Received: by 10.68.216.4 with SMTP id om4mr3134623pbc.19.1331117594534;
-        Wed, 07 Mar 2012 02:53:14 -0800 (PST)
-Received: from tre ([115.74.59.10])
-        by mx.google.com with ESMTPS id 3sm571070pbx.66.2012.03.07.02.53.11
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 07 Mar 2012 02:53:13 -0800 (PST)
-Received: by tre (sSMTP sendmail emulation); Wed, 07 Mar 2012 17:54:44 +0700
-X-Mailer: git-send-email 1.7.8.36.g69ee2
-In-Reply-To: <1331117661-19378-1-git-send-email-pclouds@gmail.com>
+	id S1755122Ab2CGLDc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Mar 2012 06:03:32 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:46877 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751399Ab2CGLDb (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Mar 2012 06:03:31 -0500
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1S5EeJ-0001Ns-C2; Wed, 07 Mar 2012 12:03:30 +0100
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
+	id 1S5EeJ-0004sV-5E; Wed, 07 Mar 2012 12:03:15 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <4F56C946.8080601@gmail.com>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1331118210.363599000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192444>
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- builtin/cat-file.c |   25 +++++++++++++++++++++++++
- t/t1050-large.sh   |    4 ++--
- 2 files changed, 27 insertions(+), 2 deletions(-)
+On 07.03.2012 03:34, Neal Kreitzinger wrote:
+> Create a new non-bare clone of your bare repo. Then do git-pull on the
+> new non-bare after the bare gets updates (someone does git push to it)
+> and you want to test those new commits. The worktree of the new non-bare
+> clone can be the document root of your testing virtual host, if that's
+> what you're doing. That way, you know that no one else is messing with
+> new non-bare (test repo) like doing development in it and messing up
+> your tests.
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 8ed501f..36a9104 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -11,6 +11,7 @@
- #include "parse-options.h"
- #include "diff.h"
- #include "userdiff.h"
-+#include "streaming.h"
-=20
- #define BATCH 1
- #define BATCH_CHECK 2
-@@ -127,6 +128,8 @@ static int cat_one_file(int opt, const char *exp_ty=
-pe, const char *obj_name)
- 			return cmd_ls_tree(2, ls_args, NULL);
- 		}
-=20
-+		if (type =3D=3D OBJ_BLOB)
-+			return stream_blob_to_fd(1, sha1, NULL, 0);
- 		buf =3D read_sha1_file(sha1, &type, &size);
- 		if (!buf)
- 			die("Cannot read object %s", obj_name);
-@@ -149,6 +152,28 @@ static int cat_one_file(int opt, const char *exp_t=
-ype, const char *obj_name)
- 		break;
-=20
- 	case 0:
-+		if (type_from_string(exp_type) =3D=3D OBJ_BLOB) {
-+			unsigned char blob_sha1[20];
-+			if (sha1_object_info(sha1, NULL) =3D=3D OBJ_TAG) {
-+				enum object_type type;
-+				unsigned long size;
-+				char *buffer =3D read_sha1_file(sha1, &type, &size);
-+				if (memcmp(buffer, "object ", 7) ||
-+				    get_sha1_hex(buffer + 7, blob_sha1))
-+					die("%s not a valid tag", sha1_to_hex(sha1));
-+				free(buffer);
-+			} else
-+				hashcpy(blob_sha1, sha1);
-+
-+			if (sha1_object_info(blob_sha1, NULL) =3D=3D OBJ_BLOB)
-+				return stream_blob_to_fd(1, blob_sha1, NULL, 0);
-+			/*
-+			 * we attempted to dereference a tag to a blob
-+			 * and failed; there may be new dereference
-+			 * mechanisms this code is not aware of.
-+			 * fall-back to the usual case.
-+			 */
-+		}
- 		buf =3D read_object_with_reference(sha1, exp_type, &size, NULL);
- 		break;
-=20
-diff --git a/t/t1050-large.sh b/t/t1050-large.sh
-index ded66b3..f662fef 100755
---- a/t/t1050-large.sh
-+++ b/t/t1050-large.sh
-@@ -116,11 +116,11 @@ test_expect_success 'hash-object' '
- 	git hash-object large1
- '
-=20
--test_expect_failure 'cat-file a large file' '
-+test_expect_success 'cat-file a large file' '
- 	git cat-file blob :large1 >/dev/null
- '
-=20
--test_expect_failure 'cat-file a large file from a tag' '
-+test_expect_success 'cat-file a large file from a tag' '
- 	git tag -m largefile largefiletag :large1 &&
- 	git cat-file blob largefiletag >/dev/null
- '
---=20
-1.7.8.36.g69ee2
+To expand on Neals method, if you do git fetch (periodically in a cron 
+job for example) on the cloned non-bare, 'git log HEAD..origin/HEAD' 
+will have output only if the non-bare has new commits.
