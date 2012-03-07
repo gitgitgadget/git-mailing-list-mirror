@@ -1,71 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/3] Fix memory leak in apply_patch in apply.c.
-Date: Wed, 07 Mar 2012 15:39:43 -0800
-Message-ID: <7vr4x4j800.fsf@alter.siamese.dyndns.org>
-References: <cover.1331158240.git.jaredhance@gmail.com>
- <eadfc83a0d823cc04ea37bf606b57597fb632156.1331158240.git.jaredhance@gmail.com>
+From: ecloud <shawn.t.rutledge@gmail.com>
+Subject: storing pre-computed fine-grained diffs
+Date: Wed, 7 Mar 2012 15:41:43 -0800 (PST)
+Message-ID: <1331163703976-7353466.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jared Hance <jaredhance@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 00:40:04 2012
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 08 00:41:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5QSh-0008Vu-En
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 00:40:03 +0100
+	id 1S5QUP-0002A9-Gb
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 00:41:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758954Ab2CGXjs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Mar 2012 18:39:48 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65080 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758862Ab2CGXjp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2012 18:39:45 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 06DD2676B;
-	Wed,  7 Mar 2012 18:39:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=QpaxLvBtadpSDsJkoV+ILsRbGQ4=; b=dDi0RcOoxwhk66CpCAuF
-	so+cmB+y9smhWgAEWkOWwvsTqnm/axCiLOd+H3TGEZsq0v9NLTNqgEDKXyFr56IA
-	wn2FVSnIfaMFoVuBx2YYl37VjQPC1uy7noK/b+8xWivjHkNjPGkQz1iZC181ZTy4
-	VaP0Z+UzKGdBIUVjxjTFC0o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=BwNFuxwcaa8Hf+U+yboJc1XoVM9fyePJqX9CYLW05G7s1F
-	Qqk+A7bBbWxnkkcyWcav9a4ca4naireBeb5egWUGWZEhpnUT3CqR8CPqvNh76Bq7
-	MyY3s9DUr4lntAf+/fCLPdAZ0oWr5iPzdd1dl2losNZ0YrWq7Cp2zxSE9aB6A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2DDA676A;
-	Wed,  7 Mar 2012 18:39:44 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 842096769; Wed,  7 Mar 2012
- 18:39:44 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D174AF06-68AE-11E1-A582-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758882Ab2CGXlp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Mar 2012 18:41:45 -0500
+Received: from sam.nabble.com ([216.139.236.26]:33947 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755457Ab2CGXlo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2012 18:41:44 -0500
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <shawn.t.rutledge@gmail.com>)
+	id 1S5QUJ-0005bZ-Vp
+	for git@vger.kernel.org; Wed, 07 Mar 2012 15:41:43 -0800
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192507>
 
-Jared Hance <jaredhance@gmail.com> writes:
+The thing about git, as well as all version control systems I have known so
+far which store diffs, is that computing the diff means post-analyzing a
+saved file.  That is, you use any editor you like, and after making a whole
+batch of changes you manually commit to the repository, and the diff
+algorithm figures out what you changed.  Some information is already lost
+about what order you made the changes and what the logical chunks actually
+were.  But what if there was an editor that could save each individual
+change as a separate version?  You put the cursor at one point in the file,
+and type some text; then you click elsewhere, and the editor does a "git
+commit this-file" automatically.  Then you select some other text and delete
+it, and it does a commit again.  It would be nice in that case to avoid
+doing the diff at all, because the editor already knows exactly what the
+change was.  Would it be possible to store these fine-grained changes
+directly in a packfile, efficiently?  Or would it require a different
+storage format?  I know the diff algorithm used is already much smarter than
+a line-by-line diff, but is the storage format capable of representing
+changes over ranges of characters without "extra context" like the
+line-by-line diffs usually have?
 
-> In the while loop inside apply_patch, patch is dynamically allocated
-> with a calloc. However, only unused patches are actually free'd; the
-> rest are left in a memory leak. Since a list is actively built up
-> consisting of the used patches, they can simply be iterated and free'd
-> at the end of the function.
-> ...
-
-Thanks.
-
-This more-or-less looks good modulo minor style issues.  We might
-also want to make rejected a one-bit bitfield that sits next to the
-new free_patch field to share the same word, but that is a separate
-topic.
-
-Will queue.
+--
+View this message in context: http://git.661346.n2.nabble.com/storing-pre-computed-fine-grained-diffs-tp7353466p7353466.html
+Sent from the git mailing list archive at Nabble.com.
