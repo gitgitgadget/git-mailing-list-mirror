@@ -1,84 +1,230 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] perf: compare diff algorithms
-Date: Wed, 07 Mar 2012 10:19:31 -0800
-Message-ID: <7vzkbsmfyk.fsf@alter.siamese.dyndns.org>
-References: <87pqcp6fyh.fsf@thomas.inf.ethz.ch>
- <m31up5tnjw.fsf@localhost.localdomain> <877gywy40l.fsf@thomas.inf.ethz.ch>
- <201203071903.02373.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@inf.ethz.ch>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Michal Privoznik <mprivozn@redhat.com>,
-	Jeff King <peff@peff.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 07 19:19:41 2012
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH] Maintaince script for l10n files and commits
+Date: Thu,  8 Mar 2012 02:47:14 +0800
+Message-ID: <1331146034-85804-1-git-send-email-worldhello.net@gmail.com>
+Cc: Git List <git@vger.kernel.org>, avarab@gmail.com,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 07 19:48:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5LSd-000187-Fa
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 19:19:39 +0100
+	id 1S5Lu3-0000h8-AH
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 19:47:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964971Ab2CGSTf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Mar 2012 13:19:35 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62668 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932423Ab2CGSTe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2012 13:19:34 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C54178F6;
-	Wed,  7 Mar 2012 13:19:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rq67fBwns8yp/SLg2jyWrlxGfpw=; b=Kj/gnl
-	ZGTFwTGArNTpyOHKcSmRAPt1bafIOXiJZZ7rDxzOTyusL6i4DT3ReN4CIFlMVp79
-	Tr7XSNMgMaYNu54DBtdpUgNMbw2EMIfA5Crfdtb33/QXarph30y9ry+HiA1n2iQw
-	e9rZaTne1JNPEcfnS8cE8j9tP2wlAKWbpBH2g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IQANDJ2yvCRKEaEQ7Phu38ArapJuWgnx
-	mQlW/ii5C2Zaq9KvjPXsK3JByo6zlACL38pn3MTtXB1AUNRCSOELd9bboIUFdPL7
-	WQTb3ZEw8gC10YijmlvQPEZXqJqkPpF9dffZedVfGj0Z9NduUBVQ09VMK0dfgADW
-	kgmSecIKDZk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7432478F5;
-	Wed,  7 Mar 2012 13:19:33 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0558B78F4; Wed,  7 Mar 2012
- 13:19:32 -0500 (EST)
-In-Reply-To: <201203071903.02373.jnareb@gmail.com> (Jakub Narebski's message
- of "Wed, 7 Mar 2012 19:03:01 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 167FD602-6882-11E1-85F5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759627Ab2CGSry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Mar 2012 13:47:54 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:50189 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759001Ab2CGSrx (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Mar 2012 13:47:53 -0500
+Received: by obbuo6 with SMTP id uo6so7246065obb.19
+        for <git@vger.kernel.org>; Wed, 07 Mar 2012 10:47:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=lLEWbGifBMBjRSFXKkxnaxCcAVa9Ki1bRPuKNNJ1Ph0=;
+        b=rt6uBTSFD8iF3V3sQdWyTi/V5Z9wc/h6QuIubhgibw6PkmtW+Yq/mzcOBHZG+DKknx
+         B+KU5BnMkdalakyfmLzNGdExyG5ZrBZ0DIehFKn8H3SnYHcPiAel/IbeQK1lpkXxVXzT
+         pytK1mVjgsr0cLpmSavtaGDKwzT+meCv9/jE8KezBNOQb5TuwoEZuC7wsw7EOWSSuSBQ
+         Zd3u+HvWv/OU0kj+ZkmLYYKe7uTCtI1+G91ikbAQbswMQ79ocD8O+IlGJukPJ6DL2WR+
+         i8qhQ5EjTJlPRP6UFCqEr3+woLCfB5S0HSFz9dW0uX9wkK4PUM2oxF3F9q340DdaMtGg
+         ZHMg==
+Received: by 10.60.12.131 with SMTP id y3mr1460824oeb.26.1331146072899;
+        Wed, 07 Mar 2012 10:47:52 -0800 (PST)
+Received: from localhost.foo.bar ([123.116.247.153])
+        by mx.google.com with ESMTPS id b3sm23131478obp.6.2012.03.07.10.47.40
+        (version=SSLv3 cipher=OTHER);
+        Wed, 07 Mar 2012 10:47:51 -0800 (PST)
+X-Mailer: git-send-email 1.7.9.2.330.gaa956.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192471>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Usage of this script:
 
-> Beside extracting logic that sets GITPERLLIB into separate file like
-> in Junio proposal?
+ * rake commits      : Check commit logs written with non-ascii chars,
+                       but without the correct encoding settings.
+                       Always report Non-ascii in subject line as error.
 
-That was not even a proposal.  The part that deals with valgrind is
-blatantly wrong (it shouldn't create symlinks in that code, it only
-should figure out where things should be).
+ * rake pot          : Print the summary of the update of git.pot file
 
-> You can always assume that it is fixed relative
-> to perl/Git.pm, and use __DIR__ or $FindBin to make "use lib", e.g.
->
->   use FindBin;
->   use lib "$FindBin::Bin/../../perl";
+ * rake XX.po        : Create or update XX.po from the git.po tempolate file
 
-Use of FindBin to find the location of the script is OK, but does
-using "../../perl" really work?
+ * rake check[XX.po] : Syntax check on XX.po
 
-We have this
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+---
+ po/Rakefile |  157 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 157 insertions(+)
+ create mode 100644 po/Rakefile
 
-  GITPERLLIB="$GIT_BUILD_DIR"/perl/blib/lib:"$GIT_BUILD_DIR"/perl/blib/arch/auto/Git
-
-to look for two places in test-lib.sh
+diff --git a/po/Rakefile b/po/Rakefile
+new file mode 100644
+index 00000..e581b
+--- /dev/null
++++ b/po/Rakefile
+@@ -0,0 +1,157 @@
++require 'tempfile'
++
++POTFILE="git.pot"
++
++class NonAsciiInSubjectError < Exception
++end
++
++class BadEncodingError < Exception
++end
++
++def shellout(cmd)
++    pipe = IO.popen(cmd)
++    pipe.readlines
++end
++
++desc "Syntax check on XX.po, or all .po files if nothing provided."
++task :check, :po_file do |t, args|
++    if args[:po_file]
++        if File.exists? args[:po_file]
++            system("msgfmt -o /dev/null --check --statistics #{args[:po_file]}")
++        else
++            $stderr.puts "File #{args[:po_file]} does not exist."
++        end
++    else
++        FileList["*.po"].each do |po_file|
++            puts "=" * 72
++            puts "Check #{po_file}..."
++            system("msgfmt -o /dev/null --check --statistics #{po_file}")
++        end
++    end
++end
++
++desc "Show summary of updates of git.pot"
++task :pot do
++    status = shellout("git status --porcelain -- #{POTFILE}")
++    new = []
++    dropped = []
++    tmpfile = Tempfile.new('git.pot')
++    if status.empty?
++        puts "Nothing changed."
++    else
++        ENV["LANGUAGE"] = "C"
++        system("git show HEAD:./git.pot > #{tmpfile.path}")
++        msgcmp = shellout("msgcmp -N --use-untranslated #{tmpfile.path} #{POTFILE} 2>&1")
++        msgcmp.each do |line|
++            if m = /^.*:([0-9]+): this message is used but not defined in/.match(line)
++                new << m[1]
++            elsif m = /^.*:([0-9]+): warning: this message is not used/.match(line)
++                dropped << m[1]
++            end
++        end
++        puts "Update of #{POTFILE}:"
++        puts
++        if not new.empty?
++            puts " * Add #{new.count} new l10n string#{new.count>1 ? "s":""}" +
++                 " in the new generated \"git.pot\" file at" +
++                 " line#{new.count>1? "s":""}:"
++            puts "   " + new.join(", ")
++            puts
++        end
++        if not dropped.empty?
++            puts " * Remove #{dropped.count} l10n string#{dropped.count>1 ?
++                 "s":""} from the old \"git.pot\" file at line" +
++                 "#{dropped.count>1 ? "s":""}:"
++            puts "   " + dropped.join(", ")
++        end
++    end
++end
++
++# raise Exception if commit has bad encoding setting
++def verify_commit_encoding(commit, log)
++    subject = 0
++    non_ascii = nil
++    encoding = nil
++    log.each do |line|
++        if line.chomp!.empty?
++            # next line would be the commit log subject line,
++            # if no previous empty line found.
++            subject += 1
++            next
++        end
++        if subject == 0 and line =~ /^encoding /
++            encoding = line.chomp.sub(/^encoding /, '')
++        end
++        # non-ascii found in commit log
++        if match = /([^[:alnum:][:punct:][:space:]]+)/.match(line)
++            non_ascii = "#{line} << #{match[1][0..9]}"
++            # subject must be written in english
++            raise NonAsciiInSubjectError.new(non_ascii) if subject == 1
++        end
++        # subject has only one line
++        subject += 1 if subject == 1
++        # break if there are non-asciis and has already checked subject line
++        break if non_ascii && subject > 0
++    end
++
++    return if not non_ascii
++
++    encoding = 'UTF-8' if not encoding
++    cmd = "python -c \"s='''#{
++              log.collect!{
++                |x| x.chomp.gsub(/['"]/, "")
++              }.join(' - ')}'''; s.decode('#{encoding}')\" 2>/dev/null"
++    raise BadEncodingError.new(non_ascii) if not system(cmd)
++end
++
++desc "Check commits for bad encoding settings."
++task :commits, :from, :to do |t, args|
++    from = args[:from] || 'origin/master'
++    to = args[:to] || 'HEAD'
++    commits = shellout("git rev-list #{from}..#{to}")
++    commits.each do |c|
++        c.chomp!
++        log = shellout("git cat-file commit #{c}")
++        begin
++            verify_commit_encoding(c, log)
++        rescue BadEncodingError => e
++            $stderr.puts "=" * 78
++            $stderr.puts "Error: Bad encoding setting found in commit #{c[0,7]}:"
++            $stderr.puts "       >> #{e.message}"
++            $stderr.puts
++            log.each {|line| puts "\t" + line.chomp}
++        rescue NonAsciiInSubjectError => e
++            $stderr.puts "=" * 78
++            $stderr.puts "Error: Non-AscII found in subject in commit #{c[0,7]}:"
++            $stderr.puts "       >> #{e.message}"
++            $stderr.puts
++            log.each {|line| puts "\t" + line.chomp}
++        end
++    end
++end
++
++
++desc "Create or update XX.po file from git.pot"
++task "XX.po" do
++    $stderr.puts "Use your real locale file, such as zh_CN.po"
++end
++
++# Update XX.po even if timestamp of XX.po is newer
++FileList["*.po"].each do |t|
++    task t => POTFILE
++end
++
++rule '.po' => POTFILE do |t|
++    if File.exist?(t.name)
++        system("msgmerge --add-location --backup=off -U #{t.name} #{t.source}")
++    else
++        system("msginit -i #{t.source} --locale=#{t.name.sub(/.po$/, '')}")
++    end
++    mofile="build/locale/#{t.name.sub(/.po$/, '')}/LC_MESSAGES/git.mo"
++    FileUtils.mkdir_p File.dirname(mofile)
++    system("msgfmt -o #{mofile} --check --statistics #{t.name}")
++end
++
++task :default do
++    system("rake -T")
++end
+-- 
+1.7.9.2.330.gaa956.dirty
