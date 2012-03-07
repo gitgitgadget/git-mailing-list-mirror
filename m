@@ -1,169 +1,110 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [spf:guess] Re: Approaches to SVN to Git conversion (was: Re:
- [RFC] "Remote helper for Subversion" project)
-Date: Tue, 06 Mar 2012 15:59:27 -0800
-Message-ID: <4F56A4DF.8060807@vilain.net>
-References: <ab5eb5a7-a446-4dc3-b8e8-e3f7ec306452@mail>
+From: Jerome Yanga <jerome.yanga@gmail.com>
+Subject: Re: git push from client is not updating files on server
+Date: Tue, 6 Mar 2012 16:28:06 -0800
+Message-ID: <CAC0z1F9sBYCuv_HMCx1ryWLvxZKUcLPS1UUj80ihEesje+SKzg@mail.gmail.com>
+References: <CAC0z1F-bGikXZtLnd8d=3G+4okvNqZaxyrLjh4G3YzPpmqyxQA@mail.gmail.com>
+	<4F567DC6.4070903@gmail.com>
+	<4F567FEF.5000105@gmail.com>
+	<CAC0z1F_eyMo4D8E2j15dOFhp-6tZ_ixacB6XcKfNpJategcsXQ@mail.gmail.com>
+	<CAC0z1F_LYRkReO1qqcjkWy6Vb3E0_oNo-0kSf15nGfQFAtXpdg@mail.gmail.com>
+	<CAC0z1F87ORZQmrZeMGo2suV1fAt-5mAwwpkkV3ZTx0US3AjM8Q@mail.gmail.com>
+	<4F569EA8.4050907@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nathan Gray <n8gray@n8gray.org>,
-	Andrew Sayers <andrew-git@pileofstuff.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	David Barr <davidbarr@google.com>
-To: Stephen Bash <bash@genarts.com>
-X-From: git-owner@vger.kernel.org Wed Mar 07 00:59:41 2012
+Cc: git@vger.kernel.org
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 07 01:28:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S54I8-0002dY-81
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 00:59:40 +0100
+	id 1S54jm-000302-WA
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 01:28:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031513Ab2CFX7f convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Mar 2012 18:59:35 -0500
-Received: from uk.vilain.net ([92.48.122.123]:51581 "EHLO uk.vilain.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1031468Ab2CFX7e (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 18:59:34 -0500
-Received: by uk.vilain.net (Postfix, from userid 1001)
-	id 09BCF8277; Tue,  6 Mar 2012 23:59:33 +0000 (GMT)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on uk.vilain.net
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=unavailable version=3.3.1
-Received: from [IPv6:::1] (localhost [127.0.0.1])
-	by uk.vilain.net (Postfix) with ESMTP id 12BA98209;
-	Tue,  6 Mar 2012 23:59:27 +0000 (GMT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <ab5eb5a7-a446-4dc3-b8e8-e3f7ec306452@mail>
+	id S1031282Ab2CGA2I convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Mar 2012 19:28:08 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:64710 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932682Ab2CGA2H convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Mar 2012 19:28:07 -0500
+Received: by vcqp1 with SMTP id p1so4969318vcq.19
+        for <git@vger.kernel.org>; Tue, 06 Mar 2012 16:28:06 -0800 (PST)
+Received-SPF: pass (google.com: domain of jerome.yanga@gmail.com designates 10.52.90.110 as permitted sender) client-ip=10.52.90.110;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of jerome.yanga@gmail.com designates 10.52.90.110 as permitted sender) smtp.mail=jerome.yanga@gmail.com; dkim=pass header.i=jerome.yanga@gmail.com
+Received: from mr.google.com ([10.52.90.110])
+        by 10.52.90.110 with SMTP id bv14mr10763283vdb.118.1331080086128 (num_hops = 1);
+        Tue, 06 Mar 2012 16:28:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=ZchzAoXNAtDf3PkbwXSHiyL9/t8860l1mPO4gpoHUZI=;
+        b=XTMX7nbKeMIIQHdKvO/gmjrzs46jnXMxvs3c8cnGhIWxiY2UFj4CgOMffrkZB8WS46
+         z8XiJEoKFxsnudhttk3gLJ7ksnp1TmdEZOfsnYUQ1yWPn1Bx17ZVzs55BModnEfbiBrn
+         QtySlS+wuM5QocwgLbe0KJetbHAtrO9+20ba995QrTn19i5AX9J70Yb9BLV9YUS250uA
+         Y1vD9bq/J9fEAuCHbRgdaURHtBaxQkiItSGHwPUqmhZ1lMlAXqDk+Cjja8NDAmIZYPxf
+         gl+QPJigspqH2cuxy/0RPYUI9Ee20kk9MdmcU7eT6lrNnmTmWAElDgEBC0OLViXcZ9oc
+         Xf8g==
+Received: by 10.52.90.110 with SMTP id bv14mr9268912vdb.118.1331080086071;
+ Tue, 06 Mar 2012 16:28:06 -0800 (PST)
+Received: by 10.220.5.210 with HTTP; Tue, 6 Mar 2012 16:28:06 -0800 (PST)
+In-Reply-To: <4F569EA8.4050907@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192419>
 
-On 3/6/12 12:35 PM, Stephen Bash wrote:
->> The problem of specifying and detecting branches is a major problem =
-in
->> my upcoming conversion.  We've got toplevel trunk/branches/tags
->> directories but underneath "branches" it's a free-for-all:
+The project in Apache's DocumentRoot was created using the following co=
+mmand:
+
+"cd /var/www/git
+git clone --bare <non-bare working directory> <project>.git"
+
+Hence, I believe that is is bare.  Besides, it does not have .git
+folder.  I assumed that when I did this that the non-bare directory
+will also be updated when a push is performed via http.
+
+My objective is that I would like the developers to be able to push
+via http and these pushes will need to be reflected on the non-bare
+working directory as these directories will be used for automated
+tests.
+
+Is what I am trying to do even possible?  If so, please share with me a=
+ guide.
+
+Thank you in advance.
+
+Regards,
+j
+
+On Tue, Mar 6, 2012 at 3:32 PM, Neal Kreitzinger <nkreitzinger@gmail.co=
+m> wrote:
+> On 3/6/2012 5:07 PM, Jerome Yanga wrote:
 >>
->> /branches/codenameA/{projectA,projectB,projectC}
->> /branches/codenameB   (actually a branch of projectA)
->> /branches/developers/joe/frobnicator-experiment (also a branch of
->> projectA)
+>> Is there a way to make git write to the working directory of the
+>> central public server?
 >>
->> Clearly there's no simple regex that's going to capture this, so I'm
->> reduced to listing every branch of projectA, which is tedious and
->> error-prone.  However, what *would* work fabulously well for me is
->> "marker file" detection.  Every copy of projectA has a certain file =
-at
->> it's root.  Let's call it "markerFile.txt".  What I'd really love is=
- a
->> way to say:
->>
->> my %branch_markers =3D {'/branches/**/markerFile.txt' =3D>
->>                        '/refs/heads/**'}
+> In your original post you stated:
 >
-> Ooo...  I like it.  I hadn't hit on this idea yet, but it certainly i=
-s a very helpful heuristic.  I doubt I'd have any sort of demo code for=
- you in the near future, but it's definitely an idea to roll into the m=
-ix.
-
-What I did for the Perl Perforce conversion is make this a multi=E2=80=93=
-step=20
-process; first, the heuristic goes through and detects branches and=20
-merge parents.  Then you do the actual export.  If, however, the=20
-heuristic gets it wrong, then you can manually override the branch=20
-detection for a particular revision, which invalidates all of the=20
-_automatic_ decisions made for later revisions the next time you run it=
-=2E
-
-Even with all of the information in Postgres, and much of the hard work=
-=20
-pushed into the Postgres engine, and Postgres tuned for OLAP, this was=20
-the slowest part of the operation.  For a 30,000=E2=80=93odd revision P=
-erforce=20
-repository.
-
-The manual input is extremely useful for bespoke conversions; there wil=
-l=20
-always be warts in the history and no heuristic is perfect (even if you=
-=20
-can supply your own set of expressions, a way to override it for just=20
-one revision is handy).
-
-Just to revise, the steps in git-p4raw, are:
-
-* load metadata (git-p4raw load ; git-p4raw check)
-* load blobs (git-p4raw export-blobs)
-* find project roots (git-p4raw find-branches)
-
-   Project root decisions can be overridden, in git-p4raw this was=20
-through a DB insert, but all this consisted of was inserting (revision,=
-=20
-branch) tuples into the appropriate table so a front=E2=80=93end would =
-be=20
-trivial.  As you suggest, a custom heuristic is also an option but the=20
-most flexible solution is just being able to override the decisions mad=
-e=20
-for a particular revision.
-
-* detect project merges (also done by git-p4raw find-branches)
-
-Detecting merge parents used a heuristic based on the per=E2=80=93file=20
-integration records and a computation based on an internal diff-tree=20
-which produced a list of files that would have needed resolving.  This=20
-one I actually used enough to bother implementing a front=E2=80=93end f=
-or:
-
-   git-p4raw graft REV PARENT PARENT
-
-Where 'PARENT' could be another project root (revision/branch location)=
-,=20
-or it could be a git commit ID (for the inevitable occasion where you=20
-need to manually graft on some history).  This interface allows you to=20
-do several things:
-
-   1. mark a merge which was not recorded correctly in history
-   2. un=E2=80=93mark a merge which was detected/recorded incorrectly
-   3. skip bad sections of history, for instance squash merging merges=20
-which happened over several commits (SVN and Perforce, of course,=20
-support insane piecemeal merging prohibited by git)
-
-* the actual fast-import exporter.
-
-   git-p4raw export-commits 1..5000
-
-There was also an important reverse operation:
-
-   git-p4raw unexport-commits 2500
-
-Which moved all of the exported refs backwards, deleted ones which=20
-didn't exist at revision 2500.
-
-Once the data has been mined, the actual exporting can proceed very=20
-fast.  Eg, on my laptop I could easily be topping 300 commits per secon=
-d=20
-which makes for a nice export/examine/rewind/adjust cycle.
-
-=46or more information,
-
-   git clone git://github.com/samv/git-p4raw
-   cd git-p4raw
-   perldoc git-p4raw
-
-The "Game plan." section of the POD is particularly relevant.  Remember=
-=20
-that SVN is very similar to Perforce in virtually all of its design=20
-details so this tool, its database schema, and implementation are all=20
-very relevant to the design of the new svn-fe importer.
-
-Sam
+>
+>> From the git client server, I can successfully clone projects in fro=
+m
+>> the central public Git server using the command below.
+>>
+>> git clone
+>> http://<hostname_of_central_public_git_server>/<Project_name>.git
+>
+> ".git" extension implies "bare" repo. =A0A bare repo has _no_ working=
+ tree.
+> =A0Is the repo in question bare or non-bare? =A0If you are not sure, =
+then cd to
+> the central-repo-dir (ie., the <Project_name>.git you cloned _from_ i=
+n your
+> example above) and run "git config -l |grep bare". =A0If it says
+> "core.bare=3Dtrue" then it is a bare repo.
+>
+> v/r,
+> neal
