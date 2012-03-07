@@ -1,97 +1,114 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH/RFC] Change t0204-gettext-reencode-sanity.sh to pass under
- Mac OSX
-Date: Wed, 7 Mar 2012 23:04:43 +0100
-Message-ID: <CACBZZX6W=-ZchaCsLGdpZ420L_9=w8AHD8BNVb7XV5M-hc0Qhg@mail.gmail.com>
-References: <201203052039.16893.tboegi@web.de> <7vzkbuzss7.fsf@alter.siamese.dyndns.org>
- <CACBZZX4P=JSdP_vLOMx5r3R+YO8SMSs5W8+vf2DMibKMwBx_Vg@mail.gmail.com>
- <7vfwdkm6xs.fsf@alter.siamese.dyndns.org> <CACBZZX4q0Da=H=-fO86f2YN+CmE25QfEgAp8Efmdyf65CGckiQ@mail.gmail.com>
- <7v4nu0m5tb.fsf@alter.siamese.dyndns.org>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: [PATCH] Documentation/git-rerere: document 'remaining' command
+Date: Wed, 7 Mar 2012 17:10:48 -0500
+Message-ID: <CABURp0rOFgwLu0pX0W5txOH=CH6Yb4NchYLaj91m1nMve_zjDg@mail.gmail.com>
+References: <1331036512-7626-1-git-send-email-vfr@lyx.org> <7vwr6xsfbn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Cc: Vincent van Ravesteijn <vfr@lyx.org>, git@vger.kernel.org,
+	martin.von.zweigbergk@gmail.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 07 23:05:13 2012
+X-From: git-owner@vger.kernel.org Wed Mar 07 23:11:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5Oyt-000392-S6
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 23:05:12 +0100
+	id 1S5P51-0001y5-CI
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 23:11:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030523Ab2CGWFJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Mar 2012 17:05:09 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:65076 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030508Ab2CGWFF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Mar 2012 17:05:05 -0500
-Received: by eekc41 with SMTP id c41so2502424eek.19
-        for <git@vger.kernel.org>; Wed, 07 Mar 2012 14:05:04 -0800 (PST)
+	id S1030692Ab2CGWLZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Mar 2012 17:11:25 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:46496 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1030652Ab2CGWLL convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 7 Mar 2012 17:11:11 -0500
+Received: by lahj13 with SMTP id j13so7820665lah.19
+        for <git@vger.kernel.org>; Wed, 07 Mar 2012 14:11:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        bh=ZqtoRUGMhfG1jo0TpWHMbq06LknLad/MjbDQPYPIMhM=;
-        b=dfuDFq1ih94W8Q3VWAKyXiPSpbl4J0uuOyqzP8vAASE994LFngb7FXjOsVuEK/v7V7
-         lW1NuWhwPXraaU4sK5Pp41iGX0V75WG7u2YA/9ce0SHfC1BeKZTgoKVhuTo/+6eGk9oT
-         1p485Gxc/4pAGVKv18alYWSBGHyyvbxqmcMyR9s3qGr7UcdCmNA0wmwRqMKQPQnr0YDG
-         NbeuRfBezAQdkZRXY7zq3HrMY1WNicPvDSBlRZ9ymDn2lmTbNZ/6FPfCVB/Z3vv9UflA
-         OfkiyAqrVtSA9s+DfcAu/AmqFoEwiu7qRhZEDdQcZLjp9Pi5mc9W06kWr5ZAg2CjSMa1
-         0y4w==
-Received: by 10.14.127.76 with SMTP id c52mr1641367eei.37.1331157904293; Wed,
- 07 Mar 2012 14:05:04 -0800 (PST)
-Received: by 10.213.2.147 with HTTP; Wed, 7 Mar 2012 14:04:43 -0800 (PST)
-In-Reply-To: <7v4nu0m5tb.fsf@alter.siamese.dyndns.org>
+        bh=RWSkNma780MRL15ClnkzDgl8MugPhaSbIFHEF+1NpV4=;
+        b=W+F9hUDdEQbVM3CUUXnSw2VjGS01OhfQ58hm4xqz6Sjhd5guWdTgY3Otwe/74fogTa
+         ktkPwzXKJXbic4k2Qw7G30olh3Tt3amgUfkfcaGwe2V9r29uSr5WHncatP1D8tQlRpZs
+         y0hgZ87HuptCeta1UiH70YTWFPPqxftCPQO7w0cxwElg6UwzmxfcW+bQFPQThE6wZvLd
+         ZEAWlcPJcFoJISyReoFDh1mJaqvyCE8CNFlb8nyDs/8tbTpJbVOeOJwES1rVT2oRdWWO
+         ClmfPIuhwVQ6blcHTKALI+H/sXfh/k3r+o20tuGv9DdzGPqyN8kOR0mu5l6RBsr+m9Rh
+         TroA==
+Received: by 10.112.24.4 with SMTP id q4mr1347823lbf.80.1331158269535; Wed, 07
+ Mar 2012 14:11:09 -0800 (PST)
+Received: by 10.112.8.133 with HTTP; Wed, 7 Mar 2012 14:10:48 -0800 (PST)
+In-Reply-To: <7vwr6xsfbn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192491>
 
-2012/3/7 Junio C Hamano <gitster@pobox.com>:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Tue, Mar 6, 2012 at 2:24 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Vincent van Ravesteijn <vfr@lyx.org> writes:
 >
->> On Wed, Mar 7, 2012 at 22:34, Junio C Hamano <gitster@pobox.com> wro=
-te:
->>>> I think it's important to be pro-active about trying to spot
->>>> any issues that might affect end users before they happen.
->>>
->>> The goal is noble, but asking the platform to perform an impossible
->>> task and subjectively judging if the failure mode is acceptable is
->>> not the way to do so, I would have to say.
+>> From: Vincent van Ravesteijn <vfr@lyx.org>
 >>
->> I leave it up to you whether you want to accept the patch to remove
->> it, but with it included we at least *know* what the failure modes
->> are, since we get user reports about it.
+>> This adds the 'remaining' command to the documentation of
+>> 'git rerere'. This command was added in ac49f5ca (Feb 16 2011;
+>> Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>) but
+>> it was never documented.
 >>
->> That's the reason I put it in there to begin with. Because I have no
->> idea how all these pieces play together with systems in the wild, an=
-d
->> I'd like to pro-actively find out about that.
+>> Signed-off-by: Vincent van Ravesteijn <vfr@lyx.org>
+>> ---
+>> =A0Documentation/git-rerere.txt | =A0 10 +++++++++-
+>> =A01 files changed, 9 insertions(+), 1 deletions(-)
+>>
+>> diff --git a/Documentation/git-rerere.txt b/Documentation/git-rerere=
+=2Etxt
+>> index a6253ba..b75d34b 100644
+>> --- a/Documentation/git-rerere.txt
+>> +++ b/Documentation/git-rerere.txt
+>> @@ -8,7 +8,7 @@ git-rerere - Reuse recorded resolution of conflicted=
+ merges
+>> =A0SYNOPSIS
+>> =A0--------
+>> =A0[verse]
+>> -'git rerere' ['clear'|'forget' <pathspec>|'diff'|'status'|'gc']
+>> +'git rerere' ['clear'|'forget' <pathspec>|'diff'|'remaining'|'statu=
+s'|'gc']
+>>
+>> =A0DESCRIPTION
+>> =A0-----------
+>> @@ -53,6 +53,14 @@ useful for tracking what has changed while the us=
+er is resolving
+>> =A0conflicts. =A0Additional arguments are passed directly to the sys=
+tem
+>> =A0'diff' command installed in PATH.
+>>
+>> +'remaining'::
+>> +
+>> +Like 'diff', but this only prints the unresolved filenames. This
 >
-> Are we talking about the same specific test?
+[...]
 >
-> What you said above all makes sense and I agreed that it is a noble
-> goal, *if* and only if the test is about the case we *expect* to
-> work. =C2=A0This particular one prepares a message that cannot possib=
-ly
-> be transliterated to iso-8859-1 and asks the system to show it.
+> =A0 =A0 =A0 =A0'remaining'::
 >
-> What scenario do you have in mind that we (or the end user for that
-> matter) might benefit by having this test?
+> =A0 =A0 =A0 =A0Print paths with conflicts that are not resolved.
+>
+> Should be sufficient, I think.
+>
+> In fact, wouldn't this be more or less equivalent to "ls-files -u"
+> without anything other than name part?
 
-E.g. if we find out that their implementation of gettext panics
-instead of showing question marks that means we'd have to pay special
-attention to that platform.
+No.  When using  --no-rerere-autoupdate, git does not add autoresolved
+files to the index; it fixes them only in your working directory.
+'ls-files -u' still lists them as unresolved.  'rerere remaining' does
+not list these autoresolved files.  'mergetool' uses this command to
+avoid asking the user to resolve files which git rerere already
+resolved for her.
 
-Anyway, I admit that this is an obscure edge case. I really just like
-the idea of having complete knowledge (which we'll have in time since
-we get ported everywhere) about how the various aspects of our i18n
-implementation work.
+ac49f5ca8 has a pretty complete description, though it may be a bit
+too wordy for the the up-front synopsis.
+2f59c9470 has a more complete justification.
 
-Having that information doesn't cost us a lot, in this case we can
-just amend the test to assert that on OSX the output should be the
-same as under the UTF-8 output.
+Phil
