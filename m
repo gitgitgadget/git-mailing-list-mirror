@@ -1,94 +1,84 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 1/2] perf: compare diff algorithms
-Date: Wed, 7 Mar 2012 19:03:01 +0100
-Message-ID: <201203071903.02373.jnareb@gmail.com>
-References: <87pqcp6fyh.fsf@thomas.inf.ethz.ch> <m31up5tnjw.fsf@localhost.localdomain> <877gywy40l.fsf@thomas.inf.ethz.ch>
+Date: Wed, 07 Mar 2012 10:19:31 -0800
+Message-ID: <7vzkbsmfyk.fsf@alter.siamese.dyndns.org>
+References: <87pqcp6fyh.fsf@thomas.inf.ethz.ch>
+ <m31up5tnjw.fsf@localhost.localdomain> <877gywy40l.fsf@thomas.inf.ethz.ch>
+ <201203071903.02373.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@inf.ethz.ch>,
 	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
 	Michal Privoznik <mprivozn@redhat.com>,
 	Jeff King <peff@peff.net>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Mar 07 19:03:21 2012
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 07 19:19:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5LCm-00088s-FZ
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 19:03:16 +0100
+	id 1S5LSd-000187-Fa
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 19:19:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758962Ab2CGSDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Mar 2012 13:03:12 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:61758 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757850Ab2CGSDL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2012 13:03:11 -0500
-Received: by eaaq12 with SMTP id q12so2340607eaa.19
-        for <git@vger.kernel.org>; Wed, 07 Mar 2012 10:03:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=7w+3Ik97++mA2EvJJgyr7xUwZGOMYgp8KUbHpp/mH10=;
-        b=BpnptWDXP8J6vV636fzbmAPBCICZH94lxSgPEYLq21SAHtqxG76P7x0/SEtLwUyN43
-         PX3/LK5n0vaVRQtkLb9BcmPki8ynhU1ejE4P+U1G8enMUvkztwzYIOIFhfLWcGKEKU6L
-         7+Vf9b7WBiB+lqTpdGBt/hAYbCY7KPbtDLrYQw3BfQcw3/1933DSaUlMJwE0u7xIQTRu
-         sjdyvTdD0xzdDRNKvQrq28JO4tiPIZdJpC6uRTgXVM6RM5ae+4n0TUql7R2eQOUEnnJO
-         urkvwa/6Lx+gFOu7cv/eB9xWj9vjbxV/ST22YLfVetrRefESgZmgGd4J86SYpu2vYKgS
-         T2rw==
-Received: by 10.213.5.6 with SMTP id 6mr751683ebt.88.1331143390205;
-        Wed, 07 Mar 2012 10:03:10 -0800 (PST)
-Received: from [192.168.1.13] (abwo250.neoplus.adsl.tpnet.pl. [83.8.238.250])
-        by mx.google.com with ESMTPS id o49sm89636700eeb.7.2012.03.07.10.03.05
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 07 Mar 2012 10:03:09 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <877gywy40l.fsf@thomas.inf.ethz.ch>
-Content-Disposition: inline
+	id S964971Ab2CGSTf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Mar 2012 13:19:35 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62668 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932423Ab2CGSTe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2012 13:19:34 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C54178F6;
+	Wed,  7 Mar 2012 13:19:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rq67fBwns8yp/SLg2jyWrlxGfpw=; b=Kj/gnl
+	ZGTFwTGArNTpyOHKcSmRAPt1bafIOXiJZZ7rDxzOTyusL6i4DT3ReN4CIFlMVp79
+	Tr7XSNMgMaYNu54DBtdpUgNMbw2EMIfA5Crfdtb33/QXarph30y9ry+HiA1n2iQw
+	e9rZaTne1JNPEcfnS8cE8j9tP2wlAKWbpBH2g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IQANDJ2yvCRKEaEQ7Phu38ArapJuWgnx
+	mQlW/ii5C2Zaq9KvjPXsK3JByo6zlACL38pn3MTtXB1AUNRCSOELd9bboIUFdPL7
+	WQTb3ZEw8gC10YijmlvQPEZXqJqkPpF9dffZedVfGj0Z9NduUBVQ09VMK0dfgADW
+	kgmSecIKDZk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7432478F5;
+	Wed,  7 Mar 2012 13:19:33 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0558B78F4; Wed,  7 Mar 2012
+ 13:19:32 -0500 (EST)
+In-Reply-To: <201203071903.02373.jnareb@gmail.com> (Jakub Narebski's message
+ of "Wed, 7 Mar 2012 19:03:01 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 167FD602-6882-11E1-85F5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192470>
 
-Thomas Rast wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> > Junio C Hamano <gitster@pobox.com> writes:
-> >> 
-> >> But of course, this from a command line would not work:
-> >> 
-> >> 	$ perl -MGit
-> >> 
-> >> I do not expect it to, and for the ease of testing new versions, I
-> >> prefer it not to work.
-> >> 
-> >> In any case, you should be able to do anything under t/ _before_
-> >> installing, so relying on having Git.pm in normal @INC is a double
-> >> no-no.
-> >
-> > Thomas, take a look at how it is solved in 't/t9700/test.pl', used by
-> > 't/t9700-perl-git.sh':
-> >
-> >   use lib (split(/:/, $ENV{GITPERLLIB}));
-> 
-> Hum.  The problem is that the user may invoke aggregate.perl manually,
-> and GITPERLLIB won't be set in that case.
-> 
-> Is there a better solution than duplicating the logic that sets
-> GITPERLLIB in test-lib.sh within aggregate.perl?
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Beside extracting logic that sets GITPERLLIB into separate file like
-in Junio proposal?  You can always assume that it is fixed relative
-to perl/Git.pm, and use __DIR__ or $FindBin to make "use lib", e.g.
+> Beside extracting logic that sets GITPERLLIB into separate file like
+> in Junio proposal?
 
-  use FindBin;
-  use lib "$FindBin::Bin/../../perl";
+That was not even a proposal.  The part that deals with valgrind is
+blatantly wrong (it shouldn't create symlinks in that code, it only
+should figure out where things should be).
 
--- 
-Jakub Narebski
-Poland
+> You can always assume that it is fixed relative
+> to perl/Git.pm, and use __DIR__ or $FindBin to make "use lib", e.g.
+>
+>   use FindBin;
+>   use lib "$FindBin::Bin/../../perl";
+
+Use of FindBin to find the location of the script is OK, but does
+using "../../perl" really work?
+
+We have this
+
+  GITPERLLIB="$GIT_BUILD_DIR"/perl/blib/lib:"$GIT_BUILD_DIR"/perl/blib/arch/auto/Git
+
+to look for two places in test-lib.sh
