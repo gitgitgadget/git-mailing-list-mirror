@@ -1,142 +1,90 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH] builtin/index-pack.c: Fix some pthread_t misuse
-Date: Wed, 07 Mar 2012 19:00:31 +0000
-Message-ID: <4F57B04F.6050307@ramsay1.demon.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] builtin/index-pack.c: Fix some pthread_t misuse
+Date: Wed, 07 Mar 2012 11:15:00 -0800
+Message-ID: <7vvcmgmde3.fsf@alter.siamese.dyndns.org>
+References: <4F57B04F.6050307@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	GIT Mailing-list <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 07 20:03:02 2012
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Wed Mar 07 20:15:12 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5M8Y-0001HZ-Op
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 20:02:59 +0100
+	id 1S5MKN-0007IP-Cc
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 20:15:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932700Ab2CGTCq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Mar 2012 14:02:46 -0500
-Received: from anchor-post-1.mail.demon.net ([195.173.77.132]:64731 "EHLO
-	anchor-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932608Ab2CGTCn (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Mar 2012 14:02:43 -0500
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-1.mail.demon.net with esmtp (Exim 4.69)
-	id 1S5M8G-0002Pq-iK; Wed, 07 Mar 2012 19:02:41 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+	id S1759740Ab2CGTPG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Mar 2012 14:15:06 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64274 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758731Ab2CGTPF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2012 14:15:05 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3496F67C7;
+	Wed,  7 Mar 2012 14:15:04 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=m3C6CZrhGX5G+Age7MxUuYOBtvI=; b=qhonUw
+	SZtq1zcjZYKL64eCXpZhAnuJzRrgDitIlzKlUB+5EQXK13zBTdyAUl4ZS+Zd9fZL
+	qwqBM8AfZjggjuuZb9RCqOkfAqB+vwdtReI4CjggBooubVuC3mXpAIulP69KTRMX
+	fTvjbjlBZKTTKuBGsieXA0IW9w3Z00VPr/KNo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lHOzumP+jofB4HDv9GNhKJP/GoxNdTHz
+	nsZ89QZY1kwCQgIoinNsOk+LOygkXJvIvG6uft/Zr1dSLVd/qbbNhAY2isHrM7DF
+	7JJaFP8NLEYxd4FGZKOdVmlXvR+h2kscTbf8U9ZAFDawhq3MSiMelAzuC1y7pICJ
+	+FDI8dIrALo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26BAD67C6;
+	Wed,  7 Mar 2012 14:15:04 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AF01467C2; Wed,  7 Mar 2012
+ 14:15:01 -0500 (EST)
+In-Reply-To: <4F57B04F.6050307@ramsay1.demon.co.uk> (Ramsay Jones's message
+ of "Wed, 07 Mar 2012 19:00:31 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D68E3B6C-6889-11E1-AF21-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192473>
 
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 
-On cygwin, sparse complains as follows:
+> However, pthread_t is intended to be an opaque (implementation defined)
+> type. For example, an implementation may choose to use a structure to
+> implement the type.  Therefore, assigning zero (or any other constant)
+> to a pthread_t is not supported in general.
+> ...
+> Note that, for the same reason given above, you can not, in general,
+> directly compare pthread_t handles with the built-in equality operator.
+> In order to compare pthread_t's for equality, the POSIX standard requires
+> the use of pthread_equal().
 
-        SP builtin/index-pack.c
-    builtin/index-pack.c:892:49: warning: Using plain integer as \
-        NULL pointer
+Thanks, the above analysis all sound sensible.
 
-The warning refers to code which assigns zero to a pthread_t thread
-handle. In this case, the pthread_t handle type is a pointer type,
-which results in the above warning. On Linux a pthread_t is defined
-as an integer type (unsigned long int for me) and so sparse does not
-issue any such warning.
+I do not think it matters in *this* case, but if a loop iterates
+over an array of things with a field of type pthread_t in it, whose
+element may or may not be valid, and wants to mark the validity of
+an element with the value of its pthread_t field, what is the proper
+way to do so?  I.e.
 
-However, pthread_t is intended to be an opaque (implementation defined)
-type. For example, an implementation may choose to use a structure to
-implement the type.  Therefore, assigning zero (or any other constant)
-to a pthread_t is not supported in general.
+	for (i = 0; i < ARRAY_SIZE(thread_data); i++) {
+		if (pthread_invalid(thread_data[i].thread)
+			continue; /* not used */
+        	if (!pthread_equal(self, thread_data[i].thread))
+                	continue; /* not me */
+		/* ah, this is mine! */
+                ...
+	}
 
-As a case in point, the pthread emulation code on MinGW defines the
-pthread_t type using a structure (see compat/win32/pthread.h:57), which
-results in gcc complaining as follows:
-
-        CC builtin/index-pack.o
-    builtin/index-pack.c: In function 'get_thread_data':
-    builtin/index-pack.c:290: error: invalid operands to binary == \
-        (have 'pthread_t' and 'pthread_t')
-    builtin/index-pack.c: In function 'resolve_one_delta':
-    builtin/index-pack.c:302: error: invalid operands to binary == \
-        (have 'pthread_t' and 'pthread_t')
-    builtin/index-pack.c: In function 'parse_pack_objects':
-    builtin/index-pack.c:892: error: incompatible types when assigning \
-        to type 'pthread_t' from type 'int'
-    make: *** [builtin/index-pack.o] Error 1
-
-Note that, for the same reason given above, you can not, in general,
-directly compare pthread_t handles with the built-in equality operator.
-In order to compare pthread_t's for equality, the POSIX standard requires
-the use of pthread_equal().
-
-In order to fix the warnings and errors, we replace the use of the
-'==' operator with corresponding calls to pthread_equal() and remove
-the statement which assigns zero to the thread handle.
-
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
-
-Hi Nguyen,
-
-commit ee66dabd ("index-pack: support multithreaded delta resolving",
-02-03-2012) causes a build failure on MinGW. This patch makes a small
-improvement - it at least builds.
-
-The only testing I have done is to run the testsuite on Linux (it passes)
-and tests t5300-pack-object.sh, t5302-pack-index.sh, t5510-fetch.sh and
-t6050-replace.sh on cygwin (running the full testsuite on cygwin takes
-*hours*) and again it passes.
-
-On MinGW, however, the above tests all fail miserably! (They crash with
-that irritating 'git.exe failed do you want to send error report to
-Microsoft' dialog). I noticed that the 'counter_mutex' is not initialised
-or destroyed, and have (literally) just tested a patch which does this
-and ... it made no difference! :(
-
-So, more debugging needs to be done on windows ...
-
-ATB,
-Ramsay Jones
-
- builtin/index-pack.c |    8 +++-----
- 1 files changed, 3 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index edd7cbd..f8d93b8 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -287,7 +287,7 @@ static struct thread_local *get_thread_data(void)
- 	int i;
- 	pthread_t self = pthread_self();
- 	for (i = 1; i < nr_threads; i++)
--		if (self == thread_data[i].thread)
-+		if (pthread_equal(self, thread_data[i].thread))
- 			return &thread_data[i];
- #endif
- 	return &thread_data[0];
-@@ -299,7 +299,7 @@ static void resolve_one_delta(void)
- 	int i;
- 	pthread_t self = pthread_self();
- 	for (i = 1; i < nr_threads; i++)
--		if (self == thread_data[i].thread) {
-+		if (pthread_equal(self, thread_data[i].thread)) {
- 			counter_lock();
- 			nr_resolved_deltas++;
- 			counter_unlock();
-@@ -887,10 +887,8 @@ static void parse_pack_objects(unsigned char *sha1)
- 			if (ret)
- 				die("unable to create thread: %s", strerror(ret));
- 		}
--		for (i = 1; i < nr_threads; i++) {
-+		for (i = 1; i < nr_threads; i++)
- 			pthread_join(thread_data[i].thread, NULL);
--			thread_data[i].thread = 0;
--		}
- 		cleanup_thread();
- 
- 		/* stop get_thread_data() from looking up beyond the
--- 
-1.7.9
+Perhaps the answer is "Don't do it" and that is perfectly fine, but
+does Nguyen's code rely on the final clean-up (assignment with 0 you
+are removing with this patch) to mark that these elements are no
+longer relevant?
