@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 2/7] Add more large blob test cases
-Date: Wed,  7 Mar 2012 17:54:16 +0700
-Message-ID: <1331117661-19378-3-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 4/7] parse_object: avoid putting whole blob in core
+Date: Wed,  7 Mar 2012 17:54:18 +0700
+Message-ID: <1331117661-19378-5-git-send-email-pclouds@gmail.com>
 References: <7vty21twqc.fsf@alter.siamese.dyndns.org>
  <1331117661-19378-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -12,180 +12,156 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 07 11:53:19 2012
+X-From: git-owner@vger.kernel.org Wed Mar 07 11:53:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5EUe-0002vb-4w
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 11:53:16 +0100
+	id 1S5EUy-0003DF-Gi
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 11:53:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755320Ab2CGKxJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Mar 2012 05:53:09 -0500
+	id S1755460Ab2CGKxX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Mar 2012 05:53:23 -0500
 Received: from mail-pz0-f52.google.com ([209.85.210.52]:64743 "EHLO
 	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755276Ab2CGKxH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2012 05:53:07 -0500
+	with ESMTP id S1755433Ab2CGKxV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2012 05:53:21 -0500
 Received: by mail-pz0-f52.google.com with SMTP id p12so7761663dad.11
-        for <git@vger.kernel.org>; Wed, 07 Mar 2012 02:53:07 -0800 (PST)
+        for <git@vger.kernel.org>; Wed, 07 Mar 2012 02:53:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=qgZtVS2n5ABwU6WiWentVcz5vGUuS0I18GTNnQqA0bA=;
-        b=rvTM+DT3OqejdaGwhjbgtA1H9tmskvrItZpzzvyuvnZAXUibDOh/vQ5bQiSEvr7H3y
-         Sx/vKNo5XJgvwsJlvWsnk47GWRUNX+TnlmTqSxI/dl148hEJvf99PLoV/W0p8BpXWuOp
-         sGzd9nikQii2Kcgd1NBnwW4PNv/zRTFHtB5DjseAN9sRXlelwHLcIo3LX65eRoB76prC
-         HWQwjIRWcx7NAhJl6+3NSll2rkVB2VnSyiPfrpx9sZ9ejF+7zLgIkXh6gTfL0knG8tge
-         FXun27funB8Cf/UnXHQcOYiaYFSWBCcZLSVCYEVb59BIXPDOysuXAp4Ox7VYqEqasbk7
-         3gUA==
-Received: by 10.68.242.201 with SMTP id ws9mr2769917pbc.67.1331117587575;
-        Wed, 07 Mar 2012 02:53:07 -0800 (PST)
+        bh=IhES7oHikxL/rB9U8pPjm+z7rhE3EtX1zGnlI8NBdYQ=;
+        b=ydutHbhRebFmf2Y9ERIkZKSCI8ITkISI8tME+PMeWWsr2rHv4d4c/tlqkha7RCucTG
+         LuDZpI6rS9SBtRlkZv0vy3FySRQFZ1NVKaeTtlgrNkdLL7xhQw8G8vhIFPN6OP9dK/dj
+         c7SbDd6vVe8EfERYmNE8NNwHxgM5i4TziVTkCvCmNhGSrXoE+YQT74Qw+yvdi4v70/60
+         S2flqEZ8j2vMXbk1QJsz+79v+Tu7Vz5d66bO+NiFmSzqTNqpLunPu5CNUkAKYny8jG8/
+         sniL8eKW9sf0tHbABpKiKPfP/71PAeFGS/O74iOnwBLCkpYRRERV6InwKMrD1iz4wUU0
+         fIQw==
+Received: by 10.68.220.196 with SMTP id py4mr2903462pbc.166.1331117600808;
+        Wed, 07 Mar 2012 02:53:20 -0800 (PST)
 Received: from tre ([115.74.59.10])
-        by mx.google.com with ESMTPS id o7sm591896pbq.8.2012.03.07.02.53.03
+        by mx.google.com with ESMTPS id k2sm584481pba.28.2012.03.07.02.53.17
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 07 Mar 2012 02:53:06 -0800 (PST)
-Received: by tre (sSMTP sendmail emulation); Wed, 07 Mar 2012 17:54:37 +0700
+        Wed, 07 Mar 2012 02:53:19 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Wed, 07 Mar 2012 17:54:51 +0700
 X-Mailer: git-send-email 1.7.8.36.g69ee2
 In-Reply-To: <1331117661-19378-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192439>
 
-New test cases list commands that should work when memory is
-limited. All memory allocation functions (*) learn to reject any
-allocation larger than $GIT_ALLOC_LIMIT if set.
+Traditionally, all the callers of check_sha1_signature() first
+called read_sha1_file() to prepare the whole object data in core,
+and called this function.  The function is used to revalidate what
+we read from the object database actually matches the object name we
+used to ask for the data from the object database.
 
-(*) Not exactly all. Some places do not use x* functions, but
-malloc/calloc directly, notably diff-delta. These code path should
-never be run on large blobs.
+Update the API to allow callers to pass NULL as the object data, and
+have the function read and hash the object data using streaming API
+to recompute the object name, without having to hold everything in
+core at the same time.  This is most useful in parse_object() that
+parses a blob object, because this caller does not have to keep the
+actual blob data around in memory after a "struct blob" is returned.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- t/t1050-large.sh |   38 ++++++++++++++++++++++++++++++++++++--
- wrapper.c        |   27 ++++++++++++++++++++++++---
- 2 files changed, 60 insertions(+), 5 deletions(-)
+ object.c    |   11 +++++++++++
+ sha1_file.c |   42 ++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 51 insertions(+), 2 deletions(-)
 
-diff --git a/t/t1050-large.sh b/t/t1050-large.sh
-index 29d6024..ded66b3 100755
---- a/t/t1050-large.sh
-+++ b/t/t1050-large.sh
-@@ -6,11 +6,15 @@ test_description=3D'adding and checking out large blo=
-bs'
- . ./test-lib.sh
+diff --git a/object.c b/object.c
+index 6b06297..0498b18 100644
+--- a/object.c
++++ b/object.c
+@@ -198,6 +198,17 @@ struct object *parse_object(const unsigned char *s=
+ha1)
+ 	if (obj && obj->parsed)
+ 		return obj;
 =20
- test_expect_success setup '
--	git config core.bigfilethreshold 200k &&
-+	# clone does not allow us to pass core.bigfilethreshold to
-+	# new repos, so set core.bigfilethreshold globally
-+	git config --global core.bigfilethreshold 200k &&
- 	echo X | dd of=3Dlarge1 bs=3D1k seek=3D2000 &&
- 	echo X | dd of=3Dlarge2 bs=3D1k seek=3D2000 &&
- 	echo X | dd of=3Dlarge3 bs=3D1k seek=3D2000 &&
--	echo Y | dd of=3Dhuge bs=3D1k seek=3D2500
-+	echo Y | dd of=3Dhuge bs=3D1k seek=3D2500 &&
-+	GIT_ALLOC_LIMIT=3D1500 &&
-+	export GIT_ALLOC_LIMIT
- '
-=20
- test_expect_success 'add a large file or two' '
-@@ -100,4 +104,34 @@ test_expect_success 'packsize limit' '
- 	)
- '
-=20
-+test_expect_success 'diff --raw' '
-+	git commit -q -m initial &&
-+	echo modified >>large1 &&
-+	git add large1 &&
-+	git commit -q -m modified &&
-+	git diff --raw HEAD^
-+'
-+
-+test_expect_success 'hash-object' '
-+	git hash-object large1
-+'
-+
-+test_expect_failure 'cat-file a large file' '
-+	git cat-file blob :large1 >/dev/null
-+'
-+
-+test_expect_failure 'cat-file a large file from a tag' '
-+	git tag -m largefile largefiletag :large1 &&
-+	git cat-file blob largefiletag >/dev/null
-+'
-+
-+test_expect_failure 'git-show a large file' '
-+	git show :large1 >/dev/null
-+
-+'
-+
-+test_expect_failure 'repack' '
-+	git repack -ad
-+'
-+
- test_done
-diff --git a/wrapper.c b/wrapper.c
-index 85f09df..6ccd059 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -9,6 +9,18 @@ static void do_nothing(size_t size)
-=20
- static void (*try_to_free_routine)(size_t size) =3D do_nothing;
-=20
-+static void memory_limit_check(size_t size)
-+{
-+	static int limit =3D -1;
-+	if (limit =3D=3D -1) {
-+		const char *env =3D getenv("GIT_ALLOC_LIMIT");
-+		limit =3D env ? atoi(env) * 1024 : 0;
++	if ((obj && obj->type =3D=3D OBJ_BLOB) ||
++	    (!obj && has_sha1_file(sha1) &&
++	     sha1_object_info(sha1, NULL) =3D=3D OBJ_BLOB)) {
++		if (check_sha1_signature(repl, NULL, 0, NULL) < 0) {
++			error("sha1 mismatch %s\n", sha1_to_hex(repl));
++			return NULL;
++		}
++		parse_blob_buffer(lookup_blob(sha1), NULL, 0);
++		return lookup_object(sha1);
 +	}
-+	if (limit && size > limit)
-+		die("attempting to allocate %"PRIuMAX" over limit %d",
-+		    (intmax_t)size, limit);
-+}
 +
- try_to_free_t set_try_to_free_routine(try_to_free_t routine)
- {
- 	try_to_free_t old =3D try_to_free_routine;
-@@ -32,7 +44,10 @@ char *xstrdup(const char *str)
+ 	buffer =3D read_sha1_file(sha1, &type, &size);
+ 	if (buffer) {
+ 		if (check_sha1_signature(repl, buffer, size, typename(type)) < 0) {
+diff --git a/sha1_file.c b/sha1_file.c
+index 4f06a0e..ad314f0 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -19,6 +19,7 @@
+ #include "pack-revindex.h"
+ #include "sha1-lookup.h"
+ #include "bulk-checkin.h"
++#include "streaming.h"
 =20
- void *xmalloc(size_t size)
- {
--	void *ret =3D malloc(size);
-+	void *ret;
-+
-+	memory_limit_check(size);
-+	ret =3D malloc(size);
- 	if (!ret && !size)
- 		ret =3D malloc(1);
- 	if (!ret) {
-@@ -79,7 +94,10 @@ char *xstrndup(const char *str, size_t len)
+ #ifndef O_NOATIME
+ #if defined(__linux__) && (defined(__i386__) || defined(__PPC__))
+@@ -1146,10 +1147,47 @@ static const struct packed_git *has_packed_and_=
+bad(const unsigned char *sha1)
+ 	return NULL;
+ }
 =20
- void *xrealloc(void *ptr, size_t size)
+-int check_sha1_signature(const unsigned char *sha1, void *map, unsigne=
+d long size, const char *type)
++/*
++ * With an in-core object data in "map", rehash it to make sure the
++ * object name actually matches "sha1" to detect object corruption.
++ * With "map" =3D=3D NULL, try reading the object named with "sha1" us=
+ing
++ * the streaming interface and rehash it to do the same.
++ */
++int check_sha1_signature(const unsigned char *sha1, void *map,
++			 unsigned long size, const char *type)
  {
--	void *ret =3D realloc(ptr, size);
-+	void *ret;
+ 	unsigned char real_sha1[20];
+-	hash_sha1_file(map, size, type, real_sha1);
++	enum object_type obj_type;
++	struct git_istream *st;
++	git_SHA_CTX c;
++	char hdr[32];
++	int hdrlen;
 +
-+	memory_limit_check(size);
-+	ret =3D realloc(ptr, size);
- 	if (!ret && !size)
- 		ret =3D realloc(ptr, 1);
- 	if (!ret) {
-@@ -95,7 +113,10 @@ void *xrealloc(void *ptr, size_t size)
++	if (map) {
++		hash_sha1_file(map, size, type, real_sha1);
++		return hashcmp(sha1, real_sha1) ? -1 : 0;
++	}
++
++	st =3D open_istream(sha1, &obj_type, &size, NULL);
++	if (!st)
++		return -1;
++
++	/* Generate the header */
++	hdrlen =3D sprintf(hdr, "%s %lu", typename(obj_type), size) + 1;
++
++	/* Sha1.. */
++	git_SHA1_Init(&c);
++	git_SHA1_Update(&c, hdr, hdrlen);
++	for (;;) {
++		char buf[1024 * 16];
++		ssize_t readlen =3D read_istream(st, buf, sizeof(buf));
++
++		if (!readlen)
++			break;
++		git_SHA1_Update(&c, buf, readlen);
++	}
++	git_SHA1_Final(real_sha1, &c);
++	close_istream(st);
+ 	return hashcmp(sha1, real_sha1) ? -1 : 0;
+ }
 =20
- void *xcalloc(size_t nmemb, size_t size)
- {
--	void *ret =3D calloc(nmemb, size);
-+	void *ret;
-+
-+	memory_limit_check(size * nmemb);
-+	ret =3D calloc(nmemb, size);
- 	if (!ret && (!nmemb || !size))
- 		ret =3D calloc(1, 1);
- 	if (!ret) {
 --=20
 1.7.8.36.g69ee2
