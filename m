@@ -1,105 +1,88 @@
-From: karsten.blees@dcon.de
-Subject: Re: [msysGit] [PATCH] fix deletion of .git/objects sub-directories in
- git-prune/repack
-Date: Wed, 7 Mar 2012 11:50:34 +0100
-Message-ID: <OF193C81EB.4E07375C-ONC12579BA.00363763-C12579BA.003B9773@dcon.de>
-References: <7vmx7tqu0q.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 0/7] nd/stream-more updates
+Date: Wed,  7 Mar 2012 17:54:14 +0700
+Message-ID: <1331117661-19378-1-git-send-email-pclouds@gmail.com>
+References: <7vty21twqc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	kusmabite@gmail.com, msysGit <msysgit@googlegroups.com>,
-	Pat Thoyts <patthoyts@gmail.com>,
-	Stefan Naewe <stefan.naewe@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 07 11:50:59 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 07 11:53:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5ESR-0000Jp-95
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 11:50:59 +0100
+	id 1S5EUP-0002aQ-9c
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 11:53:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755270Ab2CGKuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Mar 2012 05:50:54 -0500
-Received: from mail.dcon.de ([77.244.111.98]:18855 "EHLO MAIL.DCON.DE"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755122Ab2CGKux (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2012 05:50:53 -0500
-In-Reply-To: <7vmx7tqu0q.fsf@alter.siamese.dyndns.org>
-X-Mailer: Lotus Notes Release 7.0.3 September 26, 2007
-X-MIMETrack: Serialize by Router on DCON14/DCon(Release 7.0.3FP1|February 24, 2008) at
- 07.03.2012 11:50:37,
-	Serialize complete at 07.03.2012 11:50:37
+	id S1754627Ab2CGKwy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Mar 2012 05:52:54 -0500
+Received: from mail-pz0-f52.google.com ([209.85.210.52]:64743 "EHLO
+	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752534Ab2CGKwx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2012 05:52:53 -0500
+Received: by dadp12 with SMTP id p12so7761663dad.11
+        for <git@vger.kernel.org>; Wed, 07 Mar 2012 02:52:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=UTIBXbzr5k+AbDArpODiWD2M9+0xwBSFxsyHyPg15do=;
+        b=O7hjfDLRptiN/otCWbD8n4vmoiTb4FSBvI8GvbW1us8nSi8vjtJoijX7lF9cfhG/et
+         zFFs77yR/3oklcKcpFN1A1gmi+GUt/rr8YktLB/v+nkhMyTqC+wFyh+QZowzPU72KQ7U
+         +uW+pjOmZ7GkTZLPLhgErZaeg5Pb8mdrHYChs7zXvmFkUN9MIMGXbckVGaCB2PTKDfuj
+         kRWl+o8WSFX58hwZvmbiUj61zWpPZT9LncgxDp0EDlrL/nl6Ay1jnrDXwYfqJMWi6u7o
+         KSke8WjOkdGmzN7bgTNLEehlrQ0uN5bY0Ruxvs+viJ7imoVZTwxxo8qH7ep1Z2boFH3X
+         5LNQ==
+Received: by 10.68.225.104 with SMTP id rj8mr2936206pbc.135.1331117572747;
+        Wed, 07 Mar 2012 02:52:52 -0800 (PST)
+Received: from tre ([115.74.59.10])
+        by mx.google.com with ESMTPS id k3sm568170pbn.71.2012.03.07.02.52.49
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 07 Mar 2012 02:52:51 -0800 (PST)
+Received: by tre (sSMTP sendmail emulation); Wed, 07 Mar 2012 17:54:22 +0700
+X-Mailer: git-send-email 1.7.8.36.g69ee2
+In-Reply-To: <7vty21twqc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192436>
 
-Junio C Hamano <gitster@pobox.com> wrote on 06.03.2012 22:49:57:
-> karsten.blees@dcon.de writes:
-> 
-> > Junio C Hamano <gitster@pobox.com> wrote on 06.03.2012 21:19:06:
-> >> Johannes Sixt <j6t@kdbg.org> writes:
-> >> 
-> >> >> diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
-> >> >> index f9463de..a834417 100644
-> >> >> --- a/builtin/prune-packed.c
-> >> >> +++ b/builtin/prune-packed.c
-> >> >> @@ -36,7 +36,6 @@ static void prune_dir(int i, DIR *dir, char 
-> > *pathname, 
-> >> >> int len, int opts)
-> >> >>                 display_progress(progress, i + 1);
-> >> >>         }
-> >> >>         pathname[len] = 0;
-> >> >> -       rmdir(pathname);
-> >> >
-> >> > After moving the rmdir() away from prune_dir(), the truncation of 
-the
-> >> > pathname does not logically belong here anymore. It should be moved 
+As discussed, this series removes test_expect_failure that are still
+not fixed in the end. It also adds update-server-info patch. I'll hold
+off the rest of the previous series until 1.7.10 comes out.
 
-> > with
-> >> > the rmdir(). Looks good otherwise.
-> >> 
-> >> I agree that it is better to have the NUL termination close to where
-> >> it actually matters.
-> >> 
-> >
-> > The pathname is extended in prune_dir, so I think it should be reset 
-there
-> > as well; moving it to prune_packed_objects would be quite obscure:
-> 
-> This depends entirely on how you look at it.
-> 
-> You can certainly stare at the original code and declare that the
-> contract between the caller and the callee was that the caller gives
-> pathname[] and len (len+3 for the caller) to the callee, and allows
-> the callee to play with the rest of the pathname[] array but expects
-> that pathname[] to be properly NUL-terminated when the callee comes
-> back.  From that point of view, "pathname[len] = 0" can belong to
-> the callee.
-> 
-> But while you are staring the original code, notice that "expects
-> that pathname[] to be NUL-terminated when the callee comes back" is
-> not something the caller even depends on.  That expectation starts
-> to matter _only_ if you move rmdir(pathname) to the caller.
-> 
-> That is why I said "where it actually matters."
-> 
+Junio C Hamano (1):
+  streaming: make streaming-write-entry to be more reusable
 
-Well, I just don't like that a function designed to prune a directory
-modifies its input parameters as a side effect (it is bad enough that
-prune_dir uses the caller's buffer at all). You know, trying to limit
-side effects as a general programming principle.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (6):
+  Add more large blob test cases
+  cat-file: use streaming API to print blobs
+  parse_object: avoid putting whole blob in core
+  show: use streaming API for showing blobs
+  fsck: use streaming API for writing lost-found blobs
+  update-server-info: respect core.bigfilethreshold
 
-In my opinion, it doesn't matter at all if the caller actually depends on
-unmodified parameters or not, it just makes robust APIs that encourage
-reuse.
+ builtin/cat-file.c           |   25 +++++++++++++++++++
+ builtin/fsck.c               |    8 +----
+ builtin/log.c                |   34 +++++++++++++++----------
+ builtin/update-server-info.c |    1 +
+ entry.c                      |   53 ++++------------------------------=
+------
+ object.c                     |   11 ++++++++
+ sha1_file.c                  |   42 ++++++++++++++++++++++++++++++-
+ streaming.c                  |   55 ++++++++++++++++++++++++++++++++++=
+++++++++
+ streaming.h                  |    2 +
+ t/t1050-large.sh             |   38 +++++++++++++++++++++++++++-
+ wrapper.c                    |   27 ++++++++++++++++++--
+ 11 files changed, 221 insertions(+), 75 deletions(-)
 
-Just my 2 cents, though, prune_packed_objects and prune_dir are so tightly
-coupled that it probably doesn't make any difference...(on the other hand,
-we have near identical code in prune.c, so thinking about reuse is not so
-far fetched)
+--=20
+1.7.8.36.g69ee2
