@@ -1,61 +1,105 @@
-From: Vincent van Ravesteijn <vfr@lyx.org>
-Subject: Re: Why Is There No Bug Tracker And Why Are Patches Sent Instead
- Of Pull Requests
-Date: Wed, 07 Mar 2012 10:52:50 +0100
-Message-ID: <4F572FF2.7030507@lyx.org>
-References: <CAM=oOO2i-9zraF-YG5YzvZEmN1eXTnQfhJ-eMF04NP7HGtf41w@mail.gmail.com> <7vhay9tqs6.fsf@alter.siamese.dyndns.org> <20120229225304.GA9099@burratino> <CAH5451miv_Mo_9tZV+mfDEHuEX0491duqAYh66aOzLsMLTNkaA@mail.gmail.com> <8762eoimp0.fsf@thomas.inf.ethz.ch> <7vmx80nt68.fsf@alter.siamese.dyndns.org> <4F504699.3070406@gmail.com> <20120302041924.GG5248@burratino> <4F505F8C.70802@gmail.com> <7vsjhrfprz.fsf@alter.siamese.dyndns.org> <4F50D6C6.3080909@op5.se> <7vk433eyts.fsf@alter.siamese.dyndns.org> <CAH5451mcu=sQa8KL8ptGr5w_d-OmtzAD9B-fwtMGE0w5zELgGA@mail.gmail.com>
+From: karsten.blees@dcon.de
+Subject: Re: [msysGit] [PATCH] fix deletion of .git/objects sub-directories in
+ git-prune/repack
+Date: Wed, 7 Mar 2012 11:50:34 +0100
+Message-ID: <OF193C81EB.4E07375C-ONC12579BA.00363763-C12579BA.003B9773@dcon.de>
+References: <7vmx7tqu0q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Andreas Ericsson <ae@op5.se>,
-	Neal Kreitzinger <nkreitzinger@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	opticyclic <opticyclic@gmail.com>, git@vger.kernel.org
-To: Andrew Ardill <andrew.ardill@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 07 10:52:59 2012
+Content-Type: text/plain; charset="US-ASCII"
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	kusmabite@gmail.com, msysGit <msysgit@googlegroups.com>,
+	Pat Thoyts <patthoyts@gmail.com>,
+	Stefan Naewe <stefan.naewe@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 07 11:50:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5DYI-00062q-KH
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 10:52:58 +0100
+	id 1S5ESR-0000Jp-95
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 11:50:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753340Ab2CGJwy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Mar 2012 04:52:54 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:34172 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751525Ab2CGJwx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2012 04:52:53 -0500
-Received: by bkcik5 with SMTP id ik5so5010718bkc.19
-        for <git@vger.kernel.org>; Wed, 07 Mar 2012 01:52:52 -0800 (PST)
-Received: by 10.204.155.143 with SMTP id s15mr591185bkw.44.1331113971652;
-        Wed, 07 Mar 2012 01:52:51 -0800 (PST)
-Received: from [145.94.169.74] (wlan-145-94-169-074.wlan.tudelft.nl. [145.94.169.74])
-        by mx.google.com with ESMTPS id f5sm26726733bke.9.2012.03.07.01.52.50
-        (version=SSLv3 cipher=OTHER);
-        Wed, 07 Mar 2012 01:52:50 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <CAH5451mcu=sQa8KL8ptGr5w_d-OmtzAD9B-fwtMGE0w5zELgGA@mail.gmail.com>
-X-Gm-Message-State: ALoCoQmrWLrNZTWo30Op/CoB1QKcJbHnV6xgbc/H7gp+YGG5XFEwB8qzs1YgECDegd5KfaSVL73V
+	id S1755270Ab2CGKuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Mar 2012 05:50:54 -0500
+Received: from mail.dcon.de ([77.244.111.98]:18855 "EHLO MAIL.DCON.DE"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755122Ab2CGKux (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2012 05:50:53 -0500
+In-Reply-To: <7vmx7tqu0q.fsf@alter.siamese.dyndns.org>
+X-Mailer: Lotus Notes Release 7.0.3 September 26, 2007
+X-MIMETrack: Serialize by Router on DCON14/DCon(Release 7.0.3FP1|February 24, 2008) at
+ 07.03.2012 11:50:37,
+	Serialize complete at 07.03.2012 11:50:37
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192435>
 
-Op 7-3-2012 9:03, Andrew Ardill schreef:
-> Just a quick status update on where the issue tracker experiment at
-> git-scm.atlassian.net is up to:
->
-> The basic structure of the issue tracker is set up, and is ready for
-> people to log bugs if they want to. So far no one seems to inclined,
-> but note that it is still locked down to only people who have both
-> registered, and been promoted to 'trusted'. I will promote everyone
-> who has registered so far to 'trusted' in the hope that some of them
-> might add bugs!
+Junio C Hamano <gitster@pobox.com> wrote on 06.03.2012 22:49:57:
+> karsten.blees@dcon.de writes:
+> 
+> > Junio C Hamano <gitster@pobox.com> wrote on 06.03.2012 21:19:06:
+> >> Johannes Sixt <j6t@kdbg.org> writes:
+> >> 
+> >> >> diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
+> >> >> index f9463de..a834417 100644
+> >> >> --- a/builtin/prune-packed.c
+> >> >> +++ b/builtin/prune-packed.c
+> >> >> @@ -36,7 +36,6 @@ static void prune_dir(int i, DIR *dir, char 
+> > *pathname, 
+> >> >> int len, int opts)
+> >> >>                 display_progress(progress, i + 1);
+> >> >>         }
+> >> >>         pathname[len] = 0;
+> >> >> -       rmdir(pathname);
+> >> >
+> >> > After moving the rmdir() away from prune_dir(), the truncation of 
+the
+> >> > pathname does not logically belong here anymore. It should be moved 
 
-Done: https://git-scm.atlassian.net/browse/GIT-1
+> > with
+> >> > the rmdir(). Looks good otherwise.
+> >> 
+> >> I agree that it is better to have the NUL termination close to where
+> >> it actually matters.
+> >> 
+> >
+> > The pathname is extended in prune_dir, so I think it should be reset 
+there
+> > as well; moving it to prune_packed_objects would be quite obscure:
+> 
+> This depends entirely on how you look at it.
+> 
+> You can certainly stare at the original code and declare that the
+> contract between the caller and the callee was that the caller gives
+> pathname[] and len (len+3 for the caller) to the callee, and allows
+> the callee to play with the rest of the pathname[] array but expects
+> that pathname[] to be properly NUL-terminated when the callee comes
+> back.  From that point of view, "pathname[len] = 0" can belong to
+> the callee.
+> 
+> But while you are staring the original code, notice that "expects
+> that pathname[] to be NUL-terminated when the callee comes back" is
+> not something the caller even depends on.  That expectation starts
+> to matter _only_ if you move rmdir(pathname) to the caller.
+> 
+> That is why I said "where it actually matters."
+> 
 
-Vincent
+Well, I just don't like that a function designed to prune a directory
+modifies its input parameters as a side effect (it is bad enough that
+prune_dir uses the caller's buffer at all). You know, trying to limit
+side effects as a general programming principle.
+
+In my opinion, it doesn't matter at all if the caller actually depends on
+unmodified parameters or not, it just makes robust APIs that encourage
+reuse.
+
+Just my 2 cents, though, prune_packed_objects and prune_dir are so tightly
+coupled that it probably doesn't make any difference...(on the other hand,
+we have near identical code in prune.c, so thinking about reuse is not so
+far fetched)
