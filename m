@@ -1,73 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Maintaince script for l10n files and commits
-Date: Wed, 07 Mar 2012 11:17:13 -0800
-Message-ID: <7vr4x4mdae.fsf@alter.siamese.dyndns.org>
-References: <1331146034-85804-1-git-send-email-worldhello.net@gmail.com>
+From: Nate Parsons <parsons.nate@gmail.com>
+Subject: Unable to make git with https support
+Date: Wed, 7 Mar 2012 14:52:13 -0500
+Message-ID: <CADjGbJq_HL--_CAuE_Yj3B0srx=WDficot8bgadvW92zz9PJdg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, avarab@gmail.com
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 07 20:17:38 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 07 20:52:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5MMc-0001bi-ET
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 20:17:30 +0100
+	id 1S5Muk-0000dW-KR
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 20:52:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759780Ab2CGTRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Mar 2012 14:17:18 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65445 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759755Ab2CGTRQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2012 14:17:16 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF52D686B;
-	Wed,  7 Mar 2012 14:17:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YmnwAM6PyYvK1UinII35/tvDMpA=; b=dWWE3M
-	eHX0GQLknUYFPwH5S0QtAu9tRKyX/NE5GEnT1PkIhvLzbngnDpBAIWEzP1X98bFv
-	EWhzFH3AaWimK4vL0B+v7LyppQqVh5jZx7UIVHvVhpnBPd1VP+Ywdfc1HqOFGeVi
-	cRhwE6Dg+dGzeJ3adEyuxVJYsbSC0hdW4lrt8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vTMEl320VQgs67tuEyS9QMn7cKvmedeP
-	iji1L9f/hBAYz4yTeTIHPhbKG0k6XAK8nxT7H1qorV5hH2pdadOSENUlCcYeMsPP
-	VqrCtkDpjc9oF8UeQiCVvOekQJBB/B9bLrJeyCBuCG76RPUPDYOtv8py+RFCddSo
-	bhQ2Dg+MIOo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D3A08686A;
-	Wed,  7 Mar 2012 14:17:15 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 498F16865; Wed,  7 Mar 2012
- 14:17:15 -0500 (EST)
-In-Reply-To: <1331146034-85804-1-git-send-email-worldhello.net@gmail.com>
- (Jiang Xin's message of "Thu, 8 Mar 2012 02:47:14 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 262DDE8E-688A-11E1-BEA2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1030558Ab2CGTwn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Mar 2012 14:52:43 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:39043 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030495Ab2CGTwe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2012 14:52:34 -0500
+Received: by bkcik5 with SMTP id ik5so5585946bkc.19
+        for <git@vger.kernel.org>; Wed, 07 Mar 2012 11:52:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=X72kz2fY7HYTsg1ydezVAB332XDtootJmKsQCgCR5sU=;
+        b=qJOU+oGxkHtoRRh9CD1vaIlwELnkXl9jqH2ouO+7fpkV8UGXoEEBoizHf6hMMKdugY
+         B9IQgEFle7bovBjfrE/e3nAtuxod6n7IZUvnmPHaOtTarZQyC/DR4WRZuK/PKPevIfTK
+         pqwVJbC/Jnlal7wdxO4Yp3NbUtjVqjgIgLL6YFZv3fiXSGVFscuWB4p1y0cB3jJr1WyU
+         V6rqTTNN6JximN61PfsgxNT5jsPu+oxeVC709pWd39ZJewWSiBeY1z3HCDQUMxqyTZRh
+         1Fq4nh32NkDgKOn8BbgTfn66QdoLb/D5AGQRJ63Xt8vSXOGdB596AY0KJtNSjljE84gD
+         Ny1Q==
+Received: by 10.204.141.8 with SMTP id k8mr1568555bku.24.1331149953421; Wed,
+ 07 Mar 2012 11:52:33 -0800 (PST)
+Received: by 10.204.168.81 with HTTP; Wed, 7 Mar 2012 11:52:13 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192475>
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+I'm trying to make git for myself, but can't seem to get https
+working. This is what I did to make it:
 
-> Usage of this script:
->
->  * rake commits      : Check commit logs written with non-ascii chars,
->                        but without the correct encoding settings.
->                        Always report Non-ascii in subject line as error.
->
->  * rake pot          : Print the summary of the update of git.pot file
->
->  * rake XX.po        : Create or update XX.po from the git.po tempolate file
->
->  * rake check[XX.po] : Syntax check on XX.po
+> wget http://git-core.googlecode.com/files/git-1.7.9.3.tar.gz
+> tar -xf git-1.7.9.3.tar.gz
+> cd git-1.7.9.3.tar.gz
+> ./configure --with-curl --prefix=$HOME
+> make
+> make install
 
-I would relly prefer not to add another language dependency to the
-system.  Are you doing anything that cannot be done with what we
-already use, e.g. make and shell?
+In a new shell
+
+> git clone https://github.com/git/git.git
+Cloning into 'git'...
+fatal: Unable to find remote helper for 'https'
+
+But my machine does have curl, and that curl can access https urls
+
+> which curl
+/usr/bin/curl
+> curl --version
+curl 7.19.0 (x86_64-suse-linux-gnu) libcurl/7.19.0 OpenSSL/0.9.8h
+zlib/1.2.3 libidn/1.10
+Protocols: tftp ftp telnet dict ldap http file https ftps
+Features: GSS-Negotiate IDN IPv6 Largefile NTLM SSL libz
+> curl https://github.com/git/git.git
+<GitHub 404 page, no https error message>
+
+Thanks, Nate
