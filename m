@@ -1,65 +1,93 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH/RFC] Change t0204-gettext-reencode-sanity.sh to pass under
- Mac OSX
-Date: Wed, 7 Mar 2012 22:43:10 +0100
-Message-ID: <CACBZZX4q0Da=H=-fO86f2YN+CmE25QfEgAp8Efmdyf65CGckiQ@mail.gmail.com>
-References: <201203052039.16893.tboegi@web.de> <7vzkbuzss7.fsf@alter.siamese.dyndns.org>
- <CACBZZX4P=JSdP_vLOMx5r3R+YO8SMSs5W8+vf2DMibKMwBx_Vg@mail.gmail.com> <7vfwdkm6xs.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fmt-merge-msg: show those involved in a merged series
+Date: Wed, 07 Mar 2012 13:59:46 -0800
+Message-ID: <7vzkbskr71.fsf@alter.siamese.dyndns.org>
+References: <7vvcmj68iz.fsf@alter.siamese.dyndns.org>
+ <CA+55aFzQ3+EFBVyE9PWOyH0XEC_oW+kUaBTYfixmi2wgMmiZvw@mail.gmail.com>
+ <7vipii27ka.fsf@alter.siamese.dyndns.org>
+ <CA+55aFw-sS_p7JXNXbSbpiwh9_bZhSrTtC3is4NtLa_n9Hzk5A@mail.gmail.com>
+ <7vmx7uzq8h.fsf_-_@alter.siamese.dyndns.org>
+ <4F57D18B.5090506@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 07 22:43:42 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Wed Mar 07 22:59:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5Oe2-0003eA-5U
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 22:43:38 +0100
+	id 1S5Otp-0005UN-BL
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 22:59:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755718Ab2CGVnc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Mar 2012 16:43:32 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:51456 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752753Ab2CGVnb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2012 16:43:31 -0500
-Received: by eaaq12 with SMTP id q12so2402354eaa.19
-        for <git@vger.kernel.org>; Wed, 07 Mar 2012 13:43:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=hssCjcii+1Z5SZBwIvbVX4IjOvd9llqd9+6oAOFMO7A=;
-        b=ivrDCnBOh3J5pyOSlGnKNUWWsPSr1ZY3o2VcI7l7l9rHtzMChCVAZSjUTujx9ZuOZW
-         dvR3YVF/LGrO8KqXkUVnWhiMGk5M+SUepR+hdoiEX7bwHC0z1hqPQH3/retiY8Y/H+bh
-         W4ngSnrK+GuMaxgdSfmoZvZ4eJTAg/W/6ZRFxsk8HB5LzCM48ynMOHbWl5c4TciwLHqT
-         gMQdctHOUoXv1I7+ezOHbYhhewpKBszjAjTmb1Tfx7EYHVat0yQk22Y7HaSLzDbEobu8
-         MJ9AvrT6rLahIaGJjVP0Cm8bi3xJeOewfCw4EEB80jVVhOVsG5W8H073s5lBeFNGZJ3X
-         yADA==
-Received: by 10.14.127.76 with SMTP id c52mr1621317eei.37.1331156610457; Wed,
- 07 Mar 2012 13:43:30 -0800 (PST)
-Received: by 10.213.2.147 with HTTP; Wed, 7 Mar 2012 13:43:10 -0800 (PST)
-In-Reply-To: <7vfwdkm6xs.fsf@alter.siamese.dyndns.org>
+	id S1030230Ab2CGV7v convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Mar 2012 16:59:51 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52600 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754366Ab2CGV7s convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Mar 2012 16:59:48 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0FB6F7095;
+	Wed,  7 Mar 2012 16:59:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=81axE7ByTy8C
+	6Mmi6Oy5prDdnC4=; b=bHyWLg27eouMTqT1OieB3DvmNHdGzSIsagr/+pk+lURD
+	LKD1kjRBTwu7maONLSaE4cGYqoTMNnzvvF1eMgP1MjBOdrFHoM8KIcKtyVKeDDpa
+	4JrPFC7kCifVKnPk4P1bXqlReylEzK/t4d0mUwdOSKkDG5+JVjOu6mjQ13OCrSo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=lkpzuO
+	mEmPVnXdv6zvOetNnzDiR62j9ameC5l7Cj0teo6Jb7pZXIXZ08Kyz0DOpBvhHdKo
+	mgVqyBpTI9RjrFRih3xn72cvcPWcuoRHLf+o3ryk2D3oeTSs0tNUo7Xh2G8IyjdR
+	W4ZhKD8q+/x4aeFvhchuxaQ1P6aoMz6ShPZp4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 07AFC7094;
+	Wed,  7 Mar 2012 16:59:48 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 90FAC7093; Wed,  7 Mar 2012
+ 16:59:47 -0500 (EST)
+In-Reply-To: <4F57D18B.5090506@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
+ Scharfe"'s message of "Wed, 07 Mar 2012 22:22:19 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DAFF45BC-68A0-11E1-B0A1-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192488>
 
-On Wed, Mar 7, 2012 at 22:34, Junio C Hamano <gitster@pobox.com> wrote:
->> I think it's important to be pro-active about trying to spot
->> any issues that might affect end users before they happen.
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+
+> Am 05.03.2012 22:34, schrieb Junio C Hamano:
 >
-> The goal is noble, but asking the platform to perform an impossible
-> task and subjectively judging if the failure mode is acceptable is
-> not the way to do so, I would have to say.
+>> +#define util_as_int(elem) ((intptr_t)((elem)->util))
+>
+> Something that actually returns an int would fit the name better. ;)
 
-I leave it up to you whether you want to accept the patch to remove
-it, but with it included we at least *know* what the failure modes
-are, since we get user reports about it.
+The particular type would not matter to the callers of the helper
+macro, would it?
 
-That's the reason I put it in there to begin with. Because I have no
-idea how all these pieces play together with systems in the wild, and
-I'd like to pro-actively find out about that.
+>> +static int committer_is_me(const char *name)
+>> +{
+>> +	int namelen =3D strlen(name);
+>> +	const char *me =3D git_committer_info(IDENT_NO_DATE);
+>> +	return (me && !memcmp(me, name, namelen) &&
+>> +		!memcmp(me + namelen, " <", 2));
+>> +}
+>
+> This looks scary due to the missing length check of me before the
+> memcmp() call, but is actually safe because git_committer_info()
+> returns a pointer to a static buffer that is just as long as name can
+> possibly be.  Still, perhaps this is nicer instead:
+>
+> 	const char *me =3D git_committer_info(IDENT_NO_DATE);
+> 	const char *rest =3D skip_prefix(me, name);
+> 	return rest && skip_prefix(rest, " <");
+
+Probably.  Let me fix it up.
+
+Thanks.
