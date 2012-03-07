@@ -1,149 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Multiple --reference arguments to submodule add/update
-Date: Wed, 07 Mar 2012 09:57:48 -0800
-Message-ID: <7vboo8nvj7.fsf@alter.siamese.dyndns.org>
-References: <m3hay0ldf4.fsf@passepartout.tim-landscheidt.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/2] perf: compare diff algorithms
+Date: Wed, 7 Mar 2012 19:03:01 +0100
+Message-ID: <201203071903.02373.jnareb@gmail.com>
+References: <87pqcp6fyh.fsf@thomas.inf.ethz.ch> <m31up5tnjw.fsf@localhost.localdomain> <877gywy40l.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Tim Landscheidt <tim@tim-landscheidt.de>
-X-From: git-owner@vger.kernel.org Wed Mar 07 18:58:00 2012
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Michal Privoznik <mprivozn@redhat.com>,
+	Jeff King <peff@peff.net>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Mar 07 19:03:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5L7c-0001Vi-Qk
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 18:57:57 +0100
+	id 1S5LCm-00088s-FZ
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 19:03:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759268Ab2CGR5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Mar 2012 12:57:52 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50247 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758389Ab2CGR5v (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2012 12:57:51 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E85A73D8;
-	Wed,  7 Mar 2012 12:57:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FoDA7eMRyMCT8mAjXrPje3qEcvM=; b=bd696e
-	gZLBgypg5TaoZWnWumzX4GCmeckrBX58q+qNMV33pXHAVJucpzlCuj7jTuO7oTjm
-	X8ikHnmAQhjRkBQQqmzOs7tBdFUst5m9GI4+Y1xTmimz70PHotgKce1GztGzdA4h
-	hTxaMU9GfVF7omdgrTgIesphgp/iseDSljtjc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=a2rBP76vDOvG/+DgKFgJ1dzByoImN+0t
-	Eb/JmUZbJfFApZI4ks8XeUqg3+RKAnSOUEPq++kyuv/eGofIJ2bhVJEU9/O9r5t9
-	Kaef86oxMuN4Z7iOfuCKrtz/9RXtvbaLf3lelvImKF6ahRxgi7QqxFxwrVpMwLm5
-	Dfy2NGOa0KE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8195973D7;
-	Wed,  7 Mar 2012 12:57:50 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EDACA73D6; Wed,  7 Mar 2012
- 12:57:49 -0500 (EST)
-In-Reply-To: <m3hay0ldf4.fsf@passepartout.tim-landscheidt.de> (Tim
- Landscheidt's message of "Wed, 07 Mar 2012 13:59:43 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0DD2394E-687F-11E1-B3ED-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758962Ab2CGSDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Mar 2012 13:03:12 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:61758 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757850Ab2CGSDL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2012 13:03:11 -0500
+Received: by eaaq12 with SMTP id q12so2340607eaa.19
+        for <git@vger.kernel.org>; Wed, 07 Mar 2012 10:03:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=7w+3Ik97++mA2EvJJgyr7xUwZGOMYgp8KUbHpp/mH10=;
+        b=BpnptWDXP8J6vV636fzbmAPBCICZH94lxSgPEYLq21SAHtqxG76P7x0/SEtLwUyN43
+         PX3/LK5n0vaVRQtkLb9BcmPki8ynhU1ejE4P+U1G8enMUvkztwzYIOIFhfLWcGKEKU6L
+         7+Vf9b7WBiB+lqTpdGBt/hAYbCY7KPbtDLrYQw3BfQcw3/1933DSaUlMJwE0u7xIQTRu
+         sjdyvTdD0xzdDRNKvQrq28JO4tiPIZdJpC6uRTgXVM6RM5ae+4n0TUql7R2eQOUEnnJO
+         urkvwa/6Lx+gFOu7cv/eB9xWj9vjbxV/ST22YLfVetrRefESgZmgGd4J86SYpu2vYKgS
+         T2rw==
+Received: by 10.213.5.6 with SMTP id 6mr751683ebt.88.1331143390205;
+        Wed, 07 Mar 2012 10:03:10 -0800 (PST)
+Received: from [192.168.1.13] (abwo250.neoplus.adsl.tpnet.pl. [83.8.238.250])
+        by mx.google.com with ESMTPS id o49sm89636700eeb.7.2012.03.07.10.03.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 07 Mar 2012 10:03:09 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <877gywy40l.fsf@thomas.inf.ethz.ch>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192468>
 
-Tim Landscheidt <tim@tim-landscheidt.de> writes:
+Thomas Rast wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> > Junio C Hamano <gitster@pobox.com> writes:
+> >> 
+> >> But of course, this from a command line would not work:
+> >> 
+> >> 	$ perl -MGit
+> >> 
+> >> I do not expect it to, and for the ease of testing new versions, I
+> >> prefer it not to work.
+> >> 
+> >> In any case, you should be able to do anything under t/ _before_
+> >> installing, so relying on having Git.pm in normal @INC is a double
+> >> no-no.
+> >
+> > Thomas, take a look at how it is solved in 't/t9700/test.pl', used by
+> > 't/t9700-perl-git.sh':
+> >
+> >   use lib (split(/:/, $ENV{GITPERLLIB}));
+> 
+> Hum.  The problem is that the user may invoke aggregate.perl manually,
+> and GITPERLLIB won't be set in that case.
+> 
+> Is there a better solution than duplicating the logic that sets
+> GITPERLLIB in test-lib.sh within aggregate.perl?
 
-> It's trivial to fix this for trivial repository specifiers.
-> But for specifiers with white space, quote or shell meta
-> characters, my mind boggles :-).
+Beside extracting logic that sets GITPERLLIB into separate file like
+in Junio proposal?  You can always assume that it is fixed relative
+to perl/Git.pm, and use __DIR__ or $FindBin to make "use lib", e.g.
 
-Something like this. As always, totally untested.
+  use FindBin;
+  use lib "$FindBin::Bin/../../perl";
 
- git-submodule.sh |   30 ++++++++++++++++--------------
- 1 file changed, 16 insertions(+), 14 deletions(-)
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 9bb2e13..f9991cb 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -30,6 +30,10 @@ nofetch=
- update=
- prefix=
- 
-+sq () {
-+    git rev-parse --sq-quote "$@"
-+}
-+
- # Resolve relative url by appending to parent's url
- resolve_relative_url ()
- {
-@@ -121,7 +125,7 @@ module_clone()
- {
- 	path=$1
- 	url=$2
--	reference="$3"
-+	references=$3
- 	quiet=
- 	if test -n "$GIT_QUIET"
- 	then
-@@ -163,13 +167,11 @@ module_clone()
- 		echo "gitdir: $rel_gitdir" >"$path/.git"
- 		rm -f "$gitdir/index"
- 	else
--		mkdir -p "$gitdir_base"
--		if test -n "$reference"
--		then
--			git-clone $quiet "$reference" -n "$url" "$path" --separate-git-dir "$gitdir"
--		else
--			git-clone $quiet -n "$url" "$path" --separate-git-dir "$gitdir"
--		fi ||
-+		mkdir -p "$gitdir_base" &&
-+		cmd='git clone $quiet '"$references" &&
-+		cmd="$cmd "' -n "$url" "$path" --separate-git-dir "$gitdir"' &&
-+		# echo "$cmd" && # if you want to debug this
-+		eval "$cmd" ||
- 		die "$(eval_gettext "Clone of '\$url' into submodule path '\$path' failed")"
- 	fi
- }
-@@ -200,11 +202,11 @@ cmd_add()
- 			;;
- 		--reference)
- 			case "$2" in '') usage ;; esac
--			reference="--reference=$2"
-+			reference="$reference --reference=$(sq "$2") "
- 			shift
- 			;;
- 		--reference=*)
--			reference="$1"
-+			reference="$reference$(sq "$1") "
- 			shift
- 			;;
- 		--)
-@@ -450,12 +452,12 @@ cmd_update()
- 			;;
- 		--reference)
- 			case "$2" in '') usage ;; esac
--			reference="--reference=$2"
--			orig_flags="$orig_flags $(git rev-parse --sq-quote "$1")"
-+			reference="$reference --reference=$(sq "$2") "
-+			orig_flags="$orig_flags $(sq "$1")"
- 			shift
- 			;;
- 		--reference=*)
--			reference="$1"
-+			reference="$reference$(sq "$1") "
- 			;;
- 		-m|--merge)
- 			update="merge"
-@@ -523,7 +525,7 @@ Maybe you want to use 'update --init'?")"
- 
- 		if ! test -d "$path"/.git -o -f "$path"/.git
- 		then
--			module_clone "$path" "$url" "$reference"|| exit
-+			module_clone "$path" "$url" "$reference" || exit
- 			cloned_modules="$cloned_modules;$name"
- 			subsha1=
- 		else
+-- 
+Jakub Narebski
+Poland
