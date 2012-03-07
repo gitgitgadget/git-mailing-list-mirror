@@ -1,89 +1,106 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: git push from client is not updating files on server
-Date: Tue, 06 Mar 2012 20:34:46 -0600
-Message-ID: <4F56C946.8080601@gmail.com>
-References: <CAC0z1F-bGikXZtLnd8d=3G+4okvNqZaxyrLjh4G3YzPpmqyxQA@mail.gmail.com>	<4F567DC6.4070903@gmail.com>	<4F567FEF.5000105@gmail.com>	<CAC0z1F_eyMo4D8E2j15dOFhp-6tZ_ixacB6XcKfNpJategcsXQ@mail.gmail.com>	<CAC0z1F_LYRkReO1qqcjkWy6Vb3E0_oNo-0kSf15nGfQFAtXpdg@mail.gmail.com>	<CAC0z1F87ORZQmrZeMGo2suV1fAt-5mAwwpkkV3ZTx0US3AjM8Q@mail.gmail.com>	<4F569EA8.4050907@gmail.com> <CAC0z1F9sBYCuv_HMCx1ryWLvxZKUcLPS1UUj80ihEesje+SKzg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] config: Introduce --patience config variable
+Date: Tue, 06 Mar 2012 18:57:42 -0800
+Message-ID: <7vlindp17d.fsf@alter.siamese.dyndns.org>
+References: <a87ed689ddfb06601dd639541199fc72d829bdaf.1331031473.git.mprivozn@redhat.com>
+ <20120306114914.GB6733@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jerome Yanga <jerome.yanga@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 07 03:35:23 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Michal Privoznik <mprivozn@redhat.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 07 03:58:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S56ii-0006MX-GZ
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 03:35:16 +0100
+	id 1S574j-0006wt-VP
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 03:58:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755174Ab2CGCet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 21:34:49 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:35629 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753863Ab2CGCes (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 21:34:48 -0500
-Received: by yhmm54 with SMTP id m54so2670165yhm.19
-        for <git@vger.kernel.org>; Tue, 06 Mar 2012 18:34:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=i1pf3YcnAQFNoaPYDit0UjY3539Mx/UgBOkuRrpaR4U=;
-        b=lQGPJi3volMhcOl3PBxgo01ZIgmau8yP7Mm0jNWUAMjNKGTEr+CYtsuv+jxlAG+qiG
-         /3OaDetRq8A+MnJzL+tUFUacMNnLpf2v2lyOWf4mTZEdhAB670eiASRnuBoJfAzpzq9Y
-         wgVLR4gj6MLP/Sh5UP3OhtZGwwUN/D4nkmewfHrdUn4Amr9BtxbzTS4sTyH0SR/NIwQp
-         ON29LbV5X8sJebXDqrY9sD1NmH+lSVqp5wRUM34nVEuGxx4D0ak7cRUp2bmeAOr0vZnu
-         6NlISN4PhUkpt7rTkXmageXh2/PzO24IMOpuIBxhEO3cZyQHqJoLuH4ZfIIYLyTIw784
-         /v0g==
-Received: by 10.236.157.9 with SMTP id n9mr389989yhk.96.1331087688191;
-        Tue, 06 Mar 2012 18:34:48 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id e8sm9295412yhk.0.2012.03.06.18.34.47
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 06 Mar 2012 18:34:47 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.27) Gecko/20120216 Thunderbird/3.1.19
-In-Reply-To: <CAC0z1F9sBYCuv_HMCx1ryWLvxZKUcLPS1UUj80ihEesje+SKzg@mail.gmail.com>
+	id S1758854Ab2CGC5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Mar 2012 21:57:47 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64520 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756658Ab2CGC5p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2012 21:57:45 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E83BA6874;
+	Tue,  6 Mar 2012 21:57:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RgjC2AGJmerKD8Gmh84T8JlA4pc=; b=yfFq9n
+	50Uyf43Ii8lBI6SNEcrr4P7BNgzGv66UeBiH2j+dzbFmCJqUpE5R5pjnLXbk1C70
+	z0HAXSQJ//vJCUmuSg3FSVgw2donmPfpUD0M+VlWeFUcEEyHYw2nF0+yBZoQB7oM
+	dtKVV7a6m0W0GY4NO3VgZh+V+UAC/N0fLJHjU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Gx2cDCJ+n4SAY892WS1No2b3HcHD/2pm
+	zNdqm7jgAEWue7K6BsQpczLjRb1OUNLyqPAHDwUWIvQdF2BpodU9wH4yaZ4wvEUn
+	S+o9n1JP3OMohOsXf/72wKzfe3a7LFXHjdmRBQGG3X2LOmfzdofFmRFthBhILOZB
+	7Aq5BY4wLJU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DD9886872;
+	Tue,  6 Mar 2012 21:57:44 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5C2206871; Tue,  6 Mar 2012
+ 21:57:44 -0500 (EST)
+In-Reply-To: <20120306114914.GB6733@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 6 Mar 2012 06:49:14 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4FFA3B88-6801-11E1-B29D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192424>
 
-On 3/6/2012 6:28 PM, Jerome Yanga wrote:
-> The project in Apache's DocumentRoot was created using the following command:
+Jeff King <peff@peff.net> writes:
+
+> On Tue, Mar 06, 2012 at 11:59:42AM +0100, Michal Privoznik wrote:
 >
-> "cd /var/www/git
-> git clone --bare<non-bare working directory>  <project>.git"
+>> Some users like the patience diff more than the bare diff. However,
+>> specifying the '--patience' argument every time diff is to be used
+>> is impractical. Moreover, creating an alias doesn't play with other
+>> tools nice, e.g. git-show; Therefore we need a configuration variable
+>> to turn this on/off across whole git tools.
 >
-> Hence, I believe that is is bare.  Besides, it does not have .git
-> folder.
+> The idea of turning on patience diff via config makes sense to me, and
+> it is not a problem for plumbing tools to have patience diff on, since
+> patience diffs are syntactically identical to non-patience diffs.
 
-The bare repo is the .git folder.  That's why its called barerepo.git. 
-.git = git repo.  worktree/.git = non-bare repo with worktree and .git 
-repo.  barerepo.git = bare repo and no worktree.
+Even though I do not strongly object to the general conclusion, I
+have to point out that the last line above is a dangerous thought.
 
-> I assumed that when I did this that the non-bare directory
-> will also be updated when a push is performed via http.
->
-The non-bare you cloned from is independent.  It doesn't know about the 
-bare repo you cloned from it, and your bare repo does not know about the 
-non-bare repo it was cloned from.  I'm not sure what you were doing with 
-that non-bare before you created the bare from it.  You may not need 
-that non-bare anymore if that's all it was for.
+If you change the default diff algorithm, you will invalidate long
+term caches that computed their keys based on the shape of patches
+produced in the past.  The prime example being the rerere database,
+but I wouldn't be surprised if somebody has a notes tree to record
+patch ids for existing commits to speed up "git cherry" (hence "git
+rebase").  Also kup tool kernel.org folks use to optimize the
+uploading of inter-release diff relies on having a stable output
+from "git diff A..B", so that the uploader can run the command to
+produce a diff locally, GPG sign it, and upload only the signature
+and have the k.org side produce the same diff between two tags,
+without having to upload the huge patchfile over the wire.
 
-> My objective is that I would like the developers to be able to push
-> via http and these pushes will need to be reflected on the non-bare
-> working directory as these directories will be used for automated
-> tests.
->
-Create a new non-bare clone of your bare repo.  Then do git-pull on the 
-new non-bare after the bare gets updates (someone does git push to it) 
-and you want to test those new commits.  The worktree of the new 
-non-bare clone can be the document root of your testing virtual host, if 
-that's what you're doing.  That way, you know that no one else is 
-messing with new non-bare (test repo) like doing development in it and 
-messing up your tests.
+IOW, "syntactically identical so it is OK" is not the right thought
+process.  "It may change the shape of the patch, which is a potential
+problem for various tools, but as long as users understand that, it
+should be allowed." is OK.
 
-v/r,
-neal
+Cached patch-id database for "git cherry" would be a local and does
+not affect the correctness, so I would consider breaking it is fine.
+
+About kup use case, the potential problem can be worked around as
+long as the receiving end keeps the setting vanilla (and I do not
+see any reason it wouldn't) and the uploader remembers to choose the
+matching variant when he locally generates the patch, so I think it
+would be also OK.
+
+Unnecessarily invalidating rerere database may be more frustrating,
+but that again is local and personal, so the end user may suffer
+worse than cached patch-id use case, but that hopefully is just one
+time pain.
+
+My preference however is to limit this to Porcelains only, though.
