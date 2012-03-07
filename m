@@ -1,13 +1,15 @@
-From: Phil Hord <phil.hord@gmail.com>
+From: Nathan Gray <n8gray@n8gray.org>
 Subject: Re: Approaches to SVN to Git conversion
-Date: Wed, 7 Mar 2012 17:33:39 -0500
-Message-ID: <CABURp0pLnMdFVgQ2+S_rW-KEjUBjKbEbMepEdPUkRJD+JQ_Ehg@mail.gmail.com>
-References: <4F536FE9.1050000@pileofstuff.org> <3c2ab05e-b2af-4df4-bca6-ff5512b0c73e@mail>
- <CA+7g9Jwb=7wH7R3=ShhOGMdHXWmq4ZahocpaEuJdf+yBfCpA8A@mail.gmail.com> <4F5690FB.9060800@pileofstuff.org>
+Date: Wed, 7 Mar 2012 15:08:20 -0800
+Message-ID: <CA+7g9JzETuynGMCRo1MLuNErFiFc3AmhGS6Hr+jO-hoV2j4JDg@mail.gmail.com>
+References: <4F536FE9.1050000@pileofstuff.org>
+	<3c2ab05e-b2af-4df4-bca6-ff5512b0c73e@mail>
+	<CA+7g9Jwb=7wH7R3=ShhOGMdHXWmq4ZahocpaEuJdf+yBfCpA8A@mail.gmail.com>
+	<4F5690FB.9060800@pileofstuff.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nathan Gray <n8gray@n8gray.org>, Stephen Bash <bash@genarts.com>,
+Cc: Stephen Bash <bash@genarts.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Jeff King <peff@peff.net>, git@vger.kernel.org,
 	Sverre Rabbelier <srabbelier@gmail.com>,
@@ -15,46 +17,60 @@ Cc: Nathan Gray <n8gray@n8gray.org>, Stephen Bash <bash@genarts.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Sam Vilain <sam@vilain.net>, David Barr <davidbarr@google.com>
 To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Wed Mar 07 23:34:08 2012
+X-From: git-owner@vger.kernel.org Thu Mar 08 00:08:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5PQt-0001vt-T7
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 23:34:08 +0100
+	id 1S5PyC-0006ry-6v
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 00:08:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030785Ab2CGWeC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Mar 2012 17:34:02 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:41502 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1030771Ab2CGWeA convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 7 Mar 2012 17:34:00 -0500
-Received: by lahj13 with SMTP id j13so7844497lah.19
-        for <git@vger.kernel.org>; Wed, 07 Mar 2012 14:33:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=CcnAtm1Pf7e+oUpK7DjwwCk79forYIg4YJlvH35E5SM=;
-        b=Eg+xstFagNT2XzOD/VNT4Y3ECyk/vQWTtzo4n2OU8v6kjxoSukU/8NmrZCpqw//qu4
-         Ex1Zeoo8QlY3C3Ga3ItL5awxG6mazOh6i26Ykj+vymF1sTctgpLfeAIX/3y3+QW05Ip3
-         /Sl1ytLYePnOJU6Q8lJSLa4rUHROKIO5egN7YFQ+ZqGDbxudNH3UBdjxk2f1ZnYjWAr5
-         sFVopFTMGvIBNI54ht/gAg42gHPSJpyraxqBWCUAXPEPhkjnVCnGVcNx0LqIs7XM9d9z
-         kOCXTbo8amM8O80c1Mn/vtdp3VJXHQvCGZDn8RyDGE9MERky70eMga0U8M00772dHt+2
-         LPgA==
-Received: by 10.112.86.229 with SMTP id s5mr1373300lbz.0.1331159639261; Wed,
- 07 Mar 2012 14:33:59 -0800 (PST)
-Received: by 10.112.8.133 with HTTP; Wed, 7 Mar 2012 14:33:39 -0800 (PST)
+	id S1030416Ab2CGXIW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Mar 2012 18:08:22 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:60569 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758720Ab2CGXIV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Mar 2012 18:08:21 -0500
+Received: by bkcik5 with SMTP id ik5so5716669bkc.19
+        for <git@vger.kernel.org>; Wed, 07 Mar 2012 15:08:20 -0800 (PST)
+Received: by 10.204.10.66 with SMTP id o2mr1841915bko.30.1331161700326; Wed,
+ 07 Mar 2012 15:08:20 -0800 (PST)
+Received: by 10.205.34.9 with HTTP; Wed, 7 Mar 2012 15:08:20 -0800 (PST)
+X-Originating-IP: [184.182.186.242]
 In-Reply-To: <4F5690FB.9060800@pileofstuff.org>
+X-Gm-Message-State: ALoCoQlMAr0xG46rEoDaItLtVQaUr4YWuYNKA6t0qomSDf7GxWaRhuKc0XW3Yc/qTONe6gc15cGU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192499>
 
-On Tue, Mar 6, 2012 at 5:34 PM, Andrew Sayers
+On Tue, Mar 6, 2012 at 2:34 PM, Andrew Sayers
 <andrew-git@pileofstuff.org> wrote:
+[snip]
+> On 06/03/12 19:29, Nathan Gray wrote:
+> <snip>
+>>
+>> The problem of specifying and detecting branches is a major problem =
+in
+>> my upcoming conversion. =A0We've got toplevel trunk/branches/tags
+>> directories but underneath "branches" it's a free-for-all:
+>>
+>> /branches/codenameA/{projectA,projectB,projectC}
+>> /branches/codenameB =A0 (actually a branch of projectA)
+>> /branches/developers/joe/frobnicator-experiment (also a branch of pr=
+ojectA)
+>>
+>> Clearly there's no simple regex that's going to capture this, so I'm
+>> reduced to listing every branch of projectA, which is tedious and
+>> error-prone. =A0However, what *would* work fabulously well for me is
+>> "marker file" detection. =A0Every copy of projectA has a certain fil=
+e at
+>> it's root. =A0Let's call it "markerFile.txt". =A0What I'd really lov=
+e is a
+>> way to say:
+>
 > This is quite close to the implementation I've got. =A0The SVN export=
 er
 > runs in two stages:
@@ -69,7 +85,14 @@ at
 runks
 > with this weak heuristic makes it much easier to hand-verify the resu=
 lt.
->
+
+I'm not sure I understand.  So if I have /trunk/projectA and
+/trunk/projectB then do I have to blacklist /trunk/projectB to extract
+only projectA's history?  Assuming it's always lived there will your
+code detect /trunk/projectA as the "trunk?"  Would it be possible to
+specify /trunk/projectA directly instead of blacklisting everything
+else?
+
 > In the second stage, the script looks through the history again, trac=
 ing
 > the copies of known branches in a slightly less clever way than
@@ -84,44 +107,15 @@ man
 ),
 > but I'd be interested to hear examples of where this would go wrong.
 
-I think what you're describing would work perfectly for my weird svn
-repo.  I have branches named like this:
+That sounds pretty good, but it should probably also be transitive,
+i.e. `svn cp /any/known/branch/root /some/new/path` is also a new
+branch.  Sometimes we'll spin off hotfix branches from release
+branches, for example.
 
-branches/developer/hordp/foo
-branches/developer/hordp/bar
-etc.
+I'll have to give your code a try and see how it works.
 
-Since these were created with 'svn cp' originally, they would be
-properly considered branches by your algorithm, right?    If so,
-sweet!
+Cheers,
+-n8
 
-> Having said that, here's a dodgy example I'd like to pre-emptively de=
-fend:
->
-> =A0 =A0 =A0 =A0svn add tronk
-> =A0 =A0 =A0 =A0svn ci -m "Created trunk" # r1
-> =A0 =A0 =A0 =A0svn cp tronk trunk
-> =A0 =A0 =A0 =A0svn ci -m "D'oh" # r2
-> =A0 =A0 =A0 =A0svn rm tronk
-> =A0 =A0 =A0 =A0svn add trunk/markerFile.txt
-> =A0 =A0 =A0 =A0svn ci -m "Double d'oh!" # r3
->
-> You could argue that the correct branch history description for the
-> above would be:
->
-> =A0 =A0 =A0 =A0In r3, create branch "trunk"
->
-> In other words, ignore everything that happened before the marker fil=
-e
-> was created. =A0However, I would argue the following representation i=
-s
-> more correct:
->
-> =A0 =A0 =A0 =A0In r1, create branch "tronk"
-> =A0 =A0 =A0 =A0In r2, create branch "trunk" from "tronk" r1
-> =A0 =A0 =A0 =A0In r3, delete branch "tronk"
->
-
-I prefer your interpretation. It doesn't look dodgy at all.
-
-Phil
+--=20
+http://n8gray.org
