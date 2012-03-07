@@ -1,112 +1,61 @@
-From: Andreas Stricker <astricker@futurelab.ch>
-Subject: Re: git-svn show-externals and svn version
-Date: Wed, 07 Mar 2012 10:39:40 +0100
-Organization: FutureLAB
-Message-ID: <4F572CDC.6060303@futurelab.ch>
-References: <E59CCE45-6F92-4748-9B6E-2A562647904B@nikolaus-demmel.de> <994D6101-DD43-4CD9-BB96-34807E3087C4@nikolaus-demmel.de> <5B8386D7-3C01-4A58-A7AB-9AA43BB45572@nikolaus-demmel.de>
+From: Vincent van Ravesteijn <vfr@lyx.org>
+Subject: Re: Why Is There No Bug Tracker And Why Are Patches Sent Instead
+ Of Pull Requests
+Date: Wed, 07 Mar 2012 10:52:50 +0100
+Message-ID: <4F572FF2.7030507@lyx.org>
+References: <CAM=oOO2i-9zraF-YG5YzvZEmN1eXTnQfhJ-eMF04NP7HGtf41w@mail.gmail.com> <7vhay9tqs6.fsf@alter.siamese.dyndns.org> <20120229225304.GA9099@burratino> <CAH5451miv_Mo_9tZV+mfDEHuEX0491duqAYh66aOzLsMLTNkaA@mail.gmail.com> <8762eoimp0.fsf@thomas.inf.ethz.ch> <7vmx80nt68.fsf@alter.siamese.dyndns.org> <4F504699.3070406@gmail.com> <20120302041924.GG5248@burratino> <4F505F8C.70802@gmail.com> <7vsjhrfprz.fsf@alter.siamese.dyndns.org> <4F50D6C6.3080909@op5.se> <7vk433eyts.fsf@alter.siamese.dyndns.org> <CAH5451mcu=sQa8KL8ptGr5w_d-OmtzAD9B-fwtMGE0w5zELgGA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Nikolaus Demmel <nikolaus@nikolaus-demmel.de>
-X-From: git-owner@vger.kernel.org Wed Mar 07 10:48:23 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Andreas Ericsson <ae@op5.se>,
+	Neal Kreitzinger <nkreitzinger@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	opticyclic <opticyclic@gmail.com>, git@vger.kernel.org
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 07 10:52:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5DTp-0000Kj-N5
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 10:48:22 +0100
+	id 1S5DYI-00062q-KH
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 10:52:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752832Ab2CGJsQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Mar 2012 04:48:16 -0500
-Received: from host-179.futurelab.ch ([62.2.169.179]:46585 "EHLO
-	primus.futurelab.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752441Ab2CGJsP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2012 04:48:15 -0500
-X-Greylist: delayed 511 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Mar 2012 04:48:14 EST
-Received: from astricker.futurelab.ch (primus [127.0.0.1])
-	(authenticated bits=0)
-	by primus.futurelab.ch (8.13.8/8.13.8/fL-3.7) with ESMTP id q279deQD003088;
-	Wed, 7 Mar 2012 10:39:40 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <5B8386D7-3C01-4A58-A7AB-9AA43BB45572@nikolaus-demmel.de>
-X-Enigmail-Version: 1.3.5
+	id S1753340Ab2CGJwy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Mar 2012 04:52:54 -0500
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:34172 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751525Ab2CGJwx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2012 04:52:53 -0500
+Received: by bkcik5 with SMTP id ik5so5010718bkc.19
+        for <git@vger.kernel.org>; Wed, 07 Mar 2012 01:52:52 -0800 (PST)
+Received: by 10.204.155.143 with SMTP id s15mr591185bkw.44.1331113971652;
+        Wed, 07 Mar 2012 01:52:51 -0800 (PST)
+Received: from [145.94.169.74] (wlan-145-94-169-074.wlan.tudelft.nl. [145.94.169.74])
+        by mx.google.com with ESMTPS id f5sm26726733bke.9.2012.03.07.01.52.50
+        (version=SSLv3 cipher=OTHER);
+        Wed, 07 Mar 2012 01:52:50 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <CAH5451mcu=sQa8KL8ptGr5w_d-OmtzAD9B-fwtMGE0w5zELgGA@mail.gmail.com>
+X-Gm-Message-State: ALoCoQmrWLrNZTWo30Op/CoB1QKcJbHnV6xgbc/H7gp+YGG5XFEwB8qzs1YgECDegd5KfaSVL73V
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192434>
 
-Nikolaus Demmel <nikolaus@nikolaus-demmel.de> wrote:
-> I feel a bit like I am talking to myself, but I see from the high
-> traffic on this list that people are busy doing great things :-). I will
-> write anyway in case someone interested in git-svn listens.
+Op 7-3-2012 9:03, Andrew Ardill schreef:
+> Just a quick status update on where the issue tracker experiment at
+> git-scm.atlassian.net is up to:
+>
+> The basic structure of the issue tracker is set up, and is ready for
+> people to log bugs if they want to. So far no one seems to inclined,
+> but note that it is still locked down to only people who have both
+> registered, and been promoted to 'trusted'. I will promote everyone
+> who has registered so far to 'trusted' in the hope that some of them
+> might add bugs!
 
-Um I'm always a bit behind in reading this list. A long time ago my
-colleague and I implemented a parser for the new svn:externals format
-as a proof of concept[1]. I never took the time to finish it.
+Done: https://git-scm.atlassian.net/browse/GIT-1
 
-> So I've investigated the matter a bit further. Turns out in the
-> subversion SWIG language bindings there is an API function that parses
-> svn:externals definitions for you.
-
-This looks like a sane approach. I ended with a bunch of complicated
-parsing code [2].
-
-> How could this be used in git-svn show-externals? As layed out before, I
-> believe that the current output for the svn1.5 syntax is inherently
-> broken and we should not worry about backwards compatibility for
-> that.
-
-I second that. The output for the new syntax is just plain broken and
-can't be used in a sane way. I know that because I tried...
-
-> To maintain backwards compatibility with the output for the old
-> format and to give a canonical, easy to parse, output for any external
-> definition, I suggest sticking to the current format, just inserting the
-> parsed definition at the appropriate place with relative URLs completely
-> resolved to absolute ones.
-
-This is exactly what my proof of concept does. The output format keeps
-the same as for pre subversion 1.5 format.
-
-> The pre-svn1.5 syntax for external definitions was:
-> 
-> LOCAL-PATH [-r REVISION] ABSOLUTE-URL
-> 
-> The output for show-externals was thus (note that there is no parsing of
-> the external definition going on yet):
-> 
-> DIRECTORY-PREFIX/LOCAL-PATH [-rREVISION] ABSOLUTE-URL
-
-Wasn't there also a line commented with a hash "#" before that? Like:
-# DIRECTORY-PREFIX
-
-> The DIRECTORY-PREFIX was added because show-externals shows the external
-> definitions for all subdirectories recursively. With this prefix, every
-> line can be processed on its own. I suggest extending this output to:
-> 
-> DIRECTORY-PREFIX/LOCAL-PATH [-rREVISION] ABSOLUTE-URL[@PEG-REV]
-> 
-> Again, as mentioned above, show-externals should parse the definitions
-> and resolve relative URLs. Any lines that the svn API call cannot parse
-> should be completely ommited (e.g. commented lines and empty lines).
-
-A sane approach. What about a warning about lines skipped?
-
-> As I understand it show-externals is intended primarily for scripts for
-> further processing. With this extension existing scripts for the old
-> syntax should keep working also long as they don't feature
-> peg-revisions. With relative URLs resolved and a standard ordering old
-> and new syntax cannot be distinguished in terms of show-externals output
-> (except when there are peg-revsion are there).
-
-True. So external tools like git-svn-clone-externals will still work
-with this. I verified this with my proof of concept.
-
-Regards, Andy
-
-[1] https://github.com/AndyStricker/git
-[2]
-https://github.com/AndyStricker/git/commit/9981b3b8313fb831247a16a04d5040bd6a8660b1
+Vincent
