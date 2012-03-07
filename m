@@ -1,71 +1,152 @@
 From: Jared Hance <jaredhance@gmail.com>
-Subject: [PATCH v3 0/3] Fix documented fixme's throughout
-Date: Wed,  7 Mar 2012 17:21:24 -0500
-Message-ID: <cover.1331158240.git.jaredhance@gmail.com>
+Subject: [PATCH v3 1/3] Fix memory leak in apply_patch in apply.c.
+Date: Wed,  7 Mar 2012 17:21:25 -0500
+Message-ID: <eadfc83a0d823cc04ea37bf606b57597fb632156.1331158240.git.jaredhance@gmail.com>
+References: <cover.1331158240.git.jaredhance@gmail.com>
 Cc: Jared Hance <jaredhance@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 07 23:21:39 2012
+X-From: git-owner@vger.kernel.org Wed Mar 07 23:21:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5PEm-0004p8-Eu
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 23:21:36 +0100
+	id 1S5PEu-0004ug-8Z
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 23:21:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030324Ab2CGWVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Mar 2012 17:21:32 -0500
+	id S1757396Ab2CGWVf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Mar 2012 17:21:35 -0500
 Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:37079 "EHLO
 	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752636Ab2CGWVa (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Mar 2012 17:21:30 -0500
-Received: by obbuo6 with SMTP id uo6so7476933obb.19
-        for <git@vger.kernel.org>; Wed, 07 Mar 2012 14:21:30 -0800 (PST)
+	by vger.kernel.org with ESMTP id S1755025Ab2CGWVd (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Mar 2012 17:21:33 -0500
+Received: by mail-tul01m020-f174.google.com with SMTP id uo6so7476933obb.19
+        for <git@vger.kernel.org>; Wed, 07 Mar 2012 14:21:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=4EWZH07FRLnlOxtGe4o8O/GfAMLZbrHt4oCoqsx2lFs=;
-        b=cCoIb2AccTPlfzdp07w7Cp/A4yjaJuMnCeUhqV7aiWQw1YvjibX8fTPaPFevtAVwg5
-         T+KMXhajq3rWPfWHOyWh8veKcvfho5Q3yAVsicuZXgemKqsEmmm9HWyGs1ElnVWKvN4J
-         XFW2rdEFB2B280n9I/7bTINVsnDszzyMa6rqcqFBLr8hFxCO2xcJx4GTguHOScFwwah7
-         QIwCdrZM5LuE+EQTn1fnjtk/liGg5CJCMWgfRxMKPFS/G74JKOkBuj6850TT0xgr0Cw5
-         vHAZzGuxRdBCT/sNSZNDy3U35k4XA6ReN8RdaEYJ74BbHQIH7Wcvtnyv1N0NloohU6Wl
-         oo0g==
-Received: by 10.182.231.41 with SMTP id td9mr1487178obc.22.1331158890105;
-        Wed, 07 Mar 2012 14:21:30 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :in-reply-to:references;
+        bh=KsKGrYqai3b4hKfFJOOviBv5rk02OrlUXSNYR6pUosU=;
+        b=tggMIP/bJqw+pqV4MDVbafYyASnjOEnE94v0ebP1iUPCTbrNDE6726D380O2HuMHTl
+         c30bm1R+ivT6/59QZTZ+vBfjEjNqTO0qJnuD86Lt3fd2pcrKxTpIs07zuo3lFJsDtR8Z
+         Zh78nyxhW2MIL+k9M1AUSN5S9d0diWDQLsOmqAmWiln7xOpY+VgyXK6cA+uCJ5mf34yA
+         PnWR1y3PTh3UrXL8QIHzXKV8pCzYAmG5RbrcjgDjytlRyYRgWQ46Fr3O9FfqZ3CuWAMP
+         QiEd0JjsIV5g+Rkf50TzYYpirJGN/gVsDwnpBfBhNkMHFx2Q3xACPoJh0zsXe9IsIP7Q
+         zb3Q==
+Received: by 10.60.29.68 with SMTP id i4mr1612302oeh.7.1331158893380;
+        Wed, 07 Mar 2012 14:21:33 -0800 (PST)
 Received: from localhost.localdomain (mail.middletownlibrary.org. [66.213.99.6])
-        by mx.google.com with ESMTPS id gl4sm23853230obb.23.2012.03.07.14.21.28
+        by mx.google.com with ESMTPS id gl4sm23853230obb.23.2012.03.07.14.21.31
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 07 Mar 2012 14:21:29 -0800 (PST)
+        Wed, 07 Mar 2012 14:21:32 -0800 (PST)
 X-Mailer: git-send-email 1.7.3.4
+In-Reply-To: <cover.1331158240.git.jaredhance@gmail.com>
+In-Reply-To: <cover.1331158240.git.jaredhance@gmail.com>
+References: <cover.1331158240.git.jaredhance@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192493>
 
-A few patches that (hopefully) don't change the behavior of git except to
-rectify a memory error. Also, this should ever so slightly help with
-the parallelism of git (a GSoC proposal). All of these were found with
-commented FIXME and git grep.
+In the while loop inside apply_patch, patch is dynamically allocated
+with a calloc. However, only unused patches are actually free'd; the
+rest are left in a memory leak. Since a list is actively built up
+consisting of the used patches, they can simply be iterated and free'd
+at the end of the function.
 
-Jared Hance (3):
-  Fix memory leak in apply_patch in apply.c.
-  Add threaded versions of functions in symlinks.c.
-  Use startup_info->prefix rather than prefix.
+In addition, the list of fragments should be free'd. To fix this, the
+utility function free_patch has been implemented. It loops over the
+entire patch list, and in each patch, loops over the fragment list,
+freeing the fragments, followed by the patch in the list. It frees both
+patch and patch->next.
 
+The main caveat is that the text in a fragment, ie,
+patch->fragments->patch, may or may not need to be free'd. The text is
+dynamically allocated and needs to be freed iff the patch is a binary
+patch, as allocation occurs in inflate_it.
+
+Signed-off-by: Jared Hance <jaredhance@gmail.com>
+---
  builtin/apply.c |   31 ++++++++++++++++++++++++++++---
- cache.h         |    4 +++-
- git.c           |    2 +-
- symlinks.c      |   28 ++++++++++++++++++++++++++--
- trace.c         |   10 +++++-----
- 5 files changed, 63 insertions(+), 12 deletions(-)
+ 1 files changed, 28 insertions(+), 3 deletions(-)
 
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 389898f..4c6b278 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -153,6 +153,7 @@ struct fragment {
+ 	unsigned long oldpos, oldlines;
+ 	unsigned long newpos, newlines;
+ 	const char *patch;
++	unsigned int free_patch:1;
+ 	int size;
+ 	int rejected;
+ 	int linenr;
+@@ -196,6 +197,29 @@ struct patch {
+ 	struct patch *next;
+ };
+ 
++static void free_patch(struct patch *patch)
++{
++	while (patch != NULL) {
++		struct patch *patch_next;
++		struct fragment *fragment;
++
++		patch_next = patch->next;
++
++		fragment = patch->fragments;
++		while (fragment != NULL) {
++			struct fragment *fragment_next = fragment->next;
++			if (fragment->patch != NULL && fragment->free_patch) {
++				free((void*) fragment->patch);
++			}
++			free(fragment);
++			fragment = fragment_next;
++		}
++
++		free(patch);
++		patch = patch_next;
++	}
++}
++
+ /*
+  * A line in a file, len-bytes long (includes the terminating LF,
+  * except for an incomplete line at the end if the file ends with
+@@ -1742,6 +1766,7 @@ static struct fragment *parse_binary_hunk(char **buf_p,
+ 
+ 	frag = xcalloc(1, sizeof(*frag));
+ 	frag->patch = inflate_it(data, hunk_size, origlen);
++	frag->free_patch = 1;
+ 	if (!frag->patch)
+ 		goto corrupt;
+ 	free(data);
+@@ -3687,7 +3712,6 @@ static int apply_patch(int fd, const char *filename, int options)
+ 	struct patch *list = NULL, **listp = &list;
+ 	int skipped_patch = 0;
+ 
+-	/* FIXME - memory leak when using multiple patch files as inputs */
+ 	memset(&fn_table, 0, sizeof(struct string_list));
+ 	patch_input_file = filename;
+ 	read_patch_file(&buf, fd);
+@@ -3712,8 +3736,7 @@ static int apply_patch(int fd, const char *filename, int options)
+ 			listp = &patch->next;
+ 		}
+ 		else {
+-			/* perhaps free it a bit better? */
+-			free(patch);
++			free_patch(patch);
+ 			skipped_patch++;
+ 		}
+ 		offset += nr;
+@@ -3754,6 +3777,8 @@ static int apply_patch(int fd, const char *filename, int options)
+ 	if (summary)
+ 		summary_patch_list(list);
+ 
++	free_patch(list);
++
+ 	strbuf_release(&buf);
+ 	return 0;
+ }
 -- 
-
-Minor style changes and move the most controversial commit to the end of the
-patch series.
-
-Sorry, accidently sent out an old saved version of this just a bit before.
-
 1.7.3.4
