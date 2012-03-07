@@ -1,88 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: who's on first? - following first parent and merge-management
-Date: Tue, 06 Mar 2012 23:37:42 -0800
-Message-ID: <7vwr6woo8p.fsf@alter.siamese.dyndns.org>
-References: <jj6s47$m98$1@dough.gmane.org>
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: Why Is There No Bug Tracker And Why Are Patches Sent Instead Of
+ Pull Requests
+Date: Wed, 7 Mar 2012 19:03:17 +1100
+Message-ID: <CAH5451mcu=sQa8KL8ptGr5w_d-OmtzAD9B-fwtMGE0w5zELgGA@mail.gmail.com>
+References: <CAM=oOO2i-9zraF-YG5YzvZEmN1eXTnQfhJ-eMF04NP7HGtf41w@mail.gmail.com>
+ <7vhay9tqs6.fsf@alter.siamese.dyndns.org> <20120229225304.GA9099@burratino>
+ <CAH5451miv_Mo_9tZV+mfDEHuEX0491duqAYh66aOzLsMLTNkaA@mail.gmail.com>
+ <8762eoimp0.fsf@thomas.inf.ethz.ch> <7vmx80nt68.fsf@alter.siamese.dyndns.org>
+ <4F504699.3070406@gmail.com> <20120302041924.GG5248@burratino>
+ <4F505F8C.70802@gmail.com> <7vsjhrfprz.fsf@alter.siamese.dyndns.org>
+ <4F50D6C6.3080909@op5.se> <7vk433eyts.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 07 08:37:52 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Andreas Ericsson <ae@op5.se>,
+	Neal Kreitzinger <nkreitzinger@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	opticyclic <opticyclic@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 07 09:04:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5BRX-0001D7-Rl
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 08:37:52 +0100
+	id 1S5Bqn-0006vj-A0
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 09:03:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753159Ab2CGHhp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Mar 2012 02:37:45 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39554 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753065Ab2CGHhp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2012 02:37:45 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 162DD4B41;
-	Wed,  7 Mar 2012 02:37:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=70ERIqvGvp87dExANNgDsco2JSA=; b=g4EHTm
-	cIt6d2A8EePzxqA539HmfrkEypcebSX1Q+TXkyyaWwp91b/UOICvTxEzluTlxaRC
-	AiJx0dzQyEEOox/GJNFiXI/XyGzPQ8Ry18H2Drus2OgPVXSghNdROpS7E6JZ/+wm
-	tYK/BPLuaQq9V2Q5WmiLsF30ZdkJCGTAy+4o4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rOif0shVpV9oStoznKkuk+fx74i+T+QX
-	G1XoXRiWnpb9TKSXfWbtKzKvppHB6oBwjOG4FolC5UVyxPvO4/W6YOEP55A2Pjoz
-	GRmINZTfM9Ee1N1CVxFyGwPSd4JU272yXqiHiDpQR1TkPd+lXQyO1/r9vB64/Tj3
-	lokKst2tDYo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D9594B40;
-	Wed,  7 Mar 2012 02:37:44 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 988D34B3F; Wed,  7 Mar 2012
- 02:37:43 -0500 (EST)
-In-Reply-To: <jj6s47$m98$1@dough.gmane.org> (Neal Kreitzinger's message of
- "Tue, 06 Mar 2012 23:36:06 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6D1BF1F8-6828-11E1-B514-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753756Ab2CGIDl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Mar 2012 03:03:41 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:42142 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753670Ab2CGIDj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2012 03:03:39 -0500
+Received: by wejx9 with SMTP id x9so3581519wej.19
+        for <git@vger.kernel.org>; Wed, 07 Mar 2012 00:03:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=xoXtVjX4PQSK1Tn8YMrsJZDOfL3Wqi2voYQwfp9J62o=;
+        b=ZiTjfV9QBvoolHL2e1zSnJOyz2D0/DPktu2iha4/eVVONV4dRr2jPg3psUFMSytnb1
+         HeYbSQzTfT6Q5vXBH5/74Y3/urDr6py1TyDw4SEaVfQZO/tP5V8F1J6zKCVoxLlwpj+s
+         ivIJI1PGuSgXDiAWhhbxvN/VmlePaYugv/73LV8fEP8XgRpAlihI3+09U3CljHo3nSy3
+         1LVUXvL3qsWML4cexV/gvBNY83nvyegFi3TQBZO+zH48M0fhPO1svtAfs+7xs5ubHcGe
+         yFQySnqpyIHUVvJcE4FXY/vyASfNwe1OL4FRNks2ZTgWK83p9sF1R70SbrD12TQ2wqgh
+         3zZg==
+Received: by 10.180.93.232 with SMTP id cx8mr24454002wib.14.1331107418348;
+ Wed, 07 Mar 2012 00:03:38 -0800 (PST)
+Received: by 10.223.96.133 with HTTP; Wed, 7 Mar 2012 00:03:17 -0800 (PST)
+In-Reply-To: <7vk433eyts.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192431>
 
-Neal Kreitzinger <nkreitzinger@gmail.com> writes:
+Just a quick status update on where the issue tracker experiment at
+git-scm.atlassian.net is up to:
 
-> Please advise on "first parent" intent, best-practices, and pitfalls,
-> or documentation that explains it.  (I haven't found documentation
-> that directly explains "first parent theory and practice".  I've seen
-> many references to "first parent" and its implied meaning that I'm
-> supposed to "just know" or deduce).
+The basic structure of the issue tracker is set up, and is ready for
+people to log bugs if they want to. So far no one seems to inclined,
+but note that it is still locked down to only people who have both
+registered, and been promoted to 'trusted'. I will promote everyone
+who has registered so far to 'trusted' in the hope that some of them
+might add bugs!
 
-A short conclusion: if you take "first parentness" very seriously,
-neither of your two approaches are optimal, but that does not make
-you a bad person. It is just that "log --first-parent" is not the
-best way to get an overview of the history for your workflow.
+The next main step is to have conversations on the list automatically
+converted into issues that can be tracked. This will be either by
+forwarding selected threads to the tracker, or forwarding everything
+to the tracker and managing it from there. Unfortunately, a recent
+upgrade broke the (unsupported) ability to create issues from
+emails[1]. This will hopefully be fixed soon, and when it is we will
+be able to move this experiment to the next phase.
 
-The mechanical definition of "first parent" is that:
+If anyone has any ideas they would like to test, please let me know!
 
- - A merge is a commit with more than one parent.
+Regards,
 
- - When you run "merge", you are on one commit, HEAD, taking changes
-   made by "other branches" you are merging into "your history"
-   (whose definition is "the commit-dag leading to your HEAD
-   commit"), and record the resulting tree as a new commit.
+Andrew Ardill
 
- - This new commit records all its parents, one of them being your
-   old "HEAD" and the rest being "other branches" you merged into
-   "your history".  They are recorded in that order in the resulting
-   commit ("git cat-file commit HEAD" after a merge to see them).
+[1] Reply from Atlassian:
+Officially we do not support
+(http://confluence.atlassian.com/display/AOD/Restricted+Functions+in+Atlassian+OnDemand)
+issue creation from email in OnDemand. The feature request for this
+functionality is located at:
+https://studio.atlassian.com/browse/JST-5649
 
-Hence, the first parent of a merge is the HEAD the committer was at
-when s/he ran "git merge".
+There was the ability to create issues from email if emails were sent
+to jira@<instance domain> as you tried to setup, but this
+functionality was not officially supported and broke in the recent
+JIRA 5 upgrade (which is why you receive those errors).
 
-It's late so I won't go into the details of what the implications of
-this is in this message.  Perhaps tomorrow when/if I have time.
+I believe we are planning to fix this in an upcoming bugfix release
+within the next several weeks though, so please try again later.
