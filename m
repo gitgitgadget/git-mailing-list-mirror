@@ -1,104 +1,97 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: Why Is There No Bug Tracker And Why Are Patches Sent Instead Of
- Pull Requests
-Date: Wed, 7 Mar 2012 12:18:36 -0500
-Message-ID: <CABURp0q7fJLBHGGdD7EQ6pwEu=zErKHz+ZZJ5HLVe5VO2Y66gQ@mail.gmail.com>
-References: <CAM=oOO2i-9zraF-YG5YzvZEmN1eXTnQfhJ-eMF04NP7HGtf41w@mail.gmail.com>
- <7vhay9tqs6.fsf@alter.siamese.dyndns.org> <20120229225304.GA9099@burratino>
- <CAH5451miv_Mo_9tZV+mfDEHuEX0491duqAYh66aOzLsMLTNkaA@mail.gmail.com>
- <8762eoimp0.fsf@thomas.inf.ethz.ch> <7vmx80nt68.fsf@alter.siamese.dyndns.org>
- <4F504699.3070406@gmail.com> <20120302041924.GG5248@burratino>
- <4F505F8C.70802@gmail.com> <7vsjhrfprz.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] config: Introduce --patience config variable
+Date: Wed, 07 Mar 2012 09:24:18 -0800
+Message-ID: <7vobs8nx31.fsf@alter.siamese.dyndns.org>
+References: <a87ed689ddfb06601dd639541199fc72d829bdaf.1331031473.git.mprivozn@redhat.com>
+ <20120306114914.GB6733@sigill.intra.peff.net>
+ <7vlindp17d.fsf@alter.siamese.dyndns.org>
+ <20120307114714.GA14990@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Neal Kreitzinger <nkreitzinger@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Andrew Ardill <andrew.ardill@gmail.com>,
-	opticyclic <opticyclic@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 07 18:19:04 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Michal Privoznik <mprivozn@redhat.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 07 18:24:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5KVz-0005Bh-Vl
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 18:19:04 +0100
+	id 1S5KbL-0003Ef-D9
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 18:24:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756528Ab2CGRS7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Mar 2012 12:18:59 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:48474 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755524Ab2CGRS6 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 7 Mar 2012 12:18:58 -0500
-Received: by lahj13 with SMTP id j13so7516930lah.19
-        for <git@vger.kernel.org>; Wed, 07 Mar 2012 09:18:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=eZoidLoT120MSUi63U0MX6PEP3WpUNbmEpxh86b1mVM=;
-        b=kdW7Zg+LSwmE8pIcc58sLrvRUdxwmUvWDqABGgrZcooSd37A/zgJIYqZP9Hrio/jD9
-         H/y5roX/kAUU6jlQu+SYxqKhKfpWX9pd7ZOJfvfL8KIeqiPHtyT+b2cNJUqIdUA6/ME+
-         I6R6XXrlVSG/5x90CdQZgbfJEzMu6hy1TJIAGsGmu0xvepGLXMTAMxJXuRPcutELH4B8
-         o3VOz1ucIiSNatjipZ3afng3XL5ky/f66fdYXrQBlsEe7TpJxJYbnZXnXslPDFGpy+g2
-         f+2swdXWMMdy7tj5fAcRiOtao0x7Y4F/i48h3ojUflcqsqNTFC7MpT7PYktspRs2QLcF
-         IncQ==
-Received: by 10.152.147.1 with SMTP id tg1mr2002247lab.22.1331140736651; Wed,
- 07 Mar 2012 09:18:56 -0800 (PST)
-Received: by 10.112.8.133 with HTTP; Wed, 7 Mar 2012 09:18:36 -0800 (PST)
-In-Reply-To: <7vsjhrfprz.fsf@alter.siamese.dyndns.org>
+	id S932403Ab2CGRY0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Mar 2012 12:24:26 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34616 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932246Ab2CGRYV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2012 12:24:21 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C91C36AC0;
+	Wed,  7 Mar 2012 12:24:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/OXLXTjrBj+KDJ/rETOsx4Iljtw=; b=jUbj4O
+	9LK5cjaswAmTuGKJD7mb/B8PKEfPlvar92zT2M28je1SvrxNwEyYK+Dl8rKlzWW3
+	LtqbBMno4dNFCmepFwOmG6C8wG11w4J2Luc+q5ioer5TgHHkYVX9ItbQ+S40oliF
+	81aQPeeHARDoSAUNdlAYnEovZReQvudntTAiY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jPAWYUfvHhJFKAmOJKhUHCD90XP5Xwyl
+	fvDVoIMz7fIjYmqOb1DIDHXSR4RUR3cnB2bLbpMovDuDxK7TaOhp0gT5JuQCNd3L
+	U4a9ZGj9ELsRJFvh0eoc8DGHMbTb+abMgAGnIXwNFm1rdr1cPw4mHCbsM/Jh3qzP
+	g1Ymbne+YBM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BFE3E6ABE;
+	Wed,  7 Mar 2012 12:24:20 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4DEAA6ABB; Wed,  7 Mar 2012
+ 12:24:20 -0500 (EST)
+In-Reply-To: <20120307114714.GA14990@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 7 Mar 2012 06:47:15 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5FF965B2-687A-11E1-9AAB-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192465>
 
-On Fri, Mar 2, 2012 at 2:03 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Neal Kreitzinger <nkreitzinger@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
+
+> On Tue, Mar 06, 2012 at 06:57:42PM -0800, Junio C Hamano wrote:
 >
->> I realize this is not an exact match of the git-workflow, but you ge=
-t
->> the idea. =A0I'm also new to mailinglists so I'm not sure if you can
->> change part of the subject line. =A0If not, a header in the body cou=
-ld
->> possibly be used.
+>> > The idea of turning on patience diff via config makes sense to me, and
+>> > it is not a problem for plumbing tools to have patience diff on, since
+>> > patience diffs are syntactically identical to non-patience diffs.
+>> 
+>> Even though I do not strongly object to the general conclusion, I
+>> have to point out that the last line above is a dangerous thought.
+>>
+>> If you change the default diff algorithm, you will invalidate long
+>> term caches that computed their keys based on the shape of patches
+>> produced in the past.
 >
-> The most important information is missing from your discussion: who a=
-re
-> you trying to help, and what problem are you trying to solve?
+> I see your point, though I don't think I'd use the word "dangerous" to
+> describe the invalidation of a cache.
 
-Problems this could help solve (regardless of whether it's an
-appropriate tool for the job):
+I probably was not writing clearly enough to avoid getting misread.
+The "dangerous" does not refer to "invalidation of a cache".  What I
+meant was that "The output is syntactically identical, so it is OK"
+is a dangerous way to think when assessing the risk of regression,
+because applying to a given preimage and producing the same
+postimage is not the *only* way the output is used.
 
-1. Collects issues into a more concise list than the mailing list provi=
-des.
+I think the executive summary is that we are in agreement; your
+analysis of potential regression coming from differences of the
+shape of the patch output (not applicability to a given preimage to
+produce the same postimage) seems to match what I said in the
+previous message.
 
-2. Collects issues (and discussion) conveniently bundled with the git
-source code.
-
-3. Collects issues for off-line reference and searching.
-
-4. Reduction of list noise, if issues in git.git turn out to be better
-grep-targets than the mailing list.
-
-5. Serves as an incubator for a git-based distributed issues tracker
-Best Practice or Dire Warning, depending on how it goes.
-
-The current mailing list bug tracker, where finding existing issues
-and previous discussions is "crowd-sourced" to the list, is very
-efficient for the new users, but not so efficient for the core
-developers and respondents.
-
-I doubt this idea is really workable or appropriate for git.git, for
-various reasons.  But I do think a well-designed, distributed,
-git-based issue tracker could be useful for many other projects.  Many
-others have tried and failed, so I am probably wrong about this last
-statement.   See [*1*] for a list of mostly stagnating prior art.
-
-Phil
-
-[*1*] http://dist-bugs.branchable.com/software/
+Especially in the kup case, it is a minority tool used by people who
+knows or can be easily taught in a tightly controlled environment,
+and it is fine as long as the users have a way to make sure two
+diffs run on both ends of the communication produce the same result
+(in an earlier discussion on k.org users list where kup was first
+discussed, the limitation of users having to use the same version as
+k.org has was noted and the users are already aware of it).
