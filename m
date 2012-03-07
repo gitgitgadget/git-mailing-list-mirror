@@ -1,122 +1,75 @@
-From: Jared Hance <jaredhance@gmail.com>
-Subject: [PATCH v3 3/3] Use startup_info->prefix rather than prefix.
-Date: Wed,  7 Mar 2012 17:21:27 -0500
-Message-ID: <a2980b437f2eb81b6bc28ad4ebbf05429485729e.1331158240.git.jaredhance@gmail.com>
-References: <cover.1331158240.git.jaredhance@gmail.com>
-Cc: Jared Hance <jaredhance@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 07 23:21:52 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation/git-rerere: document 'remaining' command
+Date: Wed, 07 Mar 2012 14:24:23 -0800
+Message-ID: <7vvcmgkq20.fsf@alter.siamese.dyndns.org>
+References: <1331036512-7626-1-git-send-email-vfr@lyx.org>
+ <7vwr6xsfbn.fsf@alter.siamese.dyndns.org>
+ <CABURp0rOFgwLu0pX0W5txOH=CH6Yb4NchYLaj91m1nMve_zjDg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Vincent van Ravesteijn <vfr@lyx.org>, git@vger.kernel.org,
+	martin.von.zweigbergk@gmail.com
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 07 23:24:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5PF1-000543-Re
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 23:21:52 +0100
+	id 1S5PHb-00081P-Gi
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 23:24:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030554Ab2CGWVp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Mar 2012 17:21:45 -0500
-Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:37079 "EHLO
-	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1030404Ab2CGWVm (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Mar 2012 17:21:42 -0500
-Received: by mail-tul01m020-f174.google.com with SMTP id uo6so7476933obb.19
-        for <git@vger.kernel.org>; Wed, 07 Mar 2012 14:21:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :in-reply-to:references;
-        bh=p2k3G8K3sfFLTDJ+xP1Q5x6B8EDxvbEeltt4Jz0h1hU=;
-        b=S59F3w4qOcu5xvWETXDMe1UHTkzncibzmD1a5k6EnQQxjd5rF7tNU+zTnmrEOzuJwe
-         AXYCOCEUfSG7E1JbvIiRw3LnmSlhmKEJGo96v3uPNFI/fx8S/Tf6l/iGtMW9PmzZMdpf
-         49kVkqdTv9aTL93RpFtvSYP3HlxREBib4SboZdEV+olVcSSGtYAv/56Kjf4aZDusRWq7
-         zAbD3dShBTxpcvRbhcyM1x5sPpXkZ1OW+ltIwvcuYT3OaFmz0lPGKDyneXA2EuLkoEEM
-         KDdLWKnJJTqi0sEpDbJhehStyau57CoGNJ/+NMzC9kG03Vf68PaalpHAlE9Uxo0mKiCN
-         +pFQ==
-Received: by 10.60.9.232 with SMTP id d8mr1501880oeb.66.1331158902624;
-        Wed, 07 Mar 2012 14:21:42 -0800 (PST)
-Received: from localhost.localdomain (mail.middletownlibrary.org. [66.213.99.6])
-        by mx.google.com with ESMTPS id gl4sm23853230obb.23.2012.03.07.14.21.40
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 07 Mar 2012 14:21:41 -0800 (PST)
-X-Mailer: git-send-email 1.7.3.4
-In-Reply-To: <cover.1331158240.git.jaredhance@gmail.com>
-In-Reply-To: <cover.1331158240.git.jaredhance@gmail.com>
-References: <cover.1331158240.git.jaredhance@gmail.com>
+	id S1756667Ab2CGWY0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Mar 2012 17:24:26 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64209 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755016Ab2CGWY0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2012 17:24:26 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 246757615;
+	Wed,  7 Mar 2012 17:24:25 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Cvw09/qmbVCpK8ZA5ZrKONGX7u0=; b=P569gl
+	Pn+7m3CQ31QcIFNxcO6EdocVYNHlpMVvFBe/uDQbW5ahenqmcfaJgxb6NtXyTjQ5
+	Xp75DvODA6LDZU76U01NnoUdE/8qdnForLUadRWP3ZsmQy031rfeiyb8gps0ZmM7
+	tHwZsDr3lQJbHQdoeenk4nsXvF/vtbp5Ujeh4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GCA0g90hDIX1mUrTlCW/hsfK8lpzjltw
+	m5swAkCXt6MI8PWCjueEsHSh8ywTlufcNqbNo1AYmStMfTOth8yOaokN9Q7XBDDP
+	XlXE1fVnqDcH3d+OQhR4t5MMVuCBrquOZQF53aKb/svRHqfxNhbic9UaPs1uezFH
+	IIfjPiqRcMQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C2B57614;
+	Wed,  7 Mar 2012 17:24:25 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A75ED7613; Wed,  7 Mar 2012
+ 17:24:24 -0500 (EST)
+In-Reply-To: <CABURp0rOFgwLu0pX0W5txOH=CH6Yb4NchYLaj91m1nMve_zjDg@mail.gmail.com> (Phil
+ Hord's message of "Wed, 7 Mar 2012 17:10:48 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4B69B500-68A4-11E1-97E6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192496>
 
-In trace_repo_setup, prefix is passed in as startup_info->prefix. But, as
-indicated but a FIXME comment, trace_repo_setup has access to
-startup_info. The prefix parameter has therefore been eliminated.
+Phil Hord <phil.hord@gmail.com> writes:
 
-Signed-off-by: Jared Hance <jaredhance@gmail.com>
----
- cache.h |    2 +-
- git.c   |    2 +-
- trace.c |   10 +++++-----
- 3 files changed, 7 insertions(+), 7 deletions(-)
+> On Tue, Mar 6, 2012 at 2:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> ...
+>>        'remaining'::
+>>
+>>        Print paths with conflicts that are not resolved.
+>>
+>> Should be sufficient, I think.
+>
+> ....  'mergetool' uses this command to
+> avoid asking the user to resolve files which git rerere already
+> resolved for her.
 
-diff --git a/cache.h b/cache.h
-index e5e1aa4..1113296 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1213,7 +1213,7 @@ extern void trace_printf(const char *format, ...);
- extern void trace_vprintf(const char *key, const char *format, va_list ap);
- __attribute__((format (printf, 2, 3)))
- extern void trace_argv_printf(const char **argv, const char *format, ...);
--extern void trace_repo_setup(const char *prefix);
-+extern void trace_repo_setup(void);
- extern int trace_want(const char *key);
- extern void trace_strbuf(const char *key, const struct strbuf *buf);
- 
-diff --git a/git.c b/git.c
-index 3805616..7dcc527 100644
---- a/git.c
-+++ b/git.c
-@@ -296,7 +296,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
- 
- 		if ((p->option & (RUN_SETUP | RUN_SETUP_GENTLY)) &&
- 		    startup_info->have_repository) /* get_git_dir() may set up repo, avoid that */
--			trace_repo_setup(prefix);
-+			trace_repo_setup();
- 	}
- 	commit_pager_choice();
- 
-diff --git a/trace.c b/trace.c
-index d953416..09a470b 100644
---- a/trace.c
-+++ b/trace.c
-@@ -152,8 +152,7 @@ static const char *quote_crnl(const char *path)
- 	return new_path;
- }
- 
--/* FIXME: move prefix to startup_info struct and get rid of this arg */
--void trace_repo_setup(const char *prefix)
-+void trace_repo_setup(void)
- {
- 	static const char *key = "GIT_TRACE_SETUP";
- 	const char *git_work_tree;
-@@ -168,13 +167,14 @@ void trace_repo_setup(const char *prefix)
- 	if (!(git_work_tree = get_git_work_tree()))
- 		git_work_tree = "(null)";
- 
--	if (!prefix)
--		prefix = "(null)";
-+	if (!startup_info->prefix)
-+		startup_info->prefix = "(null)";
- 
- 	trace_printf_key(key, "setup: git_dir: %s\n", quote_crnl(get_git_dir()));
- 	trace_printf_key(key, "setup: worktree: %s\n", quote_crnl(git_work_tree));
- 	trace_printf_key(key, "setup: cwd: %s\n", quote_crnl(cwd));
--	trace_printf_key(key, "setup: prefix: %s\n", quote_crnl(prefix));
-+	trace_printf_key(key, "setup: prefix: %s\n",
-+			 quote_crnl(startup_info->prefix));
- }
- 
- int trace_want(const char *key)
--- 
-1.7.3.4
+Ok, so "Print paths with conflicts that are not resolved." indeed is
+sufficient.
