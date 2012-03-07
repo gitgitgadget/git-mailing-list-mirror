@@ -1,72 +1,184 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] Make the largest pack the first one in the pack
- search queue
-Date: Tue, 06 Mar 2012 19:21:17 -0800
-Message-ID: <7vhay1p042.fsf@alter.siamese.dyndns.org>
-References: <1331089308-16706-1-git-send-email-pclouds@gmail.com>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: who's on first? - following first parent and merge-management
+Date: Tue, 06 Mar 2012 23:36:06 -0600
+Message-ID: <jj6s47$m98$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 07 04:21:26 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 07 06:36:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S57RN-0008Fz-Ql
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 04:21:26 +0100
+	id 1S59Y1-000198-6d
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Mar 2012 06:36:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757299Ab2CGDVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Mar 2012 22:21:20 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44246 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756680Ab2CGDVT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2012 22:21:19 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F4F96FD9;
-	Tue,  6 Mar 2012 22:21:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EZ7GHfY4+FUz2FIa//aXU1e2nYU=; b=tk/aTA
-	lhnA9i6AsZJ1zBULWWtgHnRhNcGCKcscuJj3Cu2dSCRAb2ixQsEn/FWahcuaxXE6
-	YjRDbk0ySVlXQqP9KbY18TbQO4E9TpvNlVNDVzjgg/2hhuCKuu3lJ0vPs42mMi8g
-	AkTzD+3kIUfwngTtgcYfwa74bJ/KIgyTBwQkk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wgWUQ1nTmiOZI4GyQNOMUHC7vmdipqw9
-	mk2TWPe3kLYg1tRCg8TiOrIVa/+V1cDm1cW7TP2luf/UTVyQKXt3UxJRV/fFYLfO
-	QQ5+zULUAfoLNJBMxEpswsbUFx2ou3F9pVWztn1q/MvNPyQdJ7m8ca1nvoMcDTgq
-	SXV0U9Y6ZdU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26D716FCF;
-	Tue,  6 Mar 2012 22:21:19 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AEC2F6FCE; Tue,  6 Mar 2012
- 22:21:18 -0500 (EST)
-In-Reply-To: <1331089308-16706-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 7 Mar
- 2012 10:01:48 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9AFD1EA4-6804-11E1-AB9B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1750977Ab2CGFgU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Mar 2012 00:36:20 -0500
+Received: from plane.gmane.org ([80.91.229.3]:51676 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750795Ab2CGFgT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2012 00:36:19 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1S59Xu-00015y-2N
+	for git@vger.kernel.org; Wed, 07 Mar 2012 06:36:18 +0100
+Received: from 67.63.162.200 ([67.63.162.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 Mar 2012 06:36:18 +0100
+Received: from nkreitzinger by 67.63.162.200 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 Mar 2012 06:36:18 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 67.63.162.200
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.27) Gecko/20120216 Thunderbird/3.1.19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192427>
 
-As the expected pay off from this change seems to be only based on a
-hunch, it is hard for anybody to give useful comments on a patch
-like this without benchmarks. As the implementation is more or less
-trivial, the only thing anybody could say is "if changing the search
-order is proved to be useful, the patch seems sane," but the "if"
-part poses a lot bigger question than the patch itself.
+"first parent" and "follow first parent" are mentioned frequently in git 
+documentation.  This seems to imply that its pretty important.  That 
+would imply it should be intentional (planned).  Who is "first parent"? 
+  Who is "first parent" _meant_ to be?  What is "follow first parent" 
+_meant_ to show?
 
-At this late in the cycle, I would rather see a contributor with
-many in-flight topics to start sifting his own existing topics into
-the ones to be polished for the next release and the others to be
-postponed for the next cycle, instead of adding yet more topics with
-untied loose ends at this point.
+(I've been on the rebase track until now so I'm "new" to git-merge's.) 
+Symptomatically, I think "first parent" is the branch you were on when 
+you did the merge.  That would mean the first parent can change 
+depending on your merge-management practices.  This affects the results 
+that "follow first parent" produces.  For example:
 
-Thanks.
+$ git log --first-parent --oneline origin/master
+deadbee some commit x
+
+Scenario A: "First-Parent Flip-Flop" (some users are doing this)
+
+(1) I commit on local master.  USER=foo
+$ git checkout master && hack && git commit -a -m "foo commit 1"
+$ git log --first-parent --oneline master
+foo1111 foo commit 1
+deadbee some commit x
+
+(2) You push to canonical master.  USER=bar
+$ git checkout master && hack && git commit -a -m "bar commit 1"
+$ git log --first-parent --oneline master
+bar1111 bar commit 1
+deadbee some commit x
+$ git push origin HEAD && git fetch origin
+$ git log --first-parent --oneline origin/master
+bar1111 bar commit 1
+deadbee some commit x
+
+(3) I merge canonical master w/my master and push.  USER=foo
+$ git checkout master && git pull origin
+$ git log --first-parent --oneline master
+mrg1111 Merge branch 'master' of file:///root/BARE
+foo1111 foo commit 1
+deadbee some commit x
+$ git push origin HEAD && git fetch origin
+$ git log --first-parent --oneline origin/master
+mrg1111 Merge branch 'master' of file:///root/BARE
+foo1111 foo commit 1
+deadbee some commit x
+
+(4) You merge canonical master w/your master and push.  USER=bar
+$ git checkout master && hack && git commit -a -m "bar commit 2"
+$ git log --first-parent --oneline master
+bar2222 bar commit 2
+bar1111 bar commit 1
+deadbee some commit x
+$ git pull origin
+$ git log --first-parent --oneline master
+mrg2222 Merge branch 'master' of file:///root/BARE
+bar2222 bar commit 2
+bar1111 bar commit 1
+deadbee some commit x
+$ git push origin HEAD && git fetch origin
+$ git log --first-parent --oneline origin/master
+mrg2222 Merge branch 'master' of file:///root/BARE
+bar2222 bar commit 2
+bar1111 bar commit 1
+deadbee some commit x
+
+This "flip-flop" practice does not seem right to me.  Please comment.
+
+Scenario B: "First-Parent Consistency"
+(1) I commit on local master.  USER=foo
+$ git checkout -b foo-topic master && hack && git commit -a -m "foo 
+commit 1"
+$ git log --first-parent --oneline foo-topic
+foo1111 foo commit 1
+deadbee some commit x
+
+(2) You push to canonical master.  USER=bar
+$ git checkout -b bar-topic master && hack && git commit -a -m "bar 
+commit 1"
+$ git log --first-parent --oneline bar-topic
+bar1111 bar commit 1
+deadbee some commit x
+$ git checkout master && git merge bar-topic && git push origin HEAD && 
+git fetch origin
+$ git log --first-parent --oneline origin/master
+bar1111 bar commit 1
+deadbee some commit x
+
+(3) I merge --no-ff into master and push.  USER=foo
+$ git checkout master && git pull --ff-only origin
+$ git log --first-parent --oneline master
+bar1111 bar commit 1
+deadbee some commit x
+$ git-merge foo-topic
+$ git log --first-parent --oneline master
+mrg1111 Merge branch 'foo-topic'
+bar1111 bar commit 1
+deadbee some commit x
+$ git push origin HEAD && git fetch origin
+$ git log --first-parent --oneline origin/master
+mrg1111 Merge branch 'foo-topic'
+bar1111 bar commit 1
+deadbee some commit x
+
+(4) You merge --no-ff into master and push.  USER=bar
+$ git checkout bar-topic && hack && git commit -a -m "bar commit 2"
+$ git log --first-parent --oneline bar-topic
+bar2222 bar commit 2
+bar1111 bar commit 1
+deadbee some commit x
+$ git checkout origin && git pull --ff-only origin
+$ git log --first-parent --oneline master
+mrg1111 Merge branch 'foo-topic'
+bar1111 bar commit 1
+deadbee some commit x
+$ git merge bar-topic
+$ git log --first-parent --oneline master
+mrg2222 Merge branch 'bar-topic'
+mrg1111 Merge branch 'foo-topic'
+bar1111 bar commit 1
+deadbee some commit x
+$ git push origin HEAD && git fetch origin
+$ git log --first-parent --oneline origin/master
+mrg2222 Merge branch 'bar-topic'
+mrg1111 Merge branch 'foo-topic'
+bar1111 bar commit 1
+deadbee some commit x
+
+This "consistency" scenario seems better, but I'm not sure if its right. 
+  Git seems to "like it" in that the merge messages make more sense. 
+Please comment.
+
+Please advise on "first parent" intent, best-practices, and pitfalls, or 
+documentation that explains it.  (I haven't found documentation that 
+directly explains "first parent theory and practice".  I've seen many 
+references to "first parent" and its implied meaning that I'm supposed 
+to "just know" or deduce).
+
+Thanks in advance for any pointers.
+
+v/r,
+neal
