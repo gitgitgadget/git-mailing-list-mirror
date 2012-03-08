@@ -1,128 +1,90 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [gsoc2012 wiki PATCH] "Use JavaScript library / framework in gitweb" project
-Date: Thu,  8 Mar 2012 22:18:13 +0100
-Message-ID: <1331241493-17188-1-git-send-email-jnareb@gmail.com>
-References: <20120302091114.GA3984@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Replacing large blobs in git history
+Date: Thu, 08 Mar 2012 13:22:57 -0800
+Message-ID: <7vy5rabxe6.fsf@alter.siamese.dyndns.org>
+References: <CAD-6W7byTiuE9MFZY1yG_ann-Ox7+wGjYduZ=Wwmw0ToF5Pynw@mail.gmail.com>
+ <4F56786D.60801@gmail.com>
+ <CACBZZX4hinV8vkebyNCLp_Ac6L80aNbdGOFqg1nSsCuRktFFrg@mail.gmail.com>
+ <4F58D2CD.2050502@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 08 22:18:34 2012
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Neal Kreitzinger <nkreitzinger@gmail.com>,
+	Barry Roberts <blr@robertsr.us>, git <git@vger.kernel.org>
+To: Holger Hellmuth <hellmuth@ira.uka.de>
+X-From: git-owner@vger.kernel.org Thu Mar 08 22:23:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5kjH-0006va-63
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 22:18:31 +0100
+	id 1S5knj-000317-5S
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 22:23:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756164Ab2CHVS1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 16:18:27 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:64607 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755917Ab2CHVSX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 16:18:23 -0500
-Received: by wgbdr13 with SMTP id dr13so931671wgb.1
-        for <git@vger.kernel.org>; Thu, 08 Mar 2012 13:18:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=oeRMJxDRv1E1FbI1v+AXq0ljqbqVUiygD+OaGMSsZkI=;
-        b=sSlFSzFDkpgLmzCi8QQy3kdXVSyuFDZeCIe28X0h9/fkQm0NTenKhqdu/DnZouJCuZ
-         te9Sb1hrMHr4gr2AAoTt6keBAXJeahpr/HnjW3+BRRxIq8EV8UQ4NhqJp7hE3IQhqrzV
-         MsGBFwp0epKnAnRvYyazcVvrXtYpDEmR0mdmhCusO1gmBqM3jPkaPOXysRV2JmBX6i5x
-         n7CX5ela4P7XIeJ0/8QW5fLEu/vgEvrGxcMJI2ge5asICAKIFdM8bf5c5dVBpnoC5Hi0
-         GnIX1dUVddgowLzOkINJKk8CVBPiXRb8nfoqB/XCjd/ebVPkOwL9YDZsi310fWhSPqoH
-         IfhA==
-Received: by 10.180.96.8 with SMTP id do8mr38213360wib.21.1331241502048;
-        Thu, 08 Mar 2012 13:18:22 -0800 (PST)
-Received: from localhost.localdomain (abwp68.neoplus.adsl.tpnet.pl. [83.8.239.68])
-        by mx.google.com with ESMTPS id t20sm14264799wiv.0.2012.03.08.13.18.19
-        (version=SSLv3 cipher=OTHER);
-        Thu, 08 Mar 2012 13:18:21 -0800 (PST)
-X-Mailer: git-send-email 1.7.9
-In-Reply-To: <20120302091114.GA3984@sigill.intra.peff.net>
+	id S1753379Ab2CHVXB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 16:23:01 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51733 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752900Ab2CHVXA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 16:23:00 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B4CD772C;
+	Thu,  8 Mar 2012 16:22:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=vEDRDndagNgs
+	5LtAEqpuDOPAVQA=; b=hwS31O9uomu6IFog/W9/l2fdKw2qAbfn2awnwOC6PLJ5
+	PXEm19CsBE/nlgcB6e7KPNP+VWGiInT0R4FwXKuuVVw/GE5BGM1WFDSTmfTFiFPT
+	HzdpGTLPFI0wVnbaJUdmVwjQVfP2KFksgc8Q5XN86SAfPfVhHVwPeOFZaq5vorw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=g5im7c
+	65aWXV8ve8AP6/lM0Syd+pZC7z/+zgA4PRwHi+FqSRHuh6KiLUeWA66Qe+kz8tUB
+	P4xTaZ/3SI6IchNclRQGTUICYZ1OUrz0sVdDiwALAr+g1Y6DlhMZQEYzAqJTudQX
+	ORjECjOLnovkzmBuiUYUSgTvxauiyLvzCvAcY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 11F6F772B;
+	Thu,  8 Mar 2012 16:22:59 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9DCAC772A; Thu,  8 Mar 2012
+ 16:22:58 -0500 (EST)
+In-Reply-To: <4F58D2CD.2050502@ira.uka.de> (Holger Hellmuth's message of
+ "Thu, 08 Mar 2012 16:39:57 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E0C68928-6964-11E1-9151-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192652>
 
----
-Inspied by problems with timezone changing JavaScript that Ramsay
-Jones had.
+Holger Hellmuth <hellmuth@ira.uka.de> writes:
 
- SoC-2012-Ideas.md |   54 +++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 54 insertions(+), 0 deletions(-)
+> On 07.03.2012 22:27, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> Does something other than git-fsck actually check whether the
+>> collection of blobs you're getting from the remote when you clone ha=
+ve
+>> sensible sha1's?
+>>
+>> What'll happen if he replaces that 550MB blob with a 0 byte blob but
+>> hacks the object store so that it pretends to have the same sha1?
+>
+> This is something I tested once because of security concerns
+> (i.e. what happens if a malicious intruder just drops something else
+> into the object store) and if I remember correctly only git-fsck was
+> able to spot the switch. But I didn't test cloning, only a few local
+> operations.
 
-diff --git a/SoC-2012-Ideas.md b/SoC-2012-Ideas.md
-index 6f543f6..8c3b266 100644
---- a/SoC-2012-Ideas.md
-+++ b/SoC-2012-Ideas.md
-@@ -264,6 +264,60 @@ Programming language: Perl
- Proposed by: Jakub Nar=C4=99bski =20
- Possible mentor(s): Jakub Nar=C4=99bski (?)
-=20
-+Use JavaScript library / framework in gitweb
-+--------------------------------------------
-+
-+Gitweb (git web interface) includes some *optional* client-side
-+scripting using JavaScript.  This includes checking if JavaScript is
-+available and remembering this information so gitweb can choose
-+JavaScript-only version of a view (javascript-detection), selecting
-+common timezone to use when showing dates (adjust-timezone), and
-+AJAX-y incremental blame view (blame_incremental).
-+
-+Currently all this is done using hand-written JavaScript.  This means
-+that gitweb scripting includes handling cookies, formatting output,
-+processing dates, and smoothing out incompatibilities between browsers
-+(like e.g. XmlHttpRequest creation).
-+
-+This is redoing work which JavaScript libraries, such as jQuery,
-+MooTools or YUI already did.  Moreover, if we want to add new features
-+(e.g. table sorted using JavaScript), or improve existing ones, we
-+would have to re-implement existing JavaScript code.  Also our
-+hand-crafted code is not as well tested as widely used JavaScript
-+libraries.
-+
-+The goal of this project is to move gitweb client side scripting to
-+use some JavaScript library / JavaScript framework.
-+
-+The project would consist of the following steps:
-+
-+ * Add support for configuring and loading external JavaScript library
-+   to `gitweb/gitweb.perl` and `gitweb/Makefile`.  It would be nice
-+   (though not necessary) to be able to use local version of library,
-+   and have such feature well documented.
-+
-+ * Remove gitweb's JavaScript mini-library in `gitweb/static/js/lib`
-+   and replace it part by part by appropriate JavaScript library
-+   functions (methods).
-+
-+ * Replace DOM selectors by library version, if applicable.
-+
-+ * Optional: emulate 'onprogress' in XmlHttpRequest using native
-+   JavaScript library mechanism (creating a class, or whatever).
-+
-+ * Optional: better deferring of repainting in incremental blame.
-+
-+Note that we require that client-side scripting in gitweb follow
-+[progressive enhancement] strategy; gitweb should work correctly,
-+perhaps with reduced functionality, even if JavaScript is turned off,
-+or external JavaScript library cannot be loaded.
-+
-+[progressive enhancement]: http://en.wikipedia.org/wiki/Progressive_en=
-hancement
-+
-+Programming language: JavaScript =20
-+Proposed by: Jakub Nar=C4=99bski =20
-+Possible mentor(s): Jakub Nar=C4=99bski
-+
- Finishing network support for libgit2
- -------------------------------------
-=20
---=20
-1.7.9
+Local operation that do not have to look at such a corrupt blob will
+not verify everything under the sun every time for obvious reasons.
+
+An operation to transfer objects out of the repository (e.g. serving
+as the source of "clone" from elsewhere) will notice when it has to
+send such a corrupt object and you will be prevented from spreading
+the damage.
+
+The same thing for a transfer in the reverse direction. When the
+other side tells us that it is giving us everything we asked, we
+still look at all the objects we received to make sure.
