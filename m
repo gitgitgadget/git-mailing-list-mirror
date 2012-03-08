@@ -1,144 +1,186 @@
-From: David Barr <davidbarr@google.com>
-Subject: [PATCH] fast-import: fix ls command with empty path
-Date: Thu,  8 Mar 2012 16:30:56 +1100
-Message-ID: <1331184656-98629-1-git-send-email-davidbarr@google.com>
-References: <CAFfmPPMxcs0ySgnD7UfUS1yq=qaqfn1qCxdh1HYgFu6WPfpWQg@mail.gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Andrew Sayers <andrew-git@pileofstuff.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>,
-	David Barr <davidbarr@google.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH/RFC] Change t0204-gettext-reencode-sanity.sh to pass under
+ Mac OSX
+Date: Thu, 08 Mar 2012 06:54:54 +0100
+Message-ID: <4F5849AE.1070807@web.de>
+References: <201203052039.16893.tboegi@web.de> <7vzkbuzss7.fsf@alter.siamese.dyndns.org> <CACBZZX4P=JSdP_vLOMx5r3R+YO8SMSs5W8+vf2DMibKMwBx_Vg@mail.gmail.com> <7vfwdkm6xs.fsf@alter.siamese.dyndns.org> <CACBZZX4q0Da=H=-fO86f2YN+CmE25QfEgAp8Efmdyf65CGckiQ@mail.gmail.com> <7v4nu0m5tb.fsf@alter.siamese.dyndns.org> <CACBZZX6W=-ZchaCsLGdpZ420L_9=w8AHD8BNVb7XV5M-hc0Qhg@mail.gmail.com> <7vd38okmp0.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	git@vger.kernel.org,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 06:32:13 2012
+X-From: git-owner@vger.kernel.org Thu Mar 08 06:55:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5VxS-00012L-QK
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 06:32:11 +0100
+	id 1S5WJg-00088Z-4P
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 06:55:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751282Ab2CHFbi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 00:31:38 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:58694 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751220Ab2CHFbh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 00:31:37 -0500
-Received: by iagz16 with SMTP id z16so207816iag.19
-        for <git@vger.kernel.org>; Wed, 07 Mar 2012 21:31:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=Oo7/p3ZldsgTbJk+EwOEhO0A/h8AjPQvUeqB9UEdKMM=;
-        b=FQP84eAWp2ONtTqaKi8jQsdlpL6wKmE5mBDUoW27i5AopU+IZveR2M9b6EwbygIlss
-         ryqBzPYES6KBxv3cGYhcTVL99b245Oc9SCFAY+40DZK3rtRMoKmQyLii7mROUAmSiAk7
-         F6jH+UM+HXnWl1+GZNsE3E2hWt5tHL0T6K2sjFE9f/LsZiCViO5tpjF7wyJiWTlnrM5T
-         1iKF9ASVVmuovqlrGX0Xnot6Yy42K6X+6HG0o033xXuza4x3wqhDWYPiMSVluLxt/JCP
-         9Ef5ZU4M6mjn2PQKsgLCpwudBbsa5ptP+0oYiYQhjdl4KHT64t0PJsQKhZc127zyRvrV
-         f/Mg==
-Received: by 10.50.181.162 with SMTP id dx2mr4496355igc.42.1331184696618;
-        Wed, 07 Mar 2012 21:31:36 -0800 (PST)
-Received: by 10.50.181.162 with SMTP id dx2mr4496328igc.42.1331184696492;
-        Wed, 07 Mar 2012 21:31:36 -0800 (PST)
-Received: from davidbarr-macpro.syd.corp.google.com (davidbarr-macpro.syd.corp.google.com [172.23.4.51])
-        by mx.google.com with ESMTPS id s3sm614924igw.17.2012.03.07.21.31.33
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 07 Mar 2012 21:31:35 -0800 (PST)
-X-Mailer: git-send-email 1.7.9.3
-In-Reply-To: <CAFfmPPMxcs0ySgnD7UfUS1yq=qaqfn1qCxdh1HYgFu6WPfpWQg@mail.gmail.com>
-X-Gm-Message-State: ALoCoQlq92MX7mzLpUPnYxolzbUZZB6Po/on99TS0dWhx0Bojby7AwytR1aWh5QB4tZG2Ar5cTa18+cHFPfDnFv0OWUX0Yvyjr1DbfUFr+eabv2g1kw5l4+kd7BBI9u3ZNrVUREX3NqfHT4Vho98MWW0BSrzRFSLvlUNL1IyiyRkT8NbyNJz568=
+	id S1752246Ab2CHFzD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 00:55:03 -0500
+Received: from smtp-out12.han.skanova.net ([195.67.226.212]:47230 "EHLO
+	smtp-out12.han.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752234Ab2CHFzB (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 00:55:01 -0500
+Received: from birne.lan (194.22.188.61) by smtp-out12.han.skanova.net (8.5.133) (authenticated as tboegi@telia.com)
+        id 4EFC380E0129AE35; Thu, 8 Mar 2012 06:54:55 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <7vd38okmp0.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192521>
 
-There is a pathological Subversion operation that svn-fe handles
-incorrectly due to an unexpected response from fast-import:
+On 08.03.12 00:36, Junio C Hamano wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>=20
+>> Having that information doesn't cost us a lot, in this case we can
+>> just amend the test to assert that on OSX the output should be the
+>> same as under the UTF-8 output.
+>=20
+> Known modes of error behaviour are to show:
+>=20
+>  - runs of "?", saying "I dunno";
+>=20
+>  - the key used to query the message catalog ("TEST: Old English
+>    Runes"), saying "I don't do i18n"; or
+>=20
+>  - the raw value stored in the message catalog (runes in UTF-8).
+>=20
+> and each makes sort-of sense in its own way.
+>=20
+> I would be OK if the patch read like the attached, but I do not
+> think treating the "show key" and "stuff with ?" case differently
+> like the original code did makes any sense.
+>=20
+> It may be better to clarify in the "say" comment that this test is
+> not about finding if the user's system is *broken* but about seeing
+> if the "undefined" behaviour upon user error is one that we
+> recognize, though.
+>=20
+>  t/t0204-gettext-reencode-sanity.sh |   21 +++++++++++++--------
+>  1 file changed, 13 insertions(+), 8 deletions(-)
+>=20
+> diff --git a/t/t0204-gettext-reencode-sanity.sh b/t/t0204-gettext-ree=
+ncode-sanity.sh
+> index 189af90..8911e93 100755
+> --- a/t/t0204-gettext-reencode-sanity.sh
+> +++ b/t/t0204-gettext-reencode-sanity.sh
+> @@ -7,6 +7,7 @@ test_description=3D"Gettext reencoding of our *.po/*.=
+mo files works"
+> =20
+>  . ./lib-gettext.sh
+> =20
+> +RUNES=3D"TILRAUN: =E1=9A=BB=E1=9B=96 =E1=9A=B3=E1=9A=B9=E1=9A=AB=E1=9A=
+=A6 =E1=9A=A6=E1=9A=AB=E1=9B=8F =E1=9A=BB=E1=9B=96 =E1=9B=92=E1=9A=A2=E1=
+=9B=9E=E1=9B=96 =E1=9A=A9=E1=9A=BE =E1=9A=A6=E1=9A=AB=E1=9B=97 =E1=9B=9A=
+=E1=9A=AA=E1=9A=BE=E1=9B=9E=E1=9B=96 =E1=9A=BE=E1=9A=A9=E1=9A=B1=E1=9A=A6=
+=E1=9A=B9=E1=9B=96=E1=9A=AA=E1=9A=B1=E1=9B=9E=E1=9A=A2=E1=9B=97 =E1=9A=B9=
+=E1=9B=81=E1=9A=A6 =E1=9A=A6=E1=9A=AA =E1=9A=B9=E1=9B=96=E1=9B=A5=E1=9A=
+=AB"
+> =20
+>  test_expect_success GETTEXT_LOCALE 'gettext: Emitting UTF-8 from our=
+ UTF-8 *.mo files / Icelandic' '
+>      printf "TILRAUN: Hall=C3=B3 Heimur!" >expect &&
+> @@ -15,7 +16,7 @@ test_expect_success GETTEXT_LOCALE 'gettext: Emitti=
+ng UTF-8 from our UTF-8 *.mo
+>  '
+> =20
+>  test_expect_success GETTEXT_LOCALE 'gettext: Emitting UTF-8 from our=
+ UTF-8 *.mo files / Runes' '
+> -    printf "TILRAUN: =E1=9A=BB=E1=9B=96 =E1=9A=B3=E1=9A=B9=E1=9A=AB=E1=
+=9A=A6 =E1=9A=A6=E1=9A=AB=E1=9B=8F =E1=9A=BB=E1=9B=96 =E1=9B=92=E1=9A=A2=
+=E1=9B=9E=E1=9B=96 =E1=9A=A9=E1=9A=BE =E1=9A=A6=E1=9A=AB=E1=9B=97 =E1=9B=
+=9A=E1=9A=AA=E1=9A=BE=E1=9B=9E=E1=9B=96 =E1=9A=BE=E1=9A=A9=E1=9A=B1=E1=9A=
+=A6=E1=9A=B9=E1=9B=96=E1=9A=AA=E1=9A=B1=E1=9B=9E=E1=9A=A2=E1=9B=97 =E1=9A=
+=B9=E1=9B=81=E1=9A=A6 =E1=9A=A6=E1=9A=AA =E1=9A=B9=E1=9B=96=E1=9B=A5=E1=
+=9A=AB" >expect &&
+> +    printf "%s" "$RUNES" >expect &&
+>      LANGUAGE=3Dis LC_ALL=3D"$is_IS_locale" gettext "TEST: Old Englis=
+h Runes" >actual &&
+>      test_cmp expect actual
+>  '
+> @@ -28,15 +29,19 @@ test_expect_success GETTEXT_ISO_LOCALE 'gettext: =
+Emitting ISO-8859-1 from our UT
+> =20
+>  test_expect_success GETTEXT_ISO_LOCALE 'gettext: Emitting ISO-8859-1=
+ from our UTF-8 *.mo files / Runes' '
+>      LANGUAGE=3Dis LC_ALL=3D"$is_IS_iso_locale" gettext "TEST: Old En=
+glish Runes" >runes &&
+> -
+> -	if grep "^TEST: Old English Runes$" runes
+> +	runes=3D$(cat runes) &&
+> +	if test "z$runes" =3D "zTEST: Old English Runes"
+> +	then
+> +		say "Your system gives back the key to message catalog for an impo=
+ssible request"
+> +	elif test "z$runes" =3D "zTILRAUN: ?? ???? ??? ?? ???? ?? ??? ?????=
+ ??????????? ??? ?? ????"
+> +	then
+> +		say "Your system replaces an impossible character with ?"
+> + 	elif test "z$runes" =3D "z$RUNES"
+>  	then
+> -		say "Your system can not handle this complexity and returns the st=
+ring as-is"
+> +		say "Your system gives back the raw message for an impossible requ=
+est"
+>  	else
+> -		# Both Solaris and GNU libintl will return this stream of
+> -		# question marks, so it is s probably portable enough
+> -		printf "TILRAUN: ?? ???? ??? ?? ???? ?? ??? ????? ??????????? ??? =
+?? ????" >runes-expect &&
+> -		test_cmp runes-expect runes
+> +		say "We error behaviour your system shows"
+> +		false
+>  	fi
+>  '
+> =20
+>=20
+>=20
+>=20
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-  svn cp $SVN_ROOT $SVN_ROOT/subdirectory
+With that patch the t0204 test is passed.
 
-When the following command is sent to fast-import:
+(based on 1.7.10-rc0).
 
- 'ls' SP ':1' SP LF
+ And all the other tests passed as well.
 
-The expected output is:
+/Torsten
 
- '040000' SP 'tree' SP <dataref> HT LF
 
-The actual output is:
 
- 'missing' SP LF
-
-This is because tree_content_get() is called but expects a non-empty
-path. Instead, copy the root entry and force the mode to S_IFDIR.
-
-Reported-by: Andrew Sayers <andrew-git@pileofstuff.org>
-Signed-off-by: David Barr <davidbarr@google.com>
----
- fast-import.c          |    7 ++++++-
- t/t9300-fast-import.sh |   31 +++++++++++++++++++++++++++++++
- 2 files changed, 37 insertions(+), 1 deletion(-)
-
-diff --git a/fast-import.c b/fast-import.c
-index c1486ca..8dbfd4c 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -3019,7 +3019,12 @@ static void parse_ls(struct branch *b)
- 			die("Garbage after path in: %s", command_buf.buf);
- 		p = uq.buf;
- 	}
--	tree_content_get(root, p, &leaf);
-+	if (*p) {
-+		tree_content_get(root, p, &leaf);
-+	} else {
-+		leaf = *root;
-+		leaf.versions[1].mode = S_IFDIR;
-+	}
- 	/*
- 	 * A directory in preparation would have a sha1 of zero
- 	 * until it is saved.  Save, for simplicity.
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 438aaf6..2558a2e 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -1400,6 +1400,37 @@ test_expect_success \
- 	 test_cmp expect.qux actual.qux &&
- 	 test_cmp expect.qux actual.quux'
- 
-+test_expect_success PIPE 'N: read and copy root' '
-+	cat >expect <<-\EOF
-+	:100755 100755 f1fb5da718392694d0076d677d6d0e364c79b0bc f1fb5da718392694d0076d677d6d0e364c79b0bc C100	file2/newf	file3/file2/newf
-+	:100644 100644 7123f7f44e39be127c5eb701e5968176ee9d78b1 7123f7f44e39be127c5eb701e5968176ee9d78b1 C100	file2/oldf	file3/file2/oldf
-+	:100755 100755 85df50785d62d3b05ab03d9cbf7e4a0b49449730 85df50785d62d3b05ab03d9cbf7e4a0b49449730 C100	file4	file3/file4
-+	:100755 100755 e74b7d465e52746be2b4bae983670711e6e66657 e74b7d465e52746be2b4bae983670711e6e66657 C100	newdir/exec.sh	file3/newdir/exec.sh
-+	:100644 100644 fcf778cda181eaa1cbc9e9ce3a2e15ee9f9fe791 fcf778cda181eaa1cbc9e9ce3a2e15ee9f9fe791 C100	newdir/interesting	file3/newdir/interesting
-+	EOF
-+	git update-ref -d refs/heads/N12 &&
-+	rm -f backflow &&
-+	mkfifo backflow &&
-+	(
-+		exec <backflow &&
-+		cat <<-EOF &&
-+		commit refs/heads/N12
-+		committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+		data <<COMMIT
-+		copy root directory by tree hash read via ls
-+		COMMIT
-+
-+		from refs/heads/branch^0
-+		ls ""
-+		EOF
-+		read mode type tree filename &&
-+		echo "M 040000 $tree file3"
-+	) |
-+	git fast-import --cat-blob-fd=3 3>backflow &&
-+	git diff-tree -C --find-copies-harder -r N12^ N12 >actual &&
-+	compare_diff_raw expect actual
-+'
-+
- ###
- ### series O
- ###
--- 
-1.7.9.3
+Applying: Change t0204-gettext-reencode-sanity.sh to pass under Mac OSX
+/Users/tb/projects/git/git_git/.git/rebase-apply/patch:35: space before=
+ tab in indent.
+        elif test "z$runes" =3D "z$RUNES"
+warning: 1 line adds whitespace errors.
+~/projects/git/git_git> cd t
+~/projects/git/git_git/t> ./t0204-gettext-reencode-sanity.sh
+# lib-gettext: No is_IS UTF-8 locale available
+# lib-gettext: No is_IS ISO-8859-1 locale available
+ok 1 # skip gettext: Emitting UTF-8 from our UTF-8 *.mo files / Iceland=
+ic (missing GETTEXT_LOCALE)
+ok 2 # skip gettext: Emitting UTF-8 from our UTF-8 *.mo files / Runes (=
+missing GETTEXT_LOCALE)
+ok 3 # skip gettext: Emitting ISO-8859-1 from our UTF-8 *.mo files / Ic=
+elandic (missing GETTEXT_ISO_LOCALE)
+ok 4 # skip gettext: Emitting ISO-8859-1 from our UTF-8 *.mo files / Ru=
+nes (missing GETTEXT_ISO_LOCALE)
+ok 5 # skip gettext: Fetching a UTF-8 msgid -> UTF-8 (missing GETTEXT_L=
+OCALE)
+ok 6 # skip gettext: Fetching a UTF-8 msgid -> ISO-8859-1 (missing GETT=
+EXT_ISO_LOCALE)
+ok 7 # skip gettext.c: git init UTF-8 -> UTF-8 (missing GETTEXT_LOCALE)
+ok 8 # skip gettext.c: git init UTF-8 -> ISO-8859-1 (missing GETTEXT_IS=
+O_LOCALE)
+# passed all 8 test(s)
+1..8
