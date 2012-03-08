@@ -1,90 +1,98 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/5] i18n: keep the last \n even when text is poisoned
-Date: Thu, 8 Mar 2012 16:01:32 -0600
-Message-ID: <20120308220131.GA10122@burratino>
-References: <1331198198-22409-1-git-send-email-pclouds@gmail.com>
- <1331198198-22409-2-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] verify-tag: Parse GPG configuration options.
+Date: Thu, 08 Mar 2012 14:01:46 -0800
+Message-ID: <7vmx7qbvlh.fsf@alter.siamese.dyndns.org>
+References: <20120308200720.GA93880@blarf>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 23:01:49 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Alex Zepeda <alex@inferiorhumanorgans.com>
+X-From: git-owner@vger.kernel.org Thu Mar 08 23:01:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5lPA-000755-F8
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 23:01:48 +0100
+	id 1S5lPI-0007D6-Rh
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 23:01:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758718Ab2CHWBn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 17:01:43 -0500
-Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:47881 "EHLO
-	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758604Ab2CHWBm convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 17:01:42 -0500
-Received: by obbuo6 with SMTP id uo6so1213794obb.19
-        for <git@vger.kernel.org>; Thu, 08 Mar 2012 14:01:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=Wd98njusz8Tw4jtU04xbjIRXaQu/80jg4hVIQQ8Ms6g=;
-        b=ORZxr5Yz/aHn1lolZiYH12kP5QI9eGFhLRESyqtnmEHI5nmpCGnh4sJ48Exmm9IPXt
-         nu6sLTC+pmIFwXTa+i8eDaFXR7WNdzfg014FW7jeURO9m4rm25LewOvX6nD7KObuKEUD
-         LTadhIx8s+lGUDT3qXbCaYdt//jAEDbBdQaR2c/nbkDntG0xQknZ4U18DHH4Ogvmc8zO
-         TEMwwOQ9ZDB1Yaw3q13lKUjXd9B+md+9Rv3JuMqo+F2zBWbCpR6ZffNCNRaCJVi+lt5P
-         7dNAgVVfpHrD7Q95pQXgC7TZNJ4lbNFNxE91Evk517ay7kf1Z4CVfNApMGpVKutKnnHR
-         VN5g==
-Received: by 10.182.160.10 with SMTP id xg10mr3025739obb.40.1331244102267;
-        Thu, 08 Mar 2012 14:01:42 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id a6sm1574114oea.13.2012.03.08.14.01.41
-        (version=SSLv3 cipher=OTHER);
-        Thu, 08 Mar 2012 14:01:41 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1331198198-22409-2-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758721Ab2CHWBw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 17:01:52 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40957 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758604Ab2CHWBv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 17:01:51 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CDC836075;
+	Thu,  8 Mar 2012 17:01:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hPmyhDTUpTZqGoL1IRbTVk1vNNQ=; b=Ke+5B2
+	KpMrEomlcZoeNWi8VKP1nSBQBQZ30XIW4rDMkWoFHwKcGAUe422PMQlm+hs3h2FQ
+	kBXe493ockWDCuVTXYQnrM9A9j9b37emK+6nB3s8fmMZDFXxkJgp9VJj7X4K2an1
+	HMVLAkRniQYYvrrnh6YhtlCSGHtf4zon9L9O8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=F+bnOqsx8702bIHMf+tmqZbY9dXMpU0W
+	fh/15KFBO4WhUcoErTEaz+vunlGiLQF0OjMVwaw13BMlsNGVIse4xBhEC8pmqU3a
+	aD6o5mQYAb6E0/7oXzV1fcKwUQsKDBdr9+Heh2nSKSZp6jchVbfS8zK+CriyVsSP
+	VaGDSXuXJMI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C58C46074;
+	Thu,  8 Mar 2012 17:01:48 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5B7456072; Thu,  8 Mar 2012
+ 17:01:48 -0500 (EST)
+In-Reply-To: <20120308200720.GA93880@blarf> (Alex Zepeda's message of "Thu, 8
+ Mar 2012 12:07:20 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4D66D36C-696A-11E1-9110-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192657>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+Alex Zepeda <alex@inferiorhumanorgans.com> writes:
 
-> --- a/gettext.c
-> +++ b/gettext.c
-> @@ -24,6 +24,16 @@ int use_gettext_poison(void)
->  		poison_requested =3D getenv("GIT_GETTEXT_POISON") ? 1 : 0;
->  	return poison_requested;
+> Modify verify-tag to load relevant GPG variables from the git
+> configuratio file.  This allows git tag -v to use an alternative
+> GPG binary in the same way that git tag -s does.
+>
+> Signed-off-by: Alex Zepeda <alex@inferiorhumanorgans.com>
+> ---
+
+Makes sense; thanks.
+
+>  builtin/verify-tag.c |   10 +++++++++-
+>  1 files changed, 9 insertions(+), 1 deletions(-)
+>
+> diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
+> index 28c2174..986789f 100644
+> --- a/builtin/verify-tag.c
+> +++ b/builtin/verify-tag.c
+> @@ -58,6 +58,14 @@ static int verify_tag(const char *name, int verbose)
+>  	return ret;
 >  }
-> +
-> +const char *poison_text(const char *msgid)
+>  
+> +static int git_verify_tag_config(const char *var, const char *value, void *cb)
 > +{
-> +	int len =3D strlen(msgid);
-> +	if (len && msgid[len-1] =3D=3D '\n')
-> +		return "# GETTEXT POISON #\n";
-> +	else
-> +		return "# GETTEXT POISON #";
-
-I realize this was not the motivation behind the above patch, but if
-the translation of some message has to end with a newline for git to
-function correctly, would we consider that a bug?
-
-I am of two minds on that:
-
- - on one hand, translators tend to be trustworthy, reasonable folks
- - on the other hand, anything we can do to make the translation
-   process less fussy seems like time well spent
-
-The latter wins out for me, so I would prefer not to have this patch
-so the test suite can detect important newlines that should be not be
-part of the translatable string.
-
-Just my two cents,
-Jonathan
+> +	int status = git_gpg_config(var, value, cb);
+> +	if (status)
+> +		return status;
+> +	return git_default_config(var, value, cb);
+> +}
+> +
+>  int cmd_verify_tag(int argc, const char **argv, const char *prefix)
+>  {
+>  	int i = 1, verbose = 0, had_error = 0;
+> @@ -66,7 +74,7 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
+>  		OPT_END()
+>  	};
+>  
+> -	git_config(git_default_config, NULL);
+> +	git_config(git_verify_tag_config, NULL);
+>  
+>  	argc = parse_options(argc, argv, prefix, verify_tag_options,
+>  			     verify_tag_usage, PARSE_OPT_KEEP_ARGV0);
