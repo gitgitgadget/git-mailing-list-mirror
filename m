@@ -1,61 +1,67 @@
-From: Jeff King <peff@peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH 2/2] post-receive-email: defend against non UTF-8
  i18n.logoutputencoding setting
-Date: Thu, 8 Mar 2012 08:50:30 -0500
-Message-ID: <20120308135030.GB30602@sigill.intra.peff.net>
+Date: Thu, 8 Mar 2012 07:52:37 -0600
+Message-ID: <20120308135237.GA14918@burratino>
 References: <20120308115119.GA2604@burratino>
  <20120308115957.GB2750@burratino>
+ <20120308135030.GB30602@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Gerrit Pape <pape@smarden.org>,
 	Alexey Shumkin <zapped@mail.ru>, Johannes Sixt <j6t@kdbg.org>,
 	Michael Haggerty <mhagger@alum.mit.edu>,
 	Jon Jensen <jon@endpoint.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 14:50:43 2012
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 08 14:52:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5djs-0005Kr-P3
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 14:50:41 +0100
+	id 1S5dlz-0007mf-1T
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 14:52:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755361Ab2CHNud (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 08:50:33 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44672
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754745Ab2CHNuc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 08:50:32 -0500
-Received: (qmail 7058 invoked by uid 107); 8 Mar 2012 13:50:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 08 Mar 2012 08:50:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Mar 2012 08:50:30 -0500
+	id S1753159Ab2CHNwr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 08:52:47 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:61351 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752260Ab2CHNwq (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 08:52:46 -0500
+Received: by obbuo6 with SMTP id uo6so686436obb.19
+        for <git@vger.kernel.org>; Thu, 08 Mar 2012 05:52:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=K90UQl+7orrQTw7coAkhJlqM/cR1Ci10qlNCPzn4+EY=;
+        b=M2omDypQPQpYjekuFRIchbyhhnvGoLhD47vZjCciTnlHIATAA7Y6C/0GSeQI6+bbxw
+         kM+8bNPkVegNdlFKefHtAwzbmufSYy4lNy/KMuWil2EKgRcqjtjBGzLZv5iOXhLoM6uW
+         G8SvjPkLVXGu5QARmNXwD+L2UVGnL6NTOL04O4JQHT1vGDVD8pkFMF8IyRYDaOS+HhRk
+         VKG50aIH6v/BaHx9ZS1wjsnP0cmcnnzB/JFygOZR9VRITL3RLIeh3ijKd7Ejk3T3EIuP
+         +dSNSxfp/68CpZpweow4S8WV2lO44hWW70efUAcnNgUApQt62J080+xR7N8xN795WHkr
+         VnRg==
+Received: by 10.60.21.134 with SMTP id v6mr2460659oee.52.1331214765844;
+        Thu, 08 Mar 2012 05:52:45 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id g6sm958106oeb.10.2012.03.08.05.52.44
+        (version=SSLv3 cipher=OTHER);
+        Thu, 08 Mar 2012 05:52:45 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20120308115957.GB2750@burratino>
+In-Reply-To: <20120308135030.GB30602@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192602>
 
-On Thu, Mar 08, 2012 at 05:59:57AM -0600, Jonathan Nieder wrote:
+Jeff King wrote:
 
-> diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
-> index dc184d0b..b59e03cd 100755
-> --- a/contrib/hooks/post-receive-email
-> +++ b/contrib/hooks/post-receive-email
-> @@ -464,7 +464,7 @@ generate_delete_branch_email()
->  	echo "       was  $oldrev"
->  	echo ""
->  	echo $LOGBEGIN
-> -	git show -s --pretty=oneline $oldrev
-> +	git diff-tree --encoding=UTF-8 -s --pretty=oneline $oldrev
->  	echo $LOGEND
+> If you are using "-s" to suppress diff output, why are you using
+> diff-tree? Wouldn't "rev-list -1" (or "rev-list --no-walk") work equally
+> well and be a little more obvious?
 
-If you are using "-s" to suppress diff output, why are you using
-diff-tree? Wouldn't "rev-list -1" (or "rev-list --no-walk") work equally
-well and be a little more obvious?
-
--Peff
+Just a habit --- some part of me is wired to think "diff-tree is the
+command to show a commit".  Maybe rev-list didn't support --pretty in
+olden days?
