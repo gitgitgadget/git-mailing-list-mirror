@@ -1,94 +1,60 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: who's on first? - following first parent and merge-management
-Date: Thu, 08 Mar 2012 09:03:32 +0100
-Message-ID: <4F5867D4.1010904@viscovery.net>
-References: <jj6s47$m98$1@dough.gmane.org> <7vwr6woo8p.fsf@alter.siamese.dyndns.org> <7vty1zfwmd.fsf@alter.siamese.dyndns.org> <20120308071403.GE7643@sigill.intra.peff.net>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: Unable to make git with https support
+Date: Thu, 8 Mar 2012 09:19:10 +0100
+Message-ID: <87eht3tsht.fsf@thomas.inf.ethz.ch>
+References: <CADjGbJq_HL--_CAuE_Yj3B0srx=WDficot8bgadvW92zz9PJdg@mail.gmail.com>
+	<87pqcotc9w.fsf@thomas.inf.ethz.ch>
+	<CADjGbJpL69BTpOHyToqYmSWSBYA--6fSGB4CZyBXvdA9Zy4NvQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Neal Kreitzinger <nkreitzinger@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 08 09:03:43 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: <git@vger.kernel.org>
+To: Nate Parsons <parsons.nate@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 08 09:19:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5YK6-0000ig-Mq
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 09:03:43 +0100
+	id 1S5YZC-0000uB-3P
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 09:19:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753979Ab2CHIDh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 03:03:37 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:31540 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752934Ab2CHIDh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 03:03:37 -0500
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1S5YJw-0001pC-Ml; Thu, 08 Mar 2012 09:03:33 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 5BAD11660F;
-	Thu,  8 Mar 2012 09:03:32 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <20120308071403.GE7643@sigill.intra.peff.net>
-X-Spam-Score: -1.4 (-)
+	id S1753968Ab2CHITN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 03:19:13 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:9151 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753048Ab2CHITM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 03:19:12 -0500
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 8 Mar
+ 2012 09:19:10 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 8 Mar
+ 2012 09:19:10 +0100
+In-Reply-To: <CADjGbJpL69BTpOHyToqYmSWSBYA--6fSGB4CZyBXvdA9Zy4NvQ@mail.gmail.com>
+	(Nate Parsons's message of "Wed, 7 Mar 2012 17:30:24 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192536>
 
-Am 3/8/2012 8:14, schrieb Jeff King:
-> What if the user could specify a partial ordering of refs, and we used
-> that order when listing merge parents in the resulting commit. So for
-> example, if you said that:
-> 
->   refs/remotes/origin/master > refs/heads/master
-> 
-> then doing:
-> 
->   $ git checkout master
->   $ git pull origin master
-> 
-> would result in a "flipped" merge commit, with origin/master as the
-> first parent, and master as the second.
+Nate Parsons <parsons.nate@gmail.com> writes:
 
-I have wished for such a thing several times already.
+> On Wed, Mar 7, 2012 at 2:57 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
+>> Have you also installed libcurl-devel (or whatever the package might be
+>> called, but it seems you are also using opensuse)?
+>
+> This is the problem, thanks. I only have curl and libcurl4 installed,
+> and I was hoping to not install any new packages.
 
-It happens when I have a topic with changes that trigger a complete
-rebuild of the project. When I merge it to master, I have to
+Which is to say, you either have a totally crazy aversion against
+installing (headers-only, no less) packages, or you have a hidden reason
+why you don't want to do that and you're not telling us.
 
-   # on topic
-   git checkout master   #1
-   git merge topic       #2
+Meh.
 
-#1 triggers a rebuild, but I don't do a build. Then #2 again triggers a
-rebuild, but in reality the only changes since the last build are those
-from master since the topic forked (no, I can't use ccache).
-
-To avoid the situation, I jump through hoops by preparing an index and
-worktree with the merge result while I am on topic:
-
-   # on topic
-   git checkout --detach
-   git merge master      # triggers rebuild of only master's changes
-   # merge result ready; carry it over to master and repeat the merge
-   git reset --soft master
-   git checkout master
-   git merge topic       # fails if content merge is necessary
-   git checkout master -- file/needing/content/merge # (*)
-   git merge topic       # now succeeds
-
-This would not be necessary if the order of the merge parents could be
-specified, e.g.:
-
-   # on topic
-   git merge --into master
-
-(*) Jumping through these hoops make sense only if
-file/needing/content/merge is _not_ the one that triggers the complete
-rebuild.
-
--- Hannes
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
