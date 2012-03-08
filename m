@@ -1,97 +1,197 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Re: git push default behaviour?
-Date: Thu, 8 Mar 2012 13:12:48 +0100
-Message-ID: <CANgJU+V-nSRwz7YitsDLsUA=5nm5S6L59pUhw4x50kKojLBFuA@mail.gmail.com>
-References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com>
-	<87k42vs8pi.fsf@thomas.inf.ethz.ch>
-	<CAFsnPqopZEZeeuFzK4ZoUjGnfpiv5oMs=xV5XBSgSyGLXOwgqA@mail.gmail.com>
-	<1331202483.21444.11.camel@beez.lab.cmartin.tk>
-	<vpqeht3qpev.fsf@bauges.imag.fr>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH/RFC] remove #!interpreter line from shell libraries
+Date: Thu, 8 Mar 2012 06:14:04 -0600
+Message-ID: <20120308121403.GA16493@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
-	Jeremy Morton <jeremy@configit.com>,
-	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Mar 08 13:12:55 2012
+Cc: Jeff King <peff@peff.net>, David Aguilar <davvid@gmail.com>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 08 13:14:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5cDG-0006go-03
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 13:12:54 +0100
+	id 1S5cEc-0008ID-8W
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 13:14:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754401Ab2CHMMt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 07:12:49 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:46615 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753568Ab2CHMMt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 07:12:49 -0500
-Received: by ghrr11 with SMTP id r11so123946ghr.19
-        for <git@vger.kernel.org>; Thu, 08 Mar 2012 04:12:48 -0800 (PST)
+	id S1753390Ab2CHMOO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 07:14:14 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:65074 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751011Ab2CHMON convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 07:14:13 -0500
+Received: by obbuo6 with SMTP id uo6so578351obb.19
+        for <git@vger.kernel.org>; Thu, 08 Mar 2012 04:14:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=PtHw9iUzct7oimxeHHDcQ7cHU289mc+36CYSlQqFEvo=;
-        b=bVOiv72x7P4aHLowMWKg13ip+ZkocUVf6gAsTMy+xLHW3vG3n8OGsH8+hLdqlhqm+k
-         52wnE5IIgRhmiFunyPyk+XAJLPpWSYQD2uROgqQU0HhfvqUMtlgILDILbIGjNg5DKgJd
-         TPgDdvfhGMbrg24X1saw8XyreetHaEuv+eQXHKpCRqKSeiV+IfkQLQ3o+ry7je1J/SOr
-         8RpK8axq1e9oEM/JqQt5ilt75OwaLB+gHD6vw8zMvjzK4yz01c5iK9I6ROJ4KHGCN3Mg
-         uTvupEa/fH5RnOseI3/7bxyt2pfqXMuTxExfStixLyLqs6jS8ecxXGVGyCykKImWYIlv
-         y6ag==
-Received: by 10.236.197.66 with SMTP id s42mr9872478yhn.69.1331208768443; Thu,
- 08 Mar 2012 04:12:48 -0800 (PST)
-Received: by 10.236.176.1 with HTTP; Thu, 8 Mar 2012 04:12:48 -0800 (PST)
-In-Reply-To: <vpqeht3qpev.fsf@bauges.imag.fr>
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:content-transfer-encoding:user-agent;
+        bh=Um9OiE1Ykp3qBYILi+svcXndhYD4U6yGgAvG4R//zrM=;
+        b=v+5gOyFdH28vzk7c1Hfs7E2h26EKtfEccQT+kFznvLmnvhjV4OS7L6HavlQUOE9v4T
+         /0uS/eNbOUaJxh0hJ9SAxoUa3NWhL4JxbtC2b8My7Z+HqMUNVz2/uvTQZqvtJYfQZgCy
+         9DuSH9ihdbFOdvl51+OntJnNe8+qhcePkPejoC2Aao1FZbGtMef45XPvD8T4rZw/p1X+
+         H0B3Mt5O+FzmrqaPGLw6FIQFSPHrYO7SHoRhO/K9cZooDNpx3Rhj/5Z2FRdj3GQ7rSVP
+         a+a3FHkTN/W+JxkWOViJFOldgEaT16HHExVtMu/OCueRJjlX9r5KDpf+K6QVTAx0REB6
+         2zfw==
+Received: by 10.182.147.106 with SMTP id tj10mr2199358obb.71.1331208852464;
+        Thu, 08 Mar 2012 04:14:12 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id a18sm2325208obu.15.2012.03.08.04.14.11
+        (version=SSLv3 cipher=OTHER);
+        Thu, 08 Mar 2012 04:14:11 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192582>
 
-On 8 March 2012 12:54, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrot=
-e:
-> Carlos Mart=EDn Nieto <cmn@elego.de> writes:
->
->> On Thu, 2012-03-08 at 10:13 +0000, Jeremy Morton wrote:
->>> Right, so I guess I'm saying that the default value for push.defaul=
-t
->>> should be upstream instead of matching...
->>
->> Any default is going to leave some people unhappy. If upstream is th=
-e
->> right thing for you, then that's what you should use. Most questions=
- I
->> see about push not doing what the users expect would actually benefi=
-t
->> from 'current'. 'matching' is a fairly safe default, as it won't try=
- to
->> push private branches or changes in private branches that track
->> something upstream.
->
-> There were some discussions about changing the default, and I thought
-> people agreed that 'upstream' was a better default value for
-> push.default:
->
-> =A0http://permalink.gmane.org/gmane.comp.version-control.git/167149
->
-> it needs to be done with a sane migration path, however, and I guess =
-no
-> one stepped in to start the process (but I may have missed some furth=
-er
-> discussions).
+As explained in v1.7.0-rc1~9 (2009-11-25), even when a script is
+expected to be sourced instead of executed on its own, a #!/bin/sh
+shebang line can provide useful documentation about what format the
+file is in.  However, it is even clearer to include a comment and no
+shebang at all, to avoid creating the illusion that the indicated
+choice of shell will have any effect at runtime.
 
-=46rom the point of view of new users the current default is sub-optima=
-l
-and confusing. I actually find the current default an odd choice, as I
-personally have *never* wanted to push all the branches at once, nor
-have I ever seen a colleague want to do that.
+Add some text to each of git's shell libraries explaining in what
+context the fragment is meant to be sourced and remove the shebangs.
 
-cheers,
-Yves
+Because these files are not marked executable, removing the #! lines
+would not confuse the valgrind support of our test scripts, so this
+should be safe.  Noticed by lintian.
 
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Hi,
+
+This patch has only an aesthetic justification but I think it is
+basically good.  Last took a brief visit to the list at [1].  More
+context at [2].  I'd be happy for any thoughts you have.
+
+Thanks,
+Jonathan
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/185079/focus=
+=3D185106
+[2] http://bugs.debian.org/368792
+    http://thread.gmane.org/gmane.comp.version-control.git/138253/focus=
+=3D138560
+
+ git-mergetool--lib.sh      |    3 +--
+ git-parse-remote.sh        |    4 +++-
+ git-rebase--am.sh          |    3 ++-
+ git-rebase--interactive.sh |    8 +++-----
+ git-rebase--merge.sh       |    4 +++-
+ git-sh-i18n.sh             |    5 ++---
+ git-sh-setup.sh            |    9 +++------
+ 7 files changed, 17 insertions(+), 19 deletions(-)
+
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index ed630b20..7a0f499b 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -1,5 +1,4 @@
+-#!/bin/sh
+-# git-mergetool--lib is a library for common merge tool functions
++# git-mergetool--lib is a shell library for common merge tool function=
+s
+ diff_mode() {
+ 	test "$TOOL_MODE" =3D diff
+ }
+diff --git a/git-parse-remote.sh b/git-parse-remote.sh
+index b24119d6..739ff772 100644
+--- a/git-parse-remote.sh
++++ b/git-parse-remote.sh
+@@ -1,4 +1,6 @@
+-#!/bin/sh
++# This is a shell library to calculate the remote repository and
++# upstream branch that should be pulled by "git pull" from the current
++# branch.
+=20
+ # git-ls-remote could be called from outside a git managed repository;
+ # this would fail in that case and would issue an error message.
+diff --git a/git-rebase--am.sh b/git-rebase--am.sh
+index c815a241..5d8d451b 100644
+--- a/git-rebase--am.sh
++++ b/git-rebase--am.sh
+@@ -1,4 +1,5 @@
+-#!/bin/sh
++# This shell script fragment is sourced by git-rebase to implement
++# its default, fast, patch-based, non-interactive mode.
+ #
+ # Copyright (c) 2010 Junio C Hamano.
+ #
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 5812222e..ff00b094 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -1,11 +1,9 @@
+-#!/bin/sh
+ #
+ # Copyright (c) 2006 Johannes E. Schindelin
+=20
+-# SHORT DESCRIPTION
+-#
+-# This script makes it easy to fix up commits in the middle of a serie=
+s,
+-# and rearrange commits.
++# This shell script fragment is sourced by git-rebase to implement
++# its interactive mode.  "git rebase --interactive" makes it easy
++# to fix up commits in the middle of a series and rearrange commits.
+ #
+ # The original idea comes from Eric W. Biederman, in
+ # http://article.gmane.org/gmane.comp.version-control.git/22407
+diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
+index dc599077..0fa0e491 100644
+--- a/git-rebase--merge.sh
++++ b/git-rebase--merge.sh
+@@ -1,4 +1,6 @@
+-#!/bin/sh
++# This shell script fragment is sourced by git-rebase to implement
++# its merge-based non-interactive mode that copes well with renamed
++# files.
+ #
+ # Copyright (c) 2010 Junio C Hamano.
+ #
+diff --git a/git-sh-i18n.sh b/git-sh-i18n.sh
+index b4575fb3..eff20a08 100644
+--- a/git-sh-i18n.sh
++++ b/git-sh-i18n.sh
+@@ -1,9 +1,8 @@
+-#!/bin/sh
++# This shell library is Git's interface to gettext.sh. See po/README
++# for usage instructions.
+ #
+ # Copyright (c) 2010 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+ #
+-# This is Git's interface to gettext.sh. See po/README for usage
+-# instructions.
+=20
+ # Export the TEXTDOMAIN* data that we need for Git
+ TEXTDOMAIN=3Dgit
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index 5d8e4e6c..51362d60 100644
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -1,9 +1,6 @@
+-#!/bin/sh
+-#
+-# This is included in commands that either have to be run from the top=
+level
+-# of the repository, or with GIT_DIR environment variable properly.
+-# If the GIT_DIR does not look like the right correct git-repository,
+-# it dies.
++# This shell scriplet is meant to be included by other shell scripts
++# to set up some variables pointing at the normal git directories and
++# a few helper shell functions.
+=20
+ # Having this variable in your environment would break scripts because
+ # you would cause "cd" to be taken to unexpected places.  If you
 --=20
-perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
+1.7.9.2.792.g4ea66.dirty
