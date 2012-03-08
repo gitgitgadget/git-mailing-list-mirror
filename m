@@ -1,88 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] rebase -i: new option --name-rev
-Date: Thu, 08 Mar 2012 14:13:36 -0800
-Message-ID: <7vipiebv1r.fsf@alter.siamese.dyndns.org>
-References: <1331203358-28277-1-git-send-email-domq@google.com>
- <1331203358-28277-2-git-send-email-domq@google.com>
- <87399jnyxh.fsf@thomas.inf.ethz.ch> <7vaa3qewqw.fsf@alter.siamese.dyndns.org>
+From: Richard Hartmann <richih.mailinglist@gmail.com>
+Subject: Re: [PATCH 8/5] srv: tolerate broken DNS replies
+Date: Thu, 8 Mar 2012 23:28:21 +0100
+Message-ID: <CAD77+gT_1O2kjvob9Csa2C6vZZYyGrssrdBz8PxNU00wO+6UDQ@mail.gmail.com>
+References: <20120308124857.GA7666@burratino> <20120308132339.GH9426@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@inf.ethz.ch>,
-	Dominique Quatravaux <domq@google.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 08 23:13:48 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Eric Wong <normalperson@yhbt.net>,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 08 23:28:53 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5lal-0001Ug-72
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 23:13:47 +0100
+	id 1S5lpI-0007F8-6y
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 23:28:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758834Ab2CHWNk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 17:13:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46807 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758831Ab2CHWNi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 17:13:38 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E03C262E6;
-	Thu,  8 Mar 2012 17:13:37 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iJ3Na2ksicfF4Ze/M8T0jtstbZM=; b=grS5ww
-	0w3dAhqVYic7s9zTLixU64yD5QxwwRj5epiX20ngB9OzSpv1ARtbX8A5axT3CJKR
-	bvRno45US94Eq0mVmxEVkPuEMrUGugBdhbsBurFn+yixgZMI2I5fb4lpFn21pbaw
-	79IL0nfhURl7lDpAjzqaQ+yjPbwtAs6ricqGw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oR8M2hJXp1woqPqUNf4gRzA0WYfxi9FR
-	QfZ+7hp+DKtTfJycvu92k5Mq/SUCmlrAqiIxjtxH0+OT8YG1/aZYgDC1IdbrRxNG
-	hifGR1dqlItLg+zI8WHd3rbBWGWmWWXgFjgTMtF9Ze/mG87tj1vUp8cgy8m0bs/0
-	/Q48YvGCf8o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D70B862E5;
-	Thu,  8 Mar 2012 17:13:37 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6ABE762E3; Thu,  8 Mar 2012
- 17:13:37 -0500 (EST)
-In-Reply-To: <7vaa3qewqw.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 08 Mar 2012 11:08:39 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F4092FDE-696B-11E1-BC23-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758871Ab2CHW2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 17:28:43 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:65017 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758752Ab2CHW2m (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 17:28:42 -0500
+Received: by wgbdr13 with SMTP id dr13so996890wgb.1
+        for <git@vger.kernel.org>; Thu, 08 Mar 2012 14:28:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=13yM2sRIklkp2oFPz48UUszITMY/OOZnExyESzC4cpA=;
+        b=WCUZ16LEsqYkWDzEpay8hoeYDcTHtdKXmLXaiBV6aytAsSDmmfD5L/rP+lKHFD8sEY
+         NDs5sIIoG6WEi5pVDf7eYVonpMJbkRM9rBD0AwOkDvLkw7NO5J3n/SxzY37U6DyXb6ni
+         UbYTBMyxgxsdjk1/RLjrRrhr7LYqH8uh6JS7ybtNZosQ1l5HiYPo9aKsk76+qS5Xj/q9
+         6dVl5w3XX2AMbSSy5ZSk3GszZYQjXC3x+bKghqhcfwgyMuXLx8faiSAIhow4OKKeVM3E
+         ktIRDiMBR9IogzI2lE/gHy7FTUIJ98dS1exc2Uqq0QEKeBXG+2dBLBUMinsdfgobrLbV
+         8pPg==
+Received: by 10.216.137.97 with SMTP id x75mr4385202wei.25.1331245721409; Thu,
+ 08 Mar 2012 14:28:41 -0800 (PST)
+Received: by 10.216.173.21 with HTTP; Thu, 8 Mar 2012 14:28:21 -0800 (PST)
+In-Reply-To: <20120308132339.GH9426@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192660>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Mar 8, 2012 at 14:23, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-> Thomas Rast <trast@inf.ethz.ch> writes:
->
->> Dominique Quatravaux <domq@google.com> writes:
->>
->>> If set, the second column of the rebase todo contains named revisions (obtained
->>> with git name-rev) instead of short SHA1s.
->>
->> Hum.  I'm not sure yet if I find that very useful, since frequently the
->> names will just be 'topic', 'topic~1', ...., 'topic~N' if you are
->> rebasing a topic with N+1 commits not in master.  But you might, so who
->> am I to judge.
->
-> I think the only use case where this might be useful is when you
-> have totally undescriptive one-line description to your commits that
-> they alone do not help distinguishing the commits being picked, e.g.
-> ...
+> Other programs gave some warnings but otherwise worked fine.
 
-This may need a bit of clarification for readers from the future.
-If you _were_ somehow interactively rebasing changes made on two or
-more branches into a single branch, knowing which branch each commit
-came from may have value, even if your commit titles are descriptive
-enough.
+Just ftr, Chrome/Chromium ignores this quickly and loads pages while
+Konqueror takes ages to get around this. Not related to git, but maybe
+an interesting data point in the future. If not, disregard.
 
-Today's "git rebase -i" wouldn't do something like that, and we will
-not know how the user would interact with such a yet-to-be-written
-tool, so it is too early to judge if using "topic~1" is the desired
-improvement or not at this point.
+
+Thanks for hunting and killing this one.
+
+
+Richard
