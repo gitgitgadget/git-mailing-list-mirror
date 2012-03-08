@@ -1,97 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git push default behaviour?
-Date: Thu, 08 Mar 2012 11:29:30 -0800
-Message-ID: <7vty1ydh7p.fsf@alter.siamese.dyndns.org>
-References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com>
- <87k42vs8pi.fsf@thomas.inf.ethz.ch>
- <CAFsnPqopZEZeeuFzK4ZoUjGnfpiv5oMs=xV5XBSgSyGLXOwgqA@mail.gmail.com>
- <1331202483.21444.11.camel@beez.lab.cmartin.tk>
- <CAFsnPqpnH2CTki8zz6Mpz=qrdxF_aTA92cPrn1L9MQZVMoxdeg@mail.gmail.com>
- <1331203321.21444.13.camel@beez.lab.cmartin.tk>
- <CAFsnPqpoBLHoshgv0MsUUStA3Q=niM8hP9yaHr+rSQvh-JWHZA@mail.gmail.com>
- <7vlinbdkb0.fsf@alter.siamese.dyndns.org> <vpq1up3aqk8.fsf@bauges.imag.fr>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] fast-import: fix ls command with empty path
+Date: Thu, 8 Mar 2012 13:32:20 -0600
+Message-ID: <20120308193220.GA27916@burratino>
+References: <CAFfmPPMxcs0ySgnD7UfUS1yq=qaqfn1qCxdh1HYgFu6WPfpWQg@mail.gmail.com>
+ <1331184656-98629-1-git-send-email-davidbarr@google.com>
+ <20120308070951.GA2181@burratino>
+ <7vty1zdp2b.fsf@alter.siamese.dyndns.org>
+ <CA+gfSn8bh-tV+uduM7xsuwqXQW2a57yvVmRXjXjp9JaO779bUg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeremy Morton <jeremy@configit.com>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Mar 08 20:29:39 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	David Barr <davidbarr@google.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Andrew Sayers <andrew-git@pileofstuff.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Dmitry Ivankov <divanorama@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 08 20:32:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5j1u-00081p-Rr
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 20:29:39 +0100
+	id 1S5j4n-0002ly-Uq
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 20:32:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753514Ab2CHT3e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 14:29:34 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54082 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752658Ab2CHT3d (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 14:29:33 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C1F2D75E8;
-	Thu,  8 Mar 2012 14:29:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8bh9LHlmTKhFBJpEb7/EO0OjraQ=; b=Fnl8VM
-	ZWj7mOCAD5HqDL8oEgQg1oRylg+v7DQ9Jh/udObS4u2TfSU4yzVtHtaEj5DWc4yk
-	btUJbsArqquzsZ/KoLT+Bjas9tqyaLE1yKqA54b2z1KCn5LB9hWwIcxuCskCbweh
-	xL4FTI/yYUbBoNCilB4ViDgV7egcqQfI6ThC0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=va51USJBKd1I1/tOehPP6fZaWXl0dp63
-	mT4+XG/XYUviYXMKwLiYqBpLCK+sU9Dkwq18AY9OKAvOmmii8pSIZThzq8FunPoX
-	R96rxvdGU5SAycAWW0R3S5RDO48o5ORjwDjaahehwhZH5Tb54wnRvh+RoS7xnLxn
-	6xCdIt7dx1Q=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B7BDC75E7;
-	Thu,  8 Mar 2012 14:29:32 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1A61F75E0; Thu,  8 Mar 2012
- 14:29:32 -0500 (EST)
-In-Reply-To: <vpq1up3aqk8.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Thu, 08 Mar 2012 19:35:51 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 07C34F3A-6955-11E1-A777-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758401Ab2CHTcc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 14:32:32 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:57642 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754022Ab2CHTcb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 14:32:31 -0500
+Received: by yhmm54 with SMTP id m54so465401yhm.19
+        for <git@vger.kernel.org>; Thu, 08 Mar 2012 11:32:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Vc8PfZYZZ8Vw8o7kMh4H9fTkPZ0boaYYKOG2wkVQJxY=;
+        b=nc6kcNTDBrTu6pfVMg59i/jUweypArCTwcH+AQRCEFRNP+OCJ3reba0nn6hiCkZ1vn
+         BYT+8oSDwAy8/w93ccrrjLp0/3hFTKeQpvTaqefY1cPc/EcqpvLgl4+mZSdCa/mXaeNa
+         qNuDy0o2QA4mnIdHgZEjpNOAlGvkiulX0MH3gGy4yA89s5KbrfUdBOUocEPgSU7MlV4P
+         kTrlnnLEiWUo1Tlz8G/B2zH2bgozEhKhzivNrOM3/JgG0cNl3k4W9P6J24R0TrvpwkEz
+         zkr8RNdp/j/Q1StAKG4eN53l244Q8oQW3XFYG3qlUIhkXzsOxxpHrzu8NpWY8C9FU2sH
+         8eVA==
+Received: by 10.60.7.102 with SMTP id i6mr3088861oea.9.1331235150178;
+        Thu, 08 Mar 2012 11:32:30 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id q5sm1399096oef.3.2012.03.08.11.32.28
+        (version=SSLv3 cipher=OTHER);
+        Thu, 08 Mar 2012 11:32:29 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CA+gfSn8bh-tV+uduM7xsuwqXQW2a57yvVmRXjXjp9JaO779bUg@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192636>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Dmitry Ivankov wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+>  One more quick thought. "force the root mode to S_IFDIR" part doesn't
+>  look obviously good for me.
+
+It was just a problematic and incomplete version of what your "be
+saner with temporary trees" does properly. ;-)
+
+[...]
+>  P.S. looking at [1] now I'd say the commit messages could be improved there
 >
->> If you publish to your own repository
->> and let others pull, the behaviour is not dangerous at all with or
->> without --force (well, --force brings its own danger but that does
->> not have anything to do with which branches are pushed).  If you
->> default to 'current' in such a workflow, you risk forgetting to
->> push, which is the more dangerous option between the two.
->
-> Forgetting to push a branch is a danger, but far less dangerous than
-> what "push --force" can do in a shared repository.
->
-> In a shared repository, there's actually a race condition that you
-> cannot avoid AFAICT:
-> ...
-> If someone else did a push between my first push and the "push --force",
-> then the other user's push is discarded.
+>  [1] http://thread.gmane.org/gmane.comp.version-control.git/179426
 
-That is exactly what I said in the parentheses above, isn't it?  The
-danger of "--force" does not have anything to do with which branches
-are pushed. It comes primarily from the use of shared repository.
-The first advice Carlos gave us in this thread, which was perfectly
-sane, applies to your observation: before you "push --force", think
-twice.
+Yes, please.  Or patch 2/2 could be split into multiple patches,
+perhaps along the following lines:
 
-That does not change the conclusion that current is more suitable
-for shared repository workflow and matching is more (not "equally to
-current") suitable for publishing repository workflow, and we have a
-way for user to tell Git which one is being used in a particular
-project exactly for that purpose.
+ - ls "" support, as in David's patch
+ - ls <dataref> "" support, which requires the "be saner with
+   temporaries" fix
+ - D "" support, maybe.  (As you mentioned, we have deleteall so
+   compatibility would dictate not supporting it unless some frontend
+   is using it already by mistake in some circumstance.)
+ - C "" <dest> support, as in my reply to David's patch
+ - R "" <dest> support
+
+Thanks,
+Jonathan
