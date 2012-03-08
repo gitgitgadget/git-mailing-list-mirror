@@ -1,94 +1,85 @@
-From: Dominique Quatravaux <domq@google.com>
-Subject: Re: [PATCH 1/2] rebase -i: optimize the creation of the todo file
-Date: Thu, 8 Mar 2012 12:48:24 +0100
-Message-ID: <CAJh6GrGWfyKguhgf9dJR4yG3qYjh2jJz7OzzN8wao0rWLcohoA@mail.gmail.com>
-References: <1331203358-28277-1-git-send-email-domq@google.com> <87boo7pdvc.fsf@thomas.inf.ethz.ch>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH/RFC 0/2] post-receive-email: declaring and consistently using
+ one output encoding
+Date: Thu, 8 Mar 2012 05:51:19 -0600
+Message-ID: <20120308115119.GA2604@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Mar 08 12:49:09 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Gerrit Pape <pape@smarden.org>, Alexey Shumkin <zapped@mail.ru>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jon Jensen <jon@endpoint.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 08 12:51:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5bqA-0004HS-JJ
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 12:49:02 +0100
+	id 1S5bsb-0007Jh-ED
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 12:51:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757172Ab2CHLss convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 06:48:48 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:37540 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757043Ab2CHLsp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 06:48:45 -0500
-Received: by wejx9 with SMTP id x9so250155wej.19
-        for <git@vger.kernel.org>; Thu, 08 Mar 2012 03:48:44 -0800 (PST)
+	id S1756957Ab2CHLv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 06:51:29 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:58137 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753565Ab2CHLv2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 06:51:28 -0500
+Received: by yhmm54 with SMTP id m54so114211yhm.19
+        for <git@vger.kernel.org>; Thu, 08 Mar 2012 03:51:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding:x-system-of-record;
-        bh=/79aOJQBUsnnlcfOK3fWpFVGikm8j4zTiw6/xYW9QpQ=;
-        b=TdYDveBKMGerfpJjxJs6+C64zDAagFc/UnTrrwsfND5GBIIyd1+20NsumgObcYhwd/
-         pK4O8CEp0uaOasE6u/XEPr1Y3FiHwv/zfLJkyqoyQd09tm2hx0TMtIpk9zSZm9BhSBBt
-         HDIP/kTkSWTsz0RPIfEfdX6xJYPM6B8qjb7PevDrnhu17/Tx5Zr7zRUuGS3Kje0teN+M
-         TSLn8HybrFyovm6qEDh1aKaUXCdn2FyZlM9Vyc02aZypjekuErZwDtICAKipvCu7eyOp
-         +jjTqgdIY27y+LgmgJ8EYF/2ZetN+I71pMTvNL2ETIXEyPW2/Dqu4OPLcYcVlf+jbzJE
-         WsoQ==
-Received: by 10.180.95.34 with SMTP id dh2mr12038324wib.15.1331207324606;
-        Thu, 08 Mar 2012 03:48:44 -0800 (PST)
-Received: by 10.180.95.34 with SMTP id dh2mr12038281wib.15.1331207324321; Thu,
- 08 Mar 2012 03:48:44 -0800 (PST)
-Received: by 10.227.7.138 with HTTP; Thu, 8 Mar 2012 03:48:24 -0800 (PST)
-In-Reply-To: <87boo7pdvc.fsf@thomas.inf.ethz.ch>
-X-System-Of-Record: true
-X-Gm-Message-State: ALoCoQneivV13QHhV+KO7GwbdmVDnDMy4GAsyLOMkAYVuSPuz9hO4oWrLwVa21bFj7QJEgu7uak5/9nyHTGtQeGOXPJRyIDatbxUx5AEI0O7H8JdH/18lb0mp0sFJxp8HOTi8YetVv6/1PDZTcHf3DXtZa+ZR/LEdw==
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=rzfi45/C/8wi0RwlpwThwW/prcUfgN3XQYeUOrr/qb8=;
+        b=IJlQi+gDN5OthvPMEVQOcY+7XWA4dBztXZ879MDZmCIDSGudkj9al5ZJIfHJqsOoH1
+         vzho9NcK3N3kuUWr5aPRx62VTi1Xnoea+If4rIXGdpWBjUU4PDji3ODL+0OvnjuZZZ4m
+         i1CYQgRINiyzJeNSD7zJ1IYeExJg+bHf4xrMkX8vEQiNbB+JMe5VNMPqfWO831n7SQQV
+         idbckUDLgxVCiGNFPIQHjeGAVPTYV7YIW06aJHK8QkAJuVrtpVKQ2qX/bal8UqhKm7Yf
+         eAjdRWz25AkgcEty32VDQvjGpiTCy8Op03JRTvA4XlwM+3cXKYcM+cf9ewOlXmJqv+Rg
+         BY7A==
+Received: by 10.60.9.102 with SMTP id y6mr2598037oea.46.1331207487454;
+        Thu, 08 Mar 2012 03:51:27 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id d9sm2286423obq.0.2012.03.08.03.51.26
+        (version=SSLv3 cipher=OTHER);
+        Thu, 08 Mar 2012 03:51:27 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192573>
 
-On Thu, Mar 8, 2012 at 11:48 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
-> Dominique Quatravaux <domq@google.com> writes:
->
->> Instead of obtaining short SHA1's from "git rev-list" and hitting th=
-e repository
->> once more with "git rev-parse" for the full-size SHA1's, obtain long=
- SHA1's from
->> "git rev-list" and truncate them with "cut".
->
-> That doesn't work if there are 7-digit SHA1 collisions in the repo.
+Hi,
 
-I don't see how my patch changes the picture wrt SHA1 collisions. In
-the current state, the rebase todo already uses short SHA1s.
+These patches revisit the bug described at [1], where the sample
+post-receive script annoys receiving MUAs by not declaring what
+encoding it uses.  Worse, sometimes the mails have a mixture of
+encodings.
 
-> Even my git.git has a bunch of them, as checked with
->
-> =A0git rev-list --objects --all | cut -c1-7 | sort | uniq -d
->
-> and I expect a bigger project would have collisions beyond the 9th
-> digit.
->
-> What you can, however, do:
->
->> -git rev-list $merges_option --pretty=3Doneline --abbrev-commit \
->> - =A0 =A0 --abbrev=3D7 --reverse --left-right --topo-order \
->> +git rev-list $merges_option --pretty=3Doneline --no-abbrev-commit \
->> + =A0 =A0 --reverse --left-right --topo-order \
->> =A0 =A0 =A0 $revisions | \
->
-> rev-list can give you *both* the abbreviated and full SHA1s if you sa=
-y
->
-> =A0git rev-list $merges_option --format=3D"%>%h %H %s" <...etc...>
+These patches standardize on UTF-8, but that is only for the sake of
+simplicity.  A patch on top to make the choice of encoding
+customizable would probably not be too complicated, if someone is
+interested.
 
-Interesting, thanks! It seems that %h works with find_unique_abbrev
-which according to the name, should Do The Right Thing. I'll update my
-patch.
+Patches are targetted at 1.7.11 unless there is overwhelming
+interest in them landing sooner.  Thanks to Alexander Gerasiov
+<gq@cs.msu.su> for the writing a patch long ago to get this
+started[1].
 
+Thoughts?
 
---=20
-=A0 Dominique Quatravaux
-=A0 +41 79 609 40 72
+Gerrit Pape (1):
+  bug#506445: hooks/post-receive-email: set encoding to utf-8
+
+Jonathan Nieder (1):
+  post-receive-email: defend against non-utf8 [i18n] logoutputencoding
+    setting
+
+ contrib/hooks/post-receive-email |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/181737/focus=181755
+[2] http://bugs.debian.org/506445
