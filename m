@@ -1,86 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fast-import: fix ls command with empty path
-Date: Thu, 08 Mar 2012 08:39:56 -0800
-Message-ID: <7vty1zdp2b.fsf@alter.siamese.dyndns.org>
-References: <CAFfmPPMxcs0ySgnD7UfUS1yq=qaqfn1qCxdh1HYgFu6WPfpWQg@mail.gmail.com>
- <1331184656-98629-1-git-send-email-davidbarr@google.com>
- <20120308070951.GA2181@burratino>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [ANNOUNCE] Git 1.7.10-rc0
+Date: Thu, 8 Mar 2012 17:55:59 +0100
+Message-ID: <201203081756.00604.jnareb@gmail.com>
+References: <7v7gyvkh84.fsf@alter.siamese.dyndns.org> <m3wr6vs7a2.fsf@localhost.localdomain> <7v4ntzf45w.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Barr <davidbarr@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Andrew Sayers <andrew-git@pileofstuff.org>,
-	Dmitry Ivankov <divanorama@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 17:40:08 2012
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 08 17:56:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5gNo-0000pr-7W
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 17:40:04 +0100
+	id 1S5gdP-0000uI-BZ
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 17:56:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757988Ab2CHQj7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 11:39:59 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53876 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757269Ab2CHQj7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 11:39:59 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 89A7D7A34;
-	Thu,  8 Mar 2012 11:39:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=58/LAd7Ti9skmyUoLd3Qe4H+Tvg=; b=C1szI1
-	CV7TiuhBxFGBEi4ziCPYleO61QmKCutJuZlmww/6ukcWkTmPK15bmcyc7Bdw4mrc
-	UacvRTnQFXKA0yZmAUj9LwsBXRrGIjE+dVsNeyYzMsunose8mQ3IAaZ+X2L2VRPU
-	jDiZHkyfaoBfddraabRe6CwvnTXaBxKbH8h6s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cHIfkjPBVEoBoJf5QiynRVjNZ/S6k4qQ
-	ej/6WbjiK19nAA21rYGAPBzMiyhn2n6voLmRTFuFkMQ+XnHIW7H75kT5NNfwExbc
-	M6ZA2DMrlVHCAgzn/8v+OLGFVIzLc9ieFL1/sg/1XTnN89fthR1xMT+K3rJHJ29X
-	6oJxtSJiKm4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 80ED67A33;
-	Thu,  8 Mar 2012 11:39:58 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D360C7A2F; Thu,  8 Mar 2012
- 11:39:57 -0500 (EST)
-In-Reply-To: <20120308070951.GA2181@burratino> (Jonathan Nieder's message of
- "Thu, 8 Mar 2012 01:09:51 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5775CA20-693D-11E1-84B9-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757285Ab2CHQ4G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 11:56:06 -0500
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:38657 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751621Ab2CHQ4E (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 11:56:04 -0500
+Received: by wibhm2 with SMTP id hm2so459970wib.19
+        for <git@vger.kernel.org>; Thu, 08 Mar 2012 08:56:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=712TrQSOI2v7sTMdlwDksAcCnW3ipLAV5XsBkg+VNQs=;
+        b=BLRp4gObF79osNy1KYHBr/5xbDe9X3ADHn2CG9UuEzh0WW0p55hWFu64kyBZSdkASM
+         yXG9q5gs6vYxnAEnH5CiqZNhMNPaKKr3Aq6Qd/MayWiGXbPltsmEqUlcNQwk97DLAv6o
+         LJRV6LhZd2eIQNen+6A2qAxr4UjwiqVe/9TOVpMS7ml95Pm2dqt3aJ5xTknXdKijvEzc
+         s+b3oce1Vf45T/jrVn8foLPK5KF03DKgzVa+W7kCcKzUnFoHXkkHvU56QLuou4ybPqJU
+         ppPDPNuAgkvNfU2DxUFz+h/m4nD7u9QRdttRDV+BfKaXwmQH2QzduLBXyitGEerUuSef
+         ee3Q==
+Received: by 10.180.87.8 with SMTP id t8mr36737410wiz.15.1331225763498;
+        Thu, 08 Mar 2012 08:56:03 -0800 (PST)
+Received: from [192.168.1.13] (abwr173.neoplus.adsl.tpnet.pl. [83.8.241.173])
+        by mx.google.com with ESMTPS id ff2sm11048793wib.9.2012.03.08.08.56.01
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 08 Mar 2012 08:56:02 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7v4ntzf45w.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192618>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> > Junio C Hamano <gitster@pobox.com> writes:
+> > ...
+> >> Fixes since v1.7.9
+> >> ------------------
+> >> 
+> >> Unless otherwise noted, all the fixes since v1.7.9 in the maintenance
+> >> releases are contained in this release (see release notes to them for
+> >> details).
+> > [...]
+> >
+> >>  * "gitweb" used to drop warnings in the log file when "heads" view is
+> >>    accessed in a repository whose HEAD does not point at a valid
+> >>    branch.
+> >
+> > It looks like fix for fixed-string project search is missing.
+> 
+> Hasn't it been already fixed in the 1.7.9.x maintenance track?
 
-> For what it's worth,
-> Acked-by: Jonathan Nieder <jrnieder@gmail.com>
->
-> Thanks very much for taking care of it.
->
->> [Subject: fast-import: fix ls command with empty path]
->
-> I would s/fix/accept/ to be more precise about the nature of the
-> breakage.  (In other words: rather than mishandling ls with an empty
-> path, fast-import was not handling it at all.)
->
-> ...
-> (good).  What do you think?
->
-> -- >8 --
-> Subject: fast-import: allow filecopy to copy from root
+I don't see it either in 'maint' or in 'master'.
 
-So what do you guys want to do with topic?  My gut feeling is that
-this is not a new regression and can wait until the next cycle.  I
-could certainly carry David's patch in 'pu' if doing so helps the
-discussion to come up with the right solution, though.
+It is surely not in master, otherwise 'stg rebase' would drop the
+"gitweb: Fix fixed string (non-regexp) project search" patch.
+
+-- 
+Jakub Narebski
+Poland
