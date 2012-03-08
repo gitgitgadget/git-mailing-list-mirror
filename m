@@ -1,80 +1,88 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/5] i18n: parseopt: lookup help and argument
- translations when showing usage
-Date: Thu, 8 Mar 2012 16:07:24 -0600
-Message-ID: <20120308220724.GA10270@burratino>
-References: <1331198198-22409-1-git-send-email-pclouds@gmail.com>
- <1331198198-22409-4-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] rebase -i: new option --name-rev
+Date: Thu, 08 Mar 2012 14:13:36 -0800
+Message-ID: <7vipiebv1r.fsf@alter.siamese.dyndns.org>
+References: <1331203358-28277-1-git-send-email-domq@google.com>
+ <1331203358-28277-2-git-send-email-domq@google.com>
+ <87399jnyxh.fsf@thomas.inf.ethz.ch> <7vaa3qewqw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 23:07:43 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@inf.ethz.ch>,
+	Dominique Quatravaux <domq@google.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 08 23:13:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5lUp-00047g-Sz
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 23:07:40 +0100
+	id 1S5lal-0001Ug-72
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 23:13:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758739Ab2CHWHf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 17:07:35 -0500
-Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:59396 "EHLO
-	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757993Ab2CHWHe convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 17:07:34 -0500
-Received: by obbuo6 with SMTP id uo6so1220568obb.19
-        for <git@vger.kernel.org>; Thu, 08 Mar 2012 14:07:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=i9xhz2HM48vvURhaZC9t0eOtjA1+hiJArUjprAFg+4c=;
-        b=b81+9upZyemNFvK5DAzB/ARpjNpqk6wKxWYzaxKwcoUj7nYR96btoFcTgtawwpAfvD
-         3dksYiZycj0bHE4KW4g6CspaByP2qeV48zH3R5MttwQL/lygF3LCPa+/pH80bU69gWQR
-         x4+b1caHFYaVEd96c4Pxq9JRG6K8lhUQqR2CbHwZWmSDbxQL33vvQn0u8ShkOkn77iND
-         edWIK6DFcyR7OMZhWhYDr2YaxBksgX8dMzmIaoQX/uXtxLiZKYA6QVWQAx02W4QBF03O
-         5Iv7JU9V9htpp/UjBsHaAqBUrLIfW8cXiRSVKS4dxGImWVD9CVfqckxCOr50pVovLKGY
-         cF0g==
-Received: by 10.60.30.66 with SMTP id q2mr3202157oeh.25.1331244454187;
-        Thu, 08 Mar 2012 14:07:34 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id 4sm1605090oex.0.2012.03.08.14.07.33
-        (version=SSLv3 cipher=OTHER);
-        Thu, 08 Mar 2012 14:07:33 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1331198198-22409-4-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758834Ab2CHWNk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 17:13:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46807 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758831Ab2CHWNi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 17:13:38 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E03C262E6;
+	Thu,  8 Mar 2012 17:13:37 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iJ3Na2ksicfF4Ze/M8T0jtstbZM=; b=grS5ww
+	0w3dAhqVYic7s9zTLixU64yD5QxwwRj5epiX20ngB9OzSpv1ARtbX8A5axT3CJKR
+	bvRno45US94Eq0mVmxEVkPuEMrUGugBdhbsBurFn+yixgZMI2I5fb4lpFn21pbaw
+	79IL0nfhURl7lDpAjzqaQ+yjPbwtAs6ricqGw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oR8M2hJXp1woqPqUNf4gRzA0WYfxi9FR
+	QfZ+7hp+DKtTfJycvu92k5Mq/SUCmlrAqiIxjtxH0+OT8YG1/aZYgDC1IdbrRxNG
+	hifGR1dqlItLg+zI8WHd3rbBWGWmWWXgFjgTMtF9Ze/mG87tj1vUp8cgy8m0bs/0
+	/Q48YvGCf8o=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D70B862E5;
+	Thu,  8 Mar 2012 17:13:37 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6ABE762E3; Thu,  8 Mar 2012
+ 17:13:37 -0500 (EST)
+In-Reply-To: <7vaa3qewqw.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 08 Mar 2012 11:08:39 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F4092FDE-696B-11E1-BC23-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192659>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> --- a/parse-options.c
-> +++ b/parse-options.c
-> @@ -490,7 +490,7 @@ static int usage_argh(const struct option *opts, =
-=46ILE *outfile)
->  			s =3D literal ? "[%s]" : "[<%s>]";
->  	else
->  		s =3D literal ? " %s" : " <%s>";
-> -	return fprintf(outfile, s, opts->argh ? opts->argh : "...");
-> +	return fprintf(outfile, s, opts->argh ? gettext(opts->argh) : "..."=
-);
+> Thomas Rast <trast@inf.ethz.ch> writes:
+>
+>> Dominique Quatravaux <domq@google.com> writes:
+>>
+>>> If set, the second column of the rebase todo contains named revisions (obtained
+>>> with git name-rev) instead of short SHA1s.
+>>
+>> Hum.  I'm not sure yet if I find that very useful, since frequently the
+>> names will just be 'topic', 'topic~1', ...., 'topic~N' if you are
+>> rebasing a topic with N+1 commits not in master.  But you might, so who
+>> am I to judge.
+>
+> I think the only use case where this might be useful is when you
+> have totally undescriptive one-line description to your commits that
+> they alone do not help distinguishing the commits being picked, e.g.
+> ...
 
-It is ok to use _() with an argument that is not a string literal, and
-in fact it is needed if the argument is to be poisoned.
+This may need a bit of clarification for readers from the future.
+If you _were_ somehow interactively rebasing changes made on two or
+more branches into a single branch, knowing which branch each commit
+came from may have value, even if your commit titles are descriptive
+enough.
 
-Maybe it would be worth resending the patch to make the gettext()
-identifier not available in NO_GETTEXT builds, so this kind of thing
-is easier to catch.
-
-Thanks and hope that helps,
-Jonathan
+Today's "git rebase -i" wouldn't do something like that, and we will
+not know how the user would interact with such a yet-to-be-written
+tool, so it is too early to judge if using "topic~1" is the desired
+improvement or not at this point.
