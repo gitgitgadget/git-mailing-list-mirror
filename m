@@ -1,91 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: who's on first? - following first parent and merge-management
-Date: Wed, 07 Mar 2012 23:38:05 -0800
-Message-ID: <7v8vjbfspu.fsf@alter.siamese.dyndns.org>
+Date: Thu, 8 Mar 2012 01:49:11 -0600
+Message-ID: <20120308074911.GA23712@burratino>
 References: <jj6s47$m98$1@dough.gmane.org>
  <7vwr6woo8p.fsf@alter.siamese.dyndns.org>
  <7vty1zfwmd.fsf@alter.siamese.dyndns.org>
- <20120308071403.GE7643@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Neal Kreitzinger <nkreitzinger@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 08 08:38:25 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 08 08:49:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5XvU-0007Qb-7k
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 08:38:16 +0100
+	id 1S5Y6R-0002Tc-1C
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 08:49:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752234Ab2CHHiM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 02:38:12 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61829 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751004Ab2CHHiI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 02:38:08 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C9DE9447E;
-	Thu,  8 Mar 2012 02:38:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SUPc/XjKIhrkBmkf8/Do1DpzD+k=; b=dCAT5Q
-	EFfGhCHu0cM50X4w7rTfp7ASOWO9VK1+uz5a8sxPRD+0v8SGGqRU4TDFnn0qQGCu
-	DKssbz1P+bWY1sxhJM6gs4ktlJofwpK0rcha6hBFCLH/Vdve9orhHd0JN4k3sn2i
-	k7NMGrJIXGLm7OxJQeC9K+Xmb8K6AzOrqoja4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Bm2XLLTZf8ImLps4RMd+dcUnWnfb4jTP
-	PybQvm0hkCzhBT5C9mBQfgSc710THjmPm6bvK7Bzc+WWZ8RQuZZ86n/1cApwjMKW
-	mJwu76N91GBYLeIOOVqQEksFYOPPIUd/Kegu0IsWa8rm7BmtxBgyFdvMGYQFuVQP
-	LoFWjQ3WfD0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BFED1447D;
-	Thu,  8 Mar 2012 02:38:07 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 48A08447C; Thu,  8 Mar 2012
- 02:38:07 -0500 (EST)
-In-Reply-To: <20120308071403.GE7643@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 8 Mar 2012 02:14:03 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A5A1EA68-68F1-11E1-9465-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753883Ab2CHHtW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 02:49:22 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:39098 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753807Ab2CHHtS (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 02:49:18 -0500
+Received: by obbuo6 with SMTP id uo6so312339obb.19
+        for <git@vger.kernel.org>; Wed, 07 Mar 2012 23:49:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=PiHCnJ+07CjDhvZs6v/UxQgk+D2WE9eq6/GwYT1GQew=;
+        b=MhwIgcJwop0csa/6z0JgT8EpHGOfE8HoiSpzENikyY9O5ssypuGhNbKR7shP6ciHfa
+         AblFo9Mn/RjBjVZnHutAGMIlot/FKfC/cdBobwKTwsNCEGLtBJ/xXQ9P5itAOuyC9er4
+         ieVGgzn82WU7j9UiW7FUTFQwGIEOSHnTPW5n9jAyTkM8S2T27ret2/74hPbxki7jA6XE
+         eVttTKNSsjmWgG+8G+DL03AfrnoctAlDWxNzsvLyHocrXNHZsET3A5Uqi30IO5Kgl65D
+         ZpnNhYyYqz/IZIfbAiR0UQQJOQKFQS3w8ypzOKUTCEHo5Hh87dK6M6G+PAP2PLwdO2fY
+         KE7g==
+Received: by 10.60.4.162 with SMTP id l2mr2491351oel.3.1331192958249;
+        Wed, 07 Mar 2012 23:49:18 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id b6sm1503631obe.12.2012.03.07.23.49.17
+        (version=SSLv3 cipher=OTHER);
+        Wed, 07 Mar 2012 23:49:17 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vty1zfwmd.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192534>
 
-Jeff King <peff@peff.net> writes:
+Hi all,
 
-> This gave me an idea that I think is probably crazy, but that I hadn't
-> seen mentioned before.
-> ...
-> You could extend it to topic branches, too ("refs/heads/master >
-> refs/heads/jk/*"). Of course, depending on your workflow, you might
-> _want_ to have them flipped. I.e., when it is not just laziness or lack
-> of understanding, and you really are making a merge commit to say "topic
-> XYZ depends on something that is now in master, so let's merge that in
-> before continuing topic development".
+Junio C Hamano wrote:
 
-It certainly is *fun* to think about, and in a way it is sort-of in
-line at least in spirit with the -m option to the "revert" command
-to give the user run-time control over the order of the parents when
-creating a new merge commit object.
+> Given the above definition, the first thing to realize is that "the
+> first parent" is primarily a local concept.
+[... and much nice explanation ...]
 
-But I agree that people are overly and needlessly interested in
-first parenthood.
+Would you mind including this explanation as a new file with some name
+like <Documentation/howto/using-first-parent.txt>?  I think the quoted
+explanation is very clear and I have not come up with any obvious
+tweaks to make to it, which is why I am simply suggesting this instead
+of sending a patch that would repeat the same text.
 
-> So I think the primary audience would be people doing clueless
-> centralized-repo development. Of course you'd perhaps want to flip the
-> merge message, too. And I do think people are overly-interested in
-> --first-parent in the first place, so the effort of specifying the
-> parent ordering like this is probably not worth it.
+Strawman abstract:
 
-As I already said in my first message in this thread, using shared
-central repository workflow does not make one a bad person, let
-alone clueless.  It just means that the first parenthood is not a
-suitable tool for summarlizing their histories, and there are more
-suitable ones such as shortlog that would apply equally well to all
-workflows regardless of the parent order.
+| From: Junio C Hamano <gitster@pobox.com>
+| Date: Wed, 07 Mar 2012 22:13:46 -0800
+| Subject: who's on first? - following first parent and merge-management
+| Abstract: In this article, JC describes the "log --first-parent" and
+|  "merge --no-ff" options and what kind of history makes them useful.
+
+Hm?
+Jonathan
