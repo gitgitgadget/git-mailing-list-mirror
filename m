@@ -1,66 +1,83 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 1/2] rebase -i: optimize the creation of the todo file
-Date: Thu, 08 Mar 2012 12:51:28 +0100
-Message-ID: <4F589D40.5060804@viscovery.net>
-References: <1331203358-28277-1-git-send-email-domq@google.com> <4F589611.6060106@viscovery.net> <CAJh6GrGch9JHYnGW+K-wxdX9wPRry4Lxi2ysTtt0g9FTF4ThTQ@mail.gmail.com> <CAJh6GrGcr3nOMR7Yrq7g8c-RgQ4FS_FrhcMb+w-nXQO2nic_rw@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: git push default behaviour?
+Date: Thu, 08 Mar 2012 12:54:00 +0100
+Message-ID: <vpqeht3qpev.fsf@bauges.imag.fr>
+References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com>
+	<87k42vs8pi.fsf@thomas.inf.ethz.ch>
+	<CAFsnPqopZEZeeuFzK4ZoUjGnfpiv5oMs=xV5XBSgSyGLXOwgqA@mail.gmail.com>
+	<1331202483.21444.11.camel@beez.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Dominique Quatravaux <domq@google.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 12:51:40 2012
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeremy Morton <jeremy@configit.com>,
+	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
+To: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Thu Mar 08 12:54:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5bsh-0007Sq-LZ
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 12:51:40 +0100
+	id 1S5bvk-0002gf-CE
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 12:54:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757173Ab2CHLvd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 06:51:33 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:40254 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756972Ab2CHLvc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 06:51:32 -0500
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1S5bsW-0004So-Pp; Thu, 08 Mar 2012 12:51:28 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 81B311660F;
-	Thu,  8 Mar 2012 12:51:28 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <CAJh6GrGcr3nOMR7Yrq7g8c-RgQ4FS_FrhcMb+w-nXQO2nic_rw@mail.gmail.com>
-X-Enigmail-Version: 1.3.5
-X-Spam-Score: -1.4 (-)
+	id S1756972Ab2CHLyo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 06:54:44 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:49830 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756686Ab2CHLyn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 06:54:43 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q28BnqgA014673
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 8 Mar 2012 12:49:52 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1S5buy-00084O-UX; Thu, 08 Mar 2012 12:54:01 +0100
+In-Reply-To: <1331202483.21444.11.camel@beez.lab.cmartin.tk> ("Carlos
+ =?iso-8859-1?Q?Mart=EDn?=
+	Nieto"'s message of "Thu, 08 Mar 2012 11:28:03 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 08 Mar 2012 12:49:53 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q28BnqgA014673
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1331812193.62933@ysCqsuak/kdDpsZDUEgtDg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192575>
 
-Am 3/8/2012 12:41, schrieb Dominique Quatravaux:
-> On Thu, Mar 8, 2012 at 12:36 PM, Dominique Quatravaux <domq@google.com> wrote:
->> On Thu, Mar 8, 2012 at 12:20 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
->>> Am 3/8/2012 11:42, schrieb Dominique Quatravaux:
->>>> +     shortsha1=$(echo $sha1 | cut -c1-7)
->>>
->>>> -             sha1=$(git rev-parse $shortsha1)
->>>
->>> Why do you call it "optimization" when you spend two or three subprocesses
->>> instead of one?
->>
->> echo is a shell internal. "git rev-parse" is two processes just as
->> "cut" and a pipe.
-> 
-> My mistake, strace git rev-parse revals that this is only one process.
-> Still, I think that saving a bunch of filesystem access beats saving
-> one fork()... 
+Carlos Mart=EDn Nieto <cmn@elego.de> writes:
 
-Not so on Windows.
+> On Thu, 2012-03-08 at 10:13 +0000, Jeremy Morton wrote:
+>> Right, so I guess I'm saying that the default value for push.default
+>> should be upstream instead of matching...
+>
+> Any default is going to leave some people unhappy. If upstream is the
+> right thing for you, then that's what you should use. Most questions =
+I
+> see about push not doing what the users expect would actually benefit
+> from 'current'. 'matching' is a fairly safe default, as it won't try =
+to
+> push private branches or changes in private branches that track
+> something upstream.
 
-But you must look at the repository in any case to avoid truncating the
-SHA1 too much, as Thomas pointed out.
+There were some discussions about changing the default, and I thought
+people agreed that 'upstream' was a better default value for
+push.default:
 
--- Hannes
+  http://permalink.gmane.org/gmane.comp.version-control.git/167149
+
+it needs to be done with a sane migration path, however, and I guess no
+one stepped in to start the process (but I may have missed some further
+discussions).
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
