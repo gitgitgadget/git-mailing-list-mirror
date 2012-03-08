@@ -1,60 +1,114 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: Replacing large blobs in git history
-Date: Thu, 08 Mar 2012 16:39:57 +0100
-Message-ID: <4F58D2CD.2050502@ira.uka.de>
-References: <CAD-6W7byTiuE9MFZY1yG_ann-Ox7+wGjYduZ=Wwmw0ToF5Pynw@mail.gmail.com> <4F56786D.60801@gmail.com> <CACBZZX4hinV8vkebyNCLp_Ac6L80aNbdGOFqg1nSsCuRktFFrg@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH 4/5] tcp: unify ipv4 and ipv6 code paths
+Date: Thu, 8 Mar 2012 16:39:02 +0100
+Message-ID: <CABPQNSYfv19cVQoAoUyXVaF1TpLXTYDRFnHE4vr=X42W771tbA@mail.gmail.com>
+References: <20120308124857.GA7666@burratino> <20120308130913.GD9426@burratino>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Neal Kreitzinger <nkreitzinger@gmail.com>,
-	Barry Roberts <blr@robertsr.us>, git <git@vger.kernel.org>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 16:39:35 2012
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Eric Wong <normalperson@yhbt.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 08 16:39:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5fRE-0003zH-7f
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 16:39:32 +0100
+	id 1S5fRd-0004R5-Da
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 16:39:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757479Ab2CHPj0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 10:39:26 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:49254 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756597Ab2CHPj0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 10:39:26 -0500
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1S5fQj-0006Gs-EJ; Thu, 08 Mar 2012 16:39:18 +0100
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	id 1S5fQj-0002jo-7k; Thu, 08 Mar 2012 16:39:01 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <CACBZZX4hinV8vkebyNCLp_Ac6L80aNbdGOFqg1nSsCuRktFFrg@mail.gmail.com>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1331221158.614726000
+	id S1757529Ab2CHPjo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 10:39:44 -0500
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:42346 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757310Ab2CHPjm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 10:39:42 -0500
+Received: by dajr28 with SMTP id r28so554422daj.19
+        for <git@vger.kernel.org>; Thu, 08 Mar 2012 07:39:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=JLHforEnZkmdUee3KngCqH/c7DfVTc9j9qRAajyfn8o=;
+        b=NFbMtZ1Gpb0O09Y/OwnP6V+YkZrPfEfO8VPH4gRrY2IUAihVa0va+3KYkxXCxxIO7F
+         HyXC1V2dCq3N0rwEXnkhQn/5jW+v2dSfDTF7Ore9Wh5xB3r11l8YIz4zmVhTUJWJdYeK
+         F8c5xD/9PtiTyk976VZ3xoi8085Pt+3aLF/tKxZfnXoWn0yMTZQbuDkBhzLNrnLqaEj+
+         4GZu/JvtGdSg0XqBqZna16hvebX74JZzV+tjyRdKm+cLCMH93EzUeRdAWZMVzFLANbg5
+         PP1u/SrHfKQyc0aqKBM73ErEIVZJku/oVEw2LUfpX9SRceyhV3c8rJcIIj4hyBdDfVSz
+         U58w==
+Received: by 10.68.240.41 with SMTP id vx9mr10396938pbc.10.1331221182157; Thu,
+ 08 Mar 2012 07:39:42 -0800 (PST)
+Received: by 10.68.1.135 with HTTP; Thu, 8 Mar 2012 07:39:02 -0800 (PST)
+In-Reply-To: <20120308130913.GD9426@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192612>
 
-On 07.03.2012 22:27, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> Does something other than git-fsck actually check whether the
-> collection of blobs you're getting from the remote when you clone hav=
-e
-> sensible sha1's?
+On Thu, Mar 8, 2012 at 2:09 PM, Jonathan Nieder <jrnieder@gmail.com> wr=
+ote:
+> Date: Mon, 6 Jun 2011 04:41:28 -0500
 >
-> What'll happen if he replaces that 550MB blob with a 0 byte blob but
-> hacks the object store so that it pretends to have the same sha1?
+> The new DNS API abstracts away differences between the gethostbyname-
+> and getaddrinfo-centric interfaces for looking up a host, making the
+> code to use them in connect.c a little easier to read.
+>
+> To make a lookup:
+>
+> =A0 =A0 =A0 =A0resolver_result ai;
+> =A0 =A0 =A0 =A0dns_resolve(host, port, 0, &ai);
+> =A0 =A0 =A0 =A0...
+> =A0 =A0 =A0 =A0dns_free(ai);
+>
+> To iterate over responses:
+>
+> =A0 =A0 =A0 =A0resolved_address i;
+> =A0 =A0 =A0 =A0for_each_address(i, ai) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0...
+> =A0 =A0 =A0 =A0}
+>
+> In the !NO_IPV6 codepath, the git_locate_host function that is used t=
+o
+> find the canonical IP and hostname for a git server's public address
+> (for virtual hosting) tells getaddrinfo to restrict attention to TCP
+> services after this patch. =A0That should make no difference because =
+the
+> service parameter is NULL.
+>
+> No functional change intended.
+>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+> This is the title feature, corresponding to
+> http://thread.gmane.org/gmane.comp.version-control.git/175106/focus=3D=
+175111
+>
+> It needed changes to adjust to released changes in the code it touche=
+s,
+> but nothing is fundamentally different from v1.
+>
+> =A0Makefile =A0 | =A0 =A05 ++
+> =A0dns-ipv4.c | =A0 33 +++++++++++
+> =A0dns-ipv4.h | =A0 69 +++++++++++++++++++++++
+> =A0dns-ipv6.c | =A0 49 ++++++++++++++++
+> =A0dns-ipv6.h | =A0 31 +++++++++++
+> =A0tcp.c =A0 =A0 =A0| =A0182 +++++++++++-----------------------------=
+--------------------
+> =A06 files changed, 218 insertions(+), 151 deletions(-)
 
-This is something I tested once because of security concerns (i.e. what=
-=20
-happens if a malicious intruder just drops something else into the=20
-object store) and if I remember correctly only git-fsck was able to spo=
-t=20
-the switch. But I didn't test cloning, only a few local operations.
+I'm not entirely sure I understand the motivation here. We already had
+well-tested, implementations of IPv4 and IPv6 tcp-socket setup. Here
+you unify the code by adding abstraction, but it ends up amounting to
+more lines of code, with the details scattered around in different
+source files.
+
+=46or me, this means that I have to learn a new API, and to see what
+really happens when something goes wrong, I have to jump between
+multiple source files.
+
+And I'm not entirely sure what this patch actually improves. If it was
+likely that we'd get support for yet another IP-stack version, then
+this would probably be a win. But that's not likely, is it?
