@@ -1,200 +1,268 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] builtin/index-pack.c: Fix some pthread_t misuse
-Date: Thu, 8 Mar 2012 08:29:53 +0700
-Message-ID: <20120308012953.GA8444@duynguyen-vnpc.dek-tpc.internal>
-References: <4F57B04F.6050307@ramsay1.demon.co.uk>
- <7vvcmgmde3.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git 1.7.10-rc0
+Date: Wed, 07 Mar 2012 17:35:07 -0800
+Message-ID: <7v7gyvkh84.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Thu Mar 08 02:30:29 2012
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 08 02:36:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5SBY-0001nD-De
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 02:30:28 +0100
+	id 1S5SH3-00080F-LM
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 02:36:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752433Ab2CHBaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Mar 2012 20:30:23 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:59705 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751697Ab2CHBaW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2012 20:30:22 -0500
-Received: by pbcun15 with SMTP id un15so1044111pbc.19
-        for <git@vger.kernel.org>; Wed, 07 Mar 2012 17:30:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ZVsTa+bjAiVWm/CXt6m6g39yyB37U1QkBDrwOV0D0H4=;
-        b=oqn5mQ53Q5134BzdJ1cYflr839BjJEmAUKBjkThvPfciK9bKfyd7gXjRWgkI6O8n26
-         8LVWF5R32jOxZMYeub3obcCHl9ukFMhx1JOOJWwZxkn+cafnUbOE1PST0Hflog/+ntil
-         bLMh/0AfvWr3/QCIoUeUK0Mp/5EQ6DWn2jNtC2gl17oxMHbn18zOEGmHgH1vhgyErTvc
-         HhHcfsa9QAftFBRMniVQ2QcmS26chmdj4jX4yUoxoA3uShm8i0+pnRF6RbWAGTVEVfb+
-         hxUqkTvmssrRAjP8yHAhi70bOzcnBdYn4BRCJ0nhtLsWZOl0ox4GhKomt0uG+TM9gBHp
-         tNuA==
-Received: by 10.68.211.168 with SMTP id nd8mr6667674pbc.25.1331170221348;
-        Wed, 07 Mar 2012 17:30:21 -0800 (PST)
-Received: from pclouds@gmail.com ([113.161.77.29])
-        by mx.google.com with ESMTPS id e3sm1715045pbr.15.2012.03.07.17.30.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 07 Mar 2012 17:30:19 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 08 Mar 2012 08:29:53 +0700
-Content-Disposition: inline
-In-Reply-To: <7vvcmgmde3.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753874Ab2CHBfO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Mar 2012 20:35:14 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54668 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752730Ab2CHBfL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2012 20:35:11 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 932596320;
+	Wed,  7 Mar 2012 20:35:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:cc:date:message-id:mime-version:content-type; s=sasl;
+	 bh=IqoZp90mdaxac8INQ4ZxW7PiT9c=; b=TE2HzAIjwvx2QO49Vla1d2KwD/ta
+	XRHoiIT7HmoWiOgLUTeVyBTB/XQEc1At/DrvQuUfcQu8tHfC5C9FqaiITNvotwFp
+	HB6SJ6hK6ZP4SGuRhXZlkaPO7WwcgTovNPDrfd3i+2RWOX/peFVGE04NE0d8dNrP
+	w5AM5BOUCpFhnCo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:cc:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
+	twt+n5Ll37OslTPrXLphdEJk28pbFrI6H79Z9SiM6OtCUDCXsKDgxp6M1fGoID86
+	V37XSXq5iK93Aiz2JLwQqxam/3pgvGY1Knaloi2fAzKu6drrurs8YrdogzwzsqRr
+	wZhC4Y73/9ORt937GiLEZP8xPrcdWfCqUCqmbOTsY3s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 88D7D631F;
+	Wed,  7 Mar 2012 20:35:09 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B86CD631E; Wed,  7 Mar 2012
+ 20:35:08 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F09C36BE-68BE-11E1-8C8B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192515>
 
-On Wed, Mar 07, 2012 at 11:15:00AM -0800, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
-> 
-> > However, pthread_t is intended to be an opaque (implementation defined)
-> > type. For example, an implementation may choose to use a structure to
-> > implement the type.  Therefore, assigning zero (or any other constant)
-> > to a pthread_t is not supported in general.
-> > ...
-> > Note that, for the same reason given above, you can not, in general,
-> > directly compare pthread_t handles with the built-in equality operator.
-> > In order to compare pthread_t's for equality, the POSIX standard requires
-> > the use of pthread_equal().
-> 
-> Thanks, the above analysis all sound sensible.
-> 
-> I do not think it matters in *this* case, but if a loop iterates
-> over an array of things with a field of type pthread_t in it, whose
-> element may or may not be valid, and wants to mark the validity of
-> an element with the value of its pthread_t field, what is the proper
-> way to do so?  I.e.
-> 
-> 	for (i = 0; i < ARRAY_SIZE(thread_data); i++) {
-> 		if (pthread_invalid(thread_data[i].thread)
-> 			continue; /* not used */
->         	if (!pthread_equal(self, thread_data[i].thread))
->                 	continue; /* not me */
-> 		/* ah, this is mine! */
->                 ...
-> 	}
-> 
-> Perhaps the answer is "Don't do it" and that is perfectly fine, but
-> does Nguyen's code rely on the final clean-up (assignment with 0 you
-> are removing with this patch) to mark that these elements are no
-> longer relevant?
 
-The 0 assignment is not strictly needed. Shortly after that,
-nr_threads is set back to 1, which makes thread_data[1..]
-inaccessible, and thread_data[0] is dedicated for the main thread
-already.
+A release candidate Git 1.7.10-rc0 is now available for testing at
+the usual places.
 
-We can get rid of pthread_t comparison by using TLS (I avoided this
-because this would be the first time pthread_getspecific is used in
-git).
+The release tarballs are found at:
 
-Does this help your crash Ramsay? It also moves down cleanup_thread()
-so counter_mutex is always valid when it's used. Seems to work with
-linux-2.6.git.
+    http://code.google.com/p/git-core/downloads/list
 
--- 8< --
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index edd7cbd..098f350 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -104,6 +104,8 @@ static pthread_mutex_t work_mutex;
- #define work_lock()		pthread_mutex_lock(&work_mutex)
- #define work_unlock()		pthread_mutex_unlock(&work_mutex)
- 
-+static pthread_key_t key;
-+
- /*
-  * Mutex and conditional variable can't be statically-initialized on Windows.
-  */
-@@ -111,6 +113,7 @@ static void init_thread(void)
- {
- 	init_recursive_mutex(&read_mutex);
- 	pthread_mutex_init(&work_mutex, NULL);
-+	pthread_key_create(&key, NULL);
- }
- 
- static void cleanup_thread(void)
-@@ -284,31 +287,19 @@ static NORETURN void bad_object(unsigned long offset, const char *format, ...)
- static struct thread_local *get_thread_data(void)
- {
- #ifndef NO_PTHREADS
--	int i;
--	pthread_t self = pthread_self();
--	for (i = 1; i < nr_threads; i++)
--		if (self == thread_data[i].thread)
--			return &thread_data[i];
-+	if (nr_threads > 1)
-+		return pthread_getspecific(key);
- #endif
-+	assert(nr_threads == 1 &&
-+	       "This should only be reached when all threads are gone");
- 	return &thread_data[0];
- }
- 
- static void resolve_one_delta(void)
- {
--#ifndef NO_PTHREADS
--	int i;
--	pthread_t self = pthread_self();
--	for (i = 1; i < nr_threads; i++)
--		if (self == thread_data[i].thread) {
--			counter_lock();
--			nr_resolved_deltas++;
--			counter_unlock();
--			return;
--		}
--#endif
--	assert(nr_threads == 1 &&
--	       "This should only be reached when all threads are gone");
-+	counter_lock();
- 	nr_resolved_deltas++;
-+	counter_unlock();
- }
- 
- static struct base_data *alloc_base_data(void)
-@@ -796,6 +787,7 @@ static void second_pass(struct object_entry *obj)
- 
- static void *threaded_second_pass(void *arg)
- {
-+	pthread_setspecific(key, arg);
- 	for (;;) {
- 		int i, nr = 16;
- 		work_lock();
-@@ -883,15 +875,12 @@ static void parse_pack_objects(unsigned char *sha1)
- 		init_thread();
- 		for (i = 1; i < nr_threads; i++) {
- 			int ret = pthread_create(&thread_data[i].thread, NULL,
--						 threaded_second_pass, NULL);
-+						 threaded_second_pass, thread_data + i);
- 			if (ret)
- 				die("unable to create thread: %s", strerror(ret));
- 		}
--		for (i = 1; i < nr_threads; i++) {
-+		for (i = 1; i < nr_threads; i++)
- 			pthread_join(thread_data[i].thread, NULL);
--			thread_data[i].thread = 0;
--		}
--		cleanup_thread();
- 
- 		/* stop get_thread_data() from looking up beyond the
- 		   first item, when fix_unresolved_deltas() runs */
-@@ -1411,6 +1400,9 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 			die("pack has %d unresolved deltas",
- 			    nr_deltas - nr_resolved_deltas);
- 	}
-+#ifndef NO_PTHREADS
-+	cleanup_thread();
-+#endif
- 	free(deltas);
- 	if (strict)
- 		check_objects();
--- 8< --
+and their SHA-1 checksums are:
+
+96d1d25fd4f681246009b24fcaa4e41d88223f5b  git-1.7.10.rc0.tar.gz
+a8c76f12980a287e0f6a0f285768ab492caaed98  git-htmldocs-1.7.10.rc0.tar.gz
+8f5f8aa4f692eb3d6e3549f6eb0fb0b5419c2f57  git-manpages-1.7.10.rc0.tar.gz
+
+Also the following public repositories all have a copy of the v1.7.10.rc0
+tag and the master branch that the tag points at:
+
+  url = git://repo.or.cz/alt-git.git
+  url = https://code.google.com/p/git-core/
+  url = git://git.sourceforge.jp/gitroot/git-core/git.git
+  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url = https://github.com/gitster/git
+
+The other day, soon after announcement of the 1.7.9.3 maintenance
+release, there was a report that some tests did not pass on one
+platform.  Even though it is better than not seeing one, such a late
+report saddens us, especially because the exact test breakage has
+been in the master and next branches for quite some time for people
+to catch before it goes to any released versions.
+
+Please test this and later pre-releases to make sure no such late
+report has to come for the upcoming 1.7.10 final.
+
+Thanks.
+
+
+Git v1.7.10 Release Notes (draft)
+=========================
+
+Compatibility Notes
+-------------------
+
+ * From this release on, the "git merge" command in an interactive
+   session will start an editor when it automatically resolves the
+   merge for the user to explain the resulting commit, just like the
+   "git commit" command does when it wasn't given a commit message.
+
+   If you have a script that runs "git merge" and keeps its standard
+   input and output attached to the user's terminal, and if you do not
+   want the user to explain the resulting merge commits, you can
+   export GIT_MERGE_AUTOEDIT environment variable set to "no", like
+   this:
+
+	#!/bin/sh
+	GIT_MERGE_AUTOEDIT=no
+	export GIT_MERGE_AUTOEDIT
+
+   to disable this behaviour (if you want your users to explain their
+   merge commits, you do not have to do anything).  Alternatively, you
+   can give the "--no-edit" option to individual invocations of the
+   "git merge" command if you know everybody who uses your script has
+   Git v1.7.8 or newer.
+
+
+Updates since v1.7.9
+--------------------
+
+UI, Workflows & Features
+
+ * Teams for localizing the messages from the Porcelain layer of
+   commands are starting to form, thanks to Jiang Xin who volunteered
+   to be the localization coordinator.  An initial set of translated
+   messages for simplified chinese is available.
+
+ * The configuration mechanism learned an "include" facility; an
+   assignment to the include.path pseudo-variable causes the named
+   file to be included in-place when Git looks up configuration
+   variables.
+
+ * A content filter (clean/smudge) used to be just a way to make the
+   recorded contents "more useful", and allowed to fail; a filter can
+   new optionally be marked as "required".
+
+ * Options whose names begin with "--no-" (e.g. the "--no-verify"
+   option of the "git commit" command) can be negated by omitting
+   "no-" from its name, e.g. "git commit --verify".
+
+ * "git am" learned to pass "-b" option to underlying "git mailinfo", so
+   that bracketed string other than "PATCH" at the beginning can be kept.
+
+ * "git clone" learned "--single-branch" option to limit cloning to a
+   single branch (surprise!).
+
+ * "git clone" learned to detach the HEAD in the resulting repository
+   when the source repository's HEAD does not point to a branch.
+
+ * When showing a patch while ignoring whitespace changes, the context
+   lines are taken from the postimage, in order to make it easier to
+   view the output.
+
+ * "git diff --stat" learned to adjust the width of the output on
+   wider terminals, and give more columns to pathnames as needed.
+
+ * "diff-highlight" filter (in contrib/) was updated to produce more
+   aesthetically pleasing output.
+
+ * "fsck" learned "--no-dangling" option to omit dangling object
+   information.
+
+ * "git log -G" learned to pay attention to the "-i" option and can
+   find patch hunks that introduce or remove a string that matches the
+   given pattern ignoring the case.
+
+ * "git merge" in an interactive session learned to spawn the editor
+   by default to let the user edit the auto-generated merge message,
+   to encourage people to explain their merges better. Legacy scripts
+   can export GIT_MERGE_AUTOEDIT=no to retain the historical behavior.
+   Both "git merge" and "git pull" can be given --no-edit from the
+   command line to accept the auto-generated merge message.
+
+ * The advise message given when the user didn't give enough clue on
+   what to merge to "git pull" and "git merge" has been updated to
+   be more concise and easier to understand.
+
+ * "git push" learned the "--prune" option, similar to "git fetch".
+
+ * "git symbolic-ref" learned the "--short" option to abbreviate the
+   refname it shows unambiguously.
+
+ * "git tag --list" can be given "--points-at <object>" to limit its
+   output to those that point at the given object.
+
+ * "gitweb" allows intermediate entries in the directory hierarchy
+   that leads to a projects to be clicked, which in turn shows the
+   list of projects inside that directory.
+
+ * "gitweb" learned to read various pieces of information for the
+   repositories lazily, instead of reading everything that could be
+   needed (including the ones that are not necessary for a specific
+   task).
+
+ * Project search in "gitweb" shows the substring that matched in the
+   project name and description highlighted.
+
+Foreign Interface
+
+ * Improved handling of views, labels and branches in "git-p4" (in contrib).
+
+ * "git-p4" (in contrib) suffered from unnecessary merge conflicts when
+   p4 expanded the embedded $RCS$-like keywords; it can be now told to
+   unexpand them.
+
+ * Some "git-svn" updates.
+
+ * "vcs-svn"/"svn-fe" learned to read dumps with svn-deltas and
+   support incremental imports.
+
+ * "git difftool/mergetool" learned to drive DeltaWalker.
+
+Performance
+
+ * Unnecessary calls to parse_object() "git upload-pack" makes in
+   response to "git fetch", have been eliminated, to help performance
+   in repositories with excessive number of refs.
+
+Internal Implementation (please report possible regressions)
+
+ * Recursive call chains in "git index-pack" to deal with long delta
+   chains have been flattened, to reduce the stack footprint.
+
+ * Use of add_extra_ref() API is now gone, to make it possible to
+   cleanly restructure the overall refs API.
+
+ * The command line parser of "git pack-objects" now uses parse-options
+   API.
+
+ * The test suite supports the new "test_pause" helper function.
+
+ * Parallel to the test suite, there is a beginning of performance
+   benchmarking framework.
+
+ * t/Makefile is adjusted to prevent newer versions of GNU make from
+   running tests in seemingly random order.
+
+ * The code to check if a path points at a file beyond a symbolic link
+   has been restructured to be thread-safe.
+
+Also contains minor documentation updates and code clean-ups.
+
+
+Fixes since v1.7.9
+------------------
+
+Unless otherwise noted, all the fixes since v1.7.9 in the maintenance
+releases are contained in this release (see release notes to them for
+details).
+
+ * "git bundle" did not record boundary commits correctly when there
+   are many of them.
+   (merge efe4be1 tr/maint-bundle-boundary later to maint).
+
+ * "git diff-index" and its friends at the plumbing level showed the
+   "diff --git" header and nothing else for a path whose cached stat
+   info is dirty without actual difference when asked to produce a
+   patch. This was a longstanding bug that we could have fixed long
+   time ago.
+   (merge b3f01ff jc/maint-diff-patch-header later to maint).
+
+ * The code to synthesize the fake ancestor tree used by 3-way merge
+   fallback in "git am" was not prepared to read a patch created with
+   a non-standard -p<num> value.
+   (merge a61ba26 jc/am-3-nonstandard-popt later to maint).
+
+ * "gitweb" used to drop warnings in the log file when "heads" view is
+   accessed in a repository whose HEAD does not point at a valid
+   branch.
