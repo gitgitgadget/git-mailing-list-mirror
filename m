@@ -1,59 +1,76 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: [ANNOUNCE] Git 1.7.10-rc0
-Date: Thu, 8 Mar 2012 11:17:50 +0100
-Message-ID: <87y5rbpfap.fsf@thomas.inf.ethz.ch>
-References: <7v7gyvkh84.fsf@alter.siamese.dyndns.org>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: git push default behaviour?
+Date: Thu, 08 Mar 2012 11:28:03 +0100
+Message-ID: <1331202483.21444.11.camel@beez.lab.cmartin.tk>
+References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com>
+	 <87k42vs8pi.fsf@thomas.inf.ethz.ch>
+	 <CAFsnPqopZEZeeuFzK4ZoUjGnfpiv5oMs=xV5XBSgSyGLXOwgqA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: <git@vger.kernel.org>, Linux Kernel <linux-kernel@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 11:18:01 2012
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
+	boundary="=-E4FMQvl9X1R0Np5veC10"
+Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
+To: Jeremy Morton <jeremy@configit.com>
+X-From: git-owner@vger.kernel.org Thu Mar 08 11:28:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5aQ1-0001uf-32
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 11:17:57 +0100
+	id 1S5aa3-00053n-Jf
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 11:28:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751085Ab2CHKRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 05:17:52 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:54893 "EHLO edge10.ethz.ch"
+	id S1751809Ab2CHK2P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 05:28:15 -0500
+Received: from kimmy.cmartin.tk ([91.121.65.165]:41735 "EHLO kimmy.cmartin.tk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750795Ab2CHKRw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 05:17:52 -0500
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 8 Mar
- 2012 11:17:50 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 8 Mar
- 2012 11:17:50 +0100
-In-Reply-To: <7v7gyvkh84.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 07 Mar 2012 17:35:07 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+	id S1750795Ab2CHK2O (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 05:28:14 -0500
+Received: from [87.77.57.197] (z39c5.pia.fu-berlin.de [87.77.57.197])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 4F7C946082;
+	Thu,  8 Mar 2012 11:28:05 +0100 (CET)
+In-Reply-To: <CAFsnPqopZEZeeuFzK4ZoUjGnfpiv5oMs=xV5XBSgSyGLXOwgqA@mail.gmail.com>
+X-Mailer: Evolution 3.2.2-1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192551>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
->  * Parallel to the test suite, there is a beginning of performance
->    benchmarking framework.
+--=-E4FMQvl9X1R0Np5veC10
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I just noticed that this does not work on OS X; its 'time' does not
-support the -f option.  For now I think I'm happy; it can compare
-several versions of Git on Linux to detect performance improvements or
-regressions.  Comparability across systems or platforms was never a main
-goal.
+On Thu, 2012-03-08 at 10:13 +0000, Jeremy Morton wrote:
+> Right, so I guess I'm saying that the default value for push.default
+> should be upstream instead of matching...
 
-In the long run we'll have to change it to either use 'time -p'
-everywhere and parse that into shape -- at least GNU and OS X agree on
-what POSIX specifies ;-) -- or just supply a small helper utility that
-does the timings for us in a ready-to-use format.
+Any default is going to leave some people unhappy. If upstream is the
+right thing for you, then that's what you should use. Most questions I
+see about push not doing what the users expect would actually benefit
+from 'current'. 'matching' is a fairly safe default, as it won't try to
+push private branches or changes in private branches that track
+something upstream.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+   cmn
+
+
+
+--=-E4FMQvl9X1R0Np5veC10
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAABAgAGBQJPWImzAAoJEHKRP1jG7ZzTRsYH/2aA6YQ6M0hEtTBpi7nou38d
+LTzfKHufe5FHCWggVgObKCKPLewmHdpQJrDljJQIMiF5/m48rfumHmkdYuburmdr
+AGnuV8zLZPc1u+YOVjjZbfcorERVRKZp+OfBcJevdfiiEpiFECWdU3qzmoOs4AiX
+cDm8Iu4QP5OnT9SsjhjEKERQucvez6RS4kLv/HpE4c8imNoe0+/6eWhwSSPvIz5Z
+4kTquBIsFiErtn15EwJ0Bh91vnyhr5x9xzPVm8nteoyL7YtDdyWKsJb3BtMUqxu9
+QTkU50pG+4mVLJgY+UbBCjL/vDQY/vyST947ecTlgSnsjk/8pVW5eTlYMs8ceMg=
+=Fcxb
+-----END PGP SIGNATURE-----
+
+--=-E4FMQvl9X1R0Np5veC10--
