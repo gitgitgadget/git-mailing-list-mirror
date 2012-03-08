@@ -1,78 +1,94 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: who's on first? - following first parent and merge-management
-Date: Thu, 8 Mar 2012 01:49:11 -0600
-Message-ID: <20120308074911.GA23712@burratino>
-References: <jj6s47$m98$1@dough.gmane.org>
- <7vwr6woo8p.fsf@alter.siamese.dyndns.org>
- <7vty1zfwmd.fsf@alter.siamese.dyndns.org>
+Date: Thu, 08 Mar 2012 09:03:32 +0100
+Message-ID: <4F5867D4.1010904@viscovery.net>
+References: <jj6s47$m98$1@dough.gmane.org> <7vwr6woo8p.fsf@alter.siamese.dyndns.org> <7vty1zfwmd.fsf@alter.siamese.dyndns.org> <20120308071403.GE7643@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Neal Kreitzinger <nkreitzinger@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 08:49:35 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Neal Kreitzinger <nkreitzinger@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 08 09:03:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5Y6R-0002Tc-1C
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 08:49:35 +0100
+	id 1S5YK6-0000ig-Mq
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 09:03:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753883Ab2CHHtW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 02:49:22 -0500
-Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:39098 "EHLO
-	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753807Ab2CHHtS (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 02:49:18 -0500
-Received: by obbuo6 with SMTP id uo6so312339obb.19
-        for <git@vger.kernel.org>; Wed, 07 Mar 2012 23:49:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=PiHCnJ+07CjDhvZs6v/UxQgk+D2WE9eq6/GwYT1GQew=;
-        b=MhwIgcJwop0csa/6z0JgT8EpHGOfE8HoiSpzENikyY9O5ssypuGhNbKR7shP6ciHfa
-         AblFo9Mn/RjBjVZnHutAGMIlot/FKfC/cdBobwKTwsNCEGLtBJ/xXQ9P5itAOuyC9er4
-         ieVGgzn82WU7j9UiW7FUTFQwGIEOSHnTPW5n9jAyTkM8S2T27ret2/74hPbxki7jA6XE
-         eVttTKNSsjmWgG+8G+DL03AfrnoctAlDWxNzsvLyHocrXNHZsET3A5Uqi30IO5Kgl65D
-         ZpnNhYyYqz/IZIfbAiR0UQQJOQKFQS3w8ypzOKUTCEHo5Hh87dK6M6G+PAP2PLwdO2fY
-         KE7g==
-Received: by 10.60.4.162 with SMTP id l2mr2491351oel.3.1331192958249;
-        Wed, 07 Mar 2012 23:49:18 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id b6sm1503631obe.12.2012.03.07.23.49.17
-        (version=SSLv3 cipher=OTHER);
-        Wed, 07 Mar 2012 23:49:17 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vty1zfwmd.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753979Ab2CHIDh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 03:03:37 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:31540 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752934Ab2CHIDh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 03:03:37 -0500
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1S5YJw-0001pC-Ml; Thu, 08 Mar 2012 09:03:33 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 5BAD11660F;
+	Thu,  8 Mar 2012 09:03:32 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <20120308071403.GE7643@sigill.intra.peff.net>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192535>
 
-Hi all,
+Am 3/8/2012 8:14, schrieb Jeff King:
+> What if the user could specify a partial ordering of refs, and we used
+> that order when listing merge parents in the resulting commit. So for
+> example, if you said that:
+> 
+>   refs/remotes/origin/master > refs/heads/master
+> 
+> then doing:
+> 
+>   $ git checkout master
+>   $ git pull origin master
+> 
+> would result in a "flipped" merge commit, with origin/master as the
+> first parent, and master as the second.
 
-Junio C Hamano wrote:
+I have wished for such a thing several times already.
 
-> Given the above definition, the first thing to realize is that "the
-> first parent" is primarily a local concept.
-[... and much nice explanation ...]
+It happens when I have a topic with changes that trigger a complete
+rebuild of the project. When I merge it to master, I have to
 
-Would you mind including this explanation as a new file with some name
-like <Documentation/howto/using-first-parent.txt>?  I think the quoted
-explanation is very clear and I have not come up with any obvious
-tweaks to make to it, which is why I am simply suggesting this instead
-of sending a patch that would repeat the same text.
+   # on topic
+   git checkout master   #1
+   git merge topic       #2
 
-Strawman abstract:
+#1 triggers a rebuild, but I don't do a build. Then #2 again triggers a
+rebuild, but in reality the only changes since the last build are those
+from master since the topic forked (no, I can't use ccache).
 
-| From: Junio C Hamano <gitster@pobox.com>
-| Date: Wed, 07 Mar 2012 22:13:46 -0800
-| Subject: who's on first? - following first parent and merge-management
-| Abstract: In this article, JC describes the "log --first-parent" and
-|  "merge --no-ff" options and what kind of history makes them useful.
+To avoid the situation, I jump through hoops by preparing an index and
+worktree with the merge result while I am on topic:
 
-Hm?
-Jonathan
+   # on topic
+   git checkout --detach
+   git merge master      # triggers rebuild of only master's changes
+   # merge result ready; carry it over to master and repeat the merge
+   git reset --soft master
+   git checkout master
+   git merge topic       # fails if content merge is necessary
+   git checkout master -- file/needing/content/merge # (*)
+   git merge topic       # now succeeds
+
+This would not be necessary if the order of the merge parents could be
+specified, e.g.:
+
+   # on topic
+   git merge --into master
+
+(*) Jumping through these hoops make sense only if
+file/needing/content/merge is _not_ the one that triggers the complete
+rebuild.
+
+-- Hannes
