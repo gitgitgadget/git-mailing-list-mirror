@@ -1,99 +1,57 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 0/5] transport: unify ipv4 and ipv6 code paths
-Date: Thu, 8 Mar 2012 06:48:57 -0600
-Message-ID: <20120308124857.GA7666@burratino>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [ANNOUNCE] L10n update for Git 1.7.10-rc0
+Date: Thu, 8 Mar 2012 20:51:03 +0800
+Message-ID: <CANYiYbFstNf2a5xGMHcfZcm=M_4xzKO_yTOed9cBoJ9uFx4H_Q@mail.gmail.com>
+References: <CANYiYbHrhcmURri+Lg7_K3XXhYZsjF7SkCzUsgvHgjBvgNKDAw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Eric Wong <normalperson@yhbt.net>,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 08 13:49:16 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Thu Mar 08 13:51:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5cmP-0007PO-8A
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 13:49:13 +0100
+	id 1S5coH-0001mq-UW
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 13:51:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757294Ab2CHMtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 07:49:09 -0500
-Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:50693 "EHLO
-	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752529Ab2CHMtH (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 07:49:07 -0500
-Received: by obbuo6 with SMTP id uo6so618489obb.19
-        for <git@vger.kernel.org>; Thu, 08 Mar 2012 04:49:06 -0800 (PST)
+	id S1757584Ab2CHMvG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 07:51:06 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:40314 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752529Ab2CHMvE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 07:51:04 -0500
+Received: by yenl12 with SMTP id l12so145742yen.19
+        for <git@vger.kernel.org>; Thu, 08 Mar 2012 04:51:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=tmpj/TrX2WkBLz1j3hiUWbbBfjxp6gnVbcvnwLs9T1A=;
-        b=CInsfpAnkxIsstyPcwufpbHhg41w8DqzXkN79mc/YLmsdRec1Y0GFmZ2735oLYu7MS
-         i61R17CSrtgzghnPhxehtjo2vOd2ZamXbPmMjFoFwelu1OBhpGZ+H8cNo/wDutA3gV8V
-         O6keTbMhRBJ8m2Gwp6pF+zKeq+ZxWJlwmxBwhkZDpdj354cI7sBf7QAnsoI04KjtyjAG
-         kNK8hQE0i1WhEzys+qGWsaSopX3qYtwy0vgtXqMHLI639+lAqaesJIQOJCYW7UqtMl4q
-         ZPAq7nakzYnLZxzvnq3D6gNjEYXObdv2LjMfi0u5CaA8PP762trGqRR6gWFovR/d+xxq
-         mAHw==
-Received: by 10.182.192.36 with SMTP id hd4mr2242823obc.60.1331210946765;
-        Thu, 08 Mar 2012 04:49:06 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id q9sm2435701obz.14.2012.03.08.04.49.05
-        (version=SSLv3 cipher=OTHER);
-        Thu, 08 Mar 2012 04:49:06 -0800 (PST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=NIzEjmkes05b6MLBhWtXOarThB+8+r5k++MEW5+8jjc=;
+        b=zOb2UOO0i+CDhRVqaVF/RPM9Htn+7glMz1gE+lPGBUQJCUT0xaHuaVMqYNAlgCioyz
+         cf2b5ZODgkvHMyNwOAAQ4U+v2z8l5UWuuKwrBvOdqSFlo6/oj8urqTfGhx+dnwD4W6Lk
+         EXL4d0u/zzprJ+vsQIiQbMxuF7NPoJAVvoLek6ewuc4L52mmtuvz2WopP5eSN9fbEwqL
+         o9SZtjsj+iL8yAoz2h+6MtXj8k4NmDsxk+zDOLMTECCjvZgcoSoD0QDTdCDE50qmbq2f
+         rN+2hDzjoeUUG4yuFzFfTiZas1htaaXmJ5Pk5qimpZ9Ud+ewKJadxB2UmAOd2WWkqK6a
+         CxBQ==
+Received: by 10.236.195.37 with SMTP id o25mr10360525yhn.55.1331211063553;
+ Thu, 08 Mar 2012 04:51:03 -0800 (PST)
+Received: by 10.236.182.5 with HTTP; Thu, 8 Mar 2012 04:51:03 -0800 (PST)
+In-Reply-To: <CANYiYbHrhcmURri+Lg7_K3XXhYZsjF7SkCzUsgvHgjBvgNKDAw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192589>
 
-Hi,
+Peter Krefting (nafmo) offered Swedish translation, and Git can speak
+Swedish now.
+Peter also create the first l10n team since the git l10n workflow
+taken into practice.
 
-These patches eliminate some ifdef-ery concerning NO_IPV6.  I used
-them when writing the SRV patch, which applies on top, but it's
-probably best to think of it as an independent topic.
+Pull request from nafmo: https://github.com/git-l10n/git-po/pull/5
 
-Patch 4 is the heart of the series.  It provides an interface similar
-to getaddrinfo that can be implemented on top of either gethostbyname
-or getaddrinfo and puts each implementation in a separate file.  This
-way, callers can just use the common API and they do not need to have
-two copies of their code, one for each host resolution API.
-
-Patches 1-3 move code around until all the code that patch 4 touches
-is in one place.
-
-Patches 5 is a potential error handling improvement noticed while
-writing patches 1-4.  It's probably not actually needed but it was a
-comfort to me.
-
-These patches have been in use in Debian since June of last year.  I'd
-like to see this in mainline early in the 1.7.11 cycle to make coding
-that touches this area during that cycle more pleasant.  Thoughts of
-all kinds welcome.
-
-Jonathan Nieder (5):
-  transport: expose git_tcp_connect and friends in new tcp.h
-  daemon: make host resolution into a separate function
-  daemon: move locate_host() to tcp.c
-  tcp: unify ipv4 and ipv6 code paths
-  daemon: check for errors retrieving IP address
-
- Makefile   |    7 ++
- connect.c  |  277 +-----------------------------------------------------------
- daemon.c   |   58 ++-----------
- dns-ipv4.c |   33 ++++++++
- dns-ipv4.h |   68 +++++++++++++++
- dns-ipv6.c |   49 +++++++++++
- dns-ipv6.h |   31 +++++++
- tcp.c      |  217 +++++++++++++++++++++++++++++++++++++++++++++++
- tcp.h      |   11 +++
- 9 files changed, 422 insertions(+), 329 deletions(-)
- create mode 100644 dns-ipv4.c
- create mode 100644 dns-ipv4.h
- create mode 100644 dns-ipv6.c
- create mode 100644 dns-ipv6.h
- create mode 100644 tcp.c
- create mode 100644 tcp.h
+-- 
+Jiang Xin
