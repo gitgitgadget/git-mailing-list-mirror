@@ -1,87 +1,98 @@
-From: Anatol Pomozov <anatol.pomozov@gmail.com>
-Subject: Removing useless merge commit with "filter-branch"
-Date: Thu, 8 Mar 2012 15:21:04 -0800
-Message-ID: <CAOMFOmWMsXgepY0-ZWFymd9uHSUmbOk66r75qa-Kv5TWx_U=EA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Removing useless merge commit with "filter-branch"
+Date: Thu, 08 Mar 2012 15:30:12 -0800
+Message-ID: <7v62eebri3.fsf@alter.siamese.dyndns.org>
+References: <CAOMFOmWMsXgepY0-ZWFymd9uHSUmbOk66r75qa-Kv5TWx_U=EA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 09 00:21:16 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Anatol Pomozov <anatol.pomozov@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 09 00:30:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5me2-00052N-Aq
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 00:21:14 +0100
+	id 1S5mms-0004cG-97
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 00:30:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759089Ab2CHXVH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 18:21:07 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:59101 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758603Ab2CHXVF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 18:21:05 -0500
-Received: by ghrr11 with SMTP id r11so606257ghr.19
-        for <git@vger.kernel.org>; Thu, 08 Mar 2012 15:21:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=iEjhxxgdicvsfwJlBxWe9xiYB+s7UzpeaDbnTVIRzGA=;
-        b=d9obIM007Jo+2nxQxVV+r0Nf1KcCrOq12rQhyL3RluHFHJxRNYC05belNzK/2d9b3f
-         HpvTuB5eku9NX5YnBb/36u/yCnH6gHE1H7dF656S3PYLd58/GKarVw07pXztv9p0pPCo
-         qjfYnF1ZnIbVj3ueuR613J1H0vzecF5tmCPOTl6wXkjWNh5E5veiQI5KH8PNxbMTrBt1
-         yuJImSbwjLcQrFprQNuqosNkitKp5ZGButZftROS7sU5tvvxmzsfLPIA7hov35Gq9fGS
-         B4MFaU0ZZ+LBjF/IjlbdzsUJxCnxdj4WqDT1Rvt1RX5Yn9gAkIVPyGgAZ/fL16s0j6+E
-         eKUA==
-Received: by 10.236.157.10 with SMTP id n10mr43700yhk.41.1331248864485; Thu,
- 08 Mar 2012 15:21:04 -0800 (PST)
-Received: by 10.100.87.10 with HTTP; Thu, 8 Mar 2012 15:21:04 -0800 (PST)
+	id S1759062Ab2CHXaR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 18:30:17 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52588 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754013Ab2CHXaQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 18:30:16 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 633887463;
+	Thu,  8 Mar 2012 18:30:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HzKCeWpwrYGgsbyT+gx6TH/of5g=; b=CH/ZDZ
+	IYmTdXl1mqPq7zRJUZApjxpWezaY4xiSlLfHlYQetS9LfFPCVMPuQ/blsNytWgzj
+	paHeFKbBAngeK8BS7e1x9glMxu3eaHB/xEEupaPa7mYhLerbRH1nxCOCJDRUAxgg
+	uDBP7M5LR1CSgVbuPem+7j5CDAZtRNm7fM7Z4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lZeXnkW/gk5SpzAQNNuUQ+OAbsu9D4xP
+	rJ/DUTyugpTdYv95uRnDBuvu3/PV5SNAVem46VSLUqHkD60ITwUhJDS7a3KH3ops
+	XXGV9twd0dzu1S3TfIOITwkwrZ7oobzGLR3rfewx74tsli/nQnVh3/j/Xl34fTKM
+	7yHVG+z+lVo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A5A47462;
+	Thu,  8 Mar 2012 18:30:15 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CD26C7461; Thu,  8 Mar 2012
+ 18:30:13 -0500 (EST)
+In-Reply-To: <CAOMFOmWMsXgepY0-ZWFymd9uHSUmbOk66r75qa-Kv5TWx_U=EA@mail.gmail.com> (Anatol
+ Pomozov's message of "Thu, 8 Mar 2012 15:21:04 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A7B479A8-6976-11E1-8347-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192664>
 
-Hi,
+Anatol Pomozov <anatol.pomozov@gmail.com> writes:
 
-I have a large project (~100K commits) and I need to split a part of
-it into separate project. What I usually do in this case is
+> |
+> o      - merge commit that previously merged feature X
+> |\
+> | \
+> |  \
+> o  |   - real commit
+> |   |
+> |  /
+> |/
+> |
 
-git filter-branch --prune-empty --index-filter 'git rm -rfq --cached
---ignore-unmatch UNNEEDED_DIRECTORIES' HEAD
+It is unclear how many commits are drawn in the above picture and
+what "feature X" is about in the above picture.  Care to redraw the
+commit DAG to explain what you are trying to do a bit better?
 
-that works more or less fine for me.
+The way I read it is that you start from a history like this (note
+that when we draw an ascii art history we often write it sideways,
+time flows from left to right):
 
-The original project has a lot of merge commits (don't ask me why).
-Basically every non-merge commit is merged back to master branch
-instead of rebasing on top of the master. In the command above I use
---prune-empty parameter that removes empty commits, but not their
-merge points. This leaves a lot of "useless commit points" like this:
+    ---A-----B-----M---
+        \         /
+         C-------D
 
-|
-o =C2=A0 =C2=A0 =C2=A0- merge commit that previously merged feature X
-|\
-| \
-| =C2=A0\
-o =C2=A0| =C2=A0 - real commit
-| =C2=A0 |
-| =C2=A0/
-|/
-|
+where a side branch to implement "feature X" that has C and D forked
+at A, and it was merged at M after somebody else committed B on the
+mainline.  When you filtered out some parts of the tree, it turns
+out that C and D are totally unintereseting because their changes
+touch parts outside of your interest, i.e. the history is:
 
+    ---A-----B-----M---
+        \         /
+         o-------o
 
-As of me such merge left-overs are completely useless and I would like
-to remove them. Actually this task can be split into 2 steps:
-1) Remove useless parents. A useless part is the one that points to a
-commit that is *already* reachable by some other parent. This step
-converts useless merge points to regular empty commits.
-2) run filter branch with --prune-empty that removes such empty commits=
-=2E
+where 'o' are now no-op.
 
+Is that what you are talking about?
 
-So my questions are:
-1) What is the best way to remove "useless parents" as in the algorithm=
- above?
-2) Should such behavior (remove useless parent/merge commits) be
-enabled when flag=C2=A0--prune-empty is used?
+I think "log --simplify-merges A..M -- path" may already has logic
+that deals with this, so it may help if you study what it does and
+how it does what it does.
