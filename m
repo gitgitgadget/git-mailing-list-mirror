@@ -1,89 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC] remove #!interpreter line from shell libraries
-Date: Thu, 8 Mar 2012 07:47:48 -0500
-Message-ID: <20120308124748.GA2002@sigill.intra.peff.net>
-References: <20120308121403.GA16493@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 0/5] transport: unify ipv4 and ipv6 code paths
+Date: Thu, 8 Mar 2012 06:48:57 -0600
+Message-ID: <20120308124857.GA7666@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 13:47:56 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Eric Wong <normalperson@yhbt.net>,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 08 13:49:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5cl9-0005jx-5J
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 13:47:55 +0100
+	id 1S5cmP-0007PO-8A
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 13:49:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753075Ab2CHMrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 07:47:51 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44590
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752035Ab2CHMru (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 07:47:50 -0500
-Received: (qmail 5718 invoked by uid 107); 8 Mar 2012 12:47:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 08 Mar 2012 07:47:58 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Mar 2012 07:47:48 -0500
+	id S1757294Ab2CHMtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 07:49:09 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:50693 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752529Ab2CHMtH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 07:49:07 -0500
+Received: by obbuo6 with SMTP id uo6so618489obb.19
+        for <git@vger.kernel.org>; Thu, 08 Mar 2012 04:49:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=tmpj/TrX2WkBLz1j3hiUWbbBfjxp6gnVbcvnwLs9T1A=;
+        b=CInsfpAnkxIsstyPcwufpbHhg41w8DqzXkN79mc/YLmsdRec1Y0GFmZ2735oLYu7MS
+         i61R17CSrtgzghnPhxehtjo2vOd2ZamXbPmMjFoFwelu1OBhpGZ+H8cNo/wDutA3gV8V
+         O6keTbMhRBJ8m2Gwp6pF+zKeq+ZxWJlwmxBwhkZDpdj354cI7sBf7QAnsoI04KjtyjAG
+         kNK8hQE0i1WhEzys+qGWsaSopX3qYtwy0vgtXqMHLI639+lAqaesJIQOJCYW7UqtMl4q
+         ZPAq7nakzYnLZxzvnq3D6gNjEYXObdv2LjMfi0u5CaA8PP762trGqRR6gWFovR/d+xxq
+         mAHw==
+Received: by 10.182.192.36 with SMTP id hd4mr2242823obc.60.1331210946765;
+        Thu, 08 Mar 2012 04:49:06 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id q9sm2435701obz.14.2012.03.08.04.49.05
+        (version=SSLv3 cipher=OTHER);
+        Thu, 08 Mar 2012 04:49:06 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20120308121403.GA16493@burratino>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192588>
 
-On Thu, Mar 08, 2012 at 06:14:04AM -0600, Jonathan Nieder wrote:
+Hi,
 
-> As explained in v1.7.0-rc1~9 (2009-11-25), even when a script is
-> expected to be sourced instead of executed on its own, a #!/bin/sh
-> shebang line can provide useful documentation about what format the
-> file is in.  However, it is even clearer to include a comment and no
-> shebang at all, to avoid creating the illusion that the indicated
-> choice of shell will have any effect at runtime.
+These patches eliminate some ifdef-ery concerning NO_IPV6.  I used
+them when writing the SRV patch, which applies on top, but it's
+probably best to think of it as an independent topic.
 
-I'm OK with this in principle, but I think there are some valgrind
-fallouts.
+Patch 4 is the heart of the series.  It provides an interface similar
+to getaddrinfo that can be implemented on top of either gethostbyname
+or getaddrinfo and puts each implementation in a separate file.  This
+way, callers can just use the common API and they do not need to have
+two copies of their code, one for each host resolution API.
 
-One is that I'm slightly confused about why this works at all.  In
-v1.7.0-rc1~9, we were having a problem because the valgrind code in
-test-lib.sh was confused by the lack of #!-line. Without it, the
-valgrind code thought the shell lib was not a script, and therefore
-needed to be wrapped by valgrind.sh and run via valgrind.
+Patches 1-3 move code around until all the code that patch 4 touches
+is in one place.
 
-You give the reasoning why this is OK here:
+Patches 5 is a potential error handling improvement noticed while
+writing patches 1-4.  It's probably not actually needed but it was a
+comfort to me.
 
-> Because these files are not marked executable, removing the #! lines
-> would not confuse the valgrind support of our test scripts, so this
-> should be safe.  Noticed by lintian.
+These patches have been in use in Debian since June of last year.  I'd
+like to see this in mainline early in the 1.7.11 cycle to make coding
+that touches this area during that cycle more pleasant.  Thoughts of
+all kinds welcome.
 
-and that makes sense looking at the valgrind setup code, which checks the
-executable bit. But that code has always checked the executable bit, and
-git-mergetool--lib.sh was never marked executable. Why did it fail
-before v1.7.0-rc1~9 but not now? Were we simply wrong in diagnosing the
-bug back then?
+Jonathan Nieder (5):
+  transport: expose git_tcp_connect and friends in new tcp.h
+  daemon: make host resolution into a separate function
+  daemon: move locate_host() to tcp.c
+  tcp: unify ipv4 and ipv6 code paths
+  daemon: check for errors retrieving IP address
 
-The second is that later, we tweaked the valgrind code with 36bfb0e
-(tests: link shell libraries into valgrind directory, 2011-06-17), which
-uses the shebang to detect those shell libraries. With your patch,
-t2300 is broken with valgrind. You might not notice it, though, because
-a previous valgrind run would leave the proper symlinks in place. But if
-you "git clean" t/valgrind/bin and re-run the test, it will fail.
-
->  git-mergetool--lib.sh      |    3 +--
->  git-parse-remote.sh        |    4 +++-
->  git-rebase--am.sh          |    3 ++-
->  git-rebase--interactive.sh |    8 +++-----
->  git-rebase--merge.sh       |    4 +++-
->  git-sh-i18n.sh             |    5 ++---
->  git-sh-setup.sh            |    9 +++------
-
-If we are interested in the aesthetic argument, then many shell
-libraries in t/ could use the same treatment.
-
--Peff
+ Makefile   |    7 ++
+ connect.c  |  277 +-----------------------------------------------------------
+ daemon.c   |   58 ++-----------
+ dns-ipv4.c |   33 ++++++++
+ dns-ipv4.h |   68 +++++++++++++++
+ dns-ipv6.c |   49 +++++++++++
+ dns-ipv6.h |   31 +++++++
+ tcp.c      |  217 +++++++++++++++++++++++++++++++++++++++++++++++
+ tcp.h      |   11 +++
+ 9 files changed, 422 insertions(+), 329 deletions(-)
+ create mode 100644 dns-ipv4.c
+ create mode 100644 dns-ipv4.h
+ create mode 100644 dns-ipv6.c
+ create mode 100644 dns-ipv6.h
+ create mode 100644 tcp.c
+ create mode 100644 tcp.h
