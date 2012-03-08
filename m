@@ -1,66 +1,59 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: git push default behaviour?
-Date: Thu, 8 Mar 2012 20:37:16 +0300
-Message-ID: <CAHkcothno3tQG0G-5Mo7vVbKxUkNGqWd+6BRWhjnKafrSp1FTw@mail.gmail.com>
-References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com>
-	<87k42vs8pi.fsf@thomas.inf.ethz.ch>
-	<CAFsnPqopZEZeeuFzK4ZoUjGnfpiv5oMs=xV5XBSgSyGLXOwgqA@mail.gmail.com>
-	<1331202483.21444.11.camel@beez.lab.cmartin.tk>
-	<CAFsnPqpnH2CTki8zz6Mpz=qrdxF_aTA92cPrn1L9MQZVMoxdeg@mail.gmail.com>
-	<1331203321.21444.13.camel@beez.lab.cmartin.tk>
-	<4F58C977.8000400@xiplink.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] archive: fix archive generation for empty trees
+Date: Thu, 08 Mar 2012 18:46:02 +0100
+Message-ID: <4F58F05A.1010606@lsrfire.ath.cx>
+References: <1331165362-78065-1-git-send-email-brodie@sf.io> <20120308055520.GB7643@sigill.intra.peff.net> <7vpqcnfvhs.fsf@alter.siamese.dyndns.org> <20120308071559.GF7643@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
-	Jeremy Morton <jeremy@configit.com>,
-	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 18:37:30 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Brodie Rao <brodie@sf.io>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 08 18:46:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5hHJ-0002bz-Df
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 18:37:25 +0100
+	id 1S5hPu-0003bn-QA
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 18:46:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752254Ab2CHRhT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 12:37:19 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:39513 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751704Ab2CHRhR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 12:37:17 -0500
-Received: by mail-qy0-f174.google.com with SMTP id w6so524209qcq.19
-        for <git@vger.kernel.org>; Thu, 08 Mar 2012 09:37:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=UdpKIgvl37odaP352D5sb2gBub+wwnlq8uG1bC6j/UA=;
-        b=ApVw9xpfg49HuxAM/utQqT9mCxxliFi+phxmnjSm81x+XvYf4PiR0kHz09XqR0sUBw
-         rlEDXpqlwzeHcPs3SYkCUCHBGOWWdDA+qqgW8IOL7arCqEU86J1jMI5x7eqTQy0Xi6cr
-         ThJSzt/zN6iaS0fEam0Y9cJLZMnJpuyuoVb44akpxQgSfcWaTj/+nPfG4NpkwU5OyUNT
-         Ueb0Pg9AH1aSPB4Ld9I2AOfaP2f2qdgd33T1Gj3bjE1jcyD8jXuIoqX98YzDDZ2MVyAK
-         mIbPJIIE/hliY37x8zy9AYdeutLO7/xwy/HZ5rvMFZusPbUZ+VsBr0MJACwkE2m7jMOK
-         Cw5w==
-Received: by 10.224.186.145 with SMTP id cs17mr4142171qab.40.1331228236889;
- Thu, 08 Mar 2012 09:37:16 -0800 (PST)
-Received: by 10.229.88.149 with HTTP; Thu, 8 Mar 2012 09:37:16 -0800 (PST)
-In-Reply-To: <4F58C977.8000400@xiplink.com>
+	id S1752911Ab2CHRqN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 12:46:13 -0500
+Received: from india601.server4you.de ([85.25.151.105]:39046 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752845Ab2CHRqN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 12:46:13 -0500
+Received: from [192.168.2.105] (p579BE4A1.dip.t-dialin.net [87.155.228.161])
+	by india601.server4you.de (Postfix) with ESMTPSA id 6070B2F8037;
+	Thu,  8 Mar 2012 18:46:11 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <20120308071559.GF7643@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192622>
 
-On Thu, Mar 8, 2012 at 7:00 PM, Marc Branchaud <marcnarc@xiplink.com> wrote:
+Am 08.03.2012 08:15, schrieb Jeff King:
+> On Wed, Mar 07, 2012 at 10:38:07PM -0800, Junio C Hamano wrote:
 >
-> Perhaps --force should be changed to require an explicit ref if push.default
-> = matching (and the code finds that it needs to use push.default's value)?
+>>> ... However, prefix_pathspec does a lot of magic parsing;
+>>> it's unclear to me whether this is all in support of properly
+>>> adding the prefix, or if its side effects are important.
+>>
+>> These "magic" are for things like :(root)/path that will explicitly
+>> refuse the prefix when run from a subdirectory.
+>
+> Yeah, that was my impression. In that case, I would think we could ge=
+t
+> rid of the get_pathspec call entirely, as it is purely about fixing-u=
+p
+> prefixes, and we know that we have none.
 
-No, it will workflow for some people. In general, --force should not be
-used, but when it is used, it is used for a reason. If you need another
-behavior like forcing only the current branch then you probably should add
---force-current or something like that, but not to break what works now.
+Yes, I think you're right.  Not sure why I didn't do that in ebfbdb34,=20
+when that empty prefix was introduced instead.
 
-Dmitry
+Ren=C3=A9
