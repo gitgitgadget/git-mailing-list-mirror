@@ -1,87 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [ANNOUNCE] Git 1.7.10-rc0
-Date: Thu, 8 Mar 2012 01:30:54 -0500
-Message-ID: <20120308063054.GD7643@sigill.intra.peff.net>
-References: <7v7gyvkh84.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] archive: fix archive generation for empty trees
+Date: Wed, 07 Mar 2012 22:38:07 -0800
+Message-ID: <7vpqcnfvhs.fsf@alter.siamese.dyndns.org>
+References: <1331165362-78065-1-git-send-email-brodie@sf.io>
+ <20120308055520.GB7643@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 07:31:02 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Brodie Rao <brodie@sf.io>,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 08 07:38:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5WsQ-0002zm-1A
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 07:31:02 +0100
+	id 1S5WzQ-0002J5-Up
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 07:38:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753880Ab2CHGa5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 01:30:57 -0500
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44331
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753238Ab2CHGa4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 01:30:56 -0500
-Received: (qmail 389 invoked by uid 107); 8 Mar 2012 06:31:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 08 Mar 2012 01:31:04 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Mar 2012 01:30:54 -0500
-Content-Disposition: inline
-In-Reply-To: <7v7gyvkh84.fsf@alter.siamese.dyndns.org>
+	id S1751399Ab2CHGiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 01:38:11 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40956 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751159Ab2CHGiK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 01:38:10 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 763F77B44;
+	Thu,  8 Mar 2012 01:38:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EZFtV789flGCoRQrm367sxMvx8c=; b=WwKH02
+	cRJpHqH+spyvoj8M0nch+pC65yQVt2P7bph2quRc0sin/Bm/mJ7fbqsbD2RLXWhS
+	Oq0y5gOJoOKsy29V6Thz9Oz1NKe2TY/NboGMoyE+X1Ube7fR9ZCkJPTb6FfWwAZs
+	g2Ms4V4CHSpN997HH2WG0MKt8ZH7HELbG+kEo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=B1KsALFkMwbjn8IbFOiP2P0ZCpwZ3Wts
+	dSWL1R3L3Rk++ZGM7Rx7A7N/TwGfTjsY/le77UVDOToqEM41Yw9nS+CEByg37rma
+	3ek1SDWe9zaYVug6ZkfHZIczqkShrJqPq6NJGE8NCUUi1AgZyvrcGwN42/h4Yosc
+	JLgen6AOP90=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D4387B43;
+	Thu,  8 Mar 2012 01:38:09 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 778DF7B42; Thu,  8 Mar 2012
+ 01:38:08 -0500 (EST)
+In-Reply-To: <20120308055520.GB7643@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 8 Mar 2012 00:55:20 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 44951392-68E9-11E1-8237-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192525>
 
-On Wed, Mar 07, 2012 at 05:35:07PM -0800, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
->  * A content filter (clean/smudge) used to be just a way to make the
->    recorded contents "more useful", and allowed to fail; a filter can
->    new optionally be marked as "required".
+>> Now, instead of "", we use a pathspec prefix of NULL. If no path
+>> arguments were provided, get_pathspec() will return NULL, and we won't
+>> try to verify the existence of any paths in the tree.
+>
+> Yeah, this looks like the right thing to do. The get_pathspec code
+> treats a NULL prefix specially as "no prefix", and I think that is what
+> we are trying to say here (i.e., we are interpreting pathspecs from the
+> root).
 
-s/new/now/
+Yes, that sounds sane.
 
->  * "git am" learned to pass "-b" option to underlying "git mailinfo", so
->    that bracketed string other than "PATCH" at the beginning can be kept.
+> ... However, prefix_pathspec does a lot of magic parsing;
+> it's unclear to me whether this is all in support of properly
+> adding the prefix, or if its side effects are important.
 
-s/bracketed/a &/
+These "magic" are for things like :(root)/path that will explicitly
+refuse the prefix when run from a subdirectory.
 
-(or s/string/&s/)
-
->  * "git clone" learned to detach the HEAD in the resulting repository
->    when the source repository's HEAD does not point to a branch.
-
-Hmm. Hasn't this been the case for a while? The jk/clone-detached topic
-went into v1.7.7, and it was just fixes for some corner cases; actually
-writing a detached HEAD is much older than that, even.
-
-I assume this entry is due to the nd/clone-detached topic. Reading over
-those commits, it seems like it is more about properly checking the
-"--branch" argument for being detached, so we can handle
-"--branch=v1.0". So maybe:
-
-  * "git clone" learned to detach the HEAD in the resulting repository
-    when the user specifies a tag with "--branch" (e.g., "--branch=v1.0").
-    Clone also learned to print the usual "detached HEAD" advice in such
-    a case, similar to "git checkout v1.0".
-
->  * "git log -G" learned to pay attention to the "-i" option and can
->    find patch hunks that introduce or remove a string that matches the
->    given pattern ignoring the case.
-
-This didn't parse well for me. Also, it affects -S, too, doesn't it?
-Maybe:
-
-  * "git log -G" and "git log -S" learned to pay attention to the "-i"
-    option. When "-i" is given, their patterns will match
-    case-insensitively.
-
->  * The advise message given when the user didn't give enough clue on
->    what to merge to "git pull" and "git merge" has been updated to
->    be more concise and easier to understand.
-
-s/advise/advice/
-
--Peff
+In the longer term, get_pathspec() should be converted to directly
+deal with "struct pathspec", but we are not there yet.  There are
+too many code left-over, even after Duy's last pathspec related
+topic, that still look at ->raw field of "struct pathspec" and they
+all need to be taught to work with the unified pathspec matching
+machinery.  This is one of the lots of unfinished loose ends, which
+might be a good GSoC project but may be a bit too large for a
+student to bite and chew.
