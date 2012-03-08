@@ -1,99 +1,89 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [ANNOUNCE] Git 1.7.10-rc0
-Date: Thu, 08 Mar 2012 02:42:49 -0800 (PST)
-Message-ID: <m3wr6vs7a2.fsf@localhost.localdomain>
-References: <7v7gyvkh84.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 11:43:00 2012
+From: Dominique Quatravaux <domq@google.com>
+Subject: [PATCH 1/2] rebase -i: optimize the creation of the todo file
+Date: Thu,  8 Mar 2012 11:42:37 +0100
+Message-ID: <1331203358-28277-1-git-send-email-domq@google.com>
+Cc: Dominique Quatravaux <domq@google.com>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 08 11:43:11 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5aoD-0004P1-5S
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 11:42:57 +0100
+	id 1S5aoL-0004cZ-LI
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 11:43:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751491Ab2CHKmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 05:42:53 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:40392 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751029Ab2CHKmw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 05:42:52 -0500
-Received: by eaaq12 with SMTP id q12so96500eaa.19
-        for <git@vger.kernel.org>; Thu, 08 Mar 2012 02:42:51 -0800 (PST)
+	id S1752261Ab2CHKnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 05:43:00 -0500
+Received: from mail-gx0-f202.google.com ([209.85.161.202]:51060 "EHLO
+	mail-gx0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751082Ab2CHKm7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 05:42:59 -0500
+Received: by ggnd2 with SMTP id d2so36142ggn.1
+        for <git@vger.kernel.org>; Thu, 08 Mar 2012 02:42:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=ML/Tiets0oY/aZI2mY7cho8lAQ5yJXoUI4Rg75pqW8Q=;
-        b=Y0VVQpOI+6LEuduxlmRG7EehIlh5XEarLletH+wa8DpUfUFEyNmqRkAmdHL9mpMiNd
-         2VnpOCtK6kjHJxIYRLNhPgVtMpIDJywWsSJ7OwPr+3NDoRpsrWhYbc0F6LhPxs4ztyC5
-         /UpQMOhhwLnWT7yhajKBLhw7uJjHopJpg8pxhMuDqZ6nk272/R38lqpJO7VP8TtzQoxc
-         FCB0caTcjx/sX29LmtmnRh1WJWsDjteUVbk0IYlBtgIaCWE1uytIDkbDSZzNe9I2XlBy
-         ZVbLuBU1is/6/chaAgTEI5BvL9gUtctqEkwXlxvZEqFH7RLYwR/9Q4FN1vt5pKFyMjxi
-         aEDQ==
-Received: by 10.213.7.10 with SMTP id b10mr1157444ebb.81.1331203370935;
-        Thu, 08 Mar 2012 02:42:50 -0800 (PST)
-Received: from localhost.localdomain (abwr173.neoplus.adsl.tpnet.pl. [83.8.241.173])
-        by mx.google.com with ESMTPS id d54sm4801844eei.9.2012.03.08.02.42.49
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 08 Mar 2012 02:42:49 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q28AgkHd008560;
-	Thu, 8 Mar 2012 11:42:47 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q28AgjtQ008557;
-	Thu, 8 Mar 2012 11:42:45 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7v7gyvkh84.fsf@alter.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=YB9zXbFftrn/3v5RbqFD5xK9+plX9v/cVqiqmkCZCm8=;
+        b=ZVzGe9F8mmjYquRKLvBqTDCa0gncrzchD8wUV+I3Q5MXqw9cJId+C6olmqJUWPP+Mk
+         B9PIJYL9zV/4p+zSne1M9HyK6QvRsbZEQvyh4Dpk1aMQrunGpuTRGEmh+rNoTRQO6TE7
+         cOKGuIloBIXdNB465YfuRuHiCChpKTQav8I83lt4ECeaSzyVz8AJLfR7RWjbi3mxcQbu
+         kw5/AO2gox35q3iXVhhQplvnMD9+RDgXtjaYKAEMSfVfwsEzaLdYjQHurDrslSPHgII9
+         q0Wt1iuvPIma3PGzU40ZOlTK6buqncPPIXAyJmD21nU1mOKLcuzEyaiOfsdO4hMvhpXU
+         OmwA==
+Received: by 10.101.133.40 with SMTP id k40mr527659ann.17.1331203379271;
+        Thu, 08 Mar 2012 02:42:59 -0800 (PST)
+Received: by 10.101.133.40 with SMTP id k40mr527647ann.17.1331203379186;
+        Thu, 08 Mar 2012 02:42:59 -0800 (PST)
+Received: from wpzn3.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
+        by gmr-mx.google.com with ESMTPS id g49si802194yhe.6.2012.03.08.02.42.59
+        (version=TLSv1/SSLv3 cipher=AES128-SHA);
+        Thu, 08 Mar 2012 02:42:59 -0800 (PST)
+Received: from alliance-maui.zrh.corp.google.com (alliance-maui.zrh.corp.google.com [172.28.204.12])
+	by wpzn3.hot.corp.google.com (Postfix) with ESMTP id 0D6C310004D;
+	Thu,  8 Mar 2012 02:42:59 -0800 (PST)
+Received: by alliance-maui.zrh.corp.google.com (Postfix, from userid 71297)
+	id 84FA7603B6; Thu,  8 Mar 2012 11:42:58 +0100 (CET)
+X-Mailer: git-send-email 1.7.7.3
+X-Gm-Message-State: ALoCoQlqNehUR1BIboFwQZ5RzvSxitlawDmfv/77TDnUj2Z+Jkeo8HXxqo3NNk6ZOMAYbgbbFaUkeAIflq/zSct8ewFsQdVZv2AYTFLHUusYjNZYudi+OeaKz9GkJdh6sL+0UoVkbaaR20BPMviJt++Fdip5ix4vkjKOLLhp8GpUetiRpBG7j4E=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192556>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Instead of obtaining short SHA1's from "git rev-list" and hitting the repository
+once more with "git rev-parse" for the full-size SHA1's, obtain long SHA1's from
+"git rev-list" and truncate them with "cut".
+---
+ git-rebase--interactive.sh |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-> Updates since v1.7.9
-> --------------------
-> 
-> UI, Workflows & Features
-[...]
->  * "gitweb" allows intermediate entries in the directory hierarchy
->    that leads to a projects to be clicked, which in turn shows the
->    list of projects inside that directory.
-> 
->  * "gitweb" learned to read various pieces of information for the
->    repositories lazily, instead of reading everything that could be
->    needed (including the ones that are not necessary for a specific
->    task).
-> 
->  * Project search in "gitweb" shows the substring that matched in the
->    project name and description highlighted.
-
-
-[...]
-> Fixes since v1.7.9
-> ------------------
-> 
-> Unless otherwise noted, all the fixes since v1.7.9 in the maintenance
-> releases are contained in this release (see release notes to them for
-> details).
-[...]
-
->  * "gitweb" used to drop warnings in the log file when "heads" view is
->    accessed in a repository whose HEAD does not point at a valid
->    branch.
-
-It looks like fix for fixed-string project search is missing.
-
-Nb. I don't know if it is worth mentioning, and if it should be in
-"Fixes" or "Updates", but gitweb now supports utf-8 search, anc checks
-regular expression for validity before using it in search.
-
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 5812222..8dcb8b0 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -774,17 +774,17 @@ else
+ 	revisions=$onto...$orig_head
+ 	shortrevisions=$shorthead
+ fi
+-git rev-list $merges_option --pretty=oneline --abbrev-commit \
+-	--abbrev=7 --reverse --left-right --topo-order \
++git rev-list $merges_option --pretty=oneline --no-abbrev-commit \
++	--reverse --left-right --topo-order \
+ 	$revisions | \
+ 	sed -n "s/^>//p" |
+-while read -r shortsha1 rest
++while read -r sha1 rest
+ do
++	shortsha1=$(echo $sha1 | cut -c1-7)
+ 	if test t != "$preserve_merges"
+ 	then
+ 		printf '%s\n' "pick $shortsha1 $rest" >> "$todo"
+ 	else
+-		sha1=$(git rev-parse $shortsha1)
+ 		if test -z "$rebase_root"
+ 		then
+ 			preserve=t
 -- 
-Jakub Narebski
+1.7.7.3
