@@ -1,85 +1,66 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH/RFC 0/2] post-receive-email: declaring and consistently using
- one output encoding
-Date: Thu, 8 Mar 2012 05:51:19 -0600
-Message-ID: <20120308115119.GA2604@burratino>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 1/2] rebase -i: optimize the creation of the todo file
+Date: Thu, 08 Mar 2012 12:51:28 +0100
+Message-ID: <4F589D40.5060804@viscovery.net>
+References: <1331203358-28277-1-git-send-email-domq@google.com> <4F589611.6060106@viscovery.net> <CAJh6GrGch9JHYnGW+K-wxdX9wPRry4Lxi2ysTtt0g9FTF4ThTQ@mail.gmail.com> <CAJh6GrGcr3nOMR7Yrq7g8c-RgQ4FS_FrhcMb+w-nXQO2nic_rw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Gerrit Pape <pape@smarden.org>, Alexey Shumkin <zapped@mail.ru>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jon Jensen <jon@endpoint.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 08 12:51:37 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Dominique Quatravaux <domq@google.com>
+X-From: git-owner@vger.kernel.org Thu Mar 08 12:51:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5bsb-0007Jh-ED
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 12:51:33 +0100
+	id 1S5bsh-0007Sq-LZ
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 12:51:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756957Ab2CHLv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 06:51:29 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:58137 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753565Ab2CHLv2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 06:51:28 -0500
-Received: by yhmm54 with SMTP id m54so114211yhm.19
-        for <git@vger.kernel.org>; Thu, 08 Mar 2012 03:51:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=rzfi45/C/8wi0RwlpwThwW/prcUfgN3XQYeUOrr/qb8=;
-        b=IJlQi+gDN5OthvPMEVQOcY+7XWA4dBztXZ879MDZmCIDSGudkj9al5ZJIfHJqsOoH1
-         vzho9NcK3N3kuUWr5aPRx62VTi1Xnoea+If4rIXGdpWBjUU4PDji3ODL+0OvnjuZZZ4m
-         i1CYQgRINiyzJeNSD7zJ1IYeExJg+bHf4xrMkX8vEQiNbB+JMe5VNMPqfWO831n7SQQV
-         idbckUDLgxVCiGNFPIQHjeGAVPTYV7YIW06aJHK8QkAJuVrtpVKQ2qX/bal8UqhKm7Yf
-         eAjdRWz25AkgcEty32VDQvjGpiTCy8Op03JRTvA4XlwM+3cXKYcM+cf9ewOlXmJqv+Rg
-         BY7A==
-Received: by 10.60.9.102 with SMTP id y6mr2598037oea.46.1331207487454;
-        Thu, 08 Mar 2012 03:51:27 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id d9sm2286423obq.0.2012.03.08.03.51.26
-        (version=SSLv3 cipher=OTHER);
-        Thu, 08 Mar 2012 03:51:27 -0800 (PST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757173Ab2CHLvd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 06:51:33 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:40254 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756972Ab2CHLvc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 06:51:32 -0500
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1S5bsW-0004So-Pp; Thu, 08 Mar 2012 12:51:28 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 81B311660F;
+	Thu,  8 Mar 2012 12:51:28 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <CAJh6GrGcr3nOMR7Yrq7g8c-RgQ4FS_FrhcMb+w-nXQO2nic_rw@mail.gmail.com>
+X-Enigmail-Version: 1.3.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192574>
 
-Hi,
+Am 3/8/2012 12:41, schrieb Dominique Quatravaux:
+> On Thu, Mar 8, 2012 at 12:36 PM, Dominique Quatravaux <domq@google.com> wrote:
+>> On Thu, Mar 8, 2012 at 12:20 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+>>> Am 3/8/2012 11:42, schrieb Dominique Quatravaux:
+>>>> +     shortsha1=$(echo $sha1 | cut -c1-7)
+>>>
+>>>> -             sha1=$(git rev-parse $shortsha1)
+>>>
+>>> Why do you call it "optimization" when you spend two or three subprocesses
+>>> instead of one?
+>>
+>> echo is a shell internal. "git rev-parse" is two processes just as
+>> "cut" and a pipe.
+> 
+> My mistake, strace git rev-parse revals that this is only one process.
+> Still, I think that saving a bunch of filesystem access beats saving
+> one fork()... 
 
-These patches revisit the bug described at [1], where the sample
-post-receive script annoys receiving MUAs by not declaring what
-encoding it uses.  Worse, sometimes the mails have a mixture of
-encodings.
+Not so on Windows.
 
-These patches standardize on UTF-8, but that is only for the sake of
-simplicity.  A patch on top to make the choice of encoding
-customizable would probably not be too complicated, if someone is
-interested.
+But you must look at the repository in any case to avoid truncating the
+SHA1 too much, as Thomas pointed out.
 
-Patches are targetted at 1.7.11 unless there is overwhelming
-interest in them landing sooner.  Thanks to Alexander Gerasiov
-<gq@cs.msu.su> for the writing a patch long ago to get this
-started[1].
-
-Thoughts?
-
-Gerrit Pape (1):
-  bug#506445: hooks/post-receive-email: set encoding to utf-8
-
-Jonathan Nieder (1):
-  post-receive-email: defend against non-utf8 [i18n] logoutputencoding
-    setting
-
- contrib/hooks/post-receive-email |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/181737/focus=181755
-[2] http://bugs.debian.org/506445
+-- Hannes
