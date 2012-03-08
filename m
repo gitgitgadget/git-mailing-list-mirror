@@ -1,76 +1,68 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: git push default behaviour?
-Date: Thu, 08 Mar 2012 16:26:34 +0100
-Message-ID: <vpq62efjeqd.fsf@bauges.imag.fr>
-References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com>
-	<87k42vs8pi.fsf@thomas.inf.ethz.ch>
-	<CAFsnPqopZEZeeuFzK4ZoUjGnfpiv5oMs=xV5XBSgSyGLXOwgqA@mail.gmail.com>
-	<1331202483.21444.11.camel@beez.lab.cmartin.tk>
-	<CAFsnPqpnH2CTki8zz6Mpz=qrdxF_aTA92cPrn1L9MQZVMoxdeg@mail.gmail.com>
-	<1331203321.21444.13.camel@beez.lab.cmartin.tk>
-	<4F58C977.8000400@xiplink.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH 1/5] transport: expose git_tcp_connect() and friends in
+ new tcp.h
+Date: Thu, 8 Mar 2012 16:28:03 +0100
+Message-ID: <CABPQNSbSkq3DnxvJ8tDp4KdyaeW1H6GriT9V3X6SLCRjkNR-fw@mail.gmail.com>
+References: <20120308124857.GA7666@burratino> <20120308130304.GA9426@burratino>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
-	Jeremy Morton <jeremy@configit.com>,
-	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 16:27:48 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Eric Wong <normalperson@yhbt.net>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 08 16:28:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5fFq-0007uy-4T
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 16:27:46 +0100
+	id 1S5fGq-0000gz-Ib
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 16:28:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755238Ab2CHP1V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 10:27:21 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:58220 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753764Ab2CHP1U (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 10:27:20 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q28FMQ7g000994
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 8 Mar 2012 16:22:26 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1S5fEh-0004du-B3; Thu, 08 Mar 2012 16:26:35 +0100
-In-Reply-To: <4F58C977.8000400@xiplink.com> (Marc Branchaud's message of "Thu,
-	08 Mar 2012 10:00:07 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 08 Mar 2012 16:22:27 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q28FMQ7g000994
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1331824947.77383@T9CYNIIbOpmTo1L8JLB/ag
+	id S1756718Ab2CHP2o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 10:28:44 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:35124 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753805Ab2CHP2n convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 10:28:43 -0500
+Received: by pbcun15 with SMTP id un15so1605349pbc.19
+        for <git@vger.kernel.org>; Thu, 08 Mar 2012 07:28:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=7tmi+uaKHOOD3ftPtHBn6nNeiTdi0GH6oU5GBM8lay8=;
+        b=yDVoNul8L3gUfOVILzMBzV0u4fmPwrFoTbIs3HixdY1ReW1mPSlD4wdF8NTsSlCIvl
+         aTLi7qX2u19hQQWv/KNjRf/9LMXb5lwvsBNB5Na+/2ZoXjsgIoBHWThLiN+t+t2c2oIX
+         GVH6qbKIaTfpLwS9wwJRB2J80vxrGW18YF07fa/utxp4+aJ/xT0W9GRF9dYJC41ueY4J
+         lcnn0D/EMdEYiZVlRVbjhejqU8efWWnKqinMSi8A1+OLZhJmuFtTw6+9WuWbguNm02i2
+         B/yXoO/mqt1h/RHZROz611951ucufpGT9CvCxdD1GUBATw9KpKv2RzE3RN5v/XSMS+Yx
+         0hKQ==
+Received: by 10.68.233.99 with SMTP id tv3mr10201075pbc.73.1331220523207; Thu,
+ 08 Mar 2012 07:28:43 -0800 (PST)
+Received: by 10.68.1.135 with HTTP; Thu, 8 Mar 2012 07:28:03 -0800 (PST)
+In-Reply-To: <20120308130304.GA9426@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192609>
 
-Marc Branchaud <marcnarc@xiplink.com> writes:
+On Thu, Mar 8, 2012 at 2:03 PM, Jonathan Nieder <jrnieder@gmail.com> wr=
+ote:
+> Date: Mon, 6 Jun 2011 04:37:14 -0500
+>
+> Split off a new tcp.c with the functions git_tcp_connect() and
+> git_proxy_connect() that resolve and connect to a host.
+>
+> Part of a series to teach git to respect DNS SRV records when making
+> new connections. =A0This is a preliminary step to make the connection
+> library easier to understand before changing it.
+>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 
-> I agree with Jeremy that the default is dangerous, or at the very
-> least surprising.
-
-Yes, --force is not the only problem. Getting constant non-fast forward
-errors just because you have out-of-date local ref is annoying, and
-really, really confusing.
-
-'push.default = matching' is never a good idea if you use shared
-repository actually. It makes sense for people like Junio pushing a
-local repository to a public one, which is read-only for the rest of the
-world. But my experience is that people using such workflow are advanced
-users, and would know how to configure Git, so it wouldn't really harm
-them to change the default.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Nice. Now that this has been libified, someone can probably get rid of
+some code in imap-send.c (specifically in the imap_open_store
+function) on top of your topic...
