@@ -1,58 +1,91 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH/RFC] Change t0204-gettext-reencode-sanity.sh to pass under
- Mac OSX
-Date: Thu, 08 Mar 2012 08:23:28 +0100
-Message-ID: <4F585E70.90302@viscovery.net>
-References: <201203052039.16893.tboegi@web.de> <7vzkbuzss7.fsf@alter.siamese.dyndns.org> <CACBZZX4P=JSdP_vLOMx5r3R+YO8SMSs5W8+vf2DMibKMwBx_Vg@mail.gmail.com> <7vfwdkm6xs.fsf@alter.siamese.dyndns.org> <CACBZZX4q0Da=H=-fO86f2YN+CmE25QfEgAp8Efmdyf65CGckiQ@mail.gmail.com> <7v4nu0m5tb.fsf@alter.siamese.dyndns.org> <CACBZZX6W=-ZchaCsLGdpZ420L_9=w8AHD8BNVb7XV5M-hc0Qhg@mail.gmail.com> <7vd38okmp0.fsf@alter.siamese.dyndns.org> <4F5849AE.1070807@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: who's on first? - following first parent and merge-management
+Date: Wed, 07 Mar 2012 23:38:05 -0800
+Message-ID: <7v8vjbfspu.fsf@alter.siamese.dyndns.org>
+References: <jj6s47$m98$1@dough.gmane.org>
+ <7vwr6woo8p.fsf@alter.siamese.dyndns.org>
+ <7vty1zfwmd.fsf@alter.siamese.dyndns.org>
+ <20120308071403.GE7643@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBC?= =?UTF-8?B?amFybWFzb24=?= 
-	<avarab@gmail.com>, git@vger.kernel.org
-To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Mar 08 08:23:47 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Neal Kreitzinger <nkreitzinger@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 08 08:38:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5XhP-0000PB-71
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 08:23:43 +0100
+	id 1S5XvU-0007Qb-7k
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 08:38:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752574Ab2CHHXh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 02:23:37 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:30999 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752489Ab2CHHXg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 02:23:36 -0500
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1S5XhB-0005oQ-56; Thu, 08 Mar 2012 08:23:29 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id B2F731660F;
-	Thu,  8 Mar 2012 08:23:28 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <4F5849AE.1070807@web.de>
-X-Spam-Score: -1.4 (-)
+	id S1752234Ab2CHHiM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 02:38:12 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61829 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751004Ab2CHHiI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 02:38:08 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C9DE9447E;
+	Thu,  8 Mar 2012 02:38:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SUPc/XjKIhrkBmkf8/Do1DpzD+k=; b=dCAT5Q
+	EFfGhCHu0cM50X4w7rTfp7ASOWO9VK1+uz5a8sxPRD+0v8SGGqRU4TDFnn0qQGCu
+	DKssbz1P+bWY1sxhJM6gs4ktlJofwpK0rcha6hBFCLH/Vdve9orhHd0JN4k3sn2i
+	k7NMGrJIXGLm7OxJQeC9K+Xmb8K6AzOrqoja4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Bm2XLLTZf8ImLps4RMd+dcUnWnfb4jTP
+	PybQvm0hkCzhBT5C9mBQfgSc710THjmPm6bvK7Bzc+WWZ8RQuZZ86n/1cApwjMKW
+	mJwu76N91GBYLeIOOVqQEksFYOPPIUd/Kegu0IsWa8rm7BmtxBgyFdvMGYQFuVQP
+	LoFWjQ3WfD0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BFED1447D;
+	Thu,  8 Mar 2012 02:38:07 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 48A08447C; Thu,  8 Mar 2012
+ 02:38:07 -0500 (EST)
+In-Reply-To: <20120308071403.GE7643@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 8 Mar 2012 02:14:03 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A5A1EA68-68F1-11E1-9465-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192533>
 
-Am 3/8/2012 6:54, schrieb Torsten B=C3=B6gershausen:
-> On 08.03.12 00:36, Junio C Hamano wrote:
->>  test_expect_success GETTEXT_ISO_LOCALE 'gettext: Emitting ISO-8859-=
-1 from our UTF-8 *.mo files / Runes' '
+Jeff King <peff@peff.net> writes:
 
-> ok 4 # skip gettext: Emitting ISO-8859-1 from our UTF-8 *.mo files / =
-Runes (missing GETTEXT_ISO_LOCALE)
-         ^^^^
-Huh? How can you have tripped over this test in the first place? The
-prerequisite did not change in Junio's patch. Why was the test not skip=
-ped
-before you started this thread with your own patch?
+> This gave me an idea that I think is probably crazy, but that I hadn't
+> seen mentioned before.
+> ...
+> You could extend it to topic branches, too ("refs/heads/master >
+> refs/heads/jk/*"). Of course, depending on your workflow, you might
+> _want_ to have them flipped. I.e., when it is not just laziness or lack
+> of understanding, and you really are making a merge commit to say "topic
+> XYZ depends on something that is now in master, so let's merge that in
+> before continuing topic development".
 
--- Hannes
+It certainly is *fun* to think about, and in a way it is sort-of in
+line at least in spirit with the -m option to the "revert" command
+to give the user run-time control over the order of the parents when
+creating a new merge commit object.
+
+But I agree that people are overly and needlessly interested in
+first parenthood.
+
+> So I think the primary audience would be people doing clueless
+> centralized-repo development. Of course you'd perhaps want to flip the
+> merge message, too. And I do think people are overly-interested in
+> --first-parent in the first place, so the effort of specifying the
+> parent ordering like this is probably not worth it.
+
+As I already said in my first message in this thread, using shared
+central repository workflow does not make one a bad person, let
+alone clueless.  It just means that the first parenthood is not a
+suitable tool for summarlizing their histories, and there are more
+suitable ones such as shortlog that would apply equally well to all
+workflows regardless of the parent order.
