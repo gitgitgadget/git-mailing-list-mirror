@@ -1,117 +1,55 @@
-From: =?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH/RFC] Change t0204-gettext-reencode-sanity.sh to pass under Mac OSX
-Date: Thu, 8 Mar 2012 10:21:43 +0100
-Message-ID: <2412B623-E91D-44E6-8E08-97AE8CD9B978@web.de>
-References: <201203052039.16893.tboegi@web.de> <7vzkbuzss7.fsf@alter.siamese.dyndns.org> <CACBZZX4P=JSdP_vLOMx5r3R+YO8SMSs5W8+vf2DMibKMwBx_Vg@mail.gmail.com> <7vfwdkm6xs.fsf@alter.siamese.dyndns.org> <CACBZZX4q0Da=H=-fO86f2YN+CmE25QfEgAp8Efmdyf65CGckiQ@mail.gmail.com> <7v4nu0m5tb.fsf@alter.siamese.dyndns.org> <CACBZZX6W=-ZchaCsLGdpZ420L_9=w8AHD8BNVb7XV5M-hc0Qhg@mail.gmail.com> <7vd38okmp0.fsf@alter.siamese.dyndns.org> <4F5849AE.1070807@web.de> <4F585E70.90302@viscovery.net>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=iso-8859-1
+From: Jeremy Morton <jeremy@configit.com>
+Subject: git push default behaviour?
+Date: Thu, 8 Mar 2012 10:01:46 +0000
+Message-ID: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Mar 08 10:21:54 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 08 11:02:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5ZXl-0004r9-Sf
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 10:21:54 +0100
+	id 1S5aAU-0008VW-BY
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 11:01:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755866Ab2CHJVt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 04:21:49 -0500
-Received: from fmmailgate04.web.de ([217.72.192.242]:54046 "EHLO
-	fmmailgate04.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755814Ab2CHJVq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 04:21:46 -0500
-Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
-	by fmmailgate04.web.de (Postfix) with ESMTP id E88607355BC6
-	for <git@vger.kernel.org>; Thu,  8 Mar 2012 10:21:44 +0100 (CET)
-Received: from birne.lan ([194.22.188.61]) by smtp.web.de (mrweb001) with
- ESMTPA (Nemesis) id 0MBTTa-1SFzOL3H42-00AdOg; Thu, 08 Mar 2012 10:21:44 +0100
-In-Reply-To: <4F585E70.90302@viscovery.net>
-X-Mailer: Apple Mail (2.1084)
-X-Provags-ID: V02:K0:gf0KkZNFWLea1NtJMrjoBMnhpdKmL8v6y8HpsXTWEaV
- ypqd1rLPhSboMQ/hLK0zX2Mo3/887ySxVn1VWWVFykJk0AiUG+
- 3IRQ52SMwM+pzhyuAHOW4d+l8YfgJ/nis3nO2HYx6PRHuZ/rfD
- AbpalCCC16mEO0wHMj97XeZWcEvi+wOOyh+Oxnusa5X24wSHGw
- JAO1t9BuXhmp5SiujXVfg==
+	id S1753249Ab2CHKBs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 05:01:48 -0500
+Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:53621 "EHLO
+	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751949Ab2CHKBs convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 05:01:48 -0500
+Received: by lahj13 with SMTP id j13so301417lah.19
+        for <git@vger.kernel.org>; Thu, 08 Mar 2012 02:01:46 -0800 (PST)
+Received: by 10.152.127.136 with SMTP id ng8mr4046734lab.16.1331200906116;
+ Thu, 08 Mar 2012 02:01:46 -0800 (PST)
+Received: by 10.112.23.225 with HTTP; Thu, 8 Mar 2012 02:01:46 -0800 (PST)
+X-Gm-Message-State: ALoCoQmg4Pha4R8iwp0ddmD5EFKbQU67h0uwC1QcBLu1aMhB+D8PjhVbrgpEZ6P2Xp7j9HXEZUO3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192547>
 
+Hi everyone,
 
-Am 08.03.2012 um 08:23 schrieb Johannes Sixt:
+I've noticed that the default behaviour of 'git push' is to push to
+*all* branches that have a remote branch set up.=A0 In order to push
+just to one branch, you must specify 'git push repo branchname'.
 
-> Am 3/8/2012 6:54, schrieb Torsten B=F6gershausen:
->> On 08.03.12 00:36, Junio C Hamano wrote:
->>> test_expect_success GETTEXT_ISO_LOCALE 'gettext: Emitting ISO-8859-=
-1 from our UTF-8 *.mo files / Runes' '
->=20
->> ok 4 # skip gettext: Emitting ISO-8859-1 from our UTF-8 *.mo files /=
- Runes (missing GETTEXT_ISO_LOCALE)
->         ^^^^
-> Huh? How can you have tripped over this test in the first place? The
-> prerequisite did not change in Junio's patch. Why was the test not sk=
-ipped
-> before you started this thread with your own patch?
->=20
-> -- Hannes
->=20
+This seems rather unintuative to me, and in the case of a '--force',
+almost certainly not what you want.=A0 You're usually working on one
+branch and just want to push that one, and it's usually the branch
+you're currently on. And in the case of a '--force', in addition by
+pushing all branches to remote, you are going to undo any changes on
+other branches made since you updated them on your local repo.
 
-Hm,=20
-things are getting confusing.
+Wouldn't it be better for git's default push behaviour (at least with
+the '--force' option) to be just to push to the current branch in the
+current repo?=A0 To push to all branches you could have an
+'--allbranches' option.
 
-After re-booting the machine, cloning git ... I get the following on a =
-clean 1.7.10-rc0 (without Junios patch):
-
-tb@birne:~/projects/git/git_clean/t> ./t0204-gettext-reencode-sanity.sh=
-=20
-# lib-gettext: No is_IS UTF-8 locale available
-# lib-gettext: No is_IS ISO-8859-1 locale available
-ok 1 # skip gettext: Emitting UTF-8 from our UTF-8 *.mo files / Iceland=
-ic (missing GETTEXT_LOCALE)
-ok 2 # skip gettext: Emitting UTF-8 from our UTF-8 *.mo files / Runes (=
-missing GETTEXT_LOCALE)
-ok 3 # skip gettext: Emitting ISO-8859-1 from our UTF-8 *.mo files / Ic=
-elandic (missing GETTEXT_ISO_LOCALE)
-ok 4 # skip gettext: Emitting ISO-8859-1 from our UTF-8 *.mo files / Ru=
-nes (missing GETTEXT_ISO_LOCALE)
-ok 5 # skip gettext: Fetching a UTF-8 msgid -> UTF-8 (missing GETTEXT_L=
-OCALE)
-ok 6 # skip gettext: Fetching a UTF-8 msgid -> ISO-8859-1 (missing GETT=
-EXT_ISO_LOCALE)
-ok 7 # skip gettext.c: git init UTF-8 -> UTF-8 (missing GETTEXT_LOCALE)
-ok 8 # skip gettext.c: git init UTF-8 -> ISO-8859-1 (missing GETTEXT_IS=
-O_LOCALE)
-# passed all 8 test(s)
-1..8
-
-on 5e9637c629702e3d41ad01d95956d1835  the log looks like this:
-
-
-tb@birne:~/projects/git/git_clean/t> ./t0204-gettext-reencode-sanity.sh=
-=20
-# lib-gettext: Found 'is_IS.UTF-8' as an is_IS UTF-8 locale
-# lib-gettext: Found 'is_IS.ISO8859-1' as an is_IS ISO-8859-1 locale
-ok 1 - gettext: Emitting UTF-8 from our UTF-8 *.mo files / Icelandic
-ok 2 - gettext: Emitting UTF-8 from our UTF-8 *.mo files / Runes
-ok 3 - gettext: Emitting ISO-8859-1 from our UTF-8 *.mo files / Iceland=
-ic
-ok 4 - gettext: Emitting ISO-8859-1 from our UTF-8 *.mo files / Runes
-ok 5 - gettext: Fetching a UTF-8 msgid -> UTF-8
-ok 6 - gettext: Fetching a UTF-8 msgid -> ISO-8859-1
-ok 7 - gettext.c: git init UTF-8 -> UTF-8
-ok 8 - gettext.c: git init UTF-8 -> ISO-8859-1
-# passed all 8 test(s)
-1..8
-tb@birne:~/projects/git/git_clean/t>=20
-
-
-At the moment I would like to say sorry for the noise.
-If somebody is interested. I can dig into details later this evening (e=
-uropean time)=20
-/Torsten
+Best regards,
+Jeremy Morton (Jez)
