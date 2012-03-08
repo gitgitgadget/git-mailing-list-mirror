@@ -1,87 +1,110 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 7/5] transport: optionally honor DNS SRV records
-Date: Thu, 8 Mar 2012 15:35:45 -0600
-Message-ID: <20120308213545.GB9497@burratino>
-References: <20120308124857.GA7666@burratino>
- <20120308132155.GG9426@burratino>
- <CABPQNSYpRGfu7Ew+KstCFsG4YDSx+i-jzHS1Bw0BA4S2hoz4SA@mail.gmail.com>
+From: Mark Hills <mark@pogo.org.uk>
+Subject: Re: [PATCH] gitk: use symbolic font names "sans" and "monospace"
+ when available
+Date: Thu, 8 Mar 2012 21:19:30 +0000 (GMT)
+Message-ID: <alpine.LNX.2.01.1203082118260.1467@stax.localdomain>
+References: <20120308123011.GA4355@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Eric Wong <normalperson@yhbt.net>
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 22:36:01 2012
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Josh Triplett <josh@joshtriplett.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 08 22:38:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5l0B-0007Hd-A6
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 22:35:59 +0100
+	id 1S5l2h-0001JR-0J
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 22:38:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756438Ab2CHVfy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 16:35:54 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:33514 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755270Ab2CHVfx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 16:35:53 -0500
-Received: by ghrr11 with SMTP id r11so555899ghr.19
-        for <git@vger.kernel.org>; Thu, 08 Mar 2012 13:35:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=tgEx8cKlh1BHfqQ7tS/Rg19otCUHB7ykMYjQ4iarytU=;
-        b=p+WVodC8fX6029Fz+yyOBCz93yaQNqV85fSIgl7l3AYB7rG/hnQHuoDeBs7JVhyKWt
-         lnKa+eet3uIRL5sKjkWxqtN9dJjD+v+m4VNORwpQpDHCHZOJrq/19ujhn/V0zuh9P7d5
-         auklVHPmzMDWK+mLH32/NF1CL0+ERPQy3aT6YEQJzU5x0t/9Qq7/Qw7emut78Sj3NipX
-         fXoImhkSMVuEnIY00u9p78ioziV0yLDw2CTUN+783Tw4pkcCQUUF5TINQBvl31yBChvu
-         kNaRqlog/dEgMWkYJuuIKdRuLJaKYMT1RSvr1yO1KJK4Fdw5NHWkQ0lHnRkN1dNK1pl+
-         ySuQ==
-Received: by 10.60.26.163 with SMTP id m3mr3028768oeg.40.1331242553085;
-        Thu, 08 Mar 2012 13:35:53 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id n7sm1554192oeh.4.2012.03.08.13.35.51
-        (version=SSLv3 cipher=OTHER);
-        Thu, 08 Mar 2012 13:35:52 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CABPQNSYpRGfu7Ew+KstCFsG4YDSx+i-jzHS1Bw0BA4S2hoz4SA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756412Ab2CHVia (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 16:38:30 -0500
+Received: from mx.ij.cx ([212.13.201.15]:50278 "EHLO wes.ijneb.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755551Ab2CHVi3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 16:38:29 -0500
+X-Greylist: delayed 1136 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 Mar 2012 16:38:29 EST
+Received: from cpc2-acto2-0-0-cust942.4-2.cable.virginmedia.com ([82.28.203.175] helo=stax.localdomain)
+	by wes.ijneb.com with esmtpa (Exim 4.77)
+	(envelope-from <mark@pogo.org.uk>)
+	id 1S5kkF-0006Jd-Mg; Thu, 08 Mar 2012 21:19:31 +0000
+Received: from mark (helo=localhost)
+	by stax.localdomain with local-esmtp (Exim 4.69)
+	(envelope-from <mark@pogo.org.uk>)
+	id 1S5kkE-0000SW-U8; Thu, 08 Mar 2012 21:19:30 +0000
+In-Reply-To: <20120308123011.GA4355@burratino>
+X-SA-Exim-Connect-IP: 82.28.203.175
+X-SA-Exim-Mail-From: mark@pogo.org.uk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192655>
 
-Erik Faye-Lund wrote:
+On Thu, 8 Mar 2012, Jonathan Nieder wrote:
 
-> It's an interesting feature, but I'm a little bit worried if this
-> promotes non-portable setups; won't these repos be unreachable (at
-> least without manually redirecting or also keeping a copy on the
-> advertised URL) on machines where libresolv is unavailable? I'm mainly
-> thinking about the "a single domain can use different hosts for
-> different services"-benefit you mentioned.
+> The following only concerns systems using X and the client-side font
+> rendering framework from freedesktop.org.  Windows and Mac OS X are
+> not affected.
+> 
+> Starting with version 8.5, Tk uses freetype and fontconfig by default
+> to render fonts on platforms that support it.  Gitk currently defaults
+> to the font Helvetica for the interface and Courier for diffs, and
+> both unfortunately look rather bad on screen in the default
+> configuration on many Linux distros with anti-aliasing and poor
+> hinting.
+> 
+> It is better to default to "sans" and "monospace", which are mapped by
+> fontconfig to some appropriate font of the sysadmin and user's
+> choosing (typically Bitstream Vera Sans and Mono).  The result looks
+> more sensible and it makes gitk feel like a well-behaved software
+> citizen since its fonts match other native apps.
+> 
+> This patch does not change the appearance of gitk for users that have
+> already run it, since gitk uses the remembered UI and diff font names
+> from ~/.gitk
+> 
+> Requested-by: Michael Biebl <biebl@debian.org>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Yes.  I think of redirecting with SRV records without a fallback as a
-misconfiguration ("don't do that, then").  Note that it would not only
-affect people without drand48 but people with broken DNS servers.
+Sounds reasonable to me.
 
-In the case of Alioth, what they do is let inetd listen on
-git.debian.org = vasks.debian.org, using netcat to forward connections
-to wagner.debian.org.  So clients with and without SRV support end up
-finding their bits shuttled to the same place, with the only
-difference being a little wasted load on vasks in the no-SRV case.
+Acked-by: Mark Hills <mark@pogo.org.uk>
 
-This means the Alioth admins don't get the benefit of not having to
-set up a proxy, but they do get the benefit of clients taking on more
-of the work and the service continuing to be available for some
-clients if vasks goes down.
+> ---
+> Hi,
+> 
+> A variant of this patch that just unconditionally set the fonts has
+> been in Debian for more than a year, but just now I finally got around
+> to making it conditional.  Tested with tk 8.5 (where fontconfig is
+> used) and tk 8.4 (where it isn't) and the autodetection seems to work.
+> 
+> Sensible?
+> 
+> Jonathan
+> 
+>  gitk-git/gitk |    5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/gitk-git/gitk b/gitk-git/gitk
+> index 64ef3c40..6981cb20 100755
+> --- a/gitk-git/gitk
+> +++ b/gitk-git/gitk
+> @@ -11426,6 +11426,11 @@ if {[tk windowingsystem] eq "aqua"} {
+>      set mainfont {{Lucida Grande} 9}
+>      set textfont {Monaco 9}
+>      set uifont {{Lucida Grande} 9 bold}
+> +} elseif {![catch {::tk::pkgconfig get fontsystem} xft] && $xft eq "xft"} {
+> +    # fontconfig!
+> +    set mainfont {sans 9}
+> +    set textfont {monospace 9}
+> +    set uifont {sans 9 bold}
+>  } else {
+>      set mainfont {Helvetica 9}
+>      set textfont {Courier 9}
+> 
 
-Maybe adding an envvar to disable the SRV handling would make it
-easier for server admins to check the fallback.  Can we do more?
-
-(By the way, what platforms don't support BIND and a random number
-generator?)
-
-Thanks,
-Jonathan
+-- 
+Mark
