@@ -1,67 +1,50 @@
-From: Jeremy Morton <jeremy@configit.com>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
 Subject: Re: git push default behaviour?
-Date: Thu, 8 Mar 2012 10:38:15 +0000
-Message-ID: <CAFsnPqpnH2CTki8zz6Mpz=qrdxF_aTA92cPrn1L9MQZVMoxdeg@mail.gmail.com>
+Date: Thu, 08 Mar 2012 11:42:01 +0100
+Message-ID: <1331203321.21444.13.camel@beez.lab.cmartin.tk>
 References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com>
-	<87k42vs8pi.fsf@thomas.inf.ethz.ch>
-	<CAFsnPqopZEZeeuFzK4ZoUjGnfpiv5oMs=xV5XBSgSyGLXOwgqA@mail.gmail.com>
-	<1331202483.21444.11.camel@beez.lab.cmartin.tk>
+	 <87k42vs8pi.fsf@thomas.inf.ethz.ch>
+	 <CAFsnPqopZEZeeuFzK4ZoUjGnfpiv5oMs=xV5XBSgSyGLXOwgqA@mail.gmail.com>
+	 <1331202483.21444.11.camel@beez.lab.cmartin.tk>
+	 <CAFsnPqpnH2CTki8zz6Mpz=qrdxF_aTA92cPrn1L9MQZVMoxdeg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
-To: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Thu Mar 08 11:38:35 2012
+To: Jeremy Morton <jeremy@configit.com>
+X-From: git-owner@vger.kernel.org Thu Mar 08 11:42:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5ajy-0007gk-Kl
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 11:38:34 +0100
+	id 1S5anR-0003Qh-Vs
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 11:42:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756091Ab2CHKiT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 05:38:19 -0500
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:34664 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755757Ab2CHKiR convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 05:38:17 -0500
-Received: by lahj13 with SMTP id j13so329659lah.19
-        for <git@vger.kernel.org>; Thu, 08 Mar 2012 02:38:15 -0800 (PST)
-Received: by 10.152.102.228 with SMTP id fr4mr4039907lab.23.1331203095664;
- Thu, 08 Mar 2012 02:38:15 -0800 (PST)
-Received: by 10.112.23.225 with HTTP; Thu, 8 Mar 2012 02:38:15 -0800 (PST)
-In-Reply-To: <1331202483.21444.11.camel@beez.lab.cmartin.tk>
-X-Gm-Message-State: ALoCoQkN+CjvH4fNH1O1x+WN9hu7e5SU6jt9eGBurjnBBcF4plsxPuuB6oEK1HykLINYMEL1CvKh
+	id S1751881Ab2CHKmF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 05:42:05 -0500
+Received: from kimmy.cmartin.tk ([91.121.65.165]:36417 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751029Ab2CHKmE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 05:42:04 -0500
+Received: from [87.77.57.197] (z39c5.pia.fu-berlin.de [87.77.57.197])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 971BE46082;
+	Thu,  8 Mar 2012 11:41:54 +0100 (CET)
+In-Reply-To: <CAFsnPqpnH2CTki8zz6Mpz=qrdxF_aTA92cPrn1L9MQZVMoxdeg@mail.gmail.com>
+X-Mailer: Evolution 3.2.2-1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192554>
 
-But 'push --force' WILL try to push your (probably outdated) master
-upstream, killing any changes there made since you last updated.  That
-alone is so dangerous it seems like reason enough to avoid it by
-default.
+On Thu, 2012-03-08 at 10:38 +0000, Jeremy Morton wrote:
+> But 'push --force' WILL try to push your (probably outdated) master
+> upstream, killing any changes there made since you last updated.  That
+> alone is so dangerous it seems like reason enough to avoid it by
+> default.
 
-Best regards,
-Jeremy Morton (Jez)
+Then don't use --force without specifying exactly what you want.
+Anything with that option needs to be used carefully.
 
-On Thu, Mar 8, 2012 at 10:28 AM, Carlos Mart=EDn Nieto <cmn@elego.de> w=
-rote:
-> On Thu, 2012-03-08 at 10:13 +0000, Jeremy Morton wrote:
->> Right, so I guess I'm saying that the default value for push.default
->> should be upstream instead of matching...
->
-> Any default is going to leave some people unhappy. If upstream is the
-> right thing for you, then that's what you should use. Most questions =
-I
-> see about push not doing what the users expect would actually benefit
-> from 'current'. 'matching' is a fairly safe default, as it won't try =
-to
-> push private branches or changes in private branches that track
-> something upstream.
->
-> =A0 cmn
->
->
+   cmn
