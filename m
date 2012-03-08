@@ -1,186 +1,136 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH/RFC] Change t0204-gettext-reencode-sanity.sh to pass under
- Mac OSX
-Date: Thu, 08 Mar 2012 06:54:54 +0100
-Message-ID: <4F5849AE.1070807@web.de>
-References: <201203052039.16893.tboegi@web.de> <7vzkbuzss7.fsf@alter.siamese.dyndns.org> <CACBZZX4P=JSdP_vLOMx5r3R+YO8SMSs5W8+vf2DMibKMwBx_Vg@mail.gmail.com> <7vfwdkm6xs.fsf@alter.siamese.dyndns.org> <CACBZZX4q0Da=H=-fO86f2YN+CmE25QfEgAp8Efmdyf65CGckiQ@mail.gmail.com> <7v4nu0m5tb.fsf@alter.siamese.dyndns.org> <CACBZZX6W=-ZchaCsLGdpZ420L_9=w8AHD8BNVb7XV5M-hc0Qhg@mail.gmail.com> <7vd38okmp0.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] archive: fix archive generation for empty trees
+Date: Thu, 8 Mar 2012 00:55:20 -0500
+Message-ID: <20120308055520.GB7643@sigill.intra.peff.net>
+References: <1331165362-78065-1-git-send-email-brodie@sf.io>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	git@vger.kernel.org,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 06:55:08 2012
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Brodie Rao <brodie@sf.io>
+X-From: git-owner@vger.kernel.org Thu Mar 08 06:55:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5WJg-00088Z-4P
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 06:55:08 +0100
+	id 1S5WJz-0008Vh-Jj
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 06:55:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752246Ab2CHFzD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 00:55:03 -0500
-Received: from smtp-out12.han.skanova.net ([195.67.226.212]:47230 "EHLO
-	smtp-out12.han.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752234Ab2CHFzB (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 00:55:01 -0500
-Received: from birne.lan (194.22.188.61) by smtp-out12.han.skanova.net (8.5.133) (authenticated as tboegi@telia.com)
-        id 4EFC380E0129AE35; Thu, 8 Mar 2012 06:54:55 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <7vd38okmp0.fsf@alter.siamese.dyndns.org>
+	id S1752688Ab2CHFzY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 00:55:24 -0500
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44311
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752673Ab2CHFzW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 00:55:22 -0500
+Received: (qmail 32672 invoked by uid 107); 8 Mar 2012 05:55:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 08 Mar 2012 00:55:30 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Mar 2012 00:55:20 -0500
+Content-Disposition: inline
+In-Reply-To: <1331165362-78065-1-git-send-email-brodie@sf.io>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192522>
 
-On 08.03.12 00:36, Junio C Hamano wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+[+cc Ren=C3=A9, as this is his code;
+ +cc Duy, for pathspec questions]
+
+On Wed, Mar 07, 2012 at 04:09:22PM -0800, Brodie Rao wrote:
+
+> Prior to this change, git-archive would try to verify path arguments =
+-
+> even if none were provided. It used get_pathspec("", pathspec), which
+> would return a pathspec of "" instead of NULL.
 >=20
->> Having that information doesn't cost us a lot, in this case we can
->> just amend the test to assert that on OSX the output should be the
->> same as under the UTF-8 output.
+> Then it would try to verify if the tree contained any paths matching
+> "". This is fine in the normal case where the tree contains anything
+> (every entry would match), but for an empty tree, it wouldn't match,
+> and you'd get this error:
 >=20
-> Known modes of error behaviour are to show:
+>   fatal: path not found:
 >=20
->  - runs of "?", saying "I dunno";
+> Now, instead of "", we use a pathspec prefix of NULL. If no path
+> arguments were provided, get_pathspec() will return NULL, and we won'=
+t
+> try to verify the existence of any paths in the tree.
+
+Yeah, this looks like the right thing to do. The get_pathspec code
+treats a NULL prefix specially as "no prefix", and I think that is what
+we are trying to say here (i.e., we are interpreting pathspecs from the
+root).
+
+Though the main function of get_pathspec seems to be to call
+prefix_pathspec on each element of the pathspec. And we have no prefix
+here. However, prefix_pathspec does a lot of magic parsing; it's unclea=
+r
+to me whether this is all in support of properly adding the prefix, or
+if its side effects are important. But if it is purely about prefixing,
+can't we just get rid of the call to get_pathspec entirely?
+
+There is also a comment above prefix_pathspec regarding moving things
+over to the new "struct pathspec" interface. But that leaves me more
+confused, since init_pathspec does not handle prefixes at all (so it
+looks like you would need to call get_pathspec first to get a
+prefixed list, and then feed the result to init_pathspec. Should we be
+doing something with "struct pathspec" here? Confused...
+
+-Peff
+
+PS The patch itself is quoted below without further comment for the
+   benefit of those who were cc'd.
+
+> ---
+>  archive.c           |    2 +-
+>  t/t5000-tar-tree.sh |   16 ++++++++++++++++
+>  2 files changed, 17 insertions(+), 1 deletion(-)
 >=20
->  - the key used to query the message catalog ("TEST: Old English
->    Runes"), saying "I don't do i18n"; or
->=20
->  - the raw value stored in the message catalog (runes in UTF-8).
->=20
-> and each makes sort-of sense in its own way.
->=20
-> I would be OK if the patch read like the attached, but I do not
-> think treating the "show key" and "stuff with ?" case differently
-> like the original code did makes any sense.
->=20
-> It may be better to clarify in the "say" comment that this test is
-> not about finding if the user's system is *broken* but about seeing
-> if the "undefined" behaviour upon user error is one that we
-> recognize, though.
->=20
->  t/t0204-gettext-reencode-sanity.sh |   21 +++++++++++++--------
->  1 file changed, 13 insertions(+), 8 deletions(-)
->=20
-> diff --git a/t/t0204-gettext-reencode-sanity.sh b/t/t0204-gettext-ree=
-ncode-sanity.sh
-> index 189af90..8911e93 100755
-> --- a/t/t0204-gettext-reencode-sanity.sh
-> +++ b/t/t0204-gettext-reencode-sanity.sh
-> @@ -7,6 +7,7 @@ test_description=3D"Gettext reencoding of our *.po/*.=
-mo files works"
-> =20
->  . ./lib-gettext.sh
-> =20
-> +RUNES=3D"TILRAUN: =E1=9A=BB=E1=9B=96 =E1=9A=B3=E1=9A=B9=E1=9A=AB=E1=9A=
-=A6 =E1=9A=A6=E1=9A=AB=E1=9B=8F =E1=9A=BB=E1=9B=96 =E1=9B=92=E1=9A=A2=E1=
-=9B=9E=E1=9B=96 =E1=9A=A9=E1=9A=BE =E1=9A=A6=E1=9A=AB=E1=9B=97 =E1=9B=9A=
-=E1=9A=AA=E1=9A=BE=E1=9B=9E=E1=9B=96 =E1=9A=BE=E1=9A=A9=E1=9A=B1=E1=9A=A6=
-=E1=9A=B9=E1=9B=96=E1=9A=AA=E1=9A=B1=E1=9B=9E=E1=9A=A2=E1=9B=97 =E1=9A=B9=
-=E1=9B=81=E1=9A=A6 =E1=9A=A6=E1=9A=AA =E1=9A=B9=E1=9B=96=E1=9B=A5=E1=9A=
-=AB"
-> =20
->  test_expect_success GETTEXT_LOCALE 'gettext: Emitting UTF-8 from our=
- UTF-8 *.mo files / Icelandic' '
->      printf "TILRAUN: Hall=C3=B3 Heimur!" >expect &&
-> @@ -15,7 +16,7 @@ test_expect_success GETTEXT_LOCALE 'gettext: Emitti=
-ng UTF-8 from our UTF-8 *.mo
+> diff --git a/archive.c b/archive.c
+> index 1ee837d..6e23896 100644
+> --- a/archive.c
+> +++ b/archive.c
+> @@ -236,7 +236,7 @@ static int path_exists(struct tree *tree, const c=
+har *path)
+>  static void parse_pathspec_arg(const char **pathspec,
+>  		struct archiver_args *ar_args)
+>  {
+> -	ar_args->pathspec =3D pathspec =3D get_pathspec("", pathspec);
+> +	ar_args->pathspec =3D pathspec =3D get_pathspec(NULL, pathspec);
+>  	if (pathspec) {
+>  		while (*pathspec) {
+>  			if (!path_exists(ar_args->tree, *pathspec))
+> diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+> index 527c9e7..404786f 100755
+> --- a/t/t5000-tar-tree.sh
+> +++ b/t/t5000-tar-tree.sh
+> @@ -360,4 +360,20 @@ test_expect_success GZIP 'remote tar.gz can be d=
+isabled' '
+>  		>remote.tar.gz
 >  '
 > =20
->  test_expect_success GETTEXT_LOCALE 'gettext: Emitting UTF-8 from our=
- UTF-8 *.mo files / Runes' '
-> -    printf "TILRAUN: =E1=9A=BB=E1=9B=96 =E1=9A=B3=E1=9A=B9=E1=9A=AB=E1=
-=9A=A6 =E1=9A=A6=E1=9A=AB=E1=9B=8F =E1=9A=BB=E1=9B=96 =E1=9B=92=E1=9A=A2=
-=E1=9B=9E=E1=9B=96 =E1=9A=A9=E1=9A=BE =E1=9A=A6=E1=9A=AB=E1=9B=97 =E1=9B=
-=9A=E1=9A=AA=E1=9A=BE=E1=9B=9E=E1=9B=96 =E1=9A=BE=E1=9A=A9=E1=9A=B1=E1=9A=
-=A6=E1=9A=B9=E1=9B=96=E1=9A=AA=E1=9A=B1=E1=9B=9E=E1=9A=A2=E1=9B=97 =E1=9A=
-=B9=E1=9B=81=E1=9A=A6 =E1=9A=A6=E1=9A=AA =E1=9A=B9=E1=9B=96=E1=9B=A5=E1=
-=9A=AB" >expect &&
-> +    printf "%s" "$RUNES" >expect &&
->      LANGUAGE=3Dis LC_ALL=3D"$is_IS_locale" gettext "TEST: Old Englis=
-h Runes" >actual &&
->      test_cmp expect actual
->  '
-> @@ -28,15 +29,19 @@ test_expect_success GETTEXT_ISO_LOCALE 'gettext: =
-Emitting ISO-8859-1 from our UT
-> =20
->  test_expect_success GETTEXT_ISO_LOCALE 'gettext: Emitting ISO-8859-1=
- from our UTF-8 *.mo files / Runes' '
->      LANGUAGE=3Dis LC_ALL=3D"$is_IS_iso_locale" gettext "TEST: Old En=
-glish Runes" >runes &&
-> -
-> -	if grep "^TEST: Old English Runes$" runes
-> +	runes=3D$(cat runes) &&
-> +	if test "z$runes" =3D "zTEST: Old English Runes"
-> +	then
-> +		say "Your system gives back the key to message catalog for an impo=
-ssible request"
-> +	elif test "z$runes" =3D "zTILRAUN: ?? ???? ??? ?? ???? ?? ??? ?????=
- ??????????? ??? ?? ????"
-> +	then
-> +		say "Your system replaces an impossible character with ?"
-> + 	elif test "z$runes" =3D "z$RUNES"
->  	then
-> -		say "Your system can not handle this complexity and returns the st=
-ring as-is"
-> +		say "Your system gives back the raw message for an impossible requ=
-est"
->  	else
-> -		# Both Solaris and GNU libintl will return this stream of
-> -		# question marks, so it is s probably portable enough
-> -		printf "TILRAUN: ?? ???? ??? ?? ???? ?? ??? ????? ??????????? ??? =
-?? ????" >runes-expect &&
-> -		test_cmp runes-expect runes
-> +		say "We error behaviour your system shows"
-> +		false
->  	fi
->  '
-> =20
+> +test_expect_success \
+> +    'git archive with an empty tree and a prefix' \
+> +    'git rm -r . &&
+> +     git commit -m empty &&
+> +     git archive --format=3Dtar --prefix=3Dempty/ HEAD > e1.tar &&
+> +     "$TAR" tf e1.tar'
+> +
+> +test_expect_success \
+> +    'git archive with an empty tree and no prefix' \
+> +    'git archive --format=3Dtar HEAD > e2.tar &&
+> +     test_must_fail "$TAR" tf e2.tar'
+> +
+> +test_expect_success \
+> +    'git archive on specific paths with an empty tree' \
+> +    'test_must_fail git archive --format=3Dtar --prefix=3Dempty/ HEA=
+D foo'
+> +
+>  test_done
+> --=20
+> 1.7.9.2
 >=20
->=20
->=20
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
-With that patch the t0204 test is passed.
-
-(based on 1.7.10-rc0).
-
- And all the other tests passed as well.
-
-/Torsten
-
-
-
-Applying: Change t0204-gettext-reencode-sanity.sh to pass under Mac OSX
-/Users/tb/projects/git/git_git/.git/rebase-apply/patch:35: space before=
- tab in indent.
-        elif test "z$runes" =3D "z$RUNES"
-warning: 1 line adds whitespace errors.
-~/projects/git/git_git> cd t
-~/projects/git/git_git/t> ./t0204-gettext-reencode-sanity.sh
-# lib-gettext: No is_IS UTF-8 locale available
-# lib-gettext: No is_IS ISO-8859-1 locale available
-ok 1 # skip gettext: Emitting UTF-8 from our UTF-8 *.mo files / Iceland=
-ic (missing GETTEXT_LOCALE)
-ok 2 # skip gettext: Emitting UTF-8 from our UTF-8 *.mo files / Runes (=
-missing GETTEXT_LOCALE)
-ok 3 # skip gettext: Emitting ISO-8859-1 from our UTF-8 *.mo files / Ic=
-elandic (missing GETTEXT_ISO_LOCALE)
-ok 4 # skip gettext: Emitting ISO-8859-1 from our UTF-8 *.mo files / Ru=
-nes (missing GETTEXT_ISO_LOCALE)
-ok 5 # skip gettext: Fetching a UTF-8 msgid -> UTF-8 (missing GETTEXT_L=
-OCALE)
-ok 6 # skip gettext: Fetching a UTF-8 msgid -> ISO-8859-1 (missing GETT=
-EXT_ISO_LOCALE)
-ok 7 # skip gettext.c: git init UTF-8 -> UTF-8 (missing GETTEXT_LOCALE)
-ok 8 # skip gettext.c: git init UTF-8 -> ISO-8859-1 (missing GETTEXT_IS=
-O_LOCALE)
-# passed all 8 test(s)
-1..8
