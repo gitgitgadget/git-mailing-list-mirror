@@ -1,50 +1,99 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: git push default behaviour?
-Date: Thu, 08 Mar 2012 11:42:01 +0100
-Message-ID: <1331203321.21444.13.camel@beez.lab.cmartin.tk>
-References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com>
-	 <87k42vs8pi.fsf@thomas.inf.ethz.ch>
-	 <CAFsnPqopZEZeeuFzK4ZoUjGnfpiv5oMs=xV5XBSgSyGLXOwgqA@mail.gmail.com>
-	 <1331202483.21444.11.camel@beez.lab.cmartin.tk>
-	 <CAFsnPqpnH2CTki8zz6Mpz=qrdxF_aTA92cPrn1L9MQZVMoxdeg@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [ANNOUNCE] Git 1.7.10-rc0
+Date: Thu, 08 Mar 2012 02:42:49 -0800 (PST)
+Message-ID: <m3wr6vs7a2.fsf@localhost.localdomain>
+References: <7v7gyvkh84.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
-To: Jeremy Morton <jeremy@configit.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 11:42:16 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 08 11:43:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5anR-0003Qh-Vs
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 11:42:10 +0100
+	id 1S5aoD-0004P1-5S
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 11:42:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751881Ab2CHKmF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 05:42:05 -0500
-Received: from kimmy.cmartin.tk ([91.121.65.165]:36417 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751029Ab2CHKmE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 05:42:04 -0500
-Received: from [87.77.57.197] (z39c5.pia.fu-berlin.de [87.77.57.197])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 971BE46082;
-	Thu,  8 Mar 2012 11:41:54 +0100 (CET)
-In-Reply-To: <CAFsnPqpnH2CTki8zz6Mpz=qrdxF_aTA92cPrn1L9MQZVMoxdeg@mail.gmail.com>
-X-Mailer: Evolution 3.2.2-1 
+	id S1751491Ab2CHKmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 05:42:53 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:40392 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751029Ab2CHKmw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 05:42:52 -0500
+Received: by eaaq12 with SMTP id q12so96500eaa.19
+        for <git@vger.kernel.org>; Thu, 08 Mar 2012 02:42:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=ML/Tiets0oY/aZI2mY7cho8lAQ5yJXoUI4Rg75pqW8Q=;
+        b=Y0VVQpOI+6LEuduxlmRG7EehIlh5XEarLletH+wa8DpUfUFEyNmqRkAmdHL9mpMiNd
+         2VnpOCtK6kjHJxIYRLNhPgVtMpIDJywWsSJ7OwPr+3NDoRpsrWhYbc0F6LhPxs4ztyC5
+         /UpQMOhhwLnWT7yhajKBLhw7uJjHopJpg8pxhMuDqZ6nk272/R38lqpJO7VP8TtzQoxc
+         FCB0caTcjx/sX29LmtmnRh1WJWsDjteUVbk0IYlBtgIaCWE1uytIDkbDSZzNe9I2XlBy
+         ZVbLuBU1is/6/chaAgTEI5BvL9gUtctqEkwXlxvZEqFH7RLYwR/9Q4FN1vt5pKFyMjxi
+         aEDQ==
+Received: by 10.213.7.10 with SMTP id b10mr1157444ebb.81.1331203370935;
+        Thu, 08 Mar 2012 02:42:50 -0800 (PST)
+Received: from localhost.localdomain (abwr173.neoplus.adsl.tpnet.pl. [83.8.241.173])
+        by mx.google.com with ESMTPS id d54sm4801844eei.9.2012.03.08.02.42.49
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 08 Mar 2012 02:42:49 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q28AgkHd008560;
+	Thu, 8 Mar 2012 11:42:47 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id q28AgjtQ008557;
+	Thu, 8 Mar 2012 11:42:45 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7v7gyvkh84.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192555>
 
-On Thu, 2012-03-08 at 10:38 +0000, Jeremy Morton wrote:
-> But 'push --force' WILL try to push your (probably outdated) master
-> upstream, killing any changes there made since you last updated.  That
-> alone is so dangerous it seems like reason enough to avoid it by
-> default.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Then don't use --force without specifying exactly what you want.
-Anything with that option needs to be used carefully.
+> Updates since v1.7.9
+> --------------------
+> 
+> UI, Workflows & Features
+[...]
+>  * "gitweb" allows intermediate entries in the directory hierarchy
+>    that leads to a projects to be clicked, which in turn shows the
+>    list of projects inside that directory.
+> 
+>  * "gitweb" learned to read various pieces of information for the
+>    repositories lazily, instead of reading everything that could be
+>    needed (including the ones that are not necessary for a specific
+>    task).
+> 
+>  * Project search in "gitweb" shows the substring that matched in the
+>    project name and description highlighted.
 
-   cmn
+
+[...]
+> Fixes since v1.7.9
+> ------------------
+> 
+> Unless otherwise noted, all the fixes since v1.7.9 in the maintenance
+> releases are contained in this release (see release notes to them for
+> details).
+[...]
+
+>  * "gitweb" used to drop warnings in the log file when "heads" view is
+>    accessed in a repository whose HEAD does not point at a valid
+>    branch.
+
+It looks like fix for fixed-string project search is missing.
+
+Nb. I don't know if it is worth mentioning, and if it should be in
+"Fixes" or "Updates", but gitweb now supports utf-8 search, anc checks
+regular expression for validity before using it in search.
+
+-- 
+Jakub Narebski
