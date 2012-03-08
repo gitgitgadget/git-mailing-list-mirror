@@ -1,110 +1,90 @@
-From: Mark Hills <mark@pogo.org.uk>
-Subject: Re: [PATCH] gitk: use symbolic font names "sans" and "monospace"
- when available
-Date: Thu, 8 Mar 2012 21:19:30 +0000 (GMT)
-Message-ID: <alpine.LNX.2.01.1203082118260.1467@stax.localdomain>
-References: <20120308123011.GA4355@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/5] i18n: keep the last \n even when text is poisoned
+Date: Thu, 8 Mar 2012 16:01:32 -0600
+Message-ID: <20120308220131.GA10122@burratino>
+References: <1331198198-22409-1-git-send-email-pclouds@gmail.com>
+ <1331198198-22409-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Josh Triplett <josh@joshtriplett.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 22:38:38 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 08 23:01:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5l2h-0001JR-0J
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 22:38:35 +0100
+	id 1S5lPA-000755-F8
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 23:01:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756412Ab2CHVia (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 16:38:30 -0500
-Received: from mx.ij.cx ([212.13.201.15]:50278 "EHLO wes.ijneb.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755551Ab2CHVi3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 16:38:29 -0500
-X-Greylist: delayed 1136 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 Mar 2012 16:38:29 EST
-Received: from cpc2-acto2-0-0-cust942.4-2.cable.virginmedia.com ([82.28.203.175] helo=stax.localdomain)
-	by wes.ijneb.com with esmtpa (Exim 4.77)
-	(envelope-from <mark@pogo.org.uk>)
-	id 1S5kkF-0006Jd-Mg; Thu, 08 Mar 2012 21:19:31 +0000
-Received: from mark (helo=localhost)
-	by stax.localdomain with local-esmtp (Exim 4.69)
-	(envelope-from <mark@pogo.org.uk>)
-	id 1S5kkE-0000SW-U8; Thu, 08 Mar 2012 21:19:30 +0000
-In-Reply-To: <20120308123011.GA4355@burratino>
-X-SA-Exim-Connect-IP: 82.28.203.175
-X-SA-Exim-Mail-From: mark@pogo.org.uk
+	id S1758718Ab2CHWBn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 17:01:43 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:47881 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758604Ab2CHWBm convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 17:01:42 -0500
+Received: by obbuo6 with SMTP id uo6so1213794obb.19
+        for <git@vger.kernel.org>; Thu, 08 Mar 2012 14:01:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Wd98njusz8Tw4jtU04xbjIRXaQu/80jg4hVIQQ8Ms6g=;
+        b=ORZxr5Yz/aHn1lolZiYH12kP5QI9eGFhLRESyqtnmEHI5nmpCGnh4sJ48Exmm9IPXt
+         nu6sLTC+pmIFwXTa+i8eDaFXR7WNdzfg014FW7jeURO9m4rm25LewOvX6nD7KObuKEUD
+         LTadhIx8s+lGUDT3qXbCaYdt//jAEDbBdQaR2c/nbkDntG0xQknZ4U18DHH4Ogvmc8zO
+         TEMwwOQ9ZDB1Yaw3q13lKUjXd9B+md+9Rv3JuMqo+F2zBWbCpR6ZffNCNRaCJVi+lt5P
+         7dNAgVVfpHrD7Q95pQXgC7TZNJ4lbNFNxE91Evk517ay7kf1Z4CVfNApMGpVKutKnnHR
+         VN5g==
+Received: by 10.182.160.10 with SMTP id xg10mr3025739obb.40.1331244102267;
+        Thu, 08 Mar 2012 14:01:42 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id a6sm1574114oea.13.2012.03.08.14.01.41
+        (version=SSLv3 cipher=OTHER);
+        Thu, 08 Mar 2012 14:01:41 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1331198198-22409-2-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192656>
 
-On Thu, 8 Mar 2012, Jonathan Nieder wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-> The following only concerns systems using X and the client-side font
-> rendering framework from freedesktop.org.  Windows and Mac OS X are
-> not affected.
-> 
-> Starting with version 8.5, Tk uses freetype and fontconfig by default
-> to render fonts on platforms that support it.  Gitk currently defaults
-> to the font Helvetica for the interface and Courier for diffs, and
-> both unfortunately look rather bad on screen in the default
-> configuration on many Linux distros with anti-aliasing and poor
-> hinting.
-> 
-> It is better to default to "sans" and "monospace", which are mapped by
-> fontconfig to some appropriate font of the sysadmin and user's
-> choosing (typically Bitstream Vera Sans and Mono).  The result looks
-> more sensible and it makes gitk feel like a well-behaved software
-> citizen since its fonts match other native apps.
-> 
-> This patch does not change the appearance of gitk for users that have
-> already run it, since gitk uses the remembered UI and diff font names
-> from ~/.gitk
-> 
-> Requested-by: Michael Biebl <biebl@debian.org>
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> --- a/gettext.c
+> +++ b/gettext.c
+> @@ -24,6 +24,16 @@ int use_gettext_poison(void)
+>  		poison_requested =3D getenv("GIT_GETTEXT_POISON") ? 1 : 0;
+>  	return poison_requested;
+>  }
+> +
+> +const char *poison_text(const char *msgid)
+> +{
+> +	int len =3D strlen(msgid);
+> +	if (len && msgid[len-1] =3D=3D '\n')
+> +		return "# GETTEXT POISON #\n";
+> +	else
+> +		return "# GETTEXT POISON #";
 
-Sounds reasonable to me.
+I realize this was not the motivation behind the above patch, but if
+the translation of some message has to end with a newline for git to
+function correctly, would we consider that a bug?
 
-Acked-by: Mark Hills <mark@pogo.org.uk>
+I am of two minds on that:
 
-> ---
-> Hi,
-> 
-> A variant of this patch that just unconditionally set the fonts has
-> been in Debian for more than a year, but just now I finally got around
-> to making it conditional.  Tested with tk 8.5 (where fontconfig is
-> used) and tk 8.4 (where it isn't) and the autodetection seems to work.
-> 
-> Sensible?
-> 
-> Jonathan
-> 
->  gitk-git/gitk |    5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index 64ef3c40..6981cb20 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -11426,6 +11426,11 @@ if {[tk windowingsystem] eq "aqua"} {
->      set mainfont {{Lucida Grande} 9}
->      set textfont {Monaco 9}
->      set uifont {{Lucida Grande} 9 bold}
-> +} elseif {![catch {::tk::pkgconfig get fontsystem} xft] && $xft eq "xft"} {
-> +    # fontconfig!
-> +    set mainfont {sans 9}
-> +    set textfont {monospace 9}
-> +    set uifont {sans 9 bold}
->  } else {
->      set mainfont {Helvetica 9}
->      set textfont {Courier 9}
-> 
+ - on one hand, translators tend to be trustworthy, reasonable folks
+ - on the other hand, anything we can do to make the translation
+   process less fussy seems like time well spent
 
--- 
-Mark
+The latter wins out for me, so I would prefer not to have this patch
+so the test suite can detect important newlines that should be not be
+part of the translatable string.
+
+Just my two cents,
+Jonathan
