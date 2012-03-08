@@ -1,72 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] Change t0204-gettext-reencode-sanity.sh to pass
- under Mac OSX
-Date: Wed, 07 Mar 2012 15:42:19 -0800
-Message-ID: <7vmx7sj7vo.fsf@alter.siamese.dyndns.org>
-References: <201203052039.16893.tboegi@web.de>
- <7vzkbuzss7.fsf@alter.siamese.dyndns.org>
- <CACBZZX4P=JSdP_vLOMx5r3R+YO8SMSs5W8+vf2DMibKMwBx_Vg@mail.gmail.com>
- <7vfwdkm6xs.fsf@alter.siamese.dyndns.org>
- <CACBZZX4q0Da=H=-fO86f2YN+CmE25QfEgAp8Efmdyf65CGckiQ@mail.gmail.com>
- <7v4nu0m5tb.fsf@alter.siamese.dyndns.org>
- <CACBZZX6W=-ZchaCsLGdpZ420L_9=w8AHD8BNVb7XV5M-hc0Qhg@mail.gmail.com>
- <7vd38okmp0.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 00:42:27 2012
+From: Brodie Rao <brodie@sf.io>
+Subject: [PATCH] archive: fix archive generation for empty trees
+Date: Wed,  7 Mar 2012 16:09:22 -0800
+Message-ID: <1331165362-78065-1-git-send-email-brodie@sf.io>
+Cc: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 08 01:09:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5QV0-0002p2-Pi
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 00:42:27 +0100
+	id 1S5QvE-0007Ek-Jw
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 01:09:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759000Ab2CGXmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Mar 2012 18:42:22 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33482 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755457Ab2CGXmV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2012 18:42:21 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 16D0B6868;
-	Wed,  7 Mar 2012 18:42:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KiMGKs+dHSIFbdNoO7K9KxRZT5I=; b=f3nqfo
-	3UN6ouGYnociAZGV7oSwBQlqGwtQEAYjDL8UsMNclhjHTAsbAtEzjlVDvprWeBKw
-	v/b/NAFDkDfNZiiXpg2aF22GfjuvSRQZM5aPlOO0pGVvmH0gALBPKgznPwRre4fz
-	zUbbmd52/OeaEAninKHhd/FF00xejtYKZNYIw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=U/rTg0xm3trgFX+cpjWVx0m/m3vo34DV
-	qz+OcChiyBKGRZD9ATlhumuxmGEJyYJbuXbwM8gTJKYQ/llf52f1kVIdIbfLWfHD
-	bin/gKida9nXlK6YxpE/Rdt5eDbudAyizIktZDbAZunvG6Ib8Q+sArfyxwZ2pzAm
-	NeCu7xqENC4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 051016867;
-	Wed,  7 Mar 2012 18:42:21 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8D68F6864; Wed,  7 Mar 2012
- 18:42:20 -0500 (EST)
-In-Reply-To: <7vd38okmp0.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 07 Mar 2012 15:36:59 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2E767D24-68AF-11E1-8131-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759315Ab2CHAJ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Mar 2012 19:09:28 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:42379 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756993Ab2CHAJ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2012 19:09:27 -0500
+Received: by iagz16 with SMTP id z16so9342953iag.19
+        for <git@vger.kernel.org>; Wed, 07 Mar 2012 16:09:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bitheap.org; s=google;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer;
+        bh=yr4ub1Dtcpl6qMTzKv4QNLa9dqRDbG5BDIQiTRxF+hc=;
+        b=U/M7M3w/VQLHifcb++kIykbCq1x6gUo32u4BCJIeBki5HkY+3vzvnnd+fIAJT+gRH1
+         sw+gCJevyXuAyPV9I3ixlYAexYd424zpK6H2X3K0WP261c+ekFgT4dIEoHBo0JulY1LW
+         opv0SCl7Kbcucab6/c3SQi+zFSsqGU1f3/HYw=
+Received: by 10.42.157.6 with SMTP id b6mr2527600icx.23.1331165367121;
+        Wed, 07 Mar 2012 16:09:27 -0800 (PST)
+Received: from kapp.staff.sf.atlassian.com (70-35-42-138.static.wiline.com. [70.35.42.138])
+        by mx.google.com with ESMTPS id dl10sm18965148igb.9.2012.03.07.16.09.26
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 07 Mar 2012 16:09:26 -0800 (PST)
+X-Mailer: git-send-email 1.7.9.2
+X-Gm-Message-State: ALoCoQmX3Qk2a1yOLA/Qm4ZLRngtX7+ce4PM/Y/LUDwH14OY2j8czUjAPolaQrcbL3RZddHmqCUw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192509>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Prior to this change, git-archive would try to verify path arguments -
+even if none were provided. It used get_pathspec("", pathspec), which
+would return a pathspec of "" instead of NULL.
 
-> +		say "We error behaviour your system shows"
-> +		false
+Then it would try to verify if the tree contained any paths matching
+"". This is fine in the normal case where the tree contains anything
+(every entry would match), but for an empty tree, it wouldn't match,
+and you'd get this error:
 
-Typo--"We do not recognize the error behaviour your system shows"
-or something.
+  fatal: path not found:
+
+Now, instead of "", we use a pathspec prefix of NULL. If no path
+arguments were provided, get_pathspec() will return NULL, and we won't
+try to verify the existence of any paths in the tree.
+
+Signed-off-by: Brodie Rao <brodie@sf.io>
+---
+ archive.c           |    2 +-
+ t/t5000-tar-tree.sh |   16 ++++++++++++++++
+ 2 files changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/archive.c b/archive.c
+index 1ee837d..6e23896 100644
+--- a/archive.c
++++ b/archive.c
+@@ -236,7 +236,7 @@ static int path_exists(struct tree *tree, const char *path)
+ static void parse_pathspec_arg(const char **pathspec,
+ 		struct archiver_args *ar_args)
+ {
+-	ar_args->pathspec = pathspec = get_pathspec("", pathspec);
++	ar_args->pathspec = pathspec = get_pathspec(NULL, pathspec);
+ 	if (pathspec) {
+ 		while (*pathspec) {
+ 			if (!path_exists(ar_args->tree, *pathspec))
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 527c9e7..404786f 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -360,4 +360,20 @@ test_expect_success GZIP 'remote tar.gz can be disabled' '
+ 		>remote.tar.gz
+ '
+ 
++test_expect_success \
++    'git archive with an empty tree and a prefix' \
++    'git rm -r . &&
++     git commit -m empty &&
++     git archive --format=tar --prefix=empty/ HEAD > e1.tar &&
++     "$TAR" tf e1.tar'
++
++test_expect_success \
++    'git archive with an empty tree and no prefix' \
++    'git archive --format=tar HEAD > e2.tar &&
++     test_must_fail "$TAR" tf e2.tar'
++
++test_expect_success \
++    'git archive on specific paths with an empty tree' \
++    'test_must_fail git archive --format=tar --prefix=empty/ HEAD foo'
++
+ test_done
+-- 
+1.7.9.2
