@@ -1,208 +1,166 @@
-From: Dominique Quatravaux <domq@google.com>
-Subject: [PATCHv2 2/2] rebase -i: new option --name-rev
-Date: Thu,  8 Mar 2012 14:52:57 +0100
-Message-ID: <1331214777-9455-2-git-send-email-domq@google.com>
-References: <1331214777-9455-1-git-send-email-domq@google.com>
-Cc: Dominique Quatravaux <domq@google.com>
-To: git@vger.kernel.org, Thomas Rast <trast@inf.ethz.ch>,
-	Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Mar 08 15:01:47 2012
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFC/PATCH 6/5] gitweb.psgi: Use installed static files, if they are available
+Date: Thu,  8 Mar 2012 15:06:06 +0100
+Message-ID: <1331215566-11637-1-git-send-email-jnareb@gmail.com>
+References: <1330797423-22926-1-git-send-email-jnareb@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 08 15:06:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5dub-0000ZY-Fm
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 15:01:45 +0100
+	id 1S5dz6-0005Vj-Be
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 15:06:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755940Ab2CHOBj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 09:01:39 -0500
-Received: from mail-gx0-f202.google.com ([209.85.161.202]:44313 "EHLO
-	mail-gx0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752159Ab2CHOBi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 09:01:38 -0500
-Received: by ggnd2 with SMTP id d2so56139ggn.1
-        for <git@vger.kernel.org>; Thu, 08 Mar 2012 06:01:38 -0800 (PST)
+	id S1753444Ab2CHOGU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 09:06:20 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:41764 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752355Ab2CHOGT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 09:06:19 -0500
+Received: by eaaq12 with SMTP id q12so154246eaa.19
+        for <git@vger.kernel.org>; Thu, 08 Mar 2012 06:06:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
+        d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=+vlIFxp3eZ1Yd/H+GQL1hxKhwM83P3t18jCtr5QaaCQ=;
-        b=chuWy+6hFpnRL5PumM2wAGPgEgL9V/elt4dCnjp6ONId0iw06zzSevWE9Wo7ryx06i
-         h3Qhmvsu+1NprJ+XdlDxzEXFdG8GgaUK5BzElRAEDtJP2olDKyAVH9NS8MPoqdSNN0Hz
-         KFdAvDel0d2h4IKUx/+KVzeq7rS5UqJ69l+dQMatfWQBsDuxX7LSu/U0HdQPH8H5jznW
-         1uavkDVPsL6pUjondPBlHNHC/PcJOYSKG79fS43geuqK4vywiW4h2IkusZhih7hK4GGS
-         fUVF30KYsWzVzmG+LiI2C0Bxqc08hJXwqPPjEmf+ryqu38aEHbmlgOHvu1xP26AHKrJU
-         KrHg==
-Received: by 10.100.230.15 with SMTP id c15mr2104889anh.7.1331214867065;
-        Thu, 08 Mar 2012 05:54:27 -0800 (PST)
-Received: by 10.100.230.15 with SMTP id c15mr2104873anh.7.1331214866936;
-        Thu, 08 Mar 2012 05:54:26 -0800 (PST)
-Received: from wpzn3.hot.corp.google.com (216-239-44-65.google.com [216.239.44.65])
-        by gmr-mx.google.com with ESMTPS id t62si643244yhj.2.2012.03.08.05.54.26
-        (version=TLSv1/SSLv3 cipher=AES128-SHA);
-        Thu, 08 Mar 2012 05:54:26 -0800 (PST)
-Received: from alliance-maui.zrh.corp.google.com (alliance-maui.zrh.corp.google.com [172.28.204.12])
-	by wpzn3.hot.corp.google.com (Postfix) with ESMTP id A984C10004D;
-	Thu,  8 Mar 2012 05:54:26 -0800 (PST)
-Received: by alliance-maui.zrh.corp.google.com (Postfix, from userid 71297)
-	id A09F66013A; Thu,  8 Mar 2012 14:54:25 +0100 (CET)
-X-Mailer: git-send-email 1.7.7.3
-In-Reply-To: <1331214777-9455-1-git-send-email-domq@google.com>
-X-Gm-Message-State: ALoCoQmAKwpXriRHlOOY/uA6VPJPhsrydvjAhJ0e8xzY2NFXYjOb5RdzG+aNW0GP+1vc27AWgYlMCXtuRzWJHp/9snR0ALWVwuY8IqLMtwjEehLGVv9gvYm87birjU2fuNQVKFN/0ULzngfxBtr0WlgmDgmOQ/g+bkdygBNizBqbVyba0y9lZ5o=
+        bh=5V3TDSgqWR+fxmbXiGK1di15Kh8zwjCEVwhSksuyTos=;
+        b=dcWOf/Lv9nCwgz21+QQaPLvHopUyN6BprTDrJCgc3l9oyyR9uFa/v9RayPp+qjff/D
+         8KqCgm2iy1jeCjJDc5AdDevfZxgEEPik9QutPBZvee7VLU5TluiR6y59QPIIA9LptAcp
+         QRQvafRAXw7zZbfeM+ARICSA1cHsjz5UBvZMUoeQXQ3suDpQUZvgL0czXDeLwfDqm9mp
+         f/zw4cjCTvOMEsuZAoMnbVyhZmkh940ao0oLPJ2pEN3s6dxvKbTFfQyc94tUgijlwR7M
+         s+/Qy4qDlxfQFErjT8/42gstUrXhcmLiYHHgHexfTBn+nTW1o2kicwAt98OQ7s9UwDe+
+         1CJg==
+Received: by 10.14.98.133 with SMTP id v5mr2266911eef.95.1331215577800;
+        Thu, 08 Mar 2012 06:06:17 -0800 (PST)
+Received: from localhost.localdomain (abwr173.neoplus.adsl.tpnet.pl. [83.8.241.173])
+        by mx.google.com with ESMTPS id d54sm6419771eei.9.2012.03.08.06.06.16
+        (version=SSLv3 cipher=OTHER);
+        Thu, 08 Mar 2012 06:06:17 -0800 (PST)
+X-Mailer: git-send-email 1.7.9
+In-Reply-To: <1330797423-22926-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192605>
 
-If set, the second column of the rebase todo contains named revisions (obtained
-with git name-rev) instead of short SHA1s.
+When gitweb is running as PSGI app, it must itself take care of
+serving static files: stylesheets, script, images that are required
+to render gitweb output.
+
+This commit makes gitweb (in PSGI mode) use installed static files
+from $(gitwebstaticdir) if such directory exists.  Before this commit
+gitweb served static files from 'static/' directory relative to
+position of gitweb script itself (to __DIR__).
+
+This allows to use gitweb in PSGI mode even if static files are
+installed to non-standard place.
+
+Note that mechanism of serving is slightly different: the one with
+__DIR__ uses Plack::Middleware::Static, while the installdir one uses
+URLMap-ped set of Plack::App::File.
+
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
- Documentation/git-rebase.txt  |    7 +++++++
- git-rebase--interactive.sh    |   10 ++++++++--
- git-rebase.sh                 |   10 ++++++++++
- t/t3404-rebase-interactive.sh |   10 ++++++++++
- t/t3415-rebase-autosquash.sh  |   24 ++++++++++++++++++++++++
- 5 files changed, 59 insertions(+), 2 deletions(-)
+This probably would have to be reworked, so that using Plack::Middleware::Static
+is preferred over set of Plack::App::File (which I think is slightly slower).
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 504945c..da2aca7 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -365,6 +365,13 @@ If the '--autosquash' option is enabled by default using the
- configuration variable `rebase.autosquash`, this option can be
- used to override and disable this setting.
+ gitweb/Makefile    |    7 +++++--
+ gitweb/gitweb.perl |   38 ++++++++++++++++++++++++++++++--------
+ 2 files changed, 35 insertions(+), 10 deletions(-)
+
+diff --git a/gitweb/Makefile b/gitweb/Makefile
+index 549e7dc..6f673ff 100644
+--- a/gitweb/Makefile
++++ b/gitweb/Makefile
+@@ -13,6 +13,8 @@ all::
+ prefix ?= $(HOME)
+ bindir ?= $(prefix)/bin
+ gitwebdir ?= /var/www/cgi-bin
++gitwebstaticdir ?= $(gitwebdir)/static
++gitweblibdir ?= $(gitwebdir)/lib
  
-+--name-rev::
-+	Instead of showing short SHA1 hashes in the todo list, show
-+	human-readable revisions obtained with linkgit:git-name-rev[1].
-++
-+This option is only valid when the '--interactive' option is used. It can also
-+be set through the `rebase.interactiveNameRev` configuration variable.
-+
- --no-ff::
- 	With --interactive, cherry-pick all rebased commits instead of
- 	fast-forwarding over the unchanged ones.  This ensures that the
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index e408e94..c597b6b 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -780,9 +780,15 @@ git rev-list $merges_option --format="%m%H %h %s" --abbrev-commit \
- 	sed -n "s/^>//p" |
- while read -r sha1 shortsha1 rest
- do
-+	if test t = "$name_rev"
-+	then
-+		rev="$(git name-rev $sha1 | cut -d\  -f2)"
-+	else
-+		rev="$shortsha1"
-+	fi
- 	if test t != "$preserve_merges"
- 	then
--		printf '%s\n' "pick $shortsha1 $rest" >> "$todo"
-+		printf '%s\n' "pick $rev $rest" >> "$todo"
- 	else
- 		if test -z "$rebase_root"
- 		then
-@@ -800,7 +806,7 @@ do
- 		if test f = "$preserve"
- 		then
- 			touch "$rewritten"/$sha1
--			printf '%s\n' "pick $shortsha1 $rest" >> "$todo"
-+			printf '%s\n' "pick $rev $rest" >> "$todo"
- 		fi
- 	fi
- done
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 69c1374..9330be3 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -43,6 +43,8 @@ s,strategy=!       use the given merge strategy
- no-ff!             cherry-pick all commits, even if unchanged
- m,merge!           use merging strategies to rebase
- i,interactive!     let the user edit the list of commits to rebase
-+name-rev           show revisions by name in the list of commits
-+no-name-rev        show revisions by short SHA1 in the list (default)
- f,force-rebase!    force rebase even if branch is up to date
- X,strategy-option=! pass the argument through to the merge strategy
- stat!              display a diffstat of what changed upstream
-@@ -98,6 +100,8 @@ action=
- preserve_merges=
- autosquash=
- test "$(git config --bool rebase.autosquash)" = "true" && autosquash=t
-+name_rev=
-+test "$(git config --bool rebase.interactivenamerev)" = "true" && name_rev=t
+ RM ?= rm -f
+ INSTALL ?= install
+@@ -58,8 +60,8 @@ PERL_PATH  ?= /usr/bin/perl
+ # Shell quote;
+ bindir_SQ = $(subst ','\'',$(bindir))#'
+ gitwebdir_SQ = $(subst ','\'',$(gitwebdir))#'
+-gitwebstaticdir_SQ = $(subst ','\'',$(gitwebdir)/static)#'
+-gitweblibdir_SQ = $(subst ','\'',$(gitwebdir)/lib)#'
++gitwebstaticdir_SQ = $(subst ','\'',$(gitwebstaticdir))#'
++gitweblibdir_SQ = $(subst ','\'',$(gitweblibdir))#'
+ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))#'
+ PERL_PATH_SQ  = $(subst ','\'',$(PERL_PATH))#'
+ DESTDIR_SQ    = $(subst ','\'',$(DESTDIR))#'
+@@ -130,6 +132,7 @@ GITWEB_JSLIB_FILES += static/js/blame_incremental.js
+ GITWEB_REPLACE = \
+ 	-e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
+ 	-e 's|++GIT_BINDIR++|$(bindir)|g' \
++	-e 's|++GITWEBSTATICDIR++|$(gitwebstaticdir)|g' \
+ 	-e 's|++GITWEB_CONFIG++|$(GITWEB_CONFIG)|g' \
+ 	-e 's|++GITWEB_CONFIG_SYSTEM++|$(GITWEB_CONFIG_SYSTEM)|g' \
+ 	-e 's|++GITWEB_CONFIG_COMMON++|$(GITWEB_CONFIG_COMMON)|g' \
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 6bd7b08..f871090 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1271,9 +1271,10 @@ sub to_psgi_app {
+ }
  
- read_basic_state () {
- 	head_name=$(cat "$state_dir"/head-name) &&
-@@ -287,6 +291,12 @@ do
- 	-f|--no-ff)
- 		force_rebase=t
- 		;;
-+	--name-rev)
-+		name_rev=t
-+		;;
-+	--no-name-rev)
-+		name_rev=
-+		;;
- 	--rerere-autoupdate|--no-rerere-autoupdate)
- 		allow_rerere_autoupdate="$1"
- 		;;
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index b981572..f3b4214 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -163,6 +163,16 @@ test_expect_success 'exchange two commits' '
- 	test G = $(git cat-file commit HEAD | sed -ne \$p)
- '
+ sub build_psgi_app {
+-	require Plack::Builder;
+-	require Plack::Middleware::Static;
+-
++	# gitweb currently doesn't work with $SIG{CHLD} set to 'IGNORE',
++	# because it uses 'close $fd or die...' on piped filehandle $fh
++	# (which causes the parent process to wait for child to finish).
++	# this middleware is enabled only if $SIG{CHLD} is 'IGNORE'.
+ 	my $sigchld_mw = sub {
+ 		my $app = shift;
+ 		sub {
+@@ -1288,14 +1289,35 @@ sub build_psgi_app {
+ 	# note: Plack::Builder DSL (builder, enable_if, enable) won't work
+ 	# with "require Plack::Builder" outside BEGIN section.
+ 	my $app = to_psgi_app();
+-	$app = Plack::Middleware::Static->wrap($app,
+-		path => qr{(?:^|/)static/.*\.(?:js|css|png)$},
+-		root => __DIR__,
+-		encoding => 'utf-8', # encoding for 'text/plain' files
+-	);
+ 	$app = $sigchld_mw->($app)
+ 		if (defined $SIG{'CHLD'} && $SIG{'CHLD'} eq 'IGNORE');
  
-+cat > expect-rebase-todo <<EOF
-+pick branch1~1 H
-+pick branch1 G
-+EOF
++	if (-d "++GITWEBSTATICDIR++") {
++		require Plack::App::URLMap;
++		require Plack::App::File;
 +
-+test_expect_success 'Symbolic revisions in --name-rev' '
-+	FAKE_LINES="exec_cp_.git/rebase-merge/git-rebase-todo_rebase-todo 1 2" git rebase -i --name-rev HEAD~2 &&
-+	test_cmp expect-rebase-todo rebase-todo
-+'
++		my $urlmap = Plack::App::URLMap->new();
++		$urlmap->map("/" => $app);
++		foreach my $static_url (@stylesheets, $stylesheet, $logo, $favicon, $javascript) {
++			next if (!defined $static_url || $static_url eq "");
 +
- cat > expect << EOF
- diff --git a/file1 b/file1
- index f70f10e..fd79235 100644
-diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-index b38be8e..3062e24 100755
---- a/t/t3415-rebase-autosquash.sh
-+++ b/t/t3415-rebase-autosquash.sh
-@@ -169,6 +169,30 @@ test_expect_success 'auto squash that matches longer sha1' '
- 	test 1 = $(git cat-file commit HEAD^ | grep squash | wc -l)
- '
++			(my $static_file = $static_url) =~ s!^.*/!!; # basename
++			$static_file = "++GITWEBSTATICDIR++/$static_file";
++			$urlmap->map($static_url => Plack::App::File->new(file => $static_file));
++		}
++		$app = $urlmap->to_app();
++
++	} else {
++		require Plack::Middleware::Static;
++
++		$app = Plack::Middleware::Static->wrap($app,
++			path => qr{(?:^|/)static/.*\.(?:js|css|png)$},
++			root => __DIR__,
++			encoding => 'utf-8', # encoding for 'text/plain' files
++		);
++
++	}
++
+ 	return $app;
+ }
  
-+test_expect_success 'auto fixup with --name-rev' '
-+	git reset --hard base &&
-+	echo 2 >file1 &&
-+	git add -u &&
-+	test_tick &&
-+	git commit -m "changing file1" &&
-+	echo 4 >file2 &&
-+	git add -u &&
-+	test_tick &&
-+	git commit -m "changing file2" &&
-+	echo 1 >file1 &&
-+	git add -u &&
-+	test_tick &&
-+	git commit -m "fixup! changing file1" &&
-+	git tag final-fixup-name-rev &&
-+	test_tick &&
-+	git rebase -i --autosquash --name-rev HEAD^^^ &&
-+	git log --oneline base..HEAD >actual &&
-+	test 2 = $(wc -l <actual) &&
-+	git diff --exit-code final-fixup-name-rev &&
-+	test 2 = "$(git cat-file blob HEAD^:file2)" &&
-+	test 1 = $(git cat-file commit HEAD^ | grep changing | wc -l)
-+'
-+
- test_auto_commit_flags () {
- 	git reset --hard base &&
- 	echo 1 >file1 &&
 -- 
-1.7.7.3
+1.7.9
