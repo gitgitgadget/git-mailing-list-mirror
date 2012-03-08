@@ -1,137 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fmt-merge-msg: show those involved in a merged series
-Date: Thu, 08 Mar 2012 13:31:29 -0800
-Message-ID: <7vr4x2bwzy.fsf@alter.siamese.dyndns.org>
-References: <7vvcmj68iz.fsf@alter.siamese.dyndns.org>
- <CA+55aFzQ3+EFBVyE9PWOyH0XEC_oW+kUaBTYfixmi2wgMmiZvw@mail.gmail.com>
- <7vipii27ka.fsf@alter.siamese.dyndns.org>
- <CA+55aFw-sS_p7JXNXbSbpiwh9_bZhSrTtC3is4NtLa_n9Hzk5A@mail.gmail.com>
- <7vmx7uzq8h.fsf_-_@alter.siamese.dyndns.org>
- <4F57D18B.5090506@lsrfire.ath.cx> <7vzkbskr71.fsf@alter.siamese.dyndns.org>
- <4F58F06A.1070108@lsrfire.ath.cx> <7v1up2ew9u.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 7/5] transport: optionally honor DNS SRV records
+Date: Thu, 8 Mar 2012 15:35:45 -0600
+Message-ID: <20120308213545.GB9497@burratino>
+References: <20120308124857.GA7666@burratino>
+ <20120308132155.GG9426@burratino>
+ <CABPQNSYpRGfu7Ew+KstCFsG4YDSx+i-jzHS1Bw0BA4S2hoz4SA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Thu Mar 08 22:31:43 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Eric Wong <normalperson@yhbt.net>
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 08 22:36:01 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5kvx-00039X-Kd
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 22:31:37 +0100
+	id 1S5l0B-0007Hd-A6
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 22:35:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753784Ab2CHVbc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Mar 2012 16:31:32 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56142 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751548Ab2CHVbb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Mar 2012 16:31:31 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 43EC678DD;
-	Thu,  8 Mar 2012 16:31:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=8JSq2Joe5ewd
-	f8n55VPM0jNamZE=; b=WU7x8Vhx96bh3+gZtjKHUubKw3rFGOPKWSsoG2X7Jtsl
-	gt61LzNqk3E7wWtGEcGuITLO66mSuHctbbHPCvjZ4wnJkTDiSR6MYImi3E6TpR5Z
-	OIjId0YIkgFeieKiMJqloOtS4dS7ChEgYtdKAdy5EkO5/JFM0jf/HaoiOhz+45g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=FYuhtN
-	fo94FrgaJAVEGhgqvK5cEX8nEHIqA848Gu3NZduJ/3wCZtiJM9+VJmAumyN24iaT
-	1TeUIhxSw0RKJ40euFd5XbmApaYBbqLomzwS79+NIHBR/m0e7WPhXsLOOB1NuFmI
-	Jikaffc7Gq1NJOlrDbYvNyY+5bYFtEDwD+pSg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3894378DC;
-	Thu,  8 Mar 2012 16:31:31 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A3A7078DA; Thu,  8 Mar 2012
- 16:31:30 -0500 (EST)
-In-Reply-To: <7v1up2ew9u.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 08 Mar 2012 11:18:53 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 11F740B8-6966-11E1-A9A2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756438Ab2CHVfy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 16:35:54 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:33514 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755270Ab2CHVfx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 16:35:53 -0500
+Received: by ghrr11 with SMTP id r11so555899ghr.19
+        for <git@vger.kernel.org>; Thu, 08 Mar 2012 13:35:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=tgEx8cKlh1BHfqQ7tS/Rg19otCUHB7ykMYjQ4iarytU=;
+        b=p+WVodC8fX6029Fz+yyOBCz93yaQNqV85fSIgl7l3AYB7rG/hnQHuoDeBs7JVhyKWt
+         lnKa+eet3uIRL5sKjkWxqtN9dJjD+v+m4VNORwpQpDHCHZOJrq/19ujhn/V0zuh9P7d5
+         auklVHPmzMDWK+mLH32/NF1CL0+ERPQy3aT6YEQJzU5x0t/9Qq7/Qw7emut78Sj3NipX
+         fXoImhkSMVuEnIY00u9p78ioziV0yLDw2CTUN+783Tw4pkcCQUUF5TINQBvl31yBChvu
+         kNaRqlog/dEgMWkYJuuIKdRuLJaKYMT1RSvr1yO1KJK4Fdw5NHWkQ0lHnRkN1dNK1pl+
+         ySuQ==
+Received: by 10.60.26.163 with SMTP id m3mr3028768oeg.40.1331242553085;
+        Thu, 08 Mar 2012 13:35:53 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id n7sm1554192oeh.4.2012.03.08.13.35.51
+        (version=SSLv3 cipher=OTHER);
+        Thu, 08 Mar 2012 13:35:52 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CABPQNSYpRGfu7Ew+KstCFsG4YDSx+i-jzHS1Bw0BA4S2hoz4SA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192654>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Erik Faye-Lund wrote:
 
->> Three of the five callers introduced in that commit cast the result =
-to
->> int and the remaining two don't care, so it actually does seem to
->> matter for most of them, strictly speaking.  When I see a nit, I can=
-'t
->> resist the urge to pick it, apparently.
->
-> Unfortunately, replacing intptr_t with int or casting the above
-> again as int will result in
->
-> builtin/fmt-merge-msg.c: In function 'record_person':
-> builtin/fmt-merge-msg.c:213: error: cast to pointer from integer of d=
-ifferent size
->
-> So...
+> It's an interesting feature, but I'm a little bit worried if this
+> promotes non-portable setups; won't these repos be unreachable (at
+> least without manually redirecting or also keeping a copy on the
+> advertised URL) on machines where libresolv is unavailable? I'm mainly
+> thinking about the "a single domain can use different hosts for
+> different services"-benefit you mentioned.
 
--- >8 --
-Subject: [PATCH] fmt-merge-msg.c: make util_as_int() return "int"
+Yes.  I think of redirecting with SRV records without a fallback as a
+misconfiguration ("don't do that, then").  Note that it would not only
+affect people without drand48 but people with broken DNS servers.
 
-As its name says, the return value from util_as_int() should be
-usable where an int is called for without casting.
+In the case of Alioth, what they do is let inetd listen on
+git.debian.org = vasks.debian.org, using netcat to forward connections
+to wagner.debian.org.  So clients with and without SRV support end up
+finding their bits shuttled to the same place, with the only
+difference being a little wasted load on vasks in the no-SRV case.
 
-Spotted-by: Ren=C3=A9 Scharfe
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/fmt-merge-msg.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+This means the Alioth admins don't get the benefit of not having to
+set up a proxy, but they do get the benefit of clients taking on more
+of the work and the service continuing to be available for some
+clients if vasks goes down.
 
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index 40b90b1..8ddefb3 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -182,7 +182,7 @@ static void add_branch_desc(struct strbuf *out, con=
-st char *name)
- 	strbuf_release(&desc);
- }
-=20
--#define util_as_int(elem) ((intptr_t)((elem)->util))
-+#define util_as_int(elem) ((int)((elem)->util))
-=20
- static void record_person(int which, struct string_list *people,
- 			  struct commit *commit)
-@@ -210,7 +210,7 @@ static void record_person(int which, struct string_=
-list *people,
- 		elem =3D string_list_insert(people, name_buf);
- 		elem->util =3D (void *)0;
- 	}
--	elem->util =3D (void*)(util_as_int(elem) + 1);
-+	elem->util =3D (void*)((intptr_t)(util_as_int(elem) + 1));
- }
-=20
- static int cmp_string_list_util_as_int(const void *a_, const void *b_)
-@@ -226,13 +226,13 @@ static void add_people_count(struct strbuf *out, =
-struct string_list *people)
- 	else if (people->nr =3D=3D 2)
- 		strbuf_addf(out, "%s (%d) and %s (%d)",
- 			    people->items[0].string,
--			    (int)util_as_int(&people->items[0]),
-+			    util_as_int(&people->items[0]),
- 			    people->items[1].string,
--			    (int)util_as_int(&people->items[1]));
-+			    util_as_int(&people->items[1]));
- 	else if (people->nr)
- 		strbuf_addf(out, "%s (%d) and others",
- 			    people->items[0].string,
--			    (int)util_as_int(&people->items[0]));
-+			    util_as_int(&people->items[0]));
- }
-=20
- static int committer_is_me(const char *name)
---=20
-1.7.10.rc0.28.g709d0
+Maybe adding an envvar to disable the SRV handling would make it
+easier for server admins to check the fallback.  Can we do more?
+
+(By the way, what platforms don't support BIND and a random number
+generator?)
+
+Thanks,
+Jonathan
