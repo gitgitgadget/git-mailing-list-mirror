@@ -1,76 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] Git 1.7.10-rc0
-Date: Thu, 08 Mar 2012 08:28:27 -0800
-Message-ID: <7v4ntzf45w.fsf@alter.siamese.dyndns.org>
-References: <7v7gyvkh84.fsf@alter.siamese.dyndns.org>
- <m3wr6vs7a2.fsf@localhost.localdomain>
+Subject: Re: [PATCH] fast-import: fix ls command with empty path
+Date: Thu, 08 Mar 2012 08:39:56 -0800
+Message-ID: <7vty1zdp2b.fsf@alter.siamese.dyndns.org>
+References: <CAFfmPPMxcs0ySgnD7UfUS1yq=qaqfn1qCxdh1HYgFu6WPfpWQg@mail.gmail.com>
+ <1331184656-98629-1-git-send-email-davidbarr@google.com>
+ <20120308070951.GA2181@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 17:28:35 2012
+Cc: David Barr <davidbarr@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Andrew Sayers <andrew-git@pileofstuff.org>,
+	Dmitry Ivankov <divanorama@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 08 17:40:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5gCh-0005hd-Cm
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 17:28:35 +0100
+	id 1S5gNo-0000pr-7W
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 17:40:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757373Ab2CHQ2b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 11:28:31 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48117 "EHLO
+	id S1757988Ab2CHQj7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 11:39:59 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53876 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754216Ab2CHQ2a (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 11:28:30 -0500
+	id S1757269Ab2CHQj7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 11:39:59 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 838897732;
-	Thu,  8 Mar 2012 11:28:29 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 89A7D7A34;
+	Thu,  8 Mar 2012 11:39:58 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CD45PlIAaLujcQpFyGLKukXy5W0=; b=syMhMu
-	7jpIJ1NaKXJBQYiTn30PYOd+ExJKJMC4BToMOZpfj9xoMUunxTCadxVOeC1V+WIs
-	/hdF2QHKPuyjsJDWyY6r5kufqmgoPoP+B/TR9ujxJOpKbQJ7m9L4jbtsnpEYOXqJ
-	82gp00Ss2gqvpUQzBMff7A4b8L73LCa/nBnEw=
+	:content-type; s=sasl; bh=58/LAd7Ti9skmyUoLd3Qe4H+Tvg=; b=C1szI1
+	CV7TiuhBxFGBEi4ziCPYleO61QmKCutJuZlmww/6ukcWkTmPK15bmcyc7Bdw4mrc
+	UacvRTnQFXKA0yZmAUj9LwsBXRrGIjE+dVsNeyYzMsunose8mQ3IAaZ+X2L2VRPU
+	jDiZHkyfaoBfddraabRe6CwvnTXaBxKbH8h6s=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=u1QO80U3toDIhD8Suto6QJdcg/6LwXnR
-	KllSmEEm6+MO/9CbRviIjyS5vCChkEzlUcEYv4nLLxzmOAFgcP2Eh8ydv4JlMeMO
-	RRzVuJ3hmqZGHX3AH4kZOD/I5mYr7T8PvTxXw+Ub17zRXn0sW/mrfHmBvdB63y4D
-	rj8TXfo36pg=
+	:content-type; q=dns; s=sasl; b=cHIfkjPBVEoBoJf5QiynRVjNZ/S6k4qQ
+	ej/6WbjiK19nAA21rYGAPBzMiyhn2n6voLmRTFuFkMQ+XnHIW7H75kT5NNfwExbc
+	M6ZA2DMrlVHCAgzn/8v+OLGFVIzLc9ieFL1/sg/1XTnN89fthR1xMT+K3rJHJ29X
+	6oJxtSJiKm4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B5787731;
-	Thu,  8 Mar 2012 11:28:29 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 80ED67A33;
+	Thu,  8 Mar 2012 11:39:58 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 105197730; Thu,  8 Mar 2012
- 11:28:28 -0500 (EST)
-In-Reply-To: <m3wr6vs7a2.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Thu, 08 Mar 2012 02:42:49 -0800 (PST)")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D360C7A2F; Thu,  8 Mar 2012
+ 11:39:57 -0500 (EST)
+In-Reply-To: <20120308070951.GA2181@burratino> (Jonathan Nieder's message of
+ "Thu, 8 Mar 2012 01:09:51 -0600")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BCE27766-693B-11E1-A285-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 5775CA20-693D-11E1-84B9-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192617>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> For what it's worth,
+> Acked-by: Jonathan Nieder <jrnieder@gmail.com>
+>
+> Thanks very much for taking care of it.
+>
+>> [Subject: fast-import: fix ls command with empty path]
+>
+> I would s/fix/accept/ to be more precise about the nature of the
+> breakage.  (In other words: rather than mishandling ls with an empty
+> path, fast-import was not handling it at all.)
+>
 > ...
->> Fixes since v1.7.9
->> ------------------
->> 
->> Unless otherwise noted, all the fixes since v1.7.9 in the maintenance
->> releases are contained in this release (see release notes to them for
->> details).
-> [...]
+> (good).  What do you think?
 >
->>  * "gitweb" used to drop warnings in the log file when "heads" view is
->>    accessed in a repository whose HEAD does not point at a valid
->>    branch.
->
-> It looks like fix for fixed-string project search is missing.
+> -- >8 --
+> Subject: fast-import: allow filecopy to copy from root
 
-Hasn't it been already fixed in the 1.7.9.x maintenance track?
+So what do you guys want to do with topic?  My gut feeling is that
+this is not a new regression and can wait until the next cycle.  I
+could certainly carry David's patch in 'pu' if doing so helps the
+discussion to come up with the right solution, though.
