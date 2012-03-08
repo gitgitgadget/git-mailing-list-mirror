@@ -1,87 +1,57 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] fast-import: fix ls command with empty path
-Date: Thu, 8 Mar 2012 13:32:20 -0600
-Message-ID: <20120308193220.GA27916@burratino>
-References: <CAFfmPPMxcs0ySgnD7UfUS1yq=qaqfn1qCxdh1HYgFu6WPfpWQg@mail.gmail.com>
- <1331184656-98629-1-git-send-email-davidbarr@google.com>
- <20120308070951.GA2181@burratino>
- <7vty1zdp2b.fsf@alter.siamese.dyndns.org>
- <CA+gfSn8bh-tV+uduM7xsuwqXQW2a57yvVmRXjXjp9JaO779bUg@mail.gmail.com>
+From: Andreas Krey <a.krey@gmx.de>
+Subject: Re: git push default behaviour?
+Date: Thu, 8 Mar 2012 20:03:10 +0100
+Message-ID: <20120308190310.GA13486@inner.h.iocl.org>
+References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com> <87k42vs8pi.fsf@thomas.inf.ethz.ch> <CAFsnPqopZEZeeuFzK4ZoUjGnfpiv5oMs=xV5XBSgSyGLXOwgqA@mail.gmail.com> <1331202483.21444.11.camel@beez.lab.cmartin.tk> <CAFsnPqpnH2CTki8zz6Mpz=qrdxF_aTA92cPrn1L9MQZVMoxdeg@mail.gmail.com> <1331203321.21444.13.camel@beez.lab.cmartin.tk> <CAFsnPqpoBLHoshgv0MsUUStA3Q=niM8hP9yaHr+rSQvh-JWHZA@mail.gmail.com> <7vlinbdkb0.fsf@alter.siamese.dyndns.org> <vpq1up3aqk8.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>,
-	David Barr <davidbarr@google.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Andrew Sayers <andrew-git@pileofstuff.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Dmitry Ivankov <divanorama@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 20:32:40 2012
+	Jeremy Morton <jeremy@configit.com>,
+	Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
+	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Mar 08 20:35:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5j4n-0002ly-Uq
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 20:32:38 +0100
+	id 1S5j7a-0005YY-M3
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Mar 2012 20:35:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758401Ab2CHTcc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 14:32:32 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:57642 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754022Ab2CHTcb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 14:32:31 -0500
-Received: by yhmm54 with SMTP id m54so465401yhm.19
-        for <git@vger.kernel.org>; Thu, 08 Mar 2012 11:32:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Vc8PfZYZZ8Vw8o7kMh4H9fTkPZ0boaYYKOG2wkVQJxY=;
-        b=nc6kcNTDBrTu6pfVMg59i/jUweypArCTwcH+AQRCEFRNP+OCJ3reba0nn6hiCkZ1vn
-         BYT+8oSDwAy8/w93ccrrjLp0/3hFTKeQpvTaqefY1cPc/EcqpvLgl4+mZSdCa/mXaeNa
-         qNuDy0o2QA4mnIdHgZEjpNOAlGvkiulX0MH3gGy4yA89s5KbrfUdBOUocEPgSU7MlV4P
-         kTrlnnLEiWUo1Tlz8G/B2zH2bgozEhKhzivNrOM3/JgG0cNl3k4W9P6J24R0TrvpwkEz
-         zkr8RNdp/j/Q1StAKG4eN53l244Q8oQW3XFYG3qlUIhkXzsOxxpHrzu8NpWY8C9FU2sH
-         8eVA==
-Received: by 10.60.7.102 with SMTP id i6mr3088861oea.9.1331235150178;
-        Thu, 08 Mar 2012 11:32:30 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id q5sm1399096oef.3.2012.03.08.11.32.28
-        (version=SSLv3 cipher=OTHER);
-        Thu, 08 Mar 2012 11:32:29 -0800 (PST)
+	id S1758470Ab2CHTfU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 14:35:20 -0500
+Received: from continuum.iocl.org ([217.140.74.2]:40210 "EHLO
+	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758455Ab2CHTfS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 14:35:18 -0500
+X-Greylist: delayed 1885 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 Mar 2012 14:35:17 EST
+Received: (from krey@localhost)
+	by continuum.iocl.org (8.11.3/8.9.3) id q28J3Ab13715;
+	Thu, 8 Mar 2012 20:03:10 +0100
 Content-Disposition: inline
-In-Reply-To: <CA+gfSn8bh-tV+uduM7xsuwqXQW2a57yvVmRXjXjp9JaO779bUg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <vpq1up3aqk8.fsf@bauges.imag.fr>
+User-Agent: Mutt/1.4.2.1i
+X-message-flag: What did you expect to see here?
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192637>
 
-Dmitry Ivankov wrote:
+On Thu, 08 Mar 2012 19:35:51 +0000, Matthieu Moy wrote:
+...
+> If someone else did a push between my first push and the "push --force",
+> then the other user's push is discarded.
 
->  One more quick thought. "force the root mode to S_IFDIR" part doesn't
->  look obviously good for me.
+A push --semiforce would help here: Should check whether the remote
+branch is at the same commit as origin/master locally, and only then set
+to new local master. (Would probably require protocol change to actuall
+be atomic.)
 
-It was just a problematic and incomplete version of what your "be
-saner with temporary trees" does properly. ;-)
+Andreas
 
-[...]
->  P.S. looking at [1] now I'd say the commit messages could be improved there
->
->  [1] http://thread.gmane.org/gmane.comp.version-control.git/179426
-
-Yes, please.  Or patch 2/2 could be split into multiple patches,
-perhaps along the following lines:
-
- - ls "" support, as in David's patch
- - ls <dataref> "" support, which requires the "be saner with
-   temporaries" fix
- - D "" support, maybe.  (As you mentioned, we have deleteall so
-   compatibility would dictate not supporting it unless some frontend
-   is using it already by mistake in some circumstance.)
- - C "" <dest> support, as in my reply to David's patch
- - R "" <dest> support
-
-Thanks,
-Jonathan
+-- 
+"Totally trivial. Famous last words."
+From: Linus Torvalds <torvalds@*.org>
+Date: Fri, 22 Jan 2010 07:29:21 -0800
