@@ -1,73 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Phil Hord <hordp@cisco.com>
 Subject: Re: rerere.autoupdate that wouldn't
-Date: Fri, 09 Mar 2012 14:46:30 -0800
-Message-ID: <7vd38l4cl5.fsf@alter.siamese.dyndns.org>
-References: <4F5A8580.1010807@cisco.com>
+Date: Fri, 09 Mar 2012 17:51:54 -0500
+Message-ID: <4F5A898A.2060701@cisco.com>
+References: <4F5A8580.1010807@cisco.com> <7vd38l4cl5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Phil Hord <hordp@cisco.com>
-X-From: git-owner@vger.kernel.org Fri Mar 09 23:46:47 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 09 23:52:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S68aE-0001dH-SV
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 23:46:47 +0100
+	id 1S68fI-0004QH-LN
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 23:52:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964900Ab2CIWqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Mar 2012 17:46:35 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48612 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964830Ab2CIWqc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2012 17:46:32 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 277BC7448;
-	Fri,  9 Mar 2012 17:46:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XIEfnIycGEuQstrWT89GE9D6rpo=; b=yW9hUG
-	FEKwsXV81uO0VLPVqV99w55oCe/7GHq0CCYu4+W4HT/I8+SdR8zkOUBIgrbbinuS
-	MKub2E44cnzJWvAcMQ7Tz9Hi+tlRQoEeGVzkr0sDHj+qDf9WcgpZc7MFEpYBZYpm
-	USCqpWrl/uJSQNdAQbHWPHFovQFDEzGLm8f+c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FpMmApsIVSWDVXDHzEfeahAX8PT/MtYn
-	QX0FEDXbecs2PBRCH8NeO3/g4S7epUzGtnxu48QAjXH9zIMNKyGUzEWzGtkUbEy2
-	IG/MxlBgQCvzH+Yx32yRet8bTVBu7mNaaHlIzk4agICdVdhuAMZ/SBreOVYQcVAL
-	v60YxbtJc1Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E0457447;
-	Fri,  9 Mar 2012 17:46:32 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A91AA7444; Fri,  9 Mar 2012
- 17:46:31 -0500 (EST)
-In-Reply-To: <4F5A8580.1010807@cisco.com> (Phil Hord's message of "Fri, 09
- Mar 2012 17:34:40 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B73247E8-6A39-11E1-AC7B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758150Ab2CIWv4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Mar 2012 17:51:56 -0500
+Received: from rcdn-iport-1.cisco.com ([173.37.86.72]:21848 "EHLO
+	rcdn-iport-1.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756909Ab2CIWvz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Mar 2012 17:51:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=hordp@cisco.com; l=921; q=dns/txt;
+  s=iport; t=1331333515; x=1332543115;
+  h=message-id:date:from:mime-version:to:cc:subject:
+   references:in-reply-to:content-transfer-encoding;
+  bh=kXzvrMrB64UWgpBqTlsUn/PSljW/annvmC4Y4E4isSU=;
+  b=IVc+HtGbzRt06GivV9STWtFgDejlS6P3hLi3Kkk0Oonsm3vIXTde566w
+   8mNZiNXGuPZ/CXN/cFZsmuAjqQtCQ2mYL44t1yw2D9f7VtIwyCL27eQEk
+   CqjHXoxQHKTc1HqPxtGjgaVhTrs2pjF3/DmItQI+jXuwfaTYdk6ZMBWns
+   M=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApYFAO+IWk+tJXG8/2dsb2JhbABDgwmyKoEHggsBAQQSAWUBEAshFg8JAwIBAgFFBg0BBQIBAR6HaJwNAZ50kHgEiFOMdoVmijaDAQ
+X-IronPort-AV: E=Sophos;i="4.73,560,1325462400"; 
+   d="scan'208";a="65262349"
+Received: from rcdn-core2-1.cisco.com ([173.37.113.188])
+  by rcdn-iport-1.cisco.com with ESMTP; 09 Mar 2012 22:51:55 +0000
+Received: from [10.117.80.109] (rtp-hordp-89112.cisco.com [10.117.80.109])
+	by rcdn-core2-1.cisco.com (8.14.3/8.14.3) with ESMTP id q29MpsEq032718;
+	Fri, 9 Mar 2012 22:51:54 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <7vd38l4cl5.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.3.5
+X-TagToolbar-Keys: D20120309175154097
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192752>
 
-Phil Hord <hordp@cisco.com> writes:
+Writ Junio C Hamano <gitster@pobox.com>,
+> Phil Hord <hordp@cisco.com> writes:
+> 
+>> Is this what is supposed to happen?  Should I look into adding
+>> 'rerere.autoContinue=true'?
+> 
+> "Yes", and "Perhaps, but there may be a better alternative".
+> 
+> Whatever rerere did, "git merge", "git am", and friends should
+> report the fact that the result is not just a trivial conflict-free
+> merge, so that the user can take an appropriate action.  Otherwise
+> you will be robbing the last chance to eyeball the result from
+> people who have been using rerere.autoupdate=true and doing so
+> before committing.
+> 
+> And a better alternative to make "rerere.autoupdate" stronger may be
+> to make the variable tri-valued, instead of adding a new variable
+> that does not make any sense when rerere.autoupdate is not set.
 
-> Is this what is supposed to happen?  Should I look into adding
-> 'rerere.autoContinue=true'?
+Any preference on the third option-name?
 
-"Yes", and "Perhaps, but there may be a better alternative".
+I think  'False || True || Continue'
 
-Whatever rerere did, "git merge", "git am", and friends should
-report the fact that the result is not just a trivial conflict-free
-merge, so that the user can take an appropriate action.  Otherwise
-you will be robbing the last chance to eyeball the result from
-people who have been using rerere.autoupdate=true and doing so
-before committing.
-
-And a better alternative to make "rerere.autoupdate" stronger may be
-to make the variable tri-valued, instead of adding a new variable
-that does not make any sense when rerere.autoupdate is not set.
+Phil
