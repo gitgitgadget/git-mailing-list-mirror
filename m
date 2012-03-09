@@ -1,90 +1,82 @@
-From: Dominique Quatravaux <domq@google.com>
-Subject: Re: [PATCH 2/2] rebase -i: new option --name-rev
-Date: Fri, 9 Mar 2012 08:58:05 +0100
-Message-ID: <CAJh6GrFRaW7HdRjdxWvt=8cC6qfDz5BJESJGKqR3Bymg7SDb2A@mail.gmail.com>
-References: <1331203358-28277-1-git-send-email-domq@google.com>
- <1331203358-28277-2-git-send-email-domq@google.com> <87399jnyxh.fsf@thomas.inf.ethz.ch>
- <CAJh6GrFKJw1506c6nOzh+EcNe7E_UM=NxV_yBPWx9BUCdpAvAg@mail.gmail.com> <7veht2ex7v.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 7/5] transport: optionally honor DNS SRV records
+Date: Fri, 9 Mar 2012 02:00:22 -0600
+Message-ID: <20120309080003.GA2229@burratino>
+References: <20120308124857.GA7666@burratino>
+ <20120308132155.GG9426@burratino>
+ <CABPQNSYpRGfu7Ew+KstCFsG4YDSx+i-jzHS1Bw0BA4S2hoz4SA@mail.gmail.com>
+ <20120308213545.GB9497@burratino>
+ <4F59AC1C.1000406@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 09 08:58:34 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Erik Faye-Lund <kusmabite@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Eric Wong <normalperson@yhbt.net>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Mar 09 09:00:59 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5uie-0002Qz-6v
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 08:58:32 +0100
+	id 1S5ul1-0004mF-Ck
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 09:00:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753390Ab2CIH61 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Mar 2012 02:58:27 -0500
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:38346 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752289Ab2CIH60 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Mar 2012 02:58:26 -0500
-X-Greylist: delayed 65039 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Mar 2012 02:58:26 EST
-Received: by wibhq7 with SMTP id hq7so242540wib.1
-        for <git@vger.kernel.org>; Thu, 08 Mar 2012 23:58:25 -0800 (PST)
+	id S1752788Ab2CIIAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Mar 2012 03:00:31 -0500
+Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:38516 "EHLO
+	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752010Ab2CIIAa (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Mar 2012 03:00:30 -0500
+Received: by obbuo6 with SMTP id uo6so1802867obb.19
+        for <git@vger.kernel.org>; Fri, 09 Mar 2012 00:00:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding:x-system-of-record;
-        bh=hlPR0lAVsU2zUi4zmxShS3XAnT34+ElU5tEf62fw59s=;
-        b=CTBdUjXeZ2PoPt+uYCI9V/yG/nLr38r7HpS1LhdeqTuoKI7g61dJZJs+2t+Nq9Pz44
-         F/0YD9KJGZPwK9GXfPtKirph2y6ZxKCCM0j2QpiuzZWJFm6t2WjxlfZyE5GNIwka3XIj
-         bAJ9v6Xx4OujYYU9JvPjMeOpAizwBNc70AVDNNd47e6FY05lwTNEctJaI1DeNyRC4dLB
-         IW9q1ILQKGm2wP/5F69FKfcMe3XSukHOIDoa1K1D1ukPcacPo9ypWR1j2tXchFEans5i
-         bOVtB4nGmu+z4U8FZ9+AYMB1I3GyU5GKhh6UZI3azNYY9ZZ0Ej9+6xItLG6rWP4A60v3
-         CqqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding:x-system-of-record
-         :x-gm-message-state;
-        bh=hlPR0lAVsU2zUi4zmxShS3XAnT34+ElU5tEf62fw59s=;
-        b=hzQft2H97Z862TaosokQwbMjAvHwxAQ7vHUMHabR+3jx79yWyhCoeWryRwVFdWBmRl
-         MLXQ3dqXGb010VpRRR5anKglX3/1zyXncFy5Z6T9yCWuwNoLKyBz4M1fvGVwwNIFdoAC
-         g+AqNqsAlfSGa3aMvjFscNhz+No/UT73grTD0NRlxa2CJlAHi8IqrtufZYZiloMI+5e3
-         BMAVlQwNN4oTp7EoqHolxOKZoV2Lc3hTPZj64vU8QWwaf5WneP+BZcS2pra0ygNFHeWu
-         NYeArb5Qea7JC+9YDzAVVZmq0B9Ps8mRO5UMLKtG/LdQrIQDeL3Ezp5EwTjFaJ1u39a0
-         ICUg==
-Received: by 10.216.138.17 with SMTP id z17mr850931wei.18.1331279905391;
-        Thu, 08 Mar 2012 23:58:25 -0800 (PST)
-Received: by 10.216.138.17 with SMTP id z17mr850920wei.18.1331279905241; Thu,
- 08 Mar 2012 23:58:25 -0800 (PST)
-Received: by 10.227.7.138 with HTTP; Thu, 8 Mar 2012 23:58:05 -0800 (PST)
-In-Reply-To: <7veht2ex7v.fsf@alter.siamese.dyndns.org>
-X-System-Of-Record: true
-X-Gm-Message-State: ALoCoQkDaBWypG4yh8WZj5bxDY/15CbRtjoYrMN1/iNyab3VYHtRXJl3Fn5ayx9Qp366VgnzMlT1sT04BBBcm7eF+carz1SyzSrCjvG7J87ywBJq3mEZfp0laUorrX6VPIBg2ahfSmgjgYU9GgEiLTOaGMlxavm+0Q==
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=xMB8JcEdH9Pt/aYkdzXbh7bLAbj7Sj4t7dIyONRThrY=;
+        b=ZvPRGYZjLd5s3y7d68pcrxueF3kYwMifCxboCoQNGzWhbmuyzDlmOFZpB/LtQ2BFsY
+         j+eoj9cMQT4G6fErCMEmSCeJOyr6poUgfbadRu4owyv6UYjPDaNZp6TShtNkPvOndBhl
+         uer0jnzdoys6wHU7GcbBdB2V12ocyoMtrJJ3U/Wzejal68bdh8J8ryWyx69+U1V6K9Bt
+         AlgGM5zwf7AKiebB9rPkfti7HBUO9i2nzTo5+5ygZaZV9nxCub5d+Yz33S3r2wgmH4+D
+         mXZ9XemQqJWVcjEaK2hZMTnV46cu3f2AYfnv/i6OLA+HpzrC3M9rAzVi5i+YpUaETWff
+         oxkw==
+Received: by 10.182.124.41 with SMTP id mf9mr487801obb.65.1331280030134;
+        Fri, 09 Mar 2012 00:00:30 -0800 (PST)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id g4sm2388316oeg.5.2012.03.09.00.00.29
+        (version=SSLv3 cipher=OTHER);
+        Fri, 09 Mar 2012 00:00:29 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <4F59AC1C.1000406@viscovery.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192689>
 
-On Thu, Mar 8, 2012 at 11:56 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
->>> On a general note: you are submitting a completely new feature touc=
-hing
->>> a heavily-used tool (and code path) during -rc0 time. As a rule of
->>> thumb: Don't do that. [..]
+Hi,
 
-Dominique Quatravaux <domq@google.com> writes:
->> Sorry about that, I skimmed Junio's "What's cooking in git.git (Mar
->> 2012, #03; Mon, 5)" and I thought I was in the "high value/damage
->> ratio" category.
+Johannes Sixt wrote:
+> Am 3/8/2012 22:35, schrieb Jonathan Nieder:
 
-On Thu, Mar 8, 2012 at 7:58 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Well, these days, nothing that comes without prior discussion on
-> pain points before the feature freeze, be it from seasoned list
-> regulars or from people new to this list, can be of so high-value
-> that it cannot wait until the next cycle.
+>> (By the way, what platforms don't support BIND and a random number
+>> generator?)
+>
+> MinGW, for example:
 
-ACK. I'm cool with skipping a cycle, they are so fast anyways!
+The ISC seems to provide BIND source code[*] and binaries for Windows,
+though I'm not sure how well they could fit into a typical development
+environment for git's MinGW port.  A good approach for drand48 is
+harder to imagine, mostly because there are too many choices for a
+free PRNG to use to replace it.  Not a bad problem to have. ;-)
 
---=20
-=A0 Dominique Quatravaux
-=A0 +41 79 609 40 72
+Though all of that would only come up once someone wants to use
+features requiring these facilities on Windows.  Thanks for the
+hints and sorry for the distraction.
+
+Ciao,
+Jonathan
+
+[*] http://www.isc.org/software/bind
