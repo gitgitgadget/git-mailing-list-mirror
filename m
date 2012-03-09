@@ -1,89 +1,90 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] archive: fix archive generation for empty trees
-Date: Fri, 09 Mar 2012 08:30:14 +0100
-Message-ID: <4F59B186.5080600@lsrfire.ath.cx>
-References: <1331165362-78065-1-git-send-email-brodie@sf.io> <20120308055520.GB7643@sigill.intra.peff.net> <7vpqcnfvhs.fsf@alter.siamese.dyndns.org> <20120308071559.GF7643@sigill.intra.peff.net> <CAJjwD-2=pEfk2WQ2=cKy8eUSwbx8y86jEo_kyiQWsxVTqVFQEg@mail.gmail.com>
+From: Dominique Quatravaux <domq@google.com>
+Subject: Re: [PATCH 2/2] rebase -i: new option --name-rev
+Date: Fri, 9 Mar 2012 08:58:05 +0100
+Message-ID: <CAJh6GrFRaW7HdRjdxWvt=8cC6qfDz5BJESJGKqR3Bymg7SDb2A@mail.gmail.com>
+References: <1331203358-28277-1-git-send-email-domq@google.com>
+ <1331203358-28277-2-git-send-email-domq@google.com> <87399jnyxh.fsf@thomas.inf.ethz.ch>
+ <CAJh6GrFKJw1506c6nOzh+EcNe7E_UM=NxV_yBPWx9BUCdpAvAg@mail.gmail.com> <7veht2ex7v.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Brodie Rao <brodie@sf.io>
-X-From: git-owner@vger.kernel.org Fri Mar 09 08:30:36 2012
+Cc: Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 09 08:58:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5uHY-0002LO-5u
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 08:30:32 +0100
+	id 1S5uie-0002Qz-6v
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 08:58:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752678Ab2CIHa1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Mar 2012 02:30:27 -0500
-Received: from india601.server4you.de ([85.25.151.105]:39264 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752526Ab2CIHa0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2012 02:30:26 -0500
-Received: from [192.168.2.105] (p4FFD8D1E.dip.t-dialin.net [79.253.141.30])
-	by india601.server4you.de (Postfix) with ESMTPSA id AB5412F8047;
-	Fri,  9 Mar 2012 08:30:24 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <CAJjwD-2=pEfk2WQ2=cKy8eUSwbx8y86jEo_kyiQWsxVTqVFQEg@mail.gmail.com>
+	id S1753390Ab2CIH61 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Mar 2012 02:58:27 -0500
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:38346 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752289Ab2CIH60 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Mar 2012 02:58:26 -0500
+X-Greylist: delayed 65039 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Mar 2012 02:58:26 EST
+Received: by wibhq7 with SMTP id hq7so242540wib.1
+        for <git@vger.kernel.org>; Thu, 08 Mar 2012 23:58:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding:x-system-of-record;
+        bh=hlPR0lAVsU2zUi4zmxShS3XAnT34+ElU5tEf62fw59s=;
+        b=CTBdUjXeZ2PoPt+uYCI9V/yG/nLr38r7HpS1LhdeqTuoKI7g61dJZJs+2t+Nq9Pz44
+         F/0YD9KJGZPwK9GXfPtKirph2y6ZxKCCM0j2QpiuzZWJFm6t2WjxlfZyE5GNIwka3XIj
+         bAJ9v6Xx4OujYYU9JvPjMeOpAizwBNc70AVDNNd47e6FY05lwTNEctJaI1DeNyRC4dLB
+         IW9q1ILQKGm2wP/5F69FKfcMe3XSukHOIDoa1K1D1ukPcacPo9ypWR1j2tXchFEans5i
+         bOVtB4nGmu+z4U8FZ9+AYMB1I3GyU5GKhh6UZI3azNYY9ZZ0Ej9+6xItLG6rWP4A60v3
+         CqqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding:x-system-of-record
+         :x-gm-message-state;
+        bh=hlPR0lAVsU2zUi4zmxShS3XAnT34+ElU5tEf62fw59s=;
+        b=hzQft2H97Z862TaosokQwbMjAvHwxAQ7vHUMHabR+3jx79yWyhCoeWryRwVFdWBmRl
+         MLXQ3dqXGb010VpRRR5anKglX3/1zyXncFy5Z6T9yCWuwNoLKyBz4M1fvGVwwNIFdoAC
+         g+AqNqsAlfSGa3aMvjFscNhz+No/UT73grTD0NRlxa2CJlAHi8IqrtufZYZiloMI+5e3
+         BMAVlQwNN4oTp7EoqHolxOKZoV2Lc3hTPZj64vU8QWwaf5WneP+BZcS2pra0ygNFHeWu
+         NYeArb5Qea7JC+9YDzAVVZmq0B9Ps8mRO5UMLKtG/LdQrIQDeL3Ezp5EwTjFaJ1u39a0
+         ICUg==
+Received: by 10.216.138.17 with SMTP id z17mr850931wei.18.1331279905391;
+        Thu, 08 Mar 2012 23:58:25 -0800 (PST)
+Received: by 10.216.138.17 with SMTP id z17mr850920wei.18.1331279905241; Thu,
+ 08 Mar 2012 23:58:25 -0800 (PST)
+Received: by 10.227.7.138 with HTTP; Thu, 8 Mar 2012 23:58:05 -0800 (PST)
+In-Reply-To: <7veht2ex7v.fsf@alter.siamese.dyndns.org>
+X-System-Of-Record: true
+X-Gm-Message-State: ALoCoQkDaBWypG4yh8WZj5bxDY/15CbRtjoYrMN1/iNyab3VYHtRXJl3Fn5ayx9Qp366VgnzMlT1sT04BBBcm7eF+carz1SyzSrCjvG7J87ywBJq3mEZfp0laUorrX6VPIBg2ahfSmgjgYU9GgEiLTOaGMlxavm+0Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192688>
 
-Am 09.03.2012 01:06, schrieb Brodie Rao:
-> 2012/3/7 Jeff King<peff@peff.net>:
->> On Wed, Mar 07, 2012 at 10:38:07PM -0800, Junio C Hamano wrote:
->>
->>>> ... However, prefix_pathspec does a lot of magic parsing;
->>>> it's unclear to me whether this is all in support of properly
->>>> adding the prefix, or if its side effects are important.
->>>
->>> These "magic" are for things like :(root)/path that will explicitly
->>> refuse the prefix when run from a subdirectory.
->>
->> Yeah, that was my impression. In that case, I would think we could g=
-et
->> rid of the get_pathspec call entirely, as it is purely about fixing-=
-up
->> prefixes, and we know that we have none.
->
-> Let me see if I've got this right: We're currently passing in ""/NULL
-> to get_pathspec() because we handle the prefix beforehand in
-> parse_treeish_args(). Once we get the tree object, every path is
-> relative to it, so we don't need to continue using a prefix.
->
-> Wouldn't it be better to continue using get_pathspec(), passing it th=
-e
-> real prefix, and looking up tree entries relative to the top-level
-> tree? The way it works now, you get weird behavior like this:
->
->    $ cd xdiff
->    $ git archive -v --format=3Dtar HEAD ../t/t5000-tar-tree.sh>  /dev=
-/null
->    fatal: '../t/t5000-tar-tree.sh' is outside repository
->    $ git archive -v --format=3Dtar HEAD ..>  /dev/null
->    fatal: '..' is outside repository
+On Thu, Mar 8, 2012 at 11:56 AM, Thomas Rast <trast@inf.ethz.ch> wrote:
+>>> On a general note: you are submitting a completely new feature touc=
+hing
+>>> a heavily-used tool (and code path) during -rc0 time. As a rule of
+>>> thumb: Don't do that. [..]
 
-With get_pathspec() gone you'd get this instead:
+Dominique Quatravaux <domq@google.com> writes:
+>> Sorry about that, I skimmed Junio's "What's cooking in git.git (Mar
+>> 2012, #03; Mon, 5)" and I thought I was in the "high value/damage
+>> ratio" category.
 
-	fatal: path not found: ..
+On Thu, Mar 8, 2012 at 7:58 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Well, these days, nothing that comes without prior discussion on
+> pain points before the feature freeze, be it from seasoned list
+> regulars or from people new to this list, can be of so high-value
+> that it cannot wait until the next cycle.
 
-The message could be improved by mentioning the subdirectory and perhap=
-s=20
-the tree, something like this:
+ACK. I'm cool with skipping a cycle, they are so fast anyways!
 
-	fatal: path not found in subdir 'xdiff' of 'HEAD': ..
-
-However, you seem to expect such an invocation to succeed.  What should=
-=20
-go into the created archive in that case and which pathes would be reco=
-rded?
-
-Ren=C3=A9
+--=20
+=A0 Dominique Quatravaux
+=A0 +41 79 609 40 72
