@@ -1,82 +1,90 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 7/5] transport: optionally honor DNS SRV records
-Date: Fri, 9 Mar 2012 02:00:22 -0600
-Message-ID: <20120309080003.GA2229@burratino>
-References: <20120308124857.GA7666@burratino>
- <20120308132155.GG9426@burratino>
- <CABPQNSYpRGfu7Ew+KstCFsG4YDSx+i-jzHS1Bw0BA4S2hoz4SA@mail.gmail.com>
- <20120308213545.GB9497@burratino>
- <4F59AC1C.1000406@viscovery.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: git push default behaviour?
+Date: Fri, 09 Mar 2012 09:05:02 +0100
+Message-ID: <vpqr4x26vyp.fsf@bauges.imag.fr>
+References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com>
+	<87k42vs8pi.fsf@thomas.inf.ethz.ch>
+	<CAFsnPqopZEZeeuFzK4ZoUjGnfpiv5oMs=xV5XBSgSyGLXOwgqA@mail.gmail.com>
+	<1331202483.21444.11.camel@beez.lab.cmartin.tk>
+	<CAFsnPqpnH2CTki8zz6Mpz=qrdxF_aTA92cPrn1L9MQZVMoxdeg@mail.gmail.com>
+	<1331203321.21444.13.camel@beez.lab.cmartin.tk>
+	<CAFsnPqpoBLHoshgv0MsUUStA3Q=niM8hP9yaHr+rSQvh-JWHZA@mail.gmail.com>
+	<7vlinbdkb0.fsf@alter.siamese.dyndns.org>
+	<vpq1up3aqk8.fsf@bauges.imag.fr>
+	<7vty1ydh7p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Erik Faye-Lund <kusmabite@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Eric Wong <normalperson@yhbt.net>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Mar 09 09:00:59 2012
+Content-Type: text/plain
+Cc: Jeremy Morton <jeremy@configit.com>,
+	Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
+	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 09 09:05:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5ul1-0004mF-Ck
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 09:00:59 +0100
+	id 1S5upd-0000nx-Ur
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 09:05:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752788Ab2CIIAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Mar 2012 03:00:31 -0500
-Received: from mail-tul01m020-f174.google.com ([209.85.214.174]:38516 "EHLO
-	mail-tul01m020-f174.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752010Ab2CIIAa (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Mar 2012 03:00:30 -0500
-Received: by obbuo6 with SMTP id uo6so1802867obb.19
-        for <git@vger.kernel.org>; Fri, 09 Mar 2012 00:00:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=xMB8JcEdH9Pt/aYkdzXbh7bLAbj7Sj4t7dIyONRThrY=;
-        b=ZvPRGYZjLd5s3y7d68pcrxueF3kYwMifCxboCoQNGzWhbmuyzDlmOFZpB/LtQ2BFsY
-         j+eoj9cMQT4G6fErCMEmSCeJOyr6poUgfbadRu4owyv6UYjPDaNZp6TShtNkPvOndBhl
-         uer0jnzdoys6wHU7GcbBdB2V12ocyoMtrJJ3U/Wzejal68bdh8J8ryWyx69+U1V6K9Bt
-         AlgGM5zwf7AKiebB9rPkfti7HBUO9i2nzTo5+5ygZaZV9nxCub5d+Yz33S3r2wgmH4+D
-         mXZ9XemQqJWVcjEaK2hZMTnV46cu3f2AYfnv/i6OLA+HpzrC3M9rAzVi5i+YpUaETWff
-         oxkw==
-Received: by 10.182.124.41 with SMTP id mf9mr487801obb.65.1331280030134;
-        Fri, 09 Mar 2012 00:00:30 -0800 (PST)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id g4sm2388316oeg.5.2012.03.09.00.00.29
-        (version=SSLv3 cipher=OTHER);
-        Fri, 09 Mar 2012 00:00:29 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4F59AC1C.1000406@viscovery.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751395Ab2CIIFk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Mar 2012 03:05:40 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:36622 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751079Ab2CIIFk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Mar 2012 03:05:40 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q2980r7S018702
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 9 Mar 2012 09:00:53 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1S5uox-0008H5-KD; Fri, 09 Mar 2012 09:05:03 +0100
+In-Reply-To: <7vty1ydh7p.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 08 Mar 2012 11:29:30 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 09 Mar 2012 09:00:55 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q2980r7S018702
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1331884859.59304@GTJsXyrdBWnwfl9vyz03Mw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192690>
 
-Hi,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Johannes Sixt wrote:
-> Am 3/8/2012 22:35, schrieb Jonathan Nieder:
+> That is exactly what I said in the parentheses above, isn't it?  The
+> danger of "--force" does not have anything to do with which branches
+> are pushed.
 
->> (By the way, what platforms don't support BIND and a random number
->> generator?)
->
-> MinGW, for example:
+I disagree. A user may use --force because he has good reason to think
+that a branch hasn't been been touched by others, but it's much harder
+to guarantee that all branches haven't been touched.
 
-The ISC seems to provide BIND source code[*] and binaries for Windows,
-though I'm not sure how well they could fit into a typical development
-environment for git's MinGW port.  A good approach for drand48 is
-harder to imagine, mostly because there are too many choices for a
-free PRNG to use to replace it.  Not a bad problem to have. ;-)
+> That does not change the conclusion that current is more suitable
+> for shared repository workflow and matching is more (not "equally to
+> current") suitable for publishing repository workflow, and we have a
+> way for user to tell Git which one is being used in a particular
+> project exactly for that purpose.
 
-Though all of that would only come up once someone wants to use
-features requiring these facilities on Windows.  Thanks for the
-hints and sorry for the distraction.
+We're not talking about the same thing. You're talking about how
+_appropriate_ a value is, and I'm mentionning how _dangerous_ it can be.
 
-Ciao,
-Jonathan
+And regardless of the danger, if I look around me, I see almost only
+people working with shared archives, and a few projects (including Git,
+obviously) using the "one commiter per repository" workflow (I teach Git
+to 200 students and several colleagues every year, I've tried teaching
+the "one public repository per developer" and it was a complete disaster).
 
-[*] http://www.isc.org/software/bind
+I really think the default should help these people.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
