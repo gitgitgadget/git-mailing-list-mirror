@@ -1,90 +1,137 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: demerphq <demerphq@gmail.com>
 Subject: Re: git push default behaviour?
-Date: Fri, 09 Mar 2012 09:05:02 +0100
-Message-ID: <vpqr4x26vyp.fsf@bauges.imag.fr>
+Date: Fri, 9 Mar 2012 09:06:18 +0100
+Message-ID: <CANgJU+WMxnNgdsP4JV6aAVW07NeWXUa5LsEa4dk5_1CZXC1nXA@mail.gmail.com>
 References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com>
 	<87k42vs8pi.fsf@thomas.inf.ethz.ch>
 	<CAFsnPqopZEZeeuFzK4ZoUjGnfpiv5oMs=xV5XBSgSyGLXOwgqA@mail.gmail.com>
 	<1331202483.21444.11.camel@beez.lab.cmartin.tk>
 	<CAFsnPqpnH2CTki8zz6Mpz=qrdxF_aTA92cPrn1L9MQZVMoxdeg@mail.gmail.com>
 	<1331203321.21444.13.camel@beez.lab.cmartin.tk>
-	<CAFsnPqpoBLHoshgv0MsUUStA3Q=niM8hP9yaHr+rSQvh-JWHZA@mail.gmail.com>
-	<7vlinbdkb0.fsf@alter.siamese.dyndns.org>
-	<vpq1up3aqk8.fsf@bauges.imag.fr>
-	<7vty1ydh7p.fsf@alter.siamese.dyndns.org>
+	<4F58C977.8000400@xiplink.com>
+	<vpq62efjeqd.fsf@bauges.imag.fr>
+	<CAHkcotiOGaOdDvibpoiEgys3PnSPfSw0mT3DeEOix+FuboULiA@mail.gmail.com>
+	<vpqfwdjas0m.fsf@bauges.imag.fr>
+	<20120309033826.GA6164@sigill.intra.peff.net>
+	<7vsjhi9wku.fsf@alter.siamese.dyndns.org>
+	<7vobs69vwj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeremy Morton <jeremy@configit.com>,
-	Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	=?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
+	Jeremy Morton <jeremy@configit.com>,
 	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 09 09:05:46 2012
+X-From: git-owner@vger.kernel.org Fri Mar 09 09:06:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5upd-0000nx-Ur
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 09:05:46 +0100
+	id 1S5uqG-0001TS-Hw
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 09:06:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751395Ab2CIIFk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Mar 2012 03:05:40 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:36622 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751079Ab2CIIFk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2012 03:05:40 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q2980r7S018702
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 9 Mar 2012 09:00:53 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1S5uox-0008H5-KD; Fri, 09 Mar 2012 09:05:03 +0100
-In-Reply-To: <7vty1ydh7p.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 08 Mar 2012 11:29:30 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 09 Mar 2012 09:00:55 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q2980r7S018702
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1331884859.59304@GTJsXyrdBWnwfl9vyz03Mw
+	id S1751574Ab2CIIGU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Mar 2012 03:06:20 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:42437 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751079Ab2CIIGT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Mar 2012 03:06:19 -0500
+Received: by gghe5 with SMTP id e5so722239ggh.19
+        for <git@vger.kernel.org>; Fri, 09 Mar 2012 00:06:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=QotlMYr5Ei8pBZLSNp6jdGCdn+pA8dOKHw2GHUZxqkM=;
+        b=KzytlKxIVKKzi/waNGeR6nDEcJaXPFy4LssQQYyRnCX8njSn3hAxmx7MG+DzCaR2+N
+         sMi+8oQwH/5wAwdRI2MslJKwTn2TDoPD0FQN+yvmh0LeU/P9j0dtSUE6FCWDJxMdqLgo
+         0s0iryCB5ZlWq89g7Ta7HX/6ES6E8mRWLKn0bFtBGz3iLG9Gfmax9bCyNDqKejMBB5XR
+         aVHE/9Pgg5qaJR7qADzAVRe/34Dl9M2bJgKyBYzKZuu2Uv3DmOH1fP77qGJK9+a9EXPl
+         Po0+PuxeZGw6jwqZLrgIMBp5tvvUqNHfRbdOs5X41+jsvPKzdklAy8dBC0bZ1XxeOZMd
+         UB2A==
+Received: by 10.236.165.34 with SMTP id d22mr1176117yhl.86.1331280378989; Fri,
+ 09 Mar 2012 00:06:18 -0800 (PST)
+Received: by 10.236.176.1 with HTTP; Fri, 9 Mar 2012 00:06:18 -0800 (PST)
+In-Reply-To: <7vobs69vwj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192691>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 9 March 2012 06:38, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> I just dug it up; start from here:
+>>
+>> =A0 =A0 http://thread.gmane.org/gmane.comp.version-control.git/12335=
+0/focus=3D123541
+>>
+>> read on a few messages downthread, and then jump to the other thread
+>> Nana points at in the above message.
+>>
+>> In short, we started warning that we _might_ change the default
+>> someday, without having a clear concensus or plan, that ended up
+>> confusing and annoying users without giving them anything good,
+>> other than awareness that such a feature is _available_.
+>>
+>> So no, the conversation did not decide if changing the default was
+>> warranted or not. It just confirmed that we weren't anywhere close
+>> to deciding back then.
+>
+> I think MJG's message (the second on in the "git push origin error"
+> thread) is probably what we would need to repeat, and this time more
+> strongly to squelch the opposition from old timers, if somebody
+> wants to resurrect the "warn until you set the default explicitly,
+> intending to change the default in the future" patch. And this time
+> around, the plan to change the default should be more concrete with
+> specific date, e.g. "Starting from April 1st, 2013".
+>
+> I was in the "keep the default to matching, so that nobody among
+> existing 47 million users would be annoyed" camp (back then we
+> probably didn't have 47 million users, but that is besides the
+> point) and I still am, but notice that I was defending the argument
+> by the "let's be ( (new user) friendly )" camp in that thread. And
+> without much fire-support from those who were vocal about it.
+>
+> Re-reading the thread made me sick.
+>
+> I wish I had enough energy remaining to say "Let's try one more
+> time, and hope that people from the 'let's change the default' camp
+> will behave much better than the last time", but I do not have high
+> hopes, after having been burned once already with exactly the same
+> issue.
 
-> That is exactly what I said in the parentheses above, isn't it?  The
-> danger of "--force" does not have anything to do with which branches
-> are pushed.
+I think I read all the relevant mails, and I have a thought concerning
+what I see to be the class of the problem here: the general question
+of "how do you change default behavior if it turns out that the
+original choice was inappropriate". It seems to me you can think of
+solutions to that problem in general without considering the subject
+of this thread.
 
-I disagree. A user may use --force because he has good reason to think
-that a branch hasn't been been touched by others, but it's much harder
-to guarantee that all branches haven't been touched.
+A possible solution might be to give config files a "format version"
+of their own. They already contain a repository format version number,
+so add a new variable "ConfigVersionLevel". Alongside that you might
+introduce a policy of having new git "fill in" the defaults missing
+from the config file whenever it operates, so that people can
+explicitly view then all at once. Then if the defaults change in the
+future an old repo will continue to work as it did before. This alone
+would allow you to change the defaults for existing configurable
+behavior, but you need the version number to handle new options.
 
-> That does not change the conclusion that current is more suitable
-> for shared repository workflow and matching is more (not "equally to
-> current") suitable for publishing repository workflow, and we have a
-> way for user to tell Git which one is being used in a particular
-> project exactly for that purpose.
+Once you have that you can change the default behavior based on the
+version level so that older users operating in older repositories get
+the old behavior, and new repositories get the new behavior. And you
+have more flexibility in how your approach these problems when they
+come up, and it seems to me that they are inevitable.
 
-We're not talking about the same thing. You're talking about how
-_appropriate_ a value is, and I'm mentionning how _dangerous_ it can be.
+Cheers,
+Yves
 
-And regardless of the danger, if I look around me, I see almost only
-people working with shared archives, and a few projects (including Git,
-obviously) using the "one commiter per repository" workflow (I teach Git
-to 200 students and several colleagues every year, I've tried teaching
-the "one public repository per developer" and it was a complete disaster).
-
-I really think the default should help these people.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+--=20
+perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
