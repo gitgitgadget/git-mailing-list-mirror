@@ -1,73 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Need to set GIT_WORK_TREE when setting GIT_DIR !?
-Date: Fri, 09 Mar 2012 15:06:02 -0800
-Message-ID: <7v4ntx4bol.fsf@alter.siamese.dyndns.org>
-References: <CALeToSUaPzdr=u7FfwHEtEanphVP5LZ09QdQXno52PLBTK0H-g@mail.gmail.com>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: how to patch git documentation
+Date: Fri, 09 Mar 2012 17:11:08 -0600
+Message-ID: <4F5A8E0C.20404@gmail.com>
+References: <jjbqe9$8l3$1@dough.gmane.org> <7v1up2bikm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?B?RnLDqWTDqXJpYw==?= Heitzmann 
-	<frederic.heitzmann@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 10 00:06:13 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 10 00:11:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S68t3-0003hn-6b
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Mar 2012 00:06:13 +0100
+	id 1S68xw-0006NX-LP
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Mar 2012 00:11:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751632Ab2CIXGI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Mar 2012 18:06:08 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59117 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750850Ab2CIXGG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Mar 2012 18:06:06 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E37E279AE;
-	Fri,  9 Mar 2012 18:06:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=xDwJXjZEm9MB
-	CelPXRRGayIu05Y=; b=WKM4tLXFQqnAjB2/mpQXTZlGeoijT6RJ0jaBVO2fgYu/
-	BCvI0BivddOycWawjApeHHQbOEuEhar9OXbNlloY4CGQUMIvMJB5BeyL5B9iaRIn
-	wQUqKUXQbUNtBJir3bgtzHq9lP3kHZTSx9qGOCpYfMvhnk2C2ebcRG/sV6tv8hM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=O1pP6Y
-	gBjEfZxCeyABQ22JwMSYtp8riOnL/OIdfyFlTwPUntlhgPjYjpI2WfbofY99P7oH
-	EefAth0d+fIefcxHcOjp5+ZSZqRg2bAAy0ewYK/kNbv89FySAoAwpEoKlHBNoJxH
-	AtiRZ/R9i3hpo6CT1e6g5uinT56tYNlVvHI9s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA8BE79AD;
-	Fri,  9 Mar 2012 18:06:04 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5754279AC; Fri,  9 Mar 2012
- 18:06:04 -0500 (EST)
-In-Reply-To: <CALeToSUaPzdr=u7FfwHEtEanphVP5LZ09QdQXno52PLBTK0H-g@mail.gmail.com>
- (=?utf-8?B?IkZyw6lkw6lyaWM=?= Heitzmann"'s message of "Fri, 9 Mar 2012
- 23:51:48 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7228D218-6A3C-11E1-B044-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753016Ab2CIXLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Mar 2012 18:11:12 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:57437 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751077Ab2CIXLL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Mar 2012 18:11:11 -0500
+Received: by yhmm54 with SMTP id m54so1279604yhm.19
+        for <git@vger.kernel.org>; Fri, 09 Mar 2012 15:11:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=40fMlIU6PMG+sNFgzj9LKk/NgIlO0QEq6hyhoSwegBg=;
+        b=y/sxXoIHM6aacLixGtv9UEo+PvCcrKtpiPIj/szFOjdAPtZI0ac3FIQ8Kx1wPA1EFE
+         SZbpxSY9nl+oHWC23z7ceu65m5EULyrZ4pYbKi7/9GGKiDym3ndtuoPm6gD3BMVWzwZB
+         T8DCpL4iHPKXh1qfwP7IHVEySNLAuDskzhtkYXJz5Sv/amB7tQjBSnqnkzUV1kpcSQHB
+         qY4Y85Z0XbwcVhxr6Ekt+ETvFXUFMmvxUQ0r2pgrS1u6jEXZvdP13uvQkp5iDqGuF84o
+         1PmHeAU9lQ4/9rgGITRnw6QS1yvdvFmYOAky4OrjDaTRbMOl1QfOrYIXQB0Wb1/lDlDC
+         /iwA==
+Received: by 10.236.191.105 with SMTP id f69mr4890777yhn.23.1331334670372;
+        Fri, 09 Mar 2012 15:11:10 -0800 (PST)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id p41sm17713453yhj.14.2012.03.09.15.11.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 09 Mar 2012 15:11:09 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.27) Gecko/20120216 Thunderbird/3.1.19
+In-Reply-To: <7v1up2bikm.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192757>
 
-=46r=C3=A9d=C3=A9ric Heitzmann  <frederic.heitzmann@gmail.com> writes:
+On 3/8/2012 8:43 PM, Junio C Hamano wrote:
+> Neal Kreitzinger<nkreitzinger@gmail.com>  writes:
+>
+>> What language are the git documentation *.txt files written in?
+> Mixture of Pidgin English and a bit of AsciiDoc ;-).
+>
+>
+Does someone have documentation on how to test the AsciiDoc changes of 
+their Documentation/ patches?  This tester I found doesn't work right 
+because it not only shows my asciidoc changes misformatted in html, but 
+it also shows the original working asciidoc code from git.git as being 
+misformatted in html :  http://andrewk.webfactional.com/asciidoc.php
 
-Yes, to the question on the Subject line.  But you can also say=20
-
-    [core] worktree =3D /path/to/the/work/tree
-
-in $GIT_DIR/config.  Make sure your $GIT_DIR/config does *NOT* say
-that the repository is a bare repository.
-
-> ...
-> Note: that using --git-dir instead of GIT_DIR give the same errors.
-
-Yes, that is the intended behaviour; the command line option and the
-environment variable should give you the same consistent effect).
+v/r,
+neal
