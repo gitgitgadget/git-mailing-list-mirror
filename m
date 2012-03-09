@@ -1,67 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] configure: allow user to prevent $PATH "sanitization" on
- Solaris
-Date: Fri, 09 Mar 2012 08:29:31 -0800
-Message-ID: <7vboo57n6c.fsf@alter.siamese.dyndns.org>
-References: <7vhay6etqc.fsf@alter.siamese.dyndns.org>
- <a706eaa1e1cd5e13a8cd98362fe09bba628789d1.1331296220.git.stefano.lattarini@gmail.com>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: Strange behauviour on Cherry-Pick
+Date: Fri, 09 Mar 2012 18:20:12 +0100
+Message-ID: <1331313612.21444.46.camel@beez.lab.cmartin.tk>
+References: <1331296972-sup-5028@masterkorp.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stefano Lattarini <stefano.lattarini@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 09 17:29:48 2012
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Alfredo Palhares <masterkorp@masterkorp.net>
+X-From: git-owner@vger.kernel.org Fri Mar 09 18:20:26 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S62hG-0002a4-QI
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 17:29:39 +0100
+	id 1S63UM-0004iq-5o
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 18:20:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757905Ab2CIQ3e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Mar 2012 11:29:34 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51326 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751365Ab2CIQ3d (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2012 11:29:33 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AF1259BA;
-	Fri,  9 Mar 2012 11:29:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SkI0u0TLsxeMvuAeTlYEUP3DAYk=; b=S1asON
-	4DLBlqlmFHf8KFMos0dzbRGADL8azv9Aqzz6l1QePT28eemqDo+QOiiY09aghADO
-	Pfrqh1wRcL27VtnvxXvenfAqndFu4Cru/MiinkRbRI2MtR6QU6Wm0yhbyAJ2qB4w
-	c/5W38U+TwmA6h6+8BMNW295y7+HqyZ0TcJfQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ki5P36lbTjgEVfCs4QJKdraHeq2xU0rw
-	3+8buEx9RDAmn1hp+6Ij2KGSd6UhkUm+PwtNNMlwCW1Xo7cv0A8Ul+Uw3Ct4ko6d
-	Ykd702OyTei9uYTfrl9rkG7KNV9nzm04v/lL76M6c6a0ljtSYkkG6Us6IvctTE9X
-	ui8LxqQh9VY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 11B1759B9;
-	Fri,  9 Mar 2012 11:29:33 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9E5E359B8; Fri,  9 Mar 2012
- 11:29:32 -0500 (EST)
-In-Reply-To: <a706eaa1e1cd5e13a8cd98362fe09bba628789d1.1331296220.git.stefano.lattarini@gmail.com> (Stefano Lattarini's message of "Fri, 9 Mar 2012 13:43:55 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0D31FD58-6A05-11E1-BD1E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758278Ab2CIRUQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Mar 2012 12:20:16 -0500
+Received: from kimmy.cmartin.tk ([91.121.65.165]:51824 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754557Ab2CIRUP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Mar 2012 12:20:15 -0500
+Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 9252B46057;
+	Fri,  9 Mar 2012 18:20:05 +0100 (CET)
+In-Reply-To: <1331296972-sup-5028@masterkorp.net>
+X-Mailer: Evolution 3.2.2-1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192729>
 
-Stefano Lattarini <stefano.lattarini@gmail.com> writes:
+On Fri, 2012-03-09 at 15:11 +0100, Alfredo Palhares wrote:
+> Hello, 
+> 
+> I have a repository[1] with my home files that i keep track off on my machines. 
+> Until now ive been having everything in the same branch across all the computers, 
+> but now i have a machine that requires diferences on some files.
+> 
+> So what i did i branched out and keep control the commits i want to the other branch
+> trough cherry-picking.
+> 
 
->  Hi Junio, sorry for the delay.
+[cherry-pick two commits from 'boobierack' into 'master']
 
-Thanks for not forgetting.
+> Back to the boobierack machine:
+>   Pull the commits before adding more stuff
+>   $ git pull origin 
+>   remote: Counting objects: 20, done.
+>   remote: Compressing objects: 100% (13/13), done.
+>   remote: Total 18 (delta 2), reused 18 (delta 2)
+>   Unpacking objects: 100% (18/18), done.
+>   From github.com:masterkorp/Home-files
+>    * branch            HEAD       -> FETCH_HEAD
+>    Merge made by recursive.
+> 
+>   I got like... OK ? 
+>   On branh boobierack
+>   $ git log --pretty=format:'''%h : %s''' --date-order --graph -n 6
+>   *   4d7b2e8 : Merge github.com:masterkorp/Home-files into boobierack
+>   |\  
+>   | * 9937a0a : Fancier tmux
+>   * | 811355b : Add sup config files
+>   * | 9de92a2 : Fancier tmux
+>   | * aac85ac : Add weechat config files
+>   * | 90a6162 : Add weechat config files
+> 
+>   And master branch was untouched, i read on recursive merging on man page, but 
 
-The contributors are used as "tracking system" around here, and they
-won't get "what happened to your stalled patch? Any progress?" from
-anybody (unless there are others who are deeply interested in the
-topic).  Delay is not a problem.
+The master branch was untouched because you didn't tell git to do
+anything with it.
+
+>   i can't even understand why is git using that method in the first place, since 
+>   the hashes are diferent and git doesn't care about the diff when fetching iirc.
+
+The diffs between branches don't matter when fetching, but this is only
+part of what you are doing here. Pull is fetch + merge and as you
+specified a remote and no branch, it took the remote's default branch,
+which seems to be 'master', and merged it into your current branch. What
+you show is precisely what one would expect to see. Those two commits
+that you cherry-picked are on each branch (or rather, their equivalents)
+and then you have a merge between that remote and branch 'boobierack'
+which you were on when you told git to merge origin's default branch.
+
+This however doesn't seem to be what you were trying to do. What were
+you trying to achieve with the pull? It seems to make sense that you'd
+want to merge the master branch, as you yourself said that it had
+changes that would never get merged back to 'master'.
+
+   cmn
