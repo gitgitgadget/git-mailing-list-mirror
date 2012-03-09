@@ -1,140 +1,73 @@
-From: Martin Stenberg <martin@gnutiken.se>
-Subject: [PATCH] fix incorrect line number report for bad gitconfig
-Date: Fri, 9 Mar 2012 23:30:14 +0100
-Message-ID: <20120309223014.GA6380@gnutiken.se>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: rerere.autoupdate that wouldn't
+Date: Fri, 09 Mar 2012 14:46:30 -0800
+Message-ID: <7vd38l4cl5.fsf@alter.siamese.dyndns.org>
+References: <4F5A8580.1010807@cisco.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="cNdxnHkX5QqsyA0e"
-Cc: Linus Torvalds <torvalds@osdl.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 09 23:40:25 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Phil Hord <hordp@cisco.com>
+X-From: git-owner@vger.kernel.org Fri Mar 09 23:46:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S68U3-0006hF-MI
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 23:40:24 +0100
+	id 1S68aE-0001dH-SV
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 23:46:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758382Ab2CIWkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Mar 2012 17:40:16 -0500
-Received: from gnutiken.se ([109.74.202.65]:42167 "EHLO gnutiken.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755803Ab2CIWkP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2012 17:40:15 -0500
-X-Greylist: delayed 605 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Mar 2012 17:40:15 EST
-Received: from gnutiken.se (c-2ec2f5c3-74736162.cust.telenor.se [46.194.245.195])
-	by gnutiken.se (Postfix) with ESMTPSA id 8F70EEA005;
-	Fri,  9 Mar 2012 23:30:07 +0100 (CET)
-Content-Disposition: inline
-X-Disclaimer: 816148156
-X-Mailer: mutt
-X-Evilbit: 0
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S964900Ab2CIWqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Mar 2012 17:46:35 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48612 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964830Ab2CIWqc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Mar 2012 17:46:32 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 277BC7448;
+	Fri,  9 Mar 2012 17:46:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XIEfnIycGEuQstrWT89GE9D6rpo=; b=yW9hUG
+	FEKwsXV81uO0VLPVqV99w55oCe/7GHq0CCYu4+W4HT/I8+SdR8zkOUBIgrbbinuS
+	MKub2E44cnzJWvAcMQ7Tz9Hi+tlRQoEeGVzkr0sDHj+qDf9WcgpZc7MFEpYBZYpm
+	USCqpWrl/uJSQNdAQbHWPHFovQFDEzGLm8f+c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FpMmApsIVSWDVXDHzEfeahAX8PT/MtYn
+	QX0FEDXbecs2PBRCH8NeO3/g4S7epUzGtnxu48QAjXH9zIMNKyGUzEWzGtkUbEy2
+	IG/MxlBgQCvzH+Yx32yRet8bTVBu7mNaaHlIzk4agICdVdhuAMZ/SBreOVYQcVAL
+	v60YxbtJc1Y=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E0457447;
+	Fri,  9 Mar 2012 17:46:32 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A91AA7444; Fri,  9 Mar 2012
+ 17:46:31 -0500 (EST)
+In-Reply-To: <4F5A8580.1010807@cisco.com> (Phil Hord's message of "Fri, 09
+ Mar 2012 17:34:40 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B73247E8-6A39-11E1-AC7B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192751>
 
+Phil Hord <hordp@cisco.com> writes:
 
---cNdxnHkX5QqsyA0e
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Is this what is supposed to happen?  Should I look into adding
+> 'rerere.autoContinue=true'?
 
-=46rom c88f00e06cb877f9d944fdec480f53a7a42dd990 Mon Sep 17 00:00:00 2001
-=46rom: Martin Stenberg <martin@gnutiken.se>
-Date: Fri, 9 Mar 2012 22:57:54 +0100
-Subject: [PATCH] fix incorrect line number report for bad gitconfig
+"Yes", and "Perhaps, but there may be a better alternative".
 
-A .gitconfig section with a missing "]" reports the next line as beeing bad,
-same goes to a value with a missing end quote.
+Whatever rerere did, "git merge", "git am", and friends should
+report the fact that the result is not just a trivial conflict-free
+merge, so that the user can take an appropriate action.  Otherwise
+you will be robbing the last chance to eyeball the result from
+people who have been using rerere.autoupdate=true and doing so
+before committing.
 
-This happens because the error is not detected until the end of the line, w=
-hen
-line number is already increased. Fix this issue by decreasing line number =
-by
-one for these cases.
-Signed-off-by: Martin Stenberg <martin@gnutiken.se>
----
- config.c |   16 ++++++++++++----
- 1 files changed, 12 insertions(+), 4 deletions(-)
-
-diff --git a/config.c b/config.c
-index ad03908..8d96ba1 100644
---- a/config.c
-+++ b/config.c
-@@ -196,8 +196,10 @@ static char *parse_value(void)
- 	for (;;) {
- 		int c =3D get_next_char();
- 		if (c =3D=3D '\n') {
--			if (quote)
-+			if (quote) {
-+				cf->linenr--;
- 				return NULL;
-+			}
- 			return cf->value.buf;
- 		}
- 		if (comment)
-@@ -286,8 +288,10 @@ static int get_value(config_fn_t fn, void *data, char =
-*name, unsigned int len)
- static int get_extended_base_var(char *name, int baselen, int c)
- {
- 	do {
--		if (c =3D=3D '\n')
-+		if (c =3D=3D '\n') {
-+			cf->linenr--;
- 			return -1;
-+		}
- 		c =3D get_next_char();
- 	} while (isspace(c));
-=20
-@@ -298,14 +302,18 @@ static int get_extended_base_var(char *name, int base=
-len, int c)
-=20
- 	for (;;) {
- 		int c =3D get_next_char();
--		if (c =3D=3D '\n')
-+		if (c =3D=3D '\n') {
-+			cf->linenr--;
- 			return -1;
-+		}
- 		if (c =3D=3D '"')
- 			break;
- 		if (c =3D=3D '\\') {
- 			c =3D get_next_char();
--			if (c =3D=3D '\n')
-+			if (c =3D=3D '\n') {
-+				cf->linenr--;
- 				return -1;
-+			}
- 		}
- 		name[baselen++] =3D c;
- 		if (baselen > MAXNAME / 2)
---=20
-1.7.9.1
-
-
---cNdxnHkX5QqsyA0e
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJPWoR2AAoJEGP7bLlG/aTxxDkP/3oAqLYZN3mWTgIMC0XNdNPk
-FhL5hlIBbiDwbyD3WTnWPZIpCKMbxlIXqO5y+NLhA4tEIcvY1BKt3kr8Q3dlTl0/
-S6/iNKMfdOTmcwmaI8hyRm1V+fivSWv9Qql2zYkO+QXgayYbgkoTwCbUvNi9m6im
-zAfm43i9DX5AHTjFY7Pe5lcUQ5wrpBJM82Dc5+bsBlhoB57JWMtupIBKlik29vM2
-g7YKvfYe7qeGc6FIKbK0W5qy8Lv2DH8ChEZ27LtpFqFX3Nsevx55lZ+f6AulqKVl
-fb1J6ifMhIyX3gzprhlyj4Xx+Vxk5SU50I/JRSQYXqJoWRXINnOWqwuuWDrqK/iC
-s7c8GVbtl+OTsbbRkCzHMYWV9ge/pFgbNqllM4VAD1FRTlBKYJsmFn454sk62D7x
-fkcQCvhwwchLYyHRshoTYy8EYGjy2TBeA4GSCXP6A1PMCziKNHgSYanUCKsvBT9l
-nMdXbbCWZrCqmKm77pW30N9jdwK2lfSr9ripPZki0R94wcmCjoNi3QFd83P4l5a3
-2aJ1QIwia4Or7XikT1+vTj6QePIExNuFeSu+Pz4AFs8ckuHZAHN/45jDHgDCA6Y+
-Xx9AL0JxOCY5sKWlj5jdiFbz5DtDjtIHLr2e96hNWEtZHFD8dUKRfQRefxoq52aa
-ppHFp1Kz2Z/LjwALRGB0
-=tsrL
------END PGP SIGNATURE-----
-
---cNdxnHkX5QqsyA0e--
+And a better alternative to make "rerere.autoupdate" stronger may be
+to make the variable tri-valued, instead of adding a new variable
+that does not make any sense when rerere.autoupdate is not set.
