@@ -1,94 +1,106 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: Strange behauviour on Cherry-Pick
-Date: Fri, 09 Mar 2012 18:20:12 +0100
-Message-ID: <1331313612.21444.46.camel@beez.lab.cmartin.tk>
-References: <1331296972-sup-5028@masterkorp.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git push default behaviour?
+Date: Fri, 09 Mar 2012 09:44:55 -0800
+Message-ID: <7v7gyt7joo.fsf@alter.siamese.dyndns.org>
+References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com>
+ <87k42vs8pi.fsf@thomas.inf.ethz.ch>
+ <CAFsnPqopZEZeeuFzK4ZoUjGnfpiv5oMs=xV5XBSgSyGLXOwgqA@mail.gmail.com>
+ <1331202483.21444.11.camel@beez.lab.cmartin.tk>
+ <CAFsnPqpnH2CTki8zz6Mpz=qrdxF_aTA92cPrn1L9MQZVMoxdeg@mail.gmail.com>
+ <1331203321.21444.13.camel@beez.lab.cmartin.tk>
+ <4F58C977.8000400@xiplink.com> <vpq62efjeqd.fsf@bauges.imag.fr>
+ <CAHkcotiOGaOdDvibpoiEgys3PnSPfSw0mT3DeEOix+FuboULiA@mail.gmail.com>
+ <vpqfwdjas0m.fsf@bauges.imag.fr>
+ <20120309033826.GA6164@sigill.intra.peff.net>
+ <7vsjhi9wku.fsf@alter.siamese.dyndns.org> <vpqobs65gfc.fsf@bauges.imag.fr>
+ <7vwr6u6qrn.fsf@alter.siamese.dyndns.org> <vpq4ntyrn3c.fsf@bauges.imag.fr>
+ <7vobs57nij.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Alfredo Palhares <masterkorp@masterkorp.net>
-X-From: git-owner@vger.kernel.org Fri Mar 09 18:20:26 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Dmitry Potapov <dpotapov@gmail.com>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	Jeremy Morton <jeremy@configit.com>,
+	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Mar 09 18:45:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S63UM-0004iq-5o
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 18:20:22 +0100
+	id 1S63sG-0000Ur-Dy
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 18:45:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758278Ab2CIRUQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Mar 2012 12:20:16 -0500
-Received: from kimmy.cmartin.tk ([91.121.65.165]:51824 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754557Ab2CIRUP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2012 12:20:15 -0500
-Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 9252B46057;
-	Fri,  9 Mar 2012 18:20:05 +0100 (CET)
-In-Reply-To: <1331296972-sup-5028@masterkorp.net>
-X-Mailer: Evolution 3.2.2-1 
+	id S1753223Ab2CIRo7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Mar 2012 12:44:59 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62055 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752753Ab2CIRo6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Mar 2012 12:44:58 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 30D3873C6;
+	Fri,  9 Mar 2012 12:44:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mfJkMwMhTVdf5mi57G8fzS0ynCE=; b=b0u2Vl
+	TK7PQSvK7/xCugnyHRAhKxL3NYhjmB2pQToc3xwPAzr2KUlmmLJGfgGR2HBg/dVu
+	ljAlN4/Y12O34UZEE0W5vHo/TQnLmyB5MLnb1vNtWr/qaU3kuDifqDHbQzRBQvqw
+	ejMXx7Jwt63pCp7TWf2+ukYNy2cDxTws6/M5I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PxqbOg4SX5BZIp3TJCBZRStIFYqfWTlJ
+	5nOwZNUmGdiKYyo8HmY7WBp0rFubX7xsNL7qyZWBvZf3i9rPKiu7PLxrGxJE+ix3
+	kbckHwZ6gOKc9NbJ0axjI1IwL1yXuRwyjH4OH0euVWpQFWRX3SV+xCem9SqUke60
+	8raHWvYSx4g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26FD973C5;
+	Fri,  9 Mar 2012 12:44:57 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9E97F73C4; Fri,  9 Mar 2012
+ 12:44:56 -0500 (EST)
+In-Reply-To: <7vobs57nij.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Fri, 09 Mar 2012 08:22:12 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 95BA57A6-6A0F-11E1-A897-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192730>
 
-On Fri, 2012-03-09 at 15:11 +0100, Alfredo Palhares wrote:
-> Hello, 
-> 
-> I have a repository[1] with my home files that i keep track off on my machines. 
-> Until now ive been having everything in the same branch across all the computers, 
-> but now i have a machine that requires diferences on some files.
-> 
-> So what i did i branched out and keep control the commits i want to the other branch
-> trough cherry-picking.
-> 
+Junio C Hamano <gitster@pobox.com> writes:
 
-[cherry-pick two commits from 'boobierack' into 'master']
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> I can send a message saying "[...]" to the kernel list. Anybody could,
+>>> for that matter.
+>> ...
+> But I obviously *WILL* *NOT* be able to do so for *all* communities
+> whose members may be negatively affected.
 
-> Back to the boobierack machine:
->   Pull the commits before adding more stuff
->   $ git pull origin 
->   remote: Counting objects: 20, done.
->   remote: Compressing objects: 100% (13/13), done.
->   remote: Total 18 (delta 2), reused 18 (delta 2)
->   Unpacking objects: 100% (18/18), done.
->   From github.com:masterkorp/Home-files
->    * branch            HEAD       -> FETCH_HEAD
->    Merge made by recursive.
-> 
->   I got like... OK ? 
->   On branh boobierack
->   $ git log --pretty=format:'''%h : %s''' --date-order --graph -n 6
->   *   4d7b2e8 : Merge github.com:masterkorp/Home-files into boobierack
->   |\  
->   | * 9937a0a : Fancier tmux
->   * | 811355b : Add sup config files
->   * | 9de92a2 : Fancier tmux
->   | * aac85ac : Add weechat config files
->   * | 90a6162 : Add weechat config files
-> 
->   And master branch was untouched, i read on recursive merging on man page, but 
+Oh, let's avoid any misunderstanding before it happens.
 
-The master branch was untouched because you didn't tell git to do
-anything with it.
+I am not saying that we need to get involvement only from people who
+might like the current default.  If you read the "[...]" part you
+omitted from your quote again, you will notice that the RFH message was
+carefully crafted to take a neutral position, and solicit input from
+both sides, and that was very much on purpose.
 
->   i can't even understand why is git using that method in the first place, since 
->   the hashes are diferent and git doesn't care about the diff when fetching iirc.
+I was hoping that the reaction to my reply would be that "let's
+change the default" folks to help polishing the wording of the RFH
+message further, and post the final one to help spreading the word,
+both in the forums of projects that will be helped by the change,
+and of those that will be irritated by the change.
 
-The diffs between branches don't matter when fetching, but this is only
-part of what you are doing here. Pull is fetch + merge and as you
-specified a remote and no branch, it took the remote's default branch,
-which seems to be 'master', and merged it into your current branch. What
-you show is precisely what one would expect to see. Those two commits
-that you cherry-picked are on each branch (or rather, their equivalents)
-and then you have a merge between that remote and branch 'boobierack'
-which you were on when you told git to merge origin's default branch.
+I didn't mean to suggest anybody to play politics by asking input
+from only one side to skew the discussion, even though it is not
+like we will decide by majority vote anyway.  Deciding in favor of
+whichever position you happen to like is not the goal. Avoiding user
+surprises and unnecessary harm is.
 
-This however doesn't seem to be what you were trying to do. What were
-you trying to achieve with the pull? It seems to make sense that you'd
-want to merge the master branch, as you yourself said that it had
-changes that would never get merged back to 'master'.
-
-   cmn
+And that is why the lesson the older thread from 1.6.3-1.6.4 era
+teaches us is important.
