@@ -1,60 +1,65 @@
 From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 1/5] i18n: keep the last \n even when text is poisoned
-Date: Fri, 9 Mar 2012 12:24:36 +0100
-Message-ID: <CACBZZX4L+PiFUfre=_Qn+dgZAAanu6ebwjJFZUStu4_Ne7YwFg@mail.gmail.com>
-References: <1331198198-22409-1-git-send-email-pclouds@gmail.com>
- <1331198198-22409-2-git-send-email-pclouds@gmail.com> <20120308220131.GA10122@burratino>
+Subject: Re: [RFC PATCH] push: start warning upcoming default change for push.default
+Date: Fri, 9 Mar 2012 12:26:47 +0100
+Message-ID: <CACBZZX79co-BiePQG0ZkgMRiCWQ_g2NCZpVKYBNx=Rpi2WzgMQ@mail.gmail.com>
+References: <vpqobs65gfc.fsf@bauges.imag.fr> <1331281886-11667-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 09 12:25:08 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Fri Mar 09 12:27:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5xwW-0003Lp-OI
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 12:25:05 +0100
+	id 1S5xyc-00059j-KQ
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 12:27:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752073Ab2CILY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Mar 2012 06:24:59 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:52174 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751077Ab2CILY6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2012 06:24:58 -0500
-Received: by eekc41 with SMTP id c41so427054eek.19
-        for <git@vger.kernel.org>; Fri, 09 Mar 2012 03:24:57 -0800 (PST)
+	id S1752484Ab2CIL1K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Mar 2012 06:27:10 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:59688 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751077Ab2CIL1J convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Mar 2012 06:27:09 -0500
+Received: by eaaq12 with SMTP id q12so412958eaa.19
+        for <git@vger.kernel.org>; Fri, 09 Mar 2012 03:27:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=s+dxUPmhIzcoC9qmkqFe/NOrgzDP1QdlPJ1Wt6T7YQE=;
-        b=tbregCe/qCyJX8vcbSXkuNqjIRSQwOfBLq4OWGX4QHuZca+hGQ/mB+cnxQ9ML6WtVA
-         NpPSEvg8pqLaebyyOHR88wPynWP75C8B9IHngAGBvClQ5LiRVFgJOnRL0F38HoGEmQSy
-         w5WJDpDXGI/v3kZEKAjn5+tB5L9UlVnsCnwhbRrXxZH6YZ5tB3nIUG1w72ys5VtVG33E
-         jLL1F43V/B7MF9ClALbrEW7B7O0gvqokNe6iHW9dRDiociyviAmgNbwlANP/ri9wcQ9D
-         kDEfakN8EsvnHcct3NYJId4aLu86whqjZwlUIkdMwQzUogfKoMscnxEj0HU6gh0GitMz
-         ctDQ==
-Received: by 10.213.7.80 with SMTP id c16mr242523ebc.7.1331292297281; Fri, 09
- Mar 2012 03:24:57 -0800 (PST)
-Received: by 10.213.2.147 with HTTP; Fri, 9 Mar 2012 03:24:36 -0800 (PST)
-In-Reply-To: <20120308220131.GA10122@burratino>
+         :cc:content-type:content-transfer-encoding;
+        bh=f0FY0vUfB15G3zKD8aq+V1PUSylidAV1pMNv1ZnAL0I=;
+        b=yaVp+jnEJOzjyYxdNRpMqnRH0L2KNapJhKCrWE7oMtXkrjzeuvqo3M7hI120PrU9YF
+         ooO/w6Dn1Si3OA4JENFOXyH8s5FqAFYR3k42VDcYWOaYq3QvtiZ+vqjdi3KsxbUOrYIQ
+         1YrosAPRPtoJ1sRgP21xhYHMdCVCkpKSXi/wY6MgDjIeQmAAJX8wDYSZ7WuCz6hTISBx
+         OmA5dnnfVx5eBH4ek8VcnuSkOSnvW9wPM3aSTut8H4DcHtZst6tLrwAELbcefFvuD3nx
+         N7bQrhQTTvps4XBLctFnx1QqwUmaKgJhPcmtkIgfMzatDhIKmfCTAgyZRFIQFf2v7Frc
+         1XDQ==
+Received: by 10.14.99.76 with SMTP id w52mr357246eef.3.1331292428124; Fri, 09
+ Mar 2012 03:27:08 -0800 (PST)
+Received: by 10.213.2.147 with HTTP; Fri, 9 Mar 2012 03:26:47 -0800 (PST)
+In-Reply-To: <1331281886-11667-1-git-send-email-Matthieu.Moy@imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192710>
 
-2012/3/8 Jonathan Nieder <jrnieder@gmail.com>:
-> The latter wins out for me, so I would prefer not to have this patch
-> so the test suite can detect important newlines that should be not be
-> part of the translatable string.
+On Fri, Mar 9, 2012 at 09:31, Matthieu Moy <Matthieu.Moy@imag.fr> wrote=
+:
+> More inexperienced users will often push right after committing, and =
+at
+> that time they're still very much in the "working-on-one-branch" stat=
+e of
+> mind. =C2=A0"upstream" would be a safer default mode of operation for=
+ 'git push'
+> for them even when they have their personal publishing repository (al=
+so in
+> a shared public repository settings, "matching" is rarely the right
+> default mode).
 
-FWIW that's why I kept it this way. I can't recall the specific cases
-but I smoked out some issues with the poison feature that I wouldn't
-have smoked out if it had a \n at the end.
+I very much like changing the default, thanks for working on this,
+this'll make Git a lot more sensible by default.
 
-Arguably we should make it even less user friendly and have it
-randomly output 10-50 bytes of binary garbage to catch more errors.
+</aol>
