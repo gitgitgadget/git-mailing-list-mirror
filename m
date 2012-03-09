@@ -1,98 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Removing useless merge commit with "filter-branch"
-Date: Thu, 08 Mar 2012 15:30:12 -0800
-Message-ID: <7v62eebri3.fsf@alter.siamese.dyndns.org>
-References: <CAOMFOmWMsXgepY0-ZWFymd9uHSUmbOk66r75qa-Kv5TWx_U=EA@mail.gmail.com>
+From: Brodie Rao <brodie@sf.io>
+Subject: Re: [PATCH] archive: fix archive generation for empty trees
+Date: Thu, 8 Mar 2012 16:06:05 -0800
+Message-ID: <CAJjwD-2=pEfk2WQ2=cKy8eUSwbx8y86jEo_kyiQWsxVTqVFQEg@mail.gmail.com>
+References: <1331165362-78065-1-git-send-email-brodie@sf.io>
+	<20120308055520.GB7643@sigill.intra.peff.net>
+	<7vpqcnfvhs.fsf@alter.siamese.dyndns.org>
+	<20120308071559.GF7643@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Anatol Pomozov <anatol.pomozov@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 09 00:30:23 2012
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 09 01:06:45 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5mms-0004cG-97
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 00:30:22 +0100
+	id 1S5nM4-0003QI-T7
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 01:06:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759062Ab2CHXaR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Mar 2012 18:30:17 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52588 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754013Ab2CHXaQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2012 18:30:16 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 633887463;
-	Thu,  8 Mar 2012 18:30:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HzKCeWpwrYGgsbyT+gx6TH/of5g=; b=CH/ZDZ
-	IYmTdXl1mqPq7zRJUZApjxpWezaY4xiSlLfHlYQetS9LfFPCVMPuQ/blsNytWgzj
-	paHeFKbBAngeK8BS7e1x9glMxu3eaHB/xEEupaPa7mYhLerbRH1nxCOCJDRUAxgg
-	uDBP7M5LR1CSgVbuPem+7j5CDAZtRNm7fM7Z4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lZeXnkW/gk5SpzAQNNuUQ+OAbsu9D4xP
-	rJ/DUTyugpTdYv95uRnDBuvu3/PV5SNAVem46VSLUqHkD60ITwUhJDS7a3KH3ops
-	XXGV9twd0dzu1S3TfIOITwkwrZ7oobzGLR3rfewx74tsli/nQnVh3/j/Xl34fTKM
-	7yHVG+z+lVo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A5A47462;
-	Thu,  8 Mar 2012 18:30:15 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CD26C7461; Thu,  8 Mar 2012
- 18:30:13 -0500 (EST)
-In-Reply-To: <CAOMFOmWMsXgepY0-ZWFymd9uHSUmbOk66r75qa-Kv5TWx_U=EA@mail.gmail.com> (Anatol
- Pomozov's message of "Thu, 8 Mar 2012 15:21:04 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A7B479A8-6976-11E1-8347-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753937Ab2CIAGI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Mar 2012 19:06:08 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:54146 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753770Ab2CIAGG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2012 19:06:06 -0500
+Received: by pbcun15 with SMTP id un15so1994458pbc.19
+        for <git@vger.kernel.org>; Thu, 08 Mar 2012 16:06:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bitheap.org; s=google;
+        h=mime-version:sender:x-originating-ip:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=0eJa9L58+cF4XJSUOwvC7OwJZ2+7QpQlGIbD5yvwWHs=;
+        b=gtZC0qsX/6Xcm5geoKcwP+wTS0/nEVhgaBW9E1YuKVy/oi5AsvRTApo7y5GXfyGoRM
+         vT7UGhQkfkw44eNdW4K8KQrDe03uvkQW3OOT/gFyCQlCAcPopuTqBe8PuMQuwWzvPT7K
+         nKQw6m8pJDJn7f5bsjUvmQdqBqvo7nEsTjk/M=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:sender:x-originating-ip:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :x-gm-message-state;
+        bh=0eJa9L58+cF4XJSUOwvC7OwJZ2+7QpQlGIbD5yvwWHs=;
+        b=DN2mzx9V7DxQaZff+1WdizbN/aQDwTgwCwS5nATHjigni3jweGaAnDVG61/VbLCrox
+         +avCFCD8MUAVwo3ZjnEVTsMu2ogF0rKv5YoTgPuX8N21o/CIy+vBEG2Dp//QJy5J37Uy
+         lF/cTdv1ik4MgA0B89SWBiBtajZgg4uE4XlzfbwZq4Fw3YnQXcRGkK0HeR9AgdoChX+g
+         s5DCLzJANx84VcZj+/N6z1z3gVtLsnNgyDCoCOWUaOM8np8nPysMA23xZbph5kV9ff+S
+         65gxuCmnPURrv8DA/y17T5QWqtGEX8vAYBpxeYmEcb6HiMYNPPEfEylCaawCNDja9+se
+         Pamg==
+Received: by 10.68.237.201 with SMTP id ve9mr1222552pbc.45.1331251565323; Thu,
+ 08 Mar 2012 16:06:05 -0800 (PST)
+Received: by 10.142.179.13 with HTTP; Thu, 8 Mar 2012 16:06:05 -0800 (PST)
+X-Originating-IP: [70.35.42.138]
+In-Reply-To: <20120308071559.GF7643@sigill.intra.peff.net>
+X-Google-Sender-Auth: h71CJxsENIsGG5jxpuzARLv043E
+X-Gm-Message-State: ALoCoQk5zIzy9/uRmJsM0KdD7IiaHqo7YOF5i4jJ0PK2FsBI+4iuHMjJs3fd+Yr7t9VLWVPzcfNJ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192665>
 
-Anatol Pomozov <anatol.pomozov@gmail.com> writes:
+2012/3/7 Jeff King <peff@peff.net>:
+> On Wed, Mar 07, 2012 at 10:38:07PM -0800, Junio C Hamano wrote:
+>
+>> > ... However, prefix_pathspec does a lot of magic parsing;
+>> > it's unclear to me whether this is all in support of properly
+>> > adding the prefix, or if its side effects are important.
+>>
+>> These "magic" are for things like :(root)/path that will explicitly
+>> refuse the prefix when run from a subdirectory.
+>
+> Yeah, that was my impression. In that case, I would think we could get
+> rid of the get_pathspec call entirely, as it is purely about fixing-up
+> prefixes, and we know that we have none.
 
-> |
-> o      - merge commit that previously merged feature X
-> |\
-> | \
-> |  \
-> o  |   - real commit
-> |   |
-> |  /
-> |/
-> |
+Let me see if I've got this right: We're currently passing in ""/NULL
+to get_pathspec() because we handle the prefix beforehand in
+parse_treeish_args(). Once we get the tree object, every path is
+relative to it, so we don't need to continue using a prefix.
 
-It is unclear how many commits are drawn in the above picture and
-what "feature X" is about in the above picture.  Care to redraw the
-commit DAG to explain what you are trying to do a bit better?
+Wouldn't it be better to continue using get_pathspec(), passing it the
+real prefix, and looking up tree entries relative to the top-level
+tree? The way it works now, you get weird behavior like this:
 
-The way I read it is that you start from a history like this (note
-that when we draw an ascii art history we often write it sideways,
-time flows from left to right):
-
-    ---A-----B-----M---
-        \         /
-         C-------D
-
-where a side branch to implement "feature X" that has C and D forked
-at A, and it was merged at M after somebody else committed B on the
-mainline.  When you filtered out some parts of the tree, it turns
-out that C and D are totally unintereseting because their changes
-touch parts outside of your interest, i.e. the history is:
-
-    ---A-----B-----M---
-        \         /
-         o-------o
-
-where 'o' are now no-op.
-
-Is that what you are talking about?
-
-I think "log --simplify-merges A..M -- path" may already has logic
-that deals with this, so it may help if you study what it does and
-how it does what it does.
+  $ cd xdiff
+  $ git archive -v --format=tar HEAD ../t/t5000-tar-tree.sh > /dev/null
+  fatal: '../t/t5000-tar-tree.sh' is outside repository
+  $ git archive -v --format=tar HEAD .. > /dev/null
+  fatal: '..' is outside repository
