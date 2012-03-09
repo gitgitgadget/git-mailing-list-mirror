@@ -1,116 +1,75 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: who's on first? - following first parent and merge-management
-Date: Fri, 09 Mar 2012 14:25:14 +0100
-Message-ID: <4F5A04BA.8030401@ira.uka.de>
-References: <jj6s47$m98$1@dough.gmane.org> <7vwr6woo8p.fsf@alter.siamese.dyndns.org> <7vty1zfwmd.fsf@alter.siamese.dyndns.org> <20120308071403.GE7643@sigill.intra.peff.net> <4F5867D4.1010904@viscovery.net> <7vpqcndmpa.fsf@alter.siamese.dyndns.org> <4F59F212.6030701@ira.uka.de> <4F59F7A2.3030606@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Neal Kreitzinger <nkreitzinger@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Mar 09 14:24:47 2012
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: [PATCH] RelNotes: noted the addition of contrib/diffall
+Date: Fri,  9 Mar 2012 08:35:27 -0500
+Message-ID: <1331300127-21169-1-git-send-email-tim.henigan@gmail.com>
+References: <7v8vjadfgg.fsf@alter.siamese.dyndns.org>
+Cc: tim.henigan@gmail.com
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 09 14:36:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5zoM-0005fy-AX
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 14:24:46 +0100
+	id 1S5zzx-0007QT-Pt
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 14:36:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755973Ab2CINYk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Mar 2012 08:24:40 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:43523 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753937Ab2CINYk (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Mar 2012 08:24:40 -0500
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1S5znv-0003KK-2R; Fri, 09 Mar 2012 14:24:34 +0100
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	id 1S5znu-0002Sd-UP; Fri, 09 Mar 2012 14:24:18 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <4F59F7A2.3030606@viscovery.net>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1331299474.770739000
+	id S1756237Ab2CINgl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Mar 2012 08:36:41 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:44322 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753867Ab2CINgk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Mar 2012 08:36:40 -0500
+Received: by vcqp1 with SMTP id p1so1334962vcq.19
+        for <git@vger.kernel.org>; Fri, 09 Mar 2012 05:36:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=6Pl+7lyHMUuaSsFjL1OkINc8G2FiJkJ4hEjRmROMIcQ=;
+        b=Npe7nPBQ8j1NDkNBNN/GMmGO3nVAWFNNbLSBNMklR2ivcq1Hr62FbR0pTcI2NlPYVP
+         dBmu6qTbz8Lk0NN/0GXat2668gxI7Omdzu+7N6ZVNHtm/kDhDC3DlTPukghwlGvy8glj
+         EYNflgVyzIuh4kPAvrX9HsflFR/+BRen8XDeN1kkpAWd1KHCHbPQ7mvhg83hBs7L2YbB
+         y4+yLndP8leDkolABztCT3MKXIG16zGXN8stBfaLyfYctyeSgBPJUybR41VzkWkupTzZ
+         SMLUiq5APv5EnXS+a6I93DK/2Y7VdmgfBxzx9+i9UqIZnX+lmUYuMYe7+QrkN3lJ37mc
+         /6aQ==
+Received: by 10.52.180.74 with SMTP id dm10mr3458875vdc.67.1331300199406;
+        Fri, 09 Mar 2012 05:36:39 -0800 (PST)
+Received: from localhost (adsl-99-38-69-118.dsl.sfldmi.sbcglobal.net. [99.38.69.118])
+        by mx.google.com with ESMTPS id h5sm10667448vdk.0.2012.03.09.05.36.33
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 09 Mar 2012 05:36:38 -0800 (PST)
+X-Mailer: git-send-email 1.7.10.rc0
+In-Reply-To: <7v8vjadfgg.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192718>
 
-On 09.03.2012 13:29, Johannes Sixt wrote:
-> Am 3/9/2012 13:05, schrieb Holger Hellmuth:
->> On 08.03.2012 18:30, Junio C Hamano wrote:
->>> Johannes Sixt<j.sixt@viscovery.net>   writes:
->>>> To avoid the situation,...
->>>> This would not be necessary if the order of the merge parents could be
->>>> specified, e.g.:
->>>>
->>>>      # on topic
->>>>      git merge --into master
->>>
->>> I think the underlying mechanism needed to implement the above
->>> shares a lot with what Jeff called "crazy idea", but where you would
->>> want to be after such a merge may be different in these two cases.
->>
->> I don't think there is much question that you should still be in the same
->> branch. Not because you necessarily want to be in that branch. But because
->> it would be surprising if git-merge changed your branch sometimes and most
->> times not.
->
-> I don't think that it is so clear-cut. And for this reason, I would even
-> go as far as to suggest that you should end up with a detached HEAD.
->
-> Before the merge we have this situation:
->
-> --o--o--o--o<- master
->     \
->      o--o--o--X<- topic
->
-> The result of 'git merge --into master' must advance branch master by the
-> merge commit (I think there is no doubt about this):
->
-> --o--o--o--o---M<- master
->     \          /
->      o--o--o--X<- topic
->
-> Also, the index and worktree must match M (no doubt, either, IMO). But
-> what does HEAD refer to? I see three possibilities:
+Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
+---
 
-I see we have different ideas. I envisioned --into to be the equivalent of
-git checkout master
-git merge topic
-git checkout topic
+I wasn't sure if you wanted an actual patch or just wanted me to write
+up the paragraph.  If you squash this in to some other commit, that is
+fine with me.
 
-and in that case index and worktree would be topic naturally.
 
-But your caveat below would be even more problematic in this case.
+ Documentation/RelNotes/1.7.10.txt |    3 +++
+ 1 file changed, 3 insertions(+)
 
-> 1. master; as you say, this may be surprising if we were on topic before
-> the branch.
->
-> 2. topic; but then the index would be dirty because it does not match X.
->
-> 3. M, i.e. a detached HEAD; this is just a compromise and a fat warning at
-> the end of the merge output would be necessary that instructs the user to
-> checkout a suitable branch.
->
-> Now that I have tossed around these ideas, there's another caveat: What if
-> the merge fails due to a conflict? After the conflicts were resolved, 'git
-> commit' is needed to complete the merge. But this would create the commit
-> where HEAD points to. IOW, we have to chose option 1 so that the merge
-> commit advances master.
->
-> Would this be less surprising if the option were named --checkout-into?
-
-Don't think so. It would make it clear where you end up but it would 
-muddle/hide the original purpose of the parameter. "git merge --into 
-xxx" sounds like a real sentence (Larry Wall would approve ;-).
-
-Guess we would have to rely on the documentation to make it clear that a 
-branch switch happens. And a message "Changing to branch xxx" on STDOUT 
-wouldn't hurt either.
+diff --git a/Documentation/RelNotes/1.7.10.txt b/Documentation/RelNotes/1.7.10.txt
+index ae446e0..60722e2 100644
+--- a/Documentation/RelNotes/1.7.10.txt
++++ b/Documentation/RelNotes/1.7.10.txt
+@@ -106,6 +106,9 @@ UI, Workflows & Features
+  * Project search in "gitweb" shows the substring that matched in the
+    project name and description highlighted.
+ 
++ * "git diffall" can now be installed from contrib/. The script drives
++   an external tool to perform a directory diff of two Git revisions.
++
+ Foreign Interface
+ 
+  * Improved handling of views, labels and branches in "git-p4" (in contrib).
+-- 
+1.7.10.rc0
