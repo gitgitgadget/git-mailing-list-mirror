@@ -1,73 +1,99 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Introduce gc.autowarnonly config option
-Date: Fri, 09 Mar 2012 11:35:55 -0800
-Message-ID: <7veht15zz8.fsf@alter.siamese.dyndns.org>
-References: <20111105140529.3A6CE9004A@inscatolati.net>
- <CAGdFq_g=+A7q7_ZkUYG6LZ+ehLBtMY+s+nJxhp4FVhUQ4Zo_rA@mail.gmail.com>
+Subject: Re: [RFC PATCH] push: start warning upcoming default change for
+ push.default
+Date: Fri, 09 Mar 2012 12:21:01 -0800
+Message-ID: <7v62ed5xw2.fsf@alter.siamese.dyndns.org>
+References: <vpqobs65gfc.fsf@bauges.imag.fr>
+ <1331281886-11667-1-git-send-email-Matthieu.Moy@imag.fr>
+ <7vsjhi6qky.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Fernando Vezzosi <buccia@repnz.net>, git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 09 20:36:04 2012
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	Jeremy Morton <jeremy@configit.com>,
+	Thomas Rast <trast@inf.ethz.ch>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Fri Mar 09 21:21:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S65be-00011f-S2
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 20:36:03 +0100
+	id 1S66JP-0003EH-Au
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 21:21:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758910Ab2CITf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Mar 2012 14:35:58 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40677 "EHLO
+	id S1030746Ab2CIUVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Mar 2012 15:21:06 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62413 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754662Ab2CITf5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2012 14:35:57 -0500
+	id S1030754Ab2CIUVE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Mar 2012 15:21:04 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 115D76C5F;
-	Fri,  9 Mar 2012 14:35:57 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F0047736;
+	Fri,  9 Mar 2012 15:21:03 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZFkdZOhiQl55e9lztOgtRkg305I=; b=KUtVcT
-	E2FN7qfaGI9qOx4mjvK4EQ3mqeGCg2Vp+XzbGjJV+7aWKzKImwJEdpZa7TqcWF43
-	aqTPuZbehV097eU0jiLOy4oUtuUnVgG8mWtXG8SQ5xZ4Oc4ghF6vHMW8wwMinile
-	xEslpDc+eKtzBi3I+j27Taz262g2t5hZYe6XM=
+	:content-type; s=sasl; bh=W25QNG/Q/Nf7ye5L8SMU6swyLfg=; b=jXG9ou
+	3J4myHY5yKHQLc2vEDN+to6Dv4/7uIQv+d5bFVJWOVW9mPAGgzwhxj+hjtXuKgq7
+	Y9SQBv/jzFenXhhdzvGMxYOwssMnx5P8R4dKnbDTBnRDjDi8mx5ILE+M7gRBdVEm
+	NK3DUMKGbl0thDuHZUd+tsV+Zi9wEoaKjPMA0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ByJxrLunR9I4DgKHhEINW55W5iY9woLx
-	rxXmsNvd7IEbWN/IPLoXtG6rEnEG5qKxhwsCVrsrf2bcFuO2YKKXjleplXOf1KxZ
-	GQCd11NldTlwEksbL6x+4/YqlQh0ZJ789uxMvsgNa20Z6A6eXQ1D9TaQQi1e48aG
-	XfRbX35l+88=
+	:content-type; q=dns; s=sasl; b=kl2KT93UpGuRObka5/40Vg2h+q3IINXc
+	Hw+vJcgHLWe5iEhWpms8dEd31mWI3tVBVT12hSkFTKGOUULnyeJn4ICk0DoL1b9O
+	M/L7Pz3DDfeP+nz2skV+KzeFn33CsIbMGFNYUTZKPvOOZomuwqZBcV8owh53elni
+	n+TppqPcsZk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0762B6C5E;
-	Fri,  9 Mar 2012 14:35:57 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 847D77735;
+	Fri,  9 Mar 2012 15:21:03 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7BB196C5D; Fri,  9 Mar 2012
- 14:35:56 -0500 (EST)
-In-Reply-To: <CAGdFq_g=+A7q7_ZkUYG6LZ+ehLBtMY+s+nJxhp4FVhUQ4Zo_rA@mail.gmail.com> (Sverre
- Rabbelier's message of "Fri, 9 Mar 2012 13:20:36 -0600")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 136947733; Fri,  9 Mar 2012
+ 15:21:03 -0500 (EST)
+In-Reply-To: <7vsjhi6qky.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Fri, 09 Mar 2012 02:01:17 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 174C9054-6A1F-11E1-AADE-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 648D9416-6A25-11E1-8693-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192738>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Sat, Nov 5, 2011 at 08:39, Fernando Vezzosi <buccia@repnz.net> wrote:
->> When `git gc --auto` would detect need for garbage collection to run, it
->> would just run. With this patch, enabling gc.autowarnonly will instead
->> make it just emit a warning.
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 >
-> Does anyone know what happened to this patch?
+>> This patch prepares a transition to 'upstream', unlike the previous
+>> version which was advertizing 'current'. In most case, this would be
+>> the same, but 'upstream' is probably more sensible in case it points
+>> to a branch other than 'current'. I don't care much either way.
+>
+> I would agree with that choice (provided that we were to do this
+> change).
+>
+>> I've kept the wording from the original patch, which commits to a
+>> future change. We may instead relax this commitment and just say "the
+>> default is likely to change in a future version", or so.
+>
+> Please no.  Keep it _very_ firmly committed.  Otherwise we didn't
+> learn a thing from 1.6.3 era.
 
-If I recall correctly, it was pointed out that people who would get
-annoyed by unexpected triggering of an auto gc would get annoyed by
-constant nagging by this warning until they reach the point that
-they can stop and run gc themselves, and the patch was never updated
-to take that issue into account.
+The need for awareness building outside this mailing list remains,
+but the ball is in the court of "let's change the default" folks and
+I cannot do anything further on that front, so I'll focus on the
+patch itself in this message.
+
+The code seems quite competently done, except that the message text
+would want to live in a separate static array, if only to keep the
+lines in the patch not overly long.  Also, The message taken from
+Jeff's $gmane/166787 may need to be tweaked further, waiting the
+conclusion of the discussion in the other subthread.
+
+Oh, another thing is that the "1.8.0" in Jeff's original was written
+back in 1.7.5 era.  We would want to bump it to say "1.8" (or even
+"2.0").
+
+Thanks.
