@@ -1,80 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git push default behaviour?
-Date: Fri, 09 Mar 2012 01:50:32 -0800
-Message-ID: <7vboo685nb.fsf@alter.siamese.dyndns.org>
-References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com>
- <87k42vs8pi.fsf@thomas.inf.ethz.ch>
- <CAFsnPqopZEZeeuFzK4ZoUjGnfpiv5oMs=xV5XBSgSyGLXOwgqA@mail.gmail.com>
- <1331202483.21444.11.camel@beez.lab.cmartin.tk>
- <CAFsnPqpnH2CTki8zz6Mpz=qrdxF_aTA92cPrn1L9MQZVMoxdeg@mail.gmail.com>
- <1331203321.21444.13.camel@beez.lab.cmartin.tk>
- <4F58C977.8000400@xiplink.com> <vpq62efjeqd.fsf@bauges.imag.fr>
- <CAHkcotiOGaOdDvibpoiEgys3PnSPfSw0mT3DeEOix+FuboULiA@mail.gmail.com>
- <vpqfwdjas0m.fsf@bauges.imag.fr>
- <20120309033826.GA6164@sigill.intra.peff.net>
- <7vsjhi9wku.fsf@alter.siamese.dyndns.org>
- <7vobs69vwj.fsf@alter.siamese.dyndns.org>
- <CANgJU+WMxnNgdsP4JV6aAVW07NeWXUa5LsEa4dk5_1CZXC1nXA@mail.gmail.com>
- <87aa3qi2i7.fsf@thomas.inf.ethz.ch>
+From: Dominique Quatravaux <domq@google.com>
+Subject: Re: [PATCHv2 1/2] rebase -i: optimize the creation of the todo file
+Date: Fri, 9 Mar 2012 10:52:03 +0100
+Message-ID: <CAJh6GrH3x-Fz5gqKdu_fcmH0OH3KG8En3H2vURKhkYuiC+s59g@mail.gmail.com>
+References: <1331214777-9455-1-git-send-email-domq@google.com>
+ <CAFfmPPMt_o1Rg-Pvuh_KpARrASwfYSq74UN3ayp=LVzLJ0oj=A@mail.gmail.com> <7vpqcm85rs.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: demerphq <demerphq@gmail.com>, Jeff King <peff@peff.net>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	Jeremy Morton <jeremy@configit.com>, <git@vger.kernel.org>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Mar 09 10:50:45 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Barr <davidbarr@google.com>, git@vger.kernel.org,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 09 10:52:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5wTA-00052S-BP
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 10:50:40 +0100
+	id 1S5wUx-0006jF-5J
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 10:52:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753510Ab2CIJuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Mar 2012 04:50:35 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39557 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751945Ab2CIJue (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2012 04:50:34 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C89B51C5;
-	Fri,  9 Mar 2012 04:50:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=279hrANYQhekEG6yQpwfVzNeQ9I=; b=aQK52XV4YR3BmGy56qGh
-	X2M9LAB7rbIG5tcjtHOYram2nEQD3p8Ddl1IODNl3XYvTcBzN/jUhCUxVB+Ot+f+
-	xE99+lOwmZuw4cd2WgRxSTeOFp2HHt9hxvG96LbtyRhx8yD6GkRUogFHZb7Qb1M3
-	WPFbqM/w3ulXtODC2DpmsfM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=QoyXd4PZ/zYtUm5i8o2RFnts9gf+GRMWcVzQxaDLTR4QwL
-	8cLauvC17kcLCu6/WkuzZeEFPjgFwlb8AwyT3JpneU7QWdS5hspcFhHqMVbizdEt
-	l7YC3KB4m5IgIHIiiKy/P97IQfg5XuSHyoZE1mePoP141mpa8iifbHmdpyylI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 032E951C4;
-	Fri,  9 Mar 2012 04:50:34 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8771151C3; Fri,  9 Mar 2012
- 04:50:33 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 50663EB4-69CD-11E1-907A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754080Ab2CIJw0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Mar 2012 04:52:26 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:33135 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752233Ab2CIJwZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Mar 2012 04:52:25 -0500
+Received: by wgbdr13 with SMTP id dr13so1455384wgb.1
+        for <git@vger.kernel.org>; Fri, 09 Mar 2012 01:52:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding:x-system-of-record;
+        bh=j+5YgnrylEPOVFXiPPtf3NHNrMtzA5dnRB/zHnNnXeE=;
+        b=ZbmMas9D1nB7cE0UvuFTckUw6ftne8WyxVvlgVaceZWX7NfAdnjaCmAfV+SfxZzIXH
+         88ZO7eLUV6Ec1AA6alf0fUDZf31cMdlqdO7w1ahYJC/nGICwLqzxFjZuMQwf8x8Vuqw6
+         j6ksmJV8124CLhV21tkwagm+qp/anMr9O0CRT4jRN9ZyEEBypS3XmrMrhgZwNBM9zTYV
+         sd0+pw0XdJBiQJLL/rnLXncn+/z6CKy5EfHkChUP1TZSh3dR7DN07UYiCc8GQBAp7z+i
+         YNVaA6O1ZD2a0QjN4KOt3yYZdYTzc0blblc7L/OXpy5VwGODzWlY8HIXKuiTD6K12vdb
+         a9KA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding:x-system-of-record
+         :x-gm-message-state;
+        bh=j+5YgnrylEPOVFXiPPtf3NHNrMtzA5dnRB/zHnNnXeE=;
+        b=lZx6/uMhaldOFj8NYb0sE5F/BgUX49qLWJaP0VZrK3nJGl/pUGV/52yATi76ss+JEv
+         SXnvbdZNM+mO7F/npgw31eisgJC7gmgqlBr8Clljc3jzf5xj9nku7J9cOpgpeAgWXNtz
+         nTuLL8DDxcMMsCUKF3nbo+x5tjIaxgWsPQ8iS2IZ61juuFhqxfX0vMthDqIbO60dx47O
+         wgw9LK8/WCkbcZtJGXFWR0lvyek65KKuyVzRZWMHav6SMxYwabuk11IObGRJomGr9JgY
+         htkZPE+n8bH1o7B1sNj05USkN/vj+UwGdVyfenZVo4ZStTxeUKxLFjnHtmFwjzn2llWa
+         eSqw==
+Received: by 10.216.82.141 with SMTP id o13mr1070169wee.2.1331286744256;
+        Fri, 09 Mar 2012 01:52:24 -0800 (PST)
+Received: by 10.216.82.141 with SMTP id o13mr1070157wee.2.1331286744083; Fri,
+ 09 Mar 2012 01:52:24 -0800 (PST)
+Received: by 10.227.7.138 with HTTP; Fri, 9 Mar 2012 01:52:03 -0800 (PST)
+In-Reply-To: <7vpqcm85rs.fsf@alter.siamese.dyndns.org>
+X-System-Of-Record: true
+X-Gm-Message-State: ALoCoQk/JMh6IaOstcc2EEGSRpidwThzP4qIA5lfzdvqRcg/KltKaLBmfSYftj3vurElgoWRERCQCdHXrxketTciKF2lWFl99p8BiC5CsCH9EUfwM6jmZTHbb6NP7QM2rQuw+P836X84fG+Ko9pRm0VuTlYI9wunsw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192704>
 
-Thomas Rast <trast@inf.ethz.ch> writes:
-
-> This would be a brilliant way to confuse the hell out of existing users:
-> suddenly the apparent "defaults"[1] now change *between repositories*
-> depending on when they were created.
+On Fri, Mar 9, 2012 at 10:47 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> David Barr <davidbarr@google.com> writes:
 >
-> In short, oh please god no.
+>> I do notice however that the output being fed to sed expands like so=
+:
+>>
+>> =A0 commit >634a5f265ad729b91266de65272e2b5a35d05b1c
+>> =A0 >634a5f265ad729b91266de65272e2b5a35d05b1c 634a5f2 INSTALL: warn =
+[...]
+>> =A0 commit >828ea97de486c1693d6e4f2c7347acb50235a85d
+>> =A0 >828ea97de486c1693d6e4f2c7347acb50235a85d 828ea97 Git 1.7.9
+>>
+>> Maybe the format spec and sed command could use a little tuning.
+>
+> Why would that be a problem, though? =A0The sed script picks only
+> lines that begin with '>' and discards the traditional diff-tree
+> style per commit header, no?
 
-Amen ;-)
+I assume that David wants to have
+
+  commit >634a5f265ad729b91266de65272e2b5a35d05b1c
+  634a5f2 INSTALL: warn [...]
+
+and chew on that with sed.
+
+--=20
+=A0 Dominique Quatravaux
+=A0 +41 79 609 40 72
