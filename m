@@ -1,110 +1,61 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: git push default behaviour?
-Date: Fri, 09 Mar 2012 12:54:10 +0100
-Message-ID: <vpq8vjavvkt.fsf@bauges.imag.fr>
-References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com>
-	<87k42vs8pi.fsf@thomas.inf.ethz.ch>
-	<CAFsnPqopZEZeeuFzK4ZoUjGnfpiv5oMs=xV5XBSgSyGLXOwgqA@mail.gmail.com>
-	<1331202483.21444.11.camel@beez.lab.cmartin.tk>
-	<CAFsnPqpnH2CTki8zz6Mpz=qrdxF_aTA92cPrn1L9MQZVMoxdeg@mail.gmail.com>
-	<1331203321.21444.13.camel@beez.lab.cmartin.tk>
-	<CAFsnPqpoBLHoshgv0MsUUStA3Q=niM8hP9yaHr+rSQvh-JWHZA@mail.gmail.com>
-	<7vlinbdkb0.fsf@alter.siamese.dyndns.org>
-	<vpq1up3aqk8.fsf@bauges.imag.fr>
-	<7vty1ydh7p.fsf@alter.siamese.dyndns.org>
-	<vpqr4x26vyp.fsf@bauges.imag.fr>
-	<7vipie85nk.fsf@alter.siamese.dyndns.org>
+From: Holger Hellmuth <hellmuth@ira.uka.de>
+Subject: Re: who's on first? - following first parent and merge-management
+Date: Fri, 09 Mar 2012 13:05:38 +0100
+Message-ID: <4F59F212.6030701@ira.uka.de>
+References: <jj6s47$m98$1@dough.gmane.org> <7vwr6woo8p.fsf@alter.siamese.dyndns.org> <7vty1zfwmd.fsf@alter.siamese.dyndns.org> <20120308071403.GE7643@sigill.intra.peff.net> <4F5867D4.1010904@viscovery.net> <7vpqcndmpa.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeremy Morton <jeremy@configit.com>,
-	Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
-	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j.sixt@viscovery.net>, Jeff King <peff@peff.net>,
+	Neal Kreitzinger <nkreitzinger@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 09 12:54:58 2012
+X-From: git-owner@vger.kernel.org Fri Mar 09 13:05:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5yPM-0004ka-CC
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 12:54:52 +0100
+	id 1S5yZk-0005Ht-Oy
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 13:05:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752960Ab2CILyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Mar 2012 06:54:47 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:55486 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752299Ab2CILyq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2012 06:54:46 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q29Bo0Ws002121
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 9 Mar 2012 12:50:00 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1S5yOh-0006If-Sz; Fri, 09 Mar 2012 12:54:11 +0100
-In-Reply-To: <7vipie85nk.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 09 Mar 2012 01:50:23 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 09 Mar 2012 12:50:01 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q29Bo0Ws002121
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1331898603.46196@xgEi3xpHNgDwFnO3AMYSbQ
+	id S1754419Ab2CIMF0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Mar 2012 07:05:26 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:40525 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754456Ab2CIMFH (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Mar 2012 07:05:07 -0500
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1S5yYu-0004gb-4R; Fri, 09 Mar 2012 13:04:59 +0100
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
+	id 1S5yYt-00034G-Va; Fri, 09 Mar 2012 13:04:44 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <7vpqcndmpa.fsf@alter.siamese.dyndns.org>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1331294699.131471000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192713>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
->> to 200 students and several colleagues every year, I've tried teaching
->> the "one public repository per developer" and it was a complete disaster).
+On 08.03.2012 18:30, Junio C Hamano wrote:
+> Johannes Sixt<j.sixt@viscovery.net>  writes:
+>> To avoid the situation,...
+>> This would not be necessary if the order of the merge parents could be
+>> specified, e.g.:
+>>
+>>     # on topic
+>>     git merge --into master
 >
-> Interesting.  I have a couple of questions.
->
-> Who are these 200 people and what do they do with Git?  If the
-> answer is "They work on a class assignment project, 20 teams of 10
-> members each",
+> I think the underlying mechanism needed to implement the above
+> shares a lot with what Jeff called "crazy idea", but where you would
+> want to be after such a merge may be different in these two cases.
 
-Teams are smaller, but that's essentially that, yes. I'm not saying it's
-representative, my point just that I do have experience teaching Git to
-new users.
-
-> I am also curious to learn a bit more about "a complete disaster",
-
-There are several points:
-
-* It is often the case that one of the member of a team is more
-  knowledgeable than others. Then, this user can set up a shared
-  archive, and other users do not have to. When your project is
-  open-source, it's rather easy to click GitHub's web interface and
-  create a fork, but when it's a private project (and you don't want to
-  pay), you have to do some kind of magic with ACLs or so to create a
-  new repository. Doing this magic just once saves a lot of trouble.
-
-  In practice, when working with colleagues (all being computer
-  scientists), if I don't set up a shared repository, they just send me
-  their files (yes, their files, not their patches :-( ) by email and
-  ask me to do merges if needed.
-
-* Users like to know where "the latest version" is. They are already
-  confused by the fact that the last local revision may not be the same
-  as the last remote one, and having multiple public repositories adds
-  to the confusion.
-
-> even though this question (and its answer) would not be directly
-> relevant to this topic, as nobody is trying to convert projects to
-> use the "publish to be pulled" model when the "push to the shared
-> central repository" model is more appropriate for them.
-
-Sure. I'm not saying in any way that the "shared repository" is
-superior. Just that it's easier to grab for newbies.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I don't think there is much question that you should still be in the 
+same branch. Not because you necessarily want to be in that branch. But 
+because it would be surprising if git-merge changed your branch 
+sometimes and most times not.
