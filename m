@@ -1,126 +1,116 @@
-From: Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: [PATCH] configure: allow user to prevent $PATH "sanitization" on Solaris
-Date: Fri,  9 Mar 2012 13:43:55 +0100
-Message-ID: <a706eaa1e1cd5e13a8cd98362fe09bba628789d1.1331296220.git.stefano.lattarini@gmail.com>
-References: <7vhay6etqc.fsf@alter.siamese.dyndns.org>
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 09 13:44:16 2012
+From: Holger Hellmuth <hellmuth@ira.uka.de>
+Subject: Re: who's on first? - following first parent and merge-management
+Date: Fri, 09 Mar 2012 14:25:14 +0100
+Message-ID: <4F5A04BA.8030401@ira.uka.de>
+References: <jj6s47$m98$1@dough.gmane.org> <7vwr6woo8p.fsf@alter.siamese.dyndns.org> <7vty1zfwmd.fsf@alter.siamese.dyndns.org> <20120308071403.GE7643@sigill.intra.peff.net> <4F5867D4.1010904@viscovery.net> <7vpqcndmpa.fsf@alter.siamese.dyndns.org> <4F59F212.6030701@ira.uka.de> <4F59F7A2.3030606@viscovery.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Neal Kreitzinger <nkreitzinger@gmail.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Mar 09 14:24:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S5zB9-0004UN-I0
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 13:44:15 +0100
+	id 1S5zoM-0005fy-AX
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Mar 2012 14:24:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932212Ab2CIMoK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Mar 2012 07:44:10 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:44421 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753789Ab2CIMoJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2012 07:44:09 -0500
-Received: by eekc41 with SMTP id c41so450522eek.19
-        for <git@vger.kernel.org>; Fri, 09 Mar 2012 04:44:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=jPlqDGJ5V+Y7crTsUT2hQU9bVytqDYjCP/xhcnYVCVc=;
-        b=agWKDJK7ifm6Wlus0FWizd9SYN6QbBa7tmDKp4Nq8jfeaQJJszyuWICcQqv0hYDqXz
-         PMp3mjOHkE+Lod/OY+rnVLQeNuoEozloZGk+KpWlYOdUtQ1IExew8JvgiTItNlBnD5DB
-         OucQiHUUmzwVZOhAtQ1biRgfP4dwUSNt4n8Za0BQ7S4I3wN7t+DNLtdWP5OaLtnGOo/Z
-         4rYlzukZlufBx+v87FC1Bs5QayPMgwlcJUfmTAlYj4NbPg46nqYOMNjtHiSvV3ji5xtE
-         C5WU5QNRUysfNzF1KFRqjPQd9mg8yKAvIvZKODaA3Uuq+o4/sNSYs7X2QQKIB4149Y1h
-         bvrA==
-Received: by 10.213.110.17 with SMTP id l17mr272278ebp.112.1331297047643;
-        Fri, 09 Mar 2012 04:44:07 -0800 (PST)
-Received: from localhost.localdomain (host28-94-dynamic.4-87-r.retail.telecomitalia.it. [87.4.94.28])
-        by mx.google.com with ESMTPS id u9sm17641874eem.11.2012.03.09.04.44.05
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 09 Mar 2012 04:44:06 -0800 (PST)
-X-Mailer: git-send-email 1.7.9
-In-Reply-To: <7vhay6etqc.fsf@alter.siamese.dyndns.org>
+	id S1755973Ab2CINYk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Mar 2012 08:24:40 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:43523 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753937Ab2CINYk (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Mar 2012 08:24:40 -0500
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1S5znv-0003KK-2R; Fri, 09 Mar 2012 14:24:34 +0100
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
+	id 1S5znu-0002Sd-UP; Fri, 09 Mar 2012 14:24:18 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <4F59F7A2.3030606@viscovery.net>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1331299474.770739000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192717>
 
-On a Solaris 10 system with Solaris make installed as '/usr/xpg4/bin/make',
-GNU make installed as '/usr/local/bin/make', and with '/usr/local/bin'
-appearing in $PATH *before* '/usr/xpg4/bin', I was seeing errors like this
-upon invoking "make all":
+On 09.03.2012 13:29, Johannes Sixt wrote:
+> Am 3/9/2012 13:05, schrieb Holger Hellmuth:
+>> On 08.03.2012 18:30, Junio C Hamano wrote:
+>>> Johannes Sixt<j.sixt@viscovery.net>   writes:
+>>>> To avoid the situation,...
+>>>> This would not be necessary if the order of the merge parents could be
+>>>> specified, e.g.:
+>>>>
+>>>>      # on topic
+>>>>      git merge --into master
+>>>
+>>> I think the underlying mechanism needed to implement the above
+>>> shares a lot with what Jeff called "crazy idea", but where you would
+>>> want to be after such a merge may be different in these two cases.
+>>
+>> I don't think there is much question that you should still be in the same
+>> branch. Not because you necessarily want to be in that branch. But because
+>> it would be surprising if git-merge changed your branch sometimes and most
+>> times not.
+>
+> I don't think that it is so clear-cut. And for this reason, I would even
+> go as far as to suggest that you should end up with a detached HEAD.
+>
+> Before the merge we have this situation:
+>
+> --o--o--o--o<- master
+>     \
+>      o--o--o--X<- topic
+>
+> The result of 'git merge --into master' must advance branch master by the
+> merge commit (I think there is no doubt about this):
+>
+> --o--o--o--o---M<- master
+>     \          /
+>      o--o--o--X<- topic
+>
+> Also, the index and worktree must match M (no doubt, either, IMO). But
+> what does HEAD refer to? I see three possibilities:
 
-        SUBDIR perl
-    make: Warning: Ignoring DistributedMake -o option
-    Usage : make [ -f makefile ][ -K statefile ]...
-    make: Fatal error: Unknown option `-C'
+I see we have different ideas. I envisioned --into to be the equivalent of
+git checkout master
+git merge topic
+git checkout topic
 
-This happened because the Git's Makefile, when running on Solaris,
-automatically "sanitizes" $PATH by prepending '/usr/xpg6/bin' and
-'/usr/xpg4/bin' to it, and in the setup described above such a behaviour
-has the unintended consequence of forcing the use of Solaris make
-in recursive make invocations -- even if the $(MAKE) macro is being
-correctly used in them!
+and in that case index and worktree would be topic naturally.
 
-For developers that don't use the autoconf machinery, the best and easier
-fix in such a situation is to properly override $(SANE_TOOL_PATH) in
-config.mak.  But a developer using the autoconf-generated configure script
-to set up its Git source tree's configuration wouldn't expect to also have
-to provide such an override *by hand* after having run configure; he would
-either expect:
+But your caveat below would be even more problematic in this case.
 
-  1) that the issue is automatically detected and transparently worked
-     around by configure; or at least
+> 1. master; as you say, this may be surprising if we were on topic before
+> the branch.
+>
+> 2. topic; but then the index would be dirty because it does not match X.
+>
+> 3. M, i.e. a detached HEAD; this is just a compromise and a fat warning at
+> the end of the merge output would be necessary that instructs the user to
+> checkout a suitable branch.
+>
+> Now that I have tossed around these ideas, there's another caveat: What if
+> the merge fails due to a conflict? After the conflicts were resolved, 'git
+> commit' is needed to complete the merge. But this would create the commit
+> where HEAD points to. IOW, we have to chose option 1 so that the merge
+> commit advances master.
+>
+> Would this be less surprising if the option were named --checkout-into?
 
-  2) that a configure-time override telling how (and if) PATH is to be
-     sanitized is provided.
+Don't think so. It would make it clear where you end up but it would 
+muddle/hide the original purpose of the parameter. "git merge --into 
+xxx" sounds like a real sentence (Larry Wall would approve ;-).
 
-This change implements the second approach, which is less-ambitious but
-also much less fragile.  Note that, even if we should decide to implement
-the first approach in the future, the code added by the present change
-still be useful, allowing  the user the possibility to override the
-configure's choices in case they turn out wrong (in true autotools
-spirit).
----
-
- Hi Junio, sorry for the delay.  Here is a simpler approach that worked
- out well enough for me; the commit message should explain the rationales
- and motivations for it in detail.
-
- Regards,
-   Stefano
-
- configure.ac |   17 +++++++++++++++++
- 1 files changed, 17 insertions(+), 0 deletions(-)
-
-diff --git a/configure.ac b/configure.ac
-index 8bb0f44..72f7958 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -137,6 +137,23 @@ if test -n "$1"; then
- fi
- ])
- 
-+# Directories holding "saner" versions of common or POSIX binaries.
-+AC_ARG_WITH([sane-tool-path],
-+  [AS_HELP_STRING(
-+    [--with-sane-tool-path=DIR-1[[:DIR-2...:DIR-n]]],
-+    [Directories to prepend to PATH in build system and generated scripts])],
-+  [if test "$withval" = "no"; then
-+    withval=''
-+  else
-+    AC_MSG_NOTICE([Setting SANE_TOOL_PATH to '$withval'])
-+  fi
-+  GIT_CONF_APPEND_LINE([SANE_TOOL_PATH=$withval])],
-+  [# If the "--with-sane-tool-path" option was not given, don't touch
-+   # SANE_TOOL_PATH here, but let defaults in Makefile take care of it.
-+   # This should minimize spurious differences in the behaviour of the
-+   # Git build system when configure is used w.r.t. when it is not.
-+   :])
-+
- ## Site configuration related to programs (before tests)
- ## --with-PACKAGE[=ARG] and --without-PACKAGE
- #
--- 
-1.7.9
+Guess we would have to rely on the documentation to make it clear that a 
+branch switch happens. And a message "Changing to branch xxx" on STDOUT 
+wouldn't hurt either.
