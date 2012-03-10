@@ -1,85 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git push default behaviour?
-Date: Tue, 13 Mar 2012 05:34:22 -0700
-Message-ID: <7vlin4llwx.fsf@alter.siamese.dyndns.org>
-References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com>
- <87k42vs8pi.fsf@thomas.inf.ethz.ch>
- <CAFsnPqopZEZeeuFzK4ZoUjGnfpiv5oMs=xV5XBSgSyGLXOwgqA@mail.gmail.com>
- <1331202483.21444.11.camel@beez.lab.cmartin.tk>
- <CAFsnPqpnH2CTki8zz6Mpz=qrdxF_aTA92cPrn1L9MQZVMoxdeg@mail.gmail.com>
- <1331203321.21444.13.camel@beez.lab.cmartin.tk>
- <4F58C977.8000400@xiplink.com> <vpq62efjeqd.fsf@bauges.imag.fr>
- <CAHkcotiOGaOdDvibpoiEgys3PnSPfSw0mT3DeEOix+FuboULiA@mail.gmail.com>
- <vpqfwdjas0m.fsf@bauges.imag.fr>
- <20120309033826.GA6164@sigill.intra.peff.net>
- <7vsjhi9wku.fsf@alter.siamese.dyndns.org> <vpqobs65gfc.fsf@bauges.imag.fr>
- <7vwr6u6qrn.fsf@alter.siamese.dyndns.org> <vpqmx7mcgdz.fsf@bauges.imag.fr>
- <7vk42pu6io.fsf@alter.siamese.dyndns.org> <vpqwr6o3k9s.fsf@bauges.imag.fr>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [PATCH] git-gui: fix a typo in po/ files
+Date: Sat, 10 Mar 2012 23:37:41 +0000
+Message-ID: <87399g10ze.fsf@fox.patthoyts.tk>
+References: <CAGOdq5kmVr7AFYLa6by37h6q4AaHHx7EVMb5ijNc=wQv=mZWTg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Dmitry Potapov <dpotapov@gmail.com>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	Jeremy Morton <jeremy@configit.com>,
-	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Mar 13 13:34:33 2012
+Cc: gitster@pobox.com, jrnieder@gmail.com, git@vger.kernel.org,
+	worldhello.net@gmail.com
+To: Benjamin Kerensa <bkerensa@ubuntu.com>
+X-From: git-owner@vger.kernel.org Tue Mar 13 13:36:07 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7Qvu-0006gF-Lm
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 13:34:31 +0100
+	id 1S7QxT-0007kH-2U
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 13:36:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752044Ab2CMMe0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Mar 2012 08:34:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55315 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752003Ab2CMMeZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2012 08:34:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5657F41A5;
-	Tue, 13 Mar 2012 08:34:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5Vlj6+LuMavTIN8PYs7AIecnM18=; b=U+8jAH
-	ivbbg6ujYvs+6LdQkIBSCcnRs7C2xQPVbKYi9h0PeAETsb/NrOQt8iwdXg4al5Ya
-	S0JvfY1Jb18ENY1vMJoMRai+mhta+qDIlF58iCYxqa2QGjRX6Pd8E4X5kY/TAKjP
-	fixNhqYGOQrgQBZpGVSAi7nS6MZMp2B6kRoLg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=owgIQsGSfUN0N9d0Na8wptltgt88Llr2
-	rbDuws/zblrbsFkgarzFEa/UtrLOSlcFDP1EqHq+yXYrSm0beu+OnDJQ3qd9tg8n
-	ji9adJ8gBkGi5xF+W25Otrk/awQyfO9jK22MN6H1s09f7y6WuMyZbKNuBXvFSt2d
-	ycegftKXG4A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4BFA041A4;
-	Tue, 13 Mar 2012 08:34:24 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C0CE241A3; Tue, 13 Mar 2012
- 08:34:23 -0400 (EDT)
-In-Reply-To: <vpqwr6o3k9s.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Tue, 13 Mar 2012 10:47:11 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DD54F49E-6D08-11E1-8437-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752261Ab2CMMgB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Mar 2012 08:36:01 -0400
+Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:37670 "EHLO
+	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752129Ab2CMMgA (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Mar 2012 08:36:00 -0400
+Received: from know-smtpout-4.server.virginmedia.net ([62.254.123.2])
+          by mtaout02-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20120313123557.XUNN20752.mtaout02-winn.ispmail.ntl.com@know-smtpout-4.server.virginmedia.net>;
+          Tue, 13 Mar 2012 12:35:57 +0000
+Received: from [94.171.229.22] (helo=fox.patthoyts.tk)
+	by know-smtpout-4.server.virginmedia.net with esmtpa (Exim 4.63)
+	(envelope-from <patthoyts@users.sourceforge.net>)
+	id 1S7QxJ-0006sE-N2; Tue, 13 Mar 2012 12:35:57 +0000
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id BDBAE22B4B; Sat, 10 Mar 2012 23:37:41 +0000 (GMT)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+X-Home-Page: http://www.patthoyts.tk/
+X-Web: http://www.patthoyts.tk/
+In-Reply-To: <CAGOdq5kmVr7AFYLa6by37h6q4AaHHx7EVMb5ijNc=wQv=mZWTg@mail.gmail.com>
+	(Benjamin Kerensa's message of "Mon, 5 Mar 2012 17:53:23 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+X-Cloudmark-Analysis: v=1.1 cv=R50lirqlHffDPPkwUlkuVa99MrvKdVWo//yz83qex8g= c=1 sm=0 a=O9HYxzjLEG8A:10 a=cT8px0FWwN0A:10 a=kj9zAlcOel0A:10 a=fxJcL_dCAAAA:8 a=Rf460ibiAAAA:8 a=Zsq_wg3XOTwULfcddWsA:9 a=CjuIK1q_8ugA:10 a=H9zEDzkRE3YA:10 a=2eKvNQJKnqYA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193013>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Benjamin Kerensa <bkerensa@ubuntu.com> writes:
 
->> Sounds OK from a cursory read, except for a few minor details.
->>
->> Thanks.  Nitpicks follow.
+>"succeeded" was misspelled in the code, which propagated throughout the
+> translations.
 >
-> I'm taking them all. Here's the result:
+>Fixed all of them.
+>
+>Signed-off-by: Benjamin Kerensa <bkerensa <at> ubuntu.com>
 
-I'd hold onto this version for a few days before I paste it in my
-blog or send it to k-list in order to give others a chance to
-improve the text further, but this looks good (obviously) to me.
+Thanks - applied.
 
-Thanks for getting the ball rolling.
+-- 
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
