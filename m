@@ -1,78 +1,53 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 1/2] perf: compare diff algorithms
-Date: Sat, 10 Mar 2012 08:13:55 +0100
-Message-ID: <4F5AFF33.7090900@lsrfire.ath.cx>
-References: <87pqcp6fyh.fsf@thomas.inf.ethz.ch> <f113867bcf2fec3210cd1a997e1398903b3bdd76.1331039505.git.trast@student.ethz.ch>
+From: Chris Kees <cekees@gmail.com>
+Subject: --progress for git submodule update?
+Date: Sat, 10 Mar 2012 01:17:28 -0600
+Message-ID: <CAOVFbFiBOH2MyC3HUtf=hA_PssSRENW7uwpBVxh0TwnO7h90XA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Michal Privoznik <mprivozn@redhat.com>,
-	Jeff King <peff@peff.net>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sat Mar 10 08:14:17 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 10 08:17:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S6GVG-00020B-LY
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Mar 2012 08:14:11 +0100
+	id 1S6GYa-0003mX-Kr
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Mar 2012 08:17:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752240Ab2CJHOG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Mar 2012 02:14:06 -0500
-Received: from india601.server4you.de ([85.25.151.105]:39303 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751974Ab2CJHOE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Mar 2012 02:14:04 -0500
-Received: from [192.168.2.105] (p4FFD8E16.dip.t-dialin.net [79.253.142.22])
-	by india601.server4you.de (Postfix) with ESMTPSA id 029832F8042;
-	Sat, 10 Mar 2012 08:14:01 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <f113867bcf2fec3210cd1a997e1398903b3bdd76.1331039505.git.trast@student.ethz.ch>
+	id S1752253Ab2CJHRa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Mar 2012 02:17:30 -0500
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:62162 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751393Ab2CJHRa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Mar 2012 02:17:30 -0500
+Received: by wibhq7 with SMTP id hq7so1353306wib.1
+        for <git@vger.kernel.org>; Fri, 09 Mar 2012 23:17:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=PkbVQiOZGgDBBKva3zFiwN7oKVoaMqp+ceZijVl6F4Y=;
+        b=U5b8Cdvksa9iXpc4s65y5rJaVne+T7zLX1BzfctL6SNE2irAg8t5C2o825u4yv2Gfl
+         tCpqTMqOErI16+Idsl+FQ3YoVKFIGsXBOJhKvDucA11oZCrZg/UHUbzJ3y8uMGKs6NbJ
+         tiiDsuLun7UQRhitxBCKwnUhD3zqtl0/MdM6hm3yaZ2miQaOJAUc4TO/tIcomtdmIHRS
+         Xd1I1B+eMuc5RfRDXQGjfB7jRkQsSzi0LOkFM3DtnhUZAJ/imG4Gl6mj+K6H/MrK2WWg
+         CyC5x0KaMZ19FfCoS6sGPMZAaw0W2lWznBmpGIfVR3TH6GWAoxDJ9GN0SsviDp9lbVN8
+         KBVA==
+Received: by 10.180.99.100 with SMTP id ep4mr11219228wib.7.1331363848795; Fri,
+ 09 Mar 2012 23:17:28 -0800 (PST)
+Received: by 10.216.178.8 with HTTP; Fri, 9 Mar 2012 23:17:28 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192772>
 
-Am 06.03.2012 14:15, schrieb Thomas Rast:
-> 8c912ee (teach --histogram to diff, 2011-07-12) claimed histogram dif=
-f
-> was faster than both Myers and patience.
->
-> We have since incorporated a performance testing framework, so add a
-> test that compares the various diff tasks performed in a real 'log -p=
-'
-> workload.  This does indeed show that histogram diff slightly beats
-> Myers, while patience is much slower than the others.
->
-> Signed-off-by: Thomas Rast<trast@student.ethz.ch>
-> ---
->
-> The 3000 is pretty arbitrary but makes for a nice test duration.
->
-> I'm reluctant to put numbers into the message, since the whole point
-> of the perf test framework is that you can easily get them too.  But
-> here's what I'm seeing:
->
->    4000.1: log -3000 (baseline)          0.04(0.02+0.01)
->    4000.2: log --raw -3000 (tree-only)   0.49(0.38+0.09)
->    4000.3: log -p -3000 (Myers)          1.93(1.75+0.17)
->    4000.4: log -p -3000 --histogram      1.90(1.74+0.15)
->    4000.5: log -p -3000 --patience       2.25(2.07+0.16)
+Hi,
 
-Just a data point: --histogram is slightly slower for me:
+Would it be reasonable to have a --progress option for 'git submodule
+update'? I'm using buildbot with a git repository containing large
+submodules, and buildbot times out on the submodule update
+occasionally because there is no output for long periods of time.
+Adjusting buildbot's timeout factor will do for me in the short run.
 
-    Test                                  this tree
-    -----------------------------------------------------
-    4000.1: log -3000 (baseline)          0.07(0.07+0.00)
-    4000.2: log --raw -3000 (tree-only)   0.35(0.31+0.04)
-    4000.3: log -p -3000 (Myers)          1.50(1.40+0.08)
-    4000.4: log -p -3000 --histogram      1.54(1.48+0.05)
-    4000.5: log -p -3000 --patience       1.79(1.71+0.06)
-
-(baseline with -3000)
-
-Ren=E9
+Thanks,
+Chris
