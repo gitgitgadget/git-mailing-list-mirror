@@ -1,86 +1,81 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 2/1] fixup! fast-import: allow 'ls' and filecopy to read the
- root
-Date: Sat, 10 Mar 2012 03:18:12 -0600
-Message-ID: <20120310091812.GG1992@burratino>
+Subject: Re: [PATCH] fast-import: fix ls command with empty path
+Date: Sat, 10 Mar 2012 03:48:03 -0600
+Message-ID: <20120310094803.GA1969@burratino>
 References: <CAFfmPPMxcs0ySgnD7UfUS1yq=qaqfn1qCxdh1HYgFu6WPfpWQg@mail.gmail.com>
  <1331184656-98629-1-git-send-email-davidbarr@google.com>
- <20120310085354.GE1992@burratino>
+ <20120308070951.GA2181@burratino>
+ <7vty1zdp2b.fsf@alter.siamese.dyndns.org>
+ <CA+gfSn8bh-tV+uduM7xsuwqXQW2a57yvVmRXjXjp9JaO779bUg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>,
+	David Barr <davidbarr@google.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Andrew Sayers <andrew-git@pileofstuff.org>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: David Barr <davidbarr@google.com>
-X-From: git-owner@vger.kernel.org Sat Mar 10 10:18:26 2012
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Dmitry Ivankov <divanorama@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 10 10:48:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S6IRT-0000Tt-ND
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Mar 2012 10:18:24 +0100
+	id 1S6IuP-0007gV-Qy
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Mar 2012 10:48:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754072Ab2CJJSS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Mar 2012 04:18:18 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:33398 "EHLO
+	id S1752038Ab2CJJsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Mar 2012 04:48:13 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:65108 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752931Ab2CJJSQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Mar 2012 04:18:16 -0500
-Received: by iagz16 with SMTP id z16so3564717iag.19
-        for <git@vger.kernel.org>; Sat, 10 Mar 2012 01:18:16 -0800 (PST)
+	with ESMTP id S1751639Ab2CJJsL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Mar 2012 04:48:11 -0500
+Received: by iagz16 with SMTP id z16so3595853iag.19
+        for <git@vger.kernel.org>; Sat, 10 Mar 2012 01:48:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Ptzb+wyFRayq98ADlzlZklZP/fvmM65vMon9tROHy64=;
-        b=R/uiBc9bMp7BEdF0hMLKt5tZlcHmeDxf45cYGMrY37rgSe3bpQva1roFGULNRLvlT9
-         LsGVuGNgetC+5xvGX85HdS7iG6C0sgWQCJi0eHMqy2w/DViTUSzxOAFQqFuu1+d4ZFOk
-         bXKsL1fekdmAuYZz9oTg5b3H3d77pZzlj9ZmYX8ZQN0INZTj08u8BcNXlWps1nHmREqs
-         PikDOlSevHvzskiwLV0AqOJpz6O2R9mHViFBoYzMtLDmj6abpj0n+fsSUSayiiF2EDE9
-         Kom/zgauiz5XcRiTK2I40mOJtEvx2WCRSvTvwr28uGmCEgwSaN0Dll0KMS/CLCRUiJGd
-         xGFQ==
-Received: by 10.50.149.131 with SMTP id ua3mr8077974igb.41.1331371096300;
-        Sat, 10 Mar 2012 01:18:16 -0800 (PST)
+        bh=5rMVHhfCj9YZXfcxXHQoolbcmpefUpRBW7CHdN2VF24=;
+        b=PasHAfiT0Fze34mmgnWEEvDnwu6Sso9N+qc5AcFotB3IBHGr08dnTnA9jkGw+5EHeX
+         +uTsWLkrJ+AgTz87dumwmU5C76INLiDdwZoDGn6EXF7K2Rw1IcG4J2o/DGMFGf0bsusD
+         GGJGfHxweUnQI15t7K1ZD/xf+W7hC7URwUJJvbdLO1uL1OTG9pCj8ypLYLhwGgtL4ADa
+         CmGdTbF/iJG902cbp/4Exf6FZtq4OgbCcYksUrh3ckwoE7dDh811MuPbe6J0VfdxV5i8
+         Nuf8sLzEwYvIqlbIQltgaHoNpx8jepNPfSGzNLfPJdPoFWuLokqX9HGNV2487XBN5Noi
+         AWWw==
+Received: by 10.42.174.71 with SMTP id u7mr6931700icz.44.1331372890958;
+        Sat, 10 Mar 2012 01:48:10 -0800 (PST)
 Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id rd7sm1457826igb.14.2012.03.10.01.18.15
+        by mx.google.com with ESMTPS id ub10sm3578045igb.7.2012.03.10.01.48.09
         (version=SSLv3 cipher=OTHER);
-        Sat, 10 Mar 2012 01:18:15 -0800 (PST)
+        Sat, 10 Mar 2012 01:48:10 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20120310085354.GE1992@burratino>
+In-Reply-To: <CA+gfSn8bh-tV+uduM7xsuwqXQW2a57yvVmRXjXjp9JaO779bUg@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192777>
 
 Jonathan Nieder wrote:
+> Dmitry Ivankov wrote:
 
-> --- a/fast-import.c
-> +++ b/fast-import.c
-> @@ -2369,6 +2382,7 @@ static void file_change_cr(struct branch *b, int rename)
->  			leaf.tree);
->  		return;
->  	}
-> +
->  	tree_content_set(&b->branch_tree, d,
->  		leaf.versions[1].sha1,
->  		leaf.versions[1].mode,
+>>  One more quick thought. "force the root mode to S_IFDIR" part doesn't
+>>  look obviously good for me. First, isn't it already ensured that the
+>>  root is a directory?
+[...]
+> It was just a problematic and incomplete version of what your "be
+> saner with temporary trees" does properly. 
 
-Maybe next time I will send the patch to myself and bounce it to the
-list.  Sorry for the noise.
+To tie up this loose end: looks like David's patch was ok in this
+respect and my worries unfounded.  What I was missing is that
+store_tree() does nothing unless its tree argument is dirty, and the
+temporary tree used to repesent <treeish> in "ls <treeish> <path>" is
+never dirty.
 
-diff --git i/fast-import.c w/fast-import.c
-index 51cdda29..013cbd5e 100644
---- i/fast-import.c
-+++ w/fast-import.c
-@@ -2384,7 +2384,6 @@ static void file_change_cr(struct branch *b, int rename)
- 			leaf.tree);
- 		return;
- 	}
--
- 	tree_content_set(&b->branch_tree, d,
- 		leaf.versions[1].sha1,
- 		leaf.versions[1].mode,
+Of course, the reminder of the "be saner" patch and the tree delta
+discussion was still very useful.
+
+Thanks for your thoughtfulness.
+Jonathan
