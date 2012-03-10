@@ -1,7 +1,8 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH maint-1.7.6] fast-import: leakfix for 'ls' of dirty trees
-Date: Fri, 9 Mar 2012 21:20:34 -0600
-Message-ID: <20120310032034.GB3008@burratino>
+Subject: [PATCH maint-1.7.6] fast-import: don't allow 'ls' of path with empty
+ components
+Date: Fri, 9 Mar 2012 22:00:49 -0600
+Message-ID: <20120310040049.GC3008@burratino>
 References: <CAFfmPPMxcs0ySgnD7UfUS1yq=qaqfn1qCxdh1HYgFu6WPfpWQg@mail.gmail.com>
  <1331184656-98629-1-git-send-email-davidbarr@google.com>
  <20120308070951.GA2181@burratino>
@@ -15,40 +16,40 @@ Cc: David Barr <davidbarr@google.com>,
 	Dmitry Ivankov <divanorama@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 10 04:20:49 2012
+X-From: git-owner@vger.kernel.org Sat Mar 10 05:01:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S6CrM-0007gM-8T
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Mar 2012 04:20:44 +0100
+	id 1S6DUJ-0000uC-6H
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Mar 2012 05:00:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759425Ab2CJDUj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Mar 2012 22:20:39 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:52336 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754481Ab2CJDUi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2012 22:20:38 -0500
-Received: by iagz16 with SMTP id z16so3182923iag.19
-        for <git@vger.kernel.org>; Fri, 09 Mar 2012 19:20:38 -0800 (PST)
+	id S1755945Ab2CJEAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Mar 2012 23:00:54 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:46032 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753630Ab2CJEAx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Mar 2012 23:00:53 -0500
+Received: by yhmm54 with SMTP id m54so1394548yhm.19
+        for <git@vger.kernel.org>; Fri, 09 Mar 2012 20:00:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=k5xOGZ/EmrkrwFHNvUb2/7G//79qFUOUhT6P3L/3yKo=;
-        b=sqp7l9o2svRA4LRgQCvL8FUO2L/gGXc0dNY6zR2BqXH7UtKtyQrANOmxScNi19g7vA
-         ARHPleQtptPgUKmGxz8Oda0DzQ3157uVhpGI+HZV8xbwpGc66cqbPqPaxFu7vz6AdPvY
-         msIt5RoGwA3m4PmRPFyUtG++OMCrjuhwIYus8SWoXs05hHJfLT68fN2q4vZc3owOB3hd
-         bUAj62obNuBIaQgbG6UJ425SLSiSfkAvTJIwCisUoleAvuEY06OlSxHZmphPMZcSTPMt
-         ekA38ezNe6zyizH7tYz1Zka19j0stRLENN8ulWPuTCVPxfyhqfkpcP43cGov2IfOgFjC
-         /qAQ==
-Received: by 10.182.174.101 with SMTP id br5mr1795773obc.0.1331349638023;
-        Fri, 09 Mar 2012 19:20:38 -0800 (PST)
+        bh=gfAcdXdfh3ezr8iNeeUYmJecnorOK5090Y33miEmvyg=;
+        b=bDB0oNsmlGxLsM+RhjyVzXdoKQeJ6y5x1LYtsMoYVVnvfJrk4PZWZFqDdPeVTlxSm6
+         GMrzCDwTmy/VrBGXeWlUOPRUtb/zOb5KYSH50hJ9fArWTEYhfQ7E+wu5stOkWA8fgGf1
+         rbOqOh3H0aOvHF3WUKtdh+x0sG7tLevfkUE1aVk8+8pPlUsivFK5jwde8fIBmJBXda76
+         ybWQ6aI7QI/USbPg9OBm4VCsF3q0n+fA1xIR2PES1NaJhCItf+/5hywAZRTbtYXhwhH2
+         Mx9p616nafPveR75iGnQOvlyD4cpwghmZ+9UezRyDKqHKidipccnazy6ajIyH/gGfnfO
+         VgkQ==
+Received: by 10.182.114.70 with SMTP id je6mr1815035obb.30.1331352052986;
+        Fri, 09 Mar 2012 20:00:52 -0800 (PST)
 Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id g10sm3916283oei.9.2012.03.09.19.20.36
+        by mx.google.com with ESMTPS id yv3sm10260069obb.3.2012.03.09.20.00.51
         (version=SSLv3 cipher=OTHER);
-        Fri, 09 Mar 2012 19:20:37 -0800 (PST)
+        Fri, 09 Mar 2012 20:00:52 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20120310031228.GA3008@burratino>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -56,37 +57,96 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192765>
 
-When the chosen directory has changed since it was last written to
-pack, "tree_content_get" makes a deep copy of its content to scribble
-on while computing the tree name, which we forgot to free.
+As the fast-import manual explains:
 
-This leak has been present since the 'ls' command was introduced in
-v1.7.5-rc0~3^2~33 (fast-import: add 'ls' command, 2010-12-02).
+	The value of <path> must be in canonical form. That is it must
+	not:
+	. contain an empty directory component (e.g. foo//bar is invalid),
+	. end with a directory separator (e.g. foo/ is invalid),
+	. start with a directory separator (e.g. /foo is invalid),
 
+Unfortunately the "ls" command accepts these invalid syntaxes and
+responds by declaring that the indicated path is missing.  This is too
+subtle and causes importers to silently misbehave; better to error out
+so the operator knows what's happening.
+
+The C, R, and M commands already error out for such paths.
+
+Based on initial analysis by David Barr.
+
+Reported-by: Andrew Sayers <andrew-git@pileofstuff.org>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-Sorry to have missed this buglet for so long.  (Doubly so because it
-was noticed and commented on half a year ago before being promptly
-forgotten.)  Patch is against commit 8dc6a373d2 which introduced the
-leaky 'ls' support.
+Also against on 8dc6a373d (fast-import: add 'ls' command, 2010-12-02).
 
- fast-import.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fast-import.c          |    2 ++
+ t/t9300-fast-import.sh |   39 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 41 insertions(+)
 
 diff --git a/fast-import.c b/fast-import.c
-index 6c37b840..fff285cd 100644
+index fff285cd..47f61f3c 100644
 --- a/fast-import.c
 +++ b/fast-import.c
-@@ -2987,6 +2987,8 @@ static void parse_ls(struct branch *b)
- 		store_tree(&leaf);
+@@ -1640,6 +1640,8 @@ static int tree_content_get(
+ 		n = slash1 - p;
+ 	else
+ 		n = strlen(p);
++	if (!n)
++		die("Empty path component found in input");
  
- 	print_ls(leaf.versions[1].mode, leaf.versions[1].sha1, p);
-+	if (leaf.tree)
-+		release_tree_content_recursive(leaf.tree);
- 	if (!b || root != &b->branch_tree)
- 		release_tree_entry(root);
- }
+ 	if (!root->tree)
+ 		load_tree(root);
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 6b1ba6c8..2cd0f061 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -1088,6 +1088,45 @@ test_expect_success \
+ 	INPUT_END'
+ 
++test_expect_success \
++	'N: reject foo/ syntax in copy source' \
++	'test_must_fail git fast-import <<-INPUT_END
++	commit refs/heads/N5C
++	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++	data <<COMMIT
++	copy with invalid syntax
++	COMMIT
++
++	from refs/heads/branch^0
++	C file2/ file3
++	INPUT_END'
++
++test_expect_success \
++	'N: reject foo/ syntax in rename source' \
++	'test_must_fail git fast-import <<-INPUT_END
++	commit refs/heads/N5D
++	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++	data <<COMMIT
++	rename with invalid syntax
++	COMMIT
++
++	from refs/heads/branch^0
++	R file2/ file3
++	INPUT_END'
++
++test_expect_success \
++	'N: reject foo/ syntax in ls argument' \
++	'test_must_fail git fast-import <<-INPUT_END
++	commit refs/heads/N5E
++	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++	data <<COMMIT
++	copy with invalid syntax
++	COMMIT
++
++	from refs/heads/branch^0
++	ls "file2/"
++	INPUT_END'
++
+ test_expect_success \
+ 	'N: copy to root by id and modify' \
+ 	'echo "hello, world" >expect.foo &&
+ 	 echo hello >expect.bar &&
 -- 
 1.7.9.2
