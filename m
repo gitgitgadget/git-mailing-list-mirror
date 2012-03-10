@@ -1,99 +1,103 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: Stop a git commit by a specific author using pre-commit hook
-Date: Sat, 10 Mar 2012 17:03:08 -0600
-Message-ID: <4F5BDDAC.4050700@gmail.com>
-References: <CAGc=MuCQoQ711uXnB8J80RqsY+pqbaeCOXHjy0-mjq7a_ESdyA@mail.gmail.com> <4F5BAE5E.5030407@gmail.com> <7vboo415rn.fsf@alter.siamese.dyndns.org>
+From: suvayu ali <fatkasuvayu+linux@gmail.com>
+Subject: Trouble with file specific merge strategies
+Date: Sun, 11 Mar 2012 00:47:41 +0100
+Message-ID: <CAMXnza3SLHWLsFkYLhkJLAwtP2n=QVTXZ__GSL-CvajxC6i0Dw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Adrian Cornish <git@bluedreamer.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 11 00:03:46 2012
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 11 00:48:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S6VKC-0001TN-GR
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Mar 2012 00:03:44 +0100
+	id 1S6W1B-0008T7-II
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Mar 2012 00:48:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752461Ab2CJXDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Mar 2012 18:03:12 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:55214 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752261Ab2CJXDL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Mar 2012 18:03:11 -0500
-Received: by iagz16 with SMTP id z16so4437762iag.19
-        for <git@vger.kernel.org>; Sat, 10 Mar 2012 15:03:10 -0800 (PST)
+	id S1752997Ab2CJXsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Mar 2012 18:48:05 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:50237 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752089Ab2CJXsB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Mar 2012 18:48:01 -0500
+Received: by yhmm54 with SMTP id m54so1700552yhm.19
+        for <git@vger.kernel.org>; Sat, 10 Mar 2012 15:48:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=RFEEKCQoN8Hhf4EPhEuvvj0PzHooqEuOpHpK4J0mLn8=;
-        b=f014rUmO1hgs1JqCYBKKasW4lIoWGqlX9H+dcMNAqWV2MGUOg1zKoN3REJegaMuuD1
-         d8LqBB4I9t+jptoBcz/H/3IPbTrZATKevL3l3JGUvWgLn2E7/0ZisYdzuVXSnJaefGfu
-         PTnpBTyczBtTrcNuB3+aCUbPbjnWy6R6lCnJWXkvN+WW/T/Y8TCcWF+bwS2clLo4WOfl
-         8yKIzHdf5PR7M0kXaqNK9uIjhuK0X5nFl7qvejpXfLWK7Pnr45dr+6cbqPMPWg+Hzozn
-         a+ZibAKFX9DnBUyXcs9/63DeSv5XSJIj2Tjc0uTBpd/UYBCZFqR6wciJFC2tDAakUtQI
-         uM7w==
-Received: by 10.182.2.135 with SMTP id 7mr2967111obu.78.1331420590741;
-        Sat, 10 Mar 2012 15:03:10 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id v10sm10751210obb.4.2012.03.10.15.03.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 10 Mar 2012 15:03:10 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.27) Gecko/20120216 Thunderbird/3.1.19
-In-Reply-To: <7vboo415rn.fsf@alter.siamese.dyndns.org>
+        h=mime-version:sender:from:date:x-google-sender-auth:message-id
+         :subject:to:content-type;
+        bh=G5HBuQq7VYyjvqF7In+E+/y4qm6llBxEXvql0MPgigA=;
+        b=aRl1SFykTwWjYkva/jv6IEivggNyXOQgeu9Fu3OdH3fBfbZJoN4cib53KqDJyIYiPi
+         b0MVAWqmSLDQQ5O20mUOFEp/15R04Vjf+bAqHHxzT4K9aq6+mQ70mGiaqldA5smEAUbt
+         fnB3Aqr7v/8BWHP+foTUf3M6QRVOI9h/iKqQXD+oVBhcRgLyjurt8BZ67DGkYEISRPFP
+         NuVfiyy6PpJXPgripcz97vha427jvZaU48niCyCGYtq5jfK7ZcnfnOntEKmr90dUckk+
+         0HFuJEO43ueSpjLnOStqt4CZKdmpr3V0ofjcXJVK0b2Ke9oRr7UAvDG1uEIYtBZpoJzB
+         zjMg==
+Received: by 10.60.3.138 with SMTP id c10mr2907348oec.72.1331423281156; Sat,
+ 10 Mar 2012 15:48:01 -0800 (PST)
+Received: by 10.60.20.104 with HTTP; Sat, 10 Mar 2012 15:47:41 -0800 (PST)
+X-Google-Sender-Auth: Bcg_nEJ9RmkoyoOrzljVv7F_HUY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192795>
 
-On 3/10/2012 3:54 PM, Junio C Hamano wrote:
-> Neal Kreitzinger<nkreitzinger@gmail.com>  writes:
->
->> On 3/8/2012 7:15 PM, Adrian Cornish wrote:
->>> My plan is to use git to keep track of changes in /etc but when
->>> committing I want to have the person making the change specify
->>> themselves as author by adding the --author option on the commandline.
->>> So I would like to stop accidental commits as root.
->> ...
->> We use whoami in our pre-commit hook to see who the user is that is
->> doing the commit.  I think you could also use GIT_COMMITTER_NAME or
->> linux $USER environment variables.  Either way, the --author seems
->> like an unnecessary and unreliable way to get the username.
->> ...  If people can su to root
->> then $USER will not work because it will still be set to their
->> original user name (before they did su to root).  Therefore, "whoami"
->> seems like your best solution.
-> When people want to raise a red flag against a commit made by root,
-> they are coming from two different schools.
->
-> One is "do not run 'git' or any development tool for that matter
-> while being root". It is a good discipline to follow in general to
-> limit what you do with escalated privilege to the minimum.
->
-> The other is "record who actually did the work, not 'root' that
-> people cannot later track down who it actually was".  People from
-> this school do not mind running development tools as root.
->
-> And your advice is a good one for the former, but not very relevant
-> for the latter.
->
-> And I think Adrian is asking for the latter.
->
-Now I see.  In that case, at the point pre-commit is run git has not 
-overriden GIT_AUTHOR_IDENT with your --author value, yet.  I don't know 
-if that is a bug or not.  The prepare-commit-msg hook is the same way.  
-However, by the time the commit-msg hook runs git has placed your 
---author override into GIT_AUTHOR_IDENT so if you check it there it will 
-work and you can abort the commit.  Of course, at that point the user 
-has already typed their commit message and may lose it.  You could 
-create a git alias like "git root-commit" that prompts them to enter 
-their authorname and then runs git-commit --author with that user 
-provided value.  Pre-commit hook could detect root user and error out 
-telling them to run git-root-commit instead.
+Hi git devs,
 
-v/r,
-neal
+I have a repo with two branches where some files are absent in one of
+the branches. Say the two branches are <allfiles> and <somefiles>. Until now
+I was using
+
+$ git merge -s ours <allfiles> # with <somefiles> checked out
+
+to merge commits which touches the absent files. But this clutters up
+history and is very inconvenient to do sometimes. So when I came across
+the possibility of using .gitattributes for file specific merge
+strategies, I tried the following:
+
+pattern merge=ours
+
+However I get the following conflict message:
+
+CONFLICT (rename/delete): org-mode-config.el deleted in HEAD and
+renamed in 74288bb. Version 74288bb of org-mode-config.el left in
+tree.
+
+This file was deleted from <somefiles> in the past[1] and was renamed in
+<allfiles> since the last merge. I was expecting this file to be ignored
+(or in other words, merged with ours) since the .gitattributes file has
+entries like these:
+
+org-mode-config.el	   merge=ours  # new name in allfiles branch
+lisp/org-mode-settings.el  merge=ours  # old name deleted in somefiles
+
+I also see other new files in <allfiles> which are mentioned in
+.gitattributes being merged in <somefiles>.
+
+$ git status -sb
+## somefiles
+M  abbrev_defs
+A  cpp-config.el
+A  email-config.el                 # <-- this should be ignored
+A  gui-config.el                   # <-- this should be ignored
+UU init.el
+A  keybindings.el
+M  lisp/skeletons.el
+D  lisp/text-mode-like-settings.el
+UA org-mode-config.el              # <-- this should be ignored
+A  text-mode-config.el
+
+What am I doing wrong here? My git version is 1.7.7.6.
+
+Thanks in advance,
+
+
+Footnotes:
+
+[1] There has been several successful merges since then.
+
+-- 
+Suvayu
+
+Open source is the future. It sets us free.
