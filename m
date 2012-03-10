@@ -1,122 +1,99 @@
-From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH] lib-gettext.sh: Show GIT_INTERNAL_GETTEXT_SH_SCHEME = fallthrough
-Date: Sat, 10 Mar 2012 23:37:14 +0100
-Message-ID: <201203102337.16260.tboegi@web.de>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: Stop a git commit by a specific author using pre-commit hook
+Date: Sat, 10 Mar 2012 17:03:08 -0600
+Message-ID: <4F5BDDAC.4050700@gmail.com>
+References: <CAGc=MuCQoQ711uXnB8J80RqsY+pqbaeCOXHjy0-mjq7a_ESdyA@mail.gmail.com> <4F5BAE5E.5030407@gmail.com> <7vboo415rn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, tboegi@web.de
-To: avarab@gmail.com, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Mar 10 23:37:28 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Adrian Cornish <git@bluedreamer.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 11 00:03:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S6Uuk-0000GU-LV
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Mar 2012 23:37:27 +0100
+	id 1S6VKC-0001TN-GR
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Mar 2012 00:03:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752119Ab2CJWhV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Mar 2012 17:37:21 -0500
-Received: from fmmailgate05.web.de ([217.72.192.243]:49131 "EHLO
-	fmmailgate05.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751736Ab2CJWhU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Mar 2012 17:37:20 -0500
-Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
-	by fmmailgate05.web.de (Postfix) with ESMTP id C965E6B2769A
-	for <git@vger.kernel.org>; Sat, 10 Mar 2012 23:37:18 +0100 (CET)
-Received: from maxi.localnet ([194.22.188.61]) by smtp.web.de (mrweb001) with
- ESMTPA (Nemesis) id 0MDxWR-1S8zUA1X39-00HWgE; Sat, 10 Mar 2012 23:37:17 +0100
-X-Provags-ID: V02:K0:kZ43ga2YxcNLoKcEtYTALmtvzEdkrPxQiczH+3BtT02
- ETLHtB3qUDAmFjj2+a7Rm1vOwnpr6HBd23vsD8wUQVoIh0Zcz+
- f10NciEzibXwYkZAYpR16EyBBG9f/49XtZIRBV+i2Vfh76MvZA
- Q5eN5/VvlFFkTSvit7lBOFinnwTAhHUljTsLQp5TJ2zPw9sazd
- rPITmb0h5+0nJ3QFyX0PA==
+	id S1752461Ab2CJXDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Mar 2012 18:03:12 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:55214 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752261Ab2CJXDL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Mar 2012 18:03:11 -0500
+Received: by iagz16 with SMTP id z16so4437762iag.19
+        for <git@vger.kernel.org>; Sat, 10 Mar 2012 15:03:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=RFEEKCQoN8Hhf4EPhEuvvj0PzHooqEuOpHpK4J0mLn8=;
+        b=f014rUmO1hgs1JqCYBKKasW4lIoWGqlX9H+dcMNAqWV2MGUOg1zKoN3REJegaMuuD1
+         d8LqBB4I9t+jptoBcz/H/3IPbTrZATKevL3l3JGUvWgLn2E7/0ZisYdzuVXSnJaefGfu
+         PTnpBTyczBtTrcNuB3+aCUbPbjnWy6R6lCnJWXkvN+WW/T/Y8TCcWF+bwS2clLo4WOfl
+         8yKIzHdf5PR7M0kXaqNK9uIjhuK0X5nFl7qvejpXfLWK7Pnr45dr+6cbqPMPWg+Hzozn
+         a+ZibAKFX9DnBUyXcs9/63DeSv5XSJIj2Tjc0uTBpd/UYBCZFqR6wciJFC2tDAakUtQI
+         uM7w==
+Received: by 10.182.2.135 with SMTP id 7mr2967111obu.78.1331420590741;
+        Sat, 10 Mar 2012 15:03:10 -0800 (PST)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id v10sm10751210obb.4.2012.03.10.15.03.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 10 Mar 2012 15:03:10 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.27) Gecko/20120216 Thunderbird/3.1.19
+In-Reply-To: <7vboo415rn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192794>
 
-The test cases for gettext, which are in this 3 files:
- t0204-gettext-reencode-sanity.sh
- t0200-gettext-basic.sh
- t0203-gettext-setlocale-sanity.sh
+On 3/10/2012 3:54 PM, Junio C Hamano wrote:
+> Neal Kreitzinger<nkreitzinger@gmail.com>  writes:
+>
+>> On 3/8/2012 7:15 PM, Adrian Cornish wrote:
+>>> My plan is to use git to keep track of changes in /etc but when
+>>> committing I want to have the person making the change specify
+>>> themselves as author by adding the --author option on the commandline.
+>>> So I would like to stop accidental commits as root.
+>> ...
+>> We use whoami in our pre-commit hook to see who the user is that is
+>> doing the commit.  I think you could also use GIT_COMMITTER_NAME or
+>> linux $USER environment variables.  Either way, the --author seems
+>> like an unnecessary and unreliable way to get the username.
+>> ...  If people can su to root
+>> then $USER will not work because it will still be set to their
+>> original user name (before they did su to root).  Therefore, "whoami"
+>> seems like your best solution.
+> When people want to raise a red flag against a commit made by root,
+> they are coming from two different schools.
+>
+> One is "do not run 'git' or any development tool for that matter
+> while being root". It is a good discipline to follow in general to
+> limit what you do with escalated privilege to the minimum.
+>
+> The other is "record who actually did the work, not 'root' that
+> people cannot later track down who it actually was".  People from
+> this school do not mind running development tools as root.
+>
+> And your advice is a good one for the former, but not very relevant
+> for the latter.
+>
+> And I think Adrian is asking for the latter.
+>
+Now I see.  In that case, at the point pre-commit is run git has not 
+overriden GIT_AUTHOR_IDENT with your --author value, yet.  I don't know 
+if that is a bug or not.  The prepare-commit-msg hook is the same way.  
+However, by the time the commit-msg hook runs git has placed your 
+--author override into GIT_AUTHOR_IDENT so if you check it there it will 
+work and you can abort the commit.  Of course, at that point the user 
+has already typed their commit message and may lose it.  You could 
+create a git alias like "git root-commit" that prompts them to enter 
+their authorname and then runs git-commit --author with that user 
+provided value.  Pre-commit hook could detect root user and error out 
+telling them to run git-root-commit instead.
 
-are only run when GETTEXT_LOCALE or GETTEXT_ISO_LOCALE
-(depending on the test case) is set.
-
-This variables are set up in lib-gettext.sh
-The variables may not be set and the appropriate test cases are skipped
-when either
- a) GIT_INTERNAL_GETTEXT_SH_SCHEME =3D fallthrough
-or
- b) the needed locale is not available on the system.
-
-Tell the user what which was the reason to skip the tests
-
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
- t/lib-gettext.sh |   44 +++++++++++++++++++++++---------------------
- 1 file changed, 23 insertions(+), 21 deletions(-)
-
-diff --git a/t/lib-gettext.sh b/t/lib-gettext.sh
-index 0f76f6c..aa401b1 100644
---- a/t/lib-gettext.sh
-+++ b/t/lib-gettext.sh
-@@ -28,28 +28,30 @@ then
- 	# test can use it too
- 	export is_IS_locale is_IS_iso_locale
-=20
--	if test -n "$is_IS_locale" &&
--		test $GIT_INTERNAL_GETTEXT_SH_SCHEME !=3D "fallthrough"
-+	if test "$GIT_INTERNAL_GETTEXT_SH_SCHEME" !=3D fallthrough
- 	then
--		# Some of the tests need the reference Icelandic locale
--		test_set_prereq GETTEXT_LOCALE
--
--		# Exporting for t0202/test.pl
--		GETTEXT_LOCALE=3D1
--		export GETTEXT_LOCALE
--		say "# lib-gettext: Found '$is_IS_locale' as an is_IS UTF-8 locale"
--	else
--		say "# lib-gettext: No is_IS UTF-8 locale available"
--	fi
--
--	if test -n "$is_IS_iso_locale" &&
--		test $GIT_INTERNAL_GETTEXT_SH_SCHEME !=3D "fallthrough"
--	then
--		# Some of the tests need the reference Icelandic locale
--		test_set_prereq GETTEXT_ISO_LOCALE
--
--		say "# lib-gettext: Found '$is_IS_iso_locale' as an is_IS ISO-8859-1=
- locale"
-+		if test -n "$is_IS_locale"
-+		then
-+			# Some of the tests need the reference Icelandic locale
-+			test_set_prereq GETTEXT_LOCALE
-+
-+			# Exporting for t0202/test.pl
-+			GETTEXT_LOCALE=3D1
-+			export GETTEXT_LOCALE
-+			say "# lib-gettext: Found '$is_IS_locale' as an is_IS UTF-8 locale"
-+		else
-+			say "# lib-gettext: No is_IS UTF-8 locale available"
-+		fi
-+
-+		if test -n "$is_IS_iso_locale"
-+		then
-+			# Some of the tests need the reference Icelandic locale
-+			test_set_prereq GETTEXT_ISO_LOCALE
-+			say "# lib-gettext: Found '$is_IS_iso_locale' as an is_IS ISO-8859-=
-1 locale"
-+		else
-+			say "# lib-gettext: No is_IS ISO-8859-1 locale available"
-+		fi
- 	else
--		say "# lib-gettext: No is_IS ISO-8859-1 locale available"
-+		say "# GIT_INTERNAL_GETTEXT_SH_SCHEME =3D fallthrough"
- 	fi
- fi
---=20
-1.7.10.rc0.17.g74595.dirty
+v/r,
+neal
