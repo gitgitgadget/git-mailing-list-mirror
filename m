@@ -1,102 +1,66 @@
-From: Jeff Sipek <jeffpc@josefsipek.net>
-Subject: Re: [GUILT] [PATCH]  get rid of "cat: write error: Broken pipe"
- error message
-Date: Tue, 13 Mar 2012 09:41:46 -0400
-Message-ID: <20120313134146.GA1807@poseidon.cudanet.local>
-References: <4F5F4E20.6000706@opera.com>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [PATCH] git-gui: Use PWD if it exists on Mac OS X.
+Date: Sat, 10 Mar 2012 23:18:48 +0000
+Message-ID: <877gys11uv.fsf@fox.patthoyts.tk>
+References: <1331335042-25509-1-git-send-email-mk@acc.umu.se>
+	<7vty1x2vod.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Per Cederqvist <cederp@opera.com>
-X-From: git-owner@vger.kernel.org Tue Mar 13 14:50:57 2012
+Cc: git@vger.kernel.org, Marcus Karlsson <mk@acc.umu.se>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 13 14:51:29 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7S7r-00026C-Ip
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 14:50:55 +0100
+	id 1S7S8N-0002df-QY
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 14:51:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754330Ab2CMNuu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Mar 2012 09:50:50 -0400
-Received: from josefsipek.net ([64.9.206.49]:41317 "EHLO josefsipek.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754086Ab2CMNuu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2012 09:50:50 -0400
-X-Greylist: delayed 515 seconds by postgrey-1.27 at vger.kernel.org; Tue, 13 Mar 2012 09:50:49 EDT
-Received: from poseidon.cudanet.local (unknown [12.200.95.45])
-	by josefsipek.net (Postfix) with ESMTPSA id 9140F6414;
-	Tue, 13 Mar 2012 09:42:13 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <4F5F4E20.6000706@opera.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754355Ab2CMNvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Mar 2012 09:51:23 -0400
+Received: from queueout02-winn.ispmail.ntl.com ([81.103.221.56]:39509 "EHLO
+	queueout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753592Ab2CMNvW (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Mar 2012 09:51:22 -0400
+Received: from know-smtpout-4.server.virginmedia.net ([62.254.123.2])
+          by mtaout03-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20120313123557.SASS14668.mtaout03-winn.ispmail.ntl.com@know-smtpout-4.server.virginmedia.net>;
+          Tue, 13 Mar 2012 12:35:57 +0000
+Received: from [94.171.229.22] (helo=fox.patthoyts.tk)
+	by know-smtpout-4.server.virginmedia.net with esmtpa (Exim 4.63)
+	(envelope-from <patthoyts@users.sourceforge.net>)
+	id 1S7QxJ-0006sG-N6; Tue, 13 Mar 2012 12:35:57 +0000
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id EA9BF22B49; Sat, 10 Mar 2012 23:18:48 +0000 (GMT)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+X-Home-Page: http://www.patthoyts.tk/
+X-Web: http://www.patthoyts.tk/
+In-Reply-To: <7vty1x2vod.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 09 Mar 2012 15:37:06 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+X-Cloudmark-Analysis: v=1.1 cv=JvdXmxIgLJv2/GthKqHpGJEEHukvLcvELVXUanXFreg= c=1 sm=0 a=O9HYxzjLEG8A:10 a=d_KsGz-eqJ4A:10 a=kj9zAlcOel0A:10 a=ybZZDoGAAAAA:8 a=Rf460ibiAAAA:8 a=NE1UYl_qaBzi58DN0MMA:9 a=CjuIK1q_8ugA:10 a=qIVjreYYsbEA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193027>
 
-Looks good!
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks,
+>Thanks, Marcus.
+>
+>Just forwarding to the current maintainer; please note that my
+>sign-off does not mean anything more than what D-C-O says it means;
+>I rarely if ever use git-gui myself and do not have a Macintosh.
 
-Jeff.
-
-On Tue, Mar 13, 2012 at 02:39:44PM +0100, Per Cederqvist wrote:
-> In some circumstances (like running guilt in a M-x shell buffer in
-> Emacs) cat may give the above error message when the reader of the
-> output from cat exits without reading all input from cat.  (In other
-> circumstances cat is just silently terminated with SIGPIPE.)
-> 
-> Get rid of the error by removing the useless use of cat in
-> do_get_header and do_get_full_header.
-> 
-> Signed-off-by: Per Cederqvist <cederp@opera.com>
-> ---
->  guilt |    8 ++++----
->  1 files changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/guilt b/guilt
-> index d1e17d4..7f6806e 100755
-> --- a/guilt
-> +++ b/guilt
-> @@ -359,7 +359,7 @@ do_get_header()
->  	# 4th line skips any empty lines thereafter.
->  	# 5th line turns off empty line skip upon seeing a non-empty line.
->  	# 6th line terminates execution when we encounter the diff
-> -	cat "$1" | awk '
-> +	awk '
->  BEGIN{body=0; subj=0}
->  /^Subject:/ && (body == 0 && subj == 0){subj=1; print substr($0,
-> 10) "\n"; next}
->  /^(Subject:|From:|Author:|Date:|commit)/ && (body == 0){next}
-> @@ -369,7 +369,7 @@ BEGIN{body=0; subj=0}
->  /^(diff |---$|--- )/{exit}
->  {print $0}
->  END{}
-> -'
-> +' < "$1"
->  }
-> 
->  # usage: do_get_full_header patchfile
-> @@ -377,12 +377,12 @@ do_get_full_header()
->  {
->  	# 2nd line checks for the begining of a patch
->  	# 3rd line outputs the line if it didn't get pruned by the above rules
-> -	cat "$1" | awk '
-> +	awk '
->  BEGIN{}
->  /^(diff |---$|--- )/{exit}
->  {print $0}
->  END{}
-> -'
-> +' < "$1"
->  }
-> 
->  # usage: assert_head_check
-> -- 
-> 1.7.9
-> 
+Thanks for this. I also don't have a Mac but this looks sensible
+so applied.
 
 -- 
-Si hoc legere scis nimium eruditionis habes.
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
