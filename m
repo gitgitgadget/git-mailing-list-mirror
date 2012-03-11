@@ -1,94 +1,90 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 2/2] perl/Makefile: install Git::I18N under NO_PERL_MAKEMAKER
-Date: Sun, 11 Mar 2012 20:27:50 +0100
-Message-ID: <CACBZZX47hAF_ayaa_QBrGcOkZ9UpR0Uxm-4Hf=FB685OKKvYFw@mail.gmail.com>
-References: <CACBZZX5wHEigiYjn6ahmnXN3wd9sEyDnRV2EZiP+JSUCc182TQ@mail.gmail.com>
- <1331382575-16936-1-git-send-email-avarab@gmail.com> <1331382575-16936-3-git-send-email-avarab@gmail.com>
- <7vfwdg16i8.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Tom G. Christensen" <tgc@statsbiblioteket.dk>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 11 20:28:27 2012
+From: lists@haller-berlin.de (Stefan Haller)
+Subject: Re: [RFC PATCH] push: start warning upcoming default change for push.default
+Date: Sun, 11 Mar 2012 21:26:35 +0100
+Message-ID: <1kgsxjq.jf2f02ib96ufM%lists@haller-berlin.de>
+References: <7v62ec2mlf.fsf@alter.siamese.dyndns.org>
+Cc: marcnarc@xiplink.com (Marc Branchaud),
+	cmn@elego.de (=?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?=),
+	Matthieu.Moy@imag.fr (Matthieu Moy), git@vger.kernel.org
+To: gitster@pobox.com (Junio C Hamano)
+X-From: git-owner@vger.kernel.org Sun Mar 11 21:26:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S6oRN-0003JB-Mj
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Mar 2012 20:28:26 +0100
+	id 1S6pLm-00089p-SK
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Mar 2012 21:26:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751339Ab2CKT2N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Mar 2012 15:28:13 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:49007 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751307Ab2CKT2L convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Mar 2012 15:28:11 -0400
-Received: by eekc41 with SMTP id c41so852758eek.19
-        for <git@vger.kernel.org>; Sun, 11 Mar 2012 12:28:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=t2UPNAtPX5Ihua0ApAX96dkTu48XlnaurSGiBAOkGTA=;
-        b=lVcWXnDpdoF3kxTljk0XK7vBbv0YIzHN0YIyT3KWev2Wn24TVxJeDgIK8noqIIX2TN
-         6+NbH7zpcZ3S1QHl9MZM3IxKcvplOfePNHoIHfs8h1O9JqAjpmriAM7Wr2E8GETP40W2
-         c+luD7Qd28CIeyoQAnp+QtGlGvxl7pkhvFSgfpZMJRsv58NH0sOovpuav7MvN5Su357L
-         3janVTanQxE3hH89KeTFSsIY6C/A/VmMKrVA8FR9eO8w6sz7ZunJd7P0YgAYq+Xeszz5
-         ojVkXazp7ig5rym4GAXxCU1sQImhE3RQzyvgWfwLQop4UIKvaS87PvnHlyqxoN9GRv8F
-         oeEQ==
-Received: by 10.14.127.76 with SMTP id c52mr1515496eei.37.1331494090329; Sun,
- 11 Mar 2012 12:28:10 -0700 (PDT)
-Received: by 10.213.2.147 with HTTP; Sun, 11 Mar 2012 12:27:50 -0700 (PDT)
-In-Reply-To: <7vfwdg16i8.fsf@alter.siamese.dyndns.org>
+	id S1751624Ab2CKU0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Mar 2012 16:26:38 -0400
+Received: from server90.greatnet.de ([83.133.96.186]:40686 "EHLO
+	server90.greatnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751394Ab2CKU0h (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Mar 2012 16:26:37 -0400
+Received: from [192.168.0.42] (nat1.ableton.net [217.110.199.117])
+	by server90.greatnet.de (Postfix) with ESMTPA id 50BF73B065C;
+	Sun, 11 Mar 2012 21:26:35 +0100 (CET)
+In-Reply-To: <7v62ec2mlf.fsf@alter.siamese.dyndns.org>
+User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.7.3 (x86))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192825>
 
-On Sat, Mar 10, 2012 at 22:38, Junio C Hamano <gitster@pobox.com> wrote=
-:
->> =C2=A0 =C2=A0 =C2=A0 echo ' =C2=A0$(RM) blib/lib/Git.pm; cp Git.pm b=
-lib/lib/' >> $@
->> + =C2=A0 =C2=A0 echo ' =C2=A0$(RM) blib/lib/Git/I18N.pm; cp Git/I18N=
-=2Epm blib/lib/Git/' >> $@
->> =C2=A0 =C2=A0 =C2=A0 echo ' =C2=A0$(RM) blib/lib/Error.pm' >> $@
->> =C2=A0 =C2=A0 =C2=A0 '$(PERL_PATH_SQ)' -MError -e 'exit($$Error::VER=
-SION < 0.15009)' || \
->> =C2=A0 =C2=A0 =C2=A0 echo ' =C2=A0cp private-Error.pm blib/lib/Error=
-=2Epm' >> $@
->> =C2=A0 =C2=A0 =C2=A0 echo install: >> $@
->> =C2=A0 =C2=A0 =C2=A0 echo ' =C2=A0mkdir -p "$$(DESTDIR)$(instdir_SQ)=
-"' >> $@
->> + =C2=A0 =C2=A0 echo ' =C2=A0mkdir -p "$$(DESTDIR)$(instdir_SQ)/Git"=
-' >> $@
->> =C2=A0 =C2=A0 =C2=A0 echo ' =C2=A0$(RM) "$$(DESTDIR)$(instdir_SQ)/Gi=
-t.pm"; cp Git.pm "$$(DESTDIR)$(instdir_SQ)"' >> $@
->> + =C2=A0 =C2=A0 echo ' =C2=A0$(RM) "$$(DESTDIR)$(instdir_SQ)/Git/I18=
-N.pm"; cp Git/I18N.pm "$$(DESTDIR)$(instdir_SQ)/Git"' >> $@
->> =C2=A0 =C2=A0 =C2=A0 echo ' =C2=A0$(RM) "$$(DESTDIR)$(instdir_SQ)/Er=
-ror.pm"' >> $@
->> =C2=A0 =C2=A0 =C2=A0 '$(PERL_PATH_SQ)' -MError -e 'exit($$Error::VER=
-SION < 0.15009)' || \
->> =C2=A0 =C2=A0 =C2=A0 echo ' =C2=A0cp private-Error.pm "$$(DESTDIR)$(=
-instdir_SQ)/Error.pm"' >> $@
->> =C2=A0 =C2=A0 =C2=A0 echo instlibdir: >> $@
->> =C2=A0 =C2=A0 =C2=A0 echo ' =C2=A0echo $(instdir_SQ)' >> $@
->> + =C2=A0 =C2=A0 echo ' =C2=A0echo $(instdir_SQ)/Git' >> $@
->
-> This break "make NO_PERL_MAKEMAKER=3DNah git-add--interactive", or
-> anything that is a perl script, it appears.
->
-> The resulting perl/perl.mak ends with
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0instlibdir:
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0echo foo
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0echo foo/Git
->
-> but the top-level Makefile wants to see output from
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0make instlibdir
+Junio C Hamano <gitster@pobox.com> wrote:
 
-=46ail, I just tested installing it to /tmp. Sorry about that.
+> lists@haller-berlin.de (Stefan Haller) writes:
+> 
+> > When we say
+> >
+> >   git checkout -b topic origin/master
+> >
+> > then it's always a mistake, and what we really meant was
+> >
+> >   git checkout -b --no-track topic origin/master
+> 
+> It would have been nice if you explained larger picture of your
+> workflow, as almost anything else in life, a blanket statement like
+> the above is not a universal truth.
+
+I wasn't saying that "checkout -b topic origin/master" isn't useful for
+*anybody*; it's just not useful for us.  But you are right, I should
+have explained who "us" is, and what our workflow is, sorry.
+
+We're a closed-source company that uses git more or less like an
+old-style, non-distributed VCS. (This is not because "we don't get it",
+as someone phrased it elsewhere in this thread, but because it's what
+makes most sense for us.)
+
+The central repository has special significance, because it sends an
+email for every commit, and it is hooked up to the CI system. For these
+reasons, everything that people work on is pushed to the central
+repository, on a topic branch with the same name as the local branch.
+Also, it is very common for two or more developers to collaborate on a
+topic branch, and the central repository is the hub for this (developers
+pull topics with "pull --rebase"). There's no direct exchange between
+developer's clones, because others on the team wouldn't see a commit
+mail.
+
+Topics are never pushed to master; we have a "merge --no-ff" policy for
+integration.
+
+Sometimes, we need to branch a topic (let's call it B) off another topic
+(say A), because B needs some of A's code before it's integrated (we'll
+rebase B onto master once A is merged back, to keep the history clean).
+Same thing here: we say "checkout -b B origin/A", but we don't want to
+have B's upstream to be set to origin/A. Again, we forgot to say
+--no-track.
+
+To sum it up, push.default=current is almost perfect for this kind of
+workflow; except that you still need to configure your upstream branches
+so that pull works, and status (and the shell prompt) displays the right
+information.
+
+
+-- 
+Stefan Haller
+Berlin, Germany
+http://www.haller-berlin.de/
