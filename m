@@ -1,97 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Re*: [PATCH/RFC] Change t0204-gettext-reencode-sanity.sh to pass
- under Mac OSX
-Date: Sun, 11 Mar 2012 12:22:41 -0700
-Message-ID: <7vzkbnvt6m.fsf@alter.siamese.dyndns.org>
-References: <201203052039.16893.tboegi@web.de>
- <7vzkbuzss7.fsf@alter.siamese.dyndns.org>
- <CACBZZX4P=JSdP_vLOMx5r3R+YO8SMSs5W8+vf2DMibKMwBx_Vg@mail.gmail.com>
- <7vfwdkm6xs.fsf@alter.siamese.dyndns.org>
- <CACBZZX4q0Da=H=-fO86f2YN+CmE25QfEgAp8Efmdyf65CGckiQ@mail.gmail.com>
- <7v4nu0m5tb.fsf@alter.siamese.dyndns.org>
- <CACBZZX6W=-ZchaCsLGdpZ420L_9=w8AHD8BNVb7XV5M-hc0Qhg@mail.gmail.com>
- <7vd38okmp0.fsf@alter.siamese.dyndns.org>
- <7vlin94dbc.fsf_-_@alter.siamese.dyndns.org> <4F5BD585.5050007@web.de>
- <4F5CC08C.90703@web.de>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 2/2] perl/Makefile: install Git::I18N under NO_PERL_MAKEMAKER
+Date: Sun, 11 Mar 2012 20:27:50 +0100
+Message-ID: <CACBZZX47hAF_ayaa_QBrGcOkZ9UpR0Uxm-4Hf=FB685OKKvYFw@mail.gmail.com>
+References: <CACBZZX5wHEigiYjn6ahmnXN3wd9sEyDnRV2EZiP+JSUCc182TQ@mail.gmail.com>
+ <1331382575-16936-1-git-send-email-avarab@gmail.com> <1331382575-16936-3-git-send-email-avarab@gmail.com>
+ <7vfwdg16i8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Mar 11 20:22:50 2012
+Cc: git@vger.kernel.org, "Tom G. Christensen" <tgc@statsbiblioteket.dk>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 11 20:28:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S6oLx-0001CC-JH
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Mar 2012 20:22:49 +0100
+	id 1S6oRN-0003JB-Mj
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Mar 2012 20:28:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751151Ab2CKTWq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Mar 2012 15:22:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62204 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750733Ab2CKTWo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Mar 2012 15:22:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E265C678D;
-	Sun, 11 Mar 2012 15:22:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=ttC3RJiTBosJ
-	J15d9+mNytdH55o=; b=En3blFM2A+0F2VxDjIKhR2RLnHH4cDTy6JQ7KmtubZFp
-	d95dOwGp4N8cWO7wnPLzJvG4DuwJBlehxgtYT4vVJFMQmhb37ADrOIo5t9AGvpgt
-	oKU5EEYCDs7UjkC2zqPjocrU8WslzpEzRfZZMqDIeEb67m2ZA373E/cwyc9viM8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=V7zLs5
-	Kd8GeF1jHveHsFbtyx82QxxBDOcMo0RL+3cg9n4y5M4hgkd5Dwouztsmq7ZyExE5
-	nuQqenpw08KcuoBQlbE0cx5R2TtzXWPsDILz4OLiIzEhBPQAxD0D/HPEmJXjFQ34
-	GcJXHGQhxnhVMQK5VE2BtyER5D6Y4eAfFcN6E=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D91DB678C;
-	Sun, 11 Mar 2012 15:22:43 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 680C9678B; Sun, 11 Mar 2012
- 15:22:43 -0400 (EDT)
-In-Reply-To: <4F5CC08C.90703@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershausen?=
- =?utf-8?Q?=22's?= message of "Sun, 11 Mar 2012 16:11:08 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 93687D06-6BAF-11E1-A028-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751339Ab2CKT2N convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Mar 2012 15:28:13 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:49007 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751307Ab2CKT2L convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Mar 2012 15:28:11 -0400
+Received: by eekc41 with SMTP id c41so852758eek.19
+        for <git@vger.kernel.org>; Sun, 11 Mar 2012 12:28:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=t2UPNAtPX5Ihua0ApAX96dkTu48XlnaurSGiBAOkGTA=;
+        b=lVcWXnDpdoF3kxTljk0XK7vBbv0YIzHN0YIyT3KWev2Wn24TVxJeDgIK8noqIIX2TN
+         6+NbH7zpcZ3S1QHl9MZM3IxKcvplOfePNHoIHfs8h1O9JqAjpmriAM7Wr2E8GETP40W2
+         c+luD7Qd28CIeyoQAnp+QtGlGvxl7pkhvFSgfpZMJRsv58NH0sOovpuav7MvN5Su357L
+         3janVTanQxE3hH89KeTFSsIY6C/A/VmMKrVA8FR9eO8w6sz7ZunJd7P0YgAYq+Xeszz5
+         ojVkXazp7ig5rym4GAXxCU1sQImhE3RQzyvgWfwLQop4UIKvaS87PvnHlyqxoN9GRv8F
+         oeEQ==
+Received: by 10.14.127.76 with SMTP id c52mr1515496eei.37.1331494090329; Sun,
+ 11 Mar 2012 12:28:10 -0700 (PDT)
+Received: by 10.213.2.147 with HTTP; Sun, 11 Mar 2012 12:27:50 -0700 (PDT)
+In-Reply-To: <7vfwdg16i8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192824>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+On Sat, Mar 10, 2012 at 22:38, Junio C Hamano <gitster@pobox.com> wrote=
+:
+>> =C2=A0 =C2=A0 =C2=A0 echo ' =C2=A0$(RM) blib/lib/Git.pm; cp Git.pm b=
+lib/lib/' >> $@
+>> + =C2=A0 =C2=A0 echo ' =C2=A0$(RM) blib/lib/Git/I18N.pm; cp Git/I18N=
+=2Epm blib/lib/Git/' >> $@
+>> =C2=A0 =C2=A0 =C2=A0 echo ' =C2=A0$(RM) blib/lib/Error.pm' >> $@
+>> =C2=A0 =C2=A0 =C2=A0 '$(PERL_PATH_SQ)' -MError -e 'exit($$Error::VER=
+SION < 0.15009)' || \
+>> =C2=A0 =C2=A0 =C2=A0 echo ' =C2=A0cp private-Error.pm blib/lib/Error=
+=2Epm' >> $@
+>> =C2=A0 =C2=A0 =C2=A0 echo install: >> $@
+>> =C2=A0 =C2=A0 =C2=A0 echo ' =C2=A0mkdir -p "$$(DESTDIR)$(instdir_SQ)=
+"' >> $@
+>> + =C2=A0 =C2=A0 echo ' =C2=A0mkdir -p "$$(DESTDIR)$(instdir_SQ)/Git"=
+' >> $@
+>> =C2=A0 =C2=A0 =C2=A0 echo ' =C2=A0$(RM) "$$(DESTDIR)$(instdir_SQ)/Gi=
+t.pm"; cp Git.pm "$$(DESTDIR)$(instdir_SQ)"' >> $@
+>> + =C2=A0 =C2=A0 echo ' =C2=A0$(RM) "$$(DESTDIR)$(instdir_SQ)/Git/I18=
+N.pm"; cp Git/I18N.pm "$$(DESTDIR)$(instdir_SQ)/Git"' >> $@
+>> =C2=A0 =C2=A0 =C2=A0 echo ' =C2=A0$(RM) "$$(DESTDIR)$(instdir_SQ)/Er=
+ror.pm"' >> $@
+>> =C2=A0 =C2=A0 =C2=A0 '$(PERL_PATH_SQ)' -MError -e 'exit($$Error::VER=
+SION < 0.15009)' || \
+>> =C2=A0 =C2=A0 =C2=A0 echo ' =C2=A0cp private-Error.pm "$$(DESTDIR)$(=
+instdir_SQ)/Error.pm"' >> $@
+>> =C2=A0 =C2=A0 =C2=A0 echo instlibdir: >> $@
+>> =C2=A0 =C2=A0 =C2=A0 echo ' =C2=A0echo $(instdir_SQ)' >> $@
+>> + =C2=A0 =C2=A0 echo ' =C2=A0echo $(instdir_SQ)/Git' >> $@
+>
+> This break "make NO_PERL_MAKEMAKER=3DNah git-add--interactive", or
+> anything that is a perl script, it appears.
+>
+> The resulting perl/perl.mak ends with
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0instlibdir:
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0echo foo
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0echo foo/Git
+>
+> but the top-level Makefile wants to see output from
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0make instlibdir
 
-> Here the results of my investigations:
-> a) git-sh-i18n is used by the test suite, not git-sh-i18n.sh
->    git-sh-i18n is generated from git-sh-i18n.sh when running make
-
-Yeah, that is the correct behaviour.
-
-> b) When running
->    make clean && make USE_GETTEXT_SCHEME=3Dgnu && (cd t && make)
->   the log of t0204 looks like this:
-> ...
-> Summary: test OK,
-
-Now, the last remaining issues appear to be these:
-
- * Is USE_GETTEXT_SCHEME=3Dgnu the right thing for Mac OS X?  It may
-   make this test pass, but does it not break other things?  Does
-   Mac OS X come with a working gettext.sh to help i18n of shell
-   scripts?  Does it also give eval_gettext?
-
- * If so, Mac OS X users shouldn't have to say that from the command
-   line of "make". Do we need a Makefile update?
-
- * If not, what is the appropriate value for USE_GETTEXT_SCHEME on
-   Mac OS X?  If the answer is not "fallthrough", do we need a
-   Makefile update?
-
-Thanks.
+=46ail, I just tested installing it to /tmp. Sorry about that.
