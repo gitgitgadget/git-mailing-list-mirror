@@ -1,60 +1,126 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: --progress for git submodule update?
-Date: Sun, 11 Mar 2012 21:50:05 +0100
-Message-ID: <4F5D0FFD.1020509@web.de>
-References: <CAOVFbFiBOH2MyC3HUtf=hA_PssSRENW7uwpBVxh0TwnO7h90XA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] apply: reallocate the postimage buffer when needed
+Date: Sun, 11 Mar 2012 13:54:10 -0700
+Message-ID: <7vipiax3il.fsf@alter.siamese.dyndns.org>
+References: <1331475857-15169-1-git-send-email-cmn@elego.de>
+ <7v8vj7x9jr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Chris Kees <cekees@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 11 21:50:31 2012
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	Chris Webb <chris@arachsys.com>
+X-From: git-owner@vger.kernel.org Sun Mar 11 21:54:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S6pio-00084g-Lu
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Mar 2012 21:50:31 +0100
+	id 1S6pmm-00018R-21
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Mar 2012 21:54:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751928Ab2CKUuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Mar 2012 16:50:13 -0400
-Received: from fmmailgate05.web.de ([217.72.192.243]:38827 "EHLO
-	fmmailgate05.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751571Ab2CKUuL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Mar 2012 16:50:11 -0400
-Received: from moweb001.kundenserver.de (moweb001.kundenserver.de [172.19.20.114])
-	by fmmailgate05.web.de (Postfix) with ESMTP id D53046B3291B
-	for <git@vger.kernel.org>; Sun, 11 Mar 2012 21:50:09 +0100 (CET)
-Received: from [192.168.178.48] ([91.3.165.207]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0LjJaZ-1Sd7vU2hax-00cdfA; Sun, 11 Mar 2012 21:50:07
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <CAOVFbFiBOH2MyC3HUtf=hA_PssSRENW7uwpBVxh0TwnO7h90XA@mail.gmail.com>
-X-Provags-ID: V02:K0:O8I/HHg6J8aauI+joT+0B1F/p04jnDiaV4jOidVOxKw
- wI4CKSZfFqgDYyVydO93A6v9YvRTT/+rY/5DXp6MDePdGTHn4U
- nixqwn4dYvu3bvxFRsrKmFki8FIa2WR/58Gd0fDrLlSy17cj35
- 6vks+UNu1L5AkZdsMZU6dS9lDhpkK0Llc1HExkFrQS8LljXtTd
- 5t/J/iWyDt5RxIlm0+9Kg==
+	id S1752342Ab2CKUyT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Mar 2012 16:54:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61954 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752043Ab2CKUyO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Mar 2012 16:54:14 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C5D877F5;
+	Sun, 11 Mar 2012 16:54:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=hmoRdGOg1YeG
+	KWkOBfxdqsSDEq0=; b=fTb9OdivQ71vsHTh/cY9ezRyvXSr2a7DD/YT0S2NQP+E
+	xasyahCJRAftOy4LI9baV2n3KyuI5/QwzVWYe3l46Lt+Mrdgc+jBPH/lBU9zimew
+	2fatUzUlApi95c4OVC2Ds2CZZvu8iaqpjEV4pZcixXvPLPVLom2LEQTc9/2UqFQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=UjecjS
+	qZTXJm7jkRcpaGZgB8y6VpCEJJ0Wg8DyU91OdYBVVV5TeBfdN8FgC92rUBELbUSc
+	GoZwqRySOSyUzrQUDRZfZR7a5AxkBiOnFwz0m+ChhUP8wKWKXxu7Fm2tYaa5IaOT
+	g/MqnWzE1HZOZsQoTksnpBdk93qs80H+R3dBo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 23FD577F4;
+	Sun, 11 Mar 2012 16:54:13 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8FD4677F3; Sun, 11 Mar 2012
+ 16:54:12 -0400 (EDT)
+In-Reply-To: <7v8vj7x9jr.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sun, 11 Mar 2012 11:43:52 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5B34462E-6BBC-11E1-BAEA-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192828>
 
-Am 10.03.2012 08:17, schrieb Chris Kees:
-> Would it be reasonable to have a --progress option for 'git submodule
-> update'? I'm using buildbot with a git repository containing large
-> submodules, and buildbot times out on the submodule update
-> occasionally because there is no output for long periods of time.
-> Adjusting buildbot's timeout factor will do for me in the short run.
+Junio C Hamano <gitster@pobox.com> writes:
 
-As cloning a submodule talks a lot about its progress am I right
-suspecting it is the checkout part that is taking so long for you?
-The submodule script always uses the -q option for git checkout
-(which also gets rid of the unwanted "detached HEAD" messages). So
-AFAICS before a --progress option could be added to the submodule
-script, git checkout would have to learn an option to show progress
-but not the detached HEAD message (or to just suppress that advice).
+> Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
+>
+>> Blame says Junio and Giuseppe were the last ones to touch this part =
+of
+>> the code, so there you go.
+>
+> Whatever you do in your fix, this comment block needs to be updated:
+>
+> 	/*
+> 	 * Adjust the common context lines in postimage. This can be
+> 	 * done in-place when we are just doing whitespace fixing,
+> 	 * which does not make the string grow, but needs a new buffer
+> 	 * when ignoring whitespace causes the update, since in this case
+> 	 * we could have e.g. tabs converted to multiple spaces.
+> 	 * We trust the caller to tell us if the update can be done
+> 	 * in place (postlen=3D=3D0) or not.
+> 	 */
+>
+> The second sentence used to be true for a long time (if you indented
+> your line with too many spaces, we removed them and replaced with
+> fewer number of tabs; if you had spaces before a tab, we removed
+> them; if you added unnecessary whitespaces at the end, we removed
+> them), but ceased to be so when Python style "indent must be spaces"
+> was added.
+>
+> So I think this either always needs to re-allocate, or the caller
+> has to tell it by other means than "!postlen" the need for
+> reallocation.
+>
+> I wasn't involved in the "apply while ignoring whitespace
+> differences", so Giuseppe may be able to notice other mode of
+> beakages in this and fuzzy_matchlines() function.  The commit to be
+> stared at is 86c91f9 (git apply: option to ignore whitespace
+> differences, 2009-08-04).
 
-What times are we talking about here?
+Looking at the call site of update_pre_post_images() again, I think
+the call made from this part may also need to be updated for "indent
+must be spaces" that was added by 3e3ec2a (whitespace: add
+tab-in-indent error class, 2010-04-03) and 4e35c51 (whitespace: add
+tab-in-indent support for --whitespace=3Dfix, 2010-04-03):
+
+	... code to look at preimage and img, checking if the lines
+        ... match if the whitespace breakages in the preimage line
+        ... were fixed is here.
+	/*
+	 * Yes, the preimage is based on an older version that still
+	 * has whitespace breakages unfixed, and fixing them makes the
+	 * hunk match.  Update the context lines in the postimage.
+	 */
+	fixed_buf =3D strbuf_detach(&fixed, &fixed_len);
+	update_pre_post_images(preimage, postimage,
+			       fixed_buf, fixed_len, 0);
+
+The logic to match the preimage and img is correct and does not
+overflow anything; the fixing of preimage and img is done with
+ws_fix_copy() that uses strbuf.
+
+But fixed_buf and fixed_len may be longer than the original length
+of preimage buffer when "indent must be spaces" is in effect, and
+that would mean context lines in the postimage may have to also
+grow. The call to update_pre_post_images() must be telling how big
+the postimage with fixed context lines will be, not passing 0 to say
+"I know it will not grow", because that is no longer true these
+days.
