@@ -1,89 +1,63 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH 07/11] perf: convert realtime to seconds when collecting runs
-Date: Mon, 12 Mar 2012 16:10:03 +0100
-Message-ID: <f9c799d3e926c1ec650ee7d414ba4d1040082f36.1331561353.git.trast@student.ethz.ch>
-References: <cover.1331561353.git.trast@student.ethz.ch>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [RFC PATCH] push: start warning upcoming default change for push.default
+Date: Mon, 12 Mar 2012 11:10:39 -0400
+Message-ID: <4F5E11EF.501@xiplink.com>
+References: <1kgpkt9.lt61vy108h530M%lists@haller-berlin.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 12 16:11:22 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Stefan Haller <lists@haller-berlin.de>
+X-From: git-owner@vger.kernel.org Mon Mar 12 16:11:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S76u5-0002Kk-OJ
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 16:11:18 +0100
+	id 1S76u9-0002Kk-RG
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 16:11:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755860Ab2CLPKc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Mar 2012 11:10:32 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:39345 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755827Ab2CLPKO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2012 11:10:14 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 12 Mar
- 2012 16:10:08 +0100
-Received: from thomas.inf.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 12 Mar
- 2012 16:10:07 +0100
-X-Mailer: git-send-email 1.7.10.rc0.230.g16d90
-In-Reply-To: <cover.1331561353.git.trast@student.ethz.ch>
-X-Originating-IP: [129.132.153.233]
+	id S1755856Ab2CLPKo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Mar 2012 11:10:44 -0400
+Received: from smtp182.dfw.emailsrvr.com ([67.192.241.182]:55531 "EHLO
+	smtp182.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755724Ab2CLPKk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2012 11:10:40 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp8.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id 145CD802E;
+	Mon, 12 Mar 2012 11:10:40 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp8.relay.dfw1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 6902B80B6;
+	Mon, 12 Mar 2012 11:10:39 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <1kgpkt9.lt61vy108h530M%lists@haller-berlin.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192881>
 
-Our use of 'time' gives results along the lines of
+On 12-03-09 04:08 PM, Stefan Haller wrote:
+> 
+> But coming back to the subject of push.default: in our environment,
+> "upstream" is the only default that is useful with the current behaviour
+> of git.
 
-  0:01.04 0.67 0.02
+I'm not at all surprised -- everyone works differently.  This is why the
+default is configurable in the first place.
 
-That is, the realtime field is formatted as a H:M:S.CC time with the
-hour field optional.  Use a little perl magic to convert it to
-seconds, too.  This makes it easier to parse further downstream.
+When it comes to what git should do by default, I think it's a bit pointless
+to have environment-vs-environment discussions.  No matter how many people
+join such a discussion on this list, it can only give us hints to which
+default would best serve git's users.  Maybe the git survey can tell us what
+workflows are most popular, but even that may not indicate the best default
+behaviour.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
- t/perf/aggregate.perl |    9 ++++-----
- t/perf/perf-lib.sh    |    3 ++-
- 2 files changed, 6 insertions(+), 6 deletions(-)
+The point I was trying to make in my previous message is that "upstream"
+seems like the least dangerous default behaviour.  Yes, it does not match
+everyone's workflow.  But it seems the least likely to shoot the feet off of
+people who have yet to figure out their workflow at all.
 
-diff --git a/t/perf/aggregate.perl b/t/perf/aggregate.perl
-index 4586840..b04d3a0 100755
---- a/t/perf/aggregate.perl
-+++ b/t/perf/aggregate.perl
-@@ -15,12 +15,11 @@ sub get_times {
- 	my $sum_s = 0.0;
- 	my $n = 0;
- 	while (<$fh>) {
--		/^(?:(\d+):)?(\d+):(\d+(?:\.\d+)?) (\d+(?:\.\d+)?) (\d+(?:\.\d+)?)$/
-+		/^(\d+(?:\.\d+)?) (\d+(?:\.\d+)?) (\d+(?:\.\d+)?)$/
- 			or die "bad input line: $_";
--		my $rt = ((defined $1 ? $1 : 0.0)*60+$2)*60+$3;
--		$sum_rt += $rt;
--		$sum_u += $4;
--		$sum_s += $5;
-+		$sum_rt += $1;
-+		$sum_u += $2;
-+		$sum_s += $3;
- 		$n++;
- 	}
- 	return undef if !$n;
-diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-index a13f105..bfc2926 100644
---- a/t/perf/perf-lib.sh
-+++ b/t/perf/perf-lib.sh
-@@ -185,7 +185,8 @@ test_perf () {
- 		fi
- 		base="$perf_results_dir"/"$perf_results_prefix$(basename "$0" .sh)"."$test_count"
- 		rm test_time.0
--		cat test_time.* >"$base".times
-+		perl -pe 's/(?:(\d+):)?(\d+):(\d+(?:\.\d+)?)/((defined $1?$1:0)*60+$2)*60+$3/e' \
-+			test_time.* >"$base".times
- 	fi
- 	echo >&3 ""
- }
--- 
-1.7.10.rc0.230.g16d90
+		M.
