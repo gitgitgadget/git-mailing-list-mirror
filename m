@@ -1,73 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Edit a rerere conflict resolution
-Date: Mon, 12 Mar 2012 14:52:57 -0700
-Message-ID: <7v7gyppjuu.fsf@alter.siamese.dyndns.org>
-References: <4F5E4B20.5080709@lyx.org>
- <7vobs1r3kn.fsf@alter.siamese.dyndns.org> <4F5E5A77.1070605@lyx.org>
- <7vd38hr22e.fsf@alter.siamese.dyndns.org> <4F5E68C5.5070300@lyx.org>
- <m34nttzeex.fsf@localhost.localdomain>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] git-am: error out when seeing -b/--binary
+Date: Mon, 12 Mar 2012 16:56:07 -0500
+Message-ID: <20120312215607.GB11362@burratino>
+References: <20120312024948.GB4650@kroah.com>
+ <20120312063027.GB8971@1wt.eu>
+ <20120312064855.GB16820@burratino>
+ <20120312085820.GA11569@1wt.eu>
+ <20120312152004.GB9380@kroah.com>
+ <20120312152453.GB12405@1wt.eu>
+ <87aa3l4vqq.fsf@thomas.inf.ethz.ch>
+ <20120312165703.GB18791@burratino>
+ <7vvcm9snko.fsf@alter.siamese.dyndns.org>
+ <87399dpk48.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Vincent van Ravesteijn <vfr@lyx.org>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 12 22:53:19 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Cc: Junio C Hamano <gitster@pobox.com>, Willy Tarreau <w@1wt.eu>,
+	Greg KH <greg@kroah.com>, Ben Hutchings <ben@decadent.org.uk>,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+	git@vger.kernel.org
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: linux-kernel-owner@vger.kernel.org Mon Mar 12 22:56:36 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7DB5-0006kp-Ok
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 22:53:16 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1S7DEH-0000TB-PF
+	for glk-linux-kernel-3@plane.gmane.org; Mon, 12 Mar 2012 22:56:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757550Ab2CLVxB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Mar 2012 17:53:01 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58748 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757533Ab2CLVxA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2012 17:53:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FAD2602D;
-	Mon, 12 Mar 2012 17:52:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=U9TdWSPtH9lYBXZ/T7zIg26qO34=; b=alXW5E
-	KGYn/B/R3RJa3r8Qg9Rl2HF25Y9203kVLGaC9BavAdqD8+SHXMVsri8FD52xGBXS
-	SRyCq4BKPAyWKumQUV/liwpToBbAvrwZXWWkGYW+TfDescfTbPwLgwis+Lewml3i
-	bQMPxeawxiNmcL+3CkjMLOTaexcL4QzxQt/J0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xOksLmr3TAj++HdMg6qYllU6TfiZoSkJ
-	14Zcenld+Czfbvb04eZHNxSARPVme8XHJoMlscS6PJtrpA7jozUZDiTKXHwTbsIz
-	PdMgjvlwth6CPAeUjRgqlCxFRhrOmI/qdJuzvfQkE6dW2dgh+T1kBwZ17BbWaULv
-	JmQUc+KJpKg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 87A94602C;
-	Mon, 12 Mar 2012 17:52:59 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1B3BA602B; Mon, 12 Mar 2012
- 17:52:59 -0400 (EDT)
-In-Reply-To: <m34nttzeex.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Mon, 12 Mar 2012 14:40:43 -0700 (PDT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BB96AE86-6C8D-11E1-A1D8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
+	id S932078Ab2CLV4W (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Mon, 12 Mar 2012 17:56:22 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:47420 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757654Ab2CLV4S (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 12 Mar 2012 17:56:18 -0400
+Received: by yenl12 with SMTP id l12so3110541yen.19
+        for <multiple recipients>; Mon, 12 Mar 2012 14:56:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=SJ3cMEhKGTlEh8m7as3NpTLM7VlOd+1k9L4WkPuXHms=;
+        b=EoQZe/IUOwf2O+NUaGgiv0lxRToK7AygGdUYKjNEIfYEuUTVgyjSr2e+wCCv2Gecr7
+         /NI5Uq3MV2q2EeiIbaMrOZJrPrx15o5kUsirlb7qVBc41KbUDqE96sOyJLtWWgApKCNf
+         ZP5Tzx6/+aUIdSWQjtaWl0+H7eucfB+scGPk3a1antB9iu2sr+8Uawc0p3UE7IauzDog
+         Q1bLtGOVprcaVQnAvR/qwsURwu4B/8iZ9NrFZtAx+fj37xoUSAPw1ZumBYu3UWuPt7gz
+         mK5fq59PzwwWvbD+o9nWwwXKJckLHxIl4McgR9HJ+IcVOWJDyeUUEYfsangPMzIOt+FC
+         5jwg==
+Received: by 10.182.227.37 with SMTP id rx5mr9346950obc.53.1331589377904;
+        Mon, 12 Mar 2012 14:56:17 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id u5sm22484176obk.16.2012.03.12.14.56.16
+        (version=SSLv3 cipher=OTHER);
+        Mon, 12 Mar 2012 14:56:17 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <87399dpk48.fsf@thomas.inf.ethz.ch>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192957>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192958>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Thomas Rast wrote:
 
-> You can also use custom merge strategies, but that is probably
-> overkill, and I am not sure that it would work (adding new strategy)
-> without modifying git.
+> Ok, but if I don't get to say anything about repurposing, can I at least
+> make it an error message instead of just spewing out the "invalid
+> option" help?
 
-Merge strategies are primarily for people who want to customize the
-way how the final shape of the resulting tree is determined.  Even
-if you go that route, you would need to write and use your own merge
-driver anyway in order to tweak the way how the file-level three-way
-merge is performed.
+I don't mind either way.
 
-So it is not just an overkill, but it is entirely pointless, as it
-buys nothing to use a custom merge strategy in this case.
+[...]
+> --- a/git-am.sh
+> +++ b/git-am.sh
+> @@ -380,7 +380,9 @@ do
+>  	-i|--interactive)
+>  		interactive=t ;;
+>  	-b|--binary)
+> -		: ;;
+> +		echo >&2 "The -b/--binary option was deprecated in 1.6.0 and removed in 1.7.10."
+> +		die "Please adjust your scripts."
+> +		;;
+
+Hm, on second thought, if people are seeing this message, I would
+prefer if they write to the mailing list so we can find out about it.
+So I really would rather see this say
+
+	--binary)
+		: ;;
+
+and have "-b" completely unrecognized, without any words in our
+defense except for a note in the release notes mentioning the option's
+removal and that it has been an unadvertised backward-compatibility
+no-op since 1.6.0.
+
+Jonathan
