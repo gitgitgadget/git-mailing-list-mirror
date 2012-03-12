@@ -1,90 +1,105 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v2 2/2] index-pack: support multithreaded delta resolving
-Date: Mon, 12 Mar 2012 19:18:44 +0700
-Message-ID: <CACsJy8A5xY54Ls+yWbY3E_aef22Znu4Jygdoppx4_3+DL17zDA@mail.gmail.com>
-References: <1331519549-28090-1-git-send-email-pclouds@gmail.com>
- <1331519549-28090-3-git-send-email-pclouds@gmail.com> <87y5r684t6.fsf@thomas.inf.ethz.ch>
- <CACsJy8CyLgKrEAriS-uLU9qG6ahBeQ6qLbvHiLvsbTjMZsMW+g@mail.gmail.com> <87boo282hg.fsf@thomas.inf.ethz.ch>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] t0303: set reason for skipping tests
+Date: Mon, 12 Mar 2012 08:30:31 -0400
+Message-ID: <20120312123031.GA14456@sigill.intra.peff.net>
+References: <1331553907-19576-1-git-send-email-zbyszek@in.waw.pl>
+ <1331553907-19576-2-git-send-email-zbyszek@in.waw.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Thomas Rast <trast@inf.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Mar 12 13:19:22 2012
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+X-From: git-owner@vger.kernel.org Mon Mar 12 13:31:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S74Dg-0002F5-Sj
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 13:19:21 +0100
+	id 1S74PC-00011X-TH
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 13:31:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753707Ab2CLMTQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Mar 2012 08:19:16 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:34556 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753152Ab2CLMTP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Mar 2012 08:19:15 -0400
-Received: by wibhq7 with SMTP id hq7so3628913wib.1
-        for <git@vger.kernel.org>; Mon, 12 Mar 2012 05:19:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=LjRIDn7HH98EBnb00QeJu29jICh6IgifgESUIKb0tRg=;
-        b=L7Vv3cgx9gd3IPfelKFuO56x7g7Bj3jcNSiuYrmvS9Q4uGz8aCMfNp253U4DG6NmwV
-         yK4WLN/g+jtlJHXJ9cwpVpWd1tKcRTQXNA61uZEdpFS2VAmwJlYlsBBev+kXjK4/2kPV
-         qKTjV///aG32HJERuGRDY/g4Qx0n+uCxUb0ZacdAnba/Kwqd8OdLr+lwDxQuurIhW09w
-         hf5CHLGfsbaMBrZWhbhwcQ+u9l11Eod0FMJ6psEMlIEvEjKqdOL4MDpEwy393NifLLC4
-         PinJ0LOt3GKyAw12DoLddqcVcFKDng8yWT5kn1rTy3Y+z+cC9JBdCN7qFYqJDIOvP/SO
-         tDyQ==
-Received: by 10.180.106.9 with SMTP id gq9mr26761791wib.17.1331554754256; Mon,
- 12 Mar 2012 05:19:14 -0700 (PDT)
-Received: by 10.223.13.5 with HTTP; Mon, 12 Mar 2012 05:18:44 -0700 (PDT)
-In-Reply-To: <87boo282hg.fsf@thomas.inf.ethz.ch>
+	id S1755024Ab2CLMbI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Mar 2012 08:31:08 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47651
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754978Ab2CLMae (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2012 08:30:34 -0400
+Received: (qmail 15768 invoked by uid 107); 12 Mar 2012 12:30:44 -0000
+Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 12 Mar 2012 08:30:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Mar 2012 08:30:31 -0400
+Content-Disposition: inline
+In-Reply-To: <1331553907-19576-2-git-send-email-zbyszek@in.waw.pl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192863>
 
-On Mon, Mar 12, 2012 at 6:47 PM, Thomas Rast <trast@inf.ethz.ch> wrote:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->
->> 2012/3/12 Thomas Rast <trast@inf.ethz.ch>:
->>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> write=
-s:
->>>
->>>> This puts delta resolving on each base on a separate thread, one b=
-ase
->>>> cache per thread. Per-thread data is grouped in struct thread_loca=
-l.
->>>> When running with nr_threads =3D=3D 1, no pthreads calls are made.=
- The
->>>> system essentially runs in non-thread mode.
->>>
->>> As discussed when we took the git-grep measurements, it may be
->>> interesting to have a way to run 1 thread. =C2=A0Can you put in suc=
-h an
->>> option?
->>
->> Sorry I wasn't clear, nr_threads =3D=3D 1 is equivalent to --threads=
-=3D1. So
->> yes it supports running in non-thread mode.
->
-> Well, in that case I wasn't clear: I meant that there should be a way=
- to
-> run with the whole threading machinery enabled, but still only have o=
-ne
-> thread (doing the work, possibly having another that fills the queue)=
-=2E
->
-> That allows us to see how big the overhead is.
+On Mon, Mar 12, 2012 at 01:05:06PM +0100, Zbigniew J=C4=99drzejewski-Sz=
+mek wrote:
 
-I really don't want to add overhead, no matter how small it is, to
---threads=3D1. How's GIT_USE_THREADS variable for testing purposes?
-Threaded grep can share the same variable if you also like to avoid
-threading machinery in git grep --threads=3D1.
---=20
-Duy
+> t0300-credential-helpers.sh runs two sets of tests. Each set is
+> controlled by an environment variable and is skipped if the variable
+> is not defined. If both sets are skipped, prove will say:
+>   ./t0303-credential-external.sh .. skipped: (no reason given)
+> which isn't very nice.
+>=20
+> Use skip_all=3D"..." to set the reason when both sets are skipped.
+
+Sounds reasonable. A few nits:
+
+>  if test -z "$GIT_TEST_CREDENTIAL_HELPER"; then
+> -	say "# skipping external helper tests (set GIT_TEST_CREDENTIAL_HELP=
+ER)"
+> +	say "# skipping external helper tests (GIT_TEST_CREDENTIAL_HELPER n=
+ot set)"
+>  else
+> [...]
+>  if test -z "$GIT_TEST_CREDENTIAL_HELPER_TIMEOUT"; then
+> -	say "# skipping external helper timeout tests"
+> +	say "# skipping external helper timeout tests (GIT_TEST_CREDENTIAL_=
+HELPER_TIMEOUT not set)"
+
+These don't affect prove at all, do they? I'm OK with the changes, but =
+I
+was confused to see them after reading the commit message.
+
+Should they actually say "# SKIP ..." to tell prove what's going on? I
+don't know very much about TAP.
+
+> +if test -z "$GIT_TEST_CREDENTIAL_HELPER" \
+> +    -o -z "$GIT_TEST_CREDENTIAL_HELPER_TIMEOUT"; then
+> +    skip_all=3D"used to test external credential helpers"
+> +fi
+
+Actually, I think it is not OK to run t0303 with HELPER_TIMEOUT set, bu=
+t
+HELPER not set. The "helper_test_clean" bits will fail badly. The
+documentation given in the commit message is actually wrong (I added th=
+e
+clean bits to the patch later, and failed to realize the dependency or
+update the commit message).
+
+Also, our usual idiom is to check the prerequisites at the top of the
+script and bail immediately.
+
+So maybe the whole script should be restructured as:
+
+  if test -z "$GIT_TEST_CREDENTIAL_HELPER"; then
+          skip_all=3D"GIT_TEST_CREDENTIAL_HELPER not set"
+          test_done
+  fi
+
+  pre_test
+  helper_test "$GIT_TEST_CREDENTIAL_HELPER"
+  if test -z "$GIT_TEST_CREDENTIAL_HELPER_TIMEOUT"; then
+          say "# skipping timeout tests (GIT_TEST_CREDENTIAL_HELPER_TIM=
+EOUT not set)"
+  else
+          helper_test_timeout "$GIT_TEST_CREDENTIAL_HELPER_TIMEOUT"
+  fi
+  post_test
+
+-Peff
