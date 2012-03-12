@@ -1,63 +1,102 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [RFC PATCH] push: start warning upcoming default change for push.default
-Date: Mon, 12 Mar 2012 11:10:39 -0400
-Message-ID: <4F5E11EF.501@xiplink.com>
-References: <1kgpkt9.lt61vy108h530M%lists@haller-berlin.de>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH 03/11] Introduce a performance test for git-blame
+Date: Mon, 12 Mar 2012 16:09:59 +0100
+Message-ID: <64fe6409a201285227862feffb2d51e4d8efc3eb.1331561353.git.trast@student.ethz.ch>
+References: <cover.1331561353.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Stefan Haller <lists@haller-berlin.de>
+Content-Type: text/plain
+To: <git@vger.kernel.org>
 X-From: git-owner@vger.kernel.org Mon Mar 12 16:11:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S76u9-0002Kk-RG
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 16:11:22 +0100
+	id 1S76uA-0002Kk-Tz
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 16:11:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755856Ab2CLPKo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Mar 2012 11:10:44 -0400
-Received: from smtp182.dfw.emailsrvr.com ([67.192.241.182]:55531 "EHLO
-	smtp182.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755724Ab2CLPKk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2012 11:10:40 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp8.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id 145CD802E;
-	Mon, 12 Mar 2012 11:10:40 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp8.relay.dfw1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 6902B80B6;
-	Mon, 12 Mar 2012 11:10:39 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <1kgpkt9.lt61vy108h530M%lists@haller-berlin.de>
+	id S1755899Ab2CLPLO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Mar 2012 11:11:14 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:39345 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755796Ab2CLPKL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2012 11:10:11 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 12 Mar
+ 2012 16:10:07 +0100
+Received: from thomas.inf.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 12 Mar
+ 2012 16:10:07 +0100
+X-Mailer: git-send-email 1.7.10.rc0.230.g16d90
+In-Reply-To: <cover.1331561353.git.trast@student.ethz.ch>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192882>
 
-On 12-03-09 04:08 PM, Stefan Haller wrote:
-> 
-> But coming back to the subject of push.default: in our environment,
-> "upstream" is the only default that is useful with the current behaviour
-> of git.
+It blames a pseudo-randomly chosen (but fixed as long as the tested
+repository remains the same) set of 10 files with various options.
+The choice of 10 is arbitrary, but gives a nice runtime with git.git.
 
-I'm not at all surprised -- everyone works differently.  This is why the
-default is configurable in the first place.
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
+ t/perf/p8002-blame.sh |   46 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
+ create mode 100755 t/perf/p8002-blame.sh
 
-When it comes to what git should do by default, I think it's a bit pointless
-to have environment-vs-environment discussions.  No matter how many people
-join such a discussion on this list, it can only give us hints to which
-default would best serve git's users.  Maybe the git survey can tell us what
-workflows are most popular, but even that may not indicate the best default
-behaviour.
-
-The point I was trying to make in my previous message is that "upstream"
-seems like the least dangerous default behaviour.  Yes, it does not match
-everyone's workflow.  But it seems the least likely to shoot the feet off of
-people who have yet to figure out their workflow at all.
-
-		M.
+diff --git a/t/perf/p8002-blame.sh b/t/perf/p8002-blame.sh
+new file mode 100755
+index 0000000..000b9d2
+--- /dev/null
++++ b/t/perf/p8002-blame.sh
+@@ -0,0 +1,46 @@
++#!/bin/sh
++
++test_description="Tests blame performance"
++
++. ./perf-lib.sh
++
++test_perf_default_repo
++
++# Pick 10 files to blame pseudo-randomly.  The sort key is the blob
++# hash, so it is stable.
++test_expect_success 'setup' '
++	git ls-tree HEAD | grep ^100644 |
++	sort -k 3 | head | cut -f 2 >filelist
++'
++
++test_perf 'blame' '
++	while read -r name; do
++		git blame HEAD -- "$name" >/dev/null
++	done <filelist
++'
++
++test_perf 'blame -M' '
++	while read -r name; do
++		git blame -M HEAD -- "$name" >/dev/null
++	done <filelist
++'
++
++test_perf 'blame -C' '
++	while read -r name; do
++		git blame -C HEAD -- "$name" >/dev/null
++	done <filelist
++'
++
++test_perf 'blame -C -C' '
++	while read -r name; do
++		git blame -C -C HEAD -- "$name" >/dev/null
++	done <filelist
++'
++
++test_perf 'blame -C -C -C' '
++	while read -r name; do
++		git blame -C -C -C HEAD -- "$name" >/dev/null
++	done <filelist
++'
++
++test_done
+-- 
+1.7.10.rc0.230.g16d90
