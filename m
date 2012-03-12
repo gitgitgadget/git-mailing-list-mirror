@@ -1,82 +1,145 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: stripping [PATCH] without losing later tags from mailed patches
- (Re: [ 02/12] Remove COMPAT_IA32 support)
-Date: Mon, 12 Mar 2012 13:54:40 -0500
-Message-ID: <20120312185440.GA21817@burratino>
-References: <20120312024948.GB4650@kroah.com>
- <20120312063027.GB8971@1wt.eu>
- <20120312064855.GB16820@burratino>
- <20120312085820.GA11569@1wt.eu>
- <20120312152004.GB9380@kroah.com>
- <20120312152453.GB12405@1wt.eu>
- <87aa3l4vqq.fsf@thomas.inf.ethz.ch>
- <20120312165703.GB18791@burratino>
- <7vvcm9snko.fsf@alter.siamese.dyndns.org>
- <20120312185008.GH12405@1wt.eu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] push: start warning upcoming default change for
+ push.default
+Date: Mon, 12 Mar 2012 12:06:48 -0700
+Message-ID: <7vfwddskon.fsf@alter.siamese.dyndns.org>
+References: <vpqobs65gfc.fsf@bauges.imag.fr>
+ <1331281886-11667-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1331288715.21444.38.camel@beez.lab.cmartin.tk>
+ <4F5A4C45.7070406@xiplink.com> <4F5AF1A8.4050604@alum.mit.edu>
+ <4F5E12A5.6030701@xiplink.com> <vpqzkblixmb.fsf@bauges.imag.fr>
+ <20120312183725.GA2187@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@inf.ethz.ch>, Greg KH <greg@kroah.com>,
-	Ben Hutchings <ben@decadent.org.uk>,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-	git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
-To: Willy Tarreau <w@1wt.eu>
-X-From: linux-kernel-owner@vger.kernel.org Mon Mar 12 19:55:07 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 12 20:07:01 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1S7AOg-0007OT-Ur
-	for glk-linux-kernel-3@plane.gmane.org; Mon, 12 Mar 2012 19:55:07 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1S7AaB-0005kh-8C
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 20:06:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756500Ab2CLSy4 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 12 Mar 2012 14:54:56 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:46362 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756448Ab2CLSyy (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 12 Mar 2012 14:54:54 -0400
-Received: by iagz16 with SMTP id z16so7226999iag.19
-        for <multiple recipients>; Mon, 12 Mar 2012 11:54:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=r0XO0s9iS21PtlSlquQ5UPpq4LvP10azycLCBc7Dqtg=;
-        b=ItbPiN2vTYiQaFD0D3lpU3Zn10NOdywXqHizMx31Ab1kQ3Uygef505Dep5AaMIQWBN
-         r1Qg34++dFxAPX60Sm3Q/O7HaNTtbf7IGvFenqlUJ6frVaO12mlNDJ5K2uffSPqVYy+z
-         EOmTprqElL5+fz3+KtwOv/Dk+jEtGuDJ/qoIYNpVc482hJe5PH0021KZdDwNLuXcyjqH
-         I1bLsUhPaoEZKxc0zqpNYeRGVg1fK5FRreypuAREzwuIB+1sqThI33y7RUBT4ETzla6w
-         2ztY1gIJGShC1yn2qzfi1rGBwq2k9hjpmm41dMVU00nkNi4SopgdDPAiRNVmAxw4vbZo
-         mdtQ==
-Received: by 10.43.126.68 with SMTP id gv4mr16932743icc.30.1331578493999;
-        Mon, 12 Mar 2012 11:54:53 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id c2sm13156301igj.1.2012.03.12.11.54.53
-        (version=SSLv3 cipher=OTHER);
-        Mon, 12 Mar 2012 11:54:53 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20120312185008.GH12405@1wt.eu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1756292Ab2CLTGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Mar 2012 15:06:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41390 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754105Ab2CLTGw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2012 15:06:52 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 741F57796;
+	Mon, 12 Mar 2012 15:06:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NbLWqjs/BiFm9eIFIzCf2Gx93+s=; b=jfBiIl
+	6984uOpjqwqSZ8nEx68pmd8DGjgfIkyTfKNRwggnuerBssZ8L1quDibXq0XXew7L
+	GRfoqSNlpsASPzKm+btrZ0pv2KiMyQFHS6GbdA3EH+14WPUokYdhUla241OLQRNX
+	0tSpULCBdOnYB2yALkXJhEdIa2AbuR7Z9hTyo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QdRAnbD+4oIKJ3F+ssLUXGYIEO6Ymr5Y
+	xcu8gBlAzbjvv8LD+nPodjpBVYIKg2sBVQ6xUzrf+p4ZxdElkSvPMrVFRlrI8Ubi
+	FOabNDAt4FjMSjZgY5RG4AsPYT/YOPcTprNrSElfMp/cUcVw9jjVQvo/3OsQqKpy
+	LsK9gFlcR+k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B66D7795;
+	Mon, 12 Mar 2012 15:06:51 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7148D7794; Mon, 12 Mar 2012
+ 15:06:50 -0400 (EDT)
+In-Reply-To: <20120312183725.GA2187@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 12 Mar 2012 14:37:25 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 85CFD8CA-6C76-11E1-A3EE-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192924>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192925>
 
-Willy Tarreau wrote:
+Jeff King <peff@peff.net> writes:
 
-> From my user experience and what I see on a number of coworkers, users
-> tend to make big jumps when they need a new feature, so in practice,
-> not offering the option in a version or two would probably not affect
-> most users, especially the ones still relying on the old behaviour. So
-> I don't see much benefit in waiting for repurposing the option.
+> ... This is not a push.default issue,
+> but I think it is somewhat related, and maybe worth discussing along
+> with the topic of asymmetry. ...
+> I've mostly trained my fingers to type "git push
+> <my-publish-repo>", but I do occasionally forget.
 
-The benefit is that if it does turn out to be a regression, early
-adopters will complain to us because their scripts have stopped
-working and we get a chance to back out the change without having to
-worry about others who have started to rely on the option.
+In an assymmetric set-up, you would typically push into one place
+but update from one or more places, so it might make sense to make
+it easier to say "git push" and "git pull $there".  But that does
+not solve the fundamental issue, I would think.
 
-Regards,
-Jonathan
+> Do other people with
+> asymmetric workflows find this annoying? Do they not care? Or are many
+> fewer people doing asymmetric things than I think?
+
+I think it is not "they do not care", but "they do not have a good
+solution".  I do not think of anything offhand, either.
+
+> While I'm ranting, there's another weirdness I noticed. If I have
+> push.default set to upstream, and config like this:
+>
+>   [branch "foo"]
+>      remote = origin
+>      merge = refs/heads/master
+>
+> then typing "git push" will go to foo's master branch. But if I type
+> "git push other-remote", then it will go to other-remote's master
+> branch. Which makes no sense to me. The upstream is foo's master, and
+> now we are making guesses about how the names on each side are the same.
+> Is this an intentional behavior?
+
+Because "upstream" is meant to be "For the branch I am on, you know
+how the branches map between the remote repository, so you already
+know what the right thing to do---do it" mode, the correct "guess"
+in your case is to error out and say "Nah, you are not talking with
+your upstream, so I do not have any clue what branches you want to
+push out and how. As you said that the push.default is upstream, not
+matching, I refuse to even do the matching push in your case.  This
+is an error. Be more specific".
+
+> Actually, this is the thing that scares me the most about "upstream" as
+> a default, because in this case, you are implicitly performing the
+> equivalent of a fast-forward merge. So that's handy if you are a new
+> user who wants to publish your work back to the master branch. But that
+> has two problems:
+>
+>   1. If you are a new user who does like the implicit merge, you
+>   may find it convenient not to have to learn about ... << and we
+>   shouldn't discourage them from learning as it will be needed
+>   anyway >>
+>
+>   2. If you are a new user who _doesn't_ want to do the merge, but
+>   instead wants to publish your work-in-progress topic, then the
+>   implicit merge-back-to-master behavior is wrong and dangerous.
+>   << the newbie may push -f ruining the work of others >>
+
+I agree with both points.  Also there is a cross-variant issue of
+the above two:
+
+	If a new user hears "not fast-forward, first pull and then
+	push again", that will be done on a topic branch, merging
+	'master' back and then pushing the result to 'master',
+	leaving the 'master' of the user behind.
+
+> So far a lot of the discussion has focused on "what is the most sensible
+> default for the most number of people". But I wonder if a better
+> question is "what is the default that is the least likely to do
+> something dangerous and embarrassing". People who use git enough to say
+> "wow, I don't like this default for my workflow" are probably at the
+> point that they can configure push.default themselves.
+
+I do not think "the most number of people" is a high-priority issue,
+but "least damage" default may not be necessarily the best.
+
+Obviously, "nothing" is the least-damage option, and looking at how
+even people on this list cannot decide between current and upstream,
+I actually am very tempted to suggest it as the new default.
