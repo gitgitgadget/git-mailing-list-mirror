@@ -1,65 +1,118 @@
-From: Willy Tarreau <w@1wt.eu>
-Subject: Re: stripping [PATCH] without losing later tags from mailed patches (Re: [ 02/12] Remove COMPAT_IA32 support)
-Date: Mon, 12 Mar 2012 09:58:20 +0100
-Message-ID: <20120312085820.GA11569@1wt.eu>
-References: <20120312002046.041448832@1wt.eu> <1331514446.3022.140.camel@deadeye> <20120312024948.GB4650@kroah.com> <20120312063027.GB8971@1wt.eu> <20120312064855.GB16820@burratino>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: git push default behaviour?
+Date: Mon, 12 Mar 2012 10:34:00 +0100
+Message-ID: <vpqmx7mcgdz.fsf@bauges.imag.fr>
+References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com>
+	<87k42vs8pi.fsf@thomas.inf.ethz.ch>
+	<CAFsnPqopZEZeeuFzK4ZoUjGnfpiv5oMs=xV5XBSgSyGLXOwgqA@mail.gmail.com>
+	<1331202483.21444.11.camel@beez.lab.cmartin.tk>
+	<CAFsnPqpnH2CTki8zz6Mpz=qrdxF_aTA92cPrn1L9MQZVMoxdeg@mail.gmail.com>
+	<1331203321.21444.13.camel@beez.lab.cmartin.tk>
+	<4F58C977.8000400@xiplink.com> <vpq62efjeqd.fsf@bauges.imag.fr>
+	<CAHkcotiOGaOdDvibpoiEgys3PnSPfSw0mT3DeEOix+FuboULiA@mail.gmail.com>
+	<vpqfwdjas0m.fsf@bauges.imag.fr>
+	<20120309033826.GA6164@sigill.intra.peff.net>
+	<7vsjhi9wku.fsf@alter.siamese.dyndns.org>
+	<vpqobs65gfc.fsf@bauges.imag.fr>
+	<7vwr6u6qrn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Greg KH <greg@kroah.com>, Ben Hutchings <ben@decadent.org.uk>,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-	git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: linux-kernel-owner@vger.kernel.org Mon Mar 12 09:59:01 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Dmitry Potapov <dpotapov@gmail.com>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
+	Jeremy Morton <jeremy@configit.com>,
+	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 12 10:34:57 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1S715o-0007ml-FV
-	for glk-linux-kernel-3@plane.gmane.org; Mon, 12 Mar 2012 09:59:00 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1S71eW-0008VP-DO
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 10:34:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753275Ab2CLI6p (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 12 Mar 2012 04:58:45 -0400
-Received: from 1wt.eu ([62.212.114.60]:63155 "EHLO 1wt.eu"
+	id S1754984Ab2CLJes (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Mar 2012 05:34:48 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:38881 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752793Ab2CLI6l (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 12 Mar 2012 04:58:41 -0400
-Received: (from willy@localhost)
-	by mail.home.local (8.14.4/8.14.4/Submit) id q2C8wKKP011585;
-	Mon, 12 Mar 2012 09:58:20 +0100
-Content-Disposition: inline
-In-Reply-To: <20120312064855.GB16820@burratino>
-User-Agent: Mutt/1.4.2.3i
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1753251Ab2CLJeq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2012 05:34:46 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q2C9TfZJ020230
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 12 Mar 2012 10:29:41 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1S71dh-0004G0-D7; Mon, 12 Mar 2012 10:34:01 +0100
+In-Reply-To: <7vwr6u6qrn.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 09 Mar 2012 01:57:16 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 12 Mar 2012 10:29:43 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q2C9TfZJ020230
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1332149386.23216@ZZlaIGPAcyjfzN2IPDlmrQ
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192848>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192849>
 
-Hi Jonathan,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Mon, Mar 12, 2012 at 01:48:55AM -0500, Jonathan Nieder wrote:
-> > Indeed, and I've even changed my patch formats in haproxy to avoid brackets
-> > due to this issue. The cause is that many patches are sent with a [PATCH]
-> > prefix and that with Git, either you keep the subject line intact or you
-> > remove everything that is between brackets. There's the -b option to only
-> > remove remove tags looking like [PATCH], but my general experience with it
-> > was not satisfying (I don't remind why).
-> 
-> Maybe the problem was as simple as "git am" not knowing about "-b".
+> I can send a message saying "There is a proposal to change the
+> default behaviour of 'git push' on the Git mailing list, and you may
+> be negatively affected if you do not see anything in the output from
+> 'git config push.default' when such a change happens. On the other
+> hand, you may want to see the default behaviour to change. In either
+> case, please join the discussion to give us more data point and help
+> us decide the future of Git." to the kernel list. Anybody could, for
+> that matter.
 
-I think you're quite right.
+Here's an attempt to an improved message. The first paragraph is here to
+make sure people understand their opinion counts (before they stop
+reading because it's too long). The rest explains the change and the way
+to get involved:
 
-> Two relevant patches:
-> 
->   f7e5ea17 (am: learn passing -b to mailinfo, 2012-01-16)
->   ee2d1cb4 (mailinfo: with -b, keep space after [foo], 2012-01-16)
-> 
-> are in "master" and 1.7.10-rc0 and were not part of any earlier release.
->
-> Kudos to Thomas for writing them.
+---------- 8< ---------- 8< -----------
 
-Ah, thank you very much for this useful info, I'll update my version !
+There is a proposal to change the default behaviour of 'git push'
+on the Git mailing list. The goal of this message is to encourage you
+to discuss it before it happens (or the change is aborted, depending
+on the outcome of the discussion).
 
-Cheers,
-Willy
+In the current setting (i.e. push.default=matching), 'git push' without
+argument will push all branches that exist locally and remotely with
+the same name. This is usually appropriate when a developer pushes to
+his own public repository, but confusing if not dangerous when using a
+shared repository. The proposal is to change the default to
+'upstream', i.e. push only the current branch, and push it to the
+upstream branch (the one 'git pull' would pull from). 'current' is
+another candidate.
+
+For more details on the behavior of Git with these values, read
+the documentation about 'push.default' in 'man git-config'
+(http://schacon.github.com/git/git-config.html).
+
+You may be negatively affected when such a change happens if you
+do not see anything in the output from 'git config push.default'
+and if you rely on the fact that 'git push' pushes all your
+matching branches. On the other hand, you may want to see the
+default behaviour to change, especially if you are using shared
+repositories. In either case, please join the discussion to give
+us more data point and help us decide the future of Git.
+
+To join the discussion, send your messages to: git@vger.kernel.org
+You don't need to subscribe the list to post, and it's customary to
+Cc: posters when replying on this list.
+To view the current discussion, see this thread:
+http://thread.gmane.org/gmane.comp.version-control.git/192547/focus=192694
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
