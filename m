@@ -1,100 +1,62 @@
-From: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
-Subject: [PATCH v4 5/5] http: rename HTTP_REAUTH to HTTP_RETRY
-Date: Mon, 12 Mar 2012 18:30:00 +0100
-Message-ID: <4F5E3298.5030502@seap.minhap.es>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH 00/11] perf improvements past v1.7.10
+Date: Mon, 12 Mar 2012 17:35:22 +0100
+Message-ID: <87sjhd4w1h.fsf@thomas.inf.ethz.ch>
+References: <cover.1331561353.git.trast@student.ethz.ch>
+	<CACsJy8BQXvX6iOH0txcw5wmW-2ddnG3A39BxsrspfkqPTwDy_g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: peff@peff.net, sam@vilain.net
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 12 17:31:44 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Thomas Rast <trast@student.ethz.ch>, <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 12 17:35:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S789v-0000HV-Oi
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 17:31:44 +0100
+	id 1S78DZ-0002P7-3L
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 17:35:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753287Ab2CLQbk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Mar 2012 12:31:40 -0400
-Received: from luthien1.map.es ([213.9.211.102]:3377 "EHLO luthien2.map.es"
+	id S1753294Ab2CLQfZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Mar 2012 12:35:25 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:46164 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751533Ab2CLQbj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2012 12:31:39 -0400
-Received: from correo.map.es (unknown [10.1.24.76])
-	by luthien2.map.es (Postfix) with ESMTP id 164C425351;
-	Mon, 12 Mar 2012 17:31:15 +0100 (CET)
-Received: from [10.47.128.147] (unknown [10.1.29.55])
-	by correo.map.es (Postfix) with ESMTP id 754602C2EB;
-	Mon, 12 Mar 2012 17:31:09 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0.1) Gecko/20120216 Thunderbird/10.0.1
-X-map-MapScanner: Libre de virus, Libre de virus
-X-Spam-Status: No, No
-X-map-MapScanner-Information: 
-X-map-MapScanner-ID: 164C425351.05B66
-X-map-MapScanner-From: nelsonjesus.benitez@seap.minhap.es
-X-map-MailScanner-Watermark: 1332174675.37116@wAGYb5NO/zZSJjK/Q/vjIw
+	id S1752343Ab2CLQfY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2012 12:35:24 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 12 Mar
+ 2012 17:35:23 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 12 Mar
+ 2012 17:35:23 +0100
+In-Reply-To: <CACsJy8BQXvX6iOH0txcw5wmW-2ddnG3A39BxsrspfkqPTwDy_g@mail.gmail.com>
+	(Nguyen Thai Ngoc Duy's message of "Mon, 12 Mar 2012 22:28:45 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192901>
 
-After adding the proxy authentication support in
-http, the semantics of HTTP_REAUTH changed more to
-a retry rather than a re-authentication, so we
-rename it to HTTP_RETRY.
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-Signed-off-by: Nelson Benitez Leon <nbenitezl@gmail.com>
----
- http.c |    6 +++---
- http.h |    2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+> Not really related to the series, how do I compare the same tests on
+> different repositories? These repositories share the same DAG, but may
+> have different object representation (all loose, single pack, zillion
+> of packs, different versions of pack...)
 
-diff --git a/http.c b/http.c
-index 9b98179..4aa5a46 100644
---- a/http.c
-+++ b/http.c
-@@ -823,7 +823,7 @@ static int http_request(const char *url, void *result, int target, int options)
- 			} else {
- 				credential_fill(&http_auth);
- 				init_curl_http_auth(slot->curl);
--				ret = HTTP_REAUTH;
-+				ret = HTTP_RETRY;
- 			}
- 		} else if (results.http_code == 407) { /* Proxy authentication failure */
- 			if (proxy_auth.username && proxy_auth.password) {
-@@ -832,7 +832,7 @@ static int http_request(const char *url, void *result, int target, int options)
- 			} else {
- 				credential_fill(&proxy_auth);
- 				set_proxy_auth(slot->curl);
--				ret = HTTP_REAUTH;
-+				ret = HTTP_RETRY;
- 			}
- 		} else {
- 			if (!curl_errorstr[0])
-@@ -862,7 +862,7 @@ static int http_request_reauth(const char *url, void *result, int target,
- 
- 	do {
- 		ret = http_request(url, result, target, options);
--	} while (ret == HTTP_REAUTH);
-+	} while (ret == HTTP_RETRY);
- 
- 	return ret;
- }
-diff --git a/http.h b/http.h
-index 0b61653..6499397 100644
---- a/http.h
-+++ b/http.h
-@@ -123,7 +123,7 @@ extern char *get_remote_object_url(const char *url, const char *hex,
- #define HTTP_MISSING_TARGET	1
- #define HTTP_ERROR		2
- #define HTTP_START_FAILED	3
--#define HTTP_REAUTH	4
-+#define HTTP_RETRY	4
- #define HTTP_NOAUTH	5
- 
- /*
+Currently the only way is to run the test once for each setting of
+GIT_PERF_REPO.  The only comparisons it does so far is between
+revisions/build directories.
+
+That's just because at the time, I saw neither a clear need nor a simple
+syntax that I could use.  I'd welcome suggestions, however.
+
+My only use-case that 'run' does not handle so far would just be
+mirroring the table, i.e., getting a comparison of different tests (such
+as 'rebase', 'rebase -m' etc.)  from the same build tree.
+
 -- 
-1.7.7.6
+Thomas Rast
+trast@{inf,student}.ethz.ch
