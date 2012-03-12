@@ -1,95 +1,88 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git 1.7.9.4
-Date: Mon, 12 Mar 2012 16:45:21 -0700
-Message-ID: <7vvcm9mlim.fsf@alter.siamese.dyndns.org>
+Subject: Incremental highlights from next issue of "What's cooking"
+Date: Mon, 12 Mar 2012 16:51:38 -0700
+Message-ID: <7vr4wxml85.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
 To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Tue Mar 13 00:45:52 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+X-From: git-owner@vger.kernel.org Tue Mar 13 00:51:48 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1S7Ew3-00080M-Lq
-	for glk-linux-kernel-3@plane.gmane.org; Tue, 13 Mar 2012 00:45:52 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1S7F1m-0002Ob-Ol
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 00:51:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965030Ab2CLXpa (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 12 Mar 2012 19:45:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49050 "EHLO
+	id S1758121Ab2CLXvm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Mar 2012 19:51:42 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51352 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932258Ab2CLXp1 (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 12 Mar 2012 19:45:27 -0400
+	id S1757757Ab2CLXvl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2012 19:51:41 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5514E7AA2;
-	Mon, 12 Mar 2012 19:45:24 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BCE017BE4;
+	Mon, 12 Mar 2012 19:51:40 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:cc:date:message-id:mime-version:content-type; s=sasl;
-	 bh=YeisRtR2sTa2HlLm1KlhAUgncTM=; b=pSRYzdKs379rUqE83ew7LlBsdp6K
-	MvpxGeyeeNzk6+KpXvEuIGGhgvaBEHrmBF889/vHALUMkbx2X/EFgf1cTjK6NBtD
-	1HbRgO2I8zYD8DWqVrVzsKQpojE4QNd8MIYbTBfXxlfCkTQjezMk90OVUidHxX9h
-	u7GUv6p3YyVSzeE=
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=I
+	TfvIW1T1cBjJIRA2hNMBTpu8Ps=; b=Rr85yze0sN7+/pZjCV+ReKQy0g6B8YoqZ
+	+3xeOqwWqWF/SKoCS7kMlAjjHIpDNyB3q/mE5LbmXmEM7yy+8NfzqQGpWte7a9vZ
+	IX+mXn/Xtc98PAxlpjWBTA4lLN0QJSXWyCffXWFFratbZozYMjuT9rOVKOCyzmzl
+	ftgjdWI5FM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:cc:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
-	J4XS3P0UW5OLS63d5M0ltZ/NYlnJloEV7vtGD15eu5ZXcHY7zW+56M82vexTmlQy
-	jaAC4jhPFZTv1/4lgrFqJHTMlHjmjQLGldy0pBMAXQiZhVBTHJV0fPF8UAJ0Bpzd
-	72khD1xGX1E2hlkIxXcPzwsRxr/liM1aDj9G7J8LCm0=
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=Vqf
+	a2vvsOSulod5SdCS1uEaVmP/lsMpjdowxKsLYo6z0J6442VmNQ5Q6HHM2UlntvJ0
+	zNvTO2AajuIjzNK3zWyZOtRlh48X4TM8CAVsUrSuWK7L0OBvX/5frMWKTRNiFQO0
+	xWI0ZzDB74B98q0EpHetUuyWlvQ5zcXSiT1x14ps=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4BCA47AA1;
-	Mon, 12 Mar 2012 19:45:24 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B405E7BE3;
+	Mon, 12 Mar 2012 19:51:40 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C54057A9B; Mon, 12 Mar 2012
- 19:45:22 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4723D7BE1; Mon, 12 Mar 2012
+ 19:51:40 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6F251078-6C9D-11E1-8EFC-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+X-Pobox-Relay-ID: 5024661E-6C9E-11E1-AFC2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192964>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192965>
 
-The latest maintenance release Git 1.7.9.4 is now available at the
-usual places.
+Here is the summary of my thinking regarding individual topics in
+flight (stalled ones are omitted).
 
-The release tarballs are found at:
+Undecided are mostly "my not thinking" ;-)  If any of these (or the
+ones marked as "will defer") is critical for 1.7.10, please holler.
 
-    http://code.google.com/p/git-core/downloads/list
+-- >8 --
 
-and their SHA-1 checksums are:
+Needs more work; results in double-frees.
+ - cn/apply-fix-ws-can-lengthen-lines                           03-11          #1
 
-05d2ff75ffd3356516d096f992b4fb3b8b6c0079  git-1.7.9.4.tar.gz
-4d8b27a244969a707e83f6699fd00c322ff0ad5e  git-htmldocs-1.7.9.4.tar.gz
-833dc143d2d296754d681c57b41a008ff433b225  git-manpages-1.7.9.4.tar.gz
+Undecided
+ + jc/i18n-shell-script-gettext                                 03-12/03-12    #1
+ - jc/diff-algo-cleanup                                         02-19          #2
+ - jh/apply-free-patch                                          03-07          #1
+ - jn/maint-fast-import-empty-ls                                03-09          #2
+ - mm/push-default-switch-warning                               03-09          #1
+ - sl/customize-sane-tool-path                                  03-09          #1
+ - ab/perl-i18n                                                 03-10          #3
+ - jc/run-hook-env-1                                            03-11          #4
+ - nd/threaded-index-pack                                       03-11          #2
+ - jh/notes-merge-in-git-dir-worktree                           03-12          #2
 
-Also the following public repositories all have a copy of the v1.7.9.4
-tag and the maint branch that the tag points at:
+Will defer til 1.7.10.
+ + rs/unpack-trees-leakfix                                      03-06/03-07    #1
+ + nd/stream-more                                               03-07/03-07    #7
+ + jc/fmt-merge-msg-people                                      03-08/03-08    #3
+ + jc/commit-hook-authorship                                    03-11/03-12    #3
+ - nl/http-proxy-more                                           03-12          #4
 
-  url = git://repo.or.cz/alt-git.git
-  url = https://code.google.com/p/git-core/
-  url = git://git.sourceforge.jp/gitroot/git-core/git.git
-  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url = https://github.com/gitster/git
+Will discard.
+ + tb/maint-remove-irrelevant-i18n-test                         03-06/03-07    #1
 
-----------------------------------------------------------------
-
-Changes since v1.7.9.3 are as follows:
-
-Jakub Narebski (1):
-      gitweb: Fix fixed string (non-regexp) project search
-
-Junio C Hamano (6):
-      am -3: allow nonstandard -p<num> option
-      test: "am -3" can accept non-standard -p<num>
-      t4011: modernise style
-      t4011: illustrate "diff-index -p" on stat-dirty paths
-      diff -p: squelch "diff --git" header for stat-dirty paths
-      Git 1.7.9.4
-
-Thomas Rast (5):
-      t5510: refactor bundle->pack conversion
-      t5510: ensure we stay in the toplevel test dir
-      bundle: keep around names passed to add_pending_object()
-      Document the --histogram diff option
-      t5704: fix nonportable sed/grep usages
+Will merge to 'master' by 1.7.10.
+ + ph/rerere-doc                                                03-08/03-12    #1
+ + jc/maint-undefined-i18n-observation-test                     03-09/03-12    #1
+ + ms/maint-config-error-at-eol-linecount                       03-12/03-12    #1
