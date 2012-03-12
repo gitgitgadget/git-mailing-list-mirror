@@ -1,139 +1,82 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 1/2] t3310: Add testcase demonstrating failure to --commit
- from within another dir
-Date: Mon, 12 Mar 2012 19:54:14 +0100
-Message-ID: <CALKQrgeXSwG6n41CDwmoyHWrU5CnQMBtoPdFmGqh1gZqeMzNqA@mail.gmail.com>
-References: <87boo3m50x.fsf@zancas.localnet>
-	<1331564233-1969-1-git-send-email-johan@herland.net>
-	<7vr4wxsmrt.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: stripping [PATCH] without losing later tags from mailed patches
+ (Re: [ 02/12] Remove COMPAT_IA32 support)
+Date: Mon, 12 Mar 2012 13:54:40 -0500
+Message-ID: <20120312185440.GA21817@burratino>
+References: <20120312024948.GB4650@kroah.com>
+ <20120312063027.GB8971@1wt.eu>
+ <20120312064855.GB16820@burratino>
+ <20120312085820.GA11569@1wt.eu>
+ <20120312152004.GB9380@kroah.com>
+ <20120312152453.GB12405@1wt.eu>
+ <87aa3l4vqq.fsf@thomas.inf.ethz.ch>
+ <20120312165703.GB18791@burratino>
+ <7vvcm9snko.fsf@alter.siamese.dyndns.org>
+ <20120312185008.GH12405@1wt.eu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, david@tethera.net, pclouds@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 12 19:54:25 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@inf.ethz.ch>, Greg KH <greg@kroah.com>,
+	Ben Hutchings <ben@decadent.org.uk>,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+	git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
+To: Willy Tarreau <w@1wt.eu>
+X-From: linux-kernel-owner@vger.kernel.org Mon Mar 12 19:55:07 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7AO0-00070y-Tl
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 19:54:25 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1S7AOg-0007OT-Ur
+	for glk-linux-kernel-3@plane.gmane.org; Mon, 12 Mar 2012 19:55:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755173Ab2CLSyU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Mar 2012 14:54:20 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:53293 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754057Ab2CLSyU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Mar 2012 14:54:20 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1S7ANu-000H9L-I0
-	for git@vger.kernel.org; Mon, 12 Mar 2012 19:54:18 +0100
-Received: by iagz16 with SMTP id z16so7226267iag.19
-        for <git@vger.kernel.org>; Mon, 12 Mar 2012 11:54:14 -0700 (PDT)
-Received: by 10.50.159.161 with SMTP id xd1mr321093igb.15.1331578454879; Mon,
- 12 Mar 2012 11:54:14 -0700 (PDT)
-Received: by 10.42.170.3 with HTTP; Mon, 12 Mar 2012 11:54:14 -0700 (PDT)
-In-Reply-To: <7vr4wxsmrt.fsf@alter.siamese.dyndns.org>
-Sender: git-owner@vger.kernel.org
+	id S1756500Ab2CLSy4 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Mon, 12 Mar 2012 14:54:56 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:46362 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756448Ab2CLSyy (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 12 Mar 2012 14:54:54 -0400
+Received: by iagz16 with SMTP id z16so7226999iag.19
+        for <multiple recipients>; Mon, 12 Mar 2012 11:54:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=r0XO0s9iS21PtlSlquQ5UPpq4LvP10azycLCBc7Dqtg=;
+        b=ItbPiN2vTYiQaFD0D3lpU3Zn10NOdywXqHizMx31Ab1kQ3Uygef505Dep5AaMIQWBN
+         r1Qg34++dFxAPX60Sm3Q/O7HaNTtbf7IGvFenqlUJ6frVaO12mlNDJ5K2uffSPqVYy+z
+         EOmTprqElL5+fz3+KtwOv/Dk+jEtGuDJ/qoIYNpVc482hJe5PH0021KZdDwNLuXcyjqH
+         I1bLsUhPaoEZKxc0zqpNYeRGVg1fK5FRreypuAREzwuIB+1sqThI33y7RUBT4ETzla6w
+         2ztY1gIJGShC1yn2qzfi1rGBwq2k9hjpmm41dMVU00nkNi4SopgdDPAiRNVmAxw4vbZo
+         mdtQ==
+Received: by 10.43.126.68 with SMTP id gv4mr16932743icc.30.1331578493999;
+        Mon, 12 Mar 2012 11:54:53 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id c2sm13156301igj.1.2012.03.12.11.54.53
+        (version=SSLv3 cipher=OTHER);
+        Mon, 12 Mar 2012 11:54:53 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20120312185008.GH12405@1wt.eu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192923>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192924>
 
-On Mon, Mar 12, 2012 at 19:21, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> Johan Herland <johan@herland.net> writes:
->
->> Found-by: David Bremner <david@tethera.net>
->> Signed-off-by: Johan Herland <johan@herland.net>
->
-> Could you clarify what "from within another dir" means on the subject=
-?
->
-> What was the expected usage?
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0The 'git notes merge' command expected to =
-be run from the
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0working tree of the project being annotate=
-d, and did not
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0anticipate getting run inside $GIT_DIR/. =C2=
-=A0However, because
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0we use $GIT_DIR/NOTES_MERGE_WORKTREE as a =
-temporary working
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0space for the user to work on resolving co=
-nflicts, it is not
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0unreasonable for a user to run "git notes =
-merge --commit"
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0there.
->
-> Is that the issue?
+Willy Tarreau wrote:
 
-That is exactly the issue. Thanks for the clear wording.
+> From my user experience and what I see on a number of coworkers, users
+> tend to make big jumps when they need a new feature, so in practice,
+> not offering the option in a version or two would probably not affect
+> most users, especially the ones still relying on the old behaviour. So
+> I don't see much benefit in waiting for repurposing the option.
 
-=46eel free to update the commit message accordingly.
+The benefit is that if it does turn out to be a regression, early
+adopters will complain to us because their scripts have stopped
+working and we get a chance to back out the change without having to
+worry about others who have started to rely on the option.
 
-
-=2E..Johan
-
->> ---
->>
->> (sending again in the correct thread. Sorry for the screwup.)
->>
->> This is a transcription of David's test script into a git test case.
->>
->> Thanks to David for finding this issue.
->>
->>
->> Have fun! :)
->>
->> ...Johan
->>
->> =C2=A0t/t3310-notes-merge-manual-resolve.sh | =C2=A0 19 ++++++++++++=
-+++++++
->> =C2=A01 file changed, 19 insertions(+)
->>
->> diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-m=
-erge-manual-resolve.sh
->> index 4367197..0c531c3 100755
->> --- a/t/t3310-notes-merge-manual-resolve.sh
->> +++ b/t/t3310-notes-merge-manual-resolve.sh
->> @@ -553,4 +553,23 @@ test_expect_success 'resolve situation by abort=
-ing the notes merge' '
->> =C2=A0 =C2=A0 =C2=A0 verify_notes z
->> =C2=A0'
->>
->> +cat >expect_notes <<EOF
->> +foo
->> +bar
->> +EOF
->> +
->> +test_expect_failure 'switch cwd before committing notes merge' '
->> + =C2=A0 =C2=A0 git notes add -m foo HEAD &&
->> + =C2=A0 =C2=A0 git notes --ref=3Dother add -m bar HEAD &&
->> + =C2=A0 =C2=A0 test_must_fail git notes merge refs/notes/other &&
->> + =C2=A0 =C2=A0 (
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cd .git/NOTES_MERGE_WORK=
-TREE &&
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo "foo" > $(git rev-p=
-arse HEAD) &&
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo "bar" >> $(git rev-=
-parse HEAD) &&
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git notes merge --commit
->> + =C2=A0 =C2=A0 ) &&
->> + =C2=A0 =C2=A0 git notes show HEAD > actual_notes &&
->> + =C2=A0 =C2=A0 test_cmp expect_notes actual_notes
->> +'
->> +
->> =C2=A0test_done
->> --
->> 1.7.9.2
-
-
-
---=20
-Johan Herland, <johan@herland.net>
-www.herland.net
+Regards,
+Jonathan
