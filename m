@@ -1,130 +1,81 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Re*: [PATCH/RFC] Change t0204-gettext-reencode-sanity.sh to pass
- under Mac OSX
-Date: Mon, 12 Mar 2012 14:25:05 -0700
-Message-ID: <7vmx7lpl5a.fsf@alter.siamese.dyndns.org>
-References: <201203052039.16893.tboegi@web.de>
- <7vzkbuzss7.fsf@alter.siamese.dyndns.org>
- <CACBZZX4P=JSdP_vLOMx5r3R+YO8SMSs5W8+vf2DMibKMwBx_Vg@mail.gmail.com>
- <7vfwdkm6xs.fsf@alter.siamese.dyndns.org>
- <CACBZZX4q0Da=H=-fO86f2YN+CmE25QfEgAp8Efmdyf65CGckiQ@mail.gmail.com>
- <7v4nu0m5tb.fsf@alter.siamese.dyndns.org>
- <CACBZZX6W=-ZchaCsLGdpZ420L_9=w8AHD8BNVb7XV5M-hc0Qhg@mail.gmail.com>
- <7vd38okmp0.fsf@alter.siamese.dyndns.org>
- <7vlin94dbc.fsf_-_@alter.siamese.dyndns.org> <4F5BD585.5050007@web.de>
- <4F5CC08C.90703@web.de> <7vzkbnvt6m.fsf@alter.siamese.dyndns.org>
- <4F5D14CD.6080507@web.de> <7vzkbmvmvx.fsf@alter.siamese.dyndns.org>
- <4F5E6362.7050001@web.de>
+Subject: Re: Edit a rerere conflict resolution
+Date: Mon, 12 Mar 2012 14:34:19 -0700
+Message-ID: <7vipi9pkpw.fsf@alter.siamese.dyndns.org>
+References: <4F5E4B20.5080709@lyx.org>
+ <7vobs1r3kn.fsf@alter.siamese.dyndns.org> <4F5E5A77.1070605@lyx.org>
+ <7vd38hr22e.fsf@alter.siamese.dyndns.org> <4F5E68C5.5070300@lyx.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon Mar 12 22:25:19 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Vincent van Ravesteijn <vfr@lyx.org>
+X-From: git-owner@vger.kernel.org Mon Mar 12 22:34:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7Ck1-0007vx-Cs
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 22:25:17 +0100
+	id 1S7Ct0-0004UA-91
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 22:34:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757044Ab2CLVZK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Mar 2012 17:25:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39030 "EHLO
+	id S1757395Ab2CLVe1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Mar 2012 17:34:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45549 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755921Ab2CLVZJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Mar 2012 17:25:09 -0400
+	id S1757366Ab2CLVeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2012 17:34:22 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9485179D0;
-	Mon, 12 Mar 2012 17:25:08 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DAB5D7BF1;
+	Mon, 12 Mar 2012 17:34:21 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=yJAqLrx6R/Z/
-	IVreXRzbhrpxqnY=; b=lpXtciKWzAEFiRegFSWJk77vpIggv2cWXg9MQQl67eKw
-	Zs0HTTaH3Zr+2laA42WdlH5hgd4WO3vFiz4Yo6AZqtJZX4tED5tCaT1wr05yg3d8
-	QgN7122zsaF2RjlXVCmXOXAC2gU3Q9hIYWwj6CTQHQyRD0TaK5WehMzIQ8lvJZs=
+	:content-type; s=sasl; bh=Lyy+VDuw3P8B5BKm3JdMS4UCdIA=; b=oTrnVG
+	NQRwNJRcoEmCuL5cjZxKdUfzY1gQP8T7OB5pbs598Q0FOfL+gojF//HCVCXKJQTj
+	/zuHyHtIbaFTnK/kF9HlAC7OOaLCTAhH3P+jS7xRtKdA5zzv5d3U2At2NhS99IAg
+	twYR22HANw7NMzCfhPNxbqnvHFhcXFrjE0Yl8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=MqK8jL
-	kljcC927JzD8TQdx6mZSP1yNCnq+KEE+RjV45uGDks1Ft33V4jcmbhNoaxDzVVru
-	OG29y5EubpFur5JoavOv2bqV/oHiZGTtwe9tTmjo6MpgUHFSNfj9UDsoQG94q04h
-	8jkLjbCLOQVZQBfli2aJhfiCl+HJG4+7JrvII=
+	:content-type; q=dns; s=sasl; b=IMhNwVdijoK5ELZg5kShfHfIHIXFuW81
+	/HH1qHRDawFiR6amJ8b+vi3HNTBkhpJeTVukmw83gdDy4nQrzbLIOLj+JPhKadGL
+	ysh40MO5q3ZT4F83/O6iU0pdLy3IV8MHDkN3PO3h8b5KLZhX+2BzoJx1VP+pdYjt
+	KToqaWKuDn4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8BC6F79CF;
-	Mon, 12 Mar 2012 17:25:08 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CE9967BF0;
+	Mon, 12 Mar 2012 17:34:21 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0DF0A79CE; Mon, 12 Mar 2012
- 17:25:06 -0400 (EDT)
-In-Reply-To: <4F5E6362.7050001@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of "Mon, 12 Mar 2012 21:58:10 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3E6E77BED; Mon, 12 Mar 2012
+ 17:34:21 -0400 (EDT)
+In-Reply-To: <4F5E68C5.5070300@lyx.org> (Vincent van Ravesteijn's message of
+ "Mon, 12 Mar 2012 22:21:09 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D6F755E4-6C89-11E1-A82A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 214B56B2-6C8B-11E1-8405-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192950>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Vincent van Ravesteijn <vfr@lyx.org> writes:
 
-> [snip]
->  (. gettext.sh; eval_gettext frotz; echo $?)
-> frotz0
+>> The problem I have with "rerere edit" is it is an offline process,
+>> and to validate that the update is correct, I would have to have the
+>> problematic merge in my working tree once _anyway_.  And at that
+>> point, updating the target file in the working tree and recording
+>> the updated resolution using the usual "git rerere" feels a more
+>> natural way to do so, and more importantly, it is a more convenient
+>> way to do the "update and validate".  On the other hand, "rerere
+>> edit" is a more convenient way to "update but not validate the
+>> result".
+>
+> This last part probably makes the difference indeed. In my case the
+> merge resolution was very very easy (the conflicting hunks have
+> fileformat version numbers), but it is a bit annoying and it requires
+> some 'vim'-skills to redo the merge conflict just to correct a newline
+> somewhere, or a missing ','.
 
-So your system can claim "gnu".  The patch I sent earlier that
-replaced "type gettext.sh" with something like the above should work
-along that line.
-
-> I get
-> : no probing necessary
-
-> When I run the following scriptlet,=20
-> ...
-> elif test -n "@@USE_FALLTHROUGH_GETTEXT_SCHEME@@$GIT_INTERNAL_GETTEXT=
-_TEST_FALLBACKS"
-> then
-> 		echo ": no probing necessary"
-
-Gaah.  That should read as @@USE_GETTEXT_SCHEME@@, which would be
-replaced by the Makefile to become either empty (if you run "make"
-without forcing USE_GETTEXT_SCHEME to any particular value).
-
-It comes from ad17ea7 (add a Makefile switch to avoid gettext
-translation in shell scripts, 2012-01-23) but nobody replaces the
-token anywhere.
-
-http://thread.gmane.org/gmane.comp.version-control.git/188706/focus=3D1=
-89016
-and comparing it with the original (focus=3D188827 in the same thread),
-we can see that this was my mistake while re-rolling the patch.
-
--- >8 --
-Subject: i18n: fix auto detection of gettext scheme for shell scripts
-
-A new code added by ad17ea7 (add a Makefile switch to avoid gettext
-translation in shell scripts, 2012-01-23) tried to optionally force
-a gettext scheme to "fallthrough", but ended up forcing it to everybody=
-=2E
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- git-sh-i18n.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/git-sh-i18n.sh b/git-sh-i18n.sh
-index d5fae99..6a27f68 100644
---- a/git-sh-i18n.sh
-+++ b/git-sh-i18n.sh
-@@ -21,7 +21,7 @@ GIT_INTERNAL_GETTEXT_SH_SCHEME=3Dfallthrough
- if test -n "@@USE_GETTEXT_SCHEME@@"
- then
- 	GIT_INTERNAL_GETTEXT_SH_SCHEME=3D"@@USE_GETTEXT_SCHEME@@"
--elif test -n "@@USE_FALLTHROUGH_GETTEXT_SCHEME@@$GIT_INTERNAL_GETTEXT_=
-TEST_FALLBACKS"
-+elif test -n "$GIT_INTERNAL_GETTEXT_TEST_FALLBACKS"
- then
- 	: no probing necessary
- elif test -n "$GIT_GETTEXT_POISON"
+Now you confused me.  How do you envision your "rerere edit" not to
+require "vim-skills" that is needed to navigate to the problematic
+line to correct a newline or comma?  To put it another way, how much
+more "vim-skills" is needed to fix the conflict in the real file,
+than "rerere edit"?
