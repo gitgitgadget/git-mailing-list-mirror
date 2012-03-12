@@ -1,119 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] apply: reallocate the postimage buffer when needed
-Date: Sun, 11 Mar 2012 23:23:47 -0700
-Message-ID: <7v1uoyuyks.fsf@alter.siamese.dyndns.org>
-References: <1331475857-15169-1-git-send-email-cmn@elego.de>
- <7v8vj7x9jr.fsf@alter.siamese.dyndns.org>
- <7vipiax3il.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: stripping [PATCH] without losing later tags from mailed patches (Re:
+ [ 02/12] Remove COMPAT_IA32 support)
+Date: Mon, 12 Mar 2012 01:48:55 -0500
+Message-ID: <20120312064855.GB16820@burratino>
+References: <20120312002046.041448832@1wt.eu>
+ <1331514446.3022.140.camel@deadeye>
+ <20120312024948.GB4650@kroah.com>
+ <20120312063027.GB8971@1wt.eu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	Chris Webb <chris@arachsys.com>, git@vger.kernel.org
-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Mon Mar 12 07:23:58 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Cc: Greg KH <greg@kroah.com>, Ben Hutchings <ben@decadent.org.uk>,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+	git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
+To: Willy Tarreau <w@1wt.eu>
+X-From: linux-kernel-owner@vger.kernel.org Mon Mar 12 07:49:26 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S6yfj-0000AQ-Gq
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 07:23:55 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1S6z4N-0001kr-Uh
+	for glk-linux-kernel-3@plane.gmane.org; Mon, 12 Mar 2012 07:49:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751291Ab2CLGXv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Mar 2012 02:23:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38133 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751019Ab2CLGXu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2012 02:23:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F0FB3D48;
-	Mon, 12 Mar 2012 02:23:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dOtyuJCmcVTphuxhATa0izWOgD0=; b=I1FIpD
-	r8PZ5hi2aMDOx2jlHjrwSna1ypFWFOg1mBZQhXrvQ7rF0JkhmL9KTbWfZAuFYHQg
-	mpz0ZbMRlKA8f3hz28kpkdHtsTzJgQnD+UxHgijA8S+G/mRF5at8gPHac9ldVTt9
-	ybQ/tL3lZYDhDfiInLlmojskF1l4nbp0cIPZs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lXy6bzpwfZ4+BlTUZwjjE+ddoOmDUvpR
-	P2KoatR1eEG7WX1gvUQCoJx2t8TKfp5b23lo3bE+CtaECQCIV/+NSjQS5r9ifRxE
-	p4ZRJ18BQcNYlmcQWvHVeWt6TAhPiDc3IexT0B69ixGrZPd7P/KlyHlm8etS6sQP
-	PUt0x3d1DlI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 563273D45;
-	Mon, 12 Mar 2012 02:23:49 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BD4113D44; Mon, 12 Mar 2012
- 02:23:48 -0400 (EDT)
-In-Reply-To: <7vipiax3il.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 11 Mar 2012 13:54:10 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EDCC72FA-6C0B-11E1-823D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
+	id S1754088Ab2CLGtO (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Mon, 12 Mar 2012 02:49:14 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:42063 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752209Ab2CLGtF (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 12 Mar 2012 02:49:05 -0400
+Received: by ghrr11 with SMTP id r11so2213996ghr.19
+        for <multiple recipients>; Sun, 11 Mar 2012 23:49:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=NbpSqm/zuY/JAb//2o/vb88o1/snXQyNOONexJCOwKg=;
+        b=REx3gVPymBvyk3OriZFm2aij1yitmi+05YJR56OyA63nN2GS6iykkM5K150f6U+oQ4
+         zkf/RBQttWgZTmAbq9p5ANvv0ot98D86WLXzzl6NFb3Rtrx6My1X1PAYutU5mu05OWPF
+         XlvudlkJY3XujadBeKk6uGFdfIpV4d3Y2f/ocgJUl/rDee6J4jpys/ZV5tZ9eQIZjpM/
+         Jz6h/M3Sz7T4jgIYgE/B150+hnOW35NNX0Uxfwfg6FXjh7CEpLPaQXyEAOsFsuWa5h8Z
+         a0iYIV5d7FGDLvid9NWBrBNfYerHVOuopweUzbrvCRdWzhKOCcREGIaPK3jNggYq89SI
+         uzpw==
+Received: by 10.60.5.193 with SMTP id u1mr6324356oeu.8.1331534944931;
+        Sun, 11 Mar 2012 23:49:04 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id q5sm9832592oef.3.2012.03.11.23.49.03
+        (version=SSLv3 cipher=OTHER);
+        Sun, 11 Mar 2012 23:49:04 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20120312063027.GB8971@1wt.eu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192842>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192843>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> ...
-> But fixed_buf and fixed_len may be longer than the original length
-> of preimage buffer when "indent must be spaces" is in effect, and
-> that would mean context lines in the postimage may have to also
-> grow. The call to update_pre_post_images() must be telling how big
-> the postimage with fixed context lines will be, not passing 0 to say
-> "I know it will not grow", because that is no longer true these
-> days.
+(adding git list and Thomas to cc)
+Willy Tarreau wrote:
+> On Sun, Mar 11, 2012 at 07:49:48PM -0700, Greg KH wrote:
+>> On Mon, Mar 12, 2012 at 01:07:26AM +0000, Ben Hutchings wrote:
 
-Just in case you haven't noticed it on your machine, t4105 shows
-that this patch breaks "git apply".
+>>> The subject/first line should include '[IA64]', as in the original
+>>> commit.  It looks like this has been automatically stripped.
+>>
+>> Yeah, munging patches to and from quilt and git will cause that to
+>> happen at times, it's quite common :(
+>
+> Indeed, and I've even changed my patch formats in haproxy to avoid brackets
+> due to this issue. The cause is that many patches are sent with a [PATCH]
+> prefix and that with Git, either you keep the subject line intact or you
+> remove everything that is between brackets. There's the -b option to only
+> remove remove tags looking like [PATCH], but my general experience with it
+> was not satisfying (I don't remind why).
 
-...
-ok 5 - big offset
+Maybe the problem was as simple as "git am" not knowing about "-b".
 
-expecting success: 
-		git checkout-index -f -q -u file &&
-		git apply -C2 F0.diff &&
-		test_cmp expect file
-	
-Context reduced to (2/2) to apply fragment at 6
-*** glibc detected *** /git.git/git: free(): invalid pointer: 0x00000000020c09e2 ***
-...
-./test-lib.sh: line 492: 10555 Aborted                 git apply -C2 F0.diff
-not ok - 6 fuzz with no offset
-#	
-#			git checkout-index -f -q -u file &&
-#			git apply -C2 F0.diff &&
-#			test_cmp expect file
-#		
+Two relevant patches:
 
-With --valgrind the same test dies like so:
+  f7e5ea17 (am: learn passing -b to mailinfo, 2012-01-16)
+  ee2d1cb4 (mailinfo: with -b, keep space after [foo], 2012-01-16)
 
-==18735== Invalid free() / delete / delete[]
-==18735==    at 0x4C240FD: free (vg_replace_malloc.c:366)
-==18735==    by 0x40918A: apply_data (apply.c:2692)
-==18735==    by 0x40A1C2: check_patch (apply.c:3163)
-==18735==    by 0x40C9A4: apply_patch (apply.c:3178)
-==18735==    by 0x40D9A1: cmd_apply (apply.c:3959)
-==18735==    by 0x404DD6: handle_internal_command (git.c:308)
-==18735==    by 0x404FFC: main (git.c:513)
-==18735==  Address 0x55c7c62 is 2 bytes inside a block of size 52 alloc'd
-==18735==    at 0x4C244E8: malloc (vg_replace_malloc.c:236)
-==18735==    by 0x4C24562: realloc (vg_replace_malloc.c:525)
-==18735==    by 0x4E19AD: xrealloc (wrapper.c:82)
-==18735==    by 0x4CFD7A: strbuf_grow (strbuf.c:72)
-==18735==    by 0x4082B6: apply_data (apply.c:2470)
-==18735==    by 0x40A1C2: check_patch (apply.c:3163)
-==18735==    by 0x40C9A4: apply_patch (apply.c:3178)
-==18735==    by 0x40D9A1: cmd_apply (apply.c:3959)
-==18735==    by 0x404DD6: handle_internal_command (git.c:308)
-==18735==    by 0x404FFC: main (git.c:513)
+are in "master" and 1.7.10-rc0 and were not part of any earlier release.
 
+Kudos to Thomas for writing them.
 
-where "apply_data (apply.c:2692)" refers to 
-
-	free(postimage.buf);
+Jonathan
