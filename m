@@ -1,72 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] push: start warning upcoming default change for
- push.default
-Date: Mon, 12 Mar 2012 09:11:12 -0700
-Message-ID: <7vobs1u7dr.fsf@alter.siamese.dyndns.org>
-References: <1kguf28.1u417v5fn74afM%lists@haller-berlin.de>
- <vpq1uoyx9zh.fsf@bauges.imag.fr>
+From: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
+Subject: [PATCH v4 0/5] New roll of proxy improvements
+Date: Mon, 12 Mar 2012 18:24:53 +0100
+Message-ID: <4F5E3165.9090304@seap.minhap.es>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: lists@haller-berlin.de (Stefan Haller),
-	marcnarc@xiplink.com (Marc Branchaud),
-	cmn@elego.de (Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto),
-	git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Mar 12 17:11:27 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: peff@peff.net, sam@vilain.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 12 17:26:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S77qI-0004wU-U4
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 17:11:27 +0100
+	id 1S784j-0005Tz-TU
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 17:26:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752659Ab2CLQLS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Mar 2012 12:11:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53953 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752174Ab2CLQLP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2012 12:11:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C8E165D7;
-	Mon, 12 Mar 2012 12:11:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bdfs99HV3W9kU5kR2eaOtTu7IQQ=; b=wLvBax
-	p8m76KQqQcAv/HikKYoOJ4iC+KXh7SiGNXJxfJBPxbm/ibmYg5cFrhzczTGzBxcu
-	hlzITzIdcnPuHCS5R8FKoeBvST/OxFje5lv6hICBO3omBO0JXj+1uXjH51Ug8yCd
-	v0rzYwWhfREfCyXZdSKHLiSyK/Qf73R/YT9v8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RUJsQmstLLqDYDPg2k4EPryUK/r78vom
-	S4g4Q0a1eX+iwPbO7uaM0G8GiTmhfLmQ1nUqfHv4/DyQ/JYWOPkwTH+Z340ixMwu
-	BZunVVY5FpNq07JjO28qEe5IF73VFHRGS73ZPfnYhOKzpydPmyFapXtmj8zqM/+U
-	gfIwR4Hb/6E=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 44C0C65D6;
-	Mon, 12 Mar 2012 12:11:14 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D12CD65D5; Mon, 12 Mar 2012
- 12:11:13 -0400 (EDT)
-In-Reply-To: <vpq1uoyx9zh.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Mon, 12 Mar 2012 13:46:42 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FD811F50-6C5D-11E1-BC1D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751608Ab2CLQ0S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Mar 2012 12:26:18 -0400
+Received: from luthien1.map.es ([213.9.211.102]:24491 "EHLO luthien2.map.es"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751417Ab2CLQ0R (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2012 12:26:17 -0400
+Received: from correo.map.es (unknown [10.1.24.76])
+	by luthien2.map.es (Postfix) with ESMTP id 3BF89F690A;
+	Mon, 12 Mar 2012 17:26:07 +0100 (CET)
+Received: from [10.47.128.147] (unknown [10.1.29.55])
+	by correo.map.es (Postfix) with ESMTP id 389882C684;
+	Mon, 12 Mar 2012 17:26:02 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0.1) Gecko/20120216 Thunderbird/10.0.1
+X-map-MapScanner: Libre de virus, Libre de virus
+X-Spam-Status: No, No
+X-map-MapScanner-Information: 
+X-map-MapScanner-ID: 3BF89F690A.9ACE5
+X-map-MapScanner-From: nelsonjesus.benitez@seap.minhap.es
+X-map-MailScanner-Watermark: 1332174367.41557@6SnwkxZCBFVZ9z0M8W5SYA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192891>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+So here is a new roll based on last comments, changes
+from last roll are:
 
-> Just to be clear: I'm not saying that your workflow is wrong, but my
-> feeling is that you wouldn't be hurt by 'push.default=upstream'. The
-> area of potential improvement for your case would be at branch creation
-> time more than at push time.
+- Unify in new function set_proxy_auth() the code for
+setting proxy username and password in cURL options, which is
+indepently setted and not as part of the CURLOPT_PROXY as before.
 
-Your analysis of Stefan's pain points sounds very sensible.
-The autoSetupMerge mechanism may want to learn new tricks, but that
-is a separate issue and it shouldn't affect the search for a sane
-default for push.
+- If using libcurl >= 7.19.1 use options CURLOPT_PROXYUSERNAME
+and CURLOPT_PROXYPASSWORD which let special characters like '@'
+or ':' to be present in those options and be correctly treated
+by libcurl. If libcurl is < 7.19.1 then use CURLOPT_PROXYUSERPWD
+option.
+
+- Refactor http_request_reauth() function to permit more than two
+retries, this comes from a jeff king's patch.
+
+- Rename HTTP_REAUTH return status to HTTP_RETRY to better fit the
+new semantics according to the aforementioned refactor in
+http_request_reauth().
+
+Regards,
+
+Nelson Benitez Leon (5):
+  http: try http_proxy env var when http.proxy config option is not set
+  http: handle proxy proactive authentication
+  http: handle proxy authentication failure (error 407)
+  http: Avoid limit of retrying request only twice
+  http: rename HTTP_REAUTH to HTTP_RETRY
+
+ http.c |   56 ++++++++++++++++++++++++++++++++++++++++++++++++++------
+ http.h |    2 +-
+ 2 files changed, 51 insertions(+), 7 deletions(-)
+
+-- 
+1.7.7.6
