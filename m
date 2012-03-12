@@ -1,114 +1,100 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] fmt-merge-msg: show those involved in a merged series
-Date: Mon, 12 Mar 2012 02:11:22 -0500
-Message-ID: <20120312071121.GA17269@burratino>
-References: <7vvcmj68iz.fsf@alter.siamese.dyndns.org>
- <CA+55aFzQ3+EFBVyE9PWOyH0XEC_oW+kUaBTYfixmi2wgMmiZvw@mail.gmail.com>
- <7vipii27ka.fsf@alter.siamese.dyndns.org>
- <CA+55aFw-sS_p7JXNXbSbpiwh9_bZhSrTtC3is4NtLa_n9Hzk5A@mail.gmail.com>
- <7vmx7uzq8h.fsf_-_@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC PATCH] push: start warning upcoming default change for push.default
+Date: Mon, 12 Mar 2012 09:47:26 +0100
+Message-ID: <vpqzkbmcijl.fsf@bauges.imag.fr>
+References: <1kgsxjq.jf2f02ib96ufM%lists@haller-berlin.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 12 08:11:40 2012
+Content-Type: text/plain
+Cc: gitster@pobox.com (Junio C Hamano),
+	marcnarc@xiplink.com (Marc Branchaud),
+	cmn@elego.de (Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto),
+	git@vger.kernel.org
+To: lists@haller-berlin.de (Stefan Haller)
+X-From: git-owner@vger.kernel.org Mon Mar 12 09:48:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S6zPv-0002cD-Vi
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 08:11:40 +0100
+	id 1S70vU-0002ej-FZ
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 09:48:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753635Ab2CLHLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Mar 2012 03:11:35 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:35197 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751491Ab2CLHLd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2012 03:11:33 -0400
-Received: by ghrr11 with SMTP id r11so2225623ghr.19
-        for <git@vger.kernel.org>; Mon, 12 Mar 2012 00:11:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=RuFUXz5PES9ysmKOZpDyOAfHtjDc8ghd3F0CKMLQSgg=;
-        b=v/WGMwcBrVHTBG2rd3TYF4t9iKDQXdbRt2eO34FwJhNS47rjx3E0abPI7Zz40dGuE0
-         Fni0g7wOoGb1JMLxOUfQFmO+865bcFnwPO0pUcrL7Tftrfx+3negf/uDGnThmaTWHQHl
-         f17CFoWGiPZZwLKfh/ILfKRx29qR678HB89B8jdSASqPiprx/I1s6XxCRQR7Nc37n5gJ
-         wR+ByxSjPRRvOKsQ1b22mU9J5ESpZ9x6mzq3jmEUxCNhqzaYNB/NRaNmadWAKGeWJFOI
-         etdiwJNih3bSXUd/k99xmAyOpg1VNuaf6XaW0SCdqVv2QH1dwuMet+6fHaAGma4Zi2Y0
-         PrGQ==
-Received: by 10.182.54.114 with SMTP id i18mr6413799obp.49.1331536293338;
-        Mon, 12 Mar 2012 00:11:33 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id n1sm9883833oen.8.2012.03.12.00.11.31
-        (version=SSLv3 cipher=OTHER);
-        Mon, 12 Mar 2012 00:11:32 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vmx7uzq8h.fsf_-_@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752803Ab2CLIsC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Mar 2012 04:48:02 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:51238 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752518Ab2CLIsA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2012 04:48:00 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q2C8h7VH005363
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 12 Mar 2012 09:43:07 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1S70ud-0002bv-G5; Mon, 12 Mar 2012 09:47:27 +0100
+In-Reply-To: <1kgsxjq.jf2f02ib96ufM%lists@haller-berlin.de> (Stefan Haller's
+	message of "Sun, 11 Mar 2012 21:26:35 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 12 Mar 2012 09:43:09 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q2C8h7VH005363
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1332146590.93705@uu/u7bhKJtRJurwLbbU/gg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192846>
 
-Hi,
+lists@haller-berlin.de (Stefan Haller) writes:
 
-Junio C Hamano wrote:
+> We're a closed-source company that uses git more or less like an
+> old-style, non-distributed VCS.
+> [...]
+> Also, it is very common for two or more developers to collaborate on a
+> topic branch,
+> [...]
+> Topics are never pushed to master; we have a "merge --no-ff" policy for
+> integration.
+> [...]
+> To sum it up, push.default=current is almost perfect for this kind of
+> workflow; except that you still need to configure your upstream branches
+> so that pull works, and status (and the shell prompt) displays the right
+> information.
 
-> * jc/fmt-merge-msg-people (2012-03-08) 3 commits
->   (merged to 'next' on 2012-03-08 at be31aa9)
->  + fmt-merge-msg.c: make util_as_int() return "int"
->   (merged to 'next' on 2012-03-07 at 76fbac3)
->  + fmt-merge-msg: finishing touches
->   (merged to 'next' on 2012-03-05 at 38de349)
->  + fmt-merge-msg: show those involved in a merged series
->
-> The "fmt-merge-msg" command learns to list the primary contributors
-> involved in the side topic you are merging.
+What do you set "upstream" to in your flow?
 
-Ah, so that's where the funny
+I agree that push.default=current is the best setting for you. But I
+think 'tracking' would not be a silly choice either: if you collaborate
+on topic branches, it makes sense to set the upstream to the remote
+topic branch, so that "git pull" gets changes in the same branch (and
+you may need to "git pull origin master" to sync with the master branch
+from time to time). If you create a new branch with, say
 
-	By Jonathan Nieder
-	via Jonathan Nieder
+  git checkout -b new-branch
 
-lines in
+then the new branch has no upstream configured, and the next push
+without argument will fail, pointing you to the right command for your
+case:
 
-	Merge branch 'jn/maint-fast-import-empty-ls' into pu
+  $ git push
+  fatal: The current branch new-branch has no upstream branch.
+  To push the current branch and set the remote as upstream, use
+  
+      git push --set-upstream origin new-branch
 
-	By Jonathan Nieder
-	via Jonathan Nieder
-	* jn/maint-fast-import-empty-ls:
-	  fast-import: don't allow 'ls' of path with empty components
-	  fast-import: leakfix for 'ls' of dirty trees
+If you do a "git checkout new-branch" when "origin/new-branch" exists
+and "new-branch" doesn't, the upstream is configured to point to the
+remote "new-branch".
 
-come from.  As a person reading the history, I admit I don't like it.
-I enjoyed being able to get a simple overview at a higher level of
-what has been happening in "pu" with "git log --merges junio/pu" or
-"git log --first-parent junio/pu", and these extra lines before and
-adjacent to the "* name of topic:" header interfere with that.
+In both cases, the upstream is configured so that push.default=current
+do the same thing as push.default=upstream, so you don't really care
+which value is taken.
 
-By contrast, the
-
-	Merge branch 'for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/mason/linux-btrfs
-
-	Pull btrfs updates from Chris Mason:
-	[more words about that here]
-
-	* 'for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/mason/linux-btrfs:
-	 Btrfs: fix casting error in scrub reada code
-	[...]
-
-descriptions in Linus's repo are very pleasant.  It's a subtle
-difference, but the extra whitespace and the way it presents the
-important bits like "Pull btrfs updates" before the mechanics "from
-Chris Mason" help.
-
-So I like the goal, but something about this execution does not seem
-to be working.  Sorry I have no better news or more concrete feedback
-to offer.
-
-Jonathan
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
