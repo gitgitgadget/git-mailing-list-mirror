@@ -1,124 +1,85 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: Re: stripping [PATCH] without losing later tags from mailed patches (Re: [ 02/12] Remove COMPAT_IA32 support)
-Date: Mon, 12 Mar 2012 17:41:49 +0100
-Message-ID: <87aa3l4vqq.fsf@thomas.inf.ethz.ch>
-References: <20120312002046.041448832@1wt.eu>
-	<1331514446.3022.140.camel@deadeye> <20120312024948.GB4650@kroah.com>
-	<20120312063027.GB8971@1wt.eu> <20120312064855.GB16820@burratino>
-	<20120312085820.GA11569@1wt.eu> <20120312152004.GB9380@kroah.com>
-	<20120312152453.GB12405@1wt.eu>
+From: Sassy Natan <sassyn@gmail.com>
+Subject: GIT & Symbolic Links
+Date: Mon, 12 Mar 2012 18:44:46 +0200
+Message-ID: <CACHQFzEJATc2hiSdAgoGg3vssQ-CShF+89TOkzVwaf_ujYy+3w@mail.gmail.com>
+References: <CACHQFzEqe-SwpCgjgGRDdzcUQW_+8-TdLsRV6KbKorvq7dJi+g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Cc: Greg KH <greg@kroah.com>, Jonathan Nieder <jrnieder@gmail.com>,
-	Ben Hutchings <ben@decadent.org.uk>,
-	<linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>,
-	<git@vger.kernel.org>, Thomas Rast <trast@student.ethz.ch>
-To: Willy Tarreau <w@1wt.eu>
-X-From: linux-kernel-owner@vger.kernel.org Mon Mar 12 17:41:59 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=ISO-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 12 17:45:17 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1S78Jp-0006C6-Vy
-	for glk-linux-kernel-3@plane.gmane.org; Mon, 12 Mar 2012 17:41:58 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1S78Mz-0007sQ-Jx
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 17:45:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753979Ab2CLQlx (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 12 Mar 2012 12:41:53 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:46686 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753526Ab2CLQlv (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 12 Mar 2012 12:41:51 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 12 Mar
- 2012 17:41:50 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 12 Mar
- 2012 17:41:50 +0100
-In-Reply-To: <20120312152453.GB12405@1wt.eu> (Willy Tarreau's message of "Mon,
-	12 Mar 2012 16:24:53 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1753875Ab2CLQpJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Mar 2012 12:45:09 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:62493 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752343Ab2CLQpH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2012 12:45:07 -0400
+Received: by bkcik5 with SMTP id ik5so2792742bkc.19
+        for <git@vger.kernel.org>; Mon, 12 Mar 2012 09:45:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=stgEg2i5CXkvXF7Az3inWTH7CMdxDm38gadyyX8H1Ws=;
+        b=ci9TDbXT5inPtGbe7osmieyDSvV3tWglQc2o+pNAp0gY4eL9MUf8BUPorJsOYrw8UY
+         Ti4N46wmfVzZj0oGqrf7aDmj/f+jKb9kCHERx5VR/G50En2naIcCG8bRL2hjyAf+uVCa
+         xkdIcolXV0y1kUhtWqXDHfpuoQLAD9XCWyYC3TzE5ebXtr6wVogD5cF/Ad818dNwMDDo
+         +cSle+4b5GAe5Iv+bRIJ6DYb6mDEjg2eVfr1Xk9w++PAZ0Nwlti7+zmf8Fr6jrKWBxNf
+         6p/gc5WSMIxNzQEAqMvSV3ecuHbM6GPH2QrcsJvHP+SmeRUGtKqMdZ4HpmdBsuGo+fri
+         HlJQ==
+Received: by 10.204.156.23 with SMTP id u23mr5080116bkw.18.1331570706229; Mon,
+ 12 Mar 2012 09:45:06 -0700 (PDT)
+Received: by 10.204.53.81 with HTTP; Mon, 12 Mar 2012 09:44:46 -0700 (PDT)
+In-Reply-To: <CACHQFzEqe-SwpCgjgGRDdzcUQW_+8-TdLsRV6KbKorvq7dJi+g@mail.gmail.com>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192904>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192905>
 
-[+cc Junio because of backwards-compat issues]
+Hi Group,
 
-Willy Tarreau <w@1wt.eu> writes:
+I'm consider myself as a new baby when it come to GiT.
+But I have just migrate my users from SVN to GIT and I have some
+questions in mind I want to share with you.
 
-> On Mon, Mar 12, 2012 at 08:20:04AM -0700, Greg KH wrote:
->> 
->> I don't see a -b option to 'git am' in the manpage, am I missing
->> something here?
->
-> It's in the master tree only right now, and the option is "--keep-non-patch"
-> (could have been shorter). Currently rebuilding to test it :-)
+Is it possible to do the following:
 
-Exactly.
+Say I have a really big GiT repo (something around 1GB) name DEV.
+In the SVN days, each of my developers (100 Users) had to clone a
+local copy of the DEV Repo in his home folder, so total of 100GB was
+used in my shared storage (NFS Drive) where something around 85% was
+actually just a copy of the same files.
 
-The problem with -b is that it's a backwards-compatibility shorthand for
---binary, which used to pass --allow-binary-replacement (or --binary) to
-git-apply.  However, that option was obsoleted in 2b6eef9 (Make apply
---binary a no-op., 2006-09-06) and has been a no-op for over 5 years.
-It has also not been documented since cb3a160 (git-am: ignore --binary
-option, 2008-08-09).
+When I used the De-Duplication function (Under ZFS File System) I
+could easy see how the volume is shrinking, but I more inserting in
+different kind of solution, now when it comes to GIT.
 
-So perhaps we can safely claim -b for --keep-non-patch, like so:
+So for the example let's consider that user A clone the DEV GIT Repo
+into his/her home folder (/home/A/DEV)
+User B want to clone the same Repo. But now, I don't want user B to
+clone the all tree and files, but instead to have a symbolic links to
+the /home/A/DEV folder.
+All files and directories in the /home/B/DEV will be a links to the /home/A/DEV.
 
-diff --git i/Documentation/git-am.txt w/Documentation/git-am.txt
-index ee6cca2..9ec9313 100644
---- i/Documentation/git-am.txt
-+++ w/Documentation/git-am.txt
-@@ -40,6 +40,7 @@ OPTIONS
- --keep::
- 	Pass `-k` flag to 'git mailinfo' (see linkgit:git-mailinfo[1]).
- 
-+-b::
- --keep-non-patch::
- 	Pass `-b` flag to 'git mailinfo' (see linkgit:git-mailinfo[1]).
- 
-diff --git i/git-am.sh w/git-am.sh
-index 0bd290b..4b071de 100755
---- i/git-am.sh
-+++ w/git-am.sh
-@@ -9,13 +9,13 @@ git am [options] [(<mbox>|<Maildir>)...]
- git am [options] (--resolved | --skip | --abort)
- --
- i,interactive   run interactively
--b,binary*       (historical option -- no-op)
-+binary*       (historical option -- no-op)
- 3,3way          allow fall back on 3way merging if needed
- q,quiet         be quiet
- s,signoff       add a Signed-off-by line to the commit message
- u,utf8          recode into utf8 (default)
- k,keep          pass -k flag to git-mailinfo
--keep-non-patch  pass -b flag to git-mailinfo
-+b,keep-non-patch pass -b flag to git-mailinfo
- keep-cr         pass --keep-cr flag to git-mailsplit for mbox format
- no-keep-cr      do not pass --keep-cr flag to git-mailsplit independent of am.keepcr
- c,scissors      strip everything before a scissors line
-@@ -379,7 +379,7 @@ do
- 	case "$1" in
- 	-i|--interactive)
- 		interactive=t ;;
--	-b|--binary)
-+	--binary)
- 		: ;;
- 	-3|--3way)
- 		threeway=t ;;
-@@ -391,7 +391,7 @@ do
- 		utf8= ;;
- 	-k|--keep)
- 		keep=t ;;
--	--keep-non-patch)
-+	-b|--keep-non-patch)
- 		keep=b ;;
- 	-c|--scissors)
- 		scissors=t ;;
+Once user B actually want to change a file, ?somehow? the git brake
+the link, and have a local copy of that specific file.
+When the file is push back the link become back.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+While trying to get some feedback in the IRC roon, some users point me
+to git-annex and unionfs.
+Both project seems to be cool, git-annex really have nice options, but
+I don't see how this going to help me.
+
+Regarding unionfs - well I'm still not sure.
+
+Maybe someone can help here...
+
+Thanks
