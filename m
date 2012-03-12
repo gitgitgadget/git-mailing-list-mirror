@@ -1,71 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Passing commit IDs to git-archive
-Date: Mon, 12 Mar 2012 07:47:42 -0400
-Message-ID: <20120312114742.GC12921@sigill.intra.peff.net>
-References: <8c6d921d-9e8e-4caf-bc04-b1d2cfdd294f@mail>
- <8fb14091-99dc-4383-9cab-5bf508e0a554@mail>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: Re: [PATCH v2 2/2] index-pack: support multithreaded delta resolving
+Date: Mon, 12 Mar 2012 12:47:55 +0100
+Message-ID: <87boo282hg.fsf@thomas.inf.ethz.ch>
+References: <1331519549-28090-1-git-send-email-pclouds@gmail.com>
+	<1331519549-28090-3-git-send-email-pclouds@gmail.com>
+	<87y5r684t6.fsf@thomas.inf.ethz.ch>
+	<CACsJy8CyLgKrEAriS-uLU9qG6ahBeQ6qLbvHiLvsbTjMZsMW+g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git discussion list <git@vger.kernel.org>
-To: Stephen Bash <bash@genarts.com>
-X-From: git-owner@vger.kernel.org Mon Mar 12 12:47:56 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 12 12:48:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S73jC-0000Xi-Bi
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 12:47:50 +0100
+	id 1S73jP-0000fX-2i
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 12:48:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752261Ab2CLLrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Mar 2012 07:47:46 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47623
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751780Ab2CLLrp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2012 07:47:45 -0400
-Received: (qmail 15224 invoked by uid 107); 12 Mar 2012 11:47:55 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 12 Mar 2012 07:47:55 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Mar 2012 07:47:42 -0400
-Content-Disposition: inline
-In-Reply-To: <8fb14091-99dc-4383-9cab-5bf508e0a554@mail>
+	id S1753402Ab2CLLr7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Mar 2012 07:47:59 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:7386 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752709Ab2CLLr6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Mar 2012 07:47:58 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 12 Mar
+ 2012 12:47:54 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 12 Mar
+ 2012 12:47:55 +0100
+In-Reply-To: <CACsJy8CyLgKrEAriS-uLU9qG6ahBeQ6qLbvHiLvsbTjMZsMW+g@mail.gmail.com>
+	(Nguyen Thai Ngoc Duy's message of "Mon, 12 Mar 2012 18:42:14 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192857>
 
-On Fri, Mar 09, 2012 at 05:14:05PM -0500, Stephen Bash wrote:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> on Mac OS 10.6.8 (obviously this is local testing, the goal is to use
-> ssh remotely).  After parsing the error "no such ref" I attempted the
-> same operation using master as the tree-ish and archive worked as
-> expected (either specifying the path separately or using the colon
-> syntax to reference the tree directly).  Is there a reason git-archive
-> requires a named ref rather than just a commit (or tree) ID?
+> 2012/3/12 Thomas Rast <trast@inf.ethz.ch>:
+>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes=
+:
+>>
+>>> This puts delta resolving on each base on a separate thread, one ba=
+se
+>>> cache per thread. Per-thread data is grouped in struct thread_local=
+=2E
+>>> When running with nr_threads =3D=3D 1, no pthreads calls are made. =
+The
+>>> system essentially runs in non-thread mode.
+>>
+>> As discussed when we took the git-grep measurements, it may be
+>> interesting to have a way to run 1 thread. =C2=A0Can you put in such=
+ an
+>> option?
+>
+> Sorry I wasn't clear, nr_threads =3D=3D 1 is equivalent to --threads=3D=
+1. So
+> yes it supports running in non-thread mode.
 
-Yes; generally git repositories do not allow clients to access arbitrary
-sha1s. Instead, they require that the requested objects be accessible by
-a ref.
+Well, in that case I wasn't clear: I meant that there should be a way t=
+o
+run with the whole threading machinery enabled, but still only have one
+thread (doing the work, possibly having another that fills the queue).
 
-git-archive was not properly enforcing this, and was changed recently to
-allow only refs by name, as well as sub-trees of refs (e.g.,
-HEAD:subdir/). That means we do disallow an arbitrary commit or tree
-sha1, even if it is reachable from the advertised refs.
+That allows us to see how big the overhead is.
 
-> would it be difficult to patch git-upload-archive to use the IDs?  I
-> could use tags for the ref, but in my case would result in almost
-> every commit being a tag which seems wasteful.
+>> Oh, and could you write a perf test for this? :-)
+>
+> Yeah, about that, index-pack is mostly used as part of git-fetch or
+> git-clone. Maybe we need to add --threads to those commands too, then
+> we can see how clone/fetch performs. I'll need such tests anyway if
+> I'm going to push for cheaper connectivity check in git-fetch in
+> another thread.
+>
+> I guess one test with --threads=3D1, one with threads=3D2 and one wit=
+hout
+> --threads. Any ideas? We can try testing it on half available cores,
+> all cores, double available cores, but that would require exporting
+> online_cpus(), perhaps via test command. I didn't see grep --threads
+> perf test either (wanted to use it as template..)
 
-Doing it right is a bit expensive, because in the general case (somebody
-requested a tree sha1), we would need to traverse every tree of every
-commit to see if it is reachable.
+A simple one is in t/perf/p7810-grep.sh (in master already).  It doesn'=
+t
+test threads though.  For index-pack you'll also have to find a good wa=
+y
+to choose a pack, perhaps simply the biggest one in the repo.
 
-We could potentially implement a more restricted set of rules, allowing
-"<commit>:<subdir>" and checking that <commit> is reachable.  That would
-disallow an arbitrary tree sha1, but I suspect it would cover the common
-use case (i.e., you want to get the tree, or even a subtree, of a
-particular revision).
-
--Peff
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
