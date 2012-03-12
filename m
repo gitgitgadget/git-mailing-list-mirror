@@ -1,196 +1,277 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCH 2/2] notes-merge: use opendir/readdir instead of using read_directory()
-Date: Mon, 12 Mar 2012 15:57:13 +0100
-Message-ID: <1331564233-1969-2-git-send-email-johan@herland.net>
-References: <87boo3m50x.fsf@zancas.localnet>
- <1331564233-1969-1-git-send-email-johan@herland.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] xdiff: load full words in the inner loop of xdl_hash_record
+Date: Mon, 12 Mar 2012 16:10:13 +0100
+Message-ID: <1e11b1466ea3209cfe74e1dd8dff45f8666e942b.1331564754.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johan Herland <johan@herland.net>, gitster@pobox.com,
-	david@tethera.net, pclouds@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 12 15:57:44 2012
+Content-Type: text/plain
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 12 16:10:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S76gu-0002sW-O3
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 15:57:41 +0100
+	id 1S76tG-0001iv-Ub
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 16:10:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755702Ab2CLO5d convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Mar 2012 10:57:33 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:56880 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755692Ab2CLO5d (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2012 10:57:33 -0400
-Received: by wibhq7 with SMTP id hq7so3882007wib.1
-        for <git@vger.kernel.org>; Mon, 12 Mar 2012 07:57:30 -0700 (PDT)
-Received: by 10.216.132.6 with SMTP id n6mr7699986wei.26.1331564250571;
-        Mon, 12 Mar 2012 07:57:30 -0700 (PDT)
-Received: from gamma.cisco.com (64-103-25-233.cisco.com. [64.103.25.233])
-        by mx.google.com with ESMTPS id k6sm34514885wiy.7.2012.03.12.07.57.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 12 Mar 2012 07:57:27 -0700 (PDT)
-X-Mailer: git-send-email 1.7.9.2
-In-Reply-To: <1331564233-1969-1-git-send-email-johan@herland.net>
+	id S1755786Ab2CLPKW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Mar 2012 11:10:22 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:39345 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755825Ab2CLPKS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2012 11:10:18 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 12 Mar
+ 2012 16:10:14 +0100
+Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 12 Mar
+ 2012 16:10:13 +0100
+X-Mailer: git-send-email 1.7.10.rc0.230.g16d90
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192873>
 
-notes_merge_commit() only needs to list all entries (non-recursively)
-under a directory, which can be easily accomplished with
-opendir/readdir and would be more lightweight than read_directory().
+Redo the hashing loop in xdl_hash_record in a way that loads an entire
+'long' at a time, using masking tricks to see when and where we found
+the terminating '\n'.
 
-read_directory() is designed to list paths inside a working
-directory. Using it outside of its scope may lead to undesired effects.
+I stole inspiration and code from the posts by Linus Torvalds around
 
-Apparently, one of the undesired effects of read_directory() is that it
-doesn't deal with being given absolute paths. This creates problems for
-notes_merge_commit() when git_path() returns an absolute path, which
-happens when the current working directory is in a subdirectory of the
-=2Egit directory.
+  https://lkml.org/lkml/2012/3/2/452
+  https://lkml.org/lkml/2012/3/5/6
 
-Originally-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
-Updated-by:  Johan Herland <johan@herland.net>
-Signed-off-by: Johan Herland <johan@herland.net>
+His method reads the buffers in sizeof(long) increments, and may thus
+overrun it by at most sizeof(long)-1 bytes before it sees the final
+newline (or hits the buffer length check).  I considered padding out
+all buffers by a suitable amount to "catch" the overrun, but
+
+* this does not work for mmap()'d buffers: if you map 4096+8 bytes
+  from a 4096 byte file, accessing the last 8 bytes results in a
+  SIGBUS on my machine; and
+
+* it would also be extremely ugly because it intrudes deep into the
+  unpacking machinery.
+
+So I adapted it to not read beyond the buffer at all.  Instead, it
+reads the final partial word byte-by-byte and strings it together.
+Then it can use the same logic as before to finish the hashing.
+
+So far we enable this only on x86; perhaps other platforms could also
+benefit.  However it does NOT work on big-endian systems!
+
+The resulting speedup is about 7% in 'log -p' workloads:
+
+ Test                                  t/proper-xdl-speedup   origin/master             
+ -------------------------------------------------------------------------------------
+ 4000.1: log -3000 (baseline)          0.08(0.06+0.01)        0.08(0.07+0.01) +3.0%     
+ 4000.2: log --raw -3000 (tree-only)   0.40(0.34+0.04)        0.40(0.34+0.05) -1.6%     
+ 4000.3: log -p -3000 (Myers)          1.63(1.51+0.10)        1.75(1.64+0.10) +7.4%***  
+ 4000.4: log -p -3000 --histogram      1.60(1.50+0.09)        1.73(1.63+0.08) +8.4%***  
+ 4000.5: log -p -3000 --patience       1.95(1.83+0.10)        2.07(1.96+0.10) +6.5%***  
+ -------------------------------------------------------------------------------------
+ Significance hints:  '.' 0.1  '*' 0.05  '**' 0.01  '***' 0.001
+
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
 
-(sending again in the correct thread. Sorry for the screwup.)
+Also definitely post-v1.7.10 material, but I figure many people will
+be interested.  Since it's such a central part of much of git, it's
+also quite important that it gets tested heavily.
 
-This is a resurrection of pclouds' patch 2/11 in a patch series sent
-last October for rewriting read_directory(). This patch doesn't
-actually touch read_directory(), but instead rewrites
-notes_merge_commit() to use opendir()/readdir() instead of
-read_directory(). Since the usage of read_directory() is what caused
-the bug that David found (in the previous patch), this rewrite happens
-to fix that bug as well.
+For blame I get the following speedups:
+
+ Test                                  t/proper-xdl-speedup   origin/master             
+ ---------------------------------------------------------------------------------------
+ 8002.2: blame                         1.93(1.80+0.12)        1.92(1.79+0.12) -0.8%*    
+ 8002.3: blame -M                      2.05(1.91+0.12)        2.04(1.90+0.12) -0.4%     
+ 8002.4: blame -C                      2.26(2.11+0.13)        2.24(2.10+0.12) -1.0%*    
+ 8002.5: blame -C -C                   3.34(3.15+0.18)        3.47(3.28+0.18) +3.9%***  
+ 8002.6: blame -C -C -C                13.76(13.29+0.42)      14.72(14.27+0.41) +7.0%***
+ ---------------------------------------------------------------------------------------
+ Significance hints:  '.' 0.1  '*' 0.05  '**' 0.01  '***' 0.001
+
+This is using p8002 and the t-test from the perf series I am sending
+out in parallel.  It strikes me as odd that blame does not benefit
+unless it uses at least -C -C; my understanding is that blame consists
+largely of diffing.  Apparently there's more to it...
 
 
-Have fun! :)
+ Makefile       |   12 +++++++
+ xdiff/xutils.c |  108 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 120 insertions(+)
 
-=2E..Johan
-
- notes-merge.c                         |   50 ++++++++++++++++++++-----=
---------
- t/t3310-notes-merge-manual-resolve.sh |    2 +-
- 2 files changed, 31 insertions(+), 21 deletions(-)
-
-diff --git a/notes-merge.c b/notes-merge.c
-index fb0832f..3a16af2 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -687,51 +687,60 @@ int notes_merge_commit(struct notes_merge_options=
- *o,
- {
- 	/*
- 	 * Iterate through files in .git/NOTES_MERGE_WORKTREE and add all
--	 * found notes to 'partial_tree'. Write the updates notes tree to
-+	 * found notes to 'partial_tree'. Write the updated notes tree to
- 	 * the DB, and commit the resulting tree object while reusing the
- 	 * commit message and parents from 'partial_commit'.
- 	 * Finally store the new commit object SHA1 into 'result_sha1'.
- 	 */
--	struct dir_struct dir;
--	char *path =3D xstrdup(git_path(NOTES_MERGE_WORKTREE "/"));
--	int path_len =3D strlen(path), i;
-+	DIR *dir;
-+	struct dirent *e;
-+	struct strbuf path =3D STRBUF_INIT;
- 	char *msg =3D strstr(partial_commit->buffer, "\n\n");
- 	struct strbuf sb_msg =3D STRBUF_INIT;
-+	int baselen;
-
-+	strbuf_addstr(&path, git_path(NOTES_MERGE_WORKTREE));
- 	if (o->verbosity >=3D 3)
--		printf("Committing notes in notes merge worktree at %.*s\n",
--			path_len - 1, path);
-+		printf("Committing notes in notes merge worktree at %s\n",
-+			path.buf);
-
- 	if (!msg || msg[2] =3D=3D '\0')
- 		die("partial notes commit has empty message");
- 	msg +=3D 2;
-
--	memset(&dir, 0, sizeof(dir));
--	read_directory(&dir, path, path_len, NULL);
--	for (i =3D 0; i < dir.nr; i++) {
--		struct dir_entry *ent =3D dir.entries[i];
-+	dir =3D opendir(path.buf);
-+	if (!dir)
-+		die_errno("could not open %s", path.buf);
+diff --git a/Makefile b/Makefile
+index be1957a..13ed1b1 100644
+--- a/Makefile
++++ b/Makefile
+@@ -288,6 +288,11 @@ all::
+ # dependency rules.
+ #
+ # Define NATIVE_CRLF if your platform uses CRLF for line endings.
++#
++# Define XDL_FAST_HASH to use an alternative line-hashing method in
++# the diff algorithm.  It gives a nice speedup if your processor has
++# fast unaligned word loads.  Does NOT work on big-endian systems!
++# Enabled by default on x86_64.
+ 
+ GIT-VERSION-FILE: FORCE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+@@ -864,6 +869,9 @@ EXTLIBS =
+ # because maintaining the nesting to match is a pain.  If
+ # we had "elif" things would have been much nicer...
+ 
++ifeq ($(uname_M),x86_64)
++	XDL_FAST_HASH = YesPlease
++endif
+ ifeq ($(uname_S),OSF1)
+ 	# Need this for u_short definitions et al
+ 	BASIC_CFLAGS += -D_OSF_SOURCE
+@@ -1737,6 +1745,10 @@ ifndef NO_MSGFMT_EXTENDED_OPTIONS
+ 	MSGFMT += --check --statistics
+ endif
+ 
++ifneq (,$(XDL_FAST_HASH))
++	BASIC_CFLAGS += -DXDL_FAST_HASH
++endif
 +
-+	strbuf_addch(&path, '/');
-+	baselen =3D path.len;
-+	while ((e =3D readdir(dir)) !=3D NULL) {
- 		struct stat st;
--		const char *relpath =3D ent->name + path_len;
- 		unsigned char obj_sha1[20], blob_sha1[20];
-
--		if (ent->len - path_len !=3D 40 || get_sha1_hex(relpath, obj_sha1)) =
-{
-+		if (is_dot_or_dotdot(e->d_name))
-+			continue;
-+
-+		if (strlen(e->d_name) !=3D 40 || get_sha1_hex(e->d_name, obj_sha1)) =
-{
- 			if (o->verbosity >=3D 3)
--				printf("Skipping non-SHA1 entry '%s'\n",
--								ent->name);
-+				printf("Skipping non-SHA1 entry '%s%s'\n",
-+					path.buf, e->d_name);
- 			continue;
- 		}
-
-+		strbuf_addstr(&path, e->d_name);
- 		/* write file as blob, and add to partial_tree */
--		if (stat(ent->name, &st))
--			die_errno("Failed to stat '%s'", ent->name);
--		if (index_path(blob_sha1, ent->name, &st, HASH_WRITE_OBJECT))
--			die("Failed to write blob object from '%s'", ent->name);
-+		if (stat(path.buf, &st))
-+			die_errno("Failed to stat '%s'", path.buf);
-+		if (index_path(blob_sha1, path.buf, &st, HASH_WRITE_OBJECT))
-+			die("Failed to write blob object from '%s'", path.buf);
- 		if (add_note(partial_tree, obj_sha1, blob_sha1, NULL))
- 			die("Failed to add resolved note '%s' to notes tree",
--			    ent->name);
-+			    path.buf);
- 		if (o->verbosity >=3D 4)
- 			printf("Added resolved note for object %s: %s\n",
- 				sha1_to_hex(obj_sha1), sha1_to_hex(blob_sha1));
-+		strbuf_setlen(&path, baselen);
- 	}
-
- 	strbuf_attach(&sb_msg, msg, strlen(msg), strlen(msg) + 1);
-@@ -740,7 +749,8 @@ int notes_merge_commit(struct notes_merge_options *=
-o,
- 	if (o->verbosity >=3D 4)
- 		printf("Finalized notes merge commit: %s\n",
- 			sha1_to_hex(result_sha1));
--	free(path);
-+	strbuf_release(&path);
-+	closedir(dir);
- 	return 0;
+ ifeq ($(TCLTK_PATH),)
+ NO_TCLTK=NoThanks
+ endif
+diff --git a/xdiff/xutils.c b/xdiff/xutils.c
+index 0de084e..415e08a 100644
+--- a/xdiff/xutils.c
++++ b/xdiff/xutils.c
+@@ -20,6 +20,8 @@
+  *
+  */
+ 
++#include <limits.h>
++#include <assert.h>
+ #include "xinclude.h"
+ 
+ 
+@@ -276,6 +278,111 @@ static unsigned long xdl_hash_record_with_whitespace(char const **data,
+ 	return ha;
  }
-
-diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merg=
-e-manual-resolve.sh
-index 0c531c3..d6d6ac6 100755
---- a/t/t3310-notes-merge-manual-resolve.sh
-+++ b/t/t3310-notes-merge-manual-resolve.sh
-@@ -558,7 +558,7 @@ foo
- bar
- EOF
-
--test_expect_failure 'switch cwd before committing notes merge' '
-+test_expect_success 'switch cwd before committing notes merge' '
- 	git notes add -m foo HEAD &&
- 	git notes --ref=3Dother add -m bar HEAD &&
- 	test_must_fail git notes merge refs/notes/other &&
---
-1.7.9.2
+ 
++#ifdef XDL_FAST_HASH
++
++#define ONEBYTES	0x0101010101010101ul
++#define NEWLINEBYTES	0x0a0a0a0a0a0a0a0aul
++#define HIGHBITS	0x8080808080808080ul
++
++/* Return the high bit set in the first byte that is a zero */
++static inline unsigned long has_zero(unsigned long a)
++{
++	return ((a - ONEBYTES) & ~a) & HIGHBITS;
++}
++
++#if __WORDSIZE == 64
++
++/*
++ * Jan Achrenius on G+: microoptimized version of
++ * the simpler "(mask & ONEBYTES) * ONEBYTES >> 56"
++ * that works for the bytemasks without having to
++ * mask them first.
++ */
++static inline long count_masked_bytes(unsigned long mask)
++{
++	return mask*0x0001020304050608 >> 56;
++}
++
++#else	/* 32-bit case */
++
++/* Modified Carl Chatfield G+ version for 32-bit */
++static inline long count_masked_bytes(long mask)
++{
++	/*
++	 * (a) gives us
++	 *   -1 (0, ff), 0 (ffff) or 1 (ffffff)
++	 * (b) gives us
++	 *   0 for 0, 1 for (ff ffff ffffff)
++	 * (a+b+1) gives us
++	 *   correct 0-3 bytemask count result
++	 */
++	long a = (mask-256) >> 23;
++	long b = mask & 1;
++	return a + b + 1;
++}
++
++#endif
++
++unsigned long xdl_hash_record(char const **data, char const *top, long flags) {
++	unsigned long hash = 5381;
++	unsigned long a = 0, mask = 0;
++	char const *ptr = *data;
++	char const *end = top-sizeof(unsigned long)+1;
++
++	if (flags & XDF_WHITESPACE_FLAGS)
++		return xdl_hash_record_with_whitespace(data, top, flags);
++
++	ptr -= sizeof(unsigned long);
++	do {
++		hash += hash << 5;
++		hash ^= a;
++		ptr += sizeof(unsigned long);
++		if (ptr >= end)
++			break;
++		a = *(unsigned long *)ptr;
++		/* Do we have any '\n' bytes in this word? */
++		mask = has_zero(a ^ NEWLINEBYTES);
++	} while (!mask);
++
++	if (ptr >= end) {
++		/*
++		 * There is only a partial word left at the end of the
++		 * buffer. Because we may work with a memory mapping,
++		 * we have to grab the rest byte by byte instead of
++		 * blindly reading it.
++		 */
++		char const *p;
++		for (p = top-1; p >= ptr; p--)
++			a = (a << 8) + *p;
++		mask = has_zero(a ^ NEWLINEBYTES);
++		if (!mask)
++			/*
++			 * No '\n' found in the partial word.  Make a
++			 * mask that matches what we read.
++			 */
++			mask = 1UL << (8*(top-ptr)+7);
++	}
++
++	/* The mask *below* the first high bit set */
++	mask = (mask - 1) & ~mask;
++	mask >>= 7;
++	hash += hash << 5;
++	hash ^= a & mask;
++
++	/* Advance past the last (possibly partial) word */
++	ptr += count_masked_bytes(mask);
++
++	if (ptr < top) {
++		assert (*ptr == '\n');
++		ptr++;
++	}
++
++	*data = ptr;
++
++	return hash;
++}
++
++#else /* XDL_FAST_HASH */
+ 
+ unsigned long xdl_hash_record(char const **data, char const *top, long flags) {
+ 	unsigned long ha = 5381;
+@@ -293,6 +400,7 @@ unsigned long xdl_hash_record(char const **data, char const *top, long flags) {
+ 	return ha;
+ }
+ 
++#endif /* XDL_FAST_HASH */
+ 
+ unsigned int xdl_hashbits(unsigned int size) {
+ 	unsigned int val = 1, bits = 0;
+-- 
+1.7.10.rc0.230.g16d90
