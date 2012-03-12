@@ -1,91 +1,106 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/2] t0303: resurrect commit message as test documentation
-Date: Mon, 12 Mar 2012 15:43:40 -0500
-Message-ID: <20120312204340.GA10661@burratino>
-References: <1331553907-19576-1-git-send-email-zbyszek@in.waw.pl>
- <1331553907-19576-3-git-send-email-zbyszek@in.waw.pl>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: Re*: [PATCH/RFC] Change t0204-gettext-reencode-sanity.sh to pass
+ under Mac OSX
+Date: Mon, 12 Mar 2012 21:58:10 +0100
+Message-ID: <4F5E6362.7050001@web.de>
+References: <201203052039.16893.tboegi@web.de> <7vzkbuzss7.fsf@alter.siamese.dyndns.org> <CACBZZX4P=JSdP_vLOMx5r3R+YO8SMSs5W8+vf2DMibKMwBx_Vg@mail.gmail.com> <7vfwdkm6xs.fsf@alter.siamese.dyndns.org> <CACBZZX4q0Da=H=-fO86f2YN+CmE25QfEgAp8Efmdyf65CGckiQ@mail.gmail.com> <7v4nu0m5tb.fsf@alter.siamese.dyndns.org> <CACBZZX6W=-ZchaCsLGdpZ420L_9=w8AHD8BNVb7XV5M-hc0Qhg@mail.gmail.com> <7vd38okmp0.fsf@alter.siamese.dyndns.org> <7vlin94dbc.fsf_-_@alter.siamese.dyndns.org> <4F5BD585.5050007@web.de> <4F5CC08C.90703@web.de> <7vzkbnvt6m.fsf@alter.siamese.dyndns.org> <4F5D14CD.6080507@web.de> <7vzkbmvmvx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com, Jeff King <peff@peff.net>
-To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Mon Mar 12 21:44:00 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 12 21:58:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7C63-00012F-Bx
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 21:43:59 +0100
+	id 1S7CK0-0001Lw-DH
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 21:58:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932103Ab2CLUnz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Mar 2012 16:43:55 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:36930 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932089Ab2CLUny convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Mar 2012 16:43:54 -0400
-Received: by iagz16 with SMTP id z16so7349304iag.19
-        for <git@vger.kernel.org>; Mon, 12 Mar 2012 13:43:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=pUFIaaAFx7Bz8ul1OB0J7rjH0Mtpxv5AbFxNWLrXpD8=;
-        b=VRETI54XochR5spKYyd4ZcAf9WoF/0/lvwGQAlL4GkACfQYGnPYgqewwtfn4jbXfZw
-         XWy0RbOAh9fURs47igux5qpwtYOorf6DaB8scANF8PBPTA/6kQUIB21xvAHRsoDa8Ypa
-         3M7m0iFKOQZ1mOa644N2khkOvmo4wY5pTHp5o/Rbu00letLtc8w7n54IEwuLdA5HhPcj
-         aKnS+h8bXZVx1MUO4Twpjsp9Jk+OYN/eBGYU9Ep4a9UDfHot0cPhbKsMRyGRSUXZY/J0
-         aE8oMyZTjpR21CmTEMhYl4runKo2GVTrX6gMZ0zMkJ68uEONapX4jt5Vct5e2N1ssd24
-         tBBQ==
-Received: by 10.50.179.40 with SMTP id dd8mr742505igc.29.1331585034050;
-        Mon, 12 Mar 2012 13:43:54 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id dl10sm13387022igb.9.2012.03.12.13.43.52
-        (version=SSLv3 cipher=OTHER);
-        Mon, 12 Mar 2012 13:43:53 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1331553907-19576-3-git-send-email-zbyszek@in.waw.pl>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757295Ab2CLU6T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Mar 2012 16:58:19 -0400
+Received: from smtp-out11.han.skanova.net ([195.67.226.200]:43149 "EHLO
+	smtp-out11.han.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756872Ab2CLU6S (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Mar 2012 16:58:18 -0400
+Received: from birne.lan (194.22.188.61) by smtp-out11.han.skanova.net (8.5.133) (authenticated as tboegi@telia.com)
+        id 4F5CB98E000925F8; Mon, 12 Mar 2012 21:58:10 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <7vzkbmvmvx.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192944>
 
-Hi,
+[snip]
+ (. gettext.sh; eval_gettext frotz; echo $?)
+frotz0
 
-Zbigniew J=C4=99drzejewski-Szmek wrote:
+> What is curious about your system is that git-sh-i18n.sh should have
+> figured out that you want INTERNAL_GETTEXT_SH_SCHEME to be gnu by
+> itself, without any need for "make USE_GETTEXT_SCHEME=gnu", with
+> these lines:
+> 
+>                 ...
+>         elif type gettext.sh >/dev/null 2>&1
+>         then
+>                 # GNU libintl's gettext.sh
+>                 GIT_INTERNAL_GETTEXT_SH_SCHEME=gnu
+>         elif test ...
+> 
+> as long as you have /sw/bin/gettext.sh on your PATH, that is.
+> 
+> So I am not sure what's broken.
+=====================
+When I run the following scriptlet, 
+extracted from git-sh-i18n
+=====================
+#!/bin/sh
+GIT_INTERNAL_GETTEXT_SH_SCHEME=fallthrough
+if test -n ""
+then
+	GIT_INTERNAL_GETTEXT_SH_SCHEME=""
+elif test -n "@@USE_FALLTHROUGH_GETTEXT_SCHEME@@$GIT_INTERNAL_GETTEXT_TEST_FALLBACKS"
+then
+		echo ": no probing necessary"
+elif test -n "$GIT_GETTEXT_POISON"
+then
+	echo GIT_INTERNAL_GETTEXT_SH_SCHEME=poison
+elif type gettext.sh >/dev/null 2>&1
+then
+	# GNU libintl's gettext.sh
+	echo GIT_INTERNAL_GETTEXT_SH_SCHEME=gnu
+elif test "$(gettext -h 2>&1)" = "-h"
+then
+	# gettext binary exists but no gettext.sh. likely to be a gettext
+	# binary on a Solaris or something that is not GNU libintl and
+	# lack eval_gettext.
+	echo GIT_INTERNAL_GETTEXT_SH_SCHEME=gettext_without_eval_gettext
+fi
+======================
+I get
+: no probing necessary
+=====================
 
-> --- a/t/t0303-credential-external.sh
-> +++ b/t/t0303-credential-external.sh
-> @@ -1,5 +1,23 @@
->  #!/bin/sh
-> =20
-> +# Test harness for external credential helpers
-> +#
-> +# This is a tool for authors of external helper tools to sanity-chec=
-k
-> +# their helpers. If you have written the "git-credential-foo" helper=
-,
-> +# you check it with:
-> +#
-> +# GIT_TEST_CREDENTIAL_HELPER=3Dfoo make t0303-credential-external.sh
-> +#
-> +# This assumes that your helper is capable of both storing and
-> +# retrieving credentials (some helpers may be read-only, and
-> +# they will fail these tests).
-> +#
-> +# If your helper supports time-based expiration with a
-> +# configurable timeout, you can test that feature with:
-> +#
-> +#  GIT_TEST_CREDENTIAL_HELPER_TIMEOUT=3D"foo --timeout=3D1" \
-> +#      make t0303-credential-external.sh
-> +
->  test_description=3D'external credential helper tests'
+The generated git-sh-i18n is identical under both Ubuntu and Mac OS X.
+(Except that Mac OS uses /Users instead of /home)
 
-Nice idea, but shouldn't this description be in test_description so I
-can view it by running "sh t0303-credential-external.sh --help"?
+And may be the diff between git-sh-i18n.sh and the generated git-sh-i18n can give a hint:
 
-Thanks,
-Jonathan
+ diff git-sh-i18n.sh git-sh-i18n
+13c13
+<       TEXTDOMAINDIR="@@LOCALEDIR@@"
+---
+>       TEXTDOMAINDIR="/Users/tb/share/locale"
+21c21
+< if test -n "@@USE_GETTEXT_SCHEME@@"
+---
+> if test -n ""
+23c23
+<       GIT_INTERNAL_GETTEXT_SH_SCHEME="@@USE_GETTEXT_SCHEME@@"
+---
+>       GIT_INTERNAL_GETTEXT_SH_SCHEME=""
