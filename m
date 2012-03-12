@@ -1,85 +1,84 @@
-From: Vincent van Ravesteijn <vfr@lyx.org>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: Edit a rerere conflict resolution
-Date: Mon, 12 Mar 2012 22:39:32 +0100
-Message-ID: <4F5E6D14.2060306@lyx.org>
-References: <4F5E4B20.5080709@lyx.org> <7vobs1r3kn.fsf@alter.siamese.dyndns.org> <4F5E5A77.1070605@lyx.org> <7vd38hr22e.fsf@alter.siamese.dyndns.org> <4F5E68C5.5070300@lyx.org> <7vipi9pkpw.fsf@alter.siamese.dyndns.org>
+Date: Mon, 12 Mar 2012 14:40:43 -0700 (PDT)
+Message-ID: <m34nttzeex.fsf@localhost.localdomain>
+References: <4F5E4B20.5080709@lyx.org>
+	<7vobs1r3kn.fsf@alter.siamese.dyndns.org> <4F5E5A77.1070605@lyx.org>
+	<7vd38hr22e.fsf@alter.siamese.dyndns.org> <4F5E68C5.5070300@lyx.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 12 22:39:45 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Vincent van Ravesteijn <vfr@lyx.org>
+X-From: git-owner@vger.kernel.org Mon Mar 12 22:40:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7Cxw-0007Qk-8X
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 22:39:40 +0100
+	id 1S7Cz4-000822-5k
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 22:40:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753490Ab2CLVjf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Mar 2012 17:39:35 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:43002 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752326Ab2CLVje (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2012 17:39:34 -0400
-Received: by eekc41 with SMTP id c41so1524267eek.19
-        for <git@vger.kernel.org>; Mon, 12 Mar 2012 14:39:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=Wu77WwD8eFz/c0xg084bkT4EWFv1lPDqS3MfNiyCwws=;
-        b=Hh4RdYeqLEBxVYYG2VewL6bjeI1xO6IRQqCD8smVqjg23ywHT0cuv1QHzUD7ozF6JL
-         72TdF6dyeGumW+YX78zhNDpVvu3pXFTg5mzl3/IIuxKjQoQ7bqTGRD4wqWLJZJK2HCy0
-         ryzw6TBNs0CMoDyb1fPNB4JlB3lv432/2sucEEMTEIjPYl96B1hdX9QCakp+dco8SZBH
-         6Qd/WsFn/8wSVW7DpnOjZ9INQ33DrhC5JNjbO2PxTvTjQqAuavNacezl3yCaUTY1eNap
-         ds3N0WblEsUVsy+0aDrNGJgXy5Lj1j2GzhsQ/MwdTQT0LX1D2yU/yIyjWlHr7OEXlZoT
-         uRKg==
-Received: by 10.213.27.22 with SMTP id g22mr1106945ebc.83.1331588373042;
-        Mon, 12 Mar 2012 14:39:33 -0700 (PDT)
-Received: from [192.168.1.3] (j175101.upc-j.chello.nl. [24.132.175.101])
-        by mx.google.com with ESMTPS id n56sm32400400eeb.4.2012.03.12.14.39.32
-        (version=SSLv3 cipher=OTHER);
-        Mon, 12 Mar 2012 14:39:32 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <7vipi9pkpw.fsf@alter.siamese.dyndns.org>
-X-Gm-Message-State: ALoCoQkeLfFrQZOh7yEURdUhygWrKOnip266/cOYOJ9FVfiPPqbM+jcvBlkSRGiNVMsQwwk41d3D
+	id S1753498Ab2CLVkp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Mar 2012 17:40:45 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:49221 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752326Ab2CLVkp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2012 17:40:45 -0400
+Received: by wibhq7 with SMTP id hq7so4463717wib.1
+        for <git@vger.kernel.org>; Mon, 12 Mar 2012 14:40:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=4KUFcSoLj3rSnqa6u1tUaKxakOxwkcQmenx3bjgtAAA=;
+        b=jb0nIBjaLRpz9Mum54J4L2gbIoMPAsmlzs80AiLGLN0614UewZphRR5kAkf8HTUA9/
+         rI/iS5NKLqcbhCyV1qz/JqAJV3uTP6pnNIMUEcdL3xEKnn2ujZD2/Tnb0gdEGCruy2Ps
+         zUQiUP2014g6DnSM4K6Op3r3/SoD0xDmJ9oGxQ1oAEwpC15lB9zhN6I7Qu00pyT8vVi3
+         XtRrjhxcHMJ9zSru+pXnLABDA1YjK7mGhSCtkAwbcsCE06gpidDOzxKvwX95UtoUuzws
+         er9m3xRNkGZdoaHzlSyEXyYH8xcRLJlpBib8p4UGeMsqiXv7Du6bzILlTyjArlwnA7zH
+         SfBg==
+Received: by 10.180.86.105 with SMTP id o9mr1492103wiz.4.1331588443531;
+        Mon, 12 Mar 2012 14:40:43 -0700 (PDT)
+Received: from localhost.localdomain (abvp228.neoplus.adsl.tpnet.pl. [83.8.213.228])
+        by mx.google.com with ESMTPS id k6sm37269627wiy.7.2012.03.12.14.40.41
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 12 Mar 2012 14:40:43 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q2CLeftF028123;
+	Mon, 12 Mar 2012 22:40:41 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id q2CLeMUg028113;
+	Mon, 12 Mar 2012 22:40:22 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <4F5E68C5.5070300@lyx.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192953>
 
-Op 12-3-2012 22:34, Junio C Hamano schreef:
-> Vincent van Ravesteijn<vfr@lyx.org>  writes:
->
->>> The problem I have with "rerere edit" is it is an offline process,
->>> and to validate that the update is correct, I would have to have the
->>> problematic merge in my working tree once _anyway_.  And at that
->>> point, updating the target file in the working tree and recording
->>> the updated resolution using the usual "git rerere" feels a more
->>> natural way to do so, and more importantly, it is a more convenient
->>> way to do the "update and validate".  On the other hand, "rerere
->>> edit" is a more convenient way to "update but not validate the
->>> result".
->> This last part probably makes the difference indeed. In my case the
->> merge resolution was very very easy (the conflicting hunks have
->> fileformat version numbers), but it is a bit annoying and it requires
->> some 'vim'-skills to redo the merge conflict just to correct a newline
->> somewhere, or a missing ','.
-> Now you confused me.  How do you envision your "rerere edit" not to
-> require "vim-skills" that is needed to navigate to the problematic
-> line to correct a newline or comma?  To put it another way, how much
-> more "vim-skills" is needed to fix the conflict in the real file,
-> than "rerere edit"?
+Vincent van Ravesteijn <vfr@lyx.org> writes:
 
-Well, I often paste lines in the line below the line I wanted to paste 
-to, in python files I often get whitespace errors,  when cutting line I 
-always have to guess how many lines there are... anyway, I don't feel 
-very comfortable.
+> As I wrote, the merge resolutions in my case were very easy
+> (logically), but just annoying (motorically).
+> These could even be resolved by some merge-conflict hook.
+> 
+> Examples:
+> - for this file we know the conflict always has to be resolved by
+> adding the oldest hunk before the newest hunk. For example, new file
+> formats will be added sequentially to a file.
+> - for this file we can resolve it anyway we want. For example, a
+> release notes file which just enumerates all changes in random order.
+> 
+> Anyway, has anyone thought about such a hook ?
 
-Editing the postimage by just inserting an enter seems easier.
+Isn't it what custom merge drivers (for file-level merge) are for?
+I think there can be found somewhere merge driver for changelog...
 
-Vincent
+You can also use custom merge strategies, but that is probably
+overkill, and I am not sure that it would work (adding new strategy)
+without modifying git.
+
+-- 
+Jakub Narebski
