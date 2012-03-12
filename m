@@ -1,32 +1,32 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH 08/11] perf/aggregate: optionally include a t-test score
-Date: Mon, 12 Mar 2012 16:10:04 +0100
-Message-ID: <8efb03c8da7e76a1fd39a3bdcfd37ea0dc9bda72.1331561353.git.trast@student.ethz.ch>
+Subject: [PATCH 02/11] Introduce a performance test for git-rebase
+Date: Mon, 12 Mar 2012 16:09:58 +0100
+Message-ID: <e6a6af53264368a25e71719901f3227042e21f5c.1331561353.git.trast@student.ethz.ch>
 References: <cover.1331561353.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 12 16:10:28 2012
+X-From: git-owner@vger.kernel.org Mon Mar 12 16:11:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S76tH-0001iv-W8
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 16:10:28 +0100
+	id 1S76u5-0002Kk-8D
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 16:11:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755850Ab2CLPKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Mar 2012 11:10:18 -0400
+	id S1755808Ab2CLPKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Mar 2012 11:10:11 -0400
 Received: from edge20.ethz.ch ([82.130.99.26]:39345 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755842Ab2CLPKR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2012 11:10:17 -0400
+	id S1755781Ab2CLPKK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2012 11:10:10 -0400
 Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
  (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 12 Mar
- 2012 16:10:08 +0100
+ 2012 16:10:07 +0100
 Received: from thomas.inf.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
  (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 12 Mar
- 2012 16:10:07 +0100
+ 2012 16:10:06 +0100
 X-Mailer: git-send-email 1.7.10.rc0.230.g16d90
 In-Reply-To: <cover.1331561353.git.trast@student.ethz.ch>
 X-Originating-IP: [129.132.153.233]
@@ -34,148 +34,121 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192878>
 
-Adds support for calling out to R[1] to perform a significance test on
-the gathered results.
+The perf framework lets the user run the test in an arbitrary repo,
+which makes writing a test for rebase a bit finicky.  This one uses a
+perl script to determine a longest linear segment of history, that is,
+a range A..B which is completely linear.  (For a full clone of
+git.git, this is the (whole) 'html' branch.)  The number of commits
+that are rebased is capped at 50, however.  That is, if A..B is more
+than 50 commits, it uses B~50..B instead.
 
-More specifically, the script's purpose was always to compare several
-revisions (it still makes nice tables for single tests though ;-).
-Given the first and some other column (= revision/directory), this
-runs Welch's t-test[2] on the two sets of measurements to determine
-whether there is a significant difference between the distributions.
-It then shows the p-value in a simplified form, so that significant
-differences stand out optically.
-
-All of this is entirely optional: if R is not available, it simply
-puts nothing in this field.
-
-[1] http://www.r-project.org/
-[2] http://en.wikipedia.org/wiki/Welch%27s_t-test
+Having determined a suitable range, it then runs rebase with all
+combinations of rerere (on/off), -i / noninteractive, and -m / normal.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- t/perf/aggregate.perl  |   37 +++++++++++++++++++++++++++++++------
- t/perf/t_test_score.sh |   24 ++++++++++++++++++++++++
- 2 files changed, 55 insertions(+), 6 deletions(-)
- create mode 100755 t/perf/t_test_score.sh
+ t/perf/p3400-rebase.sh |   91 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 91 insertions(+)
+ create mode 100755 t/perf/p3400-rebase.sh
 
-diff --git a/t/perf/aggregate.perl b/t/perf/aggregate.perl
-index b04d3a0..4db685d 100755
---- a/t/perf/aggregate.perl
-+++ b/t/perf/aggregate.perl
-@@ -7,8 +7,12 @@
- 	"$FindBin::Bin/../../perl/blib/arch/auto/Git";
- use Git;
- 
-+my $any_sign_printed = 0;
-+
- sub get_times {
- 	my $name = shift;
-+	my $firstset = shift;
-+	my $sig = "";
- 	open my $fh, "<", $name or return undef;
- 	my $sum_rt = 0.0;
- 	my $sum_u = 0.0;
-@@ -24,11 +28,21 @@ sub get_times {
- 	}
- 	return undef if !$n;
- 	close $fh or die "cannot close $name: $!";
--	return ($sum_rt/$n, $sum_u/$n, $sum_s/$n);
-+	if (defined $firstset &&
-+	    open my $ph, "-|", "./t_test_score.sh $name $firstset 2>/dev/null") {
-+		my $result = <$ph>;
-+		close $ph or die "cannot close pipe to t_test_score.sh: $!";
-+		chomp $result;
-+		$sig = $result;
-+		if ($sig ne "") {
-+			$any_sign_printed = 1;
-+		}
-+	}
-+	return ($sum_rt/$n, $sum_u/$n, $sum_s/$n, $sig);
- }
- 
- sub format_times {
--	my ($r, $u, $s, $firstr) = @_;
-+	my ($r, $u, $s, $sign, $firstr) = @_;
- 	if (!defined $r) {
- 		return "<missing>";
- 	}
-@@ -41,6 +55,7 @@ sub format_times {
- 		} else {
- 			$out .= " +inf";
- 		}
-+		$out .= $sign;
- 	}
- 	return $out;
- }
-@@ -145,13 +160,17 @@ sub have_slash {
- }
- for my $t (@subtests) {
- 	my $firstr;
-+	my $firstset;
- 	for my $i (0..$#dirs) {
- 		my $d = $dirs[$i];
--		$times{$prefixes{$d}.$t} = [get_times("test-results/$prefixes{$d}$t.times")];
-+		$times{$prefixes{$d}.$t} = [get_times("test-results/$prefixes{$d}$t.times", $firstset)];
- 		my ($r,$u,$s,$sign) = @{$times{$prefixes{$d}.$t}};
- 		my $w = length format_times($r,$u,$s,$sign,$firstr);
- 		$colwidth[$i] = $w if $w > $colwidth[$i];
--		$firstr = $r unless defined $firstr;
-+		if (!defined $firstr) {
-+			$firstr = $r;
-+			$firstset = "test-results/$prefixes{$d}$t.times";
-+		}
- 	}
- }
- my $totalwidth = 3*@dirs+$descrlen;
-@@ -169,9 +188,15 @@ sub have_slash {
- 	my $firstr;
- 	for my $i (0..$#dirs) {
- 		my $d = $dirs[$i];
--		my ($r,$u,$s) = @{$times{$prefixes{$d}.$t}};
--		printf "   %-$colwidth[$i]s", format_times($r,$u,$s,$firstr);
-+		my ($r,$u,$s,$sign) = @{$times{$prefixes{$d}.$t}};
-+		printf "   %-$colwidth[$i]s", format_times($r,$u,$s,$sign,$firstr);
- 		$firstr = $r unless defined $firstr;
- 	}
- 	print "\n";
- }
-+
-+if ($any_sign_printed) {
-+	print "-"x$totalwidth, "\n";
-+	print "Significance hints:  '.' 0.1  '*' 0.05  '**' 0.01  '***' 0.001\n"
-+}
-+
-diff --git a/t/perf/t_test_score.sh b/t/perf/t_test_score.sh
+diff --git a/t/perf/p3400-rebase.sh b/t/perf/p3400-rebase.sh
 new file mode 100755
-index 0000000..32353d6
+index 0000000..7155574
 --- /dev/null
-+++ b/t/perf/t_test_score.sh
-@@ -0,0 +1,24 @@
++++ b/t/perf/p3400-rebase.sh
+@@ -0,0 +1,91 @@
 +#!/bin/sh
 +
-+# If the user doesn't have R, we don't care
++test_description="Tests git-rebase performance"
 +
-+command -v R >/dev/null || exit 0
++. ./perf-lib.sh
 +
-+# Uses R to run a t-test on the hypothesis that the elapsed time
-+# values in $1 are less than the ones in $2.
++test_perf_default_repo
 +
-+pvalue=$(R --no-save --slave <<-EOF
-+	a <- read.table("$1")
-+	b <- read.table("$2")
-+	tst <- t.test(a\$V1, b\$V1)
-+	p <- tst\$p.value
-+	if (p<0.001) print ("***") \
-+	else if (p<0.01) print ("**") \
-+	else if (p<0.05) print ("*") \
-+	else if (p<0.1) print (".")
-+EOF
-+)
++test_expect_success 'find a long run of linear history' '
++	git rev-list --topo-order --parents --all |
++	perl -e '\''$maxL = 0; $maxcommit = undef;
++		while (<>) {
++			chomp;
++			@parents = split;
++			$commit = shift @parents;
++			if ($L{$commit} > $maxL) {
++				$maxL = $L{$commit};
++				$maxcommit = $commit;
++			}
++			if (1 == scalar @parents
++				&& $L{$commit} >= $L{$parents[0]}) {
++				$L{$parents[0]} = $L{$commit}+1;
++				$C{$parents[0]} = $commit;
++			}
++		}
++		$cur = $maxcommit;
++		while (defined $C{$cur}) {
++			$cur = $C{$cur};
++		}
++		if ($maxL > 50) {
++			$maxL = 50;
++		}
++		print "$cur~$maxL\n$cur\n";
++	'\'' >rebase-args &&
++	base_rev=$(sed -n 1p rebase-args) &&
++	tip_rev=$(sed -n 2p rebase-args) &&
++	git checkout -f -b work $tip_rev
++'
 +
-+pvalue=${pvalue##\[1\] \"}
-+pvalue=${pvalue%%\"}
-+echo "$pvalue"
++export base_rev tip_rev
++
++test_expect_success 'verify linearity' '
++	git rev-list --parents $base_rev.. >list &&
++	! grep "[0-9a-f]+ [0-9a-f]+ [0-9a-f+].*" list
++'
++
++test_expect_success 'disable rerere' '
++	git config rerere.enabled false
++'
++
++test_perf 'rebase -f (rerere off)' '
++	git rebase -f $base_rev
++'
++
++test_perf 'rebase -m -f (rerere off)' '
++	git rebase -m -f $base_rev
++'
++
++test_perf 'rebase -i -f (rerere off)' '
++	GIT_EDITOR=: git rebase -i -f $base_rev
++'
++
++test_perf 'rebase -i -m -f (rerere off)' '
++	GIT_EDITOR=: git rebase -i -m -f $base_rev
++'
++
++test_expect_success 'enable rerere and prime it' '
++	git config rerere.enabled true &&
++	git rebase -f $base_rev &&
++	git rebase -m -f $base_rev &&
++	GIT_EDITOR=: git rebase -i -f $base_rev &&
++	GIT_EDITOR=: git rebase -i -m -f $base_rev
++'
++
++test_perf 'rebase -f (rerere ON)' '
++	git rebase -f $base_rev
++'
++
++test_perf 'rebase -m -f (rerere ON)' '
++	git rebase -m -f $base_rev
++'
++
++test_perf 'rebase -i -f (rerere ON)' '
++	GIT_EDITOR=: git rebase -i -f $base_rev
++'
++
++test_perf 'rebase -i -m -f (rerere ON)' '
++	GIT_EDITOR=: git rebase -i -m -f $base_rev
++'
++
++test_done
 -- 
 1.7.10.rc0.230.g16d90
