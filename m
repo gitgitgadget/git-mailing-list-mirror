@@ -1,62 +1,87 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 2/2] notes-merge: use opendir/readdir instead of using read_directory()
-Date: Mon, 12 Mar 2012 21:53:28 +0700
-Message-ID: <CACsJy8A=u_U8qdVcWCBeksC-TvF_JC-=D5Zu6qco5XR7-vef2A@mail.gmail.com>
-References: <1319438176-7304-3-git-send-email-pclouds@gmail.com>
- <1331563647-1909-1-git-send-email-johan@herland.net> <1331563647-1909-2-git-send-email-johan@herland.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, gitster@pobox.com, david@tethera.net
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Mar 12 15:54:07 2012
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH 1/2] t3310: Add testcase demonstrating failure to --commit from within another dir
+Date: Mon, 12 Mar 2012 15:57:12 +0100
+Message-ID: <1331564233-1969-1-git-send-email-johan@herland.net>
+References: <87boo3m50x.fsf@zancas.localnet>
+Cc: Johan Herland <johan@herland.net>, gitster@pobox.com,
+	david@tethera.net, pclouds@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 12 15:57:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S76dS-0000lY-G0
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 15:54:06 +0100
+	id 1S76gm-0002nH-LW
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Mar 2012 15:57:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755407Ab2CLOyC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Mar 2012 10:54:02 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:52397 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752673Ab2CLOyA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2012 10:54:00 -0400
-Received: by wibhq7 with SMTP id hq7so3876156wib.1
-        for <git@vger.kernel.org>; Mon, 12 Mar 2012 07:53:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=G21mx7vIm1DkPS8IMGAWDRIvcmeSiksTqaBHSYhvUoQ=;
-        b=IuJbMzOvR066CDqqvbPkhYvsxo89GuRPwGNqBlHuYnzJznLQ5oK8cs8HAaK8FEE65G
-         E4EH2Dg9yrUz2Y0ffOEXp65cjhRXIfSZP5JNTMY7Q6/1eooXiaO35S/8kZQlTmU7pgJd
-         OTz4cgIy8epaaGRfa5/v+gxLDNb7YVtUPL3AyQ0WNqOJKGdNzv+l77pRAr5+qxA27cAf
-         h/fC8pNoIaBZVFMYR7gsAWG4jvUT50x+n9/1r7JtLpS3LRffcP+/z0Mzw54lvkpmdDN/
-         1hMYDqTLDBHZJaWVsDbQXPB3EG3wIn/7EPFF8LD9Q5Ww1KgCmw0wfDXKUHgdHXWR39+9
-         NTfw==
-Received: by 10.180.91.10 with SMTP id ca10mr27391162wib.17.1331564039440;
- Mon, 12 Mar 2012 07:53:59 -0700 (PDT)
-Received: by 10.223.13.5 with HTTP; Mon, 12 Mar 2012 07:53:28 -0700 (PDT)
-In-Reply-To: <1331563647-1909-2-git-send-email-johan@herland.net>
+	id S1755679Ab2CLO52 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Mar 2012 10:57:28 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:51162 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755140Ab2CLO51 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2012 10:57:27 -0400
+Received: by wibhj6 with SMTP id hj6so3844463wib.1
+        for <git@vger.kernel.org>; Mon, 12 Mar 2012 07:57:26 -0700 (PDT)
+Received: by 10.180.95.34 with SMTP id dh2mr28013238wib.15.1331564246037;
+        Mon, 12 Mar 2012 07:57:26 -0700 (PDT)
+Received: from gamma.cisco.com (64-103-25-233.cisco.com. [64.103.25.233])
+        by mx.google.com with ESMTPS id k6sm34514885wiy.7.2012.03.12.07.57.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 12 Mar 2012 07:57:22 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9.2
+In-Reply-To: <87boo3m50x.fsf@zancas.localnet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192871>
 
-On Mon, Mar 12, 2012 at 9:47 PM, Johan Herland <johan@herland.net> wrote:
-> This is a resurrection of pclouds' patch 2/11 in a patch series sent
-> last October for rewriting read_directory(). This patch doesn't
-> actually touch read_directory(), but instead rewrites
-> notes_merge_commit() to use opendir()/readdir() instead of
-> read_directory(). Since the usage of read_directory() is what caused
-> the bug that David found (in the previous patch), this rewrite happens
-> to fix that bug as well.
+Found-by: David Bremner <david@tethera.net>
+Signed-off-by: Johan Herland <johan@herland.net>
+---
 
-Happy to help. And that reminds me I've got to revive the
-read_directory() rewrite soon. Got stuck at git-add because I aimed
-too high. Gaah...
--- 
-Duy
+(sending again in the correct thread. Sorry for the screwup.)
+
+This is a transcription of David's test script into a git test case.
+
+Thanks to David for finding this issue.
+
+
+Have fun! :)
+
+...Johan
+
+ t/t3310-notes-merge-manual-resolve.sh |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merge-manual-resolve.sh
+index 4367197..0c531c3 100755
+--- a/t/t3310-notes-merge-manual-resolve.sh
++++ b/t/t3310-notes-merge-manual-resolve.sh
+@@ -553,4 +553,23 @@ test_expect_success 'resolve situation by aborting the notes merge' '
+ 	verify_notes z
+ '
+
++cat >expect_notes <<EOF
++foo
++bar
++EOF
++
++test_expect_failure 'switch cwd before committing notes merge' '
++	git notes add -m foo HEAD &&
++	git notes --ref=other add -m bar HEAD &&
++	test_must_fail git notes merge refs/notes/other &&
++	(
++		cd .git/NOTES_MERGE_WORKTREE &&
++		echo "foo" > $(git rev-parse HEAD) &&
++		echo "bar" >> $(git rev-parse HEAD) &&
++		git notes merge --commit
++	) &&
++	git notes show HEAD > actual_notes &&
++	test_cmp expect_notes actual_notes
++'
++
+ test_done
+--
+1.7.9.2
