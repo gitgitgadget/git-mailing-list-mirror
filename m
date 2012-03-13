@@ -1,115 +1,176 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Use macro HANDLER_WRAPPER in sigchain to wrap clean
- function of sigchain
-Date: Tue, 13 Mar 2012 11:11:23 -0700
-Message-ID: <7vmx7kweus.fsf@alter.siamese.dyndns.org>
-References: <CAMocUqRsEvwnoV32Cr05dJeUj7iNDj1cLP5kAzgyMNEo1O0kCw@mail.gmail.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH v2 2/2] index-pack: support multithreaded delta resolving
+Date: Tue, 13 Mar 2012 00:32:34 +0000
+Message-ID: <4F5E95A2.8050106@ramsay1.demon.co.uk>
+References: <1331519549-28090-1-git-send-email-pclouds@gmail.com> <1331519549-28090-3-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: Git =?utf-8?B?6YKu5Lu25YiX6KGo?= <git@vger.kernel.org>
-To: =?iso-2022-jp?B?GyRCPXltbBsoQg==?= <xudifsd@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 13 19:11:32 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 13 19:16:24 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7WC3-0002sL-JG
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 19:11:31 +0100
+	id 1S7WGm-0006pP-7A
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 19:16:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759253Ab2CMSL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Mar 2012 14:11:27 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59338 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759109Ab2CMSL0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2012 14:11:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6CFD8659B;
-	Tue, 13 Mar 2012 14:11:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+Q1TbLxfXWzwh0Lfoy8ozEKDiUM=; b=geNh4M
-	L3HXCo/t42mSEKzl4tR32Zo6lmTVkjbLcO7H0Pxv1Ll1a/h4ETmU7RO/IOajo/ld
-	yHgSnLmbjUGjHJahClz8bpqTqFB5iaHZuL1wRV02XTOoaXenZG0ZAxzehTASu8GX
-	x5z3FKM0ZzEptbq/0Uy9XUKEhHmpcrA8cPZm4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dTRZJ04p/QYkbKi2fy1/j9+Szi6oJBbr
-	7P04t0PpqnLuaeGCuQHjA2KJeOcPzesLkMKPvcTmhs6OM7CUuUw4JDmKKdEAAozF
-	tIAefCTbU2KfLpugydy9HkUg6QIl+CA+MW8Q3CVoMSad0d7RO8sPiV6TXJ1kK+Zp
-	cQGVCi/+LeI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6312A659A;
-	Tue, 13 Mar 2012 14:11:25 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BA18E6595; Tue, 13 Mar 2012
- 14:11:24 -0400 (EDT)
-In-Reply-To: <CAMocUqRsEvwnoV32Cr05dJeUj7iNDj1cLP5kAzgyMNEo1O0kCw@mail.gmail.com>
- (=?iso-2022-jp?B?IhskQj15bWwbKEIiJ3M=?= message of "Tue, 13 Mar 2012 15:52:56
- +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F1F40384-6D37-11E1-BD52-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759240Ab2CMSQT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Mar 2012 14:16:19 -0400
+Received: from lon1-post-1.mail.demon.net ([195.173.77.148]:45074 "EHLO
+	lon1-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758568Ab2CMSQS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Mar 2012 14:16:18 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by lon1-post-1.mail.demon.net with esmtp (Exim 4.69)
+	id 1S7WGd-0007Ge-ZS; Tue, 13 Mar 2012 18:16:17 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <1331519549-28090-3-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193051>
 
-徐迪 <xudifsd@gmail.com> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+[snipped]
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  I changed Ramsay's mutex patch a little bit and incorporate it here.
+>  Ramsay, it'd be great if you could try it again on MinGW
 
-> The sigchain APIs require user to code like:
->
-> void clean_foo_on_signal(int sig)
-> {
->  clean_foo();
->  sigchain_pop(sig);
->  raise(sig);
-> }
+Hmm, well do you want the good news, or the bad news ... :-D
 
-I can see the repetition, but I do not think your macro is a very good way
-to reduce it.  Can't we fix the sigchain API a bit, perhaps first by
-making a bit more state available to the sigchain stack?
+=46irst, I should say that I feel like I'm doing a very bad job of
+communicating, so let me apologize for that and hope that this time
+I make a better job of it!
 
-	typedef void (*sigchain_fn)(int, void *);
-        int sigchain_push(int sig, sigchain_fn fn, void *cb_data);
-        int sigchain_pop(int sig);
-        void sigchain_push_common(sigchain_fn fn, void *cb_data);
+This patch breaks the build on MinGW, since the emulation code has not
+(thus far) included an implementation of pthread_key_delete(). I simply
+commented out the call to that function, in cleanup_thread(), so that I
+could test the remainder of the patch.
 
-And then make the repetitive one into a single copy of a helper function,
-while giving a new external interface to register a on_signal handler:
+Although this patch is an improvement on previous patches, it still fai=
+ls
+in *exactly* the same way as earlier attempts.
 
-        static void relay_fn(int sig, void *cb_data)
-        {
-                void (*fn)(void) = cb_data; /* [*1*] */
-        	fn();
-                sigchain_pop(sig);
-                raise(sig);
-        }
+I probably didn't make clear before that 'nr_threads' has been given to=
+o
+many duties, which is the main reason for me introducing a new variable
+'threads_active'. For example, ...
 
-        void sigchain_add_relayed(void (*fn)(void))
-        {
-		sigchain_push_common(relay_fn, fn);
-        }
+>  builtin/index-pack.c             |  198 ++++++++++++++++++++++++++++=
+++++++----
+>  3 files changed, 192 insertions(+), 18 deletions(-)
+>=20
 
-The code that wants to register a clean-up action would do:
+[snipped]
 
-	sigchain_add_relayed(clean_foo);
+> +static inline void lock_mutex(pthread_mutex_t *mutex)
+> +{
+> +	if (nr_threads > 1)
+> +		pthread_mutex_lock(mutex);
+> +}
 
-instead of
+What is this condition testing (ie. what does it mean)? Does it mean:
 
-	sigchain_push_common(clean_foo_on_signal);
+    1. there are some threads currently running ?
+    2. the mutex variables are in a usable state ?
 
-with repeated definition of clean_xxx_on_signal.
+Does this expression always express the same invariant?
 
-Hmm?
+The answer, of course, is *no*.
 
-[Footnote]
+Let us consider the call to parse_pack_objects() at line 1367. Let us
+suppose that we have been asked to use threads (from the config file,
+the command-line, or simply !NO_PTHREADS), so that when we call the
+parse_pack_objects() function nr_threads > 1.
 
-*1* Yes, I know, this casts between a data pointer and a function pointer
-that is not portable, but the purpose of this pseudo-code is primarily to
-illustrate the high level view of the idea.  We would probably want to be
-able to pass callback value to the clean_foo() function and at that point,
-we would likely to be passing a pointer to a struct, and we could declare
-the first element of such a struct is a pointer to a sigchain_fn, or
-something.
+Note that, at this point, no threads are active and the mutex variables
+have not been initialised.
+
+Now, at the beginning of parse_pack_objects(), we find some 'first pass=
+'
+processing [for (i =3D 0; i < nr_objects; i++) ... lines 839-851], whic=
+h
+includes a call to sha1_object() at line 848. sha1_object() in turn has
+an invocation of the read_lock() macro (line 552), which in turn calls
+lock_mutex() with a pointer to the read_mutex.
+
+Note that, at this point, no threads are active and the mutex variables
+have not been initialised.
+
+Also note that "nr_threads > 1" is true. At this point, nr_threads is s=
+till
+playing the "this is how many threads I have been requested to create" =
+role.
+But again, no threads have been created yet, the mutex variables haven'=
+t been
+initialised, and ... well, *boom*.
+
+So, in order to get it to work on MinGW (and this time I only tested on=
+ MinGW),
+I had to apply the patch below (look familiar?).
+
+[I ran the same four tests as before, five times in a row. On *one* occ=
+asion
+t5300.22 (verify-pack catches a corrupted type/size of the 1st packed o=
+bject data)
+failed because the 'dd' command crashed! So, maybe there is a problem l=
+urking.]
+
+ATB,
+Ramsay Jones
+
+-- >8 --
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 7e3b287..6679734 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -69,6 +69,7 @@ static int nr_processed;
+ static int nr_deltas;
+ static int nr_resolved_deltas;
+ static int nr_threads;
++static int threads_active;
+=20
+ static int from_stdin;
+ static int strict;
+@@ -105,13 +106,13 @@ static pthread_key_t key;
+=20
+ static inline void lock_mutex(pthread_mutex_t *mutex)
+ {
+-	if (nr_threads > 1)
++	if (threads_active)
+ 		pthread_mutex_lock(mutex);
+ }
+=20
+ static inline void unlock_mutex(pthread_mutex_t *mutex)
+ {
+-	if (nr_threads > 1)
++	if (threads_active)
+ 		pthread_mutex_unlock(mutex);
+ }
+=20
+@@ -125,14 +126,16 @@ static void init_thread(void)
+ 	pthread_mutex_init(&work_mutex, NULL);
+ 	pthread_key_create(&key, NULL);
+ 	thread_data =3D xcalloc(nr_threads, sizeof(*thread_data));
++	threads_active =3D 1;
+ }
+=20
+ static void cleanup_thread(void)
+ {
++	threads_active =3D 0;
+ 	pthread_mutex_destroy(&read_mutex);
+ 	pthread_mutex_destroy(&counter_mutex);
+ 	pthread_mutex_destroy(&work_mutex);
+-	pthread_key_delete(key);
++	/*pthread_key_delete(key);*/
+ 	nr_threads =3D 1;
+ 	free(thread_data);
+ }
+-- 8< --
