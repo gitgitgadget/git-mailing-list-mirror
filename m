@@ -1,102 +1,90 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC PATCH] push: start warning upcoming default change for push.default
-Date: Tue, 13 Mar 2012 14:35:47 +0100
-Message-ID: <vpqaa3kfwss.fsf@bauges.imag.fr>
-References: <vpqobs65gfc.fsf@bauges.imag.fr>
-	<1331281886-11667-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1331288715.21444.38.camel@beez.lab.cmartin.tk>
-	<4F5A4C45.7070406@xiplink.com> <4F5AF1A8.4050604@alum.mit.edu>
-	<4F5E12A5.6030701@xiplink.com> <vpqzkblixmb.fsf@bauges.imag.fr>
-	<20120312183725.GA2187@sigill.intra.peff.net>
-	<vpqy5r44zg7.fsf@bauges.imag.fr>
-	<7vehswljxi.fsf@alter.siamese.dyndns.org>
+From: Per Cederqvist <cederp@opera.com>
+Subject: [GUILT] [PATCH]  get rid of "cat: write error: Broken pipe" error
+ message
+Date: Tue, 13 Mar 2012 14:39:44 +0100
+Message-ID: <4F5F4E20.6000706@opera.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Marc Branchaud <marcnarc@xiplink.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 13 14:37:55 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff Sipek <jeffpc@josefsipek.net>
+X-From: git-owner@vger.kernel.org Tue Mar 13 14:40:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7RvF-0000hw-LP
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 14:37:53 +0100
+	id 1S7RxG-0002Lu-Px
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 14:39:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753893Ab2CMNhl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Mar 2012 09:37:41 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:57160 "EHLO rominette.imag.fr"
+	id S1753994Ab2CMNjz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Mar 2012 09:39:55 -0400
+Received: from smtp.opera.com ([213.236.208.81]:59776 "EHLO smtp.opera.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751885Ab2CMNhj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2012 09:37:39 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q2DDVkRb003033
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 13 Mar 2012 14:31:46 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1S7RtE-00027K-Ef; Tue, 13 Mar 2012 14:35:48 +0100
-In-Reply-To: <7vehswljxi.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Tue, 13 Mar 2012 06:17:13 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 13 Mar 2012 14:31:47 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q2DDVkRb003033
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1332250307.38213@nGLd5ODqYd4OOmkeUqoiuw
+	id S1753931Ab2CMNjx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Mar 2012 09:39:53 -0400
+Received: from [10.30.1.61] (oslo.jvpn.opera.com [213.236.208.46])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id q2DDdjWX000883
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 13 Mar 2012 13:39:48 GMT
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.27) Gecko/20120216 Thunderbird/3.1.19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193025>
 
-Junio C Hamano <gitster@pobox.com> writes:
+In some circumstances (like running guilt in a M-x shell buffer in
+Emacs) cat may give the above error message when the reader of the
+output from cat exits without reading all input from cat.  (In other
+circumstances cat is just silently terminated with SIGPIPE.)
 
-> I actually think the "pull before push again" was written with only
-> CVS style non-branching workflow in mind, in other words, only to
-> help somebody who works on his master against the central master.
+Get rid of the error by removing the useless use of cat in
+do_get_header and do_get_full_header.
 
-It doesn't have much to do with branching/non-branching. You may use
-branches, and still work collaboratively on them. There was an example
-above in the same thread:
+Signed-off-by: Per Cederqvist <cederp@opera.com>
+---
+  guilt |    8 ++++----
+  1 files changed, 4 insertions(+), 4 deletions(-)
 
-  http://thread.gmane.org/gmane.comp.version-control.git/192547/focus=192694
+diff --git a/guilt b/guilt
+index d1e17d4..7f6806e 100755
+--- a/guilt
++++ b/guilt
+@@ -359,7 +359,7 @@ do_get_header()
+  	# 4th line skips any empty lines thereafter.
+  	# 5th line turns off empty line skip upon seeing a non-empty line.
+  	# 6th line terminates execution when we encounter the diff
+-	cat "$1" | awk '
++	awk '
+  BEGIN{body=0; subj=0}
+  /^Subject:/ && (body == 0 && subj == 0){subj=1; print substr($0, 10) 
+"\n"; next}
+  /^(Subject:|From:|Author:|Date:|commit)/ && (body == 0){next}
+@@ -369,7 +369,7 @@ BEGIN{body=0; subj=0}
+  /^(diff |---$|--- )/{exit}
+  {print $0}
+  END{}
+-'
++' < "$1"
+  }
 
-There are also cases like "I pushed from my laptop and I'm back to my
-desktop", or "the content has been edited from GitHub's web interface".
+  # usage: do_get_full_header patchfile
+@@ -377,12 +377,12 @@ do_get_full_header()
+  {
+  	# 2nd line checks for the begining of a patch
+  	# 3rd line outputs the line if it didn't get pruned by the above rules
+-	cat "$1" | awk '
++	awk '
+  BEGIN{}
+  /^(diff |---$|--- )/{exit}
+  {print $0}
+  END{}
+-'
++' < "$1"
+  }
 
-Actually, I hardly see a case where "pull before push again" (with or
-without --rebase or such) is wrong for a beginner.
-
-> Pushing 'current' from a branch 'topic' forked from either 'master'
-> or 'origin/master' will create a new branch 'topic' at the central
-> repository. But that is straightforward and understandable. The user
-> will see what happened in the feedback from the command, and there
-> is no need for the user to be experienced enough to know the mapping
-> of @{upstream} to understand why it happened.  "I am on 'topic' and
-> I pushed, I created 'topic' there".  Very simple explanation exists.
-
-Very simple explanation exist for what "push" does, but not for "the
-global picture of what push and pull do". And really, the case "Git
-prevents me from pushing, I don't know what to do" is a problem for
-people who don't get the whole remote/branch/upstream/... things.
-
-Actually, I'm starting to wonder if the whole "upstream" thing should
-not be deactivated by default, and replaced with a simpler mechanism
-like "pull.default", similar to what "push.default" does today. Then,
-users could set "pull.default=current", and "git pull" would pull a
-branch with the same name remotely. Or users could set
-"pull.default=upstream" and get what Git does today.
-
-But that's a much larger change, then ...
-
+  # usage: assert_head_check
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.9
