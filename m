@@ -1,66 +1,104 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH] git-gui: Use PWD if it exists on Mac OS X.
-Date: Sat, 10 Mar 2012 23:18:48 +0000
-Message-ID: <877gys11uv.fsf@fox.patthoyts.tk>
-References: <1331335042-25509-1-git-send-email-mk@acc.umu.se>
-	<7vty1x2vod.fsf@alter.siamese.dyndns.org>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [RFC PATCH] push: start warning upcoming default change for push.default
+Date: Tue, 13 Mar 2012 10:31:27 -0400
+Message-ID: <4F5F5A3F.8010102@xiplink.com>
+References: <vpqobs65gfc.fsf@bauges.imag.fr> <1331281886-11667-1-git-send-email-Matthieu.Moy@imag.fr> <1331288715.21444.38.camel@beez.lab.cmartin.tk> <4F5A4C45.7070406@xiplink.com> <4F5AF1A8.4050604@alum.mit.edu> <4F5E12A5.6030701@xiplink.com> <vpqzkblixmb.fsf@bauges.imag.fr> <20120312183725.GA2187@sigill.intra.peff.net> <vpqy5r44zg7.fsf@bauges.imag.fr> <7vehswljxi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Marcus Karlsson <mk@acc.umu.se>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	=?ISO-8859-1?Q?Carlos_Mart=ED?= =?ISO-8859-1?Q?n_Nieto?= 
+	<cmn@elego.de>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 13 14:51:29 2012
+X-From: git-owner@vger.kernel.org Tue Mar 13 15:31:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7S8N-0002df-QY
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 14:51:28 +0100
+	id 1S7SlD-0006p3-63
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 15:31:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754355Ab2CMNvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Mar 2012 09:51:23 -0400
-Received: from queueout02-winn.ispmail.ntl.com ([81.103.221.56]:39509 "EHLO
-	queueout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753592Ab2CMNvW (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Mar 2012 09:51:22 -0400
-Received: from know-smtpout-4.server.virginmedia.net ([62.254.123.2])
-          by mtaout03-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20120313123557.SASS14668.mtaout03-winn.ispmail.ntl.com@know-smtpout-4.server.virginmedia.net>;
-          Tue, 13 Mar 2012 12:35:57 +0000
-Received: from [94.171.229.22] (helo=fox.patthoyts.tk)
-	by know-smtpout-4.server.virginmedia.net with esmtpa (Exim 4.63)
-	(envelope-from <patthoyts@users.sourceforge.net>)
-	id 1S7QxJ-0006sG-N6; Tue, 13 Mar 2012 12:35:57 +0000
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id EA9BF22B49; Sat, 10 Mar 2012 23:18:48 +0000 (GMT)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-In-Reply-To: <7vty1x2vod.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 09 Mar 2012 15:37:06 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
-X-Cloudmark-Analysis: v=1.1 cv=JvdXmxIgLJv2/GthKqHpGJEEHukvLcvELVXUanXFreg= c=1 sm=0 a=O9HYxzjLEG8A:10 a=d_KsGz-eqJ4A:10 a=kj9zAlcOel0A:10 a=ybZZDoGAAAAA:8 a=Rf460ibiAAAA:8 a=NE1UYl_qaBzi58DN0MMA:9 a=CjuIK1q_8ugA:10 a=qIVjreYYsbEA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1755028Ab2CMOba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Mar 2012 10:31:30 -0400
+Received: from smtp152.dfw.emailsrvr.com ([67.192.241.152]:43148 "EHLO
+	smtp152.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754693Ab2CMOb3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Mar 2012 10:31:29 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp15.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id 2537A3004C4;
+	Tue, 13 Mar 2012 10:31:29 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp15.relay.dfw1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 6FB6D300145;
+	Tue, 13 Mar 2012 10:31:28 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <7vehswljxi.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193028>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 12-03-13 09:17 AM, Junio C Hamano wrote:
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> 
+>> There's a rule of thumb which works very well for beginners: when "git
+>> push" tells you to pull before, then pull before. This rule of thumb
+>> works, but only provided "push" and "pull" are symmetrical.
+> 
+> I actually think the "pull before push again" was written with only
+> CVS style non-branching workflow in mind, in other words, only to
+> help somebody who works on his master against the central master.
+> Obviously "push and pull are symmetrical" holds true for that single
+> branch workflow, but that does not mean a more complex workflow must
+> be symmetrical.
+> 
+> Even though I think 'upstream' will be a superset of what 'current'
+> wants to do in an ideal world where the user configures everything
+> right (hence it ought to be the better default between the two), I
+> do not think that the target audience "let's change the default"
+> folks are trying to help is those who set @{upstream} correctly
+> point the destination for a branch they want to push to and leave it
+> unset for a strictly private branch. If we choose the default that
+> would primarily make it efficient for people who can configure
+> everything right, we are missing the point of this discussion. I
+> think the target audience to be helped is the people who do not
+> (yet) do anything complex, and the point of this discussion is to
+> help them avoid getting surprised.
+> 
+> And by "surprised", I do not necessarily mean "dangerous". While we
+> should aim to avoid "dangerous", we should avoid "ununderstandable"
+> even more.
+> 
+> Pushing 'current' from a branch 'topic' forked from either 'master'
+> or 'origin/master' will create a new branch 'topic' at the central
+> repository. But that is straightforward and understandable. The user
+> will see what happened in the feedback from the command, and there
+> is no need for the user to be experienced enough to know the mapping
+> of @{upstream} to understand why it happened.  "I am on 'topic' and
+> I pushed, I created 'topic' there".  Very simple explanation exists.
+> 
+> On the other hand, the user needs to know not just 'branch' but also
+> understand the concept of @{upstream} in order to use 'upstream'
+> without surprise.  When something goes wrong, prerequisite knowledge
+> that is required to understand it is greater.  Also the current
+> implementation of 'upstream' has some weird semantics (or undesigned
+> bugs) pointed out by Peff, which would make it even more confusing.
+> 
+> That makes me suspect that 'current' might be a more appropriate
+> default between the two. From that simple default, those in the
+> "shared central repository" world can graduate to 'upstream' once
+> they know what an 'upstream' is and how to take advantage of
+> per-branch configuration.  Similarly, those in the "publish to be
+> pulled" world would graduate to 'matching'.
 
->Thanks, Marcus.
->
->Just forwarding to the current maintainer; please note that my
->sign-off does not mean anything more than what D-C-O says it means;
->I rarely if ever use git-gui myself and do not have a Macintosh.
+Good points!
 
-Thanks for this. I also don't have a Mac but this looks sensible
-so applied.
+I think someone who's figuring out their workflow as they go would appreciate
+the simplicity offered by "current".
 
--- 
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+You've changed my mind:  I now think "current" is the better default.
+
+		M.
