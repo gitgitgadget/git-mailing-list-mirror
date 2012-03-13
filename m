@@ -1,73 +1,74 @@
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: [PATCH 1/2] Release notes for 1.7.10: Typo in compatibility notes
-Date: Tue, 13 Mar 2012 09:28:36 -0300
-Message-ID: <1331641717-6430-2-git-send-email-vonbrand@inf.utfsm.cl>
-References: <1331641717-6430-1-git-send-email-vonbrand@inf.utfsm.cl>
-Cc: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Mar 13 13:38:01 2012
+From: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
+Subject: [PATCH v5 0/5] new roll of proxy improvements
+Date: Tue, 13 Mar 2012 15:01:53 +0100
+Message-ID: <4F5F5351.8090401@seap.minhap.es>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: peff@peff.net, sam@vilain.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 13 14:04:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7QzC-0000Xk-PM
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 13:37:55 +0100
+	id 1S7ROk-00025k-B2
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 14:04:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752467Ab2CMMgu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Mar 2012 08:36:50 -0400
-Received: from zimbra.inf.utfsm.cl ([200.1.19.17]:50207 "EHLO
-	zimbra.inf.utfsm.cl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752264Ab2CMMgt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2012 08:36:49 -0400
-X-Greylist: delayed 487 seconds by postgrey-1.27 at vger.kernel.org; Tue, 13 Mar 2012 08:36:49 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.inf.utfsm.cl (Postfix) with ESMTP id D771F182016;
-	Tue, 13 Mar 2012 09:28:41 -0300 (CLST)
-X-Virus-Scanned: amavisd-new at zimbra.inf.utfsm.cl
-Received: from zimbra.inf.utfsm.cl ([127.0.0.1])
-	by localhost (zimbra.inf.utfsm.cl [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 36b1JBxp7zzb; Tue, 13 Mar 2012 09:28:41 -0300 (CLST)
-Received: from quelen.inf.utfsm.cl (quelen.inf.utfsm.cl [200.1.19.54])
-	by zimbra.inf.utfsm.cl (Postfix) with ESMTPS id C3C7F181ABC;
-	Tue, 13 Mar 2012 09:28:41 -0300 (CLST)
-Received: from laptop15.inf.utfsm.cl (ip127.4.priv.inf.utfsm.cl [10.10.4.127])
-	by quelen.inf.utfsm.cl (8.14.5/8.14.5) with ESMTP id q2DCSfCB001252
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 13 Mar 2012 09:28:41 -0300
-Received: from laptop15.inf.utfsm.cl (laptop15.inf.utfsm.cl [127.0.0.1])
-	by laptop15.inf.utfsm.cl (8.14.5/8.14.5) with ESMTP id q2DCSfDJ006507;
-	Tue, 13 Mar 2012 09:28:41 -0300
-Received: (from vonbrand@localhost)
-	by laptop15.inf.utfsm.cl (8.14.5/8.14.5/Submit) id q2DCSfXl006506;
-	Tue, 13 Mar 2012 09:28:41 -0300
-X-Mailer: git-send-email 1.7.10.rc0.41.gfa678f
-In-Reply-To: <1331641717-6430-1-git-send-email-vonbrand@inf.utfsm.cl>
+	id S1751804Ab2CMNEN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Mar 2012 09:04:13 -0400
+Received: from luthien1.map.es ([82.150.0.102]:57905 "EHLO luthien2.map.es"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751340Ab2CMNEM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Mar 2012 09:04:12 -0400
+Received: from correo.map.es (unknown [10.1.24.76])
+	by luthien2.map.es (Postfix) with ESMTP id 169E724CE4;
+	Tue, 13 Mar 2012 14:03:07 +0100 (CET)
+Received: from [10.47.128.147] (unknown [10.1.29.55])
+	by correo.map.es (Postfix) with ESMTP id 877D22C50D;
+	Tue, 13 Mar 2012 14:03:01 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0.1) Gecko/20120216 Thunderbird/10.0.1
+X-map-MapScanner: Libre de virus, Libre de virus
+X-Spam-Status: No, No
+X-map-MapScanner-Information: 
+X-map-MapScanner-ID: 169E724CE4.ECE21
+X-map-MapScanner-From: nelsonjesus.benitez@seap.minhap.es
+X-map-MailScanner-Watermark: 1332248588.69916@XlZgoBdht4myCl9+c0HR3g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193017>
 
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
 
-Signed-off-by: Horst H. von Brand <vonbrand@inf.utfsm.cl>
----
- Documentation/RelNotes/1.7.10.txt |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The changes from v4 are:
+- In patch 1/5, read proxy env var accordingly to the protocol used in
+the destination url, so e.g. if url is a https one, we will only read 
+https_proxy env var. We also read no_proxy env var so to ignore 
+aforementioned proxy env var if no_proxy contains an asterisk ('*') or 
+contains the host used in url destination. To make those changes
+possible we needed to pass the destination url as a parameter to 
+get_active_slot() and get_curl_handle() functions, so that change is
+also included in the patch.
 
-diff --git a/Documentation/RelNotes/1.7.10.txt b/Documentation/RelNotes/1.7.10.txt
-index 65df74b..0e7def1 100644
---- a/Documentation/RelNotes/1.7.10.txt
-+++ b/Documentation/RelNotes/1.7.10.txt
-@@ -26,7 +26,7 @@ Compatibility Notes
-    Git v1.7.8 or newer.
- 
-  * The "--binary/-b" options to "git am" have been a no-op for quite a
--   while and was deprecated in mid 2008 (v1.6.0).  When you give these
-+   while and were deprecated in mid 2008 (v1.6.0).  When you give these
-    options to "git am", it will now fail with an error.
- 
- 
+- In patch 2/5, added Junio review fixes.
+
+Regards,
+
+Nelson Benitez Leon (5):
+  http: try http_proxy env var when http.proxy config option is not set
+  http: handle proxy proactive authentication
+  http: handle proxy authentication failure (error 407)
+  http: Avoid limit of retrying request only twice
+  http: rename HTTP_REAUTH to HTTP_RETRY
+
+ http-push.c   |   24 ++++++++--------
+ http-walker.c |    2 +-
+ http.c        |   84 ++++++++++++++++++++++++++++++++++++++++++++++++---------
+ http.h        |    4 +-
+ remote-curl.c |    4 +-
+ 5 files changed, 88 insertions(+), 30 deletions(-)
+
 -- 
-1.7.10.rc0.41.gfa678f
+1.7.7.6
