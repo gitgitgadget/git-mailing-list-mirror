@@ -1,8 +1,8 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 4/7] test: test cherry-pick functionality and output
- separately
-Date: Tue, 13 Mar 2012 00:00:36 -0500
-Message-ID: <20120313050036.GD12550@burratino>
+Subject: [PATCH 5/7] test: use --numstat instead of --stat in "git stash
+ show" tests
+Date: Tue, 13 Mar 2012 00:01:32 -0500
+Message-ID: <20120313050132.GE12550@burratino>
 References: <1328019840-6168-1-git-send-email-pclouds@gmail.com>
  <1328100907-20397-1-git-send-email-pclouds@gmail.com>
  <20120313045100.GA12474@burratino>
@@ -13,40 +13,40 @@ Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Frederik Schwarzer <schwarzerf@gmail.com>,
 	Brandon Casey <drafnel@gmail.com>
 To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 13 06:01:00 2012
+X-From: git-owner@vger.kernel.org Tue Mar 13 06:01:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7Jqx-0003rq-VC
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 06:00:56 +0100
+	id 1S7Jrr-0004Di-I6
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 06:01:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758139Ab2CMFAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Mar 2012 01:00:51 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:51477 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752372Ab2CMFAu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2012 01:00:50 -0400
-Received: by yhmm54 with SMTP id m54so140351yhm.19
-        for <git@vger.kernel.org>; Mon, 12 Mar 2012 22:00:49 -0700 (PDT)
+	id S964943Ab2CMFBr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Mar 2012 01:01:47 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:57981 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752372Ab2CMFBq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Mar 2012 01:01:46 -0400
+Received: by gghe5 with SMTP id e5so148861ggh.19
+        for <git@vger.kernel.org>; Mon, 12 Mar 2012 22:01:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=6UtQ1Ioq+xsiNkTVxFpcJmrs1vtpy7F07urhh6wO3cg=;
-        b=dJg/Yi94rbdFVXefwIxJJmHCnkYqkcDrD/IiKkO6fsf/4xMvP4ebP99M9V+2ZNxOS/
-         KU7iZRmQpEb424SFMee7+VL2uXHhh62V19U7OD8P3Fa5ZPxIu0mphEJwppCjZCZpuXnf
-         DD3CPxVTYke0Qx+Qql5CL1KqA1zbJcq0HPAyESmupK7j/SIgHtaJ4XMpzkBfiR2WBBxh
-         Afzc/gmI4JvlIpP2c9q4IEGnECxgdkazsbUkMzUH9fjRc3JlTm44EQbC27nfo/vNqzxO
-         zXs0AGqyMT1IAgngHjLJT+FwNMCe/xUvkhWX7R2C6cTYDcnLuwtr+76zZpvMZuEQE8s5
-         G4WQ==
-Received: by 10.182.111.3 with SMTP id ie3mr10304167obb.14.1331614849428;
-        Mon, 12 Mar 2012 22:00:49 -0700 (PDT)
+        bh=mw4Ih1hCM2AnU6pb4Rb/CKAjfvTa7oanx3S79GOEj/0=;
+        b=nVZGsJX4iwUhHikZA6R79++mAxZO9ISsSfoCEJmEuO/71wXgF7R7jNr1uAA1+CvxLK
+         PB7fdndP5Ra8Q2SkpGD2RgePRYycY1rmFkC5KqHzBM4Aj44V7IGeFCO/MWONBwGq29pH
+         a21Jmo5gD+Aa7CFk18HiWMwxRejb2FLenrz1OFV35iLCZ8kB3ZKEyniYU62MCxCqhwMT
+         kfrHhMTvri/XtTgxWIjT7sedCh/cQJP0D524D7vX5wdj8NKwDvPMKmjNlSypoe81YG/4
+         RqWOBWa+KZte/TJV4TaO5MrGud4YwFJJi18ift8jUtskzK6oKalFNLy4aM2hzBjcGkD0
+         ZMow==
+Received: by 10.182.154.5 with SMTP id vk5mr10443999obb.24.1331614905455;
+        Mon, 12 Mar 2012 22:01:45 -0700 (PDT)
 Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id c7sm13868205oeh.1.2012.03.12.22.00.48
+        by mx.google.com with ESMTPS id q6sm24310188obz.17.2012.03.12.22.01.44
         (version=SSLv3 cipher=OTHER);
-        Mon, 12 Mar 2012 22:00:48 -0700 (PDT)
+        Mon, 12 Mar 2012 22:01:45 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20120313045100.GA12474@burratino>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -54,95 +54,83 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192976>
 
-Since v1.7.3-rc0~26^2~9 (revert: report success when using option
---strategy, 2010-07-14), the cherry-pick-many-commits test checks the
-format of output written to the terminal during a cherry-pick sequence
-in addition to the functionality.  There is no reason those have to
-be checked in the same test, though, and it has some downsides:
+git's diff --stat output is intended for human consumption and
+since v1.7.9.2~13 (2012-02-01) varies by locale.  Add a test checking
+that git stash show defaults to --stat and tweak the rest of the
+"stash show" tests that showed a diffstat to use numstat.
 
- - when progress output is broken, the test result does not convey
-   whether the functionality was also broken or not
-
- - it is not immediately obvious when reading that these checks are
-   meant to prevent regressions in details of the output format and
-   are not just a roundabout way to check functional details like the
-   number of commits produced
-
- - there is a temptation to include the same kind of output checking
-   for every new cherry-pick test, which would make future changes
-   to the output unnecessarily difficult
-
-Put the tests from v1.7.3-rc0~26^2~9 in separate assertions, following
-the principle "test one feature at a time".
+This way, there are fewer tests to tweak if the diffstat format
+changes again.  This also improves test coverage when running tests
+with git configured not to write its output in the C locale (e.g.,
+via GETTEXT_POISON=Yes).
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- t/t3508-cherry-pick-many-commits.sh |   32 +++++++++++++++++++++++---------
- 1 file changed, 23 insertions(+), 9 deletions(-)
+ t/t3903-stash.sh |   36 ++++++++++++++++++++++++------------
+ 1 file changed, 24 insertions(+), 12 deletions(-)
 
-diff --git a/t/t3508-cherry-pick-many-commits.sh b/t/t3508-cherry-pick-many-commits.sh
-index d909e6db..75f7ff4f 100755
---- a/t/t3508-cherry-pick-many-commits.sh
-+++ b/t/t3508-cherry-pick-many-commits.sh
-@@ -35,6 +35,16 @@ test_expect_success setup '
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index c69e4da1..3addb804 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -432,6 +432,24 @@ test_expect_success 'stash branch - stashes on stack, stash-like argument' '
+ 	test $(git ls-files --modified | wc -l) -eq 1
  '
  
- test_expect_success 'cherry-pick first..fourth works' '
-+	git checkout -f master &&
-+	git reset --hard first &&
-+	test_tick &&
-+	git cherry-pick first..fourth &&
-+	git diff --quiet other &&
-+	git diff --quiet HEAD other &&
-+	check_head_differs_from fourth
++test_expect_success 'stash show format defaults to --stat' '
++	git stash clear &&
++	test_when_finished "git reset --hard HEAD" &&
++	git reset --hard &&
++	echo foo >> file &&
++	git stash &&
++	test_when_finished "git stash drop" &&
++	echo bar >> file &&
++	STASH_ID=$(git stash create) &&
++	git reset --hard &&
++	cat >expected <<-EOF &&
++	 file |    1 +
++	 1 file changed, 1 insertion(+)
++	EOF
++	git stash show ${STASH_ID} >actual &&
++	test_i18ncmp expected actual
 +'
 +
-+test_expect_success 'output to keep user entertained during multi-pick' '
- 	cat <<-\EOF >expected &&
- 	[master OBJID] second
- 	 Author: A U Thor <author@example.com>
-@@ -51,15 +61,22 @@ test_expect_success 'cherry-pick first..fourth works' '
- 	git reset --hard first &&
- 	test_tick &&
- 	git cherry-pick first..fourth >actual &&
--	git diff --quiet other &&
--	git diff --quiet HEAD other &&
--
- 	sed -e "s/$_x05[0-9a-f][0-9a-f]/OBJID/" <actual >actual.fuzzy &&
--	test_i18ncmp expected actual.fuzzy &&
--	check_head_differs_from fourth
-+	test_line_count -ge 3 actual.fuzzy &&
-+	test_i18ncmp expected actual.fuzzy
+ test_expect_success 'stash show - stashes on stack, stash-like argument' '
+ 	git stash clear &&
+ 	test_when_finished "git reset --hard HEAD" &&
+@@ -442,12 +460,9 @@ test_expect_success 'stash show - stashes on stack, stash-like argument' '
+ 	echo bar >> file &&
+ 	STASH_ID=$(git stash create) &&
+ 	git reset --hard &&
+-	cat >expected <<-EOF &&
+-	 file |    1 +
+-	 1 file changed, 1 insertion(+)
+-	EOF
+-	git stash show ${STASH_ID} >actual &&
+-	test_i18ncmp expected actual
++	echo "1	0	file" >expected &&
++	git stash show --numstat ${STASH_ID} >actual &&
++	test_cmp expected actual
  '
  
- test_expect_success 'cherry-pick --strategy resolve first..fourth works' '
-+	git checkout -f master &&
-+	git reset --hard first &&
-+	test_tick &&
-+	git cherry-pick --strategy resolve first..fourth &&
-+	git diff --quiet other &&
-+	git diff --quiet HEAD other &&
-+	check_head_differs_from fourth
-+'
-+
-+test_expect_success 'output during multi-pick indicates merge strategy' '
- 	cat <<-\EOF >expected &&
- 	Trying simple merge.
- 	[master OBJID] second
-@@ -79,11 +96,8 @@ test_expect_success 'cherry-pick --strategy resolve first..fourth works' '
- 	git reset --hard first &&
- 	test_tick &&
- 	git cherry-pick --strategy resolve first..fourth >actual &&
--	git diff --quiet other &&
--	git diff --quiet HEAD other &&
- 	sed -e "s/$_x05[0-9a-f][0-9a-f]/OBJID/" <actual >actual.fuzzy &&
--	test_i18ncmp expected actual.fuzzy &&
--	check_head_differs_from fourth
-+	test_i18ncmp expected actual.fuzzy
+ test_expect_success 'stash show -p - stashes on stack, stash-like argument' '
+@@ -480,12 +495,9 @@ test_expect_success 'stash show - no stashes on stack, stash-like argument' '
+ 	echo foo >> file &&
+ 	STASH_ID=$(git stash create) &&
+ 	git reset --hard &&
+-	cat >expected <<-EOF &&
+-	 file |    1 +
+-	 1 file changed, 1 insertion(+)
+-	EOF
+-	git stash show ${STASH_ID} >actual &&
+-	test_i18ncmp expected actual
++	echo "1	0	file" >expected &&
++	git stash show --numstat ${STASH_ID} >actual &&
++	test_cmp expected actual
  '
  
- test_expect_success 'cherry-pick --ff first..fourth works' '
+ test_expect_success 'stash show -p - no stashes on stack, stash-like argument' '
 -- 
 1.7.9.2
