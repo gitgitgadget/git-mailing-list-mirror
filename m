@@ -1,105 +1,122 @@
-From: Chris Kees <cekees@gmail.com>
-Subject: Re: CAC enabled authentication with git transfer protocols
-Date: Mon, 12 Mar 2012 21:20:39 -0500
-Message-ID: <CAOVFbFhbuWDFYcOqW3vcN==eC8495xuGRONLOrcWO6uZwJ2ETA@mail.gmail.com>
-References: <B1ECBDB2E23847488F70D870CBE563F70198D579@nawespscez06v.nadsuswe.nads.navy.mil>
-	<CAJo=hJsshrJc0Onjph3LcQxEkXDSzEPp8TQetGoy9Rwz6OXRuw@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [RFC/PATCH 0/7] tests: diffstat summary line varies by locale (Re:
+ [PATCH v2] Use correct grammar in diffstat summary line)
+Date: Mon, 12 Mar 2012 23:51:01 -0500
+Message-ID: <20120313045100.GA12474@burratino>
+References: <1328019840-6168-1-git-send-email-pclouds@gmail.com>
+ <1328100907-20397-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Jones, Brian P CTR SPAWARSYSCEN-PACIFIC, 63600" 
-	<brian.p.jones4.ctr@navy.mil>, git@vger.kernel.org
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Mar 13 03:29:16 2012
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Frederik Schwarzer <schwarzerf@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 13 05:51:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7HUA-00035c-D7
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 03:29:14 +0100
+	id 1S7Jhk-00086w-L5
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 05:51:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758419Ab2CMC2k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Mar 2012 22:28:40 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:48800 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756113Ab2CMC2j convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Mar 2012 22:28:39 -0400
-Received: by wejx9 with SMTP id x9so43919wej.19
-        for <git@vger.kernel.org>; Mon, 12 Mar 2012 19:28:38 -0700 (PDT)
+	id S1756512Ab2CMEvT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Mar 2012 00:51:19 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:60458 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756067Ab2CMEvR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Mar 2012 00:51:17 -0400
+Received: by yenl12 with SMTP id l12so141647yen.19
+        for <git@vger.kernel.org>; Mon, 12 Mar 2012 21:51:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=K5YIJ/MFcCJohtCkuguefOQRX9VihYIU/X46So1uKjY=;
-        b=B3qJvLRWpAzP+32Eku6/CIHIS+yozpOF0qQK976COYSN7UT10/IG3u7MLrEtAUkJKO
-         fOH6/zqNtJefa0iG4el/vvyg87vIUe8AWjfqNMioAVJmwRdPNk1rB/aScLj/w1IKlB4N
-         Sk59JjBC+YbYFxnhVcvzR6PyqLiipgvxiPUDYp+0zLVdvIpP0UI6dBYIx3pu4+iphuPB
-         2HjvE+hMvMkB7Lj9RseH/+7ACnXMy3hyIreBPCDi+9v/hkaBz2lbg0QM8yxIdn9IvXOB
-         A+jYiPAU76DqZEIOzA0ieWFi/RD8h25Lw2K99goawvl8iS5/T8mS/hgoPIbFDm6jemHd
-         fx8A==
-Received: by 10.180.102.102 with SMTP id fn6mr2997919wib.10.1331605240004;
- Mon, 12 Mar 2012 19:20:40 -0700 (PDT)
-Received: by 10.216.178.8 with HTTP; Mon, 12 Mar 2012 19:20:39 -0700 (PDT)
-In-Reply-To: <CAJo=hJsshrJc0Onjph3LcQxEkXDSzEPp8TQetGoy9Rwz6OXRuw@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=f/iKUSmBf2nmg4rC0j+Vu8zR2T/qkZIN9MMU7hBs3d4=;
+        b=gkaXdE6EwPVhu5if+6Bmx6Jr675Moutx6J+sRXQ+do4Uhh/n/acG84RArTCkpsXI2J
+         hJ5BiKlwP88d8NR2hImiPuYgCtURJpmV+skKqJfCWTAJqF5DdYtBSHcx5VIDtHBrB7Lk
+         bleCRanrI1JC43J8aFTLxVlckTNRpMzPDa3Ji0EwODLPvuNavQfl495dKhz1eUvunR19
+         aBgmt39XSbquaKzCURGXZjvc4NDPapYAVujN21yDMw3LHJ7E74hFsD2do99ByS5purlL
+         rEXWT6JZA7HYTvWLGagg/WTrusbU1I3SMHFBIXLrlDnCV0Fn0lCH2h9/ZRfGZs9BoVez
+         48vA==
+Received: by 10.60.9.168 with SMTP id a8mr7871298oeb.58.1331614276899;
+        Mon, 12 Mar 2012 21:51:16 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id j9sm23169310obl.21.2012.03.12.21.51.15
+        (version=SSLv3 cipher=OTHER);
+        Mon, 12 Mar 2012 21:51:16 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1328100907-20397-1-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192971>
 
-On Mon, Mar 12, 2012 at 8:53 PM, Shawn Pearce <spearce@spearce.org> wro=
-te:
-> On Mon, Mar 12, 2012 at 17:54, Jones, Brian P CTR
-> SPAWARSYSCEN-PACIFIC, 63600 <brian.p.jones4.ctr@navy.mil> wrote:
->> Does anyone know if git is being used in a military CAC enabled envi=
-ronment? This means that the DoD CAC card is required to authenticate w=
-hen hitting the git transfer protocol. This is a requirement before I c=
-an propose using git. I understand that git is able to use https as wel=
-l as ssh or over port 9418. Is there any documentation on setting up CA=
-C enabled git protocols?
->
-> The git:// protocol on port 9418 has no authentication. It won't meet
-> your requirements.
->
->
-> For Git over ssh://, Git just relies on the SSH client and server
-> binaries installed on the system. You would have to find out if these
-> binaries meet your requirements. If they do, you may just be able to
-> use SSH.
->
+(-cc: Thomas)
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-It seems like ssh might be the best shot. Kerberised ssh servers and
-clients can already be set up so that they use a CaC for
-authentication.
+>  In Vietnamese, the summary line is "thay =C4=91=E1=BB=95i 68 t=E1=BA=
+=ADp tin, th=C3=AAm(+) 163,
+>  xo=C3=A1(-) 116". Lovely. Perhaps I'll translate git into Vietnamese=
+ after
+>  all :)
 
->
-> Git 1.7.9 and later on https:// can use a credential helper binary to
-> obtain the user's "password" string. A credential helper is an
-> external program Git calls to help it authenticate over HTTP using
-> either HTTP basic or HTTP digest authentication. It may be possible t=
-o
-> write a git-credential-dodcac binary that does the magic required.
-> Install this binary in the user's $PATH, have them enable it with a
-> `git config --global credential.helper dodcac` configuration setting,
-> and away they go.
->
-> If a DoD CAC is like a one time password scheme, it may be possible t=
-o
-> have the user's "password" over HTTP actually be $password:$onetimepa=
-d
-> or some such format, and then use a custom authentication system on
-> the server to decode this string and verify it.
->
-> Internally at $DAYJOB we use a custom git-credential-$DAYJOB binary t=
-o
-> acquire a unique token that identifies the caller and pass this to th=
-e
-> server over HTTPS. The HTTP server in turn verifies this string with
-> the authentication system. Its not really their password, its just a
-> mutually agreed upon blob that was passed around between the client
-> workstation and the server.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+Though I wouldn't be able to read it, that would make me happy.
+
+>  And this patch's diffstat looks just scary due to test suite's updat=
+es.
+
+Here's a series on top that does two things:
+
+ 1. make the current testsuite run again with GETTEXT_POISON enabled
+ 2. try to ensure that next time someone wants to tweak --stat output,
+    fewer test updates will be needed.
+
+Patch 1 consists only of good changes that seem maint-worthy to me,
+but it is incomplete (see patch 7).
+
+The rest seem to work but I haven't re-checked them carefully.
+
+Patch 7 is a "miscellany" patch that even includes a few changes that
+should be part of patch 1.  I am sending it this way just to get early
+feedback on the approach; a final series would move all the
+s/test_cmp/test_i18ncmp/ changes to patch 1 and have the rest of the
+changes split up by topic.
+
+The series is based against 7f814632 (Use correct grammar in diffstat
+summary line).
+
+Thoughts welcome, of course.
+
+Jonathan Nieder (7):
+  test: use test_i18ncmp to check --stat output
+  test: use numstat instead of diffstat in funny-names test
+  test: modernize funny-names test style
+  test: test cherry-pick functionality and output separately
+  test: use numstat instead of stat in "git stash show" tests
+  test: use numstat instead of diffstat in binary-diff test
+  remainder
+
+ t/t3300-funny-names.sh              |  354 ++++++++++++++++++---------=
+--------
+ t/t3508-cherry-pick-many-commits.sh |   32 +++-
+ t/t3903-stash.sh                    |   32 +++-
+ t/t4012-diff-binary.sh              |   29 ++-
+ t/t4013-diff-various.sh             |    7 +-
+ t/t4014-format-patch.sh             |    9 +-
+ t/t4016-diff-quote.sh               |   35 ++--
+ t/t4030-diff-textconv.sh            |    6 +-
+ t/t4031-diff-rewrite-binary.sh      |   10 +-
+ t/t4043-diff-rename-binary.sh       |    8 +-
+ t/t4045-diff-relative.sh            |   16 +-
+ t/t4047-diff-dirstat.sh             |   65 +++----
+ t/t4049-diff-stat-count.sh          |    2 +-
+ t/t4100-apply-stat.sh               |    4 +-
+ t/t5150-request-pull.sh             |    2 +-
+ t/t7602-merge-octopus-many.sh       |    6 +-
+ 16 files changed, 356 insertions(+), 261 deletions(-)
