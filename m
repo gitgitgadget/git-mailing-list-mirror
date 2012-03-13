@@ -1,147 +1,115 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: checkout -q not quiet enough
-Date: Tue, 13 Mar 2012 16:08:43 -0400
-Message-ID: <20120313200842.GA23664@sigill.intra.peff.net>
-References: <86aa3k5ppk.fsf@red.stonehenge.com>
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: Re: [PATCH 2/2] Documentation/diff-options: reword description of
+ --submodule option
+Date: Tue, 13 Mar 2012 16:36:48 -0400
+Message-ID: <CAFouetgSw7MMzHWOJox6DiPmBWD=6j4mST1KFZYsZyLmKHRrEQ@mail.gmail.com>
+References: <1331665251-11147-1-git-send-email-tim.henigan@gmail.com>
+	<1331665251-11147-2-git-send-email-tim.henigan@gmail.com>
+	<7vipi8uv12.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Tue Mar 13 21:08:52 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 13 21:36:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7Y1b-0001fh-0x
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 21:08:51 +0100
+	id 1S7YSm-00069w-Uq
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 21:36:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752585Ab2CMUIq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Mar 2012 16:08:46 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48650
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752370Ab2CMUIq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2012 16:08:46 -0400
-Received: (qmail 1584 invoked by uid 107); 13 Mar 2012 20:08:56 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 13 Mar 2012 16:08:56 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Mar 2012 16:08:43 -0400
-Content-Disposition: inline
-In-Reply-To: <86aa3k5ppk.fsf@red.stonehenge.com>
+	id S1753974Ab2CMUgv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Mar 2012 16:36:51 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:58120 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751439Ab2CMUgu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Mar 2012 16:36:50 -0400
+Received: by eaaq12 with SMTP id q12so616516eaa.19
+        for <git@vger.kernel.org>; Tue, 13 Mar 2012 13:36:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=UGTHsGKSrC0P7b4cDcoIcDk3Q9j9ApE2Zsw0ciUPips=;
+        b=wqck2WphTOuwpB7+wEr7lcVeucu/XFEsdCcXSMG2lphByhgigU6aIYGSvpKE9tTf5W
+         EswT5oo00WG14ppHhL0fcE+9t6+uiuoQ6/hCreWAduDD7iYuiKoTNA4W5LdAKLg+g748
+         i8LWhWFAi2GYqM/aE9IyBL2cHIut2u1YbBQHzbtt2Dk9nw/OszVqWfmzIIZh36QKluS2
+         0zz9aJM48tI7vp+J+gVTVmhLbjH8FpwgV6pCJW6XnRcxZmgTC7NwQdzn0bwVT27/eoQh
+         6lkdvbZRQwVww3Ae7X/wCtCsk2LVvcy/LvMM9ujoinM5Y2nzBFCiHHHSez8ZYpVZRvbW
+         Xc1w==
+Received: by 10.50.153.166 with SMTP id vh6mr7010781igb.44.1331671008684; Tue,
+ 13 Mar 2012 13:36:48 -0700 (PDT)
+Received: by 10.42.218.65 with HTTP; Tue, 13 Mar 2012 13:36:48 -0700 (PDT)
+In-Reply-To: <7vipi8uv12.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193065>
 
-On Tue, Mar 13, 2012 at 11:19:03AM -0700, Randal L. Schwartz wrote:
+>> =C2=A0--submodule[=3D<format>]::
+>> - =C2=A0 =C2=A0 Choose the output format for submodule differences. =
+<format> can be one of
+>> - =C2=A0 =C2=A0 'short' and 'log'. 'short' just shows pairs of commi=
+t names, this format
+>> - =C2=A0 =C2=A0 is used when this option is not given. 'log' is the =
+default value for this
+>> - =C2=A0 =C2=A0 option and lists the commits in that commit range li=
+ke the 'summary'
+>> - =C2=A0 =C2=A0 option of linkgit:git-submodule[1] does.
+>> + =C2=A0 =C2=A0 Choose the output format for submodule differences. =
+<format> can be one
+>> + =C2=A0 =C2=A0 of 'short' or 'log'. The default value is 'log'.
+>> + =C2=A0 =C2=A0 'log' lists commits in the commit range like linkgit=
+:git-submodule[1] `--summary`.
+>> + =C2=A0 =C2=A0 'short' shows only the SHA1 of the source and destin=
+ation.
+>
+> Does it risk being unclear to say src/dst here without defining, or i=
+s it
+> sufficiently clear from the context (the previous line says "range")?
 
-> checkout without -q:
-> 
->   Switched to a new branch 'projects/DUH-11'
->   Branch projects/DUH-11 set up to track remote branch projects/DUH-11 from origin.
-> 
-> checkout with -q:
-> 
->   Branch projects/DUH-11 set up to track remote branch projects/DUH-11 from origin.
-> 
-> Bug or feature?  If feature, how do I get it "more q'ey"?
+I chose those words based on descriptions in some of the other diff
+options (see `changes` and --src-prefix in the same file.  That being
+said, the description you gave is more clear.
 
-Bug, I think. You'd need something like the patch below, except that:
 
-  1. It should probably collapse the many options to create_branch into
-     a "flags" field.
+> You lost "not giving this option at all is the same as --submodule=3D=
+short".
 
-  2. git-branch should probably learn "-q", as well, to suppress the
-     same message.
+I removed that part on purpose.  I wasn't sure that it needs to be
+documented here since it is about how the 'diff' command normally
+behaves rather than about the '--submodule' option itself.
 
----
-diff --git a/branch.c b/branch.c
-index 9971820..796da08 100644
---- a/branch.c
-+++ b/branch.c
-@@ -101,7 +101,7 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
-  * config.
-  */
- static int setup_tracking(const char *new_ref, const char *orig_ref,
--                          enum branch_track track)
-+			  enum branch_track track, int flags)
- {
- 	struct tracking tracking;
- 
-@@ -128,7 +128,7 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
- 		return error("Not tracking: ambiguous information for ref %s",
- 				orig_ref);
- 
--	install_branch_config(BRANCH_CONFIG_VERBOSE, new_ref, tracking.remote,
-+	install_branch_config(flags, new_ref, tracking.remote,
- 			      tracking.src ? tracking.src : orig_ref);
- 
- 	free(tracking.src);
-@@ -191,7 +191,7 @@ int validate_new_branchname(const char *name, struct strbuf *ref,
- void create_branch(const char *head,
- 		   const char *name, const char *start_name,
- 		   int force, int reflog, int clobber_head,
--		   enum branch_track track)
-+		   int quiet, enum branch_track track)
- {
- 	struct ref_lock *lock = NULL;
- 	struct commit *commit;
-@@ -201,6 +201,7 @@ void create_branch(const char *head,
- 	int forcing = 0;
- 	int dont_change_ref = 0;
- 	int explicit_tracking = 0;
-+	int tracking_flags = quiet ? 0 : BRANCH_CONFIG_VERBOSE;
- 
- 	if (track == BRANCH_TRACK_EXPLICIT || track == BRANCH_TRACK_OVERRIDE)
- 		explicit_tracking = 1;
-@@ -260,7 +261,7 @@ void create_branch(const char *head,
- 			 start_name);
- 
- 	if (real_ref && track)
--		setup_tracking(ref.buf+11, real_ref, track);
-+		setup_tracking(ref.buf+11, real_ref, track, tracking_flags);
- 
- 	if (!dont_change_ref)
- 		if (write_ref_sha1(lock, sha1, msg) < 0)
-diff --git a/branch.h b/branch.h
-index b99c5a3..923fc34 100644
---- a/branch.h
-+++ b/branch.h
-@@ -13,8 +13,8 @@
-  * branch for (if any).
-  */
- void create_branch(const char *head, const char *name, const char *start_name,
--		   int force, int reflog,
--		   int clobber_head, enum branch_track track);
-+		   int force, int reflog, int clobber_head, int quiet,
-+		   enum branch_track track);
- 
- /*
-  * Validates that the requested branch may be created, returning the
-diff --git a/builtin/branch.c b/builtin/branch.c
-index d8cccf7..f1eaf1e 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -808,7 +808,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		if (kinds != REF_LOCAL_BRANCH)
- 			die(_("-a and -r options to 'git branch' do not make sense with a branch name"));
- 		create_branch(head, argv[0], (argc == 2) ? argv[1] : head,
--			      force_create, reflog, 0, track);
-+			      force_create, reflog, 0, 0, track);
- 	} else
- 		usage_with_options(builtin_branch_usage, options);
- 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 6b9061f..23fc56d 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -543,6 +543,7 @@ static void update_refs_for_switch(struct checkout_opts *opts,
- 				      opts->new_branch_force ? 1 : 0,
- 				      opts->new_branch_log,
- 				      opts->new_branch_force ? 1 : 0,
-+				      opts->quiet,
- 				      opts->track);
- 		new->name = opts->new_branch;
- 		setup_branch_path(new);
+
+> Here is my attempt, but I do not think I particularly did a good job =
+at
+> this.
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0Specify how differences in submodules are =
+shown. =C2=A0A `--submodule`
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0or `--submodule=3Dlog` option uses the lon=
+g format, which lists the
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0commits in the range like linkgit:git-subm=
+odule[1] `--summary` does.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0Omitting the `--submodule` option, or a `-=
+-submodule=3Dshort` option,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0uses the short format, which just shows th=
+e names of the commits
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0at the beginning and the end of the range.
+
+Some further minor changes to your version:
+
+ =C2=A0 =C2=A0Specify how differences in submodules are shown. =C2=A0Wh=
+en `--submodule`
+ =C2=A0 =C2=A0or `--submodule=3Dlog` is given, the 'log' format is used=
+=2E  This format lists
+ =C2=A0 =C2=A0the commits in the range like linkgit:git-submodule[1] `-=
+-summary` does.
+ =C2=A0 =C2=A0Omitting the `--submodule` option or specifying `--submod=
+ule=3Dshort`,
+ =C2=A0 =C2=A0uses the 'short' format. This format just shows the names=
+ of the commits
+ =C2=A0 =C2=A0at the beginning and end of the range.
