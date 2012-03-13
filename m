@@ -1,125 +1,106 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: git push default behaviour?
-Date: Tue, 13 Mar 2012 10:47:11 +0100
-Message-ID: <vpqwr6o3k9s.fsf@bauges.imag.fr>
-References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com>
-	<87k42vs8pi.fsf@thomas.inf.ethz.ch>
-	<CAFsnPqopZEZeeuFzK4ZoUjGnfpiv5oMs=xV5XBSgSyGLXOwgqA@mail.gmail.com>
-	<1331202483.21444.11.camel@beez.lab.cmartin.tk>
-	<CAFsnPqpnH2CTki8zz6Mpz=qrdxF_aTA92cPrn1L9MQZVMoxdeg@mail.gmail.com>
-	<1331203321.21444.13.camel@beez.lab.cmartin.tk>
-	<4F58C977.8000400@xiplink.com> <vpq62efjeqd.fsf@bauges.imag.fr>
-	<CAHkcotiOGaOdDvibpoiEgys3PnSPfSw0mT3DeEOix+FuboULiA@mail.gmail.com>
-	<vpqfwdjas0m.fsf@bauges.imag.fr>
-	<20120309033826.GA6164@sigill.intra.peff.net>
-	<7vsjhi9wku.fsf@alter.siamese.dyndns.org>
-	<vpqobs65gfc.fsf@bauges.imag.fr>
-	<7vwr6u6qrn.fsf@alter.siamese.dyndns.org>
-	<vpqmx7mcgdz.fsf@bauges.imag.fr>
-	<7vk42pu6io.fsf@alter.siamese.dyndns.org>
+From: Kevin <ikke@ikke.info>
+Subject: Re: GIT & Symbolic Links
+Date: Tue, 13 Mar 2012 11:06:33 +0100
+Message-ID: <CAO54GHDgvoHdF3x8+kZwJ2XfB9Tyk1_xwrbfKux-b6wxS9koGw@mail.gmail.com>
+References: <CACHQFzEqe-SwpCgjgGRDdzcUQW_+8-TdLsRV6KbKorvq7dJi+g@mail.gmail.com>
+ <CACHQFzEJATc2hiSdAgoGg3vssQ-CShF+89TOkzVwaf_ujYy+3w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Dmitry Potapov <dpotapov@gmail.com>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
-	Jeremy Morton <jeremy@configit.com>,
-	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 13 10:48:11 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: Sassy Natan <sassyn@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 13 11:08:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7OKv-0003Mm-K4
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 10:48:10 +0100
+	id 1S7Oec-0005Mx-PM
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 11:08:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965068Ab2CMJsD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Mar 2012 05:48:03 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:43075 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965037Ab2CMJsB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2012 05:48:01 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q2D9gn9p014586
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 13 Mar 2012 10:42:49 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1S7OK0-0004Dj-En; Tue, 13 Mar 2012 10:47:12 +0100
-In-Reply-To: <7vk42pu6io.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 12 Mar 2012 09:29:51 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 13 Mar 2012 10:42:50 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q2D9gn9p014586
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1332236571.36421@yEdBBFS37UbFgMJX6sDV1A
+	id S1760446Ab2CMKGz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Mar 2012 06:06:55 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:33135 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760421Ab2CMKGy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Mar 2012 06:06:54 -0400
+Received: by wibhq7 with SMTP id hq7so547975wib.1
+        for <git@vger.kernel.org>; Tue, 13 Mar 2012 03:06:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=+cpbRgmFksN6LZXUAWpzfRQRJYeG31k7UYS5ITt9rng=;
+        b=lACpPenh9Eqe3Mu+LgSx31SVEhUseaRReOShvPjLivHOwwvEcw+vY9NYLIbRXoujCh
+         tCfpMB/6YLhl7/cbMfvOu43F1/KLtwXTQKU7FpbJW52E0hHthpnQI5Vb0EuY2p8OSGHl
+         mqwQvsZhljOnpP8dFjWCjmTEUX5CAILVugVDO89/QitnGDOlh4FlCCa1rnOXf2+H9t7S
+         tvwP+sZPOG6WeY1hCCMNkiDTq5H60CZaUL9FLDkTp3McVr4FB7AxxcE0kIDe7chpWV4z
+         aBAzBLYEv9jpHT70VKP9QHMp7X7bB1KqyL9QhgssMZehcrAt53Bt4L2U6Bc99rdePdnU
+         +Kyw==
+Received: by 10.216.131.2 with SMTP id l2mr9195832wei.3.1331633213250; Tue, 13
+ Mar 2012 03:06:53 -0700 (PDT)
+Received: by 10.227.113.74 with HTTP; Tue, 13 Mar 2012 03:06:33 -0700 (PDT)
+In-Reply-To: <CACHQFzEJATc2hiSdAgoGg3vssQ-CShF+89TOkzVwaf_ujYy+3w@mail.gmail.com>
+X-Google-Sender-Auth: dCVS094MInYyfD_bBgUiP7TjnZw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192995>
 
-Junio C Hamano <gitster@pobox.com> writes:
+As the IRC channel already concluded, git itself has no option to
+'break' symbolic links on write, as git is not the only one editing
+these files, but your editor does too.
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+This is why this is never going to work without the support of your
+editor, or with something more low level, like file system support
+
+On Mon, Mar 12, 2012 at 5:44 PM, Sassy Natan <sassyn@gmail.com> wrote:
+> Hi Group,
 >
->> Here's an attempt to an improved message. The first paragraph is here to
->> make sure people understand their opinion counts (before they stop
->> reading because it's too long). The rest explains the change and the way
->> to get involved:
+> I'm consider myself as a new baby when it come to GiT.
+> But I have just migrate my users from SVN to GIT and I have some
+> questions in mind I want to share with you.
 >
-> Sounds OK from a cursory read, except for a few minor details.
+> Is it possible to do the following:
 >
-> Thanks.  Nitpicks follow.
-
-I'm taking them all. Here's the result:
-
----------- 8< ---------- 8< -----------
-
-There is a proposal to change the default behaviour of 'git push'
-on the Git mailing list. The goal of this message is to encourage you
-to discuss it before it happens (or the change is aborted, depending
-on the outcome of the discussion).
-
-In the current setting (i.e. push.default=matching), 'git push' without
-argument will push all branches that exist locally and remotely with the
-same name. This is usually appropriate when a developer pushes to his
-own public repository, but may be confusing if not dangerous when using
-a shared repository. The proposal is to change the default to
-'upstream', i.e. push only the current branch, and push it to the branch
-'git pull' would pull from. Another candidate is 'current'; this pushes
-only the current branch to the remote branch of the same name.
-
-For more details on the behavior of Git with these values, read
-the documentation about 'push.default' in 'man git-config'
-(http://schacon.github.com/git/git-config.html).
-
-You may be negatively affected when such a change happens if you do not
-see anything in the output from 'git config push.default' and if you
-rely on the default that pushes all your matching branches. On the other
-hand, you may want to see the
-
-default behaviour to change, especially if you are using shared
-repositories. In either case, please join the discussion to give
-us more data point and help us decide the future of Git.
-
-What has been discussed so far can be seen in this thread:
-http://thread.gmane.org/gmane.comp.version-control.git/192547/focus=192694
-Previous relevant discussions include:
-http://thread.gmane.org/gmane.comp.version-control.git/123350/focus=123541
-http://thread.gmane.org/gmane.comp.version-control.git/166743
-
-To join the discussion, send your messages to: git@vger.kernel.org
-The list accepts messages from non-subscribers, and you do
-not have to ask "please Cc me, I am not subscribed", as it's
-customary to Cc: posters when replying on this list.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> Say I have a really big GiT repo (something around 1GB) name DEV.
+> In the SVN days, each of my developers (100 Users) had to clone a
+> local copy of the DEV Repo in his home folder, so total of 100GB was
+> used in my shared storage (NFS Drive) where something around 85% was
+> actually just a copy of the same files.
+>
+> When I used the De-Duplication function (Under ZFS File System) I
+> could easy see how the volume is shrinking, but I more inserting in
+> different kind of solution, now when it comes to GIT.
+>
+> So for the example let's consider that user A clone the DEV GIT Repo
+> into his/her home folder (/home/A/DEV)
+> User B want to clone the same Repo. But now, I don't want user B to
+> clone the all tree and files, but instead to have a symbolic links to
+> the /home/A/DEV folder.
+> All files and directories in the /home/B/DEV will be a links to the /=
+home/A/DEV.
+>
+> Once user B actually want to change a file, ?somehow? the git brake
+> the link, and have a local copy of that specific file.
+> When the file is push back the link become back.
+>
+> While trying to get some feedback in the IRC roon, some users point m=
+e
+> to git-annex and unionfs.
+> Both project seems to be cool, git-annex really have nice options, bu=
+t
+> I don't see how this going to help me.
+>
+> Regarding unionfs - well I'm still not sure.
+>
+> Maybe someone can help here...
+>
+> Thanks
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
