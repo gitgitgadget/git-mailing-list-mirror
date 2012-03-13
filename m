@@ -1,91 +1,62 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: [PATCH 2/2] Documentation/diff-options: reword description of --submodule option
-Date: Tue, 13 Mar 2012 15:00:51 -0400
-Message-ID: <1331665251-11147-2-git-send-email-tim.henigan@gmail.com>
-References: <1331665251-11147-1-git-send-email-tim.henigan@gmail.com>
-Cc: Tim Henigan <tim.henigan@gmail.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Mar 13 20:01:17 2012
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH/RFC] remove #!interpreter line from shell libraries
+Date: Tue, 13 Mar 2012 20:09:49 +0100
+Message-ID: <20120313190949.GB8074@ecki>
+References: <20120308121403.GA16493@burratino>
+ <20120309075820.GA15985@ecki>
+ <4F5E4618.10102@xiplink.com>
+ <20120312191703.GB21817@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Marc Branchaud <marcnarc@xiplink.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, David Aguilar <davvid@gmail.com>,
+	Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 13 20:18:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7WyC-0008RM-Eo
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 20:01:16 +0100
+	id 1S7XEn-00053K-Gm
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 20:18:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758815Ab2CMTBJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Mar 2012 15:01:09 -0400
-Received: from mail-fa0-f46.google.com ([209.85.161.46]:36268 "EHLO
-	mail-fa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758691Ab2CMTBI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2012 15:01:08 -0400
-X-Greylist: delayed 4478 seconds by postgrey-1.27 at vger.kernel.org; Tue, 13 Mar 2012 15:01:07 EDT
-Received: by faas1 with SMTP id s1so247314faa.19
-        for <git@vger.kernel.org>; Tue, 13 Mar 2012 12:01:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=12K4oGhZJWeKh+aDFVQ6HmAZI4zlO+CYG7XY1hHZyhA=;
-        b=B2yfnOcwi+8yYb6GedIvEn3QkBzcpX97enLWgksGu75+krM4xuG0GHBTbUpM0lhKld
-         Njb1jAmGFdUHQzU/gF/3F81LQNLMSLSf3g/h4wwNVXsMoXgpFbWK3u5pHzJBjCyuM8dh
-         iI7ufpZ2X3tjmgT70Lsvtg3s1y9V5Fu8xb/YcX3GAKGF5fcJUpkZKEUpoboXDCqhfJ+I
-         BgDHhp8fUHShiEwUv9JiV1bGy/ZXjx8smlbKk/2tvuPAtG69qpjBvkI2E9aDT1zXHQug
-         d6gDLpraQslHZXcbweQt9Q/oTLndIlMli8hhYR3tIIanH5DFDjYuygjUkdu/ZyQah0i0
-         Wg+Q==
-Received: by 10.224.184.203 with SMTP id cl11mr11437911qab.27.1331665266109;
-        Tue, 13 Mar 2012 12:01:06 -0700 (PDT)
-Received: from localhost (adsl-99-38-69-118.dsl.sfldmi.sbcglobal.net. [99.38.69.118])
-        by mx.google.com with ESMTPS id j17sm4758156qaj.9.2012.03.13.12.01.04
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 13 Mar 2012 12:01:05 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.rc0
-In-Reply-To: <1331665251-11147-1-git-send-email-tim.henigan@gmail.com>
+	id S1759243Ab2CMTSU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Mar 2012 15:18:20 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:41083 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759152Ab2CMTST (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Mar 2012 15:18:19 -0400
+X-Greylist: delayed 77463 seconds by postgrey-1.27 at vger.kernel.org; Tue, 13 Mar 2012 15:18:19 EDT
+Received: from localhost (p5B22F210.dip.t-dialin.net [91.34.242.16])
+	by bsmtp.bon.at (Postfix) with ESMTP id 5CA1F13004F;
+	Tue, 13 Mar 2012 20:15:19 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20120312191703.GB21817@burratino>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193059>
 
-The previous description was a bit confusing.  This rewrite makes it
-easier to understand.
+On Mon, Mar 12, 2012 at 02:17:03PM -0500, Jonathan Nieder wrote:
+> 
+> By the way, my mild dislike for the #! line in shell libraries is
+> actually rooted in functionality, in a way.  Though it would never
+> happen in git, I have had too many unhappy experiences of shell
+> libraries with #!/bin/bash at the top that were used in #!/bin/sh
+> scripts and broke completely.  So that is where the bad association
+> comes from.
 
-It should be noted that even though 'log' is listed as the default
-format, it is not used when the '--submodule' option is missing. This
-means that the output of:
-   'git diff'             matches 'git diff --submodule=short'
-   'git diff --submodule' matches 'git diff --submodule=log'
+Maybe I am missing something here, but as far as I can see this is an
+argument for _keeping_ the #! line, because at least it will give a hint
+that a /bin/bash library will not work for a /bin/sh script, whereas
+"this is a shell library" can mean almost anything.
 
-Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
----
+Anyways, I can certainly survive without the #! line. So please feel
+free to ignore my comments if you feel strongly about this.
 
-Resent due to a typo in the developer list email address.
-
-I will understand if this change is rejected, but I found the current
-description difficult to follow the first couple times I read it.
-
- Documentation/diff-options.txt |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index f44f3fc..0e1c753 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -165,11 +165,10 @@ any of those replacements occurred.
- 	of the `--diff-filter` option on what the status letters mean.
- 
- --submodule[=<format>]::
--	Choose the output format for submodule differences. <format> can be one of
--	'short' and 'log'. 'short' just shows pairs of commit names, this format
--	is used when this option is not given. 'log' is the default value for this
--	option and lists the commits in that commit range like the 'summary'
--	option of linkgit:git-submodule[1] does.
-+	Choose the output format for submodule differences. <format> can be one
-+	of 'short' or 'log'. The default value is 'log'.
-+	'log' lists commits in the commit range like linkgit:git-submodule[1] `--summary`.
-+	'short' shows only the SHA1 of the source and destination.
- 
- --color[=<when>]::
- 	Show colored diff.
--- 
-1.7.10.rc0
+Clemens
