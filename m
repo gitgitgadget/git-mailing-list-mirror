@@ -1,71 +1,81 @@
 From: Tim Henigan <tim.henigan@gmail.com>
-Subject: [PATCH 1/4] contrib/diffall: change comment to reflect actual reason for 'cdup'
-Date: Tue, 13 Mar 2012 13:45:30 -0400
-Message-ID: <1331660734-10538-1-git-send-email-tim.henigan@gmail.com>
+Subject: [PATCH 2/4] contrib/diffall: teach diffall to create tmp dirs without using mktemp
+Date: Tue, 13 Mar 2012 13:45:31 -0400
+Message-ID: <1331660734-10538-2-git-send-email-tim.henigan@gmail.com>
+References: <1331660734-10538-1-git-send-email-tim.henigan@gmail.com>
 Cc: tim.henigan@gmail.com
 To: git@vger.kernel.org, gitster@poxbox.com
-X-From: git-owner@vger.kernel.org Tue Mar 13 18:46:00 2012
+X-From: git-owner@vger.kernel.org Tue Mar 13 18:46:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7VnL-0007vx-AQ
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 18:45:59 +0100
+	id 1S7VnY-00089g-SY
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 18:46:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759077Ab2CMRpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Mar 2012 13:45:54 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:44051 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758945Ab2CMRpy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2012 13:45:54 -0400
-Received: by eekc41 with SMTP id c41so464836eek.19
-        for <git@vger.kernel.org>; Tue, 13 Mar 2012 10:45:52 -0700 (PDT)
+	id S1758935Ab2CMRqH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Mar 2012 13:46:07 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:58593 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759096Ab2CMRqG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Mar 2012 13:46:06 -0400
+Received: by eaaq12 with SMTP id q12so460115eaa.19
+        for <git@vger.kernel.org>; Tue, 13 Mar 2012 10:46:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=LgMxWsMrbuXYJiPFlArkk5IsPQUO3siTUQw8QQjIS3E=;
-        b=iB4pyW1OpxHxZwvfDdivvOen0VMudizax4AOA+bboKblqZ/fSuIj7Lt/azuYxiD1YE
-         +U0fFkMwPShtt6O2E1oaHwzeDkdK6Atr7Kd0sZ9CIWV1dAZ+m3od5Yz5KD8r1bHxLBg3
-         J2WiOpOAzhmG80w7sHpGTboeUkrBWH24DT4S/K0zxiKCyztXx/stfYH2RC7Y3QXEGn5+
-         Os4EwkzsShe8DtePzrcfsxlEeXFqLV6EG+ngkw8TO50Xc84nXn/jqE7jp1weTHXu9qsu
-         tU1H2PboLO4XQRrcPipRLnCTHucu1VrFqSbLWCSwjj+ywjulsfZbxCv/B5IBa1q/KKWW
-         MfVQ==
-Received: by 10.229.78.86 with SMTP id j22mr4141779qck.95.1331660752159;
-        Tue, 13 Mar 2012 10:45:52 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=7IvbEzmz9g541bOfG9CZlvv8sx0Y6nf4Am0+YByAarU=;
+        b=dF7URHsS29O7paQtcepXGSa7K/rtjls3V7mc46lSYW9SQOFk1KnHp88YCEV51XCsQG
+         nfB+dMY4OK224YrD+Ko07xRT+lMk0oPoR/m5WuOUZliGbsIr8HJMvHnUDmjseJRMTmjN
+         /UUZAZ48iwc9h8ogkwBiRoIF5JJN1doX3u4V37e95ZkbfYOEpQTYFh2uDgFUc7IvLnxv
+         m2vKiIGCQ0lmbR2aAIN6aDTRcBnVDD3xCbqF6RrCd+Je+GcWDzRyc2MedRs+yLHw3tkg
+         hPyyeL+LFNkSO5kLFJ35WAqp9K3tHKlOGIT3qE230QWh7MR1wkeHt7pEjkfaVuTlbVgr
+         aYeg==
+Received: by 10.224.222.141 with SMTP id ig13mr13571068qab.63.1331660764837;
+        Tue, 13 Mar 2012 10:46:04 -0700 (PDT)
 Received: from localhost (adsl-99-38-69-118.dsl.sfldmi.sbcglobal.net. [99.38.69.118])
-        by mx.google.com with ESMTPS id h11sm4417727qae.3.2012.03.13.10.45.46
+        by mx.google.com with ESMTPS id dw1sm4413939qab.4.2012.03.13.10.46.01
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 13 Mar 2012 10:45:51 -0700 (PDT)
+        Tue, 13 Mar 2012 10:46:04 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.rc0
+In-Reply-To: <1331660734-10538-1-git-send-email-tim.henigan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193042>
 
-The comment from an earlier commit did not reflect the actual reason this
-operation is needed.
+mktemp is not available on all platforms.  Instead of littering the code
+with a work-around, this commit replaces mktemp with a one-line Perl
+script.
 
 Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
 ---
- contrib/diffall/git-diffall |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ contrib/diffall/git-diffall |   11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/contrib/diffall/git-diffall b/contrib/diffall/git-diffall
-index 9bbd27f..d706a6d 100755
+index d706a6d..443f646 100755
 --- a/contrib/diffall/git-diffall
 +++ b/contrib/diffall/git-diffall
-@@ -36,7 +36,9 @@ fi
+@@ -45,13 +45,10 @@ cd "$cdup" || {
+ 	exit 1
+ }
  
- start_dir=$(pwd)
+-# mktemp is not available on all platforms (missing from msysgit)
+-# Use a hard-coded tmp dir if it is not available
+-tmp="$(mktemp -d -t tmp.XXXXXX 2>/dev/null)" || {
+-	tmp=/tmp/git-diffall-tmp.$$
+-	mkdir "$tmp" || exit 1
+-}
+-
++# set up temp dir
++tmp=$(perl -e 'use File::Temp qw(tempdir);
++	$t=tempdir("/tmp/git-diffall.XXXXX") or exit(1);
++	print $t') || exit 1
+ trap 'rm -rf "$tmp" 2>/dev/null' EXIT
  
--# needed to access tar utility
-+# All the file paths returned by the diff command are relative to the root
-+# of the working copy. So if the script is called from a subdirectory, it
-+# must switch to the root of working copy before trying to use those paths.
- cdup=$(git rev-parse --show-cdup) &&
- cd "$cdup" || {
- 	echo >&2 "Cannot chdir to $cdup, the toplevel of the working tree"
+ left=
 -- 
 1.7.10.rc0
