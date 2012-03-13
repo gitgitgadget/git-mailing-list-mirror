@@ -1,176 +1,76 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH v2 2/2] index-pack: support multithreaded delta resolving
-Date: Tue, 13 Mar 2012 00:32:34 +0000
-Message-ID: <4F5E95A2.8050106@ramsay1.demon.co.uk>
-References: <1331519549-28090-1-git-send-email-pclouds@gmail.com> <1331519549-28090-3-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-am: error out when seeing -b/--binary
+Date: Tue, 13 Mar 2012 11:22:10 -0700
+Message-ID: <7vipi8wect.fsf@alter.siamese.dyndns.org>
+References: <20120312152453.GB12405@1wt.eu>
+ <87aa3l4vqq.fsf@thomas.inf.ethz.ch> <20120312165703.GB18791@burratino>
+ <7vvcm9snko.fsf@alter.siamese.dyndns.org> <87399dpk48.fsf@thomas.inf.ethz.ch>
+ <20120312215607.GB11362@burratino> <874ntto4t8.fsf@thomas.inf.ethz.ch>
+ <20120312222227.GC11362@burratino> <87fwdcldqj.fsf@thomas.inf.ethz.ch>
+ <7v62e8la9y.fsf@alter.siamese.dyndns.org> <20120313175158.GA6653@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 13 19:16:24 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@student.ethz.ch>, Willy Tarreau <w@1wt.eu>,
+	Greg KH <greg@kroah.com>, Ben Hutchings <ben@decadent.org.uk>,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: linux-kernel-owner@vger.kernel.org Tue Mar 13 19:22:24 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7WGm-0006pP-7A
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 19:16:24 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1S7WMa-00031n-C1
+	for glk-linux-kernel-3@plane.gmane.org; Tue, 13 Mar 2012 19:22:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759240Ab2CMSQT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Mar 2012 14:16:19 -0400
-Received: from lon1-post-1.mail.demon.net ([195.173.77.148]:45074 "EHLO
-	lon1-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758568Ab2CMSQS (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Mar 2012 14:16:18 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by lon1-post-1.mail.demon.net with esmtp (Exim 4.69)
-	id 1S7WGd-0007Ge-ZS; Tue, 13 Mar 2012 18:16:17 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <1331519549-28090-3-git-send-email-pclouds@gmail.com>
-Sender: git-owner@vger.kernel.org
+	id S1759403Ab2CMSWO (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 13 Mar 2012 14:22:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64435 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758733Ab2CMSWM (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 13 Mar 2012 14:22:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 587E76815;
+	Tue, 13 Mar 2012 14:22:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=R95JUFIASNNxjPHxglW7fEt9rAQ=; b=oNADcx
+	6rXRV7pFh+B506pi5o/9aE9PzcjG1pqHR0jQFexZdsocA4Y7yLJ3G52ZAxHDDHoN
+	qI4W1ZWMNmTgKP0UTYCeuneYHB+c7txE5cP/yoHsndGPD+X+a32lWWOvVLHuk/RX
+	ugHk4kc1Z40x0hjWLXJkKB8Rny2uq65A28L1s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dCPwn+DNsD2oL/sORcJ0ED4VGuVhEeXc
+	pwEDd/QiR/cQKCtSMFZxRi2vIlWHaq+4+0wLRTAchqffA6Pc1HlRfeKkLwdI4RkQ
+	VmbcgP/E2GE8uy21EwP8kuVxsNwL0XjB5mF0Ca+igR7iccynY8cEkrVaDi9+hET5
+	Um/ftjugYqY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F0C96814;
+	Tue, 13 Mar 2012 14:22:12 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D28F66813; Tue, 13 Mar 2012
+ 14:22:11 -0400 (EDT)
+In-Reply-To: <20120313175158.GA6653@burratino> (Jonathan Nieder's message of
+ "Tue, 13 Mar 2012 12:51:58 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 73AB9580-6D39-11E1-8F14-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193051>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193052>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-[snipped]
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  I changed Ramsay's mutex patch a little bit and incorporate it here.
->  Ramsay, it'd be great if you could try it again on MinGW
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Hmm, well do you want the good news, or the bad news ... :-D
+>> I really don't think it is a good idea to avoid mentioning 1.6.0, at
+>> which we *removed* description of the option in our manual pages and
+>> from the "git am -h" help message. How much more active deprecation
+>> would a user want?
+>
+> A warning when the option is used or a mention in the release notes.
 
-=46irst, I should say that I feel like I'm doing a very bad job of
-communicating, so let me apologize for that and hope that this time
-I make a better job of it!
-
-This patch breaks the build on MinGW, since the emulation code has not
-(thus far) included an implementation of pthread_key_delete(). I simply
-commented out the call to that function, in cleanup_thread(), so that I
-could test the remainder of the patch.
-
-Although this patch is an improvement on previous patches, it still fai=
-ls
-in *exactly* the same way as earlier attempts.
-
-I probably didn't make clear before that 'nr_threads' has been given to=
-o
-many duties, which is the main reason for me introducing a new variable
-'threads_active'. For example, ...
-
->  builtin/index-pack.c             |  198 ++++++++++++++++++++++++++++=
-++++++----
->  3 files changed, 192 insertions(+), 18 deletions(-)
->=20
-
-[snipped]
-
-> +static inline void lock_mutex(pthread_mutex_t *mutex)
-> +{
-> +	if (nr_threads > 1)
-> +		pthread_mutex_lock(mutex);
-> +}
-
-What is this condition testing (ie. what does it mean)? Does it mean:
-
-    1. there are some threads currently running ?
-    2. the mutex variables are in a usable state ?
-
-Does this expression always express the same invariant?
-
-The answer, of course, is *no*.
-
-Let us consider the call to parse_pack_objects() at line 1367. Let us
-suppose that we have been asked to use threads (from the config file,
-the command-line, or simply !NO_PTHREADS), so that when we call the
-parse_pack_objects() function nr_threads > 1.
-
-Note that, at this point, no threads are active and the mutex variables
-have not been initialised.
-
-Now, at the beginning of parse_pack_objects(), we find some 'first pass=
-'
-processing [for (i =3D 0; i < nr_objects; i++) ... lines 839-851], whic=
-h
-includes a call to sha1_object() at line 848. sha1_object() in turn has
-an invocation of the read_lock() macro (line 552), which in turn calls
-lock_mutex() with a pointer to the read_mutex.
-
-Note that, at this point, no threads are active and the mutex variables
-have not been initialised.
-
-Also note that "nr_threads > 1" is true. At this point, nr_threads is s=
-till
-playing the "this is how many threads I have been requested to create" =
-role.
-But again, no threads have been created yet, the mutex variables haven'=
-t been
-initialised, and ... well, *boom*.
-
-So, in order to get it to work on MinGW (and this time I only tested on=
- MinGW),
-I had to apply the patch below (look familiar?).
-
-[I ran the same four tests as before, five times in a row. On *one* occ=
-asion
-t5300.22 (verify-pack catches a corrupted type/size of the 1st packed o=
-bject data)
-failed because the 'dd' command crashed! So, maybe there is a problem l=
-urking.]
-
-ATB,
-Ramsay Jones
-
--- >8 --
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 7e3b287..6679734 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -69,6 +69,7 @@ static int nr_processed;
- static int nr_deltas;
- static int nr_resolved_deltas;
- static int nr_threads;
-+static int threads_active;
-=20
- static int from_stdin;
- static int strict;
-@@ -105,13 +106,13 @@ static pthread_key_t key;
-=20
- static inline void lock_mutex(pthread_mutex_t *mutex)
- {
--	if (nr_threads > 1)
-+	if (threads_active)
- 		pthread_mutex_lock(mutex);
- }
-=20
- static inline void unlock_mutex(pthread_mutex_t *mutex)
- {
--	if (nr_threads > 1)
-+	if (threads_active)
- 		pthread_mutex_unlock(mutex);
- }
-=20
-@@ -125,14 +126,16 @@ static void init_thread(void)
- 	pthread_mutex_init(&work_mutex, NULL);
- 	pthread_key_create(&key, NULL);
- 	thread_data =3D xcalloc(nr_threads, sizeof(*thread_data));
-+	threads_active =3D 1;
- }
-=20
- static void cleanup_thread(void)
- {
-+	threads_active =3D 0;
- 	pthread_mutex_destroy(&read_mutex);
- 	pthread_mutex_destroy(&counter_mutex);
- 	pthread_mutex_destroy(&work_mutex);
--	pthread_key_delete(key);
-+	/*pthread_key_delete(key);*/
- 	nr_threads =3D 1;
- 	free(thread_data);
- }
--- 8< --
+Ok, then we should probably instead do these two starting at 1.7.10 ("the
+official deprecation date"), and then start erroring out on "-b" three
+cycles after that.
