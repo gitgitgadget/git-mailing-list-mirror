@@ -1,102 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] git-am: error out when seeing -b/--binary
-Date: Tue, 13 Mar 2012 12:51:58 -0500
-Message-ID: <20120313175158.GA6653@burratino>
-References: <20120312152453.GB12405@1wt.eu>
- <87aa3l4vqq.fsf@thomas.inf.ethz.ch>
- <20120312165703.GB18791@burratino>
- <7vvcm9snko.fsf@alter.siamese.dyndns.org>
- <87399dpk48.fsf@thomas.inf.ethz.ch>
- <20120312215607.GB11362@burratino>
- <874ntto4t8.fsf@thomas.inf.ethz.ch>
- <20120312222227.GC11362@burratino>
- <87fwdcldqj.fsf@thomas.inf.ethz.ch>
- <7v62e8la9y.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, Willy Tarreau <w@1wt.eu>,
-	Greg KH <greg@kroah.com>, Ben Hutchings <ben@decadent.org.uk>,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: linux-kernel-owner@vger.kernel.org Tue Mar 13 18:52:24 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: [PATCH 3/4] contrib/diffall: teach diffall to handle working copy changes without tar
+Date: Tue, 13 Mar 2012 13:45:32 -0400
+Message-ID: <1331660734-10538-3-git-send-email-tim.henigan@gmail.com>
+References: <1331660734-10538-1-git-send-email-tim.henigan@gmail.com>
+Cc: tim.henigan@gmail.com
+To: git@vger.kernel.org, gitster@poxbox.com
+X-From: git-owner@vger.kernel.org Tue Mar 13 18:54:36 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1S7VtR-0004bV-B4
-	for glk-linux-kernel-3@plane.gmane.org; Tue, 13 Mar 2012 18:52:17 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1S7Vvf-0006IE-F1
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 18:54:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759188Ab2CMRwJ (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 13 Mar 2012 13:52:09 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:62819 "EHLO
+	id S1758939Ab2CMRy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Mar 2012 13:54:29 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:47474 "EHLO
 	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759138Ab2CMRwG (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 13 Mar 2012 13:52:06 -0400
-Received: by ghrr11 with SMTP id r11so829023ghr.19
-        for <multiple recipients>; Tue, 13 Mar 2012 10:52:05 -0700 (PDT)
+	with ESMTP id S1759207Ab2CMRy3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Mar 2012 13:54:29 -0400
+Received: by ghrr11 with SMTP id r11so831950ghr.19
+        for <git@vger.kernel.org>; Tue, 13 Mar 2012 10:54:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Wl2bjbIfgkngu6dL3vZq9hYSr0y7f4K6GfmuxtFpcuU=;
-        b=TMEH9U28R7FS5nMNhZyCnfijHDKhQGG7h5d+rD++SyPXRZUNeayJ9zIbxi+4RrrA5p
-         1DMDqqz+PQ2nVd24ta6WM/6/bWXIcFiEbfKwnpz1ULHqEVgrQuIsxTR78dL78bOK4YO4
-         ZmqY75DSx4ATXqjNTc+72p1rSIwBuygDEBUVZ8XWAXBr4eTSFiTu04oeV3rTBeDFYI1I
-         CeLdhJe5zlMbNsx367GXFqRYLrkrP7PuYa0AMjO5cj1iQKQeJf+ModJZuTfc4nNWmHJQ
-         wcqZHVumfavvz+Y85hnpqBoHPlN0wHl1LwB25dRgUIEYTPssDzy603DUuP1fqvgOZjHA
-         HCwg==
-Received: by 10.60.14.4 with SMTP id l4mr9792139oec.39.1331661125733;
-        Tue, 13 Mar 2012 10:52:05 -0700 (PDT)
-Received: from burratino (remote.soliantconsulting.com. [67.109.75.130])
-        by mx.google.com with ESMTPS id v7sm1842083obh.1.2012.03.13.10.52.04
-        (version=SSLv3 cipher=OTHER);
-        Tue, 13 Mar 2012 10:52:04 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7v62e8la9y.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: linux-kernel-owner@vger.kernel.org
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=w9HX4VCfmIvv6nnCJfDBZtOUYRTFxMIMwd6bQ2yWeGI=;
+        b=VOI0YTcjkUg474sMqXMvMaF/kvgAdgZAkQoeq+sYap5rRkZ9+BR1x6ECmvAfYnaTe8
+         UykmMdSHj9JW3ox3qSEFLWzso89xcvXNZOLI2nKijv6RK24IS2DYzYZg1FYN//Yvnbck
+         U8GkEzlTmEi7DSG3Jji+hRl6KrbUTziXdeiAwfuH6WSIK9dvDFCaV0dMEtLsOMLnTWvL
+         EgCPvt9SJq1KaoFHCp2J6v6FWKPm8FVYke81CNB4mtl3vLJWXMIoL9d4c65Sno9T15Bp
+         hxfGCeH87+3V1Z2uta3ubukU7c0yQ2hLxT2LvKhO0O9YrWbn9teddJMXUyFXIyZ+izgX
+         aJZA==
+Received: by 10.224.195.201 with SMTP id ed9mr14043332qab.65.1331660787768;
+        Tue, 13 Mar 2012 10:46:27 -0700 (PDT)
+Received: from localhost (adsl-99-38-69-118.dsl.sfldmi.sbcglobal.net. [99.38.69.118])
+        by mx.google.com with ESMTPS id ha10sm4383532qab.14.2012.03.13.10.46.22
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 13 Mar 2012 10:46:27 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.rc0
+In-Reply-To: <1331660734-10538-1-git-send-email-tim.henigan@gmail.com>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193047>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193048>
 
-Junio C Hamano wrote:
+The 'tar' utility is not available on all platforms (some only support
+'gnutar').  An earlier commit created a work-around for this problem,
+but a better solution is to eliminate the use of 'tar' completely.
 
-> I really don't think it is a good idea to avoid mentioning 1.6.0, at
-> which we *removed* description of the option in our manual pages and
-> from the "git am -h" help message. How much more active deprecation
-> would a user want?
+Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
+---
+ contrib/diffall/git-diffall |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-A warning when the option is used or a mention in the release notes.
-
-> To put it another way, think what your answer would be when somebody
-> sees the message and says "eh? all of a sudden it was removed?".
-> Wouldn't you tell him "At 1.6.0 we deprecated it and stopped
-> advertising it"?  Why not give that answer upfront?
-
-I would tell her "Since 1.4.3 it has been a compatibility no-op and
-our documentation made that clear, and by now based on a search nobody
-seems to be using it".
-
-What happened in 1.6.0, then?  Well, before 1.6.0, the git-am(1)
-manual said
-
- -b, --binary
-	Pass --allow-binary-replacement flag to git-apply (see
-	git-apply(1)).
-
-and the git-apply(1) manual said
-
- --allow-binary-replacement, --binary
-	Historically we did not allow binary patch applied
-	without an explicit permission from the user, and this
-	flag was the way to do so.  Currently we always allow binary
-	patch application, so this is a no-op.
-
-Afterwards, the entry in the git-am(1) manual was removed, saving the
-reader a little time.
-
-Jonathan
+diff --git a/contrib/diffall/git-diffall b/contrib/diffall/git-diffall
+index 443f646..8d243c7 100755
+--- a/contrib/diffall/git-diffall
++++ b/contrib/diffall/git-diffall
+@@ -202,10 +202,14 @@ then
+ 		fi
+ 	done < "$tmp/filelist"
+ else
+-	# Mac users have gnutar rather than tar
+-	(tar --ignore-failed-read -c -T "$tmp/filelist" | (cd "$tmp/$right_dir" && tar -x)) || {
+-		gnutar --ignore-failed-read -c -T "$tmp/filelist" | (cd "$tmp/$right_dir" && gnutar -x)
+-	}
++	while read name
++	do
++		if test -e "$name"
++		then
++			mkdir -p "$tmp/$right_dir/$(dirname "$name")"
++			cp "$name" "$tmp/$right_dir"
++		fi
++	done < "$tmp/filelist"
+ fi
+ 
+ # Populate the tmp/left_dir directory with the files to be compared
+-- 
+1.7.10.rc0
