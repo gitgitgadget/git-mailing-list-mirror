@@ -1,92 +1,95 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Use macro HANDLER_WRAPPER in sigchain to wrap clean
- function of sigchain
-Date: Tue, 13 Mar 2012 16:55:01 -0400
-Message-ID: <20120313205501.GB27436@sigill.intra.peff.net>
-References: <CAMocUqRsEvwnoV32Cr05dJeUj7iNDj1cLP5kAzgyMNEo1O0kCw@mail.gmail.com>
- <7vmx7kweus.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] fmt-merge-msg: show those involved in a merged series
+Date: Tue, 13 Mar 2012 17:03:57 -0400
+Message-ID: <20120313210357.GC27436@sigill.intra.peff.net>
+References: <7vvcmj68iz.fsf@alter.siamese.dyndns.org>
+ <CA+55aFzQ3+EFBVyE9PWOyH0XEC_oW+kUaBTYfixmi2wgMmiZvw@mail.gmail.com>
+ <7vipii27ka.fsf@alter.siamese.dyndns.org>
+ <CA+55aFw-sS_p7JXNXbSbpiwh9_bZhSrTtC3is4NtLa_n9Hzk5A@mail.gmail.com>
+ <7vmx7uzq8h.fsf_-_@alter.siamese.dyndns.org>
+ <4F57D18B.5090506@lsrfire.ath.cx>
+ <7vzkbskr71.fsf@alter.siamese.dyndns.org>
+ <4F58F06A.1070108@lsrfire.ath.cx>
+ <7v1up2ew9u.fsf@alter.siamese.dyndns.org>
+ <CABURp0oVn3s27Rtq2JQeLBgcXq1-R-=0qawcXVMxZ8qgOeZGkQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?5b6Q6L+q?= <xudifsd@gmail.com>,
-	Git =?utf-8?B?6YKu5Lu25YiX6KGo?= <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 13 21:55:12 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Phil Hord <phil.hord@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 13 22:04:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7YkS-0002rv-Az
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 21:55:12 +0100
+	id 1S7Yt5-0001N8-Nm
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 22:04:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755908Ab2CMUzF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Mar 2012 16:55:05 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48681
+	id S1752852Ab2CMVEC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Mar 2012 17:04:02 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48688
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751859Ab2CMUzE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2012 16:55:04 -0400
-Received: (qmail 1996 invoked by uid 107); 13 Mar 2012 20:55:15 -0000
+	id S1751478Ab2CMVEA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Mar 2012 17:04:00 -0400
+Received: (qmail 2057 invoked by uid 107); 13 Mar 2012 21:04:11 -0000
 Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 13 Mar 2012 16:55:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Mar 2012 16:55:01 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 13 Mar 2012 17:04:11 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Mar 2012 17:03:57 -0400
 Content-Disposition: inline
-In-Reply-To: <7vmx7kweus.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <CABURp0oVn3s27Rtq2JQeLBgcXq1-R-=0qawcXVMxZ8qgOeZGkQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193068>
 
-On Tue, Mar 13, 2012 at 11:11:23AM -0700, Junio C Hamano wrote:
+On Mon, Mar 12, 2012 at 05:37:57PM -0400, Phil Hord wrote:
 
-> =E5=BE=90=E8=BF=AA <xudifsd@gmail.com> writes:
->=20
-> > The sigchain APIs require user to code like:
-> >
-> > void clean_foo_on_signal(int sig)
-> > {
-> >  clean_foo();
-> >  sigchain_pop(sig);
-> >  raise(sig);
-> > }
->=20
-> I can see the repetition, but I do not think your macro is a very goo=
-d way
-> to reduce it.  Can't we fix the sigchain API a bit, perhaps first by
-> making a bit more state available to the sigchain stack?
->
-> 	typedef void (*sigchain_fn)(int, void *);
->         int sigchain_push(int sig, sigchain_fn fn, void *cb_data);
->         int sigchain_pop(int sig);
->         void sigchain_push_common(sigchain_fn fn, void *cb_data);
+> Subject: [PATCH] Appease compiler pedantry with an extra cast
+> 
+> Recently git repurposed a pointer as an integer to hold some
+> counter which git fancies.
+> 
+> Casting directly from 'pointer' to 'int' ((int)(void*)&x) causes a
+> possible size mismatch because pointers can be bigger than ints.
+> In such a situation, the compiler complains:
+> 
+>    warning: cast from pointer to integer of different size
+>             [-Wpointer-to-int-cast]
 
-=46WIW, when I wrote the original sigchain implementation I considered
-doing something more complex like this. The calling code ends up
-shorter, but I wonder if the end result is really any easier to
-understand. Ditto for the macro. It's shorter, but much harder for a
-reader to understand. The boilerplate, while ugly, reads very simply,
-and is not error-prone.
+Yeah, I've been seeing the same warning on my x86_64 box, and came up
+with the same fix. However...
 
-So I don't like boilerplate or repetition, but this may be one of those
-times where it is simply more clear to just be verbose.
+> Cast the value through intptr_t first to quell compiler complaints
+> about how this gun appears to be aimed near our feet.  Then cast this
+> value to an int; this path assures the compiler we are smarter than we
+> look, or at least that we intend to aim the gun this way for a reason.
 
-> *1* Yes, I know, this casts between a data pointer and a function poi=
-nter
-> that is not portable, but the purpose of this pseudo-code is primaril=
-y to
-> illustrate the high level view of the idea.  We would probably want t=
-o be
-> able to pass callback value to the clean_foo() function and at that p=
-oint,
-> we would likely to be passing a pointer to a struct, and we could dec=
-lare
-> the first element of such a struct is a pointer to a sigchain_fn, or
-> something.
+This feels so hacky.  One of the callsites does:
 
-That is the correct way to do it, but where does the struct memory come
-from? You'd have to allocate it on the heap, unless you want to burden
-the caller.
+    elem->util = (void*)((intptr_t)(util_as_int(elem) + 1));
+
+which will truncate the value down to an int before replacing it back in
+the void pointer. And that truncation is ultimately what the compiler is
+warning about, and what we are sneaking around with the extra cast
+(because casting between integer sizes of different types is OK, even
+though it can cause truncation).
+
+I don't think the truncation is a problem in practice, but it just feels
+like we are not just silencing an over-zealous compiler, but actually
+burying type-size assumption behind a set of four (4!) casts.
+
+I wonder if we would be happier to declare the "util" field of
+string_list as a union. Obviously that provides no safety that we read
+the correct item out of the union, but that is no worse than the
+situation with all of these casts, and I suspect the result would be
+much more obvious and readable.
+
+The downside is that all current users of the "util" field would need
+s/util/&.ptr/ or similar to dereference the pointer field.
 
 -Peff
