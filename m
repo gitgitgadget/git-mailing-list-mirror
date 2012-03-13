@@ -1,76 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-am: error out when seeing -b/--binary
-Date: Tue, 13 Mar 2012 11:22:10 -0700
-Message-ID: <7vipi8wect.fsf@alter.siamese.dyndns.org>
-References: <20120312152453.GB12405@1wt.eu>
- <87aa3l4vqq.fsf@thomas.inf.ethz.ch> <20120312165703.GB18791@burratino>
- <7vvcm9snko.fsf@alter.siamese.dyndns.org> <87399dpk48.fsf@thomas.inf.ethz.ch>
- <20120312215607.GB11362@burratino> <874ntto4t8.fsf@thomas.inf.ethz.ch>
- <20120312222227.GC11362@burratino> <87fwdcldqj.fsf@thomas.inf.ethz.ch>
- <7v62e8la9y.fsf@alter.siamese.dyndns.org> <20120313175158.GA6653@burratino>
+Subject: Re: [PATCH] fmt-merge-msg: show those involved in a merged series
+Date: Tue, 13 Mar 2012 11:26:47 -0700
+Message-ID: <7v4ntswe54.fsf@alter.siamese.dyndns.org>
+References: <7vvcmj68iz.fsf@alter.siamese.dyndns.org>
+ <CA+55aFzQ3+EFBVyE9PWOyH0XEC_oW+kUaBTYfixmi2wgMmiZvw@mail.gmail.com>
+ <7vipii27ka.fsf@alter.siamese.dyndns.org>
+ <CA+55aFw-sS_p7JXNXbSbpiwh9_bZhSrTtC3is4NtLa_n9Hzk5A@mail.gmail.com>
+ <7vmx7uzq8h.fsf_-_@alter.siamese.dyndns.org>
+ <20120312071121.GA17269@burratino> <7vipi9mfhx.fsf@alter.siamese.dyndns.org>
+ <4F5EF6EC.20008@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, Willy Tarreau <w@1wt.eu>,
-	Greg KH <greg@kroah.com>, Ben Hutchings <ben@decadent.org.uk>,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: linux-kernel-owner@vger.kernel.org Tue Mar 13 19:22:24 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Mar 13 19:26:56 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1S7WMa-00031n-C1
-	for glk-linux-kernel-3@plane.gmane.org; Tue, 13 Mar 2012 19:22:24 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1S7WQx-0006dx-Mm
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 19:26:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759403Ab2CMSWO (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 13 Mar 2012 14:22:14 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64435 "EHLO
+	id S1753913Ab2CMS0v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Mar 2012 14:26:51 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33685 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758733Ab2CMSWM (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 13 Mar 2012 14:22:12 -0400
+	id S1753332Ab2CMS0t (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Mar 2012 14:26:49 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 587E76815;
-	Tue, 13 Mar 2012 14:22:12 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D217695E;
+	Tue, 13 Mar 2012 14:26:49 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=R95JUFIASNNxjPHxglW7fEt9rAQ=; b=oNADcx
-	6rXRV7pFh+B506pi5o/9aE9PzcjG1pqHR0jQFexZdsocA4Y7yLJ3G52ZAxHDDHoN
-	qI4W1ZWMNmTgKP0UTYCeuneYHB+c7txE5cP/yoHsndGPD+X+a32lWWOvVLHuk/RX
-	ugHk4kc1Z40x0hjWLXJkKB8Rny2uq65A28L1s=
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=5xfjr7Gat8NpqdND0qHoEZgMESU=; b=YwS/dGxJfrlPnQ8jaA1E
+	RMO67OZv7Ioq0HW8fRn15GNRC0f/XEOH4tvIRpUG7PsK2vmJYoDD4pMEKk0RGbV4
+	1cQfWNalf1O/sOhYiuPHTmI8TU2/3mBjQ7KrEfKXR71RKVd7YC5gfkmWi2pRW77r
+	b9gR6aeQ8Me3DkgRM171AW4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dCPwn+DNsD2oL/sORcJ0ED4VGuVhEeXc
-	pwEDd/QiR/cQKCtSMFZxRi2vIlWHaq+4+0wLRTAchqffA6Pc1HlRfeKkLwdI4RkQ
-	VmbcgP/E2GE8uy21EwP8kuVxsNwL0XjB5mF0Ca+igR7iccynY8cEkrVaDi9+hET5
-	Um/ftjugYqY=
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=ySVw5E6/YJxHK2LAmpV8/hCrXfVpSh+ZZKTqQSYlUIUh1P
+	sF8pxlmQulr+Gu+SE3J/7WC6GCcZTwVoEFKDl/h8vL1PyeCBqXPSCcv4zGe4kDvQ
+	oPltswmEJZOUHiBfgX4yC5/u/HnTXnTOUvGpFYrxJL33M9+e58gnUCxmFI924=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F0C96814;
-	Tue, 13 Mar 2012 14:22:12 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7470B695D;
+	Tue, 13 Mar 2012 14:26:49 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D28F66813; Tue, 13 Mar 2012
- 14:22:11 -0400 (EDT)
-In-Reply-To: <20120313175158.GA6653@burratino> (Jonathan Nieder's message of
- "Tue, 13 Mar 2012 12:51:58 -0500")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0C44D695C; Tue, 13 Mar 2012
+ 14:26:48 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 73AB9580-6D39-11E1-8F14-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+X-Pobox-Relay-ID: 18DEEBBA-6D3A-11E1-82C6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193052>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193053>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
->> I really don't think it is a good idea to avoid mentioning 1.6.0, at
->> which we *removed* description of the option in our manual pages and
->> from the "git am -h" help message. How much more active deprecation
->> would a user want?
+> Am 3/13/2012 2:55, schrieb Junio C Hamano:
+>> I'd hold making that judgement for a several weeks until my eyes get
+>> used to if I were you. I've seen that people (including myself)
+>> react really badly to _any_ change and make loud noises (including
+>> "we will never get used to this updated output, it is horrible!"),
+>> and then eventually get used to it as if nothing happened, and that
+>> happened often enough recently.
 >
-> A warning when the option is used or a mention in the release notes.
+> I can buy that.
 
-Ok, then we should probably instead do these two starting at 1.7.10 ("the
-official deprecation date"), and then start erroring out on "-b" three
-cycles after that.
+Assuming "that" refers to my "hold ... for several weeks", let me stop
+reading right here.  We can talk about the rest of your message in several
+weeks.
