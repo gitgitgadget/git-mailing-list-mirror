@@ -1,81 +1,65 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: [PATCH 2/4] contrib/diffall: teach diffall to create tmp dirs without using mktemp
-Date: Tue, 13 Mar 2012 13:45:31 -0400
-Message-ID: <1331660734-10538-2-git-send-email-tim.henigan@gmail.com>
-References: <1331660734-10538-1-git-send-email-tim.henigan@gmail.com>
-Cc: tim.henigan@gmail.com
-To: git@vger.kernel.org, gitster@poxbox.com
-X-From: git-owner@vger.kernel.org Tue Mar 13 18:46:13 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] diff: Introduce diff.algorithm variable
+Date: Tue, 13 Mar 2012 10:46:46 -0700
+Message-ID: <7v399cxuk9.fsf@alter.siamese.dyndns.org>
+References: <06652d553040ad6b25608dc69d632f1ee38eaeca.1331300343.git.mprivozn@redhat.com>
+ <CALUzUxpR_bPLvnHRJrQ2wVpqJD6Ccg6r3RMa_sCDKHTapnJsdw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Michal Privoznik <mprivozn@redhat.com>, git@vger.kernel.org,
+	trast@student.ethz.ch, peff@peff.net, Lawrence.Holding@cubic.com
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 13 18:46:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7VnY-00089g-SY
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 18:46:13 +0100
+	id 1S7VoE-0000Fs-HA
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 18:46:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758935Ab2CMRqH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Mar 2012 13:46:07 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:58593 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759096Ab2CMRqG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2012 13:46:06 -0400
-Received: by eaaq12 with SMTP id q12so460115eaa.19
-        for <git@vger.kernel.org>; Tue, 13 Mar 2012 10:46:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=7IvbEzmz9g541bOfG9CZlvv8sx0Y6nf4Am0+YByAarU=;
-        b=dF7URHsS29O7paQtcepXGSa7K/rtjls3V7mc46lSYW9SQOFk1KnHp88YCEV51XCsQG
-         nfB+dMY4OK224YrD+Ko07xRT+lMk0oPoR/m5WuOUZliGbsIr8HJMvHnUDmjseJRMTmjN
-         /UUZAZ48iwc9h8ogkwBiRoIF5JJN1doX3u4V37e95ZkbfYOEpQTYFh2uDgFUc7IvLnxv
-         m2vKiIGCQ0lmbR2aAIN6aDTRcBnVDD3xCbqF6RrCd+Je+GcWDzRyc2MedRs+yLHw3tkg
-         hPyyeL+LFNkSO5kLFJ35WAqp9K3tHKlOGIT3qE230QWh7MR1wkeHt7pEjkfaVuTlbVgr
-         aYeg==
-Received: by 10.224.222.141 with SMTP id ig13mr13571068qab.63.1331660764837;
-        Tue, 13 Mar 2012 10:46:04 -0700 (PDT)
-Received: from localhost (adsl-99-38-69-118.dsl.sfldmi.sbcglobal.net. [99.38.69.118])
-        by mx.google.com with ESMTPS id dw1sm4413939qab.4.2012.03.13.10.46.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 13 Mar 2012 10:46:04 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.rc0
-In-Reply-To: <1331660734-10538-1-git-send-email-tim.henigan@gmail.com>
+	id S1759021Ab2CMRqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Mar 2012 13:46:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46777 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758945Ab2CMRqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Mar 2012 13:46:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC3E37FA2;
+	Tue, 13 Mar 2012 13:46:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zQXX9Fr3+PnGX7YCDBm5LUT6b+A=; b=P7sKcO
+	tfitpBWqjULKGFBrzohaoZjC37GE4Z1nn2AHzZmh8K+qH92uJEbTs2Z6jdCqqpdH
+	yM31ryqHw9Tzejx7aNEo5OU8HMbY4PZFAPLjHvG81ks/+12a3ojGLzrQwtRMRX/+
+	TztkRFofXk/bRdDCBtosTu14T7XHKAhhlW7Uc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KyfquH8K4EYAC2Z212L4I6kNGGTRFTG/
+	2Mz1KE1hTU+Egi2bgubn3YlFnc04slrDGd/D8Wbv45xAdIqXLGmirP7H7THgR924
+	w8xuj+j6uejx02xH7JMuGu1PxMRicXmeWQYa3NY8NVSFl22oquwK/BdIABO2g0uV
+	isI1fhXEayI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A2F757FA1;
+	Tue, 13 Mar 2012 13:46:48 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 31E6A7FA0; Tue, 13 Mar 2012
+ 13:46:48 -0400 (EDT)
+In-Reply-To: <CALUzUxpR_bPLvnHRJrQ2wVpqJD6Ccg6r3RMa_sCDKHTapnJsdw@mail.gmail.com> (Tay Ray
+ Chuan's message of "Tue, 13 Mar 2012 22:42:50 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 81DF6690-6D34-11E1-9BEC-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193043>
 
-mktemp is not available on all platforms.  Instead of littering the code
-with a work-around, this commit replaces mktemp with a one-line Perl
-script.
+Tay Ray Chuan <rctay89@gmail.com> writes:
 
-Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
----
- contrib/diffall/git-diffall |   11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+> Considering that --minimal isn't really an algorithm,...
 
-diff --git a/contrib/diffall/git-diffall b/contrib/diffall/git-diffall
-index d706a6d..443f646 100755
---- a/contrib/diffall/git-diffall
-+++ b/contrib/diffall/git-diffall
-@@ -45,13 +45,10 @@ cd "$cdup" || {
- 	exit 1
- }
- 
--# mktemp is not available on all platforms (missing from msysgit)
--# Use a hard-coded tmp dir if it is not available
--tmp="$(mktemp -d -t tmp.XXXXXX 2>/dev/null)" || {
--	tmp=/tmp/git-diffall-tmp.$$
--	mkdir "$tmp" || exit 1
--}
--
-+# set up temp dir
-+tmp=$(perl -e 'use File::Temp qw(tempdir);
-+	$t=tempdir("/tmp/git-diffall.XXXXX") or exit(1);
-+	print $t') || exit 1
- trap 'rm -rf "$tmp" 2>/dev/null' EXIT
- 
- left=
--- 
-1.7.10.rc0
+I think this discussion thread already settled that "minimal" *is* an
+algorithm for the purpose of this topic, considering that the --minimal
+option does not apply anything but myers.
