@@ -1,70 +1,100 @@
-From: Hallison Batista <hallison@codigorama.com>
-Subject: [announce] Git Smart HTTP re-implementation in Ruby/Sinatra
-Date: Tue, 13 Mar 2012 12:49:14 -0400
-Message-ID: <CANr2nXqsu-ZaRevLqj6t=dP2VpQSL-0vV6c0Cdx9jkS_OJMbxw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-am: error out when seeing -b/--binary
+Date: Tue, 13 Mar 2012 10:31:03 -0700
+Message-ID: <7v62e8la9y.fsf@alter.siamese.dyndns.org>
+References: <20120312064855.GB16820@burratino>
+ <20120312085820.GA11569@1wt.eu> <20120312152004.GB9380@kroah.com>
+ <20120312152453.GB12405@1wt.eu> <87aa3l4vqq.fsf@thomas.inf.ethz.ch>
+ <20120312165703.GB18791@burratino> <7vvcm9snko.fsf@alter.siamese.dyndns.org>
+ <87399dpk48.fsf@thomas.inf.ethz.ch> <20120312215607.GB11362@burratino>
+ <874ntto4t8.fsf@thomas.inf.ethz.ch> <20120312222227.GC11362@burratino>
+ <87fwdcldqj.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 13 17:49:44 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Willy Tarreau <w@1wt.eu>, Greg KH <greg@kroah.com>,
+	Ben Hutchings <ben@decadent.org.uk>,
+	<linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>,
+	<git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>
+X-From: linux-kernel-owner@vger.kernel.org Tue Mar 13 18:31:31 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7Uus-0005oH-A6
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 17:49:42 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1S7VZJ-0005QG-A7
+	for glk-linux-kernel-3@plane.gmane.org; Tue, 13 Mar 2012 18:31:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755491Ab2CMQtg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Mar 2012 12:49:36 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:54878 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755311Ab2CMQtf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Mar 2012 12:49:35 -0400
-Received: by yhmm54 with SMTP id m54so748601yhm.19
-        for <git@vger.kernel.org>; Tue, 13 Mar 2012 09:49:34 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-originating-ip:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding:x-gm-message-state;
-        bh=BocWxAiDhO8tqgRrYHqAABFeoorWh8yy55VQmmJ67gE=;
-        b=Lfri0ZcTV60J7Y61yiA5+52DDQ7Fha0Mffj+k67saS2v5HAIcAdr+FPkDLgu0vc/wm
-         Rg8Zk8lEXmXa8Bv1NhvX6gQIPYdDQMouWhZ5zg3FllAJV/b8f7sFhkA+zWOng0QSjzGq
-         abMSy+pJFAUQpsb+n6VLnE1elsG0fN5B82LCbHAOh3vj6xvf7DfS0RSJV1Jesfk3JCLL
-         so2ORzhsnuVb8JaRRWLjO/ulpdHqYoajzJ++2b4em6RDEXvkG4Azy9/hIZx0boI3yPNo
-         +wr3eUd3woLjGul3a8g3VHJKz+9r20gdPz4XaZ43VEXUIuIV2IbyS5Q+a17UZDZdSuF5
-         ApHg==
-Received: by 10.60.4.10 with SMTP id g10mr12400401oeg.18.1331657374248; Tue,
- 13 Mar 2012 09:49:34 -0700 (PDT)
-Received: by 10.182.5.129 with HTTP; Tue, 13 Mar 2012 09:49:14 -0700 (PDT)
-X-Originating-IP: [200.208.153.196]
-X-Gm-Message-State: ALoCoQnMlh3ir2wZEFHlXCRYXNn4eByzZBSFJBED9nSYLpIEy5spfA1WK4BVxaFfp0cAGUAPVdhI
-Sender: git-owner@vger.kernel.org
+	id S1758899Ab2CMRbL (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 13 Mar 2012 13:31:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39102 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758650Ab2CMRbG (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 13 Mar 2012 13:31:06 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CF4D7C2A;
+	Tue, 13 Mar 2012 13:31:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:message-id:references:date:mime-version
+	:content-type; s=sasl; bh=08aFGA/guUWv9Xt/LF+s70EzLPs=; b=a2F3pb
+	T0gBYO0iAYv4ohFhSToz5E0adDkkRmvoID3p4puPbRXuGd/RjFV2oB3cp8yiayU5
+	TxPE10fJKaMUUjHn/HNiAj9wzyHp65aJl+x/1Kk2kVWFkxd1nBBqTC6gqs89iaZw
+	R9wO/eLQrqRRXRtH9rRId7xSyunQdOtWAUFxE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:message-id:references:date:mime-version
+	:content-type; q=dns; s=sasl; b=JNDdZqexnFIUTD4BeRAjIaUGhx/QaJgU
+	/X4HQNg8eNlhFoy+VkzHX7Xqr+gny8fVfurIujUBcOA5bbmVp5GnYLQi/L6UxrJ/
+	Vnd8ekfNsseVzDtf6cBOTZwjM6WOP+4+yB1C0dxg5sAe4GalolCPjdXI0PrFK7sV
+	DHTY6uRLTys=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 92F487C29;
+	Tue, 13 Mar 2012 13:31:05 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 18A9D7C27; Tue, 13 Mar 2012
+ 13:31:05 -0400 (EDT)
+In-Reply-To: <87fwdcldqj.fsf@thomas.inf.ethz.ch> (Thomas Rast's message of
+ "Tue, 13 Mar 2012 16:31:00 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4FBD02C8-6D32-11E1-8CC3-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193038>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193039>
 
-Hello everyone,
+Thomas Rast <trast@student.ethz.ch> writes:
 
-I wrote a Web Application called Git::Webby.=C2=A0This project is a
-Smart-HTTP server handler and has developed using=C2=A0Sinatra=C2=A0and=
- aims
-replace the original "git-http-backend" including new features.
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+>> 	--binary)
+>> 		: ;;
+>> 	-b)
+>> 		gettextln >&2 "The -b option (a no-op short for --binary) was removed in 1.7.10."
+>> 		die "$(gettext "Please adjust your scripts.")"
+>> 		;;
+>>
+>> Mentioning deprecation in 1.6.0 in the message left me uneasy because
+>> we never actually did anything to actively deprecate the option; it
+>> just has not been needed since 1.4.3 and we stopped advertising it in
+>> the manpage in 1.6.0.  So I don't like the implication of "this is all
+>> right because we told you so" --- on the contrary, it is "in practice
+>> nobody seems to be using this option and we hope nobody will notice
+>> when we take it away".
+>
+> Hmm, I had an alternate patch ready in the morning, but Junio beat us to
+> it and applied the old one to master.
 
-The main goal of the Git-Webby is implement the following useful featur=
-es.
+I really don't think it is a good idea to avoid mentioning 1.6.0, at
+which we *removed* description of the option in our manual pages and
+from the "git am -h" help message. How much more active deprecation
+would a user want?
 
-* Smart-HTTP, based on git-http-backend.
-* Authentication flexible based on database or configuration file like
-=2Ehtpasswd and .htgroup.
-* API to get information about repository.
+To put it another way, think what your answer would be when somebody
+sees the message and says "eh? all of a sudden it was removed?".
+Wouldn't you tell him "At 1.6.0 we deprecated it and stopped
+advertising it"?  Why not give that answer upfront?
 
-If you have interest, please, see the repository hosted on Github
-(http://github.com/codigorama/git-webby).
-
-=46eedback is welcome.
-
-Thanks,
-
-Hallison Batista
+Especially when you think "in practice nobody seems to be using
+this" is true?
