@@ -1,102 +1,80 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] fmt-merge-msg: show those involved in a merged series
-Date: Tue, 13 Mar 2012 00:23:35 -0500
-Message-ID: <20120313052335.GA16664@burratino>
+Date: Mon, 12 Mar 2012 22:45:24 -0700
+Message-ID: <7v4nttm4uj.fsf@alter.siamese.dyndns.org>
 References: <7vvcmj68iz.fsf@alter.siamese.dyndns.org>
  <CA+55aFzQ3+EFBVyE9PWOyH0XEC_oW+kUaBTYfixmi2wgMmiZvw@mail.gmail.com>
  <7vipii27ka.fsf@alter.siamese.dyndns.org>
  <CA+55aFw-sS_p7JXNXbSbpiwh9_bZhSrTtC3is4NtLa_n9Hzk5A@mail.gmail.com>
  <7vmx7uzq8h.fsf_-_@alter.siamese.dyndns.org>
- <20120312071121.GA17269@burratino>
- <7vipi9mfhx.fsf@alter.siamese.dyndns.org>
+ <20120312071121.GA17269@burratino> <7vipi9mfhx.fsf@alter.siamese.dyndns.org>
+ <20120313052335.GA16664@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 13 06:23:58 2012
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 13 06:45:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7KDG-0005Tl-6T
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 06:23:58 +0100
+	id 1S7KYB-0006nr-Ul
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 06:45:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754623Ab2CMFXy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Mar 2012 01:23:54 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:43511 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753398Ab2CMFXx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2012 01:23:53 -0400
-Received: by yhmm54 with SMTP id m54so151390yhm.19
-        for <git@vger.kernel.org>; Mon, 12 Mar 2012 22:23:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=TrmBCtaid1TFwIN7hzOiTb5xmtyf7YBsBzJt31ooamo=;
-        b=OybAbenkA1RLdU8u9xBO4I4WUZMsxMgvIAwhJAD8U81NK7ieYYdTJ9tV24eUzHMNdo
-         JrPPKaRkUlvgxfaiCSycvhkbKbHS8arskSHZ1V0Um/uwtLFnjKMelIbB69tVPAN51BwB
-         btJByuszCKEybG3pCcHyxV2mCWyJsAzuz3Jnskmv5cqb1V+QwOxjrZlfAEjAzm5+eGHG
-         3v759FjNDdZvUmyeZoSlodl/jn/KjN2bXOHI5n7Pjt9sXyuWBdB6S33aMyMEsG1eM5F/
-         LOFFAVEJ6sSuQtWxsFXkEr34MHrTfNLjoAvZSQoO+DHJrpuUP3MI4VLUTaN1LhKip96I
-         ysSw==
-Received: by 10.182.216.2 with SMTP id om2mr5573664obc.46.1331616232387;
-        Mon, 12 Mar 2012 22:23:52 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id g2sm24414440obw.10.2012.03.12.22.23.50
-        (version=SSLv3 cipher=OTHER);
-        Mon, 12 Mar 2012 22:23:51 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vipi9mfhx.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758950Ab2CMFp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Mar 2012 01:45:29 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58468 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752822Ab2CMFp2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Mar 2012 01:45:28 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7925E7E61;
+	Tue, 13 Mar 2012 01:45:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kRUDmmobTxVCRzy823JccIHdWwg=; b=XRFaKL
+	nato7UGMnsMtXRc8w5zeDKGKZG2IFdQz0JnG5v5v502sCdGLIh8D+76SPZTdp9Ma
+	sjCxJnwPIqBUHnVS6Xn5JwBTWzWyprUlzd5Z9eEwEuWrUVWLCd+3md8I+1LmdP7V
+	yJhRj1Ec+az8Til2XBItonZKyVRSYDzKkAXNc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=udvfYwwSp/myKjcLME/nwl1Ez8ieB+CL
+	iLiSuca3x/mP+9HGG3tpgl/w4PwQNmYw0dQZ3ySWSdgmZdrCXTZDR7I+9grFN/M3
+	TS0VzMhvi8a1jYHIV1YVLYMqVYvVoC5Wz1cxMWGHZLbVLApVa6Nk1b56eMjdhnBV
+	VyiJ2ryhL+c=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 70AA07E60;
+	Tue, 13 Mar 2012 01:45:26 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 02E9E7E5D; Tue, 13 Mar 2012
+ 01:45:25 -0400 (EDT)
+In-Reply-To: <20120313052335.GA16664@burratino> (Jonathan Nieder's message of
+ "Tue, 13 Mar 2012 00:23:35 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: BBA87200-6CCF-11E1-B710-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/192980>
 
-Junio C Hamano wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Having said that, I tweaked the automated rebuilding procedure a bit
-> today, and made it annotate these merges with snippets from the
-> branch description in the "What's cooking" document, so the commits
-> on master..pu are hopefully "very pleasant"ly annotated.
+> I also wonder if it would make sense to change
+> ... to ...
+> 	* 'mm/push-default-switch-warning' by Matthieu Moy:
+> 	  push: start warning upcoming default change for push.default
+> which makes the author less distractingly prominent (since they will
+> be right there in the log soon later once we hit the commits
+> themselves) and makes the start of the list of commits easier to find
+> by eye.  This is what I was inarticulately hinting at in my message
 
-Yes, that helps.
-
-I also wonder if it would make sense to change
-
-	Merge branch 'mm/push-default-switch-warning' into pu
-
-	... description ...
-
-	By Matthieu Moy
-	* mm/push-default-switch-warning:
-	  push: start warning upcoming default change for push.default
-
-to
-
-	Merge branch 'mm/push-default-switch-warning' into pu
-
-	... description ...
-
-	* 'mm/push-default-switch-warning' by Matthieu Moy:
-	  push: start warning upcoming default change for push.default
-
-which makes the author less distractingly prominent (since they will
-be right there in the log soon later once we hit the commits
-themselves) and makes the start of the list of commits easier to find
-by eye.  This is what I was inarticulately hinting at in my message
-before.  With two authors it still looks reasonable:
-
-	* 'jc/pickaxe-ignore-case' by Junio C Hamano (2) and Ramsay Jones (1):
-	  ctype.c: Fix a sparse warning
-	  pickaxe: allow -i to search in patch case-insensitively
-	  grep: use static trans-case table
-
-If this seems worth a patch, I'd be glad to try it (and even gladder
-to learn that someone else already tried it).
-
-Jonathan
+Having the author/subsystem attribution on separate lines was a
+deliberate design decision made by me, so that (1) cutting and
+pasting Linus would prefer to do stays easier, and (2) giving the
+credits more prominently in a default format.  There is a paragraph
+break before the attribution begins anyway, and I think eyes easily
+learn to scan for paragraphs that begin "By " instead of " * ".
