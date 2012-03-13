@@ -1,72 +1,74 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git push default behaviour?
-Date: Tue, 13 Mar 2012 16:27:30 +0100
-Message-ID: <201203131627.30455.jnareb@gmail.com>
-References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com> <m3sjhjs4z5.fsf@localhost.localdomain> <CAFsnPqqJt13gDp2RNiEU4dt59iMwFvMzysfk51mO8aF+_nYGXA@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] git-am: error out when seeing -b/--binary
+Date: Tue, 13 Mar 2012 16:31:00 +0100
+Message-ID: <87fwdcldqj.fsf@thomas.inf.ethz.ch>
+References: <20120312064855.GB16820@burratino> <20120312085820.GA11569@1wt.eu>
+	<20120312152004.GB9380@kroah.com> <20120312152453.GB12405@1wt.eu>
+	<87aa3l4vqq.fsf@thomas.inf.ethz.ch> <20120312165703.GB18791@burratino>
+	<7vvcm9snko.fsf@alter.siamese.dyndns.org>
+	<87399dpk48.fsf@thomas.inf.ethz.ch> <20120312215607.GB11362@burratino>
+	<874ntto4t8.fsf@thomas.inf.ethz.ch> <20120312222227.GC11362@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Carlos =?iso-8859-1?q?Mart=EDn_Nieto?= <cmn@elego.de>,
-	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
-To: Jeremy Morton <jeremy@configit.com>
-X-From: git-owner@vger.kernel.org Tue Mar 13 16:27:46 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset="us-ascii"
+Cc: Junio C Hamano <gitster@pobox.com>, Willy Tarreau <w@1wt.eu>,
+	Greg KH <greg@kroah.com>, Ben Hutchings <ben@decadent.org.uk>,
+	<linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>,
+	<git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: linux-kernel-owner@vger.kernel.org Tue Mar 13 16:31:23 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7TdU-0005i6-1l
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 16:27:40 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1S7Th3-0001Bu-JF
+	for glk-linux-kernel-3@plane.gmane.org; Tue, 13 Mar 2012 16:31:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754451Ab2CMP1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Mar 2012 11:27:35 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:45782 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751340Ab2CMP1e (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2012 11:27:34 -0400
-Received: by wibhq7 with SMTP id hq7so1046320wib.1
-        for <git@vger.kernel.org>; Tue, 13 Mar 2012 08:27:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=7qFBT75tlyZg7FqNObefus+vCB/Jn+RrPvj4Lhn72Tg=;
-        b=NeJToYqQ+hDk6L8ziW1b8faxNY74Vu1Drx443mNqcNTYXXNR/QatjAxLVMzBEibo2o
-         hvEkeY7/hatcbWy6gEr2BA4rdPDKQNS3mglYFc56a9uDcovYnTUXiplWk5Vj54FgVnmC
-         A7chhjmG5fjvWb2ij4j/8y3gwKGpBfKaX66TJHCLHersOZM7YqG1ZEJtayPD0gkgvfql
-         qQwj+jXUT1MSYNGrvsZmRPRX6qTVqkG/R6gFM/8SA0bdKmTGETEPs2dTFQPXpezuUUdn
-         xT5CIixkVmslvodtZq1Bp90GrmLKM7tDGwZ7GGd4lZzBRvYe2OvTFtdKGA7fAMu1kmo8
-         MKDQ==
-Received: by 10.180.95.129 with SMTP id dk1mr9882822wib.3.1331652453488;
-        Tue, 13 Mar 2012 08:27:33 -0700 (PDT)
-Received: from [192.168.1.13] (abwr197.neoplus.adsl.tpnet.pl. [83.8.241.197])
-        by mx.google.com with ESMTPS id d7sm3542849wiz.6.2012.03.13.08.27.31
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 13 Mar 2012 08:27:32 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <CAFsnPqqJt13gDp2RNiEU4dt59iMwFvMzysfk51mO8aF+_nYGXA@mail.gmail.com>
-Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
+	id S1756073Ab2CMPbG (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 13 Mar 2012 11:31:06 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:7803 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751340Ab2CMPbE (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 13 Mar 2012 11:31:04 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 13 Mar
+ 2012 16:31:01 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.355.2; Tue, 13 Mar
+ 2012 16:31:00 +0100
+In-Reply-To: <20120312222227.GC11362@burratino> (Jonathan Nieder's message of
+	"Mon, 12 Mar 2012 17:22:27 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193034>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193035>
 
-On Thu, 8 Mar 2012, Jeremy Morton wrote:
-> On Thu, Mar 8, 2012 at 11:33 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> > You can always configure server to refuse forced pushes.
-> 
-> We're using github, and as far as I'm aware, there's no way to
-> configure github to do that.
+> 	--binary)
+> 		: ;;
+> 	-b)
+> 		gettextln >&2 "The -b option (a no-op short for --binary) was removed in 1.7.10."
+> 		die "$(gettext "Please adjust your scripts.")"
+> 		;;
+>
+> Mentioning deprecation in 1.6.0 in the message left me uneasy because
+> we never actually did anything to actively deprecate the option; it
+> just has not been needed since 1.4.3 and we stopped advertising it in
+> the manpage in 1.6.0.  So I don't like the implication of "this is all
+> right because we told you so" --- on the contrary, it is "in practice
+> nobody seems to be using this option and we hope nobody will notice
+> when we take it away".
 
-It would be nice if GitHub supported setting receive.denyNonFastForward
-and receive.denyDeletes (the receive.*current* do not matter for GitHub).
-Though I am not sure if it would not require changes to the custom Git
-implementation they use...
+Hmm, I had an alternate patch ready in the morning, but Junio beat us to
+it and applied the old one to master.
+
+I don't really think it matters enough to apply *another*, so I'll leave
+it at that.
 
 -- 
-Jakub Narebski
-Poland
+Thomas Rast
+trast@{inf,student}.ethz.ch
