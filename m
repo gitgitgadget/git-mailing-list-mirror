@@ -1,68 +1,109 @@
-From: lists@haller-berlin.de (Stefan Haller)
-Subject: Re: Auto-matching upstream branches by name (was: [RFC PATCH] push: start warning upcoming default change for push.default)
-Date: Tue, 13 Mar 2012 21:01:49 +0100
-Message-ID: <1kgwl7x.5pilu08h6t2eM%lists@haller-berlin.de>
-References: <vpqaa3kfwss.fsf@bauges.imag.fr>
-Cc: peff@peff.net (Jeff King), marcnarc@xiplink.com (Marc Branchaud),
-	mhagger@alum.mit.edu (Michael Haggerty),
-	cmn@elego.de (=?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?=),
-	git@vger.kernel.org
-To: Matthieu.Moy@grenoble-inp.fr (Matthieu Moy),
-	gitster@pobox.com (Junio C Hamano)
-X-From: git-owner@vger.kernel.org Tue Mar 13 21:02:02 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] Documentation/diff-options: reword description of
+ --submodule option
+Date: Tue, 13 Mar 2012 13:04:57 -0700
+Message-ID: <7vipi8uv12.fsf@alter.siamese.dyndns.org>
+References: <1331665251-11147-1-git-send-email-tim.henigan@gmail.com>
+ <1331665251-11147-2-git-send-email-tim.henigan@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 13 21:05:08 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7Xuw-0004ns-1H
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 21:01:58 +0100
+	id 1S7Xy0-0007CS-4m
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Mar 2012 21:05:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751884Ab2CMUBw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Mar 2012 16:01:52 -0400
-Received: from server90.greatnet.de ([83.133.96.186]:38625 "EHLO
-	server90.greatnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751780Ab2CMUBw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2012 16:01:52 -0400
-Received: from [192.168.0.42] (dslb-088-073-085-009.pools.arcor-ip.net [88.73.85.9])
-	by server90.greatnet.de (Postfix) with ESMTPA id CAA383B0489;
-	Tue, 13 Mar 2012 21:01:49 +0100 (CET)
-In-Reply-To: <vpqaa3kfwss.fsf@bauges.imag.fr>
-User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.7.3 (x86))
+	id S1752377Ab2CMUFB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Mar 2012 16:05:01 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53413 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752308Ab2CMUFA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Mar 2012 16:05:00 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E7ACC5692;
+	Tue, 13 Mar 2012 16:04:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eH3q7Vwedn1l/g8tcgI3sN9klC8=; b=IJslez
+	760vVAdmaHHHjxcsVCYRqmyhP8j6C/UUEdfPJBcPUVviipTgWF+vr8YmaSIVSg0I
+	+pHJjsPOcz35V7aPtA69yO5Q5EiXvOuVm8X5Z3RVBrYtQMfSDRCvgZrKNrSAfs1E
+	Jp5jTHUmCky2VjJXU2Iwqcr39dIJgiDTB7kyE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bFqlRQTJfl3N3RQwkS4hXUtQzYmXKcAa
+	uXPZ+9AVNU9fDvnSz0Zi5CPUNCBn9wLIg2RofCPvIIzYxxx0UsUcRBxjxUd+54uU
+	A4P3EPwBiLzlyut+0tvOUaEigbvKCmHf8cK4pDWoxVmR767wZUhNd/yjPtQ74GPS
+	7co8UcW8jQw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF8B25691;
+	Tue, 13 Mar 2012 16:04:58 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 703775690; Tue, 13 Mar 2012
+ 16:04:58 -0400 (EDT)
+In-Reply-To: <1331665251-11147-2-git-send-email-tim.henigan@gmail.com> (Tim
+ Henigan's message of "Tue, 13 Mar 2012 15:00:51 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CF3B5206-6D47-11E1-A7FE-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193063>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
+Tim Henigan <tim.henigan@gmail.com> writes:
 
-> Actually, I'm starting to wonder if the whole "upstream" thing should
-> not be deactivated by default, and replaced with a simpler mechanism
-> like "pull.default", similar to what "push.default" does today. Then,
-> users could set "pull.default=current", and "git pull" would pull a
-> branch with the same name remotely. Or users could set
-> "pull.default=upstream" and get what Git does today.
+> The previous description was a bit confusing.  This rewrite makes it
+> easier to understand.
 
-Yes, this is pretty similar to what I had in mind, in the last paragraph
-of this message:
+I can understand the confusion.  We are trying to say too many things at
+the same time:
 
-   http://thread.gmane.org/gmane.comp.version-control.git/192547/focus=192694
+ * There are two formats, log and short.
 
-But it's not just about pull versus push. If you make them both work
-with same-name branches automatically, you still need to make "status"
-and "branch -vv" aware of that too, so that they can report whether you
-are ahead or behind your, well, "upstream".  "git log @{u}" would be
-nice as well in this mode.
+ * The log format is like "git submodule --summary A..B" for the range.
 
-So I think that "pull.default" is not the best option to use for this;
-maybe something like "branch.automatchupstreambyname" or some such.
+ * The short format just shows A and B for the range.
 
-(It's really a separate discussion from the push.default question
-though, so I'm changing the subject.)
+ * The log format is obtained by giving --submodule or --submodule=log.
 
+ * The short format is obtained by not giving this option at all, or
+   giving --submodule=short.
 
--- 
-Stefan Haller
-Berlin, Germany
-http://www.haller-berlin.de/
+> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+> index f44f3fc..0e1c753 100644
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -165,11 +165,10 @@ any of those replacements occurred.
+>  	of the `--diff-filter` option on what the status letters mean.
+>  
+>  --submodule[=<format>]::
+> -	Choose the output format for submodule differences. <format> can be one of
+> -	'short' and 'log'. 'short' just shows pairs of commit names, this format
+> -	is used when this option is not given. 'log' is the default value for this
+> -	option and lists the commits in that commit range like the 'summary'
+> -	option of linkgit:git-submodule[1] does.
+> +	Choose the output format for submodule differences. <format> can be one
+> +	of 'short' or 'log'. The default value is 'log'.
+> +	'log' lists commits in the commit range like linkgit:git-submodule[1] `--summary`.
+> +	'short' shows only the SHA1 of the source and destination.
+
+Does it risk being unclear to say src/dst here without defining, or is it
+sufficiently clear from the context (the previous line says "range")?
+
+You lost "not giving this option at all is the same as --submodule=short".
+
+Here is my attempt, but I do not think I particularly did a good job at
+this.
+
+        Specify how differences in submodules are shown.  A `--submodule`
+        or `--submodule=log` option uses the long format, which lists the
+        commits in the range like linkgit:git-submodule[1] `--summary` does.
+	Omitting the `--submodule` option, or a `--submodule=short` option,
+	uses the short format, which just shows the names of the commits
+	at the beginning and the end of the range.
