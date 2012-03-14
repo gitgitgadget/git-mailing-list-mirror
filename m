@@ -1,97 +1,129 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: [PATCH 5/5 v2] contrib/diffall: fix cleanup trap on Windows
-Date: Wed, 14 Mar 2012 12:38:06 -0400
-Message-ID: <1331743086-32304-6-git-send-email-tim.henigan@gmail.com>
-References: <1331743086-32304-1-git-send-email-tim.henigan@gmail.com>
-Cc: Tim Henigan <tim.henigan@gmail.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Mar 14 17:40:33 2012
+From: Christopher Tiwald <christiwald@gmail.com>
+Subject: Re: [PATCH] push: Provide situational hints for non-fast-forward
+ errors
+Date: Wed, 14 Mar 2012 12:40:57 -0400
+Message-ID: <20120314164057.GD3558@gmail.com>
+References: <20120313232256.GA49626@democracyinaction.org>
+ <7vobrzst7n.fsf@alter.siamese.dyndns.org>
+ <20120314121434.GB28595@in.waw.pl>
+ <vpqobrzgww9.fsf@bauges.imag.fr>
+ <20120314142752.GD28595@in.waw.pl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>, peff@peff.net,
+	zbyszek@in.waw.pl
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 14 17:41:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7rFY-0005CA-DW
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 17:40:32 +0100
+	id 1S7rGB-00067S-9Z
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 17:41:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030360Ab2CNQk1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Mar 2012 12:40:27 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:44337 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030328Ab2CNQk0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2012 12:40:26 -0400
-Received: by yhmm54 with SMTP id m54so1982024yhm.19
-        for <git@vger.kernel.org>; Wed, 14 Mar 2012 09:40:26 -0700 (PDT)
+	id S1030871Ab2CNQlH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Mar 2012 12:41:07 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:52067 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030328Ab2CNQlD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2012 12:41:03 -0400
+Received: by eaaq12 with SMTP id q12so1052709eaa.19
+        for <git@vger.kernel.org>; Wed, 14 Mar 2012 09:41:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=/eDr22hpNmNWyKHKlO4MeJxDEyCDlwxrwtP+rli57iE=;
-        b=jKvpVXjtnov0M4NJZ2NYGtyVFM1LuufIW9+sGWF9wmA002KV0ZxrjN5e1IP7GDhrjm
-         FYdScfcd9qaSKee3h11N5LzgMiMQeU4K9VgdZd8/J1dm/Uz8fedx5N7vzEpQKgiPfWVc
-         lQHuQoNZ2tGAhmZxhhKovu6uAVXd2qnb6WZsKlqncPz0pfRc+qDKM3yvI+AGX9YqqbN+
-         5v+bE51cGxk9CDiwYgLlxewR1t4TvWPDgm237lTHDtV6sFSuJbIEKKPHJT4P7WZ4R1aB
-         K3yTtr0mEl4tpANpFueAbc0ge/x/NpxIchqJfXrc7j5bicb28YnC43umxvWOC91r4IPn
-         1ZiA==
-Received: by 10.224.202.66 with SMTP id fd2mr3982142qab.9.1331743226217;
-        Wed, 14 Mar 2012 09:40:26 -0700 (PDT)
-Received: from localhost ([99.38.69.118])
-        by mx.google.com with ESMTPS id ec5sm9610438qab.21.2012.03.14.09.40.19
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=9pq8WjBRcc6pjZ0VaNKJAMANxMz9w8NRa1VmRxmrayk=;
+        b=dQ6kZSYyfcJFUuR+6K8L6u/6M6iaLtZIIqioDpC32CEHixYC6lj2N2eeLrjv6eUDwv
+         QkmD8K/aFy/oeYkVkRAkRG3PdaMh9/O0GQYMxPbEsv/XZVv/bxRhQTNKisrtGME9Bhiq
+         LfOo5EMksVZhcKGp0NJhyXYnsGUcmch7YcZhndoaFXzoenvbdef6Q3KV6Pf9Za1MttjZ
+         ex910fNe6XxDX857xMh4svFEIIQ8EEpFQ7+8D81YDnxzy8JdO6WtI419Yi5SGNUiMDvc
+         ezeVjuzFLLIJTxoXe6t+vOTtFbSFo0UNCdYu1s/ZNexg923PfIKwbcuaDNRZHMvmUmqw
+         ftNg==
+Received: by 10.229.137.85 with SMTP id v21mr1100589qct.70.1331743262119;
+        Wed, 14 Mar 2012 09:41:02 -0700 (PDT)
+Received: from gmail.com ([216.55.38.246])
+        by mx.google.com with ESMTPS id g16sm9664511qah.6.2012.03.14.09.41.00
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 14 Mar 2012 09:40:25 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.rc0
-In-Reply-To: <1331743086-32304-1-git-send-email-tim.henigan@gmail.com>
+        Wed, 14 Mar 2012 09:41:00 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20120314142752.GD28595@in.waw.pl>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193133>
 
-Prior to this commit, the cleanup trap that removes the tmp dir
-created by the script would fail on Windows. The error was silently
-ignored by the script.
+On Wed, Mar 14, 2012 at 03:27:52PM +0100, Zbigniew J=C4=99drzejewski-Sz=
+mek wrote:
+> On Wed, Mar 14, 2012 at 02:00:38PM +0100, Matthieu Moy wrote:
+> > Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
+> >=20
+> > > I think that having three different config keys for the three
+> > > different advices makes sense, because the advices will be displa=
+yed
+> > > at different times.
+> >=20
+> > I don't think it really makes sense to be such fine-grained. We alr=
+eady
+> > have 6 different advices, so an advance user who do not want them n=
+eed
+> > to set these 6 variables. I think we want to keep this number relat=
+ively
+> > low.
+> >=20
+> > The advice messages do not point explicitely to the way to disable =
+them,
+> > so users who know how to set advice.* are users who know a little a=
+bout
+> > configuration files, and who read the docs.=20
+>=20
+> Elsewhere in this thread it was proposed to add an actual 'git config=
+'
+> command to the advice.
 
-On Windows, a directory cannot be removed while it is the working
-directory of the process (thanks to Johannes Sixt on the Git list
-for this info [1]).
+After considering it, I tend to agree that three different config keys
+is overkill. I feel like users who disable advice are doing it because
+they find the messages annoying, not because they've mastered that
+particular situation and no longer need the reminder. Forcing them to
+disable three different options to get an advice-less 'git push' seems
+like it'd just be irritating.
 
-This commit eliminates the 'cd' into the tmp directory that caused
-the error.
+I could be wrong about that. Perhaps users who graduate workflows as yo=
+u
+described above are more common? I don't disable any advice locally and
+thus can't speak well to what motivates that decision.
+>=20
+> > Instead of having too
+> > fine-grained configuration variables, we can have a better doc,
+> > explaining shortly the 3 possible cases under advice.nonfastforward=
+ in
+> > config.txt. The user who disable the advice can read the doc (I usu=
+ally
+> > think that "users don't read documentation" is a better assumption,=
+ but
+> > since the user knows about the name of the variable, it is OK here)=
+=2E
+> >=20
+> > Also, if I read correctly the patch, the old variable is left in th=
+e doc
+> > and in advice.{c,h}, but is no longer used. This means old-timers w=
+ho
+> > have set it will see the message poping-up again after they upgrade=
+,
+> > which I think is inconveinient for them.
+>=20
+> So it seems that the old variable should be respected, not to annoy
+> "old-timers".
 
-[1]: http://article.gmane.org/gmane.comp.version-control.git/193086
+I hadn't considered users who already have the variable set. I'll
+correct for that. I'll also attempt to improve the doc for
+advice.nonfastforward.
 
-Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
----
-
-This patch was added in v2 of the series.
-
-
- contrib/diffall/git-diffall |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
-
-diff --git a/contrib/diffall/git-diffall b/contrib/diffall/git-diffall
-index 91a31c8..84f2b65 100755
---- a/contrib/diffall/git-diffall
-+++ b/contrib/diffall/git-diffall
-@@ -49,7 +49,7 @@ cd "$cdup" || {
- tmp=$(perl -e 'use File::Temp qw(tempdir);
- 	$t=tempdir("/tmp/git-diffall.XXXXX") or exit(1);
- 	print $t') || exit 1
--trap 'rm -rf "$tmp" 2>/dev/null' EXIT
-+trap 'rm -rf "$tmp"' EXIT
- 
- left=
- right=
-@@ -233,9 +233,8 @@ do
- 	fi
- done < "$tmp/filelist"
- 
--cd "$tmp"
--LOCAL="$left_dir"
--REMOTE="$right_dir"
-+LOCAL="$tmp/$left_dir"
-+REMOTE="$tmp/$right_dir"
- 
- if test -n "$diff_tool"
- then
--- 
-1.7.10.rc0
+--
+Christopher Tiwald
