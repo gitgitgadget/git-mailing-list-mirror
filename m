@@ -1,93 +1,108 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Auto-matching upstream branches by name
-Date: Wed, 14 Mar 2012 10:10:52 +0100
-Message-ID: <vpq8vj3zgwz.fsf@bauges.imag.fr>
-References: <1kgwl7x.5pilu08h6t2eM%lists@haller-berlin.de>
+From: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
+Subject: Re: [PATCH v4 5/5] http: rename HTTP_REAUTH to HTTP_RETRY
+Date: Wed, 14 Mar 2012 12:11:43 +0100
+Message-ID: <4F607CEF.5010209@seap.minhap.es>
+References: <4F5E3298.5030502@seap.minhap.es><7vk42pr3c7.fsf@alter.siamese.dyndns.org> <4F5F41FF.4000204@seap.minhap.es><7vy5r4wfru.fsf@alter.siamese.dyndns.org><20120313220411.GA28357@sigill.intra.peff.net> <7v1uowt83u.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: gitster@pobox.com (Junio C Hamano), peff@peff.net (Jeff King),
-	marcnarc@xiplink.com (Marc Branchaud),
-	mhagger@alum.mit.edu (Michael Haggerty),
-	cmn@elego.de (Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto),
-	git@vger.kernel.org
-To: lists@haller-berlin.de (Stefan Haller)
-X-From: git-owner@vger.kernel.org Wed Mar 14 10:11:35 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, sam@vilain.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 14 11:14:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7kF3-00067i-TF
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 10:11:34 +0100
+	id 1S7lDc-000214-L3
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 11:14:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932449Ab2CNJL3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Mar 2012 05:11:29 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:37588 "EHLO shiva.imag.fr"
+	id S1030713Ab2CNKOB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Mar 2012 06:14:01 -0400
+Received: from luthien1.map.es ([213.9.211.102]:57137 "EHLO luthien2.map.es"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932446Ab2CNJL1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2012 05:11:27 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q2E96RMB010381
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 14 Mar 2012 10:06:28 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1S7kEP-0002lj-If; Wed, 14 Mar 2012 10:10:53 +0100
-In-Reply-To: <1kgwl7x.5pilu08h6t2eM%lists@haller-berlin.de> (Stefan Haller's
-	message of "Tue, 13 Mar 2012 21:01:49 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 14 Mar 2012 10:06:29 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q2E96RMB010381
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1332320791.03084@gFpEklf+U9XrqsZRRrG0kQ
+	id S1760447Ab2CNKOA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2012 06:14:00 -0400
+Received: from correo.map.es (unknown [10.1.24.31])
+	by luthien2.map.es (Postfix) with ESMTP id D817824E8A;
+	Wed, 14 Mar 2012 11:12:58 +0100 (CET)
+Received: from [10.47.128.147] (unknown [10.1.29.55])
+	by correo.map.es (Postfix) with ESMTP id 613DED4251;
+	Wed, 14 Mar 2012 11:12:50 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0.1) Gecko/20120216 Thunderbird/10.0.1
+In-Reply-To: <7v1uowt83u.fsf@alter.siamese.dyndns.org>
+X-map-MapScanner: Libre de virus, Libre de virus
+X-Spam-Status: No, No
+X-map-MapScanner-Information: 
+X-map-MapScanner-ID: D817824E8A.0B557
+X-map-MapScanner-From: nelsonjesus.benitez@seap.minhap.es
+X-map-MailScanner-Watermark: 1332324779.82804@V1JGFYCwETECDYR2vPRYjQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193092>
 
-lists@haller-berlin.de (Stefan Haller) writes:
+After adding the proxy authentication support in
+http, the semantics of HTTP_REAUTH changed more to
+a retry rather than a re-authentication, so we
+rename it to HTTP_AUTH_RETRY.
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
->
->> Actually, I'm starting to wonder if the whole "upstream" thing should
->> not be deactivated by default, and replaced with a simpler mechanism
->> like "pull.default", similar to what "push.default" does today. Then,
->> users could set "pull.default=current", and "git pull" would pull a
->> branch with the same name remotely. Or users could set
->> "pull.default=upstream" and get what Git does today.
->
-> Yes, this is pretty similar to what I had in mind, in the last paragraph
-> of this message:
->
->    http://thread.gmane.org/gmane.comp.version-control.git/192547/focus=192694
+Signed-off-by: Nelson Benitez Leon <nbenitezl@gmail.com>
+---
+Ok this is a new 5/5 patch that have HTTP_AUTH_RETRY as
+Junio suggested, is responding with this patch good or
+do I need to send a new re-roll just for this?
 
-Indeed, yes.
+thanks, 
 
-> But it's not just about pull versus push. If you make them both work
-> with same-name branches automatically, you still need to make "status"
-> and "branch -vv" aware of that too, so that they can report whether you
-> are ahead or behind your, well, "upstream".  "git log @{u}" would be
-> nice as well in this mode.
->
-> So I think that "pull.default" is not the best option to use for this;
-> maybe something like "branch.automatchupstreambyname" or some such.
+ http.c |    6 +++---
+ http.h |    2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-I'd call that 'upstream.default' actually.
-
-> (It's really a separate discussion from the push.default question
-> though, so I'm changing the subject.)
-
-Separate, but related. If Git had this behavior as default, I'd
-recommend 'current' without hesitation. I'm starting to be convinced
-that the whole 'upstream' stuff is confusing for non-expert, but it is
-for pull as much as it is for push.
-
+diff --git a/http.c b/http.c
+index 12dcaa1..7468cdb 100644
+--- a/http.c
++++ b/http.c
+@@ -837,7 +837,7 @@ static int http_request(const char *url, void *result, int target, int options)
+ 			} else {
+ 				credential_fill(&http_auth);
+ 				init_curl_http_auth(slot->curl);
+-				ret = HTTP_REAUTH;
++				ret = HTTP_AUTH_RETRY;
+ 			}
+ 		} else if (results.http_code == 407) { /* Proxy authentication failure */
+ 			if (proxy_auth.username && proxy_auth.password) {
+@@ -846,7 +846,7 @@ static int http_request(const char *url, void *result, int target, int options)
+ 			} else {
+ 				credential_fill(&proxy_auth);
+ 				set_proxy_auth(slot->curl);
+-				ret = HTTP_REAUTH;
++				ret = HTTP_AUTH_RETRY;
+ 			}
+ 		} else {
+ 			if (!curl_errorstr[0])
+@@ -876,7 +876,7 @@ static int http_request_reauth(const char *url, void *result, int target,
+ 
+ 	do {
+ 		ret = http_request(url, result, target, options);
+-	} while (ret == HTTP_REAUTH);
++	} while (ret == HTTP_AUTH_RETRY);
+ 
+ 	return ret;
+ }
+diff --git a/http.h b/http.h
+index 303eafb..6e3ea59 100644
+--- a/http.h
++++ b/http.h
+@@ -123,7 +123,7 @@ extern char *get_remote_object_url(const char *url, const char *hex,
+ #define HTTP_MISSING_TARGET	1
+ #define HTTP_ERROR		2
+ #define HTTP_START_FAILED	3
+-#define HTTP_REAUTH	4
++#define HTTP_AUTH_RETRY	4
+ #define HTTP_NOAUTH	5
+ 
+ /*
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.7.6
