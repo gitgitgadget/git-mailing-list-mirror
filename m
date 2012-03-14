@@ -1,84 +1,129 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: Re: [RFC PATCH] push: start warning upcoming default change for push.default
-Date: Wed, 14 Mar 2012 20:15:23 +0100
-Message-ID: <4F60EE4B.9020803@ira.uka.de>
-References: <vpqobs65gfc.fsf@bauges.imag.fr> <1331281886-11667-1-git-send-email-Matthieu.Moy@imag.fr> <1331288715.21444.38.camel@beez.lab.cmartin.tk> <4F5A4C45.7070406@xiplink.com> <4F5AF1A8.4050604@alum.mit.edu> <4F5E12A5.6030701@xiplink.com> <vpqzkblixmb.fsf@bauges.imag.fr> <20120312183725.GA2187@sigill.intra.peff.net> <vpqy5r44zg7.fsf@bauges.imag.fr> <7vehswljxi.fsf@alter.siamese.dyndns.org> <4F5F60C5.6020900@ira.uka.de> <7v7gyoxuth.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/3] Demonstrate a bug in --word-diff where
+ diff.*.wordregex is "sticky"
+Date: Wed, 14 Mar 2012 12:24:10 -0700
+Message-ID: <7vsjhboujp.fsf@alter.siamese.dyndns.org>
+References: <3bb99e938624ae674674b304c24c48b9dc05871b.1331749299.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jeff King <peff@peff.net>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	=?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 14 20:15:09 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j6t@kdbg.org>, <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Mar 14 20:24:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7tf9-0002Io-Cf
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 20:15:07 +0100
+	id 1S7to3-0001j5-Ba
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 20:24:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755331Ab2CNTPC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Mar 2012 15:15:02 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:34120 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753960Ab2CNTPA (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Mar 2012 15:15:00 -0400
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1S7tee-00084W-4A; Wed, 14 Mar 2012 20:14:51 +0100
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	id 1S7ted-00076C-Vc; Wed, 14 Mar 2012 20:14:36 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-In-Reply-To: <7v7gyoxuth.fsf@alter.siamese.dyndns.org>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1331752491.371711000
+	id S932089Ab2CNTYO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Mar 2012 15:24:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58103 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752027Ab2CNTYM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2012 15:24:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5770A6A36;
+	Wed, 14 Mar 2012 15:24:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cdnJX4gV+AXgICb2JiH0N6EaeSo=; b=Kz+K/P
+	mf+VaTqy28zn/IGvfKkASI7vfCNYifXi01+zn6wJDFiv4r2lHue3JhDaiRcJFv0Z
+	/t21hGIkrHSvNpWl4Uye2/G6CwYlTe70GvN+3kcl2OhqP9a+7ofPRVWZu0tzgZZ0
+	qDiM0UNfTGcTr5ENcXPgXhoPEBON8e3kRFSRQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NSJx6jZqWHRHulJpiYeoIuk81XFKSnR8
+	WqylTLg9NVWsHZH5auJPlj+kNEJy+CKR3b+1H8bzhTcRVdrtsiPESVE1RLSdVjEr
+	dDYfZoKFAuHqWR4hgyqpqYmdJMijuzm62WzWNfO0iA8ylEXhj/VhRDSR3SsLgqyB
+	ZuA8rXy26PQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DF5B6A35;
+	Wed, 14 Mar 2012 15:24:12 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CB8AE6A34; Wed, 14 Mar 2012
+ 15:24:11 -0400 (EDT)
+In-Reply-To: <3bb99e938624ae674674b304c24c48b9dc05871b.1331749299.git.trast@student.ethz.ch> (Thomas Rast's message of "Wed, 14 Mar 2012 19:24:07 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 47579C54-6E0B-11E1-B19E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193152>
 
-On 13.03.2012 18:41, Junio C Hamano wrote:
-> Holger Hellmuth<hellmuth@ira.uka.de>  writes:
->> If Peff's "push to same branch in a different remote" is a bug (and
->> IMHO it is) it should not count as a reason for what should be the
->> default.
+Thomas Rast <trast@student.ethz.ch> writes:
+
+> From: Johannes Sixt <j6t@kdbg.org>
 >
-> I may phrased it poorly, but I don't think you mean "if the bug is fixed,
-> then the behaviour of upstream is simple and easy to understand".  The
+> The test case applies a custom wordRegex to one file in a diff, and expects
+> that the default word splitting applies to the second file in the diff.
+> But the custom wordRegex is also incorrectly used for the second file.
+>
+> [tr: unset the diff.wordRegex variable to make the test meaningful]
+>
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+> ---
+>
+> Compared to your version, I added the first hunk.  Otherwise the
+> diff.wordRegex=[[:alnum:]]+ setting carries over and makes the test
+> fail even with the bug fixed.
+>
+> I deliberately put it as early as possible, rather than into the setup
+> for your test, to avoid confusion next time someone patches that file.
+>
+>  t/t4034-diff-words.sh |   37 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 37 insertions(+)
+>
+> diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+> index 5c20121..69e81f3 100755
+> --- a/t/t4034-diff-words.sh
+> +++ b/t/t4034-diff-words.sh
+> @@ -293,6 +293,10 @@ test_expect_success '--word-diff=none' '
+>  	word_diff --word-diff=plain --word-diff=none
+>  '
+>  
+> +test_expect_success 'unset default driver' '
+> +	git config --unset diff.wordregex
+> +'
 
-I think the behaviour of the whole pull/push system is not easy to 
-understand. One has to learn a lot of concepts about git before being 
-able to answer the simple question "if I do 'git push' now, what happens?".
+Isn't this unsafe if some of the tests before this one failed?
 
-Since I am using git without any collaboration I never had much need to 
-play around with the whole porcelain remote configuration (cloning and 
-using git config was enough). So today I tried to create a bidirectional 
-link between a local and a remote branch using only porcelain commands 
-(i.e. without using git config directly). Somehow I didn't succeed. I 
-can either use git checkout --track or git push -u to make a pull 
-connection between the two, but to automatically push I would have to 
-create a branch of the same name (and know that this is the magical 
-ingredient that makes it work!)
+	test_unconfig diff.wordregex
 
-Maybe what is missing is a parameter to git-push that tells git that 
-from now on this is what git push should do per default in this branch 
-(Similar to what git checkout --track does). This would mean that even 
-new users could do most remote configuration with just the knowledge of 
-git checkout and git push.
+By the way, I really loathe the change that gutted major parts out of
+t/test-lib.sh and moved them to another file; now I have to eyeball two
+files to write a response like this instead of one.
 
-By the way I think I found another "hole" in the porcelain: If you add a 
-single branch to follow with git remote add -t <branch> ..., you can't 
-add another. A second git remote add -t <otherbranch> ... will be met 
-with an error that the remote is already configured. I would have to 
-delete the remote and add it again with git add -t <branch> -t 
-<otherbranch> ..... Or use a different remote name (which would be 
-confusing later on). Did I miss something?
+> +test_expect_failure 'wordRegex for the first file does not apply to the second' '
+> +	echo "a diff=tex" >.gitattributes &&
+> +	git config diff.tex.wordRegex "[a-z]+|." &&
+
+The use of files "a" and "z" as an example of pair of a tex and non tex
+input makes the test look overly artificial (why not a.tex vs z.txt or
+something?), but other than that, looks cleanly done.
+
+Thanks.
+
+> +	cat >expect <<-\EOF &&
+> +		diff --git a/a b/a
+> +		index 9823d38..b09f967 100644
+> +		--- a/a
+> +		+++ b/a
+> +		@@ -1 +1 @@
+> +		a [-b-]{+bx+}; c
+> +		diff --git a/z b/z
+> +		index 9823d38..b09f967 100644
+> +		--- a/z
+> +		+++ b/z
+> +		@@ -1 +1 @@
+> +		a [-b;-]{+bx;+} c
+> +	EOF
+> +	git diff --word-diff HEAD~ >actual
+> +	test_cmp expect actual
+> +'
+> +
+>  test_done
