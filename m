@@ -1,83 +1,83 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/2] post-receive-email: defend against non UTF-8
- i18n.logoutputencoding setting
-Date: Wed, 14 Mar 2012 14:55:09 -0500
-Message-ID: <20120314195509.GA31686@burratino>
-References: <20120308115119.GA2604@burratino>
- <20120308115957.GB2750@burratino>
- <20120314233609.04a2a37b@zappedws>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fmt-merge-msg: show those involved in a merged series
+Date: Wed, 14 Mar 2012 13:34:39 -0700
+Message-ID: <7vaa3iq5uo.fsf@alter.siamese.dyndns.org>
+References: <7vvcmj68iz.fsf@alter.siamese.dyndns.org>
+ <CA+55aFzQ3+EFBVyE9PWOyH0XEC_oW+kUaBTYfixmi2wgMmiZvw@mail.gmail.com>
+ <7vipii27ka.fsf@alter.siamese.dyndns.org>
+ <CA+55aFw-sS_p7JXNXbSbpiwh9_bZhSrTtC3is4NtLa_n9Hzk5A@mail.gmail.com>
+ <7vmx7uzq8h.fsf_-_@alter.siamese.dyndns.org>
+ <20120312071121.GA17269@burratino> <7vipi9mfhx.fsf@alter.siamese.dyndns.org>
+ <4F5EF6EC.20008@viscovery.net> <7v4ntswe54.fsf@alter.siamese.dyndns.org>
+ <4F603CA9.70906@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Gerrit Pape <pape@smarden.org>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jon Jensen <jon@endpoint.com>
-To: Alexey Shumkin <zapped@mail.ru>
-X-From: git-owner@vger.kernel.org Wed Mar 14 20:55:24 2012
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Mar 14 21:34:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7uI7-0002n9-O7
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 20:55:24 +0100
+	id 1S7uuF-00026H-RL
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 21:34:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030942Ab2CNTzT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Mar 2012 15:55:19 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:57861 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757802Ab2CNTzS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2012 15:55:18 -0400
-Received: by eaaq12 with SMTP id q12so1261423eaa.19
-        for <git@vger.kernel.org>; Wed, 14 Mar 2012 12:55:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=wjL5RlmDadGgIvehXCeKHS5d4jjX8b+aMVJR2Gn+CV0=;
-        b=OzUtcF7j1NxLmZJzV88bc5PeIHGEodt4cvuakOhE3ZWmC0Ny5deV6PIXO5sQlT5/NQ
-         crCNurx6j7/9d9cdQqwrwaHMVrPHraR+7folqG4LUEoLGLmjcljSijoYc4C1dCFA6G7j
-         d/b6LunY5BoagMa2p77ExokwWBF945pVU1/R2YWkQX3a/MU2+RfeodQ0oNnWFVQpU7Vz
-         0aRBYNxcAM0gsyW8btsSkRA2zpPx4O+TqcslbmE9u2H9QGmVeZxVMMrHnOZz0SVKyAOF
-         qUDAUw1i+hIpSVohNam4bhj5teJYModjRP8jRQCvurH8Dgl0ZcQGyVic+nl137SA94sj
-         yXyw==
-Received: by 10.50.159.161 with SMTP id xd1mr14099299igb.15.1331754916298;
-        Wed, 14 Mar 2012 12:55:16 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id md6sm4066442igc.0.2012.03.14.12.55.15
-        (version=SSLv3 cipher=OTHER);
-        Wed, 14 Mar 2012 12:55:15 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20120314233609.04a2a37b@zappedws>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757425Ab2CNUen (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Mar 2012 16:34:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60173 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753875Ab2CNUel (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2012 16:34:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F17A57AE5;
+	Wed, 14 Mar 2012 16:34:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9P0JH3Y3w0NgxmeUgJXaM9a82vU=; b=tQEcfP
+	RQCPznB+qISfk8kA0RswGjB4pjvgz3BWdqr598G161eu1maQlWPLzlrNLnkgU6pK
+	4qKAy2MF8d4hF7IR1cO48FLdrjIODrNS3biEh9gqXQ4tklPrtCaASBKBZsCAYlkP
+	NcRSRqP3vMlKhH782QWzgMuSijTRyc30C7Ot0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fZJf5GUI7nD6TNwGuX5qNBAc2Yth/WI+
+	fZgTY5IOInyo+tTtTwpz6tdiOiX83d01jpQTelnCxMpuLERp5f9adVoWtgiAD2qi
+	0EagnaEycEUkkRGy1RcWj7+1SqHbiS/jbvcMKR0BnFcTfpbMZ8l3FKSPtXlV6FRH
+	kGHtYLbfutc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E85EF7AE4;
+	Wed, 14 Mar 2012 16:34:40 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7C3847AE3; Wed, 14 Mar 2012
+ 16:34:40 -0400 (EDT)
+In-Reply-To: <4F603CA9.70906@viscovery.net> (Johannes Sixt's message of "Wed,
+ 14 Mar 2012 07:37:29 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1FD47896-6E15-11E1-94E0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193159>
 
-Alexey Shumkin wrote:
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-> I'd like to remind then following aspect
+> Am 3/13/2012 19:26, schrieb Junio C Hamano:
+>> Johannes Sixt <j.sixt@viscovery.net> writes:
+>>> I can buy that.
+>> 
+>> Assuming "that" refers to my "hold ... for several weeks", let me stop
+>> reading right here.  We can talk about the rest of your message in several
+>> weeks.
 >
->> My proposition was in to send email message in explicitly defined
->> custom encoding. Why? In development process under Windows non-UTF-8
->> encoding is used (cp1251 in my case). So, filenames have this
->> encoding, and as we know Git stores their names as is
-[...]
->>                                                                 with
->> core.quotepath= false
+> No, "that" refers to "make loud noises (including "we will never get used
+> to this updated output, it is horrible!"), and then eventually get used to
+> it as if nothing happened". Nevertheless,...
 
-Sure.  Do you think this patch makes that problem worse, and if so, do
-you have any ideas about how that could be prevented?  Otherwise:
-
->>            Making the email charset configurable is left as an
->> exercise for the interested reader.
-
-I did not want to do that part because I do not trust myself to
-understand the needs of people using non-utf8 and test it
-appropriately, but I tried to make sure the patch was structured in a
-way that would make it easy.
-
-Hoping clarifies a little,
-Jonathan
+I understand that.  But ask yourself honestly and tell me (in several
+weeks) why you do not think that your "would like to opt-out" part falls
+into exactly the same "loud noises immediately after seeing a change"
+category.
