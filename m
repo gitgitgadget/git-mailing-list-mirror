@@ -1,80 +1,87 @@
-From: Jeremy Morton <jeremy@configit.com>
-Subject: Re: git push default behaviour?
-Date: Wed, 14 Mar 2012 13:12:48 +0100
-Message-ID: <CAFsnPqrU7fzybncyhY35iAjjQWpAiW_Y2YAW8ExP6Qrxfbu_Cw@mail.gmail.com>
-References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com>
-	<m3sjhjs4z5.fsf@localhost.localdomain>
-	<CAFsnPqqJt13gDp2RNiEU4dt59iMwFvMzysfk51mO8aF+_nYGXA@mail.gmail.com>
-	<201203131627.30455.jnareb@gmail.com>
+From: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+Subject: Re: [PATCH] push: Provide situational hints for non-fast-forward
+ errors
+Date: Wed, 14 Mar 2012 13:14:34 +0100
+Message-ID: <20120314121434.GB28595@in.waw.pl>
+References: <20120313232256.GA49626@democracyinaction.org>
+ <7vobrzst7n.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
-	Thomas Rast <trast@inf.ethz.ch>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 14 13:12:56 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, peff@peff.net
+To: Junio C Hamano <gitster@pobox.com>,
+	Christopher Tiwald <christiwald@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 14 13:14:48 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7n4Z-0007t9-Fj
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 13:12:55 +0100
+	id 1S7n6H-0000np-Qr
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 13:14:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760878Ab2CNMMv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Mar 2012 08:12:51 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:60533 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760875Ab2CNMMt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2012 08:12:49 -0400
-Received: by lbbgm6 with SMTP id gm6so754367lbb.19
-        for <git@vger.kernel.org>; Wed, 14 Mar 2012 05:12:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:x-gm-message-state;
-        bh=f7O1vpIAlxAVbO9Sc4x0glaXU56rrXHdD8qJaEO4Oco=;
-        b=YWT7cY8mjnGkOWfmQKgPnIgWiwlKxsIfMY5NpuF2/6phx72HQA2BEjcP6kU32o+WdS
-         dzE8bGNXf/DW/Q/lV4c5EjghFwwm5TeNeNPr2qvgXWX8S8bRPkhVjODmON3GHbmVadv/
-         gy2QJijAhsElLK63Mz26dIrN697Mtn3c0eNoUlxBLRq1a1KuSKzW/fZ1YCYuG6MRgFiV
-         S7yD3MRjS7BW19D0WsDk7pHv9lB+9/bZwVPFYbBT0kIZWX6zwO98HjxuP4kt+xv3toxX
-         H04F3EwaoNky3wtIiEl55kkKxQ9zLfMI9CvFCh+OS1XeR3VfUc3ccILJPo3YQ0B4spIc
-         Zm6Q==
-Received: by 10.112.87.225 with SMTP id bb1mr817655lbb.59.1331727168120; Wed,
- 14 Mar 2012 05:12:48 -0700 (PDT)
-Received: by 10.112.23.225 with HTTP; Wed, 14 Mar 2012 05:12:47 -0700 (PDT)
-In-Reply-To: <201203131627.30455.jnareb@gmail.com>
-X-Gm-Message-State: ALoCoQlwu8rD8uq+d6qpdVZJ1+IqAPbsYbqGUhYH+oP2/tKKFRJAfx01WYlrnneXmKIXX+exjvCf
+	id S1757629Ab2CNMOh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Mar 2012 08:14:37 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:55749 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754372Ab2CNMOh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2012 08:14:37 -0400
+Received: from zbyszek by kawka.in.waw.pl with local (Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1S7n6A-0007rW-Hi; Wed, 14 Mar 2012 13:14:34 +0100
+Content-Disposition: inline
+In-Reply-To: <7vobrzst7n.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193099>
 
-Would that deny non fast-forwards for all branches, though, or just
-selected ones?  We'd like to just to it for 2 of our branches.  We'd
-also like to explitly ALLOW fast-forwards to master, when we want to
-merge in from develop to master.
+On Tue, Mar 13, 2012 at 09:27:08PM -0700, Junio C Hamano wrote:
+> Christopher Tiwald <christiwald@gmail.com> writes:
+>  * I can see there are three kinds of advices, but I do not see why users
+>    need to acknowledge that they understand them one by one with separate
+>    advice configuration.  Isn't it better to have only one variable, "OK,
+>    I know how to deal with a failed push due to non-fast-forward"?
 
-A better description of what we want is to prevent 'rewriting of
-history' for some of our branches.
+Hi,
 
-Best regards,
-Jeremy Morton (Jez)
+I think that having three different config keys for the three
+different advices makes sense, because the advices will be displayed
+at different times. E.g. the user starts with the simplest one-branch
+workflow, triggers the first alternative, reads "pullBeforePush" and
+then disables the hint. Then the team upgrades the workflow to use
+several branches and the user triggers the second alternative. At this
+point, git should hint to "useUpstream". If the user disabled all the
+non-FF hints at the first advice, she would miss the second, different
+one, later.
 
-On Tue, Mar 13, 2012 at 4:27 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> On Thu, 8 Mar 2012, Jeremy Morton wrote:
->> On Thu, Mar 8, 2012 at 11:33 AM, Jakub Narebski <jnareb@gmail.com> wrote:
->
->> > You can always configure server to refuse forced pushes.
->>
->> We're using github, and as far as I'm aware, there's no way to
->> configure github to do that.
->
-> It would be nice if GitHub supported setting receive.denyNonFastForward
-> and receive.denyDeletes (the receive.*current* do not matter for GitHub).
-> Though I am not sure if it would not require changes to the custom Git
-> implementation they use...
->
-> --
-> Jakub Narebski
-> Poland
+> > diff --git a/Documentation/config.txt b/Documentation/config.txt
+> > index c081657..50d9249 100644
+> > --- a/Documentation/config.txt
+> > +++ b/Documentation/config.txt
+> > @@ -158,6 +158,21 @@ advice.*::
+> >  		Advice shown when you used linkgit:git-checkout[1] to
+> >  		move to the detach HEAD state, to instruct how to create
+> >  		a local branch after the fact.
+> > +	pullBeforePush::
+> > +		Advice shown when you ran linkgit:git-push[1] and pushed
+> > +		a non-fast-forward update to HEAD, instructing you to
+> > +		linkgit:git-pull[1] before pushing again.
+> > +	useUpstream::
+> > +		Advice to set 'push.default' to 'upstream' when you ran
+> > +		linkgit:git-push[1] and pushed 'matching refs' by default
+> > +		(i.e. you did not have any explicit refspec on the command
+> > +		line, and no 'push.default' configuration was set) and it
+> > +		resulted in a non-fast-forward error.
+> > +	checkoutPullPush::
+> > +		Advice shown when you ran linkgit:git-push[1] and pushed
+> > +		a non-fast-forward update to a non-HEAD branch, instructing
+> > +		you to checkout the branch and run linkgit:git-pull[1]
+> > +		before pushing again.
+> 
+> I would prefer to see these consolidated into a single advice.pushNonFF
+> variable, but I may be missing why it could be a good idea to allow them
+> turned off selectively.
+
+Zbyszek
