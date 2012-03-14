@@ -1,123 +1,88 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/3] Demonstrate a bug in --word-diff where
- diff.*.wordregex is "sticky"
-Date: Wed, 14 Mar 2012 14:38:45 -0700
-Message-ID: <7vhaxqoobe.fsf@alter.siamese.dyndns.org>
-References: <3bb99e938624ae674674b304c24c48b9dc05871b.1331749299.git.trast@student.ethz.ch> <7vsjhboujp.fsf@alter.siamese.dyndns.org> <4F60F67D.9050003@kdbg.org>
+Subject: Re: --progress for git submodule update?
+Date: Wed, 14 Mar 2012 14:45:05 -0700
+Message-ID: <7vd38eoo0u.fsf@alter.siamese.dyndns.org>
+References: <CAOVFbFiBOH2MyC3HUtf=hA_PssSRENW7uwpBVxh0TwnO7h90XA@mail.gmail.com>
+ <4F5D0FFD.1020509@web.de>
+ <CAOVFbFhMfpFa5=a0Z50H7nHdQFHn9Y4ApUnQJq6GCOFP+AKy5A@mail.gmail.com>
+ <4F60F4A6.1070507@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Mar 14 22:38:58 2012
+Cc: Chris Kees <cekees@gmail.com>, git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Mar 14 22:45:22 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7vuL-000078-FZ
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 22:38:57 +0100
+	id 1S7w0U-0005xP-VH
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 22:45:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761550Ab2CNViv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Mar 2012 17:38:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54702 "EHLO
+	id S932151Ab2CNVpO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Mar 2012 17:45:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57367 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761538Ab2CNViu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2012 17:38:50 -0400
+	id S1761503Ab2CNVpN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2012 17:45:13 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CE2C96A14;
-	Wed, 14 Mar 2012 17:38:48 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8654A6B96;
+	Wed, 14 Mar 2012 17:45:12 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kszi2r6uXuL3GS4/Rs/DU7WWfVk=; b=n77H0B
-	ylGjft0ez5jxe1yNojWFh9cydUvQwUZ6L4p6smyoGG9ZB7rXmSp+B1ONiTeZW5vH
-	/rREBKBR5VWsNS9lnYbh8cXKKtfZh9eqJCFNA2Htukp6zMr5GttA+WAkTSgRm6WB
-	eYw/JkZmRgcZ2XmLv4b3/N7Tzt65Nxt5bYwV4=
+	:content-type; s=sasl; bh=lgg4EHdVZgKrUT3zHj1+B0gvalE=; b=T/OMFb
+	OL+n1GO+ri+8T+sAHNb4kmXEC0kmMgBG1/u9n+7ZcJr+1a6Q91RXzFU2/Em7UqkS
+	zHIK7kDkaooGEOZJJvSuv09cDMOgtYKZLFaLuJAWatHsY6mJcTJDje7QmaUwg9aD
+	ShYLFsuQQs1kkvYsnM13H/Vskh7QsXRT2NtBM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IBPRAse32ePvVdkgIqfBUrElChZMvcJf
-	pwawhHdZQkxbAiQG4hDMbRvrdiAO8/77z9Xhn6lCchdGxHYtAbnjcxUB4D2MeQfq
-	zD4zGY2hsFlFX5sOc2QvK3jfcV8lkAu7+cmkKgnQVawD6Q0V8dfOuTQbWChW4rEe
-	QgPffE1P75c=
+	:content-type; q=dns; s=sasl; b=HbDDb4VtJvHdIgnWyhsC3UerQ14pvKYa
+	PBGxRXQOWixkLD2yTpq7ST2TIOvJOQsEWtn78i3sxCnNrhFarlwZOslFYaT13zZH
+	yWzoa7txLxZt+tvvgoVq5Nt+4MCYopEaQzZmfCSUwX4zei1GEhPLyMEpyu6VzSmq
+	jxVbtzYLexM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C47976A13;
-	Wed, 14 Mar 2012 17:38:48 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D1216B95;
+	Wed, 14 Mar 2012 17:45:12 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 448AB6A11; Wed, 14 Mar 2012
- 17:38:47 -0400 (EDT)
-In-Reply-To: <4F60F67D.9050003@kdbg.org> (Johannes Sixt's message of "Wed, 14
- Mar 2012 20:50:21 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E44036B91; Wed, 14 Mar 2012
+ 17:45:06 -0400 (EDT)
+In-Reply-To: <4F60F4A6.1070507@web.de> (Jens Lehmann's message of "Wed, 14
+ Mar 2012 20:42:30 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 14AF2CB4-6E1E-11E1-849A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F6F9B3F0-6E1E-11E1-A1F6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193165>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-> The test case applies a custom wordRegex to one file in a diff, and expects
-> that the default word splitting applies to the second file in the diff.
-> But the custom wordRegex is also incorrectly used for the second file.
+> Am 13.03.2012 03:17, schrieb Chris Kees:
+>> It's 'git submodule update --recursive' that is taking so long
+>> silently.  The problem is mainly on the first time. There are about 10
+>> submodules that together have taken more than 30 minutes. It's not
+>> really just the amount of data, I think there are also network traffic
+>> issues that slow things down on some systems.
 >
-> Helped-by: Thomas Rast <trast@student.ethz.ch>
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
-> Changes in this round, where I do not resend 2/3 and 3/3:
+> I suppose with "first time" you mean right after "git submodule init",
+> when the submodules have to be cloned initially? Thinking about that
+> again, you mentioned a buildbot doing all that. When the submodules
+> are updated from a script, no progress output is shown at all and only
+> the line "Cloning into 'xxx'..." will appear for each submodule, which
+> explains why you don't see output for quite some time.
 >
-> - Use test_unconfig.
-> - Use compare_diff_patch to check the result.
-> - Fix a broken && chain at the end of the last test.
-> - Name the files a.tex and z.tex as per your suggestion.
+> So I suspect increasing the timeout on your buildbot is the way to go,
+> as progress output is intended for humans.
 
-Thanks, but using a.tex and z.tex and marking only the former as tex
-does not change anything in the puzzlement I mentioned in my response.
+Considering that more often than not, people who run stuff from cronjob
+request us to be quiet when nothing wrong happens, I think that is a
+sane thing to suggest.
 
-Perhaps this on top of your patch?
+I do not mind "submodule $subcmd --progress" to pass "--progress" down to
+whatever underlying git commands it uses, or squelch "-q" that it uses
+when running them by default, though.
 
- t/t4034-diff-words.sh |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
-
-diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
-index 9e9643e..310ace1 100755
---- a/t/t4034-diff-words.sh
-+++ b/t/t4034-diff-words.sh
-@@ -355,18 +355,18 @@ test_expect_success 'word-diff with no newline at EOF' '
- 
- test_expect_success 'setup history with two files' '
- 	echo "a b; c" >a.tex &&
--	echo "a b; c" >z.tex &&
--	git add a.tex z.tex &&
-+	echo "a b; c" >z.txt &&
-+	git add a.tex z.txt &&
- 	git commit -minitial &&
- 
- 	# modify both
- 	echo "a bx; c" >a.tex &&
--	echo "a bx; c" >z.tex &&
-+	echo "a bx; c" >z.txt &&
- 	git commit -mmodified -a
- '
- 
- test_expect_failure 'wordRegex for the first file does not apply to the second' '
--	echo "a.tex diff=tex" >.gitattributes &&
-+	echo "*.tex diff=tex" >.gitattributes &&
- 	git config diff.tex.wordRegex "[a-z]+|." &&
- 	cat >expect <<-\EOF &&
- 		diff --git a/a.tex b/a.tex
-@@ -374,9 +374,9 @@ test_expect_failure 'wordRegex for the first file does not apply to the second'
- 		+++ b/a.tex
- 		@@ -1 +1 @@
- 		a [-b-]{+bx+}; c
--		diff --git a/z.tex b/z.tex
--		--- a/z.tex
--		+++ b/z.tex
-+		diff --git a/z.txt b/z.txt
-+		--- a/z.txt
-+		+++ b/z.txt
- 		@@ -1 +1 @@
- 		a [-b;-]{+bx;+} c
- 	EOF
--- 
-1.7.10.rc0.65.g3445e
+We may even want to make "git submodule init -q" to squelch the "Cloning
+into..." message, but that is a separate topic.
