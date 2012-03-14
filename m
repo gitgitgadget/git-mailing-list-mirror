@@ -1,114 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH jh/notes-merge-in-git-dir-worktree] fixup! t3310 on
- Windows
-Date: Wed, 14 Mar 2012 10:44:46 -0700
-Message-ID: <7vlin3qdpt.fsf@alter.siamese.dyndns.org>
-References: <1319438176-7304-3-git-send-email-pclouds@gmail.com>
- <1331563647-1909-1-git-send-email-johan@herland.net>
- <1331563647-1909-2-git-send-email-johan@herland.net>
- <4F60593A.5070106@viscovery.net>
- <CALKQrgdjYvkSBn8UORSsZecSVyhJbfU5tjU0hPJOYn1OMVxMyw@mail.gmail.com>
- <4F60882E.90303@viscovery.net>
- <CALKQrgdWZM959OyrEp+WCCehczZmMA3K8_RAcf23aAczKBCfvA@mail.gmail.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [RFC PATCH] push: start warning upcoming default change for push.default
+Date: Wed, 14 Mar 2012 20:47:23 +0300
+Message-ID: <CAHkcothjDBP+cyGRf--mNgwF5Sp2UiR3Gq1Vb-XwsKmMH_JCvA@mail.gmail.com>
+References: <vpqobs65gfc.fsf@bauges.imag.fr>
+	<1331281886-11667-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1331288715.21444.38.camel@beez.lab.cmartin.tk>
+	<4F5A4C45.7070406@xiplink.com>
+	<4F5AF1A8.4050604@alum.mit.edu>
+	<4F5E12A5.6030701@xiplink.com>
+	<vpqzkblixmb.fsf@bauges.imag.fr>
+	<20120312183725.GA2187@sigill.intra.peff.net>
+	<vpqy5r44zg7.fsf@bauges.imag.fr>
+	<CAHkcotg1FKxfMR4Fe9Xfo_i4nuxzXdfVWe80HZu0wQEkiXhhmA@mail.gmail.com>
+	<vpqhaxrzh2a.fsf@bauges.imag.fr>
+	<CAHkcotgMgqr29WEQfiH+89JVbTAAQyLwscXRtTyrf3JRxEuVbA@mail.gmail.com>
+	<vpqhaxrz1c6.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	david@tethera.net, pclouds@gmail.com
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Mar 14 18:44:58 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jeff King <peff@peff.net>, Marc Branchaud <marcnarc@xiplink.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	=?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
+	git@vger.kernel.org, gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Mar 14 18:47:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7sFq-00059T-TS
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 18:44:55 +0100
+	id 1S7sIN-00071D-Cx
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 18:47:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761194Ab2CNRou (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Mar 2012 13:44:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43642 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760995Ab2CNRot (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2012 13:44:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7AB486E96;
-	Wed, 14 Mar 2012 13:44:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=z9negj4SE7MDJsl1WWbIP3SfKNk=; b=BOze9N
-	u9vyH2RcmB57KHRomN2YVBf/EGpRqRpkD4iOooXURjPeUdiudCJjRkkD0HFC6RVa
-	I8OhLwdpZsK2NVxVny+PGbPVyIV0Gm6LUyRRkXJ7oxV1313MZOleeqgEP0SZOKKb
-	QTqkZvkPQ2g6k7jJ9K+NIQHK//bummJcNZfcE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pfvNsq+CLmIjpgQ2wiXKv+0Nwey3LyzA
-	UUpccTkAno/jV4stBPe7sQj2QuEReA1xdpcoqGYPOqU1A4OQLCqyi4D0v2jYYev7
-	LimKVHLC8ZHGjUdIJcXHAh2UIzTOzUnWE/759kM0UAQHd1lq/tNVavs474AlQZEQ
-	nZuVyMXgGXE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 71A986E95;
-	Wed, 14 Mar 2012 13:44:48 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 06C3E6E94; Wed, 14 Mar 2012
- 13:44:47 -0400 (EDT)
-In-Reply-To: <CALKQrgdWZM959OyrEp+WCCehczZmMA3K8_RAcf23aAczKBCfvA@mail.gmail.com> (Johan
- Herland's message of "Wed, 14 Mar 2012 13:56:44 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 64A31F3A-6DFD-11E1-A43F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1761306Ab2CNRr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Mar 2012 13:47:26 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:39548 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761133Ab2CNRrZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2012 13:47:25 -0400
+Received: by eaaq12 with SMTP id q12so1136457eaa.19
+        for <git@vger.kernel.org>; Wed, 14 Mar 2012 10:47:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=4H2zzVcmM8cYPtCDwzSM/E7s/y12/QMrctkSt5bZS3s=;
+        b=nnZqalpRXTwgO0jhU6480Vlq4vGkp7BezZQ6f+nVlxAWoRvlmWxgqaPxLUATBrOTIs
+         Rkjzr7s5iQHal3EOB0ioKTbylKjGLhRO5BBIMDVsPRIzJ0H0gvzKGUngZEecNg8WbsBN
+         /VWYw5Wv0P05Ys+7Xgf5u1O1kHAFrziF+afNJ5I4Ld/5YtfhqEHIo6aN28FJlHVJJ6ti
+         gjS8IhtJyRaIzEwxXS4oD74G58ds60qTM8Z3UnWRiN3JLvPIl56+Pfi0A3m80dB2uosm
+         c/5tgw9DZnUANMkm8X5IF00JLHs44+vu+2sBxXRJDIQ5KKEGwx9Py/8GyGv2153likJE
+         zbuA==
+Received: by 10.224.59.208 with SMTP id m16mr4148991qah.37.1331747243910; Wed,
+ 14 Mar 2012 10:47:23 -0700 (PDT)
+Received: by 10.229.135.130 with HTTP; Wed, 14 Mar 2012 10:47:23 -0700 (PDT)
+In-Reply-To: <vpqhaxrz1c6.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193139>
 
-Johan Herland <johan@herland.net> writes:
-
-> On Wed, Mar 14, 2012 at 12:59, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> ...
->> I doubt that the use-case that is tested here makes sense.
+On Wed, Mar 14, 2012 at 6:47 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Dmitry Potapov <dpotapov@gmail.com> writes:
 >
-> As David wrote, the use case is likely to pop up among regular users.
-> We can't simply ignore it.
+>> Not of course. I said above non-fast forward push should not be used by
+>> beginners.
 >
->> Or .git/NOTES_MERGE_WORKTREE should not be removed. Would it be an option
->> to clear it out only when it is needed, right before it is filled again?
->
-> Maybe, but then we wouldn't be able to warn or abort in the case where
-> there is a previous unfinished notes merge, and the user tries to
-> start a new notes merge. Instead, we'd silently overwrite the previous
-> unfinished notes merge...
+> Do you mean "beginners should not force non-fast forward push", or
+> "beginners should not use flow where push may be denied because of
+> non-fast forward"?
 
-We cannot simply ignore it.
+Of course, the former. I have never said that the centralized workflow
+should never been used. I have only said that it is not scalable and
+lead to problems in larger projects.
 
-You _could_ do is perhaps to do something like:
+> If the second, this implies that beginners should never have a shared
+> repository,
 
- - when you notice that you need to ask the user to hand-merge a temporary
-   file (i.e. when 'notes merge' is run), check if .git/N_M_W/done exists.
+Well, you can set up a shared repository where everyone has their own
+namespaces to push. I don't say that that it is better than having one
+public repository per user, but it may be easier to setup...
 
-    - If you see that marker file, remove it everything in the
-      directory, deposit the temporary file you want the user to edit,
-      and expect the user to later tell you that he is done by "notes
-      merge --commit";
+So it only implies that you cannot have a centralized workflow in this
+way.
 
-    - If you don't, the user didn't give you "notes merge --commit"
-      during the earlier run.  Tell him to first abandon the previous
-      round with "notes merge --abandon" or something.
+> either shared for one user and multiple machines, or shared
+> between developers?
 
- - "notes merge --commit" will just mark .git/N_M_W/ with "done".
+I am not sure that I understood this part.
 
- - "notes merge --abandon" will remove .git/N_M_W/.
+> If you mean that shared repositories are too complex for beginners, my
+> experience is exactly the opposite.
 
-but it only supports the simplest "Run 'notes merge', cd to .git/N_M_W,
-edit all, run 'notes merge --commit'" workflow.  If the user decides to
-abandon instead of commit, he will be inside the problematic directory, so
-trying to be more elaborate like the above does not really solve anything
-fundamental.  The user has to come out of that temporary directory
-eventually anyway.
+It is not too complex but it is wrong for any more or less serious project.
+Git is flexible enough to cover different workflows, including some variant
+of a centralized workflow, but git was not designed with the centralized
+workflow in mind. So some trade-offs are different in it than in VCS that
+were designed primary (if not only) to be used with a centralized workflow.
+IMHO if you teach git then you should teach a distributed workflow,
+because it is the workflow where advantages of git is most obvious...
 
-So I think the following is not just an improvement over the current code,
-but probably an acceptable solution, given its simplicity.
-
-> Maybe it's better to simply detect if cwd is inside
-> .git/NOTES_MERGE_WORKTREE, and then abort, telling the user to chdir
-> out before trying again?
+Dmitry
