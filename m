@@ -1,110 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC PATCH] push: start warning upcoming default change for
- push.default
-Date: Wed, 14 Mar 2012 10:00:12 -0400
-Message-ID: <20120314140012.GA2651@sigill.intra.peff.net>
-References: <vpqobs65gfc.fsf@bauges.imag.fr>
- <1331281886-11667-1-git-send-email-Matthieu.Moy@imag.fr>
- <1331288715.21444.38.camel@beez.lab.cmartin.tk>
- <4F5A4C45.7070406@xiplink.com>
- <4F5AF1A8.4050604@alum.mit.edu>
- <4F5E12A5.6030701@xiplink.com>
- <vpqzkblixmb.fsf@bauges.imag.fr>
- <20120312183725.GA2187@sigill.intra.peff.net>
- <4F605DD8.9040504@alum.mit.edu>
+From: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+Subject: Re: [PATCH 1/2] t0303: set reason for skipping tests
+Date: Wed, 14 Mar 2012 15:14:01 +0100
+Message-ID: <20120314141401.GC28595@in.waw.pl>
+References: <1331553907-19576-1-git-send-email-zbyszek@in.waw.pl>
+ <1331553907-19576-2-git-send-email-zbyszek@in.waw.pl>
+ <20120312123031.GA14456@sigill.intra.peff.net>
+ <4F5E65AE.8050401@in.waw.pl>
+ <20120313215331.GC27752@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	git@vger.kernel.org, gitster@pobox.com
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Mar 14 15:00:22 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 14 15:14:27 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7okX-0004nr-Vg
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 15:00:22 +0100
+	id 1S7oy7-0007Gn-Tk
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 15:14:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753151Ab2CNOAQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Mar 2012 10:00:16 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49156
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752638Ab2CNOAP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2012 10:00:15 -0400
-Received: (qmail 9828 invoked by uid 107); 14 Mar 2012 14:00:26 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 Mar 2012 10:00:26 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Mar 2012 10:00:12 -0400
+	id S1753200Ab2CNOOS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Mar 2012 10:14:18 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:55760 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932485Ab2CNOOD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2012 10:14:03 -0400
+Received: from zbyszek by kawka.in.waw.pl with local (Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1S7oxl-0008LB-H6; Wed, 14 Mar 2012 15:14:01 +0100
 Content-Disposition: inline
-In-Reply-To: <4F605DD8.9040504@alum.mit.edu>
+In-Reply-To: <20120313215331.GC27752@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193108>
 
-On Wed, Mar 14, 2012 at 09:59:04AM +0100, Michael Haggerty wrote:
+On Tue, Mar 13, 2012 at 05:53:32PM -0400, Jeff King wrote:
+> The reason is that the individual tests do not verify all of the
+> preconditions themselves, but rather build on each other.
+Right. I added a note based on this sentence in the test description.
 
-> > Ending that confusion is one of the best reasons to switch the default,
-> > IMHO, but I don't think it argues for "current" versus "upstream", as
-> > they both fix it (but Michael's matching-current hybrid would not, so I
-> > agree it is less appealing).
+> In an ideal world, each test snippet would be totally independent and
+> check its preconditions. That would give us an accurate count of how
+> many tests actually passed or failed. But fundamentally we only care
+> about "did they all succeed or not?", which the current script does tell
+> us (either test 2 fails, or if it succeeds, then we have checked the
+> precondition for test 4). And the tests end up way shorter, because we
+> don't repeat the preconditions over and over.
 > 
-> In the case of my proposed matching-current hybrid, the error message
-> for the failing push would make it pretty obvious what went wrong and
-> how to fix it; something like:
+> If you want to try to make the tests more robust, you can (for example,
+> you can tighten the precondition on 4 to check "does it give the right
+> answer with the right protocol" instead of just "does it ever give us
+> the right answer"). But personally, I'm not sure it's worth that much
+> effort.
+Yeah.
+
+> > >Should they actually say "# SKIP ..." to tell prove what's going on? I
+> > >don't know very much about TAP.
+> > # SKIP is used when skipping individual tests (IIUC), but when we
+> > skip a group of tests, we simply jump over them and this message is
+> > purely informative output that is not interpreted by the harness.
 > 
->     $ git push
->     The remote repository "git.example.com:myproject" does not yet
->     contain a branch called "master".  If you would like to create one
->     now, type
-> 
->         git push origin master
-> 
->     For other alternatives, please see gitworkflows(7).
-> 
-> This error message would appear *whenever* the matching-current hybrid
-> policy caused the push to fail.  Since this problem occurs only if (1)
-> the upstream repository is empty and (2) the user hasn't configured a
-> more liberal global push.default, and since it is blindingly obvious
-> what to do to fix the problem, it doesn't seem especially onerous.
+> Just looking at test-lib.sh, it seems like we output "# SKIP" when we do
+> skip_all. But I think you would have to give a count of which tests you
+> skipped (e.g., try "./t5541-http-push.sh" to see its TAP output). Which
+> means when skipping a subset, you'd have to deal with test numbering,
+> which is a pain. So it's probably not worth worrying about.
+Skipped test numbering could done automatically by using test prereqs,
+but (after actually doing that and discarding) I agree that it isn't
+worth the trouble.
 
-Thanks for the clarification. That does go a long way towards dealing
-with the confusion. I think I'd be OK with that, though I am on the
-fence about whether just pushing (i.e., "current") would be better or
-worse.
 
-> 3. In the branching configurations for which all workflows agree about
->    what "git push" should do, then that is what "git push" should do by
->    default.  When they do not agree, then "git push" should do nothing,
->    give an informative error message, and leave it to the user to
->    decide.
-> [...]
-> Isn't it obvious?: The fact that we cannot even agree among ourselves
-> what "git push" should do in all cases *proves* that we are trying to be
-> too ambitious with DWIM.  "git push" must therefore become more
-> deferential when the obvious thing to do is unclear, especially given
-> that mistakes (due to the very nature of "git push") often have
-> embarrassing and publicly visible effects.
+Jonathan Nieder wrote:
+> Nice idea, but shouldn't this description be in test_description so I
+> can view it by running "sh t0303-credential-external.sh --help"?
+Done.
 
-I find your approach interesting, but it doesn't deal with one problem:
-user perception when git fails to do something out of the box. I am
-worried that the rule above means that push will end up defaulting to
-nothing. It is one thing to say "there are so many workflows, and they
-do not agree, so we should be safe and do nothing"; that makes sense to
-an advanced user who thinks about things like different workflows. But
-to a brand-new git user who is running "push" in their first session, it
-makes git seem very unfriendly.
+Updated patches follow.
 
-And that's why I think either "current" or "current-if-matching" as you
-describe is a sane default. I don't think it matches with what the
-"upstream" people want, and so does not meet your criteria above as a
-default behavior. But it does something sensible and not very dangerous
-or embarrassing, and it means git will do something that is probably
-useful out of the box for a new user.
+(This time I tested with GIT_TEST_CREDENTIAL_HELPER=cache
+GIT_TEST_CREDENTIAL_HELPER_TIMEOUT="cache --timeout=1,3" and things
+seem to work as expected.)
 
--Peff
+Zbyszek
