@@ -1,141 +1,86 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH jh/notes-merge-in-git-dir-worktree] fixup! t3310 on Windows
-Date: Wed, 14 Mar 2012 13:56:44 +0100
-Message-ID: <CALKQrgdWZM959OyrEp+WCCehczZmMA3K8_RAcf23aAczKBCfvA@mail.gmail.com>
-References: <1319438176-7304-3-git-send-email-pclouds@gmail.com>
-	<1331563647-1909-1-git-send-email-johan@herland.net>
-	<1331563647-1909-2-git-send-email-johan@herland.net>
-	<4F60593A.5070106@viscovery.net>
-	<CALKQrgdjYvkSBn8UORSsZecSVyhJbfU5tjU0hPJOYn1OMVxMyw@mail.gmail.com>
-	<4F60882E.90303@viscovery.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] push: Provide situational hints for non-fast-forward errors
+Date: Wed, 14 Mar 2012 14:00:38 +0100
+Message-ID: <vpqobrzgww9.fsf@bauges.imag.fr>
+References: <20120313232256.GA49626@democracyinaction.org>
+	<7vobrzst7n.fsf@alter.siamese.dyndns.org>
+	<20120314121434.GB28595@in.waw.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com, david@tethera.net,
-	pclouds@gmail.com
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Mar 14 13:56:56 2012
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christopher Tiwald <christiwald@gmail.com>,
+	git@vger.kernel.org, peff@peff.net
+To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+X-From: git-owner@vger.kernel.org Wed Mar 14 14:02:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7nl8-0007KU-HY
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 13:56:54 +0100
+	id 1S7nqI-00039h-HL
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 14:02:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755121Ab2CNM4t convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Mar 2012 08:56:49 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:60974 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753635Ab2CNM4t convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Mar 2012 08:56:49 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1S7nl1-0000R4-Fr
-	for git@vger.kernel.org; Wed, 14 Mar 2012 13:56:47 +0100
-Received: by eaaq12 with SMTP id q12so804594eaa.19
-        for <git@vger.kernel.org>; Wed, 14 Mar 2012 05:56:45 -0700 (PDT)
-Received: by 10.50.85.131 with SMTP id h3mr11500963igz.39.1331729804538; Wed,
- 14 Mar 2012 05:56:44 -0700 (PDT)
-Received: by 10.43.52.6 with HTTP; Wed, 14 Mar 2012 05:56:44 -0700 (PDT)
-In-Reply-To: <4F60882E.90303@viscovery.net>
+	id S1757304Ab2CNNBp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Mar 2012 09:01:45 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:52910 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754863Ab2CNNBo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Mar 2012 09:01:44 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q2ECuYhs006684
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 14 Mar 2012 13:56:34 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1S7nol-0001LP-Fp; Wed, 14 Mar 2012 14:00:39 +0100
+In-Reply-To: <20120314121434.GB28595@in.waw.pl> ("Zbigniew
+	\=\?utf-8\?Q\?J\=C4\=99drzejewski-Szmek\=22's\?\= message of "Wed, 14 Mar 2012
+ 13:14:34 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 14 Mar 2012 13:56:35 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q2ECuYhs006684
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1332334597.65222@dW6T8ZOJjNcHmQpQcMqArw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193103>
 
-On Wed, Mar 14, 2012 at 12:59, Johannes Sixt <j.sixt@viscovery.net> wro=
-te:
-> Am 3/14/2012 12:39, schrieb Johan Herland:
->> On Wed, Mar 14, 2012 at 09:39, Johannes Sixt <j.sixt@viscovery.net> =
-wrote:
->>> From: Johannes Sixt <j6t@kdbg.org>
->>>
->>> On Windows, a directory cannot be removed while it is the working
->>> directory of a process. "git notes merge --commit" attempts to remo=
-ve
->>> .git/NOTES_MERGE_WORKTREE, but during the test the directory was st=
-ill
->>> "occupied" by the shell. Move the command out of the subshell to re=
-lease
->>> the directory.
->>>
->>> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
->>> ---
->>> =C2=A0Feel free to squash this into 1/2.
->>>
->>> =C2=A0t/t3310-notes-merge-manual-resolve.sh | =C2=A0 =C2=A04 ++--
->>> =C2=A01 file changed, 2 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-=
-merge-manual-resolve.sh
->>> index d6d6ac6..6351877 100755
->>> --- a/t/t3310-notes-merge-manual-resolve.sh
->>> +++ b/t/t3310-notes-merge-manual-resolve.sh
->>> @@ -565,9 +565,9 @@ test_expect_success 'switch cwd before committi=
-ng notes merge' '
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0(
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cd .git/NOTE=
-S_MERGE_WORKTREE &&
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0echo "foo" >=
- $(git rev-parse HEAD) &&
->>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo "bar" >> $(=
-git rev-parse HEAD) &&
->>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git notes merge =
---commit
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo "bar" >> $(=
-git rev-parse HEAD)
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0) &&
->>> + =C2=A0 =C2=A0 =C2=A0 git notes merge --commit &&
->>
->> NAK. This defeats the entire purpose of this test. The bug that we'r=
-e
->> trying to solve is exactly the situation where the user has changed
->> into the .git/NOTES_MERGE_WORKTREE directory, and invokes 'git notes
->> merge --commit' from within. We need to find a different solution fo=
-r
->> this on Windows. Maybe we should just abort 'git notes merge
->> --commit/--abort' if the current directory is within
->> .git/NOTES_MERGE_WORKTREE (and we're on Windows)?
->
-> Isn't this an indication that something *VERY* wrong is happening? Ho=
-w do
-> you explain to POSIX people that you have just pulled the rug unter t=
-heir
-> feet?
->
-> $ git notes merge --commit
-> $ git notes
-> fatal: Unable to read current working directory: No such file or dire=
-ctory
+Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
 
-True.
+> I think that having three different config keys for the three
+> different advices makes sense, because the advices will be displayed
+> at different times.
 
-> I doubt that the use-case that is tested here makes sense.
+I don't think it really makes sense to be such fine-grained. We already
+have 6 different advices, so an advance user who do not want them need
+to set these 6 variables. I think we want to keep this number relativel=
+y
+low.
 
-As David wrote, the use case is likely to pop up among regular users.
-We can't simply ignore it.
+The advice messages do not point explicitely to the way to disable them=
+,
+so users who know how to set advice.* are users who know a little about
+configuration files, and who read the docs. Instead of having too
+fine-grained configuration variables, we can have a better doc,
+explaining shortly the 3 possible cases under advice.nonfastforward in
+config.txt. The user who disable the advice can read the doc (I usually
+think that "users don't read documentation" is a better assumption, but
+since the user knows about the name of the variable, it is OK here).
 
-> Or .git/NOTES_MERGE_WORKTREE should not be removed. Would it be an op=
-tion
-> to clear it out only when it is needed, right before it is filled aga=
-in?
-
-Maybe, but then we wouldn't be able to warn or abort in the case where
-there is a previous unfinished notes merge, and the user tries to
-start a new notes merge. Instead, we'd silently overwrite the previous
-unfinished notes merge...
-
-Maybe it's better to simply detect if cwd is inside
-=2Egit/NOTES_MERGE_WORKTREE, and then abort, telling the user to chdir
-out before trying again?
-
-
-=2E..Johan
+Also, if I read correctly the patch, the old variable is left in the do=
+c
+and in advice.{c,h}, but is no longer used. This means old-timers who
+have set it will see the message poping-up again after they upgrade,
+which I think is inconveinient for them.
 
 --=20
-Johan Herland, <johan@herland.net>
-www.herland.net
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
