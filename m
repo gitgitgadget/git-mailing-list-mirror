@@ -1,75 +1,76 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH jh/notes-merge-in-git-dir-worktree] fixup! t3310 on Windows
-Date: Wed, 14 Mar 2012 09:39:22 +0100
-Message-ID: <4F60593A.5070106@viscovery.net>
-References: <1319438176-7304-3-git-send-email-pclouds@gmail.com> <1331563647-1909-1-git-send-email-johan@herland.net> <1331563647-1909-2-git-send-email-johan@herland.net>
+From: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
+Subject: Re: [PATCH 2/3] http: try standard proxy env vars when http.proxy
+ config option is not set
+Date: Wed, 14 Mar 2012 10:54:49 +0100
+Message-ID: <4F606AE9.70608@seap.minhap.es>
+References: <4F4CCE8A.4010800@seap.minhap.es><m3pqcjt6s2.fsf@carbon.jhcloos.org> <7v4ntvx87v.fsf@alter.siamese.dyndns.org><4F5F1FEA.8020103@seap.minhap.es> <7vhaxrsssm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com, david@tethera.net,
-	pclouds@gmail.com
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Mar 14 09:39:42 2012
+Cc: James Cloos <cloos@jhcloos.com>, git@vger.kernel.org,
+	peff@peff.net, sam.vilain@catalyst.net.nz, sam@vilain.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 14 09:57:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7jk9-0007me-As
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 09:39:37 +0100
+	id 1S7k1A-00048g-IV
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 09:57:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932372Ab2CNIjb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Mar 2012 04:39:31 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:35811 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751907Ab2CNIj2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2012 04:39:28 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1S7jjv-0004ZO-98; Wed, 14 Mar 2012 09:39:23 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id EC6541660F;
-	Wed, 14 Mar 2012 09:39:22 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <1331563647-1909-2-git-send-email-johan@herland.net>
-X-Spam-Score: -1.4 (-)
+	id S932375Ab2CNI5G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Mar 2012 04:57:06 -0400
+Received: from luthien2.map.es ([82.150.0.102]:59953 "EHLO luthien2.map.es"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759827Ab2CNI5D (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2012 04:57:03 -0400
+Received: from correo.map.es (unknown [10.1.24.76])
+	by luthien2.map.es (Postfix) with ESMTP id 6214824EDF;
+	Wed, 14 Mar 2012 09:56:04 +0100 (CET)
+Received: from [10.47.128.147] (unknown [10.1.29.55])
+	by correo.map.es (Postfix) with ESMTP id 81B4C2C51E;
+	Wed, 14 Mar 2012 09:55:55 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0.1) Gecko/20120216 Thunderbird/10.0.1
+In-Reply-To: <7vhaxrsssm.fsf@alter.siamese.dyndns.org>
+X-map-MapScanner: Libre de virus, Libre de virus
+X-Spam-Status: No, No
+X-map-MapScanner-Information: 
+X-map-MapScanner-ID: 6214824EDF.D868E
+X-map-MapScanner-From: nelsonjesus.benitez@seap.minhap.es
+X-map-MailScanner-Watermark: 1332320165.05987@iia+MCYuWajvoNizP/si+w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193087>
 
-From: Johannes Sixt <j6t@kdbg.org>
+On 03/14/2012 05:36 AM, Junio C Hamano wrote:
+> Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es> writes:
+> 
+>> On 03/11/2012 08:12 PM, Junio C Hamano wrote:
+>>> James Cloos <cloos@jhcloos.com> writes:
+>>>
+>>>> Please include a way, eg via ~/.gitconfig, to ignore any http_proxy in
+>>>> the environment and connect directly.
+>>>
+>>> Hrm.
+>>>
+>>> I think without this patch series, the "NO_PROXY" environment
+>>> variable is honored by the curl library when it uses http_proxy
+>>> to make the decision. If this patch (or a future reroll of it) fails
+>>> to do the same, it would be a regression.
+>>>
+>>> Nelson, do you agree?
+>>
+>> I agree, so I would need to handle $no_proxy in the patch-set, will look
+>> into that.
+> 
+> Are you sure $no_proxy is spelled in lowercase?  man curl(1) seems to
+> indicate otherwise.
 
-On Windows, a directory cannot be removed while it is the working
-directory of a process. "git notes merge --commit" attempts to remove
-.git/NOTES_MERGE_WORKTREE, but during the test the directory was still
-"occupied" by the shell. Move the command out of the subshell to release
-the directory.
+Instead here[1] in section "Environment Variables" it's spelled lowercase,
+and given that cURL reads $http_proxy only in lowercase I think it does
+the same for $no_proxy.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- Feel free to squash this into 1/2.
-
- t/t3310-notes-merge-manual-resolve.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merge-manual-resolve.sh
-index d6d6ac6..6351877 100755
---- a/t/t3310-notes-merge-manual-resolve.sh
-+++ b/t/t3310-notes-merge-manual-resolve.sh
-@@ -565,9 +565,9 @@ test_expect_success 'switch cwd before committing notes merge' '
- 	(
- 		cd .git/NOTES_MERGE_WORKTREE &&
- 		echo "foo" > $(git rev-parse HEAD) &&
--		echo "bar" >> $(git rev-parse HEAD) &&
--		git notes merge --commit
-+		echo "bar" >> $(git rev-parse HEAD)
- 	) &&
-+	git notes merge --commit &&
- 	git notes show HEAD > actual_notes &&
- 	test_cmp expect_notes actual_notes
- '
--- 
-1.7.10.rc0.1198.g85187
+[1] http://curl.haxx.se/libcurl/c/libcurl-tutorial.html
