@@ -1,87 +1,57 @@
-From: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-Subject: Re: [PATCH] push: Provide situational hints for non-fast-forward
- errors
-Date: Wed, 14 Mar 2012 13:14:34 +0100
-Message-ID: <20120314121434.GB28595@in.waw.pl>
-References: <20120313232256.GA49626@democracyinaction.org>
- <7vobrzst7n.fsf@alter.siamese.dyndns.org>
+From: David Bremner <david@tethera.net>
+Subject: Re: [PATCH jh/notes-merge-in-git-dir-worktree] fixup! t3310 on Windows
+Date: Wed, 14 Mar 2012 09:20:11 -0300
+Message-ID: <87fwdbnzlw.fsf@zancas.localnet>
+References: <1319438176-7304-3-git-send-email-pclouds@gmail.com> <1331563647-1909-1-git-send-email-johan@herland.net> <1331563647-1909-2-git-send-email-johan@herland.net> <4F60593A.5070106@viscovery.net> <CALKQrgdjYvkSBn8UORSsZecSVyhJbfU5tjU0hPJOYn1OMVxMyw@mail.gmail.com> <4F60882E.90303@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, peff@peff.net
-To: Junio C Hamano <gitster@pobox.com>,
-	Christopher Tiwald <christiwald@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 14 13:14:48 2012
+Cc: git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com
+To: Johannes Sixt <j.sixt@viscovery.net>,
+	Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Mar 14 13:20:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7n6H-0000np-Qr
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 13:14:42 +0100
+	id 1S7nCI-0005it-So
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 13:20:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757629Ab2CNMOh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Mar 2012 08:14:37 -0400
-Received: from kawka.in.waw.pl ([178.63.212.103]:55749 "EHLO kawka.in.waw.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754372Ab2CNMOh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2012 08:14:37 -0400
-Received: from zbyszek by kawka.in.waw.pl with local (Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1S7n6A-0007rW-Hi; Wed, 14 Mar 2012 13:14:34 +0100
-Content-Disposition: inline
-In-Reply-To: <7vobrzst7n.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1758969Ab2CNMUY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Mar 2012 08:20:24 -0400
+Received: from tesseract.cs.unb.ca ([131.202.240.238]:36908 "EHLO
+	tesseract.cs.unb.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755595Ab2CNMUY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2012 08:20:24 -0400
+Received: from fctnnbsc30w-142166230117.dhcp-dynamic.fibreop.nb.bellaliant.net ([142.166.230.117] helo=zancas.localnet)
+	by tesseract.cs.unb.ca with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <bremner@unb.ca>)
+	id 1S7nBh-0002vt-66; Wed, 14 Mar 2012 09:20:17 -0300
+Received: from bremner by zancas.localnet with local (Exim 4.77)
+	(envelope-from <bremner@unb.ca>)
+	id 1S7nBb-0007xO-TW; Wed, 14 Mar 2012 09:20:11 -0300
+In-Reply-To: <4F60882E.90303@viscovery.net>
+User-Agent: Notmuch/0.12~rc1 (http://notmuchmail.org) Emacs/23.3.1 (x86_64-pc-linux-gnu)
+X-Spam-Score: -1.0
+X-Spam_bar: -
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193100>
 
-On Tue, Mar 13, 2012 at 09:27:08PM -0700, Junio C Hamano wrote:
-> Christopher Tiwald <christiwald@gmail.com> writes:
->  * I can see there are three kinds of advices, but I do not see why users
->    need to acknowledge that they understand them one by one with separate
->    advice configuration.  Isn't it better to have only one variable, "OK,
->    I know how to deal with a failed push due to non-fast-forward"?
 
-Hi,
+> I doubt that the use-case that is tested here makes sense.
 
-I think that having three different config keys for the three
-different advices makes sense, because the advices will be displayed
-at different times. E.g. the user starts with the simplest one-branch
-workflow, triggers the first alternative, reads "pullBeforePush" and
-then disables the hint. Then the team upgrades the workflow to use
-several branches and the user triggers the second alternative. At this
-point, git should hint to "useUpstream". If the user disabled all the
-non-FF hints at the first advice, she would miss the second, different
-one, later.
+To me, the obvious workflow to resolve notes conflicts is is chdir into
+this directory, edit files, and then call git notes merge --commit. The
+(implicit) requirement that one cannot call commit from within the
+directory you edited files was quite surprising to me. So in my opinion
+the use case does make sense, which is why I submitted the bug in the
+first place.
 
-> > diff --git a/Documentation/config.txt b/Documentation/config.txt
-> > index c081657..50d9249 100644
-> > --- a/Documentation/config.txt
-> > +++ b/Documentation/config.txt
-> > @@ -158,6 +158,21 @@ advice.*::
-> >  		Advice shown when you used linkgit:git-checkout[1] to
-> >  		move to the detach HEAD state, to instruct how to create
-> >  		a local branch after the fact.
-> > +	pullBeforePush::
-> > +		Advice shown when you ran linkgit:git-push[1] and pushed
-> > +		a non-fast-forward update to HEAD, instructing you to
-> > +		linkgit:git-pull[1] before pushing again.
-> > +	useUpstream::
-> > +		Advice to set 'push.default' to 'upstream' when you ran
-> > +		linkgit:git-push[1] and pushed 'matching refs' by default
-> > +		(i.e. you did not have any explicit refspec on the command
-> > +		line, and no 'push.default' configuration was set) and it
-> > +		resulted in a non-fast-forward error.
-> > +	checkoutPullPush::
-> > +		Advice shown when you ran linkgit:git-push[1] and pushed
-> > +		a non-fast-forward update to a non-HEAD branch, instructing
-> > +		you to checkout the branch and run linkgit:git-pull[1]
-> > +		before pushing again.
-> 
-> I would prefer to see these consolidated into a single advice.pushNonFF
-> variable, but I may be missing why it could be a good idea to allow them
-> turned off selectively.
+In any case, it should not fail silently, whether or not one is required
+to chdir back to the worktree before calling git notes merge --commit.
 
-Zbyszek
+d
