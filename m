@@ -1,76 +1,138 @@
-From: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
-Subject: Re: [PATCH 2/3] http: try standard proxy env vars when http.proxy
- config option is not set
-Date: Wed, 14 Mar 2012 10:54:49 +0100
-Message-ID: <4F606AE9.70608@seap.minhap.es>
-References: <4F4CCE8A.4010800@seap.minhap.es><m3pqcjt6s2.fsf@carbon.jhcloos.org> <7v4ntvx87v.fsf@alter.siamese.dyndns.org><4F5F1FEA.8020103@seap.minhap.es> <7vhaxrsssm.fsf@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [RFC PATCH] push: start warning upcoming default change for push.default
+Date: Wed, 14 Mar 2012 09:59:04 +0100
+Message-ID: <4F605DD8.9040504@alum.mit.edu>
+References: <vpqobs65gfc.fsf@bauges.imag.fr> <1331281886-11667-1-git-send-email-Matthieu.Moy@imag.fr> <1331288715.21444.38.camel@beez.lab.cmartin.tk> <4F5A4C45.7070406@xiplink.com> <4F5AF1A8.4050604@alum.mit.edu> <4F5E12A5.6030701@xiplink.com> <vpqzkblixmb.fsf@bauges.imag.fr> <20120312183725.GA2187@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: James Cloos <cloos@jhcloos.com>, git@vger.kernel.org,
-	peff@peff.net, sam.vilain@catalyst.net.nz, sam@vilain.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 14 09:57:13 2012
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	=?UTF-8?B?Q2FybG9zIE1hcnTDrW4gTmlldG8=?= <cmn@elego.de>,
+	git@vger.kernel.org, gitster@pobox.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 14 09:59:46 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7k1A-00048g-IV
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 09:57:12 +0100
+	id 1S7k3d-0005rL-Fv
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 09:59:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932375Ab2CNI5G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Mar 2012 04:57:06 -0400
-Received: from luthien2.map.es ([82.150.0.102]:59953 "EHLO luthien2.map.es"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759827Ab2CNI5D (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2012 04:57:03 -0400
-Received: from correo.map.es (unknown [10.1.24.76])
-	by luthien2.map.es (Postfix) with ESMTP id 6214824EDF;
-	Wed, 14 Mar 2012 09:56:04 +0100 (CET)
-Received: from [10.47.128.147] (unknown [10.1.29.55])
-	by correo.map.es (Postfix) with ESMTP id 81B4C2C51E;
-	Wed, 14 Mar 2012 09:55:55 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:10.0.1) Gecko/20120216 Thunderbird/10.0.1
-In-Reply-To: <7vhaxrsssm.fsf@alter.siamese.dyndns.org>
-X-map-MapScanner: Libre de virus, Libre de virus
-X-Spam-Status: No, No
-X-map-MapScanner-Information: 
-X-map-MapScanner-ID: 6214824EDF.D868E
-X-map-MapScanner-From: nelsonjesus.benitez@seap.minhap.es
-X-map-MailScanner-Watermark: 1332320165.05987@iia+MCYuWajvoNizP/si+w
+	id S1030436Ab2CNI7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Mar 2012 04:59:40 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:47800 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760088Ab2CNI7g (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2012 04:59:36 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id q2E8x4RF008302
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 14 Mar 2012 09:59:05 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.27) Gecko/20120216 Lightning/1.0b2 Thunderbird/3.1.19
+In-Reply-To: <20120312183725.GA2187@sigill.intra.peff.net>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193088>
 
-On 03/14/2012 05:36 AM, Junio C Hamano wrote:
-> Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es> writes:
+On 03/12/2012 07:37 PM, Jeff King wrote:
+> On Mon, Mar 12, 2012 at 05:37:32PM +0100, Matthieu Moy wrote:
+>> * For newbies, the sequence "create an empty repository, clone it,
+>>   commit and push" works like a charm with either 'upstream' or
+>>   'current'. Today, the first push to an empty repository requires
+>>   either saying "git push origin master" or "git push --all", both of
+>>   which sound like black magic to the poor user who did not yet learn
+>>   what 'origin' is and what a branch is.
 > 
->> On 03/11/2012 08:12 PM, Junio C Hamano wrote:
->>> James Cloos <cloos@jhcloos.com> writes:
->>>
->>>> Please include a way, eg via ~/.gitconfig, to ignore any http_proxy in
->>>> the environment and connect directly.
->>>
->>> Hrm.
->>>
->>> I think without this patch series, the "NO_PROXY" environment
->>> variable is honored by the curl library when it uses http_proxy
->>> to make the decision. If this patch (or a future reroll of it) fails
->>> to do the same, it would be a regression.
->>>
->>> Nelson, do you agree?
->>
->> I agree, so I would need to handle $no_proxy in the patch-set, will look
->> into that.
-> 
-> Are you sure $no_proxy is spelled in lowercase?  man curl(1) seems to
-> indicate otherwise.
+> Ending that confusion is one of the best reasons to switch the default,
+> IMHO, but I don't think it argues for "current" versus "upstream", as
+> they both fix it (but Michael's matching-current hybrid would not, so I
+> agree it is less appealing).
 
-Instead here[1] in section "Environment Variables" it's spelled lowercase,
-and given that cURL reads $http_proxy only in lowercase I think it does
-the same for $no_proxy.
+In the case of my proposed matching-current hybrid, the error message
+for the failing push would make it pretty obvious what went wrong and
+how to fix it; something like:
 
-[1] http://curl.haxx.se/libcurl/c/libcurl-tutorial.html
+    $ git push
+    The remote repository "git.example.com:myproject" does not yet
+    contain a branch called "master".  If you would like to create one
+    now, type
+
+        git push origin master
+
+    For other alternatives, please see gitworkflows(7).
+
+This error message would appear *whenever* the matching-current hybrid
+policy caused the push to fail.  Since this problem occurs only if (1)
+the upstream repository is empty and (2) the user hasn't configured a
+more liberal global push.default, and since it is blindingly obvious
+what to do to fix the problem, it doesn't seem especially onerous.
+
+(One could even create a special-case to allow such a push when the
+upstream repository is empty, but I don't think the gain in convenience
+is worth the loss of consistency.)
+
+> So far a lot of the discussion has focused on "what is the most sensible
+> default for the most number of people". But I wonder if a better
+> question is "what is the default that is the least likely to do
+> something dangerous and embarrassing". People who use git enough to say
+> "wow, I don't like this default for my workflow" are probably at the
+> point that they can configure push.default themselves.
+
+I agree entirely.  And here is an algorithm for deciding what the
+default should be:
+
+1. Make a list of branch configurations that can be distinguished by
+   git, which would be something like all combinations of
+
+   * remote has a branch with the same name as the current branch?
+     * no
+     * yes, and remote branch could be fast-forwarded to local state
+     * yes, but remote branch cannot be fast-forwarded to local state
+
+   * local branch has known upstream branch on remote?
+     * no
+     * yes, and remote upstream branch could be fast-forwarded to
+       the state of the current local branch
+     * yes, but remote upstream branch cannot be fast-forwarded to
+       the state of the current local branch
+
+2. In each of these situations, decide what "git push" should do in
+   each of the common workflows.
+
+3. In the branching configurations for which all workflows agree about
+   what "git push" should do, then that is what "git push" should do by
+   default.  When they do not agree, then "git push" should do nothing,
+   give an informative error message, and leave it to the user to
+   decide.  If all workflows agree on a safe subset of what "git push"
+   should do (for example, "matching" and "current" agree that the
+   current branch should be pushed even though they disagree whether
+   other branches should be pushed), then it might be OK to carry out
+   the safe subset.
+
+The most common workflows, along with the configuration settings that
+are recommended for that workflow, should be given standard names and
+documented in gitworkflows(7).  The warning message for a failed "git
+push" invocations (especially if push.default is unset) should direct
+the user to this manpage.
+
+
+Isn't it obvious?: The fact that we cannot even agree among ourselves
+what "git push" should do in all cases *proves* that we are trying to be
+too ambitious with DWIM.  "git push" must therefore become more
+deferential when the obvious thing to do is unclear, especially given
+that mistakes (due to the very nature of "git push") often have
+embarrassing and publicly visible effects.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
