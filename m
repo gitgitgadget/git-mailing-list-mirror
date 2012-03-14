@@ -1,138 +1,138 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] t0303: immediately bail out w/o
- GIT_TEST_CREDENTIAL_HELPER
-Date: Wed, 14 Mar 2012 15:17:28 -0700
-Message-ID: <7v8vj2omiv.fsf@alter.siamese.dyndns.org>
-References: <20120314141401.GC28595@in.waw.pl>
- <1331734704-14281-1-git-send-email-zbyszek@in.waw.pl>
+Subject: [ANNOUNCE] Git 1.7.10-rc1
+Date: Wed, 14 Mar 2012 16:17:10 -0700
+Message-ID: <7v1uouojrd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>
-To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Wed Mar 14 23:17:37 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Thu Mar 15 00:17:24 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7wVl-0000gJ-2m
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 23:17:37 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1S7xRZ-0001cB-Ct
+	for glk-linux-kernel-3@plane.gmane.org; Thu, 15 Mar 2012 00:17:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761148Ab2CNWRc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Mar 2012 18:17:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40824 "EHLO
+	id S1030313Ab2CNXRP (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Wed, 14 Mar 2012 19:17:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33145 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753461Ab2CNWRb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Mar 2012 18:17:31 -0400
+	id S1756189Ab2CNXRO (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Wed, 14 Mar 2012 19:17:14 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BB57773F1;
-	Wed, 14 Mar 2012 18:17:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=YEthyZM+IWfw
-	tu77CwkJbhycolI=; b=eNGkAQ18wTL4JI6yeRVJ6mt17NT5RDQclhjugU/m61fp
-	rcViQMUIBatkAKSXcb0lIsQlTAJ/FohJ3BAgOL0BRhV6kAtQ8LpKROfjRAUozaru
-	zfMXMo0SY4Kv6uivBmyfUEf0VQ9UmCqpHM041NJQV0ji9fOV9VI+Z0AfnySgark=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=gZjPs8
-	xK4/RdTLToVoE+s2hYZsq32Koa3hHsbL78n37w03t5nBr3LA5J+pcSmrHva2+GD0
-	t1gwHoOrIPOTuephvYgaUVvOo0zEuaTyRUeC0ytL7rmc47T/cTZXgy49cSTfAgKY
-	8oskYx7yvoA1TfzFcLHsu+1HilDFtWNvNmfFw=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DE66B6177;
+	Wed, 14 Mar 2012 19:17:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:cc:date:message-id:mime-version:content-type; s=sasl;
+	 bh=T5hb3xdYN+6P+BayZB673Ql0hb0=; b=McQtSzsFUMLLahP84wRtt8Hg3R3W
+	KKDXfZa9YqmqbyEPwuOKbmPO9nVpPuv+MNYHoZGD1Qn+Nr7lLighr6n06ACqxYrJ
+	yXtH9/NL5r4pXneh465zfXpU9Z6DjZFlHKziHalcphDHJ10SYF0kkekGn5BrUNRT
+	PK1xoCmJXSxvl3c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:cc:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
+	p/pvmujSWF6nM0+28fjn5cygjylUoC0B3M+R+f8e9BvECQ+NjUS1BcJDksqhgfe9
+	yXcRxqD1igxlX36vYehV1L+9PeVMOVoDTyGwJ+vLvm0xEltByQR7raZqQhRLHQfi
+	PVFioNuIMwAK3Te9pOQSQrXwNYj2rDw87ZUWFsqfG9A=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B2F9473F0;
-	Wed, 14 Mar 2012 18:17:30 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 74FA66176;
+	Wed, 14 Mar 2012 19:17:12 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3490973EF; Wed, 14 Mar 2012
- 18:17:30 -0400 (EDT)
-In-Reply-To: <1331734704-14281-1-git-send-email-zbyszek@in.waw.pl> ("Zbigniew
- =?utf-8?Q?J=C4=99drzejewski-Szmek=22's?= message of "Wed, 14 Mar 2012
- 15:18:23 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E03D56175; Wed, 14 Mar 2012
+ 19:17:11 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7D42CA74-6E23-11E1-92B1-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
+X-Pobox-Relay-ID: D41F2D30-6E2B-11E1-B0C5-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193167>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193168>
 
-Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl> writes:
+A release candidate Git 1.7.10-rc1 is now available for testing at
+the usual places.
 
-> t0300-credential-helpers.sh requires GIT_TEST_CREDENTIAL_HELPER to be
-> configured to do something sensible. If it is not set, prove will say=
-:
->   ./t0303-credential-external.sh .. skipped: (no reason given)
-> which isn't very nice.
->
-> Use skip_all=3D"..." && test_done to bail out immediately and provide=
- a
-> nicer message. In case GIT_TEST_CREDENTIAL_HELPER is set, but the
-> timeout tests are skipped, mention GIT_TEST_CREDENTIAL_HELPER_TIMEOUT=
-=2E
->
-> Signed-off-by: Zbigniew J=C4=99drzejewski-Szmek <zbyszek@in.waw.pl>
-> ---
->  t/t0303-credential-external.sh |   40 ++++++++++++++++--------------=
-----------
->  1 files changed, 16 insertions(+), 24 deletions(-)
->
-> diff --git a/t/t0303-credential-external.sh b/t/t0303-credential-exte=
-rnal.sh
-> index 267f4c8..4479bf8 100755
-> --- a/t/t0303-credential-external.sh
-> +++ b/t/t0303-credential-external.sh
-> @@ -4,36 +4,28 @@ test_description=3D'external credential helper test=
-s'
->  . ./test-lib.sh
->  . "$TEST_DIRECTORY"/lib-credential.sh
-> =20
-> -pre_test() {
-> -	test -z "$GIT_TEST_CREDENTIAL_HELPER_SETUP" ||
-> -	eval "$GIT_TEST_CREDENTIAL_HELPER_SETUP"
-> -
-> -	# clean before the test in case there is cruft left
-> -	# over from a previous run that would impact results
-> -	helper_test_clean "$GIT_TEST_CREDENTIAL_HELPER"
-> -}
-> -
-> -post_test() {
-> -	# clean afterwards so that we are good citizens
-> -	# and don't leave cruft in the helper's storage, which
-> -	# might be long-term system storage
-> -	helper_test_clean "$GIT_TEST_CREDENTIAL_HELPER"
-> -}
-> -
->  if test -z "$GIT_TEST_CREDENTIAL_HELPER"; then
-> -	say "# skipping external helper tests (set GIT_TEST_CREDENTIAL_HELP=
-ER)"
-> -else
-> -	pre_test
-> -	helper_test "$GIT_TEST_CREDENTIAL_HELPER"
-> -	post_test
-> +	skip_all=3D"used to test external credential helpers"
-> +	test_done
->  fi
-> =20
-> +$GIT_TEST_CREDENTIAL_HELPER_SETUP
+The release tarballs are found at:
 
-This used to be 'test -z "$it" || eval "$it"'; doesn't it make a
-difference?
+    http://code.google.com/p/git-core/downloads/list
 
-What is the value expected to be in this variable?  Nobody seems to set=
- it
-in our codebase, so I cannot say "with the current code, this rewrite i=
-s
-safe" or anything like that.
+and their SHA-1 checksums are:
 
-This is probably not related to your patch, but
+6080456a4410c65d43e79f22b5ea1b1c200b6823  git-1.7.10.rc1.tar.gz
+6f5106ee2bfb6d813a8b5a20d9caf069ea0110b4  git-htmldocs-1.7.10.rc1.tar.gz
+617a1d178c9736365ef5451d45c6f0a469c071cc  git-manpages-1.7.10.rc1.tar.gz
 
-	GIT_TEST_CREDENTIAL_HELPER=3Dcache sh t0303-*.sh
+Also the following public repositories all have a copy of the v1.7.10.rc1
+tag and the master branch that the tag points at:
 
-passes OK for me while
+  url = git://repo.or.cz/alt-git.git
+  url = https://code.google.com/p/git-core/
+  url = git://git.sourceforge.jp/gitroot/git-core/git.git
+  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url = https://github.com/gitster/git
 
-	make GIT_TEST_CREDENTIAL_HELPER=3Dcache T=3Dt0303-*.sh prove
+----------------------------------------------------------------
 
-seems to get stuck forever.
+Changes since v1.7.10-rc0 are as follows:
+
+Alex Zepeda (1):
+      verify-tag: Parse GPG configuration options.
+
+Jakub Narebski (1):
+      gitweb: Fix fixed string (non-regexp) project search
+
+Jens Lehmann (3):
+      submodules: always use a relative path to gitdir
+      submodules: always use a relative path from gitdir to work tree
+      submodules: refactor computation of relative gitdir path
+
+Jiang Xin (3):
+      l10n: Update zh_CN translation for 1.7.9.2
+      l10n: Update git.pot (1 new message)
+      l10n: Update zh_CN translation for 1.7.10-rc0
+
+Johannes Sixt (1):
+      submodules: fix ambiguous absolute paths under Windows
+
+Junio C Hamano (7):
+      Update draft release notes to 1.7.10
+      t0204: clarify the "observe undefined behaviour" test
+      i18n: fix auto detection of gettext scheme for shell scripts
+      Git 1.7.9.4
+      Update draft release notes to 1.7.10 before -rc1
+      am: officially deprecate -b/--binary option
+      Git 1.7.10-rc1
+
+Karsten Blees (1):
+      fix deletion of .git/objects sub-directories in git-prune/repack
+
+Martin Stenberg (1):
+      config: report errors at the EOL with correct line number
+
+Peter Krefting (2):
+      po/sv.po: add Swedish translation
+      Update Swedish translation (732t0f0u).
+
+Phil Hord (1):
+      rerere: Document 'rerere remaining'
+
+Thomas Rast (4):
+      perf: load test-lib-functions from the correct directory
+      perf: export some important test-lib variables
+      p4000: use -3000 when promising -3000
+      git-am: error out when seeing -b/--binary
+
+Thynson (7):
+      l10n: Improve zh_CN translation for lines insertion and deletion.
+      l10n: Improve zh_CN translation for msg about branch deletion deny
+      l10n: Improve zh_CN translation for empty cherry-pick msg.
+      l10n: Improve zh_CN translation for msg that make empty commit when amend.
+      l10n: Improve commit msg for zh_CN translation
+      l10n: Improve zh_CN trans for msg that cannot fast-forward
+      l10n: Improve zh_CN translation for msg "not something we can merge"
+
+Vincent van Ravesteijn (3):
+      Documentation/git-branch: cleanups
+      Documentation/git-branch: fix a typo
+      Documentation/git-branch: add default for --contains
