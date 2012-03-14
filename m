@@ -1,118 +1,84 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: [PATCH] fmt-merge-msg: show those involved in a merged series
-Date: Wed, 14 Mar 2012 15:12:08 -0400
-Message-ID: <CABURp0qE9XRg+a8WRdicojJNqcLnZn_PozFTDO8qZ8BMM1NsJQ@mail.gmail.com>
-References: <7vvcmj68iz.fsf@alter.siamese.dyndns.org> <CA+55aFzQ3+EFBVyE9PWOyH0XEC_oW+kUaBTYfixmi2wgMmiZvw@mail.gmail.com>
- <7vipii27ka.fsf@alter.siamese.dyndns.org> <CA+55aFw-sS_p7JXNXbSbpiwh9_bZhSrTtC3is4NtLa_n9Hzk5A@mail.gmail.com>
- <7vmx7uzq8h.fsf_-_@alter.siamese.dyndns.org> <4F57D18B.5090506@lsrfire.ath.cx>
- <7vzkbskr71.fsf@alter.siamese.dyndns.org> <4F58F06A.1070108@lsrfire.ath.cx>
- <7v1up2ew9u.fsf@alter.siamese.dyndns.org> <CABURp0oVn3s27Rtq2JQeLBgcXq1-R-=0qawcXVMxZ8qgOeZGkQ@mail.gmail.com>
- <20120313210357.GC27436@sigill.intra.peff.net>
+From: Holger Hellmuth <hellmuth@ira.uka.de>
+Subject: Re: [RFC PATCH] push: start warning upcoming default change for push.default
+Date: Wed, 14 Mar 2012 20:15:23 +0100
+Message-ID: <4F60EE4B.9020803@ira.uka.de>
+References: <vpqobs65gfc.fsf@bauges.imag.fr> <1331281886-11667-1-git-send-email-Matthieu.Moy@imag.fr> <1331288715.21444.38.camel@beez.lab.cmartin.tk> <4F5A4C45.7070406@xiplink.com> <4F5AF1A8.4050604@alum.mit.edu> <4F5E12A5.6030701@xiplink.com> <vpqzkblixmb.fsf@bauges.imag.fr> <20120312183725.GA2187@sigill.intra.peff.net> <vpqy5r44zg7.fsf@bauges.imag.fr> <7vehswljxi.fsf@alter.siamese.dyndns.org> <4F5F60C5.6020900@ira.uka.de> <7v7gyoxuth.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jeff King <peff@peff.net>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	=?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
 	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 14 20:12:37 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 14 20:15:09 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7tch-0000GI-O8
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 20:12:36 +0100
+	id 1S7tf9-0002Io-Cf
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 20:15:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761240Ab2CNTMa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Mar 2012 15:12:30 -0400
-Received: from mail-lpp01m010-f46.google.com ([209.85.215.46]:62197 "EHLO
-	mail-lpp01m010-f46.google.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757440Ab2CNTM3 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2012 15:12:29 -0400
-Received: by lahj13 with SMTP id j13so1750030lah.19
-        for <git@vger.kernel.org>; Wed, 14 Mar 2012 12:12:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=y1iwc3Wg158OeBnr0aFLAYH+U/v2oCZFyPkKL6L/KYY=;
-        b=W+jUw70qOz6K5Q9Ll3SYKfGW0XNstntUDlGviVMR+lvwSB4qfh6295bZTe3chaQdG3
-         rTfZ272OAFLet+z+bRlFveL9dwEq2g1+95+VN63oveC6b7TiiLs1J0kjO3n2Feby6PsQ
-         g33lL64fNH6XWo8WXj7WGEq45wDGj8XatioryyYXctYvNkujaWyb6CJg5wwskSrDBOjt
-         4GAnE52p1nQGQW+x52yz4h25yzYa0vS10BQ5/rFfFcvCn0nhxTrnhrxVh94FsqNIKjXr
-         d8rJNDU0cAsm99AsMoy6RvblesW7Co0EC4ZpzLjLu66Qcv/N4Eo8+nbHDoiW2Xw0clgL
-         fc3A==
-Received: by 10.112.38.3 with SMTP id c3mr1342981lbk.94.1331752348419; Wed, 14
- Mar 2012 12:12:28 -0700 (PDT)
-Received: by 10.112.55.43 with HTTP; Wed, 14 Mar 2012 12:12:08 -0700 (PDT)
-In-Reply-To: <20120313210357.GC27436@sigill.intra.peff.net>
+	id S1755331Ab2CNTPC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Mar 2012 15:15:02 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:34120 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753960Ab2CNTPA (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Mar 2012 15:15:00 -0400
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1S7tee-00084W-4A; Wed, 14 Mar 2012 20:14:51 +0100
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
+	id 1S7ted-00076C-Vc; Wed, 14 Mar 2012 20:14:36 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
+In-Reply-To: <7v7gyoxuth.fsf@alter.siamese.dyndns.org>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1331752491.371711000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193151>
 
-On Tue, Mar 13, 2012 at 5:03 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Mar 12, 2012 at 05:37:57PM -0400, Phil Hord wrote:
+On 13.03.2012 18:41, Junio C Hamano wrote:
+> Holger Hellmuth<hellmuth@ira.uka.de>  writes:
+>> If Peff's "push to same branch in a different remote" is a bug (and
+>> IMHO it is) it should not count as a reason for what should be the
+>> default.
 >
->> Subject: [PATCH] Appease compiler pedantry with an extra cast
->>
->> Recently git repurposed a pointer as an integer to hold some
->> counter which git fancies.
->>
->> Casting directly from 'pointer' to 'int' ((int)(void*)&x) causes a
->> possible size mismatch because pointers can be bigger than ints.
->> In such a situation, the compiler complains:
->>
->> =A0 =A0warning: cast from pointer to integer of different size
->> =A0 =A0 =A0 =A0 =A0 =A0 [-Wpointer-to-int-cast]
->
-> Yeah, I've been seeing the same warning on my x86_64 box, and came up
-> with the same fix. However...
->
->> Cast the value through intptr_t first to quell compiler complaints
->> about how this gun appears to be aimed near our feet. =A0Then cast t=
-his
->> value to an int; this path assures the compiler we are smarter than =
-we
->> look, or at least that we intend to aim the gun this way for a reaso=
-n.
->
-> This feels so hacky.
+> I may phrased it poorly, but I don't think you mean "if the bug is fixed,
+> then the behaviour of upstream is simple and easy to understand".  The
 
-Well, that's because it is hacky.  But it's the original code that's su=
-spect.
+I think the behaviour of the whole pull/push system is not easy to 
+understand. One has to learn a lot of concepts about git before being 
+able to answer the simple question "if I do 'git push' now, what happens?".
 
-> One of the callsites does:
->
-> =A0 =A0elem->util =3D (void*)((intptr_t)(util_as_int(elem) + 1));
->
-> which will truncate the value down to an int before replacing it back=
- in
-> the void pointer. And that truncation is ultimately what the compiler=
- is
-> warning about, and what we are sneaking around with the extra cast
-> (because casting between integer sizes of different types is OK, even
-> though it can cause truncation).
+Since I am using git without any collaboration I never had much need to 
+play around with the whole porcelain remote configuration (cloning and 
+using git config was enough). So today I tried to create a bidirectional 
+link between a local and a remote branch using only porcelain commands 
+(i.e. without using git config directly). Somehow I didn't succeed. I 
+can either use git checkout --track or git push -u to make a pull 
+connection between the two, but to automatically push I would have to 
+create a branch of the same name (and know that this is the magical 
+ingredient that makes it work!)
 
-I think this one is ok because it's really just "the hacky" bit
-storing an integer in a variable meant to hold a pointer.  That's why
-it's incrementing here, I suppose, not because it really wants to
-point at the next byte.
+Maybe what is missing is a parameter to git-push that tells git that 
+from now on this is what git push should do per default in this branch 
+(Similar to what git checkout --track does). This would mean that even 
+new users could do most remote configuration with just the knowledge of 
+git checkout and git push.
 
-> I don't think the truncation is a problem in practice, but it just fe=
-els
-> like we are not just silencing an over-zealous compiler, but actually
-> burying type-size assumption behind a set of four (4!) casts.
-
-The compiler is doing its job here to warn us against storing big-ish
-pointers in small-ish ints.  But if we know we will never accidentally
-use this as a pointer and if the integer will never overflow the
-32-bounds of the (int) representation, then it's all good.
-
-But I agree, it is hacky.
-
-Phil
+By the way I think I found another "hole" in the porcelain: If you add a 
+single branch to follow with git remote add -t <branch> ..., you can't 
+add another. A second git remote add -t <otherbranch> ... will be met 
+with an error that the remote is already configured. I would have to 
+delete the remote and add it again with git add -t <branch> -t 
+<otherbranch> ..... Or use a different remote name (which would be 
+confusing later on). Did I miss something?
