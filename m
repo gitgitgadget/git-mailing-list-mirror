@@ -1,91 +1,58 @@
-From: Jeff Sipek <jeffpc@josefsipek.net>
-Subject: Re: [GUILT] [PATCH] Fix fatal "guilt graph" error in sha1sum
- invocation.
-Date: Wed, 14 Mar 2012 10:21:48 -0400
-Message-ID: <20120314142144.GB12588@poseidon.cudanet.local>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [GUILT] [PATCH] Fix fatal "guilt graph" error in sha1sum invocation.
+Date: Wed, 14 Mar 2012 15:27:23 +0100
+Message-ID: <m2k42nmf5g.fsf@igel.home>
 References: <87399bpaq9.fsf@opera.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, ceder@lysator.liu.se
+Content-Type: text/plain
+Cc: Jeff Sipek <jeffpc@josefsipek.net>, git@vger.kernel.org
 To: Per Cederqvist <cederp@opera.com>
-X-From: git-owner@vger.kernel.org Wed Mar 14 15:22:02 2012
+X-From: git-owner@vger.kernel.org Wed Mar 14 15:27:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7p5R-0004Xt-KF
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 15:21:58 +0100
+	id 1S7pAr-0000FS-3f
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 15:27:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756062Ab2CNOVw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Mar 2012 10:21:52 -0400
-Received: from josefsipek.net ([64.9.206.49]:43621 "EHLO josefsipek.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752988Ab2CNOVv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2012 10:21:51 -0400
-Received: from poseidon.cudanet.local (unknown [12.200.95.45])
-	by josefsipek.net (Postfix) with ESMTPSA id 56605641B;
-	Wed, 14 Mar 2012 10:21:50 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <87399bpaq9.fsf@opera.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1030924Ab2CNO11 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Mar 2012 10:27:27 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:43268 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030694Ab2CNO10 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2012 10:27:26 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3V7Fd81ky3z4Kh0T;
+	Wed, 14 Mar 2012 15:27:23 +0100 (CET)
+X-Auth-Info: LZQfq3ANpOLNs2J+ctr5jSSDTi4vwoaxEiomriHvsvg=
+Received: from igel.home (ppp-88-217-102-154.dynamic.mnet-online.de [88.217.102.154])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 3V7Fd75rSXz4KK6N;
+	Wed, 14 Mar 2012 15:27:23 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 77668CA2AA; Wed, 14 Mar 2012 15:27:23 +0100 (CET)
+X-Yow: YOU'D cry too if it happened to YOU!!
+In-Reply-To: <87399bpaq9.fsf@opera.com> (Per Cederqvist's message of "Wed, 14
+	Mar 2012 14:34:38 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.94 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193112>
 
-On Wed, Mar 14, 2012 at 02:34:38PM +0100, Per Cederqvist wrote:
-> Fix the compatibility function sha1 so that it reads from
-> stdin (and not a file with a zero-length file name) when
-> no argument is supplied.
+Per Cederqvist <cederp@opera.com> writes:
 
-I just ran into this yesterday.  I stupidly changed the caller of sha1 to
-pass in - for the filename.  That worked for me since I ended up using the
-sha1sum implementations; openssl is not happy about that.  So, your patch
-looks good.
-
-Now, I should actually figure out how to get the git repo out there again.
-
-Thanks,
-
-Jeff.
-
-> Signed-off-by: Per Cederqvist <cederp@opera.com>
-> ---
->  os.Darwin |    7 ++++++-
->  os.Linux  |    7 ++++++-
->  os.SunOS  |    7 ++++++-
->  3 files changed, 18 insertions(+), 3 deletions(-)
-> 
-> Note: I have tested both versions of the sha1 function, but only on
-> Linux as I don't have access to a Mac.
-> 
->     /ceder
-> 
-> diff --git a/os.Darwin b/os.Darwin
-> index 470f5fb..acf6b68 100644
-> --- a/os.Darwin
-> +++ b/os.Darwin
-> @@ -27,7 +27,12 @@ head_n()
->  # usage: sha1 [file]
->  sha1()
->  {
 > -	openssl dgst -sha1 "$1" | sed "s,SHA1.\(.*\).= \(.*\),\2  \1,"
 > +	if [ $# = 1 ]
 > +	then
 > +		openssl dgst -sha1 "$1" | sed "s,SHA1.\(.*\).= \(.*\),\2  \1,"
 > +	else
 > +		openssl dgst -sha1 | sed 's,$,  -,'
-> +	fi
->  }
->  
->  # usage: cp_a <src> <dst>
-> diff --git a/os.Linux b/os.Linux
-> index 30b9cb0..aaebf88 100644
-> --- a/os.Linux
-> +++ b/os.Linux
-> @@ -30,7 +30,12 @@ head_n()
+
+$ openssl dgst -sha1 </dev/null
+(stdin)= da39a3ee5e6b4b0d3255bfef95601890afd80709
+
 >  # usage: sha1 [file]
 >  sha1()
 >  {
@@ -96,32 +63,12 @@ Jeff.
 > +	else
 > +		sha1sum
 > +	fi
->  }
->  
->  # usage: cp_a <src> <dst>
-> diff --git a/os.SunOS b/os.SunOS
-> index 30b9cb0..aaebf88 100644
-> --- a/os.SunOS
-> +++ b/os.SunOS
-> @@ -30,7 +30,12 @@ head_n()
->  # usage: sha1 [file]
->  sha1()
->  {
-> -	sha1sum "$1"
-> +	if [ $# = 1 ]
-> +	then
-> +		sha1sum "$1"
-> +	else
-> +		sha1sum
-> +	fi
->  }
->  
->  # usage: cp_a <src> <dst>
-> -- 
-> 1.7.9
-> 
+
+        sha1sum "$@"
+
+Andreas.
 
 -- 
-Only two things are infinite, the universe and human stupidity, and I'm not
-sure about the former.
-		- Albert Einstein
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
