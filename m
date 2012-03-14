@@ -1,119 +1,141 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [RFC PATCH] push: start warning upcoming default change for push.default
-Date: Wed, 14 Mar 2012 15:47:34 +0300
-Message-ID: <CAHkcotgsU6XZCTB+YKKeVMsUC2Yr5pVoc7eJpxdyH-GcxzeTVw@mail.gmail.com>
-References: <vpqobs65gfc.fsf@bauges.imag.fr>
-	<1331281886-11667-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1331288715.21444.38.camel@beez.lab.cmartin.tk>
-	<4F5A4C45.7070406@xiplink.com>
-	<4F5AF1A8.4050604@alum.mit.edu>
-	<4F5E12A5.6030701@xiplink.com>
-	<vpqzkblixmb.fsf@bauges.imag.fr>
-	<20120312183725.GA2187@sigill.intra.peff.net>
-	<vpqy5r44zg7.fsf@bauges.imag.fr>
-	<CAHkcotg1FKxfMR4Fe9Xfo_i4nuxzXdfVWe80HZu0wQEkiXhhmA@mail.gmail.com>
-	<7vbonzssap.fsf@alter.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH jh/notes-merge-in-git-dir-worktree] fixup! t3310 on Windows
+Date: Wed, 14 Mar 2012 13:56:44 +0100
+Message-ID: <CALKQrgdWZM959OyrEp+WCCehczZmMA3K8_RAcf23aAczKBCfvA@mail.gmail.com>
+References: <1319438176-7304-3-git-send-email-pclouds@gmail.com>
+	<1331563647-1909-1-git-send-email-johan@herland.net>
+	<1331563647-1909-2-git-send-email-johan@herland.net>
+	<4F60593A.5070106@viscovery.net>
+	<CALKQrgdjYvkSBn8UORSsZecSVyhJbfU5tjU0hPJOYn1OMVxMyw@mail.gmail.com>
+	<4F60882E.90303@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jeff King <peff@peff.net>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	=?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 14 13:47:42 2012
+Cc: git@vger.kernel.org, gitster@pobox.com, david@tethera.net,
+	pclouds@gmail.com
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Mar 14 13:56:56 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7ncD-0000dz-FZ
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 13:47:41 +0100
+	id 1S7nl8-0007KU-HY
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 13:56:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760999Ab2CNMrg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Mar 2012 08:47:36 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:45395 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759182Ab2CNMrf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Mar 2012 08:47:35 -0400
-Received: by gghe5 with SMTP id e5so1749617ggh.19
-        for <git@vger.kernel.org>; Wed, 14 Mar 2012 05:47:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=nB35Rl9AI95h7I3K8vHTxCqDf+cBCMA2+166EprEbj0=;
-        b=FosXmkYXHYjBdJkiZPESz7nHTJ6zD/un3j30mZw3DGHorXKNVUN8MNZWszUL6ixW9i
-         NZ6WEEpF8YyMF1lRJrKZX7yEAAvhfIETlwjeMn7o4FmFx30rphlqpRc63Pc7rtz1Hf6r
-         KP8eVVJUJ36Yt7KiHMYV+l7h1XdmypyL6EgBDCV+OIDpDeoVP2DwxsqIncQtqh7mrQaQ
-         UX9w4/S/ygsY5VEWc22llUDmwGV565VhbTr2EH5LnSDo2KY7OQqWrb6cqfrip6XRuQb2
-         2nZbkYKrF5X92MLEpH2dwLrVfblmzAN30nftyuRxwaZza/jlq3pYHIVs+T2+soRFEry5
-         zNVw==
-Received: by 10.224.102.8 with SMTP id e8mr2821496qao.50.1331729255277; Wed,
- 14 Mar 2012 05:47:35 -0700 (PDT)
-Received: by 10.229.135.130 with HTTP; Wed, 14 Mar 2012 05:47:34 -0700 (PDT)
-In-Reply-To: <7vbonzssap.fsf@alter.siamese.dyndns.org>
+	id S1755121Ab2CNM4t convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Mar 2012 08:56:49 -0400
+Received: from locusts.copyleft.no ([188.94.218.116]:60974 "EHLO
+	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753635Ab2CNM4t convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Mar 2012 08:56:49 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1S7nl1-0000R4-Fr
+	for git@vger.kernel.org; Wed, 14 Mar 2012 13:56:47 +0100
+Received: by eaaq12 with SMTP id q12so804594eaa.19
+        for <git@vger.kernel.org>; Wed, 14 Mar 2012 05:56:45 -0700 (PDT)
+Received: by 10.50.85.131 with SMTP id h3mr11500963igz.39.1331729804538; Wed,
+ 14 Mar 2012 05:56:44 -0700 (PDT)
+Received: by 10.43.52.6 with HTTP; Wed, 14 Mar 2012 05:56:44 -0700 (PDT)
+In-Reply-To: <4F60882E.90303@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193102>
 
-On Wed, Mar 14, 2012 at 8:46 AM, Junio C Hamano <gitster@pobox.com> wro=
+On Wed, Mar 14, 2012 at 12:59, Johannes Sixt <j.sixt@viscovery.net> wro=
 te:
-> Dmitry Potapov <dpotapov@gmail.com> writes:
->
->>> One can easily get in this situation even in a kernel-style workflo=
-w:
->>> work from your desktop, push, work from your laptop, try to push an=
-d it
->>> fails.
+> Am 3/14/2012 12:39, schrieb Johan Herland:
+>> On Wed, Mar 14, 2012 at 09:39, Johannes Sixt <j.sixt@viscovery.net> =
+wrote:
+>>> From: Johannes Sixt <j6t@kdbg.org>
+>>>
+>>> On Windows, a directory cannot be removed while it is the working
+>>> directory of a process. "git notes merge --commit" attempts to remo=
+ve
+>>> .git/NOTES_MERGE_WORKTREE, but during the test the directory was st=
+ill
+>>> "occupied" by the shell. Move the command out of the subshell to re=
+lease
+>>> the directory.
+>>>
+>>> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+>>> ---
+>>> =C2=A0Feel free to squash this into 1/2.
+>>>
+>>> =C2=A0t/t3310-notes-merge-manual-resolve.sh | =C2=A0 =C2=A04 ++--
+>>> =C2=A01 file changed, 2 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-=
+merge-manual-resolve.sh
+>>> index d6d6ac6..6351877 100755
+>>> --- a/t/t3310-notes-merge-manual-resolve.sh
+>>> +++ b/t/t3310-notes-merge-manual-resolve.sh
+>>> @@ -565,9 +565,9 @@ test_expect_success 'switch cwd before committi=
+ng notes merge' '
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0(
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cd .git/NOTE=
+S_MERGE_WORKTREE &&
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0echo "foo" >=
+ $(git rev-parse HEAD) &&
+>>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo "bar" >> $(=
+git rev-parse HEAD) &&
+>>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git notes merge =
+--commit
+>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo "bar" >> $(=
+git rev-parse HEAD)
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0) &&
+>>> + =C2=A0 =C2=A0 =C2=A0 git notes merge --commit &&
 >>
->> IMHO, when you often switch between your desktop and laptop, 'matchi=
-ng'
->> makes much more sense. If 'push' fails then usually I want to force =
-non-
->> fast-forward push, because the new series contain reworked patches t=
-hat
->> already were on the other computer.
+>> NAK. This defeats the entire purpose of this test. The bug that we'r=
+e
+>> trying to solve is exactly the situation where the user has changed
+>> into the .git/NOTES_MERGE_WORKTREE directory, and invokes 'git notes
+>> merge --commit' from within. We need to find a different solution fo=
+r
+>> this on Windows. Maybe we should just abort 'git notes merge
+>> --commit/--abort' if the current directory is within
+>> .git/NOTES_MERGE_WORKTREE (and we're on Windows)?
 >
-> You are free to live dangerously, but please do not teach that to oth=
-er
-> people.
-
-Is it more dangerous than using "git reset --hard somewhere" ?
-I believe both cases I should be able to recover the lost using reflog.
-Anyway, so far I have never had any problem, because I do "git push"
-first and then look at failures and decide whether I want to discard
-the old series on the remote end.
-
-> Switching between two machines A and B is done a lot more safely if y=
-ou
-> arrange them to cross pull from each other, i.e. on machine A, remote=
-s/B/*
-> is where you keep copies of branches of B to with either of these
+> Isn't this an indication that something *VERY* wrong is happening? Ho=
+w do
+> you explain to POSIX people that you have just pulled the rug unter t=
+heir
+> feet?
 >
-> =A0 =A0 =A0 =A0machineA$ git fetch B refs/heads/*:refs/remotes/B/*
-> =A0 =A0 =A0 =A0machineB$ git push A refs/heads/*:refs/remotes/B/*
->
-> (the latter is to emulate the former "fetch" you wish to run on A to =
-get
-> data from B in the reverse direction), and similarly on machine B, yo=
-u use
-> remotes/A/* to keep copies of branches of A.
+> $ git notes merge --commit
+> $ git notes
+> fatal: Unable to read current working directory: No such file or dire=
+ctory
 
-I am aware about that, but the thing that stops me from using this is
-there is no way to delete automatically all references from the remote
-end that were deleted locally. (There is --mirror option, which can do
-this, but it is incompatible with refspecs)
+True.
 
-If I use only "git fetch B ...", I can run "git remote prune B" from ti=
-me
-to time to remove branches that no longer exists on B. However, if I do
-"git push A ..." as you suggested then A will accumulate old garabage
-from B very quickly.
+> I doubt that the use-case that is tested here makes sense.
+
+As David wrote, the use case is likely to pop up among regular users.
+We can't simply ignore it.
+
+> Or .git/NOTES_MERGE_WORKTREE should not be removed. Would it be an op=
+tion
+> to clear it out only when it is needed, right before it is filled aga=
+in?
+
+Maybe, but then we wouldn't be able to warn or abort in the case where
+there is a previous unfinished notes merge, and the user tries to
+start a new notes merge. Instead, we'd silently overwrite the previous
+unfinished notes merge...
+
+Maybe it's better to simply detect if cwd is inside
+=2Egit/NOTES_MERGE_WORKTREE, and then abort, telling the user to chdir
+out before trying again?
 
 
-Dmitry
+=2E..Johan
+
+--=20
+Johan Herland, <johan@herland.net>
+www.herland.net
