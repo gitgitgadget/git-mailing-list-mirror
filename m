@@ -1,171 +1,235 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fmt-merge-msg: show those involved in a merged series
-Date: Tue, 13 Mar 2012 20:44:20 -0700
-Message-ID: <7vwr6nsv6z.fsf@alter.siamese.dyndns.org>
-References: <7vvcmj68iz.fsf@alter.siamese.dyndns.org>
- <CA+55aFzQ3+EFBVyE9PWOyH0XEC_oW+kUaBTYfixmi2wgMmiZvw@mail.gmail.com>
- <7vipii27ka.fsf@alter.siamese.dyndns.org>
- <CA+55aFw-sS_p7JXNXbSbpiwh9_bZhSrTtC3is4NtLa_n9Hzk5A@mail.gmail.com>
- <7vmx7uzq8h.fsf_-_@alter.siamese.dyndns.org>
- <4F57D18B.5090506@lsrfire.ath.cx> <7vzkbskr71.fsf@alter.siamese.dyndns.org>
- <4F58F06A.1070108@lsrfire.ath.cx> <7v1up2ew9u.fsf@alter.siamese.dyndns.org>
- <CABURp0oVn3s27Rtq2JQeLBgcXq1-R-=0qawcXVMxZ8qgOeZGkQ@mail.gmail.com>
- <20120313210357.GC27436@sigill.intra.peff.net>
+Subject: Re: [PATCH] push: Provide situational hints for non-fast-forward
+ errors
+Date: Tue, 13 Mar 2012 21:27:08 -0700
+Message-ID: <7vobrzst7n.fsf@alter.siamese.dyndns.org>
+References: <20120313232256.GA49626@democracyinaction.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Phil Hord <phil.hord@gmail.com>,
-	=?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 14 04:45:01 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, peff@peff.net
+To: Christopher Tiwald <christiwald@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 14 05:27:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7f8w-0001SV-GM
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 04:44:54 +0100
+	id 1S7fnz-0002NN-1v
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 05:27:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752288Ab2CNDoY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Mar 2012 23:44:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59871 "EHLO
+	id S1752090Ab2CNE1O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Mar 2012 00:27:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41833 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752174Ab2CNDoX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Mar 2012 23:44:23 -0400
+	id S1751899Ab2CNE1M (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2012 00:27:12 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BBC8F7312;
-	Tue, 13 Mar 2012 23:44:22 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E189879DA;
+	Wed, 14 Mar 2012 00:27:11 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=CgMKVH2mTg60
-	wQfuknQCAHAvsLE=; b=sGxIrL3AtoqUIw2o2H6ACWFP0k57Cpo4tnGSI5J7N/cu
-	88fSEz3ZyGz93BTJ/XMVyG8VmmbEHvLNgRBE9AmzouOoO77/MEwlaIxwQqGWRrMs
-	G1S4dTRYvw1W7y9mzNt6aV0NQfVkz0IQZg7+N0XzncsO1U30SSVHpILCjXblYvQ=
+	:content-type; s=sasl; bh=nDQQMu5Qx60HAcDcSvl7QR3zV6k=; b=VA7ptt
+	oK9paOaw3zhpMav7muyI9P7y+Z8UvFXo7Y9//A8oMyBm3tGW8fZTlSXaP9/MHd7V
+	5Ycvr494dLox2EMkWDmFLVrLaRyQMSkG7xxSKJ3lNanYLo95tmBMk/cnc2n8Ft1X
+	KRfW0dOIUXyy8pHyK//p+WeOlMdaZSSgEONcI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ph9gLV
-	wx30/+Lb5iHG5mDCnkZ2KIiwggSnOSVHif1fyoEG7cptwsSw9PsFmZ56CY6xwryQ
-	fu5Ce1Eh7M1/+Ilh81df6qS1dVPRb6W9EMysL+9jNNOlJB4vPBqP++SlhVBkzm3B
-	wHMdXIksYfsh2i+7w0KF+k5xHMVJI+yOvqfXQ=
+	:content-type; q=dns; s=sasl; b=QVh2Ya4bmKjC/CptjDY/bmqS03J9yogD
+	jZd7Kef1x33qqndfmI1sAOMhyc5HCUxLliV3hwR1aXHDD5vKQhcvWfP7QtGakJBE
+	J6mDybQK6nat1CRwH8nERRcwGwf6HtAsYF81yXTML1F2WY5rC1LPTTCIQqtJI244
+	/vyoAkB6ru4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B12907311;
-	Tue, 13 Mar 2012 23:44:22 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D778779D9;
+	Wed, 14 Mar 2012 00:27:11 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 162C07310; Tue, 13 Mar 2012
- 23:44:22 -0400 (EDT)
-In-Reply-To: <20120313210357.GC27436@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 13 Mar 2012 17:03:57 -0400")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0B85979D8; Wed, 14 Mar 2012
+ 00:27:09 -0400 (EDT)
+In-Reply-To: <20120313232256.GA49626@democracyinaction.org> (Christopher
+ Tiwald's message of "Tue, 13 Mar 2012 19:22:57 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FC762224-6D87-11E1-9EF6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F70ED276-6D8D-11E1-B5A6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193081>
 
-Jeff King <peff@peff.net> writes:
+An off-topic administrivia. Please do not try to deflect responses meant
+for you by setting Mail-Followup-To.
 
-> On Mon, Mar 12, 2012 at 05:37:57PM -0400, Phil Hord wrote:
->
-> This feels so hacky.  One of the callsites does:
->
->     elem->util =3D (void*)((intptr_t)(util_as_int(elem) + 1));
->
-> which will truncate the value down to an int before replacing it back=
- in
-> the void pointer. And that truncation is ultimately what the compiler=
- is
-> warning about, and what we are sneaking around with the extra cast
-> (because casting between integer sizes of different types is OK, even
-> though it can cause truncation).
+Christopher Tiwald <christiwald@gmail.com> writes:
 
-Yeah, I find it utterly disgusting that Phil's compiler is picky about
-(int)(void *) and insists on (intptr_t)(void *), while totally ignoring
-the same bit lossage coming from (int)(intptr_t)(void *).
+> Pushing a non-fast-forward update to a remote repository will result in
+> an error, but the hint text doesn't provide the correct resolution in
+> every case. Three scenarios may arise depending on your workflow, each
+> with a different resolution:
 
-I am again starting to think that the very original was probably the le=
-ast
-bad among the yuckies.
+Are we sure there are only three, or is this just "we do not say anything
+concrete, but at least we know common three cases, and there may be more"?
 
-As the whole point of the helper macro is to cast the .util field as
-"some" integral type, I'm tempted to squash this into the v2 patch I
-posted earlier today.  Earlier complaint from Ren=C3=A9 was very sensib=
-le that
-it looked funny to cast xxx_as_int() explicitly to int, but having to c=
-ast
-"some" integral value explicitly to int is required in the context of
-sprintf() like vararg function, so it would no longer apply to this
-version.
+I am mostly interested in making sure that we do not give a bad advice.
+Giving an advice that is mostly accurate and relevant for 95% of the time
+is perfectly fine, as long as following the advice in the remaining 5%
+does not result in a disaster.
 
- builtin/fmt-merge-msg.c |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+> 1) If you push a non-fast-forward update to HEAD, you should merge
+> remote changes with 'git pull' before pushing again.
 
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index 4e7196a..1bc6b8b 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -182,7 +182,7 @@ static void add_branch_desc(struct strbuf *out, con=
-st char *name)
- 	strbuf_release(&desc);
- }
-=20
--#define util_as_int(elem) ((int)(intptr_t)((elem)->util))
-+#define util_as_integral(elem) ((intptr_t)((elem)->util))
-=20
- static void record_person(int which, struct string_list *people,
- 			  struct commit *commit)
-@@ -210,13 +210,13 @@ static void record_person(int which, struct strin=
-g_list *people,
- 		elem =3D string_list_insert(people, name_buf);
- 		elem->util =3D (void *)0;
- 	}
--	elem->util =3D (void*)((intptr_t)(util_as_int(elem) + 1));
-+	elem->util =3D (void*)(util_as_integral(elem) + 1);
- }
-=20
--static int cmp_string_list_util_as_int(const void *a_, const void *b_)
-+static int cmp_string_list_util_as_integral(const void *a_, const void=
- *b_)
- {
- 	const struct string_list_item *a =3D a_, *b =3D b_;
--	return util_as_int(b) - util_as_int(a);
-+	return util_as_integral(b) - util_as_integral(a);
- }
-=20
- static void add_people_count(struct strbuf *out, struct string_list *p=
-eople)
-@@ -226,13 +226,13 @@ static void add_people_count(struct strbuf *out, =
-struct string_list *people)
- 	else if (people->nr =3D=3D 2)
- 		strbuf_addf(out, "%s (%d) and %s (%d)",
- 			    people->items[0].string,
--			    util_as_int(&people->items[0]),
-+			    (int)util_as_integral(&people->items[0]),
- 			    people->items[1].string,
--			    util_as_int(&people->items[1]));
-+			    (int)util_as_integral(&people->items[1]));
- 	else if (people->nr)
- 		strbuf_addf(out, "%s (%d) and others",
- 			    people->items[0].string,
--			    util_as_int(&people->items[0]));
-+			    (int)util_as_integral(&people->items[0]));
- }
-=20
- static void credit_people(struct strbuf *out,
-@@ -267,11 +267,11 @@ static void add_people_info(struct strbuf *out,
- 	if (authors->nr)
- 		qsort(authors->items,
- 		      authors->nr, sizeof(authors->items[0]),
--		      cmp_string_list_util_as_int);
-+		      cmp_string_list_util_as_integral);
- 	if (committers->nr)
- 		qsort(committers->items,
- 		      committers->nr, sizeof(committers->items[0]),
--		      cmp_string_list_util_as_int);
-+		      cmp_string_list_util_as_integral);
-=20
- 	credit_people(out, authors, 'a');
- 	credit_people(out, committers, 'c');
+You said "to HEAD", but I think you meant the case you push your current
+branch (i.e. HEAD) to update any ref on the other side.  In other words,
+the push does not have to be "*to*" HEAD over there.  Am I mistaken?
+
+> 2) If you push to a shared repository others push to, and your local
+> tracking branches are not kept up to date, the 'matching refs' default
+> will generate non-fast-forward errors on outdated branches. If this is
+> your workflow, the 'matching refs' default is not for you. Consider
+> setting the 'push.default' configuration variable to 'upstream' to
+> ensure only your checked-out branch is pushed.
+
+OK.
+
+> 3) If you push with explicit ref matching (e.g. 'git push ... topic:topic')
+> while checked out on another branch (e.g. 'master'), the correct
+> resolution is checking out the local branch, issuing git pull, and
+> merging remote changes before pushing again.
+
+Or you may have misspelled the source side of the refspec and tried to
+push a wrong branch.
+
+> Make nonfastforward an enum and teach transport.c to detect the
+> scenarios described above. Give situation-specific resolution advice
+> when pushes are rejected due to non-fast-forward updates. Finally,
+> update other instances of nonfastforward to use the proper enum option.
+
+I think the overall direction of the implemention is good, modulo minor
+design nits.
+
+ * I do not particularly find NONFASTFORWARD_NONE that is defined to be 0
+   a useful readability measure. Plain vanilla constant 0 says that there
+   is nothing magical going on to the readers clearly already.
+
+ * Also NONFASTFORWARD_FROTZ is way too long.  Wouldn't NONFF_FROTZ be
+   sufficient and clear?
+
+ * I can see there are three kinds of advices, but I do not see why users
+   need to acknowledge that they understand them one by one with separate
+   advice configuration.  Isn't it better to have only one variable, "OK,
+   I know how to deal with a failed push due to non-fast-forward"?
+
+> Signed-off-by: Christopher Tiwald <christiwald@gmail.com>
+> Based-on-patch-by: Junio C Hamano <gitster@pobox.com>
+
+These two lines are chronologically swapped.
+
+> ---
+> This is a reroll of jc/advise-push-default (2011-12-18).
+
+I lost track of this topic during the last round.  Thanks for picking it
+up.
+
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index c081657..50d9249 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -158,6 +158,21 @@ advice.*::
+>  		Advice shown when you used linkgit:git-checkout[1] to
+>  		move to the detach HEAD state, to instruct how to create
+>  		a local branch after the fact.
+> +	pullBeforePush::
+> +		Advice shown when you ran linkgit:git-push[1] and pushed
+> +		a non-fast-forward update to HEAD, instructing you to
+> +		linkgit:git-pull[1] before pushing again.
+> +	useUpstream::
+> +		Advice to set 'push.default' to 'upstream' when you ran
+> +		linkgit:git-push[1] and pushed 'matching refs' by default
+> +		(i.e. you did not have any explicit refspec on the command
+> +		line, and no 'push.default' configuration was set) and it
+> +		resulted in a non-fast-forward error.
+> +	checkoutPullPush::
+> +		Advice shown when you ran linkgit:git-push[1] and pushed
+> +		a non-fast-forward update to a non-HEAD branch, instructing
+> +		you to checkout the branch and run linkgit:git-pull[1]
+> +		before pushing again.
+
+I would prefer to see these consolidated into a single advice.pushNonFF
+variable, but I may be missing why it could be a good idea to allow them
+turned off selectively.
+
+> diff --git a/builtin/push.c b/builtin/push.c
+> index d315475..0fecf06 100644
+> --- a/builtin/push.c
+> +++ b/builtin/push.c
+>  	}
+>  }
+>  
+> +static const char *message_advice_pull_before_push[] = {
+> +	"To prevent you from losing history, non-fast-forward updates to HEAD",
+> +	"were rejected. Merge the remote changes (e.g. 'git pull') before",
+> +	"pushing again. See the 'Note about fast-forwards' section of",
+> +	"'git push --help' for details."
+> +};
+
+This again says "*to* HEAD".  If this should be "a non-fast-forward update
+to send the current branch was rejected" as I suspected above, the message
+needs to be rephrased accordingly.
+
+> +static const char *message_advice_use_upstream[] = {
+> +	"By default, git pushes all branches that have a matching counterpart",
+> +	"on the remote. In this case, some of your local branches were stale",
+> +	"with respect to their remote counterparts. If you did not intend to",
+> +	"push these branches, you may want to set the 'push.default'",
+> +	"configuration variable to 'upstream' to push only the current branch."
+> +};
+
+If you drop everything up to and including "In this case, ", the advice
+message still teaches exactly what the user needs to learn.
+
+> +static const char *message_advice_checkout_pull_push[] = {
+> +	"To prevent you from losing history, your non-fast-forward branch",
+> +	"updates were rejected. Checkout the branch and merge the remote",
+> +	"changes (e.g. 'git pull') before pushing again. See the",
+> +	"'Note about fast-forwards' section of 'git push --help' for",
+> +	"details."
+> +};
+
+OK.
+
+> @@ -136,15 +193,18 @@ static int push_with_options(struct transport *transport, int flags)
+>  
+>  	err |= transport_disconnect(transport);
+>  
+> +	if (nonfastforward == NONFASTFORWARD_HEAD) {
+> +		advise_pull_before_push();
+> +	} else if (nonfastforward == NONFASTFORWARD_OTHER) {
+> +		if (default_matching_used)
+> +			advise_use_upstream();
+> +		else
+> +			advise_checkout_pull_push();
+> +	}
+		
+I suspect that we may find more cases not just three, so
+
+	switch (nonfastforward) {
+	default:
+        	break;
+	case NONFF_HEAD:
+        	advice_pull_before_push();
+		break;
+	case NONFF_OTHER:
+		...
+	}
+
+would be a more forward-looking way to write it.
+
+Also, shouldn't we be doing this only when err is true, or is it too
+defensive?
+
+>  	if (!err)
+>  		return 0;
+>  
+> -	if (nonfastforward && advice_push_nonfastforward) {
+> -		fprintf(stderr, _("To prevent you from losing history,...
+
+That is, I am wondering why your "more detailed diag & advice" code is not
+here, i.e. after "if (!err) return 0".
