@@ -1,80 +1,63 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC PATCH] push: start warning upcoming default change for push.default
-Date: Wed, 14 Mar 2012 15:47:21 +0100
-Message-ID: <vpqhaxrz1c6.fsf@bauges.imag.fr>
-References: <vpqobs65gfc.fsf@bauges.imag.fr>
-	<1331281886-11667-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1331288715.21444.38.camel@beez.lab.cmartin.tk>
-	<4F5A4C45.7070406@xiplink.com> <4F5AF1A8.4050604@alum.mit.edu>
-	<4F5E12A5.6030701@xiplink.com> <vpqzkblixmb.fsf@bauges.imag.fr>
-	<20120312183725.GA2187@sigill.intra.peff.net>
-	<vpqy5r44zg7.fsf@bauges.imag.fr>
-	<CAHkcotg1FKxfMR4Fe9Xfo_i4nuxzXdfVWe80HZu0wQEkiXhhmA@mail.gmail.com>
-	<vpqhaxrzh2a.fsf@bauges.imag.fr>
-	<CAHkcotgMgqr29WEQfiH+89JVbTAAQyLwscXRtTyrf3JRxEuVbA@mail.gmail.com>
+From: Christopher Tiwald <christiwald@gmail.com>
+Subject: Re: [PATCH] push: Provide situational hints for non-fast-forward
+ errors
+Date: Wed, 14 Mar 2012 10:53:55 -0400
+Message-ID: <20120314145355.GB3558@gmail.com>
+References: <20120313232256.GA49626@democracyinaction.org>
+ <7vobrzst7n.fsf@alter.siamese.dyndns.org>
+ <20120314144802.GA3558@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Marc Branchaud <marcnarc@xiplink.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
-	git@vger.kernel.org, gitster@pobox.com
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 14 15:52:11 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 14 15:54:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S7pYh-0001YJ-DZ
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 15:52:11 +0100
+	id 1S7paf-00039X-2c
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Mar 2012 15:54:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965295Ab2CNOwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Mar 2012 10:52:05 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:50908 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965296Ab2CNOwD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2012 10:52:03 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q2EEgtsd026948
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 14 Mar 2012 15:42:55 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1S7pU2-0004oC-7x; Wed, 14 Mar 2012 15:47:22 +0100
-In-Reply-To: <CAHkcotgMgqr29WEQfiH+89JVbTAAQyLwscXRtTyrf3JRxEuVbA@mail.gmail.com>
-	(Dmitry Potapov's message of "Wed, 14 Mar 2012 16:23:33 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 14 Mar 2012 15:42:57 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q2EEgtsd026948
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1332340979.48682@rK/ecnpI3lzTe1eCEP3f+w
+	id S1759425Ab2CNOyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Mar 2012 10:54:05 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:65198 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030908Ab2CNOx6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2012 10:53:58 -0400
+Received: by eaaq12 with SMTP id q12so930055eaa.19
+        for <git@vger.kernel.org>; Wed, 14 Mar 2012 07:53:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Ga/iQ82N2ZsS4dS4CBc7asXSIsRk+aGRbOtnxn9/69I=;
+        b=jV8gwLyUTevwap+1Wf+lX9CzVIH7Q9jlaLIxpuUJbbGwgyRiVRTTJImsgRkIPV1amI
+         AmEtHRjofMyOqMAukY2tGl8jChSceSmwSSIYAUhSYkvc4M0NTioO1aE8+0KwwvQfqjjn
+         0vnSlIYWgEEp0c6R98kg2xMphG6e5nykL8DjS0cjTm6UspVfpQ7xpNXx2Y8rnc6ea0OB
+         s7LPIZhBiKlJTCRX3lK/zfsc1ArXXi005FWpS690kRmPYCwbQimmaS7NDTz7e0SpYHik
+         avSnPdfgXRNKwUs5B5pUhVMpq/KdHZFmu6UN3cwywrpuuEAQdx4XK1xZ7NVryfEzt1p0
+         OVHA==
+Received: by 10.229.76.139 with SMTP id c11mr988926qck.1.1331736837154;
+        Wed, 14 Mar 2012 07:53:57 -0700 (PDT)
+Received: from gmail.com ([216.55.38.246])
+        by mx.google.com with ESMTPS id ef6sm9279078qab.7.2012.03.14.07.53.55
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 14 Mar 2012 07:53:56 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20120314144802.GA3558@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193120>
 
-Dmitry Potapov <dpotapov@gmail.com> writes:
+On Wed, Mar 14, 2012 at 10:48:03AM -0400, Christopher Tiwald wrote:
+> <stuff>
 
-> Not of course. I said above non-fast forward push should not be used by
-> beginners.
+Whoops. Also apologies for not following the correct To: and Cc:
+convention in my most recent response.
 
-Do you mean "beginners should not force non-fast forward push", or
-"beginners should not use flow where push may be denied because of
-non-fast forward"?
-
-If the second, this implies that beginners should never have a shared
-repository, either shared for one user and multiple machines, or shared
-between developers?
-
-If you mean that shared repositories are too complex for beginners, my
-experience is exactly the opposite.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+--
+Christopher Tiwald
