@@ -1,126 +1,72 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git svn dcommit: avoid self-referential mergeinfo
- lines when svn.pushmergeinfo is configured
-Date: Thu, 15 Mar 2012 22:02:42 +0000
-Message-ID: <20120315220242.GA9348@dcvr.yhbt.net>
+From: Bryan Jacobs <bjacobs@woti.com>
+Subject: Re: [PATCH] git svn dcommit: avoid self-referential mergeinfo lines
+ when svn.pushmergeinfo is configured
+Date: Thu, 15 Mar 2012 18:07:03 -0400
+Organization: White Oak Technologies
+Message-ID: <20120315180703.7c9c0629@robyn.woti.com>
 References: <CAHkK2bpq1J2SW2P1tkFnjw5dWEr=uQrfrTUaS2J-swuKsP4kig@mail.gmail.com>
+	<20120315220242.GA9348@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Bryan Jacobs <bjacobs@woti.com>,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Avishay Lavie <avishay.lavie@gmail.com>, git@vger.kernel.org,
 	Sam Vilain <sam@vilain.net>
-To: Avishay Lavie <avishay.lavie@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 15 23:02:51 2012
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Mar 15 23:07:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S8Ikz-00017i-P3
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Mar 2012 23:02:50 +0100
+	id 1S8IpH-0004jN-Vm
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Mar 2012 23:07:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755599Ab2COWCo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Mar 2012 18:02:44 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:34118 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754139Ab2COWCn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Mar 2012 18:02:43 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEE061F4F5;
-	Thu, 15 Mar 2012 22:02:42 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <CAHkK2bpq1J2SW2P1tkFnjw5dWEr=uQrfrTUaS2J-swuKsP4kig@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1757334Ab2COWHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Mar 2012 18:07:08 -0400
+Received: from mail02.woti.us ([66.92.158.6]:35697 "EHLO roscoe.woti.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756208Ab2COWHG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Mar 2012 18:07:06 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by roscoe.woti.com (Postfix) with ESMTP id 41F065143FD44;
+	Thu, 15 Mar 2012 18:07:05 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at woti.com
+Received: from roscoe.woti.com ([127.0.0.1])
+	by localhost (roscoe.woti.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ydbV1AIVLgVX; Thu, 15 Mar 2012 18:07:04 -0400 (EDT)
+Received: from robyn.woti.com (robyn.woti.com [192.168.168.187])
+	by roscoe.woti.com (Postfix) with ESMTPSA id CFFC5504CDACF;
+	Thu, 15 Mar 2012 18:07:04 -0400 (EDT)
+In-Reply-To: <20120315220242.GA9348@dcvr.yhbt.net>
+X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; x86_64-redhat-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193230>
 
-Avishay Lavie <avishay.lavie@gmail.com> wrote:
-> [PATCH] git svn dcommit: avoid self-referential mergeinfo lines when
-> svn.pushmergeinfo flag is configured
+On Thu, 15 Mar 2012 22:02:42 +0000
+Eric Wong <normalperson@yhbt.net> wrote:
 
-Subject line is too long, ~50 chars is the limit.
-See git-commit(1) / Documentation/SubmittingPatches
-
-> When svn.pushmergeinfo is configured, git svn dcommit tries to
-> automatically populate svn:mergeinfo properties by merging the parent
-> branch's mergeinfo into the committed one on each merge commit. This
-> process can add self-referential mergeinfo lines, i.e. ones that
-> reference the same branch being committed into (e.g. when
-> reintegrating a branch to trunk after previously having merged trunk
-> into it), which are then mishandled by SVN and cause errors in mixed
-> SVN/Git environments.
-> For more details, see my original report on the issue at [1].
 > 
-> This commit adds a step to git svn dcommit that filters out any
-> mergeinfo lines referencing the target branch from the mergeinfo, thus
-> avoiding the problem.
+> This test breaks t9161-git-svn-mergeinfo-push.sh:
 > 
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/191932
+>   not ok - 12 check reintegration mergeinfo
+>   #
+>   #               mergeinfo=$(svn_cmd propget svn:mergeinfo
+> "$svnrepo"/branches/svnb4) #               test "$mergeinfo" =
+> "/branches/svnb1:2-4,7-9,13-18 #       /branches/svnb2:3,8,16-17
+>   #       /branches/svnb3:4,9
+>   #       /branches/svnb4:5-6,10-12
+>   #       /branches/svnb5:6,11"
 > 
-> Signed-off-by: Avishay Lavie <avishay.lavie@gmail.com>
-> ---
-> This is my first time sending a patch to the group, so if I'm doing
-> something wrong, please let me know.
+> Be sure tests run successfully before submitting patches (or ask
+> for help fixing tests).
 
-Noted :)
+The test is demonstrating the behavior the patch fixes.
 
-Sam Vilain should be Cc:-ed on mergeinfo-related stuff.  I don't know my
-way around mergeinfo stuff at all.
+A merge is made to "svnb4", and then the test checks that the mergeinfo
+contains "svnb4:5-6,10-12". So really this test could be adapted to
+prove that the patch is functioning as intended :-).
 
-This test breaks t9161-git-svn-mergeinfo-push.sh:
-
-  not ok - 12 check reintegration mergeinfo
-  #
-  #               mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb4)
-  #               test "$mergeinfo" = "/branches/svnb1:2-4,7-9,13-18
-  #       /branches/svnb2:3,8,16-17
-  #       /branches/svnb3:4,9
-  #       /branches/svnb4:5-6,10-12
-  #       /branches/svnb5:6,11"
-
-Be sure tests run successfully before submitting patches (or ask
-for help fixing tests).
-
-Lastly, formatting: some lines are too long (80 columns max) and
-there's trailing whitespace.
-
->  git-svn.perl |   15 +++++++++++++++
->  1 files changed, 15 insertions(+), 0 deletions(-)
-> 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index eeb83d3..1ed409d 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -752,6 +752,19 @@ sub populate_merge_info {
->  	return undef;
->  }
-> 
-> +sub remove_self_referential_merge_info {
-> +	return $_merge_info unless defined $_merge_info;
-> +
-> +	my ($_merge_info, $branchurl, $gs) = @_;
-> +	my $rooturl = $gs->repos_root;
-> +	
-> +	unless ($branchurl =~ /^\Q$rooturl\E(.*)/) {
-> +		fatal "URL to commit to is not under SVN root $rooturl!";
-> +	}
-> +	my $branchpath = $1;
-> +	return join("\n", grep { $_ !~ m/^$branchpath\:/ } split(/\n/, $_merge_info));
-> +}
-> +
->  sub cmd_dcommit {
->  	my $head = shift;
->  	command_noisy(qw/update-index --refresh/);
-> @@ -902,6 +915,8 @@ sub cmd_dcommit {
->  				                             $uuid,
->  				                             $linear_refs,
->  				                             $rewritten_parent);
-> +
-> +				$_merge_info = remove_self_referential_merge_info($_merge_info, $url, $gs);
->  			}
-> 
->  			my %ed_opts = ( r => $last_rev,
-> -- 
-> 1.7.8.msysgit.0
+Bryan Jacobs
