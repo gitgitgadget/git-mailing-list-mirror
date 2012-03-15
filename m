@@ -1,81 +1,87 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: [PATCH] Documentation/difftool: add deltawalker to list of valid diff tools
-Date: Thu, 15 Mar 2012 12:28:26 -0400
-Message-ID: <1331828906-5943-1-git-send-email-tim.henigan@gmail.com>
-Cc: Tim Henigan <tim.henigan@gmail.com>
-To: git@vger.kernel.org, gitster@pobox.com, davvid@gmail.com
-X-From: git-owner@vger.kernel.org Thu Mar 15 17:29:06 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/2] t0303: immediately bail out w/o
+ GIT_TEST_CREDENTIAL_HELPER
+Date: Thu, 15 Mar 2012 10:50:05 -0700
+Message-ID: <7vobrxkb3m.fsf@alter.siamese.dyndns.org>
+References: <20120314141401.GC28595@in.waw.pl>
+ <1331734704-14281-1-git-send-email-zbyszek@in.waw.pl>
+ <7v8vj2omiv.fsf@alter.siamese.dyndns.org>
+ <20120315035405.GA4149@sigill.intra.peff.net>
+ <7vk42ml5er.fsf@alter.siamese.dyndns.org>
+ <20120315132428.GB8467@sigill.intra.peff.net>
+ <20120315132642.GA8945@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 15 18:50:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S8DXw-0005bl-Fw
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Mar 2012 17:29:00 +0100
+	id 1S8Eod-000161-Bk
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Mar 2012 18:50:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031683Ab2COQ2z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Mar 2012 12:28:55 -0400
-Received: from mail-fa0-f46.google.com ([209.85.161.46]:32804 "EHLO
-	mail-fa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031681Ab2COQ2y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Mar 2012 12:28:54 -0400
-Received: by faas1 with SMTP id s1so613903faa.19
-        for <git@vger.kernel.org>; Thu, 15 Mar 2012 09:28:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=UD+dJWr9PE5oaK1o2ZdGOvKHRVCuthRiVrvZ/V9jEmo=;
-        b=aI6s/puCGCLtsqGIfb+232Ec2s3kEApVSgIniMILac/2JcycPecKp8OgMISv0D7hp/
-         kA0LWHJIKMVi9HHuI2h6TVlyJzcxkuwCmxGVe1Lv0cTomdtmdaw+gVIDzeGbULtE5Ktp
-         BIJb4r1jV619PtiwWADy5OzlhhWwnI8fXWbDpBcHQbMy48tztd0cWiNQzIzvlKzYSKnz
-         qdIRM+l5SEFuX8T1y/Ic+1jhgXoXUvRVZcOTmkYG52Ut9Ph9EZNnLiF24xrjPwK0lViP
-         yPJWYP9lQjAy+gMZ0ruhIoA38l4mBFwdyQeMBgIoRH4/y1jMrgGzRwc6YniyJIMze1oo
-         9YHg==
-Received: by 10.224.102.8 with SMTP id e8mr8544340qao.50.1331828932485;
-        Thu, 15 Mar 2012 09:28:52 -0700 (PDT)
-Received: from localhost ([99.38.69.118])
-        by mx.google.com with ESMTPS id eo4sm4887954qab.16.2012.03.15.09.28.46
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 15 Mar 2012 09:28:50 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.rc1
+	id S1161179Ab2CORuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Mar 2012 13:50:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39489 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1031939Ab2CORuL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Mar 2012 13:50:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 24D7C6D6F;
+	Thu, 15 Mar 2012 13:50:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=P5EingVwkkObeClBe3c96fx9N2s=; b=mX8FOt
+	soGO3+Htpyf0NT2eE7lVb/fYjVjyH6zw2NhCHU3gr/FgqfTs9N/gCiwF8rRUf72d
+	NVNsnltZnI7lVjr6I2NIkhDOSbCbKHs0B56NKZS0bnosIp2dZmyotwOnH5EwtQwc
+	dN0pUJbdlxLlT15QXwdeNDsq6O6sYNSw92KXg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=orlZvVC5np+/oUdUAbLC+hAHuKPc6j+u
+	X9oOGsIEAbWFVtHdDo/9QeEITW4qyUQo1rtKgzAVyqRvDKFNH//JML1mYcjbz5Qn
+	kh88gCNxxS0p29lZsnzvKRbepsowCg0FeDwWFErbN1WbC13FWzCc8RIvG3eJ0z8t
+	Ixh8Fee3pjs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CC286D6E;
+	Thu, 15 Mar 2012 13:50:08 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC2DF6D6B; Thu, 15 Mar 2012
+ 13:50:06 -0400 (EDT)
+In-Reply-To: <20120315132642.GA8945@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 15 Mar 2012 09:26:43 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4CFF4334-6EC7-11E1-B744-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193218>
 
-deltawalker has been supported since 284a126c3ef3, but was not added
-to the list of valid diff tools reported by 'git difftool --help'.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
----
+> On Thu, Mar 15, 2012 at 09:24:28AM -0400, Jeff King wrote:
+>
+>> > >> 	make GIT_TEST_CREDENTIAL_HELPER=cache T=t0303-*.sh prove
+>> > >> 
+>> > >> seems to get stuck forever.
+>> > >
+>> > > It's because t0303 is the generic "test any helper" script, and does not
+>> > > know how to clean up the credential-cache daemon. So the daemon sticks
+>> > > around, holding onto a file descriptor that causes prove to hang.
+>> > 
+>> > And the reason why "sh t0303-*.sh" version does not have this problem is...?
+>> [long-winded explanation from me]
+>
+> Oops. I read this as "why does t0301 not have the problem?". So ignore
+> everything I said.
+>
+> The reason why running it via sh works is that we leave the daemon
+> running in both cases, but only prove actually cares about the leaked
+> file descriptor and blocks.
 
-The list of valid tools seems prone to error. Right now, there is nothing
-that tells people to update this documentation when new config files are
-added to 'mergetools'.  Should I add a README to 'mergetools' with
-instructions to update this file?  Or would it be better to replace the
-list in the help string with a more general statement like "<tool> must
-match one of the files located in $(git --exec-path)/mergetools"?
-
-
- Documentation/git-difftool.txt |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
-index 19d473c..fe38f66 100644
---- a/Documentation/git-difftool.txt
-+++ b/Documentation/git-difftool.txt
-@@ -32,8 +32,9 @@ OPTIONS
- --tool=<tool>::
- 	Use the diff tool specified by <tool>.
- 	Valid diff tools are:
--	araxis, bc3, diffuse, emerge, ecmerge, gvimdiff, kdiff3,
--	kompare, meld, opendiff, p4merge, tkdiff, vimdiff and xxdiff.
-+	araxis, bc3, deltawalker, diffuse, emerge, ecmerge, gvimdiff,
-+	kdiff3,	kompare, meld, opendiff, p4merge, tkdiff, vimdiff and
-+	xxdiff.
- +
- If a diff tool is not specified, 'git difftool'
- will use the configuration variable `diff.tool`.  If the
--- 
-1.7.10.rc1
+Ah, OK, the last part was what I was missing.  Thanks for a clarification.
