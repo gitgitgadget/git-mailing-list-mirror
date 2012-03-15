@@ -1,161 +1,172 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 3/2] notes-merge: Don't remove .git/NOTES_MERGE_WORKTREE;
- it may be the user's cwd
-Date: Thu, 15 Mar 2012 08:39:30 +0100
-Message-ID: <CALKQrgfpM-y=9O=h33jxirVoOO8dHHO8tWCR9RatxTottpRXFA@mail.gmail.com>
-References: <7vlin3qdpt.fsf@alter.siamese.dyndns.org>
-	<1331769333-13890-1-git-send-email-johan@herland.net>
-	<7vipi6l52w.fsf@alter.siamese.dyndns.org>
-	<7v7gyml4g7.fsf@alter.siamese.dyndns.org>
+From: "W. Trevor King" <wking@drexel.edu>
+Subject: [PATCH] Pull gitweb If-Modified-Since handling out into its own
+ function and use for snapshots.
+Date: Thu, 15 Mar 2012 03:54:07 -0400
+Message-ID: <20120315075407.GA18246@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	david@tethera.net, pclouds@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 15 08:39:49 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary=gKMricLos+KVdGMg
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 15 08:54:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S85Ho-0003aj-Tc
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Mar 2012 08:39:49 +0100
+	id 1S85Vw-0005WX-Uh
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Mar 2012 08:54:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755434Ab2COHjh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Mar 2012 03:39:37 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:52851 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753763Ab2COHjh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Mar 2012 03:39:37 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1S85Ha-0002m5-Hy
-	for git@vger.kernel.org; Thu, 15 Mar 2012 08:39:34 +0100
-Received: by iagz16 with SMTP id z16so3531616iag.19
-        for <git@vger.kernel.org>; Thu, 15 Mar 2012 00:39:30 -0700 (PDT)
-Received: by 10.50.185.201 with SMTP id fe9mr8302996igc.47.1331797170909; Thu,
- 15 Mar 2012 00:39:30 -0700 (PDT)
-Received: by 10.43.52.6 with HTTP; Thu, 15 Mar 2012 00:39:30 -0700 (PDT)
-In-Reply-To: <7v7gyml4g7.fsf@alter.siamese.dyndns.org>
+	id S1757249Ab2COHyU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Mar 2012 03:54:20 -0400
+Received: from vms173003pub.verizon.net ([206.46.173.3]:38946 "EHLO
+	vms173003pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756940Ab2COHyT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Mar 2012 03:54:19 -0400
+Received: from odin.tremily.us ([unknown] [72.68.85.198])
+ by vms173003.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0M0X00FHJ1Y8GB10@vms173003.mailsrvcs.net> for
+ git@vger.kernel.org; Thu, 15 Mar 2012 02:54:08 -0500 (CDT)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id CC09A41BCCD; Thu,
+ 15 Mar 2012 03:54:07 -0400 (EDT)
+Content-disposition: inline
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193192>
-
-On Thu, Mar 15, 2012 at 08:16, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> Junio C Hamano <gitster@pobox.com> writes:
->> Johan Herland <johan@herland.net> writes:
->>> I'm torn about the new remove_everything_inside_dir(). Obviously it=
-'s a
->>> copy-paste-modify of dir.c:remove_dir_recursively(), and could inst=
-ead be
->>> implemented by adding an extra flag to remove_dir_recursively(). Ho=
-wever,
->>> adding a "#define REMOVE_DIR_CONTENTS_BUT_NOT_DIR_ITSELF 04" seemed=
- even
->>> uglier to me...
->>
->> Hmm, what ugliness am I missing when viewing the attached patch? =C2=
-=A0It looks
->> simple and straightforward enough, at least to me.
-
-Agreed, you found a much more palatable name than I did. The patch
-below looks good to me, and should become patch #3 in this series,
-with my "3/2" patch being adjusted accordingly and becoming patch #4.
-Do you want me to send the whole series again, or is it easier for you
-to simply fix it up yourself?
-
->> =C2=A0dir.c | =C2=A0 14 ++++++++++----
->> =C2=A0dir.h | =C2=A0 =C2=A01 +
->> =C2=A02 files changed, 11 insertions(+), 4 deletions(-)
->>
->> diff --git a/dir.c b/dir.c
->> index 0a78d00..6432728 100644
->> --- a/dir.c
->> +++ b/dir.c
->> @@ -1178,6 +1178,7 @@ int remove_dir_recursively(struct strbuf *path=
-, int flag)
->> =C2=A0 =C2=A0 =C2=A0 struct dirent *e;
->> =C2=A0 =C2=A0 =C2=A0 int ret =3D 0, original_len =3D path->len, len;
->> =C2=A0 =C2=A0 =C2=A0 int only_empty =3D (flag & REMOVE_DIR_EMPTY_ONL=
-Y);
->> + =C2=A0 =C2=A0 int keep_toplevel =3D (flag & REMOVE_DIR_KEEP_TOPLEV=
-EL);
->> =C2=A0 =C2=A0 =C2=A0 unsigned char submodule_head[20];
->>
->> =C2=A0 =C2=A0 =C2=A0 if ((flag & REMOVE_DIR_KEEP_NESTED_GIT) &&
->> @@ -1185,9 +1186,14 @@ int remove_dir_recursively(struct strbuf *pat=
-h, int flag)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Do not descend a=
-nd nuke a nested git work tree. */
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;
->>
->> + =C2=A0 =C2=A0 flag &=3D ~REMOVE_DIR_KEEP_TOPLEVEL;
->
-> Nit. This needs to drop REMOVE_DIR_KEEP_NESTED_GIT as well in order t=
-o
-> preserve the current behaviour.
->
-> I actually suspect that the passing of "only_empty" in the original m=
-ay be
-> a bug in a0f4afb (clean: require double -f options to nuke nested git
-> repository and work tree, 2009-06-30), and this patch might be a fix =
-to
-> the bug, but I didn't think things through, and it is getting late, s=
-o...
-
-I noticed the same while looking at this function, and I think your
-analysis is correct. As it stands, REMOVE_DIR_KEEP_NESTED_GIT only
-applies to .git folders located directly in the toplevel dir, and not
-inside a subdirectory. That strikes me as odd given the name of the
-flag.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193193>
 
 
-Have fun! :)
+--gKMricLos+KVdGMg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-=2E..Johan
+The current gitweb only generates Last-Modified and handles
+If-Modified-Since headers for the git_feed action.  This patch breaks
+the Last-Modified and If-Modified-Since handling code out from
+git_feed into a new function modified_since.  This makes the code easy
+to reuse for other actions where it is appropriate, and I've added the
+code to do that in git_snapshot.
 
->> =C2=A0 =C2=A0 =C2=A0 dir =3D opendir(path->buf);
->> - =C2=A0 =C2=A0 if (!dir)
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return rmdir(path->buf);
->> + =C2=A0 =C2=A0 if (!dir) {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!keep_toplevel)
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 return rmdir(path->buf);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 else
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 return -1;
->> + =C2=A0 =C2=A0 }
->> =C2=A0 =C2=A0 =C2=A0 if (path->buf[original_len - 1] !=3D '/')
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 strbuf_addch(path, =
-'/');
->>
->> @@ -1202,7 +1208,7 @@ int remove_dir_recursively(struct strbuf *path=
-, int flag)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (lstat(path->buf=
-, &st))
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 ; /* fall thru */
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 else if (S_ISDIR(st=
-=2Est_mode)) {
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 if (!remove_dir_recursively(path, only_empty))
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 if (!remove_dir_recursively(path, flag))
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 continue; /* happy */
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (!only_em=
-pty && !unlink(path->buf))
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 continue; /* happy, too */
+Signed-off-by: W Trevor King <wking@drexel.edu>
 
+---
+ gitweb/gitweb.perl |   54 ++++++++++++++++++++++++++++++++++++------------=
+---
+ 1 files changed, 38 insertions(+), 16 deletions(-)
 
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index a8b5fad..96a13e7 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -7003,6 +7003,31 @@ sub snapshot_name {
+ 	return wantarray ? ($name, $name) : $name;
+ }
+=20
++sub modified_since {
++	my ($content_type, $latest_epoch, $timezone) =3D @_;
++	our $cgi;
++
++	my $if_modified =3D $cgi->http('IF_MODIFIED_SINCE');
++	if (defined $if_modified) {
++		my $since;
++		if (eval { require HTTP::Date; 1; }) {
++			$since =3D HTTP::Date::str2time($if_modified);
++		} elsif (eval { require Time::ParseDate; 1; }) {
++			$since =3D Time::ParseDate::parsedate($if_modified, GMT =3D> 1);
++		}
++		if (defined $since && $latest_epoch <=3D $since) {
++			my %latest_date =3D parse_date($latest_epoch, $timezone);
++			print $cgi->header(
++				-type =3D> $content_type,
++				-charset =3D> 'utf-8',
++				-last_modified =3D> $latest_date{'rfc2822'},
++				-status =3D> '304 Not Modified');
++			return 0;
++		}
++	}
++	return 1;
++}
++
+ sub git_snapshot {
+ 	my $format =3D $input_params{'snapshot_format'};
+ 	if (!@snapshot_fmts) {
+@@ -7029,6 +7054,14 @@ sub git_snapshot {
+=20
+ 	my ($name, $prefix) =3D snapshot_name($project, $hash);
+ 	my $filename =3D "$name$known_snapshot_formats{$format}{'suffix'}";
++
++	my %co =3D parse_commit($hash) or die_error(404, "Unknown commit object");
++	if (! modified_since($known_snapshot_formats{$format}{'type'},
++	                     $co{'committer_epoch'},
++	                     $co{'committer_tz'})) {
++		return;
++	}
++
+ 	my $cmd =3D quote_command(
+ 		git_cmd(), 'archive',
+ 		"--format=3D$known_snapshot_formats{$format}{'format'}",
+@@ -7038,9 +7071,11 @@ sub git_snapshot {
+ 	}
+=20
+ 	$filename =3D~ s/(["\\])/\\$1/g;
++	my %latest_date =3D parse_date($co{'committer_epoch'}, $co{'committer_tz'=
+});
+ 	print $cgi->header(
+ 		-type =3D> $known_snapshot_formats{$format}{'type'},
+ 		-content_disposition =3D> 'inline; filename=3D"' . $filename . '"',
++		-last_modified =3D> $latest_date{'rfc2822'},
+ 		-status =3D> '200 OK');
+=20
+ 	open my $fd, "-|", $cmd
+@@ -7821,22 +7856,9 @@ sub git_feed {
+ 		%latest_commit =3D %{$commitlist[0]};
+ 		my $latest_epoch =3D $latest_commit{'committer_epoch'};
+ 		%latest_date   =3D parse_date($latest_epoch, $latest_commit{'comitter_tz=
+'});
+-		my $if_modified =3D $cgi->http('IF_MODIFIED_SINCE');
+-		if (defined $if_modified) {
+-			my $since;
+-			if (eval { require HTTP::Date; 1; }) {
+-				$since =3D HTTP::Date::str2time($if_modified);
+-			} elsif (eval { require Time::ParseDate; 1; }) {
+-				$since =3D Time::ParseDate::parsedate($if_modified, GMT =3D> 1);
+-			}
+-			if (defined $since && $latest_epoch <=3D $since) {
+-				print $cgi->header(
+-					-type =3D> $content_type,
+-					-charset =3D> 'utf-8',
+-					-last_modified =3D> $latest_date{'rfc2822'},
+-					-status =3D> '304 Not Modified');
+-				return;
+-			}
++		if (! modified_since($content_type, $latest_epoch,
++		                     $latest_commit{'comitter_tz'})) {
++			return;
+ 		}
+ 		print $cgi->header(
+ 			-type =3D> $content_type,
 --=20
-Johan Herland, <johan@herland.net>
-www.herland.net
+1.7.3.4
+
+--gKMricLos+KVdGMg
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.17 (GNU/Linux)
+
+iQEcBAEBAgAGBQJPYaAbAAoJEPe7CdOcrcTZTLQH/jvonAKtFxU+oqkIlrZcSG1X
+A7yrW+4PM7zGDvhnCbbEMhwyv4573NpaYy1cXiYh12eWNKbXrw7oXaczLCfYA2cn
+bu081zm/Zs1Ihq/K80+QZ5lEzaPI8ePQOdr0epm/+tthJ9uiNguP2SKYTMUDgyNE
+eu0AIp3J5sTtfV4PFNrjjpzQkw0ouRPZLgjDaPklxG+V0vBEQh/ajn7kW9Ruv6FV
+lxHH0ghe3y4eBTsjLd/tzPFn1YIicq6jB2eUpKeCVism5ZrM0GW5xXjH1wkHISIw
+Ue2BlgnFUfCxg4ZTk6HmvJV5jed95Pni27PulJk63t0OqUdFA7zCgBT3aPwX1I8=
+=1dbJ
+-----END PGP SIGNATURE-----
+
+--gKMricLos+KVdGMg--
