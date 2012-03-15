@@ -1,65 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 1/2] t0303: immediately bail out w/o
- GIT_TEST_CREDENTIAL_HELPER
-Date: Thu, 15 Mar 2012 09:26:43 -0400
-Message-ID: <20120315132642.GA8945@sigill.intra.peff.net>
-References: <20120314141401.GC28595@in.waw.pl>
- <1331734704-14281-1-git-send-email-zbyszek@in.waw.pl>
- <7v8vj2omiv.fsf@alter.siamese.dyndns.org>
- <20120315035405.GA4149@sigill.intra.peff.net>
- <7vk42ml5er.fsf@alter.siamese.dyndns.org>
- <20120315132428.GB8467@sigill.intra.peff.net>
+From: Dave Borowitz <dborowitz@google.com>
+Subject: [BUG?] git branch -m doesn't update tracked branch config
+Date: Thu, 15 Mar 2012 08:51:05 -0700
+Message-ID: <CAD0k6qRWR9H8BejcXx3gzy2yQT_MjRBDtbZzhLVM215HQiaVhg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 15 14:26:53 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 15 16:51:43 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S8Ahd-0004lp-U1
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Mar 2012 14:26:50 +0100
+	id 1S8Cxp-0003Wh-Lk
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Mar 2012 16:51:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754072Ab2CON0p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Mar 2012 09:26:45 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49871
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753109Ab2CON0p (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Mar 2012 09:26:45 -0400
-Received: (qmail 21756 invoked by uid 107); 15 Mar 2012 13:26:57 -0000
-Received: from c-71-206-173-132.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.132)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 Mar 2012 09:26:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Mar 2012 09:26:43 -0400
-Content-Disposition: inline
-In-Reply-To: <20120315132428.GB8467@sigill.intra.peff.net>
+	id S1031365Ab2COPvc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Mar 2012 11:51:32 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:65209 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030550Ab2COPv2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Mar 2012 11:51:28 -0400
+Received: by eekc41 with SMTP id c41so1678621eek.19
+        for <git@vger.kernel.org>; Thu, 15 Mar 2012 08:51:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding:x-system-of-record;
+        bh=u71FCDyvBE3GuH9RfvsNyB434nJxA9C2VoHy21lrUDc=;
+        b=h9EvGaX18k2dqn1uUrSRfIA3GXvap8EJsL//nDbbKqdrLX/CxdAW9to4pvg2D4W1j+
+         HTZ35+SwzjIwI8oIpvNTg5iV1iQjLzjefLlI4pCMtC1XC3j3s+1nIKuDhBvBTfTbtNdB
+         cM3It2ELep3AeIlpX2XK2zL94ki/EJBeSB8jFLTajoJZ6OhbNd+ZSuNrUwqyaVdABwWQ
+         vL9DgIYhwi06Y+WWZ3tJECe+a3fQOrVm/nZFQpehHo+jdKBYrzliwoZ2k0p/dKfdCU8g
+         kXJmSj2yWCSFiP794B30YLmbKbjQqYYKFaa7KWnfPRKpiIST9szDetpmxniDEy+eAJw8
+         9W2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding:x-system-of-record:x-gm-message-state;
+        bh=u71FCDyvBE3GuH9RfvsNyB434nJxA9C2VoHy21lrUDc=;
+        b=N4XJQXKsNgaL7yjHmyramwm1Zmejj0t7ixVi0JQrbBWJLOMr1S7hPLsd2A8Hv9Avz3
+         1vlO2A9ysAqQoaCAxOUxB/fJmejWSaeVHnwZDyGNIEuKpat6usskLULN2T9FPC1RrWUn
+         FvJjjS+VNAjtLfrqiIzgos+vccHNI8he5P2EBx1YQyClnuuKs8sK5shCGS2g8aVcmsaG
+         24ti8yCrT/GEHBYbCumAtTc29vSJlMX/defCl6pHuw7mGL4umvscZk2z6tjMiSBcjpVo
+         b5GQZ50tYuxlttxoNDPV6BALlyFZPjkExOffUKhBexTc0KOCOPih0x8L1f3a1ce6O53z
+         H8BA==
+Received: by 10.229.112.14 with SMTP id u14mr2476371qcp.75.1331826686281;
+        Thu, 15 Mar 2012 08:51:26 -0700 (PDT)
+Received: by 10.229.112.14 with SMTP id u14mr2476368qcp.75.1331826686153; Thu,
+ 15 Mar 2012 08:51:26 -0700 (PDT)
+Received: by 10.229.17.132 with HTTP; Thu, 15 Mar 2012 08:51:05 -0700 (PDT)
+X-System-Of-Record: true
+X-Gm-Message-State: ALoCoQmciK9ZHKMFu7xNK515YFZGjiFfvCNozP8oHZ3ZRKB9S26Ebb++79oUmhUZVPnN4oaUErfVwSy4intyk30gLt+JjCUPS+CkI6vr0SIvVaoribk7txT/5Ba6ehD5bK6pj19zuiwvb+sqLMiD0aQCp8Yehi6IjA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193216>
 
-On Thu, Mar 15, 2012 at 09:24:28AM -0400, Jeff King wrote:
+$ git branch --track branch master
+Branch branch set up to track local branch master.
+$ git branch -m master newmaster
+$ git branch -vv
+=A0 branch =A0 =A0e8fadc2 [master] foo
+* newmaster e8fadc2 foo
 
-> > >> 	make GIT_TEST_CREDENTIAL_HELPER=cache T=t0303-*.sh prove
-> > >> 
-> > >> seems to get stuck forever.
-> > >
-> > > It's because t0303 is the generic "test any helper" script, and does not
-> > > know how to clean up the credential-cache daemon. So the daemon sticks
-> > > around, holding onto a file descriptor that causes prove to hang.
-> > 
-> > And the reason why "sh t0303-*.sh" version does not have this problem is...?
-> [long-winded explanation from me]
-
-Oops. I read this as "why does t0301 not have the problem?". So ignore
-everything I said.
-
-The reason why running it via sh works is that we leave the daemon
-running in both cases, but only prove actually cares about the leaked
-file descriptor and blocks.
-
--Peff
+I would have expected branch's upstream to now be newmaster rather
+than master, or at the very least some warning that branch now has a
+nonexistent upstream. Is this intended behavior, or a bug?
