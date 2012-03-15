@@ -1,91 +1,63 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: How to git diff files in renamed directories
-Date: Thu, 15 Mar 2012 05:30:19 -0500
-Message-ID: <4F61C4BB.20908@gmail.com>
-References: <CAGATVH7KCr+dJNpx18==3BT8pzsvKeV5aYRWKts7xH0YZ8yaKw@mail.gmail.com>
+From: =?GB2312?B?0Oy1zw==?= <xudifsd@gmail.com>
+Subject: Re: [PATCH] Use macro HANDLER_WRAPPER in sigchain to wrap clean
+ function of sigchain
+Date: Thu, 15 Mar 2012 18:35:28 +0800
+Message-ID: <CAMocUqRuKXoNAmqzcxvDmt4Oo=NqkM=5WyqgDqfDBMcTK0Cq7w@mail.gmail.com>
+References: <CAMocUqRsEvwnoV32Cr05dJeUj7iNDj1cLP5kAzgyMNEo1O0kCw@mail.gmail.com>
+	<7vmx7kweus.fsf@alter.siamese.dyndns.org>
+	<20120313205501.GB27436@sigill.intra.peff.net>
+	<7vlin4td4g.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Patrick Sabin <patrick.just4fun@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 15 11:30:43 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jeff King <peff@peff.net>,
+	=?GB2312?B?R2l0INPKvP7B0LHt?= <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 15 11:35:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S87xB-0003QT-Mt
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Mar 2012 11:30:42 +0100
+	id 1S8820-0007qa-CH
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Mar 2012 11:35:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753157Ab2COKa0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Mar 2012 06:30:26 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:48483 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751278Ab2COKaZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Mar 2012 06:30:25 -0400
-Received: by yenl12 with SMTP id l12so2840849yen.19
-        for <git@vger.kernel.org>; Thu, 15 Mar 2012 03:30:24 -0700 (PDT)
+	id S1752334Ab2COKfc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Mar 2012 06:35:32 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:50394 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751468Ab2COKfb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Mar 2012 06:35:31 -0400
+Received: by bkcik5 with SMTP id ik5so1978573bkc.19
+        for <git@vger.kernel.org>; Thu, 15 Mar 2012 03:35:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=VgUFfPDaXHyWyzreUzIzusXFTvZNl1Ph/666CKQFLOc=;
-        b=Tc44LBaCEwBEi3Dpbra4TnPwq7syOFzUOnWp3Uesc/ATTKnlAok8uvE3TabwBS3OoK
-         /ENr/Tax59Yzcb5VtyDgcw0mUt+plz3ZSvou1ecT1poBka7W//GQtvKB2gS73evMDKnE
-         6DvNx4z4IKp0S6Z6ZJSYFyJIubPKiN1fJ1EcgzJQhfTWyUdJ9sKdfLDTX3abJbeUiglf
-         mAxa0c3qHnkRWyZCwfzS1E5PuE2yD3jzttCyv2AxYNbzcr+iwqAkgYfqiIzUwGfTKZ+X
-         yYfXzlZlAeYUOYA5Ehm4NG0Bbuol2UN0v8OBCZqGnGN8aSWtBqk+YDCygb5D2kRPtPiT
-         RnDw==
-Received: by 10.60.9.232 with SMTP id d8mr6940425oeb.66.1331807424506;
-        Thu, 15 Mar 2012 03:30:24 -0700 (PDT)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id b6sm1461786obe.12.2012.03.15.03.30.22
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 15 Mar 2012 03:30:22 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.28) Gecko/20120306 Thunderbird/3.1.20
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <CAGATVH7KCr+dJNpx18==3BT8pzsvKeV5aYRWKts7xH0YZ8yaKw@mail.gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=1XQLHkM5B7ZG+Y1fz2UO8VYLCD0Ls65YN6Vy6cECd2s=;
+        b=vtznQgNGEv5bbN15Eb8/2A2uxRWGIhVt4iuDRzFnF9ynblmam1DKBQlB8NZrQNmtX6
+         fhMT+zWqZ5CVAHht8jgjBy69mDeitsQaUr3A1UY+LiumnxOlKvO0I0N/47O3HBMkUcaA
+         oZ3dYLs+2m9Vdook1OjfKCqgSvsz1wDJd0YWVfkWmpe1Cgdu8vYhcxHK/2tKDcxjxxll
+         wHVClF3PBFc7tkY4RfuD5dsZGMFJeYOj2yfxSuMT2iIBYmxVjV1lpEM9KIz5CCYSekXw
+         GYkn8MH1ZFetFU7Sll+2pYM0hDMPESJSJFDGSxboCg6p8KJPqeK9b90HTIEPPDcktT3j
+         uXsg==
+Received: by 10.204.136.200 with SMTP id s8mr2167943bkt.97.1331807728709; Thu,
+ 15 Mar 2012 03:35:28 -0700 (PDT)
+Received: by 10.204.36.85 with HTTP; Thu, 15 Mar 2012 03:35:28 -0700 (PDT)
+In-Reply-To: <7vlin4td4g.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193208>
 
-On 3/15/2012 3:32 AM, Patrick Sabin wrote:
->
-> I want to diff a renamed file (to a different directory) in different commits.
->
-> File a was moved to the file subdir/c
->
-> I tried:
->
-> $ git diff b616d 0aa0 -- subdir/c a
->
-> but git seems to always diff against /dev/null:
->
-> diff --git a/a b/a
-> new file mode 100644
-> index 0000000..2e5ada8
-> --- /dev/null
-> +++ b/a
-> @@ -0,0 +1 @@
-> +File a
-> diff --git a/subdir/c b/subdir/c
-> deleted file mode 100644
-> index 24c846c..0000000
-> --- a/subdir/c
-> +++ /dev/null
-> @@ -1,2 +0,0 @@
-> -File b
-> -Another b change.
->
-> git log --follow subdir/c   recognizes that the file has been renamed
-> and moved to subdirectory.
->
-> Is there any way to get such a diff in git?
->
-git diff b616d:a 0aa0:subdir/c is one way to do it.
+Eh. I really don't see why it is difficult to read. Although it _is_
+error-prone, and also difficult to do further functionality extension.
 
-v/r,
-neal
+BTW, if we want to generalize the clean_xxx_on_signal, how should we
+deal with the exception I mentioned before(function named
+cleanup_children in run-command.c which require one argument)? By
+forcing all clean_xxx take one argument?
+
+Also, many books mentioned that we should never use signal() in
+portable program, use sigaction() instead, but there are plenty of
+signal() in git. Why should we do so?
