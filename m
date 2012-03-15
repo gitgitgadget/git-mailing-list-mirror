@@ -1,198 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] {fetch,receive}-pack: skip sha-1 integrity test on
- objects from new pack
-Date: Thu, 15 Mar 2012 14:57:02 -0700
-Message-ID: <7vsjh9il3l.fsf@alter.siamese.dyndns.org>
-References: <7vfwdq8914.fsf@alter.siamese.dyndns.org>
- <1331736055-21019-1-git-send-email-pclouds@gmail.com>
- <7vy5r1inax.fsf@alter.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git svn dcommit: avoid self-referential mergeinfo
+ lines when svn.pushmergeinfo is configured
+Date: Thu, 15 Mar 2012 22:02:42 +0000
+Message-ID: <20120315220242.GA9348@dcvr.yhbt.net>
+References: <CAHkK2bpq1J2SW2P1tkFnjw5dWEr=uQrfrTUaS2J-swuKsP4kig@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 15 22:57:15 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Bryan Jacobs <bjacobs@woti.com>,
+	Sam Vilain <sam@vilain.net>
+To: Avishay Lavie <avishay.lavie@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 15 23:02:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S8IfZ-000580-Nn
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Mar 2012 22:57:14 +0100
+	id 1S8Ikz-00017i-P3
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Mar 2012 23:02:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760431Ab2COV5I convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Mar 2012 17:57:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52004 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761170Ab2COV5G convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Mar 2012 17:57:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C4F86C73;
-	Thu, 15 Mar 2012 17:57:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=0mBFglb5iG0q
-	VVxmslXUGZeiGW8=; b=uoWxhVr6crFoLsa+Q+M90nHafsOZXWh13wMbi59AfqVh
-	v56IcTomzV1P85piZd7u3zk3aob3jwzA2dxrRKVwI2VbOJ7d9udUt7cZqglOA+Nj
-	yReppGWKQP259BJY1IVRdCFFltP8lfDFLILU+zknYSVFnDflqgmgPQ7KSfoSvwY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=jhZXH9
-	cMsuQl234UkB3QNz/U1Swvic0CEzmrxxfN+lh2yrFxxMLdcZQdZ59DDzjEF+U/DF
-	A7+eHPje2gpInFvG5c27/I+XwzSUM36TsZpBYGEScaKSlJn3I5IiKJQegV2Srqiv
-	kT/mwn1zDYD72fVljE5pFgdWMF/OWo9lNXUFk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2390C6C72;
-	Thu, 15 Mar 2012 17:57:05 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 59E096C71; Thu, 15 Mar 2012
- 17:57:04 -0400 (EDT)
-In-Reply-To: <7vy5r1inax.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 15 Mar 2012 14:09:26 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CD032312-6EE9-11E1-92FE-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755599Ab2COWCo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Mar 2012 18:02:44 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:34118 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754139Ab2COWCn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Mar 2012 18:02:43 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id AEE061F4F5;
+	Thu, 15 Mar 2012 22:02:42 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <CAHkK2bpq1J2SW2P1tkFnjw5dWEr=uQrfrTUaS2J-swuKsP4kig@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193229>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Avishay Lavie <avishay.lavie@gmail.com> wrote:
+> [PATCH] git svn dcommit: avoid self-referential mergeinfo lines when
+> svn.pushmergeinfo flag is configured
 
-> After thinking about this a bit more, I am beginning to think that th=
-e
-> validation of object contents is unnecessary in _all_ cases that invo=
-lve
-> "git fetch". ...
-> So the right solution is probably use --objects for connectivity chec=
-ks as
-> before; we could add a fetch.paranoid configuration to allow people t=
-o
-> still use it (with this patch to remove the over-pessimism from the c=
-ode)
-> but only if they want to.
+Subject line is too long, ~50 chars is the limit.
+See git-commit(1) / Documentation/SubmittingPatches
 
-=46ollowing the above train of thought, the patch to revert what 6d4bb3=
-8
-(fetch: verify we have everything we need before updating our ref,
-2011-09-01) did which caused this performance regression should look li=
-ke
-this.  "tag --contains 6d4bb38" tells me that this affects everything
-since v1.7.8-rc0 so we may want to issue maintenance updates once this
-proves good in 1.7.10.
+> When svn.pushmergeinfo is configured, git svn dcommit tries to
+> automatically populate svn:mergeinfo properties by merging the parent
+> branch's mergeinfo into the committed one on each merge commit. This
+> process can add self-referential mergeinfo lines, i.e. ones that
+> reference the same branch being committed into (e.g. when
+> reintegrating a branch to trunk after previously having merged trunk
+> into it), which are then mishandled by SVN and cause errors in mixed
+> SVN/Git environments.
+> For more details, see my original report on the issue at [1].
+> 
+> This commit adds a step to git svn dcommit that filters out any
+> mergeinfo lines referencing the target branch from the mergeinfo, thus
+> avoiding the problem.
+> 
+> [1] http://thread.gmane.org/gmane.comp.version-control.git/191932
+> 
+> Signed-off-by: Avishay Lavie <avishay.lavie@gmail.com>
+> ---
+> This is my first time sending a patch to the group, so if I'm doing
+> something wrong, please let me know.
 
-Nguy=E1=BB=85n, sorry for being dense.  I think this ended up being ver=
-y close to
-your initial patch.
+Noted :)
 
--- >8 --
-Subject: fetch/receive: remove over-pessimistic connectivity check
+Sam Vilain should be Cc:-ed on mergeinfo-related stuff.  I don't know my
+way around mergeinfo stuff at all.
 
-Git 1.7.8 introduced an object and history re-validation step after
-"fetch" or "push" causes new history to be added to a receiving
-repository, in order to protect a malicious server or pushing client to
-corrupt it by taking advantage of an existing corrupt object that is
-unconnected to existing history of the receiving repository.
+This test breaks t9161-git-svn-mergeinfo-push.sh:
 
-But this is way over-pessimistic, and often adds 5x to 8x runtime overh=
-ead
-for a little gain.  During "fetch" or "receive-pack" (the server side o=
-f
-"push"), unpack-objects and index-pack already validate individual obje=
-cts
-that are received, and the only thing we would want to catch are object=
-s
-that already happened to exist in our repository but were not reference=
-d
-from our refs.  But such objects must have been written by an earlier r=
-un
-of our codepaths that write out loose objects or packfiles, and they mu=
-st
-have done the validation of individual objects when they did so.  The o=
-nly
-thing left to worry about is the connectivity integrity, which can be d=
-one
-with much cheaper "rev-list --objects".
+  not ok - 12 check reintegration mergeinfo
+  #
+  #               mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb4)
+  #               test "$mergeinfo" = "/branches/svnb1:2-4,7-9,13-18
+  #       /branches/svnb2:3,8,16-17
+  #       /branches/svnb3:4,9
+  #       /branches/svnb4:5-6,10-12
+  #       /branches/svnb5:6,11"
 
-Remove this over-pessimistic check, while leaving the door open for lat=
-er
-changes, hinting the possibility in an in-code comment.
+Be sure tests run successfully before submitting patches (or ask
+for help fixing tests).
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/fetch.c |    2 +-
- connected.c     |   14 +++++++++-----
- connected.h     |    3 ++-
- 3 files changed, 12 insertions(+), 7 deletions(-)
+Lastly, formatting: some lines are too long (80 columns max) and
+there's trailing whitespace.
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 8761a33..b2f7d5b 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -505,7 +505,7 @@ static int quickfetch(struct ref *ref_map)
- 	 */
- 	if (depth)
- 		return -1;
--	return check_everything_connected(iterate_ref_map, 1, &rm);
-+	return check_everything_connected(iterate_ref_map, CONN_CHECK_QUIET, =
-&rm);
- }
-=20
- static int fetch_refs(struct transport *transport, struct ref *ref_map=
-)
-diff --git a/connected.c b/connected.c
-index d762423..3564a9f 100644
---- a/connected.c
-+++ b/connected.c
-@@ -6,22 +6,26 @@
- /*
-  * If we feed all the commits we want to verify to this command
-  *
-- *  $ git rev-list --verify-objects --stdin --not --all
-+ *  $ git rev-list --objects --stdin --not --all
-  *
-  * and if it does not error out, that means everything reachable from
-- * these commits locally exists and is connected to some of our
-- * existing refs.
-+ * these commits locally exists and is connected to our existing refs.
-  *
-  * Returns 0 if everything is connected, non-zero otherwise.
-+ *
-+ * We may want to introduce CONN_CHECK_PARANOIA option the caller can
-+ * pass to use --verify-objects instead of --objects to optionally hav=
-e
-+ * individual objects re-validated.
-  */
--int check_everything_connected(sha1_iterate_fn fn, int quiet, void *cb=
-_data)
-+int check_everything_connected(sha1_iterate_fn fn, unsigned flags, voi=
-d *cb_data)
- {
- 	struct child_process rev_list;
--	const char *argv[] =3D {"rev-list", "--verify-objects",
-+	const char *argv[] =3D {"rev-list", "--objects",
- 			      "--stdin", "--not", "--all", NULL, NULL};
- 	char commit[41];
- 	unsigned char sha1[20];
- 	int err =3D 0;
-+	int quiet =3D !!(flags & CONN_CHECK_QUIET);
-=20
- 	if (fn(cb_data, sha1))
- 		return err;
-diff --git a/connected.h b/connected.h
-index 7e4585a..6f17e07 100644
---- a/connected.h
-+++ b/connected.h
-@@ -15,6 +15,7 @@ typedef int (*sha1_iterate_fn)(void *, unsigned char =
-[20]);
-  *
-  * Return 0 if Ok, non zero otherwise (i.e. some missing objects)
-  */
--extern int check_everything_connected(sha1_iterate_fn, int quiet, void=
- *cb_data);
-+extern int check_everything_connected(sha1_iterate_fn, unsigned flags,=
- void *cb_data);
-+#define CONN_CHECK_QUIET 01
-=20
- #endif /* CONNECTED_H */
+>  git-svn.perl |   15 +++++++++++++++
+>  1 files changed, 15 insertions(+), 0 deletions(-)
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index eeb83d3..1ed409d 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -752,6 +752,19 @@ sub populate_merge_info {
+>  	return undef;
+>  }
+> 
+> +sub remove_self_referential_merge_info {
+> +	return $_merge_info unless defined $_merge_info;
+> +
+> +	my ($_merge_info, $branchurl, $gs) = @_;
+> +	my $rooturl = $gs->repos_root;
+> +	
+> +	unless ($branchurl =~ /^\Q$rooturl\E(.*)/) {
+> +		fatal "URL to commit to is not under SVN root $rooturl!";
+> +	}
+> +	my $branchpath = $1;
+> +	return join("\n", grep { $_ !~ m/^$branchpath\:/ } split(/\n/, $_merge_info));
+> +}
+> +
+>  sub cmd_dcommit {
+>  	my $head = shift;
+>  	command_noisy(qw/update-index --refresh/);
+> @@ -902,6 +915,8 @@ sub cmd_dcommit {
+>  				                             $uuid,
+>  				                             $linear_refs,
+>  				                             $rewritten_parent);
+> +
+> +				$_merge_info = remove_self_referential_merge_info($_merge_info, $url, $gs);
+>  			}
+> 
+>  			my %ed_opts = ( r => $last_rev,
+> -- 
+> 1.7.8.msysgit.0
