@@ -1,58 +1,82 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 3/2] notes-merge: Don't remove .git/NOTES_MERGE_WORKTREE;
- it may be the user's cwd
-Date: Thu, 15 Mar 2012 09:12:42 +0100
-Message-ID: <4F61A47A.2050205@viscovery.net>
-References: <7vlin3qdpt.fsf@alter.siamese.dyndns.org> <1331769333-13890-1-git-send-email-johan@herland.net>
+From: Patrick Sabin <patrick.just4fun@gmail.com>
+Subject: How to git diff files in renamed directories
+Date: Thu, 15 Mar 2012 09:32:54 +0100
+Message-ID: <CAGATVH7KCr+dJNpx18==3BT8pzsvKeV5aYRWKts7xH0YZ8yaKw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	david@tethera.net, pclouds@gmail.com
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Mar 15 09:13:00 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 15 09:34:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S85nv-000289-Gf
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Mar 2012 09:12:59 +0100
+	id 1S868U-0001Fx-Ok
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Mar 2012 09:34:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759607Ab2COIMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Mar 2012 04:12:53 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:36689 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1759439Ab2COIMt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Mar 2012 04:12:49 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.76)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1S85nf-0005Ep-9Y; Thu, 15 Mar 2012 09:12:43 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id CE3B11660F;
-	Thu, 15 Mar 2012 09:12:42 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <1331769333-13890-1-git-send-email-johan@herland.net>
-X-Enigmail-Version: 1.3.5
-X-Spam-Score: -1.4 (-)
+	id S932402Ab2COIdG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Mar 2012 04:33:06 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:36340 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932217Ab2COIcy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Mar 2012 04:32:54 -0400
+Received: by gghe5 with SMTP id e5so2766220ggh.19
+        for <git@vger.kernel.org>; Thu, 15 Mar 2012 01:32:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=AmpKvnNKBecjwhFFxU5+zWATDQWx1CnN4bb+nuQGEEY=;
+        b=epx1cJlbVJeU0NCLjqKq6uCmlpR52tAptqCWsHYjggbrscFN8ZvJFBo5mSxD1e4IwK
+         r3DleROU0icbyklomehj6ZMbmIdLTrGZFTxY1FMW3WRV/m72hRfL39qyHcSAdhlzylNA
+         G4B1eJtKtl8vfbZADr1pMzA4EW8EmZbruFz5bAQPF2ef5EBfaZBp+BIl+n2mSlrOUlV+
+         LOyj7+qJiHHbwXh0zvBghRUX9aWncq4Lrk7Q1vcn01t1TNVRUfmvIENUVuIdeMJD0QVF
+         9XI5N7SHQAmMJz2/qRKwdZ/PkbBNmpOyr4lHI1okY7JgFZVWMDPsm8wj/ziTK03jHj3n
+         BxjA==
+Received: by 10.229.75.215 with SMTP id z23mr1926089qcj.111.1331800374253;
+ Thu, 15 Mar 2012 01:32:54 -0700 (PDT)
+Received: by 10.229.142.65 with HTTP; Thu, 15 Mar 2012 01:32:54 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193199>
 
-Am 3/15/2012 0:55, schrieb Johan Herland:
-> When a manual notes merge is committed or aborted, we need to remove the
-> temporary worktree at .git/NOTES_MERGE_WORKTREE. However, removing the
-> entire directory is not good if the user ran the 'git notes merge
-> --commit/--abort' from within that directory. On Windows, the directory
-> removal would simply fail, while on POSIX systems, users would suddenly
-> find themselves in an invalid current directory.
-> 
-> Therefore, instead of deleting the entire directory, we delete everything
-> _within_ the directory, and leave the (empty) directory in place.
+Hi,
 
-Just a data point: With this patch, the test passes on Windows.
+I want to diff a renamed file (to a different directory) in different c=
+ommits.
 
--- Hannes
+=46ile a was moved to the file subdir/c
+
+I tried:
+
+$ git diff b616d 0aa0 -- subdir/c a
+
+but git seems to always diff against /dev/null:
+
+diff --git a/a b/a
+new file mode 100644
+index 0000000..2e5ada8
+--- /dev/null
++++ b/a
+@@ -0,0 +1 @@
++File a
+diff --git a/subdir/c b/subdir/c
+deleted file mode 100644
+index 24c846c..0000000
+--- a/subdir/c
++++ /dev/null
+@@ -1,2 +0,0 @@
+-File b
+-Another b change.
+
+git log --follow subdir/c=A0=A0 recognizes that the file has been renam=
+ed
+and moved to subdirectory.
+
+Is there any way to get such a diff in git?
+
+Regards,
+Patrick
