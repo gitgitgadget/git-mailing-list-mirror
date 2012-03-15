@@ -1,76 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: [PATCH 3/2] notes-merge: Don't remove .git/NOTES_MERGE_WORKTREE;
  it may be the user's cwd
-Date: Thu, 15 Mar 2012 01:12:04 -0700
-Message-ID: <7vvcm6jnaj.fsf@alter.siamese.dyndns.org>
-References: <7vlin3qdpt.fsf@alter.siamese.dyndns.org>
- <1331769333-13890-1-git-send-email-johan@herland.net>
- <7vipi6l52w.fsf@alter.siamese.dyndns.org>
- <7v7gyml4g7.fsf@alter.siamese.dyndns.org>
- <CALKQrgfpM-y=9O=h33jxirVoOO8dHHO8tWCR9RatxTottpRXFA@mail.gmail.com>
+Date: Thu, 15 Mar 2012 09:12:42 +0100
+Message-ID: <4F61A47A.2050205@viscovery.net>
+References: <7vlin3qdpt.fsf@alter.siamese.dyndns.org> <1331769333-13890-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	david@tethera.net, pclouds@gmail.com
 To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Mar 15 09:12:17 2012
+X-From: git-owner@vger.kernel.org Thu Mar 15 09:13:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S85nD-0001cz-Qh
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Mar 2012 09:12:16 +0100
+	id 1S85nv-000289-Gf
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Mar 2012 09:12:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760151Ab2COIML (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Mar 2012 04:12:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35689 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760102Ab2COIMG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Mar 2012 04:12:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DEE0D5341;
-	Thu, 15 Mar 2012 04:12:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bedkwjvA1fXqkFUNKFr9JTXRs/c=; b=BsmT4I
-	tvVLspsROn2jNnC8Ree9xmnd3rPbVm8UZ5yeVBXyYPL7fehbnM04NXZljcM9Wswa
-	gGhGKIdMbFHDpYuK5aHeL7r5vblRLVFVQ5KNclDwG3RwvTIAcN0GhW7HZ/OzjkkM
-	dwBJOvdCDGdno9DeYcsgYQmPFSkiFu+L/1rwc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=g6hDpEwqnuATBMlV83EITkFMNy82lHwK
-	71IyTJTcH8r8Ia8mWh2zVotR6NyvJXFwGmEuM2xllF3FkxSYYSknAz3wR0lyc2LV
-	fWPA89f4aSJak2ecTkiN86aryQ8L7AclsKWu7vToGe6ZCeihDlLQW1aokWzksl8C
-	XPKnY/ywr+0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D407B5340;
-	Thu, 15 Mar 2012 04:12:05 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 63A61533F; Thu, 15 Mar 2012
- 04:12:05 -0400 (EDT)
-In-Reply-To: <CALKQrgfpM-y=9O=h33jxirVoOO8dHHO8tWCR9RatxTottpRXFA@mail.gmail.com> (Johan
- Herland's message of "Thu, 15 Mar 2012 08:39:30 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8D557698-6E76-11E1-AED6-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759607Ab2COIMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Mar 2012 04:12:53 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:36689 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1759439Ab2COIMt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Mar 2012 04:12:49 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.76)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1S85nf-0005Ep-9Y; Thu, 15 Mar 2012 09:12:43 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id CE3B11660F;
+	Thu, 15 Mar 2012 09:12:42 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <1331769333-13890-1-git-send-email-johan@herland.net>
+X-Enigmail-Version: 1.3.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193198>
 
-Johan Herland <johan@herland.net> writes:
+Am 3/15/2012 0:55, schrieb Johan Herland:
+> When a manual notes merge is committed or aborted, we need to remove the
+> temporary worktree at .git/NOTES_MERGE_WORKTREE. However, removing the
+> entire directory is not good if the user ran the 'git notes merge
+> --commit/--abort' from within that directory. On Windows, the directory
+> removal would simply fail, while on POSIX systems, users would suddenly
+> find themselves in an invalid current directory.
+> 
+> Therefore, instead of deleting the entire directory, we delete everything
+> _within_ the directory, and leave the (empty) directory in place.
 
-> ... The patch
-> below looks good to me, and should become patch #3 in this series,
-> with my "3/2" patch being adjusted accordingly and becoming patch #4.
-> Do you want me to send the whole series again, or is it easier for you
-> to simply fix it up yourself?
+Just a data point: With this patch, the test passes on Windows.
 
-I'd rather not to do this myself, as this alleged #3 in v2 was written
-merely as a response to the "refactoring dir.c:remove_dir_recursively is
-ugly", without reading other parts of the patch (i.e. the logic you use to
-decide when to call this function with what arguments) at all.
-
-Thanks.
+-- Hannes
