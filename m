@@ -1,86 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase -i: inform the user they can re-order commits
-Date: Fri, 16 Mar 2012 07:46:19 -0700
-Message-ID: <7vhaxoioxw.fsf@alter.siamese.dyndns.org>
-References: <4F63205A.6000202@seap.minhap.es>
- <vpqlin0n8w5.fsf@bauges.imag.fr> <7vty1oivub.fsf@alter.siamese.dyndns.org>
- <4F63571D.4070405@seap.minhap.es> <vpqaa3geiso.fsf@bauges.imag.fr>
- <7vpqccipuv.fsf@alter.siamese.dyndns.org> <vpq3998ehp3.fsf@bauges.imag.fr>
+From: Vincent van Ravesteijn <vfr@lyx.org>
+Subject: Re: Edit a rerere conflict resolution
+Date: Fri, 16 Mar 2012 16:54:15 +0100
+Message-ID: <4F636227.2060102@lyx.org>
+References: <4F5E4B20.5080709@lyx.org> <7vobs1r3kn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>,
-	git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Mar 16 15:46:45 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 16 16:54:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S8YQS-00082w-JB
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Mar 2012 15:46:40 +0100
+	id 1S8ZU3-0001wR-To
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Mar 2012 16:54:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965421Ab2CPOqg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Mar 2012 10:46:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47906 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964906Ab2CPOqd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2012 10:46:33 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D1E04767;
-	Fri, 16 Mar 2012 10:46:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yQadXNH/3XlZGscFhPHKP9Dd3zk=; b=FQqIvG
-	CaNk4iuYmOe6MCM6PTN4psQeKUwmyedkv+t4XFO2Mo5oAk4/7EYPREuiSC5kJ83V
-	n2VkpWt4NbIp/fFKnFLZkUp/+LolRT0F7teuSYGg9WW3WvyFdJ9DLApp03qnXbUi
-	anZIupSjTat4snms++4sL3KM2aDegEoCSL7YA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Z4LccnsStJA7CxGGgeMAOQgvXuqZ7Ven
-	puSCK8wLuumU9MEoFPo8SB9pBdQgRjY680bATt1y86KQSKYm/z0Uc+M5J53UjN8e
-	a71aPfsJXPUcPD2sRrvn98GU6NHhgkjxaCw70a4adhXAjHu4OVA+udPtrQx0i5Qg
-	yv5YZZZJzdY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA2154766;
-	Fri, 16 Mar 2012 10:46:21 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5C3424765; Fri, 16 Mar 2012
- 10:46:21 -0400 (EDT)
-In-Reply-To: <vpq3998ehp3.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Fri, 16 Mar 2012 15:36:24 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CBCDF78C-6F76-11E1-90CF-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1423056Ab2CPPyU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Mar 2012 11:54:20 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:36303 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965332Ab2CPPyT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2012 11:54:19 -0400
+Received: by eekc41 with SMTP id c41so2202461eek.19
+        for <git@vger.kernel.org>; Fri, 16 Mar 2012 08:54:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :x-gm-message-state;
+        bh=zaB/1Y7yL7h/3KJW7OnmPBXz9Z4oa+V5vYc+pcIGk3c=;
+        b=h+n6YLD8bYV37dG3VarOecjKESj+jAwldhs15N0PxuE0RpEHRloBikNesYJay66/QH
+         95zkwIEyRBaOTzcrKnA9U5FYcZ8UrSTntODWlEcmb+v+YGlYx7Dptmro/8vlhyDYU6dK
+         P3+Q68iCSqQmG6uDJUNQ0d/OVn+3kz/p7pUmAD+shQjLzQSU/EZz639i0lvrS/2I5W+6
+         bDcMq8pesCuGyd0ceCiC4zBPbedMN3VCSPZfmj8DTKGsHKsPWf80SVRpd/b33mKaFxcZ
+         zBWRvAeSOi9muW+pzjl3a4E4rG3eicGBPLeXJmmwUm9U0tLQaSsqPe9ytEAcbvBT0oVs
+         /yVg==
+Received: by 10.213.4.131 with SMTP id 3mr194202ebr.22.1331913257983;
+        Fri, 16 Mar 2012 08:54:17 -0700 (PDT)
+Received: from [192.168.1.4] (j175101.upc-j.chello.nl. [24.132.175.101])
+        by mx.google.com with ESMTPS id n55sm19798549eef.6.2012.03.16.08.54.17
+        (version=SSLv3 cipher=OTHER);
+        Fri, 16 Mar 2012 08:54:17 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <7vobs1r3kn.fsf@alter.siamese.dyndns.org>
+X-Gm-Message-State: ALoCoQn0BlymPsQbIKMzhxIFQWKMBd0dzzCkZe20n1RqfoE0hflUg7PZL0axa/fgK0fbnZ5r3rYU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193271>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-
-> Junio C Hamano <gitster@pobox.com> writes:
+Op 12-3-2012 21:01, Junio C Hamano schreef:
+> Vincent van Ravesteijn<vfr@lyx.org>  writes:
 >
->> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>> Would it be a useful addition to have a command 'git rerere edit
+>> <path>  <commit>' ?
 >>
->>> But if the user sees the help message of "rebase -i", then I don't think
->>> we will stop him from breaking anything by not mentionning that
->>> reordering commits can work. We already give other commands that rewrite
->>> history with more or less danger, so the additional messages isn't
->>> really harmful.
+>> This would allow the user to edit the conflict resolution which was
+>> used in a certain commit (merge, rebase.. ).
 >>
->> I was not questioning that "You can also reorder" is dangerous in any way.
->>
->> What is dangerous is to give an illusion that it is safe to use "rebase
->> -i" without reading a decent documentation that does not even say that
->> reordering is one of the primary purpose of the command, and the mindset
->> that it is OK to give such an illusion with these reminder lines.
+>> Now I tend to grep in the .git/rr-cache directory, because I don't
+>> want to do 'git rerere forget' as this would require me to refix more
+>> resolution than needed.
+> I haven't find it necessary in practice, as the re-fix for me
+> typically would go like this:
 >
-> Yes, but my point is that you can already do that. Nelson just gave an
-> example when explaining how he came out with this patch.
+>      $ git merge other-branch
+>      ... rerere kicks in; eyeball the results
+>      ... ah, my earlier resolution is no longer correct
+>      $ edit $the_path
+>      ... test the result of manual edit in the context of the merged whole
+>      ... and be satisified
+>      $ git rerere forget $the_path
+>      $ git add $the_path
+>      $ git commit
+>      ... rerere records the updated resolution
+>
+This doesn't really work for me:
 
-Yes, I know that.
+      $ git merge other-branch
+      Auto-merging <path>
+      CONFLICT (content): Merge conflicts in <path>
+      Resolved '<path>' using previous resolution.
+      Automatic merge failed; fix conflicts and then commit the result.
 
-And a patch like this will _encourage_ the users to follow that path even
-more. Is it a good thing?  That is what I was questioning.
+      $ git rerere status
+      $ git rerere forget <path>
+      error: no remembered resolution for <path>
+
+      $ edit <path>
+      $ git commit -a -m "fix"
+      ... no sign of rerere doing something.
+
+Why is this different from what you describe above, and how can I modify 
+the recorded resolution ?
+
+Vincent
