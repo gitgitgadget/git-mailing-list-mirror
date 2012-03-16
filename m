@@ -1,103 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] difftool: print list of valid tools with '--tool-help'
-Date: Thu, 15 Mar 2012 16:18:00 -0700
-Message-ID: <7v8vj1ihcn.fsf@alter.siamese.dyndns.org>
-References: <1331850311-4620-1-git-send-email-tim.henigan@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] {fetch,receive}-pack: skip sha-1 integrity test on
+ objects from new pack
+Date: Fri, 16 Mar 2012 09:24:34 +0700
+Message-ID: <CACsJy8A-W97Jd+8FOk1zWbDoTPb=RwO6Ck37O73v7DRrR+M5ew@mail.gmail.com>
+References: <7vfwdq8914.fsf@alter.siamese.dyndns.org> <1331736055-21019-1-git-send-email-pclouds@gmail.com>
+ <7vy5r1inax.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-To: Tim Henigan <tim.henigan@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 16 00:18:25 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 16 03:25:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S8Jw7-0001Wx-R9
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Mar 2012 00:18:24 +0100
+	id 1S8Mqv-0008Fy-Mq
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Mar 2012 03:25:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1032375Ab2COXSL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Mar 2012 19:18:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34886 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1032364Ab2COXSI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Mar 2012 19:18:08 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5169B7366;
-	Thu, 15 Mar 2012 19:18:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qY5c3yBuWr1C7OCcTpxZ5zsKB1I=; b=THGy9e
-	iD36YbmKCVtUw2D50FWvB0ybkpKQmU2qpPTprAe6GVeCC1vIZcWLQ/lbD4vRm3HZ
-	PTZ0F76BwWjMlJOcX8m3J7Jm8Qm5EEwQ71P4OHcaqNcfjmqIe8tVTTOvcaRA5Ybj
-	7lVoM1afdBF6X2kbovlbdj1Yt3idX8gTX0uwg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gmY8duJUYXdEC2TOCxqcW9DurdfeDTm3
-	AzI4TTdyDe19MMxt7rptpQ+Kz0WYsVH8ifU2BHnXC7VVzAtP8kcAg9d2CJ3A7rNF
-	BKZqasD/E8ak4sxDvGjf4pdlYyrX7Xg9uT+JU7rIVb4aVFiCXH6Zgc/eZUMgHxy3
-	rP9hW17uSZ4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CDE87365;
-	Thu, 15 Mar 2012 19:18:02 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BC95D7363; Thu, 15 Mar 2012
- 19:18:01 -0400 (EDT)
-In-Reply-To: <1331850311-4620-1-git-send-email-tim.henigan@gmail.com> (Tim
- Henigan's message of "Thu, 15 Mar 2012 18:25:11 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1C404594-6EF5-11E1-8C6A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752696Ab2CPCZJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Mar 2012 22:25:09 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:64475 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752193Ab2CPCZH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Mar 2012 22:25:07 -0400
+Received: by wgbdr13 with SMTP id dr13so117766wgb.1
+        for <git@vger.kernel.org>; Thu, 15 Mar 2012 19:25:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=CuiGTWh39uVjyM8I1DDEPDL7NFx1cMg8pzatGpWxogI=;
+        b=cJ3cw/D8rYKVLrILt4dzI/BxawFOYaFVeFE1Z1FPCEC8T80c6W0nT2hNFFT1M/73Nm
+         7iOjAi/FhoX+BOoCv3q9p2jjyQAIcrSWYHxspfodKBUed3otGpPDIPJtW7cw1vJrLsq6
+         Yx160ssjUffVNR/njrrFiB8T1Z9rmo5xfYzal2ixM0ndzgJx8Z7pgPNrAG8hJm5Hxd1C
+         xiig3JIbkdrR/MoA0lU/RGSOmhb8k4RuPNK99q0eZ587SagKxUZgq8OBBEKlK5mLUyBG
+         /OS2eY3ibi16DCGkRCn8f7p54pbJ2eX4pYyUXPA9bNdL692zWHGKs9TjZtnqkhZDRxOS
+         NE8Q==
+Received: by 10.216.134.200 with SMTP id s50mr450030wei.116.1331864705206;
+ Thu, 15 Mar 2012 19:25:05 -0700 (PDT)
+Received: by 10.223.13.5 with HTTP; Thu, 15 Mar 2012 19:24:34 -0700 (PDT)
+In-Reply-To: <7vy5r1inax.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193238>
 
-Tim Henigan <tim.henigan@gmail.com> writes:
+2012/3/16 Junio C Hamano <gitster@pobox.com>:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> w=
+rites:
+>
+>> When we fetch or push, usually "git rev-list --verify-objects --not
+>> --all --stdin" is used to make sure that all objects between existin=
+g
+>> refs and new refs are good. This means no gaps in between, all objec=
+ts
+>> are well-formed, object content agrees with its sha-1 signature.
+>>
+>> For the last one, --verify-objects calls check_sha1_signature() via
+>> parse_object(). check_sha1_signature() is an expensive operation,
+>
+> After thinking about this a bit more, I am beginning to think that th=
+e
+> validation of object contents is unnecessary in _all_ cases that invo=
+lve
+> "git fetch". =C2=A0Unpack-objects and index-pack already validate ind=
+ividual
+> objects, and the only thing we would want to catch are objects that w=
+e
+> already happened to have had in our repository but were unreferenced =
+from
+> our refs.
 
-> @@ -100,6 +101,15 @@ sub generate_command
->  		if ($arg eq '-h') {
->  			usage();
->  		}
-> +		if ($arg eq '--tool-help') {
-> +			my $gitpath = Git::exec_path();
-> +			print "'git difftool --tool=<tool>' may be set to one of the following:\n";
-> +			for (glob "$gitpath/mergetools/*") {
-> +				next if /defaults$/;
-> +				print "\t" . basename($_) . "\n";
-> +			}
-
-As this topic to show list of tools dynamically has plenty of time to be
-in the mainline (it will be post 1.7.10), I would suggest a follow-up
-series to this patch to do things like the following (just thinking
-aloud):
-
- - define a new entry point to these mergetools/ scriptlets, let's call
-   it "cando".  An entry for mergetools/kompare might look like this:
-
-        cando () {
-                type kompare >/dev/null && test -n "$DISPLAY"
-        }
-
-   that would yield true only when kompare is available and $DISPLAY is
-   set.
-
- - instead of dumping everything in $gitpath/mergetools/*, check if each
-   tool says it can be used in the user's environment.
-
-        for (glob "$gitpath/mergetools/*") {
-                next unless can_run($_);
-                print ...
-        }
-        ...
-
-   and "can_run" may look like this:
-
-        sub can_run {
-                my ($script) = @_;
-             my $cmd = ". '$script' && cando";
-             system('sh', '-c', $cmd) == 0;
-        }
-
- - perhaps show the result in columnar layout.
+What about remote helpers? Should we declare it's remote helper
+responsibility to validate all incoming objects?
+--=20
+Duy
