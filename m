@@ -1,78 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Edit a rerere conflict resolution
-Date: Fri, 16 Mar 2012 09:42:47 -0700
-Message-ID: <7vobrwh4zc.fsf@alter.siamese.dyndns.org>
-References: <4F5E4B20.5080709@lyx.org>
- <7vobs1r3kn.fsf@alter.siamese.dyndns.org> <4F636227.2060102@lyx.org>
- <7vaa3gilg7.fsf@alter.siamese.dyndns.org> <4F636700.2090105@lyx.org>
- <7vvcm4h61a.fsf@alter.siamese.dyndns.org>
+From: Christopher Tiwald <christiwald@gmail.com>
+Subject: Re: [PATCH] push: Provide situational hints for non-fast-forward
+ errors
+Date: Fri, 16 Mar 2012 13:20:13 -0400
+Message-ID: <20120316172013.GA8119@gmail.com>
+References: <20120313232256.GA49626@democracyinaction.org>
+ <vpqipi7zh3n.fsf@bauges.imag.fr>
+ <7vty1rqek5.fsf@alter.siamese.dyndns.org>
+ <7vlin1gl9l.fsf@alter.siamese.dyndns.org>
+ <20120316091019.GB22273@ecki>
+ <7v3998kb0x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Vincent van Ravesteijn <vfr@lyx.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 16 17:42:56 2012
+Cc: Clemens Buchacher <drizzd@aon.at>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git@vger.kernel.org, peff@peff.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 16 18:20:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S8aEy-0007nv-5k
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Mar 2012 17:42:56 +0100
+	id 1S8apF-0002LX-SR
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Mar 2012 18:20:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422762Ab2CPQmv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Mar 2012 12:42:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40250 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753685Ab2CPQmu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2012 12:42:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D98E7620;
-	Fri, 16 Mar 2012 12:42:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iwZz2by92DvbrQAOC+GFB+MPKdE=; b=H1qn3S
-	KGorDvXGNUQurbeIzrjswguSSKbPBlHumYThZFfqoqrcBBj71OFXheey4VhXFAWl
-	x3OXxOBon/aVXWY4Eahfa8kb34JeX2r68cEsmzbSERb4N6hASbjLE4oXFfV2UVB3
-	XnQZkIGXV1e3GrG03ZW7CcNfSqUIq7nyBQpFU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GdtoAlcksLbE/m184bvooibfz5si62RP
-	xFPsdDUbIkg1r3Va3AucEJ0ipZXy3nytKdVi1471iM0GhJmgWyU4GEJGZM1CvVoa
-	rhtNwEs1Q4qaWbTxGMVmFKQp3gc2WTKADeU9LK6XtilfSw3NuBLMiRVL7gINOyn6
-	fHLth22cy0c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 43EE4761F;
-	Fri, 16 Mar 2012 12:42:49 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D0B7D761D; Fri, 16 Mar 2012
- 12:42:48 -0400 (EDT)
-In-Reply-To: <7vvcm4h61a.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 16 Mar 2012 09:20:01 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 10A9C10A-6F87-11E1-A9E2-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1750994Ab2CPRUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Mar 2012 13:20:20 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:47807 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750802Ab2CPRUT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2012 13:20:19 -0400
+Received: by gghe5 with SMTP id e5so4419445ggh.19
+        for <git@vger.kernel.org>; Fri, 16 Mar 2012 10:20:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=s7Vj1Q1XLWaAGmVvQPj+AK99Gcc3FYCXQIdBaqsgFT0=;
+        b=M5pUBwIJOVxhGqd27+hall4N4z8FqQ4T2BXrSvBpsopietpbdMUl8KImJNN55Re8dQ
+         xrza3HdTpold4uOfjHvMdnpnzNHn5fAMv4xKakITduVSCNGyJ2LeN9cgmKwhnXOhYRNu
+         ojeh1AeBHeGtlfMCHmr67qjoqW58y7cr23TuSS3YdD6bZg5OmYWyYLbdvhDYrTZCTcPY
+         JY5t+FylwzV4NdnxcG2FMtMO9jmPIWK3EmfaXmIYME9Fgw7/HRAfBuOPlykyq8S9TeHM
+         mHDUPNMRqY4WHfzlhmfqIS+Aa4xa5fdevOtByEWe7KJWeGK722YmPyHU/69/p6+U/Oxk
+         gKEQ==
+Received: by 10.224.116.6 with SMTP id k6mr4748626qaq.91.1331918418753;
+        Fri, 16 Mar 2012 10:20:18 -0700 (PDT)
+Received: from gmail.com ([216.55.38.246])
+        by mx.google.com with ESMTPS id ha3sm10126390qab.13.2012.03.16.10.20.15
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 16 Mar 2012 10:20:17 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v3998kb0x.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193278>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Mar 16, 2012 at 05:03:58AM -0700, Junio C Hamano wrote:
+> > We should not give advise_use_upstream if the user specified git push
+> > --all. The advice_checkout_pull_push would make more sense in that case.
+> 
+> Yeah, "default_matching_used" variable should be looked at somewhere
+> around that, but I *think* the approach Christpher and Peff took (and I
+> agree with them) is to help solving the immediate problem the user has and
+> can address.
 
-> Vincent van Ravesteijn <vfr@lyx.org> writes:
->
->> No, I turned rerere.autoupdate off. Proven in the above by the line
->> "Resolved... " instead of "Staged...".
->
-> Yeah, actually I just tried and the procedure works with or without
-> autoupdate for me.
->
-> So there is something different between our setup (or the nature of the
-> conflict), but I do not know what it is offhand.
+Yeah, this was how I interpretted Peff's original suggestion. It seemed
+like a nice compromise between advice that was inapplicable and advice
+that was too complex ("There are 3 different non-ff errors in your push.
+Here are the four resolution processes required to fix them...").
 
-The last message from me on this topic for now as I'll be a bit too busy,
-but a wild guess/hunch: grep NEEDSWORK near rerere.c::handle_cache()?
+Thanks for the additional patching. The language / logic changes make
+sense. One quick, slightly-off-topic question: I'd like
+to take another crack at the patch's commit message, to implement
+some of your language suggestions and clean it up further. Is it
+reasonable for me to wait a few days for additional comments or
+updates, squash together these fixups into a single v2 patch (assuming
+one patch is a logical unit for it), then resubmit?
 
-I suspect that we might need to also update this function to handle "both
-sides added, but differently" case, as we do so in check_one_conflict()
-these days, but for Vincent's particular case that shouldn't be the cause.
+Just wanted to clarify the workflow,
+
+--
+Christopher Tiwald
