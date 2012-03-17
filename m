@@ -1,83 +1,76 @@
 From: Tim Henigan <tim.henigan@gmail.com>
-Subject: [PATCH 5/9] difftool: eliminate setup_environment function
-Date: Fri, 16 Mar 2012 21:58:54 -0400
-Message-ID: <1331949534-15100-1-git-send-email-tim.henigan@gmail.com>
+Subject: [PATCH 6/9] difftool: replace system call with Git::command_noisy
+Date: Fri, 16 Mar 2012 21:59:17 -0400
+Message-ID: <1331949557-15146-1-git-send-email-tim.henigan@gmail.com>
 Cc: Tim Henigan <tim.henigan@gmail.com>
 To: gitster@pobox.com, davvid@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 17 02:59:11 2012
+X-From: git-owner@vger.kernel.org Sat Mar 17 02:59:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S8ivF-0006KE-Q6
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 02:59:10 +0100
+	id 1S8ivY-0006Zu-6v
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 02:59:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1032990Ab2CQB7F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Mar 2012 21:59:05 -0400
+	id S1946022Ab2CQB7X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Mar 2012 21:59:23 -0400
 Received: from mail-iy0-f174.google.com ([209.85.210.174]:61404 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030239Ab2CQB7D (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2012 21:59:03 -0400
-Received: by iagz16 with SMTP id z16so6234576iag.19
-        for <git@vger.kernel.org>; Fri, 16 Mar 2012 18:59:03 -0700 (PDT)
+	with ESMTP id S1945895Ab2CQB7W (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2012 21:59:22 -0400
+Received: by mail-iy0-f174.google.com with SMTP id z16so6234576iag.19
+        for <git@vger.kernel.org>; Fri, 16 Mar 2012 18:59:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=4Nqo125qJdaFvPLkr+O57Y0HSJMQNbFOXA/Mbns+kcs=;
-        b=JmKs2zKyhNAavYPpRs1kL9EvysTDfS0XD4aNDbNHkfbIijIXw8gmsAtbvx76nixOYt
-         YVu8mI17mYKSnLLIBFqot0Huylvpje/3KAXV4Wz9xHI6lN2NJFv+0PrIxgSBqqFLD24W
-         tb9uIgKqqNwrvH4KI5izA8S9N1qfaMCZt6oJ7/+9Djeu8e0gja8WqC1zIQDGM7T0CB2M
-         AaW9rJ0RCO2sUWXDMCf3nfq4uNwUVcAANqWPgQa+uvDAyptWwTWUFh/fA2ApH33cVyjH
-         WH/atLix2FZqNeQRJjKnnVYp9aDR47BMgPskrrj/WfXT+XWKvvnSgec4wMrU9h5vkfth
-         im5w==
-Received: by 10.50.179.71 with SMTP id de7mr896430igc.73.1331949543052;
-        Fri, 16 Mar 2012 18:59:03 -0700 (PDT)
+        bh=PMZni4Yo40Dy7qZJSKrDrXhgL2kRxW4RCAWZn1ee38s=;
+        b=YnoUP0P/xwXcS38q8ycPwhnQipezapADT1vKLAupxE6PkWrTy/vsnCOTO5A1IInr/l
+         Q+GqQvHdMXRup0p5ryFDsZcUSoDCHlHwOqI24cCxhHEWvBtKqSVKxwEs5RQMnhcMcnAI
+         itHnsvMTEwMwVD8IZDKra8jD+MCTmCp21UTHzOS/uCIQI5ZL0peRFrfI1cUe+FnKMTpo
+         Qn5KGxOakYj3QGbfnhh6Selim4Q7f3NXZc88Xi6rnfcBHrIFJrmdgEef+UaWAnyYFZ/d
+         ZTrX8Wv4fHB6P3l4Jxb/DM+X36K/8QGOLsHnKD6/Wm1fexdfPu+KHFQEwbDdZjYUdSvw
+         jYug==
+Received: by 10.50.194.232 with SMTP id hz8mr952207igc.38.1331949562133;
+        Fri, 16 Mar 2012 18:59:22 -0700 (PDT)
 Received: from localhost ([75.38.216.51])
-        by mx.google.com with ESMTPS id cv10sm1220686igc.13.2012.03.16.18.59.02
+        by mx.google.com with ESMTPS id uz5sm917965igc.10.2012.03.16.18.59.21
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 16 Mar 2012 18:59:02 -0700 (PDT)
+        Fri, 16 Mar 2012 18:59:21 -0700 (PDT)
 X-Mailer: git-send-email 1.7.9.1.290.gbd444
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193295>
 
-Removing this function shortens the code and makes it easier to read.
-Now all environment variables are set as part of procedural operation.
+The Git.pm module includes functions intended to standardize working
+with Git repositories in Perl scripts. This commit teaches difftool
+to use Git::command_noisy rather than a system call to run the diff
+command.
 
 Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
 ---
- git-difftool.perl |    9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ git-difftool.perl |   10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
 diff --git a/git-difftool.perl b/git-difftool.perl
-index 99ff587..9495f14 100755
+index 9495f14..8498089 100755
 --- a/git-difftool.perl
 +++ b/git-difftool.perl
-@@ -27,12 +27,6 @@ USAGE
- 	exit($exitcode);
- }
+@@ -72,12 +72,4 @@ elsif (defined($no_prompt)) {
  
--sub setup_environment
--{
--	$ENV{GIT_PAGER} = '';
--	$ENV{GIT_EXTERNAL_DIFF} = 'git-difftool--helper';
--}
+ $ENV{GIT_PAGER} = '';
+ $ENV{GIT_EXTERNAL_DIFF} = 'git-difftool--helper';
+-my @command = ('git', 'diff', @ARGV);
 -
- # parse command-line options. all unrecognized options and arguments
- # are passed through to the 'git diff' command.
- my ($difftool_cmd, $extcmd, $gui, $help, $no_prompt, $prompt);
-@@ -76,7 +70,8 @@ elsif (defined($no_prompt)) {
- 	$ENV{GIT_DIFFTOOL_NO_PROMPT} = 'true';
- }
- 
--setup_environment();
-+$ENV{GIT_PAGER} = '';
-+$ENV{GIT_EXTERNAL_DIFF} = 'git-difftool--helper';
- my @command = ('git', 'diff', @ARGV);
- 
- # ActiveState Perl for Win32 does not implement POSIX semantics of
+-# ActiveState Perl for Win32 does not implement POSIX semantics of
+-# exec* system call. It just spawns the given executable and finishes
+-# the starting program, exiting with code 0.
+-# system will at least catch the errors returned by git diff,
+-# allowing the caller of git difftool better handling of failures.
+-my $rc = system(@command);
+-exit($rc | ($rc >> 8));
++git_cmd_try { Git::command_noisy(('diff', @ARGV)) } 'exit code %d';
 -- 
 1.7.9.1.290.gbd444
