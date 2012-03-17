@@ -1,91 +1,89 @@
-From: Matthew Daniel <mdaniel@gmail.com>
-Subject: Re: [PATCH] git-gui: Do not select Revert Changes by default
-Date: Sat, 17 Mar 2012 21:07:59 +0100
-Message-ID: <CAHtgEPuLjijzcMiAC3QerATyyCAh912tam-KrYgwihe-RQd4JQ@mail.gmail.com>
-References: <loom.20120317T161127-418@post.gmane.org>
-	<4F64EDCD.1000405@kdbg.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC PATCH] push: start warning upcoming default change for push.default
+Date: Sat, 17 Mar 2012 21:46:51 +0100
+Message-ID: <vpqvcm3vttw.fsf@bauges.imag.fr>
+References: <vpqobs65gfc.fsf@bauges.imag.fr>
+	<1331281886-11667-1-git-send-email-Matthieu.Moy@imag.fr>
+	<20120316085152.GA22273@ecki> <vpq1uosswwz.fsf@bauges.imag.fr>
+	<7vy5r0iwdb.fsf@alter.siamese.dyndns.org>
+	<vpqhaxohg3n.fsf@bauges.imag.fr> <20120316214832.GB25092@ecki>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sat Mar 17 21:08:23 2012
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Sat Mar 17 21:47:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S8zvD-0006qK-PC
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 21:08:16 +0100
+	id 1S90XN-0007if-17
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 21:47:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755232Ab2CQUIH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Mar 2012 16:08:07 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:35645 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751226Ab2CQUIB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Mar 2012 16:08:01 -0400
-Received: by wejx9 with SMTP id x9so4852934wej.19
-        for <git@vger.kernel.org>; Sat, 17 Mar 2012 13:07:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=imTDMAmhKADJHoUP5pDdDP1V0txfYEstN0y99hDffdU=;
-        b=UxZg2Av/dezK4scRpDIpu1pCYjcV0aJxddNdbaeWbkak65IQnWcPDWHQeEofB8Wh2P
-         a5naXOUQPdYovarITmxKvuoNp+QJrhNfCDnr00LLqUuiBSFZiBiTCIVEcTwV6v4wRPBk
-         ou1DLf8AMZIulrCacHS6IVyRmSv7WTAjtEHoDDrhaCqQtF2NmzbrE2f6Szx1MidgJYCY
-         s2STZ2J/8Zc1ngwI+ak6Kj8LfO1Bc9THI8mG7JfjvQN+yfU9znV323qgOXcYg6wPFvN0
-         THHp96nSyQKxB4qvc8xHn3BGJEeEGVG80WmWI6fIFkcviKmdkhy8llbBL3uIE6vHrjBI
-         bjUw==
-Received: by 10.216.132.40 with SMTP id n40mr4077361wei.68.1332014879668; Sat,
- 17 Mar 2012 13:07:59 -0700 (PDT)
-Received: by 10.227.172.14 with HTTP; Sat, 17 Mar 2012 13:07:59 -0700 (PDT)
-In-Reply-To: <4F64EDCD.1000405@kdbg.org>
+	id S1755036Ab2CQUrF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Mar 2012 16:47:05 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:57800 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755344Ab2CQUrD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Mar 2012 16:47:03 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q2HKgacn029464
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sat, 17 Mar 2012 21:42:36 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1S90Wa-00010V-4j; Sat, 17 Mar 2012 21:46:52 +0100
+In-Reply-To: <20120316214832.GB25092@ecki> (Clemens Buchacher's message of
+	"Fri, 16 Mar 2012 22:48:32 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 17 Mar 2012 21:42:39 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q2HKgacn029464
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1332621762.52904@MQ3lm9uqXDJK6r7/KjAovw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193351>
 
-Okay, I thought perhaps it was a usability oversight. If it is that
-way on purpose, then feel free to not apply the patch.
+Clemens Buchacher <drizzd@aon.at> writes:
 
-  -- /v\atthew
+> On Fri, Mar 16, 2012 at 01:42:36PM +0100, Matthieu Moy wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>> 
+>> > Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>> >
+>> >> I'd count "upstream is not set" as "current and upstream agree on
+>> >> 'current'". IOW, use "current", but error out if there's a configured
+>> >> upstream that is different.
+>> >
+>> > And if there is no configured upstream, should it error out, or should it
+>> > just push the current one to its own name?
+>> 
+>> I meant just push the current one to its own name.
+>
+> Altough in a somewhat rarer case, this has the same problem as
+> "current":
+>
+> git checkout -b master origin/master
+> git checkout -b topic master
+> git push
+>
+> If a branch called topic already exists on origin, push will now try to
+> update it with the local branch topic. But they do not have any clear
+> connection, except for the name.
 
-On Sat, Mar 17, 2012 at 9:02 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 17.03.2012 16:12, schrieb Matthew L Daniel:
->> Currently, if one activates the revert changes dialog,
->> it has the destructive button selected as the default.
->>
->> This change moves the default action to "do nothing".
->> ---
->> =A0git-gui/lib/index.tcl | =A0 =A02 +-
->> =A01 files changed, 1 insertions(+), 1 deletions(-)
->>
->> diff --git a/git-gui/lib/index.tcl b/git-gui/lib/index.tcl
->> index 8efbbdd..252aa33 100644
->> --- a/git-gui/lib/index.tcl
->> +++ b/git-gui/lib/index.tcl
->> @@ -437,7 +437,7 @@ proc revert_helper {txt paths} {
->>
->> =A0[mc "Any unstaged changes will be permanently lost by the revert.=
-"]" \
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 question \
->> - =A0 =A0 =A0 =A0 =A0 =A0 1 \
->> + =A0 =A0 =A0 =A0 =A0 =A0 0 \
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 [mc "Do Nothing"] \
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 [mc "Revert Changes"] \
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 ]
->
-> Gah! Please no!
->
-> The destructive action is that you chose Branch->Revert. The dialog i=
-s
-> the "Are you sure?" question. Your change is the equivalent of an "Ar=
-e
-> you sure that you are sure?" question. It does not make a lot of
-> difference for point-and-click people, but you force another keypress=
- on
-> people who operate git-gui with the keyboard.
->
-> -- Hannes
+Yes, but the user can hardly expect anything else here. So, it may be a
+(user) mistake, but it's not a surprise.
+
+BTW, 'matching' also has this drawback, and I never saw anyone complain
+about it (maybe I didn't listen enough though).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
