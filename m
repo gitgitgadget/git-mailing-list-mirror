@@ -1,56 +1,78 @@
-From: =?ISO-8859-1?Q?R=E9mi_JANOT?= <r.janot@gmail.com>
-Subject: Git push behavior
-Date: Sat, 17 Mar 2012 09:28:21 +0100
-Message-ID: <CACOHuxUESU4t8ZDhxMuXb1b3TsOqKr8Zpr40n+_tQGUiSLO1iw@mail.gmail.com>
+From: Sebastien Douche <sdouche@gmail.com>
+Subject: Re: git push default behaviour?
+Date: Sat, 17 Mar 2012 10:36:53 +0100
+Message-ID: <CAAGHeXHWfEAym63jXFNvcBddp00joBzNuFEjhKZpqDQcn1d0kA@mail.gmail.com>
+References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 17 09:29:38 2012
+Cc: git@vger.kernel.org
+To: Jeremy Morton <jeremy@configit.com>
+X-From: git-owner@vger.kernel.org Sat Mar 17 10:37:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S8p12-0006di-4q
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 09:29:32 +0100
+	id 1S8q4z-0004GJ-KL
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 10:37:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753009Ab2CQI2p convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Mar 2012 04:28:45 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:62838 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752134Ab2CQI2n convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Mar 2012 04:28:43 -0400
-Received: by iagz16 with SMTP id z16so6585831iag.19
-        for <git@vger.kernel.org>; Sat, 17 Mar 2012 01:28:42 -0700 (PDT)
+	id S1756364Ab2CQJhg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Mar 2012 05:37:36 -0400
+Received: from mail-bk0-f46.google.com ([209.85.214.46]:42922 "EHLO
+	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755677Ab2CQJhf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Mar 2012 05:37:35 -0400
+Received: by bkcik5 with SMTP id ik5so3377202bkc.19
+        for <git@vger.kernel.org>; Sat, 17 Mar 2012 02:37:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=HkdN17ZsxZtywiCufeg33hNR4ZTKARUFSMgUyRt3H6g=;
-        b=Mvk2z/+GBewehrSqK7XKVPJj6RP1x+HuNXizII0l32rANcwnbE/3p4je7/DCSrbMUL
-         y+/IGTpza5nCZwtevet8uoQR8UldnKwlXZtk/R7d4Ptn+3uWy68IjCAagQZWpUOMwNhO
-         nJlLROX9BHvHE7omQuhVl9i8HC8ZLJTuZjyM8L4TfZ7Zv0jezoMutQLWA7UhI69l4dIp
-         /DoZTaPco09NaV2hjCRkouby1qu/3iVRC5y2KmtPrwND0G83jDKXyQjMx7MPkoavp/SS
-         qaExEFIhJyfjxYLZV9Fl8n+M9UJUNc8nY91qL7e4OuAQaL9IfIwAtVEvogTHqk5VIGXS
-         56sg==
-Received: by 10.60.6.164 with SMTP id c4mr6452761oea.43.1331972922495; Sat, 17
- Mar 2012 01:28:42 -0700 (PDT)
-Received: by 10.60.54.10 with HTTP; Sat, 17 Mar 2012 01:28:21 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=EzJ4fqME5cE5rAYEj5x/zQc/kJq88KCvaAGSAHA/KOY=;
+        b=arqbUJGJz8xavq3V+Wy8y32R8QcT0d++gmSvMeCiOvJ8LifN96QxE1Zc5Qoz9f89bO
+         /QL1zh8X74HijCwf/NyYasbLAzUoFGozvPaZr14ARnXgZIP8wCWgPshma8XLlZtuDsEw
+         t7hq4+xdFdc3B7AxOMEukmeNKo4e4a/apZgUvcY+TIvdKvn5cJsH67Z1s/1ZMaTySyeL
+         +TlK1/SDFZMcjTzwWIb9vvOsfMrzrrIF+gdGfsFk8CkMeev5BkCVF1K0u4jODSiqpAs9
+         LAGmB1Hmt5eE5MN3Bm5xKN43P6dHwfYFsOv6fI8iHHRkIc/4fnt86irt0LrQevywSit+
+         WUcw==
+Received: by 10.205.137.15 with SMTP id im15mr2079670bkc.54.1331977053394;
+ Sat, 17 Mar 2012 02:37:33 -0700 (PDT)
+Received: by 10.204.224.204 with HTTP; Sat, 17 Mar 2012 02:36:53 -0700 (PDT)
+In-Reply-To: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193312>
 
-Hi all,
+On Thu, Mar 8, 2012 at 11:01, Jeremy Morton <jeremy@configit.com> wrote=
+:
+> Hi everyone,
 
-As we use git in my company we already have problems with someone
-doing a git push -f (thinking pushing only his branch) and so rollback
-the master branch..... That's so dangerous
+Hi Jeremy (sorry to be late, back from holiday)
 
-=46or us the better default value should be "current".
+> I've noticed that the default behaviour of 'git push' is to push to
+> *all* branches that have a remote branch set up.=C2=A0 In order to pu=
+sh
+> just to one branch, you must specify 'git push repo branchname'.
+>
+> This seems rather unintuative to me
 
-Thanks!
+I made many Git presentation and managed a lot of training[1] and the
+first thing I explain on the configuration is :
 
-R=E9mi JANOT
+1. set your name and email
+2. change the default push option[2]
+
+Moreover, most people I see don't understand the default behaviour:
+it's a frequently ask question by beginner.
+
+
+[1] For git French : http://gitfr.net/blog
+[2] I recommend tracking
+
+
+--=20
+Sebastien Douche <sdouche@gmail.com>
+Twitter: @sdouche / G+: +sdouche
