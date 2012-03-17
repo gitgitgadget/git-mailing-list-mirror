@@ -1,101 +1,174 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH 7/9] difftool: teach difftool to handle directory diffs
-Date: Fri, 16 Mar 2012 20:08:55 -0700
-Message-ID: <CAJDDKr4mc7OwUzE9d51KkgMaMauVJx_T=rdmXnhEc_a0hc0LGQ@mail.gmail.com>
-References: <1331949574-15192-1-git-send-email-tim.henigan@gmail.com>
+Subject: Re: [PATCH 1/9] difftool: parse options using Getopt::Long
+Date: Fri, 16 Mar 2012 20:21:31 -0700
+Message-ID: <CAJDDKr7BTz-2THw1JaJEDcK1G4Uxwc88=gFsHCSONHAtqtypRw@mail.gmail.com>
+References: <1331949442-15039-1-git-send-email-tim.henigan@gmail.com>
+	<1331949442-15039-2-git-send-email-tim.henigan@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: base64
 Cc: gitster@pobox.com, git@vger.kernel.org
 To: Tim Henigan <tim.henigan@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 17 04:09:06 2012
+X-From: git-owner@vger.kernel.org Sat Mar 17 04:22:03 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S8k0t-0001GD-Bq
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 04:09:03 +0100
+	id 1S8kDQ-0002x4-Et
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 04:22:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753217Ab2CQDI5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Mar 2012 23:08:57 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:33594 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751514Ab2CQDI4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Mar 2012 23:08:56 -0400
-Received: by gghe5 with SMTP id e5so4797504ggh.19
-        for <git@vger.kernel.org>; Fri, 16 Mar 2012 20:08:56 -0700 (PDT)
+	id S1752720Ab2CQDVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Mar 2012 23:21:33 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:41114 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752184Ab2CQDVc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2012 23:21:32 -0400
+Received: by yhmm54 with SMTP id m54so4853419yhm.19
+        for <git@vger.kernel.org>; Fri, 16 Mar 2012 20:21:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=ng6P0vYc0Fk5ibCS4yPGCmCSY/d1ltEfAO4GrFDuJE8=;
-        b=YxJO5nrIx/Cctf1lgeTXueCpNinu7ioEkt8qs8ItjGSTBwB3aQX4wPrh7YT52Um0+y
-         P1mH6hNM3fEacZMOxBu7XOZMuk7lF/51ttMh8Czj4BsElBRQLgXXqd3StC0cC+7VVPiY
-         FiDNDQ2FOvUeAdZW2uFiTiR9iffz5soDMcBF03hGXVYEkBAXdEgl6BarSZZ2DXC2O5gT
-         Ymp2a617fq4j/+Fkoq/+77Bg6CiWi9tCLQ6xalXTEwDWkulVtv7/jFox9nI4R7H9mi93
-         6EbZcoX+qcQJ66JUqX/D45WSE/q8xddlSRNwr/ZwOfrD1L31vRRqFNkpO67EOqq2R8jQ
-         hOuQ==
-Received: by 10.236.138.110 with SMTP id z74mr4818657yhi.114.1331953735976;
- Fri, 16 Mar 2012 20:08:55 -0700 (PDT)
-Received: by 10.147.143.4 with HTTP; Fri, 16 Mar 2012 20:08:55 -0700 (PDT)
-In-Reply-To: <1331949574-15192-1-git-send-email-tim.henigan@gmail.com>
+        bh=YKUNOvCuSvsZh7FMvQOOBDW9Uj5Ok8dE+enTFYypx5w=;
+        b=n3eaMfwdRTFDMsISR9TvJyhEALT0lDjs3ru4XO2jCXCFqvyepVrD0oqOJa7ugGJ+IQ
+         5XZOAR5npP/T++aGfUDlJTwQ75dTglGgZyjF1vccmcQzp3690NcuKa7QhU6srnFWh4CX
+         W9BoGUH8N0gwZGV4NjB4Q45nzXh2sBKj6clR+YctDXt7uz5rKIX+/Y10rD0JkjucNm24
+         JlYRf50vLa18QtopLbIzIacbJPAv36iKdDzNH/2o6N+XyyHTG3eNaf5wB8Gc1s/6XAAz
+         kSFcyYj5x9ijHHFWLZl6N/1NMTp0b/xIiSwBf2hArEkGTieFm9liUKUXawWuC8lJR/J2
+         BM3A==
+Received: by 10.236.156.232 with SMTP id m68mr4839076yhk.97.1331954491499;
+ Fri, 16 Mar 2012 20:21:31 -0700 (PDT)
+Received: by 10.147.143.4 with HTTP; Fri, 16 Mar 2012 20:21:31 -0700 (PDT)
+In-Reply-To: <1331949442-15039-2-git-send-email-tim.henigan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193303>
 
-On Fri, Mar 16, 2012 at 6:59 PM, Tim Henigan <tim.henigan@gmail.com> wr=
-ote:
-> Prior to this commit, the difftool utility could only open files one
-> at a time. =C2=A0The new '--dir-diff' option copies all the modified =
-files
-> to a temporary location and runs a directory diff on them.
->
-> Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
-> ---
->
-> =C2=A0Documentation/git-difftool.txt | =C2=A0 =C2=A06 ++
-> =C2=A0git-difftool--helper.sh =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A0 20 =
-++++--
-> =C2=A0git-difftool.perl =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0| =C2=A0142 ++++++++++++++++++++++++++++++++++++----
-> =C2=A03 files changed, 150 insertions(+), 18 deletions(-)
->
-> diff --git a/git-difftool.perl b/git-difftool.perl
-> index 8498089..0262c7a 100755
-> --- a/git-difftool.perl
-> +++ b/git-difftool.perl
-> @@ -22,15 +28,109 @@ sub usage
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0print << 'USAGE';
-> =C2=A0usage: git difftool [-t|--tool=3D<tool>] [-x|--extcmd=3D<cmd>]
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- [-y|--no-prompt] =C2=A0 [-g|--gui]
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
-[-d|--dir-diff]
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- ['git diff' options]
-> =C2=A0USAGE
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0exit($exitcode);
-> =C2=A0}
->
-> +sub setup_dir_diff
-> +{
-> + =C2=A0 =C2=A0 =C2=A0 # Run the diff; exit immediately if no diff fo=
-und
-> + =C2=A0 =C2=A0 =C2=A0 my $repo =3D Git->repository();
-> + =C2=A0 =C2=A0 =C2=A0 my $diffrtn =3D $repo->command_oneline(['diff'=
-, '--raw', '--no-abbrev', '-z', @ARGV]);
-> + =C2=A0 =C2=A0 =C2=A0 exit(0) if (length($diffrtn) =3D=3D 0);
-> +
-> + =C2=A0 =C2=A0 =C2=A0 # Setup temp directories
-> + =C2=A0 =C2=A0 =C2=A0 my $tmpdir =3D tempdir('/tmp/git-diffall.XXXXX=
-', CLEANUP =3D> 1);
-
-Is it okay to hardcode /tmp here, or should we instead do something lik=
-e this?:
-
-    my $tmp =3D $ENV{TMPDIR} || '/tmp';
---=20
-David
+T24gRnJpLCBNYXIgMTYsIDIwMTIgYXQgNjo1NyBQTSwgVGltIEhlbmlnYW4gPHRpbS5oZW5pZ2Fu
+QGdtYWlsLmNvbT4gd3JvdGU6Cj4gUmVwbGFjZSBjdXN0b20gb3B0aW9uL2FyZ3VtZW50IHBhcnNl
+ciB3aXRoIHN0YW5kYXJkIEdldG9wdDo6TG9uZwo+IG1vZHVsZS4gwqBUaGlzIHNob3J0ZW5zIHRo
+ZSBjb2RlIGFuZCBtYWtlcyBpdCBlYXNpZXIgdG8gdW5kZXJzdGFuZC4KCkkndmUgYWxzbyB3YW50
+ZWQgdG8gZG8gdGhlIHNhbWUgaW4gdGhlIHBhc3QuICBUaGUgb25lIHRoaW5nIGhvbGRpbmcgbWUK
+YmFjayB3YXMgdGhpcyBub3RlIGZyb20gdGhlIHBlcmxkb2NzOgoKIklmIHBhc3NfdGhyb3VnaCBp
+cyBhbHNvIGVuYWJsZWQsIG9wdGlvbnMgcHJvY2Vzc2luZyB3aWxsIHRlcm1pbmF0ZSBhdAp0aGUg
+Zmlyc3QgdW5yZWNvZ25pemVkIG9wdGlvbiwgb3Igbm9uLW9wdGlvbiwgd2hpY2hldmVyIGNvbWVz
+IGZpcnN0LiIKCmh0dHA6Ly9zZWFyY2guY3Bhbi5vcmcvfmp2L0dldG9wdC1Mb25nLTIuMzgvbGli
+L0dldG9wdC9Mb25nLnBtCgpUaGF0IGxlYWRzIG1lIHRvIGJlbGlldmUgdGhhdCB1c2luZyBHZXRv
+cHQ6Okxvbmcgd291bGQgYnJlYWsgdGhpcyB1c2UgY2FzZToKCiAgICAkIGdpdCBkaWZmdG9vbCAt
+LWNhY2hlZCAtLXRvb2wgeHhkaWZmIC4uLgoKQWNjb3JkaW5nIHRvIHRoZSBkb2NzLCBpdCB3aWxs
+IHN0b3AgYXQgLS1jYWNoZWQgYW5kIGxlYXZlIGl0IChhbmQgdGhlCnJlc3QpIGluIEBBUkdWLiAg
+V2hlbiBnaXQtZGlmZiBydW5zIGl0IHdpbGwgc2VlIHRoZSAtLXRvb2wgYXJndW1lbnQKYW5kIGJh
+aWwgb3V0LgoKSXMgdGhpcyBpbmRlZWQgdGhlIGNhc2U/ICBJIGFtIGEgbGl0dGxlIGFzaGFtZWQg
+dGhhdCB0aGUgZGlmZnRvb2wKdGVzdHMgZG8gbm90IGNvdmVyIHRoaXMgYXJlYS4gIFRoYXQgd291
+bGQgYmUgYSB2YWx1YWJsZSBmaXJzdCBzdGVwCnRvd2FyZHMgZXhwbG9yaW5nIHRoaXMgYXBwcm9h
+Y2gsIElNTy4KCgpCVFcsIEkgaGF0ZSBAQVJHViBwYXJzaW5nIGxvb3BzIGp1c3QgYXMgbXVjaCBh
+cyBhbnlvbmUhICBJIHdhcyBub3QKaWdub3JhbnQgb2YgR2V0b3B0OjpMb25nLCBhbmQgbm8sIEkg
+d2FzIG5vdCByZS1pbnZlbnRpbmcgdGhlIHdoZWVsIGZvcgpubyByZWFzb24uICBUaGUgcmVhc29u
+IGl0IHdhcyBkb25lIHRoYXQgd2F5IHdhcyBzbyB0aGF0IHdlIGNhbiBmb3J3YXJkCmV2ZXJ5dGhp
+bmcgd2UgZG9uJ3Qga25vdyBhYm91dCB0byBnaXQtZGlmZi4KCkkgaGF2ZW4ndCB0cmllZCB0aGlz
+IHBhdGNoLCBidXQgbXkgcmVhZGluZyBvZiB0aGUgZG9jdW1lbnRhdGlvbiBsZWFkcwptZSB0byBi
+ZWxpZXZlIHRoYXQgdGhpcyBpcyBhIHJlZ3Jlc3Npb24uCgoKCj4gU2lnbmVkLW9mZi1ieTogVGlt
+IEhlbmlnYW4gPHRpbS5oZW5pZ2FuQGdtYWlsLmNvbT4KPiAtLS0KPiDCoGdpdC1kaWZmdG9vbC5w
+ZXJsIHwgwqAxMDkgKysrKysrKysrKysrKysrKysrKysrLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0KPiDCoDEgZmlsZSBjaGFuZ2VkLCA0NCBpbnNlcnRpb25zKCspLCA2NSBkZWxldGlv
+bnMoLSkKPgo+IGRpZmYgLS1naXQgYS9naXQtZGlmZnRvb2wucGVybCBiL2dpdC1kaWZmdG9vbC5w
+ZXJsCj4gaW5kZXggMDliNjVmMS4uZTM2NTcyNyAxMDA3NTUKPiAtLS0gYS9naXQtZGlmZnRvb2wu
+cGVybAo+ICsrKyBiL2dpdC1kaWZmdG9vbC5wZXJsCj4gQEAgLTE1LDExICsxNSw4IEBAIHVzZSBz
+dHJpY3Q7Cj4gwqB1c2Ugd2FybmluZ3M7Cj4gwqB1c2UgQ3dkIHF3KGFic19wYXRoKTsKPiDCoHVz
+ZSBGaWxlOjpCYXNlbmFtZSBxdyhkaXJuYW1lKTsKPiAtCj4gLXJlcXVpcmUgR2l0Owo+IC0KPiAt
+bXkgJERJUiA9IGFic19wYXRoKGRpcm5hbWUoJDApKTsKPiAtCj4gK3VzZSBHZXRvcHQ6Okxvbmcg
+cXcoOmNvbmZpZyBwYXNzX3Rocm91Z2gpOwo+ICt1c2UgR2l0Owo+Cj4gwqBzdWIgdXNhZ2UKPiDC
+oHsKPiBAQCAtMzMsNiArMzAsNyBAQCBVU0FHRQo+Cj4gwqBzdWIgc2V0dXBfZW52aXJvbm1lbnQK
+PiDCoHsKPiArIMKgIMKgIMKgIG15ICRESVIgPSBhYnNfcGF0aChkaXJuYW1lKCQwKSk7Cj4gwqAg
+wqAgwqAgwqAkRU5We1BBVEh9ID0gIiRESVI6JEVOVntQQVRIfSI7Cj4gwqAgwqAgwqAgwqAkRU5W
+e0dJVF9QQUdFUn0gPSAnJzsKPiDCoCDCoCDCoCDCoCRFTlZ7R0lUX0VYVEVSTkFMX0RJRkZ9ID0g
+J2dpdC1kaWZmdG9vbC0taGVscGVyJzsKPiBAQCAtNDcsNzUgKzQ1LDU2IEBAIHN1YiBleGUKPiDC
+oCDCoCDCoCDCoHJldHVybiAkZXhlOwo+IMKgfQo+Cj4gLXN1YiBnZW5lcmF0ZV9jb21tYW5kCj4g
+LXsKPiAtIMKgIMKgIMKgIG15IEBjb21tYW5kID0gKGV4ZSgnZ2l0JyksICdkaWZmJyk7Cj4gLSDC
+oCDCoCDCoCBteSAkc2tpcF9uZXh0ID0gMDsKPiAtIMKgIMKgIMKgIG15ICRpZHggPSAtMTsKPiAt
+IMKgIMKgIMKgIG15ICRwcm9tcHQgPSAnJzsKPiAtIMKgIMKgIMKgIGZvciBteSAkYXJnIChAQVJH
+Vikgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgJGlkeCsrOwo+IC0gwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgaWYgKCRza2lwX25leHQpIHsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgICRza2lwX25leHQgPSAwOwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+bmV4dDsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIH0KPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IGlmICgkYXJnIGVxICctdCcgfHwgJGFyZyBlcSAnLS10b29sJykgewo+IC0gwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgdXNhZ2UoKSBpZiAkI0FSR1YgPD0gJGlkeDsKPiAtIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgICRFTlZ7R0lUX0RJRkZfVE9PTH0gPSAkQVJHVlsk
+aWR4ICsgMV07Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCAkc2tpcF9uZXh0
+ID0gMTsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIG5leHQ7Cj4gLSDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCB9Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoJGFyZyA9fiAv
+Xi0tdG9vbD0vKSB7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCAkRU5We0dJ
+VF9ESUZGX1RPT0x9ID0gc3Vic3RyKCRhcmcsIDcpOwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgbmV4dDsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIH0KPiAtIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIGlmICgkYXJnIGVxICcteCcgfHwgJGFyZyBlcSAnLS1leHRjbWQnKSB7Cj4g
+LSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB1c2FnZSgpIGlmICQjQVJHViA8PSAk
+aWR4Owo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgJEVOVntHSVRfRElGRlRP
+T0xfRVhUQ01EfSA9ICRBUkdWWyRpZHggKyAxXTsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgICRza2lwX25leHQgPSAxOwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgbmV4dDsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIH0KPiAtIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIGlmICgkYXJnID1+IC9eLS1leHRjbWQ9Lykgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgJEVOVntHSVRfRElGRlRPT0xfRVhUQ01EfSA9IHN1YnN0cigkYXJnLCA5
+KTsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIG5leHQ7Cj4gLSDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCB9Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoJGFyZyBlcSAnLWcn
+IHx8ICRhcmcgZXEgJy0tZ3VpJykgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgZXZhbCB7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCBteSAkdG9vbCA9IEdpdDo6Y29tbWFuZF9vbmVsaW5lKCdjb25maWcnLAo+IC0gwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgJ2RpZmYuZ3VpdG9vbCcpOwo+IC0gwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKGxlbmd0aCgkdG9vbCkpIHsK
+PiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgICRFTlZ7R0lUX0RJRkZfVE9PTH0gPSAkdG9vbDsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIH0KPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIH07Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBuZXh0Owo+IC0g
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKCRhcmcg
+ZXEgJy15JyB8fCAkYXJnIGVxICctLW5vLXByb21wdCcpIHsKPiAtIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgICRwcm9tcHQgPSAnbm8nOwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgbmV4dDsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIH0KPiAtIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIGlmICgkYXJnIGVxICctLXByb21wdCcpIHsKPiAtIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgICRwcm9tcHQgPSAneWVzJzsKPiAtIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIG5leHQ7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9Cj4gLSDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCBpZiAoJGFyZyBlcSAnLWgnKSB7Cj4gLSDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCB1c2FnZSgpOwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+IC0g
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgcHVzaCBAY29tbWFuZCwgJGFyZzsKPiArIyBwYXJzZSBjb21t
+YW5kLWxpbmUgb3B0aW9ucy4gYWxsIHVucmVjb2duaXplZCBvcHRpb25zIGFuZCBhcmd1bWVudHMK
+PiArIyBhcmUgcGFzc2VkIHRocm91Z2ggdG8gdGhlICdnaXQgZGlmZicgY29tbWFuZC4KPiArbXkg
+KCRkaWZmdG9vbF9jbWQsICRleHRjbWQsICRndWksICRoZWxwLCAkbm9fcHJvbXB0LCAkcHJvbXB0
+KTsKPiArR2V0T3B0aW9ucygnZ3xndWknID0+IFwkZ3VpLAo+ICsgwqAgwqAgwqAgJ2gnID0+IFwk
+aGVscCwKPiArIMKgIMKgIMKgICdwcm9tcHQnID0+IFwkcHJvbXB0LAo+ICsgwqAgwqAgwqAgJ3R8
+dG9vbDpzJyA9PiBcJGRpZmZ0b29sX2NtZCwKPiArIMKgIMKgIMKgICd4fGV4dGNtZDpzJyA9PiBc
+JGV4dGNtZCwKPiArIMKgIMKgIMKgICd5fG5vLXByb21wdCcgPT4gXCRub19wcm9tcHQpOwo+ICsK
+PiAraWYgKGRlZmluZWQoJGhlbHApKSB7Cj4gKyDCoCDCoCDCoCB1c2FnZSgpOwo+ICt9Cj4gK2lm
+IChkZWZpbmVkKCRkaWZmdG9vbF9jbWQpKSB7Cj4gKyDCoCDCoCDCoCBpZiAobGVuZ3RoKCRkaWZm
+dG9vbF9jbWQpID4gMCkgewo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgJEVOVntHSVRfRElGRl9U
+T09MfSA9ICRkaWZmdG9vbF9jbWQ7Cj4gKyDCoCDCoCDCoCB9IGVsc2Ugewo+ICsgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgcHJpbnQgIk5vIDx0b29sPiBnaXZlbiBmb3IgLS10b29sPTx0b29sPlxuIjsK
+PiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHVzYWdlKCk7Cj4gwqAgwqAgwqAgwqB9Cj4gLSDCoCDC
+oCDCoCBpZiAoJHByb21wdCBlcSAneWVzJykgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgJEVO
+VntHSVRfRElGRlRPT0xfUFJPTVBUfSA9ICd0cnVlJzsKPiAtIMKgIMKgIMKgIH0gZWxzaWYgKCRw
+cm9tcHQgZXEgJ25vJykgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgJEVOVntHSVRfRElGRlRP
+T0xfTk9fUFJPTVBUfSA9ICd0cnVlJzsKPiArfQo+ICtpZiAoZGVmaW5lZCgkZXh0Y21kKSkgewo+
+ICsgwqAgwqAgwqAgaWYgKGxlbmd0aCgkZXh0Y21kKSA+IDApIHsKPiArIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgICRFTlZ7R0lUX0RJRkZUT09MX0VYVENNRH0gPSAkZXh0Y21kOwo+ICsgwqAgwqAgwqAg
+fSBlbHNlIHsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHByaW50ICJObyA8Y21kPiBnaXZlbiBm
+b3IgLS1leHRjbWQ9PGNtZD5cbiI7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCB1c2FnZSgpOwo+
+ICsgwqAgwqAgwqAgfQo+ICt9Cj4gK2lmIChkZWZpbmVkKCRndWkpKSB7Cj4gKyDCoCDCoCDCoCBt
+eSAkZ3VpdG9vbCA9ICIiOwo+ICsgwqAgwqAgwqAgJGd1aXRvb2wgPSBHaXQ6OmNvbmZpZygnZGlm
+Zi5ndWl0b29sJyk7Cj4gKyDCoCDCoCDCoCBpZiAobGVuZ3RoKCRndWl0b29sKSA+IDApIHsKPiAr
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgICRFTlZ7R0lUX0RJRkZfVE9PTH0gPSAkZ3VpdG9vbDsKPiDC
+oCDCoCDCoCDCoH0KPiAtIMKgIMKgIMKgIHJldHVybiBAY29tbWFuZAo+ICt9Cj4gK2lmIChkZWZp
+bmVkKCRwcm9tcHQpKSB7Cj4gKyDCoCDCoCDCoCAkRU5We0dJVF9ESUZGVE9PTF9QUk9NUFR9ID0g
+J3RydWUnOwo+ICt9Cj4gK2Vsc2lmIChkZWZpbmVkKCRub19wcm9tcHQpKSB7Cj4gKyDCoCDCoCDC
+oCAkRU5We0dJVF9ESUZGVE9PTF9OT19QUk9NUFR9ID0gJ3RydWUnOwo+IMKgfQo+Cj4gwqBzZXR1
+cF9lbnZpcm9ubWVudCgpOwo+ICtteSBAY29tbWFuZCA9IChleGUoJ2dpdCcpLCAnZGlmZicsIEBB
+UkdWKTsKPgo+IMKgIyBBY3RpdmVTdGF0ZSBQZXJsIGZvciBXaW4zMiBkb2VzIG5vdCBpbXBsZW1l
+bnQgUE9TSVggc2VtYW50aWNzIG9mCj4gwqAjIGV4ZWMqIHN5c3RlbSBjYWxsLiBJdCBqdXN0IHNw
+YXducyB0aGUgZ2l2ZW4gZXhlY3V0YWJsZSBhbmQgZmluaXNoZXMKPiDCoCMgdGhlIHN0YXJ0aW5n
+IHByb2dyYW0sIGV4aXRpbmcgd2l0aCBjb2RlIDAuCj4gwqAjIHN5c3RlbSB3aWxsIGF0IGxlYXN0
+IGNhdGNoIHRoZSBlcnJvcnMgcmV0dXJuZWQgYnkgZ2l0IGRpZmYsCj4gwqAjIGFsbG93aW5nIHRo
+ZSBjYWxsZXIgb2YgZ2l0IGRpZmZ0b29sIGJldHRlciBoYW5kbGluZyBvZiBmYWlsdXJlcy4KPiAt
+bXkgJHJjID0gc3lzdGVtKGdlbmVyYXRlX2NvbW1hbmQoKSk7Cj4gK215ICRyYyA9IHN5c3RlbShA
+Y29tbWFuZCk7Cj4gwqBleGl0KCRyYyB8ICgkcmMgPj4gOCkpOwo+IC0tCj4gMS43LjkuMS4yOTAu
+Z2JkNDQ0Cj4KCgoKLS0gCkRhdmlkCg==
