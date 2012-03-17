@@ -1,82 +1,89 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH 6/9] difftool: replace system call with Git::command_noisy
-Date: Sat, 17 Mar 2012 11:50:57 +0100
-Message-ID: <CALxABCYiOpQavW3qz+Xx-qjadaF3sAQ3DHAAwzRRBDXm6MAnOw@mail.gmail.com>
-References: <1331949557-15146-1-git-send-email-tim.henigan@gmail.com> <CAJDDKr4+0iWoZhxo6kMVa0YUtDzmrH=XTZnDqQdbnM6TJ41UDg@mail.gmail.com>
+From: Vincent van Ravesteijn <vfr@lyx.org>
+Subject: Re: Edit a rerere conflict resolution
+Date: Sat, 17 Mar 2012 12:03:21 +0100
+Message-ID: <4F646F79.9090408@lyx.org>
+References: <4F5E4B20.5080709@lyx.org> <7vobs1r3kn.fsf@alter.siamese.dyndns.org> <4F636227.2060102@lyx.org> <7vaa3gilg7.fsf@alter.siamese.dyndns.org> <4F636700.2090105@lyx.org> <7vvcm4h61a.fsf@alter.siamese.dyndns.org> <7vobrwh4zc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Tim Henigan <tim.henigan@gmail.com>, gitster@pobox.com,
-	git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 17 11:51:55 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 17 12:03:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S8rEo-0007uD-9B
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 11:51:54 +0100
+	id 1S8rQ5-0001ux-DX
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 12:03:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965065Ab2CQKvW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Mar 2012 06:51:22 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:39493 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756743Ab2CQKvV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Mar 2012 06:51:21 -0400
-Received: by lbbgm6 with SMTP id gm6so2497382lbb.19
-        for <git@vger.kernel.org>; Sat, 17 Mar 2012 03:51:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=c1I+4Nlm6wr6PjYFhv24mDBneHM+CPEuWc7v8Bgoz3g=;
-        b=1KMGIPkf3ersv765+W7BKcWTvR901t33apTcNDs+yHy3NYU4RtzSWMKiEP6lEVpIfg
-         PRwWACijK79xsxkOlEeEcMVCadegdtzyDGYmvFyAhDfm08YNMPSunA4WYnJWimrP4YDE
-         0VfqevU+Hb34Z5afkwdqrED3pTpWj3l2M3j9otpl88K7bP6qjqvoUVMPXaeSLTol3Blo
-         dRyfL8s/xkZV9tKp1o2rHKESasZp1DT6/16zqc/x3PayeqvXKSDfveKKIEuv2GYWDJ9y
-         F8Qv5di1j9AQdK3nxWYgkXnDUbJvuOX7+aTYBMXVLwktJ8MuiewH1L0v4RFOFeRZX/I/
-         dP8Q==
-Received: by 10.112.38.68 with SMTP id e4mr2158891lbk.38.1331981478144; Sat,
- 17 Mar 2012 03:51:18 -0700 (PDT)
-Received: by 10.152.146.65 with HTTP; Sat, 17 Mar 2012 03:50:57 -0700 (PDT)
-In-Reply-To: <CAJDDKr4+0iWoZhxo6kMVa0YUtDzmrH=XTZnDqQdbnM6TJ41UDg@mail.gmail.com>
+	id S1756903Ab2CQLDZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Mar 2012 07:03:25 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:39380 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756794Ab2CQLDY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Mar 2012 07:03:24 -0400
+Received: by eekc41 with SMTP id c41so2380968eek.19
+        for <git@vger.kernel.org>; Sat, 17 Mar 2012 04:03:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :x-gm-message-state;
+        bh=ek8jOBdusM6TjFGhkZQTJ/u6svnTiG4GSb5saXX8Lqo=;
+        b=X9VFZ8YwwbEV0vDEWWrDQLWQygZ6hNqq5R/lYXyjV3MCFOshfWsSScV9r8F5j+Bjzi
+         ahzwk4mZQlVY/AMjMyxWKFbGjfx/gmh+Qbp2hxqDR+USKfgusq/7CYg3orS0IoXqEGrk
+         Io5PUfdtjhv2bm/aw7JZj7+0a6RBkEdi3lbLrDSMr5vXg65TP+JXBR0JYi9FO2aTB40i
+         4gUgdg9Kxv1LsZqUVaZdnZvcgmarwFZ4X44AZLTK7JIEGAtbeNSO0GFtj551Atdw19Iy
+         OcGsPB61VfLRLkxL9M494TBH1BxrmN754TeHe63wOkSRc8vE2wVOHeSL74VASx07xzzE
+         FMnA==
+Received: by 10.14.96.6 with SMTP id q6mr714575eef.6.1331982202694;
+        Sat, 17 Mar 2012 04:03:22 -0700 (PDT)
+Received: from [192.168.1.4] (j175101.upc-j.chello.nl. [24.132.175.101])
+        by mx.google.com with ESMTPS id r44sm27793926eef.2.2012.03.17.04.03.21
+        (version=SSLv3 cipher=OTHER);
+        Sat, 17 Mar 2012 04:03:22 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <7vobrwh4zc.fsf@alter.siamese.dyndns.org>
+X-Gm-Message-State: ALoCoQm9uuCjHHoMg6frxcFUe5AbBZrKZDVH5HOqOd/ULKDRkEpQjcyKY/WdAJvP6I/VI0SMIebM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193319>
 
-Resend for vger archives. Damn that Android GMail client.
+Op 16-3-2012 17:42, Junio C Hamano schreef:
+> Junio C Hamano<gitster@pobox.com>  writes:
+>
+>> Vincent van Ravesteijn<vfr@lyx.org>  writes:
+>>
+>>> No, I turned rerere.autoupdate off. Proven in the above by the line
+>>> "Resolved... " instead of "Staged...".
+>> Yeah, actually I just tried and the procedure works with or without
+>> autoupdate for me.
+>>
+>> So there is something different between our setup (or the nature of the
+>> conflict), but I do not know what it is offhand.
+> The last message from me on this topic for now as I'll be a bit too busy,
+> but a wild guess/hunch: grep NEEDSWORK near rerere.c::handle_cache()?
+>
+> I suspect that we might need to also update this function to handle "both
+> sides added, but differently" case, as we do so in check_one_conflict()
+> these days, but for Vincent's particular case that shouldn't be the cause.
 
-On Sat, Mar 17, 2012 at 03:48, David Aguilar <davvid@gmail.com> wrote:
-> On Fri, Mar 16, 2012 at 6:59 PM, Tim Henigan <tim.henigan@gmail.com> =
-wrote:
->> The Git.pm module includes functions intended to standardize working
->> with Git repositories in Perl scripts. This commit teaches difftool
->> to use Git::command_noisy rather than a system call to run the diff
->> command.
->
-> Git::command_noisy() calls _cmd_exec() which calls _execv_git_cmd()
-> which does a fork() + exec('git', @_) + waitpid();
->
-> We were avoiding exec() for portability reasons, as Alex explained in
-> 677fbff88f368ed6ac52438ddbb530166ec1d5d1:
->
-> # ActiveState Perl for Win32 does not implement POSIX semantics of
-> # exec* system call. It just spawns the given executable and finishes
-> # the starting program, exiting with code 0.
-> # system will at least catch the errors returned by git diff,
-> # allowing the caller of git difftool better handling of failures.
->
-> Is this no longer a concern? =C2=A0Does Git.pm need a similar portabi=
-lity
-> caveat, or =C2=A0does it avoid the problem altogether since it uses f=
-ork()
-> + exec() + waitpid()? =C2=A0(if this is true then it implies that thi=
-s
-> change is fine).
+Yes, the problem is with the renormalization (of eol style) in handle_cache.
 
-It _might_ work. Cygwin kind of has fork(2), it even works (kind of:
-it is a *very* expensive thing to do). There are also other ifs and
-whens, but it is worth a test. It's a nice clean up to have.
+When I've set 'core.autocrlf = true', 'git rerere forget' fails because 
+it does not renormalize. The sha1 of the merge conflict is computed with 
+'crlf' line-ending in handle_file, but with 'lf' line-ending in 
+handle_cache.
+
+Even if I change the code to do the renormalization, it fails. In 
+'renormalize_buffer; , the buffer is converted to 'crlf' by 
+'convert_to_working_tree_internal', but at the end it is converted back 
+to 'lf' by 'convert_to_git'
+
+I don't understand the logic of 'convert_to_git' and 'crlf_to_git' well 
+enough to pinpoint what is going wrong exactly.
+
+Vincent
