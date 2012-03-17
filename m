@@ -1,68 +1,58 @@
-From: Matthew L Daniel <mdaniel@gmail.com>
-Subject: [PATCH] git-gui: Do not select Revert Changes by default
-Date: Sat, 17 Mar 2012 15:12:55 +0000 (UTC)
-Message-ID: <loom.20120317T161127-418@post.gmane.org>
+From: Eric Hanchrow <eric.hanchrow@gmail.com>
+Subject: Re: git push default behaviour?
+Date: Sat, 17 Mar 2012 15:49:37 +0000 (UTC)
+Message-ID: <loom.20120317T164347-871@post.gmane.org>
+References: <CAFsnPqp1+jX3ZY0LZ1QDmvA=2_ebApPBttwFjr36OuTX2_MHug@mail.gmail.com> <87k42vs8pi.fsf@thomas.inf.ethz.ch> <CAFsnPqopZEZeeuFzK4ZoUjGnfpiv5oMs=xV5XBSgSyGLXOwgqA@mail.gmail.com> <1331202483.21444.11.camel@beez.lab.cmartin.tk> <CAFsnPqpnH2CTki8zz6Mpz=qrdxF_aTA92cPrn1L9MQZVMoxdeg@mail.gmail.com> <1331203321.21444.13.camel@beez.lab.cmartin.tk> <4F58C977.8000400@xiplink.com> <vpq62efjeqd.fsf@bauges.imag.fr> <CAHkcotiOGaOdDvibpoiEgys3PnSPfSw0mT3DeEOix+FuboULiA@mail.gmail.com> <vpqfwdjas0m.fsf@bauges.imag.fr> <20120309033826.GA6164@sigill.intra.peff.net> <7vsjhi9wku.fsf@alter.siamese.dyndns.org> <vpqobs65gfc.fsf@bauges.imag.fr> <7vwr6u6qrn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 17 16:13:18 2012
+X-From: git-owner@vger.kernel.org Sat Mar 17 16:50:04 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S8vJj-0005xA-7u
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 16:13:15 +0100
+	id 1S8vtJ-00051k-RI
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 16:50:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754850Ab2CQPNL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Mar 2012 11:13:11 -0400
-Received: from plane.gmane.org ([80.91.229.3]:35495 "EHLO plane.gmane.org"
+	id S1756040Ab2CQPtz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Mar 2012 11:49:55 -0400
+Received: from plane.gmane.org ([80.91.229.3]:34615 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753285Ab2CQPNI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Mar 2012 11:13:08 -0400
+	id S1751020Ab2CQPtz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Mar 2012 11:49:55 -0400
 Received: from list by plane.gmane.org with local (Exim 4.69)
 	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1S8vJZ-0005pG-6Q
-	for git@vger.kernel.org; Sat, 17 Mar 2012 16:13:05 +0100
-Received: from 85-171-89-252.rev.numericable.fr ([85.171.89.252])
+	id 1S8vt9-0004u3-35
+	for git@vger.kernel.org; Sat, 17 Mar 2012 16:49:51 +0100
+Received: from q-static-138-125.avvanta.com ([206.124.138.125])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 17 Mar 2012 16:13:05 +0100
-Received: from mdaniel by 85-171-89-252.rev.numericable.fr with local (Gmexim 0.1 (Debian))
+        for <git@vger.kernel.org>; Sat, 17 Mar 2012 16:49:51 +0100
+Received: from eric.hanchrow by q-static-138-125.avvanta.com with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 17 Mar 2012 16:13:05 +0100
+        for <git@vger.kernel.org>; Sat, 17 Mar 2012 16:49:51 +0100
 X-Injected-Via-Gmane: http://gmane.org/
 X-Complaints-To: usenet@dough.gmane.org
 X-Gmane-NNTP-Posting-Host: sea.gmane.org
 User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 85.171.89.252 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.100 Safari/535.19)
+X-Loom-IP: 206.124.138.125 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.79 Safari/535.11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193333>
 
-Currently, if one activates the revert changes dialog,
-it has the destructive button selected as the default.
+In response to
+http://git-blame.blogspot.com/2012/03/please-discuss-what-git-push-should-do.html:
 
-This change moves the default action to "do nothing".
----
- git-gui/lib/index.tcl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/git-gui/lib/index.tcl b/git-gui/lib/index.tcl
-index 8efbbdd..252aa33 100644
---- a/git-gui/lib/index.tcl
-+++ b/git-gui/lib/index.tcl
-@@ -437,7 +437,7 @@ proc revert_helper {txt paths} {
- 
- [mc "Any unstaged changes will be permanently lost by the revert."]" \
- 		question \
--		1 \
-+		0 \
- 		[mc "Do Nothing"] \
- 		[mc "Revert Changes"] \
- 		]
--- 
-1.7.9.msysgit.0
+I think either 'current' or 'upstream' is a better default than
+'matching', since it's less likely to surprise newbies.  However, I
+cannot decide which of 'current' or 'upstream' is the best choice.  It
+might be worthwhile to have 'git push' warn when someone has
+push.default = current or push.default = upstream, AND when @{u} has a
+different name than the local branch -- in other words, emit a warning
+when 'upstream'' and 'current' refer to different branches.  The
+warning itself should be turn-off-able, since it would get pretty old
+pretty quickly.
