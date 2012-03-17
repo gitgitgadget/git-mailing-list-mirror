@@ -1,87 +1,81 @@
-From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>
-Subject: Re: [fixup PATCH] push: Provide situational hints for non-fast-forward
- errors
-Date: Sat, 17 Mar 2012 20:42:24 +0100
-Message-ID: <4F64E920.7010008@in.waw.pl>
-References: <20120313232256.GA49626@democracyinaction.org> <vpqipi7zh3n.fsf@bauges.imag.fr> <7vty1rqek5.fsf@alter.siamese.dyndns.org> <7vlin1gl9l.fsf@alter.siamese.dyndns.org> <4F64C58B.4000207@in.waw.pl> <20120317184649.GA320@gmail.com>
+From: "Yi, EungJun" <semtlenori@gmail.com>
+Subject: Re: How to reorder all commits include the initial commit
+Date: Sun, 18 Mar 2012 04:45:15 +0900
+Message-ID: <CAFT+Tg9UGdBxj5-DTpxDJRVgvBCnmkmgm6nzVek0KeELgsNneQ@mail.gmail.com>
+References: <CAFT+Tg_DmqxiK1qw1YvNZtY07ZaZ89+JWohdWw2fm8f=6hAwiQ@mail.gmail.com>
+	<m3k42jl2wn.fsf@localhost.localdomain>
+Reply-To: semtlenori@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=EUC-KR
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git@vger.kernel.org, peff@peff.net,
-	Clemens Buchacher <drizzd@aon.at>
-To: Christopher Tiwald <christiwald@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 17 20:42:50 2012
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 17 20:45:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S8zWb-0006mP-H9
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 20:42:49 +0100
+	id 1S8zZ4-00007A-Ev
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 20:45:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754633Ab2CQTmo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Mar 2012 15:42:44 -0400
-Received: from kawka.in.waw.pl ([178.63.212.103]:55866 "EHLO kawka.in.waw.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753511Ab2CQTmo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Mar 2012 15:42:44 -0400
-Received: from 89-78-221-60.dynamic.chello.pl ([89.78.221.60] helo=[192.168.2.82])
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1S8zWL-0003gP-B8; Sat, 17 Mar 2012 20:42:35 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20120104 Icedove/8.0
-In-Reply-To: <20120317184649.GA320@gmail.com>
+	id S1755475Ab2CQTpS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Mar 2012 15:45:18 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:45390 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753511Ab2CQTpQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Mar 2012 15:45:16 -0400
+Received: by iagz16 with SMTP id z16so7239870iag.19
+        for <git@vger.kernel.org>; Sat, 17 Mar 2012 12:45:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=IJBrXE8wHzi4lduSMowWNV6syYDoaNF4sOAOuGphqs0=;
+        b=q1pe1N18J7iKfa8vqunPbrQbQ+nBUdJyl0cfvpCiY7UroMGSZAHlCWFLZ8f0ELLXQF
+         ey3a9Lp1XLgD1/3cKaeTZgu2yyib2hV7u3JRaEpA5HxjHFH8HOayT+vyc4D4NQjv3gEh
+         yK5szSQXhcbXjjxKQgEME7uiK9oUHVcgmja5J/5Ngwmx/+/NwONkSY0RDD/kBLJ34dAb
+         /p0dhIL9c9MP4A2Jp+vnm93QFFKJIRx9CBChjWldvixYrcpO5voutCdydTpOcH387RdZ
+         edMZeTBEpYIzUxwXBo59Vy+5izlYUECxJAdVxAz8b9uqvbDXU3ieOq0drQ1n2L3s7yEe
+         I2Xg==
+Received: by 10.60.2.6 with SMTP id 6mr7918699oeq.21.1332013515528; Sat, 17
+ Mar 2012 12:45:15 -0700 (PDT)
+Received: by 10.182.53.98 with HTTP; Sat, 17 Mar 2012 12:45:15 -0700 (PDT)
+In-Reply-To: <m3k42jl2wn.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193347>
 
-On 03/17/2012 07:46 PM, Christopher Tiwald wrote:
-> On Sat, Mar 17, 2012 at 06:10:35PM +0100, Zbigniew J=C4=99drzejewski-=
-Szmek wrote:
->>   static const char message_advice_use_upstream[] =3D
->> -	N_("Some of your local branches were stale with respect to their\n=
-"
->> -	   "remote counterparts. If you did not intend to push these branc=
-hes,\n"
->> -	   "you may want to set the 'push.default' configuration variable =
-to\n"
->> -	   "'current' or 'upstream' to push only the current branch.");
->> +	N_("Updates were rejected because a tip of your branch is behind t=
-he remote.\n"
->> +	   "If you did not intend to push that branch, you may want to exp=
-licitly\n"
->> +	   "specify branches to push or set the 'push.default' configurati=
-on variable"
->> +	   "to 'current' or 'upstream' to always push only the current bra=
-nch.");
->
-> I prefer the "Some of your local..." language to "Updates were
-> rejected..." as a reader, but I think you're right about providing th=
-e
-> reason git rejected the push up front.
->
-> My concern about this particular message is "tip of your branch is be=
-hind
-> the remote" reads to me like my _current_ branch is the offender, whe=
-n
-> that cannot be the case (it'd hit message_advice_pull_before_push
-> first). Maybe something like this might make it clearer?
->
-> "Updates were rejected because a pushed branch tip is behind its remo=
-te
-> counterpart. If you did not intend to push that branch, you may want =
-to
-> explicitly specify branches to push or set the 'push.default' configu=
-ration
-> variable to 'current' or 'upstream' to always push only the current b=
-ranch."
-Yeah, that's better.
+Thanks to David Barr and Jakub Narebski.
+=46inally I found the way based on your hints to solve my problem.
 
-Zbyszek
+$ git checkout -b test --orphan
+$ git format-patch <newroot>^..<newroot> | git am
+$ git rebase -i --onto test --root master
+$ git branch -M test master
+
+Please let me know if there is more simple way.
+
+2012=B3=E2 3=BF=F9 17=C0=CF =BF=C0=C8=C4 11:26, Jakub Narebski <jnareb@=
+gmail.com>=B4=D4=C0=C7 =B8=BB:
+> semtlenori@gmail.com writes:
+>
+>> Sometimes, I need to reorder all commits, which include the initial
+>> commit, in my branch.
+>> So I tried it using git-rebase as follows, but it failed with the fa=
+tal error.
+>>
+>> (supposing the initial commit is 793ea88)
+>> $ git rebase -i 793ea88^
+>> fatal: Needed a single revision
+>> invalid upstream 793ea88^
+>>
+>> How can I do that?
+>
+> Use `--root` option.
+>
+> --
+> Jakub Narebski
+>
