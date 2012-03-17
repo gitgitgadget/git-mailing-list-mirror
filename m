@@ -1,80 +1,68 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] t7800: Test difftool passing arguments to diff
-Date: Fri, 16 Mar 2012 20:54:37 -0700
-Message-ID: <1331956477-61346-1-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org
-To: Tim Henigan <tim.henigan@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 17 04:55:23 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/9] difftool: teach command to perform directory diffs
+Date: Fri, 16 Mar 2012 21:24:47 -0700
+Message-ID: <7vehsretww.fsf@alter.siamese.dyndns.org>
+References: <1331949442-15039-1-git-send-email-tim.henigan@gmail.com>
+ <7vlin0dlrm.fsf@alter.siamese.dyndns.org>
+ <CAFouetgqsLv9HUYiUXe8aw+NQ-i=k+OGosPRNKSrqePf5wUnQA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: davvid@gmail.com, git@vger.kernel.org
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 17 05:25:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S8kjg-0004ON-JS
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 04:55:20 +0100
+	id 1S8lCu-00030I-QC
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 05:25:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754155Ab2CQDym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Mar 2012 23:54:42 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:43948 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751812Ab2CQDyl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2012 23:54:41 -0400
-Received: by iagz16 with SMTP id z16so6348558iag.19
-        for <git@vger.kernel.org>; Fri, 16 Mar 2012 20:54:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=nOuSXemROPnvJ7JwhARHc4MRBX6Ti4htszXgnS3XGDU=;
-        b=Y2mW+AzqDxKyGP0Ca/e/IwsQqt8kmo8o4Il0MUL1wcsnFLo4lgjSRg88AWDBJbX2rk
-         rps+/fRSvDXpQvobo0J91vjFyKDoZv/Mojz16l9DrfArbOgB5LayEtwiYu7TbgD5Qgbf
-         d0aBVakYlwvwBIcNN8Sq6Vf/+OvLY1QEkpt+QB6LlXdfn/47ZIVSv4ibviEKNjkmYD7h
-         cywBXegyOxUH+T5cYXHjY/xtJgGMVXR7mpDxFLOoBy7Gd0n1A/h0SDnV1xTDbH6mWOxj
-         +B/klfaUXqNdIfuNf/HmsdmwKYlaNuCHjVY6lRKGoavgsOiE87WJp8V+XeAW4GeD715F
-         SvtQ==
-Received: by 10.182.141.10 with SMTP id rk10mr4838669obb.48.1331956480618;
-        Fri, 16 Mar 2012 20:54:40 -0700 (PDT)
-Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPS id xh3sm6666340obb.13.2012.03.16.20.54.39
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 16 Mar 2012 20:54:40 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.rc1.22.gf5241.dirty
+	id S1751715Ab2CQEYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Mar 2012 00:24:51 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59519 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751255Ab2CQEYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Mar 2012 00:24:50 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 561B86C03;
+	Sat, 17 Mar 2012 00:24:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UXrElVmjNHmE670cKbHF6gTv/HQ=; b=txMAHK
+	+lqAjWPfR49pQQ3KQ0HOE5i2PAhvWmjpRNcfLHhcjUupEYheaMjE9E/6kq45Iwwj
+	0WMLfUzlJmERL8e31eDMrAvQEQ4GUN51ZY60EWETN10gTWjjwyqWUb1bg2vO1Tcs
+	l7igRgVavsub8dHN8bqWMnaVNfgjedRMjHsdg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ssJs8EK+h7P8ns5jWRgl2a+lWBSMX1gC
+	+NfvfJfZkwRf2X5To0jkUZO1LJcXQnY0qM8yr74gMCLdYu/UjrfgD/03RpnUP0J+
+	/7BldHqYJu1sfkqzXwHiIe7H2A4VLuJ6o0H0uB8Tpl4VfIyCo8K/V7RCB2w1KGo2
+	mWMLPgG1Seo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DC296C02;
+	Sat, 17 Mar 2012 00:24:49 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D42B86C01; Sat, 17 Mar 2012
+ 00:24:48 -0400 (EDT)
+In-Reply-To: <CAFouetgqsLv9HUYiUXe8aw+NQ-i=k+OGosPRNKSrqePf5wUnQA@mail.gmail.com> (Tim
+ Henigan's message of "Fri, 16 Mar 2012 22:26:11 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2225E5B4-6FE9-11E1-ACD3-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193306>
 
-git-difftool relies on the ability to forward unknown arguments
-to the git-diff command.  Add a test to ensure that this works
-as advertised.
+Tim Henigan <tim.henigan@gmail.com> writes:
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
- t/t7800-difftool.sh |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+> I began fixing those issues in 'git-diffall' by rewriting the loop
+> that populates the tmp dirs in Perl.  By the time I changed the loop
+> to use 'git diff --raw -z' and handle working copy changes and
+> submodules, it seemed I was very near to finishing the things I wanted
+> to accomplish in "phase 2".  Finishing the work by updating 'difftool'
+> seemed to actually be easier than trying to update 'diffall'.
 
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index 4fb4c93..2763d79 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -83,6 +83,17 @@ test_expect_success PERL 'difftool ignores bad --tool values' '
- 	test "$diff" = ""
- '
- 
-+test_expect_success PERL 'difftool forwards arguments to diff' '
-+	>for-diff &&
-+	git add for-diff &&
-+	echo changes>for-diff &&
-+	git add for-diff &&
-+	diff=$(git difftool --cached --no-prompt -- for-diff) &&
-+	test "$diff" = "" &&
-+	git reset -- for-diff &&
-+	rm for-diff
-+'
-+
- test_expect_success PERL 'difftool honors --gui' '
- 	git config merge.tool bogus-tool &&
- 	git config diff.tool bogus-tool &&
--- 
-1.7.10.rc1.22.gf5241.dirty
+;-)  Good.
