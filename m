@@ -1,118 +1,72 @@
 From: Vincent van Ravesteijn <vfr@lyx.org>
-Subject: Re: rebase problem
-Date: Sat, 17 Mar 2012 17:11:21 +0100
-Message-ID: <4F64B7A9.20805@lyx.org>
-References: <OF506B5658.3E449452-ONC12579C4.00460A6E-C12579C4.0047355D@transmode.se> <4F649202.4080102@lyx.org> <OF03E8C640.7C5AF318-ONC12579C4.004F7449-C12579C4.004FCF5C@transmode.se>
+Subject: Re: git repo in a single file
+Date: Sat, 17 Mar 2012 17:13:01 +0100
+Message-ID: <4F64B80D.4000308@lyx.org>
+References: <20120317155445.GA18712@mailgate.onlinehome-server.info>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Joakim Tjernlund <joakim.tjernlund@transmode.se>
-X-From: git-owner@vger.kernel.org Sat Mar 17 17:11:34 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 17 17:13:10 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S8wE9-00039H-Qq
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 17:11:34 +0100
+	id 1S8wFh-0004OS-Rn
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 17:13:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752184Ab2CQQLZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Mar 2012 12:11:25 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:44769 "EHLO
+	id S1752717Ab2CQQNG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Mar 2012 12:13:06 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:63746 "EHLO
 	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751660Ab2CQQLY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Mar 2012 12:11:24 -0400
-Received: by eekc41 with SMTP id c41so2416310eek.19
-        for <git@vger.kernel.org>; Sat, 17 Mar 2012 09:11:23 -0700 (PDT)
+	with ESMTP id S1751660Ab2CQQNE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Mar 2012 12:13:04 -0400
+Received: by eekc41 with SMTP id c41so2416476eek.19
+        for <git@vger.kernel.org>; Sat, 17 Mar 2012 09:13:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding
          :x-gm-message-state;
-        bh=j++ENM3P00ueb+uepJjv+byPo4+fBW976eRaxWE4maI=;
-        b=dfANuCjsz/EYZjJKaNDxS/20qY1YOZiPoqvJ3eIIeiqcq/H8BJvUKoB20StWJfAo1Q
-         ieif+IgLrVXybmsREnms35ixEXC4+pXBiPu5pmvLcJV/PtgMaqG7ojqcX2PRCX4J1i1N
-         emU55Td9Gv8sp+jwm1ApXma+2y6XCRDzJUmI2ZuZin6/24nK8GLaReHnmKjypAB0uDU6
-         5wRW4cThKuTvWM+xrx3UjbSXl4fEz3wPb+PVR50STCWrY+d/pfw+GN6xqddbLfaW/+l6
-         ZRb/AcHMnUjAVx8g2WlKQCkfB55YVNQs39C65gq8BeVVy0cakwqG7/LqGkRFzwPf8Vd8
-         Y+8g==
-Received: by 10.14.183.136 with SMTP id q8mr803449eem.60.1332000683312;
-        Sat, 17 Mar 2012 09:11:23 -0700 (PDT)
+        bh=gdRHnGzphZVyWdbvmjuo4lZ0/q95egpytVeIB0V26/0=;
+        b=Vf5vAbwQdTRx/JqNg62PetccOpVRvuiZxWE30THMJbJBrxhNQwrkLAauvaUtjSzPz6
+         7HvENJnXd5ZJFljSHRLpWkyxeZH4+w3ZwiKivn0BfInCLbGSGLjmHeVrvAm846hlc6Ts
+         lUYSSMlju24R+25Ge7J6D7Cg2ndmWoZAMRYYHpJN6hSUpecr0asvr3zRTx1Yy0vx4pQl
+         pYie+UpFEzDd0iipr5Qh1GnPH7qWolRMqokkgmZeIPZZnmH6j6BpGFWn/aYLWNUY21Qr
+         0rikyRp+k+MQcyGKVtCr9b1EOl3G3rLRUFEFpGGGs529TLuhVz4q1AwqfEdjfnKC150j
+         4EEw==
+Received: by 10.14.98.72 with SMTP id u48mr789282eef.81.1332000782600;
+        Sat, 17 Mar 2012 09:13:02 -0700 (PDT)
 Received: from [192.168.1.4] (j175101.upc-j.chello.nl. [24.132.175.101])
-        by mx.google.com with ESMTPS id x8sm29938569eea.10.2012.03.17.09.11.22
+        by mx.google.com with ESMTPS id s48sm30021292eem.0.2012.03.17.09.13.01
         (version=SSLv3 cipher=OTHER);
-        Sat, 17 Mar 2012 09:11:22 -0700 (PDT)
+        Sat, 17 Mar 2012 09:13:02 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <OF03E8C640.7C5AF318-ONC12579C4.004F7449-C12579C4.004FCF5C@transmode.se>
-X-Gm-Message-State: ALoCoQlYsAPc10ulue755cahPGFG5b7rRuHwnChMo7KUxihmziGzIsVHCsIOLc+cTCo78q+QhSdT
+In-Reply-To: <20120317155445.GA18712@mailgate.onlinehome-server.info>
+X-Gm-Message-State: ALoCoQmEDbS8Cq5wRdo8SO2bEXnCBl8lJ5v0xCPTdwY1h/cA5GzGXlm2GZwO3e+rnOd3Nn2iypPn
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193337>
 
-Op 17-3-2012 15:31, Joakim Tjernlund schreef:
-> Vincent van Ravesteijn<vfr@lyx.org>  wrote on 2012/03/17 14:30:42:
->> Op 17-3-2012 13:57, Joakim Tjernlund schreef:
->>> A co-worker this on our local u-boot repo:
->>>     git checkout master
->>>     git fetch denx/master
->>>     git merge denx/master
->>> <resolve conflicts>
->>>     git commit
->>>     ...
->>>     git commit
->>> Now u-boot is working again
->>> then update to latest u-boot so:
->>>     git fetch denx/master
->>>     git rebase denx/master
->>> Now it is a mess, that rebase seems to start from way back as a
->>> staring reference, not from the last merge shown above.
->>> I guess I forgotten how git works, what did go wrong?
->>>
->>>     Jocke
->>>
->>> --
->>> To unsubscribe from this list: send the line "unsubscribe git" in
->>> the body of a message to majordomo@vger.kernel.org
->>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->> The situation is like this:
->>
->>    master - C - o - o - D - o - o - o - A
->>                        /
->>    denx/master- - - - o - o - o - o - B
->>
->> Now, you ask to rebase master (A) onto denx/master (B). If master would
->> have started from D, it would indeed apply the commits D -- A on top of
->> B. In your case, however, master already had a lot of commits that were
->> not in denx/master: C -- D  (including the merge resolution). So it will
->> also apply C -- D on top of  B.
-> Thanks, this makes sense. How do I get from above to
->
->     master - C - o - o - D - o - o - o - A
->                         /
->     denx/master- - o - B
+Op 17-3-2012 16:54, Enrico Weigelt schreef:
+> Hi folks,
 >
 >
-> Jocke
+> in several discussion with people eg. on office software fronts,
+> I've seen the value of having an git repo in one file. For example,
+> an office document, internally consisting of several files (like
+> ODF) could be put into an git repo instead of zip. That would
+> give a good basis for things like versioning, etc.
 >
-Don't you just want to merge with denx/master again ?
-
-    master - C - o - o - D - o - o - o - A
-                        /               /
-    denx/master- - o - o - o - o - o - B
-
-
-In this way you pull in the new commits from denx/master.
-
-Of course you can rework your history such to obtain what you drew 
-above, but this means you need to rewrite some of the history, which you 
-probably don't want to do if you share this code with colleagues. But 
-well, if you really want:
-
-git checkout D~1
-git merge B
-git rebase --onto HEAD D master
+> IMHO, zip (without compression) could even serve as container.
+>
+> What do you think about this idea ?
+>
+>
+> cu
+We have had the same idea before to implement this for our software.
 
 Vincent
