@@ -1,89 +1,88 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC PATCH] push: start warning upcoming default change for push.default
-Date: Sat, 17 Mar 2012 21:46:51 +0100
-Message-ID: <vpqvcm3vttw.fsf@bauges.imag.fr>
-References: <vpqobs65gfc.fsf@bauges.imag.fr>
-	<1331281886-11667-1-git-send-email-Matthieu.Moy@imag.fr>
-	<20120316085152.GA22273@ecki> <vpq1uosswwz.fsf@bauges.imag.fr>
-	<7vy5r0iwdb.fsf@alter.siamese.dyndns.org>
-	<vpqhaxohg3n.fsf@bauges.imag.fr> <20120316214832.GB25092@ecki>
+From: Felipe Tanus <fotanus@gmail.com>
+Subject: [GSoC] Improving parallelism
+Date: Sat, 17 Mar 2012 19:18:09 -0300
+Message-ID: <CANELHzNc+28ZDiZ69zv3X0DJMf0DTkiZXQD1-32Wsy-=vtWDhw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Sat Mar 17 21:47:41 2012
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 17 23:19:05 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S90XN-0007if-17
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 21:47:41 +0100
+	id 1S91xo-0000FV-On
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 23:19:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755036Ab2CQUrF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Mar 2012 16:47:05 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:57800 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755344Ab2CQUrD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Mar 2012 16:47:03 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q2HKgacn029464
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 17 Mar 2012 21:42:36 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1S90Wa-00010V-4j; Sat, 17 Mar 2012 21:46:52 +0100
-In-Reply-To: <20120316214832.GB25092@ecki> (Clemens Buchacher's message of
-	"Fri, 16 Mar 2012 22:48:32 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 17 Mar 2012 21:42:39 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q2HKgacn029464
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1332621762.52904@MQ3lm9uqXDJK6r7/KjAovw
+	id S965210Ab2CQWSc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Mar 2012 18:18:32 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:52670 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965079Ab2CQWSb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Mar 2012 18:18:31 -0400
+Received: by wibhq7 with SMTP id hq7so2339404wib.1
+        for <git@vger.kernel.org>; Sat, 17 Mar 2012 15:18:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=gLUBcRyrFfBqWIG7Ti3cL/27FgOwdtCQNmb1ij0vdeQ=;
+        b=WP/uUvZgfnKUZMwxBrEGJh+YoBYCIBed9fq4zx+qKkqp8dIEZXWUtkJI3WgPJUR0vY
+         wl9oxJaSAJmhNxor/pM9cqm1FfnM07iUI2V3KOlcklhOUzlvp7rHVd+PhqTINKVnw6Fj
+         Bv2IvwpbUqhnGzYBSTlSWydGRq28Nc7GQXp3eLLhgccK/5LmOVUcSa+VXxj6IZxJ6hvL
+         8h5dV+ZHsOpFoUwMXWtFFkH9Et0EOZ2Ojru8bqKKoe91p4IAhv83E89I3tbgK6919GNx
+         0C07wGD1G6YZfj/CZLJ9SDHAXdpvsoP3kECFz/RZxMQ91LqIFuD2CXVMXhJbAMRH2DW8
+         PETw==
+Received: by 10.180.83.72 with SMTP id o8mr8635286wiy.5.1332022710072; Sat, 17
+ Mar 2012 15:18:30 -0700 (PDT)
+Received: by 10.216.26.4 with HTTP; Sat, 17 Mar 2012 15:18:09 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193352>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+Hi,
 
-> On Fri, Mar 16, 2012 at 01:42:36PM +0100, Matthieu Moy wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->> 
->> > Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->> >
->> >> I'd count "upstream is not set" as "current and upstream agree on
->> >> 'current'". IOW, use "current", but error out if there's a configured
->> >> upstream that is different.
->> >
->> > And if there is no configured upstream, should it error out, or should it
->> > just push the current one to its own name?
->> 
->> I meant just push the current one to its own name.
->
-> Altough in a somewhat rarer case, this has the same problem as
-> "current":
->
-> git checkout -b master origin/master
-> git checkout -b topic master
-> git push
->
-> If a branch called topic already exists on origin, push will now try to
-> update it with the local branch topic. But they do not have any clear
-> connection, except for the name.
+I'm looking forward to joining Google Summer of Code through git. Some
+short words about me: I'm an undergraduate student of Computer Science
+in UFRGS, Brazil, and also work part time in the onthegosystems
+company from home. In the past couple of years, I participated in
+GSoC: The first in the boost, and the last on macports; in both years
+my projects were evaluated as successful. I'm a git user for nearly 3
+years now, and this is my first e-mail to this mailing list. If you
+want to know more about me or check some references, please visit my
+Site at this mail signature. Also be welcome to make any questions.
 
-Yes, but the user can hardly expect anything else here. So, it may be a
-(user) mistake, but it's not a surprise.
+My proposal will most likely follow one of the proposed idea entitled
+"Improving parallelism in various commands". I'm very used to C
+programming, and pthreads is my friend, so I'm the right guy for this
+job. The downside is that I never looked at the git source code
+before, and I expect the most challenging step from the project is to
+find where parallelism can be further explored. For this, I count on
+my skill in C programming, a good mentor to help me to go through the
+code and evaluate my ideas.
 
-BTW, 'matching' also has this drawback, and I never saw anyone complain
-about it (maybe I didn't listen enough though).
+I find the idea of the proposal straight-forward, and no doubts pop up
+in my mind, except on what commands can I work on. The idea described
+in the wiki tells that the commands "git grep --cached" and "git grep
+COMMIT" need this improvement, and most likely "git diff" and "git log
+-p" need too. That is a good start, but if you know already other
+commands that might benefit from this parallelism, please tell me in
+order for me to include in my proposal. I also plan to use the
+community bonding time frame to look deeper in the code searching for
+what can be improved, and In my schedule, I plan to have some time at
+the start coding phase to keep looking into the code and decide with
+my mentor what commands will need to be touched.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+If you have any Idea which can turn this project better or just some
+advice for my application, please share it through the list, then
+other people can keep collaborating.
+
+Regards,
+
+--
+Felipe de Oliveira Tanus
+E-mail: fotanus@gmail.com
+Site: http://www.inf.ufrgs.br/~fotanus/
+-----
+"All we have to decide is what to do with the time that is given us." - Gandalf
