@@ -1,85 +1,62 @@
-From: "Marcus D. Hanwell" <marcus.hanwell@kitware.com>
-Subject: Re: Please discuss: what "git push" should do when you do not say
- what to push?
-Date: Sun, 18 Mar 2012 01:43:43 -0400
-Message-ID: <CAMkPkZVuW-5=o=pdfrymVkPu3k_DS1DDH_wuGXoXnq3=Z+LN_w@mail.gmail.com>
-References: <7v7gyjersg.fsf@alter.siamese.dyndns.org>
-	<CADVrmKSGbA2gWVyPLMCBay3EikOykwq3eEH1+qWCpZvOron3Aw@mail.gmail.com>
-	<4F655E53.6030408@zytor.com>
+From: =?ISO-8859-2?Q?Zbigniew_J=EAdrzejewski-Szmek?= <zbyszek@in.waw.pl>
+Subject: Re: [L10N] New po/git.pot generated for Git 1.7.10-rc1
+Date: Sun, 18 Mar 2012 07:04:01 +0100
+Message-ID: <4F657AD1.3020600@in.waw.pl>
+References: <CANYiYbGZ7mQaqyAxOiHOdMfDSy0VsDgLaWiBTTaZ30asiSU0nQ@mail.gmail.com> <4F64C837.10700@in.waw.pl> <CANYiYbGtnHbOGYhVc_gCa71PiTM=q8YMz6OH0-kQrw6R-ah_yg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-2;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: fREW Schmidt <frioux@gmail.com>, git@vger.kernel.org
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Sun Mar 18 06:44:23 2012
+Cc: Git List <git@vger.kernel.org>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 18 07:04:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S98ul-0001BU-5Z
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Mar 2012 06:44:23 +0100
+	id 1S99EV-0005Qo-1l
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Mar 2012 07:04:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753140Ab2CRFnp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Mar 2012 01:43:45 -0400
-Received: from na3sys009aog128.obsmtp.com ([74.125.149.141]:33865 "HELO
-	na3sys009amx257.postini.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with SMTP id S1752899Ab2CRFnp convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Mar 2012 01:43:45 -0400
-Received: from mail-wg0-f43.google.com ([74.125.82.43]) (using TLSv1) by na3sys009aob128.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKT2V2D7F61N7p7l8EYb2BMFk4f+TaQQVT@postini.com; Sat, 17 Mar 2012 22:43:44 PDT
-Received: by mail-wg0-f43.google.com with SMTP id dr12so424967wgb.0
-        for <git@vger.kernel.org>; Sat, 17 Mar 2012 22:43:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding:x-gm-message-state;
-        bh=x9NNEJuwQ7S6aXusRdX3WueGZVlXEA8Ip/3HYX3I3Q8=;
-        b=aN/QLLw5DX4vwI9Sp8iFejrHaf1ZdWL75+fyFoLBUOCsMzb1ic1xdqwSDGdhKdbtDz
-         eoRQjF9iGwuAcd1vASIejfcNIBRDdaV2Us4eoWAXyJd0OuGTgHn39RNK8fjzvgEyA+eK
-         H/zoCNdLfAKbY1BZxovdyR4Ie2zVdwkXqnN80EtE0sNWCGSTojYuzreDlOtEjSvYQbht
-         jnN/IoZrzuDDIIAR1uypWxdAqMXjaZmGzEKYVh0cf/IyqoCFpQfu1mvnDyq5GKfZOYsV
-         YWDi1PzEO/VNPtwd1L+/suOCgm6hOfbvnXxbv8eFgBlnabye3AiF9KmRoExqg2H2Y1ad
-         bivA==
-Received: by 10.180.96.168 with SMTP id dt8mr10245669wib.18.1332049423578;
- Sat, 17 Mar 2012 22:43:43 -0700 (PDT)
-Received: by 10.227.59.196 with HTTP; Sat, 17 Mar 2012 22:43:43 -0700 (PDT)
-In-Reply-To: <4F655E53.6030408@zytor.com>
-X-Gm-Message-State: ALoCoQm6V7tqN1P/Hm5+lNZPiDBcHQIz5g67EUcmNMVssmE7AC1Cvt7jIAH2ueS/RSqcogzp3nKi
+	id S1752966Ab2CRGEL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Mar 2012 02:04:11 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:55877 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752757Ab2CRGEK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Mar 2012 02:04:10 -0400
+Received: from 89-78-221-60.dynamic.chello.pl ([89.78.221.60] helo=[192.168.2.82])
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1S99Dq-0002El-RT; Sun, 18 Mar 2012 07:04:06 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20120104 Icedove/8.0
+In-Reply-To: <CANYiYbGtnHbOGYhVc_gCa71PiTM=q8YMz6OH0-kQrw6R-ah_yg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193372>
 
-On Sun, Mar 18, 2012 at 12:02 AM, H. Peter Anvin <hpa@zytor.com> wrote:
-> On 03/17/2012 11:43 AM, fREW Schmidt wrote:
->> On Sat, Mar 17, 2012 at 12:10 AM, Junio C Hamano <gitster@pobox.com>=
- wrote:
->>>
->>> There is a proposal to change the default behaviour of 'git push' o=
-n the
->>> Git mailing list. The goal of this message is to encourage you to d=
-iscuss
->>> it before it happens (or the change is aborted, depending on the ou=
-tcome
->>> of the discussion).
+On 03/18/2012 03:20 AM, Jiang Xin wrote:
+> 2012/3/18 Zbigniew J=EAdrzejewski-Szmek<zbyszek@in.waw.pl>:
+>>>       https://github.com/git-l10n/git-po/
 >>
->> I personally much prefer the one where it pushes the current branch =
-to
->> its tracking branch only. =A0That leaves very little room for surpri=
-ses
->> and mistakes (the one exception being git push after git checkout -b
->> new-branch origin/master.)
+>> Hi,
+>> the slash at the end makes this an invalid url to pull from:
 >>
+>> % git remote add l10n https://github.com/git-l10n/git-po/
+>> % git fetch l10n
+>> error: RPC failed; result=3D22, HTTP code =3D 502
+>> fatal: The remote end hung up unexpectedly
+>>
+>> (Works fine with "https://github.com/git-l10n/git-po").
 >
-> I would agree with this being the least surprising behavior. =A0I bel=
-ieve
-> this is what push.default =3D upstream does.
+> Next time I should write the url of the repo, not url of the project.
 >
-I agree that the least surprising default is to push the current
-branch to its tracking branch only. It always surprised me that other
-branches tried to push too.
+>     git://github.com/git-l10n/git-po.git
+>     https://github.com/git-l10n/git-po.git
+Nope. https://github.com/git-l10n/git-po is better because it works in=20
+the browser too. https://github.com/git-l10n/git-po.git gives 404.
 
-Marcus
+-
+Zbyszek
