@@ -1,51 +1,101 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: in support of git pushing only the active branch by default
-Date: Sun, 18 Mar 2012 08:53:47 +0000
-Message-ID: <20120318085347.GA612@hashpling.org>
-References: <5B1A6856-E87D-4AB6-B7CC-71055FF2DF48@me.com>
+From: Ivan Todoroski <grnch_lists@gmx.net>
+Subject: Clone fails on a repo with too many heads/tags
+Date: Sun, 18 Mar 2012 08:14:30 +0000 (UTC)
+Message-ID: <loom.20120318T083216-96@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Mark Essel <messel@me.com>
-X-From: git-owner@vger.kernel.org Sun Mar 18 10:00:06 2012
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 18 11:10:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9By8-0000M3-4N
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Mar 2012 10:00:04 +0100
+	id 1S9D4c-0004T5-4E
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Mar 2012 11:10:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753976Ab2CRI75 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Mar 2012 04:59:57 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:39461 "EHLO
-	avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753604Ab2CRI74 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Mar 2012 04:59:56 -0400
-X-Greylist: delayed 365 seconds by postgrey-1.27 at vger.kernel.org; Sun, 18 Mar 2012 04:59:56 EDT
-Received: from hashpling.plus.com ([212.159.69.125])
-	by avasout04 with smtp
-	id mwto1i0012iA9hg01wtpEl; Sun, 18 Mar 2012 08:53:49 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.0 cv=LITkseq9 c=1 sm=1 a=wpJ/2au8Z6V/NgdivHIBow==:17
- a=-GleFfVwiy8A:10 a=yvbpGxkJF8EA:10 a=mSBy96HJJ2wA:10 a=BHUvooL90DcA:10
- a=kj9zAlcOel0A:10 a=rxt3RxhRpuc7yeePk4EA:9 a=CjuIK1q_8ugA:10
- a=wpJ/2au8Z6V/NgdivHIBow==:117
-Received: from charles by hashpling.plus.com with local (Exim 4.72)
-	(envelope-from <charles@hashpling.org>)
-	id 1S9Bs4-0000JT-57; Sun, 18 Mar 2012 08:53:48 +0000
-Content-Disposition: inline
-In-Reply-To: <5B1A6856-E87D-4AB6-B7CC-71055FF2DF48@me.com>
-User-Agent: Mutt/1.5.20 (2009-08-17)
+	id S1754521Ab2CRKKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Mar 2012 06:10:07 -0400
+Received: from plane.gmane.org ([80.91.229.3]:45120 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754031Ab2CRKKG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Mar 2012 06:10:06 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1S9D3r-0003zL-8h
+	for git@vger.kernel.org; Sun, 18 Mar 2012 11:10:03 +0100
+Received: from 77.28.169.135 ([77.28.169.135])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 18 Mar 2012 11:10:03 +0100
+Received: from grnch_lists by 77.28.169.135 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 18 Mar 2012 11:10:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 77.28.169.135 (Opera/9.80 (Windows NT 5.1; U; en) Presto/2.10.229 Version/11.62)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193375>
 
-On Sat, Mar 17, 2012 at 06:16:51AM -0400, Mark Essel wrote:
-> I would appreciate a brief option to push all branches, git push-all or similar for personal git usage.
+I recently tried cloning a fresh copy of a large repo (converted from CVS, 
+nearly 10 years of history) and to my surprise "git clone" failed with the 
+following message:
 
-You mean like this?
+    error: cannot spawn git: No such file or directory
 
-git push origin :
+The problem is only reproduced using the Smart HTTP transport.
+
+I used msysGit on Windows so my first instinct was to contact them, but after 
+some poking around I discovered that the problem is present in the Linux 
+version too, although harder to trigger.
+
+Try executing this script:
+
+-------------------------------
+git init too-many-refs
+cd too-many-refs
+echo bla > bla.txt
+git add .
+git commit -m test
+sha=$(git rev-parse HEAD)
+for ((i=0; i<100000; i++)); do 
+	echo $sha refs/tags/artificially-long-tag-name-to-more-easily-
+demonstrate-the-problem-$i >> .git/packed-refs
+done
+-------------------------------
+
+Now share this repo using the Smart HTTP transport (git-http-backend) and then 
+try cloning it in a different directory. This is what you would get:
+
+$ git clone http://localhost/.../too-many-refs/.git
+Cloning into 'too-many-refs'...
+fatal: cannot exec 'fetch-pack': Argument list too long
+
+So we come to the real reason for the failure: somewhere inside Git a 
+subcommand is invoked with all the tags/heads on the command line and if you 
+have enough of them it overflows the command line length limit of the OS.
+
+Obviously the number of tags in the "too-many-refs" repo above is absurd (100k) 
+because the cmdline length in Linux is much more generous, but on Windows the 
+clone fails with as little as 500 tags in the above loop! I am already hitting 
+this problem with msysGit on real repos, not just artificial test cases.
+
+I tracked down the problem to remote-curl.c:fetch_git(). That's where the 
+"fetch-pack" command line is being constructed with all the refs on one line:
+
+git fetch-pack --stateless-rpc --lock-pack ...<all the refs>...
+
+The solution is conceptually simple: if the list of refs results in a too long 
+command line, split the refs in batches and call fetch-pack multiple times such 
+that each call is under the cmdline limit:
+
+git fetch-pack --stateless-rpc --lock-pack ...<first batch of refs>...
+git fetch-pack --stateless-rpc --lock-pack ...<second batch of refs>...
+...
+git fetch-pack --stateless-rpc --lock-pack ...<last batch of refs>...
