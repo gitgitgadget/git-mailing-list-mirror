@@ -1,74 +1,76 @@
-From: "Yi, EungJun" <semtlenori@gmail.com>
-Subject: Re: How to reorder all commits include the initial commit
-Date: Mon, 19 Mar 2012 04:05:14 +0900
-Message-ID: <CAFT+Tg8=dkFLh_=2pMYH6McZTWr2NjxZHztVG7WcxGMEBmdOwA@mail.gmail.com>
-References: <CAFT+Tg_DmqxiK1qw1YvNZtY07ZaZ89+JWohdWw2fm8f=6hAwiQ@mail.gmail.com>
-	<m3k42jl2wn.fsf@localhost.localdomain>
-	<CAFT+Tg9UGdBxj5-DTpxDJRVgvBCnmkmgm6nzVek0KeELgsNneQ@mail.gmail.com>
-	<CANYiYbGbJxZPOAN9twBPZoD318eA_CLcsVzcFuoHrc32+e96FQ@mail.gmail.com>
-Reply-To: semtlenori@gmail.com
+From: Jeff King <peff@peff.net>
+Subject: Re: Clone fails on a repo with too many heads/tags
+Date: Sun, 18 Mar 2012 15:07:00 -0400
+Message-ID: <20120318190659.GA24829@sigill.intra.peff.net>
+References: <loom.20120318T083216-96@post.gmane.org>
+ <m3fwd550j3.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=EUC-KR
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 18 20:05:25 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Ivan Todoroski <grnch_lists@gmx.net>, git@vger.kernel.org,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 18 20:07:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9LPv-0007zg-Ac
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Mar 2012 20:05:23 +0100
+	id 1S9LRf-00010p-0Y
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Mar 2012 20:07:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755137Ab2CRTFQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Mar 2012 15:05:16 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:34431 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755024Ab2CRTFP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Mar 2012 15:05:15 -0400
-Received: by obbeh20 with SMTP id eh20so610263obb.19
-        for <git@vger.kernel.org>; Sun, 18 Mar 2012 12:05:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        bh=RCNTzfe6vce9Y2uKSEcC4q2n4XSubHY39X/MGzJraIw=;
-        b=C8BDoNZWSh8V8NcLJRS81E+5OKmF68w+Cqgp+8/Qn6MPACIpVTjBJ4DWYOeX1JC0dG
-         75606Ap3uZBc84JB/GCr6Xb+yQiEnqrwvDvy8z9TgshWjguqHTWbyKtP7PeJTMamUHb3
-         FxklFxtQvTVo9ZMTW7MPJrAUrMgwnDsLrAP6cHhEseV35F67MdUnqNErR7BcTfXFtHOY
-         IjtCvj3+yZlqF01S+OeIknj1n4OU4oRdRfO3DEdV0gK+8otObuZ4MZAHIkM1nZNcsBXi
-         XKxlWrKw6kldwAjqdtTX2SIo3+1vHoTPtdmK+xSj7VmnD2upQ44VlTgniXIkz3wSPXsT
-         9tmg==
-Received: by 10.182.72.71 with SMTP id b7mr10956990obv.11.1332097514895; Sun,
- 18 Mar 2012 12:05:14 -0700 (PDT)
-Received: by 10.182.53.98 with HTTP; Sun, 18 Mar 2012 12:05:14 -0700 (PDT)
-In-Reply-To: <CANYiYbGbJxZPOAN9twBPZoD318eA_CLcsVzcFuoHrc32+e96FQ@mail.gmail.com>
+	id S1755750Ab2CRTHE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Mar 2012 15:07:04 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51755
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755464Ab2CRTHD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Mar 2012 15:07:03 -0400
+Received: (qmail 22167 invoked by uid 107); 18 Mar 2012 19:07:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 18 Mar 2012 15:07:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 18 Mar 2012 15:07:00 -0400
+Content-Disposition: inline
+In-Reply-To: <m3fwd550j3.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193390>
 
-2012=B3=E2 3=BF=F9 18=C0=CF =BF=C0=C0=FC 11:58, Jiang Xin <worldhello.n=
-et@gmail.com>=B4=D4=C0=C7 =B8=BB:
->> $ git checkout -b test --orphan
->
-> option -b and --orphan can not be used together.
->
->> $ git format-patch <newroot>^..<newroot> | git am
->
-> can not apply patch when there is no root commit
->
+On Sun, Mar 18, 2012 at 09:36:24AM -0700, Jakub Narebski wrote:
 
-You are all right. I made several mistakes including what you point out=
-=2E
+> > The solution is conceptually simple: if the list of refs results in a too long 
+> > command line, split the refs in batches and call fetch-pack multiple times such 
+> > that each call is under the cmdline limit:
+> > 
+> > git fetch-pack --stateless-rpc --lock-pack ...<first batch of refs>...
+> > git fetch-pack --stateless-rpc --lock-pack ...<second batch of refs>...
+> > ...
+> > git fetch-pack --stateless-rpc --lock-pack ...<last batch of refs>...
+> 
+> That, or implement --stdin / --revs in git-fetch-pach (perhaps
+> following git-pack-objects that implements --revs).
 
-I fixed them as follows:
+I don't think that will work, as stateless-rpc fetch-pack already uses
+stdin to receive the list of advertised refs from the remote. Nor would
+you want to have multiple invocations of fetch-pack, since that would
+mean multiple http requests and multiple pack responses (which could not
+delta between themselves).
 
-$ git checkout --orphan test
-$ git rm '*' -f
-$ git show <newroot> | git apply - --index
-$ git commit --reuse-message <newroot>
-$ git rebase --onto test --root master
-$ git branch -d test
+And you can't condense the list in the general case. It is the set of
+refs that we actually want to fetch. We could try passing just the
+original refspecs (not the expansion) and letting fetch-pack try to do
+the expansion, but in the worst case, you might really just have a
+gigantic list of refs.
+
+I think the only sane solution is to write the values to a temporary
+file, and do something like:
+
+  git fetch-pack --stateless-rpc --refs-from=$tmpfile
+
+Even if you put the tmpfile in $GIT_DIR, I don't think this should run
+afoul of any read-only repositories, since by definition you are
+fetching into the repository (but you could also just put it in /tmp).
+
+-Peff
