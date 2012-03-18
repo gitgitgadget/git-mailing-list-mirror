@@ -1,202 +1,72 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: [PATCH 1/9 v2] difftool: parse options using Getopt::Long
-Date: Sat, 17 Mar 2012 21:55:26 -0400
-Message-ID: <1332035734-5443-2-git-send-email-tim.henigan@gmail.com>
-References: <1331949442-15039-1-git-send-email-tim.henigan@gmail.com>
- <1332035734-5443-1-git-send-email-tim.henigan@gmail.com>
-Cc: Tim Henigan <tim.henigan@gmail.com>
-To: gitster@pobox.com, davvid@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 18 02:57:05 2012
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [L10N] New po/git.pot generated for Git 1.7.10-rc1
+Date: Sun, 18 Mar 2012 10:20:05 +0800
+Message-ID: <CANYiYbGtnHbOGYhVc_gCa71PiTM=q8YMz6OH0-kQrw6R-ah_yg@mail.gmail.com>
+References: <CANYiYbGZ7mQaqyAxOiHOdMfDSy0VsDgLaWiBTTaZ30asiSU0nQ@mail.gmail.com>
+	<4F64C837.10700@in.waw.pl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: =?ISO-8859-2?Q?Zbigniew_J=EAdrzejewski=2DSzmek?= 
+	<zbyszek@in.waw.pl>
+X-From: git-owner@vger.kernel.org Sun Mar 18 03:20:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S95Ml-0004Sq-V5
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Mar 2012 02:57:04 +0100
+	id 1S95jC-00027f-MQ
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Mar 2012 03:20:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757254Ab2CRB4b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Mar 2012 21:56:31 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:55335 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756883Ab2CRB4A (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Mar 2012 21:56:00 -0400
-Received: by mail-iy0-f174.google.com with SMTP id z16so7559135iag.19
-        for <git@vger.kernel.org>; Sat, 17 Mar 2012 18:56:00 -0700 (PDT)
+	id S1757109Ab2CRCUH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Mar 2012 22:20:07 -0400
+Received: from mail-vb0-f46.google.com ([209.85.212.46]:63582 "EHLO
+	mail-vb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757073Ab2CRCUG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Mar 2012 22:20:06 -0400
+Received: by vbbff1 with SMTP id ff1so347035vbb.19
+        for <git@vger.kernel.org>; Sat, 17 Mar 2012 19:20:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=fMc0NAui6Fee1ce5Ds6wgBAiZBdKHiZhgHzspUnYCu4=;
-        b=rZ8vybxE6roam/ecQw19PdcNJJTSOgiYksgYsdctI9yDEGrpXqed99B/hdTJxCbCob
-         4VCkAUuwMRdG62+WyzyAr55Fm81NWnpc/9gErOnX+JobdsrO12bv9411y9WPMgJ+hdOm
-         V5lN+bWPZja90GoFxr4WMPZXY3O2kFkywmss02NgL02tv7CgvGd9W6YyJntfmh9gctcK
-         rXEsuSfwlRzN1pknNcsQfGX2zMNrFxMVR3Ponm9OnCMMgtP0gJT+ppyz3HjROLVex0FS
-         mz6mCa61Pdy+4/5wIP6TCB4me6EWJ2GRvL1D6sO8VEoLowtxHBfq1BF0pugc7bF1zWvb
-         fbzA==
-Received: by 10.50.159.228 with SMTP id xf4mr2959527igb.0.1332035760487;
-        Sat, 17 Mar 2012 18:56:00 -0700 (PDT)
-Received: from localhost ([75.38.216.51])
-        by mx.google.com with ESMTPS id uy10sm2950959igc.15.2012.03.17.18.55.59
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 17 Mar 2012 18:55:59 -0700 (PDT)
-X-Mailer: git-send-email 1.7.9.1.290.gbd444
-In-Reply-To: <1332035734-5443-1-git-send-email-tim.henigan@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=ylv/Ok0EmTonMbHtrxl20WazwuiJ4+gfra3oM4Q+8K8=;
+        b=iI2AJHxHxqY03TvpfmHIJOmXpwI6XGwkZ0ApvLReiHPvUMmleCdFPuejn29n6x62oq
+         IKHVPy8cX+oGohXFnti7WesyChzxAG7I+LqXDbGdi6YwNP96sIuYpEV+Eg5qhBGx20TX
+         NcgXEzVocWOuLTwONyIzERDW+hO8IT7y9qWKUaFlsE9O9OVYL4BH82Y0HQpyfJMK0Fz0
+         qGzvhTvPn5cMfi7M7vU6UQh8/Oh/esSljCw7HILiM7PNfVevnGSQQ6Ulo13DBKm/IOTC
+         H225NI9ivBrVMzhk0jmnkC82XR8fTdz73KArOKQdChnuikyyIIdH+gsyhDDDMPoC+XT5
+         Jp7g==
+Received: by 10.220.229.66 with SMTP id jh2mr2619554vcb.40.1332037205145; Sat,
+ 17 Mar 2012 19:20:05 -0700 (PDT)
+Received: by 10.52.26.37 with HTTP; Sat, 17 Mar 2012 19:20:05 -0700 (PDT)
+In-Reply-To: <4F64C837.10700@in.waw.pl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193365>
 
-Replace custom option/argument parser with standard Getopt::Long
-module.  This shortens the code and makes it easier to understand.
+2012/3/18 Zbigniew J=EAdrzejewski-Szmek <zbyszek@in.waw.pl>:
+>> =A0 =A0 =A0https://github.com/git-l10n/git-po/
+>
+> Hi,
+> the slash at the end makes this an invalid url to pull from:
+>
+> % git remote add l10n https://github.com/git-l10n/git-po/
+> % git fetch l10n
+> error: RPC failed; result=3D22, HTTP code =3D 502
+> fatal: The remote end hung up unexpectedly
+>
+> (Works fine with "https://github.com/git-l10n/git-po").
 
-Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
----
- git-difftool.perl |  109 +++++++++++++++++++++--------------------------------
- 1 file changed, 44 insertions(+), 65 deletions(-)
+Next time I should write the url of the repo, not url of the project.
 
-diff --git a/git-difftool.perl b/git-difftool.perl
-index 09b65f1..e365727 100755
---- a/git-difftool.perl
-+++ b/git-difftool.perl
-@@ -15,11 +15,8 @@ use strict;
- use warnings;
- use Cwd qw(abs_path);
- use File::Basename qw(dirname);
--
--require Git;
--
--my $DIR = abs_path(dirname($0));
--
-+use Getopt::Long qw(:config pass_through);
-+use Git;
- 
- sub usage
- {
-@@ -33,6 +30,7 @@ USAGE
- 
- sub setup_environment
- {
-+	my $DIR = abs_path(dirname($0));
- 	$ENV{PATH} = "$DIR:$ENV{PATH}";
- 	$ENV{GIT_PAGER} = '';
- 	$ENV{GIT_EXTERNAL_DIFF} = 'git-difftool--helper';
-@@ -47,75 +45,56 @@ sub exe
- 	return $exe;
- }
- 
--sub generate_command
--{
--	my @command = (exe('git'), 'diff');
--	my $skip_next = 0;
--	my $idx = -1;
--	my $prompt = '';
--	for my $arg (@ARGV) {
--		$idx++;
--		if ($skip_next) {
--			$skip_next = 0;
--			next;
--		}
--		if ($arg eq '-t' || $arg eq '--tool') {
--			usage() if $#ARGV <= $idx;
--			$ENV{GIT_DIFF_TOOL} = $ARGV[$idx + 1];
--			$skip_next = 1;
--			next;
--		}
--		if ($arg =~ /^--tool=/) {
--			$ENV{GIT_DIFF_TOOL} = substr($arg, 7);
--			next;
--		}
--		if ($arg eq '-x' || $arg eq '--extcmd') {
--			usage() if $#ARGV <= $idx;
--			$ENV{GIT_DIFFTOOL_EXTCMD} = $ARGV[$idx + 1];
--			$skip_next = 1;
--			next;
--		}
--		if ($arg =~ /^--extcmd=/) {
--			$ENV{GIT_DIFFTOOL_EXTCMD} = substr($arg, 9);
--			next;
--		}
--		if ($arg eq '-g' || $arg eq '--gui') {
--			eval {
--				my $tool = Git::command_oneline('config',
--				                                'diff.guitool');
--				if (length($tool)) {
--					$ENV{GIT_DIFF_TOOL} = $tool;
--				}
--			};
--			next;
--		}
--		if ($arg eq '-y' || $arg eq '--no-prompt') {
--			$prompt = 'no';
--			next;
--		}
--		if ($arg eq '--prompt') {
--			$prompt = 'yes';
--			next;
--		}
--		if ($arg eq '-h') {
--			usage();
--		}
--		push @command, $arg;
-+# parse command-line options. all unrecognized options and arguments
-+# are passed through to the 'git diff' command.
-+my ($difftool_cmd, $extcmd, $gui, $help, $no_prompt, $prompt);
-+GetOptions('g|gui' => \$gui,
-+	'h' => \$help,
-+	'prompt' => \$prompt,
-+	't|tool:s' => \$difftool_cmd,
-+	'x|extcmd:s' => \$extcmd,
-+	'y|no-prompt' => \$no_prompt);
-+
-+if (defined($help)) {
-+	usage();
-+} 
-+if (defined($difftool_cmd)) {
-+	if (length($difftool_cmd) > 0) {
-+		$ENV{GIT_DIFF_TOOL} = $difftool_cmd;
-+	} else {
-+		print "No <tool> given for --tool=<tool>\n";
-+		usage();
- 	}
--	if ($prompt eq 'yes') {
--		$ENV{GIT_DIFFTOOL_PROMPT} = 'true';
--	} elsif ($prompt eq 'no') {
--		$ENV{GIT_DIFFTOOL_NO_PROMPT} = 'true';
-+}
-+if (defined($extcmd)) {
-+	if (length($extcmd) > 0) {
-+		$ENV{GIT_DIFFTOOL_EXTCMD} = $extcmd;
-+	} else {
-+		print "No <cmd> given for --extcmd=<cmd>\n";
-+		usage();
-+	}
-+}
-+if (defined($gui)) {
-+	my $guitool = "";
-+	$guitool = Git::config('diff.guitool');
-+	if (length($guitool) > 0) {
-+		$ENV{GIT_DIFF_TOOL} = $guitool;
- 	}
--	return @command
-+}
-+if (defined($prompt)) {
-+	$ENV{GIT_DIFFTOOL_PROMPT} = 'true';
-+}
-+elsif (defined($no_prompt)) {
-+	$ENV{GIT_DIFFTOOL_NO_PROMPT} = 'true';
- }
- 
- setup_environment();
-+my @command = (exe('git'), 'diff', @ARGV);
- 
- # ActiveState Perl for Win32 does not implement POSIX semantics of
- # exec* system call. It just spawns the given executable and finishes
- # the starting program, exiting with code 0.
- # system will at least catch the errors returned by git diff,
- # allowing the caller of git difftool better handling of failures.
--my $rc = system(generate_command());
-+my $rc = system(@command);
- exit($rc | ($rc >> 8));
--- 
-1.7.9.1.290.gbd444
+   git://github.com/git-l10n/git-po.git
+   https://github.com/git-l10n/git-po.git
+
+Thanks.
+
+--=20
+Jiang Xin
