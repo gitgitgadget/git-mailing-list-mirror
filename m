@@ -1,88 +1,113 @@
-From: Felipe Tanus <fotanus@gmail.com>
-Subject: [GSoC] Improving parallelism
-Date: Sat, 17 Mar 2012 19:18:09 -0300
-Message-ID: <CANELHzNc+28ZDiZ69zv3X0DJMf0DTkiZXQD1-32Wsy-=vtWDhw@mail.gmail.com>
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: Re: [PATCH 7/9] difftool: teach difftool to handle directory diffs
+Date: Sat, 17 Mar 2012 20:58:12 -0400
+Message-ID: <CAFouetg1JEBsO4SyHxpaphQZQtmbo8ugbHoUWnhSXku4DWuvVA@mail.gmail.com>
+References: <1331949574-15192-1-git-send-email-tim.henigan@gmail.com>
+	<m3fwd7l2mu.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 17 23:19:05 2012
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, davvid@gmail.com, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 18 01:58:19 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S91xo-0000FV-On
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Mar 2012 23:19:05 +0100
+	id 1S94Ru-0001wd-OP
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Mar 2012 01:58:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965210Ab2CQWSc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Mar 2012 18:18:32 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:52670 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965079Ab2CQWSb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Mar 2012 18:18:31 -0400
-Received: by wibhq7 with SMTP id hq7so2339404wib.1
-        for <git@vger.kernel.org>; Sat, 17 Mar 2012 15:18:30 -0700 (PDT)
+	id S1756392Ab2CRA6O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Mar 2012 20:58:14 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:58915 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755312Ab2CRA6N convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Mar 2012 20:58:13 -0400
+Received: by iagz16 with SMTP id z16so7515833iag.19
+        for <git@vger.kernel.org>; Sat, 17 Mar 2012 17:58:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=gLUBcRyrFfBqWIG7Ti3cL/27FgOwdtCQNmb1ij0vdeQ=;
-        b=WP/uUvZgfnKUZMwxBrEGJh+YoBYCIBed9fq4zx+qKkqp8dIEZXWUtkJI3WgPJUR0vY
-         wl9oxJaSAJmhNxor/pM9cqm1FfnM07iUI2V3KOlcklhOUzlvp7rHVd+PhqTINKVnw6Fj
-         Bv2IvwpbUqhnGzYBSTlSWydGRq28Nc7GQXp3eLLhgccK/5LmOVUcSa+VXxj6IZxJ6hvL
-         8h5dV+ZHsOpFoUwMXWtFFkH9Et0EOZ2Ojru8bqKKoe91p4IAhv83E89I3tbgK6919GNx
-         0C07wGD1G6YZfj/CZLJ9SDHAXdpvsoP3kECFz/RZxMQ91LqIFuD2CXVMXhJbAMRH2DW8
-         PETw==
-Received: by 10.180.83.72 with SMTP id o8mr8635286wiy.5.1332022710072; Sat, 17
- Mar 2012 15:18:30 -0700 (PDT)
-Received: by 10.216.26.4 with HTTP; Sat, 17 Mar 2012 15:18:09 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=11D2XCBClKqwWfh0mZDNyLkZxsr3BGs10fkZDVkTXL4=;
+        b=c/jbvD9dV72hZBgkwR7ONmosdunPACmAmOqWLhF0V33crftV2zbdJw7yVA2Gc86fek
+         61/2gyraStheXu3sntGEU1t0Aj4TMiPgahW+O1WNJztxgNL2m4OnWsIQh4sLQSNtdNda
+         5bI+D4T5F/Cg77r6lr7H36SNbbJZGUIK8rgQNbWbOJ2Wy9s+Qac7uiUEIOC+U+Ndq36R
+         tBcf51cyz3hGzvCmOP7qOeff9IMjxoyRE07WSbWsJpE7YrprjgInIgh1ce9KL3PEPcPb
+         20VRW7Z7AhN5KpikavUYeRhwAXnB0p/9Nx5SxzlFJ+dt/vVT9N4dgClrAzCbl1PkXCQH
+         cyXw==
+Received: by 10.42.142.136 with SMTP id s8mr4212047icu.36.1332032292458; Sat,
+ 17 Mar 2012 17:58:12 -0700 (PDT)
+Received: by 10.42.218.65 with HTTP; Sat, 17 Mar 2012 17:58:12 -0700 (PDT)
+In-Reply-To: <m3fwd7l2mu.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193353>
 
-Hi,
+On Sat, Mar 17, 2012 at 10:32 AM, Jakub Narebski <jnareb@gmail.com> wro=
+te:
+> Tim Henigan <tim.henigan@gmail.com> writes:
+>
+>> + =C2=A0 =C2=A0 foreach my $path (keys %submodule) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (defined $submodule{$=
+path}{left}) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 open(SUBMOD, ">$ldir/$path") or die $!;
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 print(SUBMOD "Subproject commit $submodule{$path}{left}");
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 close(SUBMOD);
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (defined $submodule{$=
+path}{right}) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 open(SUBMOD, ">$rdir/$path") or die $!;
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 print(SUBMOD "Subproject commit $submodule{$path}{right}");
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 close(SUBMOD);
+>
+> Could you please use modern Perl, and use lexical filehandles instead
+> of globs, and 3-arg version of 'open', i.e.
+>
+> =C2=A0+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 open my $submod_fh, ">", "$ldir/$path" or die $!;
+> =C2=A0+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 print $submod_fh "Subproject commit $submodule{$path}{left}";
+> =C2=A0+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 close $submod_fh;
 
-I'm looking forward to joining Google Summer of Code through git. Some
-short words about me: I'm an undergraduate student of Computer Science
-in UFRGS, Brazil, and also work part time in the onthegosystems
-company from home. In the past couple of years, I participated in
-GSoC: The first in the boost, and the last on macports; in both years
-my projects were evaluated as successful. I'm a git user for nearly 3
-years now, and this is my first e-mail to this mailing list. If you
-want to know more about me or check some references, please visit my
-Site at this mail signature. Also be welcome to make any questions.
+I will make this change in v2.  Thank you for the review and the remind=
+er.
 
-My proposal will most likely follow one of the proposed idea entitled
-"Improving parallelism in various commands". I'm very used to C
-programming, and pthreads is my friend, so I'm the right guy for this
-job. The downside is that I never looked at the git source code
-before, and I expect the most challenging step from the project is to
-find where parallelism can be further explored. For this, I count on
-my skill in C programming, a good mentor to help me to go through the
-code and evaluate my ideas.
 
-I find the idea of the proposal straight-forward, and no doubts pop up
-in my mind, except on what commands can I work on. The idea described
-in the wiki tells that the commands "git grep --cached" and "git grep
-COMMIT" need this improvement, and most likely "git diff" and "git log
--p" need too. That is a good start, but if you know already other
-commands that might benefit from this parallelism, please tell me in
-order for me to include in my proposal. I also plan to use the
-community bonding time frame to look deeper in the code searching for
-what can be improved, and In my schedule, I plan to have some time at
-the start coding phase to keep looking into the code and decide with
-my mentor what commands will need to be touched.
+>> +if (defined($dirdiff)) {
+>> + =C2=A0 =C2=A0 my ($a, $b) =3D setup_dir_diff();
+>> + =C2=A0 =C2=A0 if (defined($extcmd)) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 system("$extcmd $a $b");
+>> + =C2=A0 =C2=A0 } else {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 $ENV{GIT_DIFFTOOL_DIRDIF=
+=46} =3D 'true';
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 system("git difftool--he=
+lper $a $b");
+>> + =C2=A0 =C2=A0 }
+>
+> Why you use 'system' (and not in list form which does not require
+> escaping shell characters) instead of git_cmd_try for first
+> "git difftool--helper" invocation?
 
-If you have any Idea which can turn this project better or just some
-advice for my application, please share it through the list, then
-other people can keep collaborating.
+There is no good reason to use 'system' here.  I will change this to
+'Git::command_noisy' in v2.
 
-Regards,
 
---
-Felipe de Oliveira Tanus
-E-mail: fotanus@gmail.com
-Site: http://www.inf.ufrgs.br/~fotanus/
------
-"All we have to decide is what to do with the time that is given us." - Gandalf
+> Is $extcmd and resultof setup_dir_diff() to be treated as shell
+> snippet, and used in string form of 'system' without escaping shell
+> metacharacters (like ' ' in filename)?
+
+In v2, I will change to the list form of 'system' for the call to
+$extcmd. I think I made some bad assumptions about the contents of
+$extcmd, $a and $b because of my local test setup.  However, changing
+to list form should correct the oversight.
