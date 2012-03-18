@@ -1,93 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] Add "first parent" to gitglossary
-Date: Sun, 18 Mar 2012 11:56:41 -0700
-Message-ID: <7vehspd9g6.fsf@alter.siamese.dyndns.org>
-References: <1331966864-31687-1-git-send-email-nkreitzinger@gmail.com>
+From: "Yi, EungJun" <semtlenori@gmail.com>
+Subject: Re: How to reorder all commits include the initial commit
+Date: Mon, 19 Mar 2012 04:05:14 +0900
+Message-ID: <CAFT+Tg8=dkFLh_=2pMYH6McZTWr2NjxZHztVG7WcxGMEBmdOwA@mail.gmail.com>
+References: <CAFT+Tg_DmqxiK1qw1YvNZtY07ZaZ89+JWohdWw2fm8f=6hAwiQ@mail.gmail.com>
+	<m3k42jl2wn.fsf@localhost.localdomain>
+	<CAFT+Tg9UGdBxj5-DTpxDJRVgvBCnmkmgm6nzVek0KeELgsNneQ@mail.gmail.com>
+	<CANYiYbGbJxZPOAN9twBPZoD318eA_CLcsVzcFuoHrc32+e96FQ@mail.gmail.com>
+Reply-To: semtlenori@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jrnieder@gmail.com, bfields@fieldses.org,
-	phil.hord@gmail.com
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 18 19:57:18 2012
+Content-Type: text/plain; charset=EUC-KR
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 18 20:05:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9LI6-00026a-EG
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Mar 2012 19:57:18 +0100
+	id 1S9LPv-0007zg-Ac
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Mar 2012 20:05:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754561Ab2CRS4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Mar 2012 14:56:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36491 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753838Ab2CRS4n (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Mar 2012 14:56:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E43D77B9;
-	Sun, 18 Mar 2012 14:56:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EnREgiZ5eDg33WL4CFwJkPMttkU=; b=dMH+qD
-	pnGHaTsO3fT3QvvKSq/BX1vLoUuUZ+xW2IoqyudSdlQWXSc+K9GFEoySCK759SOJ
-	psuRM4VC41+9a0unfXZMRO1ikHu8twNGANrCQgZF1585gjB1lMc37b/fRIdOWiBi
-	6Lvav5Og8WOfiF82kP5suolC5fnEx9+Q0PQPM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XmTRIMNBBUvHq8WTo/Q4p/eaEk5uWG6d
-	fmhaJMKjKodrAiGKrZ6AMDLdUPdUtpmaoh8VnjovpMlp0nBtHJxW9q1SN5OXIuQR
-	hBKAI0pXT8w+p/KH4dzPj4/nHdAqdXUtBeDw2DrPvq0sYP8TafD7wg/ktwagMXsC
-	OhJHbrRIz4E=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 630B077B8;
-	Sun, 18 Mar 2012 14:56:43 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E8C7277B6; Sun, 18 Mar 2012
- 14:56:42 -0400 (EDT)
-In-Reply-To: <1331966864-31687-1-git-send-email-nkreitzinger@gmail.com> (Neal
- Kreitzinger's message of "Sat, 17 Mar 2012 01:47:44 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1A2FA5A4-712C-11E1-8335-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755137Ab2CRTFQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Mar 2012 15:05:16 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:34431 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755024Ab2CRTFP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Mar 2012 15:05:15 -0400
+Received: by obbeh20 with SMTP id eh20so610263obb.19
+        for <git@vger.kernel.org>; Sun, 18 Mar 2012 12:05:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=RCNTzfe6vce9Y2uKSEcC4q2n4XSubHY39X/MGzJraIw=;
+        b=C8BDoNZWSh8V8NcLJRS81E+5OKmF68w+Cqgp+8/Qn6MPACIpVTjBJ4DWYOeX1JC0dG
+         75606Ap3uZBc84JB/GCr6Xb+yQiEnqrwvDvy8z9TgshWjguqHTWbyKtP7PeJTMamUHb3
+         FxklFxtQvTVo9ZMTW7MPJrAUrMgwnDsLrAP6cHhEseV35F67MdUnqNErR7BcTfXFtHOY
+         IjtCvj3+yZlqF01S+OeIknj1n4OU4oRdRfO3DEdV0gK+8otObuZ4MZAHIkM1nZNcsBXi
+         XKxlWrKw6kldwAjqdtTX2SIo3+1vHoTPtdmK+xSj7VmnD2upQ44VlTgniXIkz3wSPXsT
+         9tmg==
+Received: by 10.182.72.71 with SMTP id b7mr10956990obv.11.1332097514895; Sun,
+ 18 Mar 2012 12:05:14 -0700 (PDT)
+Received: by 10.182.53.98 with HTTP; Sun, 18 Mar 2012 12:05:14 -0700 (PDT)
+In-Reply-To: <CANYiYbGbJxZPOAN9twBPZoD318eA_CLcsVzcFuoHrc32+e96FQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193389>
 
-Neal Kreitzinger <nkreitzinger@gmail.com> writes:
-
-> Add "first parent" to "gitglossary" reference manual page.  Use the
-> definition provided by Junio Hamano in a git newsgroup post[1].
+2012=B3=E2 3=BF=F9 18=C0=CF =BF=C0=C0=FC 11:58, Jiang Xin <worldhello.n=
+et@gmail.com>=B4=D4=C0=C7 =B8=BB:
+>> $ git checkout -b test --orphan
 >
-> [1] http://article.gmane.org/gmane.comp.version-control.git/192523
+> option -b and --orphan can not be used together.
+>
+>> $ git format-patch <newroot>^..<newroot> | git am
+>
+> can not apply patch when there is no root commit
+>
 
-As the message was written specifically for you, taking what *you* seem to
-already know, and more importantly what *you* seem to be misunderstanding,
-into account, I do not think it is suitable for general documentation
-without rewording.
+You are all right. I made several mistakes including what you point out=
+=2E
 
-Also, as Jonathan already pointed out, singling out "first parent" and
-placing it in the glossary is a very odd thing to do.
+I fixed them as follows:
 
-Also see
-
-  http://thread.gmane.org/gmane.comp.version-control.git/192427/focus=192534
-
-
-Three entries "parent", "child" and "ancestry" might want to have an
-explanation in the glossary to give new people the prerequisite, though.
-
-child::
-parent::
-ancestry::
-	Git represents a specific state of the project in its history with
-	a commit object, which points at zero or more other commit objects
-	as its "parents". When commit A points at commit B as its parent,
-	we say "A is a child of B" and "B is a parent of A".
-+
-Parents of a commit is an ordered set, and because a commit object is
-immutable, the parents of a commit do not change once it is created.
-On the other hand, a new commit can be created, pointing at any other
-commit as its parent, so children of a commit is not a mutable set,
-and there is no inherent order among children.
+$ git checkout --orphan test
+$ git rm '*' -f
+$ git show <newroot> | git apply - --index
+$ git commit --reuse-message <newroot>
+$ git rebase --onto test --root master
+$ git branch -d test
