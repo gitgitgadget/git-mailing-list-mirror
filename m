@@ -1,101 +1,75 @@
-From: Ivan Todoroski <grnch_lists@gmx.net>
-Subject: Clone fails on a repo with too many heads/tags
-Date: Sun, 18 Mar 2012 08:14:30 +0000 (UTC)
-Message-ID: <loom.20120318T083216-96@post.gmane.org>
+From: larsh-K3XMUd79hPisTnJN9+BGXg@public.gmane.org
+Subject: [ANNOUNCE] CGIT 0.9.0.3
+Date: Sun, 18 Mar 2012 10:27:13 +0000
+Message-ID: <20120318102713.GA14884@hjemli.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 18 11:10:50 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+To: cgit-K3XMUd79hPisTnJN9+BGXg@public.gmane.org
+X-From: cgit-bounces-K3XMUd79hPisTnJN9+BGXg@public.gmane.org Sun Mar 18 11:21:29 2012
+Return-path: <cgit-bounces-K3XMUd79hPisTnJN9+BGXg@public.gmane.org>
+Envelope-to: gcvc-cgit@m.gmane.org
+Received: from li195-143.members.linode.com ([178.79.139.143] helo=hjemli.net)
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9D4c-0004T5-4E
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Mar 2012 11:10:50 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754521Ab2CRKKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Mar 2012 06:10:07 -0400
-Received: from plane.gmane.org ([80.91.229.3]:45120 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754031Ab2CRKKG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Mar 2012 06:10:06 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1S9D3r-0003zL-8h
-	for git@vger.kernel.org; Sun, 18 Mar 2012 11:10:03 +0100
-Received: from 77.28.169.135 ([77.28.169.135])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 18 Mar 2012 11:10:03 +0100
-Received: from grnch_lists by 77.28.169.135 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 18 Mar 2012 11:10:03 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 77.28.169.135 (Opera/9.80 (Windows NT 5.1; U; en) Presto/2.10.229 Version/11.62)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193375>
+	(envelope-from <cgit-bounces-K3XMUd79hPisTnJN9+BGXg@public.gmane.org>)
+	id 1S9DEu-0004DI-OJ
+	for gcvc-cgit@m.gmane.org; Sun, 18 Mar 2012 11:21:28 +0100
+Received: from localhost ([127.0.0.1] helo=node.hjemli.net)
+	by hjemli.net with esmtp (Exim 4.74)
+	(envelope-from <cgit-bounces-K3XMUd79hPisTnJN9+BGXg@public.gmane.org>)
+	id 1S9DKU-0003t0-Pk; Sun, 18 Mar 2012 10:27:14 +0000
+Received: from larsh by hjemli.net with local (Exim 4.74)
+ (envelope-from <larsh-K3XMUd79hPisTnJN9+BGXg@public.gmane.org>)
+ id 1S9DKT-0003st-LU; Sun, 18 Mar 2012 10:27:13 +0000
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+X-BeenThere: cgit-K3XMUd79hPisTnJN9+BGXg@public.gmane.org
+X-Mailman-Version: 2.1.14
+Precedence: list
+List-Id: list for cgit developers and users <cgit.hjemli.net>
+List-Unsubscribe: <http://hjemli.net/mailman/options/cgit>,
+ <mailto:cgit-request-K3XMUd79hPisTnJN9+BGXg@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://hjemli.net/pipermail/cgit>
+List-Post: <mailto:cgit-K3XMUd79hPisTnJN9+BGXg@public.gmane.org>
+List-Help: <mailto:cgit-request-K3XMUd79hPisTnJN9+BGXg@public.gmane.org?subject=help>
+List-Subscribe: <http://hjemli.net/mailman/listinfo/cgit>,
+ <mailto:cgit-request-K3XMUd79hPisTnJN9+BGXg@public.gmane.org?subject=subscribe>
+Errors-To: cgit-bounces-K3XMUd79hPisTnJN9+BGXg@public.gmane.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193376>
 
-I recently tried cloning a fresh copy of a large repo (converted from CVS, 
-nearly 10 years of history) and to my surprise "git clone" failed with the 
-following message:
+A bugfix release of cgit (a web interface to git repositories) is now
+available from http://hjemli.net/git/cgit. Thanks to everyone who
+contributed!
 
-    error: cannot spawn git: No such file or directory
+$ git shortlog v0.9.0.2..v0.9.0.3
+Eric Wong (2):
+      ui-ssdiff.c: correct length check for LCS table
+      segfault fix on some bogus requests
 
-The problem is only reproduced using the Smart HTTP transport.
+Georg M=C3=BCller (1):
+      ui-log.c: do not show remote heads if enable-remote-branches=3D0
 
-I used msysGit on Windows so my first instinct was to contact them, but after 
-some poking around I discovered that the problem is present in the Linux 
-version too, although harder to trigger.
+Jamie Couture (2):
+      ui-ssdiff: move LCS table away from the stack
+      use correct type for sizeof
 
-Try executing this script:
+John Keeping (1):
+      Fix segmentation fault in empty repository
 
--------------------------------
-git init too-many-refs
-cd too-many-refs
-echo bla > bla.txt
-git add .
-git commit -m test
-sha=$(git rev-parse HEAD)
-for ((i=0; i<100000; i++)); do 
-	echo $sha refs/tags/artificially-long-tag-name-to-more-easily-
-demonstrate-the-problem-$i >> .git/packed-refs
-done
--------------------------------
+Lars Hjemli (2):
+      Makefile: fetch git tarballs from http://hjemli.net/git/git/
+      CGIT-0.9.0.3
 
-Now share this repo using the Smart HTTP transport (git-http-backend) and then 
-try cloning it in a different directory. This is what you would get:
+Lukas Fleischer (2):
+      Remove dead initialization in cgit_parse_commit()
+      Fix potential XSS vulnerability in rename hint
 
-$ git clone http://localhost/.../too-many-refs/.git
-Cloning into 'too-many-refs'...
-fatal: cannot exec 'fetch-pack': Argument list too long
+Norberto Lopes (1):
+      fix css color value and vertical-align value
 
-So we come to the real reason for the failure: somewhere inside Git a 
-subcommand is invoked with all the tags/heads on the command line and if you 
-have enough of them it overflows the command line length limit of the OS.
+Tim Chen (1):
+      Fix diff mode switching when side-by-side-diffs=3D1
 
-Obviously the number of tags in the "too-many-refs" repo above is absurd (100k) 
-because the cmdline length in Linux is much more generous, but on Windows the 
-clone fails with as little as 500 tags in the above loop! I am already hitting 
-this problem with msysGit on real repos, not just artificial test cases.
-
-I tracked down the problem to remote-curl.c:fetch_git(). That's where the 
-"fetch-pack" command line is being constructed with all the refs on one line:
-
-git fetch-pack --stateless-rpc --lock-pack ...<all the refs>...
-
-The solution is conceptually simple: if the list of refs results in a too long 
-command line, split the refs in batches and call fetch-pack multiple times such 
-that each call is under the cmdline limit:
-
-git fetch-pack --stateless-rpc --lock-pack ...<first batch of refs>...
-git fetch-pack --stateless-rpc --lock-pack ...<second batch of refs>...
-...
-git fetch-pack --stateless-rpc --lock-pack ...<last batch of refs>...
+Tobias Grimm (1):
+      Add sort parameter to pager of repo list
