@@ -1,220 +1,103 @@
-From: Christopher Tiwald <christiwald@gmail.com>
-Subject: Re: [PATCH v2] push: Provide situational hints for non-fast-forward
- errors
-Date: Mon, 19 Mar 2012 18:22:25 -0400
-Message-ID: <20120319222225.GA36860@gmail.com>
-References: <20120319074944.GA18489@democracyinaction.org>
- <7vbonsbepx.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Please discuss: what "git push" should do when you do not say
+ what to push?
+Date: Mon, 19 Mar 2012 15:38:07 -0700
+Message-ID: <7v1uoo9pyo.fsf@alter.siamese.dyndns.org>
+References: <7v7gyjersg.fsf@alter.siamese.dyndns.org>
+ <7vty1ndcoi.fsf@alter.siamese.dyndns.org> <4F6461D7.40303@pileofstuff.org>
+ <7vipi1d9r7.fsf@alter.siamese.dyndns.org> <4F6792DE.80208@pileofstuff.org>
+ <7v62e09sig.fsf@alter.siamese.dyndns.org>
+ <CANgJU+VF-3LnwkrWgSQ1r50R=zjw8vsK1G686OqetSUGHuFcfw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, zbyszek@in.waw.pl,
-	Matthieu.Moy@grenoble-inp.fr, drizzd@aon.at
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 19 23:22:38 2012
+Cc: Andrew Sayers <andrew-git@pileofstuff.org>, git@vger.kernel.org
+To: demerphq <demerphq@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 19 23:38:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9kyK-0004h3-2E
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 23:22:36 +0100
+	id 1S9lDh-00036r-2Z
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 23:38:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757612Ab2CSWWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Mar 2012 18:22:32 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:52964 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757405Ab2CSWWa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2012 18:22:30 -0400
-Received: by qcqw6 with SMTP id w6so1471314qcq.19
-        for <git@vger.kernel.org>; Mon, 19 Mar 2012 15:22:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=5PvgRLFbkMqADmhCn7z1USC1QbiguhUKTA+yTGoPE7k=;
-        b=cMLhEaO5rwhDiLDXJjS0rK1KBfkpUS6UqP4pKzewh+D7WEjr/VuDI0Q+ZL7j/kmwly
-         Tg/bvl7G5ynIqVxOBFMMRcu8C961tOdvdcyCRI2dOv8AMfdujcVJqYYk7keBTTdCt90d
-         EgFzvie+ri+YQL7Qg5LXp9KJM0HnQu41b/kIKoPuoLIq7NhHYGxUpVD05Y0etcz/UwvM
-         gvajPlGWg55Eur+F173qBmJ76bhV2b4qc3d7HdTtF6ciggVVVIMdqu1VxRRcOHnw4PwS
-         pGGYyRadW0vYkwye7WJaUNaG7yTsWlRxmY1U7nk1XqvGVab/w2RDylrhSpRbQqU6TlyL
-         RQaQ==
-Received: by 10.224.105.79 with SMTP id s15mr2432106qao.35.1332195750135;
-        Mon, 19 Mar 2012 15:22:30 -0700 (PDT)
-Received: from gmail.com (cpe-74-66-248-47.nyc.res.rr.com. [74.66.248.47])
-        by mx.google.com with ESMTPS id 1sm6718489qac.3.2012.03.19.15.22.28
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 19 Mar 2012 15:22:29 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vbonsbepx.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758077Ab2CSWiM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Mar 2012 18:38:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49391 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757939Ab2CSWiK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2012 18:38:10 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 61A677734;
+	Mon, 19 Mar 2012 18:38:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=08NA9Tx8IN6fsBMdcXgezD3N4lA=; b=EIEGHp
+	nUmqbvvGxdKenruerRNEIr7X2eOy8oJDj7RvfDu7YvLNbvVa4dwLtp2dtiB/zk6s
+	KYCfDL1mXjwjWL839feixQI5tLofwb0A9fpupcYAlmGTyM/xS3LlC5NGQVa5P8l4
+	hghFDkYKmdLr9dcOKw4CdGjxfgjS5pTK5XHnU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PS91Ez2vuIIxaZV/yfw/fqn3sLDXBxfH
+	MU8X+aAPbR7rAH9BJndbjgN7XYwsLhI5EyCvaGJ8Y+2T+HdjjY79UBV+nuHiuPEY
+	lgoJvYkyK088ezsAoMY26PL4vgO5Hp9cXSz1SIjfP1Fn3j3q1gLHOGb2F+fiprit
+	DYuIY31GtLg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 578397733;
+	Mon, 19 Mar 2012 18:38:09 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AB8887732; Mon, 19 Mar 2012
+ 18:38:08 -0400 (EDT)
+In-Reply-To: <CANgJU+VF-3LnwkrWgSQ1r50R=zjw8vsK1G686OqetSUGHuFcfw@mail.gmail.com>
+ (demerphq@gmail.com's message of "Mon, 19 Mar 2012 23:20:28 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3385ACE0-7214-11E1-B496-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193469>
 
-On Mon, Mar 19, 2012 at 11:58:02AM -0700, Junio C Hamano wrote:
-> Christopher Tiwald <christiwald@gmail.com> writes:
-> 
-> > Pushing a non-fast-forward update to a remote repository will result in
-> > an error, but the hint text doesn't provide the correct resolution in
-> > every case. Give better resolution advice in three push scenarios:
-> >
-> > 1) If you push a non-fast-forward update to your current branch, you
-> > should merge remote changes with 'git pull' before pushing again.
-> 
-> I have always found "update *to* your current branch" very strange
-> phrasing (the earlier one said "to HEAD", but it amounts to the same
-> thing).  You do not push *to* your branch.  You push your branch to
-> somewhere else (namely, remote).  I would understand if it said "If your
-> push of your current branch triggers a non-ff error, ...", though.
+demerphq <demerphq@gmail.com> writes:
 
-Ah. Yeah. I can see the problem with my phrasing now. How about something
-like the following?
+> ... I thought the worse case here is
+> minor inconvenience, not data loss or anything else that is obviously
+> harmful.
 
-"If you push your current branch and it triggers a non-fast-forward
-error, you should merge remote changes with 'git pull' before pushing
-again."
+If your definition of harm is limited to data loss then we wouldn't be
+talking about updating the default from matching to current or upstream.
+"If your push failed, pushed what you did not mean to, or did not push
+what you meant to, you would correct the mistake" applies equally to a new
+person who expected "current" (or "upstream") and got "matching", or an old
+person who expected "matching" and got "current".
 
-> She never gets a chance to see the other checkout-pull-push message, does
-> she?
-> 
-> >  There is one aspect about this patch about which I'm unsure: What to
-> >  do with users who've set "advice.pushNonFastForward = false" already.
-> 
-> The change in this patch is merely clarifying what pushNonFastForward
-> advise has already taught them ("Non-ff was rejected; the manual will tell
-> you what you wanted to do") by dividing them into three categories and
-> giving different advices to these categories.  As the user says he
-> understood what he is doing, I think squelching all of them is a sane
-> choice.
+The purpose of the default change is to reduce surprises to people who
+haven't yet learned Git too well.  And for them,
 
-How about the something like the following fixup? This introduces two
-changes to v2:
+    I was on master, I said 'git push' without saying what to push to
+    where, and it resulted in master updated at the central repository.
 
-- It breaks the new advice into three config variables. Users
-  who might benefit from the advice can't accidentally shut a message
-  off before being confronted with the situation it's designed to
-  advise.
-- It leaves pushNonFastForward in place, and if a user sets
-  'advice.pushNonFastForward = false', it'll disable all three pieces
-  of advice.
+is the least surprising outcome.  Note that a learnt Git user would not
+express what he did this way; he will say 'I was on *my* master' and
+'the master at the central repository was updated with *my* master', but
+the change of the default is to help those who haven't even learned that
+your branches and branches at the central server are not always connected.
 
---
-Christopher Tiwald
---- 8< ---
-Signed-off-by: Christopher Tiwald <christiwald@gmail.com>
----
- Documentation/config.txt |   19 +++++++++++++++----
- advice.c                 |    8 ++++++--
- advice.h                 |    4 +++-
- builtin/push.c           |    6 +++---
- 4 files changed, 27 insertions(+), 10 deletions(-)
+Choice of "upstream" is more convenient for users who learned Git a bit
+more and knows the distinction between branches you have and branches the
+central server has.  For them, "I was on my 'topic' branch, that was
+forked from the 'master' branch at the central repository. I said 'git
+push', and I updated the 'master' over there with my 'topic'", is also not
+surprising, but it is more advanced audience than those helped by the
+default setting to push 'current'.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index a2329b5..fb386ab 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -137,13 +137,24 @@ advice.*::
- 	can tell Git that you do not need help by setting these to 'false':
- +
- --
-+	pushNonFastForward::
-+		Set this variable to 'false' if you want to disable
-+		'pushNonFFCurrent', 'pushNonFFDefault', and
-+		'pushNonFFMatching' simultaneously.
- 	pushNonFFCurrent::
- 		Advice shown when linkgit:git-push[1] fails due to a
- 		non-fast-forward update to the current branch.
--	pushNonFFOther::
--		Advice shown when linkgit:git-push[1] fails due to a
--		non-fast-forward update to a branch other than the
--		current one.
-+	pushNonFFDefault::
-+		Advice to set 'push.default' to 'upstream' or 'current'
-+		when you ran linkgit:git-push[1] and pushed 'matching
-+		refs' by default (i.e. you did not provide an explicit
-+		refspec, and no 'push.default' configuration was set)
-+		and it resulted in a non-fast-forward error.
-+	pushNonFFMatching::
-+		Advice shown when you ran linkgit:git-push[1] and pushed
-+		'matching refs' explicitly (i.e. you used ':', or
-+		specified a refspec that isn't your current branch) and
-+		it resulted in a non-fast-forward error.
- 	statusHints::
- 		Directions on how to stage/unstage/add shown in the
- 		output of linkgit:git-status[1] and the template shown
-diff --git a/advice.c b/advice.c
-index ee62e1b..a492eea 100644
---- a/advice.c
-+++ b/advice.c
-@@ -1,7 +1,9 @@
- #include "cache.h"
- 
-+int advice_push_nonfastforward = 1;
- int advice_push_non_ff_current = 1;
--int advice_push_non_ff_other = 1;
-+int advice_push_non_ff_default = 1;
-+int advice_push_non_ff_matching = 1;
- int advice_status_hints = 1;
- int advice_commit_before_merge = 1;
- int advice_resolve_conflict = 1;
-@@ -12,8 +14,10 @@ static struct {
- 	const char *name;
- 	int *preference;
- } advice_config[] = {
-+	{ "pushnonfastforward", &advice_push_nonfastforward },
- 	{ "pushnonffcurrent", &advice_push_non_ff_current },
--	{ "pushnonffother", &advice_push_non_ff_other },
-+	{ "pushnonffdefault", &advice_push_non_ff_default },
-+	{ "pushnonffmatching", &advice_push_non_ff_matching },
- 	{ "statushints", &advice_status_hints },
- 	{ "commitbeforemerge", &advice_commit_before_merge },
- 	{ "resolveconflict", &advice_resolve_conflict },
-diff --git a/advice.h b/advice.h
-index 98c675e..f3cdbbf 100644
---- a/advice.h
-+++ b/advice.h
-@@ -3,8 +3,10 @@
- 
- #include "git-compat-util.h"
- 
-+extern int advice_push_nonfastforward;
- extern int advice_push_non_ff_current;
--extern int advice_push_non_ff_other;
-+extern int advice_push_non_ff_default;
-+extern int advice_push_non_ff_matching;
- extern int advice_status_hints;
- extern int advice_commit_before_merge;
- extern int advice_resolve_conflict;
-diff --git a/builtin/push.c b/builtin/push.c
-index 3de2737..a0ffbb3 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -138,21 +138,21 @@ static const char message_advice_checkout_pull_push[] =
- 
- static void advise_pull_before_push(void)
- {
--	if (!advice_push_non_ff_current)
-+	if (!advice_push_non_ff_current | !advice_push_nonfastforward)
- 		return;
- 	advise(_(message_advice_pull_before_push));
- }
- 
- static void advise_use_upstream(void)
- {
--	if (!advice_push_non_ff_other)
-+	if (!advice_push_non_ff_default | !advice_push_nonfastforward)
- 		return;
- 	advise(_(message_advice_use_upstream));
- }
- 
- static void advise_checkout_pull_push(void)
- {
--	if (!advice_push_non_ff_other)
-+	if (!advice_push_non_ff_matching | !advice_push_nonfastforward)
- 		return;
- 	advise(_(message_advice_checkout_pull_push));
- }
--- 
-1.7.10.rc1.23.g2a051.dirty
+In either way, once people learn sufficiently to the point that they can
+choose their own default that suit them, there is no need for handholding.
+They won't be surprised.
+
+But except for one case you should *not* forget about.
+
+The ones who get pulled the old default under their feet while not paying
+too much attention to this discussion. The change will hit them with a
+surprise, and that is what I am trying to avoid here.
