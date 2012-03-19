@@ -1,58 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: link user-name with ssh-login
-Date: Mon, 19 Mar 2012 16:57:47 -0400
-Message-ID: <20120319205747.GB3039@sigill.intra.peff.net>
-References: <4F6765D0.5060706@gmail.com>
- <7v7gygbdxg.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/9 v2] difftool: teach command to perform directory
+ diffs
+Date: Mon, 19 Mar 2012 14:00:01 -0700
+Message-ID: <7vhaxk9ui6.fsf@alter.siamese.dyndns.org>
+References: <1331949442-15039-1-git-send-email-tim.henigan@gmail.com>
+ <1332035734-5443-1-git-send-email-tim.henigan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Roberto <mrgreiner@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 19 21:57:59 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: davvid@gmail.com, git@vger.kernel.org
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 19 22:00:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9jeO-00058x-OX
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 21:57:57 +0100
+	id 1S9jgh-0006H8-MF
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 22:00:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754073Ab2CSU5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Mar 2012 16:57:52 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53768
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754022Ab2CSU5v (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2012 16:57:51 -0400
-Received: (qmail 2021 invoked by uid 107); 19 Mar 2012 20:58:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 19 Mar 2012 16:58:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Mar 2012 16:57:47 -0400
-Content-Disposition: inline
-In-Reply-To: <7v7gygbdxg.fsf@alter.siamese.dyndns.org>
+	id S1754707Ab2CSVAK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Mar 2012 17:00:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37320 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751821Ab2CSVAI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2012 17:00:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F4E97C60;
+	Mon, 19 Mar 2012 17:00:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZUlRl+Y6QaNiEVHOK63Yvrnp94A=; b=g4D1cu
+	fFxDcB+RhEtvgxhZAzeL7+1i1fOw/QrnXRTgn5KAxcdzdSSOqAjoumKFdbvxq7vY
+	SWV0+ImcFomlqX6zve951XfODbov/2zc+AE7zzsQ1Aafc6CAFHV3j31A11jCQRqQ
+	fgpz7DufAe+8LRYk/hZbbicF/dIEh93oTgIUk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ME5dkH0DyNujrCyugdXTC0gDMiqIlBKY
+	+JAI71nChTLcOISrDtp2WDL+9gga/EmtIIqApby8A3t2hPdtI9Ora19qtNQ1PmIK
+	tNXpXtFNvSwHVHSNucqcC7x9VPr8+Fr13qRgPnBuilsGIOVOc50pWEgHZoFwqTIS
+	nOtuWNJ07EM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F6CD7C5B;
+	Mon, 19 Mar 2012 17:00:06 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 457F57C51; Mon, 19 Mar 2012
+ 17:00:03 -0400 (EDT)
+In-Reply-To: <1332035734-5443-1-git-send-email-tim.henigan@gmail.com> (Tim
+ Henigan's message of "Sat, 17 Mar 2012 21:55:25 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7F8A3DEE-7206-11E1-A453-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193459>
 
-On Mon, Mar 19, 2012 at 12:15:07PM -0700, Junio C Hamano wrote:
+Thanks.
 
-> A pre-receive hook that lists the author names of the commits, along the
-> lines of "git log --format='%an <%ae>' $OLD_HEAD..$NEW_HEAD" and compares
-> against the name of the user authenticated against your SSH server would
-> be a way to do this.
-> 
-> But that would mean you are forbidding people to accept patches from
-> others, inspect the patches for validity and vouch for them, while giving
-> the credit to them by recoding the author names of the patch authors.
-> 
-> Perhaps checking the committer name would suit your situation better.  I
-> dunno.
+I do not know a difftool user, and I wasn't paying close attention to the
+discussion but I recall these points raised and I do not recall the
+resolutions:
 
-Then you would be forbidding merges of other people's work, no? Even if
-the other person's commits are available in the upstream repo, they
-might be hitting this ref for the first time, and would be generally be
-checked by such a hook.
+ * In [1/9], use of pass_through would mean 'git difftool' must be fed the
+   options for difftool and then options meant for underlying diff
+   machinery.  Is this limitation still there?  If so, isn't this a
+   regression?  Shouldn't it at least be advertised to the users a lot
+   stronger in documentation?
 
--Peff
+ * In [4/9], you remove the .exe extension when running git, which was
+   there since the beginning of difftool 5c38ea3 (contrib: add 'git
+   difftool' for launching common merge tools, 2009-01-16).  I think it is
+   safe but are Windows folks OK with this?
+
+ * In [6/9], the exit code in the failure case seem to be modified from
+   that of the underlying "git diff" to whatever croak gives us.  Is this
+   a regression, or nobody cares error status from difftool?  I personally
+   suspect it is the latter, but just double-checking if you have
+   considered it.
+
+ * In [7/9], difftool--helper declares SUBDIRECTORY_OK, but there doesn't
+   seem to be any inclusion of git-sh-setup in this script, and the patch
+   does not have any effort to prepend $prefix to paths relative to $cwd.
+   What good does the variable do here?
