@@ -1,85 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] push: Provide situational hints for non-fast-forward
- errors
-Date: Mon, 19 Mar 2012 15:41:40 -0700
-Message-ID: <7vwr6g8b8b.fsf@alter.siamese.dyndns.org>
-References: <20120319074944.GA18489@democracyinaction.org>
- <7vbonsbepx.fsf@alter.siamese.dyndns.org> <20120319222225.GA36860@gmail.com>
+From: Andrew Sayers <andrew-git@pileofstuff.org>
+Subject: Re: Please discuss: what "git push" should do when you do not say
+ what to push?
+Date: Mon, 19 Mar 2012 22:47:39 +0000
+Message-ID: <4F67B78B.6080208@pileofstuff.org>
+References: <7v7gyjersg.fsf@alter.siamese.dyndns.org> <7vty1ndcoi.fsf@alter.siamese.dyndns.org> <4F6461D7.40303@pileofstuff.org> <7vipi1d9r7.fsf@alter.siamese.dyndns.org> <4F6792DE.80208@pileofstuff.org> <7v62e09sig.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, zbyszek@in.waw.pl,
-	Matthieu.Moy@grenoble-inp.fr, drizzd@aon.at
-To: Christopher Tiwald <christiwald@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 19 23:42:02 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 19 23:47:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9lH2-0004hS-Is
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 23:41:56 +0100
+	id 1S9lMk-0007Sm-PT
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 23:47:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965001Ab2CSWlq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Mar 2012 18:41:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50884 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932168Ab2CSWlm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2012 18:41:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 15CA377EA;
-	Mon, 19 Mar 2012 18:41:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=x+ziF+S6bE/TGFcEtdkiWj302Bs=; b=lq2ERN
-	jDQpBCmj5mu32oemmOBDhiRD3+McvZFaneugGYFT9ufpz+kS+YU7hQrrFjxL8sM8
-	mnkC8BsITdfjMHfvpAtpGVToByMvwVCbLtBmseCD8EM78U18Z0aXpBLkGJxG/aka
-	D8W8lAP3X7SLIdVkgutRwjExBjas7ZGNw7iKs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lUpwpx6dbbbOJy2IBvHsNXeBScSKvl9v
-	DmcvoWybW9ZvOOeeWFj4zt0YuumP1ucit9kdsyc0r+s8jg2xTa6LzjJqc0Z/L22L
-	f9TI8IvJuWAPPgmiMAeDY4quGJbGB6WAbDnBWfNifRl5e/3vPRWhZDDgYit1uHbQ
-	nioxmsRAuYo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0AFD077E9;
-	Mon, 19 Mar 2012 18:41:42 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 972D077E8; Mon, 19 Mar 2012
- 18:41:41 -0400 (EDT)
-In-Reply-To: <20120319222225.GA36860@gmail.com> (Christopher Tiwald's message
- of "Mon, 19 Mar 2012 18:22:25 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B26E594E-7214-11E1-99C0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757973Ab2CSWrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Mar 2012 18:47:46 -0400
+Received: from mtaout01-winn.ispmail.ntl.com ([81.103.221.47]:51793 "EHLO
+	mtaout01-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S964799Ab2CSWro (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Mar 2012 18:47:44 -0400
+Received: from aamtaout04-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout01-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20120319224742.ODDH6650.mtaout01-winn.ispmail.ntl.com@aamtaout04-winn.ispmail.ntl.com>;
+          Mon, 19 Mar 2012 22:47:42 +0000
+Received: from [192.168.0.2] (really [94.170.150.126])
+          by aamtaout04-winn.ispmail.ntl.com
+          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
+          id <20120319224742.ZYPZ23925.aamtaout04-winn.ispmail.ntl.com@[192.168.0.2]>;
+          Mon, 19 Mar 2012 22:47:42 +0000
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.27) Gecko/20120216 Thunderbird/3.1.19
+In-Reply-To: <7v62e09sig.fsf@alter.siamese.dyndns.org>
+X-Cloudmark-Analysis: v=1.1 cv=JvdXmxIgLJv2/GthKqHpGJEEHukvLcvELVXUanXFreg= c=1 sm=0 a=pFZ1vDXyzkQA:10 a=thCgSaaV3M8A:10 a=u4BGzq-dJbcA:10 a=8nJEP1OIZ-IA:10 a=qOz2pZ_4AAAA:8 a=VXyBlBbcmqxut6A2UtMA:9 a=k857nZmpOnmNzgQ8wkAA:7 a=wPNLvfGTeEIA:10 a=7qzHkXPk5l4A:10 a=3ak68Tv0hvght0in:21 a=hKrQjsZ63jxhNTbf:21 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193471>
 
-Christopher Tiwald <christiwald@gmail.com> writes:
+On 19/03/12 21:43, Junio C Hamano wrote:
+> Andrew Sayers <andrew-git@pileofstuff.org> writes:
+> 
+>> On 18/03/12 18:50, Junio C Hamano wrote:
+>>>
+>>> ... but in short, it is not a problem we can solve
+>>> (nor we should be solving), as long as we have a reasonable migration plan
+>>> and if the user is locked out of that migration plan---whoever is doing
+>>> the locking-out is taking responsibility for these users who are out of
+>>> our reach.
+>>
+>> I take the point that distros have their own support infrastructure, so
+>> perhaps this would be a better example:
+>>
+>> Many administrators in corporate environments will install git from
+>> source, because they don't trust RPM/need some feature in the latest
+>> version/are just that way inclined.  Having installed it, they tend to
+>> sit on that version for a few years ...
+> 
+> The same response applies. These administrators are taking responsibility
+> for their users by making them out of our reach.
+> 
 
-> How about the something like the following fixup? This introduces two
-> changes to v2:
->
-> - It breaks the new advice into three config variables. Users
->   who might benefit from the advice can't accidentally shut a message
->   off before being confronted with the situation it's designed to
->   advise.
-> - It leaves pushNonFastForward in place, and if a user sets
->   'advice.pushNonFastForward = false', it'll disable all three pieces
->   of advice.
+I'm not sure I follow.  It sounds like you're saying we should avoid
+helping anyone that doesn't stick to our upgrade schedule, but that
+would mean it's redundant to add code at all - all the publicity this
+change has got means everyone close enough to the process has heard
+about it already.
 
-Sounds good.
+>> ... a
+>> slightly better solution:
+>>
+>> When a user upgrades to a mid- or post-change version of git, I think
+>> it's a good idea for them to be warned about the change of behaviour.
+>> But new users, and old users with new repositories, gain nothing from
+>> the little history lesson.
+> 
+> You are right for new users, but are wrong for old users who aren't aware
+> of the switch-over, *and* are harmed by the switch-over.
 
->  static void advise_pull_before_push(void)
->  {
-> -	if (!advice_push_non_ff_current)
-> +	if (!advice_push_non_ff_current | !advice_push_nonfastforward)
+You're right that the solution I suggested would harm people who
+regularly create new repositories, but have written scripts that expect
+the old behaviour in those new repositories.  The only solution that
+would completely avoid harming that small group would be to permanently
+make the default push.default "print a warning and give up" - otherwise
+you're just harming people with long schedules instead of those with
+short ones.
 
-Bitwise or would work OK as long as both sides are !var, but is not
-particularly a style.  Please replace all of these with "||".
-
-Other than that, sounds sane to me.
-
-Thanks.
+	- Andrew
