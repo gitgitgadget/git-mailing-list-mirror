@@ -1,67 +1,64 @@
-From: Thomas Rast <trast@student.ethz.ch>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: A better git diff --word-diff (--word-diff-regex) ?
-Date: Mon, 19 Mar 2012 10:50:29 +0100
-Message-ID: <87ipi0vs0q.fsf@thomas.inf.ethz.ch>
+Date: Mon, 19 Mar 2012 10:58:19 +0100
+Message-ID: <4F67033B.2060904@viscovery.net>
 References: <CAA01CsrJ12LmNYe6ujnDsZecJcGc8mFaB=1GC8-RZzvMYbYuUw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: Git Mailing List <git@vger.kernel.org>
 To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 19 10:50:40 2012
+X-From: git-owner@vger.kernel.org Mon Mar 19 10:58:32 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9ZEb-0006ES-Om
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 10:50:38 +0100
+	id 1S9ZMD-0002LU-CC
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 10:58:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758710Ab2CSJud (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Mar 2012 05:50:33 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:24646 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758591Ab2CSJuc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2012 05:50:32 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 19 Mar
- 2012 10:50:29 +0100
-Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.355.2; Mon, 19 Mar
- 2012 10:50:29 +0100
+	id S1758725Ab2CSJ6Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Mar 2012 05:58:24 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:4406 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758646Ab2CSJ6Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2012 05:58:24 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.76)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1S9ZM4-0005sy-Rd; Mon, 19 Mar 2012 10:58:21 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id C26B81660F;
+	Mon, 19 Mar 2012 10:58:19 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
 In-Reply-To: <CAA01CsrJ12LmNYe6ujnDsZecJcGc8mFaB=1GC8-RZzvMYbYuUw@mail.gmail.com>
-	(Piotr Krukowiecki's message of "Mon, 19 Mar 2012 10:44:31 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Originating-IP: [129.132.153.233]
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193423>
 
-Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
-
+Am 3/19/2012 10:44, schrieb Piotr Krukowiecki:
 > is there a way to configure --word-diff to be a more programming
 > language friendly? For example if I add one parameter to a function
 > declaration, I'd like to see only the addition of the parameter as the
 > change. But currently it shows much more.
->
+> 
 > For example if
 >   void foo(int x);
 > is changed to
 >   void foo(int x, int y);
 > I'd like to see only ",int y" as the change, not "x, int y);".
->
+> 
 > I think I'd like to ignore all white spaces and tokenize text on word
 > boundaries and see the diff between the tokens. This way if I e.g. add
 > a missing ";" it'll be shown as the only change.
 
-Umm, what's wrong with
+Start with
 
-  echo '*.cpp diff=cpp' >>.git/info/attributes
+   git config diff.wordregex '[[:alnum:]]+|[^[:space:]]'
 
-Ok, the funcname patterns aren't so good, but the word regex is designed
-to "tokenize" as far as that is feasible.
+Adjust to your likings.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+-- Hannes
