@@ -1,72 +1,71 @@
-From: Roberto <mrgreiner@gmail.com>
-Subject: link user-name with ssh-login
-Date: Mon, 19 Mar 2012 13:58:56 -0300
-Message-ID: <4F6765D0.5060706@gmail.com>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: A better git diff --word-diff (--word-diff-regex) ?
+Date: Mon, 19 Mar 2012 18:06:49 +0100
+Message-ID: <CAA01Cso5z9oT_MyFmGCJ0aV7EXb11k8zK4bJ9XBBLT3Yx_zpdw@mail.gmail.com>
+References: <CAA01CsrJ12LmNYe6ujnDsZecJcGc8mFaB=1GC8-RZzvMYbYuUw@mail.gmail.com>
+	<87ipi0vs0q.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 19 17:59:07 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Mar 19 18:06:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9fvG-0001OB-LR
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 17:59:07 +0100
+	id 1S9g2p-00052t-1i
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 18:06:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1162248Ab2CSQ7A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Mar 2012 12:59:00 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:51385 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756641Ab2CSQ67 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2012 12:58:59 -0400
-Received: by vcqp1 with SMTP id p1so6458505vcq.19
-        for <git@vger.kernel.org>; Mon, 19 Mar 2012 09:58:59 -0700 (PDT)
+	id S1161417Ab2CSRGv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Mar 2012 13:06:51 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:43815 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758422Ab2CSRGu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Mar 2012 13:06:50 -0400
+Received: by yhmm54 with SMTP id m54so5681279yhm.19
+        for <git@vger.kernel.org>; Mon, 19 Mar 2012 10:06:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=7wN6hW5YiF71vJg8IW+Ug+pbqFyYZDRvB/sqCohKZAk=;
-        b=pCFODlBOSghrUdJwUmgSIY6F8ASJX6YPRi9UzRUG16JiZ7rezx7PJFgR4p8lCfVggF
-         vCxBqW3abhR8Rr+9zZPbYpbFs3VWM9L/m+MrYAyOhGk2M+QzfDIkRED53svxnQftb4WD
-         BYe+ZOd+rmX20MbMy6mt5+ytMtKiyH8ymT0L5AMuo+fp4mPcMUxoh7lkUTNYqMX0z6a+
-         YRDw8v8u22b29D7jjdqmFo6ms+dtuYQam6UvQIos7IeIcrAaFnyZ5+AphHramWqWbcxZ
-         LXsQdsuMds6UZjJSdXlItmZvKu/2N040HPY2wMe0xRDZr+d3F/QDyUh4Oap+YH62o9XK
-         9Hlg==
-Received: by 10.52.30.65 with SMTP id q1mr4159184vdh.77.1332176339009;
-        Mon, 19 Mar 2012 09:58:59 -0700 (PDT)
-Received: from ?IPv6:2801:88:ead:0:5d0f:2926:26b1:5b9f? ([2801:88:ead:0:5d0f:2926:26b1:5b9f])
-        by mx.google.com with ESMTPS id ig6sm10038036vdb.0.2012.03.19.09.58.57
-        (version=SSLv3 cipher=OTHER);
-        Mon, 19 Mar 2012 09:58:58 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:11.0) Gecko/20120312 Thunderbird/11.0
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Id/GGb/IJ948zyh0zcS31APfbym8HmsvO9qNgrVEguM=;
+        b=Ng6lJIKBS1P6/Kg0xJfUWhO96p/34MdewkGNeWFfS+l9GagNL4SP0XUnZ1JbUjjBmd
+         3eUBEkhoXn4yj8mlyMcCUhwN1j6sXKHyqY0aHGvttT76sRG4Xt6BCDzTbTh4XuAX1FZ4
+         6RchsALpoblm8I+Mb1sxf+4Qm+O0lw5dheyHPk1ELjnOevnkjxtUvfv1v3o0C5wcFln6
+         eoWjEEqh2ypIXdMTPA7V+HKijqSfry82PCA9OO84m0iJbK4CHso3G+/MAlA69hxDihnU
+         bee0rtfC9J80IEw6AqFIXutaWAlm6mmGOwsgz6Z4AJwRv6rCMJT8WEiXUXrMnq9qZ5M5
+         hpPA==
+Received: by 10.50.170.104 with SMTP id al8mr6745006igc.9.1332176809364; Mon,
+ 19 Mar 2012 10:06:49 -0700 (PDT)
+Received: by 10.50.170.40 with HTTP; Mon, 19 Mar 2012 10:06:49 -0700 (PDT)
+In-Reply-To: <87ipi0vs0q.fsf@thomas.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193443>
 
-Hi,
+On Mon, Mar 19, 2012 at 10:50 AM, Thomas Rast <trast@student.ethz.ch> w=
+rote:
+> Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
+>
+>> is there a way to configure --word-diff to be a more programming
+>> language friendly? For example if I add one parameter to a function
+>> declaration, I'd like to see only the addition of the parameter as t=
+he
+>> change. But currently it shows much more.
+>
+> Umm, what's wrong with
+>
+> =A0echo '*.cpp diff=3Dcpp' >>.git/info/attributes
+>
+> Ok, the funcname patterns aren't so good, but the word regex is desig=
+ned
+> to "tokenize" as far as that is feasible.
 
-I have small ssh-based git server used for insite code development. But 
-there is one thing I can't find how to set.
+Thanks, that's very good! I've missed it reading the git-diff man page.
 
-In the server, each developer has a valid ssh account (I switched the 
-shell to git-shell). The problem is that when a developer commit's some 
-code, he can freely set in his local .git/config file the user name he 
-want's to appear in the commit logs. Is there any way to link/force a 
-certain ssh login to a name?
-
-Thanks,
-
-Roberto
-
--- 
-   -----------------------------------------------------
-                 Marcos Roberto Greiner
-
-    Os otimistas acham que estamos no melhor dos mundos
-     Os pessimistas tem medo de que isto seja verdade
-                                   James Branch Cabell
-   -----------------------------------------------------
+--=20
+Piotr Krukowiecki
