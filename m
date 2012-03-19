@@ -1,78 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: link user-name with ssh-login
-Date: Mon, 19 Mar 2012 12:15:07 -0700
-Message-ID: <7v7gygbdxg.fsf@alter.siamese.dyndns.org>
-References: <4F6765D0.5060706@gmail.com>
+From: "Michael K. Johnson" <johnsonm@danlj.org>
+Subject: Re: Please discuss: what "git push" should do when you do not say
+	what to push?
+Date: Mon, 19 Mar 2012 14:26:35 -0400
+Message-ID: <20120319182635.GA23181@people.danlj.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Roberto <mrgreiner@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 19 20:15:20 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 19 20:20:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9i35-0004kp-Hf
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 20:15:19 +0100
+	id 1S9i7p-00074l-HL
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 20:20:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1032605Ab2CSTPM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Mar 2012 15:15:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58299 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1032559Ab2CSTPL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2012 15:15:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C0EF7F7A;
-	Mon, 19 Mar 2012 15:15:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gbijbRgxY1BKJwZiLn/OOmMJkGo=; b=cJTK35
-	6U7E3aNxAgBN5b4XEdEJ4bbaSZwNlXXUKGNXVHekPdyYnPkviGx6xDRR/GoVySqn
-	va4FBUTpJQ/ho8HDM2VHkZ/8KrGZagg741tzvS12K6G4TMwmmaspi8Z5QPavx3jQ
-	xFhCeL/E/eGy92voDi0CmyWObRld8Z9efCFy0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YhZTPzUFa3ZWwdPmtZT16KKyqDYe/YBf
-	PCiLm+9Q+THTPi9rYFRAheBKda44Wcqvjme5i3aLlnbbzaFQD1FxEZGz90Vg2sh4
-	8naDxnQ/hs9yu8NAACCBVmvVARAktA/Xuy97ybmx6FyDRsEhaakQmPTzuxl0riXD
-	MpXBjtc72sI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 833D87F79;
-	Mon, 19 Mar 2012 15:15:10 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 218367F78; Mon, 19 Mar 2012
- 15:15:09 -0400 (EDT)
-In-Reply-To: <4F6765D0.5060706@gmail.com> (Roberto's message of "Mon, 19 Mar
- 2012 13:58:56 -0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D7EF71E8-71F7-11E1-A49A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759293Ab2CSTUG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Mar 2012 15:20:06 -0400
+Received: from mail.ladweb.net ([216.129.110.26]:58432 "EHLO mail.ladweb.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759219Ab2CSTUE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2012 15:20:04 -0400
+X-Greylist: delayed 3207 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Mar 2012 15:20:04 EDT
+Received: from people.danlj.org (danlj.colo.ladweb.net [10.0.0.2])
+	by mail.ladweb.net (8.13.7/8.13.7) with ESMTP id q2JIQa6p011281
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Mon, 19 Mar 2012 14:26:36 -0400
+Received: from people.danlj.org (people.danlj.org [127.0.0.1])
+	by people.danlj.org (8.14.2/8.14.2) with ESMTP id q2JIQaeY023473
+	for <git@vger.kernel.org>; Mon, 19 Mar 2012 14:26:36 -0400
+Received: (from johnsonm@localhost)
+	by people.danlj.org (8.14.2/8.14.2/Submit) id q2JIQZ7l023472
+	for git@vger.kernel.org; Mon, 19 Mar 2012 14:26:35 -0400
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193450>
 
-Roberto <mrgreiner@gmail.com> writes:
+Thank you for the public requests for comment on changing "git push"
+semantics.  I don't have anything particularly new to say, so TL;DR
+is: I think that changing the default value for push.default to
+upstream would help advocate corporate Git adoption as potential
+users experiment on their own, attracted by the benefits of "branchy"
+development.  I don't think that my own ability to advocate for Git
+is affected by this decision, but wanted to share the observation.
 
-> I have small ssh-based git server used for insite code
-> development. But there is one thing I can't find how to set.
->
-> In the server, each developer has a valid ssh account (I switched the
-> shell to git-shell). The problem is that when a developer commit's
-> some code, he can freely set in his local .git/config file the user
-> name he want's to appear in the commit logs. Is there any way to
-> link/force a certain ssh login to a name?
+I am encouraging corporate adoption of Git for primary source
+code control, and I see two reasons for making relatively centralized
+workflows easy.
 
-A pre-receive hook that lists the author names of the commits, along the
-lines of "git log --format='%an <%ae>' $OLD_HEAD..$NEW_HEAD" and compares
-against the name of the user authenticated against your SSH server would
-be a way to do this.
+It is easiest to advocate for this change when more developers are
+convinced that the initial adoption process will be relatively easy;
+that they can change from existing centralized version control
+to Git without synchronized, protracted productivity loss due to
+a steep learning curve.  Don't get me wrong, they want to make
+use of DVCS concepts, and they aren't interested in the change
+without expecting benefits from the change, it's just that having a
+centralized workflow available makes it easier to contemplate change.
+The more developers involved, the harder it would be to try to
+synchronize everyone's learning curve and the more value in a
+centralized workflow being available.
 
-But that would mean you are forbidding people to accept patches from
-others, inspect the patches for validity and vouch for them, while giving
-the credit to them by recoding the author names of the patch authors.
+As has been raised several times already, most corporations are most
+comfortable with having one repository that is the official main
+repository, a "primus inter pares" of repositories.  At least in
+my own context, for business continuity we want developers to push
+topic branches to the official central repository.  In practice, very
+little truly disconnected development is done; the benefits of DVCS
+in general and Git in particular lie mostly in the version graph, and
+secondarily in the scalability derived from repository distribution.
 
-Perhaps checking the committer name would suit your situation better.  I
-dunno.
+The default setting of push.default=matching is confusing for new
+users in practice, at least in centralized workflows.  It has been
+confusing in practice that they need to synchronize their master
+in order to synchronize their topic branch, and in order to find
+the solution they need to have some idea what solution they are
+looking for -- and expect that there is a solution.
+
+Finally, my reasoning for "upstream" instead of "current" is that
+I have heard in practice that quite a few developers who are interested
+in Git but not yet familiar with it have heard that branches can have
+different names in different repositories, and they like the idea.
+They might want to track "origin/bug1234567" in "mybug" that is
+shorter and easier to remember...  This is a minor point, in my
+opinion.
