@@ -1,79 +1,132 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Please discuss: what "git push" should do when you do not say
- what to push?
-Date: Mon, 19 Mar 2012 15:59:14 -0700
-Message-ID: <7vsjh48af1.fsf@alter.siamese.dyndns.org>
-References: <7v7gyjersg.fsf@alter.siamese.dyndns.org>
- <7vty1ndcoi.fsf@alter.siamese.dyndns.org> <4F6461D7.40303@pileofstuff.org>
- <7vipi1d9r7.fsf@alter.siamese.dyndns.org> <4F6792DE.80208@pileofstuff.org>
- <7v62e09sig.fsf@alter.siamese.dyndns.org> <4F67B78B.6080208@pileofstuff.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: GSOC Application [gitweb]
+Date: Mon, 19 Mar 2012 16:06:49 -0700 (PDT)
+Message-ID: <m3bons42d2.fsf@localhost.localdomain>
+References: <4F67AEAD.4070401@informatik.uni-luebeck.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Mon Mar 19 23:59:24 2012
+To: Philipp Abraham <abrahamp@informatik.uni-luebeck.de>
+X-From: git-owner@vger.kernel.org Tue Mar 20 00:06:58 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9lXv-0004JE-Jx
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 23:59:23 +0100
+	id 1S9lfF-0007rg-5N
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 00:06:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758411Ab2CSW7S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Mar 2012 18:59:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58760 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756567Ab2CSW7R (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2012 18:59:17 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C79D17C2B;
-	Mon, 19 Mar 2012 18:59:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2QZX6djBquDUyKQfPFE553iY8t0=; b=UWOoYE
-	t1dTXGNaxztAzTYj4sEWDeecMPr43EKf9zvmLgOAv9zn+OBrstDKQtSWinQI8xrq
-	H64EpOIp7mDb/Taz4GrHFnMweova67GhECrQyDVXPpEh8mb2+tLMV1tLdFbR/uQs
-	eLC3p77Gvx+IFzyM/n1yGgO/+TIWKKQnu5bUY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=g4qA8dpzrf313L7YLwDBW82dwV2kyvZL
-	O818eyzyTbotRMUVgWYDg83rYa0199/uukJKmhciaZYtVwfjr5KEkuPs3Klb2bTN
-	9eJ48yL1oJhRMz8ntVOaSqkPUV5Gng80yP6mQSu3aR7najJxERqqjW1VJPIzgsAL
-	p/fXh2i6+Ks=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BF0647C2A;
-	Mon, 19 Mar 2012 18:59:16 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3BB507C29; Mon, 19 Mar 2012
- 18:59:16 -0400 (EDT)
-In-Reply-To: <4F67B78B.6080208@pileofstuff.org> (Andrew Sayers's message of
- "Mon, 19 Mar 2012 22:47:39 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 27092DC2-7217-11E1-B261-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758575Ab2CSXGw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Mar 2012 19:06:52 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:36216 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755617Ab2CSXGv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2012 19:06:51 -0400
+Received: by wibhq7 with SMTP id hq7so4467369wib.1
+        for <git@vger.kernel.org>; Mon, 19 Mar 2012 16:06:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=xgMwhcpUzBf2Fu+CxszyimryYGXnvjj2NRzgcaaHn/0=;
+        b=mgVkV4ejTmpgUfDD/aVLOHCKTnyuoqi4eRcx3UdYF/v7Lnkz1euLZKmwXW63bp6wtW
+         HKVE6sA/ukCofI40cPDdhmZzHiv+P2BSxw8pWzh9P8YB3FpnhO5OgPB8k+8tTiUcqfKi
+         mpKJQqJrvixMBKeB4vZYTVBBc7PTeJQsLxoU4INaJstiMA87v4ax9q7OIDjZ3GbV+whm
+         jYEySbYrgaM0oMTP37mPkLD/OlrGx/Frw3HhUSmZlronthKc7ndTC1xQib7ppvsbbrKf
+         F9tXhE+DPJ0ewqLgc3aTBsqW3kOf/sYKK0XxeC3fo3U0cN4OMzntg4pMJ+oXqdB6lMel
+         G6bw==
+Received: by 10.180.76.74 with SMTP id i10mr23802529wiw.2.1332198410329;
+        Mon, 19 Mar 2012 16:06:50 -0700 (PDT)
+Received: from localhost.localdomain (abvw11.neoplus.adsl.tpnet.pl. [83.8.220.11])
+        by mx.google.com with ESMTPS id n15sm29241721wiw.6.2012.03.19.16.06.48
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 19 Mar 2012 16:06:49 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q2JN6oim010528;
+	Tue, 20 Mar 2012 00:06:50 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id q2JN6nQE010525;
+	Tue, 20 Mar 2012 00:06:49 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <4F67AEAD.4070401@informatik.uni-luebeck.de>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193473>
 
-Andrew Sayers <andrew-git@pileofstuff.org> writes:
+Philipp Abraham <abrahamp@informatik.uni-luebeck.de> writes:
 
-> On 19/03/12 21:43, Junio C Hamano wrote:
->> 
->> The same response applies. These administrators are taking responsibility
->> for their users by making them out of our reach.
->
-> I'm not sure I follow.  It sounds like you're saying we should avoid
-> helping anyone that doesn't stick to our upgrade schedule,...
+> For my application, I would like to focus on gitweb.
+> Looking at this year's proposals [1] the point "Use JavaScript library
+> / framework in gitweb" caught my interest.
+> I scanned through the current javascript code used by gitweb and
+> noticed that there's not too much going on currently.
+> 
+> There are only 2 components where JS is used: Adjusting the time zone
+> and incrementally looking up the data for blame.
 
-I am not saying "should avoid".  I am saying it is not much use.
+Well, there is 2 and a 1/2: there is also "JavaScript detection".
 
-All we can do is to inform, educate and help those who are taking
-responsibility, be it LTS distro or these administrators, to help their
-users.  I've already outlined what LTS distros could do with backporting
-and reverting in the previous message.
+> Since including a JS library (like prototype.js or jQuery) and
+> refactoring the (small) existing code base to use the lib's methods
+> doesn't look enough for GSoC, I wanted to ask what would be the best
+> idea for a project proposal.
 
-We can make sure that the "default flip" and "stop warn" patches can be
-easily cherry-picked by them, even though we cannot force them to do so.
+All three components could be improved:
+
+* "JavaScript detection" now rewrites all internal links after
+  loading document.  Perhaps a better solution would be to install
+  "live" onclick event handler that would capture clicking on
+  internal links and only then add 'js=1'
+
+* The UI for adjusting timezone could be improved using UI part of
+  JavaScript library; also capturing of onclick could be improved.
+
+* Incremental blame could be written in two parts: one as possibly
+  emulated (via timer) onprogress for XHR, one as queuing visual
+  updates based on received data
+
+> Are there any additional features that you would like to see in gitweb?
+
+* Client-side sorting of tables (e.g. list of projects), though at
+  least for some JavaScript libraries that would hardly need any work
+  beside intergrating visually with the rest of gitweb and disabling
+  server-side sorting
+
+* Client-side syntax highlighting of blob view.  The problem here is
+  how gitweb splits putput into lines, and provides line numbers,
+  instead of just dumping file contents inside some kind of
+  <pre>...</pre> element.
+
+* Some way of allowing to create a diff between two arbitrary
+  revisions; this might need some changes in server-side, and
+  knowledge of Perl.
+
+  A subset of this could be something like history view in MediaWiki.
+
+* Perhaps further refinement of highlighting changes in diff, or even
+  implementing transforming ordinary unified diff into side-by-side
+  diff entirely on client side.
+ 
+* Some way of automatic extending of clickable area for places where
+  we have single link in a cell or cell-like structure
+
+> I thought about creating a graphical representation of the tree (as
+> proposed on last years idea list [2]) additionally or in exchange for
+> the first idea.
+> Though I couldn't think of the perfect solution (from a technology
+> point) yet.
+> Possible technologies would be using SVG, html5 canvas element or
+> dynamically manipulated DOM elements (best browser support but harder
+> to realize). Using special characters like 'git log --graph' does,
+> seems to look a bit too retro in a web application.
+
+Or just use Raphael JavaScript library (http://raphaeljs.com)...
+
+> What would you advice to maximize the chances of getting accepted to
+> work on gitweb?
+
+-- 
+Jakub Narebski
