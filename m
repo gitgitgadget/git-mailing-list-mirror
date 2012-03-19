@@ -1,90 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Please discuss: what "git push" should do when you do not say
- what to push?
-Date: Mon, 19 Mar 2012 14:43:03 -0700
-Message-ID: <7v62e09sig.fsf@alter.siamese.dyndns.org>
-References: <7v7gyjersg.fsf@alter.siamese.dyndns.org>
- <7vty1ndcoi.fsf@alter.siamese.dyndns.org> <4F6461D7.40303@pileofstuff.org>
- <7vipi1d9r7.fsf@alter.siamese.dyndns.org> <4F6792DE.80208@pileofstuff.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: link user-name with ssh-login
+Date: Mon, 19 Mar 2012 14:56:04 -0700
+Message-ID: <CAJo=hJvqr2pKVje490g2k2Wxdf2rrQYsrWQ2eN6bPn84fRxLEQ@mail.gmail.com>
+References: <4F6765D0.5060706@gmail.com> <7v7gygbdxg.fsf@alter.siamese.dyndns.org>
+ <20120319205747.GB3039@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Mon Mar 19 22:43:18 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Roberto <mrgreiner@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 19 22:56:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9kMH-0002db-J5
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 22:43:17 +0100
+	id 1S9kZ5-0000nu-5g
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 22:56:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756287Ab2CSVnK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Mar 2012 17:43:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56018 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756260Ab2CSVnG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2012 17:43:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC8BA6975;
-	Mon, 19 Mar 2012 17:43:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=19Ggf1flVIy1U1y6yz4hXbtRYdY=; b=QRzPAh
-	Fu1OyFXjp6k+EbKVVVoNVdT+Xg030Kgg80rf6I5TxQVQoDFq/G7Y74Uq5AkdTj8G
-	Flnce8PQgOcam2o1KnYYGpbC3Ww3LyS1tSqHCfyBaN/LDJqwmtNoTUHDUurb/Dq5
-	Jbae1ake8rAoleiEKfVE9BBlvLrMhI6HmrcmE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=v/45CPrU0hfeR2/fq+jJwCmrV2+PbtyP
-	A3Gx2TmUW4Gp/Tu895UnlZruZfdbHVWKDJJHRSRO6No2dGp3BtJ7z03oWVZzCKfw
-	WcMqTkzvyOPuBxe4zZmrUZ/9KeWYfIXJli7T3gZY15fXnBUYeyIe+mxGTK0m99o/
-	ZvglWDtaq/w=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C29566973;
-	Mon, 19 Mar 2012 17:43:05 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 540DA6971; Mon, 19 Mar 2012
- 17:43:05 -0400 (EDT)
-In-Reply-To: <4F6792DE.80208@pileofstuff.org> (Andrew Sayers's message of
- "Mon, 19 Mar 2012 20:11:10 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 82911570-720C-11E1-AC63-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756625Ab2CSV40 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Mar 2012 17:56:26 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:33707 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756347Ab2CSV4Z convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Mar 2012 17:56:25 -0400
+Received: by dajr28 with SMTP id r28so10451209daj.19
+        for <git@vger.kernel.org>; Mon, 19 Mar 2012 14:56:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=aU4QH5EYqQkZhzits6yxsGuwVfU3JmV/Ap9spXEZCYk=;
+        b=RjL1JlkqMlVlnaehdc2VYILfWOgwmV6ac0/S877OPT7JXl6lmLi0046rOmA4Unsz5I
+         AWu2AqvNClGvwQnmtlUHxwHFI27JAfahy7f3bqMUfmAtslzsOkvWex0nwcGx1+RvmZfe
+         Kpjh7k1rK7P1k8JEx/ozyVIxG6+kshwq0PRb8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding:x-gm-message-state;
+        bh=aU4QH5EYqQkZhzits6yxsGuwVfU3JmV/Ap9spXEZCYk=;
+        b=KcmGhOREuw8yfOn2718VTp12RH5QrBQMTz124pH3gBX2aeDcsnPkTlf6JLsph7kPaR
+         DSpdAS8GNZPi4FZc9olsnTnpJOAJk8moxZEwIAdTbilaAbQMIHfpRDeUKTGOCpRbfwG5
+         0BQ5EXeqjs2H54GDMHWHmtzN/00ndv0/9HfejclbwusHxAqIZicVkA4ZBzhfAlChnfur
+         cg9wSS4GhD1gQUe3WEX9d0Xi+Zqm9rAPlvBtEacUT1h6oip8UkHVtdYueuwl5lIgT5Jr
+         5mpxm8hg0Yp4KKPMlzXH6Y3ReT/ApKrSfmhSq4GY5dHYCNuDt5febqJXwmhQOcX63JMG
+         ELvA==
+Received: by 10.68.230.195 with SMTP id ta3mr43439682pbc.149.1332194184633;
+ Mon, 19 Mar 2012 14:56:24 -0700 (PDT)
+Received: by 10.68.237.201 with HTTP; Mon, 19 Mar 2012 14:56:04 -0700 (PDT)
+In-Reply-To: <20120319205747.GB3039@sigill.intra.peff.net>
+X-Gm-Message-State: ALoCoQn0GnoMoq9HHdaZ1OZelv6KhdKMFM3x29UI2tHW2pCgWFgcwh/jFcg5Dx/nsdlkcYyo6Fir
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193465>
 
-Andrew Sayers <andrew-git@pileofstuff.org> writes:
-
-> On 18/03/12 18:50, Junio C Hamano wrote:
->> 
->> ... but in short, it is not a problem we can solve
->> (nor we should be solving), as long as we have a reasonable migration plan
->> and if the user is locked out of that migration plan---whoever is doing
->> the locking-out is taking responsibility for these users who are out of
->> our reach.
+On Mon, Mar 19, 2012 at 13:57, Jeff King <peff@peff.net> wrote:
+> On Mon, Mar 19, 2012 at 12:15:07PM -0700, Junio C Hamano wrote:
 >
-> I take the point that distros have their own support infrastructure, so
-> perhaps this would be a better example:
+>> A pre-receive hook that lists the author names of the commits, along=
+ the
+>> lines of "git log --format=3D'%an <%ae>' $OLD_HEAD..$NEW_HEAD" and c=
+ompares
+>> against the name of the user authenticated against your SSH server w=
+ould
+>> be a way to do this.
+>>
+>> But that would mean you are forbidding people to accept patches from
+>> others, inspect the patches for validity and vouch for them, while g=
+iving
+>> the credit to them by recoding the author names of the patch authors=
+=2E
+>>
+>> Perhaps checking the committer name would suit your situation better=
+=2E =A0I
+>> dunno.
 >
-> Many administrators in corporate environments will install git from
-> source, because they don't trust RPM/need some feature in the latest
-> version/are just that way inclined.  Having installed it, they tend to
-> sit on that version for a few years ...
+> Then you would be forbidding merges of other people's work, no? Even =
+if
+> the other person's commits are available in the upstream repo, they
+> might be hitting this ref for the first time, and would be generally =
+be
+> checked by such a hook.
 
-The same response applies. These administrators are taking responsibility
-for their users by making them out of our reach.
-
-> ... a
-> slightly better solution:
->
-> When a user upgrades to a mid- or post-change version of git, I think
-> it's a good idea for them to be warned about the change of behaviour.
-> But new users, and old users with new repositories, gain nothing from
-> the little history lesson.
-
-You are right for new users, but are wrong for old users who aren't aware
-of the switch-over, *and* are harmed by the switch-over.
+Most hooks that are trying to do this use "$NEW_HEAD --not --all" to
+only examine commits that would be newly reachable. Already reachable
+commits are presumed valid. If you want to merge someone else's
+commits, just make sure they have already pushed their commits to a
+branch somewhere, like a refs/heads/$USER/ sandbox space or something.
