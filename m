@@ -1,82 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Strange git merge behaviour with empty branches
-Date: Mon, 19 Mar 2012 12:51:17 -0700
-Message-ID: <7vvcm09xoq.fsf@alter.siamese.dyndns.org>
-References: <20120319185349.GH12789@mudshark.cambridge.arm.com>
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: Please discuss: what "git push" should do when you do not say what
+ to push?
+Date: Mon, 19 Mar 2012 11:57:16 -0700
+Message-ID: <87BE88BA-2827-4EDC-99BF-94026E604AB0@sb.org>
+References: <7v7gyjersg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Will Deacon <will.deacon@arm.com>
-X-From: git-owner@vger.kernel.org Mon Mar 19 20:51:27 2012
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; CHARSET=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: linux-kernel-owner@vger.kernel.org Mon Mar 19 21:01:22 2012
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9ic1-0005fe-Fh
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 20:51:25 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1S9ile-0002eB-37
+	for glk-linux-kernel-3@plane.gmane.org; Mon, 19 Mar 2012 21:01:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1032675Ab2CSTvU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Mar 2012 15:51:20 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40634 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752943Ab2CSTvT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2012 15:51:19 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C5A0698B;
-	Mon, 19 Mar 2012 15:51:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/rB42iuHIdGouN4nowAVrQ1Os4I=; b=C0Zfta
-	TC4BjOj3Hb5PepGxA6sX/QLuIQN9He3APA6CPgeP/G0MxzLx1rDULsbAjNESpdE5
-	SIl5AJl1ko827waIvl1ZhyhL6fyoXcpeMw+TTy5XC7K9NAEY7nBW6BOzxDRWdrqR
-	Y1KDKvJ14oTpCAp6DguIqIVYKEoUIFrvqXmus=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hab842fr6cG3o7O77CZY44puUwWFY12A
-	2gxzAQje0lTtnkVQLg1FXReqkvNb3odUne0ZRFt+Eic8Pwa/XemtyCWKfXUBGjp/
-	CcI6UXjolKPVpxdNOmmrbFi+4MabJgkrZAzQTiXQ+2edYtK18eGqC2Ju07WbDtCs
-	L3TA5+Moh7c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 53694698A;
-	Mon, 19 Mar 2012 15:51:19 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E00BB6987; Mon, 19 Mar 2012
- 15:51:18 -0400 (EDT)
-In-Reply-To: <20120319185349.GH12789@mudshark.cambridge.arm.com> (Will
- Deacon's message of "Mon, 19 Mar 2012 18:53:49 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E539EF90-71FC-11E1-A306-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
+	id S1162292Ab2CSUBM (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Mon, 19 Mar 2012 16:01:12 -0400
+Received: from mail-out.apple.com ([17.151.62.49]:60172 "EHLO
+	mail-out.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1162173Ab2CSUBH (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 19 Mar 2012 16:01:07 -0400
+X-Greylist: delayed 3830 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Mar 2012 16:01:07 EDT
+Received: from relay15.apple.com ([17.128.113.54])
+ by mail-out.apple.com (Oracle Communications Messaging Server 7u4-23.01
+ (7.0.4.23.0) 64bit (built Aug 10 2011))
+ with ESMTP id <0M15001SFAI4C7K0@mail-out.apple.com>; Mon,
+ 19 Mar 2012 11:57:13 -0700 (PDT)
+X-AuditID: 11807136-b7bd3ae000002dbb-e2-4f678188fffb
+Received: from kencur (kencur.apple.com [17.151.62.38])
+	(using TLS with cipher RC4-MD5 (RC4-MD5/128 bits))
+	(Client did not present a certificate)	by relay15.apple.com (Apple SCV relay)
+ with SMTP id 5F.72.11707.881876F4; Mon, 19 Mar 2012 11:57:13 -0700 (PDT)
+Received: from il0103b-dhcp193.apple.com
+ (il0103b-dhcp193.apple.com [17.201.38.243])
+ by kencur.apple.com (Oracle Communications Messaging Server 7u4-23.01
+ (7.0.4.23.0) 64bit (built Aug 10 2011))
+ with ESMTPSA id <0M1500LGLBBCEK30@kencur.apple.com>; Mon,
+ 19 Mar 2012 11:57:12 -0700 (PDT)
+In-reply-to: <7v7gyjersg.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1257)
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrFLMWRmVeSWpSXmKPExsUiON1OTbezMd3f4PM5ZouuK91MFpd3zWFz
+	YPL4vEkugDGKyyYlNSezLLVI3y6BK2PH209sBdMlKo40pTUwbhPuYuTkkBAwkdh36ggThC0m
+	ceHeerYuRi4OIYF2Jokdfb+ZIZzlTBKLPp0HqxIWiJKYcnAlC4jNK2Aose/3f7A4s4CWxPqd
+	x8FsNgEliXsTloDZnAJmEquWTGQDsVkEVCV2NX1jh6g3lWie+B2qV1viybsLrBAzLSW+bjrB
+	DGILAdXsvX8BzBYRUJOY2HaIBeJSWYnbB/czTWAUmIXkjFlIzpiFZOwCRuZVjIJFqTmJlYam
+	eokFBTmpesn5uZsYQSHYUGi2g3HHX7lDjAIcjEo8vBtj0v2FWBPLiitzDzFKcDArifA6XU/z
+	F+JNSaysSi3Kjy8qzUktPsQozcGiJM57Lg+oWiA9sSQ1OzW1ILUIJsvEwSnVwOibdyYw+uDv
+	w/+PfYjPVF3mfav0ZAXXW9bD2/qdr8SV9EwoVk6etfbDk555ena+KvcnZNyymtrQWdPwkdvC
+	rz4pUS1hwubyR+cP6pZ8ncSdsXr1T6d3p1+t/eLQeGC56sUnfTbT1fZv23plm9iTg1rXlzxa
+	YsejlfiK+/Ce29X66hlzU7lESlmUWIozEg21mIuKEwH3Pg27PQIAAA==
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193452>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193453>
 
-Will Deacon <will.deacon@arm.com> writes:
+I would love to see the default changed to 'upstream'. I've wanted this ever
+since the push.default=tracking value was introduced. When introducing new
+users to git, one of the first things I always tell them is to run
 
-> Any thoughts?
+    git config --global push.default tracking
 
-What is recorded in Octopus merges is a rather torn issue.  The original
-motivation was to allow recording anything the user throws at us, even
-though some are ancestors of others, without reducing them to the minimum
-set of parents that are necessary to represent the full history, because
-that is after all what the user wanted to do. You see some of that there.
+because it's far easier to explain how that behavior works than it is to
+explain how the 'matching' behavior works, and it more closely aligns with
+the way people (in my experience) typically use git.
 
-On the other hand, there was an edict from the original maintainer that we
-shouldn't record useless merge parents, so there were some changes in that
-direction to cull obviously redundant parents from the parent list.
+-Kevin
 
-But over time, novelty of Octopus merges waned, and nobody serious uses it
-for real work these days, except when bored and being curious, playing
-around and seeing what it does.
+On Mar 16, 2012, at 10:10 PM, Junio C Hamano wrote:
 
-An advice for an end-user is "Don't throw meaningless parents at
-Octopus. It will do whatever it does, and the only guarantee you are
-getting is that it does not record wrong parents, it may omit obviously
-redundant parents, and it will never discard an independent parent."
-
-An advice for a developer is to update it to make sure only the
-independent parents are recorded; "show-branch --independent" may be a
-good tool to compute them
+> There is a proposal to change the default behaviour of 'git push' on the
+> Git mailing list. The goal of this message is to encourage you to discuss
+> it before it happens (or the change is aborted, depending on the outcome
+> of the discussion).
+> 
+> In the current setting (i.e. push.default=matching), 'git push' without
+> argument will push all branches that exist locally and remotely with the
+> same name. This is usually appropriate when a developer pushes to his own
+> public repository, but may be confusing if not dangerous when using a
+> shared repository. The proposal is to change the default to 'upstream',
+> i.e. push only the current branch, and push it to the branch 'git pull'
+> would pull from. Another candidate is 'current'; this pushes only the
+> current branch to the remote branch of the same name.
+> 
+> For more details on the behavior of Git with these values, read the
+> documentation about 'push.default' in 'man git-config'
+> (http://schacon.github.com/git/git-config.html).
+> 
+> You may be negatively affected when such a change happens if you do not
+> see anything in the output from 'git config push.default' and if you rely
+> on the default that pushes all your matching branches. On the other hand,
+> you may want to see the default behaviour to change, especially if you are
+> using shared repositories. In either case, please join the discussion to
+> give us more data point and help us decide the future of Git. Also, if
+> you think your friends and colleagues will be affected by this change,
+> either positively or negatively, please tell them about this discussion.
+> 
+> What has been discussed so far can be seen in this thread:
+> 
+>    http://thread.gmane.org/gmane.comp.version-control.git/192547/focus=192694
+> 
+> Previous relevant discussions include:
+> 
+>    http://thread.gmane.org/gmane.comp.version-control.git/123350/focus=123541
+>    http://thread.gmane.org/gmane.comp.version-control.git/166743
+> 
+> To join the discussion, send your messages to:
+> 
+>    git@vger.kernel.org
+> 
+> The list accepts messages from non-subscribers, and you do not have to ask
+> "please Cc me, I am not subscribed", as it's customary to Cc: posters when
+> replying on this list.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
