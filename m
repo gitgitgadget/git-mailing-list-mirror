@@ -1,74 +1,78 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Letting remote repositories override local configuration
-Date: Mon, 19 Mar 2012 04:35:05 -0500
-Message-ID: <20120319093505.GA10017@burratino>
-References: <7v7gyjersg.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.2.00.1203190945560.15290@ds9.cixit.se>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: A better git diff --word-diff (--word-diff-regex) ?
+Date: Mon, 19 Mar 2012 10:44:31 +0100
+Message-ID: <CAA01CsrJ12LmNYe6ujnDsZecJcGc8mFaB=1GC8-RZzvMYbYuUw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Mon Mar 19 10:35:39 2012
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 19 10:44:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9Z03-00069p-SM
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 10:35:36 +0100
+	id 1S9Z8m-0002sq-Vg
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 10:44:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964806Ab2CSJfZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Mar 2012 05:35:25 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:32843 "EHLO
+	id S1758688Ab2CSJoc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Mar 2012 05:44:32 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:38345 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964982Ab2CSJfW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2012 05:35:22 -0400
-Received: by iagz16 with SMTP id z16so9209569iag.19
-        for <git@vger.kernel.org>; Mon, 19 Mar 2012 02:35:22 -0700 (PDT)
+	with ESMTP id S1755987Ab2CSJob (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2012 05:44:31 -0400
+Received: by iagz16 with SMTP id z16so9220231iag.19
+        for <git@vger.kernel.org>; Mon, 19 Mar 2012 02:44:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=8hq1zbSy57lI4gfiaC9eI32WjDCpzbHVLWcz7uezpQY=;
-        b=xiPjaBWibQlD5Cyy4R0aG0HKuNaoeb3DOC+fHTQRqRIOL+pFR6QO3q9YnR81l+oi7x
-         NlmJ8tjG1OGAEsSiE9blrOmoe1ITaSOM8iDSPeyxnPwbnjFjcQipMMzxYPEw86DpibmC
-         EvNBI+o2Stb20RU9WOjwcaivXG/74trgUxKoCurfbFrdgbMIrBMOW08tnfguDnl5XYOe
-         l5cxjaLV8amsmP5bPT1JAIGcUNghcY/UpNz5KkI/X7fsRASI+KjcjfOJyTMkXAVQUAYe
-         tqyDy1CtOq2ZbzkM6kYgCVPPG/DtPFxhaxrNIFpeQrZxDgAuR1BVawybzggZJxEAFKco
-         aKiw==
-Received: by 10.50.192.134 with SMTP id hg6mr5508932igc.59.1332149722469;
-        Mon, 19 Mar 2012 02:35:22 -0700 (PDT)
-Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
-        by mx.google.com with ESMTPS id vr4sm15793502igb.1.2012.03.19.02.35.21
-        (version=SSLv3 cipher=OTHER);
-        Mon, 19 Mar 2012 02:35:22 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.00.1203190945560.15290@ds9.cixit.se>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=cpAkRH0sd0rrbF4ZekW9zEuweeVz7aPQPOS2/DTmvbE=;
+        b=LWCjLri1s10YCIgstXLBsCkZm5teGQImnGrCljqSss1pEvHo/z3C/DoyWurcdt9sIc
+         7pYp26nxRwQioaa0R8s/GL5Q/sH2azmasIrg6JmTL6uB4jDkN8JZkR4vqPNBS1KTMhe3
+         aPQcIcutmwk3oQfX1xvtxo6UztBP+qlb80M7c+e1paJugwkfpTPtIbBHuuXB8B/bp3n3
+         GzRrvu3D7WZNqqAVGfXB3olaJePJFEUIz3urhBAPMdDi/Or3HQf62+ZaEyUQVPIlRrpW
+         zNZZG53F8zcjJP1PW2WyCOrgfaiW+nzIsL4P7jYuHwT0KGsjaz8xiHVvY1NgoyvqMJ3z
+         I1xg==
+Received: by 10.50.161.232 with SMTP id xv8mr5654923igb.9.1332150271202; Mon,
+ 19 Mar 2012 02:44:31 -0700 (PDT)
+Received: by 10.50.170.40 with HTTP; Mon, 19 Mar 2012 02:44:31 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193420>
 
-Peter Krefting wrote:
+Hi,
 
-> I know the policy in Git is to not allow the remote repository
-> dictate anything about the configuration in the local repository,
-> but as an alternative to changing the "push.default" value, perhaps
-> we should allow setting some configuration option on the remote
-> repository that blocks it from being the target of a "push.default =
-> matching" push?
+is there a way to configure --word-diff to be a more programming
+language friendly? For example if I add one parameter to a function
+declaration, I'd like to see only the addition of the parameter as the
+change. But currently it shows much more.
 
-If I work for your company and always keep all my local topic branches
-in good order, I would expect to be permitted to use "push.default =
-matching" to easily push them all at once after I have finished
-preparing them, provided I have set up my local copy of git that way
-explicitly, regardless of what the person setting up the
-infrastructure thought.
+For example if
+  void foo(int x);
+is changed to
+  void foo(int x, int y);
+I'd like to see only ",int y" as the change, not "x, int y);".
 
-What would I be missing?
+I think I'd like to ignore all white spaces and tokenize text on word
+boundaries and see the diff between the tokens. This way if I e.g. add
+a missing ";" it'll be shown as the only change.
 
-Curious,
-Jonathan
+
+$ echo 'void foo(int x);' > foo.c && git add foo.c && git commit -m "foo"
+[master (root-commit) 5af60cb2] foo
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 foo.c
+
+$ echo 'void foo(int x, int y);' > foo.c && git diff --word-diff
+diff --git a/foo.c b/foo.c
+index 42a5d4e9..289eb233 100644
+--- a/foo.c
++++ b/foo.c
+@@ -1 +1 @@
+void foo(int [-x);-]{+x, int y);+}
+
+
+Thanks,
+-- 
+Piotr Krukowiecki
