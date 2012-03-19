@@ -1,59 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Clone fails on a repo with too many heads/tags
-Date: Sun, 18 Mar 2012 22:45:51 -0400
-Message-ID: <20120319024551.GC10426@sigill.intra.peff.net>
-References: <loom.20120318T083216-96@post.gmane.org>
- <m3fwd550j3.fsf@localhost.localdomain>
- <20120318190659.GA24829@sigill.intra.peff.net>
- <201203182307.43599.jnareb@gmail.com>
- <20120319023231.GA10426@sigill.intra.peff.net>
- <CACsJy8DsuQNEwLb_vSPTN_Zrh6o9OK3V_R3xZDMQsFCaOafUXw@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] gitk: use symbolic font names "sans" and "monospace"
+ when available
+Date: Sun, 18 Mar 2012 23:53:18 -0500
+Message-ID: <20120319045318.GB25237@burratino>
+References: <20120308123011.GA4355@burratino>
+ <20120318232503.GG26977@bloggs.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Ivan Todoroski <grnch_lists@gmx.net>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 19 03:46:06 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Mark Hills <mark@pogo.org.uk>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon Mar 19 05:53:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9Sbe-0007aq-BQ
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 03:45:58 +0100
+	id 1S9Ub6-0001zk-KV
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 05:53:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964871Ab2CSCpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Mar 2012 22:45:54 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51959
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964825Ab2CSCpx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Mar 2012 22:45:53 -0400
-Received: (qmail 26636 invoked by uid 107); 19 Mar 2012 02:46:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 18 Mar 2012 22:46:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 18 Mar 2012 22:45:51 -0400
+	id S1753023Ab2CSEx1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Mar 2012 00:53:27 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:48384 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752543Ab2CSEx1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2012 00:53:27 -0400
+Received: by iagz16 with SMTP id z16so8914629iag.19
+        for <git@vger.kernel.org>; Sun, 18 Mar 2012 21:53:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=JFey8iJMReYebbMkyTtVM8rP1y3/vQICqXM7taodlEQ=;
+        b=NA3nrZbIbvQAFU0jjjJrQVlPKuqlWcCSM0ShO7omE6xnrOGlj9nLYkYYYy7ZyylWou
+         1xgOqXTcHnpLKq4fa/4OPaMWx0Tqk+8lBgfGDDxs4ShzhcRPyGKaNOobIs4TceXYCpmG
+         Egf4PoMTWpXrYPnfAY0iDJ+U4vDqXIJ3SBflRd0BfHqDlLOetR9usUMsIamWwIizsMj9
+         p/QnASVcCabik3wRrp/Sk5Mdy8EE8RuFHFQVSFoQn+4AZ6Q+3AD/wdVO24Whp1dLGr/I
+         yj6qWN3SBwY7qP4BXESYCPeI1wbo6sAT5IZJIQ22QdqFoP+bbJc5Zag93DTTn9G1Nqu2
+         z5Dg==
+Received: by 10.50.17.226 with SMTP id r2mr4894601igd.67.1332132806600;
+        Sun, 18 Mar 2012 21:53:26 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id cu4sm7701931igc.15.2012.03.18.21.53.25
+        (version=SSLv3 cipher=OTHER);
+        Sun, 18 Mar 2012 21:53:25 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <CACsJy8DsuQNEwLb_vSPTN_Zrh6o9OK3V_R3xZDMQsFCaOafUXw@mail.gmail.com>
+In-Reply-To: <20120318232503.GG26977@bloggs.ozlabs.ibm.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193414>
 
-On Mon, Mar 19, 2012 at 09:43:05AM +0700, Nguyen Thai Ngoc Duy wrote:
+Paul Mackerras wrote:
 
-> On Mon, Mar 19, 2012 at 9:32 AM, Jeff King <peff@peff.net> wrote:
-> > However, I think you would need to teach the run-command API how to open
-> > extra pipes to a child beyond stdout/stdin/stderr.
-> 
-> That might be a problem on Windows. I think Windows exec* has special
-> support for stdin/stdout/stderr and only those.
+> Thanks, applied.
 
-Then your sneak-it-across-stdin trick is probably the best bet. It's a
-little ugly, but this is for stateless-rpc, so it's not like anything
-outside of git is going to actually see this.
-
--Peff
+Thanks to all of you for looking it over.
