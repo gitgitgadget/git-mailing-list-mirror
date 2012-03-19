@@ -1,123 +1,138 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: Please discuss: what "git push" should do when you do not say what
- to push?
-Date: Mon, 19 Mar 2012 11:57:16 -0700
-Message-ID: <87BE88BA-2827-4EDC-99BF-94026E604AB0@sb.org>
-References: <7v7gyjersg.fsf@alter.siamese.dyndns.org>
+From: Andrew Sayers <andrew-git@pileofstuff.org>
+Subject: Re: Please discuss: what "git push" should do when you do not say
+ what to push?
+Date: Mon, 19 Mar 2012 20:11:10 +0000
+Message-ID: <4F6792DE.80208@pileofstuff.org>
+References: <7v7gyjersg.fsf@alter.siamese.dyndns.org> <7vty1ndcoi.fsf@alter.siamese.dyndns.org> <4F6461D7.40303@pileofstuff.org> <7vipi1d9r7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: linux-kernel-owner@vger.kernel.org Mon Mar 19 21:01:22 2012
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+X-From: git-owner@vger.kernel.org Mon Mar 19 21:11:23 2012
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1S9ile-0002eB-37
-	for glk-linux-kernel-3@plane.gmane.org; Mon, 19 Mar 2012 21:01:22 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1S9ivI-0007GZ-8E
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 21:11:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1162292Ab2CSUBM (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 19 Mar 2012 16:01:12 -0400
-Received: from mail-out.apple.com ([17.151.62.49]:60172 "EHLO
-	mail-out.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1162173Ab2CSUBH (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 19 Mar 2012 16:01:07 -0400
-X-Greylist: delayed 3830 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Mar 2012 16:01:07 EDT
-Received: from relay15.apple.com ([17.128.113.54])
- by mail-out.apple.com (Oracle Communications Messaging Server 7u4-23.01
- (7.0.4.23.0) 64bit (built Aug 10 2011))
- with ESMTP id <0M15001SFAI4C7K0@mail-out.apple.com>; Mon,
- 19 Mar 2012 11:57:13 -0700 (PDT)
-X-AuditID: 11807136-b7bd3ae000002dbb-e2-4f678188fffb
-Received: from kencur (kencur.apple.com [17.151.62.38])
-	(using TLS with cipher RC4-MD5 (RC4-MD5/128 bits))
-	(Client did not present a certificate)	by relay15.apple.com (Apple SCV relay)
- with SMTP id 5F.72.11707.881876F4; Mon, 19 Mar 2012 11:57:13 -0700 (PDT)
-Received: from il0103b-dhcp193.apple.com
- (il0103b-dhcp193.apple.com [17.201.38.243])
- by kencur.apple.com (Oracle Communications Messaging Server 7u4-23.01
- (7.0.4.23.0) 64bit (built Aug 10 2011))
- with ESMTPSA id <0M1500LGLBBCEK30@kencur.apple.com>; Mon,
- 19 Mar 2012 11:57:12 -0700 (PDT)
-In-reply-to: <7v7gyjersg.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1257)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrFLMWRmVeSWpSXmKPExsUiON1OTbezMd3f4PM5ZouuK91MFpd3zWFz
-	YPL4vEkugDGKyyYlNSezLLVI3y6BK2PH209sBdMlKo40pTUwbhPuYuTkkBAwkdh36ggThC0m
-	ceHeerYuRi4OIYF2Jokdfb+ZIZzlTBKLPp0HqxIWiJKYcnAlC4jNK2Aose/3f7A4s4CWxPqd
-	x8FsNgEliXsTloDZnAJmEquWTGQDsVkEVCV2NX1jh6g3lWie+B2qV1viybsLrBAzLSW+bjrB
-	DGILAdXsvX8BzBYRUJOY2HaIBeJSWYnbB/czTWAUmIXkjFlIzpiFZOwCRuZVjIJFqTmJlYam
-	eokFBTmpesn5uZsYQSHYUGi2g3HHX7lDjAIcjEo8vBtj0v2FWBPLiitzDzFKcDArifA6XU/z
-	F+JNSaysSi3Kjy8qzUktPsQozcGiJM57Lg+oWiA9sSQ1OzW1ILUIJsvEwSnVwOibdyYw+uDv
-	w/+PfYjPVF3mfav0ZAXXW9bD2/qdr8SV9EwoVk6etfbDk555ena+KvcnZNyymtrQWdPwkdvC
-	rz4pUS1hwubyR+cP6pZ8ncSdsXr1T6d3p1+t/eLQeGC56sUnfTbT1fZv23plm9iTg1rXlzxa
-	YsejlfiK+/Ce29X66hlzU7lESlmUWIozEg21mIuKEwH3Pg27PQIAAA==
-Sender: linux-kernel-owner@vger.kernel.org
+	id S964910Ab2CSULP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Mar 2012 16:11:15 -0400
+Received: from mtaout03-winn.ispmail.ntl.com ([81.103.221.49]:62847 "EHLO
+	mtaout03-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753542Ab2CSULO (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Mar 2012 16:11:14 -0400
+Received: from aamtaout02-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout03-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20120319201112.NPCF21084.mtaout03-winn.ispmail.ntl.com@aamtaout02-winn.ispmail.ntl.com>;
+          Mon, 19 Mar 2012 20:11:12 +0000
+Received: from [192.168.0.2] (really [94.170.150.126])
+          by aamtaout02-winn.ispmail.ntl.com
+          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
+          id <20120319201112.GJCE5924.aamtaout02-winn.ispmail.ntl.com@[192.168.0.2]>;
+          Mon, 19 Mar 2012 20:11:12 +0000
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.27) Gecko/20120216 Thunderbird/3.1.19
+In-Reply-To: <7vipi1d9r7.fsf@alter.siamese.dyndns.org>
+X-Cloudmark-Analysis: v=1.1 cv=R50lirqlHffDPPkwUlkuVa99MrvKdVWo//yz83qex8g= c=1 sm=0 a=pFZ1vDXyzkQA:10 a=thCgSaaV3M8A:10 a=u4BGzq-dJbcA:10 a=8nJEP1OIZ-IA:10 a=qOz2pZ_4AAAA:8 a=VwQbUJbxAAAA:8 a=qZB2upWFR4h1POTL1VUA:9 a=NElMQDwOTx3z8RugopYA:7 a=wPNLvfGTeEIA:10 a=x8gzFH9gYPwA:10 a=7qzHkXPk5l4A:10 a=nVCxOMTkaIi2j9dC:21 a=guzHum4CUN1-3eW_:21 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193453>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193454>
 
-I would love to see the default changed to 'upstream'. I've wanted this ever
-since the push.default=tracking value was introduced. When introducing new
-users to git, one of the first things I always tell them is to run
-
-    git config --global push.default tracking
-
-because it's far easier to explain how that behavior works than it is to
-explain how the 'matching' behavior works, and it more closely aligns with
-the way people (in my experience) typically use git.
-
--Kevin
-
-On Mar 16, 2012, at 10:10 PM, Junio C Hamano wrote:
-
-> There is a proposal to change the default behaviour of 'git push' on the
-> Git mailing list. The goal of this message is to encourage you to discuss
-> it before it happens (or the change is aborted, depending on the outcome
-> of the discussion).
+On 18/03/12 18:50, Junio C Hamano wrote:
+> Andrew Sayers <andrew-git@pileofstuff.org> writes:
 > 
-> In the current setting (i.e. push.default=matching), 'git push' without
-> argument will push all branches that exist locally and remotely with the
-> same name. This is usually appropriate when a developer pushes to his own
-> public repository, but may be confusing if not dangerous when using a
-> shared repository. The proposal is to change the default to 'upstream',
-> i.e. push only the current branch, and push it to the branch 'git pull'
-> would pull from. Another candidate is 'current'; this pushes only the
-> current branch to the remote branch of the same name.
+>> On 17/03/12 05:22, Junio C Hamano wrote:
+>>> If the conclusion of the discussion is that we will change the default,
+>>> the transition to the new default will go like this:
+>>>
+>>>  1. An announcement message to let the user communities know about the
+>>>     future change will be distributed in a way similar to the previous
+>>>     request-for-discussion message was distributed.
+>>>
+>>>  2. The first version of Git that is released after such an announcement
+>>>     will start issuing a warning ...
+>>>
+>>>  3. We wait for a few release cycles.
+>>>
+>>>  4. The default changes. ... 
+>>>     The warning message will be reworded ...
+>>>     being the 'matching' in the future", it will say "has changed to X".
+>>>
+>>>  5. We wait for a few release cycles.
+>>>
+>>>  6. The warning is removed.
+>>>
+>>> A typical release cycle lasts for 8-10 weeks.
+>>
+>> Unfortunately, "a few release cycles" strikes me as a rather hopeful
+>> description.  For example, a user installing the new Ubuntu LTS release
+>> (due out next month) would feel completely justified in not upgrading
+>> until 2017, whereas the rest of us would get rather bored disabling the
+>> same old warning in every new repo we create for the next five years.
 > 
-> For more details on the behavior of Git with these values, read the
-> documentation about 'push.default' in 'man git-config'
-> (http://schacon.github.com/git/git-config.html).
+> There is nothing hopeful about it.
 > 
-> You may be negatively affected when such a change happens if you do not
-> see anything in the output from 'git config push.default' and if you rely
-> on the default that pushes all your matching branches. On the other hand,
-> you may want to see the default behaviour to change, especially if you are
-> using shared repositories. In either case, please join the discussion to
-> give us more data point and help us decide the future of Git. Also, if
-> you think your friends and colleagues will be affected by this change,
-> either positively or negatively, please tell them about this discussion.
+> The point of a release like LTS is to shield the users of the distribution
+> from what happens in upstream, so it is up to the distro to help users. We
+> do not have a way to help their users in a direct way, other than letting
+> the distro know about the change, and educate the distros how they help
+> their users.
 > 
-> What has been discussed so far can be seen in this thread:
+> If I were a user of such a distro whose sole point is a long term support,
+> I would expect that a LTS that was originally released before point #2
+> whose lifespan extends beyond point #6 to backport only the "warning"
+> changes to such a release between #2 and #6 timespan as a point update to
+> such a LTS release. Otherwise the distro is actively doing a disservice to
+> its users.  Such a distro can also choose to revert the "warning removal"
+> change #6 in their binary when they release a new LTS. If they did not
+> backport "add warning" to their earlier LTS release, that is at least what
+> they can do to help their users.
 > 
->    http://thread.gmane.org/gmane.comp.version-control.git/192547/focus=192694
+> But again, that is not something we have direct control over, and it is
+> not very useful to discuss this on this list. Ubuntu LTS support forum
+> might be a better place, but in short, it is not a problem we can solve
+> (nor we should be solving), as long as we have a reasonable migration plan
+> and if the user is locked out of that migration plan---whoever is doing
+> the locking-out is taking responsibility for these users who are out of
+> our reach.
 > 
-> Previous relevant discussions include:
-> 
->    http://thread.gmane.org/gmane.comp.version-control.git/123350/focus=123541
->    http://thread.gmane.org/gmane.comp.version-control.git/166743
-> 
-> To join the discussion, send your messages to:
-> 
->    git@vger.kernel.org
-> 
-> The list accepts messages from non-subscribers, and you do not have to ask
-> "please Cc me, I am not subscribed", as it's customary to Cc: posters when
-> replying on this list.
 > --
 > To unsubscribe from this list: send the line "unsubscribe git" in
 > the body of a message to majordomo@vger.kernel.org
 > More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
+
+I take the point that distros have their own support infrastructure, so
+perhaps this would be a better example:
+
+Many administrators in corporate environments will install git from
+source, because they don't trust RPM/need some feature in the latest
+version/are just that way inclined.  Having installed it, they tend to
+sit on that version for a few years until they have to upgrade the
+system/need some feature in the new latest version/are still just that
+way inclined.  Their justification for not upgrading is often that new
+versions of software tend to change behaviour in subtle ways that break
+the scripts they've bodged together over the years.  Trying to argue
+that one particular bit of software will only hurt you if you wait for
+the wrong amount of time tends to be a losing battle, because
+administrators hate special cases just as much as programmers.
+
+Having said all that, here's a slightly different argument for a
+slightly better solution:
+
+When a user upgrades to a mid- or post-change version of git, I think
+it's a good idea for them to be warned about the change of behaviour.
+But new users, and old users with new repositories, gain nothing from
+the little history lesson.  This should be solved in git itself, because
+two users of the same binary might expect different behaviour.  An
+automatic `git config push.default <whatever>` at repository creation
+time would silence the noise without disrupting the signal.  As an added
+bonus, this approach might take some heat out of the argument when the
+umpteenth "is it time to remove the warning yet?" thread kicks off.
+
+	- Andrew
