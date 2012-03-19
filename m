@@ -1,85 +1,93 @@
-From: Andrew Sayers <andrew-git@pileofstuff.org>
-Subject: Re: Licensing a file format (was Re: SVN Branch Description Format)
-Date: Mon, 19 Mar 2012 20:31:41 +0000
-Message-ID: <4F6797AD.2070501@pileofstuff.org>
-References: <4F5C85A3.4080806@pileofstuff.org> <4F668BD4.70808@pileofstuff.org> <20120319013422.GC19680@burratino>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] Unification of user message strings
+Date: Mon, 19 Mar 2012 16:53:00 -0400
+Message-ID: <20120319205300.GA3039@sigill.intra.peff.net>
+References: <1332179503-2992-1-git-send-email-vfr@lyx.org>
+ <1332179503-2992-2-git-send-email-vfr@lyx.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Andrew Sayers <andrew-20120318@pileofstuff.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
-	Nathan Gray <n8gray@n8gray.org>, Jeff King <peff@peff.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	David Barr <davidbarr@google.com>, semen.vadishev@tmatesoft.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 19 21:31:57 2012
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Vincent van Ravesteijn <vfr@lyx.org>
+X-From: git-owner@vger.kernel.org Mon Mar 19 21:53:13 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9jFA-0000kU-J3
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 21:31:52 +0100
+	id 1S9jZo-0002m1-DF
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 21:53:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754643Ab2CSUbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Mar 2012 16:31:47 -0400
-Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:19782 "EHLO
-	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752752Ab2CSUbq (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Mar 2012 16:31:46 -0400
-Received: from aamtaout04-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout02-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20120319203144.LXOK20752.mtaout02-winn.ispmail.ntl.com@aamtaout04-winn.ispmail.ntl.com>;
-          Mon, 19 Mar 2012 20:31:44 +0000
-Received: from [192.168.0.2] (really [94.170.150.126])
-          by aamtaout04-winn.ispmail.ntl.com
-          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
-          id <20120319203144.YTSY23925.aamtaout04-winn.ispmail.ntl.com@[192.168.0.2]>;
-          Mon, 19 Mar 2012 20:31:44 +0000
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.27) Gecko/20120216 Thunderbird/3.1.19
-In-Reply-To: <20120319013422.GC19680@burratino>
-X-Cloudmark-Analysis: v=1.1 cv=JvdXmxIgLJv2/GthKqHpGJEEHukvLcvELVXUanXFreg= c=1 sm=0 a=pFZ1vDXyzkQA:10 a=jVv34ezM4nwA:10 a=u4BGzq-dJbcA:10 a=8nJEP1OIZ-IA:10 a=VwQbUJbxAAAA:8 a=2o0rwsxK18A_E8S9_SgA:9 a=WqnpPMN0tdmfrt0RlckA:7 a=wPNLvfGTeEIA:10 a=x8gzFH9gYPwA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1754045Ab2CSUxG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Mar 2012 16:53:06 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53761
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753422Ab2CSUxF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2012 16:53:05 -0400
+Received: (qmail 1949 invoked by uid 107); 19 Mar 2012 20:53:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 19 Mar 2012 16:53:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Mar 2012 16:53:00 -0400
+Content-Disposition: inline
+In-Reply-To: <1332179503-2992-2-git-send-email-vfr@lyx.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193457>
 
-On 19/03/12 01:34, Jonathan Nieder wrote:
-> Hi Andrew,
-> 
-> Andrew Sayers wrote:
-> 
->> I'm planning to release the spec under a Creative Commons
->> Attribution-NoDerivs license
-> [...]
->> So the big question - would you be more inclined to use/contribute to
->> the SVN Branch Description Format if it had a different license?
-> 
-> Yes.  By the way, I think fear of forking/discussion of potential
-> improvements/translation into other languages in the context of
-> standards is misguided.  If you would like legal protection for your
-> standard, that is what trademark law is for.
-> 
-> Kind regards,
-> Jonathan
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+On Mon, Mar 19, 2012 at 06:51:42PM +0100, Vincent van Ravesteijn wrote:
 
-Could you expand on this?  A quick tour of the git codebase suggests
-your objection is just to the "no derivatives" bit for documentation,
-and not to the MIT license for code?
+> Rewrite user messages to stick to a uniform style for all messages.
+> From the surrounding code, the following guidelines were deduced:
+> - messages start with a capital,
 
-It sounds like you're saying that forking isn't a big real-world
-problem, which I guess makes sense - it'll all work out in the end as
-long as a single standard is in everybody's interests.  So the CC-BY
-license is my favourite for now.
+I was surprised by this one, as I think we generally use lower-case
+messages. Grepping shows that lower-case has a slight edge, though it i=
+s
+far from decided:
 
-	- Andrew
+  $ git grep -E '(error|die)\((_\()?"[A-Z]' | wc -l
+  810
+  $ git grep -E '(error|die)\((_\()?"[a-z]' | wc -l
+  1267
+
+-Peff
+
+PS I was curious if it was simply that some people prefer one way and
+   not the other, but the results are quite mixed. Below is the result
+   of a small script I wrote that calculates "upper-casedness" per
+   author using the above regexes and git-blame.
+
+   The first number is the percentage of an author's messages starting
+   with upper-case characters, followed by the total number of messages
+   for that author, followed by the author's name. I limited the output
+   to the top 20 by total number, as there is a long tail of people
+   contributing just a few messages.
+
+      0.14 37 Martin Koegler
+      0.14 42 Johannes Sixt
+      0.14 81 Jonathan Nieder
+      0.16 31 Pierre Habouzit
+      0.18 92 Nicolas Pitre
+      0.20 66 Jeff King
+      0.20 87 Linus Torvalds
+      0.26 348 Junio C Hamano
+      0.35 20 Christian Couder
+      0.37 43 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy
+      0.39 18 Ren=C3=A9 Scharfe
+      0.41 32 Miklos Vajna
+      0.45 270 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+      0.47 129 Shawn O. Pearce
+      0.50 36 David Barr
+      0.54 57 Johannes Schindelin
+      0.62 39 Ramkumar Ramachandra
+      0.67 21 Daniel Barkalow
+      0.76 59 Johan Herland
+
+   You can see that some people are usually lowercase and some are usua=
+lly
+   uppercase, but there are many people near 50%, doing both equally.
+   There's also some inaccuracy in my simplistic sampling. For example,
+   of my 13 upper-case messages, 11 of them are "BUG:".
