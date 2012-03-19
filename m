@@ -1,74 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Please discuss: what "git push" should do when you do not say
- what to push?
-Date: Sun, 18 Mar 2012 17:36:16 -0700
-Message-ID: <7vy5qxbf5r.fsf@alter.siamese.dyndns.org>
-References: <7v7gyjersg.fsf@alter.siamese.dyndns.org>
- <20120317140030.GA27369@gnu.kitenet.net>
+From: Ivan Todoroski <grnch_lists@gmx.net>
+Subject: Re: Clone fails on a repo with too many heads/tags
+Date: Mon, 19 Mar 2012 02:05:22 +0100
+Message-ID: <4F668652.5090705@gmx.net>
+References: <loom.20120318T083216-96@post.gmane.org> <m3fwd550j3.fsf@localhost.localdomain> <20120318190659.GA24829@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Mon Mar 19 01:36:30 2012
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 19 02:05:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9QaG-0003kn-IP
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 01:36:24 +0100
+	id 1S9R29-0001sN-Mt
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 02:05:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757150Ab2CSAgU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Mar 2012 20:36:20 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56488 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756009Ab2CSAgT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Mar 2012 20:36:19 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E135F76D5;
-	Sun, 18 Mar 2012 20:36:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HuQKLM+mxqbKklkMLWadD3X3IZI=; b=nFExZh
-	rAixZMZDnTJEuHKqhODl0GZoGB7VAbaiW3h+s5I1/zS5wdnqoDfo/6uj8wt3pF6r
-	RQgSSHoz5me6RFQ8t/9NquvIDTLRBRZQkMKo5+XGgJMf3k3ZxYLnmI7yYlYgmKNF
-	30f6XtBwU+QIYeW37tZhpdY0WcvNjwn/nRPuI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BHuEikYP/ik3oMcxJfpYmtMhyllCiXaM
-	ZMJXSUPsiP61fgKVwniD2r5xmWRhxlf4yWuiAM8oqP0Ofa5/fGZMgx+/MsfllhXW
-	CJBRFRjT9g2ShQrt7akqpazgdboYNgDgBwqql7rQokptzeE6GanCJY8yfj9IYYnt
-	tOPIq0GKUr8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7C4B76D4;
-	Sun, 18 Mar 2012 20:36:18 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9519576D2; Sun, 18 Mar 2012
- 20:36:17 -0400 (EDT)
-In-Reply-To: <20120317140030.GA27369@gnu.kitenet.net> (Joey Hess's message of
- "Sat, 17 Mar 2012 10:00:30 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8A6D76F0-715B-11E1-B38B-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755443Ab2CSBFG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Mar 2012 21:05:06 -0400
+Received: from mailout-de.gmx.net ([213.165.64.22]:50401 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1754043Ab2CSBFF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Mar 2012 21:05:05 -0400
+Received: (qmail invoked by alias); 19 Mar 2012 01:05:02 -0000
+Received: from unknown (EHLO [127.0.0.1]) [77.28.174.114]
+  by mail.gmx.net (mp032) with SMTP; 19 Mar 2012 02:05:02 +0100
+X-Authenticated: #14478976
+X-Provags-ID: V01U2FsdGVkX19cmSNYtZlcocftfY43hOpv+4qhJ5WAnU3vzy6/3y
+	DdSjQdpjiHudji
+User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
+In-Reply-To: <20120318190659.GA24829@sigill.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193405>
 
-Joey Hess <joey@kitenet.net> writes:
+On 18.03.2012 20:07, Jeff King wrote:
+> Nor would you want to have multiple invocations of fetch-pack, since
+> that would mean multiple http requests and multiple pack responses
+> (which could not delta between themselves).
 
-> ... I know this
-> will be confusing, because with current git, users have to be instructed
-> to push these branches *once*, to get the tracking set up.
+Sure, but if fetch-pack is called with so many refs that it overflows 
+the command line, it's looking at a lot of work ahead of it anyway, it's 
+not going to be a fast operation. So the overhead of multiple HTTP 
+requests and lack of delta compression between huge batches of refs 
+wouldn't be all that significant in practice.
 
-Well, a tool like git-annex is not the primary audience to choose the
-default behaviour for "git push" without configuration. Instead of
-instructing "to push *once*", you can easily instruct to install
-remote.$name.push that covers the primary and subsidiary branches.
+That said, I really like your temp file idea below. It's the best 
+solution so far. Simple, efficient, non-intrusive.
 
-Alternatively "git annex push" could drive the underlying "git push" in
-whatever way it wishes. Notice a branch is being pushed, and then add its
-subsidiary branch to the set of refs to be pushed (because it, not Git, is
-the one who knows the correspondence between the primary branch and the
-subsidiary branch).
+
+> I think the only sane solution is to write the values to a temporary 
+> file, and do something like:
+> 
+> git fetch-pack --stateless-rpc --refs-from=$tmpfile
+> 
+> Even if you put the tmpfile in $GIT_DIR, I don't think this should
+> run afoul of any read-only repositories, since by definition you are 
+> fetching into the repository (but you could also just put it in
+> /tmp).
+
+OK, if nobody beats me to it I will try to code this next weekend. Maybe 
+sooner, but I don't usually have much free time over the week (day job, 
+family, etc.).
