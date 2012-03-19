@@ -1,103 +1,85 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Please discuss: what "git push" should do when you do not say
- what to push?
-Date: Mon, 19 Mar 2012 15:38:07 -0700
-Message-ID: <7v1uoo9pyo.fsf@alter.siamese.dyndns.org>
-References: <7v7gyjersg.fsf@alter.siamese.dyndns.org>
- <7vty1ndcoi.fsf@alter.siamese.dyndns.org> <4F6461D7.40303@pileofstuff.org>
- <7vipi1d9r7.fsf@alter.siamese.dyndns.org> <4F6792DE.80208@pileofstuff.org>
- <7v62e09sig.fsf@alter.siamese.dyndns.org>
- <CANgJU+VF-3LnwkrWgSQ1r50R=zjw8vsK1G686OqetSUGHuFcfw@mail.gmail.com>
+Subject: Re: [PATCH v2] push: Provide situational hints for non-fast-forward
+ errors
+Date: Mon, 19 Mar 2012 15:41:40 -0700
+Message-ID: <7vwr6g8b8b.fsf@alter.siamese.dyndns.org>
+References: <20120319074944.GA18489@democracyinaction.org>
+ <7vbonsbepx.fsf@alter.siamese.dyndns.org> <20120319222225.GA36860@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andrew Sayers <andrew-git@pileofstuff.org>, git@vger.kernel.org
-To: demerphq <demerphq@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 19 23:38:34 2012
+Cc: git@vger.kernel.org, zbyszek@in.waw.pl,
+	Matthieu.Moy@grenoble-inp.fr, drizzd@aon.at
+To: Christopher Tiwald <christiwald@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 19 23:42:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9lDh-00036r-2Z
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 23:38:29 +0100
+	id 1S9lH2-0004hS-Is
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 23:41:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758077Ab2CSWiM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Mar 2012 18:38:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49391 "EHLO
+	id S965001Ab2CSWlq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Mar 2012 18:41:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50884 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757939Ab2CSWiK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2012 18:38:10 -0400
+	id S932168Ab2CSWlm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2012 18:41:42 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 61A677734;
-	Mon, 19 Mar 2012 18:38:09 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 15CA377EA;
+	Mon, 19 Mar 2012 18:41:42 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=08NA9Tx8IN6fsBMdcXgezD3N4lA=; b=EIEGHp
-	nUmqbvvGxdKenruerRNEIr7X2eOy8oJDj7RvfDu7YvLNbvVa4dwLtp2dtiB/zk6s
-	KYCfDL1mXjwjWL839feixQI5tLofwb0A9fpupcYAlmGTyM/xS3LlC5NGQVa5P8l4
-	hghFDkYKmdLr9dcOKw4CdGjxfgjS5pTK5XHnU=
+	:content-type; s=sasl; bh=x+ziF+S6bE/TGFcEtdkiWj302Bs=; b=lq2ERN
+	jDQpBCmj5mu32oemmOBDhiRD3+McvZFaneugGYFT9ufpz+kS+YU7hQrrFjxL8sM8
+	mnkC8BsITdfjMHfvpAtpGVToByMvwVCbLtBmseCD8EM78U18Z0aXpBLkGJxG/aka
+	D8W8lAP3X7SLIdVkgutRwjExBjas7ZGNw7iKs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PS91Ez2vuIIxaZV/yfw/fqn3sLDXBxfH
-	MU8X+aAPbR7rAH9BJndbjgN7XYwsLhI5EyCvaGJ8Y+2T+HdjjY79UBV+nuHiuPEY
-	lgoJvYkyK088ezsAoMY26PL4vgO5Hp9cXSz1SIjfP1Fn3j3q1gLHOGb2F+fiprit
-	DYuIY31GtLg=
+	:content-type; q=dns; s=sasl; b=lUpwpx6dbbbOJy2IBvHsNXeBScSKvl9v
+	DmcvoWybW9ZvOOeeWFj4zt0YuumP1ucit9kdsyc0r+s8jg2xTa6LzjJqc0Z/L22L
+	f9TI8IvJuWAPPgmiMAeDY4quGJbGB6WAbDnBWfNifRl5e/3vPRWhZDDgYit1uHbQ
+	nioxmsRAuYo=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 578397733;
-	Mon, 19 Mar 2012 18:38:09 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0AFD077E9;
+	Mon, 19 Mar 2012 18:41:42 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AB8887732; Mon, 19 Mar 2012
- 18:38:08 -0400 (EDT)
-In-Reply-To: <CANgJU+VF-3LnwkrWgSQ1r50R=zjw8vsK1G686OqetSUGHuFcfw@mail.gmail.com>
- (demerphq@gmail.com's message of "Mon, 19 Mar 2012 23:20:28 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 972D077E8; Mon, 19 Mar 2012
+ 18:41:41 -0400 (EDT)
+In-Reply-To: <20120319222225.GA36860@gmail.com> (Christopher Tiwald's message
+ of "Mon, 19 Mar 2012 18:22:25 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3385ACE0-7214-11E1-B496-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B26E594E-7214-11E1-99C0-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193470>
 
-demerphq <demerphq@gmail.com> writes:
+Christopher Tiwald <christiwald@gmail.com> writes:
 
-> ... I thought the worse case here is
-> minor inconvenience, not data loss or anything else that is obviously
-> harmful.
+> How about the something like the following fixup? This introduces two
+> changes to v2:
+>
+> - It breaks the new advice into three config variables. Users
+>   who might benefit from the advice can't accidentally shut a message
+>   off before being confronted with the situation it's designed to
+>   advise.
+> - It leaves pushNonFastForward in place, and if a user sets
+>   'advice.pushNonFastForward = false', it'll disable all three pieces
+>   of advice.
 
-If your definition of harm is limited to data loss then we wouldn't be
-talking about updating the default from matching to current or upstream.
-"If your push failed, pushed what you did not mean to, or did not push
-what you meant to, you would correct the mistake" applies equally to a new
-person who expected "current" (or "upstream") and got "matching", or an old
-person who expected "matching" and got "current".
+Sounds good.
 
-The purpose of the default change is to reduce surprises to people who
-haven't yet learned Git too well.  And for them,
+>  static void advise_pull_before_push(void)
+>  {
+> -	if (!advice_push_non_ff_current)
+> +	if (!advice_push_non_ff_current | !advice_push_nonfastforward)
 
-    I was on master, I said 'git push' without saying what to push to
-    where, and it resulted in master updated at the central repository.
+Bitwise or would work OK as long as both sides are !var, but is not
+particularly a style.  Please replace all of these with "||".
 
-is the least surprising outcome.  Note that a learnt Git user would not
-express what he did this way; he will say 'I was on *my* master' and
-'the master at the central repository was updated with *my* master', but
-the change of the default is to help those who haven't even learned that
-your branches and branches at the central server are not always connected.
+Other than that, sounds sane to me.
 
-Choice of "upstream" is more convenient for users who learned Git a bit
-more and knows the distinction between branches you have and branches the
-central server has.  For them, "I was on my 'topic' branch, that was
-forked from the 'master' branch at the central repository. I said 'git
-push', and I updated the 'master' over there with my 'topic'", is also not
-surprising, but it is more advanced audience than those helped by the
-default setting to push 'current'.
-
-In either way, once people learn sufficiently to the point that they can
-choose their own default that suit them, there is no need for handholding.
-They won't be surprised.
-
-But except for one case you should *not* forget about.
-
-The ones who get pulled the old default under their feet while not paying
-too much attention to this discussion. The change will hit them with a
-surprise, and that is what I am trying to avoid here.
+Thanks.
