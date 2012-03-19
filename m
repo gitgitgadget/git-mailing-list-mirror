@@ -1,89 +1,104 @@
-From: "Michael K. Johnson" <johnsonm@danlj.org>
-Subject: Re: Please discuss: what "git push" should do when you do not say
-	what to push?
-Date: Mon, 19 Mar 2012 14:26:35 -0400
-Message-ID: <20120319182635.GA23181@people.danlj.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Unification of user message strings
+Date: Mon, 19 Mar 2012 12:39:28 -0700
+Message-ID: <7v1uoobcsv.fsf@alter.siamese.dyndns.org>
+References: <1332179503-2992-1-git-send-email-vfr@lyx.org>
+ <1332179503-2992-2-git-send-email-vfr@lyx.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 19 20:20:17 2012
+Cc: git@vger.kernel.org
+To: Vincent van Ravesteijn <vfr@lyx.org>
+X-From: git-owner@vger.kernel.org Mon Mar 19 20:39:38 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9i7p-00074l-HL
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 20:20:13 +0100
+	id 1S9iQb-0008Pd-Pp
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 20:39:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759293Ab2CSTUG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Mar 2012 15:20:06 -0400
-Received: from mail.ladweb.net ([216.129.110.26]:58432 "EHLO mail.ladweb.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759219Ab2CSTUE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2012 15:20:04 -0400
-X-Greylist: delayed 3207 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Mar 2012 15:20:04 EDT
-Received: from people.danlj.org (danlj.colo.ladweb.net [10.0.0.2])
-	by mail.ladweb.net (8.13.7/8.13.7) with ESMTP id q2JIQa6p011281
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Mon, 19 Mar 2012 14:26:36 -0400
-Received: from people.danlj.org (people.danlj.org [127.0.0.1])
-	by people.danlj.org (8.14.2/8.14.2) with ESMTP id q2JIQaeY023473
-	for <git@vger.kernel.org>; Mon, 19 Mar 2012 14:26:36 -0400
-Received: (from johnsonm@localhost)
-	by people.danlj.org (8.14.2/8.14.2/Submit) id q2JIQZ7l023472
-	for git@vger.kernel.org; Mon, 19 Mar 2012 14:26:35 -0400
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1759267Ab2CSTjd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Mar 2012 15:39:33 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36283 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752690Ab2CSTjc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2012 15:39:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68725668C;
+	Mon, 19 Mar 2012 15:39:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5kazxD/YlIHo9vgbmC+1dUc1ORw=; b=qfWBQ2
+	Iqvb4Bpa00xH1G0SigsiVI/zwV10ZfPUSbORWk41qV7FbVBPlwPeIAEJULTQtFsW
+	/CG35eGehcp9zpTjmX9imBOaaeHWBti3AMR5iN0LlX5Gj7pRqm+0wHsCF1UtSwRI
+	JN6HFJQCH0WGQh2nr1aH10GytQ/3BgCAWiz+E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TC8yx0i6bh3PtNrBjONgB585VMea3ZPB
+	q3dnLXteC/iY1xuHBXTRL3lcPheecJC+QYKu7Fh9hRU6+wjeHSYzjTKniTyZsiU0
+	eKEHpG+lvVJjfZ/ntLkWe/PDg7PXmFv9i7kuwbQBGfrs7l/w+QRSfova0qpnPZ3E
+	2JWeAaFzY60=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F34A668B;
+	Mon, 19 Mar 2012 15:39:31 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E2EA6667B; Mon, 19 Mar 2012
+ 15:39:30 -0400 (EDT)
+In-Reply-To: <1332179503-2992-2-git-send-email-vfr@lyx.org> (Vincent van
+ Ravesteijn's message of "Mon, 19 Mar 2012 18:51:42 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3F3B36F4-71FB-11E1-8D37-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193451>
 
-Thank you for the public requests for comment on changing "git push"
-semantics.  I don't have anything particularly new to say, so TL;DR
-is: I think that changing the default value for push.default to
-upstream would help advocate corporate Git adoption as potential
-users experiment on their own, attracted by the benefits of "branchy"
-development.  I don't think that my own ability to advocate for Git
-is affected by this decision, but wanted to share the observation.
+Vincent van Ravesteijn <vfr@lyx.org> writes:
 
-I am encouraging corporate adoption of Git for primary source
-code control, and I see two reasons for making relatively centralized
-workflows easy.
+> From: Vincent van Ravesteijn <vfr@lyx.org>
+>
+> Rewrite user messages to stick to a uniform style for all messages. From the surrounding code, the following guidelines were deduced:
+> - messages start with a capital,
+> - short messages do not end with a full stop,
+> - paths, filenames, and commands are quoted by single quotes (if not separated by the normal text by a ':'),
+> - 'could not' is used rather than 'cannot'.
+>
+> Signed-off-by: Vincent van Ravesteijn <vfr@lyx.org>
+> ---
+>  gpg-interface.c |    6 +++---
+>  grep.c          |    2 +-
+>  help.c          |    2 +-
+>  sequencer.c     |   24 ++++++++++++------------
+>  4 files changed, 17 insertions(+), 17 deletions(-)
+>
+> diff --git a/gpg-interface.c b/gpg-interface.c
+> index 09ab64a..5e14a21 100644
+> --- a/gpg-interface.c
+> +++ b/gpg-interface.c
+> @@ -56,7 +56,7 @@ int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *sig
+>  	args[3] = NULL;
+>  
+>  	if (start_command(&gpg))
+> -		return error(_("could not run gpg."));
+> +		return error(_("Could not run 'gpg'"));
 
-It is easiest to advocate for this change when more developers are
-convinced that the initial adoption process will be relatively easy;
-that they can change from existing centralized version control
-to Git without synchronized, protracted productivity loss due to
-a steep learning curve.  Don't get me wrong, they want to make
-use of DVCS concepts, and they aren't interested in the change
-without expecting benefits from the change, it's just that having a
-centralized workflow available makes it easier to contemplate change.
-The more developers involved, the harder it would be to try to
-synchronize everyone's learning curve and the more value in a
-centralized workflow being available.
+Ok with s/c/C/, but I am not sure about the 'gpg' bit.  The name of the
+program and path to it can be configured so the user may be expecting to
+run a program called gnupg, and unquoted gpg feels more like a generic
+term to refer to the program.  It might be worth using all-CAPS, though.
 
-As has been raised several times already, most corporations are most
-comfortable with having one repository that is the official main
-repository, a "primus inter pares" of repositories.  At least in
-my own context, for business continuity we want developers to push
-topic branches to the official central repository.  In practice, very
-little truly disconnected development is done; the benefits of DVCS
-in general and Git in particular lie mostly in the version graph, and
-secondarily in the scalability derived from repository distribution.
+Likewise for the other hunks for this file.
 
-The default setting of push.default=matching is confusing for new
-users in practice, at least in centralized workflows.  It has been
-confusing in practice that they need to synchronize their master
-in order to synchronize their topic branch, and in order to find
-the solution they need to have some idea what solution they are
-looking for -- and expect that there is a solution.
+> -		return error(_("cannot open %s: %s"), filename,
+> +		return error(_("Could not open '%s': %s"), filename,
 
-Finally, my reasoning for "upstream" instead of "current" is that
-I have heard in practice that quite a few developers who are interested
-in Git but not yet familiar with it have heard that branches can have
-different names in different repositories, and they like the idea.
-They might want to track "origin/bug1234567" in "mybug" that is
-shorter and easier to remember...  This is a minor point, in my
-opinion.
+Honestly speaking, I would personally prefer "Cannot open" over "Could not
+open".  Yes, all the error messages report _after_ we attempted to do
+something and finding that we _couldn't_ do that thing, so "Could not" may
+be technically more correct, but still...
+
+But that is probably just me.
+
+Other than that, the patch looks good; let's hear from others, too.
