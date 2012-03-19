@@ -1,97 +1,85 @@
-From: Vincent van Ravesteijn <vfr@lyx.org>
-Subject: Re: [PATCH 1/2] Unification of user message strings
-Date: Mon, 19 Mar 2012 21:16:25 +0100
-Message-ID: <4F679419.8020204@lyx.org>
-References: <1332179503-2992-1-git-send-email-vfr@lyx.org> <1332179503-2992-2-git-send-email-vfr@lyx.org> <7v1uoobcsv.fsf@alter.siamese.dyndns.org>
+From: Andrew Sayers <andrew-git@pileofstuff.org>
+Subject: Re: Licensing a file format (was Re: SVN Branch Description Format)
+Date: Mon, 19 Mar 2012 20:31:41 +0000
+Message-ID: <4F6797AD.2070501@pileofstuff.org>
+References: <4F5C85A3.4080806@pileofstuff.org> <4F668BD4.70808@pileofstuff.org> <20120319013422.GC19680@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 19 21:16:37 2012
+Cc: Andrew Sayers <andrew-20120318@pileofstuff.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
+	Nathan Gray <n8gray@n8gray.org>, Jeff King <peff@peff.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	David Barr <davidbarr@google.com>, semen.vadishev@tmatesoft.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 19 21:31:57 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9j0M-0001XE-7p
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 21:16:34 +0100
+	id 1S9jFA-0000kU-J3
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 21:31:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759391Ab2CSUQ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Mar 2012 16:16:29 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:47727 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759168Ab2CSUQ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2012 16:16:28 -0400
-Received: by eekc41 with SMTP id c41so2850052eek.19
-        for <git@vger.kernel.org>; Mon, 19 Mar 2012 13:16:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=v1YqbYdrcVAfKMaJ3EW81j77aBrPT1qHxj68F92CNz4=;
-        b=V2YJkcGQQ6zLINnKtyRd28OBiLwVCSnkReUaa+MtufjOhPhhUjFImgsbou2PCBqIYQ
-         KtLHbX1NPxWn3V5x7TlanmttG7AFYAnaMs2zuwDVQF6QHEu5QuAuUM+gPF734KLBXpWu
-         jvZyIDR2NX6179pngXFy+6k1exSzUUgO4g3FtUQVpJ0vaXBrhnvhai2E6ZWf/97GARp4
-         krQmHZkQkjZsr9qSpqMQtuXZLbnvSpY/7vrHHCeVcYZ6Ktu9BLLlweEdAMZx/Gofte46
-         rfPS/fch9j8HQ8Cnr29H5qKFT3B1/kejHAAjdMBJGzSi2iY2yj/2ggmR49QOf6NFedgg
-         jmBw==
-Received: by 10.213.20.12 with SMTP id d12mr834802ebb.278.1332188186979;
-        Mon, 19 Mar 2012 13:16:26 -0700 (PDT)
-Received: from [192.168.1.5] (j175101.upc-j.chello.nl. [24.132.175.101])
-        by mx.google.com with ESMTPS id y11sm53045125eem.3.2012.03.19.13.16.26
-        (version=SSLv3 cipher=OTHER);
-        Mon, 19 Mar 2012 13:16:26 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <7v1uoobcsv.fsf@alter.siamese.dyndns.org>
-X-Gm-Message-State: ALoCoQlmbn2KtDGwcpkRSsQR2eLVNUTN2bzQmn8zfXVhStki4NB4prS5IJPNB4AZM3PN66Fk9NJr
+	id S1754643Ab2CSUbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Mar 2012 16:31:47 -0400
+Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:19782 "EHLO
+	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752752Ab2CSUbq (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Mar 2012 16:31:46 -0400
+Received: from aamtaout04-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout02-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20120319203144.LXOK20752.mtaout02-winn.ispmail.ntl.com@aamtaout04-winn.ispmail.ntl.com>;
+          Mon, 19 Mar 2012 20:31:44 +0000
+Received: from [192.168.0.2] (really [94.170.150.126])
+          by aamtaout04-winn.ispmail.ntl.com
+          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
+          id <20120319203144.YTSY23925.aamtaout04-winn.ispmail.ntl.com@[192.168.0.2]>;
+          Mon, 19 Mar 2012 20:31:44 +0000
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.27) Gecko/20120216 Thunderbird/3.1.19
+In-Reply-To: <20120319013422.GC19680@burratino>
+X-Cloudmark-Analysis: v=1.1 cv=JvdXmxIgLJv2/GthKqHpGJEEHukvLcvELVXUanXFreg= c=1 sm=0 a=pFZ1vDXyzkQA:10 a=jVv34ezM4nwA:10 a=u4BGzq-dJbcA:10 a=8nJEP1OIZ-IA:10 a=VwQbUJbxAAAA:8 a=2o0rwsxK18A_E8S9_SgA:9 a=WqnpPMN0tdmfrt0RlckA:7 a=wPNLvfGTeEIA:10 a=x8gzFH9gYPwA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193456>
 
+On 19/03/12 01:34, Jonathan Nieder wrote:
+> Hi Andrew,
+> 
+> Andrew Sayers wrote:
+> 
+>> I'm planning to release the spec under a Creative Commons
+>> Attribution-NoDerivs license
+> [...]
+>> So the big question - would you be more inclined to use/contribute to
+>> the SVN Branch Description Format if it had a different license?
+> 
+> Yes.  By the way, I think fear of forking/discussion of potential
+> improvements/translation into other languages in the context of
+> standards is misguided.  If you would like legal protection for your
+> standard, that is what trademark law is for.
+> 
+> Kind regards,
+> Jonathan
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
 
->> From: Vincent van Ravesteijn<vfr@lyx.org>
->>
->> Rewrite user messages to stick to a uniform style for all messages. From the surrounding code, the following guidelines were deduced:
->> - messages start with a capital,
->> - short messages do not end with a full stop,
->> - paths, filenames, and commands are quoted by single quotes (if not separated by the normal text by a ':'),
->> - 'could not' is used rather than 'cannot'.
->>
->>
->> @@ -56,7 +56,7 @@ int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *sig
->>   	args[3] = NULL;
->>
->>   	if (start_command(&gpg))
->> -		return error(_("could not run gpg."));
->> +		return error(_("Could not run 'gpg'"));
-> Ok with s/c/C/, but I am not sure about the 'gpg' bit.  The name of the
-> program and path to it can be configured so the user may be expecting to
-> run a program called gnupg, and unquoted gpg feels more like a generic
-> term to refer to the program.  It might be worth using all-CAPS, though.
+Could you expand on this?  A quick tour of the git codebase suggests
+your objection is just to the "no derivatives" bit for documentation,
+and not to the MIT license for code?
 
-Yes, all-CAPS seems the better alternative.
+It sounds like you're saying that forking isn't a big real-world
+problem, which I guess makes sense - it'll all work out in the end as
+long as a single standard is in everybody's interests.  So the CC-BY
+license is my favourite for now.
 
->> -		return error(_("cannot open %s: %s"), filename,
->> +		return error(_("Could not open '%s': %s"), filename,
-> Honestly speaking, I would personally prefer "Cannot open" over "Could not
-> open".  Yes, all the error messages report _after_ we attempted to do
-> something and finding that we _couldn't_ do that thing, so "Could not" may
-> be technically more correct, but still...
->
-> But that is probably just me.
->
-
-No it's not you, grep tells me "Cannot" is indeed the most occuring, 
-except in sequencer.c (which I stumbled on first).
-
-
-> Other than that, the patch looks good; let's hear from others, too.
-
-Ok, let's hear other comments, and then I will send a reroll to fix up 
-the things above.
-
-Vincent
+	- Andrew
