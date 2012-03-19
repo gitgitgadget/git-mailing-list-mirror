@@ -1,121 +1,73 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Feature request: don't require both bad and good when bisecting
-Date: Mon, 19 Mar 2012 12:45:10 -0400
-Message-ID: <20120319164510.GA27601@sigill.intra.peff.net>
-References: <20120318212957.GS1219@chaosreigns.com>
- <4F67468B.4070502@op5.se>
- <20120319153006.GD24848@sigill.intra.peff.net>
- <4F675DD3.3040004@op5.se>
+Date: Mon, 19 Mar 2012 09:49:21 -0700
+Message-ID: <7vobrsbkoe.fsf@alter.siamese.dyndns.org>
+References: <20120318212957.GS1219@chaosreigns.com> <4F67468B.4070502@op5.se>
+ <20120319153006.GD24848@sigill.intra.peff.net> <4F675DD3.3040004@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: darxus@chaosreigns.com, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, darxus@chaosreigns.com,
+	git@vger.kernel.org
 To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Mon Mar 19 17:45:40 2012
+X-From: git-owner@vger.kernel.org Mon Mar 19 17:49:31 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9fiD-0002oZ-CJ
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 17:45:37 +0100
+	id 1S9flx-0005AA-QJ
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 17:49:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1162194Ab2CSQpQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Mar 2012 12:45:16 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53569
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1162184Ab2CSQpO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2012 12:45:14 -0400
-Received: (qmail 31887 invoked by uid 107); 19 Mar 2012 16:45:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 19 Mar 2012 12:45:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Mar 2012 12:45:10 -0400
-Content-Disposition: inline
-In-Reply-To: <4F675DD3.3040004@op5.se>
+	id S1161976Ab2CSQtZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Mar 2012 12:49:25 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60466 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030563Ab2CSQtY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2012 12:49:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 977717628;
+	Mon, 19 Mar 2012 12:49:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+U8t9GSVHzAmxeAJOzaoEG7o0Yo=; b=RlSXfQ
+	w3SRO8YBZ3qO3Y5Fea+rkm6vCT+k8qmhyjrR16SftoYlciq3QdjQ3j9Y76L3oJJT
+	xOaCXgWo8sIiVBPaMjqX76xsbo3iHCGcc9zVX2TV5EryAbr3aO51a+GYha9VhqVE
+	PHDCNeHTz4k1QRi63xk57GujrO2ydzjaYq1qw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wO+/MIEbwH7K0uurc7bAtQy/t+J5UGjG
+	GvM6R0lgHZxOTlct4jmZE0NYNTm8vH2JMuA3vRAH0K4VeRgTmbgFrs/27YHyRssi
+	gp8Fjdv2RoWHhgE8MExgLM2so2qDa6Px+HuoJ8Aq2emiXDiEczIvx3TqPv3yVLnF
+	NS7cHq9Ndps=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F3207627;
+	Mon, 19 Mar 2012 12:49:23 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B9D117626; Mon, 19 Mar 2012
+ 12:49:22 -0400 (EDT)
+In-Reply-To: <4F675DD3.3040004@op5.se> (Andreas Ericsson's message of "Mon,
+ 19 Mar 2012 17:24:51 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7AB07324-71E3-11E1-850C-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193439>
 
-On Mon, Mar 19, 2012 at 05:24:51PM +0100, Andreas Ericsson wrote:
+Andreas Ericsson <ae@op5.se> writes:
 
-> >> On 03/18/2012 10:29 PM, darxus@chaosreigns.com wrote:
-> >>> I'd like to be able to tell get only that I know the latest commit is bad,
-> >>> and have it go find a good commit, then do the bisecting.  Maybe something
-> >>> like the opposite of a binary search, start with the last commit, then
-> >>> second to last, then 4th to last, 8th to last, etc., till it finds a good
-> >>> commit.
-> [...]
-> Automatic bisection is a different beast, naturally, since writing
-> a test-script that handles all corner cases (feature not added,
-> feature added but different bug found, feature added and right bug
-> found, etc) can be cumbersome, but that doesn't always apply, and
-> darxus didn't mention it. He only mentioned "let's test 4 revisions
-> back in history so I can find the good commit!", and I pointed out
-> that it's ridiculous to do so regardless of whether one has a hunch
-> of where the breakage is or not, since it will (almost) always be
-> 100 times faster to just double the scanned range and let git get
-> on with it, even if it means doing a manual bisect first to find
-> when the feature was introduced and then an automated one to find
-> when the bug came alive.
+> It's sort of beside the point though. Using git as experiment (again),
+> we're looking at less than 30000 revisions and 289 non-rc tags. With only
+> 30k revisions, you'll do *worse* testing 15 tags sequentially than you
+> would by just letting the bisection machinery get on with it and use
+> the full history as base for bisection.
 
-Hmm. What he wrote is confusing, since he uses "last" to refer to the
-last commit, which would give strides of 2, 2, and then 4. Which makes
-little sense to me. I took it to mean "2nd from the last tested, then
-4th from the last tested, then 8th from the last tested". I.e., doubling
-the stride each time.
+I think you are missing the primary point in what Jeff said.
 
-If you take it to mean a fixed-size stride (e.g., maxing out at going
-back 4 commits each time), then yes, that is absolutely horrible and
-will do hundreds of times more work. I took it to mean exponential,
-which has OK asymptotic behavior, but IMHO is _still_ not worth it.
-
-> > IOW, my procedure for a bug like the above is usually to walk backwards
-> > along major tagged versions, manually interpreting the results. When I
-> > try v1.6.0 and my test blows up (because the feature isn't implemented),
-> > I recognize it, dig a little with "git log" to find where it was
-> > implemented, and only then write a script for automated bisection.
-> 
-> That means you've tested 81 tags (discarding rc tags between 1.7.6 and
-> 1.6.0).
-
-Actually, I would usually try v1.7.0, then v1.6.0, and so on, depending
-on the bug (and then possibly look at minor versions manually). But my
-main point was that I am using some domain-specific knowledge about what
-constitutes a good break-point when features might have been added, or
-how far back is "reasonable". For some projects and some features, v0.99
-might be a reasonable place to look. For git, it is generally not, and
-anything before v1.5.0 is not even worth bisecting.
-
-> What I was getting at is that trying to be more efficient than O(log n)
-> is hard and usually requires a really good educated guess to succeed.
-> Picking a random number of jumps to go backwards certainly isn't the
-> right way to do it, and especially since the problems you mentioned
-> (feature missing) will still exist with such a solution.
-
-Oh, absolutely. I should have been more clear in my email: I was
-agreeing with you that the OP's plan was not a good one. My goal wasn't
-to do better than O(log n), but to eliminate the need for the user to
-worry about picking bisection boundaries in the first place.
-
-That is, in theory, you could have something like this:
-
-  git bisect start-run test.sh
-
-which would test HEAD (which generally has the bug, or why are you
-bisecting?), as well as all of the roots (which generally don't,
-otherwise there is nothing to bisect). And it isn't much more work to
-bisect because of the logarithmic nature of bisection (e.g., even if you
-include 10 times as many commits, that's only ~3 extra bisection steps).
-
-However, in practice that does not work because writing a test script to
-handle antique code-bases automatically is at least as much work as just
-finding a reasonable bisection boundary in the first place.
-
-> I managed to use a lot of text to get to that final paragraph. Sorry.
-
-That's OK. I read fast, and I may be guilty of verbosity from time to
-time, as well. :)
-
--Peff
+It does not matter if you inspect increasingly older versions based on
+exponentially longer strides or if you test tagged releases. What matters
+is to making intelligent determination after seeing a failure, between the
+failure due to "the feature being tested did not even exist" and "the
+feature when introduced was good but at this commit it is broken".
