@@ -1,66 +1,82 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH] gitk: use symbolic font names "sans" and "monospace"
- when available
-Date: Mon, 19 Mar 2012 10:25:04 +1100
-Message-ID: <20120318232503.GG26977@bloggs.ozlabs.ibm.com>
-References: <20120308123011.GA4355@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [fixup PATCH] push: Provide situational hints for
+ non-fast-forward errors
+Date: Sun, 18 Mar 2012 17:15:09 -0700
+Message-ID: <7v7gyhcupe.fsf@alter.siamese.dyndns.org>
+References: <20120313232256.GA49626@democracyinaction.org>
+ <vpqipi7zh3n.fsf@bauges.imag.fr> <7vty1rqek5.fsf@alter.siamese.dyndns.org>
+ <7vlin1gl9l.fsf@alter.siamese.dyndns.org> <4F64C58B.4000207@in.waw.pl>
+ <20120317184649.GA320@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Mark Hills <mark@pogo.org.uk>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 19 00:26:42 2012
+Cc: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git@vger.kernel.org, peff@peff.net,
+	Clemens Buchacher <drizzd@aon.at>
+To: Christopher Tiwald <christiwald@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 19 01:15:52 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9PUf-00087s-64
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 00:26:33 +0100
+	id 1S9QGM-0001Fy-1N
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Mar 2012 01:15:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756743Ab2CRX0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Mar 2012 19:26:12 -0400
-Received: from ozlabs.org ([203.10.76.45]:33322 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753640Ab2CRX0L (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Mar 2012 19:26:11 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 32C95B6FFE; Mon, 19 Mar 2012 10:26:09 +1100 (EST)
-Content-Disposition: inline
-In-Reply-To: <20120308123011.GA4355@burratino>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757086Ab2CSAPP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Mar 2012 20:15:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49106 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755982Ab2CSAPN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Mar 2012 20:15:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D860772C3;
+	Sun, 18 Mar 2012 20:15:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4OYZyJ6gJbh9arvucSxlrb3IhXo=; b=NkfOvZ
+	LOuLinkL9NhbW0gRWI8DwOjQYtOMJKyWzsA9uYZ0p7txHXMTijz2j+aP2HrsJuFR
+	ktXiSajKXIikOxFguXdfnt4jstkjHfc98Lgyc9MAXLdNqzAeZEI78+BqQMnFtK/V
+	gNd9g+qEibLjE09q38sCm0l6x/vVB2c67Yqkc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fqFTvwZftIkPmG5UKlpPHTOZ6FOd88/d
+	Z7HGKXohHIgzdt41N0/y55gLaRH/YL3enFbj3X1+4/Hyp+ypcRBfywlZmoe56Vd1
+	oA2CUBrEfNC3wdJt+i+rbA1KydId5nyFcFo4W1e39lvotaY4ITbYVzRn5Huz5pkE
+	N6xWtug/DeU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CDE1472C2;
+	Sun, 18 Mar 2012 20:15:12 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 68A9A72C0; Sun, 18 Mar 2012
+ 20:15:11 -0400 (EDT)
+In-Reply-To: <20120317184649.GA320@gmail.com> (Christopher Tiwald's message
+ of "Sat, 17 Mar 2012 14:46:51 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 97B99E0E-7158-11E1-8E69-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193402>
 
-On Thu, Mar 08, 2012 at 06:30:11AM -0600, Jonathan Nieder wrote:
-> The following only concerns systems using X and the client-side font
-> rendering framework from freedesktop.org.  Windows and Mac OS X are
-> not affected.
-> 
-> Starting with version 8.5, Tk uses freetype and fontconfig by default
-> to render fonts on platforms that support it.  Gitk currently defaults
-> to the font Helvetica for the interface and Courier for diffs, and
-> both unfortunately look rather bad on screen in the default
-> configuration on many Linux distros with anti-aliasing and poor
-> hinting.
-> 
-> It is better to default to "sans" and "monospace", which are mapped by
-> fontconfig to some appropriate font of the sysadmin and user's
-> choosing (typically Bitstream Vera Sans and Mono).  The result looks
-> more sensible and it makes gitk feel like a well-behaved software
-> citizen since its fonts match other native apps.
-> 
-> This patch does not change the appearance of gitk for users that have
-> already run it, since gitk uses the remembered UI and diff font names
-> from ~/.gitk
-> 
-> Requested-by: Michael Biebl <biebl@debian.org>
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Christopher Tiwald <christiwald@gmail.com> writes:
 
-Thanks, applied.
+> I prefer the "Some of your local..." language to "Updates were
+> rejected..." as a reader, but I think you're right about providing the
+> reason git rejected the push up front.
 
-Paul.
+Ok.
+
+> My concern about this particular message is "tip of your branch is behind
+> the remote" reads to me like my _current_ branch is the offender, when
+> that cannot be the case (it'd hit message_advice_pull_before_push
+> first). Maybe something like this might make it clearer?
+>
+> "Updates were rejected because a pushed branch tip is behind its remote
+> counterpart. If you did not intend to push that branch, you may want to
+> explicitly specify branches to push or set the 'push.default' configuration
+> variable to 'current' or 'upstream' to always push only the current branch."
+
+Sounds good.
