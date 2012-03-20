@@ -1,45 +1,81 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
-Subject: git rev-list -S ?
-Date: Tue, 20 Mar 2012 19:34:12 +0100
-Message-ID: <4F68CDA4.6060109@ira.uka.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 7/9] difftool: teach difftool to handle directory diffs
+Date: Tue, 20 Mar 2012 11:35:14 -0700
+Message-ID: <7vlimv5del.fsf@alter.siamese.dyndns.org>
+References: <1331949574-15192-1-git-send-email-tim.henigan@gmail.com>
+ <CAFouetiSyTFAR=CJBuYEcpUDq=f2jVaOMnsThgEP-zSbTH1H_g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 20 19:34:00 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: davvid@gmail.com, git@vger.kernel.org
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 20 19:35:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SA3sd-000100-RV
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 19:34:00 +0100
+	id 1SA3tz-0001mS-JC
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 19:35:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755292Ab2CTSdz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Mar 2012 14:33:55 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:42932 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755192Ab2CTSdy (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Mar 2012 14:33:54 -0400
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1SA3sE-0002Bk-Jf
-	for <git@vger.kernel.org>; Tue, 20 Mar 2012 19:33:53 +0100
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	for <git@vger.kernel.org>
-	id 1SA3sE-0001Xu-CM; Tue, 20 Mar 2012 19:33:34 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.24) Gecko/20111101 SUSE/3.1.16 Thunderbird/3.1.16
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1332268433.420776000
+	id S1755405Ab2CTSfT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Mar 2012 14:35:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52492 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755192Ab2CTSfR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2012 14:35:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA2936DE6;
+	Tue, 20 Mar 2012 14:35:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QbPoZIRviujsgpUxUZhtAPl3xjs=; b=OhH8eh
+	CJVI9zcwLCHLhurTzNCIU+GbQy3eSIJM6W4XBlb+QF/ZjTygLL+D1UPgDCc8jT92
+	BsIV0mIy5oT4PO1Dg56mGrDdfKQZItXWksWc36UcQPtxB5B+DfZZt7kKaTDFGaky
+	Xd0GeeVu53/2Slm1x10BEcZ2FFOaj6hZciWmA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=I1utNYAC69bR/DHE2YY+0oD4ehwhE5/D
+	HZKJ3bii1w7qrAoDGCzM5WgbUKtSSONhMErwN2HMKALSgzxVSxrIoANMe4aV5sCB
+	NBo6tSjO/pUGwjYrozOgLncVMAB+SRL1FXkmwO1+J7kX1acedh0NYRZpZkd7luRO
+	+2k+ZoV/IK4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C15C96DDF;
+	Tue, 20 Mar 2012 14:35:16 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5355F6DDC; Tue, 20 Mar 2012
+ 14:35:16 -0400 (EDT)
+In-Reply-To: <CAFouetiSyTFAR=CJBuYEcpUDq=f2jVaOMnsThgEP-zSbTH1H_g@mail.gmail.com> (Tim
+ Henigan's message of "Tue, 20 Mar 2012 13:43:52 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 702181A4-72BB-11E1-A876-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193534>
 
-I read the GsoC page about the ultimate tracking tool just now and 
-couldn't find the -S option in git rev-list documentation nor in 'What's 
-cooking'. Stealth command or am I just blind?
+Tim Henigan <tim.henigan@gmail.com> writes:
+
+> However, when 'difftool --dir-diff' is run from a subdirectory of the
+> Git repository, there are problems.
+>   - The temporary index file generated by 'git update-index' appears
+> to be correct.
+>   - 'git checkout-index --all --prefix=$tmp' command does not work
+> (output tmp dir is empty).
+
+Hrmph.
+
+$ rm -fr /tmp/xyz
+$ cd Documentation
+$ git checkout-index --all --prefix=/tmp/xyz/
+$ ls -F /tmp/xyz
+Documentation/
+$ rm -fr /tmp/xyz
+$ GIT_DIR=$(pwd)/../.git GIT_WORK_TREE=$(pwd) \
+  git checkout-index --all --prefix=/tmp/xyz/
+$ ls -FC /tmp/xyz | head -2 
+abspath.c                   git-merge-octopus.sh*       reflog-walk.c
+aclocal.m4                  git-merge-one-file.sh*      reflog-walk.h
+
+Be sure to have the trailing slash in $tmp.
