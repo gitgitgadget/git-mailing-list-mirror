@@ -1,80 +1,72 @@
-From: "Holding, Lawrence" <Lawrence.Holding@cubic.com>
-Subject: RE: Annoying absolute path for "core.worktree" to submodule
-Date: Wed, 21 Mar 2012 10:39:56 +1300
-Message-ID: <A5E8E180685CEF45AB9E737A010799802D9872@cdnz-ex1.corp.cubic.cub>
-References: <20120320105243.2e8a489b@christian-hammerl.de> <4F6886A6.3010805@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git rev-list -S ?
+Date: Tue, 20 Mar 2012 18:00:32 -0400
+Message-ID: <20120320220032.GA29233@sigill.intra.peff.net>
+References: <4F68CDA4.6060109@ira.uka.de>
+ <7vaa3b570l.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "Christian Hammerl" <info@christian-hammerl.de>,
-	"Antony Male" <antony.male@gmail.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 20 22:40:26 2012
+Content-Type: text/plain; charset=utf-8
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Holger Hellmuth <hellmuth@ira.uka.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 20 23:00:50 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SA6mz-0005C9-Ju
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 22:40:21 +0100
+	id 1SA76f-0008TB-3e
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 23:00:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755231Ab2CTVkG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Mar 2012 17:40:06 -0400
-Received: from exprod6og104.obsmtp.com ([64.18.1.187]:34360 "HELO
-	exprod6og104.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1754942Ab2CTVkE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Mar 2012 17:40:04 -0400
-Received: from bb-corp-outmail1.corp.cubic.com ([149.63.70.140]) (using TLSv1) by exprod6ob104.postini.com ([64.18.5.12]) with SMTP
-	ID DSNKT2j5MKS13tc2D17L4X9hRKcF8qjfPyZn@postini.com; Tue, 20 Mar 2012 14:40:04 PDT
-Received: from bb-corp-ex4.corp.cubic.cub ([149.63.2.70])
-	by bb-corp-outmail1.corp.cubic.com (8.13.1/8.13.1) with ESMTP id q2KLdxa3010927;
-	Tue, 20 Mar 2012 14:40:00 -0700
-Received: from cdnz-ex1.corp.cubic.cub ([172.19.33.136]) by bb-corp-ex4.corp.cubic.cub with Microsoft SMTPSVC(6.0.3790.4675);
-	 Tue, 20 Mar 2012 14:39:59 -0700
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <4F6886A6.3010805@gmail.com>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Annoying absolute path for "core.worktree" to submodule
-Thread-Index: Ac0Gnw/sRolUZB7ATR6bwwgE9qgJ6gAQIoEg
-X-OriginalArrivalTime: 20 Mar 2012 21:39:59.0894 (UTC) FILETIME=[002D0B60:01CD06E2]
+	id S1755813Ab2CTWAg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Mar 2012 18:00:36 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54699
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755525Ab2CTWAf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2012 18:00:35 -0400
+Received: (qmail 14848 invoked by uid 107); 20 Mar 2012 22:00:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 20 Mar 2012 18:00:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Mar 2012 18:00:32 -0400
+Content-Disposition: inline
+In-Reply-To: <7vaa3b570l.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193544>
 
-> Antony Male wrote:
-> On 20/03/2012 9:52 am, Christian Hammerl wrote:
-> > Hey folks,
-> >
-> > I really love the work you are doing on GIT but the last update
-> > regarding submodules is a bit annoying. Although the path inside the
-> > ".git" file is stored relative to the submodule's path, the path in
-> > ".git/modules/path-to-submodule/config" is stored as an absolute
-path
-> > for "core.worktree".
-> 
-> What are you referring to as the "last update"? v1.7.8 introduced the
-> separate git dir for submodules, and used an absolute path.
-> 
-> This absolute path was changed to a relative path in the patchset at
-> [1], which is present in v1.7.10-rc1.
-> 
-> [1]: http://thread.gmane.org/gmane.comp.version-control.git/192173
+On Tue, Mar 20, 2012 at 01:53:14PM -0700, Junio C Hamano wrote:
 
-Slightly off topic, but related, what is the recommended way for finding
-the git folder from the top level project or any of the submodules? And
-of finding the working tree from inside a hook script?
+> |    $ git log -S'it drives an external
+> |   an external' master Documentation/RelNotes
+> 
+> is a way to find commits that introduced and then removed the block of
+> text to files in the named directory, starting at the tip of 'master'.
+> 
+> Most of the "ultimate tracking tool" dream has already been realized in
+> "git blame" except one major part.  Once you find where the blame lies,
+> the tool _could_ help the user to find where these blamed lines came from
+> more than it currently does.  Were they typed anew?  Were similar lines
+> removed by the commit from other files?  Often people run "blame" on a
+> line range they are interested in, find the commits that were blamed, look
+> at "git show $the_found_commit" to see if they can find similar lines in
+> deleted parts of other files and then finally run blame again on the
+> deleted line range of these other files starting from the parent commit of
+> the found commit to do this (and this needs to be repeated).  A good GUI
+> should be able to help this process quite a lot, if backed by a good logic
+> to detect "similar" code blocks.
 
-Context: One of the (optional) steps in our build process installs
-pre-commit hooks into the git/hooks folder of the tools submodule and
-into the git/hooks folder of the next level up project. Then on commit
-the hook reads the config file from inside the tools submodule and
-checks file formats and naming standards before permitting the commit.
-The current implementation has the paths hard coded between the two
-location, now with some having the old layout and some the new, we are
-looking for a consistent solution without duplicating the logic in the
-git executables.
+Related to this is the line-level history browser project. The idea was
+basically to get a log-like view (i.e., reverse chronological commits)
+of a chunk of code, tracing the ancestry of a particular chunk of lines.
+
+This was done by Bo Yang as a GSoC project in 2010, but the code still
+hasn't been merged. As I recall, it mostly works, but there are perhaps
+some corner cases or ugly parts of the code still to be re-worked.
+Thomas Rast was cleaning it up some, and could say more on the current
+state.
+
+-Peff
