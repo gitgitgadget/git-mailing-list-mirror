@@ -1,90 +1,183 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Please discuss: what "git push" should do when you do not say what to push?
-Date: Tue, 20 Mar 2012 09:43:26 -0700 (PDT)
-Message-ID: <m3ty1j2pg4.fsf@localhost.localdomain>
-References: <7v7gyjersg.fsf@alter.siamese.dyndns.org>
-	<7vty1ndcoi.fsf@alter.siamese.dyndns.org>
-	<CACPiFCKbfgSZMnpc6Q_Lg6n5YMHQ2bad-bwQsyASk0eMuiAFTQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] Fix --stat width calculations to handle --graph
+Date: Tue, 20 Mar 2012 10:09:26 -0700
+Message-ID: <7vehsn6vy1.fsf@alter.siamese.dyndns.org>
+References: <1332229097-19262-1-git-send-email-lucian.poston@gmail.com>
+ <1332229097-19262-2-git-send-email-lucian.poston@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 20 17:43:38 2012
+Cc: git@vger.kernel.org,
+	"Johannes Schindelin" <johannes.schindelin@gmx.de>,
+	"Michael J Gruber" <git@drmicha.warpmail.net>,
+	"Bo Yang" <struggleyb.nku@gmail.com>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+To: Lucian Poston <lucian.poston@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 20 18:10:06 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SA29m-0001Sf-C6
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 17:43:34 +0100
+	id 1SA2ZQ-0002Km-92
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 18:10:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756240Ab2CTQn3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Mar 2012 12:43:29 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:60980 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754472Ab2CTQn2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2012 12:43:28 -0400
-Received: by wibhq7 with SMTP id hq7so331381wib.1
-        for <git@vger.kernel.org>; Tue, 20 Mar 2012 09:43:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=qyOELcwjCeJMnGBAjyQpc2VxUSqJtm3f+NM5YdmYk7M=;
-        b=Zu1m4ceSgPpacqIfBJdvpkogXcoJqdw6DDd0r/UJYTwQ/P+yUltQOJ588+E9QB3qE3
-         j6T1bj6o3iwrXZefbmbj+CnaX/IGsJ6Xg0tnq+NSrWdVXckNF4+pQwmnqqF1B+XP0BNP
-         XhXeMBCrkELbXSIKGYQVmdyXy493DnMR4FUvqcatHVv7m12errcSQ7ZIb7RmdsU9vN26
-         CgNpc+CXD2L0spvUNGSXG8bwDCjUxJmJDf2zWYeyNqbhVfXEUvL1mcJZy5B14G8RHeSd
-         j/H0gEgAGAELGmFiS4e4+zTfyT7ghi6lakkSDbBPCiptqGM2M5lK8tHumy2GT9lLKZhW
-         bZPg==
-Received: by 10.216.203.146 with SMTP id f18mr332232weo.21.1332261807163;
-        Tue, 20 Mar 2012 09:43:27 -0700 (PDT)
-Received: from localhost.localdomain (abwt72.neoplus.adsl.tpnet.pl. [83.8.243.72])
-        by mx.google.com with ESMTPS id ff2sm8461586wib.9.2012.03.20.09.43.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 20 Mar 2012 09:43:26 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id q2KGhOOL022690;
-	Tue, 20 Mar 2012 17:43:24 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id q2KGhNOk022686;
-	Tue, 20 Mar 2012 17:43:23 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <CACPiFCKbfgSZMnpc6Q_Lg6n5YMHQ2bad-bwQsyASk0eMuiAFTQ@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1755536Ab2CTRJb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Mar 2012 13:09:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36584 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753952Ab2CTRJa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2012 13:09:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2F607709;
+	Tue, 20 Mar 2012 13:09:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EBnUnXosigEVYHs0qMFsNZxNmco=; b=rnaSNj
+	+41VXw6qjjYHfkYB3FyBWQqC2vjifdaxUQo3Cvgfs+96RzM0IgmaYwXng3wA2/Tn
+	sZFTsEO0vVgfBZWyA9r5/2nXNyNGRg272gndm3ywQzM1Vv79SLjqu15XEc8adJU/
+	89qw4YJml5aJUoynNnfXG1lgY3yOi3xU5vaCo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=p/y8vDz/yBMnK8F8h9Cd68P/zainQ5BI
+	BvsEKolLHsA7OliKDSZ0JUw5YtyKfeI87NJEF9KF44VcAdjLRLZE6I8iQ43LBXA9
+	ZqGJxfp9eALtQHu9nsabTwikbV9lJJZhAzjD+ftaF33jwx8sFE+/nlH+qbkFobCI
+	37s8kNID3KI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EA3727708;
+	Tue, 20 Mar 2012 13:09:28 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 558FF7707; Tue, 20 Mar 2012
+ 13:09:28 -0400 (EDT)
+In-Reply-To: <1332229097-19262-2-git-send-email-lucian.poston@gmail.com>
+ (Lucian Poston's message of "Tue, 20 Mar 2012 00:38:17 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 73B3FCB8-72AF-11E1-BB47-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193520>
 
-Martin Langhoff <martin.langhoff@gmail.com> writes:
-> On Sat, Mar 17, 2012 at 1:22 AM, Junio C Hamano <gitster@pobox.com> wrote:
+Lucian Poston <lucian.poston@gmail.com> writes:
 
-> > If the conclusion of the discussion is that we will change the default,
-> > the transition to the new default will go like this:
-> 
-> I am in general agreement with the course of action outlined. There is
-> one little thing I had expected in addition, that is not discussed:
-> 
->  --force should change behaviour, immediately, to "current" or even
-> none (forcing the user to name the remote and branch explicitly).
-> 
-> The potential for messups with --force combined with "matching" and a
-> repo that allows it is considerable. And I cannot imagine any
-> mainstream use cases for --force defaulting to matching; at least none
-> important enough to counterbalance the damage.
+> Adjusted stat width calculations to take into consideration the diff output
+> prefix e.g. the graph prefix generated by `git log --graph --stat`.
+>
+> This change fixes the line wrapping that occurs when diff stats are large
+> enough to be scaled to fit within the terminal's columns. This issue only
+> appears when using --stat and --graph together on large diffs.
+>
+> Adjusted stat output tests accordingly. The scaled output tests are closer to
+> the target 5:3 ratio.
+>
+> Added test that verifies the output of --stat --graph is truncated to fit
+> within the available terminal $COLUMNS
 
-Well, one can always use
+Thanks.
 
-  git push <remote> +:
+Regarding the log message:
 
-instead of
+ - Please start it with a problem description. Describe both what the
+   current code shows, and why you think it is wrong or suboptimal.
+   I.e. the observation of the problem in your second paragraph comes at
+   the beginning
 
-  git push --force
+ - Our log message usually gives an order to the codebase or to the person
+   who is applying the patch in order to address the problem you described
+   in the earlier part of the log message, instead of tells a story of
+   what happened in the past.
 
-for "matching" push... but I think you would have to provide name of
-repository.
+E.g.
 
--- 
-Jakub Narebski
+    The recent change to compute the width of diff --stat based on the
+    terminal width did not take the width needed to show the --graph
+    output into account, and makes lines in "log --graph --stat" too long.
+   
+    Adjust stat width calculation to take the width of graph prefix into
+    account. ...
+
+> @@ -1392,6 +1394,18 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+>  	if (options->output_prefix) {
+>  		msg = options->output_prefix(options, options->output_prefix_data);
+>  		line_prefix = msg->buf;
+> +
+> +		/*
+> +		 * line_prefix can contain color codes, so only pipes '|' and
+> +		 * spaces ' ' are counted.
+> +		 */
+> +		line_prefix_iter = line_prefix;
+> +		while (*line_prefix_iter != '\0') {
+> +			if (*line_prefix_iter == ' ' || *line_prefix_iter == '|') {
+> +				line_prefix_length++;
+> +			}
+> +			line_prefix_iter += 1;
+> +		}
+
+Yikes.
+
+This code relies on "Count only ' ' and '|', because these are the only
+ones we currently happen to use", which is fragile. The next person who
+will update graph.c can change the set of letters used in the graph to
+improve the output without even knowing your code exists or the assumption
+your code makes, so she is likely not going to update it.
+
+I think the caller should be taught to pass the exact width it carves out
+of the available width for use by the ancestry graph output, and if we are
+to do so, adding "int output_prefix_len" field (which usually is 0) to
+diff_options, and seting it in graph.c::diff_output_prefix_callback() (at
+that point, graph->width has the number you want, I think), may be the way
+to go.
+
+> diff --git a/t/t4052-stat-output.sh b/t/t4052-stat-output.sh
+> index 328aa8f..84dd8bb 100755
+> --- a/t/t4052-stat-output.sh
+> +++ b/t/t4052-stat-output.sh
+> @@ -162,7 +162,7 @@ test_expect_success 'preparation for long filename tests' '
+>  '
+>  
+>  cat >expect <<'EOF'
+> - ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++
+> + ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++++++++
+>  EOF
+
+Isn't it a sign that the change is doing a lot more than justified that it
+has to change the test vector for cases where --graph is *NOT* involved at
+all?
+
+> @@ -179,7 +179,7 @@ log -1 --stat
+>  EOF
+>  
+>  cat >expect80 <<'EOF'
+> - ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++++++++++
+> + ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++++++++++++++++
+
+Likewise.
+
+> @@ -198,6 +198,26 @@ respects expect200 show --stat
+>  respects expect200 log -1 --stat
+>  EOF
+>  
+> +cat >expect80graphed <<'EOF'
+> +|  ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++++++++++++++++
+> +EOF
+> +cat >expect80 <<'EOF'
+> + ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++++++++++++++++
+> +EOF
+> +while read verb expect cmd args
+> +do
+> +	test_expect_success "$cmd $verb 80 COLUMNS (long filename)" '
+> +		COLUMNS=80 git $cmd $args >output
+> +		grep " | " output >actual &&
+> +		test_cmp "$expect" actual
+> +	'
+> +done <<\EOF
+> +respects expect80 show --stat
+> +respects expect80 log -1 --stat
+> +respects expect80graphed show --stat --graph
+> +respects expect80graphed log -1 --stat --graph
+> +EOF
+> +
+>  cat >expect <<'EOF'
+>   abcd | 1000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  EOF
