@@ -1,93 +1,64 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: Re: [PATCH 7/9] difftool: teach difftool to handle directory diffs
-Date: Tue, 20 Mar 2012 16:17:51 -0400
-Message-ID: <CAFouethvGQD3RR_Lcu6GFA3pRS7_7nQC77g7coxOBDBP4ATP6A@mail.gmail.com>
-References: <1331949574-15192-1-git-send-email-tim.henigan@gmail.com>
-	<CAFouetiSyTFAR=CJBuYEcpUDq=f2jVaOMnsThgEP-zSbTH1H_g@mail.gmail.com>
-	<7vlimv5del.fsf@alter.siamese.dyndns.org>
+From: Christopher Tiwald <christiwald@gmail.com>
+Subject: Re: git rev-list -S ?
+Date: Tue, 20 Mar 2012 16:21:24 -0400
+Message-ID: <20120320202124.GF3601@gmail.com>
+References: <4F68CDA4.6060109@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: davvid@gmail.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 20 21:18:01 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Holger Hellmuth <hellmuth@ira.uka.de>
+X-From: git-owner@vger.kernel.org Tue Mar 20 21:21:36 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SA5VF-0000TT-Tj
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 21:17:58 +0100
+	id 1SA5Yk-0004RV-By
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 21:21:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756308Ab2CTURx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Mar 2012 16:17:53 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:56216 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752576Ab2CTURw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Mar 2012 16:17:52 -0400
-Received: by iagz16 with SMTP id z16so477733iag.19
-        for <git@vger.kernel.org>; Tue, 20 Mar 2012 13:17:51 -0700 (PDT)
+	id S1757018Ab2CTUV3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Mar 2012 16:21:29 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:52973 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753952Ab2CTUV2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2012 16:21:28 -0400
+Received: by ghrr11 with SMTP id r11so477750ghr.19
+        for <git@vger.kernel.org>; Tue, 20 Mar 2012 13:21:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=/FoOT7i9cmfj7sUax4Qj0Yp0azkM/uXZmU7gcch/CGg=;
-        b=DLQiidGT2gCwZpQeH4xCyTCbHp2zNFsIGziWj2ADywkXEFyhJxNrb4D1iAZkJLOouH
-         ErV4Y50pSRuk9V6N7MzhOueu+H7ymLmUf3a0Mdfr+V/C1MvehqnjueCXta65VlfmH6fH
-         iIbjfDL/ClyDQ53Rp6i1Qq1Zi/cXJXBgkIDp6mdF4uFSkoX4gR+CcqnK1l9FS/otKXwQ
-         AiPyUZGWhxlPi+Yi6lM1xDmQ23ApdI/27xekZ95AZroG+Zh6Cz1m+c9MGQpeOQ3jDITD
-         Ywg6wvQKOO2kci4qlmrhBQ312DxtYi4cg9ov+H9vYzKMlNMDo23z0qmW/E5yhCj39kD5
-         arTQ==
-Received: by 10.50.187.231 with SMTP id fv7mr9877768igc.51.1332274671812; Tue,
- 20 Mar 2012 13:17:51 -0700 (PDT)
-Received: by 10.42.138.5 with HTTP; Tue, 20 Mar 2012 13:17:51 -0700 (PDT)
-In-Reply-To: <7vlimv5del.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=LnVHdY4vLE9IvZFLpDVpNR0pPsyfvbxWquDRJXX4oeY=;
+        b=J9f0ILKinqimnF3wQWY2AMHyH9/P2IzzP67IaPj3iQcLvK6pGxV8oz3SstmwDjVnZg
+         H9FFtmggDECxr1uIIttzUiM7CaDF0FdybpxKyGR5LtqbLC+xFSlwTGGICnNezSzFa5sV
+         eK8n6FHrVuDZfl84r2TQrOe+1czcjRRzflzIeVSPQS8fxcd/luL+T2wnWjWbRyvKJlyX
+         O+pVEW0emCMCK6X8uZIepiRV/o3mxD+zGxjAi8WsUUBUI0jzl1kCuVDs+KIleE0iVdFu
+         9hAcdpYjbbZXZ5+aAKMwVmdp8ytdBr9ule3wJwYBxPC4ae0Q9fxeO8p1JiXmkvl0HUJM
+         VOfA==
+Received: by 10.224.17.202 with SMTP id t10mr2594284qaa.87.1332274888399;
+        Tue, 20 Mar 2012 13:21:28 -0700 (PDT)
+Received: from gmail.com (cpe-74-66-248-47.nyc.res.rr.com. [74.66.248.47])
+        by mx.google.com with ESMTPS id dv7sm4381486qab.15.2012.03.20.13.21.26
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 20 Mar 2012 13:21:27 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4F68CDA4.6060109@ira.uka.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193539>
 
-On Tue, Mar 20, 2012 at 2:35 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Tim Henigan <tim.henigan@gmail.com> writes:
->
->> However, when 'difftool --dir-diff' is run from a subdirectory of th=
-e
->> Git repository, there are problems.
->> =C2=A0 - The temporary index file generated by 'git update-index' ap=
-pears
->> to be correct.
->> =C2=A0 - 'git checkout-index --all --prefix=3D$tmp' command does not=
- work
->> (output tmp dir is empty).
->
-> Hrmph.
->
-> $ rm -fr /tmp/xyz
-> $ cd Documentation
-> $ git checkout-index --all --prefix=3D/tmp/xyz/
-> $ ls -F /tmp/xyz
-> Documentation/
-> $ rm -fr /tmp/xyz
-> $ GIT_DIR=3D$(pwd)/../.git GIT_WORK_TREE=3D$(pwd) \
-> =C2=A0git checkout-index --all --prefix=3D/tmp/xyz/
-> $ ls -FC /tmp/xyz | head -2
-> abspath.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 git-merge-octopus.sh* =C2=A0 =C2=A0 =C2=A0 reflog-walk.c
-> aclocal.m4 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0git-merge-one-file.sh* =C2=A0 =C2=A0 =C2=A0reflog-walk.h
->
-> Be sure to have the trailing slash in $tmp.
+On Tue, Mar 20, 2012 at 07:34:12PM +0100, Holger Hellmuth wrote:
+> I read the GsoC page about the ultimate tracking tool just now and
+> couldn't find the -S option in git rev-list documentation nor in
+> 'What's cooking'. Stealth command or am I just blind?
 
-It turns out that 'Git::command_oneline()' does not honor environment
-variables set prior to calling the function.
+I use 'git log -S<string>' to pickaxe search my histories for commits
+that affect <string> nigh daily. I can't find reference to it in
+'git rev-list', but I know similar functionality is available in
+'git diff'. Maybe it's just a typo in the wiki page?
 
-This change fixed the problem:
-
-- $repo->command_oneline(["checkout-index", "-a", "--prefix=3D$ldir/"])=
-;
-+ $ENV{GIT_DIR} =3D $repo->repo_path();
-+ system(('git', 'checkout-index', '-a', "--prefix=3D$ldir/"));
-
-I'm still testing, but will submit an updated patch soon.
+--
+Christopher Tiwald
