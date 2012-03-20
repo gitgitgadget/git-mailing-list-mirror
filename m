@@ -1,232 +1,102 @@
-From: Lucian Poston <lucian.poston@gmail.com>
-Subject: [PATCH 1/1] Fix --stat width calculations to handle --graph
-Date: Tue, 20 Mar 2012 00:38:17 -0700
-Message-ID: <1332229097-19262-2-git-send-email-lucian.poston@gmail.com>
-References: <1332229097-19262-1-git-send-email-lucian.poston@gmail.com>
-Cc: Lucian Poston <lucian.poston@gmail.com>,
-	"Junio C Hamano" <junkio@cox.net>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Schindelin" <johannes.schindelin@gmx.de>,
-	"Michael J Gruber" <git@drmicha.warpmail.net>,
-	"Bo Yang" <struggleyb.nku@gmail.com>,
-	=?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 20 08:39:33 2012
+From: Vincent van Ravesteijn <vfr@lyx.org>
+Subject: Re: [PATCH 1/2] Unification of user message strings
+Date: Tue, 20 Mar 2012 08:47:46 +0100
+Message-ID: <4F683622.6010409@lyx.org>
+References: <1332179503-2992-1-git-send-email-vfr@lyx.org> <1332179503-2992-2-git-send-email-vfr@lyx.org> <20120319205300.GA3039@sigill.intra.peff.net> <7vaa3c9ste.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 20 08:47:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9tfH-00085F-VO
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 08:39:32 +0100
+	id 1S9tnN-0002nC-KH
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 08:47:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757206Ab2CTHjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Mar 2012 03:39:22 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:57924 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757688Ab2CTHjQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2012 03:39:16 -0400
-Received: by mail-pb0-f46.google.com with SMTP id un15so1540894pbc.19
-        for <git@vger.kernel.org>; Tue, 20 Mar 2012 00:39:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=pxRt+g9/8UBUrbBUp7R/6S4KT9gOPuKDgHoGLjPQy6o=;
-        b=A3TkA6Vlpah/LdiDPb5iK1ds2CPzjBS987q2Isisgeu3D8QDfONSluLoPiJSON1W2A
-         un4sj07ZsLfXQ7KyPoizeZP65khFrKkLjNuy7zLLgTyl7j7r36cJz0O+ggepTfqTg3om
-         PCttkLpAFCtPCIji5xTQH7L0AyflcQH6jjqAx9rE0Fg0qf0wVnlWV5DDIhH/1667OUjG
-         861W34RLPkZl3pmXf4BXME2OkZTKiddXCLArhSz65d+++6udqk3idpyiblfHxX/5G4PX
-         RZ1X8rjSbmN+dVmVA/L/xS2p2YoKF6elNv3WaMoKk4i0sIBU9WXSHB6MDmRohYjl+WIs
-         +YoA==
-Received: by 10.68.74.197 with SMTP id w5mr47213473pbv.129.1332229156388;
-        Tue, 20 Mar 2012 00:39:16 -0700 (PDT)
-Received: from localhost.localdomain (c-76-121-54-246.hsd1.wa.comcast.net. [76.121.54.246])
-        by mx.google.com with ESMTPS id f7sm727637pbr.3.2012.03.20.00.39.15
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 20 Mar 2012 00:39:16 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.4
-In-Reply-To: <1332229097-19262-1-git-send-email-lucian.poston@gmail.com>
+	id S1758298Ab2CTHrt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Mar 2012 03:47:49 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:36979 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756886Ab2CTHrs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2012 03:47:48 -0400
+Received: by eaaq12 with SMTP id q12so2886545eaa.19
+        for <git@vger.kernel.org>; Tue, 20 Mar 2012 00:47:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :x-gm-message-state;
+        bh=lgRThvBSsy5mUqGwxx+digoXUQHlXag5Ju6vQm7Y/YM=;
+        b=aoJjhZFpQOQc/kl9dFd5+7939fVIBk4zg8yuLDbf4k0s1YSSQ973Qr2gVUl6umtYIW
+         VanIHwApN5VesEfSBG1/1KiNx30pe+9g6JpatTc3evJlrRrPayjpki2VPJNq0p22KQex
+         agd7x+POaKwp0vZ94Z5kvCmAZ3si6Tkv9A8FossE03C2RvXUPJHnPXmwTpPGp2RAlWrd
+         oXbrMCbIlt7C+alSgLJT6r1o8IQbcl49WPkmcWQDQOyeNhmsXhTWG9gbNrSvV+GYKAto
+         YolUPNO086ma44ZET48xRcR7rdpB6Xk7BvdhJV/7SKo2SA4lMVtGneIF1zaS2SMJcnFn
+         YDqQ==
+Received: by 10.213.34.197 with SMTP id m5mr927781ebd.265.1332229667321;
+        Tue, 20 Mar 2012 00:47:47 -0700 (PDT)
+Received: from [145.94.170.103] (wlan-145-94-170-103.wlan.tudelft.nl. [145.94.170.103])
+        by mx.google.com with ESMTPS id q45sm2424405eem.7.2012.03.20.00.47.46
+        (version=SSLv3 cipher=OTHER);
+        Tue, 20 Mar 2012 00:47:46 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
+In-Reply-To: <7vaa3c9ste.fsf@alter.siamese.dyndns.org>
+X-Gm-Message-State: ALoCoQmEMptX2RVzxMXsEGtSU41agIdC5xbXCa51MaNzywZw+FTTNuFvsDRjW/e43XPkA2/x25c1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193489>
 
-Adjusted stat width calculations to take into consideration the diff output
-prefix e.g. the graph prefix generated by `git log --graph --stat`.
+> I had a vague impression that plumbing messages tend to be lowercase.=
+  If
+> it is not be too much trouble, it might be interesting to redo the nu=
+mbers
+> divided into the plumbing and Porcelain messages. Perhaps these "50%"
+> folks updated both plumbing and Porcelain. Another possibility is tha=
+t
+> they tried to follow the local convention when they added a new one, =
+or
+> reworded an existing one.
+>
+> If we would be rewording, we would only be doing the Porcelain messag=
+es,
+> so I am OK with either way.
 
-This change fixes the line wrapping that occurs when diff stats are large
-enough to be scaled to fit within the terminal's columns. This issue only
-appears when using --stat and --graph together on large diffs.
+It seems that the terms "Porcelain" and "plumbing" seems to be mixed up=
+=20
+somewhere.
 
-Adjusted stat output tests accordingly. The scaled output tests are closer to
-the target 5:3 ratio.
+ From 'git help status': "The porcelain format is similar to the short=20
+format, but is guaranteed not to change in a backwards-incompatible way=
+=20
+between git versions or based on user configuration. This makes it idea=
+l=20
+for parsing by scripts".
 
-Added test that verifies the output of --stat --graph is truncated to fit
-within the available terminal $COLUMNS
+ From 'http://progit.org/book/ch9-1.html': "....it has a bunch of verbs=
+=20
+that do low-level work and were designed to be chained together UNIX=20
+style or called from scripts. These commands are generally referred to=20
+as =93plumbing=94 commands, and the more user-friendly commands are cal=
+led=20
+=93porcelain=94 commands."
 
-Signed-off-by: Lucian Poston <lucian.poston@gmail.com>
----
- diff.c                 |   55 ++++++++++++++++++++++++++++++++---------------
- t/t4052-stat-output.sh |   24 +++++++++++++++++++-
- 2 files changed, 59 insertions(+), 20 deletions(-)
+It feels like 'porcelain' means: "be careful, things break easily"; and=
+=20
+'plumbing' means: "use all the force you want to get it into (a=20
+user-friendly) shape".
 
-diff --git a/diff.c b/diff.c
-index 377ec1e..3a26561 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1382,7 +1382,9 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 	int total_files = data->nr;
- 	int width, name_width, graph_width, number_width = 4, count;
- 	const char *reset, *add_c, *del_c;
--	const char *line_prefix = "";
-+	const char *line_prefix = "", *line_prefix_iter;
-+	unsigned int line_prefix_length = 0;
-+	unsigned int reserved_character_count;
- 	int extra_shown = 0;
- 	struct strbuf *msg = NULL;
- 
-@@ -1392,6 +1394,18 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 	if (options->output_prefix) {
- 		msg = options->output_prefix(options, options->output_prefix_data);
- 		line_prefix = msg->buf;
-+
-+		/*
-+		 * line_prefix can contain color codes, so only pipes '|' and
-+		 * spaces ' ' are counted.
-+		 */
-+		line_prefix_iter = line_prefix;
-+		while (*line_prefix_iter != '\0') {
-+			if (*line_prefix_iter == ' ' || *line_prefix_iter == '|') {
-+				line_prefix_length++;
-+			}
-+			line_prefix_iter += 1;
-+		}
- 	}
- 
- 	count = options->stat_count ? options->stat_count : data->nr;
-@@ -1427,22 +1441,27 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 	 * We have width = stat_width or term_columns() columns total.
- 	 * We want a maximum of min(max_len, stat_name_width) for the name part.
- 	 * We want a maximum of min(max_change, stat_graph_width) for the +- part.
--	 * We also need 1 for " " and 4 + decimal_width(max_change)
--	 * for " | NNNN " and one the empty column at the end, altogether
--	 * 6 + decimal_width(max_change).
-+	 * Each line needs space for the following characters:
-+	 *   - line_prefix_length for the line_prefix
-+	 *   - 1 for the initial " "
-+	 *   - 4 + decimal_width(max_change) for " | NNNN "
-+	 *   - 1 for the empty column at the end,
-+	 * Altogether, the reserved_character_count totals
-+	 * 6 + line_prefix_length + decimal_width(max_change).
- 	 *
- 	 * If there's not enough space, we will use the smaller of
- 	 * stat_name_width (if set) and 5/8*width for the filename,
--	 * and the rest for constant elements + graph part, but no more
-+	 * and the rest for reserved characters + graph part, but no more
- 	 * than stat_graph_width for the graph part.
--	 * (5/8 gives 50 for filename and 30 for the constant parts + graph
--	 * for the standard terminal size).
-+	 * (5/8 gives 50 for filename and 30 for the reserved characters + graph
-+	 * for the standard terminal size assuming there is no line prefix).
- 	 *
- 	 * In other words: stat_width limits the maximum width, and
- 	 * stat_name_width fixes the maximum width of the filename,
- 	 * and is also used to divide available columns if there
- 	 * aren't enough.
- 	 */
-+	reserved_character_count = 6 + number_width + line_prefix_length;
- 
- 	if (options->stat_width == -1)
- 		width = term_columns();
-@@ -1453,11 +1472,11 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 		options->stat_graph_width = diff_stat_graph_width;
- 
- 	/*
--	 * Guarantee 3/8*16==6 for the graph part
--	 * and 5/8*16==10 for the filename part
-+	 * Guarantees at least 6 characters for the graph part [16 * 3/8]
-+	 * and at least 10 for the filename part [16 * 5/8]
- 	 */
--	if (width < 16 + 6 + number_width)
--		width = 16 + 6 + number_width;
-+	if (width < 16 + reserved_character_count)
-+		width = 16 + reserved_character_count;
- 
- 	/*
- 	 * First assign sizes that are wanted, ignoring available width.
-@@ -1472,16 +1491,16 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 	/*
- 	 * Adjust adjustable widths not to exceed maximum width
- 	 */
--	if (name_width + number_width + 6 + graph_width > width) {
--		if (graph_width > width * 3/8 - number_width - 6)
--			graph_width = width * 3/8 - number_width - 6;
-+	if (reserved_character_count + name_width + graph_width > width) {
-+		if (graph_width > (width - reserved_character_count) * 3/8)
-+			graph_width = (width - reserved_character_count) * 3/8;
- 		if (options->stat_graph_width &&
--		    graph_width > options->stat_graph_width)
-+				graph_width > options->stat_graph_width)
- 			graph_width = options->stat_graph_width;
--		if (name_width > width - number_width - 6 - graph_width)
--			name_width = width - number_width - 6 - graph_width;
-+		if (name_width > width - reserved_character_count - graph_width)
-+			name_width = width - reserved_character_count - graph_width;
- 		else
--			graph_width = width - number_width - 6 - name_width;
-+			graph_width = width - reserved_character_count - name_width;
- 	}
- 
- 	/*
-diff --git a/t/t4052-stat-output.sh b/t/t4052-stat-output.sh
-index 328aa8f..84dd8bb 100755
---- a/t/t4052-stat-output.sh
-+++ b/t/t4052-stat-output.sh
-@@ -162,7 +162,7 @@ test_expect_success 'preparation for long filename tests' '
- '
- 
- cat >expect <<'EOF'
-- ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++
-+ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++++++++
- EOF
- while read cmd args
- do
-@@ -179,7 +179,7 @@ log -1 --stat
- EOF
- 
- cat >expect80 <<'EOF'
-- ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++++++++++
-+ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++++++++++++++++
- EOF
- cat >expect200 <<'EOF'
-  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-@@ -198,6 +198,26 @@ respects expect200 show --stat
- respects expect200 log -1 --stat
- EOF
- 
-+cat >expect80graphed <<'EOF'
-+|  ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++++++++++++++++
-+EOF
-+cat >expect80 <<'EOF'
-+ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++++++++++++++++
-+EOF
-+while read verb expect cmd args
-+do
-+	test_expect_success "$cmd $verb 80 COLUMNS (long filename)" '
-+		COLUMNS=80 git $cmd $args >output
-+		grep " | " output >actual &&
-+		test_cmp "$expect" actual
-+	'
-+done <<\EOF
-+respects expect80 show --stat
-+respects expect80 log -1 --stat
-+respects expect80graphed show --stat --graph
-+respects expect80graphed log -1 --stat --graph
-+EOF
-+
- cat >expect <<'EOF'
-  abcd | 1000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- EOF
--- 
-1.7.3.4
+Second, to me it is not totally clear which strings are plumbing and=20
+which ones are porcelain. Is there a general rule to tell ? The=20
+command-list file says what the general intention of a command is, but=20
+often it's both plumbing as porcelain.
+
+Can anyone help me out here ?
+
+Vincent
