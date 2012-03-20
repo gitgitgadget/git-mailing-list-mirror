@@ -1,183 +1,92 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 1/1] Fix --stat width calculations to handle --graph
-Date: Tue, 20 Mar 2012 10:09:26 -0700
-Message-ID: <7vehsn6vy1.fsf@alter.siamese.dyndns.org>
+Date: Tue, 20 Mar 2012 10:23:52 -0700
+Message-ID: <7vaa3b6v9z.fsf@alter.siamese.dyndns.org>
 References: <1332229097-19262-1-git-send-email-lucian.poston@gmail.com>
  <1332229097-19262-2-git-send-email-lucian.poston@gmail.com>
+ <alpine.DEB.1.00.1203201109370.3340@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	"Johannes Schindelin" <johannes.schindelin@gmx.de>,
-	"Michael J Gruber" <git@drmicha.warpmail.net>,
-	"Bo Yang" <struggleyb.nku@gmail.com>,
+Cc: Lucian Poston <lucian.poston@gmail.com>, git@vger.kernel.org,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Bo Yang <struggleyb.nku@gmail.com>,
 	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-To: Lucian Poston <lucian.poston@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 20 18:10:06 2012
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 20 18:24:02 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SA2ZQ-0002Km-92
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 18:10:04 +0100
+	id 1SA2mv-0001wT-LB
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 18:24:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755536Ab2CTRJb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Mar 2012 13:09:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36584 "EHLO
+	id S965089Ab2CTRX4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Mar 2012 13:23:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46380 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753952Ab2CTRJa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2012 13:09:30 -0400
+	id S964783Ab2CTRXy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2012 13:23:54 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2F607709;
-	Tue, 20 Mar 2012 13:09:28 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 48FF97A49;
+	Tue, 20 Mar 2012 13:23:54 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EBnUnXosigEVYHs0qMFsNZxNmco=; b=rnaSNj
-	+41VXw6qjjYHfkYB3FyBWQqC2vjifdaxUQo3Cvgfs+96RzM0IgmaYwXng3wA2/Tn
-	sZFTsEO0vVgfBZWyA9r5/2nXNyNGRg272gndm3ywQzM1Vv79SLjqu15XEc8adJU/
-	89qw4YJml5aJUoynNnfXG1lgY3yOi3xU5vaCo=
+	:content-type; s=sasl; bh=lnrgazNI/iBJpyhdlmilu9BHnak=; b=OEMjUG
+	kwGjgm4+4XC9JXQPn+vAOnyCdQ8228gNRQH3nk7F73xwnZaC12mTDvCgDTlrI5tl
+	M3lQ1dxt4GvSwfPXokqjLGpvJtGj8EbxjtiIqwltLgwy2Wtpyms/nyc5qG+N1P6r
+	L5KtKgWksTe0Py27IhaHMX7TFa9todgSWS2j8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=p/y8vDz/yBMnK8F8h9Cd68P/zainQ5BI
-	BvsEKolLHsA7OliKDSZ0JUw5YtyKfeI87NJEF9KF44VcAdjLRLZE6I8iQ43LBXA9
-	ZqGJxfp9eALtQHu9nsabTwikbV9lJJZhAzjD+ftaF33jwx8sFE+/nlH+qbkFobCI
-	37s8kNID3KI=
+	:content-type; q=dns; s=sasl; b=m/6jft4lfm4UGezHyvkWSHfSL+UJr5//
+	pU9B+8GH/Nquy8kwdA1eZCz9wXL0irsH72oGJbGPxky2oTMPo9RiQi2/+DJnoKIe
+	/xGmfb1mzLkTiUNBStaRur8WEzXt6DJlgBYpGr5HdnuQFCdeXEP7yRbnJ8ue9af6
+	x9cTf+2PhxA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EA3727708;
-	Tue, 20 Mar 2012 13:09:28 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 40BCA7A48;
+	Tue, 20 Mar 2012 13:23:54 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 558FF7707; Tue, 20 Mar 2012
- 13:09:28 -0400 (EDT)
-In-Reply-To: <1332229097-19262-2-git-send-email-lucian.poston@gmail.com>
- (Lucian Poston's message of "Tue, 20 Mar 2012 00:38:17 -0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B9B767A47; Tue, 20 Mar 2012
+ 13:23:53 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.1203201109370.3340@s15462909.onlinehome-server.info>
+ (Johannes Schindelin's message of "Tue, 20 Mar 2012 11:17:18 -0500 (CDT)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 73B3FCB8-72AF-11E1-BB47-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 77889B94-72B1-11E1-9D48-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193521>
 
-Lucian Poston <lucian.poston@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Adjusted stat width calculations to take into consideration the diff output
-> prefix e.g. the graph prefix generated by `git log --graph --stat`.
+> However, a little nit, since this list is so famous for "just a little
+> nit": I'd prefer to factor-out the indent width measuring, like so:
 >
-> This change fixes the line wrapping that occurs when diff stats are large
-> enough to be scaled to fit within the terminal's columns. This issue only
-> appears when using --stat and --graph together on large diffs.
+> static int count_pipes_and_spaces(const char *string)
+> {
+> 	int count;
 >
-> Adjusted stat output tests accordingly. The scaled output tests are closer to
-> the target 5:3 ratio.
+> 	for (count = 0; *string; string++)
+> 		if (*string == '|' || *string == ' ')
+> 			count++;
 >
-> Added test that verifies the output of --stat --graph is truncated to fit
-> within the available terminal $COLUMNS
+> 	return count;
+> }
+>
+
+I agree that this is much better than the original by Lucian, but if we
+were to go this route, I would prefer to see it *not* count pipes and
+spaces, but actually measure the display width of the string.  Both the
+name of the function and the implementation would have to change, of
+course.
+
+Even though I didn't look very closely, I do not think it should be too
+hard for graph.c to tell the diff_options structure how wide a prefix it
+placed in the output_prefix, so use of such a "display_columns()" function
+would be wasteful for this particular case, but for a more general case,
+it would come in handy as a helper function, and at that point, this
+should not hide in diff.c as a static function.
 
 Thanks.
-
-Regarding the log message:
-
- - Please start it with a problem description. Describe both what the
-   current code shows, and why you think it is wrong or suboptimal.
-   I.e. the observation of the problem in your second paragraph comes at
-   the beginning
-
- - Our log message usually gives an order to the codebase or to the person
-   who is applying the patch in order to address the problem you described
-   in the earlier part of the log message, instead of tells a story of
-   what happened in the past.
-
-E.g.
-
-    The recent change to compute the width of diff --stat based on the
-    terminal width did not take the width needed to show the --graph
-    output into account, and makes lines in "log --graph --stat" too long.
-   
-    Adjust stat width calculation to take the width of graph prefix into
-    account. ...
-
-> @@ -1392,6 +1394,18 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
->  	if (options->output_prefix) {
->  		msg = options->output_prefix(options, options->output_prefix_data);
->  		line_prefix = msg->buf;
-> +
-> +		/*
-> +		 * line_prefix can contain color codes, so only pipes '|' and
-> +		 * spaces ' ' are counted.
-> +		 */
-> +		line_prefix_iter = line_prefix;
-> +		while (*line_prefix_iter != '\0') {
-> +			if (*line_prefix_iter == ' ' || *line_prefix_iter == '|') {
-> +				line_prefix_length++;
-> +			}
-> +			line_prefix_iter += 1;
-> +		}
-
-Yikes.
-
-This code relies on "Count only ' ' and '|', because these are the only
-ones we currently happen to use", which is fragile. The next person who
-will update graph.c can change the set of letters used in the graph to
-improve the output without even knowing your code exists or the assumption
-your code makes, so she is likely not going to update it.
-
-I think the caller should be taught to pass the exact width it carves out
-of the available width for use by the ancestry graph output, and if we are
-to do so, adding "int output_prefix_len" field (which usually is 0) to
-diff_options, and seting it in graph.c::diff_output_prefix_callback() (at
-that point, graph->width has the number you want, I think), may be the way
-to go.
-
-> diff --git a/t/t4052-stat-output.sh b/t/t4052-stat-output.sh
-> index 328aa8f..84dd8bb 100755
-> --- a/t/t4052-stat-output.sh
-> +++ b/t/t4052-stat-output.sh
-> @@ -162,7 +162,7 @@ test_expect_success 'preparation for long filename tests' '
->  '
->  
->  cat >expect <<'EOF'
-> - ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++
-> + ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++++++++
->  EOF
-
-Isn't it a sign that the change is doing a lot more than justified that it
-has to change the test vector for cases where --graph is *NOT* involved at
-all?
-
-> @@ -179,7 +179,7 @@ log -1 --stat
->  EOF
->  
->  cat >expect80 <<'EOF'
-> - ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++++++++++
-> + ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++++++++++++++++
-
-Likewise.
-
-> @@ -198,6 +198,26 @@ respects expect200 show --stat
->  respects expect200 log -1 --stat
->  EOF
->  
-> +cat >expect80graphed <<'EOF'
-> +|  ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++++++++++++++++
-> +EOF
-> +cat >expect80 <<'EOF'
-> + ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++++++++++++++++
-> +EOF
-> +while read verb expect cmd args
-> +do
-> +	test_expect_success "$cmd $verb 80 COLUMNS (long filename)" '
-> +		COLUMNS=80 git $cmd $args >output
-> +		grep " | " output >actual &&
-> +		test_cmp "$expect" actual
-> +	'
-> +done <<\EOF
-> +respects expect80 show --stat
-> +respects expect80 log -1 --stat
-> +respects expect80graphed show --stat --graph
-> +respects expect80graphed log -1 --stat --graph
-> +EOF
-> +
->  cat >expect <<'EOF'
->   abcd | 1000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  EOF
