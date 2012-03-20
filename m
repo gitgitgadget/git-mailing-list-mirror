@@ -1,133 +1,103 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] Fix --stat width calculations to handle --graph
-Date: Tue, 20 Mar 2012 11:17:18 -0500 (CDT)
-Message-ID: <alpine.DEB.1.00.1203201109370.3340@s15462909.onlinehome-server.info>
-References: <1332229097-19262-1-git-send-email-lucian.poston@gmail.com> <1332229097-19262-2-git-send-email-lucian.poston@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix git-completion.bash for use in zsh
+Date: Tue, 20 Mar 2012 09:23:31 -0700
+Message-ID: <7vr4wn6y2k.fsf@alter.siamese.dyndns.org>
+References: <4E5F8CF3.3060304@randomguy3.me.uk>
+ <4F686FA2.8070803@randomguy3.me.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Bo Yang <struggleyb.nku@gmail.com>,
-	=?ISO-8859-2?Q?Zbigniew_J=EAdrzejewski-Szmek?= <zbyszek@in.waw.pl>
-To: Lucian Poston <lucian.poston@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 20 17:17:27 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Alex Merry <kde@randomguy3.me.uk>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 20 17:23:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SA1kU-00010C-FF
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 17:17:26 +0100
+	id 1SA1qX-0005IV-Co
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 17:23:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760212Ab2CTQRW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Mar 2012 12:17:22 -0400
-Received: from mailout-de.gmx.net ([213.165.64.22]:55469 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1754886Ab2CTQRV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2012 12:17:21 -0400
-Received: (qmail invoked by alias); 20 Mar 2012 16:17:18 -0000
-Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
-  by mail.gmx.net (mp040) with SMTP; 20 Mar 2012 17:17:18 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/ROXhkRSXRaWgQYTOoxX6bxAR1NrQsbG9fAgCQ0X
-	zPar7RHEilqSMq
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <1332229097-19262-2-git-send-email-lucian.poston@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1030438Ab2CTQXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Mar 2012 12:23:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43764 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030383Ab2CTQXf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2012 12:23:35 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D6FE06AD2;
+	Tue, 20 Mar 2012 12:23:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=s4GuV8m+QMQBXX+I5cT1PSdDEp8=; b=kuwVn5
+	gaeAUUmvRUorpv+RVh1bmEqpPqP/H9tAW6gM5shng2Su7I9MlhaD+XYCmFPn2BcB
+	sDvTrhLwGzw5fwHNzZsiLdZv1kRx93tgbFSLrLomLVNnTL88xIa/FnASyWpa2T6E
+	2sB5U5s2cpFwRBrmzZHXUm42o8f0GO+MJfubM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pdttTHDhz7qDJeLnmHMSFmEr4xP6/EJl
+	XfBz5hjijMxLs36ImqZpFdEQkXy0t7Ni7xXDml2eaQbtAKKu36Jkfvi5VOw4NcNK
+	ER7rEBZD+VUoje7vFik3TnjICF07NinpoHT2/mmcE3Va9NtYoPnwH7bJwpiCxG5r
+	Hgw37l7TxcM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CECFB6AD1;
+	Tue, 20 Mar 2012 12:23:34 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F123F6ACF; Tue, 20 Mar 2012
+ 12:23:32 -0400 (EDT)
+In-Reply-To: <4F686FA2.8070803@randomguy3.me.uk> (Alex Merry's message of
+ "Tue, 20 Mar 2012 11:53:06 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 095D6864-72A9-11E1-8D26-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193516>
 
-Hi Lucian,
+Alex Merry <kde@randomguy3.me.uk> writes:
 
-On Tue, 20 Mar 2012, Lucian Poston wrote:
+> This is just a reminder message, since I haven't heard anything back
+> on this, and it hasn't made its way into the repo.
+> I realise Felipe Contreras has been pushing a different approach to
+> making it work properly in zsh, but this should be a fairly innocuous
+> fix in the meantime.
 
-> Adjusted stat width calculations to take into consideration the diff output
-> prefix e.g. the graph prefix generated by `git log --graph --stat`.
-> 
-> This change fixes the line wrapping that occurs when diff stats are large
-> enough to be scaled to fit within the terminal's columns. This issue only
-> appears when using --stat and --graph together on large diffs.
-> 
-> Adjusted stat output tests accordingly. The scaled output tests are closer to
-> the target 5:3 ratio.
-> 
-> Added test that verifies the output of --stat --graph is truncated to fit
-> within the available terminal $COLUMNS
-> 
-> Signed-off-by: Lucian Poston <lucian.poston@gmail.com>
-> ---
+Thanks.
 
-Good. Just a quick question before everything else: are the commit
-messages cut off/wrapped to the same number of columns? If so, where do
-they get the indent from? (Sorry for asking, but I figured that you're
-already deep in the code so you might know of the top of your head.)
+"git grep 'local .*=('" tells me that there is only one such construct;
+there is another hit but it is not an empty array "=()" but that assigns
+"=($(some command output))" so presumably zsh does not mistake it for a
+declaration.
 
-> diff --git a/diff.c b/diff.c
-> index 377ec1e..3a26561 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -1382,7 +1382,9 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
->  	int total_files = data->nr;
->  	int width, name_width, graph_width, number_width = 4, count;
->  	const char *reset, *add_c, *del_c;
-> -	const char *line_prefix = "";
-> +	const char *line_prefix = "", *line_prefix_iter;
-> +	unsigned int line_prefix_length = 0;
-> +	unsigned int reserved_character_count;
->  	int extra_shown = 0;
->  	struct strbuf *msg = NULL;
->  
-> @@ -1392,6 +1394,18 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
->  	if (options->output_prefix) {
->  		msg = options->output_prefix(options, options->output_prefix_data);
->  		line_prefix = msg->buf;
-> +
-> +		/*
-> +		 * line_prefix can contain color codes, so only pipes '|' and
-> +		 * spaces ' ' are counted.
-> +		 */
-> +		line_prefix_iter = line_prefix;
-> +		while (*line_prefix_iter != '\0') {
-> +			if (*line_prefix_iter == ' ' || *line_prefix_iter == '|') {
-> +				line_prefix_length++;
-> +			}
-> +			line_prefix_iter += 1;
-> +		}
->  	}
-
-My 1st reaction was: why is the current indent width not stored in the options?
-But you're right, the indent is generated dynamically from output_prefix()
-which is a method of diff_options, so there is little chance to do it
-differently from your solution.
-
-However, a little nit, since this list is so famous for "just a little
-nit": I'd prefer to factor-out the indent width measuring, like so:
-
-static int count_pipes_and_spaces(const char *string)
-{
-	int count;
-
-	for (count = 0; *string; string++)
-		if (*string == '|' || *string == ' ')
-			count++;
-
-	return count;
-}
-
-It's not only that that new function cannot mess with the local variables
-of show_stats(), it also documents a bit better what the code is supposed
-to do (and all that without a single /* ... */! Isn't that fab? ;)
-
-As for the complete patch: nicely done. I especially like that it is
-minimally intrusive and that you took great care of updating the comments
--- not something everybody does!
-
-My nits aside: this is good to go.
-
-Ciao,
-Dscho
+Felipe, any comments?
+>
+> Alex
+>
+> On 01/09/11 14:47, Alex Merry wrote:
+>> Certain versions (or option combinations) of zsh appear to treat
+>> things like
+>> local some_var=()
+>> as a function declaration.  This makes errors appear when using it in
+>> combination with the GIT_PS1_SHOWUPSTREAM option.
+>>
+>> Signed-off-by: Alex Merry<dev@randomguy3.me.uk>
+>> ---
+>>   contrib/completion/git-completion.bash |    3 ++-
+>>   1 files changed, 2 insertions(+), 1 deletions(-)
+>>
+>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+>> index 5a83090..89de45d 100755
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -106,8 +106,9 @@ __gitdir ()
+>>   __git_ps1_show_upstream ()
+>>   {
+>>          local key value
+>> -       local svn_remote=() svn_url_pattern count n
+>> +       local svn_remote svn_url_pattern count n
+>>          local upstream=git legacy="" verbose=""
+>> +       svn_remote=()
+>>
+>>          # get some config options from git-config
+>>          while read key value; do
