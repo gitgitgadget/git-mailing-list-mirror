@@ -1,130 +1,161 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: Re: [PATCH 0/9 v2] difftool: teach command to perform directory diffs
-Date: Tue, 20 Mar 2012 09:07:41 -0400
-Message-ID: <CAFouetj2gME+X47EUAQTUKX_GJ8PW=cSWRj7VUdBsi91Aa9Wyw@mail.gmail.com>
-References: <1331949442-15039-1-git-send-email-tim.henigan@gmail.com>
-	<1332035734-5443-1-git-send-email-tim.henigan@gmail.com>
-	<7vhaxk9ui6.fsf@alter.siamese.dyndns.org>
+From: David Barr <davidbarr@google.com>
+Subject: Re: GSoC intro
+Date: Wed, 21 Mar 2012 00:19:41 +1100
+Message-ID: <CAFfmPPPabm_H9f2Zr8eWc7Wxo6UDz-km_Vg8cc-O38XhGCrj7Q@mail.gmail.com>
+References: <11292500.AVmZFUUvNi@flobuntu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: davvid@gmail.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 20 14:13:31 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Andrew Sayers <andrew-git@pileofstuff.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>
+To: Florian Achleitner <florian.achleitner2.6.31@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 20 14:19:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9ysU-0003oz-Fb
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 14:13:30 +0100
+	id 1S9yye-0006iw-O5
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 14:19:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756484Ab2CTNNZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Mar 2012 09:13:25 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:64127 "EHLO
+	id S1756627Ab2CTNTn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Mar 2012 09:19:43 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:55382 "EHLO
 	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756212Ab2CTNNZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Mar 2012 09:13:25 -0400
-Received: by gghe5 with SMTP id e5so13220ggh.19
-        for <git@vger.kernel.org>; Tue, 20 Mar 2012 06:13:24 -0700 (PDT)
+	with ESMTP id S1754067Ab2CTNTm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2012 09:19:42 -0400
+Received: by gghe5 with SMTP id e5so20179ggh.19
+        for <git@vger.kernel.org>; Tue, 20 Mar 2012 06:19:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=DggIjlkLNmeiwVM5n5SBBe3QqgtsBNbfjPCGtgXX5Kg=;
-        b=ervjHPqUK62otFBUtsxCOI+5MFvLNg55jZR/oBNv3Ut3z7wx3mgZy8SE0F4dUqGZ+X
-         SLGNDb5IVtsTaOCjcwig/mQ5fFdKQ6RgSijXNCSaBWbE6T7qr+rXrf0Gl3aZUV/yJ3x7
-         gD9dkZWI9SXxEED1GObf5iLnhin3mwUtu7W6v/SvpZKyYOzboMNIVibvJi7zAB9OCxXr
-         mIAWhvj0RYhTJTq4cb/xLMDqDwnbTQaM8+P4l0nyh8IcBby1dL40qBz4lKX2LoARRURu
-         fJ1ztR+cs0j7bHZjnSShe1tb4elR6lxx4H6BODc+fJ6eCSGXfAJMPpvKP0ZPCdU7UzTq
-         EvKA==
-Received: by 10.50.212.101 with SMTP id nj5mr8715086igc.41.1332248861327; Tue,
- 20 Mar 2012 06:07:41 -0700 (PDT)
-Received: by 10.42.138.5 with HTTP; Tue, 20 Mar 2012 06:07:41 -0700 (PDT)
-In-Reply-To: <7vhaxk9ui6.fsf@alter.siamese.dyndns.org>
+         :cc:content-type:x-system-of-record;
+        bh=QW42j+TbycVYOaPoinMUI3VBk17Tbaub0EkRVSQbXk8=;
+        b=QB07K6yQQmBCVFHb7hmu9NJKZ6DONMfaq1KAk6z3vV/Chfnc8JTtCMl4HU0w7+0992
+         20b4DNPhze9JcdGLKHq+FXVUUxkNgO389mO7X0jVaxHdJNm0MO9mnXjAiIHKM+3LyxyF
+         37ZSavwHxszIYeF6MJpyy4CXdAq2bXcWPh5jlKbdRCrJhjynoh/zWwQ9nEkp59qXifaC
+         YPXyv+Ev0FH1CvjdpSdOFMqh3IbrnPBgq46S3x5DX+FgRcPh9fc3sqd7ujj6gRSufj77
+         pYK7KZFLP1lYUQ2bdYx/piFSxVmAvu4cy0lE3XfoNscnHnILlzpWjM9bDUotxiO5aljo
+         40rQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:x-system-of-record:x-gm-message-state;
+        bh=QW42j+TbycVYOaPoinMUI3VBk17Tbaub0EkRVSQbXk8=;
+        b=IB2nM1TZPSgxtWTUqL+HcqauKQ1Wc8W7PfhFljXYxsVYEF91ji7gxmHqmqK/Kurtnb
+         MqEwrqAlsRvKn65vJgsMNlfM7bN7MvDDZ5ScieDHQKBvrK6GFoBBlpOvGO94xZwFtxsP
+         CbdOejmNt4SMKzXJt/Q44vMHPazX8rGqsJWPGhM4Nm++3+5JC9oKHkDyDVHGyUv+0V33
+         lYliLtqEJVzx7av1+5ig4WL1KDLbfJSHKxbpDXmWTYpcCBPDFzgBy4VvN8tEu3A7+NiX
+         oXIkuab8DSFeI9VEg3V1EwUfKYIpGCk09qAkAAyAdmBcneYNf8FN5naaZNHj0M6EDNCn
+         t8KA==
+Received: by 10.236.75.232 with SMTP id z68mr17077766yhd.6.1332249581891;
+        Tue, 20 Mar 2012 06:19:41 -0700 (PDT)
+Received: by 10.236.75.232 with SMTP id z68mr17077749yhd.6.1332249581747; Tue,
+ 20 Mar 2012 06:19:41 -0700 (PDT)
+Received: by 10.101.154.34 with HTTP; Tue, 20 Mar 2012 06:19:41 -0700 (PDT)
+In-Reply-To: <11292500.AVmZFUUvNi@flobuntu>
+X-System-Of-Record: true
+X-Gm-Message-State: ALoCoQnjNpP57HoQL5VKzNFcTQ8p60f22SxcF8nbUcxOPKtKKnmhtbjL6i4p4QHAg+WIWNYpFExhZLOPMF071RFy2sSMUT8DR8qCkhkGVj+PXA5sSYBk+FHzLlLHNcv2TtVCeiP6KQtYl50dTWdUMWXDFYDk2mrBtA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193510>
 
-I have successfully tested on:
-  - Linux with Git v1.7.10-rc0 and 1
-  - Windows 7 with msysgit v1.7.9
+Hi Florian,
 
-I installed cygwin Git on Windows 7, but found that 'git difftool'
-would not work, even before my patches were applied.  It appears that
-I need to learn more about cygwin before I can use it as a test
-platform.
+> I'm curious about applying for GSoC 2012 considering the idea "Remote helper
+> for Subversion".
+> I'm using git since years and have converted my svn repos to git years ago,
+> but I'm not yet familiar with the pre-work on this topic. Is there a branch in
+> git's git?
 
+Much of the progress so far has been merged into master.
+Still outstanding are some of Dmitry's patches:
+remote-svn-alpha_v2 [1]
+svn-fe-options_v7 [2]
 
-On Mon, Mar 19, 2012 at 5:00 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
+> Does a "full-featured bi-directional git-remote-svn" mean, that it should work
+> like any remote git repository where you can push to and fetch from?
+
+Yes, that's the plan. To be fair, it is a stretch goal. Two GSoC
+students have brought us as far as a read-only remote helper. So I
+think there's at least two summers' worth of work remaining.
+
+> Below I briefly introduce myself, for those who are interested.
 >
-> =C2=A0* In [1/9], use of pass_through would mean 'git difftool' must =
-be fed the
-> =C2=A0 options for difftool and then options meant for underlying dif=
-f
-> =C2=A0 machinery. =C2=A0Is this limitation still there? =C2=A0If so, =
-isn't this a
-> =C2=A0 regression? =C2=A0Shouldn't it at least be advertised to the u=
-sers a lot
-> =C2=A0 stronger in documentation?
+> About me
+> My name is Florian Achleitner (IRC: FlyingFlo). I'm
+> from Austria and I study Telematics (a blend of computer science and
+> electric engineering) at the Graz University of Technology. I'm currently in
+> the first year of the master program. Before starting my studies I worked for
+> four years as a developer of embedded systems in industry.
+>
+> My programming experience grew since I started writing programs on TI
+> calculators in school probably 15 years ago.
+> I'm open-source enthusiast, exclusively using Linux since years.
+> I currently work as teaching assistant for an exercise about programming
+> operating systems. In this course we also teach the students to use git.
 
-Both the documentation and testing has shown that 'pass_through' works
-as I expected.  That is, options that difftool cares about are
-extracted from @ARGV while all others are passed on to the underlying
-'git diff' command.  The order of the arguments/options does not
-matter.  We "use 5.008;" at the top of the script, so I believe this
-change is correct and safe.  That being said, I have a limited number
-of computers/configurations to test on.
+Thanks for the introduction. When I first got involved with this
+sub-project, I gave a quick self introduction [3]. As a potential
+mentor, it would be prudent to let you know what my commitments are.
+My day job is primarily to contribute to chromium.org and webkit.org.
+I also have a 20% commitment to git-core and related projects.
 
+> About me and GSoC
+> In summer 2010 I participated in GSoC for hugin writing a Makefile-creation
+> library in C++, which is used to drive the panorama creation [1]. It was a
+> great experience and a cool, successful summer job! ( and it was merged in
+> hugin's master branch :-) )
 
-> =C2=A0* In [4/9], you remove the .exe extension when running git, whi=
-ch was
-> =C2=A0 there since the beginning of difftool 5c38ea3 (contrib: add 'g=
-it
-> =C2=A0 difftool' for launching common merge tools, 2009-01-16). =C2=A0=
-I think it is
-> =C2=A0 safe but are Windows folks OK with this?
+> [1] http://hugin.hg.sourceforge.net/hgweb/hugin/hugin/branches branch:
+> gsoc2010_makefilelib (unfortunately the web fronted doesn't display a specific
+> branch)
 
-My testing on Windows with msysgit has shown that this change is safe.
- Also, even though I had other problems when testing on cygwin (noted
-at the top of the email), the 'difftool' script was able to
-successfully execute 'git diff --raw -z' without appending '.exe'.
+A track record is a plus.
 
+> Why git?
+> - I use git daily. It's always good to work on things you use and a chance to
+> contribute something.
 
-> =C2=A0* In [6/9], the exit code in the failure case seem to be modifi=
-ed from
-> =C2=A0 that of the underlying "git diff" to whatever croak gives us. =
-=C2=A0Is this
-> =C2=A0 a regression, or nobody cares error status from difftool? =C2=A0=
-I personally
-> =C2=A0 suspect it is the latter, but just double-checking if you have
-> =C2=A0 considered it.
+I'm sure this is the reason most git contributors are here.
 
-In my testing, if "Git::command_noisy(('diff', @ARGV))" fails, the
-exit code from 'git diff' is passed back to the terminal.  So not only
-is the 'git diff' exit code echoed to the terminal, but '$?' also
-contains the correct exit code.
+> - I like C
+> - I used svn. Nowadays I only use it if i have to ;)
 
+You're in good company.
 
-> =C2=A0* In [7/9], difftool--helper declares SUBDIRECTORY_OK, but ther=
-e doesn't
-> =C2=A0 seem to be any inclusion of git-sh-setup in this script, and t=
-he patch
-> =C2=A0 does not have any effort to prepend $prefix to paths relative =
-to $cwd.
-> =C2=A0 What good does the variable do here?
+> - The community interaction aspect of open source development is very
+> interesting.. as the ideas page says ".. and get it merged into upstream Git."
 
-This was an oversight.  It was copied over from a previous
-implementation that still used ". git-sh-setup".
+The git contributors are mostly a pleasure to work with. The volume
+and quality of feedback to contribution, especially from newcomers,
+sets it apart from the other communities I participate in.
 
-So the only outstanding changes that I am planning are:
-  1) Remove SUBDIRECTORY_OK
-  2) Add tests for the new '--dir-diff' option
+Some extra reading:
 
-Would it be better to resend the complete patches series with these
-changes or just add new patches to the end?
+To catch up on the current state of the art with respect to
+translating Subversion history read:
+Another bite of the reposturgeon, Eric S. Raymond [4].
+Unfortunately, he hasn't published the code quite yet.
+However, he did what we have been lax to do and contacted the
+Subversion developers to assist updating protocol documentation [5].
+I think the corner cases for the Subversion delta format are still
+undocumented [6].
 
-Please let me know if I missed anything else.
+[1] https://github.com/divanorama/git/tree/remote-svn-alpha_v2
+[2] https://github.com/divanorama/git/tree/svn-fe-options_v7
+[3] http://thread.gmane.org/gmane.comp.version-control.git/143187/focus=143201
+[4] http://esr.ibiblio.org/?p=4071
+[5] http://svn.apache.org/repos/asf/subversion/trunk/notes/dump-load-format.txt
+[6] http://svn.apache.org/repos/asf/subversion/trunk/notes/svndiff
+
+> Regards,
+> Flo
+
+--
+David Barr
