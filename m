@@ -1,53 +1,78 @@
-From: =?UTF-8?B?QW5kcsOpIFdhbGtlcg==?= <andre@andrewalker.net>
-Subject: Re: Git and Google Summer of Code 2012
-Date: Tue, 20 Mar 2012 15:26:12 -0300
-Message-ID: <4F68CBC4.1010507@andrewalker.net>
-References: <001636c5c21b02c35904bba0ff9a@google.com> <201203201637.10417.jnareb@gmail.com> <7v62dz6v5c.fsf@alter.siamese.dyndns.org> <201203201844.55155.jnareb@gmail.com> <20120320175422.GA20669@sigill.intra.peff.net> <4F68C5E4.3050306@andrewalker.net> <20120320181857.GA20804@sigill.intra.peff.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Please discuss: what "git push" should do when you do not say
+ what to push?
+Date: Tue, 20 Mar 2012 14:31:19 -0400
+Message-ID: <CACPiFCLbTA=AwymUOde43Z61t9cd5O=uk_hs5Dt6WZhYYg06zA@mail.gmail.com>
+References: <7v7gyjersg.fsf@alter.siamese.dyndns.org> <7vty1ndcoi.fsf@alter.siamese.dyndns.org>
+ <CACPiFCKbfgSZMnpc6Q_Lg6n5YMHQ2bad-bwQsyASk0eMuiAFTQ@mail.gmail.com> <7vy5qv70mh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 20 19:26:55 2012
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 20 19:31:47 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SA3ll-0005DX-GA
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 19:26:53 +0100
+	id 1SA3qT-00089c-RP
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 19:31:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754718Ab2CTS0s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Mar 2012 14:26:48 -0400
-Received: from oproxy5-pub.bluehost.com ([67.222.38.55]:37499 "HELO
-	oproxy5-pub.bluehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752022Ab2CTS0r (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2012 14:26:47 -0400
-Received: (qmail 25328 invoked by uid 0); 20 Mar 2012 18:26:44 -0000
-Received: from unknown (HELO host245.hostmonster.com) (74.220.215.245)
-  by cpoproxy2.bluehost.com with SMTP; 20 Mar 2012 18:26:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=andrewalker.net; s=default;
-	h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References:Subject:CC:To:MIME-Version:From:Date:Message-ID; bh=MYzobHHeA8cXq/TXdIw/2ju24qWUL5JoHSFVnlnzipU=;
-	b=Uvhg3H8AmaebxgblVbZV2IETgfPqDclhakNOgVNh0HG07zvili+T8ia3ayIOI9UOkaxiwV26xwnbMHQwKMavWW71G51ZnvjPtsA9CLw3oK7ZrDyKe4rE3Jl/cZhWbVOI;
-Received: from saeed.torservers.net ([96.44.163.75] helo=[0.0.0.0])
-	by host245.hostmonster.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.76)
-	(envelope-from <andre@andrewalker.net>)
-	id 1SA3la-0007Dh-IC; Tue, 20 Mar 2012 12:26:44 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.1) Gecko/20120209 Thunderbird/10.0.1
-In-Reply-To: <20120320181857.GA20804@sigill.intra.peff.net>
-X-Identified-User: {2744:host245.hostmonster.com:picloadc:andrewalker.net} {sentby:smtp auth 96.44.163.75 authed with andre@andrewalker.net}
+	id S1754864Ab2CTSbl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Mar 2012 14:31:41 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:54053 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754832Ab2CTSbk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Mar 2012 14:31:40 -0400
+Received: by iagz16 with SMTP id z16so363242iag.19
+        for <git@vger.kernel.org>; Tue, 20 Mar 2012 11:31:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=yFycLCobquKAV3EnAuZXrRpjzjVmLcEN8M2YdmJyqXE=;
+        b=tIC+mAkcez/2EkHwQWpng1HtTnldLREiZmF3gaCnPR5pulng6LWf5LCo3ruAiIpRJh
+         03cazKZGoGhvFiGIMzvU+z55VbSGPMdKAV+WN9uOPYkY5xlGloYQRsU+8+ddkqKatXPN
+         qgq469EKT04QGCxu9PQovT3LDLSoLHdOItGldvBt6S+1C0Yt/K4DP4qkV2C1mjFvUICu
+         7uDQOgajMvFzTghOSRrRQlag7XfQ6AGvJDmCYj/rvF6NZpxzXJCqUWEk5G3zJhutOg7B
+         51V7uy410QDUP/aTbvWWa85dAFr9+dAiE314lsQ2KUd2GVlSb9Wd7xro1NuN6tf2/Cxx
+         0HuA==
+Received: by 10.50.40.166 with SMTP id y6mr687679igk.69.1332268299743; Tue, 20
+ Mar 2012 11:31:39 -0700 (PDT)
+Received: by 10.42.239.131 with HTTP; Tue, 20 Mar 2012 11:31:19 -0700 (PDT)
+In-Reply-To: <7vy5qv70mh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193531>
 
-On 03/20/2012 03:18 PM, Jeff King wrote:
-> It sounds like you are doing it right. And your emails look OK to me
-> (and the list is accepting them when cc'd). Your original mails may have
-> been greylisted, and waiting on your mail server to re-send them.
-> Depending on how your mail server is configured, that might be a few
-> minutes or a few hours. How long ago did you try?
-Right. The first time was more than 11 hours ago, and the second 1 hour 
-ago. Is there a list administrator who can whitelist my address?
+On Tue, Mar 20, 2012 at 11:28 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> As many people already said in the discussion before the RFD message =
+that
+> is at the root of this thread, the name of the option --force alone
+> already signals it is something you use after thinking twice.
+
+Definitely. You may think twice about the branch you' re planning to
+force-update. "Do I really want to force-update <this>?". But it
+doesn't mean you know and fully understand the "push default" rules of
+git.
+
+With "immediately" I mean "sooner than several releases away".
+
+In any case, seems I missed the train and the discussion is closed;
+I'll head back to my cave.
+
+cheers,
+
+
+
+m
+--=20
+=A0martin.langhoff@gmail.com
+=A0martin@laptop.org -- Software Architect - OLPC
+=A0- ask interesting questions
+=A0- don't get distracted with shiny stuff=A0 - working code first
+=A0- http://wiki.laptop.org/go/User:Martinlanghoff
