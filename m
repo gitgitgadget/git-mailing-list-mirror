@@ -1,73 +1,65 @@
-From: =?ISO-8859-2?Q?Maciej_Ma=B3ecki?= <me@mmalecki.com>
-Subject: Re: [PATCH] Use SSH key from `GIT_SSH_KEY` variable if supplied
-Date: Tue, 20 Mar 2012 09:07:47 +0100
-Message-ID: <CAKC8-7zr8JKCzMwameXvXVhCcycNG8B-dzCcPiCxrqFzGr_b8w@mail.gmail.com>
-References: <1332207557-10965-1-git-send-email-me@mmalecki.com>
-	<7vhaxk829x.fsf@alter.siamese.dyndns.org>
-	<robbat2-20120320T020552-803311730Z@orbis-terrarum.net>
+From: Christian Hammerl <info@christian-hammerl.de>
+Subject: Annoying absolute path for "core.worktree" to submodule
+Date: Tue, 20 Mar 2012 10:52:43 +0100
+Message-ID: <20120320105243.2e8a489b@christian-hammerl.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 20 09:07:57 2012
+X-From: git-owner@vger.kernel.org Tue Mar 20 10:52:54 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1S9u6m-0001sq-Ne
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 09:07:57 +0100
+	id 1S9vkJ-0005oa-MJ
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Mar 2012 10:52:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757249Ab2CTIHv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Mar 2012 04:07:51 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:64209 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751294Ab2CTIHr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Mar 2012 04:07:47 -0400
-Received: by yenl12 with SMTP id l12so6042809yen.19
-        for <git@vger.kernel.org>; Tue, 20 Mar 2012 01:07:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:x-originating-ip:in-reply-to:references:date
-         :message-id:subject:from:to:content-type:content-transfer-encoding
-         :x-gm-message-state;
-        bh=HnMxNYE+YfW/FG45ITAoYLeQdxiSEcIPna//D3B2scg=;
-        b=ZiNasgKEeHxBGUPDZA5fs8wDxv+wi3MvtdL8S+N4fK5jW5naoyEyNw96ehej/m+qSc
-         2lI3d4ZCC3o+alOESFD40OGxsAXvvUUNu/5YGhR39+/vrmaE4PV8uwhxtf3qUTKTvh7p
-         DiYarqOwoNL0imRXX1XoO7POnDv7bwxOp76lUjVIvnzxW/H1cENagCbpdIbcmHkr9buF
-         ovv8glj0TIJDdlVzlIrFoMzvkhbXE8+4tuPp5yXs8oQYCknnsaKY40l691XzvrRHvlvI
-         h90rno54ZAcxtF7AJjb571tWSOBhr9uZYKE2EtJIu647npXTg1rY60TH43V0aUby1xY4
-         5fog==
-Received: by 10.60.23.138 with SMTP id m10mr17102451oef.12.1332230867300; Tue,
- 20 Mar 2012 01:07:47 -0700 (PDT)
-Received: by 10.182.116.104 with HTTP; Tue, 20 Mar 2012 01:07:47 -0700 (PDT)
-X-Originating-IP: [83.25.48.110]
-In-Reply-To: <robbat2-20120320T020552-803311730Z@orbis-terrarum.net>
-X-Gm-Message-State: ALoCoQmCnOa80Swq2TF1U3S4YapS3x/jaOpQv5yJ9VT3BIYqpA4W7ZpYN1Ys/Xalbl7B4PidZy8/
+	id S1756253Ab2CTJwr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Mar 2012 05:52:47 -0400
+Received: from w3variance.de ([85.197.82.140]:59540 "EHLO w3variance.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753279Ab2CTJwq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2012 05:52:46 -0400
+Received: from ip-95-222-97-168.unitymediagroup.de ([95.222.97.168] helo=localhost.localdomain)
+	by w3variance.de with esmtpa (Exim 4.75)
+	(envelope-from <info@christian-hammerl.de>)
+	id 1S9vjt-0001dM-7w; Tue, 20 Mar 2012 10:52:25 +0100
+X-Mailer: Claws Mail 3.8.0 (GTK+ 2.24.10; x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193492>
 
-W dniu 20 marca 2012 03:07 u=BFytkownik Robin H. Johnson
-<robbat2@gentoo.org> napisa=B3:
-> On Mon, Mar 19, 2012 at 06:55:06PM -0700, =A0Junio C Hamano wrote:
->> Hmm. I am somewhat torn.
->>
->> The minimalist in me finds this extraneous and unnecessary noise. =A0=
-Why
->> should the user always set GIT_SSH_KEY environment variable that onl=
-y
->> applies to git and does not help his other ssh sessions? =A0Why isn'=
-t having
->> an entry in .ssh/config to name IdentityFile sufficient?
->>
->> Would GIT_SSH_ARGS=3D'-i /home/me/.ssh/there.pub -l me' be more appr=
-opriate?
-> I'd strongly prefer a generic args support, for making it easier to u=
-se
-> in deployment code.
-After rethinking it, I'm also +1 on GIT_SSH_ARGS. Should I submit a pat=
-ch?
-Sorry for noob question, but it'd go into a new e-mail thread, right?
+Hey folks,
+
+I really love the work you are doing on GIT but the last update
+regarding submodules is a bit annoying. Although the path inside the
+".git" file is stored relative to the submodule's path, the path in
+".git/modules/path-to-submodule/config" is stored as an absolute path
+for "core.worktree".
+
+I develop (for some projects) within a chroot where I have a different
+username and therefore the path differs if I am currently inside the
+chroot or not. If the submodule is initialized inside the chroot, I
+always get this message when I cd into the project's directory outside
+of the chroot:
+
+fatal: Could not switch to
+'/home/chroot-username/parent-path-of-submodule': File or directory not
+found
+fatal: 'git status --porcelain' failed in submodule
+relative-path-to-submodule
+
+This is caused by using `__git_ps1` for my bash-prompt. I don't know
+exactly where the problem is and what actions (called by __git_ps1) are
+responsible for this.
+
+Any suggestions how to deal with this?
+
+And no, removing __git_ps1 from my bash-prompt is not the answer, I
+like this feature very much. ;-)
+
+Thanks in advance
+Christian
