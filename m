@@ -1,70 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Strange effect merging empty file
-Date: Wed, 21 Mar 2012 10:14:21 -0700
-Message-ID: <7v62dx3mhe.fsf@alter.siamese.dyndns.org>
-References: <4F69AD3C.4070203@ericsson.com> <4F69B375.5050205@in.waw.pl>
+From: Jeff King <peff@peff.net>
+Subject: Re: Clone fails on a repo with too many heads/tags
+Date: Wed, 21 Mar 2012 13:14:23 -0400
+Message-ID: <20120321171423.GA13140@sigill.intra.peff.net>
+References: <loom.20120318T083216-96@post.gmane.org>
+ <m3fwd550j3.fsf@localhost.localdomain>
+ <20120318190659.GA24829@sigill.intra.peff.net>
+ <CACsJy8BNT-dY+wDONY_TgLnv0135RZ-47BEVMzX6c3ddH=83Zw@mail.gmail.com>
+ <20120319024436.GB10426@sigill.intra.peff.net>
+ <4F69B5F0.2060605@gmx.net>
+ <CAJo=hJu0H5wfXB_y5XQ6=S0VJ9t4pxHWkuy_=rehJL_6psf00g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ralf Nyren <ralf.nyren@ericsson.com>, git@vger.kernel.org
-To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Wed Mar 21 18:14:32 2012
+Cc: Ivan Todoroski <grnch_lists@gmx.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Mar 21 18:14:41 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAP7H-0001S0-Ec
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 18:14:31 +0100
+	id 1SAP7O-0001Y2-80
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 18:14:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758297Ab2CURO0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Mar 2012 13:14:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41449 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756884Ab2CUROZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Mar 2012 13:14:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 961756DD6;
-	Wed, 21 Mar 2012 13:14:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=6ANQKoMP70s6
-	OJ/WBFGNis2aUnA=; b=J0XpWqkTqwH77JskFPICGcHIdv6gCyg+o3HOBwYtzBS/
-	G/yyYUfV2oDrVYoJu9QGT4Xvp5RH3fSbUm9ieONcLaxp5y/kxEegaEqU7rQs2cQV
-	6cR0OmKdusstRhYiPVpJOZatI57OR4zDObjA4Jnw2SsGEu56K7fKyynDOY7JR1g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=osuv0z
-	+IFFsOo1UgGJ+cmD61ZeNybPrcXXa+8Bud+Z+1ATAowj47Amu5AKGjMEowYDJm72
-	8gPfAsJxNfe3Bl9MMRDmzCYwekXtdHqpg/umQXscjyZTnYCgDbviY+wACYeJlCI4
-	kSxPX4HggWADvX5Wj53pqiyQPoOFccQty3qE0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D1156DD5;
-	Wed, 21 Mar 2012 13:14:24 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 278B56DD4; Wed, 21 Mar 2012
- 13:14:23 -0400 (EDT)
-In-Reply-To: <4F69B375.5050205@in.waw.pl> ("Zbigniew =?utf-8?Q?J=C4=99drze?=
- =?utf-8?Q?jewski-Szmek=22's?= message of "Wed, 21 Mar 2012 11:54:45 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4DD2E868-7379-11E1-972E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758709Ab2CUROc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Mar 2012 13:14:32 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55249
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758326Ab2CURO2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2012 13:14:28 -0400
+Received: (qmail 24195 invoked by uid 107); 21 Mar 2012 17:14:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 21 Mar 2012 13:14:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Mar 2012 13:14:23 -0400
+Content-Disposition: inline
+In-Reply-To: <CAJo=hJu0H5wfXB_y5XQ6=S0VJ9t4pxHWkuy_=rehJL_6psf00g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193590>
 
-Zbigniew J=C4=99drzejewski-Szmek  <zbyszek@in.waw.pl> writes:
+On Wed, Mar 21, 2012 at 07:28:24AM -0700, Shawn O. Pearce wrote:
 
-> # Merge import 1.0 and remove the empty file
-> git merge  --no-edit import^
-> git rm empty.txt
-> git commit -m 'Remove empty file'
->
-> # Merge import 1.1 and watch empty.txt contents show up in .gitignore
-> git merge --no-edit import
-> cat .gitignore
+> > Would it be OK for fetch-pack.c to use the packetized format (pkt-line.h)
+> > for reading the list of refs from stdin?
+> 
+> This is probably the easiest way to implement the sneak-into-stdin
+> patch. Use a pkt-line for each argument that should have been in the
+> argv array from the command line, and a flush pkt to terminate the
+> list.
 
-Given what merge-recursive does, I am not very surprised, even though I
-agree that it feels like a very surprising end user experience ;-)
+Something in me feels slightly uncomfortable with that, just because
+simple newline-delimited formats make it easy for people to hack on the
+tool and feed input from unexpected sources.
+
+But stateless-rpc is already a pretty deep internal interface anyway,
+and the format is already weird (the second half is already packetized
+input from a remote anyway). So it's probably not worth caring about
+hackability here.
+
+-Peff
