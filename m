@@ -1,64 +1,89 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] rebase -i: inform the user they can re-order commits
-Date: Wed, 21 Mar 2012 10:45:37 -0000
-Organization: OPDS
-Message-ID: <4ED2974882CF442CB1A79A12057F94EE@PhilipOakley>
-References: <4F63205A.6000202@seap.minhap.es> <vpqlin0n8w5.fsf@bauges.imag.fr><7vty1oivub.fsf@alter.siamese.dyndns.org><4F63571D.4070405@seap.minhap.es> <vpqaa3geiso.fsf@bauges.imag.fr><7vpqccipuv.fsf@alter.siamese.dyndns.org><7vlin0ip9l.fsf@alter.siamese.dyndns.org><7vobrq50su.fsf@alter.siamese.dyndns.org> <vpq7gyee4x7.fsf@bauges.imag.fr>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+Subject: Re: Strange effect merging empty file
+Date: Wed, 21 Mar 2012 11:54:45 +0100
+Message-ID: <4F69B375.5050205@in.waw.pl>
+References: <4F69AD3C.4070203@ericsson.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>,
-	"Nelson Benitez Leon" <nelsonjesus.benitez@seap.minhap.es>
-To: "Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>,
-	"Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 21 11:45:28 2012
+Cc: git@vger.kernel.org
+To: Ralf Nyren <ralf.nyren@ericsson.com>
+X-From: git-owner@vger.kernel.org Wed Mar 21 11:55:00 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAJ2j-00005e-JX
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 11:45:25 +0100
+	id 1SAJBz-0006PB-Jr
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 11:54:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758280Ab2CUKpU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Mar 2012 06:45:20 -0400
-Received: from smtp2go.com ([207.58.142.213]:39238 "EHLO smtp2go.com"
+	id S1758430Ab2CUKyx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Mar 2012 06:54:53 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:56014 "EHLO kawka.in.waw.pl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758237Ab2CUKpT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2012 06:45:19 -0400
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752980Ab2CUKyw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2012 06:54:52 -0400
+Received: from optyk25.fuw.edu.pl ([193.0.81.79])
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1SAJBr-00009m-3p; Wed, 21 Mar 2012 11:54:51 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20120104 Icedove/8.0
+In-Reply-To: <4F69AD3C.4070203@ericsson.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193566>
 
-From: "Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr> Sent: Wednesday, March 
-21, 2012 8:25 AM
-> Junio C Hamano <gitster@pobox.com> writes:
+On 03/21/2012 11:28 AM, Ralf Nyren wrote:
+> Hi,
 >
->> --- a/git-rebase--interactive.sh
->> +++ b/git-rebase--interactive.sh
->> @@ -846,6 +846,8 @@ cat >> "$todo" << EOF
->>  #  f, fixup = like "squash", but discard this commit's log message
->>  #  x, exec = run command (the rest of the line) using shell
->>  #
->> +# These lines can be re-ordered; they are executed from top to bottom.
->> +#
+> I found a "strange effect" when merging from a branch containing a
+> change of a previously empty file. The change is added to another empty
+> file in the current branch by the merge.
 >
-> Great, it says everything that needs to be said, in just a line!
+> I guess git sees it as a renamed file which is logical from a
+> content-perspective.
 >
-> -- 
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
-> --
+> Not sure what to do with this, I would not say it is a bug really...
+It does seem like a bug. An unrelated file is clobbered.
 
-I agree. It says all that needs to be made clear.
-Philip Oakley 
+> Reproduce as follows (should be cut-n-paste friendly):
+Here's a slightly simplified version that is actually cut-n-paste 
+friendly after recent changes to always edit merge comments...
+
+# Start with a new repository
+git init
+echo Readme file >README
+git add README
+git commit -m 'Initial commit'
+
+# Setup the branch to be merged
+git checkout -b import
+touch empty.txt
+echo hello world >hello.txt
+git add empty.txt hello.txt
+git commit -m 'Import 1.0'
+echo This file is no longer empty >empty.txt
+git commit -m 'Import 1.1' empty.txt
+
+# Setup master branch
+git checkout master
+touch .gitignore
+git add .gitignore
+git commit -m 'Static web content'
+
+# Merge import 1.0 and remove the empty file
+git merge  --no-edit import^
+git rm empty.txt
+git commit -m 'Remove empty file'
+
+# Merge import 1.1 and watch empty.txt contents show up in .gitignore
+git merge --no-edit import
+cat .gitignore
+
+
+Regards,
+Zbyszek
