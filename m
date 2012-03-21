@@ -1,46 +1,155 @@
-From: =?UTF-8?B?QW5kcsOpIFdhbGtlcg==?= <andre@andrewalker.net>
-Subject: Re: majordomo subscription woes
-Date: Wed, 21 Mar 2012 11:36:40 -0300
-Message-ID: <4F69E778.4000104@andrewalker.net>
-References: <001636c5c21b02c35904bba0ff9a@google.com> <201203201637.10417.jnareb@gmail.com> <7v62dz6v5c.fsf@alter.siamese.dyndns.org> <201203201844.55155.jnareb@gmail.com> <20120320175422.GA20669@sigill.intra.peff.net> <4F68C5E4.3050306@andrewalker.net> <20120320181857.GA20804@sigill.intra.peff.net> <4F68CBC4.1010507@andrewalker.net> <20120320183246.GA21429@sigill.intra.peff.net>
+From: "W. Trevor King" <wking@drexel.edu>
+Subject: Re: [PATCH v3] Isolate If-Modified-Since handling in gitweb
+Date: Wed, 21 Mar 2012 10:04:30 -0400
+Message-ID: <20120321140429.GA28721@odin.tremily.us>
+References: <m3sjh2ay6j.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 21 15:37:01 2012
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary=45Z9DzgjV8m4Oswq
+To: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 21 16:15:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAMeo-0000FO-7C
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 15:36:58 +0100
+	id 1SANFu-0002yu-BM
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 16:15:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030885Ab2CUOgt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Mar 2012 10:36:49 -0400
-Received: from oproxy1-pub.bluehost.com ([66.147.249.253]:59895 "HELO
-	oproxy1-pub.bluehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1030462Ab2CUOgr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2012 10:36:47 -0400
-Received: (qmail 23204 invoked by uid 0); 21 Mar 2012 14:36:46 -0000
-Received: from unknown (HELO host245.hostmonster.com) (74.220.215.245)
-  by oproxy1.bluehost.com with SMTP; 21 Mar 2012 14:36:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=andrewalker.net; s=default;
-	h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References:Subject:CC:To:MIME-Version:From:Date:Message-ID; bh=z8VJdY66cGaGbn0kXA/coz31A6TFtxt7V3mfSo9J6d4=;
-	b=XvsVzlq0YL6p5SVHtUFBiSv1e8jc7AHeTfaVyloGr1myq8W661c2VTSWnusoGwGbRUG1W3jB3s1MiGr7S8H46C6KYRIn8Rp5iqWB4f+sk+S5klHGqbcc9V1klq0mgEFi;
-Received: from [189.79.221.163] (helo=[192.168.2.103])
-	by host245.hostmonster.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.76)
-	(envelope-from <andre@andrewalker.net>)
-	id 1SAMeb-0001Pz-JO; Wed, 21 Mar 2012 08:36:45 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.1) Gecko/20120209 Thunderbird/10.0.1
-In-Reply-To: <20120320183246.GA21429@sigill.intra.peff.net>
-X-Identified-User: {2744:host245.hostmonster.com:picloadc:andrewalker.net} {sentby:smtp auth 189.79.221.163 authed with andre@andrewalker.net}
+	id S1757624Ab2CUPPN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Mar 2012 11:15:13 -0400
+Received: from vms173017pub.verizon.net ([206.46.173.17]:57834 "EHLO
+	vms173017pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757568Ab2CUPPL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2012 11:15:11 -0400
+Received: from odin.tremily.us ([unknown] [72.68.85.198])
+ by vms173017.mailsrvcs.net
+ (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
+ with ESMTPA id <0M1800FY2OSL0E50@vms173017.mailsrvcs.net> for
+ git@vger.kernel.org; Wed, 21 Mar 2012 09:42:48 -0500 (CDT)
+Received: by odin.tremily.us (Postfix, from userid 1000)	id 7B537427A40; Wed,
+ 21 Mar 2012 10:04:31 -0400 (EDT)
+Content-disposition: inline
+In-reply-to: <m3sjh2ay6j.fsf@localhost.localdomain>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193582>
 
-Attempt #3 failed again =(
+
+--45Z9DzgjV8m4Oswq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Mar 21, 2012 at 06:19:51AM -0700, Jakub Narebski wrote:
+> By the way, it is custom on this mailing list to usually Cc (send a
+> copy) to all people participating in discussion, and not only to git
+> mailing list.
+
+Ah, sorry.  I figured that if you got the original email to the list,
+I'd just be doubling up in your inbox by Cc-ing you directly.
+
+> Though trouble with coming up with a short but fairly complete
+> one-line summary might mean that this patch would be better split in
+> two: refactoring and adding support for If-Modified-Since to
+> snapshots.
+
+Agreed.
+
+> >                                  where it is appropriate
+>                                    ^^^^^^^^^^^^^^^^^^^^^^^
+> This doesn't add any information.  I think it the commit message would
+> be better if you either remove this, or expand (in a separate
+> paragraph) where support for If-Modified-Since might make sense, and
+> where it could not.
+
+I'll expand it in the refactoring patch.
+
+> BTW. what happened to diffstat?
+
+My local branch has sequential commits for each patch version (e.g.,
+commits for v1, v2, ...).  When it's time to email the list, I'm
+supposed to send logical patches against the trunk (e.g., patches for
+refactoring, git_snapshot, ...).  For v2 I just used `git diff
+origin/master` to generate the patch, and it doesn't include the
+diffstat.  Now that I'm splitting into two patches, I'll probably use
+`git rebase -i origin/master` and just keep track of the changes by
+hand ;).  If there's a better way that I'm overlooking, feel free to
+point me in the right direction.
+
+> Tests (to be put, I think, in t/t9501-gitweb-standalone-http-status.sh)?
+> We could use test_tick() and $test_tick for that (or extract formatted
+> committer date from a commit).
+
+I'll try to set that up.  Should it be bundled into the git_snapshot
+patch, or should there be three patches:
+
+1: gitweb: Refactor If-Modified-Since handling
+2: gitweb: Add If-Modified-Since tests for git_snapshot
+3: gitweb: Add If-Modified-Since support for git_snapshot
+
+> > @@ -7029,6 +7051,10 @@ sub git_snapshot {
+> > =20
+> >  	my ($name, $prefix) =3D snapshot_name($project, $hash);
+> >  	my $filename =3D "$name$known_snapshot_formats{$format}{'suffix'}";
+> > +
+> > +	my %co =3D parse_commit($hash) or die_error(404, "Unknown commit obje=
+ct");
+> > +	die_if_unmodified($co{'committer_epoch'});
+> > +
+>=20
+> That unexplainably changes behavior of 'snapshot' action.  Before we
+> would accept snapshot of a tree given by its SHA-1, now we do not.
+>=20
+> This might be a good idea from a security point of view wrt. leaking
+> information (c.f. "git archive --remote" behavior), but it at least
+> needs to be explained in commit message, and perhaps even in a comment
+> above this line.
+>=20
+> Alternative solution would be to skip If-Modified-Since handling if we
+> request snapshot by tree id:
+>=20
+>   +
+>   +	my %co =3D parse_commit($hash);
+>   +	die_if_unmodified($co{'committer_epoch'}) if %co;
+>   +
+
+I'm still not understanding the problem here.  The following all work
+in my testing:
+
+  http://.../gitweb.cgi?p=3Da/.git;a=3Dsnapshot;h=3D1d545cab4a8dc894fae2c26=
+34a74993ea62b054d;sf=3Dtgz
+  http://.../gitweb.cgi?p=3Da/.git;a=3Dsnapshot;h=3D1d5;sf=3Dtgz
+  http://.../gitweb.cgi?p=3Da/.git;a=3Dsnapshot;h=3DHEAD;sf=3Dtgz
+
+Can you give me an example of a hash that you expect to not work?
+
+Cheers,
+Trevor
+
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+--45Z9DzgjV8m4Oswq
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.17 (GNU/Linux)
+
+iQEcBAEBAgAGBQJPad/sAAoJEPe7CdOcrcTZVSoH/2u8tKts0Wis537ts3NJWbuB
+0Xg7zXD6eNV5vNj6PhRKnqq8gMcJ2vSzOpqx6T4JsbJRwniVTKSgChR3QSU2P6jR
+zo2QOcJd6HC5ycUTlfEHadwkpKdKHC1+ClZ5jaQTgSH+AI9fZPtWxjyXemdvjSGr
+c/E2MGyJgPmTrSZhOsuC+zwxcROYK/p1HWwy+fCPKSiFyQpYmHe5KtFX+MebcaUG
+N8ASxEYpIs8z4NEndC06saO4IWPaF77g2WVI1rWcNaqgh9uYwNNlIQW++CFHOcgD
+Ky9xoppVmi00iYqJbnRC/WjOJQZxv6uYH1aWKwkC6CIce0G69EQXSLm9u2v990Y=
+=cnBA
+-----END PGP SIGNATURE-----
+
+--45Z9DzgjV8m4Oswq--
