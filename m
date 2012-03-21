@@ -1,86 +1,74 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] Isolate If-Modified-Since handling in gitweb
-Date: Wed, 21 Mar 2012 13:09:24 -0700
-Message-ID: <7viphx1zt7.fsf@alter.siamese.dyndns.org>
-References: <20120321140429.GA28721@odin.tremily.us>
- <7vmx7921yz.fsf@alter.siamese.dyndns.org>
- <20120321195520.GB32535@odin.tremily.us>
- <201203212104.23192.jnareb@gmail.com>
+Subject: Re: [PATCH v3 10/9] difftool: do not allow mix of '--prompt' with
+ '--no-prompt'
+Date: Wed, 21 Mar 2012 13:14:19 -0700
+Message-ID: <7vehsl1zl0.fsf@alter.siamese.dyndns.org>
+References: <1332358560-13774-1-git-send-email-tim.henigan@gmail.com>
+ <1332358560-13774-4-git-send-email-tim.henigan@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "W. Trevor King" <wking@drexel.edu>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 21 21:09:40 2012
+Cc: git@vger.kernel.org, davvid@gmail.com
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 21 21:14:33 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SARqh-0008SL-Q6
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 21:09:36 +0100
+	id 1SARvT-0003iM-EP
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 21:14:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758144Ab2CUUJ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Mar 2012 16:09:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47852 "EHLO
+	id S1759010Ab2CUUOZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Mar 2012 16:14:25 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50566 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756946Ab2CUUJ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2012 16:09:27 -0400
+	id S1758439Ab2CUUOY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2012 16:14:24 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D20F36AD3;
-	Wed, 21 Mar 2012 16:09:26 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5602A6C7D;
+	Wed, 21 Mar 2012 16:14:24 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=td9dbVRcPSBveFRi8rQzMqec7Jw=; b=KDOn2U
-	vj0SizP76DFjAwORuVuvoFDmllb9Fr2PBiXg9bjUCJ4BCp+PrRKTaPkvwUBCfje4
-	vdwbZF4DPoMhCbNCdaQKzlDB73EwFkK6SRAVjS3rBN4ml7FyeNN8/7ObRtCIDoQA
-	J71/iFNj+HFswzIAVi4u9fRKlw3Z0liICP2FQ=
+	:content-type; s=sasl; bh=aYWND8WXMXnuiSBvJTUhQJoy6Kg=; b=RI2SUr
+	+Yk8DAEU3mC1F+A5QunRMzSgr4K1el9wtK1N8TnPnMTXbYHd/tmrMwoMOp5b262X
+	YhJwn1eirrdi0BIntQGxQoIWDL/DnSgddPTUTgEAuVaiSWBCeseXSZlD6iORotis
+	l7BlIy+YIGHvvMmr9F8rmyPe5VkWAO6z1u7xA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uQdxYIEKxE63S6bxrmSmv2d+T5roMv6g
-	z72v7eNQhF7Xb18jwUgD5VnZwJlYWK71OTr49yNIh261vlR4WC3bD/OWNfNI1nmt
-	g6Jcmwj6QlnSdYvk6DGakOBy4/dwrQgqTNwGTCjKEQQlPDIKBB7gY8vJYehbBvMG
-	sLO+yMqlByg=
+	:content-type; q=dns; s=sasl; b=BT1ZkrY0bOsyMhRSYIvWd/Lms5S8kCpr
+	7el8ihqvsAN55C2RbNJ2lrmjP4xog057B2wIe3DV6HvfYzbAJBC8P+jM5qzECkUm
+	IgZBffRiOcjCEc4mNPZaRQDy3K30UAeP0W8KwpJxnCZsEO0fmd6mw0IRm37q2ecQ
+	5slkf2J6opA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C8B0A6AD2;
-	Wed, 21 Mar 2012 16:09:26 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F19EB6C7C;
+	Wed, 21 Mar 2012 16:14:23 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 30B0B6AD0; Wed, 21 Mar 2012
- 16:09:26 -0400 (EDT)
-In-Reply-To: <201203212104.23192.jnareb@gmail.com> (Jakub Narebski's message
- of "Wed, 21 Mar 2012 21:04:22 +0100")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 911826C7B; Wed, 21 Mar 2012
+ 16:14:22 -0400 (EDT)
+In-Reply-To: <1332358560-13774-4-git-send-email-tim.henigan@gmail.com> (Tim
+ Henigan's message of "Wed, 21 Mar 2012 15:35:58 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C21F4802-7391-11E1-A7CE-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 72C9B66A-7392-11E1-AF43-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193611>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Tim Henigan <tim.henigan@gmail.com> writes:
 
->> 1: tests for i-m-s and git_feed
->> 2: refactor i-m-s handling
+> When difftool was changed to use Getopt::Long, it changed the way that
+> the '--prompt' and '--no-prompt' options are handled. Prior to the change,
+> if both options were given, then the last option was used.  After the
+> change, if both were given, then '--prompt' was always used.
 >
-> Those two can be in single commit.  Tests added need only test i-m-s
-> using git_feed ('atom' or 'rss' action), as it is the only user,
-> and you touch only i-m-s handling.
+> This commit teaches difftool to exit with an error if both options are
+> given at the command line. t7800 was updated to match.
 
-Correct.
+Hrm, people with "[alias] mdt = difftool --prompt" have every right to
+expect their
 
->> 3: tests for i-m-s and git_snapshot (which fail until 4)
->> 4: add i-m-s to git_snapshot
->
-> We usually put tests together with feature.  Tests before feature means
-> that you would need to mark them as test_expect_failure, as they would
-> not pass before feature is added, isn't it?
+	$ git mdt --no-prompt
 
-Correct.
-
-In a more elaborate series, you would first add a lot of tests to nail the
-behaviour of the existing code down, then refactor or reimplement them in
-a different way, add tests that expect failure until the next phase, and
-then add features and turn expect_failure in tests to expect_success.
-
-But I do not htink this single patch deserves that complexity.  Does it
-even have to split into three?
+to keep working, no?
