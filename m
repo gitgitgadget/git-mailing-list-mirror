@@ -1,89 +1,71 @@
-From: greened@obbligato.org
-Subject: New git-subtree almost ready
-Date: Tue, 20 Mar 2012 22:36:25 -0500
-Message-ID: <87limu7hhi.fsf@smith.obbligato.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] rebase -i: inform the user they can re-order commits
+Date: Wed, 21 Mar 2012 09:25:56 +0100
+Message-ID: <vpq7gyee4x7.fsf@bauges.imag.fr>
+References: <4F63205A.6000202@seap.minhap.es> <vpqlin0n8w5.fsf@bauges.imag.fr>
+	<7vty1oivub.fsf@alter.siamese.dyndns.org>
+	<4F63571D.4070405@seap.minhap.es> <vpqaa3geiso.fsf@bauges.imag.fr>
+	<7vpqccipuv.fsf@alter.siamese.dyndns.org>
+	<7vlin0ip9l.fsf@alter.siamese.dyndns.org>
+	<7vobrq50su.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 21 04:39:56 2012
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 21 09:26:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SACOy-0004Bh-E1
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 04:39:56 +0100
+	id 1SAGs6-0000bd-2W
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 09:26:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756617Ab2CUDju (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Mar 2012 23:39:50 -0400
-Received: from li209-253.members.linode.com ([173.255.199.253]:34537 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754289Ab2CUDjt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2012 23:39:49 -0400
-Received: from c-75-73-20-8.hsd1.mn.comcast.net ([75.73.20.8] helo=smith.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.77)
-	(envelope-from <greened@obbligato.org>)
-	id 1SA8fG-0002h8-QH
-	for git@vger.kernel.org; Tue, 20 Mar 2012 18:40:31 -0500
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org", has
- identified this incoming email as possible spam.  The original message
- has been attached to this so you can view it (if it isn't spam) or label
- similar future email.  If you have any questions, see
- @@CONTACT_ADDRESS@@ for details.
- Content preview:  I've got the git-subtree merge in pretty good shape now. After
-    being taught about TEST_DIRECTORY, I've been able to get rid of all of the
-    test system changes and can run the git-subtree tests using the stock test
-    infrastructure. [...] 
- Content analysis details:   (1.4 points, 5.0 required)
-  pts rule name              description
- ---- ---------------------- --------------------------------------------------
- -1.0 ALL_TRUSTED            Passed through trusted hosts only via SMTP
-  2.4 DATE_IN_FUTURE_03_06   Date: is 3 to 6 hours  
+	id S1752932Ab2CUI0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Mar 2012 04:26:10 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:50641 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752301Ab2CUI0G (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2012 04:26:06 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q2L8LAZQ009376
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 21 Mar 2012 09:21:10 +0100
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1SAGrk-0007B3-VJ; Wed, 21 Mar 2012 09:25:57 +0100
+In-Reply-To: <7vobrq50su.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 20 Mar 2012 16:07:29 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 21 Mar 2012 09:21:11 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: q2L8LAZQ009376
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1332922871.70581@3jTirf1nbN3lXXQ/dzb0zw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193560>
 
-I've got the git-subtree merge in pretty good shape now.  After being
-taught about TEST_DIRECTORY, I've been able to get rid of all of the
-test system changes and can run the git-subtree tests using the stock
-test infrastructure.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Before I can put the new tree up I need a little help.  Since it's been
-a while since I posted the last version of the tree, I tried to update
-from upstream master.  git-subtree is in a separate branch (it wqas
-applied as a subtree merge) so I did the usual switch-to-master-and-pull
-thing.
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -846,6 +846,8 @@ cat >> "$todo" << EOF
+>  #  f, fixup = like "squash", but discard this commit's log message
+>  #  x, exec = run command (the rest of the line) using shell
+>  #
+> +# These lines can be re-ordered; they are executed from top to bottom.
+> +#
 
-However, now I don't know how to rebase from master to the subtree
-branch.  If I do a "git rebase master" then the subtree merge gets
-re-applied as if the files were placed in the root directory rather than
-in the target directory of the original subtree merge.
+Great, it says everything that needs to be said, in just a line!
 
-The problem is described pretty well here and the issue has been covered
-on the mailing list before:
-
-http://groups.google.com/group/git-users/browse_thread/thread/d54bacd234d95639
-http://comments.gmane.org/gmane.comp.version-control.git/191934
-
-I can think of a few strategies to move forward.
-
-1. Keep the git-subtree branch where it is.  Don't rebase and just push
-   the branch to a public repository.  Make Junio do the hard work.  :)
-
-2. Split the subtree merge, remove it from the git repository, rebase
-   from master and then re-subtree-merge it.
-
-3. Don't do a rebase, just do a regular merge from master.
-
-Which of these would be best to integrate git-subtree into
-Junio's repository?
-
-git-web guys, how did you handle this situation?
-
-Thanks!
-
-                           -David
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
