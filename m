@@ -1,72 +1,95 @@
-From: Ivan Todoroski <grnch_lists@gmx.net>
-Subject: Re: Clone fails on a repo with too many heads/tags
-Date: Wed, 21 Mar 2012 21:02:13 +0100
-Message-ID: <4F6A33C5.2080909@gmx.net>
-References: <loom.20120318T083216-96@post.gmane.org> <m3fwd550j3.fsf@localhost.localdomain> <20120318190659.GA24829@sigill.intra.peff.net> <CACsJy8BNT-dY+wDONY_TgLnv0135RZ-47BEVMzX6c3ddH=83Zw@mail.gmail.com> <20120319024436.GB10426@sigill.intra.peff.net> <4F69B5F0.2060605@gmx.net> <CAJo=hJu0H5wfXB_y5XQ6=S0VJ9t4pxHWkuy_=rehJL_6psf00g@mail.gmail.com> <20120321171423.GA13140@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v3] Isolate If-Modified-Since handling in gitweb
+Date: Wed, 21 Mar 2012 21:04:22 +0100
+Message-ID: <201203212104.23192.jnareb@gmail.com>
+References: <20120321140429.GA28721@odin.tremily.us> <7vmx7921yz.fsf@alter.siamese.dyndns.org> <20120321195520.GB32535@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 21 21:02:21 2012
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "W. Trevor King" <wking@drexel.edu>
+X-From: git-owner@vger.kernel.org Wed Mar 21 21:04:35 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SARjg-0003Ge-SS
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 21:02:21 +0100
+	id 1SARll-0004n2-Nv
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 21:04:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758108Ab2CUUCK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Mar 2012 16:02:10 -0400
-Received: from mailout-de.gmx.net ([213.165.64.22]:49482 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1757250Ab2CUUCI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2012 16:02:08 -0400
-Received: (qmail invoked by alias); 21 Mar 2012 20:02:06 -0000
-Received: from unknown (EHLO [127.0.0.1]) [77.28.163.209]
-  by mail.gmx.net (mp032) with SMTP; 21 Mar 2012 21:02:06 +0100
-X-Authenticated: #14478976
-X-Provags-ID: V01U2FsdGVkX1/gHg9vNUXgDn6ptXlzUBwRfStthkycOhDIyXyQ44
-	2LmIbbNEE/5C89
-User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
-In-Reply-To: <20120321171423.GA13140@sigill.intra.peff.net>
-X-Y-GMX-Trusted: 0
+	id S1757434Ab2CUUEZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Mar 2012 16:04:25 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:41385 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756977Ab2CUUEY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2012 16:04:24 -0400
+Received: by wejx9 with SMTP id x9so1254430wej.19
+        for <git@vger.kernel.org>; Wed, 21 Mar 2012 13:04:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=Vofbyh80/Zd5Pj+S1GOaPxK1J2lanwPXqUZ4yCKL2BM=;
+        b=oKfjM3Yc0s2q4DK48xFwqOzmzWkTXgkJr+WKoC/wdvpLX3yOHxRdP5XKxbhEQ0Mncu
+         ikOJlPponCnWhiOnvxpty4n+57ZiIbX7Za+H3X9NwXOYZbJJ85xp+yXE7icQkjfxjmwi
+         YLYC8OmWxQyckpXTBi2uMIeVC0eMLH8FtYzkLEv2tv5Z8EmKPinHdHCp1cqe1X66QhEy
+         Ar7kvdSRpLotRX7zh2JQHcSpjObtwc+/3sdbvO2nFyYO1MrSNAATrueLHFHl92UtTmGa
+         cyqAyV+EWCWz6+SJLKbOWgPY8HNNEym3onOdL0KEp/YlN+akNMsQJ1bJBUVg/gvSJKNb
+         fJ9Q==
+Received: by 10.180.72.212 with SMTP id f20mr37744022wiv.15.1332360263311;
+        Wed, 21 Mar 2012 13:04:23 -0700 (PDT)
+Received: from [192.168.1.13] (abvy85.neoplus.adsl.tpnet.pl. [83.8.222.85])
+        by mx.google.com with ESMTPS id bx13sm7012054wib.10.2012.03.21.13.04.22
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 21 Mar 2012 13:04:22 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20120321195520.GB32535@odin.tremily.us>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193609>
 
-On 21.03.2012 18:14, Jeff King wrote:
-> On Wed, Mar 21, 2012 at 07:28:24AM -0700, Shawn O. Pearce wrote:
+W. Trevor King wrote:
+> On Wed, Mar 21, 2012 at 12:22:44PM -0700, Junio C Hamano wrote:
+> > "W. Trevor King" <wking@drexel.edu> writes:
+
+> > > > I think it would be better to add initial tests with refactoring, and
+> > > > snapshot specific tests with snapshot support, e.g.:
+> > > > 
+> > > >   1/2: gitweb: Refactor If-Modified-Since handling and add tests
+> > > >   2/2: gitweb: Add If-Modified-Since support for snapshots
+> > >
+> > > But the new tests would be for the new functionality (i.e. snapshot
+> > > support), so they wouldn't belong in the general refactoring commit.
+> > 
+> > Then you are planning to split it in a wrong way.
+> > 
+> > ... add tests for codepaths that use i-m-s to make sure your
+> > refactoring did not break them...
 > 
->>> Would it be OK for fetch-pack.c to use the packetized format (pkt-line.h)
->>> for reading the list of refs from stdin?
->> This is probably the easiest way to implement the sneak-into-stdin
->> patch. Use a pkt-line for each argument that should have been in the
->> argv array from the command line, and a flush pkt to terminate the
->> list.
+> Ah, I was assuming that some current tests might be checking the
+> current behavior, and that my new tests would be testing my new
+> snapshot behavior.  If the old i-m-s handling also needs tests, that
+> should happen before any of my previously proposed patches:
 > 
-> Something in me feels slightly uncomfortable with that, just because
-> simple newline-delimited formats make it easy for people to hack on the
-> tool and feed input from unexpected sources.
+> 1: tests for i-m-s and git_feed
+> 2: refactor i-m-s handling
 
-I understand what you mean. How about this:
+Those two can be in single commit.  Tests added need only test i-m-s
+using git_feed ('atom' or 'rss' action), as it is the only user,
+and you touch only i-m-s handling.
 
-If both --stdin and --stateless-rpc are specified to fetch-pack, it will 
-use pkt-line to read the refs from stdin before handing off stdin to 
-get_remote_heads().
+> 3: tests for i-m-s and git_snapshot (which fail until 4)
+> 4: add i-m-s to git_snapshot
 
-However, if only --stdin is specified, it will read refs from stdin in a 
-script-friendly newline delimited format, one ref per line. This is okay 
-because when --stateless-rpc is not specified get_remote_heads() reads 
-from an fd different from stdin so there is no issue with residual 
-buffers in this case.
+We usually put tests together with feature.  Tests before feature means
+that you would need to mark them as test_expect_failure, as they would
+not pass before feature is added, isn't it?
 
-This way you preserve scriptability for any other callers who don't use 
---stateless-rpc.
-
-How does this sound?
+-- 
+Jakub Narebski
+Poland
