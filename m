@@ -1,91 +1,97 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] Isolate If-Modified-Since handling in gitweb
-Date: Wed, 21 Mar 2012 10:21:25 -0700
-Message-ID: <7v1uol3m5m.fsf@alter.siamese.dyndns.org>
-References: <7v62dy4zhf.fsf@alter.siamese.dyndns.org>
- <20120321121126.GA27660@odin.tremily.us>
- <m3sjh2ay6j.fsf@localhost.localdomain>
+Subject: Summary of discussion on "git push" default change
+Date: Wed, 21 Mar 2012 10:54:05 -0700
+Message-ID: <7vr4wl262q.fsf@alter.siamese.dyndns.org>
+References: <7v7gyjersg.fsf@alter.siamese.dyndns.org>
+ <7vty1ndcoi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "W. Trevor King" <wking@drexel.edu>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 21 18:21:34 2012
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 21 18:54:17 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAPE6-0006sO-6x
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 18:21:34 +0100
+	id 1SAPjk-0006xf-82
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 18:54:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753367Ab2CURV3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Mar 2012 13:21:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44239 "EHLO
+	id S1752863Ab2CURyK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Mar 2012 13:54:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57167 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751112Ab2CURV2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2012 13:21:28 -0400
+	id S1752152Ab2CURyI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2012 13:54:08 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D3C486F7D;
-	Wed, 21 Mar 2012 13:21:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WyhV65q9lHX33tJtiLv3rVLoXYI=; b=pWy3Gs
-	+3klZ7FwJYqJeJfDRh5rSyhZGs1rXTuT4O2/YVd5mgNQoURgHWOmSbaXUM3JU4M+
-	IklGtdu013BFOAEyOV/hWG0IxWj0rX7iCjZawy5vsubhBw+jY2BJkOvtQxXUXz4A
-	4gIRmv+y4YTbPNge06qwqxsZ7Kcb+eKPwfjjs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Lm2oft0seKlZWD6cW6hKJJUEG32YjuMC
-	Q2qpsAkZzqJgO17G2EaoaslTYZEET9ct5qzH4qbwp1TIkhDQDNkpyCTqA4Ze49yx
-	FacGWhzvf0CDQMNGcxODpviUVuVPSLV3sINRomce/V3bG3MbjmOeDSkNTSBbS2yK
-	YTGRGxgwrjk=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 05331772D;
+	Wed, 21 Mar 2012 13:54:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=DhcIxmKdMpe3k/Giso1PimK6n/E=; b=qQ7DMlrts/HYCOSsE2r8
+	LP1zL51HQy+jR86UkFKmFEfyUxCyLa50xh81509Wt6ldz6JcN5Sh2fnTJDp++yeN
+	XxOWDQtHTc+sNvf4SMIoc1N6bkuLpjvPLXCjxmfdUCXEDuJ6g0RESM82qygknB2r
+	jc81PlVN5jf0d5nShoKqdOA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:references:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=hy/Q0hs5ASTKto++DQ3GAhxfHzDt64WuOfs41c766lPBPqp20tokZIuO
+	bpi9VDyfq8RPWVazsEPjPPIE6k74XaULzVk1H2L2N3cXCD5Uc+57B/4HBveM/+Je
+	RQQv9uGv2vfRTzHk8m52cUQa2fSSk+rZsr0trbS60L4IRh4f7ds=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CBC506F7C;
-	Wed, 21 Mar 2012 13:21:27 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F196C772C;
+	Wed, 21 Mar 2012 13:54:07 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5B4DD6F7B; Wed, 21 Mar 2012
- 13:21:27 -0400 (EDT)
-In-Reply-To: <m3sjh2ay6j.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Wed, 21 Mar 2012 06:19:51 -0700 (PDT)")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 544B07728; Wed, 21 Mar 2012
+ 13:54:07 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4AAC8D32-737A-11E1-942E-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: DAE88E9C-737E-11E1-9D4D-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193592>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+By now it should be obvious that most people would prefer to see the
+default behaviour for 'git push' to be something other than matching, even
+if you did not read each and every "me too" message.
 
-> By the way, it is custom on this mailing list to usually Cc (send a
-> copy) to all people participating in discussion, and not only to git
-> mailing list.
->
-> "W. Trevor King" <wking@drexel.edu> writes:
->
->> Subject: [PATCH v3] Isolate If-Modified-Since handling in gitweb
->
-> Perhaps a better title would be:
->
->   gitweb: Refactor If-Modified-Since handling, support in snapshot
+Actually, we've known it from the beginning. Otherwise, we wouldn't have
+made noises about it in the first place ;-).  It was not the primary
+objective of the discussion thread to decide if we are going to switch
+away from 'matching' by voting (waking up those who are sleeping, so that
+they do not have to be surprised with "I didn't know that was happening!"
+was).
 
-With "gitweb: " prefix to denote what area it affects, that is certainly
-better.  Given the primary objective and effect is that the snapshot
-feature starts honoring i-m-s,
+The new default we are switching to is not about how many people prefer it
+for their own use. It is about what default is the least confusing to the
+new users.  A default whose behaviour is easy to explain, easy to follow
+and easy to understand is the goal. Once people understand what they want
+and realize they fall into a minority, it is easy for them to configure
+their push.default to something else, like 'matching'. And 'matching' was
+a bad default for that purpose; it was the hardest to explain and
+understand in the context of the workflows of many new people.
 
-	gitweb: honor If-Modified-Since request header in snapshot
+Many people said that they like 'upstream' solely based on their personal
+preference, but a few people did justify their preference of 'upstream'
+over 'current' based on their experience in teaching new people and
+observing the sharp edges that hurt them. And they all sounded reasonable.
 
-would be sufficient.
+In order to show how the world after phase #2 of the transition [*1*]
+would look like to developers, testers and early adopters, I am planning
+merge Matthieu's patch mm/push-default-switch-warning topic [*2*] to
+'next', together with Christopher's ct/advise-push-default topic [*3*];
+hopefully these topics can be merged to 'master' soon after 1.7.10 final.
 
-> to mention all that thispatch does.  Though trouble with coming up
-> with a short but fairly complete one-line summary might mean that this
-> patch would be better split in two: refactoring and adding support for
-> If-Modified-Since to snapshots.
+Thanks.
 
-If many existing callsites had duplicated code to handle i-m-s, we may
-want two patch series, the first of which consolidates them into a single
-helper function without changing anything else (most importantly, without
-regression) and the second that uses the helper to add support in the
-snapshot feature.  But if that is not the case, I think we can go either
-way.
+To people who helped spreading the initial RFD message: please do feel
+free to distribute this message to the same channels, too.
+
+
+[References]
+
+*1* http://article.gmane.org/gmane.comp.version-control.git/193308
+
+*2* https://github.com/gitster/git/commit/5293b54
+
+*3* https://github.com/gitster/git/commit/f25950f
