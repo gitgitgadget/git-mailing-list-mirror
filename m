@@ -1,89 +1,69 @@
-From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>
-Subject: Re: Strange effect merging empty file
-Date: Wed, 21 Mar 2012 11:54:45 +0100
-Message-ID: <4F69B375.5050205@in.waw.pl>
-References: <4F69AD3C.4070203@ericsson.com>
+From: Ivan Todoroski <grnch_lists@gmx.net>
+Subject: Re: Clone fails on a repo with too many heads/tags
+Date: Wed, 21 Mar 2012 12:05:20 +0100
+Message-ID: <4F69B5F0.2060605@gmx.net>
+References: <loom.20120318T083216-96@post.gmane.org> <m3fwd550j3.fsf@localhost.localdomain> <20120318190659.GA24829@sigill.intra.peff.net> <CACsJy8BNT-dY+wDONY_TgLnv0135RZ-47BEVMzX6c3ddH=83Zw@mail.gmail.com> <20120319024436.GB10426@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Ralf Nyren <ralf.nyren@ericsson.com>
-X-From: git-owner@vger.kernel.org Wed Mar 21 11:55:00 2012
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 21 12:05:25 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAJBz-0006PB-Jr
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 11:54:59 +0100
+	id 1SAJM5-0005f1-8o
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 12:05:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758430Ab2CUKyx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Mar 2012 06:54:53 -0400
-Received: from kawka.in.waw.pl ([178.63.212.103]:56014 "EHLO kawka.in.waw.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752980Ab2CUKyw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2012 06:54:52 -0400
-Received: from optyk25.fuw.edu.pl ([193.0.81.79])
-	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1SAJBr-00009m-3p; Wed, 21 Mar 2012 11:54:51 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20120104 Icedove/8.0
-In-Reply-To: <4F69AD3C.4070203@ericsson.com>
+	id S1030843Ab2CULFS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Mar 2012 07:05:18 -0400
+Received: from mailout-de.gmx.net ([213.165.64.22]:49045 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1030814Ab2CULFQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2012 07:05:16 -0400
+Received: (qmail invoked by alias); 21 Mar 2012 11:05:14 -0000
+Received: from unknown (EHLO [127.0.0.1]) [77.28.161.153]
+  by mail.gmx.net (mp028) with SMTP; 21 Mar 2012 12:05:14 +0100
+X-Authenticated: #14478976
+X-Provags-ID: V01U2FsdGVkX1+b6b4mUZ6bQVLTmhMBJ7te4Xc3LNx0FY0/Jkak95
+	TAjIgjvcRCEElR
+User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
+In-Reply-To: <20120319024436.GB10426@sigill.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193567>
 
-On 03/21/2012 11:28 AM, Ralf Nyren wrote:
-> Hi,
->
-> I found a "strange effect" when merging from a branch containing a
-> change of a previously empty file. The change is added to another empty
-> file in the current branch by the merge.
->
-> I guess git sees it as a renamed file which is logical from a
-> content-perspective.
->
-> Not sure what to do with this, I would not say it is a bug really...
-It does seem like a bug. An unrelated file is clobbered.
+On 19.03.2012 03:44, Jeff King wrote:
+> On Mon, Mar 19, 2012 at 08:30:38AM +0700, Nguyen Thai Ngoc Duy wrote:
+> 
+>> On Mon, Mar 19, 2012 at 2:07 AM, Jeff King <peff@peff.net> wrote:
+>>> I don't think that will work, as stateless-rpc fetch-pack already uses
+>>> stdin to receive the list of advertised refs from the remote. Nor would
+>>> you want to have multiple invocations of fetch-pack, since that would
+>>> mean multiple http requests and multiple pack responses (which could not
+>>> delta between themselves).
+>> remote-curl functions as middle man between http client and
+>> fetch-pack. Can we just send ref list over fetch-pack.stdin first,
+>> followed by maybe empty line, then normal stuff that remote-curl feeds
+>> fetch-pack?
+> 
+> Yes, I think that would work. You'd just have to take care to pass the
+> residual buffer (i.e., what is left in your input buffer after you
+> notice that reading the list of wanted refs is finished) along to
+> the git-protocol code.  So it would require a little refactoring of
+> get_remote_heads, I think.
 
-> Reproduce as follows (should be cut-n-paste friendly):
-Here's a slightly simplified version that is actually cut-n-paste 
-friendly after recent changes to always edit merge comments...
+Would it be OK for fetch-pack.c to use the packetized format 
+(pkt-line.h) for reading the list of refs from stdin?
 
-# Start with a new repository
-git init
-echo Readme file >README
-git add README
-git commit -m 'Initial commit'
-
-# Setup the branch to be merged
-git checkout -b import
-touch empty.txt
-echo hello world >hello.txt
-git add empty.txt hello.txt
-git commit -m 'Import 1.0'
-echo This file is no longer empty >empty.txt
-git commit -m 'Import 1.1' empty.txt
-
-# Setup master branch
-git checkout master
-touch .gitignore
-git add .gitignore
-git commit -m 'Static web content'
-
-# Merge import 1.0 and remove the empty file
-git merge  --no-edit import^
-git rm empty.txt
-git commit -m 'Remove empty file'
-
-# Merge import 1.1 and watch empty.txt contents show up in .gitignore
-git merge --no-edit import
-cat .gitignore
-
-
-Regards,
-Zbyszek
+This way we can read() the exact number of bytes needed for the refs 
+from the fd and there would be no need to refactor get_remote_heads() to 
+pass a residual buffer, it could just continue reading straight from the 
+same fd.
