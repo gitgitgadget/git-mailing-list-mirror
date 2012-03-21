@@ -1,78 +1,69 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: git merge
-Date: Tue, 20 Mar 2012 18:49:48 -0500
-Message-ID: <4F69179C.3030808@gmail.com>
-References: <4F685237.5060402@labage.be>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Please discuss: what "git push" should do when you do not say
+ what to push?
+Date: Tue, 20 Mar 2012 17:25:46 -0700
+Message-ID: <7vwr6e3ilx.fsf@alter.siamese.dyndns.org>
+References: <7v7gyjersg.fsf@alter.siamese.dyndns.org>
+ <7vty1ndcoi.fsf@alter.siamese.dyndns.org> <4F6461D7.40303@pileofstuff.org>
+ <7vipi1d9r7.fsf@alter.siamese.dyndns.org> <4F6792DE.80208@pileofstuff.org>
+ <7v62e09sig.fsf@alter.siamese.dyndns.org> <4F67B78B.6080208@pileofstuff.org>
+ <7vsjh48af1.fsf@alter.siamese.dyndns.org> <4F68F4A3.60506@pileofstuff.org>
+ <7vhaxi50q8.fsf@alter.siamese.dyndns.org> <4F6915A8.9040009@pileofstuff.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 21 00:50:18 2012
+To: Andrew Sayers <andrew-git@pileofstuff.org>
+X-From: git-owner@vger.kernel.org Wed Mar 21 01:26:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SA8of-0008Is-Gm
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 00:50:13 +0100
+	id 1SA9Nh-0002o2-Tt
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 01:26:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753218Ab2CTXuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Mar 2012 19:50:07 -0400
-Received: from plane.gmane.org ([80.91.229.3]:48273 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752675Ab2CTXuE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2012 19:50:04 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1SA8oT-0008Bj-DH
-	for git@vger.kernel.org; Wed, 21 Mar 2012 00:50:01 +0100
-Received: from 67.63.162.200 ([67.63.162.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 21 Mar 2012 00:50:01 +0100
-Received: from nkreitzinger by 67.63.162.200 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 21 Mar 2012 00:50:01 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 67.63.162.200
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.28) Gecko/20120306 Thunderbird/3.1.20
-In-Reply-To: <4F685237.5060402@labage.be>
+	id S1752972Ab2CUAZv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Mar 2012 20:25:51 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37451 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751674Ab2CUAZt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2012 20:25:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D475366F1;
+	Tue, 20 Mar 2012 20:25:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4AgTuTUOOvkNoZyG04N53U/nW7c=; b=iCJXpy
+	VEYVhWXTlyryxxbQakwcZK4nBnIKs+NzQgne2dYgN7qstz+cX6SXWSLBsAWlDNgT
+	LY1h2CGeqyJhUxrM0+Qg19DzH8sfpJdSG7cRJ9XwK1VNLjsjgyU0tbZx0QL92slt
+	VRoSWhM30aMpjyDJclHW7XSj/EXBSOqDmP5gQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OL02kePzX3tgzTe0ymPq6+A2K/jVA4VA
+	A13KDOil+cCuv92wUVjl400IgfvaXDMhAQ8emXzrT2C+UHOsuR6gZgU147Fup/vA
+	XdSOgP3UFpH1kwW2fxtergmIm426faU6VuabWP9a3xlhinWeSoCfVWvbROHTYzwP
+	WFi0mPcXKkg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC74166F0;
+	Tue, 20 Mar 2012 20:25:48 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3E88E66EE; Tue, 20 Mar 2012
+ 20:25:48 -0400 (EDT)
+In-Reply-To: <4F6915A8.9040009@pileofstuff.org> (Andrew Sayers's message of
+ "Tue, 20 Mar 2012 23:41:28 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 682107AA-72EC-11E1-8BD8-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193555>
 
-On 3/20/2012 4:47 AM, Fabien Dubail wrote:
->
-> I've conflicts when I merge branches. I can resolve some conflicts but
-> not all. The remaining conflicts will be solved by someone else?
-> To do that I would like to merge only some files and resolve 'my'
-> conflicts. (something like: 'git checkout branch files' but with merge)
-> Than remaining files will be merged by someone else and remaining
-> conflicts will be resolved .
-> Is-it possible to do that with git and how? Or is there an other way?
->
-One way you can do it is to create a branch containing your resolutions. 
-  Then the other person pulls your branch.  They would redo the merge on 
-their own branch and checkout your resolutions to apply your work, and 
-resolve the remainder himself.  This could go on for mutltiple people. 
-You can edit the merge commit message to document who resolved which 
-conflicts.
+Andrew Sayers <andrew-git@pileofstuff.org> writes:
 
-Maybe someone has a better way.  We did a "distributed merge" this way. 
-  I pulled everyone else's branches containing their resolutions and 
-then redid the merge and checkout out their resolutions from their 
-branches and resolved my portion assigned to me personally.  Actually, I 
-think I did mine in a separate branch and then when all were done I 
-redid the merge and checked out out everyone's portions from their 
-respective branches (including mine) to accomplish the distributed merge 
-(merge conflict resolution).  (In our case, we were actually doing 
-git-rebase "merge", but I think it would work for git-merge also.)
+> It sounds like we're disagreeing, but I can't tell what about.
 
-Maybe someone else has a better way.
-
-v/r,
-neal
+You are trying to read me too deeply, when there is nothing that deep to
+read, by for example assuming the s/n ratio is why we want to keep the
+warning only for a while and then eventually removing.
