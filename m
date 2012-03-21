@@ -1,71 +1,73 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] rebase -i: inform the user they can re-order commits
-Date: Wed, 21 Mar 2012 09:25:56 +0100
-Message-ID: <vpq7gyee4x7.fsf@bauges.imag.fr>
-References: <4F63205A.6000202@seap.minhap.es> <vpqlin0n8w5.fsf@bauges.imag.fr>
-	<7vty1oivub.fsf@alter.siamese.dyndns.org>
-	<4F63571D.4070405@seap.minhap.es> <vpqaa3geiso.fsf@bauges.imag.fr>
-	<7vpqccipuv.fsf@alter.siamese.dyndns.org>
-	<7vlin0ip9l.fsf@alter.siamese.dyndns.org>
-	<7vobrq50su.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Nelson Benitez Leon <nelsonjesus.benitez@seap.minhap.es>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 21 09:26:18 2012
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [GSoC] Designing a faster index format
+Date: Wed, 21 Mar 2012 10:22:30 +0100
+Message-ID: <8D287169-1AD9-4586-BDBC-F820220328FC@gmail.com>
+References: <F9D452C3-B11E-4915-A0F2-B248F92CE5DE@gmail.com> <CACsJy8CKqv2P2Co9MKpePfOTwe4fu-wxAYiigbYt3YHTxZ6wWQ@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1257)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 21 10:22:40 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAGs6-0000bd-2W
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 09:26:18 +0100
+	id 1SAHkd-0004Ap-GD
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 10:22:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752932Ab2CUI0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Mar 2012 04:26:10 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:50641 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752301Ab2CUI0G (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2012 04:26:06 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id q2L8LAZQ009376
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 21 Mar 2012 09:21:10 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SAGrk-0007B3-VJ; Wed, 21 Mar 2012 09:25:57 +0100
-In-Reply-To: <7vobrq50su.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Tue, 20 Mar 2012 16:07:29 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 21 Mar 2012 09:21:11 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q2L8LAZQ009376
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1332922871.70581@3jTirf1nbN3lXXQ/dzb0zw
+	id S964983Ab2CUJWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Mar 2012 05:22:34 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:47427 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964794Ab2CUJWd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Mar 2012 05:22:33 -0400
+Received: by eekc41 with SMTP id c41so282372eek.19
+        for <git@vger.kernel.org>; Wed, 21 Mar 2012 02:22:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        bh=vXSIV6Ugh0qeizZrUOoK1CcJENVCgB5RWMtBbjYG5vs=;
+        b=vufhqIZmGwSpluBhORZ0VbOCZqtv3g3HTK/jTUscWmTSiLTIPwXXAocK9xHjl9uuCs
+         2P2qIC58McuI7O2STIAU/RvB78lCUV7XXvdqJRY1nkgO70oB/UqaMvkMO/U/Q3iFSzhT
+         RgPSVJIkmhLh+AoHCEaaWlwrg0VhEOhRVqVLqgI0HN0nsjWhC6ugO2zy6DhUN7CkBxFz
+         gtJDb4SEijyTPth0FaNGykgvmX/pCOX8xS5vOGgH+d/cZ9vugPgn+jK6PA1v3HBOAhvc
+         16O1YL1eKigCie+W4UsL/MyWlwLetGlN02FZvFS3lnEfyIqJj3e5lj8PMMO0s25Ud2aF
+         gE6w==
+Received: by 10.14.194.72 with SMTP id l48mr412132een.100.1332321752370;
+        Wed, 21 Mar 2012 02:22:32 -0700 (PDT)
+Received: from tommi-mac.unibz.it ([46.18.27.126])
+        by mx.google.com with ESMTPS id z47sm3862118een.5.2012.03.21.02.22.31
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 21 Mar 2012 02:22:31 -0700 (PDT)
+In-Reply-To: <CACsJy8CKqv2P2Co9MKpePfOTwe4fu-wxAYiigbYt3YHTxZ6wWQ@mail.gmail.com>
+X-Mailer: Apple Mail (2.1257)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193561>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -846,6 +846,8 @@ cat >> "$todo" << EOF
->  #  f, fixup = like "squash", but discard this commit's log message
->  #  x, exec = run command (the rest of the line) using shell
->  #
-> +# These lines can be re-ordered; they are executed from top to bottom.
-> +#
+On Mar 21, 2012, at 2:29 AM, Nguyen Thai Ngoc Duy wrote:
 
-Great, it says everything that needs to be said, in just a line!
+> On Wed, Mar 21, 2012 at 4:17 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+>> There are some questions I would have about the project.
+>> Has there already been any development or thoughts in that direction?
+> 
+> Tree-based format seems to be favored by core developers, for example
+> in the footnote in [1]. But there have been no attempts to realize it.
+> You may want to search mail archive for more.
+> 
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks for your answer, so I would probably implement a tree based structure.
+However I got one more question, since I'm not yet really familiar with the
+code and internal structure of git, what exactly does the SHA1 over the
+index exactly achieve? Is it only for checking if the index is still correct
+for the next time it is used and has not been changed or is there a more
+important function of it?
+
+--
+Thomas Gummerer
