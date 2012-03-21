@@ -1,78 +1,83 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [GSoC] Designing a faster index format
-Date: Wed, 21 Mar 2012 18:18:39 +0700
-Message-ID: <CACsJy8Aga7OYfAL0X+SyHxaF4gzGs+cvqfX+DZNXCua8c9XMig@mail.gmail.com>
-References: <F9D452C3-B11E-4915-A0F2-B248F92CE5DE@gmail.com>
- <CACsJy8CKqv2P2Co9MKpePfOTwe4fu-wxAYiigbYt3YHTxZ6wWQ@mail.gmail.com>
- <8D287169-1AD9-4586-BDBC-F820220328FC@gmail.com> <CACsJy8D2RwG-Nr5btcQj0f9=JACvH6mf7LNi=Jnb_y+j4_2u0A@mail.gmail.com>
- <CALgYhfPOJpKbM__iU4KvChWeXWyyhWb2ocR-SLvrQQHNw5F5dQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 21 12:19:23 2012
+From: Alex Merry <dev@randomguy3.me.uk>
+Subject: [PATCH v2] Fix git-completion.bash for use in zsh
+Date: Wed, 21 Mar 2012 11:06:00 +0000
+Message-ID: <1332327960-5208-1-git-send-email-dev@randomguy3.me.uk>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Alex Merry <dev@randomguy3.me.uk>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 21 12:25:16 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAJZU-0006Wj-Ku
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 12:19:16 +0100
+	id 1SAJfE-0002HH-Py
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 12:25:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756603Ab2CULTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Mar 2012 07:19:12 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:63039 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753818Ab2CULTL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2012 07:19:11 -0400
-Received: by wejx9 with SMTP id x9so832457wej.19
-        for <git@vger.kernel.org>; Wed, 21 Mar 2012 04:19:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=QFGoFrpWDaNlJY4u3GcoyURQgc8PXd6dQ6oDwGRefjQ=;
-        b=xRSeeS/POIzZ8H5UXFeCwIUqF8bWl0SsaPC3IwnVT07OTa8CyW7xoUASIngCKQiAgy
-         6slkslk4pjQS4oXYnoNqdRr742aF9bGon6+XSdhN8Z11cfzNuxMR97e+AJG9yd7n9JD0
-         bHXC8jKSWayBJJh74zlklRv2Fhr0JB9AkPt9zU23UNuYPH8x1WLR42gu6cDol58rTV6H
-         Cs3jtUUsIUhElIZUoPuw74rbKUKrirOyNyQqWIouF0oJyab8gnW2TCYIKHoobDXFciBc
-         vM0s7IP+1a8eeA/1zQhUe8VAuNGSR0l7UbnoHxN5y2/KNBcmM6IMKPEmgGkiS+jIZSZ4
-         qbvA==
-Received: by 10.216.135.103 with SMTP id t81mr2021203wei.113.1332328749728;
- Wed, 21 Mar 2012 04:19:09 -0700 (PDT)
-Received: by 10.223.109.144 with HTTP; Wed, 21 Mar 2012 04:18:39 -0700 (PDT)
-In-Reply-To: <CALgYhfPOJpKbM__iU4KvChWeXWyyhWb2ocR-SLvrQQHNw5F5dQ@mail.gmail.com>
+	id S1750847Ab2CULZG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Mar 2012 07:25:06 -0400
+Received: from dorset.eukhosting.net ([92.48.117.51]:48354 "EHLO
+	dorset.eukhosting.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750767Ab2CULZF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2012 07:25:05 -0400
+X-Greylist: delayed 1095 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 Mar 2012 07:25:05 EDT
+Received: from cpc1-oxfd8-0-0-cust519.4-3.cable.virginmedia.com ([86.8.142.8]:44447 helo=localhost.localdomain)
+	by dorset.eukhosting.net with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <dev@randomguy3.me.uk>)
+	id 1SAJNN-000piC-HH; Wed, 21 Mar 2012 11:06:45 +0000
+X-Mailer: git-send-email 1.7.9.4
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - dorset.eukhosting.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - randomguy3.me.uk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193570>
 
-On Wed, Mar 21, 2012 at 6:08 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
->> > However I got one more question, since I'm not yet really familiar with
->> > the
->> > code and internal structure of git, what exactly does the SHA1 over the
->> > index exactly achieve? Is it only for checking if the index is still
->> > correct
->> > for the next time it is used and has not been changed or is there a more
->> > important function of it?
->>
->> It makes sure the index is not corrupt (by disk faults for example). I
->> don't think it is used for anything else. Cheaper checksum can be used
->> if good enough for the index. See
->> http://thread.gmane.org/gmane.comp.version-control.git/190016 and the
->> following reply.
->
-> Ok thanks. I guess that could be another way to speed things up, but for
-> really big repositories probably it won't be enough and the reduction of the
-> complexity as described in the proposal is the way to go.
+zsh treats
+  local some_var=()
+as a function declaration, rather than an array declaration (although
+its documentation does not suggest that this should be the case).
 
-Yeah. A good format should not require checksuming the whole index, if
-we only need to read/verify a few entries, I think.
+With zsh 4.3.15 on Fedora Core 15, this causes
+  __git_ps1 " (%s)"
+to produce the message
+  local:2: command not found: svn_url_pattern
+when GIT_PS1_SHOWUPSTREAM="auto", due to the line
+  local svn_remote=() svn_url_pattern count n
 
-> Is the current complexity O(n)?
+Simply doing
+  local some_var
+  some_var=()
+fixes the issue.
 
-I think so. Have a look at read-cache.c, read_index_from for reading
-and write_index for writing, as a starting point.
+Signed-off-by: Alex Merry <dev@randomguy3.me.uk>
+---
+
+Here it is again, with a better commit message, and no whitespace issues (hopefully).
+
+
+ contrib/completion/git-completion.bash |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 0acbdda..092a34f 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -94,8 +94,9 @@ __gitdir ()
+ __git_ps1_show_upstream ()
+ {
+ 	local key value
+-	local svn_remote=() svn_url_pattern count n
++	local svn_remote svn_url_pattern count n
+ 	local upstream=git legacy="" verbose=""
++	svn_remote=()
+ 
+ 	# get some config options from git-config
+ 	local output="$(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')"
 -- 
-Duy
+1.7.6.5
