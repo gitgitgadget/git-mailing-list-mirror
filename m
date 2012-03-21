@@ -1,56 +1,72 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Annoying absolute path for "core.worktree" to submodule
-Date: Wed, 21 Mar 2012 20:41:43 +0100
-Message-ID: <4F6A2EF7.5090007@web.de>
-References: <20120320105243.2e8a489b@christian-hammerl.de> <4F6886A6.3010805@gmail.com> <A5E8E180685CEF45AB9E737A010799802D9872@cdnz-ex1.corp.cubic.cub>
+From: Ivan Todoroski <grnch_lists@gmx.net>
+Subject: Re: Clone fails on a repo with too many heads/tags
+Date: Wed, 21 Mar 2012 21:02:13 +0100
+Message-ID: <4F6A33C5.2080909@gmx.net>
+References: <loom.20120318T083216-96@post.gmane.org> <m3fwd550j3.fsf@localhost.localdomain> <20120318190659.GA24829@sigill.intra.peff.net> <CACsJy8BNT-dY+wDONY_TgLnv0135RZ-47BEVMzX6c3ddH=83Zw@mail.gmail.com> <20120319024436.GB10426@sigill.intra.peff.net> <4F69B5F0.2060605@gmx.net> <CAJo=hJu0H5wfXB_y5XQ6=S0VJ9t4pxHWkuy_=rehJL_6psf00g@mail.gmail.com> <20120321171423.GA13140@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Christian Hammerl <info@christian-hammerl.de>,
-	Antony Male <antony.male@gmail.com>
-To: "Holding, Lawrence" <Lawrence.Holding@cubic.com>
-X-From: git-owner@vger.kernel.org Wed Mar 21 20:42:09 2012
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 21 21:02:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SARQ7-0004wO-8C
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 20:42:07 +0100
+	id 1SARjg-0003Ge-SS
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 21:02:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756542Ab2CUTmA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Mar 2012 15:42:00 -0400
-Received: from fmmailgate04.web.de ([217.72.192.242]:41120 "EHLO
-	fmmailgate04.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756479Ab2CUTl7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2012 15:41:59 -0400
-Received: from moweb002.kundenserver.de (moweb002.kundenserver.de [172.19.20.108])
-	by fmmailgate04.web.de (Postfix) with ESMTP id DB5E07421F9B
-	for <git@vger.kernel.org>; Wed, 21 Mar 2012 20:41:57 +0100 (CET)
-Received: from [192.168.178.48] ([91.3.178.149]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0LgpYk-1Sfu670D6E-00o6GL; Wed, 21 Mar 2012 20:41:57
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:11.0) Gecko/20120312 Thunderbird/11.0
-In-Reply-To: <A5E8E180685CEF45AB9E737A010799802D9872@cdnz-ex1.corp.cubic.cub>
-X-Provags-ID: V02:K0:W3N20EKM5XbPeoTdQ/5jlc5SpHxrKkGbYaRMvlADdeW
- 762FcUfoKszzBcICwP36gZ/YDWTSHkr5KaeAut6MEdM9FrOL9J
- fjsgoNJiPMJVa5J26/0PmGQiuTU2HYCMbsH4yDzeptIw0rfgvF
- o2RvBogolcFtAthKCiwTDrhulyuHpnbrt5hyoGifs641xzZTUl
- il4PYgSevJIN9AA33Fbjg==
+	id S1758108Ab2CUUCK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Mar 2012 16:02:10 -0400
+Received: from mailout-de.gmx.net ([213.165.64.22]:49482 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1757250Ab2CUUCI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2012 16:02:08 -0400
+Received: (qmail invoked by alias); 21 Mar 2012 20:02:06 -0000
+Received: from unknown (EHLO [127.0.0.1]) [77.28.163.209]
+  by mail.gmx.net (mp032) with SMTP; 21 Mar 2012 21:02:06 +0100
+X-Authenticated: #14478976
+X-Provags-ID: V01U2FsdGVkX1/gHg9vNUXgDn6ptXlzUBwRfStthkycOhDIyXyQ44
+	2LmIbbNEE/5C89
+User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
+In-Reply-To: <20120321171423.GA13140@sigill.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193608>
 
-Am 20.03.2012 22:39, schrieb Holding, Lawrence:
-> Slightly off topic, but related, what is the recommended way for finding
-> the git folder from the top level project or any of the submodules?
+On 21.03.2012 18:14, Jeff King wrote:
+> On Wed, Mar 21, 2012 at 07:28:24AM -0700, Shawn O. Pearce wrote:
+> 
+>>> Would it be OK for fetch-pack.c to use the packetized format (pkt-line.h)
+>>> for reading the list of refs from stdin?
+>> This is probably the easiest way to implement the sneak-into-stdin
+>> patch. Use a pkt-line for each argument that should have been in the
+>> argv array from the command line, and a flush pkt to terminate the
+>> list.
+> 
+> Something in me feels slightly uncomfortable with that, just because
+> simple newline-delimited formats make it easy for people to hack on the
+> tool and feed input from unexpected sources.
 
-Run "git rev-parse --git-dir" inside the repo whose git folder you want to
-know.
+I understand what you mean. How about this:
 
-> And of finding the working tree from inside a hook script?
+If both --stdin and --stateless-rpc are specified to fetch-pack, it will 
+use pkt-line to read the refs from stdin before handing off stdin to 
+get_remote_heads().
 
-I would expect hooks to be run in the work tree's top level directory,
-but I haven't checked that.
+However, if only --stdin is specified, it will read refs from stdin in a 
+script-friendly newline delimited format, one ref per line. This is okay 
+because when --stateless-rpc is not specified get_remote_heads() reads 
+from an fd different from stdin so there is no issue with residual 
+buffers in this case.
+
+This way you preserve scriptability for any other callers who don't use 
+--stateless-rpc.
+
+How does this sound?
