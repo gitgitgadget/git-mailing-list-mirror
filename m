@@ -1,74 +1,96 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Summary of discussion on "git push" default change
-Date: Wed, 21 Mar 2012 19:05:02 +0100
-Message-ID: <vpqlimtj0dt.fsf@bauges.imag.fr>
-References: <7v7gyjersg.fsf@alter.siamese.dyndns.org>
-	<7vty1ndcoi.fsf@alter.siamese.dyndns.org>
-	<7vr4wl262q.fsf@alter.siamese.dyndns.org>
+From: Felipe Tanus <fotanus@gmail.com>
+Subject: Re: [GSoC] Improving parallelism
+Date: Wed, 21 Mar 2012 15:06:19 -0300
+Message-ID: <CANELHzP+Kr99uLRRbmrfDzjrNn-eC-zgAfJy1Gct81nXfyrP0w@mail.gmail.com>
+References: <CANELHzNc+28ZDiZ69zv3X0DJMf0DTkiZXQD1-32Wsy-=vtWDhw@mail.gmail.com>
+ <87haxit95q.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 21 19:05:20 2012
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Mar 21 19:06:49 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAPuQ-00076o-LG
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 19:05:19 +0100
+	id 1SAPvr-0008Fx-BE
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 19:06:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759445Ab2CUSFK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Mar 2012 14:05:10 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:49072 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753754Ab2CUSFJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2012 14:05:09 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id q2LI0X4c000484
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 21 Mar 2012 19:00:34 +0100
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1SAPuA-0004O5-SL; Wed, 21 Mar 2012 19:05:03 +0100
-In-Reply-To: <7vr4wl262q.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 21 Mar 2012 10:54:05 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 21 Mar 2012 19:00:34 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: q2LI0X4c000484
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1332957636.06836@e9mn4RF72wKE6kVIUzIL+g
+	id S1759742Ab2CUSGm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Mar 2012 14:06:42 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:51802 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759064Ab2CUSGk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Mar 2012 14:06:40 -0400
+Received: by pbcun15 with SMTP id un15so945297pbc.19
+        for <git@vger.kernel.org>; Wed, 21 Mar 2012 11:06:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Gq7oH1uokCBYycZCvhKrbg/w0u5YKQpIE/XAcrEA7d0=;
+        b=DmX+n6T1J69oI8fHyuroCAySbpUzpVJOrbH2F/lZxAtDvfwPatW+vynswSMnwSgDaM
+         5gMlZBV0vlFBE4w51gYMhbhtAuN7EM9sCZkYPEA7T+fw31uJ2vVDn2tfzP31F3MfOCk9
+         5zsx8DT3Xw3psmLnpt2s7BCuBdGeG9XPZL6BE4Ar/0zlY0yNV/meql+BXWHekeEhZvS/
+         5F5O80Py/VvZgAFzHeXkfc4xvRyCPVFrISd5aJM+JGjFpkZEHjE/AnpBcWspukd0l7Y7
+         tGJE2kMgkKj66adsTxNIuD/gkYdp+7zS4lZrirpfaHB1DTayvmke4y8Z7r/377n/Drl3
+         n4pw==
+Received: by 10.68.130.163 with SMTP id of3mr13354034pbb.85.1332353199943;
+ Wed, 21 Mar 2012 11:06:39 -0700 (PDT)
+Received: by 10.68.24.106 with HTTP; Wed, 21 Mar 2012 11:06:19 -0700 (PDT)
+In-Reply-To: <87haxit95q.fsf@thomas.inf.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193595>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Mar 21, 2012 at 9:45 AM, Thomas Rast <trast@student.ethz.ch> wr=
+ote:
+> Felipe Tanus <fotanus@gmail.com> writes:
+[...]
+>
+> =C2=A01. Rework the pack access mechanisms to allow the maximum possi=
+ble
+> =C2=A0 =C2=A0parallel access.
+>
+[...]
+> I think (1.) is the most important part simply because without (1.) t=
+he
+> other two are totally meaningless. =C2=A0So I'd rather you not focus =
+too hard
+> on the command list. =C2=A0However, correctly identifying more comman=
+ds where
+> pack access is the hotspot, and backing that up with numbers, may be =
+a
+> good way to show your understanding of the matter.
+>
+> For further reading, you should start with the discussions surroundin=
+g
+> git-grep threading around
+>
+[...]
 
-> In order to show how the world after phase #2 of the transition [*1*]
-> would look like to developers, testers and early adopters, I am planning
-> merge Matthieu's patch mm/push-default-switch-warning topic [*2*]
+Hi Thomas, thank you for your answer, and more than it, thank you for
+point me to the right direction :-)
 
-Great. There was a few nitpick about my version (s/1.8/2.0/, static
-variable), but I can see that you have already fixed them.
+I followed the discussions you pointed out and it was very helpful. If
+I get it right, what you expect to be in the proposal is an analysis
+of what should be modified in the pack access mechanism because it
+will be used by the commands we will work on, and thus they should be
+thread safe and have a better performance. To achieve this I'll have
+to go through the  sha1_file.c file and come with an idea of how to
+improve the parallelism on it. Is that what you expect for a good work
+in this summer?
 
-It may make sense to create a branch like v2.0 in git.git to start
-collecting "switch default" kind of patches, to be merged before 2.0 is
-released. There were other points in the "1.8.0" discussion that may
-still be valid (I'm not sure what the status of "make add -u full tree"
-is for example):
+Regards,
 
-  http://permalink.gmane.org/gmane.comp.version-control.git/167149
-
-(BTW, does your cristal ball say anything about the release date of
-2.0?)
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+--=20
+=46elipe de Oliveira Tanus
+E-mail: fotanus@gmail.com
+Site: http://www.inf.ufrgs.br/~fotanus/
+-----
+"All we have to decide is what to do with the time that is given us." -=
+ Gandalf
