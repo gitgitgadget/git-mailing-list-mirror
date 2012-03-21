@@ -1,132 +1,90 @@
-From: Subho Banerjee <subs.zero@gmail.com>
-Subject: Re: GSoC Application [ Parallelism + Git.pm ]
-Date: Thu, 22 Mar 2012 00:22:30 +0530
-Message-ID: <CAB3zAY0atsiXkBDxaRkC+WGzQUSOYgTnRZmOXdqKiXRw_DKkjQ@mail.gmail.com>
-References: <CAB3zAY1cbjmJvPQo2i38Vxv=1CTzcusvtBTPQehi30cYsDe1Zw@mail.gmail.com>
- <m37gyhlvkz.fsf@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] Isolate If-Modified-Since handling in gitweb
+Date: Wed, 21 Mar 2012 12:22:44 -0700
+Message-ID: <7vmx7921yz.fsf@alter.siamese.dyndns.org>
+References: <20120321140429.GA28721@odin.tremily.us>
+ <201203211755.07121.jnareb@gmail.com>
+ <20120321173824.GA31490@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 21 19:52:59 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: "W. Trevor King" <wking@drexel.edu>
+X-From: git-owner@vger.kernel.org Wed Mar 21 20:22:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAQeX-0000zH-1F
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 19:52:57 +0100
+	id 1SAR7V-00070j-3n
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 20:22:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753321Ab2CUSww convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Mar 2012 14:52:52 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:57947 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751836Ab2CUSwv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Mar 2012 14:52:51 -0400
-Received: by vcqp1 with SMTP id p1so1317133vcq.19
-        for <git@vger.kernel.org>; Wed, 21 Mar 2012 11:52:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Q54aS2HDNHdXWdMljupx0pnt8nxLZ6lHwS8Idppu//o=;
-        b=bWJCSJOfHgjwI+JLG+jSroaNrK8+HswOnd8uT/00Fg1iidNp3AzLFY0kSPtqDLbOAa
-         r+tpeg9X8XCUo4ELA6CFNJv28Z1DNzQdhTQ3CbwCUdBj0373A0XxiC/gCAR5sUfPuxyN
-         ljNTfflg8X36aIm2rVk7hcVKrV1nOh/gSlnKavrdep1AfOsEij/OtY5PliVjInO6PY3l
-         UlQ4RxPAZheaYb9o8kr3MwjFl+lk8UQx+iicwSXiV9JRY+fO9YERzKY9wsPC7c/pilld
-         OIxEfUq5kPtWNXJx5/X3QYGU620zwtsDZdDspEfU7mzvGJOJxauhakYyz8LckAhUSQp+
-         dvQQ==
-Received: by 10.220.141.201 with SMTP id n9mr2330810vcu.66.1332355970904; Wed,
- 21 Mar 2012 11:52:50 -0700 (PDT)
-Received: by 10.220.141.193 with HTTP; Wed, 21 Mar 2012 11:52:30 -0700 (PDT)
-In-Reply-To: <m37gyhlvkz.fsf@localhost.localdomain>
+	id S1755656Ab2CUTWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Mar 2012 15:22:48 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61397 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755034Ab2CUTWr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2012 15:22:47 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 73C495F0E;
+	Wed, 21 Mar 2012 15:22:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Neakp+KrcUpxaEbzvaTKdVbwWI4=; b=ZzzEkf
+	R2bwbutZVWkcqFO/hf0GyTIbevNojZRw14urSh79g9+bpxszXo+3PQAzsXJ/UQR4
+	DrM1m2EP4Vt1itrmx8KXkUfqxtf+nm4hrfv3tllZwzP0tXBXyOlAKQ8lmhIfY+Mh
+	hcri06kp2VDZ694gErcF02Pw53TxanUnNvwB8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JEBOBbsDRspzzud8mXiveLrxm3XkNelF
+	ovBoc+gYk9nhdzG4tLb6+2ZZGsCiHT/IaRs4s88kUIvBjAl9TV3Z8rranYaEqwca
+	mZEqrs/1VWGqIbqYsVbShyoeK01gIt6XR8eG3+ETG3x3ECgSsJAHJdD/5rdkpo70
+	aWmtsyTID9o=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B76B5F0D;
+	Wed, 21 Mar 2012 15:22:46 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F261D5F0C; Wed, 21 Mar 2012
+ 15:22:45 -0400 (EDT)
+In-Reply-To: <20120321173824.GA31490@odin.tremily.us> (W. Trevor King's
+ message of "Wed, 21 Mar 2012 13:38:24 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3D11A4E4-738B-11E1-BC92-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193600>
 
-Hello Jakub,
-I had some time to look through the perl module in the Git sources and
-I wanted to summarize the changes that need to be made -
+"W. Trevor King" <wking@drexel.edu> writes:
 
-[Primary Task]
-[1] Move exception handling from Error::Simple to Try::Tiny and Excepti=
-on::Class
+>> I think it would be better to add initial tests with refactoring, and
+>> snapshot specific tests with snapshot support, e.g.:
+>> 
+>>   1/2: gitweb: Refactor If-Modified-Since handling and add tests
+>>   2/2: gitweb: Add If-Modified-Since support for snapshots
+>
+> But the new tests would be for the new functionality (i.e. snapshot
+> support), so they wouldn't belong in the general refactoring commit.
 
-[Additional]
-[2] A Git::Config module that parses the .gitconfig file and the
-=2Egit/config file in each repository(Is it one of these files or both?=
-)
-[3] Parsing Tree and Commit objects and then traverse the tree
-structure in Perl through a Git::Commit module.
-[4] Cleaning-up improving the API.
-In general move towards an module that can access and change data in
-the configuration and commit status using Perl instead of the fork and
-IPC being used now.
+Then you are planning to split it in a wrong way.
 
-Is this what you expect as a part of the GSoC work? Could you please
-tell me if I am missing something.
+As I said, I do not think it matters that much for a small patch like
+this, but if the plan is to make the part to create i-m-s helper function
+as a standalone "refactoring" patch, then what Jakub outlined is the right
+way to go about it.
 
-Cheers,
-Subho.
+In the first patch, you create i-m-s helper and update the existing code
+that can use the helper, without changing anything else. Do not touch
+snapshot code in this patch, if the current code does not support i-m-s in
+snapshot.  And in the same patch, add tests for codepaths that use i-m-s
+to make sure your refactoring did not break them.  In other words, if you
+remove the change to gitweb/ from the first patch and apply only the
+changes to the tests, the resulting new tests should pass with the current
+code that has i-m-s support inline without the i-m-s helper.  And if you
+add back your change to gitweb/ for the refactoring, the test should still
+pass.
 
-On Sun, Mar 18, 2012 at 10:01 PM, Jakub Narebski <jnareb@gmail.com> wro=
-te:
->
-> Subho Banerjee <subs.zero@gmail.com> writes:
->
-> [...]
-> > I had a look at the "Ideas" page on the GSoC website and I really
-> > liked two particular project ideas, in which I believe I can
-> > contribute to a larger extent.
-> >
-> > * Improving parallelism in various commands
-> > * Modernizing and expanding Git.pm
->
-> [...]
-> > From what I understand of these tasks --
-> [...]
-> > * For the second one, which aims at improving the Git perl module. =
-I
-> > tried looking around for this one on the net. I was a little confus=
-ed
-> > since I could not make out which module this was on CPAN. Is this o=
-ne
-> > of the Git::* modules or is it all of them. Because the the
-> > functionality of the Git::Config and Git::Commit as mentioned in th=
-e
-> > Ideas page seems to be there in the Git::Repository module on CPAN.
-> > Could some one please clarify this.
->
-> The "Modernizing and expanding Git.pm" project refers to the Git
-> module in git sources[1], that is used by git commands implemented in
-> Perl like git-svn, git-send-email, and interactive part of git-add.
->
-> It is not on CPAN (though if you feel like it putting it on CPAN migh=
-t
-> be part of this project, but it must be "dual-lived").
->
-> [1]: http://repo.or.cz/w/git.git/blob/HEAD:/perl/Git.pm
-> =A0 =A0 http://git.kernel.org/?p=3Dgit/git.git;a=3Dblob;hb=3DHEAD;f=3D=
-perl/Git.pm
-> =A0 =A0 https://github.com/git/git/blob/master/perl/Git.pm
->
-> You can of course take inspiration and code (if it is with compatibil=
-e
-> license) from various Git::* modules on CPAN to implement the
-> "expanding" part of this project.
->
-> Note that Git.pm must remain extremly portable, which includes
-> ActivePerl on MS Windows (msysGit or Cygwin). =A0Use of non-core modu=
-les
-> (for 5.8.0) should be also probably limited.
->
-> > I would really appreciate any ideas or advice for making my
-> > application for GSoC 2012 better.
->
-> HTH
-> --
-> Jakub Narebski
->
+And then in the second patch, you update the snapshot code and whatever
+else that can use i-m-s helper to support i-m-s.  You can add tests to
+protect the new feature from future breakages in this patch.
