@@ -1,90 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] Isolate If-Modified-Since handling in gitweb
-Date: Wed, 21 Mar 2012 12:22:44 -0700
-Message-ID: <7vmx7921yz.fsf@alter.siamese.dyndns.org>
-References: <20120321140429.GA28721@odin.tremily.us>
- <201203211755.07121.jnareb@gmail.com>
- <20120321173824.GA31490@odin.tremily.us>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: "W. Trevor King" <wking@drexel.edu>
-X-From: git-owner@vger.kernel.org Wed Mar 21 20:22:55 2012
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: [PATCH v3 0/9] difftool: teach command to perform directory diffs
+Date: Wed, 21 Mar 2012 15:35:55 -0400
+Message-ID: <1332358560-13774-1-git-send-email-tim.henigan@gmail.com>
+Cc: Tim Henigan <tim.henigan@gmail.com>
+To: gitster@pobox.com, git@vger.kernel.org, davvid@gmail.com
+X-From: git-owner@vger.kernel.org Wed Mar 21 20:36:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAR7V-00070j-3n
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 20:22:53 +0100
+	id 1SARKY-0008W9-33
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Mar 2012 20:36:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755656Ab2CUTWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Mar 2012 15:22:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61397 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755034Ab2CUTWr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2012 15:22:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 73C495F0E;
-	Wed, 21 Mar 2012 15:22:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Neakp+KrcUpxaEbzvaTKdVbwWI4=; b=ZzzEkf
-	R2bwbutZVWkcqFO/hf0GyTIbevNojZRw14urSh79g9+bpxszXo+3PQAzsXJ/UQR4
-	DrM1m2EP4Vt1itrmx8KXkUfqxtf+nm4hrfv3tllZwzP0tXBXyOlAKQ8lmhIfY+Mh
-	hcri06kp2VDZ694gErcF02Pw53TxanUnNvwB8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JEBOBbsDRspzzud8mXiveLrxm3XkNelF
-	ovBoc+gYk9nhdzG4tLb6+2ZZGsCiHT/IaRs4s88kUIvBjAl9TV3Z8rranYaEqwca
-	mZEqrs/1VWGqIbqYsVbShyoeK01gIt6XR8eG3+ETG3x3ECgSsJAHJdD/5rdkpo70
-	aWmtsyTID9o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B76B5F0D;
-	Wed, 21 Mar 2012 15:22:46 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F261D5F0C; Wed, 21 Mar 2012
- 15:22:45 -0400 (EDT)
-In-Reply-To: <20120321173824.GA31490@odin.tremily.us> (W. Trevor King's
- message of "Wed, 21 Mar 2012 13:38:24 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3D11A4E4-738B-11E1-BC92-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753944Ab2CUTgS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Mar 2012 15:36:18 -0400
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:44144 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753425Ab2CUTgQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2012 15:36:16 -0400
+Received: by qadc11 with SMTP id c11so800804qad.19
+        for <git@vger.kernel.org>; Wed, 21 Mar 2012 12:36:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=b745BUW0w4mfmlm1cojoSJGmkDLTGahSRpuF8G61KoA=;
+        b=Co/71YhXAjezGiRIh+E2EznZ91ZNuIu94cZT5CrGw7voMwT3KU4jW2dDsfxY5MnjSY
+         UW4kihSkCSoNZ7VULopBdNgn4gBawu4KHtINlU7PfNFx6mkzc/1DrURnf0mdjtQoxcka
+         KT0MVFD48nl3ha/Jthmktvw2AKC9GTGLnXO2ZhqbgUy+AdB5JuFY/IyO0nJlCgoXJ0W8
+         +RCmIpAmJmK18mR8FwzoV9fBev7Pkx9r33MX/v27v1d6AEEEdUkCt0kGEuyY2xbBP6az
+         4E0uiuKUeVhY189RNjMKLieyMmBJKthPTkt73rsFyCQfufTqmzaItLBK94NinzFoAvrA
+         nhow==
+Received: by 10.224.116.6 with SMTP id k6mr7628571qaq.91.1332358576116;
+        Wed, 21 Mar 2012 12:36:16 -0700 (PDT)
+Received: from localhost (adsl-99-38-69-118.dsl.sfldmi.sbcglobal.net. [99.38.69.118])
+        by mx.google.com with ESMTPS id hr2sm4403879qab.8.2012.03.21.12.36.11
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 21 Mar 2012 12:36:14 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.rc1.39.g6e141f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193601>
 
-"W. Trevor King" <wking@drexel.edu> writes:
+Changes in v3:
+  - Removed unused shell variable (SUBDIRECTORY_OK) from patch 7.
+  - Changed patches 7 and 8 to support calling 'difftool --dir-diff' from
+    a subdirectory of the repo.
+  - Changed patch 8 to support 
+  - Added patch 10, which makes mixing --prompt and --no-prompt and error.
+  - Added tests for new difftool options in patches 11 and 12.
 
->> I think it would be better to add initial tests with refactoring, and
->> snapshot specific tests with snapshot support, e.g.:
->> 
->>   1/2: gitweb: Refactor If-Modified-Since handling and add tests
->>   2/2: gitweb: Add If-Modified-Since support for snapshots
->
-> But the new tests would be for the new functionality (i.e. snapshot
-> support), so they wouldn't belong in the general refactoring commit.
+  - Patches 1-6 and 9 did not change and have not been resent.
+  
 
-Then you are planning to split it in a wrong way.
+Series Overview:
 
-As I said, I do not think it matters that much for a small patch like
-this, but if the plan is to make the part to create i-m-s helper function
-as a standalone "refactoring" patch, then what Jakub outlined is the right
-way to go about it.
+'git difftool' is a very useful command that allows git diffs to be opened
+in an external tool. Currently, difftool opens a separate instance of the
+external tool for each file that changed.  This can be tedious when many
+files have changed.
 
-In the first patch, you create i-m-s helper and update the existing code
-that can use the helper, without changing anything else. Do not touch
-snapshot code in this patch, if the current code does not support i-m-s in
-snapshot.  And in the same patch, add tests for codepaths that use i-m-s
-to make sure your refactoring did not break them.  In other words, if you
-remove the change to gitweb/ from the first patch and apply only the
-changes to the tests, the resulting new tests should pass with the current
-code that has i-m-s support inline without the i-m-s helper.  And if you
-add back your change to gitweb/ for the refactoring, the test should still
-pass.
+This series teaches difftool to perform directory diffs, so that all file
+changes can be opened/reviewed in a single instance of the external tool.
 
-And then in the second patch, you update the snapshot code and whatever
-else that can use i-m-s helper to support i-m-s.  You can add tests to
-protect the new feature from future breakages in this patch.
+This is the second phase of development for this feature.  The first phase
+was added as a separate command (git diffall) in 1252bbe (contrib: add
+git-diffall script).  During review of that script on the Git developers
+list, an informal development roadmap was suggested [1]. The next phase
+of that plan is to integrate the 'git-diffall' feature into 'difftool'.
+This series gets that done.
+
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/191297/focus=191383
+
+
+Tim Henigan (12):
+  difftool: parse options using Getopt::Long
+  difftool: exit(0) when usage is printed
+  difftool: remove explicit change of PATH
+  difftool: stop appending '.exe' to git
+  difftool: eliminate setup_environment function
+  difftool: replace system call with Git::command_noisy
+  difftool: teach difftool to handle directory diffs
+  difftool: teach dir-diff to copy modified files back to working tree
+  difftool: print list of valid tools with '--tool-help'
+  difftool: do not allow mix of '--prompt' with '--no-prompt'
+  t7800: add test for difftool --tool-help
+  t7800: add tests for difftool --dir-diff
+
+ Documentation/git-difftool.txt |   17 ++-
+ git-difftool--helper.sh        |   19 ++-
+ git-difftool.perl              |  264 +++++++++++++++++++++++++++-------------
+ t/t7800-difftool.sh            |   59 +++++++--
+ 4 files changed, 254 insertions(+), 105 deletions(-)
+
+-- 
+1.7.10.rc1.39.g6e141f
