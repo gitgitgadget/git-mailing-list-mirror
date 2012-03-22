@@ -1,71 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Demonstrate failure of 'core.ignorecase = true'
-Date: Thu, 22 Mar 2012 15:07:05 -0400
-Message-ID: <20120322190705.GB27037@sigill.intra.peff.net>
-References: <1332370222-5123-1-git-send-email-pj@irregularexpressions.net>
- <4F6ACB67.1080503@viscovery.net>
- <4F6B0C3E.8090501@in.waw.pl>
- <20120322141245.GB8803@sigill.intra.peff.net>
- <7vbonozi8c.fsf@alter.siamese.dyndns.org>
- <20120322173701.GA11928@sigill.intra.peff.net>
- <7viphwxyp1.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Strange effect merging empty file
+Date: Thu, 22 Mar 2012 12:12:06 -0700
+Message-ID: <7vwr6cwiux.fsf@alter.siamese.dyndns.org>
+References: <4F69AD3C.4070203@ericsson.com> <4F69B375.5050205@in.waw.pl>
+ <86iphwomnq.fsf@red.stonehenge.com> <4F6B1F48.3040007@in.waw.pl>
+ <20120322140140.GA8803@sigill.intra.peff.net>
+ <7vty1gy3eh.fsf@alter.siamese.dyndns.org>
+ <20120322175952.GA13069@sigill.intra.peff.net>
+ <20120322182533.GA20360@sigill.intra.peff.net>
+ <7v62dwxybd.fsf@alter.siamese.dyndns.org>
+ <20120322190303.GA32756@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	"Peter J. Weisberg" <pj@irregularexpressions.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 22 20:07:27 2012
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Ralf Nyren <ralf.nyren@ericsson.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 22 20:12:23 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAnM4-0001i8-W8
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 20:07:25 +0100
+	id 1SAnQm-00055L-21
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 20:12:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759304Ab2CVTHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Mar 2012 15:07:22 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56860
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753015Ab2CVTHH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2012 15:07:07 -0400
-Received: (qmail 4208 invoked by uid 107); 22 Mar 2012 19:07:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 22 Mar 2012 15:07:22 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Mar 2012 15:07:05 -0400
-Content-Disposition: inline
-In-Reply-To: <7viphwxyp1.fsf@alter.siamese.dyndns.org>
+	id S932127Ab2CVTML (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Mar 2012 15:12:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48290 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757448Ab2CVTMJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2012 15:12:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B07766885;
+	Thu, 22 Mar 2012 15:12:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=w7mtQve7N5rz9/WwElHreOtPuZE=; b=mcJayH
+	sYN1Adp4quzNWCU3v6189ctkijbFhlOea6GEPb+RzpK0hmmKNZEl5HzgQVjALrDz
+	rISpb8qaroi5f69A/qBodiFofcpMhOO1RtUpv3eKTlLbSOqyOrRjlH3UBF092Dl2
+	BTh7p9QMPmycwDOiZ7IYXsfjKFHTb8Y6U8yAw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HPfE8W0C1BCKZhzi4Cauw1f05HIxgOv+
+	XeVNPrsyqrHPp7CNNRvmc2PxqrVsALvJgRsivlkk/TR97A/bjd2Wm0MXTqKMoZON
+	EKj+Vn7SGSuqzriaGlHbKwOcJcncTG1rERkBPLe/hb8Yd7Vm6IqzurbCkCBU7aqz
+	X8TVNo4OsWc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A09F26884;
+	Thu, 22 Mar 2012 15:12:08 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B2751687F; Thu, 22 Mar 2012
+ 15:12:07 -0400 (EDT)
+In-Reply-To: <20120322190303.GA32756@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 22 Mar 2012 15:03:03 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EB0C9C44-7452-11E1-B2FD-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193691>
 
-On Thu, Mar 22, 2012 at 11:44:42AM -0700, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> I wanted it to tell *what* happens when core.ignorecase is set.  In other
-> words, I wanted the description to say that the logic employed is to work
-> around what case-insensitive filesystems do.  Case sensitive filesystems
-> obviously do not do what case-insensitive ones do (like reporting a
-> "Makefile" exists when only "makefile" exists), so I hoped that it was
-> clear enough that the additional logic would not be suitable there.
+> That is a slight layering violation, in that we are making assumptions
+> about how the diffcore-rename subsystem works.
 
-Ah. I see now why you made the change you did. But if I missed it,
-perhaps it was too subtle (of course, I found the other one perfectly
-adequate, so...).
-
-> I guess we really need to make the description foolproof then.
-> 
->                    ... exists on them is "makefile". By setting this
-> 	variable to `true`, Git employs logic to work around them.
->         Setting this to `true` on a case insensitive filesystem does
-> 	not make any sense, because it would not magically make your
-> 	system to treat your filesystem case insensitively.
-
-I'm OK with that (modulo s/insensitive/sensitive/ on the third line).
-It may be overly explicit, but I would rather err on that side.
-
--Peff
+I do not think I have to say any more than that.  The special case we want
+to have is for the "empty to empty" case and nothing else, and I do not
+want to see people having to remember to look at the merge-recursive code
+if/when rename detection starts to treat "empty to small" as "rename with
+minor modification."
