@@ -1,127 +1,104 @@
-From: Hong Xu <xuhdev@gmail.com>
-Subject: Re: [BUG] git bash-completion is incorrect for "git pull origin mas<tab>"
- if the ssh key is encrypted
-Date: Thu, 22 Mar 2012 21:00:52 +0800
-Message-ID: <4F6B2284.5030508@gmail.com>
-References: <4F6AC0FA.7040708@gmail.com> <4F6AFEC8.9090907@in.waw.pl> <4F6B16BE.1050003@viscovery.net> <03324BD2-116A-42EF-AB18-38F4A30A1115@gmail.com> <4F6B2146.8060408@in.waw.pl>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v3] Isolate If-Modified-Since handling in gitweb
+Date: Thu, 22 Mar 2012 14:05:12 +0100
+Message-ID: <201203221405.13193.jnareb@gmail.com>
+References: <20120321140429.GA28721@odin.tremily.us> <201203211755.07121.jnareb@gmail.com> <20120321173824.GA31490@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
-	<zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Thu Mar 22 14:01:52 2012
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "W. Trevor King" <wking@drexel.edu>
+X-From: git-owner@vger.kernel.org Thu Mar 22 14:05:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAheH-0001ja-QT
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 14:01:50 +0100
+	id 1SAhhq-0004gW-BS
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 14:05:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757893Ab2CVNBp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Mar 2012 09:01:45 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:64438 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754453Ab2CVNBo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2012 09:01:44 -0400
-Received: by ghrr11 with SMTP id r11so1684573ghr.19
-        for <git@vger.kernel.org>; Thu, 22 Mar 2012 06:01:44 -0700 (PDT)
+	id S964796Ab2CVNFZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Mar 2012 09:05:25 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:62821 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754453Ab2CVNFY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2012 09:05:24 -0400
+Received: by wgbdr13 with SMTP id dr13so1363617wgb.1
+        for <git@vger.kernel.org>; Thu, 22 Mar 2012 06:05:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=oqjIPpMKFP0Z5Bk50CsK4DtHPUuyGpIsiC8rEdf1zkk=;
-        b=QFimz4inydYuEXrwz7NhmpfoSvH25U4z5EKjY7tcjPo92pbVVlCvMN6tgiXMfZiUxC
-         zZ6EHs//QPU07WkdzQbETgcNYybp8E0yPO5vkrOjVI1Omt5GO4TfCba54d8vNnU3bRWX
-         hqSnGIR1SeeFbdoohm19obm0/RnVn+YRh8e5sNqjDxUreFhJDBczMNTVQ/KWxHQrEeBv
-         MtbZUNrhKIqIHK7Oweh4t0dovq1GFSAQDn4DhGS8oRuuDnp6A7qv5sJS6W8XCxgABYmP
-         rzYSJhg4AY/5MSoH5AxO/02/OhaU5QUoRAdwABG05VVasLadhd+Gdo0HtnW4e55xuCpk
-         TxIA==
-Received: by 10.60.14.136 with SMTP id p8mr9282560oec.68.1332421299859;
-        Thu, 22 Mar 2012 06:01:39 -0700 (PDT)
-Received: from [202.38.85.242] ([202.38.85.242])
-        by mx.google.com with ESMTPS id b2sm4617638obo.22.2012.03.22.06.01.36
-        (version=SSLv3 cipher=OTHER);
-        Thu, 22 Mar 2012 06:01:38 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120312 Thunderbird/11.0
-In-Reply-To: <4F6B2146.8060408@in.waw.pl>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=KaVlZ5GA4QyEnoO74yxzi91z6tlDIa3yKMtCQOlFqQA=;
+        b=MUqBQOcELurxySjkKxNhLvaijsUkVEQMqAYxaObfiN9aMsCZ0vCcoglZ/M0kffxvjd
+         7g+ycRUu/zpEfbRKnsRhb2ElDyT9PoEgj/xziTY7RNdD1V/ma+jcDXOka8y3WO3amczS
+         nia4qvUNjaHfOpeLdAnLmO7DLesJV0Y3ooqVMHV9dWcNjs7ltEPGaMObZ2/rmoc+kvZF
+         AD9JRQQOfCZZKehOzdl2oD6SZTcPq4TuF5nWbHCnm1wtsopoeLU4MFjI7JfxnSLXE1yM
+         m/rJ+QBlyviSx/L/OqC5E7ULyeWgAZT+rReLWErNPdC0oCL1m0cAp9ss+8G+COaY2ZzM
+         iubw==
+Received: by 10.180.76.74 with SMTP id i10mr4996369wiw.2.1332421523484;
+        Thu, 22 Mar 2012 06:05:23 -0700 (PDT)
+Received: from [192.168.1.13] (abwe160.neoplus.adsl.tpnet.pl. [83.8.228.160])
+        by mx.google.com with ESMTPS id fn2sm8739741wib.0.2012.03.22.06.05.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 22 Mar 2012 06:05:22 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20120321173824.GA31490@odin.tremily.us>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193654>
 
-On 03/22/2012 08:55 PM, Zbigniew J=C4=99drzejewski-Szmek wrote:
-> On 03/22/2012 01:48 PM, Hong Xu wrote:
->>
->>
->> On Mar 22, 2012, at 20:10, Johannes Sixt<j.sixt@viscovery.net> wrote=
-:
->>
->>> Am 3/22/2012 11:28, schrieb Zbigniew J=C4=99drzejewski-Szmek:
->>>> On 03/22/2012 07:04 AM, Hong Xu wrote:
->>>>> Hello everyone,
->>>>>
->>>>> If my ssh key is encrypted, "git pull origin mas<tab>" will give =
-a
->>>>> unexpected result, something like this:
->>>>>
->>>>> git pull origin masEnter passphrase for key '/home/user/.ssh/id_r=
-sa':
->>>>>
->>>>> I know maybe it is not possible to complete the "master", but may=
-be it
->>>>> is better to not complete anything than append something like tha=
-t?
->>>> It is ssh itself which emits this message. The completion script c=
-alls
->>>> 'git ls-remote origin', which in turn invokes ssh. Typing the
->>>> password in
->>>> actually works, but I understand that you are annoyed by the messa=
-ge.
->>>>
->>>> I don't think there's an easy way to silence this in git completio=
-n,
->>>> without affecting other times when the key would be requested. E.g=
-=2E we
->>>> would want ssh to ask for the key while doing 'git pull', but not
->>>> when run
->>>> automatically during completion.
->>>>
->>>> Maybe git-ls-remote should learn --quiet?
->>>
->>> No. IMHO, bash completion stretches too far by asking the remote fo=
-r the
->>> refs that it has.
->>>
->>
->> I agree with this rather than using silent mode. If a encrypted key =
-is
->> found, I think we better drop the completion. I don't know whether
->> there is a way to implement this yet, at least we can try to find it=
-=2E
-> There's more than one reason why ssh would ask for a password. So jus=
-t
-> checking for an encrypted key is pointless. Instead, ssh could be
-> invoked with -o BatchMode=3Dyes. ls-remote could pass this option if =
-it
-> was invoked with --quiet.
+On Wed, 21 Mar 2012, W. Trevor King wrote:
+> On Wed, Mar 21, 2012 at 05:55:06PM +0100, Jakub Narebski wrote:
 
-This is a good idea.
+> > There is a tool to create patches to send: git-format-patch.  Myself I
+> > usually create a new directory for a patch series, e.g. mdir.if_mod.v3,
+> > and use git-format-patch to populate it, e.g.
+> 
+> Ah, I like that.  Then I can rebase away ;).
 
->
-> Possible this is just not worth the trouble and Hong should enter the
-> run ssh-agent and enter the password beforehand.
+Yep.  Or use some patch / mailqueue management interface like StGit.
+ 
+> > I think it would be better to add initial tests with refactoring, and
+> > snapshot specific tests with snapshot support, e.g.:
+> > 
+> >   1/2: gitweb: Refactor If-Modified-Since handling and add tests
+> >   2/2: gitweb: Add If-Modified-Since support for snapshots
+> 
+> But the new tests would be for the new functionality (i.e. snapshot
+> support), so they wouldn't belong in the general refactoring commit.
 
-If I entered the password, it would be like this:
+I was thinking that "and add tests" would be about 'feed' action test
+and i-m-s.
 
-git pull origin masEnter passphrase for key '/home/user/.ssh/id_rsa':
-ter
+> > Currently all of those work
+> > 
+> >     http://.../gitweb.cgi?p=git.git;a=snapshot;h=v1.7.6;sf=tgz
+> >     http://.../gitweb.cgi?p=git.git;a=snapshot;h=f696543d;sf=tgz"
+> >     http://.../gitweb.cgi?p=git.git;a=snapshot;h=b1485af8;sf=tgz"
+> > 
+> > v1.7.6 is a tag, f696543d is a commit (v1.7.6^{}), b1485af8 is a tree
+> > (v1.7.6^{tree}).
+> > 
+> > The last URL would stop working after your change with 404
+> > "Unknown commit object".
+> 
+> Indeed it does.  I'll add you're suggested skipping for these cases.
 
-Then I press Enter, the command runs as it should be. The only problem=20
-is that this is a bit annoying.
+If by "skipping" you mean here turning off handling of If-Modified-Since
+and Last-Modified headers, then I agree.
+ 
+> There should be a way to determine the oldest commit refering to a
+> tree, which could be used for timestamping tree-ishes, but that can be
+> a project for another day ;).
 
-Hong
+That also can be ambiguous.
+
+-- 
+Jakub Narebski
+Poland
