@@ -1,70 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 10/9 v4] difftool: fix regression in '--prompt' options
-Date: Thu, 22 Mar 2012 12:13:29 -0700
-Message-ID: <7vsjh0wism.fsf@alter.siamese.dyndns.org>
-References: <1332358560-13774-4-git-send-email-tim.henigan@gmail.com>
- <1332381236-16004-1-git-send-email-tim.henigan@gmail.com>
- <7viphxz37j.fsf@alter.siamese.dyndns.org> <871uoljbe9.fsf@thomas.inf.ethz.ch>
- <CAFouetjqzAwCe3mHkpJB4Xod4rJEF9OD77ch906TGUd9+-KZWA@mail.gmail.com>
- <7v3990zi5h.fsf@alter.siamese.dyndns.org>
- <CAFouetj+myKuUqw3-SwnbZ-=Sey29q9xYdaW4noHp_ebkmrk-A@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/3] merge-recursive: don't detect renames from empty
+ files
+Date: Thu, 22 Mar 2012 14:18:51 -0500
+Message-ID: <20120322191851.GA23293@burratino>
+References: <20120322185246.GA27037@sigill.intra.peff.net>
+ <20120322185349.GC32727@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	davvid@gmail.com
-To: Tim Henigan <tim.henigan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 22 20:13:38 2012
+	Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Ralf Nyren <ralf.nyren@ericsson.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 22 20:19:14 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAnS5-00062e-Pk
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 20:13:38 +0100
+	id 1SAnXR-0002Qd-NY
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 20:19:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932161Ab2CVTNc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Mar 2012 15:13:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49046 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754067Ab2CVTNb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2012 15:13:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 167796907;
-	Thu, 22 Mar 2012 15:13:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eN1vV19Sn8vXK3Qf2Pv3LFgccyY=; b=EKqz9Y
-	xQwE7tzGHfhBnRrABJPehimpTnaRp6GybwSAnUnM7Ir4mw4gR4GwLipYdhzic5Xt
-	FJWTDS7XhJDx9ceR5+NSo+l9ylOJb5xx5pM+MBLy8BrThqoaPC8uj2BHOoxtvDYl
-	ACmSNnzqPDO7Zmh+sxjP+2UmcD0ep5NzxwuFE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ieh7uzzobFBBHbp8uPqn066N5hWUVuS7
-	nE3BcJzQjBgLKwa2tPyuLqzhhTKx5owMd3JX0vUK3qbBfS+GVpeY00BSTOgfdblI
-	o2Fm3VJOdHRmUZgLAl7fvm8Lesp+wa7DU8mFNgghEQPzPYO/esOvixv8DofAtQVV
-	vScc0xoxO1g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D7A66906;
-	Thu, 22 Mar 2012 15:13:31 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 963A16905; Thu, 22 Mar 2012
- 15:13:30 -0400 (EDT)
-In-Reply-To: <CAFouetj+myKuUqw3-SwnbZ-=Sey29q9xYdaW4noHp_ebkmrk-A@mail.gmail.com> (Tim
- Henigan's message of "Thu, 22 Mar 2012 15:01:12 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1C73BF7E-7453-11E1-AD40-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S964944Ab2CVTTG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Mar 2012 15:19:06 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:64553 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759359Ab2CVTTC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2012 15:19:02 -0400
+Received: by iagz16 with SMTP id z16so3497640iag.19
+        for <git@vger.kernel.org>; Thu, 22 Mar 2012 12:19:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=0dXGOKaDJsWmMYQn6Y+WTQ34UzK9Vj17oX5eFi5v7OY=;
+        b=lzYnv4R3mQaKtwCvapS3+NeKe9KsShD3BzwCX3BFuPIH+McdsNrFBnfBNdxiboIdRc
+         mxONCahBC07TkPxHBrAuUuIfDU/MYrIZBeojSGDh3vdyf7t+/L9coOBExjWo3QIGkiI3
+         VyDcJe2jr8S7CUhRC0W9/0pVFydNu/xG1VJdnbpQt2ioy0VFu84hFQTSug2dJT9gHEzN
+         Bt4R+EOX/d89YXjOwmvqjbVzsWfQPDOJ7BK2/HfQWtRnNOgwVTCWhCiHvzh0jClsMUIS
+         W3YSR8panapEyT91EzsRNS88L/HyLn+CeGT9FDIgihBX2c3pZj+MSrihnozhnrJdX3df
+         Qkqg==
+Received: by 10.50.159.198 with SMTP id xe6mr3319496igb.74.1332443942017;
+        Thu, 22 Mar 2012 12:19:02 -0700 (PDT)
+Received: from burratino (c-24-1-56-9.hsd1.il.comcast.net. [24.1.56.9])
+        by mx.google.com with ESMTPS id cg9sm2732778igb.17.2012.03.22.12.19.00
+        (version=SSLv3 cipher=OTHER);
+        Thu, 22 Mar 2012 12:19:01 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20120322185349.GC32727@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193693>
 
-Tim Henigan <tim.henigan@gmail.com> writes:
+Jeff King wrote:
 
-> I will resend the entire patch series (will be v6) when this is done.
->
-> Does this sound like a good plan?
+> We could do the same thing for general diff rename
+> detection. However, the stakes are much less high there, as
+> we are explicitly reporting the rename to the user. It's
+> only the automatic nature of merge-recursive that makes the
+> result confusing. So there's not as much need for caution
+> when just showing a diff.
 
-Absolutely.  Thanks for everything.
+The stakes may be different, but doesn't the same justification apply
+anyway?  If "git diff -M" chooses a random pairing to describe a
+renaming of multiple empty files, that seems just as confusing as
+merge-recursive making the same mistake.
+
+If adding this check in diffcore is more complicated, doing it in
+merge-recursive for now seems fine and prudent, but if we are doing it
+at the merge-recursive level just to be conservative then that seems
+like the wrong layer.
+
+Thanks for a clean and pleasant patch.
+Jonathan
