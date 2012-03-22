@@ -1,131 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Demonstrate failure of 'core.ignorecase = true'
-Date: Wed, 21 Mar 2012 16:58:13 -0700
-Message-ID: <7vmx79zeui.fsf@alter.siamese.dyndns.org>
-References: <1332370222-5123-1-git-send-email-pj@irregularexpressions.net>
+From: Michael Schubert <schu@schu.io>
+Subject: [GSoC] Finishing network support for libgit2
+Date: Thu, 22 Mar 2012 01:09:21 +0100
+Message-ID: <4F6A6DB1.1080202@schu.io>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Peter J. Weisberg" <pj@irregularexpressions.net>
-X-From: git-owner@vger.kernel.org Thu Mar 22 00:58:25 2012
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: libgit2@librelist.org
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 22 01:21:42 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAVQ9-0004Gq-Fh
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 00:58:25 +0100
+	id 1SAVmg-0003xD-7n
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 01:21:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753266Ab2CUX6R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Mar 2012 19:58:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47256 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752465Ab2CUX6Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2012 19:58:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 59AE463EB;
-	Wed, 21 Mar 2012 19:58:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wbkhBGsJ+Yl89Yywow8mpR9qtO4=; b=Ju1SBo
-	ao8pkVEL2ht6Fbtm/4+N4iyLWr3rxHsICkCRN0KriPylQsnAP/vQOm4vL57eb94M
-	P+LffhhuQcDu7Enx53Jt4N3klmpbe2DvnxoLM3xclSkJ+4Hf7wLUaNsjPAHgUANy
-	xHr8Y8GEGEwBGQoQPl2xsPN3WwMPnsCFp/RjI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WP++DdUaTsn65T28uiKw0H5/CmfPa4o4
-	Upr94nXE92iByUIQUaX1ZIwvbs5T1+RhMXwM0U8bbv+HQWYPOqua9D9iUUaJ21/3
-	3Q61KSohSqFpA81obpnwObE/HNshR0YZBZKigVRauEE0wYeHG2fxlc3PMYiC6bFW
-	tsl7Qu88Lc0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5062563EA;
-	Wed, 21 Mar 2012 19:58:15 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BF4A863E9; Wed, 21 Mar 2012
- 19:58:14 -0400 (EDT)
-In-Reply-To: <1332370222-5123-1-git-send-email-pj@irregularexpressions.net>
- (Peter J. Weisberg's message of "Wed, 21 Mar 2012 15:50:22 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B8FEE15E-73B1-11E1-8334-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932329Ab2CVAVh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Mar 2012 20:21:37 -0400
+Received: from schu.io ([178.77.73.177]:57090 "EHLO
+	lvps178-77-73-177.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754099Ab2CVAVg (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Mar 2012 20:21:36 -0400
+X-Greylist: delayed 647 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 Mar 2012 20:21:36 EDT
+Received: from [192.168.1.101] (e178181226.adsl.alicedsl.de [85.178.181.226])
+	by lvps178-77-73-177.dedicated.hosteurope.de (Postfix) with ESMTPSA id 81E1514954001;
+	Thu, 22 Mar 2012 01:10:46 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:11.0) Gecko/20120314 Thunderbird/11.0
+X-Enigmail-Version: 1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193628>
 
-"Peter J. Weisberg" <pj@irregularexpressions.net> writes:
+Hi everybody,
 
-> From: "Peter J. Weisberg" <pj@irregularexpressions.net>
->
-> On a filesystem that *is* case-sensitive, renaming a file to a name
-> that would be equivalent on a case-insensitive filesystem makes Git
-> think the original file was deleted.  Add a test that demonstrates
-> this as a known error.
-> ---
+I intend to apply for this year's GSoC to work on libgit2 [1],
+namely "Finishing network support for libgit2" as outlined
+under [2].
 
-Thanks, Needs sign-off.
+>From my point of view, the idea makes a good GSoC project as
+is, but more experienced developers might see potential pitfalls,
+for example regarding "pack-objects as a prerequisite".?
+(I haven't read / touched pack-related code before.)
 
-> I have a repository that contains files that I sync from a place where
-> names are case-insensitive.  When I sync a file that has a change in
-> the case of the file name, I want Git to ignore that non-change.  I
-> would think core.ignorecase would accomplish this, but it does not.
-> ---
+So far, there's two things I would like to discuss in advance:
 
-No need for the second "---"
+* What do you consider "the best" ssh library to be used?
+  libssh [3] seems to be the way to go, though I've never used
+  it before nor did I do any ssh related development. What
+  about libssh2 [4]? (Site note: libgit2 aims to be as platform
+  independent as possible.)
 
->  t/t2000-ignorecase-config.sh |   21 +++++++++++++++++++++
+* In your opinion, what features make "a sane API for managing
+  the user's SSH keys"?
 
-We'd rather not waste a new test number for a single test like this.
+(In case you want to discuss anything else / share ideas, please
+do.)
 
->  1 files changed, 21 insertions(+), 0 deletions(-)
->  create mode 100755 t/t2000-ignorecase-config.sh
->
-> diff --git a/t/t2000-ignorecase-config.sh b/t/t2000-ignorecase-config.sh
-> new file mode 100755
-> index 0000000..9d05cee
-> --- /dev/null
-> +++ b/t/t2000-ignorecase-config.sh
-> @@ -0,0 +1,21 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2012 Peter J Weisberg
-> +#
-> +
-> +test_description='core.ignorecase'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_failure "diff-files doesn't show case change when ignorecase=true" '
+About me: I study Computer Science at FU Berlin [5], besides I
+do a Git-related part time job for a SCM company. As a regular
+contributor to libgit2 [6], I'm rather familiar with the community
+and the bigger part of the code base. GSoC would allow me to both
+gain experience with "Git's network stack" and to add an important
+yet missing core part to libgit2.
 
-This needs to be protected by test prerequisite to make sure that the test
-is run on a case insensitive filesystem.  Even if you declare that the
-filesystem is case insensitive by setting core.ignorecase to true, the
-underlying system calls like open("foo") will *not* magically start
-returning a file descriptor opened for "FOO" if your filesystem is not
-case insensitive.
+Thank you.
 
-Perhaps something as simple as the following would do:
+Michael (m1sc in #git, #git-devel, #libgit2)
 
-	# on case insensitive filesystems, "mv" would fail
-        if >testfile && ! mv testfile TESTFILE >/dev/null 2>/dev/null
-        then
-                test_set_prereq CASE_INSENSITIVE_FS
-        fi
-        rm -f testfile TESTFILE
-
-	test_expect_failure CASE_INSENSITIVE_FS "diff-files doesn't..." '
-        	... test body comes here ...
-
-
-> +	git config core.ignorecase true &&
-> +
-> +	touch foo &&
-> +	git add foo &&
-> +	git commit -m "foo" &&
-> +	mv foo FOO &&
-> +
-> +	test -z "$(git diff-files)"
-> +'
-> +
-> +test_done
+[1] http://libgit2.github.com
+[2] https://github.com/peff/git/wiki/SoC-2012-Ideas
+[3] http://www.libssh.org
+[4] http://www.libssh2.org
+[5] http://inf.fu-berlin.de/en/index.html
+[6] `git log --oneline --author="schu-github"`
+ 
