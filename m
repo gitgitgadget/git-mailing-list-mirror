@@ -1,80 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Demonstrate failure of 'core.ignorecase = true'
-Date: Thu, 22 Mar 2012 19:00:56 -0400
-Message-ID: <20120322230056.GC14874@sigill.intra.peff.net>
-References: <1332370222-5123-1-git-send-email-pj@irregularexpressions.net>
- <4F6ACB67.1080503@viscovery.net>
- <4F6B0C3E.8090501@in.waw.pl>
- <20120322141245.GB8803@sigill.intra.peff.net>
- <7vbonozi8c.fsf@alter.siamese.dyndns.org>
- <20120322173701.GA11928@sigill.intra.peff.net>
- <7viphwxyp1.fsf@alter.siamese.dyndns.org>
- <4F6B84DF.8040806@in.waw.pl>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: Currently checked out branch is not bold in gitk when using ssh
+ X-forwarding
+Date: Thu, 22 Mar 2012 18:08:28 -0500
+Message-ID: <4F6BB0EC.2080209@gmail.com>
+References: <CALykgB0LCjDsMYSB1jAxBmPxsf-f6XDDFv+1nmtvCLP65ex5vw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	"Peter J. Weisberg" <pj@irregularexpressions.net>,
-	git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
-To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
-X-From: git-owner@vger.kernel.org Fri Mar 23 00:01:06 2012
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeremy Ramer <jdramer@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 23 00:08:39 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAr0C-0002OH-Eq
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 00:01:04 +0100
+	id 1SAr7W-0008Pq-1h
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 00:08:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031011Ab2CVXA7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Mar 2012 19:00:59 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57025
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755598Ab2CVXA6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2012 19:00:58 -0400
-Received: (qmail 6900 invoked by uid 107); 22 Mar 2012 23:01:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 22 Mar 2012 19:01:14 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Mar 2012 19:00:56 -0400
-Content-Disposition: inline
-In-Reply-To: <4F6B84DF.8040806@in.waw.pl>
+	id S1757711Ab2CVXId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Mar 2012 19:08:33 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:43871 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756364Ab2CVXIc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2012 19:08:32 -0400
+Received: by obbeh20 with SMTP id eh20so1867071obb.19
+        for <git@vger.kernel.org>; Thu, 22 Mar 2012 16:08:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=6ITKh+YCKp0pbNvfq9WzgeupD7ztGwVLxz/7Bqg+N94=;
+        b=MQ7zuZkk8+SjMenUp9d4UqTo4w+ltBSRhkUZMHFpcv07oPpq1WUW8vcc/BPBckd2HP
+         yuKWcnEslUUrfNrl+fi2T0KngJwggr73OzwWTSrRUMVBNy6XKVdIk2VIkxz4j5XJwBNH
+         UfMEaX16VTaJIcTqjCZLajbVyEKbCPx0PP+qYYnXc3uR1M9hcXizRlJ+MLJy7JuqFr7N
+         obUr7LUDT1OVs6BpJuO+0jDL969KIMMLoRvwcqzjuAZCnhk1koCWb3fDRA/N/LiPfeQi
+         f2SZDWbjBRf1cuik5QT1aJyARF6nMgdoNWp/H7f1SDSzafWoVMcPTMpytYJMxkYTZm1J
+         IblQ==
+Received: by 10.182.159.65 with SMTP id xa1mr12276643obb.25.1332457711584;
+        Thu, 22 Mar 2012 16:08:31 -0700 (PDT)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id n7sm4813159oeh.4.2012.03.22.16.08.29
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 22 Mar 2012 16:08:30 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.28) Gecko/20120306 Thunderbird/3.1.20
+In-Reply-To: <CALykgB0LCjDsMYSB1jAxBmPxsf-f6XDDFv+1nmtvCLP65ex5vw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193729>
 
-On Thu, Mar 22, 2012 at 09:00:31PM +0100, Zbigniew J=C4=99drzejewski-Sz=
-mek wrote:
+On 3/22/2012 4:10 PM, Jeremy Ramer wrote:
+> However, when I log in from my newer Ubuntu 11.11 laptop (ssh -X
+> buildserver) and start gitk the currently checked out branch is not
+> displayed in bold font. In fact, all the fonts are a little ugly,
+> though it is the lack of bold that is the hardest to work with.
+>
+FWIW, my theory is that is has something to do with your fonts. Just a
+simple end user observation.  I'm not a gitk programmer.
 
-> Maybe:
-> --- 8< ---
-> When set, case-insensitive comparisons will be used when internally
-> comparing file names.
->=20
-> The default is false, but when a new repository is created by
-> git-clone[1] or git-init[1], git will probe the filesystem and set it
-> to `true` if the filesystem is case-insensitive.
->=20
-> On case-insensitive filesystems like FAT, NTFS and HSF+, names that
-> differ only in capitalization, like "Makefile" and "makefile", refer
-> to the same file. While such filesystems usually preserve the
-> capitalization used during file creation, tools designed for such
-> filesystems will often modify capitalization when saving files and
-> when displaying filenames. Enabling core.ignorecase causes git to
-> ignore case-only differences in file names.
->=20
-> Enabling core.ignorecase on a case insensitive filesystem does
-> not make sense, because filenames with different capitalization will
-> still be treated as different by the filesystem.
-> --- >8 ---
+Maybe you don't have your fonts set for what-you-want in gitk.  Maybe 
+you don't have the fonts installed/setup on your ubuntu box for 
+what-you-want in gitk.
 
-=46rom his response, I guess Junio does not agree, but this is my favor=
-ite
-of the texts proposed so far.
+I assume gitk uses the fonts that you tell it to, or that are available.
 
--Peff
+Hope this helps.
 
-PS If we do use it, it needs s/HSF/HFS/.
+v/r,
+neal
