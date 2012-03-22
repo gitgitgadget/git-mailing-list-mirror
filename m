@@ -1,74 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v0 0/2] git-less: a specialized pager for git-log
-Date: Thu, 22 Mar 2012 12:00:02 -0700
-Message-ID: <7v1uokxxzh.fsf@alter.siamese.dyndns.org>
-References: <1332441744-5142-1-git-send-email-h.mitake@gmail.com>
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: Re: [PATCH 10/9 v4] difftool: fix regression in '--prompt' options
+Date: Thu, 22 Mar 2012 15:01:12 -0400
+Message-ID: <CAFouetj+myKuUqw3-SwnbZ-=Sey29q9xYdaW4noHp_ebkmrk-A@mail.gmail.com>
+References: <1332358560-13774-4-git-send-email-tim.henigan@gmail.com>
+	<1332381236-16004-1-git-send-email-tim.henigan@gmail.com>
+	<7viphxz37j.fsf@alter.siamese.dyndns.org>
+	<871uoljbe9.fsf@thomas.inf.ethz.ch>
+	<CAFouetjqzAwCe3mHkpJB4Xod4rJEF9OD77ch906TGUd9+-KZWA@mail.gmail.com>
+	<7v3990zi5h.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Hitoshi Mitake <h.mitake@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 22 20:00:15 2012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	davvid@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 22 20:01:20 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAnF8-0004ob-Bh
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 20:00:14 +0100
+	id 1SAnGA-0005ae-Kc
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 20:01:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754989Ab2CVTAI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Mar 2012 15:00:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43521 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751996Ab2CVTAH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2012 15:00:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E56376547;
-	Thu, 22 Mar 2012 15:00:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sp8ouYzm0eFGp7/Gmbs0hDPUkUY=; b=N5TZKH
-	6mLNFlUSvRrh7TPhns4kUsyzYzbNJS5vepHzZG+xV2VJRhZjYnSFMiavCGGw/mx6
-	AoYPGe+NXULNpOWt/fKVJImRe7DEAVlZa4iEalz09EoIbn0ure+YdoKx+cSpKx58
-	HVKG8pUs/hfEnK2bNup/UptUb+9/ezCMDuDGk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=I+Zdbx7mY+/ketGF+tQtr7Z6n6uxsuA5
-	TYZx6avg2F/JZWQL/Lc5nOtGSwEJHUY7QTb4E4gAfk1cutGs/tjD6l6PSV+ibZeu
-	yAJLpj/Ji4dA5F69VPEzQGyLFrvNWTINsxG2bSE0aGVXmU7wKrO/tD7Cn6XtApBd
-	oKKo8sFLNdk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DBC896546;
-	Thu, 22 Mar 2012 15:00:05 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6DC1D6540; Thu, 22 Mar 2012
- 15:00:04 -0400 (EDT)
-In-Reply-To: <1332441744-5142-1-git-send-email-h.mitake@gmail.com> (Hitoshi
- Mitake's message of "Fri, 23 Mar 2012 03:42:22 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3BF064D0-7451-11E1-A253-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759142Ab2CVTBO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Mar 2012 15:01:14 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:65408 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751341Ab2CVTBN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Mar 2012 15:01:13 -0400
+Received: by iagz16 with SMTP id z16so3478800iag.19
+        for <git@vger.kernel.org>; Thu, 22 Mar 2012 12:01:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=nS6U1ZzLvSph+lE1zdHiLKqMkSFabbojFuhWIItDasI=;
+        b=V+j4u9m7jJ95emKCsNY9Gbu/JfDsYziszI67NHTSndv5s6eeabH1BkFgi2hq/qV2Nu
+         H3y9bP9tvzUxaml3St+UqWoldtPKSNyDf5/frtantIhVFSITYapygQgdw5NubSADNfth
+         UwEs/wbFGCrDYczpGazJMyGNyAsNzLAkTguS+I7XYj8rmPu7lOWizjIRVCG2oYMEFd+B
+         9Pxff2JKP5n2OIPH4poGnFm6q+jjeB6+B1vqUOB867wTsNNBl6vwtgONajExIp3XlWPa
+         mTiApjSIV1lFUZUqK8B8SYBjud26tygjyi95uFGVhWBoyp+kzFX60L/w7jOjDjzhdaQe
+         bhwQ==
+Received: by 10.42.142.136 with SMTP id s8mr5624110icu.36.1332442872632; Thu,
+ 22 Mar 2012 12:01:12 -0700 (PDT)
+Received: by 10.42.138.5 with HTTP; Thu, 22 Mar 2012 12:01:12 -0700 (PDT)
+In-Reply-To: <7v3990zi5h.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193688>
 
-Hitoshi Mitake <h.mitake@gmail.com> writes:
+On Thu, Mar 22, 2012 at 12:59 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Tim Henigan <tim.henigan@gmail.com> writes:
+>
+>> v5 of the patch will use Getopt to parse the '--[no-]prompt' options
+>> again. =C2=A0I will also add a new patch to the series to implement
+>> '--no-gui'.
+>
+> Sensible. =C2=A0At that point, it should be rolled into an updated [1=
+/9] so
+> that Getopt::Long is used correctly from the get-go, I think.
 
-> If the pager can recognize the end of each commit, more confortable viewing of
-> git-log's output will be possible.
+That sounds reasonable.  I will re-roll the series with the following c=
+hanges:
+  - Squash "fix regression in '--prompt' options" into the first patch
+  - Squash "teach dir-diff to copy modified files back" into the
+implementation of --dir-diff
+  - Squash "add test for difftool --tool-help" into implementation of
+--tool-help
+  - Squash "add tests for difftool --dir-diff" into the implementation
+of --dir-diff
+  - Reorder so that "add '--no-gui' as an option" is patch #2
+(immediately after change to Getopts::Long)
 
-I think people just use "/^commit .*<RET>" once and then nagivate with "n"
-(and to change direction, "?<RET>") for this.
+This should make the series look cleaner and also insure that new
+features and their tests are added in the same commit.
 
-> For implementing this feature, I had to make modification of git-log
+I will resend the entire patch series (will be v6) when this is done.
 
-I do not think the change to "log" is necessary nor worth it.  If the
-pager is so specialized to be tied to git, it should learn to recognize
-the output from "git", namely, "git log" and "git log -p" would never have
-a line that begins with "^commit " that is not the beginning of one record
-for a commit.
-
-If you are not comfortable using "less", perhaps a program like "tig" that
-is very specialized for working with git might help you better.
+Does this sound like a good plan?
