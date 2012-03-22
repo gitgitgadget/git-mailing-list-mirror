@@ -1,128 +1,94 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: [PATCH 13/9 v5] difftool: add '--no-gui' as an option
-Date: Thu, 22 Mar 2012 11:02:21 -0400
-Message-ID: <1332428541-24878-3-git-send-email-tim.henigan@gmail.com>
-References: <1332428541-24878-1-git-send-email-tim.henigan@gmail.com>
-Cc: Tim Henigan <tim.henigan@gmail.com>
-To: gitster@pobox.com, git@vger.kernel.org, davvid@gmail.com
-X-From: git-owner@vger.kernel.org Thu Mar 22 16:09:20 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Demonstrate failure of 'core.ignorecase = true'
+Date: Thu, 22 Mar 2012 09:57:23 -0700
+Message-ID: <7vbonozi8c.fsf@alter.siamese.dyndns.org>
+References: <1332370222-5123-1-git-send-email-pj@irregularexpressions.net>
+ <4F6ACB67.1080503@viscovery.net> <4F6B0C3E.8090501@in.waw.pl>
+ <20120322141245.GB8803@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	"Peter J. Weisberg" <pj@irregularexpressions.net>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 22 17:57:37 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAjdd-0000IA-PG
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 16:09:18 +0100
+	id 1SAlKS-0003VV-Nr
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 17:57:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030386Ab2CVPJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Mar 2012 11:09:14 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:43136 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751665Ab2CVPJL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2012 11:09:11 -0400
-Received: by mail-qc0-f174.google.com with SMTP id w6so1367266qcq.19
-        for <git@vger.kernel.org>; Thu, 22 Mar 2012 08:09:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=Yg30JMTJ+Wq8RP0sPDeM25mmYQ0NPhO4nwlDGvxPGhs=;
-        b=lGtb7mAE3W2UKcSKt4T6VmEAEIkl/HEaA8vOH7vIXK4MIl0uPB+sq5IrW4NxcmFyf9
-         Kix3Y8DNDiU4k8UXBe+doFTe218pV/W338Cc7PzJUDWZ/XRl3qcbNyT4D37lQCgXPoTw
-         N9Ed7KTVH4T21ceXWWvE8xQbf6jUtAwWK18Fnuv8451J32xYHzCyEB3VmjE+Rw9nEYGW
-         ors5MWA+DX1vbbnxM8SKr75mhK40ntUm7xeHyocZCA35s2uSBW756IxzmKn6sfx9AEDP
-         1A2p0aVmz9XMuo4Ss5xlXfCiudahAbDQ0UnAiDmNoFqme+YdIWrwgjZsV4NwQAXQOZlT
-         bMkw==
-Received: by 10.224.9.141 with SMTP id l13mr11257423qal.52.1332428951073;
-        Thu, 22 Mar 2012 08:09:11 -0700 (PDT)
-Received: from localhost (adsl-99-38-69-118.dsl.sfldmi.sbcglobal.net. [99.38.69.118])
-        by mx.google.com with ESMTPS id by18sm6333513qab.12.2012.03.22.08.09.05
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 22 Mar 2012 08:09:10 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.rc1.40.g756bbcd
-In-Reply-To: <1332428541-24878-1-git-send-email-tim.henigan@gmail.com>
+	id S965042Ab2CVQ52 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Mar 2012 12:57:28 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50771 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964871Ab2CVQ50 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2012 12:57:26 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CCB5E650C;
+	Thu, 22 Mar 2012 12:57:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3gNW+kkWLLJlIR1c7CS8eRU7Uw4=; b=ZdZrpY
+	UBujiIu1M90e+mdewEIv0T8IiLph4jiLOiRffHeAueRDz+4ThgCx2q3vh8hL5o35
+	oH6xLD2io328BkPVJAlJ5bvhBt5kPbX7YZ9CWhqjkcIxWu3jnlwepUdGJxMN1PYN
+	xhTmURAKbbYIxdIg47/VEr5rYl59Nr6PZImcs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=r5k2/npGkd5RbWRu6hcNHbkE3nFoPdqp
+	/2HiVxV2n3oDQ8M/o8R4jvqwY5KYuG/WM/ry0ptgXvCr+SJWHNrpUHjIWuPJepwg
+	9M50wS4lMvasJHSpFvjw2ucfeQle2Zl6XC26WtPgUAD204OMkkWe0SNl6bEeNQVH
+	yxYUbcN1aYY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C4762650B;
+	Thu, 22 Mar 2012 12:57:25 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 531206506; Thu, 22 Mar 2012
+ 12:57:25 -0400 (EDT)
+In-Reply-To: <20120322141245.GB8803@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 22 Mar 2012 10:12:45 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 199176F6-7440-11E1-9722-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193664>
 
-This commit teaches difftool to handle the '--no-gui' option. This option
-negates the existing '--gui' option. The last setting given on the command
-line wins.
+Jeff King <peff@peff.net> writes:
 
-This allows a user to configure "[alias] mdt = difftool --gui", but still
-have the ability to override the setting without error:
+> I don't know. It says:
+>
+>   If true, this option enables various workarounds to enable git to work
+>   better on filesystems that are not case sensitive, like FAT. For
+>   example, if a directory listing finds "makefile" when git expects
+>   "Makefile", git will assume it is really the same file, and continue
+>   to remember it as "Makefile".
+>
+> which seems pretty clear to me that this is "let git work better on
+> case-insensitive filesystems", not "make git magically case-insensitive
+> on case sensitive filesystem".
 
-$ git mdt --no-gui
+Yes, it says what it needs to say quite clearly.
 
-Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
----
+> But maybe we could add be more explicit,
+> like:
 
-This patch is new to the series. It fixes a potential bug pointed out
-by Junio Hamano on the Git developers list [1].
+Hrm, replacing unclear part with clarified text may make sense, but it
+would not help adding new text if the existing description is not clear
+enough.
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/193601/focus=193633
+How about doing it like this?
 
+   Case-insensitive filesystems like FAT and HFS+ have various strange
+   behaviours, like reporting that a file "Makefile" already exists when
+   the file that actually exists on them is "makefile". By setting this
+   variable to `true`, Git employs logic to work around them.
 
- git-difftool.perl   |    7 ++++---
- t/t7800-difftool.sh |   13 +++++++++++++
- 2 files changed, 17 insertions(+), 3 deletions(-)
-
-diff --git a/git-difftool.perl b/git-difftool.perl
-index 9892d1e..d9be7d6 100755
---- a/git-difftool.perl
-+++ b/git-difftool.perl
-@@ -29,7 +29,8 @@ sub usage
- 	my $exitcode = shift;
- 	print << 'USAGE';
- usage: git difftool [-t|--tool=<tool>] [--tool-help]
--                    [-x|--extcmd=<cmd>] [-g|--gui]
-+                    [-x|--extcmd=<cmd>]
-+                    [-g|--gui] [--no-gui]
-                     [--prompt] [-y|--no-prompt]
-                     [-d|--dir-diff]
-                     ['git diff' options]
-@@ -132,7 +133,7 @@ sub setup_dir_diff
- # parse command-line options. all unrecognized options and arguments
- # are passed through to the 'git diff' command.
- my ($difftool_cmd, $dirdiff, $extcmd, $gui, $help, $prompt, $tool_help);
--GetOptions('g|gui' => \$gui,
-+GetOptions('g|gui!' => \$gui,
- 	'd|dir-diff' => \$dirdiff,
- 	'h' => \$help,
- 	'prompt!' => \$prompt,
-@@ -169,7 +170,7 @@ if (defined($extcmd)) {
- 		usage(1);
- 	}
- }
--if (defined($gui)) {
-+if ($gui) {
- 	my $guitool = "";
- 	$guitool = Git::config('diff.guitool');
- 	if (length($guitool) > 0) {
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index 5f3ad3f..bbe71e5 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -94,6 +94,19 @@ test_expect_success PERL 'difftool honors --gui' '
- 	restore_test_defaults
- '
- 
-+test_expect_success PERL 'difftool --gui last setting wins' '
-+	git config diff.guitool bogus-tool &&
-+	git difftool --no-prompt --gui --no-gui &&
-+
-+	git config merge.tool bogus-tool &&
-+	git config diff.tool bogus-tool &&
-+	git config diff.guitool test-tool &&
-+	diff=$(git difftool --no-prompt --no-gui --gui branch) &&
-+	test "$diff" = "branch" &&
-+
-+	restore_test_defaults
-+'
-+
- test_expect_success PERL 'difftool --gui works without configured diff.guitool' '
- 	git config diff.tool test-tool &&
- 
--- 
-1.7.10.rc1.40.g756bbcd
+   The default is false, except that git-clone[1] and git-init[1] will
+   probe the filesystem and set it to `true` as necessary when a new
+   repository is created.
