@@ -1,106 +1,63 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v3] Isolate If-Modified-Since handling in gitweb
-Date: Thu, 22 Mar 2012 13:46:34 +0100
-Message-ID: <201203221346.35295.jnareb@gmail.com>
-References: <7v62dy4zhf.fsf@alter.siamese.dyndns.org> <m3sjh2ay6j.fsf@localhost.localdomain> <7v1uol3m5m.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?WmJpZ25pZXcgSsSZZHJ6ZWpld3NraS1Tem1law==?= 
+	<zbyszek@in.waw.pl>
+Subject: Re: Strange effect merging empty file
+Date: Thu, 22 Mar 2012 13:47:04 +0100
+Message-ID: <4F6B1F48.3040007@in.waw.pl>
+References: <4F69AD3C.4070203@ericsson.com> <4F69B375.5050205@in.waw.pl> <86iphwomnq.fsf@red.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "W. Trevor King" <wking@drexel.edu>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 22 13:46:50 2012
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ralf Nyren <ralf.nyren@ericsson.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Thu Mar 22 13:47:21 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAhPj-0006lP-7o
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 13:46:47 +0100
+	id 1SAhQD-00079L-Om
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 13:47:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757872Ab2CVMqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Mar 2012 08:46:42 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:44355 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755115Ab2CVMql (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2012 08:46:41 -0400
-Received: by eekc41 with SMTP id c41so676612eek.19
-        for <git@vger.kernel.org>; Thu, 22 Mar 2012 05:46:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=J7ZMhuRpX9f2oQKkqCpxzp9fYuJsrhedyYyWKfMVP5E=;
-        b=D3duqEbzo6qKrlEWjLBStS/hmexS1V/z3VBAlQYCIG3NvajjT1mLM7BrCUakx0njHX
-         KnbdB7pJIbtEIUOsl1++INz2ObBS2Ig4kEtO8XZiAUN0s+shjNBPBXbpM512X2vjDz7s
-         miCVXa+xEEWRkNJUSjwFtbVwTTuEr0uA8nDjStxuLXp1pealZla8h2hgJ3QUxZXTRuZs
-         soIzTSPA7XVLPNqS2FqyWpuMaYQImnZ273ODtajPuuRNiQ8vGplOe0birSh+5I/QdBNs
-         HOQly8whpt7Y2PamUO4508Q3g+plpfzur4JsJ7L3e8odLQhNRANNAYzwkHhEIlYo5YQ5
-         wpqA==
-Received: by 10.213.20.80 with SMTP id e16mr581998ebb.135.1332420400363;
-        Thu, 22 Mar 2012 05:46:40 -0700 (PDT)
-Received: from [192.168.1.13] (abwe160.neoplus.adsl.tpnet.pl. [83.8.228.160])
-        by mx.google.com with ESMTPS id n55sm16733612eef.6.2012.03.22.05.46.38
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 22 Mar 2012 05:46:39 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v1uol3m5m.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1757900Ab2CVMrN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Mar 2012 08:47:13 -0400
+Received: from kawka.in.waw.pl ([178.63.212.103]:56060 "EHLO kawka.in.waw.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755115Ab2CVMrN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2012 08:47:13 -0400
+Received: from optyk25.fuw.edu.pl ([193.0.81.79])
+	by kawka.in.waw.pl with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1SAhQ6-0001UP-Iw; Thu, 22 Mar 2012 13:47:10 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:8.0) Gecko/20120104 Icedove/8.0
+In-Reply-To: <86iphwomnq.fsf@red.stonehenge.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193650>
 
-On Wed, 21 Mar 2012, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> > By the way, it is custom on this mailing list to usually Cc (send a
-> > copy) to all people participating in discussion, and not only to git
-> > mailing list.
-> >
-> > "W. Trevor King" <wking@drexel.edu> writes:
-> >
-> > > Subject: [PATCH v3] Isolate If-Modified-Since handling in gitweb
-> >
-> > Perhaps a better title would be:
-> >
-> >   gitweb: Refactor If-Modified-Since handling, support in snapshot
-> 
-> With "gitweb: " prefix to denote what area it affects, that is certainly
-> better.  Given the primary objective and effect is that the snapshot
-> feature starts honoring i-m-s,
-> 
-> 	gitweb: honor If-Modified-Since request header in snapshot
-> 
-> would be sufficient.
+On 03/22/2012 01:17 PM, Randal L. Schwartz wrote:
+>>>>>> "Zbigniew" =3D=3D Zbigniew J=C4=99drzejewski-Szmek<zbyszek@in.wa=
+w.pl>  writes:
+>
+> Zbigniew>  touch .gitignore
+>
+> If you're doing this to make sure git makes an empty directory, alway=
+s
+> put the directory name in there as a comment... that makes it (a) not=
+ an
+> empty file (so merge doesn't get confused) and (b) unique, so when yo=
+u
+> change it, merge won't try to change other similar empty files.
 
-That is a very good title... and if all changes were to be put in single
-commit (see below), that is what we should concentrate on.  Refactoring
-would be just a detail.
- 
-> > to mention all that thispatch does.  Though trouble with coming up
-> > with a short but fairly complete one-line summary might mean that this
-> > patch would be better split in two: refactoring and adding support for
-> > If-Modified-Since to snapshots.
-> 
-> If many existing callsites had duplicated code to handle i-m-s, we may
-> want two patch series, the first of which consolidates them into a single
-> helper function without changing anything else (most importantly, without
-> regression) and the second that uses the helper to add support in the
-> snapshot feature.  But if that is not the case, I think we can go either
-> way.
+Yes, this will indeed fix this particular problem. But in general, empt=
+y=20
+files can be used for various reasons, and it can be a pretty nasty=20
+surprise if they sprout random content as a result of a merge.
 
-There is only one callsite, so theoretically we could do it in single
-commit, refactoring to add support in new callsite...
+Maybe merge-recursive could special-case empty files?
 
-...if not for the fact that control flow changes from using conditional
-and early return to [longjump] "exception" based one.  That is why
-I think it would be better to put tests and refactoring in a commit
-separate from adding If-Modified-Since handling to 'snapshot' action.
-
-tl;dr.  Two commits.
--- 
-Jakub Narebski
-Poland
+Zbyszek
