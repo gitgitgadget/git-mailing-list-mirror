@@ -1,72 +1,105 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Demonstrate failure of 'core.ignorecase = true'
-Date: Thu, 22 Mar 2012 07:49:11 +0100
-Message-ID: <4F6ACB67.1080503@viscovery.net>
-References: <1332370222-5123-1-git-send-email-pj@irregularexpressions.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 10/9 v4] difftool: fix regression in '--prompt' options
+Date: Thu, 22 Mar 2012 09:19:26 +0100
+Message-ID: <871uoljbe9.fsf@thomas.inf.ethz.ch>
+References: <1332358560-13774-4-git-send-email-tim.henigan@gmail.com>
+	<1332381236-16004-1-git-send-email-tim.henigan@gmail.com>
+	<7viphxz37j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Peter J. Weisberg" <pj@irregularexpressions.net>
-X-From: git-owner@vger.kernel.org Thu Mar 22 07:49:28 2012
+Content-Type: text/plain; charset="us-ascii"
+Cc: Tim Henigan <tim.henigan@gmail.com>, <git@vger.kernel.org>,
+	<davvid@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 22 09:19:51 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAbps-00031B-J9
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 07:49:24 +0100
+	id 1SAdFO-0006BM-Ks
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 09:19:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754116Ab2CVGtR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Mar 2012 02:49:17 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:10909 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751341Ab2CVGtQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2012 02:49:16 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.76)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1SAbpf-0004Yq-Vd; Thu, 22 Mar 2012 07:49:12 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 7193A1660F;
-	Thu, 22 Mar 2012 07:49:11 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:10.0.2) Gecko/20120216 Thunderbird/10.0.2
-In-Reply-To: <1332370222-5123-1-git-send-email-pj@irregularexpressions.net>
-X-Spam-Score: -1.4 (-)
+	id S1756269Ab2CVITj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Mar 2012 04:19:39 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:53723 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755994Ab2CVIT3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2012 04:19:29 -0400
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 22 Mar
+ 2012 09:19:25 +0100
+Received: from thomas.inf.ethz.ch.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.355.2; Thu, 22 Mar
+ 2012 09:19:27 +0100
+In-Reply-To: <7viphxz37j.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 21 Mar 2012 21:09:36 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193636>
 
-Am 3/21/2012 23:50, schrieb Peter J. Weisberg:
-> +test_expect_failure "diff-files doesn't show case change when ignorecase=true" '
-> +	git config core.ignorecase true &&
-> +
-> +	touch foo &&
-> +	git add foo &&
-> +	git commit -m "foo" &&
-> +	mv foo FOO &&
-> +
-> +	test -z "$(git diff-files)"
-> +'
+Junio C Hamano <gitster@pobox.com> writes:
 
-I tried this in my git.git clone on Windows (NTFS), and it did not produce
-the expected failure:
+> Tim Henigan <tim.henigan@gmail.com> writes:
+>
+>> +# the '--prompt' and '--no-prompt' options require special treatment
+>> +# because they may be specified more than once...the last one "wins".
+>> +for (@ARGV) {
+>> +	if (($_ eq "-y") or ($_ eq "--no-prompt")) {
+>> +		$prompt = 0;
+>> +	} elsif ($_ eq "--prompt") {
+>> +		$prompt = 1;
+>> +	} else {
+>> +		push(@diffargs, $_);
+>> +	}
+>> +}
+>
+> I really do not like the direction in which this series is going.  We do
+> not have a similar --no-gui option to defeat --gui option that may appear
+> earlier on the command line, but when we fix that bug (isn't it a bug?),
+> we would have to teach this loop about that option, wouldn't we?
+>
+> In the end, won't you end up resurrecting the argument parsing loop that
+> you got rid of with the first patch in your series?  Isn't this working
+> around the problem introduced only because you are using Getopt::Long and
+> hitting its limitations?
 
-D:\Src\mingw-git>git config core.ignorecase
-true
+Limitations?  You can basically steal code from git-send-email.  As an
+example:
 
-D:\Src\mingw-git>mv git.c GIT.C
+---- 8< ----
+#!/usr/bin/perl
 
-D:\Src\mingw-git>git diff-files
+use strict;
+use warnings;
+use Getopt::Long;
 
-D:\Src\mingw-git>echo %ERRORLEVEL%
+my $foo = 0;
+my $rc = GetOptions("foo!" => \$foo,
+		    "n" => sub { $foo = 0; },
+		    "y" => \$foo);
+
+print "$foo\n";
+---- 8< ----
+
+$ ./getopt-test.perl -n
+0
+$ ./getopt-test.perl -y
+1
+$ ./getopt-test.perl --foo
+1
+$ ./getopt-test.perl --no-foo
+0
+$ ./getopt-test.perl --foo --no-foo
+0
+$ ./getopt-test.perl -y -n
+0
+$ ./getopt-test.perl --foo -n
 0
 
-D:\Src\mingw-git>ls -l [Gg][Ii][Tt].[Cc]
--rw-r--r--    1 jsixt    Administ    17166 Mar 22 06:44 GIT.C
-
-What am I missing?
-
--- Hannes
+--
+Thomas Rast
+trast@{inf,student}.ethz.ch
