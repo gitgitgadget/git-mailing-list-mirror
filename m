@@ -1,131 +1,76 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v3 12/9] t7800: add tests for difftool --dir-diff
-Date: Thu, 22 Mar 2012 02:53:26 -0700
-Message-ID: <CAJDDKr7m3Ur-RNHffkW9rvbT6kpXWjKMG+Kiw5ausQw5058LHw@mail.gmail.com>
-References: <1332358560-13774-1-git-send-email-tim.henigan@gmail.com>
-	<1332358560-13774-6-git-send-email-tim.henigan@gmail.com>
+From: Dominique Quatravaux <domq@google.com>
+Subject: Re: [PATCH] Locate git helpers with type -P, for when git --exec-path
+ is multivalued
+Date: Thu, 22 Mar 2012 11:24:54 +0100
+Message-ID: <CAJh6GrH9NAQ5=zHE-nrCj3b1NvJUaaenNzTmvon5Ut2XaS1dsg@mail.gmail.com>
+References: <1332407219-7774-1-git-send-email-domq@google.com> <87pqc5ged3.fsf@thomas.inf.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Tim Henigan <tim.henigan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 22 10:54:02 2012
+Cc: git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Mar 22 11:25:28 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAeiX-0007QP-AZ
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 10:54:01 +0100
+	id 1SAfCs-0006DT-Ou
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 11:25:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965021Ab2CVJxd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Mar 2012 05:53:33 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:38528 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755447Ab2CVJx1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Mar 2012 05:53:27 -0400
-Received: by yhmm54 with SMTP id m54so1545843yhm.19
-        for <git@vger.kernel.org>; Thu, 22 Mar 2012 02:53:26 -0700 (PDT)
+	id S1752640Ab2CVKZR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Mar 2012 06:25:17 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:44468 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751877Ab2CVKZQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Mar 2012 06:25:16 -0400
+Received: by wgbdr13 with SMTP id dr13so1270212wgb.1
+        for <git@vger.kernel.org>; Thu, 22 Mar 2012 03:25:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=UGR3B0DUC4UbFboz5A1wBpyHDcfPT6TRCGGdDSNPnzg=;
-        b=TPi/oJSgOEh/cjwIkFJ+7Wbr+L+tk822XtXRLm6nCgavLWsn9UnrzRbMDif2RpzwmC
-         aSwUPtOOFHgWqHFj2OH7g0J1h8oFNP1R794i5sND8GNlgpVRdknu446iPCJNQQzpWT4Y
-         Cr7EemDvoPQtt3h0WYYIGB2domWaFnsQPXiQXCOLJFgddTExV78hFB6876s53ZYaBwid
-         3yDaq/pEfK4+qs8eED4ynn/GZNHqe6zaZRCSkstQqa8yg0weKooO7e6IEfRkROoHq69R
-         XQE3bGIv4uTgyd0YU7f0Cg/lJLEe0QbtULvuEDDm0+OC4woAIdwvnG3/tRcN5bssbkbT
-         zcRQ==
-Received: by 10.236.46.232 with SMTP id r68mr7243762yhb.80.1332410006653; Thu,
- 22 Mar 2012 02:53:26 -0700 (PDT)
-Received: by 10.147.143.4 with HTTP; Thu, 22 Mar 2012 02:53:26 -0700 (PDT)
-In-Reply-To: <1332358560-13774-6-git-send-email-tim.henigan@gmail.com>
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:x-system-of-record:content-type:content-transfer-encoding;
+        bh=orosWUuV3X9/U+0/3hkifMrPXaG4vOeCCGuFdNmJGSM=;
+        b=XaZBNqRQH7Qj8c9fHwWuNhAvdxiwi/3KS+Coio8w3MbGb7uHT2m+gWNJdc0S3xleFA
+         RjxqCeM+Ej1GnSoOoCDsa+hjhuYU89r/iAzTlfxZI8MuyXeZxtwcvsjpLBdfVi67rGrb
+         Y/O84BOPkmO5KxTUXLREHEw6gveTKRbw7xyZ7xQX47KMxZfmPpehwv3kDTpbQQ0rbzrB
+         fp+L5DZHalN/L6lc9jqXgXkaENxRRETUxpMNbJ3XKSqt1xPSkCzBsUVwgvvte+g8Vnom
+         9iJMrVIu5nlunbWWxuXQQ9slguaK+4PvBWOuQ6HN5hfFQ6Sa0nmskZrzRev3LAcQwZuO
+         6YHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:x-system-of-record:x-gm-message-state:content-type
+         :content-transfer-encoding;
+        bh=orosWUuV3X9/U+0/3hkifMrPXaG4vOeCCGuFdNmJGSM=;
+        b=nS07pQEGJhwRmbeXhVgtCtFVJwcl9Pb9ZYNLvhyPcURiwmtQyZiA8BLBdGzIfqxAPH
+         gmr5Ii9FkFLpWO6k7GsfY3GmaRALA/AZ/uAUiyWNTsVAJRTVPUeLXM0UPFddivMCh2Zg
+         NdO+jtjgBQpWLxgIgalFBY46c6HsseTHoKWsF6GU7ZlT9ixxyt9kGNdoQ8o1j+2FuGAr
+         PqV1+SIPoukJviuhkDZI4tpFZahJbUgSILqBMliUDlZMiMR7XL0SsV16FP7eR+2Xei2/
+         ZZ5SS0uW30oFKUKB4QjP5Ap5Y8s+dnr2nyOxi0GXyZl8s21ZXe/x29jfDEEJtOKyoVZi
+         Tbjw==
+Received: by 10.180.72.212 with SMTP id f20mr3659752wiv.15.1332411915085;
+        Thu, 22 Mar 2012 03:25:15 -0700 (PDT)
+Received: by 10.180.72.212 with SMTP id f20mr3659739wiv.15.1332411915016; Thu,
+ 22 Mar 2012 03:25:15 -0700 (PDT)
+Received: by 10.227.24.144 with HTTP; Thu, 22 Mar 2012 03:24:54 -0700 (PDT)
+In-Reply-To: <87pqc5ged3.fsf@thomas.inf.ethz.ch>
+X-System-Of-Record: true
+X-Gm-Message-State: ALoCoQlvE+PmSqUfG3lVLNYGT5DtzHoSioXZaNiHbpWlZopsWPcgPd4bV+2yUTc/GzrZvYaMpi1AurQCxiJ4NSGG1ZjyYt7amtM+fVhS2BgXa0Dmi841GSvyZM5t8spAG8acD4HMDH7ye/ghxcfukFrLaMKXIkiROw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193641>
 
-On Wed, Mar 21, 2012 at 12:36 PM, Tim Henigan <tim.henigan@gmail.com> w=
+On Thu, Mar 22, 2012 at 10:43 AM, Thomas Rast <trast@student.ethz.ch> w=
 rote:
-> Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
-> ---
-> =C2=A0t/t7800-difftool.sh | =C2=A0 38 +++++++++++++++++++++++++++++++=
-+++++++
-> =C2=A01 file changed, 38 insertions(+)
->
-> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-> index 663247c..fca49d1 100755
-> --- a/t/t7800-difftool.sh
-> +++ b/t/t7800-difftool.sh
-> @@ -305,4 +305,42 @@ test_expect_success PERL 'difftool --tool-help' =
-'
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0echo "$tool_help" | stdin_contains tool
-> =C2=A0'
->
-> +test_expect_success PERL 'setup change in subdirectory' '
-> + =C2=A0 =C2=A0 =C2=A0 git checkout master &&
-> + =C2=A0 =C2=A0 =C2=A0 mkdir sub &&
-> + =C2=A0 =C2=A0 =C2=A0 echo master >sub/sub &&
-> + =C2=A0 =C2=A0 =C2=A0 git add sub/sub &&
-> + =C2=A0 =C2=A0 =C2=A0 git commit -m "added sub/sub" &&
-> + =C2=A0 =C2=A0 =C2=A0 echo test >>file &&
-> + =C2=A0 =C2=A0 =C2=A0 echo test >>sub/sub &&
-> + =C2=A0 =C2=A0 =C2=A0 git add . &&
-> + =C2=A0 =C2=A0 =C2=A0 git commit -m "modified both"
-> +'
-> +
-> +test_expect_success PERL 'difftool -d' '
-> + =C2=A0 =C2=A0 =C2=A0 diff=3D$(git difftool -d --extcmd ls branch) &=
-&
-> + =C2=A0 =C2=A0 =C2=A0 echo "$diff" | stdin_contains sub &&
-> + =C2=A0 =C2=A0 =C2=A0 echo "$diff" | stdin_contains file
-> +'
-> +
-> +test_expect_success PERL 'difftool --dir-diff' '
-> + =C2=A0 =C2=A0 =C2=A0 diff=3D$(git difftool --dir-diff --extcmd ls b=
-ranch) &&
-> + =C2=A0 =C2=A0 =C2=A0 echo "$diff" | stdin_contains sub &&
-> + =C2=A0 =C2=A0 =C2=A0 echo "$diff" | stdin_contains file
-> +'
-> +
-> +test_expect_success PERL 'difftool --dir-diff ignores --prompt' '
-> + =C2=A0 =C2=A0 =C2=A0 diff=3D$(git difftool --dir-diff --prompt --ex=
-tcmd ls branch) &&
-> + =C2=A0 =C2=A0 =C2=A0 echo "$diff" | stdin_contains sub &&
-> + =C2=A0 =C2=A0 =C2=A0 echo "$diff" | stdin_contains file
-> +'
-> +
-> +test_expect_success PERL 'difftool --dir-diff from subdirectory' '
-> + =C2=A0 =C2=A0 =C2=A0 cd sub &&
-> + =C2=A0 =C2=A0 =C2=A0 diff=3D$(git difftool --dir-diff --extcmd ls b=
-ranch) &&
-> + =C2=A0 =C2=A0 =C2=A0 echo "$diff" | stdin_contains sub &&
-> + =C2=A0 =C2=A0 =C2=A0 echo "$diff" | stdin_contains file &&
-> + =C2=A0 =C2=A0 =C2=A0 cd ..
+> I don't know where you are getting your
+> multivalued GIT_EXEC_PATH from,
 
-If we wrap the subdir operations in parentheses then the sub-shell
-saves us from having to do "cd ..".  It also helps prevent leakage
-from earlier failures, which is helpful when writing new tests.
+Well it used to work for me before, apparently not by design... Too bad=
+=2E
 
-(Please excuse any gmail whitespace mangling)
-
-e.g.:
-
-test_expect_success PERL 'difftool --dir-diff from subdirectory' '
- =C2=A0 =C2=A0 =C2=A0 (
-        =C2=A0 =C2=A0 =C2=A0 cd sub &&
-        =C2=A0 =C2=A0 =C2=A0 diff=3D$(git difftool --dir-diff --extcmd =
-ls branch) &&
-        =C2=A0 =C2=A0 =C2=A0 echo "$diff" | stdin_contains sub &&
- =C2=A0 =C2=A0 =C2=A0        echo "$diff" | stdin_contains file
- =C2=A0 =C2=A0 =C2=A0 )
-'
-
-It'd also be pretty neat if we could gather file content somehow.
-This would allow us to make assertions about the content of the
-left/right parameters passed to the tool.  I don't know if that's test
-overkill ;-) but it seems like it could be helpful.
 --=20
-David
+=A0 Dominique Quatravaux
+=A0 +41 79 609 40 72
