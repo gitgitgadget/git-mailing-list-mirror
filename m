@@ -1,72 +1,72 @@
 From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: Currently checked out branch is not bold in gitk when using ssh
- X-forwarding
-Date: Thu, 22 Mar 2012 18:08:28 -0500
-Message-ID: <4F6BB0EC.2080209@gmail.com>
-References: <CALykgB0LCjDsMYSB1jAxBmPxsf-f6XDDFv+1nmtvCLP65ex5vw@mail.gmail.com>
+Subject: Re: Push from specific directory.
+Date: Thu, 22 Mar 2012 18:22:13 -0500
+Message-ID: <4F6BB425.2010807@gmail.com>
+References: <BLU0-SMTP471329E4F80CD64A569A4F7B1410@phx.gbl> <20120322225747.GB14874@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeremy Ramer <jdramer@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 23 00:08:39 2012
+Cc: Anjib Mulepati <anjibcs@hotmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 23 00:22:30 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAr7W-0008Pq-1h
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 00:08:38 +0100
+	id 1SArKp-0002IO-CM
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 00:22:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757711Ab2CVXId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Mar 2012 19:08:33 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:43871 "EHLO
+	id S1754886Ab2CVXWS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Mar 2012 19:22:18 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:42817 "EHLO
 	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756364Ab2CVXIc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2012 19:08:32 -0400
-Received: by obbeh20 with SMTP id eh20so1867071obb.19
-        for <git@vger.kernel.org>; Thu, 22 Mar 2012 16:08:31 -0700 (PDT)
+	with ESMTP id S1752374Ab2CVXWS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2012 19:22:18 -0400
+Received: by obbeh20 with SMTP id eh20so1875700obb.19
+        for <git@vger.kernel.org>; Thu, 22 Mar 2012 16:22:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=6ITKh+YCKp0pbNvfq9WzgeupD7ztGwVLxz/7Bqg+N94=;
-        b=MQ7zuZkk8+SjMenUp9d4UqTo4w+ltBSRhkUZMHFpcv07oPpq1WUW8vcc/BPBckd2HP
-         yuKWcnEslUUrfNrl+fi2T0KngJwggr73OzwWTSrRUMVBNy6XKVdIk2VIkxz4j5XJwBNH
-         UfMEaX16VTaJIcTqjCZLajbVyEKbCPx0PP+qYYnXc3uR1M9hcXizRlJ+MLJy7JuqFr7N
-         obUr7LUDT1OVs6BpJuO+0jDL969KIMMLoRvwcqzjuAZCnhk1koCWb3fDRA/N/LiPfeQi
-         f2SZDWbjBRf1cuik5QT1aJyARF6nMgdoNWp/H7f1SDSzafWoVMcPTMpytYJMxkYTZm1J
-         IblQ==
-Received: by 10.182.159.65 with SMTP id xa1mr12276643obb.25.1332457711584;
-        Thu, 22 Mar 2012 16:08:31 -0700 (PDT)
+        bh=5ZyH3VKpqCAgq20Jbj6OX3GustUXDtIKdkbvL1VdgJs=;
+        b=esvpepSHbzvqx38ezXS5YGIlfzLvvYdI5l4/XmS7IdenmxeptRf48Dhxl9H6CrEErF
+         IY7rc0PThAlTOyWRtAhS4CL5qt9vSe/0HQ3dzn+s5LLHq8knayWaGGqfwusjqXIpvF9O
+         Ez4koSGLi3T4EoQv+GHTSGTntYAuEGhifdNuuERqfTlv2ZbriTCWgjpy2yrjtOk4gilq
+         Ckw6TvulGibYfy+NShEgzpnT4Z2cPJK3RS0w4ArYB5nsjFrigvbvw9da7kRABYCpNfO3
+         Wp/BZr1xiN98Fs7Sj5WSql26r/R5V3tHBO88Vj5EGQcOhxI1u7C1nb92KoWuSe+CgoW+
+         /dBg==
+Received: by 10.182.147.35 with SMTP id th3mr12276855obb.29.1332458537471;
+        Thu, 22 Mar 2012 16:22:17 -0700 (PDT)
 Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id n7sm4813159oeh.4.2012.03.22.16.08.29
+        by mx.google.com with ESMTPS id h5sm4440658oea.1.2012.03.22.16.22.14
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 22 Mar 2012 16:08:30 -0700 (PDT)
+        Thu, 22 Mar 2012 16:22:14 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.28) Gecko/20120306 Thunderbird/3.1.20
-In-Reply-To: <CALykgB0LCjDsMYSB1jAxBmPxsf-f6XDDFv+1nmtvCLP65ex5vw@mail.gmail.com>
+In-Reply-To: <20120322225747.GB14874@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193730>
 
-On 3/22/2012 4:10 PM, Jeremy Ramer wrote:
-> However, when I log in from my newer Ubuntu 11.11 laptop (ssh -X
-> buildserver) and start gitk the currently checked out branch is not
-> displayed in bold font. In fact, all the fonts are a little ugly,
-> though it is the lack of bold that is the hardest to work with.
+On 3/22/2012 5:57 PM, Jeff King wrote:
+> On Thu, Mar 22, 2012 at 06:04:20PM -0400, Anjib Mulepati wrote:
 >
-FWIW, my theory is that is has something to do with your fonts. Just a
-simple end user observation.  I'm not a gitk programmer.
+>> 2. Can I have a folder structure like (a) /Hello-World (b)
+>> /Hello-World/gitVersion/GitVersionFile.txt and (c)
+>> /Hello-World/nonGitVersion/NonGitVersionFile.txt where I give git
+>> init for (a) and (c). If Itry to push only from (c) is that valid?
+>
+> You have a repository inside a repository. So when you are in (c),
+> you will be pushing the commits from (c), not from (a). I'm not
+> really sure what you are trying to accomplish with that.
+>
+See this thread for the "cons" of nested git repos: (I don't think there 
+are any "pros".)
+http://thread.gmane.org/gmane.comp.version-control.git/190372
 
-Maybe you don't have your fonts set for what-you-want in gitk.  Maybe 
-you don't have the fonts installed/setup on your ubuntu box for 
-what-you-want in gitk.
-
-I assume gitk uses the fonts that you tell it to, or that are available.
-
-Hope this helps.
+*If* that is really what you meant...
 
 v/r,
 neal
