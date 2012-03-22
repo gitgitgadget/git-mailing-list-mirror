@@ -1,57 +1,115 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Push from specific directory.
-Date: Thu, 22 Mar 2012 19:27:23 -0400
-Message-ID: <20120322232723.GA15676@sigill.intra.peff.net>
-References: <BLU0-SMTP471329E4F80CD64A569A4F7B1410@phx.gbl>
- <20120322225747.GB14874@sigill.intra.peff.net>
- <4F6BB425.2010807@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] merging renames of empty files
+Date: Thu, 22 Mar 2012 16:37:05 -0700
+Message-ID: <7vpqc4us0u.fsf@alter.siamese.dyndns.org>
+References: <4F69B375.5050205@in.waw.pl> <86iphwomnq.fsf@red.stonehenge.com>
+ <4F6B1F48.3040007@in.waw.pl> <20120322140140.GA8803@sigill.intra.peff.net>
+ <7vty1gy3eh.fsf@alter.siamese.dyndns.org>
+ <20120322175952.GA13069@sigill.intra.peff.net>
+ <20120322182533.GA20360@sigill.intra.peff.net>
+ <7v62dwxybd.fsf@alter.siamese.dyndns.org>
+ <20120322190303.GA32756@sigill.intra.peff.net>
+ <7vwr6cwiux.fsf@alter.siamese.dyndns.org>
+ <20120322224651.GA14874@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Anjib Mulepati <anjibcs@hotmail.com>, git@vger.kernel.org
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 23 00:27:35 2012
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Zbigniew =?utf-8?Q?J=C4=99drzej?= =?utf-8?Q?ewski-Szmek?= 
+	<zbyszek@in.waw.pl>, "Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Ralf Nyren <ralf.nyren@ericsson.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 23 00:37:15 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SArPn-0005xE-74
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 00:27:31 +0100
+	id 1SArZD-0005C8-6Q
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Mar 2012 00:37:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760160Ab2CVX10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Mar 2012 19:27:26 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57047
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754289Ab2CVX10 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2012 19:27:26 -0400
-Received: (qmail 7374 invoked by uid 107); 22 Mar 2012 23:27:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 22 Mar 2012 19:27:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Mar 2012 19:27:23 -0400
-Content-Disposition: inline
-In-Reply-To: <4F6BB425.2010807@gmail.com>
+	id S1756587Ab2CVXhK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Mar 2012 19:37:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45409 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752664Ab2CVXhI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2012 19:37:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BCAFF66F7;
+	Thu, 22 Mar 2012 19:37:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vyyitfzfe3tD5hoWtJTcj6M1tAQ=; b=ULRKjh
+	IMO/XBKxqZZxU4mAjdxhmkzQ406JmJm9BFgDq1OUqk5lDaIb/cMEbSxwtxiSlAlZ
+	gHRoQxfh7n6rjCdFDEkSavp1QS6QeXHAC1RkeFFBGWIeKNzUdgEg114lCZc1WDq8
+	1w89nUmJza2nuGl8Hbk+irApN3xIwQM03NHb8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XFrLvOJlS3myIeCNqR7S1NeeMFQ3yt01
+	FeUSGQoJSJ+4V2Z5qOZ1jZGi/JBlWnAtGSvWED8Z5VBcFs/Wvtaj+cFN7ry4QAJ0
+	uEah1HtQQolsA9w0d1q4vJJ2lzAmZFOLe4Ap1xGSj34C+EZPYekv1xwFO4u3oy5K
+	idzos5kx1vo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B210C66F6;
+	Thu, 22 Mar 2012 19:37:07 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2E61766F5; Thu, 22 Mar 2012
+ 19:37:07 -0400 (EDT)
+In-Reply-To: <20120322224651.GA14874@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 22 Mar 2012 18:46:51 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EFDD9460-7477-11E1-A70F-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193733>
 
-On Thu, Mar 22, 2012 at 06:22:13PM -0500, Neal Kreitzinger wrote:
+Jeff King <peff@peff.net> writes:
 
-> >You have a repository inside a repository. So when you are in (c),
-> >you will be pushing the commits from (c), not from (a). I'm not
-> >really sure what you are trying to accomplish with that.
-> >
-> See this thread for the "cons" of nested git repos: (I don't think
-> there are any "pros".)
-> http://thread.gmane.org/gmane.comp.version-control.git/190372
+> Here's a 2-patch series to replace the old 3/3 (they go on top of the
+> first two cleanups from the previous iteration).
 
-Nested git repos are OK. I use one inside my git.git checkout to hold
-meta-information and scripts (and I know Junio does the same thing). But
-I mark the sub-repository as ignored in the parent repository.  What's
-insane is trying to track the same set of files from two different
-repositories. And I think that is the confusing case in the thread you
-mentioned.
+Hrm. As this is probably useful for older maintenance track, I would have
+preferred not to see the first one that touches sequencer.c that did not
+exist in the 1.7.7.x maintenance track, as the change is purely "cosmetic"
+and does not have anything to do with fixing the over-agressive merge.
 
--Peff
+>   [1/2]: teach diffcore-rename to optionally ignore empty content
+>   [2/2]: merge-recursive: don't detect renames of empty files
+>
+> Thinking on this more, it is actually a more generic problem than just
+> empty files. It is really a problem of having generic placeholder files
+> with the same content. So a fully general solution would be something
+> like a gitattribute for "don't do renames on this". However, in
+> practice, these placeholder files are empty (since any non-empty file is
+> likely to actually have different content). So I think just dropping the
+> empty files as rename candidates is a pretty good heuristic, and it's
+> nice and simple.
+
+I thought that our recommendation for keeping an otherwise empty
+directories around was to have .gitignore file with two entries in it,
+namely:
+
+	.*
+        *
+
+So these files will be everywhere and without being empty, no?
+
+But I tend to prefer the simplicity of limiting this to empty files
+anyway.
+
+> After responding to Jonathan, I'm on the fence about whether diff should
+> follow the same heuristic. I left the diff behavior unchanged, but a 3/2
+> that turns it off by default would be a trivial one-liner.
+
+I am also torn, but somewhat in favor of avoiding random permutations of
+empty files.
+
+I can think of only one situation somebody _could_ argue that detecting
+empty-to-empty rename is halfway sensible: when there is only one empty
+file that was removed, and one new empty file that was added.  Even in
+such a case, the user could have done "rm this; >that", and depending on
+the nature of these two files, "mv this that" may not have made _any_
+sense even if they are both empty, and that is why I said "halfway"
+sensible.
