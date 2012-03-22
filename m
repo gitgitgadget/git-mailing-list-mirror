@@ -1,358 +1,169 @@
 From: Tim Henigan <tim.henigan@gmail.com>
-Subject: [PATCH 8/9 v6] difftool: teach difftool to handle directory diffs
-Date: Thu, 22 Mar 2012 15:52:23 -0400
-Message-ID: <1332445944-10944-9-git-send-email-tim.henigan@gmail.com>
+Subject: [PATCH 9/9 v6] difftool: print list of valid tools with '--tool-help'
+Date: Thu, 22 Mar 2012 15:52:24 -0400
+Message-ID: <1332445944-10944-10-git-send-email-tim.henigan@gmail.com>
 References: <1332445944-10944-1-git-send-email-tim.henigan@gmail.com>
 Cc: Tim Henigan <tim.henigan@gmail.com>
 To: gitster@pobox.com, git@vger.kernel.org, davvid@gmail.com
-X-From: git-owner@vger.kernel.org Thu Mar 22 20:54:15 2012
+X-From: git-owner@vger.kernel.org Thu Mar 22 20:54:18 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAo5L-0005v8-Ml
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 20:54:12 +0100
+	id 1SAo5R-0005yN-KZ
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 20:54:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932289Ab2CVTyG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Mar 2012 15:54:06 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:50888 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932110Ab2CVTyC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2012 15:54:02 -0400
-Received: by mail-qc0-f174.google.com with SMTP id w6so1554843qcq.19
-        for <git@vger.kernel.org>; Thu, 22 Mar 2012 12:54:02 -0700 (PDT)
+	id S1030385Ab2CVTyM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Mar 2012 15:54:12 -0400
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:35572 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030360Ab2CVTyK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2012 15:54:10 -0400
+Received: by mail-qa0-f46.google.com with SMTP id b19so544975qae.19
+        for <git@vger.kernel.org>; Thu, 22 Mar 2012 12:54:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=CoPdpTVOC1kLhU1VJ6RKLJPrPNRSi0wfnAfFaEf0rNs=;
-        b=OHuuaOCdNacyp5wJlgxPh2859l99wnnJR30sYoOZi5B+EeFUFAh5tR4fBldoIabNmt
-         5BgHWFGCDpURKKi67/KbH0A30kmw/j5iUNUdgOPmLDp+ASJIh6csboQ/+H6OYl3uwf+8
-         VtVI6tggDLOsXZTX5OU8zu4tETRzER2D8MeV3d5UPialvhJILsyjZsPVjgtBW9jo9K5N
-         DbJgVvJ+8LOlNlUf8+9sXrIg5vGrB/DYHyKt8Srj8LMUV7stCxlUqOB338igRwjkSDsv
-         Xzcp7jSt+08BYWiI0P4qQsRJXa3EoZAONFt6CQQsWph0WybsEIlvO7M0Gj5zcd4+361s
-         SzEg==
-Received: by 10.224.18.131 with SMTP id w3mr12616606qaa.80.1332446042191;
-        Thu, 22 Mar 2012 12:54:02 -0700 (PDT)
+        bh=i1vx1MCDUxzwfd4ygpVtmfSdIG2zqV9WmP9ei1/k/Sk=;
+        b=guvYhSblyD1A7y/Yf7GZvMhVhnuY8QTTLM55VwRpEeNmDvvSfaamxx5YY+RUDhEuQb
+         swqEBV4eSgMEDEcNzzAqk871LqtIneaplhOTdNfcuJpJ1g9QD64At52+prADvKlHW54V
+         KCUc39RXDNjj3WjDFsfz6K3R7ro5+kd+mWtN1XZPw/TNoRsGIYGIoFtgflj7VIzH/Quc
+         hUfJ8X6WP8eW7jT3kITKsWL71hQ8AFXLaNTFnHoMtBdMMXcPDwFqqxdi0D9AhFoM0cPY
+         od7+p4kuqMAKRSIgIt3drt1kF1HG5uP4K/MA/Hua8w/5OWv07kTTzkvWdz84H5UwFe75
+         1DRg==
+Received: by 10.229.135.145 with SMTP id n17mr3624924qct.105.1332446049963;
+        Thu, 22 Mar 2012 12:54:09 -0700 (PDT)
 Received: from localhost (adsl-99-38-69-118.dsl.sfldmi.sbcglobal.net. [99.38.69.118])
-        by mx.google.com with ESMTPS id i19sm9979205qad.19.2012.03.22.12.53.58
+        by mx.google.com with ESMTPS id f12sm10030779qan.1.2012.03.22.12.54.08
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 22 Mar 2012 12:54:01 -0700 (PDT)
+        Thu, 22 Mar 2012 12:54:09 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.rc1.36.g15e879
 In-Reply-To: <1332445944-10944-1-git-send-email-tim.henigan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193708>
 
-Prior to this commit, the difftool utility could only open files one
-at a time.  The new '--dir-diff' option copies all the modified files
-to a temporary location and runs a directory diff on them.
+Since bc7a96a (mergetool--lib: Refactor tools into separate files,
+2011-08-18), it is possible to add a new diff tool by creating a simple
+script in the '$(git --exec-path)/mergetools' directory.  Updating the
+difftool help text is still a manual process, and the documentation can
+easily go out of sync.
+
+Teach the command to read the list of valid tools from the 'mergetools'
+directory and print them for the user when the '--tool-help' option is
+given.
 
 Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
 ---
 
 Changes in v6:
-  - Squashed "teach --dir-diff to copy modified files back" into this
-    commit.
-  - Squashed "add tests for difftool --dir-diff" into this commit.
+  - Squashed "added test for difftool --tool-help" into this commit.
 
 
- Documentation/git-difftool.txt |    6 ++
- git-difftool--helper.sh        |   19 +++--
- git-difftool.perl              |  151 +++++++++++++++++++++++++++++++++++++---
- t/t7800-difftool.sh            |   39 +++++++++++
- 4 files changed, 198 insertions(+), 17 deletions(-)
+ Documentation/git-difftool.txt |   11 ++++++-----
+ git-difftool.perl              |   16 +++++++++++++---
+ t/t7800-difftool.sh            |    5 +++++
+ 3 files changed, 24 insertions(+), 8 deletions(-)
 
 diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
-index fe38f66..aba5e76 100644
+index aba5e76..31fc2e3 100644
 --- a/Documentation/git-difftool.txt
 +++ b/Documentation/git-difftool.txt
-@@ -19,6 +19,12 @@ linkgit:git-diff[1].
+@@ -36,11 +36,9 @@ OPTIONS
  
- OPTIONS
- -------
-+-d::
-+--dir-diff::
-+	Copy the modified files to a temporary location and perform
-+	a directory diff on them. This mode never prompts before
-+	launching the diff tool.
+ -t <tool>::
+ --tool=<tool>::
+-	Use the diff tool specified by <tool>.
+-	Valid diff tools are:
+-	araxis, bc3, deltawalker, diffuse, emerge, ecmerge, gvimdiff,
+-	kdiff3,	kompare, meld, opendiff, p4merge, tkdiff, vimdiff and
+-	xxdiff.
++	Use the diff tool specified by <tool>.  Valid values include
++	emerge, kompare, meld, and vimdiff. Run `git difftool --tool-help`
++	for the list of valid <tool> settings.
+ +
+ If a diff tool is not specified, 'git difftool'
+ will use the configuration variable `diff.tool`.  If the
+@@ -68,6 +66,9 @@ of the diff post-image.  `$MERGED` is the name of the file which is
+ being compared. `$BASE` is provided for compatibility
+ with custom merge tool commands and has the same value as `$MERGED`.
+ 
++--tool-help::
++	Print a list of diff tools that may be used with `--tool`.
 +
- -y::
- --no-prompt::
- 	Do not prompt before launching a diff tool.
-diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
-index e6558d1..3d0fe0c 100755
---- a/git-difftool--helper.sh
-+++ b/git-difftool--helper.sh
-@@ -73,9 +73,16 @@ then
- 	fi
- fi
- 
--# Launch the merge tool on each path provided by 'git diff'
--while test $# -gt 6
--do
--	launch_merge_tool "$1" "$2" "$5"
--	shift 7
--done
-+if test -n "$GIT_DIFFTOOL_DIRDIFF"
-+then
-+	LOCAL="$1"
-+	REMOTE="$2"
-+	run_merge_tool "$merge_tool" false
-+else
-+	# Launch the merge tool on each path provided by 'git diff'
-+	while test $# -gt 6
-+	do
-+		launch_merge_tool "$1" "$2" "$5"
-+		shift 7
-+	done
-+fi
+ -x <command>::
+ --extcmd=<command>::
+ 	Specify a custom command for viewing diffs.
 diff --git a/git-difftool.perl b/git-difftool.perl
-index 7366bf5..0fa131c 100755
+index 0fa131c..d9be7d6 100755
 --- a/git-difftool.perl
 +++ b/git-difftool.perl
-@@ -1,21 +1,29 @@
- #!/usr/bin/env perl
- # Copyright (c) 2009, 2010 David Aguilar
-+# Copyright (c) 2012 Tim Henigan
- #
- # This is a wrapper around the GIT_EXTERNAL_DIFF-compatible
- # git-difftool--helper script.
- #
- # This script exports GIT_EXTERNAL_DIFF and GIT_PAGER for use by git.
--# GIT_DIFFTOOL_NO_PROMPT, GIT_DIFFTOOL_PROMPT, and GIT_DIFF_TOOL
--# are exported for use by git-difftool--helper.
-+# GIT_DIFFTOOL_NO_PROMPT, GIT_DIFFTOOL_PROMPT, GIT_DIFFTOOL_DIRDIFF,
-+# and GIT_DIFF_TOOL are exported for use by git-difftool--helper.
- #
- # Any arguments that are unknown to this script are forwarded to 'git diff'.
- 
+@@ -14,7 +14,7 @@
  use 5.008;
  use strict;
  use warnings;
-+use File::Basename qw(dirname);
-+use File::Copy;
-+use File::stat;
-+use File::Path qw(mkpath);
-+use File::Temp qw(tempdir);
- use Getopt::Long qw(:config pass_through);
- use Git;
- 
-+my @working_tree;
-+
- sub usage
+-use File::Basename qw(dirname);
++use File::Basename qw(dirname basename);
+ use File::Copy;
+ use File::stat;
+ use File::Path qw(mkpath);
+@@ -28,7 +28,7 @@ sub usage
  {
  	my $exitcode = shift;
-@@ -24,15 +32,109 @@ usage: git difftool [-t|--tool=<tool>]
+ 	print << 'USAGE';
+-usage: git difftool [-t|--tool=<tool>]
++usage: git difftool [-t|--tool=<tool>] [--tool-help]
                      [-x|--extcmd=<cmd>]
                      [-g|--gui] [--no-gui]
                      [--prompt] [-y|--no-prompt]
-+                    [-d|--dir-diff]
-                     ['git diff' options]
- USAGE
- 	exit($exitcode);
- }
+@@ -132,18 +132,28 @@ sub setup_dir_diff
  
-+sub setup_dir_diff
-+{
-+	# Run the diff; exit immediately if no diff found
-+	my $repo = Git->repository();
-+	my $diffrtn = $repo->command_oneline(['diff', '--raw', '--no-abbrev', '-z', @ARGV]);
-+	exit(0) if (length($diffrtn) == 0);
-+
-+	# Setup temp directories
-+	my $tmpdir = tempdir('git-diffall.XXXXX', CLEANUP => 1, TMPDIR => 1);
-+	my $ldir = "$tmpdir/left";
-+	my $rdir = "$tmpdir/right";
-+	mkpath($ldir) or die $!;
-+	mkpath($rdir) or die $!;
-+
-+	# Build index info for left and right sides of the diff
-+	my $submodule_mode = "160000";
-+	my $null_mode = 0 x 6;
-+	my $null_sha1 = 0 x 40;
-+	my $lindex = "";
-+	my $rindex = "";
-+	my %submodule;
-+	my @rawdiff = split('\0', $diffrtn);
-+
-+	for (my $i=0; $i<@rawdiff; $i+=2) {
-+		my ($lmode, $rmode, $lsha1, $rsha1, $status) = split(' ', substr($rawdiff[$i], 1));
-+		my $path = $rawdiff[$i + 1];
-+
-+		if (($lmode eq $submodule_mode) or ($rmode eq $submodule_mode)) {
-+			$submodule{$path}{left} = $lsha1;
-+			$submodule{$path}{right} = $rsha1;
-+			next;
-+		}
-+
-+		if ($lmode ne $null_mode) {
-+			$lindex .= "$lmode $lsha1\t$path\0";
-+		}
-+
-+		if ($rmode ne $null_mode) {
-+			if ($rsha1 ne $null_sha1) {
-+				$rindex .= "$rmode $rsha1\t$path\0";
-+			} else {
-+				push(@working_tree, $path);
-+			}
-+		}
-+	}
-+
-+	# Populate the left and right directories based on each index file
-+	my ($inpipe, $ctx);
-+	$ENV{GIT_DIR} = $repo->repo_path();
-+	$ENV{GIT_INDEX_FILE} = "$tmpdir/lindex";
-+	($inpipe, $ctx) = $repo->command_input_pipe(qw/update-index -z --index-info/);
-+	print($inpipe $lindex);
-+	$repo->command_close_pipe($inpipe, $ctx);
-+	system(('git', 'checkout-index', '--all', "--prefix=$ldir/"));
-+
-+	$ENV{GIT_INDEX_FILE} = "$tmpdir/rindex";
-+	($inpipe, $ctx) = $repo->command_input_pipe(qw/update-index -z --index-info/);
-+	print($inpipe $rindex);
-+	$repo->command_close_pipe($inpipe, $ctx);
-+	system(('git', 'checkout-index', '--all', "--prefix=$rdir/"));
-+
-+	# Changes in the working tree need special treatment since they are
-+	# not part of the index
-+	my $workdir = $repo->repo_path() . "/..";
-+	for (@working_tree) {
-+		my $dir = dirname($_);
-+		unless (-d "$rdir/$dir") {
-+			mkpath("$rdir/$dir") or die $!;
-+		}
-+		copy("$workdir/$_", "$rdir/$_") or die $!;
-+		chmod(stat("$workdir/$_")->mode, "$rdir/$_") or die $!;
-+	}
-+
-+	# Changes to submodules require special treatment. This loop writes a
-+	# temporary file to both the left and right directories to show the
-+	# change in the recorded SHA1 for the submodule.
-+	foreach my $path (keys %submodule) {
-+		if (defined $submodule{$path}{left}) {
-+			open(my $fh, ">", "$ldir/$path") or die $!;
-+			print($fh "Subproject commit $submodule{$path}{left}");
-+			close($fh);
-+		}
-+		if (defined $submodule{$path}{right}) {
-+			open(my $fh, ">", "$rdir/$path") or die $!;
-+			print($fh "Subproject commit $submodule{$path}{right}");
-+			close($fh);
-+		}
-+	}
-+
-+	return ($ldir, $rdir);
-+}
-+
  # parse command-line options. all unrecognized options and arguments
  # are passed through to the 'git diff' command.
--my ($difftool_cmd, $extcmd, $gui, $help, $prompt);
-+my ($difftool_cmd, $dirdiff, $extcmd, $gui, $help, $prompt);
+-my ($difftool_cmd, $dirdiff, $extcmd, $gui, $help, $prompt);
++my ($difftool_cmd, $dirdiff, $extcmd, $gui, $help, $prompt, $tool_help);
  GetOptions('g|gui!' => \$gui,
-+	'd|dir-diff' => \$dirdiff,
+ 	'd|dir-diff' => \$dirdiff,
  	'h' => \$help,
  	'prompt!' => \$prompt,
  	'y' => sub { $prompt = 0; },
-@@ -65,14 +167,41 @@ if ($gui) {
- 		$ENV{GIT_DIFF_TOOL} = $guitool;
- 	}
- }
--if (defined($prompt)) {
--	if ($prompt) {
--		$ENV{GIT_DIFFTOOL_PROMPT} = 'true';
-+
-+# In directory diff mode, 'git-difftool--helper' is called once
-+# to compare the a/b directories.  In file diff mode, 'git diff'
-+# will invoke a separate instance of 'git-difftool--helper' for
-+# each file that changed.
-+if (defined($dirdiff)) {
-+	my ($a, $b) = setup_dir_diff();
-+	if (defined($extcmd)) {
-+		system(($extcmd, $a, $b));
- 	} else {
--		$ENV{GIT_DIFFTOOL_NO_PROMPT} = 'true';
-+		$ENV{GIT_DIFFTOOL_DIRDIFF} = 'true';
-+		git_cmd_try {
-+			Git::command_noisy(('difftool--helper', $a, $b))
-+		} 'exit code %d';
-+	}
-+
-+	# If the diff including working copy files and those
-+	# files were modified during the diff, then the changes
-+	# should be copied back to the working tree
-+	my $repo = Git->repository();
-+	my $workdir = $repo->repo_path() . "/..";
-+	for (@working_tree) {
-+		copy("$b/$_", "$workdir/$_") or die $!;
-+		chmod(stat("$b/$_")->mode, "$workdir/$_") or die $!;
-+	}
-+} else {
-+	if (defined($prompt)) {
-+		if ($prompt) {
-+			$ENV{GIT_DIFFTOOL_PROMPT} = 'true';
-+		} else {
-+			$ENV{GIT_DIFFTOOL_NO_PROMPT} = 'true';
-+		}
- 	}
--}
+ 	't|tool:s' => \$difftool_cmd,
++	'tool-help' => \$tool_help,
+ 	'x|extcmd:s' => \$extcmd);
  
--$ENV{GIT_PAGER} = '';
--$ENV{GIT_EXTERNAL_DIFF} = 'git-difftool--helper';
--git_cmd_try { Git::command_noisy(('diff', @ARGV)) } 'exit code %d';
-+	$ENV{GIT_PAGER} = '';
-+	$ENV{GIT_EXTERNAL_DIFF} = 'git-difftool--helper';
-+	git_cmd_try { Git::command_noisy(('diff', @ARGV)) } 'exit code %d';
+ if (defined($help)) {
+ 	usage(0);
+ } 
++if (defined($tool_help)) {
++	my $gitpath = Git::exec_path();
++	print "'git difftool --tool=<tool>' may be set to one of the following:\n";
++	for (glob "$gitpath/mergetools/*") {
++		next if /defaults$/;
++		print "\t" . basename($_) . "\n";
++	}
++	exit(0);
 +}
+ if (defined($difftool_cmd)) {
+ 	if (length($difftool_cmd) > 0) {
+ 		$ENV{GIT_DIFF_TOOL} = $difftool_cmd;
 diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index e716d06..478c1be 100755
+index 478c1be..bbe71e5 100755
 --- a/t/t7800-difftool.sh
 +++ b/t/t7800-difftool.sh
-@@ -319,4 +319,43 @@ test_expect_success PERL 'say no to the second file' '
+@@ -319,6 +319,11 @@ test_expect_success PERL 'say no to the second file' '
  	echo "$diff" | stdin_doesnot_contain br2
  '
  
-+test_expect_success PERL 'setup change in subdirectory' '
-+	git checkout master &&
-+	mkdir sub &&
-+	echo master >sub/sub &&
-+	git add sub/sub &&
-+	git commit -m "added sub/sub" &&
-+	echo test >>file &&
-+	echo test >>sub/sub &&
-+	git add . &&
-+	git commit -m "modified both"
++test_expect_success PERL 'difftool --tool-help' '
++	tool_help=$(git difftool --tool-help) &&
++	echo "$tool_help" | stdin_contains tool
 +'
 +
-+test_expect_success PERL 'difftool -d' '
-+	diff=$(git difftool -d --extcmd ls branch) &&
-+	echo "$diff" | stdin_contains sub &&
-+	echo "$diff" | stdin_contains file
-+'
-+
-+test_expect_success PERL 'difftool --dir-diff' '
-+	diff=$(git difftool --dir-diff --extcmd ls branch) &&
-+	echo "$diff" | stdin_contains sub &&
-+	echo "$diff" | stdin_contains file
-+'
-+
-+test_expect_success PERL 'difftool --dir-diff ignores --prompt' '
-+	diff=$(git difftool --dir-diff --prompt --extcmd ls branch) &&
-+	echo "$diff" | stdin_contains sub &&
-+	echo "$diff" | stdin_contains file
-+'
-+
-+test_expect_success PERL 'difftool --dir-diff from subdirectory' '
-+	(
-+		cd sub &&
-+		diff=$(git difftool --dir-diff --extcmd ls branch) &&
-+		echo "$diff" | stdin_contains sub &&
-+		echo "$diff" | stdin_contains file
-+	)
-+'
-+
- test_done
+ test_expect_success PERL 'setup change in subdirectory' '
+ 	git checkout master &&
+ 	mkdir sub &&
 -- 
 1.7.10.rc1.36.g15e879
