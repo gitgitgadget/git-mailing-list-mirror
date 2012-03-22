@@ -1,201 +1,105 @@
-From: Hitoshi Mitake <h.mitake@gmail.com>
-Subject: [PATCH v0 2/2] git-less: git side support for git-less
-Date: Fri, 23 Mar 2012 03:42:24 +0900
-Message-ID: <1332441744-5142-3-git-send-email-h.mitake@gmail.com>
-References: <1332441744-5142-1-git-send-email-h.mitake@gmail.com>
-Cc: git@vger.kernel.org, Hitoshi Mitake <h.mitake@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Mar 22 19:43:12 2012
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Demonstrate failure of 'core.ignorecase = true'
+Date: Thu, 22 Mar 2012 11:44:42 -0700
+Message-ID: <7viphwxyp1.fsf@alter.siamese.dyndns.org>
+References: <1332370222-5123-1-git-send-email-pj@irregularexpressions.net>
+ <4F6ACB67.1080503@viscovery.net> <4F6B0C3E.8090501@in.waw.pl>
+ <20120322141245.GB8803@sigill.intra.peff.net>
+ <7vbonozi8c.fsf@alter.siamese.dyndns.org>
+ <20120322173701.GA11928@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Zbigniew =?utf-8?Q?J=C4=99drzejew?= =?utf-8?Q?ski-Szmek?= 
+	<zbyszek@in.waw.pl>, Johannes Sixt <j.sixt@viscovery.net>,
+	"Peter J. Weisberg" <pj@irregularexpressions.net>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 22 19:44:55 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAmya-0008Qp-P3
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 19:43:09 +0100
+	id 1SAn0H-0001LC-Ed
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 19:44:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758786Ab2CVSnB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Mar 2012 14:43:01 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:47559 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757089Ab2CVSm7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2012 14:42:59 -0400
-Received: by mail-pb0-f46.google.com with SMTP id un15so1796657pbc.19
-        for <git@vger.kernel.org>; Thu, 22 Mar 2012 11:42:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=sOuy/slijAdFjuVetkSCNLAH5a2+IIpdfxB8AZvVozs=;
-        b=P/VmHz6J1HfZv1f9IQOBZABHtRTd3XJRf8K3AQ3akoLjefefYT3P8C4l6PIsT5w6eB
-         nLo0PuQkn57v9rV27jGTjVh7x1U0SqQqmR9CkobERSVSeEVGMxb8hlPNUkQMQKxaFyVg
-         ldu5D7MO6beFjTYNmNLMBokel3Fsx3GtYZfBpNz2mjpvmlgaXuB2alz9AjKQRns4xH7Q
-         qGjpesHwuY71PmmBw0Nw60im9F73daFPEdcYpzD8TSa4/dx7tFFAnpzL977PZEXC/lGF
-         aV2dT3/e9Wh2MQuK065WtXTWOarLkzYvK6T4gdRMVa3zC4PdMNLCW1qW0TWYYmW4Wlvk
-         Mb0A==
-Received: by 10.68.74.74 with SMTP id r10mr23012101pbv.83.1332441779697;
-        Thu, 22 Mar 2012 11:42:59 -0700 (PDT)
-Received: from localhost.localdomain (FL1-122-135-76-206.tky.mesh.ad.jp. [122.135.76.206])
-        by mx.google.com with ESMTPS id b4sm4255081pbc.7.2012.03.22.11.42.58
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 22 Mar 2012 11:42:59 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.rc1.29.g2a42
-In-Reply-To: <1332441744-5142-1-git-send-email-h.mitake@gmail.com>
+	id S1758848Ab2CVSos (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Mar 2012 14:44:48 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36645 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752390Ab2CVSoq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2012 14:44:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C9FAA61BC;
+	Thu, 22 Mar 2012 14:44:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OhpczlxA7bg1ctS/yslhnVQ5rnk=; b=psdrZE
+	gpP5mP7PFWcoEs/ZJb3ZeR49e+oeIP995fJ6M1RimTcdACuBk2vDZzXCeke6laC/
+	h1q7ZAUEyxCPpC79C5t+AGesyGgPFU54nyn6n1JCz70s1WDYSFrAtesFvtfrfGph
+	dUsFx75w0ppdaheHexTkydti+O7y3CYlxIm2E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TDDJYkfRVe8+c53OB4hxoPMkfqQWABlX
+	H22J063oN32Pys7934BGZw6T51tAnKrsbMnu0SFC5t6hfsu0ncwl5vy4gwWgSSPq
+	9T+HXNBROKY2z47t80ubrVzlNhnFq6ZCp/OP7W+QkgIMDRedAxQlNvzRNVO9Qs08
+	9o/BPpCA49k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C05DC61BB;
+	Thu, 22 Mar 2012 14:44:44 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 26E6661B9; Thu, 22 Mar 2012
+ 14:44:44 -0400 (EDT)
+In-Reply-To: <20120322173701.GA11928@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 22 Mar 2012 13:37:01 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 17675CD8-744F-11E1-9D1A-9DB42E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193679>
 
-This patch modifies three parts of git.
-1. git-log ... insert ETX(0x03) between each commit for the detection the boarder
-   of commits by git-less.
-2. pager selection ... current git uses single pager program for every command.
-   I designed git-less for git-log so it is not suitable for other commands like
-   git-grep, etc.
-3. new configuration parameter for specifying git-less as a pager of git-log
+Jeff King <peff@peff.net> writes:
 
-(I think these three changes are one logical unit.)
+> On Thu, Mar 22, 2012 at 09:57:23AM -0700, Junio C Hamano wrote:
+>
+>> Hrm, replacing unclear part with clarified text may make sense, but it
+>> would not help adding new text if the existing description is not clear
+>> enough.
+>> 
+>> How about doing it like this?
+>> 
+>>    Case-insensitive filesystems like FAT and HFS+ have various strange
+>>    behaviours, like reporting that a file "Makefile" already exists when
+>>    the file that actually exists on them is "makefile". By setting this
+>>    variable to `true`, Git employs logic to work around them.
+>> 
+>>    The default is false, except that git-clone[1] and git-init[1] will
+>>    probe the filesystem and set it to `true` as necessary when a new
+>>    repository is created.
+>
+> IMHO, it suffers from the same problem as the original, which is that it
+> does tells when to use core.ignorecase, but does not specify what
 
-The most important commit is 2. As described above, current git supports only
-one pager and this is not good for git-less because git-less only assumes
-git-log. So I modified setup_pager() in pager.c to separate pager selection
-mechanism and pager setup mechanism.
+I wanted it to tell *what* happens when core.ignorecase is set.  In other
+words, I wanted the description to say that the logic employed is to work
+around what case-insensitive filesystems do.  Case sensitive filesystems
+obviously do not do what case-insensitive ones do (like reporting a
+"Makefile" exists when only "makefile" exists), so I hoped that it was
+clear enough that the additional logic would not be suitable there.
 
-As described in 3, git-log specific pager can be specified with the new string
-typed parameter "log.pager". git-less can be set as the pager like this config:
-[log]
-	pager = git-less
+> happens when one sets core.ignorecase to true on a case-sensitive
+> filesystem. Maybe we should be more explicit about what _does_ happen in
+> that case (to be honest, I am not completely sure). Or just say that it
+> is not a supported use case.
 
-The description of this new parameter is also added in the help of git-log.
+I guess we really need to make the description foolproof then.
 
-Signed-off-by: Hitoshi Mitake <h.mitake@gmail.com>
----
- Documentation/git-log.txt |    6 +++++-
- builtin/log.c             |   32 ++++++++++++++++++++++++++++++++
- cache.h                   |    1 +
- pager.c                   |    9 ++++++---
- 4 files changed, 44 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 249fc87..f2e07f4 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -177,7 +177,11 @@ notes.displayRef::
- 	or 'GIT_NOTES_REF', to read notes from when showing commit
- 	messages with the 'log' family of commands.  See
- 	linkgit:git-notes[1].
--+
-+
-+log.pager::
-+       Pager program for git-log. Currently this option only assumes
-+       "git-less".
-+
- May be an unabbreviated ref name or a glob and may be specified
- multiple times.  A warning will be issued for refs that do not exist,
- but a glob that does not match any refs is silently ignored.
-diff --git a/builtin/log.c b/builtin/log.c
-index 8a47012..2ef3ada 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -88,6 +88,22 @@ static void cmd_log_init_defaults(struct rev_info *rev)
- 		rev->date_mode = parse_date_format(default_date_mode);
- }
- 
-+static int use_git_less;
-+
-+static int setup_log_pager(const char *myname)
-+{
-+	if (strcmp(myname, "log")) {
-+		use_git_less = 0;
-+		return 0;
-+	}
-+
-+	if (!use_git_less)
-+		return 0;
-+
-+	__setup_pager("git-less");
-+	return 1;
-+}
-+
- static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
- 			 struct rev_info *rev, struct setup_revision_opt *opt)
- {
-@@ -149,6 +165,10 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
- 		rev->show_decorations = 1;
- 		load_ref_decorations(decoration_style);
- 	}
-+
-+	if (setup_log_pager(argv[0]))
-+		return;
-+
- 	setup_pager();
- }
- 
-@@ -314,6 +334,9 @@ static int cmd_log_walk(struct rev_info *rev)
- 			saved_nrl = rev->diffopt.needed_rename_limit;
- 		if (rev->diffopt.degraded_cc_to_c)
- 			saved_dcctc = 1;
-+
-+		if (use_git_less)
-+			printf("\003");
- 	}
- 	rev->diffopt.degraded_cc_to_c = saved_dcctc;
- 	rev->diffopt.needed_rename_limit = saved_nrl;
-@@ -349,6 +372,15 @@ static int git_log_config(const char *var, const char *value, void *cb)
- 	}
- 	if (!prefixcmp(var, "color.decorate."))
- 		return parse_decorate_color_config(var, 15, value);
-+	if (!strcmp(var, "log.pager")) {
-+		if (!strcmp(value, "git-less")) {
-+			use_git_less = 1;
-+			return 0;
-+		} else {
-+			fprintf(stderr, "unknown pager for git-log: %s\n", value);
-+			return -1;
-+		}
-+	}
- 
- 	return git_diff_ui_config(var, value, cb);
- }
-diff --git a/cache.h b/cache.h
-index e5e1aa4..e5e57ff 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1185,6 +1185,7 @@ static inline ssize_t write_str_in_full(int fd, const char *str)
- 
- /* pager.c */
- extern void setup_pager(void);
-+extern void __setup_pager(const char *pager);
- extern const char *pager_program;
- extern int pager_in_use(void);
- extern int pager_use_color;
-diff --git a/pager.c b/pager.c
-index 05584de..45fe9ea 100644
---- a/pager.c
-+++ b/pager.c
-@@ -69,10 +69,8 @@ const char *git_pager(int stdout_is_tty)
- 	return pager;
- }
- 
--void setup_pager(void)
-+void __setup_pager(const char *pager)
- {
--	const char *pager = git_pager(isatty(1));
--
- 	if (!pager)
- 		return;
- 
-@@ -110,6 +108,11 @@ void setup_pager(void)
- 	atexit(wait_for_pager);
- }
- 
-+void setup_pager(void)
-+{
-+	__setup_pager(git_pager(isatty(1)));
-+}
-+
- int pager_in_use(void)
- {
- 	const char *env;
--- 
-1.7.10.rc1.33.g64ff3.dirty
+                   ... exists on them is "makefile". By setting this
+	variable to `true`, Git employs logic to work around them.
+        Setting this to `true` on a case insensitive filesystem does
+	not make any sense, because it would not magically make your
+	system to treat your filesystem case insensitively.
