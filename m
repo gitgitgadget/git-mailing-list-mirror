@@ -1,59 +1,126 @@
-From: Jeremy Morton <jeremy@configit.com>
-Subject: git's behaviour during a 'both added' merge conflict
-Date: Thu, 22 Mar 2012 14:23:24 +0000
-Message-ID: <CAFsnPqrqz+HZGJHWp6YEWKJeXO2jYDw-qYfAdtHhDvYVmeTD1w@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 22 15:23:34 2012
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: [PATCH 10/9 v5] difftool: fix regression in '--prompt' options
+Date: Thu, 22 Mar 2012 11:02:19 -0400
+Message-ID: <1332428541-24878-1-git-send-email-tim.henigan@gmail.com>
+Cc: Tim Henigan <tim.henigan@gmail.com>
+To: gitster@pobox.com, git@vger.kernel.org, davvid@gmail.com
+X-From: git-owner@vger.kernel.org Thu Mar 22 16:08:34 2012
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1SAivM-0001Kk-Tl
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 15:23:33 +0100
+	id 1SAjcs-00082c-BK
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Mar 2012 16:08:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757936Ab2CVOX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Mar 2012 10:23:27 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:34243 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754318Ab2CVOX0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2012 10:23:26 -0400
-Received: by lbbgm6 with SMTP id gm6so1780816lbb.19
-        for <git@vger.kernel.org>; Thu, 22 Mar 2012 07:23:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :x-gm-message-state;
-        bh=hdcmBBjeeebnonfGbGjf1PsLU7q4XaD8KqDS1gLsWqQ=;
-        b=Kd9B6luyy7ilg7+DctiY4cNzQBwZzlArue7eTIXROdRj91ssy6kDTC37K8lnFCOnRU
-         F2tfHTqySoiFB/WYSQ4SlLA6xYUzm6xRcbi49D4R6alTvokQBWoKMb0daDXyqolWYFi8
-         QYegh6CfcYFinJT2YcPWyGL01FxUVSBakuWOiN0Kaju31lEJkoWYgD7wO6beNf35xM/x
-         9jkbVEEMFqvD/fxkJTH+yh7jNqo8ERM42CzfO5LdnydqMHttv7kOZZL9slI4Uo9pbCgx
-         KKm7YD5Gzpdl21VswC8pW9jmPkFkFe4kmj4jfWDvmpNarPP9uj/O251GjXd81dcPk1A+
-         q0OQ==
-Received: by 10.152.105.241 with SMTP id gp17mr6591062lab.21.1332426204518;
- Thu, 22 Mar 2012 07:23:24 -0700 (PDT)
-Received: by 10.112.83.100 with HTTP; Thu, 22 Mar 2012 07:23:24 -0700 (PDT)
-X-Gm-Message-State: ALoCoQltGr6tpJlP+DtOXGb8G/62tg77xB1WBy1E0LQIGvryKWwIQAtj9tRzeqTsdC8b8nmXejZ0
+	id S1030267Ab2CVPIY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Mar 2012 11:08:24 -0400
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:43136 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964878Ab2CVPIX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2012 11:08:23 -0400
+Received: by qcqw6 with SMTP id w6so1367266qcq.19
+        for <git@vger.kernel.org>; Thu, 22 Mar 2012 08:08:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=QpizwOOVjNH7Y8C4Etx3y71PWlLQnxw0g5RIdsXgPQE=;
+        b=bPKabgyGGgwzIDMD5vPr+KIB1eNXbkO5euXQQOjiAnf/QpDED0jYlJ1FVQ8x/XFUsC
+         FoG8LPN1E6Z+VUT4/Hu+ijp9o4nlbIfXK9rIwdog1C6efMnrulma/m6dyRSONFnijKWf
+         I26s77MXbRBHaW0JnL9RQjeyc5L2vcUr3OAj7Hy/aBb79hvUKZh+NKOdYiDp485wDQDv
+         tbhgoGmR+Gfq6YDvACoobf50EkS6okoIkAW0ci+hrUy4hlQfn9+yt0udN43bq/S5QJXL
+         Kg4L3oaDOvGvhd3ekrFfx/lHrAjLssuuXDXBMwOhUSjtX76MBVSEO6uPClRD+1PH49GO
+         KktA==
+Received: by 10.224.71.19 with SMTP id f19mr1364724qaj.0.1332428903201;
+        Thu, 22 Mar 2012 08:08:23 -0700 (PDT)
+Received: from localhost (adsl-99-38-69-118.dsl.sfldmi.sbcglobal.net. [99.38.69.118])
+        by mx.google.com with ESMTPS id cw5sm8763942qab.20.2012.03.22.08.08.16
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 22 Mar 2012 08:08:21 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.rc1.40.g756bbcd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/193661>
 
-I've noticed that when you're merging and there is a 'both added'
-merge conflict, git creates the .LOCAL and .REMOTE files for the
-merge, but not the .BASE file.  Now, there isn't an actual base file
-because the file has been added anew in both branches, but wouldn't it
-make sense for git to just create an empty .BASE file anyway?
-Conceptually, new content is being added on both sides to an empty
-container - the fact that it didn't exist as a file on the filesystem
-before is something git isn't meant to care about.  It also makes
-things easier for merge tools which are expecting a .BASE file; in
-practice, scripts just usually create the empty .BASE file anyway.
-Why not have git do this itself without a script?
+When difftool was changed to use Getopt::Long, it changed the way
+that the '--prompt' and '--no-prompt' options were handled. The
+expected behavior is that the two options may be given any number
+of times. The last option given "wins".
 
-Best regards,
-Jeremy Morton (Jez)
+For example, if a user sets "[alias] mdt = difftool --prompt", the
+following must still run without error:
+
+$ git mdt --no-prompt
+
+The changes made during the switch to Getopt::Long broke this
+behavior. This commit teaches difftool to handle them properly
+again.
+
+Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
+---
+
+This replaces 10/9 in the previous version of the series.
+
+Changes in v5:
+  - Based on an example provided by Thomas Rast on the Git dev list,
+    the '--[no-]prompt' options are parsed by Getopt::Long again.
+
+
+ git-difftool.perl |   21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
+
+diff --git a/git-difftool.perl b/git-difftool.perl
+index 9f0f9a9..9892d1e 100755
+--- a/git-difftool.perl
++++ b/git-difftool.perl
+@@ -29,8 +29,8 @@ sub usage
+ 	my $exitcode = shift;
+ 	print << 'USAGE';
+ usage: git difftool [-t|--tool=<tool>] [--tool-help]
+-                    [-x|--extcmd=<cmd>]
+-                    [-y|--no-prompt]   [-g|--gui]
++                    [-x|--extcmd=<cmd>] [-g|--gui]
++                    [--prompt] [-y|--no-prompt]
+                     [-d|--dir-diff]
+                     ['git diff' options]
+ USAGE
+@@ -131,15 +131,15 @@ sub setup_dir_diff
+ 
+ # parse command-line options. all unrecognized options and arguments
+ # are passed through to the 'git diff' command.
+-my ($difftool_cmd, $dirdiff, $extcmd, $gui, $help, $no_prompt, $prompt, $tool_help);
++my ($difftool_cmd, $dirdiff, $extcmd, $gui, $help, $prompt, $tool_help);
+ GetOptions('g|gui' => \$gui,
+ 	'd|dir-diff' => \$dirdiff,
+ 	'h' => \$help,
+-	'prompt' => \$prompt,
++	'prompt!' => \$prompt,
++	'y' => sub { $prompt = 0; },
+ 	't|tool:s' => \$difftool_cmd,
+ 	'tool-help' => \$tool_help,
+-	'x|extcmd:s' => \$extcmd,
+-	'y|no-prompt' => \$no_prompt);
++	'x|extcmd:s' => \$extcmd);
+ 
+ if (defined($help)) {
+ 	usage(0);
+@@ -203,10 +203,11 @@ if (defined($dirdiff)) {
+ 	}
+ } else {
+ 	if (defined($prompt)) {
+-		$ENV{GIT_DIFFTOOL_PROMPT} = 'true';
+-	}
+-	elsif (defined($no_prompt)) {
+-		$ENV{GIT_DIFFTOOL_NO_PROMPT} = 'true';
++		if ($prompt) {
++			$ENV{GIT_DIFFTOOL_PROMPT} = 'true';
++		} else {
++			$ENV{GIT_DIFFTOOL_NO_PROMPT} = 'true';
++		}
+ 	}
+ 
+ 	$ENV{GIT_PAGER} = '';
+-- 
+1.7.10.rc1.40.g756bbcd
